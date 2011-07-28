@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/27 12:20:27
+#save date:2011/07/28 14:25:59
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r1001.wms
 #SECTION START:OBJ_EVENT
@@ -14,19 +14,19 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r1001.wms
 #type
 1
 #ID name
-SWPLAZMAW_04
+D27R1001_HINT_07
 #OBJ CODE Number
 SWPLAZMAW
 #MOVE CODE Number
-MV_RND_DLR
+MV_DMY
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_D27_HINT_07
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -45,19 +45,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-SWPLAZMAW_05
+D27R1001_HINT_06
 #OBJ CODE Number
 SWPLAZMAW
 #MOVE CODE Number
-MV_RND_DLR
+MV_DMY
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_D27_HINT_06
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -76,19 +76,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-SWPLAZMAM_15
+D27R1001_HINT_01
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_RND_DLR
+MV_DMY
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_D27_HINT_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -138,19 +138,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-SWPLAZMAM_17
+D27R1001_HINT_02
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_RND_DLR
+MV_DMY
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_D27_HINT_02
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -169,19 +169,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-SWPLAZMAM_18
+D27R1001_HINT_03
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_RND_DLR
+MV_DMY
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_D27_HINT_03
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -200,19 +200,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-SWPLAZMAM_19
+D27R1001_HINT_05
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_RND_DLR
+MV_DMY
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_D27_HINT_05
 #Direction Type Number
-DIR_UP
+DIR_RIGHT
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -231,19 +231,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-SWPLAZMAM_20
+D27R1001_HINT_04
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_RND_DLR
+MV_DMY
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_D27_HINT_04
 #Direction Type Number
-DIR_UP
+DIR_RIGHT
 #Parameter 0 Number
 2
 #Parameter 1 Number

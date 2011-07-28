@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/16 16:18:34
+#save date:2011/07/28 14:36:13
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r2101.wms
 #SECTION START:OBJ_EVENT
@@ -14,19 +14,19 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r2101.wms
 #type
 1
 #ID name
-SWPLAZMAM_23
+D27R2101_HINT_01
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_DIR_RND
+MV_DMY
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_D27_HINT_01
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -45,17 +45,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-SWPLAZMAM_24
+D27R2101_HINT_04
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_DIR_RND
+MV_DMY
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_D27_HINT_04
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number

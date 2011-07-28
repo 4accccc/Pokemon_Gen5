@@ -30,6 +30,10 @@ _EVENT_DATA    ev_pos_d27r1301_button_02
 _EVENT_DATA    ev_pos_d27r1301_button_03
 _EVENT_DATA    ev_pos_d27r1301_button_04
 _EVENT_DATA    ev_pos_d27r1301_barrier_01
+_EVENT_DATA    ev_pos_d27r1301_switch_01
+_EVENT_DATA    ev_pos_d27r1301_switch_02
+_EVENT_DATA    ev_pos_d27r1301_switch_03
+_EVENT_DATA    ev_pos_d27r1301_switch_04
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -59,6 +63,34 @@ DEFINE_LOCAL  LCW_POSZ
 /*					ZONE_CHANGE_LABEL 						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r1301
+  
+  //スイッチ（１）の見栄えを分岐
+  IF $WK_SCENE_D27_SWITCH_01 == 0 THEN
+    _HIDE_SHIP_GATE_SET( 3, 0 )
+  ELSE
+    _HIDE_SHIP_GATE_SET( 3, 1 )
+  ENDIF
+  
+  //スイッチ（２）の見栄えを分岐
+  IF $WK_SCENE_D27_SWITCH_02 == 0 THEN
+    _HIDE_SHIP_GATE_SET( 2, 0 )
+  ELSE
+    _HIDE_SHIP_GATE_SET( 2, 1 )
+  ENDIF
+  
+  //スイッチ（３）の見栄えを分岐
+  IF $WK_SCENE_D27_SWITCH_03 == 0 THEN
+    _HIDE_SHIP_GATE_SET( 1, 0 )
+  ELSE
+    _HIDE_SHIP_GATE_SET( 1, 1 )
+  ENDIF
+  
+  //スイッチ（４）の見栄えを分岐
+  IF $WK_SCENE_D27_SWITCH_04 == 0 THEN
+    _HIDE_SHIP_GATE_SET( 0, 0 )
+  ELSE
+    _HIDE_SHIP_GATE_SET( 0, 1 )
+  ENDIF
   
 INIT_EVENT_END
 /************************************************************/
@@ -139,6 +171,70 @@ EVENT_START	ev_pos_d27r1301_warp_03
 
   //ワープ処理
   _MAP_CHANGE_WARP( ZONE_ID_D27R0601, 8, 9, LWK_DIR )
+
+EVENT_END
+
+/************************************************************/
+/*					バリア解除スイッチ（１）				*/
+/************************************************************/
+EVENT_START	ev_pos_d27r1301_switch_01
+  
+  //ボタン踏んだ処理
+  _HIDE_SHIP_BUTTON_OFF( 3 )
+  //ゲート解除演出
+  _HIDE_SHIP_GATE_OFF( 3 )
+  //=====================================
+  //POS無効
+  $WK_SCENE_D27_SWITCH_04 = 1
+  //=====================================
+
+EVENT_END
+
+/************************************************************/
+/*					バリア解除スイッチ（２）				*/
+/************************************************************/
+EVENT_START	ev_pos_d27r1301_switch_02
+  
+  //ボタン踏んだ処理
+  _HIDE_SHIP_BUTTON_OFF( 2 )
+  //ゲート解除演出
+  _HIDE_SHIP_GATE_OFF( 2 )
+  //=====================================
+  //POS無効
+  $WK_SCENE_D27_SWITCH_03 = 1
+  //=====================================
+
+EVENT_END
+
+/************************************************************/
+/*					バリア解除スイッチ（３）				*/
+/************************************************************/
+EVENT_START	ev_pos_d27r1301_switch_03
+  
+  //ボタン踏んだ処理
+  _HIDE_SHIP_BUTTON_OFF( 1 )
+  //ゲート解除演出
+  _HIDE_SHIP_GATE_OFF( 1 )
+  //=====================================
+  //POS無効
+  $WK_SCENE_D27_SWITCH_02 = 1
+  //=====================================
+
+EVENT_END
+
+/************************************************************/
+/*					バリア解除スイッチ（４）				*/
+/************************************************************/
+EVENT_START	ev_pos_d27r1301_switch_04
+  
+  //ボタン踏んだ処理
+  _HIDE_SHIP_BUTTON_OFF( 0 )
+  //ゲート解除演出
+  _HIDE_SHIP_GATE_OFF( 0 )
+  //=====================================
+  //POS無効
+  $WK_SCENE_D27_SWITCH_01 = 1
+  //=====================================
 
 EVENT_END
 

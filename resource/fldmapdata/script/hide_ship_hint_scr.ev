@@ -14,7 +14,15 @@
   .include	"scr_seq_def.h"
   .include  "hide_ship_hint_scr_def.h"
   .include  "../../../prog/include/msg/script/msg_hide_ship_hint.h"
+  .include  "d27r1001.h"
+  .include  "d27r1801.h"
+  .include  "d27r2201.h"
+  .include  "d27r1901.h"
+  .include  "d27r2001.h"
+  .include  "d27r2101.h"
 
+  //@author Mizuguchi_Mai(スクリプト・mevファイル作成担当）
+  
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -22,13 +30,527 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_hoge
+_EVENT_DATA    ev_d27_hint_01
+_EVENT_DATA    ev_d27_hint_02
+_EVENT_DATA    ev_d27_hint_03
+_EVENT_DATA    ev_d27_hint_04
+_EVENT_DATA    ev_d27_hint_05
+_EVENT_DATA    ev_d27_hint_06
+_EVENT_DATA    ev_d27_hint_07
 _EVENT_DATA_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_hoge:
-  //とりあえず最初のラベルだけ生成している
-  _END
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+DEFINE_LOCAL LCWK_PASSID
+DEFINE_LOCAL LCWK_MSGID
 
+/**************************************************************/
+/*  ヒント1                         */
+/**************************************************************/
+EVENT_START ev_d27_hint_01
+  _TALK_START_SE_PLAY()
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  $LCWK_MSGID = msg_hide_ship_hint1_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( D27R1001_HINT_01, anm_common_gyoe )
+  //W2
+  ELSE
+    _OBJ_ANIME( D27R2101_HINT_01, anm_common_gyoe )
+  ENDIF
+  
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前
+  IF FLAG_OFF( FE_D27_HINT_01 ) THEN
+    
+     //【仮】戦闘前メッセージ
+     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
+     
+     //ROMのバージョンを取得
+     _GET_ROM_VERSION( LCWK_VERSION )
+     
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     //W2
+     ELSE
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     ENDIF
+     
+     //結果チェック
+     _CALL ev_battle_check
+     
+     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    
+    //========================================//
+    //戦闘終了フラグセット
+    _FLAG_SET( FE_D27_HINT_01 )
+    //========================================//
+    
+  //戦闘後
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+  ENDIF
+  
+EVENT_END
+
+/**************************************************************/
+/*  ヒント2                         */
+/**************************************************************/
+EVENT_START ev_d27_hint_02
+  _TALK_START_SE_PLAY()
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  $LCWK_MSGID = msg_hide_ship_hint2_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( D27R1001_HINT_02, anm_common_gyoe )
+  //W2
+  ELSE
+    _OBJ_ANIME( D27R2201_HINT_02, anm_common_gyoe )
+  ENDIF
+  
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前
+  IF FLAG_OFF( FE_D27_HINT_02 ) THEN
+     
+     //【仮】戦闘前メッセージ
+     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
+     
+     //ROMのバージョンを取得
+     _GET_ROM_VERSION( LCWK_VERSION )
+     
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     //W2
+     ELSE
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     ENDIF
+     
+     //結果チェック
+     _CALL ev_battle_check
+     
+     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    
+    //========================================//
+    //戦闘終了フラグセット
+    _FLAG_SET( FE_D27_HINT_02 )
+    //========================================//
+    
+  //戦闘後
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+  ENDIF
+  
+EVENT_END
+
+/**************************************************************/
+/*  ヒント3                         */
+/**************************************************************/
+EVENT_START ev_d27_hint_03
+  _TALK_START_SE_PLAY()
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  $LCWK_MSGID = msg_hide_ship_hint3_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( D27R1001_HINT_03, anm_common_gyoe )
+  //W2
+  ELSE
+    _OBJ_ANIME( D27R1801_HINT_03, anm_common_gyoe )
+  ENDIF
+  
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前
+  IF FLAG_OFF( FE_D27_HINT_03 ) THEN
+     
+     //【仮】戦闘前メッセージ
+     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
+     
+     //ROMのバージョンを取得
+     _GET_ROM_VERSION( LCWK_VERSION )
+     
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     //W2
+     ELSE
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     ENDIF
+     
+     //結果チェック
+     _CALL ev_battle_check
+     
+     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    
+    //========================================//
+    //戦闘終了フラグセット
+    _FLAG_SET( FE_D27_HINT_03 )
+    //========================================//
+    
+  //戦闘後
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+  ENDIF
+  
+EVENT_END
+
+/**************************************************************/
+/*  ヒント4                         */
+/**************************************************************/
+EVENT_START ev_d27_hint_04
+  _TALK_START_SE_PLAY()
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  $LCWK_MSGID = msg_hide_ship_hint4_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( D27R1001_HINT_04, anm_common_gyoe )
+  //W2
+  ELSE
+    _OBJ_ANIME( D27R2101_HINT_04, anm_common_gyoe )
+  ENDIF
+  
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前
+  IF FLAG_OFF( FE_D27_HINT_04 ) THEN
+     
+     //【仮】戦闘前メッセージ
+     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
+     
+     //ROMのバージョンを取得
+     _GET_ROM_VERSION( LCWK_VERSION )
+     
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     //W2
+     ELSE
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     ENDIF
+     
+     //結果チェック
+     _CALL ev_battle_check
+     
+     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    
+    //========================================//
+    //戦闘終了フラグセット
+    _FLAG_SET( FE_D27_HINT_04 )
+    //========================================//
+    
+  //戦闘後
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+  ENDIF
+  
+EVENT_END
+
+/**************************************************************/
+/*  ヒント5                         */
+/**************************************************************/
+EVENT_START ev_d27_hint_05
+  _TALK_START_SE_PLAY()
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //5はメッセージ固定
+  $LCWK_MSGID = msg_hide_ship_hint5_01
+  //$LCWK_MSGID += $LCWK_PASSID
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( D27R1001_HINT_05, anm_common_gyoe )
+  //W2
+  ELSE
+    _OBJ_ANIME( D27R2001_HINT_05, anm_common_gyoe )
+  ENDIF
+  
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前
+  IF FLAG_OFF( FE_D27_HINT_05 ) THEN
+    
+     //【仮】戦闘前メッセージ
+     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
+     
+     //ROMのバージョンを取得
+     _GET_ROM_VERSION( LCWK_VERSION )
+     
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     //W2
+     ELSE
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     ENDIF
+     
+     //結果チェック
+     _CALL ev_battle_check
+     
+     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    
+    //========================================//
+    //戦闘終了フラグセット
+    _FLAG_SET( FE_D27_HINT_05 )
+    //========================================//
+    
+  //戦闘後
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+  ENDIF
+  
+EVENT_END
+
+/**************************************************************/
+/*  ヒント6                         */
+/**************************************************************/
+EVENT_START ev_d27_hint_06
+  _TALK_START_SE_PLAY()
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  $LCWK_MSGID = msg_hide_ship_hint6_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( D27R1001_HINT_06, anm_common_gyoe )
+  //W2
+  ELSE
+    _OBJ_ANIME( D27R1901_HINT_06, anm_common_gyoe )
+  ENDIF
+  
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前
+  IF FLAG_OFF( FE_D27_HINT_06 ) THEN
+    
+     //【仮】戦闘前メッセージ
+     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
+     
+     //ROMのバージョンを取得
+     _GET_ROM_VERSION( LCWK_VERSION )
+     
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     //W2
+     ELSE
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     ENDIF
+     
+     //結果チェック
+     _CALL ev_battle_check
+     
+     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    
+    //========================================//
+    //戦闘終了フラグセット
+    _FLAG_SET( FE_D27_HINT_06 )
+    //========================================//
+    
+  //戦闘後
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+  ENDIF
+  
+EVENT_END
+
+/**************************************************************/
+/*  ヒント7                         */
+/**************************************************************/
+EVENT_START ev_d27_hint_07
+  _TALK_START_SE_PLAY()
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  $LCWK_MSGID = msg_hide_ship_hint7_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( D27R1001_HINT_07, anm_common_gyoe )
+  //W2
+  ELSE
+    _OBJ_ANIME( D27R2201_HINT_07, anm_common_gyoe )
+  ENDIF
+  
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前
+  IF FLAG_OFF( FE_D27_HINT_07 ) THEN
+     
+     //【仮】戦闘前メッセージ
+     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
+     
+     //ROMのバージョンを取得
+     _GET_ROM_VERSION( LCWK_VERSION )
+     
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     //W2
+     ELSE
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //【仮】トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+     
+     ENDIF
+     
+     //結果チェック
+     _CALL ev_battle_check
+     
+     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    
+    //========================================//
+    //戦闘終了フラグセット
+    _FLAG_SET( FE_D27_HINT_07 )
+    //========================================//
+    
+  //戦闘後
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+  ENDIF
+  
+EVENT_END
+
+ev_battle_check:	
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+_RET
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	

@@ -8,14 +8,14 @@
 #ifndef ZONE_D27R1001_EVC_H
 #define ZONE_D27R1001_EVC_H
 
-#define SWPLAZMAW_04                       0
-#define SWPLAZMAW_05                       1
-#define SWPLAZMAM_15                       2
+#define D27R1001_HINT_07                   0
+#define D27R1001_HINT_06                   1
+#define D27R1001_HINT_01                   2
 #define SWPLAZMAM_16                       3
-#define SWPLAZMAM_17                       4
-#define SWPLAZMAM_18                       5
-#define SWPLAZMAM_19                       6
-#define SWPLAZMAM_20                       7
+#define D27R1001_HINT_02                   4
+#define D27R1001_HINT_03                   5
+#define D27R1001_HINT_05                   6
+#define D27R1001_HINT_04                   7
 #define D27_POKE10_02                      8
 
 #endif //ZONE_D27R1001_EVC_H

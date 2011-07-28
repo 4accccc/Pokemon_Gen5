@@ -9,8 +9,8 @@
 #ifndef ZONE_D27R2101_EVC_H
 #define ZONE_D27R2101_EVC_H
 
-#define SWPLAZMAM_23                       0
-#define SWPLAZMAM_24                       1
+#define D27R2101_HINT_01                   0
+#define D27R2101_HINT_04                   1
 
 #endif //ZONE_D27R2101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r2101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
