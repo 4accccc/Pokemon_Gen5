@@ -13946,67 +13946,25 @@ può accadere ancora di tutto!</language>
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_WORKER2_21_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
-	</row>
-
 	<row id="TRID_WORKER2_21_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_WORKER2_21_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_WORKER2_22_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">これって……
+げんじつ　って　やつ？</language>
+		<language name="JPN_KANJI" width="216">これって……
+現実って　やつ？</language>
 	</row>
 
 	<row id="TRID_WORKER2_22_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_WORKER2_22_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_WORKER2_23_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">ぼくは　まけても　いいけど
+なんだか　ポケモンが　かわいそう……</language>
+		<language name="JPN_KANJI" width="216">ぼくは　負けても　いいけど
+なんだか　ポケモンが　かわいそう……</language>
 	</row>
 
 	<row id="TRID_WORKER2_23_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_WORKER2_23_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">そういえば　ポケモンしょうぶ　とか
+すごい　ひさしぶり　だな</language>
+		<language name="JPN_KANJI" width="216">そういえば　ポケモン勝負とか
+すごい　久しぶり　だな</language>
 	</row>
 
 	<row id="TRID_ADULTW_01_TRMSG_FIGHT_START">
