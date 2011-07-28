@@ -41,7 +41,7 @@
 #define MAP_HALF_SIZE     (256 << FX32_SHIFT )
 
 // 光アニメの最終フレームと仮定するフレーム
-#define LIGHT_LAST_FRAME  ( 75 * FX32_ONE )
+#define LIGHT_LAST_FRAME  ( 73 * FX32_ONE )
 
 #define TOP_CAMERA_ID     ( 43 )      // 頂上のカメラID camera_dataのエクセルのカメラ指定値
 
