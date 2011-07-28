@@ -117,7 +117,7 @@ extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
 //------------------------------------------------------------------
 //  in wbt_makematch.c
 //------------------------------------------------------------------
-extern void WBTSYS_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list );
+extern void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond, u16 * tr_list );
 extern void WBTSYS_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID );
 
 //============================================================================================

@@ -429,7 +429,7 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
   cond.poketype = wbtsys->poketype;
   cond.seed64 = wbtsys->seed64;
 
-  WBTSYS_MakeEntryList( &cond, tr_list );
+  WBTSYS_MakeEntryList( gamedata, &cond, tr_list );
 
   WBTSYS_SetupTrainer( wbtsys, gamedata, tr_list );
 #ifdef  PM_DEBUG

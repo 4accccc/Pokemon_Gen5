@@ -49,13 +49,20 @@ typedef enum {
   ENTRY_DECIDE,     ///<出場決定
 }ENTRY_CODE;
 
+typedef enum {
+  BTLCOND_BEFORE,
+  BTLCOND_AFTER,
+  BTLCOND_NON,
+}BTLCOND;
 //------------------------------------------------------------------
 /// エントリー抽選用ワーク
 //------------------------------------------------------------------
 typedef struct {
   const WBT_MATCH_CONDITION * cond;
+  GAMEDATA * gamedata;
   GFL_STD_RandContext rand_context;
   u8 entry_table[ WBT_ROM_TRAINER_NUM ];
+  u8 battle_flag[ WBT_ROM_TRAINER_NUM ];
 }MAKE_ENTRY_WORK;
 
 
@@ -126,10 +133,12 @@ u16 WBTTOOL_GetRivalTrainerID( void )
 static void makeEntryTable( MAKE_ENTRY_WORK * mew );
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static MAKE_ENTRY_WORK * mew_Create( HEAPID heapID, const WBT_MATCH_CONDITION * cond )
+static MAKE_ENTRY_WORK * mew_Create(
+    HEAPID heapID, GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond )
 {
   MAKE_ENTRY_WORK * mew = GFL_HEAP_AllocMemoryLo( heapID, sizeof(MAKE_ENTRY_WORK) );
   mew->cond = cond;
+  mew->gamedata = gamedata;
   makeEntryTable( mew );
   GFL_STD_RandInit( &mew->rand_context, cond->seed64 );
 
@@ -167,35 +176,20 @@ static void mew_SetEntryResult( const MAKE_ENTRY_WORK * mew, u16 * tr_list )
     }
   }
 }
-//-----------------------------------------------------------------------------
-/// 指定したENTRY_CODEを数える
-//-----------------------------------------------------------------------------
-static u32 mew_CountEntry( const MAKE_ENTRY_WORK * mew, ENTRY_CODE entryCode )
-{
-  u32 count = 0;
-  int i;
-  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
-  {
-    if ( mew->entry_table[i] == entryCode ) count ++;
-  }
-  return count;
-}
+
 //-----------------------------------------------------------------------------
 /// 指定したENTRY_CODEとPRIのものを数える
 //-----------------------------------------------------------------------------
-static u32 mew_CountEntryWithPri( const MAKE_ENTRY_WORK * mew, ENTRY_CODE entryCode, u8 pri )
+static u32 mew_CountEntry( const MAKE_ENTRY_WORK * mew, ENTRY_CODE entryCode, u8 pri, BTLCOND bcond )
 {
   u32 candidate_count = 0;
   int i;
   for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
   {
-    if (mew->entry_table[i] == entryCode)
-    {
-      if ( pri == WBT_TRPRI_NULL || WBTTrainerData[i].priority == pri)
-      {
-        candidate_count ++;
-      }
-    }
+    if (mew->entry_table[i] != entryCode) continue;
+    if ( pri != WBT_TRPRI_NULL && WBTTrainerData[i].priority != pri) continue;
+    if ( bcond != BTLCOND_NON && bcond != mew->battle_flag[i] ) continue;
+    candidate_count ++;
   }
   return candidate_count;
 }
@@ -207,23 +201,21 @@ static u32 mew_CountEntryWithPri( const MAKE_ENTRY_WORK * mew, ENTRY_CODE entryC
  * @retval  u32         発見したentry_table上の位置を示すインデックス値
  */
 //-----------------------------------------------------------------------------
-static u32 selectCandidateByPri( const u8 * entry_table, u8 pri, u8 step )
+static u32 selectCandidate( const MAKE_ENTRY_WORK * mew, u8 pri, BTLCOND bcond, u8 step )
 {
   u32 pos_count = step;
   u32 i = 0;
   GF_ASSERT( step > 0 )
   for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
   {
-    if ( entry_table[i] == ENTRY_CANDIDATE )
+    if (mew->entry_table[i] != ENTRY_CANDIDATE) continue;
+    if ( pri != WBT_TRPRI_NULL && WBTTrainerData[i].priority != pri) continue;
+    if ( bcond != BTLCOND_NON && bcond != mew->battle_flag[i] ) continue;
+
+    pos_count --;
+    if ( pos_count == 0 )
     {
-      if ( pri == WBT_TRPRI_NULL || WBTTrainerData[i].priority == pri )
-      {
-        pos_count --;
-        if ( pos_count == 0 )
-        {
-          return i;
-        }
-      }
+      return i;
     }
   }
   GF_ASSERT( i < WBT_ROM_TRAINER_NUM );
@@ -247,8 +239,10 @@ static u32 mew_SelectPerson( MAKE_ENTRY_WORK * mew, u8 pri, u8 num )
   int i;
   int count = num;      //残り選択人数
   u32 candidate_count;  //候補者数
+  u32 unknown_count;    //候補者中の戦ったことがない人の数
   
-  candidate_count = mew_CountEntryWithPri( mew, ENTRY_CANDIDATE, pri );
+  candidate_count = mew_CountEntry( mew, ENTRY_CANDIDATE, pri, BTLCOND_NON );
+  unknown_count = mew_CountEntry( mew, ENTRY_CANDIDATE, pri, BTLCOND_BEFORE );
 
   //候補数以上に選ぶ必要がある場合はAssert
   GF_ASSERT( count <= candidate_count );
@@ -257,19 +251,31 @@ static u32 mew_SelectPerson( MAKE_ENTRY_WORK * mew, u8 pri, u8 num )
     u32 select;
     if ( candidate_count == 1 )
     { //場所はランダムで決めるまでもない
-      select = selectCandidateByPri( entry_table, pri, 1 );
+      select = selectCandidate( mew, pri, BTLCOND_NON, 1 );
     }
     else
     {
       u32 step;
-      //何人目を選択するかはランダムで
-      step = GFL_STD_Rand( rand_context, candidate_count ) + 1;
-      select = selectCandidateByPri( entry_table, pri, step );
+      if ( unknown_count == 0 )
+      {//優先する人はいない：何人目を選択するかはランダムで
+        step = GFL_STD_Rand( rand_context, candidate_count ) + 1;
+        select = selectCandidate( mew, pri, BTLCOND_NON, step );
+      }
+      else if ( unknown_count == 1 )
+      {//優先する人が１人：場所はランダムで決めるまでもない
+        select = selectCandidate( mew, pri, BTLCOND_BEFORE, 1 );
+      }
+      else
+      {//優先する人が複数：何人目を選択するかはランダムで
+        step = GFL_STD_Rand( rand_context, unknown_count ) + 1;
+        select = selectCandidate( mew, pri, BTLCOND_BEFORE, step );
+      }
     }
     GF_ASSERT( entry_table[select] == ENTRY_CANDIDATE );
     entry_table[select] = ENTRY_DECIDE;
-    TAMADA_Printf("SELECT TRAINER(%03d):pri(%d)candidate(%2d)\n", select, pri, candidate_count );
+    TAMADA_Printf("SELECT TRAINER(%03d):pri(%d)btl(%d)candidate(%2d)\n", select, pri, mew->battle_flag[select], candidate_count );
     candidate_count --;
+    unknown_count = mew_CountEntry( mew, ENTRY_CANDIDATE, pri, BTLCOND_BEFORE );
     count --;
     if ( candidate_count == 0 && count ) return count;
   }
@@ -337,16 +343,22 @@ static BOOL checkEnableEntryRomTrainer( const WBT_MATCH_CONDITION * cond, const 
 static void makeEntryTable( MAKE_ENTRY_WORK * mew )
 {
   int i;
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( mew->gamedata );
   GFL_STD_MemFill( mew->entry_table, ENTRY_NON, WBT_ROM_TRAINER_NUM );
+  GFL_STD_MemFill( mew->battle_flag, BTLCOND_AFTER, WBT_ROM_TRAINER_NUM );
   for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
   {
     const WBT_TRDATA * rom_data = &WBTTrainerData[ i ];
     if ( checkEnableEntryRomTrainer( mew->cond, rom_data ) == TRUE )
     {
       mew->entry_table[ i ] = ENTRY_CANDIDATE;
+      if ( i < WBTSAVE_FLAG_MAX && WBTSAVE_GetFlag( wbtsave, i ) == FALSE )
+      {
+        mew->battle_flag[ i ] = BTLCOND_BEFORE;
+      }
     }
   }
-  TAMADA_Printf("CANDIDATES:%d\n", mew_CountEntryWithPri( mew, ENTRY_CANDIDATE, WBT_TRPRI_NULL ) );
+  TAMADA_Printf("CANDIDATES:%d\n", mew_CountEntry( mew, ENTRY_CANDIDATE, WBT_TRPRI_NULL, BTLCOND_NON ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -457,20 +469,20 @@ static void entryTypeTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
   u32 leader_num, mob_num, weak_mob_num;
 
   //リーダークラスの参加者を抽選する
-  leader_num = mew_CountEntryWithPri( mew, ENTRY_CANDIDATE, WBT_TRPRI_LEADER );
+  leader_num = mew_CountEntry( mew, ENTRY_CANDIDATE, WBT_TRPRI_LEADER, BTLCOND_NON );
   rest = mew_SelectPerson( mew, WBT_TRPRI_LEADER, leader_num );
   TAMADA_Printf("SELECT LEADER:%d,rest=%d\n", leader_num, rest );
-  TAMADA_Printf(" REST CANDIDATE:%d\n", mew_CountEntryWithPri( mew, ENTRY_CANDIDATE, WBT_TRPRI_NULL ) );
+  TAMADA_Printf(" REST CANDIDATE:%d\n", mew_CountEntry( mew, ENTRY_CANDIDATE, WBT_TRPRI_NULL, BTLCOND_NON ) );
 
   //他の参加者を抽選する
-  mob_num = mew_CountEntryWithPri( mew, ENTRY_CANDIDATE, WBT_TRPRI_MOB );
+  mob_num = mew_CountEntry( mew, ENTRY_CANDIDATE, WBT_TRPRI_MOB, BTLCOND_NON );
   rest = mew_SelectPerson( mew, WBT_TRPRI_MOB, mob_num );
   TAMADA_Printf("SELECT MOB:%d,rest=%d\n", mob_num, rest );
-  TAMADA_Printf(" REST CANDIDATE:%d\n", mew_CountEntryWithPri( mew, ENTRY_CANDIDATE, WBT_TRPRI_NULL ) );
+  TAMADA_Printf(" REST CANDIDATE:%d\n", mew_CountEntry( mew, ENTRY_CANDIDATE, WBT_TRPRI_NULL, BTLCOND_NON ) );
   weak_mob_num = WBT_TRAINER_NUM - 1 - leader_num - mob_num;
   rest = mew_SelectPerson( mew, WBT_TRPRI_WEAK_MOB, weak_mob_num );
   TAMADA_Printf("SELECT WEAK MOB:%d,rest=%d\n", weak_mob_num, rest );
-  TAMADA_Printf(" REST CANDIDATE:%d\n", mew_CountEntryWithPri( mew, ENTRY_CANDIDATE, WBT_TRPRI_NULL ) );
+  TAMADA_Printf(" REST CANDIDATE:%d\n", mew_CountEntry( mew, ENTRY_CANDIDATE, WBT_TRPRI_NULL, BTLCOND_NON ) );
 
   GF_ASSERT( 1 + leader_num + mob_num + weak_mob_num == WBT_TRAINER_NUM );
 
@@ -485,9 +497,9 @@ static void entryTypeTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
  * @param[out]  tr_list
  */
 //-----------------------------------------------------------------------------
-void WBTSYS_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
+void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
-  MAKE_ENTRY_WORK * mew = mew_Create( cond->heapID, cond );
+  MAKE_ENTRY_WORK * mew = mew_Create( cond->heapID, gamedata, cond );
 
   switch (cond->wbtcup)
   {
