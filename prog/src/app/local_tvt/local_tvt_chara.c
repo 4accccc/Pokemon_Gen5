@@ -172,8 +172,8 @@ static const u8 charaResList[LTCT_MAX][3] = {
     { NARC_local_tvt_graphic_chara_doctor_d_NCLR , NARC_local_tvt_graphic_chara_doctor_d_1_NCGR , NARC_local_tvt_graphic_obj_doctor_d_NCLR },
     { NARC_local_tvt_graphic_chara_mother_NCLR   , NARC_local_tvt_graphic_chara_mother_1_NCGR   , NARC_local_tvt_graphic_obj_mother_NCLR },
     //隠しキャラ
-    { NARC_local_tvt_graphic_chara_rival_NCLR    , NARC_local_tvt_graphic_chara_rival_1_NCGR    , NARC_local_tvt_graphic_obj_rival_NCLR },
-    { NARC_local_tvt_graphic_chara_support_NCLR  , NARC_local_tvt_graphic_chara_support_1_NCGR  , NARC_local_tvt_graphic_obj_support_NCLR },
+    { NARC_local_tvt_graphic_chara_idol_m_NCLR    , NARC_local_tvt_graphic_chara_idol_m_1_NCGR    , NARC_local_tvt_graphic_obj_idol_m_NCLR },
+    { NARC_local_tvt_graphic_chara_idol_f_NCLR  , NARC_local_tvt_graphic_chara_idol_f_1_NCGR  , NARC_local_tvt_graphic_obj_idol_f_NCLR },
     //音声のみ
     { NARC_local_tvt_graphic_chara_soundonly_NCLR    , NARC_local_tvt_graphic_chara_soundonly_1_NCGR, NARC_local_tvt_graphic_obj_soundonly_NCLR },
     //主人公分岐用・主人公(女)素材
