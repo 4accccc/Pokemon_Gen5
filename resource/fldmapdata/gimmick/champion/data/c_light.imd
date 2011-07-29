@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-07-28T19:42:40" source="c_light001.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-07-29T12:06:21" source="c_light001.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-07-28T19:42:40" source="c_light001.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-07-29T12:06:21" source="c_light001.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -530,9 +530,9 @@
 	<polygon index="5" name="polygon5"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.015625 0.000000 -0.015625"
-		volume_max="0.015625 0.000000 0.015625"
-		volume_r="0.022217"
+		volume_min="-1.521240 0.000000 -1.521240"
+		volume_max="1.521240 0.000000 1.521240"
+		volume_r="2.151611"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -543,13 +543,13 @@
 					<mtx idx="0"/>
 					<tex st="-16.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_s xyz="-0.015625 0.000000 0.015625"/>
+					<pos_xyz xyz="-1.521240 0.000000 1.521240"/>
 					<tex st="16.000000 32.000000"/>
-					<pos_xy xy="0.015625 0.000000"/>
+					<pos_xy xy="1.521240 0.000000"/>
 					<tex st="16.000000 0.000000"/>
-					<pos_xz xz="0.015625 -0.015625"/>
+					<pos_xz xz="1.521240 -1.521240"/>
 					<tex st="-16.000000 0.000000"/>
-					<pos_xy xy="-0.015625 0.000000"/>
+					<pos_xy xy="-1.521240 0.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -678,16 +678,16 @@
 		brother_prev="5"
 		draw_mtx="on"
 		billboard="off"
-		scale="97.366211 97.366211 97.366211"
+		scale="0.624512 0.624512 0.624512"
 		rotate="0.000000 0.000000 0.000000"
 		translate="8.000000 208.000000 -137.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.015625 0.000000 -0.015625"
-		volume_max="0.015625 0.000000 0.015625"
-		volume_r="0.022217"
+		volume_min="-1.521240 0.000000 -1.521240"
+		volume_max="1.521240 0.000000 1.521240"
+		volume_r="2.151611"
 	>
 		<display index="0" material="3" polygon="5" priority="0"/>
 	</node>
