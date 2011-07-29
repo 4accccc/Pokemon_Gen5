@@ -60,6 +60,7 @@ typedef struct {
   GMEVENT *gmEvent;
   FIELDMAP_WORK *fieldWork;
   FLDMENUFUNC *menuFunc;
+  s16         result;
 }DEBUG_POKEWOOD_WORK;
 
 //typedef DEBUG_MENU_EVENT_WORK POKEWOOD_FUNC_WORK;
@@ -432,7 +433,7 @@ static BOOL debugMenuCallProc_PokewoodSelect( POKEWOOD_FUNC_WORK * wk )
 {
   GMEVENT *event = wk->gmEvent;
 	GMEVENT *new_event;
-	PKWD_SELECT_SCREEN_PARAM  *pkwd_param = PKWD_SELECT_SCREEN_PARAM_Create( HEAPID_PROC, wk->gmSys, NULL );
+	PKWD_SELECT_SCREEN_PARAM  *pkwd_param = PKWD_SELECT_SCREEN_PARAM_Create( HEAPID_PROC, wk->gmSys, &wk->result );
 
 	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_SELECT_SCREEN_EVENT_Call, (void *)pkwd_param );

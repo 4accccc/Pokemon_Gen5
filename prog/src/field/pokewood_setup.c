@@ -97,9 +97,9 @@ void PKWD_BOOK_PARAM_Delete( PKWD_BOOK_PARAM * pkwd_param )
 //
 //============================================================================================
 //------------------------------------------------------------------
-///  PKWD_BOOK用パラメータOBJECT生成
+///  PKWD SELECT SCREEN用パラメータOBJECT生成
 //------------------------------------------------------------------
-PKWD_SELECT_SCREEN_PARAM * PKWD_SELECT_SCREEN_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work )
+PKWD_SELECT_SCREEN_PARAM * PKWD_SELECT_SCREEN_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, s16 * res_work )
 {
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 	MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
@@ -112,7 +112,7 @@ PKWD_SELECT_SCREEN_PARAM * PKWD_SELECT_SCREEN_PARAM_Create( HEAPID heapID, GAMES
   param->sv          = sv;
   param->result      = (s16*)res_work;
   param->pokewood_sv = pokewood_sv;
-//  param->mystatus = mystatus;
+  param->mystatus    = mystatus;
 
 	return param;
 }

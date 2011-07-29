@@ -224,6 +224,20 @@ void BLINKPALANM_InitAnimeCount( BLINKPALANM_WORK * wk )
 
 //=============================================================================================
 /**
+ * @brief	通常の点滅アニメの指定の箇所にカウンターを移動させる
+ *
+ * @param   wk    BLINKPALANM_WORK
+ * @param   count 点滅ワークに代入したい値
+ */
+//=============================================================================================
+void BLINKPALANM_SetAnimeCount(BLINKPALANM_WORK * wk, int count )
+{
+  wk->cnt = count;
+  wk->seq = BLINKPALANM_NORMAL;
+}
+
+//=============================================================================================
+/**
  * @brief	決定時の点滅アニメを開始
  *
  * @param   wk		

@@ -13,6 +13,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
+#include "battle/pokewood.h"
 
 //描画設定
 #include "pkwd_count_graphic.h"
@@ -330,56 +331,9 @@ static const PKWD_COUNT_BGSCN_DATA pwc_bgscn_tbl[] = {
 	{ 0xff, 0, 0, 0,}, // end code
 };
 
-//---------------
-// BG関連(タイトル)
-//---------------
-// BGPAL(パレットは、始めにまとめて所定のタイトルだけを転送)
-static const PKWD_COUNT_BGPAL_DATA pwc_bgpal_01_tbl[] = {
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title00_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 00
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 01
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 02(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 03(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 04(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 05(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 06(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 07(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 08(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 09(dummy)
-	//
-	{ 0xff, 0, 0, 0,}, // end code
-};
 
-// BGCHR(切り替え時に、所定のタイトルだけを転送)
-static const PKWD_COUNT_BGCHR_DATA pwc_bgchr_01_tbl[] = {
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title00_logo_NCGR,	0,	0,},	// 00
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 01
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 02(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 03(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 04(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 05(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 06(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 07(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 08(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 09(dummy)
-
-	{ 0xff, 0, 0, 0,}, // end code
-};
-
-// BGSCN(切り替え時に、所定のタイトルだけを転送)
-static const PKWD_COUNT_BGSCN_DATA pwc_bgscn_01_tbl[] = {
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title00_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 00
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 01
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 02(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 03(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 04(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 05(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 06(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 07(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 08(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 09(dummy)
-
-	{ 0xff, 0, 0, 0,}, // end code
-};
+// タイトルロゴ用BGリソース定義とサブタイトルの文字列定義
+#include "pkwd_movie_title.cdat"
 
 //------------------
 // OBJの情報(通常)
@@ -464,21 +418,6 @@ static const s16 pkwd_title_tbl[] = {
 	0,
 };
 
-//-----------------------------------------------------
-// サブタイトルのテーブル(男・女の順で入っています。)
-//-----------------------------------------------------
-static const s16 pkwd_subtitle_tbl[][2] = {
-	{ pw_moviesubtitle_01_01,	pw_moviesubtitle_f_01_01, },	// 1章
-	{ pw_moviesubtitle_02_01,	pw_moviesubtitle_f_02_01, },	// 2章
-	{ pw_moviesubtitle_03_01,	pw_moviesubtitle_f_02_01, },	// 3章
-	{ pw_moviesubtitle_04_01,	pw_moviesubtitle_f_02_01, },	// 4章
-	{ pw_moviesubtitle_05_01,	pw_moviesubtitle_f_02_01, },	// 5章
-	{ pw_moviesubtitle_06_01,	pw_moviesubtitle_f_02_01, },	// 6章
-	{ pw_moviesubtitle_07_01,	pw_moviesubtitle_f_02_01, },	// 7章
-	{ pw_moviesubtitle_08_01,	pw_moviesubtitle_f_02_01, },	// 8章
-	{ pw_moviesubtitle_09_01,	pw_moviesubtitle_f_02_01, },	// 9章
-	{ pw_moviesubtitle_10_01,	pw_moviesubtitle_f_02_01, },	// 10章
-};
 
 
 //=============================================================================

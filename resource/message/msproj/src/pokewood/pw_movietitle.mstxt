@@ -10007,10 +10007,10 @@
 		Label="pw_movietitle_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダミー</Text>
+			<Text>チュートリアル</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:31" />
+				User="mori:W00269"
+				Time="2011-07-27T06:34:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10018,10 +10018,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダミー</Text>
+			<Text>チュートリアル</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:41" />
+				User="mori:W00269"
+				Time="2011-07-27T06:34:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10551,10 +10551,10 @@
 		Label="pw_moviesubtitle_03_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダミー</Text>
+			<Text>はじめての　ポケウッド</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T04:06:23" />
+				User="mori:W00269"
+				Time="2011-07-27T06:34:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10562,10 +10562,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダミー</Text>
+			<Text>はじめての　ポケウッド</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T04:06:23" />
+				User="mori:W00269"
+				Time="2011-07-27T06:34:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -12036,13 +12036,12 @@
 		Label="pw_select_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうかいを　しゅうりょうすると
-そのさくひんは　さくじょされます▽
+			<Text>しゅうりょうすると　さくじょされますが
 ほんとうに　よろしいですか？
 </Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-07-20T12:01:29" />
+				Time="2011-07-28T10:48:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -12050,12 +12049,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>公開を　終了すると
-その作品は　削除されます▽
+			<Text>終了すると　削除されますが
 本当に　よろしいですか？</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-07-20T12:01:24" />
+				Time="2011-07-28T10:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

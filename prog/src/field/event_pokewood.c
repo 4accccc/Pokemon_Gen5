@@ -1159,8 +1159,8 @@ static GMEVENT_RESULT eventPkwdSelectScreen( GMEVENT *p_event, int *p_seq, void 
       *(p_wk->param.result) = POKEWOOD_SAVEDATA_MAX;
     }else{
       GAMEDATA * gamedata = GAMESYSTEM_GetGameData( p_wk->gsys );
-      PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
-      PKWDSYS_SetPlayNo( *pkwdsys, *(p_wk->param.result) );
+//      PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
+//      PKWDSYS_SetPlayNo( *pkwdsys, *(p_wk->param.result) );
     }
     return GMEVENT_RES_FINISH;
   }
