@@ -281,7 +281,7 @@ static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
 	{ GFL_BG_FRAME1_S,	2,	16,	18,	2,	2,},		// 上：トーナメント名
 	{ GFL_BG_FRAME1_S,	2,	18,	28,	4,	2,},		// 上：内容
 	//
-	{ GFL_BG_FRAME0_M,	1,	1,	30,	2,	9,},		// 下：タイトル(注意)
+	{ GFL_BG_FRAME0_M,	1,	0,	30,	3,	9,},		// 下：タイトル(注意)
 	{ GFL_BG_FRAME0_M,	1,	4,	30,	4,	9,},		// 下：meswin
 	{ GFL_BG_FRAME0_M,	1,	19,	30,	4,	9,},		// 下：下win
 	//
@@ -455,6 +455,8 @@ static const s16 td_mes_info_tbl[] = {
 	wbt_dl_list_msg_000,		// ポケモン
 	wbt_dl_list_msg_001,		// どうぐ
 	wbt_dl_list_msg_002,		// 技
+	//
+	wbt_dl_cap_013,				// なし
 };
 
 //----------------
@@ -2167,6 +2169,26 @@ void TdCmn_chg_info_curpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 	TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_ICON_00+mode, td_info_btn_tbl[2*mode+1] );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールバー表示チェック
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk 
+ *	@param	const s32			(0-2)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdCmn_chk_info_disp_scrollbar( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
+{
+	BOOL	bflg=TRUE;
+	// 1ページしかない
+	// =>スクロールバーを非表示とする
+	if(wk->PageMaxNum[mode] == 1){
+		bflg = FALSE;
+	}
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, bflg );
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2210,6 +2232,7 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 {
 	s32		i;
 	s32		j;
+	s32		flg=0;
 	s32		buf[2];
 	s32		pnum;
 	s32		offset;
@@ -2227,6 +2250,10 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 	if(wk->CurrentPageNum[mode] == (wk->PageMaxNum[mode]-1)){
 		buf[0] = wk->ItemNum[mode]%10;		// 表示数
 		if(buf[0] == 0){
+			// 項目数が0の場合
+			if(wk->ItemNum[mode] == 0){
+				flg = 1;
+			}
 			pnum = 10;
 		}else{
 			pnum = buf[0];
@@ -2240,7 +2267,17 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 	// (0:ポケモン、1:道具、2:技)
 	j=0;
 	for(i=0;i<CANVAS_INFO_NUM;i++){
+		//----
 		// 左
+		//----
+		// 項目がない場合
+		if(flg == 1){
+			strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_info_tbl[3] );
+			TdCmn_disp_string( wk, T_DOWNLOAD_MSG_DOWN_INFO_00+i, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
+			GFL_STR_DeleteBuffer( strbuf );
+			break;
+		}
+		// 通常の場合
 		strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_info_tbl[mode] );
 		if(mode == 0){			// ポケモン
 //			WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, 1+2*i );
@@ -2259,7 +2296,9 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 		if(j >= pnum){
 			break;
 		}
+		//----
 		// 右
+		//----
 		strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_info_tbl[mode] );
 		if(mode == 0){			// ポケモン
 //			WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, 1+2*i+1 );
@@ -2298,17 +2337,23 @@ void TdCmn_init_info_mode( T_DOWNLOAD_MAIN_WORK * wk )
 	
 	// アイテム数を調べる(仮)
 	wk->ItemNum[0] = 64;
-	wk->ItemNum[1] = 12;
+//	wk->ItemNum[1] = 12;
+	wk->ItemNum[1] = 0;
 	wk->ItemNum[2] = 36;
 	//
 	for(i=0;i<T_DOWNLOAD_INFO_MAX;i++){
-		buf[0] = wk->ItemNum[i]/10;		// ページ数
-		buf[1] = wk->ItemNum[i]%10;		// 端数用
-		if(buf[1] != 0){
-			buf[0]++;
+		// 0の場合は1ページとしておく
+		if(wk->ItemNum[i] == 0){
+			wk->PageMaxNum[i] = 1;
+		}else{
+			buf[0] = wk->ItemNum[i]/10;		// ページ数
+			buf[1] = wk->ItemNum[i]%10;		// 端数用
+			if(buf[1] != 0){
+				buf[0]++;
+			}
+			// 最大ページ数
+			wk->PageMaxNum[i] = buf[0];
 		}
-		// 最大ページ数
-		wk->PageMaxNum[i] = buf[0];
 	}
 	//
 	// 初期位置セット
@@ -2404,7 +2449,7 @@ void TdCmn_disp_title_info( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32
 		id = 2+smode;
 	}
 	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_title_tbl[id] );
-	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_DOWN_TITLE, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_DOWN_TITLE, 0, 4, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
 	GFL_STR_DeleteBuffer( strbuf );
 }
 

@@ -101,6 +101,8 @@ enum{
 	//
 	FLG_MW_DEL_SAVE		= (1<<8),		// 削除してセーブにつながる
 	FLG_MW_INFO_UPDATE	= (1<<9),		// 詳細更新
+	FLG_MW_DISP_SEL_1ST	= (1<<10),		// 一度表示したのでスキップ(select)
+	FLG_MW_DISP_JOIN_1ST = (1<<11),		// 一度表示したのでスキップ(join)
 	//
 	FLG_MW_RET_END		= (1<<12),		// RETURNで終了
 	FLG_MW_CROSS_END	= (1<<13),		// ×で終了
@@ -762,15 +764,21 @@ static void td_init_join( T_DOWNLOAD_MAIN_WORK* wk )
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
 	// 左上タイトル表示
 	TdCmn_disp_title_info( wk, wk->Mode, 0);
-	// 判定の後に表示
-	TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_01, T_DOWNLOAD_WIN_JOIN_00 );
-	// 輝度変更
-	TdCmn_set_passive( wk, TRUE );
-	//
 	// カーソル移動
 	TdCmn_disp_framelist_cursor( wk, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
-	//
-	wk->Step = STEP_INIT+10;
+	// ×表示
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_CROSS,  TRUE );
+	// 一度も表示してないときのみ、
+	// 「選んでください」を表示
+	if(!(wk->Flag & FLG_MW_DISP_JOIN_1ST)){
+		// 判定の後に表示
+		TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_01, T_DOWNLOAD_WIN_JOIN_00 );
+		// 輝度変更
+		TdCmn_set_passive( wk, TRUE );
+		//
+		wk->Step = STEP_INIT+10;
+		wk->Flag |= FLG_MW_DISP_JOIN_1ST;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1117,6 +1125,8 @@ static void td_init_info( T_DOWNLOAD_MAIN_WORK* wk )
 	// 上下矢印非表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_UP,   TRUE );
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_DOWN, TRUE );
+	// ×非表示
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_CROSS,  FALSE );
 	
 	// BGの表示
 	TdCmn_init_bg_info( wk );
@@ -1170,7 +1180,9 @@ static void td_chk_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		TdCmn_disp_info_mode( wk, wk->InfoCurPos );
 		// カーソル位置
 		TdCmn_chg_info_curpos( wk, wk->InfoCurPos );
-		// カーソル移動
+		// スクロールバー表示チェック
+		TdCmn_chk_info_disp_scrollbar( wk, wk->InfoCurPos );
+		//
 		wk->Flag &= ~FLG_MW_INFO_UPDATE;
 	}
 	// タイトル更新
@@ -1199,6 +1211,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 	s32		ret = TdCmn_chk_tp( wk, 0, wk->Mode );		// trg
 	s32		cret = TdCmn_chk_tp( wk, 1, wk->Mode );		// cont
 	//
+#if 0
 	// ×
 	if(ret == T_DOWNLOAD_AREA_TD_TP_CROSS){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_CROSS );
@@ -1206,8 +1219,9 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_CANCEL );
 	}
+#endif
 	// RETURN
-	else if(ret == T_DOWNLOAD_AREA_TD_TP_RETURN){
+	if(ret == T_DOWNLOAD_AREA_TD_TP_RETURN){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RETURN );
 		flg = 1;
 		// SE
@@ -1320,6 +1334,7 @@ static BOOL td_chk_key_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 	s32		sflg=0;
 	BOOL	bflg=FALSE;
 	
+#if 0
 	// ×
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_CROSS );
@@ -1327,15 +1342,16 @@ static BOOL td_chk_key_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_CANCEL );
 	}
+#endif
 	// 戻る
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RETURN );
 		flg = 1;
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_CANCEL );
 	}
 	// 左
-	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
+	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
 		wk->InfoCurPos--;
 		if(wk->InfoCurPos < 0){
 			wk->InfoCurPos = T_DOWNLOAD_INFO_MAX-1;
@@ -1345,7 +1361,7 @@ static BOOL td_chk_key_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 	}
 	// 右
-	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
+	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
 		wk->InfoCurPos++;
 		if(wk->InfoCurPos >= T_DOWNLOAD_INFO_MAX){
 			wk->InfoCurPos = 0;
@@ -1551,6 +1567,8 @@ static void td_init_select( T_DOWNLOAD_MAIN_WORK* wk )
 	// タイトル表示
 	TdCmn_disp_title_info( wk, wk->Mode, 0);
 	//
+	// ×非表示
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_CROSS,  FALSE );
 	// 削除してセーブ
 	if(wk->Flag & FLG_MW_DEL_SAVE){
 		wk->Flag &= ~FLG_MW_DEL_SAVE;
@@ -1564,12 +1582,18 @@ static void td_init_select( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	// 3つセーブ済み
 	else{
-		// 判定の後に表示
-		TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_01, T_DOWNLOAD_WIN_SEL_DATA );
-		// 輝度変更
-		TdCmn_set_passive( wk, TRUE );
-		// 通常
-		wk->Step = STEP_INIT+10;
+		// 一度も表示してない場合のみ、
+		//「選択してください」を表示
+		if(!(wk->Flag & FLG_MW_DISP_SEL_1ST)){
+			// 判定の後に表示
+			TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_01, T_DOWNLOAD_WIN_SEL_DATA );
+			// 輝度変更
+			TdCmn_set_passive( wk, TRUE );
+			// 通常
+			wk->Step = STEP_INIT+10;
+			//
+			wk->Flag |= FLG_MW_DISP_SEL_1ST;
+		}
 	}
 }
 
@@ -1652,13 +1676,15 @@ static BOOL td_chk_tp_input_select( T_DOWNLOAD_MAIN_WORK* wk )
 	BOOL	bflg=FALSE;
 	s32		ret = TdCmn_chk_tp( wk, 0, wk->Mode );
 	
+#if 0
 	// ×
 	if(ret == T_DOWNLOAD_AREA_TD_TP_CROSS){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_CROSS );
 		flg = 1;
 	}
+#endif
 	// RETURN
-	else if(ret == T_DOWNLOAD_AREA_TD_TP_RETURN){
+	if(ret == T_DOWNLOAD_AREA_TD_TP_RETURN){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RETURN );
 		flg = 1;
 	}
@@ -1711,13 +1737,15 @@ static BOOL td_chk_key_input_select( T_DOWNLOAD_MAIN_WORK* wk )
 	s32		flg=0;
 	BOOL	bflg=FALSE;
 	
+#if 0
 	// ×
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_CROSS );
 		flg = 1;
 	}
+#endif
 	// 戻る
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RETURN );
 		flg = 1;
 	}
@@ -2076,7 +2104,8 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 	TdCmn_disp_framelist_cursor( wk, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
 	// タイトル表示
 	TdCmn_disp_title_info( wk, wk->Mode, 0 );
-	//
+	// ×非表示
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_CROSS,  FALSE );
 	// (いっぱいの場合)
 	// 判定の後に表示
 	TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_01, T_DOWNLOAD_WIN_DATA_FULL );
@@ -2156,13 +2185,16 @@ static BOOL td_chk_tp_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 	s16		flg=0;
 	s32		ret = TdCmn_chk_tp( wk, 0, wk->Mode );
 	BOOL	bflg=FALSE;
+
+#if 0
 	// ×
 	if(ret == T_DOWNLOAD_AREA_TD_TP_CROSS){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_CROSS );
 		flg = 2;
 	}
+#endif
 	// RETURN
-	else if(ret == T_DOWNLOAD_AREA_TD_TP_RETURN){
+	if(ret == T_DOWNLOAD_AREA_TD_TP_RETURN){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RETURN );
 		flg = 2;
 	}
@@ -2190,13 +2222,15 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 {
 	s16		flg=0;
 	BOOL	bflg=FALSE;
+#if 0
 	// ×
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_CROSS );
 		flg = 1;
 	}
+#endif
 	// 戻る
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RETURN );
 		flg = 1;
 	}

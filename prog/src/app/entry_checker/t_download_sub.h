@@ -61,6 +61,7 @@ extern void TdCmn_main_chgpal( T_DOWNLOAD_MAIN_WORK* wk );
 extern void TdCmn_set_chgpal( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg );
 //
 extern void TdCmn_chg_info_curpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
+extern void TdCmn_chk_info_disp_scrollbar( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 //
 extern void TdCmn_main_scrollbar( T_DOWNLOAD_MAIN_WORK * wk );
 //
