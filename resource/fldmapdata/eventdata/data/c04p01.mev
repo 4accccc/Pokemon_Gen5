@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/12 19:54:43
+#save date:2011/07/29 12:43:23
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c04p01.wms
 #SECTION START:OBJ_EVENT
@@ -94,7 +94,7 @@ SCRID_BG_C04P01_SIGN_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-344 16 88
+856 16 88
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -114,7 +114,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #Door Event Label
 DOOR_ID_C04P01_C04_EXIT01
@@ -139,6 +139,23 @@ DOOR_ID_C04P01_C04GYM0101_EXIT01
 ZONE_ID_C04GYM0101
 #Next Door ID Name
 DOOR_ID_C04GYM0101_C04P01_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+888 16 88
+#size
+1 1
+#event number: 2
+#Door Event Label
+DOOR_ID_C04P01_C04R1101_EXIT01
+#Next Zone ID Name
+ZONE_ID_C04R1101
+#Next Door ID Name
+DOOR_ID_C04R1101_C04P01_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
