@@ -21,11 +21,12 @@ struct _POKEWOOD_SAVEDATA{
 
   u32 open_flag[POKEWOOD_ARRAY_NUM];          ///< ポケウッド解放フラグ      8
   u32 played_flag[POKEWOOD_ARRAY_NUM];        ///< ポケウッド撮影済みフラグ  16
+  u32 success_flag[POKEWOOD_ARRAY_NUM];       ///< 成功フラグ取得済みフラグ  24
   u8  showed_flag[POKEWOOD_RECSAVEDATA_MAX];  ///< 上映済みフラグ
 
-  POKEWOOD_BOXOFFICE_RECORD boxoffice_record[POKEWOOD_BOXOFFICE_DATA_MAX];  // 興行成績ランキング 32*10+16
+  POKEWOOD_BOXOFFICE_RECORD boxoffice_record[POKEWOOD_BOXOFFICE_DATA_MAX];  // 興行成績ランキング 32*10+24
 
-  u8 array[164];
+  u8 array[156];
 };
 
 //---------------------------------------------------------------------------
@@ -208,5 +209,39 @@ void POKEWOOD_SAVEDATA_SetMovieShowd( POKEWOOD_SAVEDATA *sv, int no, BOOL value 
   GF_ASSERT_MSG( no >=POKEWOOD_RECSAVEDATA_MAX , "上映数の最大を超えています=%d\n",no);
   
   sv->showed_flag[no] = value;
+
+}
+
+//=============================================================================================
+/**
+ * @brief	このシナリオは成功フラグを立てているか？
+ *
+ * @param   sv		POKEWOOD_SAVEDATA
+ * @param   no		シナリオNO
+ *
+ * @retval  BOOL	TRUE:上映済み FALSE:上映してない
+ */
+//=============================================================================================
+BOOL POKEWOOD_SAVEDATA_GetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no )
+{
+  GF_ASSERT_MSG( no >=POKEWOOD_RECSAVEDATA_MAX , "上映数の最大を超えています=%d\n",no);
+
+  return sv->success_flag[no];
+}
+
+//=============================================================================================
+/**
+ * @brief	シナリオ毎に成功フラグを立てる
+ *
+ * @param   sv    POKEWOOD_SAVEDATA
+ * @param   no		シナリオNO
+ * @param   value TRUE or FALSE
+ */
+//=============================================================================================
+void POKEWOOD_SAVEDATA_SetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no, BOOL value )
+{
+  GF_ASSERT_MSG( no >=POKEWOOD_RECSAVEDATA_MAX , "上映数の最大を超えています=%d\n",no);
+  
+  sv->success_flag[no] = value;
 
 }

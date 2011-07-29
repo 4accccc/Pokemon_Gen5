@@ -144,3 +144,26 @@ extern BOOL POKEWOOD_SAVEDATA_GetMovieShowed( POKEWOOD_SAVEDATA *sv, int no );
  */
 //=============================================================================================
 extern void POKEWOOD_SAVEDATA_SetMovieShowd( POKEWOOD_SAVEDATA *sv, int no, BOOL value );
+
+//=============================================================================================
+/**
+ * @brief	このシナリオは成功フラグを立てているか？
+ *
+ * @param   sv		POKEWOOD_SAVEDATA
+ * @param   no		シナリオNO
+ *
+ * @retval  BOOL	TRUE:上映済み FALSE:上映してない
+ */
+//=============================================================================================
+extern BOOL POKEWOOD_SAVEDATA_GetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no );
+
+//=============================================================================================
+/**
+ * @brief	シナリオ毎に成功フラグを立てる
+ *
+ * @param   sv    POKEWOOD_SAVEDATA
+ * @param   no		シナリオNO
+ * @param   value TRUE or FALSE
+ */
+//=============================================================================================
+extern void POKEWOOD_SAVEDATA_SetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no, BOOL value );
