@@ -425,7 +425,7 @@ typedef struct{
 //---------------
 // BGPAL
 static const WIN_RECORD_BGPAL_DATA wr_bgpal_tbl[] = {
-	{ PALTYPE_SUB_BG,	NARC_win_record_gra_win_record_bg_u_NCLR,	0,	3,},		// 上、BG
+	{ PALTYPE_SUB_BG,	NARC_win_record_gra_win_record_bg_u_NCLR,	0,	4,},		// 上、BG
 	{ PALTYPE_MAIN_BG,	NARC_win_record_gra_win_record_bg_d_NCLR,	0,	3,},		// 下、BG
 
 	{ 0xff, 0, 0, 0,}, // end code
@@ -532,10 +532,10 @@ static const WIN_RECORD_OBJ_DATA wr_obj_up_tbl[] = {
 static const WIN_RECORD_CANVAS_DATA wr_canvas_tbl[] = {
 	{ GFL_BG_FRAME0_M,	1,	1,	30,	2,	8,},		// 下、上名前
 	//
-	{ GFL_BG_FRAME0_S,	2,	7,	16,	2,	8,},		// 上、なまえ(項目)
-	{ GFL_BG_FRAME0_S,	4,	9,	16,	2,	8,},		// 上、なまえ
-	{ GFL_BG_FRAME0_S,	2, 12,	20,	2,	8,},		// 上、そうゆうしょうかいすう(項目)
-	{ GFL_BG_FRAME0_S,	4, 14,	16,	2,	8,},		// 上、かいすう
+	{ GFL_BG_FRAME0_S,	2,	7,	16,	2,	2,},		// 上、なまえ(項目)
+	{ GFL_BG_FRAME0_S,	4,	9,	16,	2,	2,},		// 上、なまえ
+	{ GFL_BG_FRAME0_S,	2, 12,	20,	2,	2,},		// 上、そうゆうしょうかいすう(項目)
+	{ GFL_BG_FRAME0_S,	4, 14,	16,	2,	2,},		// 上、かいすう
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -1879,7 +1879,7 @@ static void wr_disp_up_string( WIN_RECORD_MAIN_WORK* wk )
 	//
 	// なまえ(fix)
 	strbuf = GFL_MSG_CreateString( wk->msg[0], wr_gmm_tbl[3] );
-	wr_disp_string( wk, WIN_RECORD_CVS_NAME_00, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+	wr_disp_string( wk, WIN_RECORD_CVS_NAME_00, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0) );
 	GFL_STR_DeleteBuffer( strbuf );
 	// なまえ
 	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
@@ -1889,13 +1889,13 @@ static void wr_disp_up_string( WIN_RECORD_MAIN_WORK* wk )
 	expbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
 	strbuf = GFL_MSG_CreateString( wk->msg[0], wr_gmm_tbl[5] );
 	WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf );
-	wr_disp_string( wk, WIN_RECORD_CVS_NAME_01, 0, 0, expbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+	wr_disp_string( wk, WIN_RECORD_CVS_NAME_01, 0, 0, expbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0) );
 	GFL_STR_DeleteBuffer( strbuf );
 	GFL_STR_DeleteBuffer( strbuf2 );
 	GFL_STR_DeleteBuffer( expbuf );
 	// 回数(fix)
 	strbuf = GFL_MSG_CreateString( wk->msg[0], wr_gmm_tbl[4] );
-	wr_disp_string( wk, WIN_RECORD_CVS_NUM_00, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+	wr_disp_string( wk, WIN_RECORD_CVS_NUM_00, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0) );
 	GFL_STR_DeleteBuffer( strbuf );
 	//
 	// 回数
@@ -1906,7 +1906,7 @@ static void wr_disp_up_string( WIN_RECORD_MAIN_WORK* wk )
 	expbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
 	strbuf = GFL_MSG_CreateString( wk->msg[0], wr_gmm_tbl[2] );
 	WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf );
-	wr_disp_string( wk, WIN_RECORD_CVS_NUM_01, 0, 0, expbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+	wr_disp_string( wk, WIN_RECORD_CVS_NUM_01, 0, 0, expbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0) );
 	GFL_STR_DeleteBuffer( strbuf );
 	GFL_STR_DeleteBuffer( strbuf2 );
 	GFL_STR_DeleteBuffer( expbuf );
