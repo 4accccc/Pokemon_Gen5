@@ -78,7 +78,8 @@ enum{
   RESID_RELIEF_00_MDL,      // 照明点灯前レリーフモデル
   RESID_RELIEF_01_MDL,      // 照明点灯後レリーフ
   RESID_RELIEF_01_ANM_ICA,  // 通常時レリーフ回転アニメ
-  RESID_RELIEF_02_ANM_ICA,  // 通常時レリーフ回転アニメ
+  RESID_RELIEF_02_ANM_ICA,  // 戦闘後レリーフ回転アニメ
+  RESID_RELIEF_02_ANM_IMA,  // 戦闘後レリーフ回転アニメ
   RESID_LIGHT_MDL,          // 差し込む光モデル
   RESID_LIGHT_ANM_ICA,      // 差し込む光アニメ
   RESID_LIGHT_ANM_IMA,      // 差し込む光アニメ
@@ -103,6 +104,7 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_CHAMPION, NARC_champion_c_relief01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_relief_01_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_relief_02_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_CHAMPION, NARC_champion_c_relief_02_nsbma, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_light_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_light_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_light_nsbma, GFL_G3D_UTIL_RESARC },
@@ -119,6 +121,7 @@ static const GFL_G3D_UTIL_ANM anm_relief[] =
 {
   { RESID_RELIEF_01_ANM_ICA, 0 },
   { RESID_RELIEF_02_ANM_ICA, 0 },
+  { RESID_RELIEF_02_ANM_IMA, 0 },
 };
 #define ANM_RELIEF_NUM  ( NELEMS(anm_relief) )
 
@@ -410,8 +413,10 @@ static void INIT_FieldRecover( CHAMPION_TMP *p_wk )
     {
       // 無効化解除
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 1, TRUE );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 2, TRUE );
       // フレーム設定(0進めた状態にする)
-      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 0, FX32_ONE );
+      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 1, 0 );
+      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 2, 0 );
     }
 
     // 光差し込み状態に
@@ -850,6 +855,7 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk )
       // レリーフのアニメ
       ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_2, 0 );
       ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, 1, 0, FALSE );
+      ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, 2, 0, FALSE );
 
       // マップのアニメ
       ANM_Play( p_wk->exp_obj, OBJ_ROOM_2, 0, 0, FALSE );

@@ -5,6 +5,7 @@
 "c_relief01.nsbmd"
 "c_relief_01.nsbca"
 "c_relief_02.nsbca"
+"c_relief_02.nsbma"
 "c_light.nsbmd"
 "c_light.nsbca"
 "c_light.nsbma"
