@@ -493,6 +493,7 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
   if(GFL_UI_CheckTouchOrKey()==GFL_APP_END_TOUCH){
     wk->nowpos  = -1;
     wk->isTouch = TRUE;
+
   }else{
     _draw_movie_subtitle( wk, wk->nowpos );
     wk->isTouch = FALSE;
@@ -515,6 +516,8 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
   
   return GFL_PROC_RES_FINISH;
 }
+
+#define BLINK_NORMAL_COLOR    ( 0x4000 )
 
 //----------------------------------------------------------------------------------
 /**
@@ -539,6 +542,7 @@ static void _blink_palanime_init( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
     BLINKPALANM_SetPalBufferArc( wk->blinkWork[i], ARCID_PKWD_ANNOUNCE, 
                                 NARC_pkwd_announce_gra_pkwd_title_select_d_NCLR, 
                                 16*category, (5+category)*16 );
+    BLINKPALANM_SetAnimeCount( wk->blinkWork[i], BLINK_NORMAL_COLOR );
     BLINKPALANM_Main( wk->blinkWork[i] );
 
   }
@@ -1158,7 +1162,7 @@ static BOOL PrintTool_MainFunc( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
 }
 
 
-#define TITLE_WIN_W ( 26 )
+#define TITLE_WIN_W ( 24 )
 #define TITLE_WIN_H (  5 )
 #define SUBTITLE_WIN1_W  ( 26 )
 #define SUBTITLE_WIN1_H  (  3 )
@@ -1507,6 +1511,28 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief	カーソル移動時に他のプレートのカラーを元に戻して
+ *
+ * @param   wk		PKWD_SELECT_SCREEN_MAIN_WORK
+ * @param   pos		現在のカーソル位置
+ */
+//----------------------------------------------------------------------------------
+static void _set_cursor_blink( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int pos )
+{
+  int i;
+  
+  for(i=0;i<PKWD_TITLE_LIST_NUM;i++){
+    if(i==pos){
+      BLINKPALANM_InitAnimeCount(wk->blinkWork[pos] );
+    }else{
+      BLINKPALANM_SetAnimeCount(wk->blinkWork[i], BLINK_NORMAL_COLOR );
+      BLINKPALANM_Main( wk->blinkWork[i] );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
  * @brief	選択箇所がが更新されている場合は上画面に反映させる
  *
  * @param   wk		PKWD_SELECT_SCREEN_MAIN_WORK
@@ -1517,7 +1543,7 @@ static void SubTitle_Func( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   if(wk->oldpos!=wk->nowpos && wk->nowpos>=0){
     wk->bgLogoRequest=TRUE;
     _draw_movie_subtitle( wk, wk->nowpos );
-    BLINKPALANM_InitAnimeCount(wk->blinkWork[wk->nowpos] );
+    _set_cursor_blink( wk, wk->nowpos );
   }
   wk->oldpos = wk->nowpos;
 }
@@ -1678,7 +1704,7 @@ static BOOL SubSeq_Yesno_Normal( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
         wk->seq = MENU_FADEOUT;
     }else{
       wk->seq   = MENU_START;
-      BLINKPALANM_InitAnimeCount(wk->blinkWork[wk->nowpos] );
+      _set_cursor_blink( wk, wk->nowpos );
     }
   }
   return FALSE;
@@ -1692,7 +1718,7 @@ static BOOL SubSeq_Yesno_Delete1( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
         wk->seq = MENU_WARNING_MSG;
     }else{
       wk->seq   = MENU_START;
-      BLINKPALANM_InitAnimeCount(wk->blinkWork[wk->nowpos] );
+      _set_cursor_blink( wk, wk->nowpos );
     }
   }
   return FALSE;
@@ -1705,7 +1731,7 @@ static BOOL SubSeq_Yesno_Delete2( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
         wk->seq = MENU_FADEOUT;
     }else{
       wk->seq   = MENU_START;
-      BLINKPALANM_InitAnimeCount(wk->blinkWork[wk->nowpos] );
+      _set_cursor_blink( wk, wk->nowpos );
     }
   }
   return FALSE;
