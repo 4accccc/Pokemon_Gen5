@@ -2,6 +2,119 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d33r0101_hakase2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『あら……
+[Name:TrainerName ]　じゃない？▼
+あなたも　ここに　めをつけるなんて
+さすが　ずかんの　もちぬし！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:36:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:04:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『あら……
+[Name:TrainerName ]　じゃない？▼
+あなたも　ここに　めをつけるなんて
+さすが　図鑑の　持ち主！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:45:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:05:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・フラグ成立で出現（フラグ条件未定）
+・GRIDX＝16、GRIDZ＝22
+　posで会話スタート
+　！マーク表示後に主人公に隣接してメッセージ
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:46:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:04:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d33r0101_hakase2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それにしても　この　くうかん……▼
+ことばに　いいあわらしにくい
+なにかで　みちているわね……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:36:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:09:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それにしても　この　くうかん……▼
+ことばに　いいあわらしにくい
+なにかで　みちているわね……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:45:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:09:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・hakase2_01以降から
+　event_01表示まで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:10:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:06:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d33r0101_event_01"
 		Style="Large">
 		<LanguageCell
@@ -31,12 +144,13 @@
 			<Comment>イベント
 ・条件を満たしているときに洞窟に入ると
 　このメッセージ表示、続けて主人公を
-　所定pos、GRIDX＝？、GRIDZ＝？に誘導
-・続けてsppoke1_01
-※このままだとポケモンの紹介ができない</Comment>
+　GRIDX＝14～22、GRIDZ＝20のラインを踏むと
+　主人公（GRIDX＝18、GRIDZ＝17）と
+　アララギ（GRIDX＝17、GRIDZ＝19）を誘導
+・続けてsppoke1_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:37:02" />
+				Time="2011-07-29T03:40:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -74,10 +188,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・続けてsppoke2_01</Comment>
+・続けてhakase2_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:34:44" />
+				Time="2011-07-29T03:42:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -94,6 +208,56 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d33r0101_hakase2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ユクシー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ユクシー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公、アララギ、ポケモンのほうを向いて
+・続けてsppoke2_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:42:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d33r0101_sppoke2_01"
@@ -123,10 +287,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・続けてsppoke3_01</Comment>
+・続けてshakase2_04</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:42:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -143,6 +307,56 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d33r0101_hakase2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エムリット……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エムリット……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公、アララギ、ポケモンのほうを向いて
+・続けてsppoke3_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:42:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d33r0101_sppoke3_01"
@@ -172,10 +386,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・続けてsppoke1_02</Comment>
+・続けてhakase2_05</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:42:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -192,6 +406,56 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d33r0101_hakase2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それに　アグノム！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それに　アグノム！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公、アララギ、ポケモンのほうを向いて
+・続けてsppoke1_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:42:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:41:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d33r0101_sppoke1_02"
@@ -349,5 +613,67 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d33r0101_hakase2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『あの　３びきは……
+ユクシー　エムリット　アグノム▼
+それぞれ　ちえ　かんじょう　いしを
+うみだした　ポケモンと　されています▽
+それにしても　どこに　いったのかしら？▼
+ねっ　[Name:TrainerName ]
+あなた　さがしてみてよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:45:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:05:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『あの　３匹は……
+ユクシー　エムリット　アグノム▼
+それぞれ　知恵　感情　意思を
+生みだした　ポケモンと　されています▽
+それにしても　どこに　行ったのかしら？▼
+ねっ　[Name:TrainerName ]
+あなた　探してみてよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:46:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:05:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、退場
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:45:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-29T03:16:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
