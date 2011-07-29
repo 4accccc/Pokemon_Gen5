@@ -54,6 +54,7 @@ extern void CTVT_TALK_SetAcceptBit2( CTVT_TALK_WORK *talkWork, const u8 NetId );
 extern const BOOL CTVT_TALK_IsAcceptNum( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork );
 extern const BOOL CTVT_TALK_IsAcceptNum2( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork );
 
+extern void CTVT_TALK_SetIsConnectVersion( CTVT_TALK_WORK *talkWork, const BOOL flg );
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------

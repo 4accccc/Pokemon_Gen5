@@ -216,12 +216,14 @@ static void*  CTVT_COMM_GetBeaconData(void* pWork);
 static int CTVT_COMM_GetBeaconSize(void *pWork);
 static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2, void* pWork);
 static BOOL CTVT_COMM_ConnectCheckCallBack(WMStartParentCallback *cbWork, void* pWork);
+static BOOL CTVT_COMM_ConnectCheckCallBack_ReqGame(WMStartParentCallback *cbWork, void* pWork);
 static BOOL CTVT_COMM_ConnectCheckCallBack_Game(WMStartParentCallback *cbWork, void* pWork);
 
 static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 
 static void CTVT_COMM_ClearMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_MEMBER_STATE *state );
 static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_MEMBER_STATE *state , const u8 idx );
+static BOOL CTVT_COMM_CheckMemberVersion( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_MEMBER_STATE *state , const u8 idx );
 
 static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static u8*    CTVT_COMM_Post_WaveData_Buff( int netID, void* pWork , int size );
@@ -830,6 +832,35 @@ static BOOL CTVT_COMM_ConnectCheckCallBack(WMStartParentCallback *cbWork, void* 
 }
 
 //--------------------------------------------------------------
+// 接続時チェックコールバック ゲーム開始待ち中
+// 子機の接続はなし
+//--------------------------------------------------------------
+static BOOL CTVT_COMM_ConnectCheckCallBack_ReqGame(WMStartParentCallback *cbWork, void* pWork)
+{
+  // 基本は上のコールバックと同じ
+  // バージョン条件を追加しただけ
+  //
+  CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  MYSTATUS *myStatus = (MYSTATUS*)&commWork->beacon.myStatus;
+  u8  version;
+
+  version = MyStatus_GetRomCode( myStatus );
+
+  // スワンのみ
+  if( version == VERSION_W2 || version == VERSION_B2 )
+  {
+    if( commWork->beacon.isCalling == 0 )
+    {
+      return TRUE;
+    }
+    return CTVT_COMM_CheckCallingAddress( &commWork->beacon , cbWork->macAddress );
+  }
+
+  OS_Printf("SWAN以外なので接続しない\n");
+  return FALSE;
+}
+
+//--------------------------------------------------------------
 // 接続時チェックコールバック ゲーム中
 // 子機の接続はなし
 //--------------------------------------------------------------
@@ -900,6 +931,33 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
     for( i=0;i<CTVT_MEMBER_NUM;i++ )
     {
       CTVT_COMM_UpdateMemberState( work , commWork , &commWork->member[i] , i );
+    }
+  }
+
+  // メンバーのROMバージョンチェック
+  {
+    CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( work );
+
+    BOOL only_swan = TRUE;
+    u8 i;
+    for( i=0;i<CTVT_MEMBER_NUM;i++ )
+    {
+      if( CTVT_COMM_CheckMemberVersion( work , commWork , &commWork->member[i] , i ) )
+      {
+        // SWAN以外のバージョンがいた
+        only_swan = FALSE;
+      }
+    }
+    
+    // 接続している人にSWAN以外がいるフラグを立てる
+    if( only_swan == FALSE )
+    {
+      CTVT_TALK_SetIsConnectVersion( talkWork, TRUE );
+    }
+    else
+    {
+      // SWANのみ
+      CTVT_TALK_SetIsConnectVersion( talkWork, FALSE );
     }
   }
 
@@ -1280,6 +1338,41 @@ static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
   case CCSU_POST_PHOTO:
     break;
   }
+}
+
+ 
+//----------------------------------------------------------------------------
+/**
+ *	@brief    メンバーのバージョンチェック
+ *	@return   SWAN以外だとTRUEを返す
+ */
+//-----------------------------------------------------------------------------
+static BOOL CTVT_COMM_CheckMemberVersion( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_MEMBER_STATE *state , const u8 idx )
+{
+  CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+  if( state->isEnable == FALSE )
+  {
+    //不在
+    return FALSE;
+  }
+  if( state->isSelf == TRUE )
+  {
+    //自分
+    return FALSE;
+  }
+
+  // バージョンチェック
+  {
+    MYSTATUS *myStatus = (MYSTATUS*)&state->data.myStatusBuff;
+    u8 version = MyStatus_GetRomCode( myStatus );
+
+    if( version == VERSION_W2 || version == VERSION_B2 )
+    {
+      return FALSE;
+    }
+  }
+
+  return TRUE;
 }
 
 #pragma mark [>send/post
@@ -2271,6 +2364,11 @@ void CTVT_COMM_SendGameReq_Score( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_SCORE
   commWork->sendGameScore = score;
 }
 
+// ゲーム参加募集に行く時の処理
+void CTVT_COMM_Req_GoGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  WH_SetJudgeAcceptFunc( CTVT_COMM_ConnectCheckCallBack_ReqGame );
+}
 // 会話からゲームに行く時の処理
 void CTVT_COMM_Exit_GoGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {

@@ -815,15 +815,15 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
     {
       CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_NONE );
     }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
     {
       CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_SEPIA01 );
     }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
     {
       CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_MONO );
     }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
     {
       CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_NEGATIVE );
     }

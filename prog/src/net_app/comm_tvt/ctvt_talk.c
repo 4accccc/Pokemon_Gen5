@@ -80,6 +80,7 @@ typedef enum
   // add ichiraku
   // ミニゲーム参加受付用
   // 親
+  CTS_REQ_GAME_INIT,    // 参加 WBの乱入禁止処理
   CTS_REQ_GAME,         // 参加 要求送信
   CTS_REQ_GAME_WAIT,    // 参加 待ち
   CTS_START_GAME,       // 開始通知
@@ -224,6 +225,8 @@ struct _CTVT_TALK_WORK
   BOOL  isStartGame2;  // START_GAMEが送信されたか？
   u8    acceptBit;    // 参加したNetIDのビット管理
   u8    acceptBit2;    // 参加したNetIDのビット管理
+
+  BOOL  isConnectVersion; // SWAN以外のバージョンが接続しているとTRUE
   // >>
 };
 
@@ -667,6 +670,14 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
   // add ichiraku
   // ミニゲーム参加受付用
   // 親
+  case CTS_REQ_GAME_INIT:    // 参加 WBの乱入禁止処理
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      // 接続チェックコールバック関数をWB接続しない関数に変更
+      CTVT_COMM_Req_GoGame( work, commWork );
+      talkWork->state = CTS_REQ_GAME;
+    }
+    break;
   case CTS_REQ_GAME:         // 参加 要求送信
     if( CTVT_TALK_GameEnter_CheckFinishReq( work , talkWork ) == FALSE )
     {
@@ -798,7 +809,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     if( CTVT_TALK_GameEnter_CheckFinishReq( work , talkWork ) == FALSE )
     {
       // ゲーム中は乱入禁止なので、ビーコンを止める
-      // ターゲットを空にする
+      // ターゲットを空にする = 子機接続しない
       {
         u8 i, j;
         CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
@@ -1318,15 +1329,15 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     {
       CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_NONE );
     }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
     {
       CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_SEPIA01 );
     }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
     {
       CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_MONO );
     }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
     {
       CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_NEGATIVE );
     }
@@ -1403,28 +1414,30 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     // 親しか押せない
     // ミニゲーム1
     if( COMM_TVT_GetSelfIdx(work) == 0 && 
-        GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton1 ) != GFL_UI_TP_HIT_NONE  )
+        GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton1 ) != GFL_UI_TP_HIT_NONE &&
+        talkWork->isConnectVersion == FALSE )
     {
       // 選択したゲームをセット
       CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork( work );
       CTVT_GAME_SetGameID( gameWork, CGI_BALLOON1 );
 
       CTVT_TALK_GameEnter_Init( work, talkWork );   // 初期化
-      talkWork->state = CTS_REQ_GAME;               // ゲーム開始要求
+      talkWork->state = CTS_REQ_GAME_INIT;               // ゲーム開始要求
       GFL_CLACT_WK_SetAnmSeq( talkWork->clwkBalloon1 , CTOAS_BALLOON1 );
       GFL_CLACT_WK_SetAutoAnmFlag( talkWork->clwkBalloon1 , TRUE );
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
     // ミニゲーム2
     if( COMM_TVT_GetSelfIdx(work) == 0 && 
-        GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton2 ) != GFL_UI_TP_HIT_NONE  )
+        GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton2 ) != GFL_UI_TP_HIT_NONE &&
+        talkWork->isConnectVersion == FALSE )
     {
       // 選択したゲームをセット
       CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork( work );
       CTVT_GAME_SetGameID( gameWork, CGI_BALLOON2 );
 
       CTVT_TALK_GameEnter_Init( work, talkWork );   // 初期化
-      talkWork->state = CTS_REQ_GAME;               // ゲーム開始要求
+      talkWork->state = CTS_REQ_GAME_INIT;               // ゲーム開始要求
       GFL_CLACT_WK_SetAnmSeq( talkWork->clwkBalloon2, CTOAS_BALLOON2 );
       GFL_CLACT_WK_SetAutoAnmFlag( talkWork->clwkBalloon2 , TRUE );
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
@@ -2452,3 +2465,16 @@ const BOOL CTVT_TALK_IsAcceptNum2( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork
 
   return TRUE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  接続バージョンチェック用フラグ設定
+ *
+ *	@param	CTVT_TALK_WORK *talkWork
+ *	@param	BOOL flg  SWAN以外が接続しているとTRUE
+ */
+//-----------------------------------------------------------------------------
+void CTVT_TALK_SetIsConnectVersion( CTVT_TALK_WORK *talkWork, const BOOL flg )
+{
+  talkWork->isConnectVersion = flg;
+}
+
