@@ -4,6 +4,7 @@
 
 #define DOOR_ID_D04R2101_D04R1001_EXIT01  0
 #define DOOR_ID_D04R2101_D04R1601_EXIT01  1
+#define DOOR_ID_D04R2101_D28R0201_EXIT01  2
 
 #endif //ZONE_D04R2101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r2101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
