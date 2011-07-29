@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-07-27T23:37:34" source="c_relief01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-07-28T19:58:17" source="c_relief01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-07-27T23:37:34" source="c_relief01.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-07-28T19:58:17" source="c_relief01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2331,7 +2331,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 60.000000"
-		translate="-78.380859 45.253174 -6.000000"
+		translate="-78.380859 45.253174 -2.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="24" polygon_size="12"
@@ -2371,7 +2371,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 -130.000000"
-		translate="90.758301 -76.155273 -22.000000"
+		translate="90.758301 -76.155273 -18.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="24" polygon_size="12"
@@ -2411,7 +2411,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 -60.000000"
-		translate="125.710449 72.578857 -41.000000"
+		translate="125.710449 72.578857 -37.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="24" polygon_size="12"
@@ -2451,7 +2451,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 120.000000"
-		translate="-147.361084 -85.078857 -56.000000"
+		translate="-147.361084 -85.078857 -52.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="24" polygon_size="12"
