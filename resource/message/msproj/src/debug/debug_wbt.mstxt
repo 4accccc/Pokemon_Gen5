@@ -484,4 +484,30 @@
 				Time="2011-06-23T11:45:41" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_WBT_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>全トーナメント解禁</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-29T06:17:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-06-23T11:45:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>全トーナメント解禁</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-29T06:17:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-06-23T11:45:41" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

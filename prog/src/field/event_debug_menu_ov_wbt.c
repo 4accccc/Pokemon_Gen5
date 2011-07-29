@@ -49,6 +49,8 @@
 #include "app/wbt_list.h"
 #include "event_wbt.h"  //WBT_EVENT_ShowTournamentList
 
+#include "field/eventwork.h"  //EVENTWORK_
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_GAMECLEAR
 //=============================================================================
 /**
  *					定数宣言
@@ -188,6 +190,7 @@ static const DEBUG_MENU_LIST WBTMenuList[] =
   //
   { DEBUG_STR_WBT_12, (void*)DEBUG_STR_WBT_12, GFL_OVERLAY_BLANK_ID },   // ダウンロード：2
   { DEBUG_STR_WBT_13, (void*)DEBUG_STR_WBT_13, GFL_OVERLAY_BLANK_ID },   // ダウンロード：3
+  { DEBUG_STR_WBT_15, (void*)DEBUG_STR_WBT_15, GFL_OVERLAY_BLANK_ID },   // 全トーナメント解禁
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuWBTImitializer = {
@@ -353,47 +356,68 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       work->stage = WBTSTAGE_2ND;
       (*seq)++;
       break;
-	//
+    //
     case DEBUG_STR_WBT_07:		// デバッグあり
 		*seq = 3;
 		work->DebugMode = DEBUG_MODE_DBG;
       break;
-	//
-	// 追加
-	//
+    //
+    // 追加
+    //
     case DEBUG_STR_WBT_08:		// エントリーチェック:1
 		work->call_func = debugMenuCallProc_WinRecord;
 		work->status = WIN_RECORD_STATUS_LV1;
 		(*seq)++;
 		break;
-	//
-	case DEBUG_STR_WBT_09:		// エントリーチェック:2
-		work->call_func = debugMenuCallProc_WinRecord;
-		work->status = WIN_RECORD_STATUS_LV2;
-		(*seq)++;
-		break;
-	//
-	case DEBUG_STR_WBT_10:		// エントリーチェック:3
-		work->call_func = debugMenuCallProc_WinRecord;
-		work->status = WIN_RECORD_STATUS_LV3;
-		(*seq)++;
-		break;
-	//
-	case DEBUG_STR_WBT_12:		// ダウンロード：2(選択)
-		work->call_func = debugMenuCallProc_TDownload;
-		work->t_status = T_DOWNLOAD_STATUS_SELECT;
-		(*seq)++;
-		break;
-	//
-	case DEBUG_STR_WBT_13:		// ダウンロード：3(参加)
-		work->call_func = debugMenuCallProc_TDownload;
-		work->t_status = T_DOWNLOAD_STATUS_JOIN;
-		(*seq)++;
-		break;
-	//
-	
+    //
+    case DEBUG_STR_WBT_09:		// エントリーチェック:2
+      work->call_func = debugMenuCallProc_WinRecord;
+      work->status = WIN_RECORD_STATUS_LV2;
+      (*seq)++;
+      break;
+    //
+    case DEBUG_STR_WBT_10:		// エントリーチェック:3
+      work->call_func = debugMenuCallProc_WinRecord;
+      work->status = WIN_RECORD_STATUS_LV3;
+      (*seq)++;
+      break;
+    //
+    case DEBUG_STR_WBT_12:		// ダウンロード：2(選択)
+      work->call_func = debugMenuCallProc_TDownload;
+      work->t_status = T_DOWNLOAD_STATUS_SELECT;
+      (*seq)++;
+      break;
+    //
+    case DEBUG_STR_WBT_13:		// ダウンロード：3(参加)
+      work->call_func = debugMenuCallProc_TDownload;
+      work->t_status = T_DOWNLOAD_STATUS_JOIN;
+      (*seq)++;
+      break;
+    //
+    case DEBUG_STR_WBT_15:   // 全トーナメント解禁
+      {
+			  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( work->gmSys );
+        EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
+        WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+
+        EVENTWORK_SetEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
+        WBTSAVE_SetWinCount( wbtsave, WBTWIN_COUNT_HODOMOE, 1 );
+        WBTSAVE_SetWinCount( wbtsave, WBTWIN_COUNT_ISSYU, 1 );
+        WBTSAVE_SetWinCount( wbtsave, WBTWIN_COUNT_KANTO, 1 );
+        WBTSAVE_SetWinCount( wbtsave, WBTWIN_COUNT_JOUTO, 1 );
+        WBTSAVE_SetWinCount( wbtsave, WBTWIN_COUNT_HOUEN, 1 );
+        WBTSAVE_SetWinCount( wbtsave, WBTWIN_COUNT_SINOU, 1 );
+        WBTSAVE_SetWinCount( wbtsave, WBTWIN_COUNT_RENTAL, 1 );
+        WBTSAVE_SetWinCount( wbtsave, WBTWIN_COUNT_SHUFFLE, 1 );
+        WBTSAVE_SetWinCount( wbtsave, WBTWIN_COUNT_WORLD, 10 );
+      }
+      PMSND_PlaySE( SEQ_SE_KON );
+      (*seq)++;
+      break;
+
     }
     break;
+
   case 2:
     FLDMENUFUNC_DeleteMenu( work->menuFunc );
     if (work->call_func != NULL
