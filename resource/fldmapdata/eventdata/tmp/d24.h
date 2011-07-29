@@ -17,6 +17,8 @@
 #define FLD_ITEM_116                       0
 #define FLD_ITEM_115                       1
 #define FLD_ITEM_117                       2
+#define TR_CYCLINGM_03                     3
+#define TR_CYCLINGW_03                     4
 
 #endif //ZONE_D24_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d24.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
