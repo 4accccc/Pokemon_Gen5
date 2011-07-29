@@ -32,14 +32,15 @@
 			Language="JPN">
 			<Comment>イベント
 ・d33イベント後にPOSを踏む
-　GRIDX＝、GRIDZ＝
+　GRIDX＝16、GRIDZ＝17
 ・はい/いいえの選択肢表示
 　はい　→poke_02
 　いいえ→終了
+・再度踏むとこのメッセージ表示
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T07:05:10" />
+				Time="2011-07-29T05:27:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
