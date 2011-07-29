@@ -1070,6 +1070,11 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
   WBTTRAINER_CopyName( wbt_tr, bp->tr_data[BTL_CLIENT_ENEMY1]->name );
 
   WBTSYS_GetOpponentBGM( wbtsys, &bp->musicDefault, &bp->musicWin );
+#ifdef PM_DEBUG
+  //‚¨‚©‚µ‚¢BGM‚æ‚¯2011.07.29
+  bp->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
+  bp->musicWin = SEQ_BGM_WIN2;
+#endif
 
   GFL_HEAP_FreeMemory( party );
   GFL_HEAP_FreeMemory( btpwd );
