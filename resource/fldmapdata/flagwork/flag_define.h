@@ -369,10 +369,10 @@
 #define FE_D27_HINT_06                     353 /* 0x0161 プラズマフリゲート：戦闘チェックフラグ */
 #define FE_D27_HINT_07                     354 /* 0x0162 プラズマフリゲート：戦闘チェックフラグ */
 #define FE_C01R0501_QUIZ2_01               355 /* 0x0163 サンヨウシティ：クイズ終了フラグ */
-		/* not used   356(0x0164) */
-		/* not used   357(0x0165) */
-		/* not used   358(0x0166) */
-		/* not used   359(0x0167) */
+#define FE_D27_CARDKEY_01                  356 /* 0x0164 プラズマフリゲート：カードキー入手フラグ */
+#define FE_D27_PASSOPEN_01                 357 /* 0x0165 プラズマフリゲート：パスワード開放フラグ */
+#define FE_INFDUNGEON_TUTORIAL_01          358 /* 0x0166 無限ダンジョン：チュートリアルフラグ（通常部屋） */
+#define FE_INFDUNGEON_TUTORIAL_02          359 /* 0x0167 無限ダンジョン：チュートリアルフラグ（ボス部屋） */
 		/* not used   360(0x0168) */
 		/* not used   361(0x0169) */
 		/* not used   362(0x016a) */
@@ -665,6 +665,8 @@
 #define FV_D27R0601_SWSAGE1_01             747 /* 0x02eb プラズマフリゲート隠し部屋：ゲーチス */
 #define FV_D27R0601_NINJA_01               748 /* 0x02ec プラズマフリゲート隠し部屋：ダークトリニティ */
 #define FV_R18_DPLEADER5_01                749 /* 0x02ed 18番道路：マキシ */
+#define FV_D31R0601_MUGENBOSS_01           750 /* 0x02ee 無限ダンジョンB：ボス */
+#define FV_D31R0501_MUGENBOSS_01           751 /* 0x02ef 無限ダンジョンW：ボス */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

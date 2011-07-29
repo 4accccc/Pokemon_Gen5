@@ -243,6 +243,8 @@
 #define WK_SCENE_D27_SWITCH_03           16631 /* 0x40f7 プラズマフリゲート：スイッチ・バリアー制御POS */
 #define WK_SCENE_D27_SWITCH_04           16632 /* 0x40f8 プラズマフリゲート：スイッチ・バリアー制御POS */
 #define WK_SCENE_C01R0501_QUIZ1_01       16633 /* 0x40f9 サンヨウシティ：トレーナーズスクールのふわふわボーイクイズ制御 */
+#define WK_SCENE_D27R1001_BARRIER_01     16634 /* 0x40fa プラズマフリゲート：バリアー制御POS */
+#define WK_SCENE_D27R1201_BARRIER_01     16635 /* 0x40fb プラズマフリゲート：バリアー制御POS */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
