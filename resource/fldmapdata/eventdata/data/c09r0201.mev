@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/22 16:41:48
+#save date:2011/07/29 11:19:46
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c09r0201.wms
 #SECTION START:OBJ_EVENT
@@ -109,7 +109,7 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 192 136
+56 192 136
 #size
 1 1
 #Map Event List Data End
