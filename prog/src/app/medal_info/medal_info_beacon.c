@@ -214,7 +214,6 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
   GAMEBEACON_INFO_TBL *infoLog = BEACON_STATUS_GetInfoTbl( b_status );
 
   // 初期用データを設定
-  p_wk->init_param.target     = p_wk->p_param->target;
   p_wk->init_param.list_size  = 0;
   p_wk->init_param.call_mode  = MEDALVIEWER_CALL_LIST;
 
@@ -234,6 +233,7 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
     if( !(( pm_version == VERSION_W2 ) || ( pm_version == VERSION_B2 )) ){
       continue;
     }
+
     p_wk->init_param.list_size ++;
   }
 
@@ -259,6 +259,12 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
     // バージョン指定
     if( !(( pm_version == VERSION_W2 ) || ( pm_version == VERSION_B2 )) ){
       continue;
+    }
+
+    // メダル詳細画面用インデックス
+    if( p_wk->p_param->target == i )
+    {
+      p_wk->init_param.target = data_index;
     }
 
     // データ各の先を取得
