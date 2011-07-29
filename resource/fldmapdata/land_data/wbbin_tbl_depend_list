@@ -1678,6 +1678,22 @@ $(DIR_WBTMP)/map08_21.tbl: $(DIR_RES)/map08_21.bin
 	@echo create_bintbl map08_21
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map08_21.bin
 
+$(DIR_WBTMP)/pwood01_00_00.tbl: $(DIR_RES)/pwood01_00_00.bin
+	@echo create_bintbl pwood01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/pwood01_00_00.bin
+
+$(DIR_WBTMP)/pwood01_01_00.tbl: $(DIR_RES)/pwood01_01_00.bin
+	@echo create_bintbl pwood01_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/pwood01_01_00.bin
+
+$(DIR_WBTMP)/pwood01_00_01.tbl: $(DIR_RES)/pwood01_00_01.bin
+	@echo create_bintbl pwood01_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/pwood01_00_01.bin
+
+$(DIR_WBTMP)/pwood01_01_01.tbl: $(DIR_RES)/pwood01_01_01.bin
+	@echo create_bintbl pwood01_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/pwood01_01_01.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin
