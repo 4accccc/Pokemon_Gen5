@@ -31,11 +31,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-初会話時
-・msg_wbt_info_02へ</Comment>
+削除対象</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T06:46:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1000,14 +999,15 @@ msg_wbt_menu_wcs</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・msg_wbt_info_03へ</Comment>
+・WCS2011はダウンロードトーナメント内に入るため
+削除ラベルです</Comment>
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:32:12" />
+				Time="2011-07-29T06:06:02" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#808080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1147,11 +1147,11 @@ msg_wbt_menu_wcs</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャッフルマスタートーナメントは
+			<Text>ミックスマスタートーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:31:17" />
+				Time="2011-07-29T06:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1159,11 +1159,11 @@ msg_wbt_menu_wcs</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャッフルマスタートーナメントは
+			<Text>ミックスマスタートーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:31:20" />
+				Time="2011-07-29T06:06:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1908,10 +1908,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャッフル</Text>
+			<Text>ミックス	</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:22:45" />
+				Time="2011-07-29T06:10:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1919,10 +1919,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャッフル</Text>
+			<Text>ミックス</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:22:48" />
+				Time="2011-07-29T06:10:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1988,10 +1988,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャッフルマスター</Text>
+			<Text>ミックスマスター</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:23:05" />
+				Time="2011-07-29T06:10:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1999,10 +1999,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャッフルマスター</Text>
+			<Text>ミックスマスター</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:23:10" />
+				Time="2011-07-29T06:10:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2050,14 +2050,16 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>♀
+・WCS2011はダウンロードトーナメント内に入るため
+削除ラベルです</Comment>
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:23:41" />
+				Time="2011-07-29T06:10:44" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#808080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2176,12 +2178,12 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほんじつの　トーナメントは
-すべて　しゅうりょう　しています▼
-またの　おこしを　おまちしております</Text>
+			<Text>かりメッセージ▼
+ちほうの　リーダーズトーナメントに
+さんか　できるように　なりました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T07:56:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2189,12 +2191,12 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>本日の　トーナメントは
-すべて　終了しています▼
-またの　ご来場を　お待ちしております</Text>
+			<Text>かりメッセージ▼
+ちほうの　リーダーズトーナメントに
+さんか　できるように　なりました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T07:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2202,12 +2204,11 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>
-・削除対象
-</Comment>
+			<Comment>♀
+・地方リーダーズトーナメント解放時のメッセージ</Comment>
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:40:13" />
+				Time="2011-07-29T07:56:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2375,10 +2376,11 @@ msg_wbt_info_11へ</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・選択肢表示</Comment>
+・ダウンロードトーナメント用
+テンポアップのため削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T06:47:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2396,7 +2398,7 @@ msg_wbt_info_11へ</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#808080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2882,10 +2884,10 @@ msg_wbt_info_11へ</Comment>
 			<Text>さんかできる　じょうけんを
 みたして　いません！▼
 さんかするには　ポケモンを
-６ひき　よういしてください▼</Text>
+４～６ひき　よういしてください▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-28T14:10:45" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T06:11:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2896,10 +2898,10 @@ msg_wbt_info_11へ</Comment>
 			<Text>参加できる　条件を
 満たして　いません！▼
 参加するには　ポケモンを
-６匹　用意してください▼</Text>
+４～６匹　用意してください▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-28T14:11:03" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T06:11:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3717,11 +3719,10 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN">
 			<Comment>♀
 ポケモン選択に異常があった場合
-・つづけてエラー内容に合わせて
-メッセージ表示</Comment>
+・msg_wbt_info_04へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T06:52:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3750,12 +3751,12 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それでは　だい１かいせんを
-かいし　いたします▼
-こちらへ　どうぞ！▼</Text>
+			<Text>かりメッセージ▼
+こんかい　ようい　させて　いただいた
+ポケモンは　こちらに　なります▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T06:50:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3763,12 +3764,12 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それでは　第１回戦を
-開始いたします▼
-こちらへ　どうぞ！▼</Text>
+			<Text>かりメッセージ▼
+こんかい　ようい　させて　いただいた
+ポケモンは　こちらに　なります▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T06:50:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3777,11 +3778,11 @@ msg_wbt_info_11へ</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-トーナメントリスト表示後
-・会場内に案内するアニメ表示</Comment>
+レンタルトーナメント選択時
+・つづけてポケモン選択画面へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T06:50:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3799,7 +3800,7 @@ msg_wbt_info_11へ</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ff78ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4106,11 +4107,10 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN">
 			<Comment>♀
 ・トーナメント解放時のメッセージ
-※暫定
-タグで対応する？</Comment>
+※暫定</Comment>
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:13:30" />
+				Time="2011-07-29T06:13:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4415,11 +4415,11 @@ msg_wbt_info_11へ</Comment>
 			<Text>かりメッセージ
 この　トーナメントに▽
 ゆうしょう　すると▼
-シャッフルマスタートーナメントに
+ミックスマスタートーナメントに
 さんか　できますよ▼</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:53:53" />
+				Time="2011-07-29T07:36:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4430,11 +4430,11 @@ msg_wbt_info_11へ</Comment>
 			<Text>かりメッセージ
 この　トーナメントに▽
 ゆうしょう　すると▼
-シャッフルマスタートーナメントに
+ミックスマスタートーナメントに
 さんか　できますよ▼</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:53:53" />
+				Time="2011-07-29T07:36:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4443,12 +4443,12 @@ msg_wbt_info_11へ</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・シャッフルマスタートーナメントの解禁条件が揃っている場合に表示
+・ミックスマスタートーナメントの解禁条件が揃っている場合に表示
 ・つづけてmsg_wbt_info_17へ
 </Comment>
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:53:53" />
+				Time="2011-07-29T07:36:57" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5899,6 +5899,57 @@ msg_wbt_info_11へ</Comment>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_notice_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+タイプエキスパートトーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T07:34:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T07:34:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+タイプエキスパートトーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T07:34:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T07:34:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・タイプエキスパートトーナメントの解禁条件が揃っている場合に表示
+・つづけてmsg_wbt_info_17へ
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T07:34:44" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
