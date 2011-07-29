@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-07-28T20:36:54" source="m_dun2701_00_00.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-07-29T15:29:03" source="m_dun2701_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2011-07-28T20:36:54" source="m_dun2701_00_00.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2011-07-29T15:29:03" source="m_dun2701_00_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -111,10 +111,10 @@
 		path="C:/home/swan_data3d/field/out70/chip/tex/h_kage.tga"
 	>
 		<bitmap size="32">
-			2020 2020 2020 2020 2020 2020 2020 2020
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 4040 4040 4040 4040 4040 4040 4040
+			2020 2020 2020 2020 4020 4040 4040 2040
+			4020 4040 4040 2040 4020 4040 4040 2040
+			4020 4040 4040 2040 4020 4040 4040 2040
+			4020 4040 4040 2040 2020 2020 2020 2020
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="out70_dan1"
