@@ -174,6 +174,7 @@ static GFL_PROC_RESULT BEACON_MEDALINFO_ProcTerm( GFL_PROC * p_proc, int * seq ,
   {
     MEDAL_INFO *p_info = &p_wk->init_param.p_info_list[i];
     GFL_STR_DeleteBuffer( p_info->p_trainer_name );
+    ONOUE_Printf("データ開放[%d]\n",i);
   }
 
   // メダル情報を開放する
@@ -204,6 +205,7 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
 
   int i,max;
   u16 tmpTime;
+  u16 data_index = 0;
 
   //テンポラリを作成
   GAMEBEACON_INFO *tmpInfo = GAMEBEACON_Alloc( p_wk->heapID );
@@ -220,10 +222,16 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
 
   // データ数を調べる
   for(i = 0;i < max;i++){
+    u32 pm_version;
     GAMEBEACON_InfoTblRing_GetBeacon( infoLog, tmpInfo, &tmpTime, i );
+    pm_version = GAMEBEACON_Get_PmVersion( tmpInfo );
 
     if( GAMEBEACON_Check_Error( tmpInfo ) || 
         GAMEBEACON_Check_NPC( tmpInfo ) ){
+      continue;
+    }
+    // バージョン指定
+    if( !(( pm_version == VERSION_W2 ) || ( pm_version == VERSION_B2 )) ){
       continue;
     }
     p_wk->init_param.list_size ++;
@@ -234,25 +242,39 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
     s32 data_lng = p_wk->init_param.list_size;
     p_wk->init_param.p_info_list = 
       GFL_HEAP_AllocClearMemory( p_wk->heapID, sizeof(GAMEBEACON_INFO)*data_lng);
+    ONOUE_Printf("データ確保数[%d]\n",data_lng);
   }
  
   // データを格納する
   for(i = 0;i < max;i++){
-    MEDAL_INFO *p_info = &p_wk->init_param.p_info_list[i];
+    u32 pm_version;
+    MEDAL_INFO *p_info;
     GAMEBEACON_InfoTblRing_GetBeacon( infoLog, tmpInfo, &tmpTime, i );
+    pm_version = GAMEBEACON_Get_PmVersion( tmpInfo );
 
     if( GAMEBEACON_Check_Error( tmpInfo ) || 
         GAMEBEACON_Check_NPC( tmpInfo ) ){
+         continue;
+    }
+    // バージョン指定
+    if( !(( pm_version == VERSION_W2 ) || ( pm_version == VERSION_B2 )) ){
       continue;
     }
 
+    // データ各の先を取得
+    p_info = &p_wk->init_param.p_info_list[data_index];
+
     // 名前用バッファを生成
     p_info->p_trainer_name = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE ,p_wk->heapID );
+    ONOUE_Printf("名前生成[%d]\n",data_index);
 
     GAMEBEACON_Get_PlayerNameToBuf( tmpInfo , p_info->p_trainer_name );
     p_info->medal_id  = GAMEBEACON_Get_PushMedal( tmpInfo );
     p_info->medal_cnt = GAMEBEACON_Get_MedalCount( tmpInfo );
     p_info->box_rank  = 0;
+
+    // データインデックスを進める
+    data_index ++;
   }
 
   // データが取得できなかった場合はアプリを終了させる
