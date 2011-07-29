@@ -233,6 +233,10 @@ typedef struct
   int seq;
   int subseq;
 
+  // VBLANK 処理
+  GFL_TCB    *vblank_task;
+  int        bgLogoRequest; // VBlank内BG転送リクエストフラグ
+
 #ifdef PKWD_SELECT_SCREEN_TASKMENU
 	//タスクメニュー
 	APP_TASKMENU_RES					*menu_res;
@@ -256,7 +260,7 @@ typedef struct
 #endif	//PKWD_SELECT_SCREEN_PRINT_TOOL
 
   // カーソル処理
-  u16 nowpos, oldpos;
+  s16 nowpos, oldpos;
   int isTouch;
   BLINKPALANM_WORK *blinkWork[4];
   
@@ -350,8 +354,8 @@ static void PkwdSelectScreen_POKE2D_LoadResourceOBJ( PKWD_SELECT_SCREEN_MAIN_WOR
 static void PkwdSelectScreen_POKE2D_UnLoadResourceOBJ( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 static void PkwdSelectScreen_POKE2D_CreateCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
 static void PkwdSelectScreen_POKE2D_DeleteCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
-static void PkwdSelectScreen_LOGO_u_LoadResource( PKWD_SELECT_SCREEN_BG_WORK *wk, int scenario_no );
 #endif //PKWD_SELECT_SCREEN_POKE2D
+static void PkwdSelectScreen_LOGO_u_LoadResource( PKWD_SELECT_SCREEN_BG_WORK *wk, int scenario_no, int index );
 
 
 static BOOL PrintTool_MainFunc( PKWD_SELECT_SCREEN_MAIN_WORK * wk );
@@ -365,6 +369,7 @@ static void PrintInit( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 static void PrintExit( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 static void _message_print( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int msg_id );
 static void _blink_palanime_init( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
+static void VBlankFunc( GFL_TCB *tcb, void * work );
 
 static BOOL SubSeqFunc( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 
@@ -489,11 +494,17 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
     wk->nowpos  = -1;
     wk->isTouch = TRUE;
   }else{
+    _draw_movie_subtitle( wk, wk->nowpos );
     wk->isTouch = FALSE;
   }
+  wk->bgLogoRequest=TRUE;
 
   // ワーク初期化
   wk->seq = 0;
+  
+  // VBlankFunc登録
+  wk->vblank_task = GFUser_VIntr_CreateTCB( VBlankFunc, wk, 1 );
+
 
 	//@todo	フェードシーケンスがないので
 //	GX_SetMasterBrightness(0);
@@ -551,6 +562,9 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Exit( GFL_PROC *proc, int *seq, void
 { 
 	PKWD_SELECT_SCREEN_MAIN_WORK* wk = mywk;
   int i;
+
+  // vblankFunc解放
+	GFL_TCB_DeleteTask( wk->vblank_task );
 
   // BMP解放
   PrintTool_DelBmpWin( wk );
@@ -637,7 +651,7 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Main( GFL_PROC *proc, int *seq, void
   }
 
   // デバッグボタンでアプリ終了
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
   {
 //    return GFL_PROC_RES_FINISH;
     wk->param->mode ^= 1;
@@ -679,6 +693,27 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Main( GFL_PROC *proc, int *seq, void
 
   return GFL_PROC_RES_CONTINUE;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief VBlank割り込み関数
+ *
+ * @param   tcb   
+ * @param   work    
+ */
+//----------------------------------------------------------------------------------
+static void VBlankFunc( GFL_TCB *tcb, void * work )
+{
+  PKWD_SELECT_SCREEN_MAIN_WORK* wk = (PKWD_SELECT_SCREEN_MAIN_WORK*)work;
+
+  //パレット転送
+  if( wk->bgLogoRequest){
+    PkwdSelectScreen_LOGO_u_LoadResource( &wk->wk_bg, wk->scenario_no[wk->nowpos], wk->nowpos );
+    wk->bgLogoRequest = 0;
+  }
+}
+
+
 //=============================================================================
 /**
  *								static関数
@@ -743,6 +778,19 @@ static void PkwdSelectScreen_BG_LoadResource( PKWD_SELECT_SCREEN_BG_WORK* wk, HE
 	GFL_ARC_CloseDataHandle( handle );
 }
 
+// シナリオデータからタイトルロゴデータを引っ張るためのテーブル
+static const u8 scenario_logo_tbl[]={
+  0,  1,  2,  0,  //  1 -  4本目  
+  1,  1,  1,  1,  //  5 -  8本目
+  2,  2,  2,  2,  //  9 - 12本目  
+  3,  3,  3,  3,  // 13 - 16本目
+  4,  4,  4,  4,  // 17 - 20本目  
+  5,  5,  5,  5,  // 21 - 24本目
+  6,  6,  6,  6,  // 25 - 28本目  
+  7,  7,  7,  7,  // 29 - 32本目
+  8,  8,  8,  8,  // 33 - 36本目  
+  9,  9,  9,  9,  // 37 - 40本目
+};
 
 //----------------------------------------------------------------------------------
 /**
@@ -750,23 +798,25 @@ static void PkwdSelectScreen_BG_LoadResource( PKWD_SELECT_SCREEN_BG_WORK* wk, HE
  *
  * @param   wk		      PKWD_SELECT_SCREEN_MAIN_WORK
  * @param   scenario_no	シナリオNO（-1のときはシナリオ指定なし）
+ * @param   index       カーソル位置
  */
 //----------------------------------------------------------------------------------
-static void PkwdSelectScreen_LOGO_u_LoadResource( PKWD_SELECT_SCREEN_BG_WORK *wk, int scenario_no )
+static void PkwdSelectScreen_LOGO_u_LoadResource( PKWD_SELECT_SCREEN_BG_WORK *wk, int scenario_no, int index )
 {
   int pal, cgx, scr;
   ARCHANDLE	*handle;
 
-  if(scenario_no==-1){
+  // タッチ待ちでカーソルがどこにも無いときは空白ロゴを転送
+  if(index==-1){
     pal = NARC_pkwd_announce_gra_pkwd_title99_logo_NCLR;
     cgx = NARC_pkwd_announce_gra_pkwd_title99_logo_NCGR;
     scr = NARC_pkwd_announce_gra_pkwd_title99_NSCR;
   }else{
-    int index = scenario_no / 4;  // @todo一つの映画は４つずつらしいので。
-    pal = pwc_bgpal_01_tbl[index].arcid;
-    cgx = pwc_bgchr_01_tbl[index].arcid;
-    scr = pwc_bgscn_01_tbl[index].arcid;
+    pal = pwc_bgpal_01_tbl[scenario_logo_tbl[scenario_no]].arcid;
+    cgx = pwc_bgchr_01_tbl[scenario_logo_tbl[scenario_no]].arcid;
+    scr = pwc_bgscn_01_tbl[scenario_logo_tbl[scenario_no]].arcid;
   }
+  OS_Printf("scenario_no=%d\n", scenario_no);
 
 	handle	= GFL_ARC_OpenDataHandle( ARCID_PKWD_ANNOUNCE, HEAPID_PKWD_SELSCR );
 
@@ -1111,7 +1161,7 @@ static BOOL PrintTool_MainFunc( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
 #define TITLE_WIN_W ( 26 )
 #define TITLE_WIN_H (  5 )
 #define SUBTITLE_WIN1_W  ( 26 )
-#define SUBTITLE_WIN1_H  (  2 )
+#define SUBTITLE_WIN1_H  (  3 )
 #define SUBTITLE_WIN2_W  ( 26 )
 #define SUBTITLE_WIN2_H  (  4 )
 #define MSGWIN_W      ( 28 )
@@ -1145,10 +1195,10 @@ static const BMPWIN_DAT bmpdat[]={
     GFL_BG_FRAME2_M, TITLE_PAL, 5, 15, TITLE_WIN_W, TITLE_WIN_H,
   },
   { // 上画面サブタイトル１
-    GFL_BG_FRAME0_S, SUBTITLE_PAL, 3,  1, SUBTITLE_WIN1_W, SUBTITLE_WIN1_H,
+    GFL_BG_FRAME0_S, SUBTITLE_PAL, 3,  0, SUBTITLE_WIN1_W, SUBTITLE_WIN1_H,
   },
   { // 上画面サブタイトル２
-    GFL_BG_FRAME0_S, SUBTITLE_PAL, 3, 17, SUBTITLE_WIN2_W, SUBTITLE_WIN2_H,
+    GFL_BG_FRAME0_S, SUBTITLE_PAL, 3, 16, SUBTITLE_WIN2_W, SUBTITLE_WIN2_H,
   },
   { // メッセージウインドウ
     GFL_BG_FRAME0_M, MSGWIN_PAL, 2, 1, MSGWIN_W, MSGWIN_H,
@@ -1265,6 +1315,8 @@ static int _touch_input( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
     if(wk->load_result[result]){
       wk->isTouch = TRUE;
       wk->nowpos = result;
+      wk->bgLogoRequest=TRUE;
+      _draw_movie_subtitle( wk, wk->nowpos );
       return result;
     }
   }
@@ -1282,13 +1334,17 @@ static int _key_input( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
     
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
       if(wk->nowpos!=0){
-        PMSND_PlaySE( SE_PKWDSELECT_MOVE );
-        wk->nowpos--;
+        if(wk->load_result[wk->nowpos-1]){
+          PMSND_PlaySE( SE_PKWDSELECT_MOVE );
+          wk->nowpos--;
+        }
       }
     }else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
       if(wk->nowpos<3){
-        PMSND_PlaySE( SE_PKWDSELECT_MOVE );
-        wk->nowpos++;
+        if(wk->load_result[wk->nowpos+1]){
+          PMSND_PlaySE( SE_PKWDSELECT_MOVE );
+          wk->nowpos++;
+        }
       }
     }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
       return wk->nowpos;
@@ -1431,7 +1487,7 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_U].win), 0 );
   GFL_MSG_GetString( wk->msg, pw_movietitle_01+wk->scenario_no[index], strbuf );
   _centering_print( &wk->print_util[PKWD_BMP_SUBTITLE_U], wk->print_que, 
-                    strbuf, 0, wk->font, PRINTSYS_LSB_Make( 15, 14, 0 ) );
+                    strbuf, 6, wk->font, PRINTSYS_LSB_Make( 15, 14, 0 ) );
   
   // 下部を描画
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_D].win), 0 );
@@ -1458,8 +1514,8 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
 //----------------------------------------------------------------------------------
 static void SubTitle_Func( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
-  if(wk->oldpos!=wk->nowpos){
-    PkwdSelectScreen_LOGO_u_LoadResource( &wk->wk_bg, wk->scenario_no[wk->nowpos] );
+  if(wk->oldpos!=wk->nowpos && wk->nowpos>=0){
+    wk->bgLogoRequest=TRUE;
     _draw_movie_subtitle( wk, wk->nowpos );
     BLINKPALANM_InitAnimeCount(wk->blinkWork[wk->nowpos] );
   }
