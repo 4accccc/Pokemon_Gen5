@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-07-28T19:12:51" source="pkwd_field02d_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-07-29T21:24:05" source="pkwd_field02d_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-07-28T19:12:51" source="pkwd_field02d_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-07-29T21:24:05" source="pkwd_field02d_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1393,7 +1393,55 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="lambert1"
+	<material index="1" name="efect_love_2"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="7"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="2" name="efect_love_3"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="17"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="3" name="lambert1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1411,54 +1459,6 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="-1" tex_palette_idx="-1"
-	/>
-	<material index="2" name="lambert27"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="4"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="3" name="lambert28"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="13"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
 	/>
 	<material index="4" name="park_bench_1"
 		light0="off" light1="off" light2="off" light3="off"
@@ -5203,14 +5203,14 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="-1099.062500 419.687500"/>
+					<tex st="-1247.062500 418.437500"/>
 					<clr rgb="29 22 26"/>
 					<pos_xyz xyz="-0.031250 -0.028809 0.000000"/>
-					<tex st="1131.062500 419.687500"/>
+					<tex st="1279.062500 418.437500"/>
 					<pos_xy xy="0.031250 -0.028809"/>
-					<tex st="1131.062500 371.312500"/>
+					<tex st="1279.062500 370.062500"/>
 					<pos_xy xy="0.031250 -0.026611"/>
-					<tex st="-1099.062500 371.312500"/>
+					<tex st="-1247.062500 370.062500"/>
 					<pos_xy xy="-0.031250 -0.026611"/>
 				</primitive>
 			</primitive_array>
@@ -5230,14 +5230,14 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="-1099.062500 371.312500"/>
+					<tex st="-1247.062500 370.062500"/>
 					<clr rgb="29 22 26"/>
 					<pos_xyz xyz="-0.031250 -0.026611 0.000000"/>
-					<tex st="1131.062500 371.312500"/>
+					<tex st="1279.062500 370.062500"/>
 					<pos_xy xy="0.031250 -0.026611"/>
-					<tex st="1131.062500 318.062500"/>
+					<tex st="1279.062500 316.812500"/>
 					<pos_xy xy="0.031250 -0.024170"/>
-					<tex st="-1099.062500 318.062500"/>
+					<tex st="-1247.062500 316.812500"/>
 					<pos_xy xy="-0.031250 -0.024170"/>
 				</primitive>
 			</primitive_array>
@@ -5257,15 +5257,15 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="1131.062500 318.062500"/>
+					<tex st="1279.062500 316.812500"/>
 					<clr rgb="29 22 26"/>
 					<pos_xyz xyz="0.031250 -0.024170 0.000000"/>
-					<tex st="1131.062500 -387.687500"/>
+					<tex st="1279.062500 -389.000000"/>
 					<clr rgb="12 7 10"/>
 					<pos_xy xy="0.031250 0.006836"/>
-					<tex st="-1099.062500 -387.687500"/>
+					<tex st="-1247.062500 -389.000000"/>
 					<pos_xy xy="-0.031250 0.006836"/>
-					<tex st="-1099.062500 318.062500"/>
+					<tex st="-1247.062500 316.812500"/>
 					<clr rgb="29 22 26"/>
 					<pos_xy xy="-0.031250 -0.024170"/>
 				</primitive>
@@ -6869,7 +6869,7 @@
 		volume_max="6.250977 5.439453 2.700195"
 		volume_r="8.323975"
 	>
-		<display index="0" material="1" polygon="3" priority="0"/>
+		<display index="0" material="3" polygon="3" priority="0"/>
 		<display index="1" material="10" polygon="2" priority="0"/>
 	</node>
 	<node index="4" name="bench2" kind="mesh"
@@ -7216,8 +7216,8 @@
 		volume_r="0.042480"
 	>
 		<display index="0" material="0" polygon="27" priority="0"/>
-		<display index="1" material="2" polygon="25" priority="0"/>
-		<display index="2" material="3" polygon="26" priority="0"/>
+		<display index="1" material="1" polygon="25" priority="0"/>
+		<display index="2" material="2" polygon="26" priority="0"/>
 	</node>
 	<node index="21" name="polySurface33" kind="mesh"
 		parent="0"
