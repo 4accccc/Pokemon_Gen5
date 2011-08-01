@@ -1355,6 +1355,11 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
     { ZONE_ID_R04,     NARC_grid_camera_scene_camera_scene_R04_dat },
     { ZONE_ID_H04,     NARC_grid_camera_scene_camera_scene_H04_dat },
     { ZONE_ID_C09P02,  NARC_grid_camera_scene_camera_scene_C09P02_dat },
+    // swan’Ç‰Á
+    { ZONE_ID_C12,     NARC_grid_camera_scene_camera_scene_C12_dat },
+    { ZONE_ID_BC10,    NARC_grid_camera_scene_camera_scene_BC10_dat },
+    { ZONE_ID_WC10,    NARC_grid_camera_scene_camera_scene_WC10_dat },
+    { ZONE_ID_R04W,    NARC_grid_camera_scene_camera_scene_R04W_dat },
   };
   zone_id = ControlZoneID(zone_id);
   
