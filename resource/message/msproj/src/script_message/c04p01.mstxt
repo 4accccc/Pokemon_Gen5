@@ -2,6 +2,72 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c04p01_glasses_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おや？　ちょうせんしゃ　っすか？▼
+もうしわけない　ですね
+ジムリーダー　なんですけど▽
+ちょいと　るすに　してまして……▼
+いきさきは　わかってます
+この　ゆうえんちの　いりぐちちかく▼
+ジェットコースターに　のれる
+たてものに　いる　はずなんすよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:00:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T07:54:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おや？　挑戦者っすか？▼
+申し訳ないですね
+ジムリーダー　なんですけど▽
+ちょいと　留守に　してまして……▼
+行き先は　わかってます
+この遊園地の　入り口近く▼
+ジェットコースターに　乗れる
+建物に　いる　はずなんすよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:00:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T07:54:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ジムバッジ取得前
+・ジムのストッパー
+　c04r1101イベントクリアで削除
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:00:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANPEI
+ダンペイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T07:54:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c04p01_clown1_01"
 		Style="Large">
 		<LanguageCell

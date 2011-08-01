@@ -1,3 +1,92 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c04r0101_adultw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら？　もしかして
+ジムリーダーを　さがしに　きたの▼
+ざんねんね……　ちょうど　いれかわりで
+ジムに　むかっていったわ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:07:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:06:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら？　もしかして
+ジムリーダーを　さがしに　きたの▼
+ざんねんね……　ちょうど　いれかわりで
+ジムに　むかっていったわ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:12:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:12:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・c04ジムバッジ取得で削除
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:08:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ADULTW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:06:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0101_adultw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダーね
+ジェットコースターの　スリルで▽
+むしんに　なるのが　すきだって</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:12:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:08:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダーね
+ジェットコースターの　スリルで▽
+むしんに　なるのが　すきだって</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:12:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:12:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・adultw_01表示後に会話
+・c04ジムバッジ取得まで繰り返し
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T08:14:54" />
+		</CommentCell>
+	</TextRow>
+</MessageStudioText>
