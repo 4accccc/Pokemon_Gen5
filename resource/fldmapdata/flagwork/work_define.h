@@ -245,6 +245,8 @@
 #define WK_SCENE_C01R0501_QUIZ1_01       16633 /* 0x40f9 サンヨウシティ：トレーナーズスクールのふわふわボーイクイズ制御 */
 #define WK_SCENE_D27R1001_BARRIER_01     16634 /* 0x40fa プラズマフリゲート：バリアー制御POS */
 #define WK_SCENE_D27R1201_BARRIER_01     16635 /* 0x40fb プラズマフリゲート：バリアー制御POS */
+#define WK_SCENE_C03R0301_BTLCOM_01      16636 /* 0x40fc バトルカンパニー：POS制御ワーク */
+#define WK_SCENE_C03R0303_BTLCOM_01      16637 /* 0x40fd バトルカンパニー：POS制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

@@ -374,9 +374,9 @@
 #define FE_INFDUNGEON_TUTORIAL_01          358 /* 0x0166 無限ダンジョン：チュートリアルフラグ（通常部屋） */
 #define FE_INFDUNGEON_TUTORIAL_02          359 /* 0x0167 無限ダンジョン：チュートリアルフラグ（ボス部屋） */
 #define FE_INFDUNGEON_TUTORIAL_03          360 /* 0x0168 無限ダンジョン：チュートリアルフラグ（通常部屋） */
-		/* not used   361(0x0169) */
-		/* not used   362(0x016a) */
-		/* not used   363(0x016b) */
+#define FE_C03R0301_ITEMGET_01             361 /* 0x0169 バトルカンパニー：アイテム入手フラグ */
+#define FE_C03R0302_ITEM_03                362 /* 0x016a バトルカンパニー：アイテム入手フラグ */
+#define FE_NAKIGOE_ITEMGET_01              363 /* 0x016b 4番道路民家（r04r0501 */
 		/* not used   364(0x016c) */
 		/* not used   365(0x016d) */
 		/* not used   366(0x016e) */
@@ -667,6 +667,7 @@
 #define FV_R18_DPLEADER5_01                749 /* 0x02ed 18番道路：マキシ */
 #define FV_D31R0601_MUGENBOSS_01           750 /* 0x02ee 無限ダンジョンB：ボス */
 #define FV_D31R0501_MUGENBOSS_01           751 /* 0x02ef 無限ダンジョンW：ボス */
+#define FV_C03R0301_CLEANINGM_01           752 /* 0x02f0 バトルカンパニー：1F清掃員 */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
