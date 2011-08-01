@@ -36,6 +36,12 @@
 //include/multiboot/wb_save_convert.hÇÃWB_SAVE_CONV_WORKÇÃèáî‘Ç∆ëŒâû
 #define DATACONV_N_BATTLE_RAIMON        ( 0)
 
+
+//include/savedata/data_convert_save.hÇÃDATA_CONVERT_OWNERÇÃèáî‘Ç∆ëŒâû
+#define DATACONV_ID_SYSTEM           ( 0)
+#define DATACONV_ID_MUSICAL          ( 1)
+#define DATACONV_ID_DENDOU           ( 2)
+
 //=============================================================================
 /**
  *					äOïîåˆäJä÷êî
@@ -44,4 +50,9 @@
 #ifndef	ASM_CPP
 extern VMCMD_RESULT EvCmdDataConv_GetFlag( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdDataConv_GetWork( VMHANDLE *p_core, void *p_wk_adrs );
+
+extern VMCMD_RESULT EvCmdDataConv_IsExist( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdDataConv_WordSetOwnerName( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdDataConv_IsConvertMusical( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdDataConv_ConvertMusical( VMHANDLE *p_core, void *p_wk_adrs );
 #endif //ASM_CPP

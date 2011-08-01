@@ -67,7 +67,8 @@ typedef struct
   STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
   u8      sex;
   u8      version;
-  u8      dummy[2];
+  u8      is_exist;
+  u8      dummy;
 }WB_SAVE_CONV_OWNER;
 
 //----------------------------------------------------------

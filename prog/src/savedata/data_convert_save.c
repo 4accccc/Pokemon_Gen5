@@ -32,7 +32,7 @@ struct _DATA_CONVERT_SAVE
   WB_SAVE_CONV_DATA   data;
 };
 
-//SDK_COMPILER_ASSERT( DATA_CONVERT_SAVE_WORK_SIZE == sizeof(DATA_CONVERT_SAVE) );
+SDK_COMPILER_ASSERT( DATA_CONVERT_SAVE_WORK_SIZE == sizeof(DATA_CONVERT_SAVE) );
 
 //=============================================================================
 /**
@@ -219,6 +219,7 @@ static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE
       if( is_convert[i] )
       {
         p_wk->owner[i]  = *cp_src_owner;
+        p_wk->owner[i].is_exist = TRUE;
       }
     }
   }
@@ -266,11 +267,17 @@ u32 DATA_CONVERT_SAVE_GetData( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_GET_
     return 0;
 
   case DATA_CONVERT_GET_ID_OWNER:  //p_data_adrsからWB_SAVE_CONV_OWNER構造体で受け取る
-    GFL_STD_MemCopy( &cp_wk->owner, p_data_adrs, sizeof(WB_SAVE_CONV_OWNER) );
-    return 0;
+    if( p_data_adrs )
+    {
+      GFL_STD_MemCopy( &cp_wk->owner, p_data_adrs, sizeof(WB_SAVE_CONV_OWNER) );
+    }
+    return (u32)&cp_wk->owner;
   case DATA_CONVERT_GET_ID_MUSICAL_ITEMBIT:  //p_data_adrsからu8のWB_SAVE_CONV_MUSICAL_ITEM_BIT配列で受け取る
-    GFL_STD_MemCopy( cp_wk->data.musical_item, p_data_adrs, sizeof(u8)*WB_SAVE_CONV_MUSICAL_ITEM_BIT);
-    return 0;
+    if( p_data_adrs )
+    {
+      GFL_STD_MemCopy( cp_wk->data.musical_item, p_data_adrs, sizeof(u8)*WB_SAVE_CONV_MUSICAL_ITEM_BIT);
+    }
+    return (u32)cp_wk->data.musical_item;
   default:
     GF_ASSERT(0);
   }
@@ -307,7 +314,61 @@ u16 DATA_CONVERT_SAVE_GetWork( const DATA_CONVERT_SAVE *cp_wk, WB_SAVE_CONV_WORK
   GF_ASSERT( wk < WB_SAVE_CONV_WORK_MAX );
   return cp_wk->data.work[ wk ];
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  IDごとのコンバートデータがあるかどうか
+ *
+ *	@param	const DATA_CONVERT_SAVE *cp_wk  ワーク
+ *	@param	id  ID
+ *
+ *	@return TRUEなら存在  FALSEならなし
+ */
+//-----------------------------------------------------------------------------
+BOOL DATA_CONVERT_SAVE_IsExist( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_OWNER id )
+{
+  GF_ASSERT( id < DATA_CONVERT_OWNER_MAX );
+  return cp_wk->owner[id].is_exist;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  性別を取得
+ *
+ *	@param	const DATA_CONVERT_SAVE *cp_wk  ワーク
+ *	@param	id  ID
+ *
+ *	@return 性別
+ */
+//-----------------------------------------------------------------------------
+u8 DATA_CONVERT_SAVE_GetSex( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_OWNER id )
+{
+  GF_ASSERT( id < DATA_CONVERT_OWNER_MAX );
+  return cp_wk->owner[id].sex;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  名前を取得
+ *
+ *	@param	const DATA_CONVERT_SAVE *cp_wk  ワーク
+ *	@param	id  ID
+ *
+ *	@return STRCODEのポインタ
+ */
+//-----------------------------------------------------------------------------
+const STRCODE * DATA_CONVERT_SAVE_GetName( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_OWNER id )
+{
+  GF_ASSERT( id < DATA_CONVERT_OWNER_MAX );
+  return cp_wk->owner[id].name;
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ設定
+ *
+ *	@param	DATA_CONVERT_SAVE *p_wk ワーク
+ *	@param	id    ID
+ *	@param	data  データ
+ */
+//-----------------------------------------------------------------------------
 void DATA_CONVERT_SAVE_SetData( DATA_CONVERT_SAVE *p_wk, DATA_CONVERT_GET_ID id, u32 data )
 {
   switch( id )
@@ -344,6 +405,15 @@ void DATA_CONVERT_SAVE_SetData( DATA_CONVERT_SAVE *p_wk, DATA_CONVERT_GET_ID id,
     GF_ASSERT(0);
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フラグを設定
+ *
+ *	@param	DATA_CONVERT_SAVE *p_wk ワーク
+ *	@param	flag  フラグ
+ *	@param	on_off フラグをON,OFFするかどうか
+ */
+//-----------------------------------------------------------------------------
 void DATA_CONVERT_SAVE_SetFlag( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_FLAG flag, BOOL on_off )
 {
   GF_ASSERT( flag < WB_SAVE_CONV_FLAG_MAX );
@@ -357,6 +427,15 @@ void DATA_CONVERT_SAVE_SetFlag( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_FLAG flag,
     p_wk->data.flag[ flag/8 ] &= ~(1<<(flag%8));
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワークに値を設定
+ *
+ *	@param	DATA_CONVERT_SAVE *p_wk ワーク
+ *	@param	wk    ワーク番号
+ *	@param	value 値
+ */
+//-----------------------------------------------------------------------------
 void DATA_CONVERT_SAVE_SetWork( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_WORK wk, u16 value )
 {
   GF_ASSERT( wk < WB_SAVE_CONV_WORK_MAX );

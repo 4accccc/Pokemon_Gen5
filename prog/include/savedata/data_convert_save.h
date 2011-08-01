@@ -73,6 +73,9 @@ extern BOOL DATA_CONVERT_SAVE_IsSameOwner( const DATA_CONVERT_SAVE *cp_wk, const
 extern u32 DATA_CONVERT_SAVE_GetData( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_GET_ID id, void *p_data_adrs );
 extern BOOL DATA_CONVERT_SAVE_GetFlag( const DATA_CONVERT_SAVE *cp_wk, WB_SAVE_CONV_FLAG flag );
 extern u16 DATA_CONVERT_SAVE_GetWork( const DATA_CONVERT_SAVE *cp_wk, WB_SAVE_CONV_WORK wk );
+extern BOOL DATA_CONVERT_SAVE_IsExist( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_OWNER id );
+extern u8 DATA_CONVERT_SAVE_GetSex( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_OWNER id );
+extern const STRCODE * DATA_CONVERT_SAVE_GetName( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_OWNER id );
 
 extern void DATA_CONVERT_SAVE_SetData( DATA_CONVERT_SAVE *p_wk, DATA_CONVERT_GET_ID id, u32 data );
 extern void DATA_CONVERT_SAVE_SetFlag( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_FLAG flag, BOOL on_off );

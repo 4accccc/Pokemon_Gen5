@@ -2927,4 +2927,107 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_swan_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふーむ！　やはり　あなたには
+かつて　ミュージカルを　さわがせた▽
+とある　スーパースターと▽
+よく　にた　オーラを　かんじます！▼
+そこで　わたしから　プレゼント！▼
+これは　かつての　スーパースターが
+つかっていた　ものと▽
+おなじ　グッズの　つめあわせです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:27:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふーむ！　やはり　あなたには
+かつて　ミュージカルを　さわがせた▽
+とある　スーパースターと▽
+よく　にた　オーラを　かんじます！▼
+そこで　わたしから　プレゼント！▼
+これは　かつての　スーパースターが
+つかっていた　ものと▽
+おなじ　グッズの　つめあわせです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:49:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:49:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_swan_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたなら　きっと
+それらの　グッズを▽
+つかいこなせる　ことでしょう！▼
+では　ぜひぜひ　ミュージカルに
+さんか　してくださいませ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:49:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたなら　きっと
+それらの　グッズを▽
+つかいこなせる　ことでしょう！▼
+では　ぜひぜひ　ミュージカルに
+さんか　してくださいませ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:49:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:49:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

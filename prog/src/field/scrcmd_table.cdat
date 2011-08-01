@@ -1054,10 +1054,10 @@
   //データコンバート
   DEF_CMD( EvCmdDataConv_GetFlag, EV_SEQ_DATACONV_GET_FLAG )
   DEF_CMD( EvCmdDataConv_GetWork, EV_SEQ_DATACONV_GET_WORK )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdDataConv_IsExist, EV_SEQ_DATACONV_IS_EXIST )
+  DEF_CMD( EvCmdDataConv_WordSetOwnerName, EV_SEQ_DATACONV_SET_NAME )
+  DEF_CMD( EvCmdDataConv_IsConvertMusical, EV_SEQ_DATACONV_IS_CONV_MUSICAL )
+  DEF_CMD( EvCmdDataConv_ConvertMusical, EV_SEQ_DATACONV_CONV_MUSICAL )
 
   // 歩数カウント
   DEF_CMD( EvCmdWalkCountStart, EV_SEQ_SC_WALK_CNT_START )

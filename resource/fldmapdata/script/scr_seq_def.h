@@ -14162,6 +14162,71 @@
   .short  \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ * _DATACONV_IS_EXIST コンバートデータが存在するか
+ * @param id        コンバートデータ種類
+ *         DATACONV_ID_SYSTEM …  フラグやワーク
+ *         DATACONV_ID_MUSICAL…  ミュージカル
+ *         DATACONV_ID_DENDOU …  でんどう
+ *
+ * @param ret_wk    ワークの中身
+ */
+//--------------------------------------------------------------
+#define _DATACONV_IS_EXIST( id, ret_wk ) \
+      _ASM_DATACONV_IS_EXIST id, ret_wk
+
+  .macro  _ASM_DATACONV_IS_EXIST id, ret_wk
+  .short  EV_SEQ_DATACONV_IS_EXIST
+  .short  \id
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * _DATACONV_SET_NAME コンバート元持ち主
+ * @param id        コンバートデータ種類
+ *         DATACONV_ID_SYSTEM …  フラグやワーク
+ *         DATACONV_ID_MUSICAL…  ミュージカル
+ *         DATACONV_ID_DENDOU …  でんどう
+ *
+ */
+//--------------------------------------------------------------
+#define _DATACONV_SET_NAME( id ) \
+      _ASM_DATACONV_SET_NAME id
+
+  .macro  _ASM_DATACONV_SET_NAME id
+  .short  EV_SEQ_DATACONV_SET_NAME
+  .short  \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * _DATACONV_IS_CONV_MUSICAL ミュージカルがすでにコンバート済みか
+ * @param ret_wk  TRUEならばコンバート済み  FALSEならまだ
+ */
+//--------------------------------------------------------------
+#define _DATACONV_IS_CONV_MUSICAL( ret_wk ) \
+      _ASM_DATACONV_IS_CONV_MUSICAL ret_wk
+
+  .macro  _ASM_DATACONV_IS_CONV_MUSICAL ret_wk
+  .short  EV_SEQ_DATACONV_IS_CONV_MUSICAL
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * _DATACONV_CONV_MUSICAL ミュージカルをコンバート
+ * @param ret_wk  TRUEならばコンバート済み  FALSEならまだ
+ */
+//--------------------------------------------------------------
+#define _DATACONV_CONV_MUSICAL() \
+      _ASM_DATACONV_CONV_MUSICAL
+
+  .macro  _ASM_DATACONV_CONV_MUSICAL
+  .short  EV_SEQ_DATACONV_CONV_MUSICAL
+  .endm
+
 //======================================================================
 //
 //  ポケウッド
