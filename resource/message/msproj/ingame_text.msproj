@@ -1851,6 +1851,8 @@
 			<ContentItem
 				Name="infinity_dungeon_btl_startmsg.mstxt" />
 			<ContentItem
+				Name="infinity_dungeon_retire.mstxt" />
+			<ContentItem
 				Name="infinity_trname.mstxt" />
 			<ContentItem
 				Name="intro.mstxt" />
