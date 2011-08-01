@@ -283,10 +283,11 @@
 			<Comment>♀
 ・！マーク表示後にメッセージ表示
 ・表示後、d06r0201へ移動
-　画面外に消えると主人公操作可能</Comment>
+　画面外に消えると主人公操作可能
+・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T03:13:30" />
+				Time="2011-08-01T06:26:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
