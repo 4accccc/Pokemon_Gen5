@@ -35,7 +35,7 @@
 
 #include "c_gear_power_onoff.h"
 
-#include "c_gear.naix"
+#include "c_gear_sw.naix"
 
 #include "../event_subscreen.h"
 
@@ -493,21 +493,20 @@ static void PowerOnOff_InitBg( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
 
   // バックグラウンドを設定
   {
-    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, heapID );
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR_SW, heapID );
     MYSTATUS* p_my = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_sys->p_gamesys) );
     u32 sex = MyStatus_GetMySex(p_my);
-    static const u32 _bgpal[]={NARC_c_gear_c_gear_m_NCLR,NARC_c_gear_c_gear_f_NCLR,NARC_c_gear_c_gear_m_NCLR};
-    static const u32 _bgcgx[]={NARC_c_gear_c_gear_m1_NCGR,NARC_c_gear_c_gear_f1_NCGR,NARC_c_gear_c_gear_m1_NCGR};
+    static const u32 _bgpal[]={NARC_c_gear_sw_no_gear_m_nclr,NARC_c_gear_sw_no_gear_f_nclr};
     
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, _bgpal[ sex ],
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, _bgpal[ sex % 2 ],
                                       PALTYPE_SUB_BG, PLTID_BG_BACK_S, 1,  heapID);
     
     // サブ画面BGキャラ転送
-    p_sys->back_area = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, _bgcgx[sex],
+    p_sys->back_area = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_c_gear_sw_no_gear_ncgr,
                                                                   BG_FRAME_BACK_S, 0, FALSE, heapID);
 
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-                                           NARC_c_gear_c_gear01_n_NSCR,
+                                           NARC_c_gear_sw_no_gear_nscr,
                                            BG_FRAME_BACK_S, 0,
                                            GFL_ARCUTIL_TRANSINFO_GetPos(p_sys->back_area), 0, 0,
                                            heapID);

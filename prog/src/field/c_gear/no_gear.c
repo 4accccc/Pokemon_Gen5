@@ -21,7 +21,7 @@
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 
-#include "c_gear.naix"
+#include "c_gear_sw.naix"
 #include "c_gear_obj_NANR_LBLDEFS.h"
 
 #include "msg/msg_c_gear.h"
@@ -217,13 +217,11 @@ static void _changeStateDebug(NO_GEAR_WORK* pWork,StateFunc state, int line)
  */
 //------------------------------------------------------------------------------
 
-static const u32 _bgpal[]={NARC_c_gear_c_gear_m_NCLR,NARC_c_gear_c_gear_f_NCLR,NARC_c_gear_c_gear_m_NCLR};
-static const u32 _bgcgx[]={NARC_c_gear_c_gear_m1_NCGR,NARC_c_gear_c_gear_f1_NCGR,NARC_c_gear_c_gear_m1_NCGR};
-
+static const u32 _bgpal[]={NARC_c_gear_sw_no_gear_m_nclr,NARC_c_gear_sw_no_gear_f_nclr};
 
 static void _gearArcCreate(NO_GEAR_WORK* pWork)
 {
-	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, pWork->heapID );
+	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR_SW, pWork->heapID );
 	MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 	u32 sex = MyStatus_GetMySex(pMy);
 	
@@ -234,11 +232,11 @@ static void _gearArcCreate(NO_GEAR_WORK* pWork)
 
 	
 	// ƒTƒu‰æ–ÊBGƒLƒƒƒ‰“]‘—
-	pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, _bgcgx[sex],
+	pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_c_gear_sw_no_gear_ncgr,
 																																GEAR_MAIN_FRAME, 0, 0, pWork->heapID);
 
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-																				 NARC_c_gear_c_gear01_n_NSCR,
+																				 NARC_c_gear_sw_no_gear_nscr,
 																				 GEAR_MAIN_FRAME, 0,
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
 																				 pWork->heapID);

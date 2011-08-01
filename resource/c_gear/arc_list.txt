@@ -4,6 +4,7 @@
 "no_gear.nscr"
 "c_gear_m.nclr"
 "c_gear_f.nclr"
+"c_gear_ring.nclr"
 "c_gear.ncgr"
 "c_gear01.nscr"
 "c_gear02.nscr"

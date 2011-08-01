@@ -22,5 +22,6 @@ g2dcvtr  c_gear_btn_f5.nce -br
 
 g2dcvtr c_gear_m_obj.ncl
 g2dcvtr c_gear_f_obj.ncl
+g2dcvtr c_gear_ring.ncl
 g2dcvtr c_gear_obj_ani.ncl
 

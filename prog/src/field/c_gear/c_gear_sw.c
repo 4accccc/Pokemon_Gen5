@@ -60,6 +60,7 @@
 #endif
 
 #define OAM_USE_PLTT_NUM (14)
+#define BG_USE_PLTT_NUM (14)
 
 static const u16 _BLACK_COLOR[] = {
   0x0441, //男性用
@@ -168,6 +169,10 @@ enum{
 ///パレット関連定義
 //----------------------------------------------------------
 #define CROSS_COLOR_MAX ( 17 )  //すれ違いアイコン用パレットソース数(お気に入りカラー16色+無効カラー1色)
+#define RING_COLOR_MAX      ( C_GEAR_RING_COLOR_MAX )    //リングカラー数
+#define RING_COLOR_SET_NUM  ( 3 ) //1つにつき、3色分データを持つ
+#define RING_COLOR_DEF_NO ( 0 )   //リングカラーのデフォルト
+#define RING_COLOR__NO ( RING_COLOR_MAX-1 )  //リングの地味カラーNo
 #if 0
 // (u32)配列としてのインデックス
 static const u32 sc_CROSS_COLOR_RES_IDX[CROSS_COLOR_MAX] = {
@@ -399,6 +404,21 @@ static const u16 sc_PANEL_TYPE_TO_COLOR[] = {
 //セルアクター関連
 //--------------------------
 
+///ユーザーレンダラー
+enum {
+  CGEAR_REND_SUB,
+
+  CGEAR_REND_MAX,
+} ;
+static const GFL_REND_SURFACE_INIT sc_REND_SURFACE_INIT[ CGEAR_REND_MAX ] = {
+  {
+    0, 0,
+    256, 192,
+    CLSYS_DRAW_SUB,
+    CLSYS_REND_CULLING_TYPE_NONE,
+  },
+};
+
 //セルアクターリソース種類定義
 typedef enum{
   _CLACT_PLT, //パレット
@@ -436,10 +456,13 @@ enum{
   ACT_CONNECT,
 
   ACT_IR,
+  ACT_IR_RING,
   ACT_IR_STR,
   ACT_WIRELESS,
+  ACT_WIRELESS_RING,
   ACT_WIRELESS_STR,
   ACT_WIFI,
+  ACT_WIFI_RING,
   ACT_WIFI_STR,
 
   ACT_DEF_DRAW_MAX, //デフォルト描画するものMax
@@ -451,7 +474,7 @@ enum{
 #define ACT_TIME_MAX    (ACT_T_MIN2-ACT_T_HOUR1+1)
 #define ACT_NORMAL_MAX  (ACT_MAX-ACT_AMPM_BASE)
 #define ACT_COMMON_MAX  ( ACT_POWER )
-#define ACT_PANEL_SET_NUM (2)
+#define ACT_PANEL_SET_NUM (3)
 
 enum{
  ACTANM_N10,
@@ -486,9 +509,12 @@ enum{
  ACTANM_IR,
  ACTANM_WIRELESS,
  ACTANM_WIFI,
- ACTANM_R_IR,
- ACTANM_R_WIRELSS,
- ACTANM_R_WIFI,
+ ACTANM_RING_IR,
+ ACTANM_RING_WIRELESS,
+ ACTANM_RING_WIFI,
+ ACTANM_LOOP_IR,
+ ACTANM_LOOP_WIRELSS,
+ ACTANM_LOOP_WIFI,
  ACTANM_E_IR,
  ACTANM_E_WIRELSS,
  ACTANM_E_WIFI,
@@ -515,6 +541,7 @@ enum{
  ACT_SPRI_EFFECT,
  ACT_SPRI_PANEL,
  ACT_SPRI_PANEL_BASE,
+ ACT_SPRI_PANEL_RING,
  ACT_SPRI_PARTS,
  ACT_SPRI_BASE, 
 };
@@ -526,7 +553,7 @@ enum{
 #define POS_T_NUM_X       (POS_AMPM_BASE_X-16)
 #define POS_T_NUM_Y       (POS_AMPM_BASE_Y-4)
 #define POS_AMPM_X        (POS_AMPM_BASE_X-8)
-#define POS_AMPM_Y        (POS_T_NUM_Y+8+2)
+#define POS_AMPM_Y        (POS_T_NUM_Y+8)
 #define POS_T_NUM_OX      (6)
 
 #define POS_BATTERY_BASE_X  (26*8)
@@ -590,7 +617,7 @@ enum{
 #define TP_CROSS_L        ( 10*8+4 )
 #define TP_CROSS_R        ( TP_CROSS_L+11*8 )
 #define TP_LOGO_T          ( POS_LOGO_Y )
-#define TP_LOGO_B          ( 16  )
+#define TP_LOGO_B          ( TP_LOGO_T+16  )
 #define TP_LOGO_L          ( POS_LOGO_X - 26 )
 #define TP_LOGO_R          ( TP_LOGO_L + 6*8+4  )
 
@@ -686,6 +713,7 @@ const static _ANIM_DATA screenTable[]={
   { 4, 4, 1, PANEL_ANIME_DEF_FRAME},
 };
 
+#if 0
 // 起動アニメ
 #define START_UP_SCREEN_ANIME_FRAME_MAX ( 126 )
 #define START_UP_SCREEN_ANIME_FRAME_START (0)
@@ -737,8 +765,7 @@ const static _ANIM_DATA StartUpScreenTable[]={
   {19+START_UP_SCREEN_ANIME_FRAME_LAST, 4, 1, PANEL_ANIME_DEF_FRAME},
 };
 
-
-
+#endif
 
 enum{
   TOUCH_LABEL_EGNORE1,  //無視 時計パネルとバッテリーパネル(一応ヒットさせて、円の当たり判定に抜きを作っている)
@@ -753,6 +780,12 @@ enum{
   TOUCH_LABEL_IR,
   TOUCH_LABEL_WIRELESS,
   TOUCH_LABEL_WIFI,
+
+  TOUCH_LABEL_RING0,
+  TOUCH_LABEL_RING1,
+  TOUCH_LABEL_RING2,
+  TOUCH_LABEL_RING3,
+  TOUCH_LABEL_RING4,
   TOUCH_LABEL_MAX,
 };
 
@@ -843,22 +876,6 @@ enum
 #define CGEAR_CLACT_BG_PRI  ( 2 )
 
 
-//-------------------------------------
-///	セルACTORユーザー連打ラー
-//=====================================
-enum {
-  CGEAR_REND_SUB,
-
-  CGEAR_REND_MAX,
-} ;
-static const GFL_REND_SURFACE_INIT sc_REND_SURFACE_INIT[ CGEAR_REND_MAX ] = {
-  {
-    0, 0,
-    256, 192,
-    CLSYS_DRAW_SUB,
-    CLSYS_REND_CULLING_TYPE_NONE,
-  },
-};
 
 
 typedef void (StateFunc)(C_GEAR_WORK* pState);
@@ -978,12 +995,13 @@ struct _C_GEAR_WORK {
   u16 palChangeType[ _CGEAR_NET_PANEL_MAX ];
   u16 palChangeCol[_CGEAR_NET_PALTYPE_MAX][_CGEAR_NET_CHANGEPAL_NUM];
 
+  u16 palRing[RING_COLOR_MAX][RING_COLOR_SET_NUM];  //リングカラー
 #if 0
   u16 tpx;
   u16 tpy;
 #endif
   // パネル
-  PANEL_MARK_ANIME panel_mark[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
+//  PANEL_MARK_ANIME panel_mark[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
 
   u8 typeAnim[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
   u8 select_type;
@@ -1008,7 +1026,8 @@ struct _C_GEAR_WORK {
   u8 eff_seq;   //エフェクト制御用サブシーケンス
   u8 startCounter;
   u8 bPanelEdit;
-  u8 bgno;
+  u8 design_no;     //パネルデザインNo
+  u8 ring_col[RING_COLOR_MAX];    //リングカラーNo
   u8 sex;
   u8 power_flag;    // 電源がはいっているか？
   u8 connect_flag;  // 一人分でも通信バッファにデータがあるか？
@@ -1054,10 +1073,12 @@ static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x
 static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, BOOL power_effect );
 static void cgear_ExitWork( C_GEAR_WORK* pWork );
 
+#if 0
 // CGEARセーブ情報の取得
 static CGEAR_PANELTYPE_ENUM _cgearSave_GetPanelType(const C_GEAR_WORK* cpWork,int x, int y);
 static BOOL _cgearSave_IsPanelTypeIcon(const C_GEAR_WORK* cpWork,int x, int y);
 static BOOL _cgearSave_IsPanelTypeLast(const C_GEAR_WORK* cpWork,int x, int y, CGEAR_PANELTYPE_ENUM type );
+#endif
 
 // スキップチェック
 static BOOL _IsEffectSkip( const C_GEAR_WORK* cpWork );
@@ -1071,16 +1092,17 @@ static void _setUpSubAlpha( C_GEAR_WORK* pWork );
 //static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type);
 //static void _gearBootInitScreen(C_GEAR_WORK* pWork);
 static BOOL _gearBootMain(C_GEAR_WORK* pWork);
-static BOOL _gearStartUpMain(C_GEAR_WORK* pWork);
+//static BOOL _gearStartUpMain(C_GEAR_WORK* pWork);
 
 //static void _gearStartUpAllOff(C_GEAR_WORK* pWork);
 
 static void _timeAnimation(C_GEAR_WORK* pWork);
 //static void _typeAnimation(C_GEAR_WORK* pWork);
 static void _editMarkONOFF(C_GEAR_WORK* pWork,BOOL bOn);
-static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans);
+static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 design_no, BOOL pal_trans);
 static void _arcGearRelease(C_GEAR_WORK* pWork);
 static void _gearObjResCreate(C_GEAR_WORK* pWork, int sex);
+static void _gearObjResChange(C_GEAR_WORK* pWork);
 static GFL_CLWK* _gearObjAdd(C_GEAR_WORK* pWork, s16 x, s16 y, u8 anm, u8 bg_pri, u8 s_pri, u8 res_idx );
 static void _gearObjGetPanelPos( C_GEAR_WORK* pWork, _CGEAR_NET_PANEL_TYPE type, GFL_CLACTPOS* pos );
 static void _gearObjSetPos( GFL_CLWK* p_cell, s16 x, s16 y );
@@ -1098,6 +1120,7 @@ static void _gearStartStartUpObjAnime(C_GEAR_WORK* pWork);
 static void _gearEndStartUpObjAnime(C_GEAR_WORK* pWork);
 static BOOL _gearIsEndStartUpObjAnime(const C_GEAR_WORK* cpWork);
 
+static void _gearRingColorChangeCore(C_GEAR_WORK* pWork, u8 ring_id, u8 col_no );
 
 
 
@@ -1120,7 +1143,7 @@ static void _PanelPaletteChangeChange(C_GEAR_WORK* pWork, int change_panel, cons
 static void _PanelPaletteChangeOff(C_GEAR_WORK* pWork, int change_panel, const PLT_COUNTER* cp_count);
 static void _PanelPaletteChangeCore( C_GEAR_WORK* pWork, int change_panel, int mod, int mod_max );
 
-
+#if 0
 static void _PanelMarkAnimeSysInit( C_GEAR_WORK* pWork );
 static void _PanelMarkAnimeSysMain( C_GEAR_WORK* pWork );
 static BOOL _PanelMarkAnimeSysIsAnime( const C_GEAR_WORK* cpWork );
@@ -1135,6 +1158,7 @@ static void _PanelMarkAnimeWriteScreen( const PANEL_MARK_ANIME* cp_mark, u32 ani
 static BOOL _PanelMarkAnimeIsAnime( const PANEL_MARK_ANIME* cp_mark );
 
 static int _PanelMark_GetPatternIndex( const C_GEAR_WORK* cpWork, u32 col_type, int x, int y );
+#endif
 
 
 // パレットカウンター
@@ -2167,7 +2191,7 @@ static BOOL _PaletteSetColType( C_GEAR_WORK* pWork, int panel,int type, int anim
   return FALSE;
 }
 
-
+#if 0
 
 //----------------------------------------------------------------------------
 /**
@@ -2412,6 +2436,7 @@ static BOOL _PanelMarkAnimeIsAnime( const PANEL_MARK_ANIME* cp_mark )
   return cp_mark->anime_on;
 }
 
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  終点カラーを取得
@@ -2430,6 +2455,7 @@ static int _PanelMark_GetPatternIndex( const C_GEAR_WORK* cpWork, u32 col_type, 
 
   return sc_PANEL_COLOR_ANIME_END_INDEX[ col_type ][ x ];
 }
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -2600,6 +2626,7 @@ static BOOL _modeSelectWaitSubFadeEnd( const C_GEAR_WORK* cpWork )
   return TRUE;
 }
 
+#if 0
 //------------------------------------------------------------------------------
 /**
  * @brief   パネルの数を取得
@@ -2627,7 +2654,7 @@ static int _gearPanelTypeNum(C_GEAR_WORK* pWork, CGEAR_PANELTYPE_ENUM type)
   }
   return i;
 }
-
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -2861,6 +2888,7 @@ static BOOL _gearBootMain(C_GEAR_WORK* pWork)
   return FALSE;
 }
 
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  スタートアップ　スクリーンアニメ　メイン
@@ -2897,8 +2925,6 @@ static BOOL _gearStartUpMain(C_GEAR_WORK* pWork)
 
   return FALSE;
 }
-
-#if 0
 
 //----------------------------------------------------------------------------
 /**
@@ -3050,7 +3076,7 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans)
+static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 design_no, BOOL pal_trans)
 {
   u32 scrno=0;
 
@@ -3059,8 +3085,13 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans
     void* buff;
     NNSG2dPaletteData* pltt;
     u16* pltt_data;
+	
+    //BGパレットをVRAM転送
+    GFL_ARCHDL_UTIL_TransVramPalette( pWork->handle,
+        NARC_c_gear_sw_c_gear_m_nclr+sex, PALTYPE_SUB_BG, 0, 0x20*BG_USE_PLTT_NUM, GFL_HEAP_LOWID(pWork->heapID) );
 
-    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_m_nclr+sex, &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
+    //基本パレットの取得と転送
+    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_m_nclr+sex, &pltt, GFL_HEAP_LOWID(pWork->heapID) );
 
     // 転送
 		DC_FlushRange( pltt->pRawData, pltt->szByte );
@@ -3072,7 +3103,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans
     }
     GFL_HEAP_FreeMemory( buff );
 
-    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_obj_ani_nclr, &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
+    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_obj_ani_nclr, &pltt, GFL_HEAP_LOWID(pWork->heapID) );
 
     for( i=0; i<_CGEAR_NET_PALTYPE_MAX; i++ ){
       _PaletteMake(pWork,pltt->pRawData,i);
@@ -3100,7 +3131,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans
     u32 pos;
     pos = GFL_BG_AllocCharacterArea( GEAR_MAIN_FRAME, GEAR_CGX_SIZE_MAX, GFL_BG_CHRAREA_GET_F );
     pWork->subchar = GFL_ARCUTIL_TRANSINFO_Make( pos, GEAR_CGX_SIZE_MAX );
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( pWork->handle, _bgcgx[bgno][sex],
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( pWork->handle, _bgcgx[design_no][sex],
                                           GEAR_MAIN_FRAME, pos, 0, FALSE, HEAPID_FIELD_SUBSCREEN);
   }
 
@@ -3128,7 +3159,7 @@ static void _gearObjResCreate(C_GEAR_WORK* pWork, int sex)
                                                       NARC_c_gear_sw_c_gear_obj_ncgr ,
                                                       FALSE , CLSYS_DRAW_SUB , pWork->heapID );
   pWork->objRes[_CLACT_CHR_PANEL] = GFL_CLGRP_CGR_Register( pWork->handle,
-                                                      NARC_c_gear_sw_c_gear_btn_m1_ncgr ,
+                                                      NARC_c_gear_sw_c_gear_btn_m1_ncgr+(pWork->sex*_CGEAR_TYPE_PATTERN_NUM+pWork->design_no),
                                                       FALSE , CLSYS_DRAW_SUB , pWork->heapID );
 
   pWork->objRes[_CLACT_ANM] = GFL_CLGRP_CELLANIM_Register( pWork->handle,
@@ -3140,7 +3171,7 @@ static void _gearObjResCreate(C_GEAR_WORK* pWork, int sex)
                                                            NARC_c_gear_sw_c_gear_btn_m1_nanr ,
                                                            pWork->heapID );
 
-  // ＣｒｏｓｓＯｂｊカラー取得
+  // CrossObjカラー取得
   {
     void * p_buff;
     NNSG2dPaletteData* p_pltt;
@@ -3156,6 +3187,22 @@ static void _gearObjResCreate(C_GEAR_WORK* pWork, int sex)
 
   GFL_NET_SetIconForcePosition( POS_COMM_ICON_X, POS_COMM_ICON_Y );
   GFL_NET_ReloadIconTopOrBottom( FALSE, pWork->heapID );
+}
+
+static void _gearObjResChange(C_GEAR_WORK* pWork)
+{
+  void *buf;
+  NNSG2dCharacterData* p_char;
+
+  buf = GFL_ARC_LoadDataAllocByHandle( pWork->handle,
+          NARC_c_gear_sw_c_gear_btn_m1_ncgr+(pWork->sex*_CGEAR_TYPE_PATTERN_NUM+pWork->design_no),
+          GFL_HEAP_LOWID( pWork->heapID ) );
+  NNS_G2dGetUnpackedCharacterData( buf, &p_char );
+
+  //キャラクタ転送
+  GFL_CLGRP_CGR_Replace(  pWork->objRes[ _CLACT_CHR_PANEL ], p_char );
+
+  GFL_HEAP_FreeMemory( buf );
 }
 
 
@@ -3242,7 +3289,7 @@ static void _createSubBg(C_GEAR_WORK* pWork)
   // アルファ値設定
   _setUpSubAlpha( pWork );
 
-  // 一応ｗｉｎｄｏｗを消しておく
+  // 一応ObjWindowを消しておく
   GXS_SetVisibleWnd( GX_WNDMASK_NONE );
 }
 
@@ -3365,12 +3412,12 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     GFL_BG_FreeCharacterArea(GEAR_MAIN_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
                              GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subchar));
 #endif
-    pWork->bgno++;
-    pWork->bgno = pWork->bgno % _CGEAR_TYPE_PATTERN_NUM;
+    pWork->design_no = (++pWork->design_no) % _CGEAR_TYPE_PATTERN_NUM;
 
-    CGEAR_SV_SetCGearType( pWork->pCGSV, pWork->bgno );
+    CGEAR_SV_SetCGearType( pWork->pCGSV, pWork->design_no );
 
-    _gearArcCreate(pWork, pWork->sex, pWork->bgno, FALSE);  //ARC読み込み BG&OBJ
+    _gearArcCreate(pWork, pWork->sex, pWork->design_no, FALSE);  //ARC読み込み BG&OBJ
+
 //    _gearPanelBgCreate(pWork);	// パネル作成
 //    _gearMarkObjDrawEnable(pWork,TRUE);
 
@@ -3467,7 +3514,7 @@ static int _TouchRingCheck( C_GEAR_WORK* pWork )
   if( ret == GFL_UI_TP_HIT_NONE || ((ret%2) == 0 )){
     return GFL_UI_TP_HIT_NONE;
   }
-  return ret/2;
+  return (ret/2)+TOUCH_LABEL_RING0;
 }
 
 //----------------------------------------------------------------------------
@@ -3539,20 +3586,35 @@ static void _InputCheck( C_GEAR_WORK* pWork )
   case TOUCH_LABEL_S_RADAR:
     pWork->createEvent = FIELD_SUBSCREEN_ACTION_SCANRADAR;
     break;
+  
+  case TOUCH_LABEL_POWER:
+    pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_POWER;
+    break;
 
   case TOUCH_LABEL_LOGO:
     PMSND_PlaySE( SEQ_SE_MSCL_07 );
 
-    pWork->bgno++;
-    pWork->bgno = pWork->bgno % _CGEAR_TYPE_PATTERN_NUM;
+    pWork->design_no = (++pWork->design_no) % _CGEAR_TYPE_PATTERN_NUM;
 
-    CGEAR_SV_SetCGearType( pWork->pCGSV, pWork->bgno );
+    CGEAR_SV_SetCGearType( pWork->pCGSV, pWork->design_no );
 
-    _gearArcCreate(pWork, pWork->sex, pWork->bgno, FALSE);  //ARC読み込み BG&OBJ
+    _gearObjResChange( pWork );
     break;
+  case TOUCH_LABEL_RING0:
+  case TOUCH_LABEL_RING1:
+  case TOUCH_LABEL_RING2:
+  case TOUCH_LABEL_RING3:
+  case TOUCH_LABEL_RING4:
+    {
+      u8 ring_id = ret-TOUCH_LABEL_RING0;
 
-  case TOUCH_LABEL_POWER:
-    pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_POWER;
+      PMSND_PlaySE( SEQ_SE_MSCL_07 );
+      pWork->ring_col[ring_id] = (++pWork->ring_col[ring_id]) % C_GEAR_RING_COLOR_MAX;
+
+      CGEAR_SV_SetCGearRingColor( pWork->pCGSV, ring_id, pWork->ring_col[ring_id] );
+
+      _gearRingColorChangeCore( pWork, ring_id, pWork->ring_col[ring_id] );
+    }
     break;
   }
  
@@ -3691,12 +3753,15 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
       { ACTANM_S_RADAR,   POS_S_RADAR_X, POS_S_RADAR_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_CONNECT,   POS_CONNECT_X, POS_CONNECT_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       
-      { ACTANM_IR,        POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
-      { ACTANM_S_IR,      POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
-      { ACTANM_WIRELESS,  POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
-      { ACTANM_S_WIRELESS,POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
-      { ACTANM_WIFI,      POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
-      { ACTANM_S_WIFI,    POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
+      { ACTANM_IR,            POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
+      { ACTANM_RING_IR,       POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_PANEL },
+      { ACTANM_S_IR,          POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
+      { ACTANM_WIRELESS,      POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
+      { ACTANM_RING_WIRELESS, POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_PANEL },
+      { ACTANM_S_WIRELESS,    POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
+      { ACTANM_WIFI,          POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
+      { ACTANM_RING_WIFI,     POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_PANEL },
+      { ACTANM_S_WIFI,        POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
       
       { ACTANM_E_IR,      POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_EFFECT, _CLACT_RES_PANEL },
     };
@@ -4036,6 +4101,18 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
   }
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   リング色変更
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _gearRingColorChangeCore(C_GEAR_WORK* pWork, u8 ring_id, u8 col_no )
+{
+   
+}
+
+
 #if 0
 //------------------------------------------------------------------------------
 /**
@@ -4074,7 +4151,14 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
   MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 
   pWork->sex = MyStatus_GetMySex(pMy) % 2;  //PM_NEUTRALは男性扱い
-  pWork->bgno = CGEAR_SV_GetCGearType(pWork->pCGSV);
+  pWork->design_no = CGEAR_SV_GetCGearType(pWork->pCGSV);
+
+  {
+    int i;
+    for( i = 0;i < C_GEAR_RING_NUM; i++ ){
+      pWork->ring_col[i] = CGEAR_SV_GetCGearRingColor( pWork->pCGSV, i);
+    }
+  } 
 
   //セル系システムの作成
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 64+ACT_MAX, 0 , pWork->heapID );
@@ -4083,7 +4167,7 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
   pWork->userRend = GFL_CLACT_USERREND_Create( sc_REND_SURFACE_INIT, CGEAR_REND_MAX, pWork->heapID );
   GFL_CLACT_UNIT_SetUserRend( pWork->cellUnit, pWork->userRend );
   
-  _gearArcCreate(pWork, pWork->sex, pWork->bgno, TRUE);  //ARC読み込み BG&OBJ
+  _gearArcCreate(pWork, pWork->sex, pWork->design_no, TRUE);  //ARC読み込み BG&OBJ
   _gearObjResCreate(pWork, pWork->sex);
   _gearObjCreate(pWork); //CLACT設定
 //  _gearCrossObjCreate(pWork);
@@ -4739,15 +4823,15 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
 //  _gearDecalScreenArcCreate(pWork,ret);
 
   // パネルアニメのシステムクリア
-  _PanelMarkAnimeSysInit( pWork );
+//  _PanelMarkAnimeSysInit( pWork );
 
   pWork->pfade_ptr = PaletteFadeInit( HEAPID_FIELD_SUBSCREEN );
   PaletteTrans_AutoSet( pWork->pfade_ptr, TRUE );
   PaletteFadeWorkAllocSet( pWork->pfade_ptr, FADE_SUB_OBJ, 0x20*OAM_USE_PLTT_NUM, HEAPID_FIELD_SUBSCREEN );
-  PaletteFadeWorkAllocSet( pWork->pfade_ptr, FADE_SUB_BG, 0x20*OAM_USE_PLTT_NUM, HEAPID_FIELD_SUBSCREEN );
+  PaletteFadeWorkAllocSet( pWork->pfade_ptr, FADE_SUB_BG, 0x20*BG_USE_PLTT_NUM, HEAPID_FIELD_SUBSCREEN );
   // 現在VRAMにあるパレットを壊さないように、VRAMからパレット内容をコピーする
   PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_OBJ, 0, 0x20*OAM_USE_PLTT_NUM );
-  PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_BG, 0, 0x20*OAM_USE_PLTT_NUM );
+  PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_BG, 0, 0x20*BG_USE_PLTT_NUM );
   _PFadeSetDefaultPal( pWork, pWork->power_flag );
   PaletteFadeTrans( pWork->pfade_ptr );
 
@@ -5221,7 +5305,6 @@ static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x
 }
 
 
-#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -5282,7 +5365,7 @@ static BOOL _cgearSave_IsPanelTypeLast(const C_GEAR_WORK* cpWork,int x, int y, C
   return FALSE;
 }
 
-
+#endif
 
 //----------------------------------------------------------------------------
 /**

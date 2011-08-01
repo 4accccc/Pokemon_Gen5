@@ -21,6 +21,9 @@
 //----------------------------------------------------------
 typedef struct _CGEAR_SAVEDATA CGEAR_SAVEDATA;
 
+#define C_GEAR_RING_COLOR_MAX (6)
+#define C_GEAR_RING_NUM (5) //ÉäÉìÉOIDÇÕì‡ë§Ç©ÇÁ0Å®4
+
 #define C_GEAR_PANEL_WIDTH   (9)
 #define C_GEAR_PANEL_HEIGHT  (4)
 
@@ -59,6 +62,8 @@ extern BOOL CGEAR_SV_GetCGearPictureONOFF(CGEAR_SAVEDATA* pSV);
 extern void CGEAR_SV_SetCGearPictureCRC(CGEAR_SAVEDATA* pSV,u16 pictureCRC);
 extern u16 CGEAR_SV_GetCGearPictureCRC(CGEAR_SAVEDATA* pSV);
 
+extern void CGEAR_SV_SetCGearRingColor( CGEAR_SAVEDATA* pSV, u8 ring_id, u8 color );
+extern u8 CGEAR_SV_GetCGearRingColor(const CGEAR_SAVEDATA* pSV, u8 ring_id );
 
 extern CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(const CGEAR_SAVEDATA* pSV,int x, int y);
 extern BOOL CGEAR_SV_IsPanelTypeIcon(const CGEAR_SAVEDATA* pSV,int x, int y);

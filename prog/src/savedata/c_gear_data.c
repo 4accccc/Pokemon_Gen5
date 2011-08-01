@@ -27,14 +27,14 @@
 //----------------------------------------------------------
 
 struct _CGEAR_SAVEDATA {
-	u8 type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
+	u8  type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
+  u8  ring_col[C_GEAR_RING_NUM];
+  u8  CGearPowerON;
+  u8  CGearON;
+  u8  gearType;
+  
   u16 CGearPictCRC;
-  u8 CGearPictureON;
-  u8 CGearON;
-  u8 gearType;
-  u8 CGearPowerON;
-  u8 dummy2;
-  u8 dummy3;
+  u8  CGearPictureON;
 };
 
 
@@ -215,6 +215,39 @@ void CGEAR_SV_SetCGearPictureCRC(CGEAR_SAVEDATA* pSV,u16 pictureCRC)
 u16 CGEAR_SV_GetCGearPictureCRC(CGEAR_SAVEDATA* pSV)
 {
   return pSV->CGearPictCRC;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   CGEAR リングカラーをセット
+ * @param   ring_id  リングID(内側から外に向かって0～)
+ * @param   color カラーNo
+ */
+//--------------------------------------------------------------------------------------------
+void CGEAR_SV_SetCGearRingColor( CGEAR_SAVEDATA* pSV, u8 ring_id, u8 color )
+{
+  if( ring_id >= C_GEAR_RING_NUM || color >= C_GEAR_RING_COLOR_MAX ){
+    GF_ASSERT(0);
+    return;
+  }
+  pSV->ring_col[ring_id] = color;
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   CGEAR リングカラーを得る
+ * @param   ring_id  リングID(内側から外に向かって0～)
+ * @return  カラーNo
+ */
+//--------------------------------------------------------------------------------------------
+u8 CGEAR_SV_GetCGearRingColor(const CGEAR_SAVEDATA* pSV, u8 ring_id )
+{
+  if( ring_id >= C_GEAR_RING_NUM ){
+    GF_ASSERT(0);
+    return 0;
+  }
+  return pSV->ring_col[ring_id];
 }
 
 //--------------------------------------------------------------------------------------------
