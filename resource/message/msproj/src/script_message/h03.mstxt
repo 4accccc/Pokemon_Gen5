@@ -1395,15 +1395,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はぁ……はぁ……
+			<Text>[Ctrl2:CtrlSpeed mode="2" ]はぁ……はぁ……
 のどが　かわいた……▼
 ホドモエのはねばし　で……
 であった　きみ……▼
 お……おいしいみず……
-くれません　か……？</Text>
+くれません　か……？[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:12:26" />
+				Time="2011-08-01T10:47:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1411,15 +1411,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はぁ……はぁ……
+			<Text>[Ctrl2:CtrlSpeed mode="2" ]はぁ……はぁ……
 のどが　かわいた……▼
 ホドモエのはねばし　で……
 であった　きみ……▼
 お……おいしいみず……
-くれません　か……？</Text>
+くれません　か……？[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:12:29" />
+				Time="2011-08-01T10:47:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1517,11 +1517,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でも　おいしいみず　ないよね……
-きもちだけ　いただきます……</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="2" ]でも　おいしいみず　ないよね……
+きもちだけ　いただきます……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:11:57" />
+				Time="2011-08-01T10:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1529,11 +1529,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>でも　おいしいみず　ないよね……
-きもちだけ　いただきます……</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="2" ]でも　おいしいみず　ないよね……
+きもちだけ　いただきます……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:11:57" />
+				Time="2011-08-01T10:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1569,14 +1569,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありが……▼
+			<Text>[Ctrl2:CtrlSpeed mode="2" ]ありが……▼
 えっ？
 そっか……▼
 おいしいみずが　ないと……
-これいじょう　はしを　はしれない</Text>
+これいじょう　はしを　はしれない[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:11:57" />
+				Time="2011-08-01T10:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1584,14 +1584,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありが……▼
+			<Text>[Ctrl2:CtrlSpeed mode="2" ]ありが……▼
 えっ？
 そっか……▼
 おいしいみずが　ないと……
-これいじょう　はしを　はしれない</Text>
+これいじょう　はしを　はしれない[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:11:57" />
+				Time="2011-08-01T10:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
