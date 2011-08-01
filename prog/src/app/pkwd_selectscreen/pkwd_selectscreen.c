@@ -96,7 +96,6 @@
 //=============================================================================
 #define PKWD_SELECT_SCREEN_TOUCHBAR
 #define PKWD_SELECT_SCREEN_TASKMENU
-//#define PKWD_SELECT_SCREEN_POKE2D				// ポケモンBG,OBJ読みこみ
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -210,7 +209,6 @@ typedef struct
 } PKWD_SELECT_SCREEN_BG_WORK;
 
 
-#define PKWD_SELECT_SCREEN_PRINT_TOOL
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
@@ -263,12 +261,6 @@ typedef struct
 
 
 
-#ifdef PKWD_SELECT_SCREEN_POKE2D
-	u32												ncg_poke2d;
-	u32												ncl_poke2d;
-	u32												nce_poke2d;
-	GFL_CLWK									*clwk_poke2d;
-#endif //PKWD_SELECT_SCREEN_POKE2D
 
   // リストOBJ用定義
   u32                       ncg_pkwdObj;
@@ -276,10 +268,8 @@ typedef struct
   u32                       nce_pkwdObj;
 	GFL_CLWK									*clwk_pkwdObj[LIST_OBJ_MAX];
 
-#ifdef	PKWD_SELECT_SCREEN_PRINT_TOOL
 	//プリントユーティリティ
 	PRINT_UTIL								print_util[PKWD_SELECT_SCREEN_BMPWIN_MAX];
-#endif	//PKWD_SELECT_SCREEN_PRINT_TOOL
 
   // カーソル処理
   s16 nowpos, oldpos;
@@ -365,18 +355,6 @@ static void PkwdSelectScreen_TASKMENU_Main( APP_TASKMENU_WORK *menu );
 #endif //PKWD_SELECT_SCREEN_TASKMENU
 
 
-
-#ifdef PKWD_SELECT_SCREEN_POKE2D
-//-------------------------------------
-///	ポケモンOBJ,BG読みこみ
-//=====================================
-static void PkwdSelectScreen_POKE2D_LoadResourceBG( PKWD_SELECT_SCREEN_MAIN_WORK *wk, HEAPID heapID );
-static void PkwdSelectScreen_POKE2D_UnLoadResourceBG( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
-static void PkwdSelectScreen_POKE2D_LoadResourceOBJ( PKWD_SELECT_SCREEN_MAIN_WORK *wk, HEAPID heapID );
-static void PkwdSelectScreen_POKE2D_UnLoadResourceOBJ( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
-static void PkwdSelectScreen_POKE2D_CreateCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
-static void PkwdSelectScreen_POKE2D_DeleteCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
-#endif //PKWD_SELECT_SCREEN_POKE2D
 static void PkwdSelectScreen_LOGO_u_LoadResource( PKWD_SELECT_SCREEN_BG_WORK *wk, int scenario_no, int index );
 static void PkwdSelectScreen_ListObj_loadResource( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 static void PkwdSelectScreen_ListObj_UnloadResource( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
@@ -492,15 +470,6 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
 #endif //PKWD_SELECT_SCREEN_TASKMENU
 
 
-#ifdef PKWD_SELECT_SCREEN_POKE2D
-	//ポケモンOBJ,BG読みこみ
-	PkwdSelectScreen_POKE2D_LoadResourceBG( wk, wk->heapID );
-	{	
-		GFL_CLUNIT *clunit = PKWD_SELECT_SCREEN_GRAPHIC_GetClunit( wk->graphic );
-		PkwdSelectScreen_POKE2D_LoadResourceOBJ( wk, wk->heapID );
-		PkwdSelectScreen_POKE2D_CreateCLWK( wk, clunit, wk->heapID );
-	}
-#endif //PKWD_SELECT_SCREEN_POKE2D
 
   PkwdSelectScreen_ListObj_loadResource( wk );
 
@@ -608,11 +577,6 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Exit( GFL_PROC *proc, int *seq, void
     BLINKPALANM_Exit( wk->blinkWork[i] );
   }
   
-#ifdef PKWD_SELECT_SCREEN_POKE2D
-	PkwdSelectScreen_POKE2D_DeleteCLWK( wk );
-	PkwdSelectScreen_POKE2D_UnLoadResourceOBJ( wk );
-	PkwdSelectScreen_POKE2D_UnLoadResourceBG( wk );
-#endif //PKWD_SELECT_SCREEN_POKE2D
 
   PkwdSelectScreen_ListObj_Del( wk );
   PkwdSelectScreen_ListObj_UnloadResource( wk );
@@ -1041,135 +1005,17 @@ static void PkwdSelectScreen_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 
 
 
-#ifdef PKWD_SELECT_SCREEN_POKE2D
-//=============================================================================
+
+
+
+
+//----------------------------------------------------------------------------------
 /**
- *	ポケモンOBJ,BG読みこみ
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	ポケモンBG読みこみ
+ * @brief	下画面リストOBJ用リソース登録
  *
- *	@param	PKWD_SELECT_SCREEN_MAIN_WORK *wk	ワーク
- *	@param	heapID										ヒープID
+ * @param   wk		
  */
-//-----------------------------------------------------------------------------
-static void PkwdSelectScreen_POKE2D_LoadResourceBG( PKWD_SELECT_SCREEN_MAIN_WORK *wk, HEAPID heapID )
-{	
-
-	POKEMON_PASO_PARAM	*ppp;
-	
-	//PPP作成
-	ppp	= (POKEMON_PASO_PARAM	*)PP_Create( MONSNO_KAMEKKUSU, 0, 0, heapID );
-
-	//1キャラ目に空白キャラいれて
-	GFL_BG_FillCharacter( BG_FRAME_POKE_M, 0, 1,  0 );
-
-	//ポケモンの絵を転送
-	//1は↑で1キャラ作成したので。
-	POKE2DGRA_BG_TransResourcePPP( ppp, POKEGRA_DIR_FRONT, BG_FRAME_POKE_M,
-			1, PLTID_BG_POKE_M, heapID );
-
-	//スクリーンに書き込んで転送
-	POKE2DGRA_BG_WriteScreen( BG_FRAME_POKE_M, 1, PLTID_BG_POKE_M, 32/2-12/2+12, 24/2-12/2 );
-	GFL_BG_LoadScreenReq( BG_FRAME_POKE_M );
-
-	//PPP破棄
-	GFL_HEAP_FreeMemory( ppp );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	ポケモンBG破棄
- *
- *	@param	PKWD_SELECT_SCREEN_MAIN_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void PkwdSelectScreen_POKE2D_UnLoadResourceBG( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
-{		
-	GFL_BG_FillCharacterRelease( BG_FRAME_POKE_M, 1, 0 );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	リソース読みこみ
- *
- *	@param	PKWD_SELECT_SCREEN_MAIN_WORK *wk	ワーク
- *	@param	heapID										ヒープID
- */
-//-----------------------------------------------------------------------------
-static void PkwdSelectScreen_POKE2D_LoadResourceOBJ( PKWD_SELECT_SCREEN_MAIN_WORK *wk, HEAPID heapID )
-{	
-	POKEMON_PASO_PARAM	*ppp;
-	ARCHANDLE						*handle;
-
-	//PPP作成
-	ppp	= (POKEMON_PASO_PARAM	*)PP_Create( MONSNO_RIZAADON, 0, 0, heapID );
-
-	//ハンドル
-	handle	= POKE2DGRA_OpenHandle( heapID );
-	//リソース読みこみ
-	wk->ncg_poke2d	= POKE2DGRA_OBJ_CGR_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, heapID );
-	wk->ncl_poke2d	= POKE2DGRA_OBJ_PLTT_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT ,CLSYS_DRAW_MAIN,  PLTID_OBJ_POKE_M*0x20,  heapID );
-	wk->nce_poke2d	= POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
-	GFL_ARC_CloseDataHandle( handle );
-
-	//PP破棄
-	GFL_HEAP_FreeMemory( ppp );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	リソース破棄
- *
- *	@param	PKWD_SELECT_SCREEN_MAIN_WORK *wk ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void PkwdSelectScreen_POKE2D_UnLoadResourceOBJ( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
-{	
-	//リソース破棄
-	GFL_CLGRP_PLTT_Release( wk->ncl_poke2d );
-	GFL_CLGRP_CGR_Release( wk->ncg_poke2d );
-	GFL_CLGRP_CELLANIM_Release( wk->nce_poke2d );
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	CLWK作成
- *
- *	@param	PKWD_SELECT_SCREEN_MAIN_WORK *wk	ワーク
- *	@param	*clunit	ユニット
- *	@param	heapID	ヒープID
- */
-//-----------------------------------------------------------------------------
-static void PkwdSelectScreen_POKE2D_CreateCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-	GFL_CLWK_DATA	cldata;
-		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		cldata.pos_x	= 38;
-		cldata.pos_y	= 80;
-		wk->clwk_poke2d	= GFL_CLACT_WK_Create( clunit, 
-				wk->ncg_poke2d,
-				wk->ncl_poke2d,
-				wk->nce_poke2d,
-				&cldata, 
-				CLSYS_DEFREND_MAIN, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	CLWK破棄
- *
- *	@param	PKWD_SELECT_SCREEN_MAIN_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void PkwdSelectScreen_POKE2D_DeleteCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
-{	
-	GFL_CLACT_WK_Remove( wk->clwk_poke2d );
-}
-#endif //PKWD_SELECT_SCREEN_POKE2D
-
-
-
-
+//----------------------------------------------------------------------------------
 static void PkwdSelectScreen_ListObj_loadResource( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
 	ARCHANDLE						*handle;
@@ -1179,13 +1025,22 @@ static void PkwdSelectScreen_ListObj_loadResource( PKWD_SELECT_SCREEN_MAIN_WORK 
 
 	//リソース読みこみ
 	wk->ncg_pkwdObj	= GFL_CLGRP_CGR_Register( handle, NARC_b_scenario_gra_pkwd_list_obj_NCGR, 0, CLSYS_DRAW_MAIN, HEAPID_PKWD_SELSCR );
-	wk->ncl_pkwdObj	= GFL_CLGRP_PLTT_Register( handle, NARC_b_scenario_gra_pkwd_list_obj_NCLR, CLSYS_DEFREND_MAIN, 0, HEAPID_PKWD_SELSCR );
+	wk->ncl_pkwdObj	= GFL_CLGRP_PLTT_RegisterEx( handle, NARC_b_scenario_gra_pkwd_list_obj_NCLR, CLSYS_DEFREND_MAIN,
+	                                             5*32, 0, 1, HEAPID_PKWD_SELSCR );
+//	GFL_CLGRP_PLTT_Register( handle, NARC_b_scenario_gra_pkwd_list_obj_NCLR, CLSYS_DEFREND_MAIN, 0, HEAPID_PKWD_SELSCR );
 	wk->nce_pkwdObj	= GFL_CLGRP_CELLANIM_Register( handle, NARC_b_scenario_gra_pkwd_list_obj_NCER, 
 	                                                       NARC_b_scenario_gra_pkwd_list_obj_NANR, HEAPID_PKWD_SELSCR );
 	GFL_ARC_CloseDataHandle( handle );
 
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	下画面リストOBJ用リソース解放
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
 static void PkwdSelectScreen_ListObj_UnloadResource( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
 	//リソース破棄
@@ -1202,6 +1057,13 @@ static const u8 listobj_pos_tbl[][2]={
   { 14, 140 },
 };
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	リストOBJ表示登録
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
 static void PkwdSelectScreen_ListObj_Add( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   GFL_CLWK_DATA	cldata;
@@ -1213,6 +1075,7 @@ static void PkwdSelectScreen_ListObj_Add( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
     cldata.pos_x	= listobj_pos_tbl[i][0];
     cldata.pos_y	= listobj_pos_tbl[i][1];
     cldata.anmseq = 1;
+    cldata.bgpri  = 2;
     wk->clwk_pkwdObj[i]	= GFL_CLACT_WK_Create( PKWD_SELECT_SCREEN_GRAPHIC_GetClunit( wk->graphic ), 
                                            wk->ncg_pkwdObj,
                                            wk->ncl_pkwdObj,
@@ -1226,11 +1089,20 @@ static void PkwdSelectScreen_ListObj_Add( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
       
       if(POKEWOOD_SAVEDATA_GetMovieShowed( wk->param->pokewood_sv, i )==0){
         GFL_CLACT_WK_SetDrawEnable( wk->clwk_pkwdObj[i], wk->load_result[i] );
+      }else{
+        GFL_CLACT_WK_SetDrawEnable( wk->clwk_pkwdObj[i], FALSE );
       }
     }
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	リストOBJ解放
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
 static void PkwdSelectScreen_ListObj_Del( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   int i;
@@ -1241,7 +1113,6 @@ static void PkwdSelectScreen_ListObj_Del( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 
 
 
-#ifdef	PKWD_SELECT_SCREEN_PRINT_TOOL
 //=============================================================================
 /**
  *	PRINT_TOOL
@@ -1363,7 +1234,6 @@ static void PrintTool_PrintHP( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
   PRINT_UTIL_Print( &wk->print_util[0], wk->print_que, 32,0, wk->strbuf, wk->font );
 
 }
-#endif	//PKWD_SELECT_SCREEN_PRINT_TOOL
 
 
 #define LOAD_SAVEDATA_MAX ( 4 )
@@ -1663,7 +1533,7 @@ static void SubTitle_Func( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   wk->oldpos = wk->nowpos;
 }
 
-
+// 塗りつぶしカラーマクロ
 #define WINCLR_COL(col) (((col)<<4)|(col))
 
 //----------------------------------------------------------------------------------
@@ -1691,7 +1561,9 @@ static void _message_print( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int msg_id )
 
 }  
 
+//===========================================================
 // サブシーケンス関数テーブル
+//===========================================================
 static BOOL (*SubSeqFuncTbl[])( PKWD_SELECT_SCREEN_MAIN_WORK *wk )={
   SubSeq_FadeinWait,  // MENU_FADEIN_WAIT=0
   SubSeq_Start,       // MENU_START,
@@ -1708,11 +1580,11 @@ static BOOL (*SubSeqFuncTbl[])( PKWD_SELECT_SCREEN_MAIN_WORK *wk )={
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	サブシーケンス呼び出し関数
+ * @brief	サブシーケンス呼び出しメイン関数
  *
- * @param   wk		
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
  *
- * @retval  BOOL		
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
  */
 //----------------------------------------------------------------------------------
 static BOOL SubSeqFunc( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
@@ -1721,6 +1593,15 @@ static BOOL SubSeqFunc( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	フェードイン待ち
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_FadeinWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   if(WIPE_SYS_EndCheck()){
@@ -1730,18 +1611,41 @@ static BOOL SubSeq_FadeinWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	処理スタート
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_Start( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   wk->seq = MENU_MAIN;
   return FALSE;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	サブシーケンスメイン
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_Main( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   int result;
+
+  // タッチ・キー制御
   if((result=_touch_input(wk))==GFL_UI_TP_HIT_NONE){
     result = _key_input(wk);
   }
   SubTitle_Func(wk);
+
+  // 決定かキャンセルか
   if(result!=GFL_UI_TP_HIT_NONE){
     PMSND_PlaySE( SE_PKWDSELECT_DECIDE );
     BLINKPALANM_SetDecideAnime( wk->blinkWork[wk->nowpos] );
@@ -1755,6 +1659,16 @@ static BOOL SubSeq_Main( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   return FALSE;
 
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	決定アニメ待ち
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_DecideWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   if(BLINKPALANM_CheckDecideAnime( wk->blinkWork[wk->nowpos] )){
@@ -1771,6 +1685,16 @@ static BOOL SubSeq_DecideWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   return FALSE;
 
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	「上映しますか？」表示終了待ち
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_MsgWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   //メッセージ描画終了待ち
@@ -1783,6 +1707,16 @@ static BOOL SubSeq_MsgWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   return FALSE;
 
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	「消えますがよろしいですか？」表示終了待ち
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_WarningMsg( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
    _message_print( wk, pw_select_03 ); //「このさくひんを　さくじょしますか？」
@@ -1792,6 +1726,15 @@ static BOOL SubSeq_WarningMsg( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	はい・いいえ待ち
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  int   -1:未決定 0:はい  1:いいえ
+ */
+//----------------------------------------------------------------------------------
 static int _yesno_wait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   int result = -1;
@@ -1811,11 +1754,22 @@ static int _yesno_wait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	上映選択はい・いいえ待ち
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_Yesno_Normal( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   int result;
   if((result=_yesno_wait(wk))>=0){
     if(result==0){
+        // 上映済みにする
+        POKEWOOD_SAVEDATA_SetMovieShowed( wk->param->pokewood_sv, wk->nowpos, TRUE );
         wk->seq = MENU_FADEOUT;
     }else{
       wk->seq   = MENU_START;
@@ -1825,6 +1779,16 @@ static BOOL SubSeq_Yesno_Normal( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   return FALSE;
   
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	削除選択はい・いいえ待ち１
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_Yesno_Delete1( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   int result;
@@ -1838,6 +1802,16 @@ static BOOL SubSeq_Yesno_Delete1( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   }
   return FALSE;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	削除選択はい・いいえ待ち２
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_Yesno_Delete2( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   int result;
@@ -1853,6 +1827,15 @@ static BOOL SubSeq_Yesno_Delete2( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	フェードアウト開始
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_FadeOut( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 0, 8, 1, HEAPID_PKWD_SELSCR);
@@ -1860,6 +1843,16 @@ static BOOL SubSeq_FadeOut( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   return FALSE;
 
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	フェードアウト終了待ち
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_FadeOutWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   if(WIPE_SYS_EndCheck()){

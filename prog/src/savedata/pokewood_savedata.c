@@ -204,7 +204,7 @@ BOOL POKEWOOD_SAVEDATA_GetMovieShowed( POKEWOOD_SAVEDATA *sv, int no )
  * @param   value TRUE or FALSE
  */
 //=============================================================================================
-void POKEWOOD_SAVEDATA_SetMovieShowd( POKEWOOD_SAVEDATA *sv, int no, BOOL value )
+void POKEWOOD_SAVEDATA_SetMovieShowed( POKEWOOD_SAVEDATA *sv, int no, BOOL value )
 {
   GF_ASSERT_MSG( no<POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
   
@@ -224,9 +224,12 @@ void POKEWOOD_SAVEDATA_SetMovieShowd( POKEWOOD_SAVEDATA *sv, int no, BOOL value 
 //=============================================================================================
 BOOL POKEWOOD_SAVEDATA_GetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no )
 {
+  int offset, shift;
   GF_ASSERT_MSG( no<POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
 
-  return sv->success_flag[no];
+  _get_shift_offset( no, &offset, &shift );
+
+  return (sv->success_flag[offset]>>shift)&1;
 }
 
 //=============================================================================================
@@ -240,8 +243,11 @@ BOOL POKEWOOD_SAVEDATA_GetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no )
 //=============================================================================================
 void POKEWOOD_SAVEDATA_SetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no, BOOL value )
 {
+  int offset, shift;
   GF_ASSERT_MSG( no<POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
-  
-  sv->success_flag[no] = value;
+
+  _get_shift_offset( no, &offset, &shift );
+
+  sv->success_flag[offset] |= (1<<shift);
 
 }

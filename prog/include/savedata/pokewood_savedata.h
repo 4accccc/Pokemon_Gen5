@@ -143,7 +143,7 @@ extern BOOL POKEWOOD_SAVEDATA_GetMovieShowed( POKEWOOD_SAVEDATA *sv, int no );
  * @param   value TRUE or FALSE
  */
 //=============================================================================================
-extern void POKEWOOD_SAVEDATA_SetMovieShowd( POKEWOOD_SAVEDATA *sv, int no, BOOL value );
+extern void POKEWOOD_SAVEDATA_SetMovieShowed( POKEWOOD_SAVEDATA *sv, int no, BOOL value );
 
 //=============================================================================================
 /**
