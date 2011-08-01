@@ -426,6 +426,26 @@ VMCMD_RESULT EvCmdGymFly_Blow( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   飛行ジムギミック 初期化
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymFly_Init( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*   work     = wk;
+  GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*      gdata    = GAMESYSTEM_GetGameData( gsys );
+  FIELD_SOUND*   fsnd     = GAMEDATA_GetFieldSound( gdata );
+
+  // 環境音SEを再生するだけ
+  FSND_PlayEnvSE( fsnd, SEQ_SE_GYM_H02 );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--氷--
 #if 0
 //--------------------------------------------------------------

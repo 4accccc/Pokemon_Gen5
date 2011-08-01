@@ -695,4 +695,5 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { TRUE, FALSE, FALSE }, // _SC_WALK_COUNT_START (692)
   { TRUE, FALSE, FALSE }, // _SC_WALK_COUNT_STOP (693)
   { TRUE, FALSE, FALSE }, // _SC_WALK_COUNT_GET (694)
+  { FALSE, TRUE, TRUE }, // _GYM_FLY_INIT (695)
 };

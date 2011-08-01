@@ -1064,6 +1064,9 @@
   DEF_CMD( EvCmdWalkCountStop, EV_SEQ_SC_WALK_CNT_STOP )
   DEF_CMD( EvCmdGetWalkCount, EV_SEQ_SC_WALK_CNT_GET )
 
+  // 飛行ジム
+  DEF_CMD( EvCmdGymFly_Init, EV_SEQ_GYM_FLY_INIT )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

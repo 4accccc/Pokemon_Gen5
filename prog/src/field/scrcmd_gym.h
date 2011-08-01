@@ -42,6 +42,7 @@ extern VMCMD_RESULT EvCmdGymGroundEnt_SetEnterPos( VMHANDLE *core, void *wk );
 
 //îÚçs
 extern VMCMD_RESULT EvCmdGymFly_Blow( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGymFly_Init( VMHANDLE * core, void *wk );
 
 //ïX
 //extern VMCMD_RESULT EvCmdGymIce_( VMHANDLE *core, void *wk );

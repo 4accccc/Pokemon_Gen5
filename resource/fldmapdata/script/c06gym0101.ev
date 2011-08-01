@@ -23,6 +23,7 @@
 _EVENT_DATA   c06gym0101_leader6_01
 _EVENT_DATA   ev_zone_c06gym0101
 _EVENT_DATA   ev_init_c06gym0101
+_EVENT_DATA   ev_recover_c06gym0101
 _EVENT_DATA   ev_pos_c06gym0101_guide
 _EVENT_DATA   ev_c06gym0101_danpei_01
 _EVENT_DATA   ev_bg_c06gym0101_statue
@@ -50,6 +51,20 @@ INIT_EVENT_START  ev_init_c06gym0101
   ELSE
     // 全員初期位置
   ENDIF
+
+  // 環境音再生
+  _GYM_FLY_INIT()
+
+INIT_EVENT_END
+
+/************************************************************/
+/*					ジムギミック初期化						*/
+/*          FIELD_RECOVER_LABEL              */
+/************************************************************/
+INIT_EVENT_START  ev_recover_c06gym0101
+
+  // 環境音再生
+  _GYM_FLY_INIT()
 
 INIT_EVENT_END
 
