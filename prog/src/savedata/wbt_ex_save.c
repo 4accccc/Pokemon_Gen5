@@ -11,6 +11,8 @@
 #include <gflib.h>
 #include "savedata/save_tbl.h"
 #include "savedata/wbt_ex_save.h"
+#include "savedata/wbt_download.h"
+
 //=============================================================================
 /**
  *					’è”éŒ¾
@@ -32,8 +34,12 @@ SDK_COMPILER_ASSERT( WBTEXSAVE_WORK_SIZE <= SAVESIZE_EXTRA_WBT );
 //=====================================
 struct _WBTEXSAVE
 {
-  int dummy;
+  WBT_DL_DATA wbt_dl_data;
 };
+enum {
+  WBT_DL_DATA_SIZE = sizeof(WBTEXSAVE),
+};
+SDK_COMPILER_ASSERT( WBT_DL_DATA_SIZE <= SAVESIZE_EXTRA_WBT );
 
 //=============================================================================
 /**
@@ -50,7 +56,7 @@ struct _WBTEXSAVE
 //-----------------------------------------------------------------------------
 u32 WBTEXSAVE_GetWorkSize( void )
 {
-  return WBTEXSAVE_WORK_SIZE;
+  return WBT_DL_DATA_SIZE;
 }
 //----------------------------------------------------------------------------
 /**

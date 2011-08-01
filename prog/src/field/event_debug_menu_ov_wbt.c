@@ -41,7 +41,8 @@
 //ŠO•”ŒöŠJ
 #include "event_debug_menu_ov_wbt.h"
 
-#include "wbt_dl.h"
+#include "savedata/wbt_ex_save.h"
+#include "savedata/wbt_download.h"
 
 #include "wbt_setup.h"
 #include "wbt_tool.h" //WBTTOOL_
@@ -326,7 +327,7 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       break;
 
     case DEBUG_STR_WBT_02:
-#if 0
+#if 1
       PMSND_PlaySE( SEQ_SE_KON );
       debugCommand_printf( NULL );
       return GMEVENT_RES_CONTINUE;
@@ -447,6 +448,8 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk )
 {
+  OS_Printf("size of Regulation = \n");
+  OS_Printf("%5d(0x%4x)\n", sizeof(REGULATION), sizeof(REGULATION) );
   OS_Printf("size of WBT DL Regulation = \n");
   OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_RULE), sizeof(WBT_DL_RULE) );
   OS_Printf("size of WBT DL Pokemon = \n");
@@ -457,6 +460,7 @@ static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk )
   OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_DATA), sizeof(WBT_DL_DATA) );
   OS_Printf("size of WBT SAVE DATA = \n");
   OS_Printf("%5d(0x%4x)\n", WBTSAVE_GetWorkSize(), WBTSAVE_GetWorkSize() );
+  OS_Printf("%d\n", WBTEXSAVE_GetWorkSize() );
   return FALSE;
 }
 
