@@ -91,8 +91,8 @@ $(defname).h $(defname).rb: $(defname).csv
 $(defname).csv $(scrtarget): $(dataname).xls
 	-rm *.txt
 	$(xlsconv) $< -s $(scrname)
-	-rm $(scrname)0.csv
-	mv $(scrname)1.csv $(defname).csv
+	-rm $(scrname)00.csv
+	mv $(scrname)01.csv $(defname).csv
 	echo > $(scrtarget)
 endif
 

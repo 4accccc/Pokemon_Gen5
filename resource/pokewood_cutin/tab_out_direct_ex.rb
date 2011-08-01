@@ -59,7 +59,7 @@ begin
   1.upto(sheetNum) do |sheetNo|
   
 
-    newfile = File.new( ARGV[2]+"#{sheetcnt}.csv", "w" )
+    newfile = File.new( ARGV[2]+"#{sprintf("%02d",sheetcnt)}.csv", "w" )
 
     sheet = xl.Worksheets.Item(sheetNo)
     sheet.extend Worksheet

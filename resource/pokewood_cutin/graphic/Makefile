@@ -45,12 +45,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .ncl.NCLR:
 	g2dcvtr $< -pcm
 
-.ncg.NCGR:
-	g2dcvtr $< -bg
-	ntrcomp -lex $< -o $*.NCGR
-
 .nce.NCER:
-	g2dcvtr $< -br
+	g2dcvtr $<
+	mv $*.NCGR $*_src.NCGR
+	ntrcomp -lex $*_src.NCGR -o $*.NCGR
 
 endif
 
@@ -70,7 +68,7 @@ $(TARGETDIR)/$(targetname_gra).naix: $(targetname_gra).naix
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
-$(targetname_gra).narc $(targetname_gra).naix: $(lobjects) $(gobjects) $(eobjects) $(aobjects)
+$(targetname_gra).narc $(targetname_gra).naix: $(lobjects) $(eobjects) $(aobjects) $(gobjects)
 	nnsarc -r -l -n -i $(targetname_gra) $^
 	$(NAIXCUT) $(targetname_gra).naix
 endif
@@ -88,6 +86,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCLR
 	rm -f *.narc
 	rm -f *.naix
+	rm -f $(targetname_gra).narc
+	rm -f $(targetname_gra).naix
 endif
 	rm -f $(TARGETDIR)/$(targetname_gra).narc
 	rm -f $(TARGETDIR)/$(targetname_gra).naix

@@ -42,7 +42,7 @@ begin
   cdat.write("} sc_pw_cutin_dat_search[] ={\n" )
 
   list.each{ |file|
-    r = Regexp.new(SCRNAME+'.\.csv') 
+    r = Regexp.new(SCRNAME+'\d*\.csv') 
     if r =~ file
 
       #datをコンバート
