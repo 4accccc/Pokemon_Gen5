@@ -62,8 +62,11 @@
 #include "net_app/union/union_main.h"
 #include "net_app/union/union_chara.h"
 #include "event_comm_error.h"
-#include "./c_gear/c_gear.h"             //CGEAR_IsDoEventWireless
 #include "./c_gear/c_gear_sw.h"          //CGEAR_SW_IsDoEventWireless
+
+#ifndef CGEAR_SWAN_ON
+#include "./c_gear/c_gear.h"             //CGEAR_IsDoEventWireless
+#endif  //ifndef CGEAR_SWAN_ON
 
 #include "../../../resource/fldmapdata/script/bg_attr_def.h" //SCRID_BG_MSG_Å`
 #include "../../../resource/fldmapdata/script/hiden_def.h"

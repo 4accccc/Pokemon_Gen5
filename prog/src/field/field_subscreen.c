@@ -17,8 +17,12 @@
 
 #include "system/wipe.h"
 #include "infowin/infowin.h"
-#include "c_gear/c_gear.h"
 #include "c_gear/c_gear_sw.h"
+
+#ifndef CGEAR_SWAN_ON
+#include "c_gear/c_gear.h"
+#endif  //ifndef CGEAR_SWAN_ON
+
 #include "c_gear/no_gear.h"
 #include "c_gear/c_gear_power_onoff.h"
 #include "field_menu.h"
