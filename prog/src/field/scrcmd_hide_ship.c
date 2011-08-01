@@ -349,6 +349,10 @@ static GMEVENT_RESULT PasswordInputEvent(GMEVENT * event, int * seq, void *work)
 
     //後始末
     NAMEIN_FreeParam( p_wk->p_namein_param );
+
+    (*seq)++;
+    break;
+  case 2:
 		return GMEVENT_RES_FINISH;
   }
 
@@ -370,6 +374,7 @@ static void result_proc( PASSWORD_INPUT_EVENT_WORK *p_wk, NAMEIN_PARAM* param )
 
   if( NAMEIN_IsCancel( param ) == TRUE ){  //キャンセルされた
     *(p_wk->ret_wk) = 0;
+    OS_Printf("キャンセルしたので不正解!");
     return;
   }
 
@@ -390,12 +395,12 @@ static void result_proc( PASSWORD_INPUT_EVENT_WORK *p_wk, NAMEIN_PARAM* param )
 #ifdef PM_DEBUG
     {
       const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(param->strbuf);
-      char str[NAMEIN_FREE_WORD_LENGTH] = {0};
+      char str[128] = {0};
 
       DEB_STR_CONV_StrcodeToSjis( cp_strcode, str, NAMEIN_FREE_WORD_LENGTH );
 
-      ICHI_Printf("入力した文字 %s\n", str );
-      ICHI_Printf("パスワードID %d \n", password_id );
+      OS_Printf("入力した文字 %s\n", str );
+      OS_Printf("パスワードID %d \n", password_id );
     }
 #endif
 
