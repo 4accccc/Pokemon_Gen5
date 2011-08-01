@@ -206,6 +206,12 @@ static const ZONEID UseZoneIDTbl_hide_ship[] =
   ZONE_ID_D27R1301,   // エンジン部屋
   ZONE_ID_D27R0201,   // 船首
   ZONE_ID_D27R1201,   // 船首
+  ZONE_ID_D27R0701,   // パスワードID取得に使用
+  ZONE_ID_D27R1801,   // パスワードID取得に使用
+  ZONE_ID_D27R1901,   // パスワードID取得に使用
+  ZONE_ID_D27R2001,   // パスワードID取得に使用
+  ZONE_ID_D27R2101,   // パスワードID取得に使用
+  ZONE_ID_D27R2201,   // パスワードID取得に使用
 };
 
 //=============================================================================
