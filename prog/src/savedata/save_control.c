@@ -91,7 +91,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
   }
 #endif
 
-  NAGI_Printf( "extra_size %x, extra_end %x all_end%x\n", EXTRA_MM_SAVE_SIZE, EXTRA_MM_SAVE_END, ALL_SAVE_END );
+  OS_TPrintf( "extra_size %x, extra_end %x all_end%x\n", EXTRA_MM_SAVE_SIZE, EXTRA_MM_SAVE_END, ALL_SAVE_END );
 
   //ÉZÅ[ÉuóÃàÊÇÕ4Mbit
   GF_ASSERT_MSG( ALL_SAVE_END < 0x80000, "save size over !! %d < %d\n", ALL_SAVE_END, 0x80000 );

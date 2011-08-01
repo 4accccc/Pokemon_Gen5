@@ -39,7 +39,7 @@
 ///EXTRA領域でポケウッドが使用するセーブサイズ
 #define SAVESIZE_EXTRA_POKEWOOD           (0x900)
 ///EXTRA領域でWBTが使用するセーブデータサイズ //TODO 仮
-#define SAVESIZE_EXTRA_WBT                (0x1800)
+#define SAVESIZE_EXTRA_WBT                (0x1300)
 ///EXTRA領域で3DS連動が使用するセーブデータサイズ //TODO　仮
 #define SAVESIZE_EXTRA_3DS                (0x100)
 ///管理外領域で不思議な贈り物が使用するセーブサイズ
