@@ -2,6 +2,663 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_r16_swbell_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『おうい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『おうい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・r05でイベント発生の場合
+　このイベントは発生しない
+・主人公＝♂
+・posイベント
+　GRIDX＝？、GRIDZ＝？
+・続けてswbell_03orswbell_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:34:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:56:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『ねえねえ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『ねえねえ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公＝♀
+・posイベント
+　GRIDX＝？、GRIDZ＝？
+・続けてswbell_03orswbell_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:30:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あのね　[Name:TrainerName ]くん
+かくしあな　ってしってる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:01:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あのね　[Name:TrainerName ]くん
+かくしあな　ってしってる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公＝♂
+・はい/いいえの選択肢表示
+　はい　→swbell_05
+　いいえ→swbell_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:30:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あのね　[Name:TrainerName ]さん
+かくしあな　ってしってる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:01:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あのね　[Name:TrainerName ]さん
+かくしあな　ってしってる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公＝♀
+・はい/いいえの選択肢表示
+　はい　→swbell_05
+　いいえ→swbell_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:30:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すごおい！
+じゃあ　すぐに　みつかるかも▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:02:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:02:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すごおい！
+じゃあ　すぐに　みつかるかも▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+・続けてswbell_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そっかあ……
+じゃあ　せつめい　するね▼
+きと　きの　あいだに
+ポケモンが　かくれそうな　あなが▽
+ときどき　みつかるんだよ▼
+それを　そのまんま
+かくしあな　って　よんでるの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:03:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そっかあ……
+じゃあ　せつめい　するね▼
+きと　きの　あいだに
+ポケモンが　かくれそうな　あなが▽
+ときどき　みつかるんだよ▼
+それを　そのまんま
+かくしあな　って　よんでるの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時
+・続けてswbell_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あのね　この　あたりで　なにか
+ものおとが　きこえたから▽
+かくしあな　ありそうなんだよねえ▼
+というわけで
+いっしょに　さがそうよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:30:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:10:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あのね　この　あたりで　なにか
+ものおとが　きこえたから▽
+かくしあな　ありそうなんだよねえ▼
+というわけで
+いっしょに　さがそうよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて
+・誘導
+　そらをとぶ禁止
+　posで移動制限</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:14:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T11:57:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっとちょっとお！
+いっしょに　さがしてよお！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:17:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっとちょっとお！
+いっしょに　さがしてよお！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・発見前
+・pos</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:16:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:04:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっとちょっとお！
+いっしょに　さがしてよお！▽
+そらをとぶは　いまは　だめだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:16:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっとちょっとお！
+いっしょに　さがしてよお！▽
+そらをとぶは　いまは　だめだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・発見前
+・そらをとぶ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:16:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:04:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　あたりから
+ものおとが　きこえるんだけどなあ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:16:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:16:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　あたりから
+ものおとが　きこえるんだけどなあ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:16:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:16:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・発見前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:16:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:04:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いま　みつけたのって……！
+かくしあな　でしょ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:22:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:17:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いま　みつけたのって……！
+かくしあな　でしょ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・発見後
+　かくしあな発見時にはい/いいえで
+　いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:23:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:04:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16_swbell_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すごいね！　だいはっけん！
+だいはっけん　だよお！▼
+ほかにも　かくしあなが　あるか
+あたしも　しらべてみるねえ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:28:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:26:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すごいね！　だいはっけん！
+だいはっけん　だよお！▼
+ほかにも　かくしあなが　あるか
+あたしも　しらべてみるねえ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:31:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・かくしあな発見時にはい/いいえで
+　はい選択時
+・マップ移動するとベルもついてきて
+　！マーク表示後に、このメッセージ表示
+・表示後、ベルだけ外にでていく</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:29:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:04:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r16_stop_01"
 		Style="Large">
 		<LanguageCell
@@ -55,7 +712,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
