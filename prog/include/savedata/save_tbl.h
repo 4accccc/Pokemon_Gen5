@@ -38,10 +38,10 @@
 #define SAVESIZE_EXTRA_DENDOU             (0x1800)
 ///EXTRA領域でポケウッドが使用するセーブサイズ
 #define SAVESIZE_EXTRA_POKEWOOD           (0x900)
-///EXTRA領域でWBTが使用するセーブデータサイズ //TODO 仮
+///EXTRA領域でWBTが使用するセーブデータサイズ
 #define SAVESIZE_EXTRA_WBT                (0x1300)
 ///EXTRA領域で3DS連動が使用するセーブデータサイズ //TODO　仮
-#define SAVESIZE_EXTRA_3DS                (0x100)
+#define SAVESIZE_EXTRA_3DS                (0x400)
 ///管理外領域で不思議な贈り物が使用するセーブサイズ
 #define SAVESIZE_OUTSIDE_MYSTERY          (0x400)
 ///管理外領域で永続使用するセーブサイズ
@@ -94,7 +94,7 @@ enum{
   EXTRA_MM_POKEWOOD_03 = EXTRA_MM_POKEWOOD_02 + SAVESIZE_EXTRA_POKEWOOD,
   EXTRA_MM_POKEWOOD_04 = EXTRA_MM_POKEWOOD_03 + SAVESIZE_EXTRA_POKEWOOD,
 
-  //ポケウッドはあと1024使える(合計13312=0x3400byte)
+  //ポケウッドはあと1792byte使える(合計13312=0x3400byte) //TODO
   EXTRA_MM_POKEWOOD_END = EXTRA_MM_POKEWOOD_04+ SAVESIZE_EXTRA_POKEWOOD + 1792,
 
   EXTRA_MM_WBT_00 = EXTRA_MM_POKEWOOD_END,
