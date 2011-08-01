@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_d27r1001.h"
   .include  "d27r1001.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -30,6 +32,7 @@ _EVENT_DATA    ev_pos_d27r1001_button_02
 _EVENT_DATA    ev_pos_d27r1001_button_03
 _EVENT_DATA    ev_pos_d27r1001_button_04
 _EVENT_DATA    ev_pos_d27r1001_barrier_01
+_EVENT_DATA    ev_bg_d27r1001_pass_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -58,7 +61,7 @@ DEFINE_LOCAL  LCW_POSZ
 /*					ZONE_CHANGE_LABEL 						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r1001
-  
+  //
 INIT_EVENT_END
 /************************************************************/
 /*					FIELD_INIT_LABEL  						*/
@@ -82,22 +85,13 @@ INIT_EVENT_END
 // ゲート(バリアー)の状態をフラグを見て設定
 sub_gate_set:
 {
-/*
-  DEFINE_LOCAL state      // ゲートが解除してあるかどうか
-  
-  //【仮】 フラグが存在しない
-  _FLAG_CHECK( FE_XXXX_01, state )
-  _HIDE_SHIP_GATE_SET( 0, state )
-  //【仮】 フラグが存在しない
-  _FLAG_CHECK( FE_XXXX_02, state  )
-  _HIDE_SHIP_GATE_SET( 1, state  )
-  //【仮】 フラグが存在しない
-  _FLAG_CHECK( FE_XXXX_03, state )
-  _HIDE_SHIP_GATE_SET( 2, state )
-  //【仮】 フラグが存在しない
-  _FLAG_CHECK( FE_XXXX_04, state )
-  _HIDE_SHIP_GATE_SET( 3, state )
-*/
+//パスワード解除済みならゲートを開放
+  IF $WK_SCENE_D27R1001_BARRIER_01 == 1 THEN
+    _HIDE_SHIP_GATE_SET( 0, 1 )
+    _HIDE_SHIP_GATE_SET( 1, 1 )
+    _HIDE_SHIP_GATE_SET( 2, 1 )
+    _HIDE_SHIP_GATE_SET( 3, 1 )
+  ENDIF
 }
 _RET
 
@@ -226,7 +220,90 @@ EVENT_START ev_pos_d27r1001_button_04
 EVENT_END
 
 /************************************************************/
-/*					【仮】バリア演出				*/
+/*				  BG：パスワード				*/
+/************************************************************/
+EVENT_START ev_bg_d27r1001_pass_01
+{
+  _TALK_START_SE_PLAY()
+  IF FLAG_OFF( FE_D27_CARDKEY_01 ) THEN
+    
+    //カードキーがひつよう　そうだ
+    _SYSWIN_MSG( msg_d27r1001_pass_01 , POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  
+  //カードキー所持・未開放
+  ELSIF $WK_SCENE_D27R1001_BARRIER_01 == 0 THEN
+    
+    //【仮】デバッグ用
+    _HIDE_SHIP_PASSWORD_ID_GET( LOCALWORK15 )
+    _DEBUG_PRINT_WK( LOCALWORK15 )
+    
+    //パスワードを入れますか？
+    _SYSWIN_MSG( msg_d27r1001_pass_02 , POS_DOWN )
+    _YES_NO_WIN( SCWK_ANSWER )
+    
+    //はい
+    IF $SCWK_ANSWER == SCR_YES THEN
+      _MSGWIN_CLOSE()
+    
+      //パスワード返り値
+      DEFINE_LOCAL  LCW_PASSRESULT
+      
+      _HIDE_SHIP_PASSWORD_INPUT( LCW_PASSRESULT )
+      
+      //正解
+      IF $LCW_PASSRESULT == TRUE THEN
+        
+        //バリアが解除された！
+        _SYSWIN_MSG( msg_d27r1001_switch_01 , POS_DOWN )
+        _AB_KEYWAIT_MARK()
+        _MSGWIN_CLOSE()
+        
+        //バリア解除処理
+        _HIDE_SHIP_GATE_OFF( 3 )
+        _TIME_WAIT(8)
+        _HIDE_SHIP_GATE_OFF( 2 )
+        _TIME_WAIT(8)
+        _HIDE_SHIP_GATE_OFF( 1 )
+        _TIME_WAIT(8)
+        _HIDE_SHIP_GATE_OFF( 0 )
+        
+        //すべてのバリアが解除され
+        _SYSWIN_MSG( msg_d27r1001_switch_02 , POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+        
+        //========================================//
+        //バリアーPOS無効
+        $WK_SCENE_D27R1001_BARRIER_01 = 1
+        //パスワード終了
+        _FLAG_SET(FE_D27_PASSOPEN_01)
+        //========================================//
+      
+      //不正解
+      ELSE
+        
+        _SYSWIN_MSG( msg_d27r1001_pass_03 , POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+        
+      ENDIF
+      
+    ENDIF
+  
+  //パスワード開放後
+  ELSE
+    //すべてのバリアが解除され
+    _SYSWIN_MSG( msg_d27r1001_switch_02 , POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+}
+EVENT_END
+
+/************************************************************/
+/*					バリア演出				*/
 /************************************************************/
 EVENT_START ev_pos_d27r1001_barrier_01
   

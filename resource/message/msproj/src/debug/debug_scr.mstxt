@@ -3040,6 +3040,38 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_debug_mizu_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>D27 カードキー所持</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-07-29T03:25:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-07-29T03:25:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>D27 カードキー所持</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-07-29T03:25:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-07-29T03:25:40" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_debug_masafumi_14_01"
 		Style="Large">
 		<LanguageCell

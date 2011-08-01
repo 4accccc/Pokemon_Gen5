@@ -16,5 +16,6 @@
 #ifndef ZONE_D27R1201_EVB_H
 #define ZONE_D27R1201_EVB_H
 
+#define BG_D27R1201_PASS_01               0
 
 #endif //ZONE_D27R1201_EVB_H

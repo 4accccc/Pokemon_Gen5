@@ -373,7 +373,7 @@
 #define FE_D27_PASSOPEN_01                 357 /* 0x0165 プラズマフリゲート：パスワード開放フラグ */
 #define FE_INFDUNGEON_TUTORIAL_01          358 /* 0x0166 無限ダンジョン：チュートリアルフラグ（通常部屋） */
 #define FE_INFDUNGEON_TUTORIAL_02          359 /* 0x0167 無限ダンジョン：チュートリアルフラグ（ボス部屋） */
-		/* not used   360(0x0168) */
+#define FE_INFDUNGEON_TUTORIAL_03          360 /* 0x0168 無限ダンジョン：チュートリアルフラグ（通常部屋） */
 		/* not used   361(0x0169) */
 		/* not used   362(0x016a) */
 		/* not used   363(0x016b) */

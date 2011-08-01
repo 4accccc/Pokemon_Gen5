@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/27 14:09:12
+#save date:2011/07/28 19:49:37
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r0201.wms
 #SECTION START:OBJ_EVENT
@@ -29,7 +29,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r0201.wms
 #hold event type:
 1
 #hold event number:
-1
+8
 #event number: 0
 #Pos Event Label
 POS_D27R0201_BARRIER_01
@@ -38,13 +38,132 @@ SCRID_POS_D27R0201_BARRIER_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK11
+WK_SCENE_D27_SWITCH_04
 #Event Trigger Work Value
 0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
 -104 0 120
+#size
+5 1
+#event number: 1
+#Pos Event Label
+POS_D27R0201_SWITCH_01
+#Pos Script Name
+SCRID_POS_D27R0201_SWITCH_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D27_SWITCH_04
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 136
+#size
+1 1
+#event number: 2
+#Pos Event Label
+POS_D27R0201_SWITCH_02
+#Pos Script Name
+SCRID_POS_D27R0201_SWITCH_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D27_SWITCH_03
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 56
+#size
+1 1
+#event number: 3
+#Pos Event Label
+POS_D27R0201_SWITCH_03
+#Pos Script Name
+SCRID_POS_D27R0201_SWITCH_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D27_SWITCH_02
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 136
+#size
+1 1
+#event number: 4
+#Pos Event Label
+POS_D27R0201_SWITCH_04
+#Pos Script Name
+SCRID_POS_D27R0201_SWITCH_04
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D27_SWITCH_01
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 56
+#size
+1 1
+#event number: 5
+#Pos Event Label
+POS_D27R0201_BARRIER_02
+#Pos Script Name
+SCRID_POS_D27R0201_BARRIER_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D27_SWITCH_03
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 136
+#size
+5 1
+#event number: 6
+#Pos Event Label
+POS_D27R0201_BARRIER_03
+#Pos Script Name
+SCRID_POS_D27R0201_BARRIER_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D27_SWITCH_02
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 152
+#size
+5 1
+#event number: 7
+#Pos Event Label
+POS_D27R0201_BARRIER_04
+#Pos Script Name
+SCRID_POS_D27R0201_BARRIER_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D27_SWITCH_01
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 168
 #size
 5 1
 #Map Event List Data End

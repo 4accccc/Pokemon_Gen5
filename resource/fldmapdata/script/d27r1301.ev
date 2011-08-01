@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_d27r1301.h"
   .include  "d27r1301.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -64,6 +66,31 @@ DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r1301
   
+  //
+  
+INIT_EVENT_END
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d27r1301
+
+  // ゲート状態設定
+  _CALL sub_gate_set
+
+INIT_EVENT_END
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d27r1301
+
+  // ゲート状態設定
+  _CALL sub_gate_set
+
+INIT_EVENT_END
+
+// ゲート(バリアー)の状態をフラグを見て設定
+sub_gate_set:
+{
   //スイッチ（１）の見栄えを分岐
   IF $WK_SCENE_D27_SWITCH_01 == 0 THEN
     _HIDE_SHIP_GATE_SET( 3, 0 )
@@ -91,46 +118,6 @@ INIT_EVENT_START	ev_zone_d27r1301
   ELSE
     _HIDE_SHIP_GATE_SET( 0, 1 )
   ENDIF
-  
-INIT_EVENT_END
-/************************************************************/
-/*					FIELD_INIT_LABEL  						*/
-/************************************************************/
-INIT_EVENT_START	ev_init_d27r1301
-
-  // ゲート状態設定
-  _CALL sub_gate_set
-
-INIT_EVENT_END
-/************************************************************/
-/*					FIELD_RECOVER_LABEL  						*/
-/************************************************************/
-INIT_EVENT_START	ev_recover_d27r1301
-
-  // ゲート状態設定
-  _CALL sub_gate_set
-
-INIT_EVENT_END
-
-// ゲート(バリアー)の状態をフラグを見て設定
-sub_gate_set:
-{
-/*
-  DEFINE_LOCAL state      // ゲートが解除してあるかどうか
-  
-  //【仮】 フラグが存在しない
-  _FLAG_CHECK( FE_XXXX_01, state )
-  _HIDE_SHIP_GATE_SET( 0, state )
-  //【仮】 フラグが存在しない
-  _FLAG_CHECK( FE_XXXX_02, state  )
-  _HIDE_SHIP_GATE_SET( 1, state  )
-  //【仮】 フラグが存在しない
-  _FLAG_CHECK( FE_XXXX_03, state )
-  _HIDE_SHIP_GATE_SET( 2, state )
-  //【仮】 フラグが存在しない
-  _FLAG_CHECK( FE_XXXX_04, state )
-  _HIDE_SHIP_GATE_SET( 3, state )
-*/
 }
 _RET
 
@@ -324,7 +311,7 @@ EVENT_START ev_pos_d27r1301_button_04
 EVENT_END
 
 /************************************************************/
-/*					【仮】バリア演出				*/
+/*					バリア演出				*/
 /************************************************************/
 EVENT_START ev_pos_d27r1301_barrier_01
   

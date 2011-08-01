@@ -48,30 +48,34 @@ DEFINE_LOCAL LCWK_MSGID
 /*  ヒント1                         */
 /**************************************************************/
 EVENT_START ev_d27_hint_01
-  _TALK_START_SE_PLAY()
+   _TALK_OBJ_START()
   _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
   
   $LCWK_MSGID = msg_hide_ship_hint1_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_ANIME( D27R1001_HINT_01, anm_common_gyoe )
-  //W2
-  ELSE
-    _OBJ_ANIME( D27R2101_HINT_01, anm_common_gyoe )
-  ENDIF
-  
-  _OBJ_ANIME_WAIT()
-  
   //戦闘前
   IF FLAG_OFF( FE_D27_HINT_01 ) THEN
     
+    
+    //B2
+    IF $LCWK_VERSION == VERSION_B2 THEN
+      _OBJ_ANIME( D27R1001_HINT_01, anm_common_gyoe )
+    //W2
+    ELSE
+      _OBJ_ANIME( D27R2101_HINT_01, anm_common_gyoe )
+    ENDIF
+    
+    _OBJ_ANIME_WAIT()
+    
+    
      //【仮】戦闘前メッセージ
      //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     
-     //ROMのバージョンを取得
-     _GET_ROM_VERSION( LCWK_VERSION )
+     //_AB_KEYWAIT_MARK()
+     //_MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
@@ -93,6 +97,8 @@ EVENT_START ev_d27_hint_01
      _CALL ev_battle_check
      
      _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+     _LAST_KEYWAIT()
+     _MSGWIN_CLOSE()
     
     //========================================//
     //戦闘終了フラグセット
@@ -102,6 +108,8 @@ EVENT_START ev_d27_hint_01
   //戦闘後
   ELSE
     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   ENDIF
   
 EVENT_END
@@ -110,30 +118,32 @@ EVENT_END
 /*  ヒント2                         */
 /**************************************************************/
 EVENT_START ev_d27_hint_02
-  _TALK_START_SE_PLAY()
+   _TALK_OBJ_START()
   _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
   
   $LCWK_MSGID = msg_hide_ship_hint2_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_ANIME( D27R1001_HINT_02, anm_common_gyoe )
-  //W2
-  ELSE
-    _OBJ_ANIME( D27R2201_HINT_02, anm_common_gyoe )
-  ENDIF
-  
-  _OBJ_ANIME_WAIT()
-  
   //戦闘前
   IF FLAG_OFF( FE_D27_HINT_02 ) THEN
+
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       _OBJ_ANIME( D27R1001_HINT_02, anm_common_gyoe )
+     //W2
+     ELSE
+       _OBJ_ANIME( D27R2201_HINT_02, anm_common_gyoe )
+     ENDIF
      
+     _OBJ_ANIME_WAIT()
+
      //【仮】戦闘前メッセージ
      //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     
-     //ROMのバージョンを取得
-     _GET_ROM_VERSION( LCWK_VERSION )
+     //_AB_KEYWAIT_MARK()
+     //_MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
@@ -155,6 +165,8 @@ EVENT_START ev_d27_hint_02
      _CALL ev_battle_check
      
      _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+     _LAST_KEYWAIT()
+     _MSGWIN_CLOSE()
     
     //========================================//
     //戦闘終了フラグセット
@@ -164,6 +176,8 @@ EVENT_START ev_d27_hint_02
   //戦闘後
   ELSE
     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   ENDIF
   
 EVENT_END
@@ -172,30 +186,32 @@ EVENT_END
 /*  ヒント3                         */
 /**************************************************************/
 EVENT_START ev_d27_hint_03
-  _TALK_START_SE_PLAY()
+   _TALK_OBJ_START()
   _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
   
   $LCWK_MSGID = msg_hide_ship_hint3_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_ANIME( D27R1001_HINT_03, anm_common_gyoe )
-  //W2
-  ELSE
-    _OBJ_ANIME( D27R1801_HINT_03, anm_common_gyoe )
-  ENDIF
-  
-  _OBJ_ANIME_WAIT()
-  
   //戦闘前
   IF FLAG_OFF( FE_D27_HINT_03 ) THEN
+
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       _OBJ_ANIME( D27R1001_HINT_03, anm_common_gyoe )
+     //W2
+     ELSE
+       _OBJ_ANIME( D27R1801_HINT_03, anm_common_gyoe )
+     ENDIF
      
+     _OBJ_ANIME_WAIT()
+
      //【仮】戦闘前メッセージ
      //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     
-     //ROMのバージョンを取得
-     _GET_ROM_VERSION( LCWK_VERSION )
+     //_AB_KEYWAIT_MARK()
+     //_MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
@@ -217,6 +233,8 @@ EVENT_START ev_d27_hint_03
      _CALL ev_battle_check
      
      _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+     _LAST_KEYWAIT()
+     _MSGWIN_CLOSE()
     
     //========================================//
     //戦闘終了フラグセット
@@ -226,6 +244,8 @@ EVENT_START ev_d27_hint_03
   //戦闘後
   ELSE
     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   ENDIF
   
 EVENT_END
@@ -234,30 +254,31 @@ EVENT_END
 /*  ヒント4                         */
 /**************************************************************/
 EVENT_START ev_d27_hint_04
-  _TALK_START_SE_PLAY()
+   _TALK_OBJ_START()
   _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
   
   $LCWK_MSGID = msg_hide_ship_hint4_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_ANIME( D27R1001_HINT_04, anm_common_gyoe )
-  //W2
-  ELSE
-    _OBJ_ANIME( D27R2101_HINT_04, anm_common_gyoe )
-  ENDIF
-  
-  _OBJ_ANIME_WAIT()
-  
   //戦闘前
   IF FLAG_OFF( FE_D27_HINT_04 ) THEN
-     
+  
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       _OBJ_ANIME( D27R1001_HINT_04, anm_common_gyoe )
+     //W2
+     ELSE
+       _OBJ_ANIME( D27R2101_HINT_04, anm_common_gyoe )
+     ENDIF
+    
+     _OBJ_ANIME_WAIT()
      //【仮】戦闘前メッセージ
      //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     
-     //ROMのバージョンを取得
-     _GET_ROM_VERSION( LCWK_VERSION )
+     //_AB_KEYWAIT_MARK()
+     //_MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
@@ -279,6 +300,8 @@ EVENT_START ev_d27_hint_04
      _CALL ev_battle_check
      
      _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+     _LAST_KEYWAIT()
+     _MSGWIN_CLOSE()
     
     //========================================//
     //戦闘終了フラグセット
@@ -288,6 +311,8 @@ EVENT_START ev_d27_hint_04
   //戦闘後
   ELSE
     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   ENDIF
   
 EVENT_END
@@ -296,31 +321,33 @@ EVENT_END
 /*  ヒント5                         */
 /**************************************************************/
 EVENT_START ev_d27_hint_05
-  _TALK_START_SE_PLAY()
+   _TALK_OBJ_START()
   _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
   
   //5はメッセージ固定
   $LCWK_MSGID = msg_hide_ship_hint5_01
   //$LCWK_MSGID += $LCWK_PASSID
   
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_ANIME( D27R1001_HINT_05, anm_common_gyoe )
-  //W2
-  ELSE
-    _OBJ_ANIME( D27R2001_HINT_05, anm_common_gyoe )
-  ENDIF
-  
-  _OBJ_ANIME_WAIT()
-  
   //戦闘前
   IF FLAG_OFF( FE_D27_HINT_05 ) THEN
     
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       _OBJ_ANIME( D27R1001_HINT_05, anm_common_gyoe )
+     //W2
+     ELSE
+       _OBJ_ANIME( D27R2001_HINT_05, anm_common_gyoe )
+     ENDIF
+     
+     _OBJ_ANIME_WAIT()
+    
      //【仮】戦闘前メッセージ
      //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     
-     //ROMのバージョンを取得
-     _GET_ROM_VERSION( LCWK_VERSION )
+     //_AB_KEYWAIT_MARK()
+     //_MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
@@ -342,6 +369,8 @@ EVENT_START ev_d27_hint_05
      _CALL ev_battle_check
      
      _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+     _LAST_KEYWAIT()
+     _MSGWIN_CLOSE()
     
     //========================================//
     //戦闘終了フラグセット
@@ -351,6 +380,8 @@ EVENT_START ev_d27_hint_05
   //戦闘後
   ELSE
     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   ENDIF
   
 EVENT_END
@@ -359,30 +390,32 @@ EVENT_END
 /*  ヒント6                         */
 /**************************************************************/
 EVENT_START ev_d27_hint_06
-  _TALK_START_SE_PLAY()
+   _TALK_OBJ_START()
   _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
   
   $LCWK_MSGID = msg_hide_ship_hint6_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_ANIME( D27R1001_HINT_06, anm_common_gyoe )
-  //W2
-  ELSE
-    _OBJ_ANIME( D27R1901_HINT_06, anm_common_gyoe )
-  ENDIF
-  
-  _OBJ_ANIME_WAIT()
-  
   //戦闘前
   IF FLAG_OFF( FE_D27_HINT_06 ) THEN
     
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       _OBJ_ANIME( D27R1001_HINT_06, anm_common_gyoe )
+     //W2
+     ELSE
+       _OBJ_ANIME( D27R1901_HINT_06, anm_common_gyoe )
+     ENDIF
+     
+     _OBJ_ANIME_WAIT()
+     
      //【仮】戦闘前メッセージ
      //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     
-     //ROMのバージョンを取得
-     _GET_ROM_VERSION( LCWK_VERSION )
+     //_AB_KEYWAIT_MARK()
+     //_MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
@@ -404,6 +437,8 @@ EVENT_START ev_d27_hint_06
      _CALL ev_battle_check
      
      _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+     _LAST_KEYWAIT()
+     _MSGWIN_CLOSE()
     
     //========================================//
     //戦闘終了フラグセット
@@ -413,6 +448,8 @@ EVENT_START ev_d27_hint_06
   //戦闘後
   ELSE
     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   ENDIF
   
 EVENT_END
@@ -421,30 +458,32 @@ EVENT_END
 /*  ヒント7                         */
 /**************************************************************/
 EVENT_START ev_d27_hint_07
-  _TALK_START_SE_PLAY()
+  _TALK_OBJ_START()
   _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
   
   $LCWK_MSGID = msg_hide_ship_hint7_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_ANIME( D27R1001_HINT_07, anm_common_gyoe )
-  //W2
-  ELSE
-    _OBJ_ANIME( D27R2201_HINT_07, anm_common_gyoe )
-  ENDIF
-  
-  _OBJ_ANIME_WAIT()
-  
   //戦闘前
   IF FLAG_OFF( FE_D27_HINT_07 ) THEN
+
+     //B2
+     IF $LCWK_VERSION == VERSION_B2 THEN
+       _OBJ_ANIME( D27R1001_HINT_07, anm_common_gyoe )
+     //W2
+     ELSE
+       _OBJ_ANIME( D27R2201_HINT_07, anm_common_gyoe )
+     ENDIF
      
+     _OBJ_ANIME_WAIT()
+
      //【仮】戦闘前メッセージ
      //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     
-     //ROMのバージョンを取得
-     _GET_ROM_VERSION( LCWK_VERSION )
+     //_AB_KEYWAIT_MARK()
+     //_MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
@@ -466,6 +505,8 @@ EVENT_START ev_d27_hint_07
      _CALL ev_battle_check
      
      _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+     _LAST_KEYWAIT()
+     _MSGWIN_CLOSE()
     
     //========================================//
     //戦闘終了フラグセット
@@ -475,6 +516,8 @@ EVENT_START ev_d27_hint_07
   //戦闘後
   ELSE
     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   ENDIF
   
 EVENT_END
