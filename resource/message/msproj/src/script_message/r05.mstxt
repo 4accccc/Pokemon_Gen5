@@ -2909,10 +2909,10 @@ musician_01</Text>
 ・主人公＝♂
 ・posイベント
 　GRIDX＝？、GRIDZ＝？
-・続けてswbell_03orswbell_04</Comment>
+・続けてswbell_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:33:54" />
+				Time="2011-08-01T12:48:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2961,10 +2961,10 @@ musician_01</Text>
 ・主人公＝♀
 ・posイベント
 　GRIDX＝？、GRIDZ＝？
-・続けてswbell_03orswbell_04</Comment>
+・続けてswbell_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:48:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2987,38 +2987,37 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あのね　[Name:TrainerName ]くん
-かくしあな　ってしってる？</Text>
+			<Text>いいところで　であったよね
+これを　あげようと　おもって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:46:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:46:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あのね　[Name:TrainerName ]くん
-かくしあな　ってしってる？</Text>
+			<Text>いいところで　であったよね
+これを　あげようと　おもって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:48:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・主人公＝♂
-・はい/いいえの選択肢表示
-　はい　→swbell_05
-　いいえ→swbell_06</Comment>
+・アイテム入手処理
+　No421「ひでんマシン０２」（そらをとぶ）
+・続けてswbell_04orswbell_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:49:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3026,7 +3025,7 @@ musician_01</Text>
 ベル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:48:10" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -3041,11 +3040,15 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あのね　[Name:TrainerName ]さん
+			<Text>そらをとぶ　でーす！▼
+たたかっていないときに
+その　わざを　つかうと　いきたい▽
+ポケモンセンターなどに　いけるよ▼
+でね　[Name:TrainerName ]くん
 かくしあな　ってしってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:47:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3053,11 +3056,15 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あのね　[Name:TrainerName ]さん
+			<Text>そらをとぶ　でーす！▼
+たたかっていないときに
+その　わざを　つかうと　いきたい▽
+ポケモンセンターなどに　いけるよ▼
+でね　[Name:TrainerName ]くん
 かくしあな　ってしってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:47:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3066,13 +3073,13 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・主人公＝♀
+・主人公＝♂
 ・はい/いいえの選択肢表示
-　はい　→swbell_05
-　いいえ→swbell_06</Comment>
+　はい　→swbell_06
+　いいえ→swbell_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:48:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3092,6 +3099,68 @@ musician_01</Text>
 	</TextRow>
 	<TextRow
 		Label="msg_r05_swbell_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そらをとぶ　でーす！▼
+たたかっていないときに
+その　わざを　つかうと　いきたい▽
+ポケモンセンターなどに　いけるよ▼
+でね　[Name:TrainerName ]さん
+かくしあな　ってしってる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:47:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:32:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そらをとぶ　でーす！▼
+たたかっていないときに
+その　わざを　つかうと　いきたい▽
+ポケモンセンターなどに　いけるよ▼
+でね　[Name:TrainerName ]さん
+かくしあな　ってしってる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:47:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:32:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公＝♀
+・はい/いいえの選択肢表示
+　はい　→swbell_06
+　いいえ→swbell_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:48:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T12:32:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r05_swbell_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3121,10 +3190,10 @@ musician_01</Text>
 			Language="JPN">
 			<Comment>♀
 ・はい選択時
-・続けてswbell_07</Comment>
+・続けてswbell_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:48:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3143,7 +3212,7 @@ musician_01</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r05_swbell_06"
+		Label="msg_r05_swbell_07"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3183,10 +3252,10 @@ musician_01</Text>
 			Language="JPN">
 			<Comment>♀
 ・いいえ選択時
-・続けてswbell_07</Comment>
+・続けてswbell_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:49:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3205,7 +3274,7 @@ musician_01</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r05_swbell_07"
+		Label="msg_r05_swbell_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3265,7 +3334,7 @@ musician_01</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r05_swbell_08"
+		Label="msg_r05_swbell_09"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3317,7 +3386,7 @@ musician_01</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r05_swbell_09"
+		Label="msg_r05_swbell_10"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3371,7 +3440,7 @@ musician_01</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r05_swbell_10"
+		Label="msg_r05_swbell_11"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3422,7 +3491,7 @@ musician_01</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r05_swbell_11"
+		Label="msg_r05_swbell_12"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3475,7 +3544,7 @@ musician_01</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r05_swbell_12"
+		Label="msg_r05_swbell_13"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3485,7 +3554,7 @@ musician_01</Text>
 あたしも　しらべてみるねえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:51:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3512,10 +3581,11 @@ musician_01</Text>
 　はい選択時
 ・マップ移動するとベルもついてきて
 　！マーク表示後に、このメッセージ表示
-・表示後、ベルだけ外にでていく</Comment>
+・表示後、ベルだけ外にでていく
+</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-08-01T12:46:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
