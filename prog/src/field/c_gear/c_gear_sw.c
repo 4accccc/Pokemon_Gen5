@@ -167,11 +167,37 @@ enum{
 //----------------------------------------------------------
 ///パレット関連定義
 //----------------------------------------------------------
+
+//パネルのステータスパレットアニメ用
+#define PANEL_COLOR_TRANS_POS_PALNO  (2)
+#define PANEL_COLOR_TRANS_POS_OFS    (0x0d)
+
+//すれ違いアイコンパレットアニメ用定義
 #define CROSS_COLOR_MAX ( 17 )  //すれ違いアイコン用パレットソース数(お気に入りカラー16色+無効カラー1色)
-#define RING_COLOR_MAX      ( C_GEAR_RING_COLOR_MAX )    //リングカラー数+電源Off時カラー
-#define RING_COLOR_SET_NUM  ( 3*3 ) //1つにつき、3色分*3のデータを持つ
-#define RING_COLOR_DEF_NO 　( 0 )   //リングカラーのデフォルト
-#define RING_COLOR_BASE_NO  ( RING_COLOR_MAX-1 )  //リングの地味カラーNo
+
+#define CROSS_COLOR_SRC_POS_START   (( 9*16 ))  //コピーソースのパレット位置
+#define CROSS_COLOR_TRANS_POS_PALNO (( 5 ))     //転送場所のパレットNo
+#define CROSS_COLOR_TRANS_POS_START (( CROSS_COLOR_TRANS_POS_PALNO*16 )+1 ) //転送開始位置
+#define CROSS_COLOR_ICON_MAX  (10)  //アイコン数
+
+//リング色変え処理用
+#define RING_NUM                ( C_GEAR_RING_NUM )
+#define RING_COLOR_MAX          ( C_GEAR_RING_COLOR_MAX+1 )    //リングカラー数+Offカラー
+#define RING_COLOR_SET_NUM      ( 3 )  //1セット3色
+#define RING_COLOR_SET_NUM_ALL  ( RING_COLOR_SET_NUM*3 ) //1セット3色
+#define RING_COLOR_DEF_NO 　    ( 0 )  //リングカラーのデフォルト
+#define RING_COLOR_BASE_NO      ( RING_COLOR_MAX-2 )  //リングの地味カラーNo
+#define RING_COLOR_OFF_NO       ( RING_COLOR_MAX-1 )  //リングのOffカラーNo
+
+#define RING_COLOR_TRANS_POS_BG_PALNO  (1) //転送場所のパレットNo
+#define RING_COLOR_TRANS_POS_BG_START  ((RING_COLOR_TRANS_POS_BG_PALNO*16)+1) //転送場所のパレットNo
+#define RING_COLOR_TRANS_POS_OBJ_R2_START1 (0*16+1+RING_COLOR_SET_NUM)
+#define RING_COLOR_TRANS_POS_OBJ_R2_START2 (1*16+1+RING_COLOR_SET_NUM)
+#define RING_COLOR_TRANS_POS_OBJ_R4_START1 (0*16+1)
+#define RING_COLOR_TRANS_POS_OBJ_R4_START2 (1*16+1)
+
+#define RING_COLOR_TRANS_POS_OBJ_PANEL_START (PANEL_COLOR_TRANS_POS_PALNO*16+1)
+
 #if 0
 // (u32)配列としてのインデックス
 static const u32 sc_CROSS_COLOR_RES_IDX[CROSS_COLOR_MAX] = {
@@ -181,11 +207,6 @@ static const u32 sc_CROSS_COLOR_RES_IDX[CROSS_COLOR_MAX] = {
 };
 #endif
 
-//すれ違いアイコンパレットアニメ用定義
-#define CROSS_COLOR_SRC_POS_START   (( 9*16 ))  //コピーソースのパレット位置
-#define CROSS_COLOR_TRANS_POS_PALNO (( 5 ))     //転送場所のパレットNo
-#define CROSS_COLOR_TRANS_POS_START (( CROSS_COLOR_TRANS_POS_PALNO*16 )+1 ) //転送開始位置
-#define CROSS_COLOR_ICON_MAX  (10)  //アイコン数
 
 //-------------------------------------
 ///	OAMパレットフェード
@@ -205,8 +226,6 @@ static const u8 _CGEAR_NET_CHANGEPAL_POSX[ _CGEAR_NET_PANEL_MAX ] = {
   0xf, 0x7, 0xb, 
 };
 #endif
-#define _CGEAR_NET_CHANGEPAL_NO  (2)
-#define _CGEAR_NET_CHANGEPAL_OFS (0x0d)
 
 enum{
   _CGEAR_NET_CHANGEPAL_ANM_TYPE_FIRST = 0,
@@ -624,16 +643,16 @@ enum{
 
 #define TP_CIRCLE_CENTER_X  (16*8)
 #define TP_CIRCLE_CENTER_Y  (12*8)
-#define TP_CIRCLE0_OUT_R    (4*8+1)
-#define TP_CIRCLE0_IN_R     (TP_CIRCLE0_OUT_R-3)
-#define TP_CIRCLE1_OUT_R    (6*8+1)
-#define TP_CIRCLE1_IN_R     (TP_CIRCLE1_OUT_R-3)
-#define TP_CIRCLE2_OUT_R    (8*8+4+1)
-#define TP_CIRCLE2_IN_R     (TP_CIRCLE2_OUT_R-3)
-#define TP_CIRCLE3_OUT_R    (11*8+1)
-#define TP_CIRCLE3_IN_R     (TP_CIRCLE3_OUT_R-3)
-#define TP_CIRCLE4_OUT_R    (14*8+1)
-#define TP_CIRCLE4_IN_R     (TP_CIRCLE4_OUT_R-3)
+#define TP_CIRCLE0_OUT_R    (4*8+2)
+#define TP_CIRCLE0_IN_R     (TP_CIRCLE0_OUT_R-5)
+#define TP_CIRCLE1_OUT_R    (6*8+2)
+#define TP_CIRCLE1_IN_R     (TP_CIRCLE1_OUT_R-5)
+#define TP_CIRCLE2_OUT_R    (8*8+4+2)
+#define TP_CIRCLE2_IN_R     (TP_CIRCLE2_OUT_R-5)
+#define TP_CIRCLE3_OUT_R    (11*8+2)
+#define TP_CIRCLE3_IN_R     (TP_CIRCLE3_OUT_R-5)
+#define TP_CIRCLE4_OUT_R    (14*8+2)
+#define TP_CIRCLE4_IN_R     (TP_CIRCLE4_OUT_R-5)
 
 // タイプ
 //#define _CLACT_TYPE_MAX (3)
@@ -994,7 +1013,7 @@ struct _C_GEAR_WORK {
   u16 palChangeType[ _CGEAR_NET_PANEL_MAX ];
   u16 palChangeCol[_CGEAR_NET_PALTYPE_MAX][_CGEAR_NET_CHANGEPAL_NUM];
 
-  u16 palRing[RING_COLOR_MAX][RING_COLOR_SET_NUM];  //リングカラー
+  u16 palRing[RING_COLOR_MAX][RING_COLOR_SET_NUM_ALL];  //リングカラー
 #if 0
   u16 tpx;
   u16 tpy;
@@ -1026,7 +1045,7 @@ struct _C_GEAR_WORK {
   u8 startCounter;
   u8 bPanelEdit;
   u8 design_no;     //パネルデザインNo
-  u8 ring_col[RING_COLOR_MAX];    //リングカラーNo
+  u8 ring_col[RING_NUM];    //リングカラーNo
   u8 sex;
   u8 power_flag;    // 電源がはいっているか？
   u8 connect_flag;  // 一人分でも通信バッファにデータがあるか？
@@ -1120,6 +1139,7 @@ static void _gearEndStartUpObjAnime(C_GEAR_WORK* pWork);
 static BOOL _gearIsEndStartUpObjAnime(const C_GEAR_WORK* cpWork);
 
 static void _gearRingColorChangeCore(C_GEAR_WORK* pWork, u8 ring_id, u8 col_no );
+static void _gearRingColorChangeInit(C_GEAR_WORK* pWork );
 
 
 
@@ -2153,7 +2173,7 @@ static void _PanelPaletteChangeCore( C_GEAR_WORK* pWork, int change_panel, int m
 
   // BGPalette
   PaletteWorkSet( pWork->pfade_ptr, &pWork->palTrans[change_panel],
-      FADE_SUB_OBJ, 16*(change_panel+_CGEAR_NET_CHANGEPAL_NO) + _CGEAR_NET_CHANGEPAL_OFS, 2 );
+      FADE_SUB_OBJ, 16*(change_panel+PANEL_COLOR_TRANS_POS_PALNO) + PANEL_COLOR_TRANS_POS_OFS, 2 );
 }
 
 
@@ -3092,26 +3112,32 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 design_no, BOOL pal_
     GFL_ARCHDL_UTIL_TransVramPalette( pWork->handle,
         NARC_c_gear_sw_c_gear_m_nclr+sex, PALTYPE_SUB_BG, 0, 0x20*BG_USE_PLTT_NUM, GFL_HEAP_LOWID(pWork->heapID) );
 
-    //基本パレットの取得と転送
-    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_m_nclr+sex, &pltt, GFL_HEAP_LOWID(pWork->heapID) );
-
-    // 転送
-		DC_FlushRange( pltt->pRawData, pltt->szByte );
-    GXS_LoadBGPltt( pltt->pRawData, 0, pltt->szByte );
+    //パネルのパレットアニメ用ベースカラーを取得 
+    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_m_obj_nclr+sex, &pltt, GFL_HEAP_LOWID(pWork->heapID) );
 
     pltt_data = pltt->pRawData;
     for( pal = 0 ; pal < _CGEAR_NET_PANEL_MAX; pal++){
-      pWork->palBase[pal] = pltt_data[(16*(_CGEAR_NET_CHANGEPAL_NO+pal)) + _CGEAR_NET_CHANGEPAL_NO ];
+      pWork->palBase[pal] = pltt_data[(16*(PANEL_COLOR_TRANS_POS_PALNO+pal)) + PANEL_COLOR_TRANS_POS_OFS ];
     }
     GFL_HEAP_FreeMemory( buff );
 
+    //パネルとすれ違いアイコン用パレットアニメのソースカラーを取得
     buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_obj_ani_nclr, &pltt, GFL_HEAP_LOWID(pWork->heapID) );
 
     for( i=0; i<_CGEAR_NET_PALTYPE_MAX; i++ ){
       _PaletteMake(pWork,pltt->pRawData,i);
     }
-
     GFL_HEAP_FreeMemory( buff );
+
+    //リング色変更用のパレットソースを取得
+    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_ring_nclr, &pltt, GFL_HEAP_LOWID(pWork->heapID) );
+
+    pltt_data = pltt->pRawData;
+    for( pal = 0 ; pal < RING_COLOR_MAX; pal++){
+      MI_CpuCopy8( &pltt_data[(16*(pal+(sex*RING_COLOR_MAX)))], pWork->palRing[pal], RING_COLOR_SET_NUM_ALL*2 );
+    }
+    GFL_HEAP_FreeMemory( buff );
+
   }
 
   //キャラ転送
@@ -4105,13 +4131,60 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   リング色変更
+ * @brief   リング色変更コア
  * @retval  none
  */
 //------------------------------------------------------------------------------
 static void _gearRingColorChangeCore(C_GEAR_WORK* pWork, u8 ring_id, u8 col_no )
 {
-   
+  int i;
+  int siz  = RING_COLOR_SET_NUM*2;
+  u16*  pal = pWork->palRing[ col_no ];
+
+  //リングベースの3色を転送
+  PaletteWorkSet( pWork->pfade_ptr, &pal[0*RING_COLOR_SET_NUM],
+      FADE_SUB_BG, ring_id*RING_COLOR_SET_NUM+RING_COLOR_TRANS_POS_BG_START, siz );
+
+  //パネルリングカラー転送
+  for( i = 0;i < _CGEAR_NET_PANEL_MAX;i++) {
+    if( ring_id != 2 ){ //属しているリングが異なればスルー
+      continue;
+    } 
+    PaletteWorkSet( pWork->pfade_ptr, &pal[1*RING_COLOR_SET_NUM],
+      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_PANEL_START+(i*16), siz );
+  }
+
+  //関連づいたOBJのリング色を転送
+  switch( ring_id ){
+  case 2: //内から3番目
+    PaletteWorkSet( pWork->pfade_ptr, &pal[1*RING_COLOR_SET_NUM],
+      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R2_START1, siz );
+    PaletteWorkSet( pWork->pfade_ptr, &pal[2*RING_COLOR_SET_NUM],
+      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R2_START2, siz );
+    break;
+  case 4: //一番外側
+    PaletteWorkSet( pWork->pfade_ptr, &pal[1*RING_COLOR_SET_NUM],
+      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R4_START1, siz );
+    PaletteWorkSet( pWork->pfade_ptr, &pal[2*RING_COLOR_SET_NUM],
+      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R4_START2, siz );
+    break;
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リング色変更初期化時
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _gearRingColorChangeInit(C_GEAR_WORK* pWork )
+{
+  int i;
+
+  for( i = 0;i < RING_NUM;i++){
+    pWork->ring_col[i] = CGEAR_SV_GetCGearRingColor( pWork->pCGSV, i );
+    _gearRingColorChangeCore( pWork, i, pWork->ring_col[i] );
+  }
 }
 
 
@@ -4834,7 +4907,8 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
   // 現在VRAMにあるパレットを壊さないように、VRAMからパレット内容をコピーする
   PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_OBJ, 0, 0x20*OAM_USE_PLTT_NUM );
   PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_BG, 0, 0x20*BG_USE_PLTT_NUM );
-  _PFadeSetDefaultPal( pWork, pWork->power_flag );
+  _PFadeSetDefaultPal( pWork, pWork->power_flag );  //パネルステートアニメ初期化
+  _gearRingColorChangeInit( pWork );  //リング色初期化
   PaletteFadeTrans( pWork->pfade_ptr );
 
   {

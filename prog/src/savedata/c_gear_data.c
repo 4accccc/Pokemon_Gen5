@@ -112,8 +112,14 @@ CGEAR_SAVEDATA* CGEAR_SV_AllocWork(HEAPID heapID)
 
 void CGEAR_SV_Init(CGEAR_SAVEDATA* pSV)
 {
+  int i;
+
 	GFL_STD_MemClear(pSV, CGEAR_SV_GetWorkSize());
 	GFL_STD_MemCopy(_inittable,pSV->type,sizeof(_inittable));
+
+  for( i = 0;i < C_GEAR_RING_NUM;i++ ){
+    pSV->ring_col[i] = i;
+  }
 }
 
 
