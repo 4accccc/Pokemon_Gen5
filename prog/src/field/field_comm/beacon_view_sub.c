@@ -1355,7 +1355,8 @@ static void panel_MedalSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO*
   for(i = 0;i < PANEL_NUM_ACTMAX;i++){
     static const u16 tbl[] = {1,10,100,1000};
     int value = ( pp->medal%tbl[(i+1)] ) / tbl[i];
-    GFL_CLACT_WK_SetAnmFrame( pp->cNum[i], FX32_CONST(value) );
+//    GFL_CLACT_WK_SetAnmFrame( pp->cNum[i], FX32_CONST(value) );
+    GFL_CLACT_WK_SetAnmIndex( pp->cNum[i], value );
   }
 }
 
