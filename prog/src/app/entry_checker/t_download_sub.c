@@ -56,10 +56,11 @@
 // 上：OBJ(14:通信)
 //
 // (main)
-// 下：BG (0-4:BG、8,9,11,12:FONT,WIN)
+// 下：BG (0-4:BG、7,8,9,11,12:FONT,WIN)
 // 下：OBJ(0-4:パネル、11-14:cmn)
 enum{
 	// (main)
+	PLTID_CAPTION_FONT			= 7,	// caption
 	PLTID_SYSWIN_BASE			= 8,	// font(syswin)
 	PLTID_SYSWIN_FONT			= 9,	// font(syswin)
 	PLTID_YESNO_WIN_BASE		= 11,	// win(yes/no window)(注：2本使用する(色変え含む:11,12))
@@ -77,11 +78,14 @@ enum{
 
 // いろいろ
 enum{
-	EMPTY_CURPOS				= 18,	// カーソル上の位置
+	EMPTY_CURPOS				= 18,	// カーソル上の位置(リスト用)
+	EMPTY_CURPOS2				= 27,	// カーソル上の位置(3枚パネル用)
 	//
 	CANVAS_INFO_OFFSET			= 9,	// 詳細用のcanvasのoffset
 	CANVAS_INFO_NUM				= 5,	// 詳細用のcanvasの数
 	//
+	CANVAS_JOIN_OFFSET			= 14,	// joinのcanvasのoffset
+	CANVAS_JOIN_NUM				= 3,	// joinのcanvasの数
 	//
 	TD_ACTIVE_RATE				= 0,	// アクティブの割合(戻し)
 	TD_PASSIVE_RATE 			= -8,	// パッシブの割合
@@ -114,6 +118,13 @@ enum{
 	CMN_DOWN_ON_SEQ 	= 10,			// 下オン
 	CMN_CROSS_ON_SEQ	= 8,			// ×オン
 	CMN_RETURN_ON_SEQ	= 9,			// 戻るオン
+	//
+	CMN_LEFT_OFF_SEQ 	= 18,			// 左オフ
+	CMN_RIGHT_OFF_SEQ 	= 19,			// 右オフ
+	CMN_UP_OFF_SEQ 		= 17,			// 上オフ
+	CMN_DOWN_OFF_SEQ 	= 16,			// 下オフ
+	CMN_CROSS_OFF_SEQ	= 14,			// ×オフ
+	CMN_RETURN_OFF_SEQ	= 15,			// 戻るオフ
 };
 
 //------------------
@@ -261,12 +272,43 @@ static const T_DOWNLOAD_BGCHR_DATA td_bgchr_00_tbl[] = {
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
-
 // BGSCN
 static const T_DOWNLOAD_BGSCN_DATA td_bgscn_00_tbl[] = {
 	{ GFL_BG_FRAME2_M,	NARC_t_download_gra_t_download_bg_d_05_NSCR,	0,	0,},	// 下、下地
 
 	{ 0xff, 0, 0, 0,}, // end code
+};
+
+//--------
+// join用
+//--------
+// BGCHR
+static const T_DOWNLOAD_BGCHR_DATA td_bgchr_01_tbl[] = {
+	{ GFL_BG_FRAME2_M,	NARC_t_download_gra_t_download_bg_d_NCGR,	0,	0,},		// 下、BG
+
+	{ 0xff, 0, 0, 0,}, // end code
+};
+// BGSCN
+static const T_DOWNLOAD_BGSCN_DATA td_bgscn_01_tbl[] = {
+//	{ GFL_BG_FRAME2_M,	NARC_t_download_gra_t_download_bg_d_04_NSCR,	0,	0,},	// 下、下地
+
+	{ 0xff, 0, 0, 0,}, // end code
+};
+//--------
+// bgまとめ
+//--------
+static const T_DOWNLOAD_BGCHR_DATA *td_bgchr_sub_tbl[] = {
+	td_bgchr_01_tbl,			// save(dummy)
+	td_bgchr_01_tbl,			// select(dummy)
+	td_bgchr_01_tbl,			// join
+	td_bgchr_00_tbl,			// info
+};
+//
+static const T_DOWNLOAD_BGSCN_DATA *td_bgscn_sub_tbl[] = {
+	td_bgscn_01_tbl,			// save(dummy)
+	td_bgscn_01_tbl,			// select(dummy)
+	td_bgscn_01_tbl,			// join
+	td_bgscn_00_tbl,			// info
 };
 
 //---------------
@@ -281,14 +323,14 @@ static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
 	{ GFL_BG_FRAME1_S,	2,	16,	18,	2,	2,},		// 上：トーナメント名
 	{ GFL_BG_FRAME1_S,	2,	18,	28,	4,	2,},		// 上：内容
 	//
-	{ GFL_BG_FRAME0_M,	1,	0,	30,	3,	9,},		// 下：タイトル(注意)
+	{ GFL_BG_FRAME0_M,	1,	0,	30,	3,	7,},		// 下：タイトル(注意)
 	{ GFL_BG_FRAME0_M,	1,	4,	30,	4,	9,},		// 下：meswin
 	{ GFL_BG_FRAME0_M,	1,	19,	30,	4,	9,},		// 下：下win
 	//
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 
-// 使い方注意
+// (info用)
 static const T_DOWNLOAD_CANVAS_DATA td_canvas_00_tbl[] = {
 	// 注意
 	{ GFL_BG_FRAME0_M,	2,	5,	26,	2,	3,},		// 下：項目00
@@ -300,12 +342,36 @@ static const T_DOWNLOAD_CANVAS_DATA td_canvas_00_tbl[] = {
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 
+// (join用)
+static const T_DOWNLOAD_CANVAS_DATA td_canvas_01_tbl[] = {
+	// 注意
+	{ GFL_BG_FRAME2_M,	3,	5,	24,	3,	2,},		// 下：項目00
+	{ GFL_BG_FRAME2_M,	3, 10,	24,	3,	2,},		// 下：項目01
+	{ GFL_BG_FRAME2_M,	3, 15,	24,	3,	2,},		// 下：項目02
+	
+	{ 0xff, 0, 0, 0, 0, 0,}, // end code
+};
+
+static const T_DOWNLOAD_CANVAS_DATA *td_canvas_sub_tbl[] = {
+	td_canvas_00_tbl,		// save(dummy)
+	td_canvas_00_tbl,		// select(dummy)
+	td_canvas_01_tbl,		// join
+	td_canvas_00_tbl,		// info
+};
+
+static const s16 td_canvas_off_tbl[] = {
+	CANVAS_INFO_OFFSET, CANVAS_INFO_NUM,	// save(dummy)
+	CANVAS_INFO_OFFSET, CANVAS_INFO_NUM,	// select(dummy)
+	CANVAS_JOIN_OFFSET, CANVAS_JOIN_NUM,	// join
+	CANVAS_INFO_OFFSET, CANVAS_INFO_NUM,	// info
+};
+
 //------------------
 // OBJの情報(通常)
 //------------------
 // narc, resid, paloffset, palnum
 static const s16 td_obj_main_info_tbl[] = {
-	NARC_t_download_gra_t_download_obj_d_NCLR, T_DOWNLOAD_RESID_OBJ_PLT, 0, 5, // NCL
+	NARC_t_download_gra_t_download_obj_d_NCLR, T_DOWNLOAD_RESID_OBJ_PLT, 0, 6, // NCL
 	NARC_t_download_gra_t_download_obj_d_NCGR, T_DOWNLOAD_RESID_OBJ_CHR, 0, 0,	// NCG
 	NARC_t_download_gra_t_download_obj_d_NCER, T_DOWNLOAD_RESID_OBJ_CEL, 0, 0, // NCE
 	NARC_t_download_gra_t_download_obj_d_NANR, -1, 0, 0,			// NAR?
@@ -330,6 +396,10 @@ static const T_DOWNLOAD_OBJ_DATA td_obj_tbl[] = {
 	{ 4,	0x30,	1,	0,	0,	1,	24,	0,},		// アイコン00(詳細で使用)
 	{ 6,	0x30,	1,	0,	0,	1,	25,	0,},		// アイコン01(詳細で使用)
 	{ 8,	0x30,	1,	0,	0,	1,	26,	0,},		// アイコン02(詳細で使用)
+	//
+	{ 10,	0x30,	3,	0,	0,	1,	27,	0,},		// パネル00
+	{ 10,	0x30,	3,	0,	0,	1,	28,	0,},		// パネル01
+	{ 10,	0x30,	3,	0,	0,	1,	29,	0,},		// パネル02
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -441,11 +511,19 @@ static const s16 td_mes_yesno_02_tbl[] = {
 	-1,							// end
 	-1,							// end
 };
+// 2択メッセージ(save後)
+static const s16 td_mes_yesno_03_tbl[] = {
+	wbt_dl_list_msg_03_02,		// 「くわしくみる」
+	wbt_dl_list_msg_03_03,		// 「やめる」
+	-1,							// end
+	-1,							// end
+};
 // 選択肢メッセージまとめ
 static const s16 *td_yesno_mes_tbl[] = {
 	td_mes_yesno_00_tbl,		// 参加
 	td_mes_yesno_01_tbl,		// 保存
 	td_mes_yesno_02_tbl,		// はい/いいえ
+	td_mes_yesno_03_tbl,		// セーブ後
 };
 
 //-----------------
@@ -475,7 +553,7 @@ static const FRAMELIST_TOUCH_DATA td_list_tp_tbl[] =
   { { 120, 143, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
   { { 144, 167, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
   //
-  { {  32, 160, 244, 252 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 06: レール
+  { {  32, 160, 236, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 06: レール
   //
   { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 07: 左
   { { 168, 192, 168, 192 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 08: 右
@@ -533,16 +611,16 @@ static const FRAMELIST_HEADER td_frame_list_header = {
 
 //---------------------------------
 // 共通ボタン
-// (通常、オン)
+// (通常、オン、オフ、0)
 //---------------------------------
 static const s16 td_cmn_btn_tbl[] = {
-	CMN_LEFT_SEQ,   CMN_LEFT_ON_SEQ,	// 左
-	CMN_RIGHT_SEQ,  CMN_RIGHT_ON_SEQ,	// 右
-	CMN_CROSS_SEQ,  CMN_CROSS_ON_SEQ,	// ×
-	CMN_RETURN_SEQ, CMN_RETURN_ON_SEQ,	// 戻る
+	CMN_LEFT_SEQ,   CMN_LEFT_ON_SEQ,  CMN_LEFT_OFF_SEQ,  0,	// 左
+	CMN_RIGHT_SEQ,  CMN_RIGHT_ON_SEQ, CMN_RIGHT_OFF_SEQ, 0,	// 右
+	CMN_CROSS_SEQ,  CMN_CROSS_ON_SEQ, CMN_CROSS_OFF_SEQ, 0,	// ×
+	CMN_RETURN_SEQ, CMN_RETURN_ON_SEQ,CMN_RETURN_OFF_SEQ,0,	// 戻る
 	//
-	CMN_DOWN_SEQ,   CMN_DOWN_ON_SEQ,	// 下
-	CMN_UP_SEQ,     CMN_UP_ON_SEQ,		// 上
+	CMN_DOWN_SEQ,   CMN_DOWN_ON_SEQ,  CMN_DOWN_OFF_SEQ,  0,	// 下
+	CMN_UP_SEQ,     CMN_UP_ON_SEQ,    CMN_UP_OFF_SEQ,    0,	// 上
 };
 
 //---------------------------------
@@ -576,8 +654,13 @@ static const GFL_UI_TP_HITTBL td_rect_01_tbl[] = {
 
 // 参加画面
 static const GFL_UI_TP_HITTBL td_rect_02_tbl[] = {
-  { 168, 192, 200, 224 }, 			// ×
   { 168, 192, 232, 255 }, 			// 戻る
+  { 168, 192, 136, 160 }, 			// 下
+  { 168, 192, 168, 192 }, 			// 上
+  //
+  {  44,  68,   8, 232 }, 			// パネル00
+  {  84, 108,   8, 232 }, 			// パネル01
+  { 124, 148,   8, 232 }, 			// パネル02
   //
   { GFL_UI_TP_HIT_END,0,0,0 }
 };
@@ -593,7 +676,7 @@ static const GFL_UI_TP_HITTBL td_rect_03_tbl[] = {
   { 168, 192,  40,  64 }, 			// 道具
   { 168, 192,  72,  96 }, 			// 技
   //
-  {  32, 160, 244, 252 }, 			// スクロールバー
+  {  32, 160, 236, 255 }, 			// スクロールバー
   //
   { GFL_UI_TP_HIT_END,0,0,0 }
 };
@@ -765,12 +848,12 @@ static void td_init_bg( T_DOWNLOAD_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void TdCmn_init_bg_info( T_DOWNLOAD_MAIN_WORK* wk )
+void TdCmn_init_sub_bg( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 {
 	s32		i;
 	s32		tmp;
-	const T_DOWNLOAD_BGCHR_DATA	*cadr = &td_bgchr_00_tbl[0];
-	const T_DOWNLOAD_BGSCN_DATA	*sadr = &td_bgscn_00_tbl[0];
+	const T_DOWNLOAD_BGCHR_DATA	*cadr = td_bgchr_sub_tbl[mode];
+	const T_DOWNLOAD_BGSCN_DATA	*sadr = td_bgscn_sub_tbl[mode];
 	//
 	ARCHANDLE		*handle;
 	//
@@ -836,6 +919,7 @@ static void td_init_string( T_DOWNLOAD_MAIN_WORK* wk )
 	{
 		ARCHANDLE	*p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
 		// Main
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_CAPTION_FONT*0x20, 0x20, wk->heapID );
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_SYSWIN_FONT*0x20, 0x20, wk->heapID );
 		// Sub
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_SUB_BG,  PLTID_UP_FONT*0x20, 0x20, wk->heapID );
@@ -925,10 +1009,16 @@ void TdCmn_clear_canvas( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void TdCmn_init_string2( T_DOWNLOAD_MAIN_WORK* wk )
+//void TdCmn_init_string2( T_DOWNLOAD_MAIN_WORK* wk )
+void TdCmn_init_string2( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 {
+	s16		buf[2];
 	s32		i;
-	const T_DOWNLOAD_CANVAS_DATA	*adr = &td_canvas_00_tbl[0];
+//	const T_DOWNLOAD_CANVAS_DATA	*adr = &td_canvas_00_tbl[0];
+	const T_DOWNLOAD_CANVAS_DATA	*adr = td_canvas_sub_tbl[mode];
+	
+	buf[0] = td_canvas_off_tbl[2*mode];			// offset
+	buf[1] = td_canvas_off_tbl[2*mode+1];		// num
 	
 	for(i=0;i<T_DOWNLOAD_CANVAS_MAXNUM;i++){
 		// 終了条件
@@ -936,14 +1026,17 @@ void TdCmn_init_string2( T_DOWNLOAD_MAIN_WORK* wk )
 			break;
 		}
 		// セット
-		wk->PrintUtil[CANVAS_INFO_OFFSET+i].win = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, 
+//		wk->PrintUtil[CANVAS_INFO_OFFSET+i].win = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, 
+		wk->PrintUtil[buf[0]+i].win = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, 
 																	 GFL_BMP_CHRAREA_GET_B );
 		// スクリーンは一度でよいはず
-		GFL_BMPWIN_MakeScreen( wk->PrintUtil[CANVAS_INFO_OFFSET+i].win );
-		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[CANVAS_INFO_OFFSET+i].win) );
+//		GFL_BMPWIN_MakeScreen( wk->PrintUtil[CANVAS_INFO_OFFSET+i].win );
+		GFL_BMPWIN_MakeScreen( wk->PrintUtil[buf[0]+i].win );
+//		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[CANVAS_INFO_OFFSET+i].win) );
+		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[buf[0]+i].win) );
 		adr++;
 		//
-		wk->PFlag &= ~(1<<(CANVAS_INFO_OFFSET+i));
+//		wk->PFlag &= ~(1<<(CANVAS_INFO_OFFSET+i));
 	}
 }
 
@@ -956,23 +1049,38 @@ void TdCmn_init_string2( T_DOWNLOAD_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void TdCmn_exit_string2( T_DOWNLOAD_MAIN_WORK* wk )
+void TdCmn_exit_string2( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 {
+	s16		buf[2];
 	s32		i;
 	
-	for(i=0;i<CANVAS_INFO_NUM;i++){
-		if(wk->PrintUtil[CANVAS_INFO_OFFSET+i].win){
+	buf[0] = td_canvas_off_tbl[2*mode];			// offset
+	buf[1] = td_canvas_off_tbl[2*mode+1];		// num
+	
+//	for(i=0;i<CANVAS_INFO_NUM;i++){
+	for(i=0;i<buf[1];i++){
+//		if(wk->PrintUtil[CANVAS_INFO_OFFSET+i].win){
+		if(wk->PrintUtil[buf[0]+i].win){
 			// chr側
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[CANVAS_INFO_OFFSET+i].win ), MES_CLEAR_COLOR );
+//			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[CANVAS_INFO_OFFSET+i].win ), MES_CLEAR_COLOR );
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[buf[0]+i].win ), MES_CLEAR_COLOR );
 			// scn側
-			GFL_BMPWIN_ClearScreen( wk->PrintUtil[CANVAS_INFO_OFFSET+i].win );
+//			GFL_BMPWIN_ClearScreen( wk->PrintUtil[CANVAS_INFO_OFFSET+i].win );
+			GFL_BMPWIN_ClearScreen( wk->PrintUtil[buf[0]+i].win );
 			// 破棄
-			GFL_BMPWIN_Delete( wk->PrintUtil[CANVAS_INFO_OFFSET+i].win );
-			wk->PrintUtil[CANVAS_INFO_OFFSET+i].win = 0;
+//			GFL_BMPWIN_Delete( wk->PrintUtil[CANVAS_INFO_OFFSET+i].win );
+			GFL_BMPWIN_Delete( wk->PrintUtil[buf[0]+i].win );
+//			wk->PrintUtil[CANVAS_INFO_OFFSET+i].win = 0;
+			wk->PrintUtil[buf[0]+i].win = 0;
 		}
 	}
-	// スクリーンもクリアしておく
-	GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+	if(mode == T_DOWNLOAD_MODE_INFO){
+		// スクリーンもクリアしておく
+		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+	}else{
+		// スクリーンもクリアしておく
+		GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
+	}
 }
 
 //---------------------------------------------------------------------------------------------------------------
@@ -1603,16 +1711,18 @@ void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id )
  *
  *	@param	T_DOWNLOAD_MAIN_WORK* wk
  *	@param	const s32				(CMNの番号:フラグと対応)
- *	@param	const s32				()
+ *	@param	const s32				(0:通常、1:off)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void TdCmn_set_cmn_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
+void TdCmn_set_cmn_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 smode )
 {
 	// アニメ再生
-	TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_CMN, mode, td_cmn_btn_tbl[mode*2+1] );
-	wk->Flag |= (1<<mode);
+	TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_CMN, mode, td_cmn_btn_tbl[mode*4+1+smode] );
+	if(smode == 0){
+		wk->Flag |= (1<<mode);
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1839,13 +1949,13 @@ s32 TdCmn_is_main_framelist( T_DOWNLOAD_MAIN_WORK * wk, const u32 mode )
 		case FRAMELIST_RET_PAGE_UP:			// page up
 		case FRAMELIST_RET_PAGE_UP_NONE:	// page up 2
 			// アニメ再生
-			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_LEFT );
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_LEFT, 0 );
 			flg = 3;
 			break;
 		case FRAMELIST_RET_PAGE_DOWN:		// page down
 		case FRAMELIST_RET_PAGE_DOWN_NONE:	// page down 2
 			// アニメ再生
-			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RIGHT );
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RIGHT, 0 );
 			flg = 3;
 			break;
 		//
@@ -2167,6 +2277,9 @@ void TdCmn_chg_info_curpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 	}
 	// 該当をon
 	TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_ICON_00+mode, td_info_btn_tbl[2*mode+1] );
+	//
+	// パレットの点滅を初期化
+	wk->PCount = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -2513,5 +2626,118 @@ void TdCmn_main_keycursor( T_DOWNLOAD_MAIN_WORK* wk )
 	if( wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_MESWIN_01].win ){
 		APP_KEYCURSOR_MainNotStream( wk->MsgCursorWork, wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_MESWIN_01].win );
 	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アニメのスピード切り替え(決めうち)
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const BOOL			(TRUE:とめる、FALSE:戻す)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdCmn_stop_anim_speed( T_DOWNLOAD_MAIN_WORK *wk, const BOOL bflg )
+{
+	BOOL	eflg;
+	
+	// スクロールカーソル
+	// 表示中 => アニメをとめる
+	eflg = GFL_CLACT_WK_GetDrawEnable( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_BAR] );
+	if(eflg == TRUE){
+		if(bflg == TRUE){		// 止める
+			GFL_CLACT_WK_StopAnm( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_BAR] );
+		}else{					// 再開
+			GFL_CLACT_WK_StartAnm( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_BAR] );
+		}
+	}
+	// カーソル
+	eflg = GFL_CLACT_WK_GetDrawEnable( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_CURSOR] );
+	if(eflg == TRUE){
+		if(bflg == TRUE){		// 止める
+			GFL_CLACT_WK_StopAnm( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_CURSOR] );
+		}else{					// 再開
+			GFL_CLACT_WK_StartAnm( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_CURSOR] );
+		}
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	カーソル表示(自前)
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ * @param	const s32					(番号)
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void TdCmn_disp_panel_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
+{
+	GFL_CLACTPOS	pos;
+	//
+	pos.x = TdCmn_get_empty( wk, (EMPTY_CURPOS2+num)*2 );
+	pos.y = TdCmn_get_empty( wk, (EMPTY_CURPOS2+num)*2+1 );
+	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_CURSOR], &pos, CLSYS_DEFREND_MAIN );
+	// 戻し
+	if(!(wk->CmnFlag & T_DOWNLOAD_FLG_CUR_ANIM)){
+		TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, OBJ_CUR_SEQ );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	カーソル表示(自前)
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ * @param	const s32					(番号)
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
+{
+	STRBUF* strbuf2;
+	STRBUF* strbuf3;
+	STRBUF* expandbuf;
+	
+	// 回数表示(test)
+	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
+//	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[wk->DispBuffer[pos]], 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+	STRTOOL_SetNumber( strbuf2, mode, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+	// 最終出力バッファ
+	expandbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
+	strbuf3 = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[0] );
+	WORDSET_ExpandStr( wk->Wordset, expandbuf, strbuf3 );
+	TdCmn_disp_string( wk, CANVAS_JOIN_OFFSET+mode, 0, 4, expandbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,2));
+	//
+	GFL_STR_DeleteBuffer( strbuf2 );
+	GFL_STR_DeleteBuffer( strbuf3 );
+	GFL_STR_DeleteBuffer( expandbuf );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	パネル表示(自前)
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ * @param	const s32					(0:通常、1:決定)
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void TdCmn_set_panel_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
+{
+	s32		seq;
+	
+	wk->CmnFlag &= ~T_DOWNLOAD_FLG_CUR_ANIM;
+	seq = OBJ_CUR_SEQ;
+	if(mode == 1){
+		seq = OBJ_CUR_ON_SEQ;
+		wk->CmnFlag |= T_DOWNLOAD_FLG_CUR_ANIM;
+	}
+	TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, seq );
 }
 

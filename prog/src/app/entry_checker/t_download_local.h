@@ -34,12 +34,12 @@ enum{
 // 最大値
 //--------
 enum{
-	T_DOWNLOAD_CANVAS_MAXNUM 	= 14,				// canvas
+	T_DOWNLOAD_CANVAS_MAXNUM 	= 17,				// canvas
 	T_DOWNLOAD_BMPOAM_MAXNUM	= 4,				// bmpoam
-	T_DOWNLOAD_EMPTY_MAXNUM		= 27*2,				// empty
+	T_DOWNLOAD_EMPTY_MAXNUM		= 30*2,				// empty
 	//
 	T_DOWNLOAD_CMN_OBJ_MAXNUM	= 6,				// common(obj)
-	T_DOWNLOAD_OBJ_MAXNUM		= 6,				// obj
+	T_DOWNLOAD_OBJ_MAXNUM		= 9,				// obj
 	//
 	T_DOWNLOAD_BGNUM_MAXNUM		= 8,				// bg
 	//
@@ -78,6 +78,16 @@ enum{
 	T_DOWNLOAD_AREA_TD_TP_SCROLL,					// スクロール領域
 };
 
+// 参加用
+enum{
+	T_DOWNLOAD_AREA_JOIN_TP_RETURN = 0,				// RETURN
+	T_DOWNLOAD_AREA_JOIN_TP_LEFT,
+	T_DOWNLOAD_AREA_JOIN_TP_RIGHT,
+	T_DOWNLOAD_AREA_JOIN_TP_PANEL_00,
+	T_DOWNLOAD_AREA_JOIN_TP_PANEL_01,
+	T_DOWNLOAD_AREA_JOIN_TP_PANEL_02,
+};
+
 //----------
 // clwork
 //----------
@@ -98,6 +108,10 @@ enum
 	T_DOWNLOAD_CLWKID_ICON_00,						// アイコン
 	T_DOWNLOAD_CLWKID_ICON_01,
 	T_DOWNLOAD_CLWKID_ICON_02,
+	//
+	T_DOWNLOAD_CLWKID_PANEL_00,						// パネル00
+	T_DOWNLOAD_CLWKID_PANEL_01,						// パネル01
+	T_DOWNLOAD_CLWKID_PANEL_02,						// パネル02
 	//
 	T_DOWNLOAD_CLWKID_MAX,
 };
@@ -172,6 +186,7 @@ enum{
 	T_DOWNLOAD_YESNO_JOIN = 0,						// 参加する
 	T_DOWNLOAD_YESNO_SAVE,							// セーブする
 	T_DOWNLOAD_YESNO_YESNO,							// yes/no
+	T_DOWNLOAD_YESNO_SAVE_AFTER,					// セーブ後
 };
 
 //--------------
@@ -250,6 +265,7 @@ typedef struct
 	s32						InfoCurPos;						// 詳細カーソル位置(0-2)
 	s32						ScrollOffy;						// BG3のスクロールoffset
 	u32						PFlag;							// Canvas用フラグ
+	s32						JoinCurPos;						// 参加カーソル
 	//
 	// パレットチェンジ用
 	s32						PCount;							///< カウンタ
