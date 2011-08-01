@@ -945,8 +945,15 @@ VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
   WBTSYS * wbtsys = getWBTSys( wk );
   STRBUF * strbuf1;
   STRBUF * strbuf2;   // プレイヤー名専用
+  u16 trtype_enemy, trtype_mine;
 
   u8 type = SCRCMD_GetVMWorkValue( core, wk );    // ビジョン種類
+
+  //対戦相手のトレーナータイプ取得
+  trtype_enemy = WBTTRAINER_GetBattleTrainerType( WBTSYS_GetOpponentTrainer( wbtsys ) );
+  //自分のトレーナータイプ取得
+  trtype_mine = WBTTRAINER_GetBattleTrainerType( WBTSYS_GetPlayerTrainer( wbtsys ) );
+  
 
   switch( type ){
   // VSビジョン

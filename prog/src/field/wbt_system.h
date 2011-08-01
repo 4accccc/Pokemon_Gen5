@@ -96,7 +96,7 @@ extern void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16
 
 extern const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos );
 
-extern const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys );
+extern const WBTTRAINER * WBTSYS_GetPlayerTrainer( const WBTSYS * wbtsys );
 
 extern u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr );
 extern u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr );
@@ -108,11 +108,13 @@ extern void WBTTRAINER_CopyName( const WBTTRAINER * wbt_tr, STRBUF * buf );
 extern void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf );
 extern u8 WBTSYS_GetOpponentSex( WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys );
+extern u16 WBTSYS_GetOpponentTrainerType( WBTSYS * wbtsys );
 extern void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm );
 
 //------------------------------------------------------------------
 //  in wbt_calc_result.c
 //------------------------------------------------------------------
+extern const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys );
 extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
 extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
 

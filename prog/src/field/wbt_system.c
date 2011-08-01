@@ -445,6 +445,27 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
 
 //------------------------------------------------------------------
 /**
+ * @brief 自分のトレーナーデータを取得する
+ * @param wbtsys
+ * @return  WBTTRAINER  自機データをセットしたWBTTRAINERへのポインタ
+ */
+//------------------------------------------------------------------
+const WBTTRAINER * WBTSYS_GetPlayerTrainer( const WBTSYS * wbtsys )
+{
+  int i;
+  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
+  {
+    if (wbtsys->wbt_trainer[i].wbt_tr_type == WBT_TRTYPE_PLAYER )
+    {
+      return &wbtsys->wbt_trainer[i];
+    }
+  }
+  GF_ASSERT( 0 );
+  return &wbtsys->wbt_trainer[0];
+}
+
+//------------------------------------------------------------------
+/**
  * @brief 対戦相手のトレーナーデータを取得
  */
 //------------------------------------------------------------------
@@ -486,6 +507,19 @@ void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf )
 {
   const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
   WBTTRAINER_CopyName( wbt_tr, strbuf );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 対戦相手のトレーナータイプを取得する
+ * @param wbtsys
+ * @return  u16 tr_type(include/tr_tool/trtype_def.h参照）
+ */
+//------------------------------------------------------------------
+u16 WBTSYS_GetOpponentTrainerType( WBTSYS * wbtsys )
+{
+  const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
+  return wbt_tr->btl_tr_type;
 }
 
 //------------------------------------------------------------------
@@ -909,6 +943,8 @@ static void setBSubwayPokemonParam(
       {
         rd->available = FALSE;
       }
+      TAMADA_Printf("Index(%3d) monsno(%3d) itemno(%3d) =:%d\n",
+          rd->index_no, rd->prd.mons_no, rd->prd.item_no, rd->available );
     }
   }
 #ifdef  PM_DEBUG
@@ -1031,6 +1067,7 @@ static void makeRomTrainerData(
   bt_trd->tr_type = WBTTRAINER_GetBattleTrainerType( wbt_tr );
   bt_trd->player_id = tr_no + TRID_OFFSET_WBT;
 
+  TAMADA_Printf(" WBT TrData(%d) id=%d use_poke_cnt = %d\n", arc_id, tr_no, trd->use_poke_cnt );
   //ポケモンデータをセット
   setBSubwayPokemonParam(
       trd, btpwd, cnt, id,
