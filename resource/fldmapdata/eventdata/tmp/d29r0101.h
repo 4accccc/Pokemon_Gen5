@@ -10,6 +10,8 @@
 #ifndef ZONE_D29R0101_EVC_H
 #define ZONE_D29R0101_EVC_H
 
+#define TR_MOUNT_19                        0
+#define TR_WORKER2_33                      1
 
 #endif //ZONE_D29R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d29r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

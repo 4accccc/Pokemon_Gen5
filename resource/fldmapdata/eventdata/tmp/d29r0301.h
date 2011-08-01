@@ -12,6 +12,10 @@
 #ifndef ZONE_D29R0301_EVC_H
 #define ZONE_D29R0301_EVC_H
 
+#define TR_RANGERM_22                      0
+#define TR_WORKER2_37                      1
+#define TR_WORKER2_38                      2
+#define TR_RANGERW_22                      3
 
 #endif //ZONE_D29R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d29r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
