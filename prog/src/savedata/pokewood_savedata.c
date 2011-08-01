@@ -174,7 +174,7 @@ void POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, POKEWOOD_BOXOFFI
 //=============================================================================================
 const POKEWOOD_BOXOFFICE_RECORD *POKEWOOD_SAVEDATA_GetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no )
 {
-  GF_ASSERT_MSG( no >= POKEWOOD_BOXOFFICE_DATA_MAX, "ƒ‰ƒ“ƒLƒ“ƒO‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
+  GF_ASSERT_MSG( no < POKEWOOD_BOXOFFICE_DATA_MAX, "ƒ‰ƒ“ƒLƒ“ƒO‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
   return &sv->boxoffice_record[no];
 }
 
@@ -190,7 +190,7 @@ const POKEWOOD_BOXOFFICE_RECORD *POKEWOOD_SAVEDATA_GetBoxOfficeData( POKEWOOD_SA
 //=============================================================================================
 BOOL POKEWOOD_SAVEDATA_GetMovieShowed( POKEWOOD_SAVEDATA *sv, int no )
 {
-  GF_ASSERT_MSG( no >=POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
+  GF_ASSERT_MSG( no <POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
 
   return sv->showed_flag[no];
 }
@@ -206,7 +206,7 @@ BOOL POKEWOOD_SAVEDATA_GetMovieShowed( POKEWOOD_SAVEDATA *sv, int no )
 //=============================================================================================
 void POKEWOOD_SAVEDATA_SetMovieShowd( POKEWOOD_SAVEDATA *sv, int no, BOOL value )
 {
-  GF_ASSERT_MSG( no >=POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
+  GF_ASSERT_MSG( no<POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
   
   sv->showed_flag[no] = value;
 
@@ -224,7 +224,7 @@ void POKEWOOD_SAVEDATA_SetMovieShowd( POKEWOOD_SAVEDATA *sv, int no, BOOL value 
 //=============================================================================================
 BOOL POKEWOOD_SAVEDATA_GetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no )
 {
-  GF_ASSERT_MSG( no >=POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
+  GF_ASSERT_MSG( no<POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
 
   return sv->success_flag[no];
 }
@@ -240,7 +240,7 @@ BOOL POKEWOOD_SAVEDATA_GetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no )
 //=============================================================================================
 void POKEWOOD_SAVEDATA_SetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no, BOOL value )
 {
-  GF_ASSERT_MSG( no >=POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
+  GF_ASSERT_MSG( no<POKEWOOD_RECSAVEDATA_MAX , "ã‰f”‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
   
   sv->success_flag[no] = value;
 

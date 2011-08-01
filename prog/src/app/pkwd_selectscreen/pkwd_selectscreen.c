@@ -82,9 +82,9 @@
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
 
-//@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
 #include "pkwd_announce_gra.naix"	// アーカイブ
+#include "b_scenario_gra.naix"
 #include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 
 #include "savedata/battle_rec.h"
@@ -151,13 +151,35 @@ enum
 	//サブOBJ
   PLTID_OBJ_PMS_DRAW = 0, // 5本使用
 
+
   PKWD_TITLE_STR_MAX = 26*2*2,  // タイトル文字列の文字数ＭＡＸ
 
   PKWD_SELECT_SCREEN_BMPWIN_MAX = 7,  // BMPWINの数
 
   PKWD_TITLE_LIST_NUM = 4,  // 映画タイトルを一度に表示できる最大数
 
-  // BMPWIN定義
+};
+
+// リスト用OBJ定義
+enum{
+  LIST_OBJ_MAX  = 4,
+  
+  LIST_OBJ_ID0 = 0,
+  LIST_OBJ_ID1,
+  LIST_OBJ_ID2,
+  LIST_OBJ_ID3,
+};
+
+
+// SE定義
+enum{
+  SE_PKWDSELECT_DECIDE = SEQ_SE_DECIDE1,
+  SE_PKWDSELECT_MOVE   = SEQ_SE_SELECT1,
+
+};
+
+// BMPWIN定義
+enum{
   PKWD_BMP_TITLE01=0,
   PKWD_BMP_TITLE02,
   PKWD_BMP_TITLE03,
@@ -166,12 +188,7 @@ enum
   PKWD_BMP_SUBTITLE_D,
   PKWD_BMP_MSGWIN,
 
-  SE_PKWDSELECT_DECIDE = SEQ_SE_DECIDE1,
-  SE_PKWDSELECT_MOVE   = SEQ_SE_SELECT1,
-
 };
-
-
 
 //=============================================================================
 /**
@@ -253,6 +270,11 @@ typedef struct
 	GFL_CLWK									*clwk_poke2d;
 #endif //PKWD_SELECT_SCREEN_POKE2D
 
+  // リストOBJ用定義
+  u32                       ncg_pkwdObj;
+  u32                       ncl_pkwdObj;
+  u32                       nce_pkwdObj;
+	GFL_CLWK									*clwk_pkwdObj[LIST_OBJ_MAX];
 
 #ifdef	PKWD_SELECT_SCREEN_PRINT_TOOL
 	//プリントユーティリティ
@@ -356,6 +378,10 @@ static void PkwdSelectScreen_POKE2D_CreateCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk
 static void PkwdSelectScreen_POKE2D_DeleteCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 #endif //PKWD_SELECT_SCREEN_POKE2D
 static void PkwdSelectScreen_LOGO_u_LoadResource( PKWD_SELECT_SCREEN_BG_WORK *wk, int scenario_no, int index );
+static void PkwdSelectScreen_ListObj_loadResource( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
+static void PkwdSelectScreen_ListObj_UnloadResource( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
+static void PkwdSelectScreen_ListObj_Add( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
+static void PkwdSelectScreen_ListObj_Del( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 
 
 static BOOL PrintTool_MainFunc( PKWD_SELECT_SCREEN_MAIN_WORK * wk );
@@ -476,10 +502,15 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
 	}
 #endif //PKWD_SELECT_SCREEN_POKE2D
 
+  PkwdSelectScreen_ListObj_loadResource( wk );
+
   // 外部セーブデータ確認・読み込み
   _load_pokewood_rec_data( wk, param );
 
   PrintTool_AddBmpWin( wk );			// BMPWIN作成
+
+  // リストOBJ表示
+  PkwdSelectScreen_ListObj_Add( wk );
 
   // 文字列描画
   _draw_titlelist( wk );
@@ -583,6 +614,8 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Exit( GFL_PROC *proc, int *seq, void
 	PkwdSelectScreen_POKE2D_UnLoadResourceBG( wk );
 #endif //PKWD_SELECT_SCREEN_POKE2D
 
+  PkwdSelectScreen_ListObj_Del( wk );
+  PkwdSelectScreen_ListObj_UnloadResource( wk );
 
 #ifdef PKWD_SELECT_SCREEN_TASKMENU
 	//TASKMENUシステム＆リソース破棄
@@ -1135,6 +1168,79 @@ static void PkwdSelectScreen_POKE2D_DeleteCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk
 #endif //PKWD_SELECT_SCREEN_POKE2D
 
 
+
+
+static void PkwdSelectScreen_ListObj_loadResource( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
+{
+	ARCHANDLE						*handle;
+
+	//ハンドル
+  handle	= GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, HEAPID_PKWD_SELSCR );
+
+	//リソース読みこみ
+	wk->ncg_pkwdObj	= GFL_CLGRP_CGR_Register( handle, NARC_b_scenario_gra_pkwd_list_obj_NCGR, 0, CLSYS_DRAW_MAIN, HEAPID_PKWD_SELSCR );
+	wk->ncl_pkwdObj	= GFL_CLGRP_PLTT_Register( handle, NARC_b_scenario_gra_pkwd_list_obj_NCLR, CLSYS_DEFREND_MAIN, 0, HEAPID_PKWD_SELSCR );
+	wk->nce_pkwdObj	= GFL_CLGRP_CELLANIM_Register( handle, NARC_b_scenario_gra_pkwd_list_obj_NCER, 
+	                                                       NARC_b_scenario_gra_pkwd_list_obj_NANR, HEAPID_PKWD_SELSCR );
+	GFL_ARC_CloseDataHandle( handle );
+
+}
+
+static void PkwdSelectScreen_ListObj_UnloadResource( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
+{
+	//リソース破棄
+	GFL_CLGRP_PLTT_Release(     wk->ncl_pkwdObj );
+	GFL_CLGRP_CGR_Release(      wk->ncg_pkwdObj );
+	GFL_CLGRP_CELLANIM_Release( wk->nce_pkwdObj );
+  
+}
+
+static const u8 listobj_pos_tbl[][2]={
+  { 14,  20 },
+  { 14,  60 },
+  { 14, 100 },
+  { 14, 140 },
+};
+
+static void PkwdSelectScreen_ListObj_Add( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
+{
+  GFL_CLWK_DATA	cldata;
+  int i;
+
+  // 「NEW！」OBJを登録
+  GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+  for(i=0;i<LIST_OBJ_MAX;i++){
+    cldata.pos_x	= listobj_pos_tbl[i][0];
+    cldata.pos_y	= listobj_pos_tbl[i][1];
+    cldata.anmseq = 1;
+    wk->clwk_pkwdObj[i]	= GFL_CLACT_WK_Create( PKWD_SELECT_SCREEN_GRAPHIC_GetClunit( wk->graphic ), 
+                                           wk->ncg_pkwdObj,
+                                           wk->ncl_pkwdObj,
+                                           wk->nce_pkwdObj,
+                                           &cldata, 
+                                           CLSYS_DEFREND_MAIN, HEAPID_PKWD_SELSCR );
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_pkwdObj[i], TRUE );
+
+    // セーブデータ読み込ている＆まだ上映していないなら「NEW!」表示
+    {
+      
+      if(POKEWOOD_SAVEDATA_GetMovieShowed( wk->param->pokewood_sv, i )==0){
+        GFL_CLACT_WK_SetDrawEnable( wk->clwk_pkwdObj[i], wk->load_result[i] );
+      }
+    }
+  }
+}
+
+static void PkwdSelectScreen_ListObj_Del( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
+{
+  int i;
+  for(i=0;i<LIST_OBJ_MAX;i++){
+  	GFL_CLACT_WK_Remove( wk->clwk_pkwdObj[i] );
+  }
+}
+
+
+
 #ifdef	PKWD_SELECT_SCREEN_PRINT_TOOL
 //=============================================================================
 /**
@@ -1284,8 +1390,17 @@ static void  _load_pokewood_rec_data( PKWD_SELECT_SCREEN_MAIN_WORK *wk, PKWD_SEL
 
     // 読み込んで各種情報を取得したい場合はココで確保
     if(wk->load_result[i]==RECLOAD_RESULT_OK){
+      POKEMON_PARAM *pp = GFL_HEAP_AllocMemory( HEAPID_PKWD_SELSCR, POKETOOL_GetWorkSize());
+
+      // シナリオＮＯ取得
       wk->scenario_no[i] = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_SENARIO, NULL);
+
+      // 先頭手持ちポケモン名取得
+      POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_POKE0, pp );
+      WORDSET_RegisterPokeNickName( wk->wordset[i], 0, pp );
+
       OS_Printf("%d: senario_no=%d\n", i , wk->scenario_no[i]);
+      GFL_HEAP_FreeMemory( pp );
     }
   }
 
@@ -1498,7 +1613,7 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
   GFL_MSG_GetString( wk->msg, pkwd_subtitle_tbl[wk->scenario_no[index]][sex], strbuf );
   WORDSET_ExpandStr( wk->wordset[index], expandbuf, strbuf );
   _centering_print( &wk->print_util[PKWD_BMP_SUBTITLE_D], wk->print_que,
-                    strbuf, 0, wk->font, PRINTSYS_LSB_Make( 13, 12, 0 ) );
+                    expandbuf, 0, wk->font, PRINTSYS_LSB_Make( 13, 12, 0 ) );
 
   GFL_STR_DeleteBuffer(expandbuf);
   GFL_STR_DeleteBuffer(strbuf);
