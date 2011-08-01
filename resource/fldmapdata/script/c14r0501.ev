@@ -75,7 +75,7 @@ EVENT_START ev_c14r0501_lady_01
       
       //LADY：話がわかる！
       _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_02,C14R0501_LADY_01, POS_DEFAULT )
-      _AB_KEYWAIT_MARK()
+      _AB_KEYWAIT_MARK() 
       _MSGWIN_CLOSE()
       
       //進入方向によって演出を分岐
@@ -326,6 +326,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_bg_c14r0501_tv_01
   
+  _TALK_START_SE_PLAY()
+  
   //散歩イベント起動していない
   IF FLAG_OFF(FH_15) THEN
     _SYSWIN_MSG( msg_c14r0501_tv_01 , POS_DOWN )
@@ -334,9 +336,13 @@ EVENT_START ev_bg_c14r0501_tv_01
   
   //散歩イベント起動中
   ELSE
-  
+    
+    //ギザウィンSE再生
+    _SE_PLAY( SEQ_SE_SYS_58 )
+    
     //LADY：ちょっと　あなたー！
     _GIZAPLAINWIN_MSG_POS( msg_c14r0501_lady_10, POS_DOWN )
+    _SE_WAIT()
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
     
@@ -361,7 +367,9 @@ EVENT_END
 /*            BG：ゴミ箱                               */
 /**************************************************************/
 EVENT_START ev_bg_c14r0501_trash_01
-
+  
+  _TALK_START_SE_PLAY()
+  
   //散歩イベント起動していない
   IF FLAG_OFF(FH_15) THEN
     _SYSWIN_MSG( msg_c14r0501_trash_01 , POS_DOWN )
@@ -370,17 +378,19 @@ EVENT_START ev_bg_c14r0501_trash_01
   
   //散歩イベント起動中
   ELSE
+    
+    //ギザウィンSE再生
+    _SE_PLAY( SEQ_SE_SYS_58 )
   
     //LADY：ちょっと　あなたー！
     _GIZAPLAINWIN_MSG_POS( msg_c14r0501_lady_10, POS_DOWN )
+    _SE_WAIT()
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
     
     //アニメ：LADY接近
     _OBJ_ANIME_AUTO( C14R0501_LADY_01, 7, 5, FORCE_TYPE_NPC, 4, DIR_UD)
     _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_l )
-    _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( C14R0501_LADY_01,anm_staystep_r )
     _OBJ_ANIME_WAIT()
     
     _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_12,C14R0501_LADY_01, POS_DEFAULT )
@@ -401,17 +411,19 @@ EVENT_END
 /*            POS：ポケモン散歩イベントSTOPPER                 */
 /**************************************************************/
 EVENT_START ev_pos_c14r0501_stopper_01
-
+  
+  //ギザウィンSE再生
+  _SE_PLAY( SEQ_SE_SYS_58 )
+  
   //LADY：ちょっと　あなたー！
   _GIZAPLAINWIN_MSG_POS( msg_c14r0501_lady_10, POS_DOWN )
+  _SE_WAIT()
   _AB_KEYWAIT_MARK()
   _GIZAPLAINWIN_CLOSE()
     
   //アニメ：LADY接近
   _OBJ_ANIME_AUTO( C14R0501_LADY_01, 5, 6, FORCE_TYPE_NPC, 4, DIR_UD)
   _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_u )
-  _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( C14R0501_LADY_01,anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
   _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_11,C14R0501_LADY_01, POS_DEFAULT )
