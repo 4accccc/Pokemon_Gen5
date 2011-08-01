@@ -7,6 +7,7 @@
 "c_gear_ring.nclr"
 "c_gear.ncgr"
 "c_gear01.nscr"
+"off_gear.nscr"
 "c_gear02.nscr"
 "c_gear_obj_ani.nclr"
 "c_gear_m_obj.nclr"

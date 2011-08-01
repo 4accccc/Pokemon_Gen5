@@ -103,19 +103,18 @@ static const u32 _cellpal[]=
 //--------------------------------------------
 
 //-------------------------
-
+#if 0
 #define PANEL_Y1 (6)
 #define PANEL_Y2 (4)
 #define PANEL_X1 (-2)
 
-#if 0
 #define PANEL_HEIDHT1 (C_GEAR_PANEL_HEIGHT-1)
 #define PANEL_HEIGHT2 (C_GEAR_PANEL_HEIGHT)
-#endif
 
 #define PANEL_WIDTH (C_GEAR_PANEL_WIDTH)
 #define PANEL_SIZEXY (4)   //
 
+#endif
 #define _CGEAR_TYPE_PATTERN_NUM (5)
 
 //-------------------------------------
@@ -169,10 +168,10 @@ enum{
 ///パレット関連定義
 //----------------------------------------------------------
 #define CROSS_COLOR_MAX ( 17 )  //すれ違いアイコン用パレットソース数(お気に入りカラー16色+無効カラー1色)
-#define RING_COLOR_MAX      ( C_GEAR_RING_COLOR_MAX )    //リングカラー数
-#define RING_COLOR_SET_NUM  ( 3 ) //1つにつき、3色分データを持つ
-#define RING_COLOR_DEF_NO ( 0 )   //リングカラーのデフォルト
-#define RING_COLOR__NO ( RING_COLOR_MAX-1 )  //リングの地味カラーNo
+#define RING_COLOR_MAX      ( C_GEAR_RING_COLOR_MAX )    //リングカラー数+電源Off時カラー
+#define RING_COLOR_SET_NUM  ( 3*3 ) //1つにつき、3色分*3のデータを持つ
+#define RING_COLOR_DEF_NO 　( 0 )   //リングカラーのデフォルト
+#define RING_COLOR_BASE_NO  ( RING_COLOR_MAX-1 )  //リングの地味カラーNo
 #if 0
 // (u32)配列としてのインデックス
 static const u32 sc_CROSS_COLOR_RES_IDX[CROSS_COLOR_MAX] = {
@@ -1062,7 +1061,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork);  // 通常の待機
 static void _modeSelectMenuWait0(C_GEAR_WORK* pWork);  // 初期入手の演出
 static void _modeSelectMenuWait1(C_GEAR_WORK* pWork);  // スリープ復帰の演出
 static void _modeSelectMenuWait2(C_GEAR_WORK* pWork);  // 復帰・初期　共通の演出
-static void _gearXY2PanelScreen(int x,int y, int* px, int* py);
+//static void _gearXY2PanelScreen(int x,int y, int* px, int* py);
 static BOOL _modeSelectWaitSubFadeEnd( const C_GEAR_WORK* cpWork );
 
 
@@ -1236,6 +1235,7 @@ static void _cgear_SleepCheck( C_GEAR_WORK* pWork, BOOL bAction );
 #endif //_NET_DEBUG
 
 
+#if 0
 //------------------------------------------------------------------------------
 /**
  * @brief   チップを置いて良いかどうか
@@ -1257,7 +1257,7 @@ static BOOL _isSetChip(int x,int y)
   }
   return FALSE;
 }
-
+#endif
 
 
 //------------------------------------------------------------------------------
@@ -1291,6 +1291,7 @@ static void _changeStateDebug(C_GEAR_WORK* pWork,StateFunc state, int line)
 #endif
 
 
+#if 0
 //------------------------------------------------------------------------------
 /**
  * @brief   与えられたxyから周囲の座標を返す
@@ -1320,7 +1321,7 @@ static void _getHexAround(int x,int y, int* xbuff,int* ybuff)
   }
 }
 
-
+#endif
 
 static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
 {
@@ -2576,7 +2577,7 @@ static void _PLTCOUNTER_SetPlay( PLT_COUNTER* p_wk, BOOL flag )
   p_wk->play = flag;
 }
 
-
+#if 0
 
 
 
@@ -2593,6 +2594,7 @@ static void _gearXY2PanelScreen(int x,int y, int* px, int* py)
   *px = PANEL_X1 + x * PANEL_SIZEXY;
   *py = ypos[ x % 2 ] + y * PANEL_SIZEXY;
 }
+#endif
 
 
 //----------------------------------------------------------------------------
@@ -3122,7 +3124,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 design_no, BOOL pal_
     pWork->handle, NARC_c_gear_sw_c_gear01_nscr, GEAR_MAIN_FRAME, 0, 
     0x800, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
   GFL_ARCHDL_UTIL_TransVramScreen(
-    pWork->handle, NARC_c_gear_sw_c_gear02_nscr, GEAR_BUTTON_FRAME, 0, 
+    pWork->handle, NARC_c_gear_sw_off_gear_nscr+pWork->power_flag, GEAR_BUTTON_FRAME, 0, 
     0x800, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
 
 #if 0
