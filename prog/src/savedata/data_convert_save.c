@@ -266,10 +266,13 @@ u32 DATA_CONVERT_SAVE_GetData( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_GET_
     }
     return 0;
 
-  case DATA_CONVERT_GET_ID_OWNER:  //p_data_adrsからWB_SAVE_CONV_OWNER構造体で受け取る
+  case DATA_CONVERT_GET_ID_OWNER_SYS:  //p_data_adrsからWB_SAVE_CONV_OWNER構造体で受け取る
+  case DATA_CONVERT_GET_ID_OWNER_MUSICAL:
+  case DATA_CONVERT_GET_ID_OWNER_DENDOU:
     if( p_data_adrs )
     {
-      GFL_STD_MemCopy( &cp_wk->owner, p_data_adrs, sizeof(WB_SAVE_CONV_OWNER) );
+      DATA_CONVERT_OWNER idx = id - DATA_CONVERT_GET_ID_OWNER_SYS;
+      GFL_STD_MemCopy( &cp_wk->owner[idx], p_data_adrs, sizeof(WB_SAVE_CONV_OWNER) );
     }
     return (u32)&cp_wk->owner;
   case DATA_CONVERT_GET_ID_MUSICAL_ITEMBIT:  //p_data_adrsからu8のWB_SAVE_CONV_MUSICAL_ITEM_BIT配列で受け取る
@@ -395,8 +398,13 @@ void DATA_CONVERT_SAVE_SetData( DATA_CONVERT_SAVE *p_wk, DATA_CONVERT_GET_ID id,
       GFL_STD_MemCopy( (void*)data, &p_wk->data.pokemon[idx], sizeof(WB_SAVE_CONV_DENDOU_POKEMON_DATA) );
     }
     break;
-  case DATA_CONVERT_GET_ID_OWNER:  //p_data_adrsからWB_SAVE_CONV_OWNER構造体で受け取る
-    GFL_STD_MemCopy( (void*)data, &p_wk->owner, sizeof(WB_SAVE_CONV_OWNER) );
+  case DATA_CONVERT_GET_ID_OWNER_SYS:  //p_data_adrsからWB_SAVE_CONV_OWNER構造体で受け取る
+  case DATA_CONVERT_GET_ID_OWNER_MUSICAL:
+  case DATA_CONVERT_GET_ID_OWNER_DENDOU:
+    {
+      DATA_CONVERT_OWNER idx = id - DATA_CONVERT_GET_ID_OWNER_SYS;
+      GFL_STD_MemCopy( (void*)data, &p_wk->owner[idx], sizeof(WB_SAVE_CONV_OWNER) );
+    }
     break;
   case DATA_CONVERT_GET_ID_MUSICAL_ITEMBIT:  //p_data_adrsからu8のWB_SAVE_CONV_MUSICAL_ITEM_BIT配列で受け取る
     GFL_STD_MemCopy( (void*)data, p_wk->data.musical_item, sizeof(u8)*WB_SAVE_CONV_MUSICAL_ITEM_BIT);

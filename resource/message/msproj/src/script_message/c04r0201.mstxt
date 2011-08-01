@@ -6,13 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあ　きみたち！
-はじめまして！▼
+			<Text>やあ　はじめまして！▼
 わたしは　この　ミュージカルの
 オーナーです　よろしく！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T10:43:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあ　きみたち！
-はじめまして！▼
+			<Text>やあ　はじめまして！▼
 わたしは　この　ミュージカルの
 オーナーです　よろしく！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T10:43:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -71,7 +69,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふーむ！　なんというか　きみたち
+			<Text>ふーむ！　なんというか　あなた
 いい　かんじの　トレーナーですねえ！▼
 ポケモンに　グッズを　つけて
 きかざってあげることを▽
@@ -80,8 +78,8 @@
 こちらの　グッズケースを
 プレゼント　しますから！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T10:44:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -89,7 +87,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふーむ！　なんというか　きみたち
+			<Text>ふーむ！　なんというか　あなた
 いい感じの　トレーナーですねえ！▼
 ポケモンに　グッズを　つけて
 着飾ってあげることを▽
@@ -98,8 +96,8 @@
 こちらの　グッズケースを
 プレゼント　しますから！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T10:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3009,6 +3007,49 @@
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-08-01T07:49:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:49:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_goods_get_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+グッズの　つめあわせを　もらった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T11:16:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+グッズの　つめあわせを　もらった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T11:16:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

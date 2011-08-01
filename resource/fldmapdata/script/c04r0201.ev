@@ -15,6 +15,7 @@
   .include  "musical_scr_local.h" //ミュージカルの定義が入っています
 
   //@author fujimura_souichirou(ライモンラリー)
+  //@author nagihashi_toru(ミュージカルチュートリアルイベント)
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -34,7 +35,6 @@ _EVENT_DATA    ev_c04r0201_stylistpoke_01
 _EVENT_DATA    ev_c04r0201_gentleman_01
 _EVENT_DATA    ev_c04r0201_man2_01
 _EVENT_DATA    ev_c04R0201_init
-_EVENT_DATA    ev_scene_c04r0201_musical_first
 _EVENT_DATA    ev_bg_c04r0201_musical_shot
 _EVENT_DATA    ev_c04r0201_girl4_01
 _EVENT_DATA    ev_bg_c04r0201_statue_01
@@ -51,10 +51,7 @@ INIT_EVENT_START  ev_c04R0201_init
   //ミュージカル初回イベント用
   IF $WK_SCENE_C04R0201 == 0 THEN
     //オーナーの位置を変更
-    _OBJ_POS_CHANGE( C04R0201_OWNER_01, 14, 0, 13, DIR_UP )
-
-    //初回イベント用のサポートを配置
-    _OBJ_ADD_EX( 13, 19, DIR_UP, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+    _OBJ_POS_CHANGE( C04R0201_OWNER_01, 14, 0, 13, DIR_DOWN )
 
   ENDIF
 
@@ -64,50 +61,94 @@ INIT_EVENT_END
 /************************************************************/
 /*				ミュージカル初回訪問イベント				*/
 /************************************************************/
-EVENT_START		ev_scene_c04r0201_musical_first
+ev_musical_first:
+{
+	DEFINE_LOCAL LWK_IS_EXIST
+
+  _DATACONV_IS_EXIST( DATACONV_ID_MUSICAL, LWK_IS_EXIST )
+
+  IF $LWK_IS_EXIST == TRUE THEN
+    //コンバート用データある
+
+	  //おや　あなた　どこかで
+	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_swan_01a, C04R0201_OWNER_01 )
+	  _MSGWIN_CLOSE()
+
+		//オーナー：！マーク
+		_TIME_WAIT( 16 )
+		_OBJ_ANIME( C04R0201_OWNER_01, anm_mark_gyoe )
+		_OBJ_ANIME_WAIT()
+
+	  //ふーむ！　なんというか　あなたから
+	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_swan_02a, C04R0201_OWNER_01 )
+    {
+    DEFINE_LOCAL LWK_YESNO
+    _YES_NO_WIN( LWK_YESNO )
+    IF $LWK_YESNO == SCR_YES THEN
+      //ならば　はなしは　はやい
+	    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_swan_02b, C04R0201_OWNER_01 )
+    ELSE
+      //ポケモンに　グッズを　つけて
+	    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_swan_02c, C04R0201_OWNER_01 )
+    ENDIF
+    }
+	  _MSGWIN_CLOSE()
+
+		//オーナー：！マーク
+		_TIME_WAIT( 16 )
+		_OBJ_ANIME( C04R0201_OWNER_01, anm_mark_gyoe )
+		_OBJ_ANIME_WAIT()
+
+    //そうだ！　あなたに　さしあげる
+	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_swan_02d, C04R0201_OWNER_01 )
+	  _MSGWIN_CLOSE()
+
+	  //オーナー：グッズケースを渡す
+	  //_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
+	  //_OBJ_ANIME_WAIT()
+
+	  //グッズケース入手
+	  _ITEM_EVENT_KEYWAIT( ITEM_GUZZUKEESU, 1 )
+
+    //グッズコンバート
+    _DATACONV_CONV_MUSICAL()
+    
+    //あなたなら　きっと　しんせだいの
+	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_swan_03a, C04R0201_OWNER_01 )
+	  _MSGWIN_CLOSE()
+
+  ELSE
+    //コンバート用データない
+
+	  //やあ きみたち！
+	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_01, C04R0201_OWNER_01 )
+	  _MSGWIN_CLOSE()
 	
-	//サポート＆主人公：受付前へ進む
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_first_support_walk_01 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_first_player_walk_01 )
-	_OBJ_ANIME_WAIT()
+		//オーナー：！マーク
+		_TIME_WAIT( 16 )
+		_OBJ_ANIME( C04R0201_OWNER_01, anm_mark_gyoe )
+		_OBJ_ANIME_WAIT()
 	
-	//ね すごいでしょ！
-	_BALLOONWIN_OBJMSG( msg_c04r0201_white_01, MMDL_ID_EVENTOBJ_00 )
-	_MSGWIN_CLOSE()
+	  //きみたち いいかんじ！
+	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_02, C04R0201_OWNER_01 )
+	  _MSGWIN_CLOSE()
 	
-	//オーナー：近寄ってくる
-	_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_come_01 )
-	_TIME_WAIT( 8 )
-	//サポート：上を見る
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_u )
-	_OBJ_ANIME_WAIT()
+	  //オーナー：グッズケースを渡す
+	  //_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
+	  //_OBJ_ANIME_WAIT()
 	
-	//やあ きみたち！
-	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_01, C04R0201_OWNER_01 )
-	_MSGWIN_CLOSE()
+	  //グッズケース入手
+	  _ITEM_EVENT_KEYWAIT( ITEM_GUZZUKEESU, 1 )
 	
-	//オーナー：サポートと主人公を見る（いったりきたり）
-	_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_01 )
-	_OBJ_ANIME_WAIT()
+	  //オーナー：一歩さがる
+	  //_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_03 )
+	  //_OBJ_ANIME_WAIT()
 	
-	//きみたち いいかんじ！
-	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_02, C04R0201_OWNER_01 )
-	_MSGWIN_CLOSE()
-	
-	//オーナー：グッズケースを渡す
-	_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
-	_OBJ_ANIME_WAIT()
-	
-	//グッズケース入手
-	_ITEM_EVENT_KEYWAIT( ITEM_GUZZUKEESU, 1 )
-	
-	//オーナー：一歩さがる
-	_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_03 )
-	_OBJ_ANIME_WAIT()
-	
-	//そのグッズケースの中に
-	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_03, C04R0201_OWNER_01 )
-	_MSGWIN_CLOSE()
+	  //そのグッズケースの中に
+	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_03, C04R0201_OWNER_01 )
+	  _MSGWIN_CLOSE()
+
+  ENDIF
 	
   _MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
 	{
@@ -117,7 +158,6 @@ EVENT_START		ev_scene_c04r0201_musical_first
 	_GET_MUSICAL_VALUE_COUNT_MUSICAL_POKE( LWK_ENT_CHK )
 	IF $LWK_ENT_CHK == 0 THEN
 		//参加できるポケモンがいない
-		//100621現在は全ポケモンが参加可能のためこちらの処理にはきません
 		
 		//オーナー：！マーク
 		_TIME_WAIT( 16 )
@@ -149,41 +189,8 @@ EVENT_START		ev_scene_c04r0201_musical_first
 	//オーナーを元の位置へ配置
 	_OBJ_POS_CHANGE( C04R0201_OWNER_01, 17, 6, 3, DIR_DOWN )
 	
-	//サポート：主人公を見る
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_r )
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-	_OBJ_ANIME_WAIT()
-	
-	//うーん どうしようかな
-	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG( msg_c04r0201_white_03, MMDL_ID_EVENTOBJ_00 )
-	_MSGWIN_CLOSE()
-	
-	//サポート：去る
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_first_support_goaway_01 )
-	_TIME_WAIT( 8 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
-	_OBJ_ANIME_WAIT()
-	
-	//サポート消す
-	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-	_SE_PLAY( SEQ_SE_KAIDAN )
-	_SE_WAIT()
-	
-	//========================================//
-	//イベント無効
-	$WK_SCENE_C04R0201 = 1
-	
-	//C04フィールド：サポートパパイベントを有効にする
-	$WK_SCENE_C04 = 2
-	//サポートパパを表示
-	//_FLAG_RESET( FV_C04_SUPPORTPAPA_01 )
-	
-	//========================================//
-	
-	
-EVENT_END
+}
+_RET
 
 
 //ドレスアップ参加フロー
@@ -431,12 +438,62 @@ EVENT_END
 /*				ミュージカル：オーナー						*/
 /************************************************************/
 EVENT_START		ev_c04r0201_owner_01
+{
+  DEFINE_LOCAL LWK_IS_CONV
+	DEFINE_LOCAL LWK_IS_EXIST
 
   //すでに何かイベントを行ったか？
+  _TALK_OBJ_START()
+
+  IF $WK_SCENE_C04R0201 == 0 THEN
+    //もし最初の話しかけなら初回イベントへ
+    _CALL ev_musical_first
+
+  	//初回話しかけイベント無効
+	  $WK_SCENE_C04R0201 = 1
+  ELSE
+
+    _DATACONV_IS_EXIST( DATACONV_ID_MUSICAL, LWK_IS_EXIST )
+    _DATACONV_IS_CONV_MUSICAL( LWK_IS_CONV )
+
+    IF $LWK_IS_EXIST == TRUE && $LWK_IS_CONV == FALSE THEN
+      //受け取っていない
+
+      //ふーむ！　やはり　あなたには
+	    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_01, C04R0201_OWNER_01 )
+	    _MSGWIN_CLOSE()
+
+      //グッズコンバート
+      _DATACONV_CONV_MUSICAL()
+
+      //プレイヤー名　は　グッズの　つめあわせを　もらった
+      _PLAYER_NAME( 0 )
+      _ME_PLAY(	SEQ_ME_KEYITEM )
+      _SYSWIN_MSG( msg_c04r0201_goods_get_00, POS_DEFAULT )
+      _ME_WAIT()
+      _SYSWIN_CLOSE()
+
+      //あなたなら　きっと　それらの　グッズ
+	    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_02, C04R0201_OWNER_01 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ELSE
+      //受け取っているなら通常のイベントアイテム入手処理へ
+      _CALL ev_owner_normal
+    ENDIF
+  ENDIF
+}
+EVENT_END
+
+/************************************************************/
+/*				ミュージカル：オーナー通常会話						*/
+/************************************************************/
+ev_owner_normal:
+{
   DEFINE_LOCAL isEvent
   $isEvent = FALSE
-  _TALK_OBJ_START()
-  
+
   //誕生日イベント
   //ケーキを持っているか？
   _GET_MUSICAL_VALUE( MUSICAL_VALUE_CHECK_HAVE_GOODS , MUSICAL_GOODS_KEEKI , SCWK_ANSWER )
@@ -538,7 +595,8 @@ EVENT_START		ev_c04r0201_owner_01
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
   ENDIF
-EVENT_END
+}
+_RET
 
 /************************************************************/
 /*					スタイリストのポケモン					*/

@@ -34,6 +34,7 @@
 //=============================================================================
 
 static u32 s_data_conv_pokemon_idx = 0;
+static u32 s_data_conv_owner_idx = 0;
 
 //=============================================================================
 /**
@@ -87,10 +88,75 @@ static inline BOOL DebugWin_Util_DC_ChangeDataU32( u32 *p_param, u32 min, u32 ma
   return is_update;
 }
 
+static void DebugWin_U_DC_Owner_Index( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
+
+  if( DebugWin_Util_DC_ChangeDataU32( &s_data_conv_owner_idx, 0, DATA_CONVERT_OWNER_MAX-1 ) )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void DebugWin_D_DC_Owner_Index( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
+
+  static const char *scp_label[]  =
+  {
+    "フラグ",
+    "ミュージカル",
+    "でんどう",
+  };
+
+  DEBUGWIN_ITEM_SetNameV( p_item , "そうさ=%s", scp_label[s_data_conv_owner_idx] );
+}
+
+static void DebugWin_U_DC_Owner_Exist( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
+  WB_SAVE_CONV_OWNER owner;
+
+  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, &owner );
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    owner.is_exist ^= 1;
+    DATA_CONVERT_SAVE_SetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, (u32)&owner );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void DebugWin_D_DC_Owner_Exist( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
+  WB_SAVE_CONV_OWNER owner;
+
+  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, &owner );
+
+  DEBUGWIN_ITEM_SetNameV( p_item , "そんざい=%d", owner.is_exist );
+}
+
 static void DebugWin_U_DC_Owner_Name( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
   DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
-  //変えられない
+  WB_SAVE_CONV_OWNER owner;
+  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, &owner );
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    if( owner.name[0] == 0 )
+    {
+      owner.name[0] = L'て';
+      owner.name[1] = L'す';
+      owner.name[2] = L'と';
+      owner.name[3] = GFL_STR_GetEOMCode();
+    }
+    else
+    {
+      GFL_STD_MemClear( owner.name, sizeof(STRCODE)*(PERSON_NAME_SIZE+EOM_SIZE) );
+    }
+    DATA_CONVERT_SAVE_SetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, (u32)&owner );
+    DEBUGWIN_RefreshScreen();
+  }
 }
 static void DebugWin_D_DC_Owner_Name( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
@@ -98,7 +164,7 @@ static void DebugWin_D_DC_Owner_Name( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
   WB_SAVE_CONV_OWNER owner;
   char sjis[ PERSON_NAME_SIZE+EOM_SIZE ];
 
-  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER, &owner );
+  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, &owner );
   GFL_STR_CONV_StrcodeToSjis( owner.name, sjis, PERSON_NAME_SIZE+EOM_SIZE );
 
   DEBUGWIN_ITEM_SetNameV( p_item , "なまえ=%s", sjis );
@@ -109,11 +175,11 @@ static void DebugWin_U_DC_Owner_TrainerID( void* p_wk_adrs, DEBUGWIN_ITEM* p_ite
   DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
   WB_SAVE_CONV_OWNER owner;
 
-  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER, &owner );
+  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, &owner );
 
   if( DebugWin_Util_DC_ChangeDataU32( &owner.trainerID, 0, 0xFFFFFFFF ) )
   {
-    DATA_CONVERT_SAVE_SetData( p_sv, DATA_CONVERT_GET_ID_OWNER, (u32)&owner );
+    DATA_CONVERT_SAVE_SetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, (u32)&owner );
     DEBUGWIN_RefreshScreen();
   }
 }
@@ -122,7 +188,7 @@ static void DebugWin_D_DC_Owner_TrainerID( void* p_wk_adrs, DEBUGWIN_ITEM* p_ite
   DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
   WB_SAVE_CONV_OWNER owner;
 
-  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER, &owner );
+  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, &owner );
 
   DEBUGWIN_ITEM_SetNameV( p_item , "ID=%d", owner.trainerID );
 }
@@ -132,12 +198,12 @@ static void DebugWin_U_DC_Owner_Sex( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
   DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
   WB_SAVE_CONV_OWNER owner;
 
-  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER, &owner );
+  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, &owner );
 
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
   {
     owner.sex ^=  1;
-    DATA_CONVERT_SAVE_SetData( p_sv, DATA_CONVERT_GET_ID_OWNER, (u32)&owner );
+    DATA_CONVERT_SAVE_SetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, (u32)&owner );
     DEBUGWIN_RefreshScreen();
   }
 }
@@ -146,7 +212,7 @@ static void DebugWin_D_DC_Owner_Sex( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
   DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
   WB_SAVE_CONV_OWNER owner;
 
-  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER, &owner );
+  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, &owner );
 
   DEBUGWIN_ITEM_SetNameV( p_item , "せいべつ=%d", owner.sex );
 }
@@ -156,13 +222,13 @@ static void DebugWin_U_DC_Owner_Version( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
   WB_SAVE_CONV_OWNER owner;
   u32 data;
 
-  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER, &owner );
+  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, &owner );
   data = owner.version;
 
   if( DebugWin_Util_DC_ChangeDataU32( &data, 0, 100 ) )
   {
     owner.version = data;
-    DATA_CONVERT_SAVE_SetData( p_sv, DATA_CONVERT_GET_ID_OWNER, (u32)&owner );
+    DATA_CONVERT_SAVE_SetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, (u32)&owner );
     DEBUGWIN_RefreshScreen();
   }
 }
@@ -171,7 +237,7 @@ static void DebugWin_D_DC_Owner_Version( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
   DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
   WB_SAVE_CONV_OWNER owner;
 
-  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER, &owner );
+  DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER_SYS+s_data_conv_owner_idx, &owner );
 
   DEBUGWIN_ITEM_SetNameV( p_item , "バージョン=%d", owner.version );
 }
@@ -898,11 +964,22 @@ static void DebugWin_D_DC_DendouPoke_Waza_03( void* p_wk_adrs, DEBUGWIN_ITEM* p_
 static void DEBUGWIN_DATA_CONVERT_Init( DATA_CONVERT_SAVE *p_sv, HEAPID heapID )
 {
   s_data_conv_pokemon_idx = 0;
+  s_data_conv_owner_idx   = 0;
 
   DEBUGWIN_AddGroupToTop( DATACONV_DEBUGWIN_GROUP, "データコンバート", heapID );
 
   DEBUGWIN_AddGroupToGroup( DATACONV_OWNER_GROUP, "オーナー", DATACONV_DEBUGWIN_GROUP , heapID );
 
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_DC_Owner_Index, 
+                              DebugWin_D_DC_Owner_Index, 
+                              p_sv, 
+                              DATACONV_OWNER_GROUP,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_DC_Owner_Exist, 
+                              DebugWin_D_DC_Owner_Exist, 
+                              p_sv, 
+                              DATACONV_OWNER_GROUP,
+                              heapID );
   DEBUGWIN_AddItemToGroupEx(  DebugWin_U_DC_Owner_TrainerID, 
                               DebugWin_D_DC_Owner_TrainerID, 
                               p_sv, 
