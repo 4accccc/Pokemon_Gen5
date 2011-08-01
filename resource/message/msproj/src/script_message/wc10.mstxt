@@ -7256,6 +7256,264 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="wc10_poke16_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>むわ～ん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:44:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:44:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むわ～ん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:44:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:44:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:40:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE16
+ポケモン・ムシャーナ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:42:02" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="wc10_poke17_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きゅ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:44:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:44:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きゅ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:44:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:44:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:40:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE17
+ポケモン・ミネズミ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:42:38" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="wc10_poke18_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チュルチュル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チュルチュル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:44:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:44:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:40:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE18
+ポケモン・チュリネ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:42:30" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="wc10_poke36_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポロロン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポロロン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:40:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE36
+ポケモン・タブンネ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:02" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="wc10_poke45_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふしゅー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふしゅー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:40:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE45
+ポケモン・コジョフー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:41:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="wc10_poke49_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぐろごろ～</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぐろごろ～</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:43:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:40:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE49
+ポケモン・ダンゴロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-01T09:41:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="wc10_sign_01"
 		Style="Large">
 		<LanguageCell
