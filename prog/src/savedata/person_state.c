@@ -359,6 +359,31 @@ u16 PERSON_STATE_GetTradeMonsno( const PERSON_STATE *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  デート終了フラグをセット
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param	enable  TRUEならばデート終了した  FALSEならばデート終了してない
+ */
+//-----------------------------------------------------------------------------
+void PERSON_STATE_SetDateEndFlag( PERSON_STATE *p_wk, BOOL enable )
+{
+  p_wk->is_date_end;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デート終了フラグを取得
+ *
+ *	@param	const PERSON_STATE *cp_wk ワーク
+ *
+ *	@return TRUEならばデート終了した  FALSEならばデート終了してない
+ */
+//-----------------------------------------------------------------------------
+BOOL PERSON_STATE_GetDateEndFlag( const PERSON_STATE *cp_wk )
+{
+  return cp_wk->is_date_end;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  約束の期日チェック
  *
  *	@param	PERSON_STATE *p_wk  ワーク

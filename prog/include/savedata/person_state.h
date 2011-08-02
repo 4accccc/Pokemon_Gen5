@@ -56,7 +56,8 @@ struct _PERSON_STATE
   u8  is_season_date:1;         //１季節に１回のデートフラグ
   u8  is_secret_displeased:1;   //不機嫌かどうか
   u8  is_trade:1;               //交換フラグ
-  u8  dummy:4;
+  u8  is_date_end:1;            //デート終了フラグ
+  u8  dummy:3;
   u16 trade_monsno;           //交換ポケモン種別
   GFDATE  secret_date;        //デートの日
 };
@@ -105,6 +106,9 @@ extern BOOL PERSON_STATE_GetTradeFlag( const PERSON_STATE *cp_wk );
 
 extern void PERSON_STATE_SetTradeMonsno( PERSON_STATE *p_wk, u16 monsno );
 extern u16 PERSON_STATE_GetTradeMonsno( const PERSON_STATE *cp_wk );
+
+extern void PERSON_STATE_SetDateEndFlag( PERSON_STATE *p_wk, BOOL enable );
+extern BOOL PERSON_STATE_GetDateEndFlag( const PERSON_STATE *cp_wk );
 
 #ifdef PM_DEBUG
 extern void DEBUG_PERSON_STATE_GetDate( const PERSON_STATE *cp_wk, RTCDate *p_date );
