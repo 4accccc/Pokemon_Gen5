@@ -13,6 +13,9 @@
 
 #define FLD_ITEM_40                        0
 #define FLD_ITEM_41                        1
+#define TR_SCIENTISTM_17                   2
+#define TR_BACKPACKERM_26                  3
+#define TR_SCIENTISTW_13                   4
 
 #endif //ZONE_D28R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d28r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

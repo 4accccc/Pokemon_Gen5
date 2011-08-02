@@ -16,6 +16,10 @@
 #define FLD_ITEM_43                        1
 #define FLD_ITEM_44                        2
 #define FLD_ITEM_45                        3
+#define TR_BACKPACKERW_20                  4
+#define TR_ESPW_12                         5
+#define TR_ESPM_13                         6
+#define TR_MOUNT_27                        7
 
 #endif //ZONE_D28R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d28r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
