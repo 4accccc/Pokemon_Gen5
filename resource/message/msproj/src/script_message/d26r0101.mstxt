@@ -1,3 +1,349 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d26r0101_badge_check_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッジ１ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:10:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッジ１ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:36" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_badge_check_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッジ２ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッジ２ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_badge_check_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッジ３ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッジ３ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:39" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_badge_check_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッジ４ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッジ４ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:39" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_badge_check_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッジ５ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッジ５ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:39" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_badge_check_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッジ６ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッジ６ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:39" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_badge_check_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッジ７ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッジ７ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:39" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_badge_check_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッジ８ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッジ８ヲチェックシマシタ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:12:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:11:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:39" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バッジチェックセンサーがバッジを確認したメッセージ
+
+</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-02T09:13:41" />
+		</CommentCell>
+	</TextRow>
+</MessageStudioText>

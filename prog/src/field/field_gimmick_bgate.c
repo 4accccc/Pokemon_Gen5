@@ -137,7 +137,8 @@ typedef struct GATE_START_WK_tag
   FIELD_CAMERA  *p_cam;
   u32           shake_event_frame;
   u16           is_shake_end[SHAKE_PARAM_CNT];
-  VecFx32       default_ofs;
+  VecFx32       default_cam_ofs;
+  VecFx32       default_target_ofs;
 }GATE_START_WK;
 
 //=============================================================================
@@ -652,7 +653,8 @@ GMEVENT* BADGEGATE_CreateGateOpenEvent( GAMESYS_WORK *p_gamesys )
     p_wk->p_gmk_wk    = GMK_TMP_WK_GetWork( p_fld_wk, BADGEGATE_WORK_ASSIGN_ID);
     p_wk->p_cam       = FIELDMAP_GetFieldCamera( p_fld_wk );
     p_wk->shake_event_frame = 0;
-    FIELD_CAMERA_GetCamPosOffset( p_wk->p_cam, &p_wk->default_ofs );
+    FIELD_CAMERA_GetCamPosOffset( p_wk->p_cam, &p_wk->default_cam_ofs );
+    FIELD_CAMERA_GetTargetOffset( p_wk->p_cam, &p_wk->default_target_ofs );
   }
 
   return p_event;
@@ -717,10 +719,12 @@ static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_a
       {
        // ループアニメーションにきりかえる,ICA起動
         SetAnmStopFlag( p_ev_model ,MDL_ANM_ACTION_ITA, TRUE );
-        SetAnmStopFlag( p_ev_model ,MDL_ANM_GATE_LOOP_ITA, FALSE );
-        SetAnmStopFlag( p_ev_model ,MDL_ANM_ACTION_ICA, FALSE );
+
+        // アニメーション切り替え
         FLD_EXP_OBJ_ValidCntAnm(p_ev_model->p_ex_obj, p_ev_model->unitID, p_ev_model->modelID, MDL_ANM_ACTION_ITA, FALSE);
         FLD_EXP_OBJ_ValidCntAnm(p_ev_model->p_ex_obj, p_ev_model->unitID, p_ev_model->modelID, MDL_ANM_GATE_LOOP_ITA, TRUE);
+        SetAnmStopFlag( p_ev_model ,MDL_ANM_GATE_LOOP_ITA, FALSE );
+        SetAnmStopFlag( p_ev_model ,MDL_ANM_ACTION_ICA, FALSE );
 
         FLD_EXP_OBJ_SetObjAnmFrm(p_ev_model->p_ex_obj, p_ev_model->unitID, p_ev_model->modelID, MDL_ANM_GATE_LOOP_ITA ,GetSynchroAnmFrame( p_wk->p_gmk_wk ) );
         (*p_seq)++;
@@ -752,6 +756,7 @@ static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_a
       FLD_EXP_OBJ_SetVanish( p_on_model->p_ex_obj,
           p_on_model->unitID , p_on_model->modelID, FALSE );
       FLD_EXP_OBJ_SetObjAnmFrm(p_on_model->p_ex_obj, p_on_model->unitID, p_on_model->modelID, MDL_ANM_LOOP_ITA ,GetSynchroAnmFrame( p_wk->p_gmk_wk ) );
+      SetAnmStopFlag( p_on_model ,MDL_ANM_LOOP_ITA, FALSE );
 
       // EVモデルを非表示に
       FLD_EXP_OBJ_SetVanish( p_ev_model->p_ex_obj,
@@ -782,7 +787,8 @@ static void GateOpen_CameraShakeMain( GATE_START_WK *p_wk )
   for( i = 0; i < SHAKE_PARAM_CNT ; i++ )
   {
     fx32 w, h;
-    VecFx32 set_ofs = p_wk->default_ofs;
+    VecFx32 set_cam_ofs = p_wk->default_cam_ofs;
+    VecFx32 set_target_ofs = p_wk->default_cam_ofs;
     const SHAKE_PARAM *p_sp = &sc_shake_param_table[i];
 
     // 指定フレーム内の時はゆらす
@@ -795,16 +801,20 @@ static void GateOpen_CameraShakeMain( GATE_START_WK *p_wk )
       tmp = shake_frame * 0x10000 / p_sp->loop_sync;
       rad = tmp;
 
-      set_ofs.x += p_sp->w * FX_SinIdx(rad);
-      set_ofs.y += p_sp->h * FX_CosIdx(rad);
+      set_cam_ofs.x += p_sp->w * FX_SinIdx(rad);
+      set_cam_ofs.y += p_sp->h * FX_CosIdx(rad);
 
-      FIELD_CAMERA_SetCamPosOffset( p_wk->p_cam, &set_ofs );
+      set_target_ofs.x += p_sp->w * FX_SinIdx(rad);
+      set_target_ofs.y += p_sp->h * FX_CosIdx(rad);
+
+      FIELD_CAMERA_SetCamPosOffset( p_wk->p_cam, &set_cam_ofs );
+      FIELD_CAMERA_SetTargetOffset( p_wk->p_cam, &set_target_ofs );
       p_wk->is_shake_end[i] = FALSE;
 
       // 終了フレームを調べ、振動をリセット
       if( p_wk->shake_event_frame >= p_sp->end_frame )
       {
-        FIELD_CAMERA_SetCamPosOffset( p_wk->p_cam, &p_wk->default_ofs );
+        FIELD_CAMERA_SetCamPosOffset( p_wk->p_cam, &p_wk->default_cam_ofs );
         p_wk->is_shake_end[i] = TRUE;
         ONOUE_Printf("振動終了\n");
       }
