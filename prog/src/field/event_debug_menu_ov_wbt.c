@@ -43,6 +43,8 @@
 
 #include "savedata/wbt_ex_save.h"
 #include "savedata/wbt_download.h"
+#include "savedata/save_tbl.h"  //EXGMDATA_ID_WBT_00
+#include "savedata/save_control.h"
 
 #include "wbt_setup.h"
 #include "wbt_tool.h" //WBTTOOL_
@@ -125,6 +127,7 @@ static BOOL debugMenuCallProc_WBTList_1st( DEBUG_WBT_WORK *p_wk );
 static BOOL debugMenuCallProc_WBTList_2nd( DEBUG_WBT_WORK *p_wk );
 static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk );
 static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk );
+static void debugCommand_CreateWBTDLData( DEBUG_WBT_WORK * p_wk );
 // test
 static BOOL debugMenuCallProc_WinRecord( DEBUG_WBT_WORK *p_wk );
 static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk );
@@ -192,6 +195,7 @@ static const DEBUG_MENU_LIST WBTMenuList[] =
   { DEBUG_STR_WBT_12, (void*)DEBUG_STR_WBT_12, GFL_OVERLAY_BLANK_ID },   // ダウンロード：2
   { DEBUG_STR_WBT_13, (void*)DEBUG_STR_WBT_13, GFL_OVERLAY_BLANK_ID },   // ダウンロード：3
   { DEBUG_STR_WBT_15, (void*)DEBUG_STR_WBT_15, GFL_OVERLAY_BLANK_ID },   // 全トーナメント解禁
+  { DEBUG_STR_WBT_16, (void*)DEBUG_STR_WBT_16, GFL_OVERLAY_BLANK_ID },   // ダウンロードデータ生成
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuWBTImitializer = {
@@ -416,6 +420,11 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       (*seq)++;
       break;
 
+    case DEBUG_STR_WBT_16:
+      debugCommand_CreateWBTDLData( work );
+      PMSND_PlaySE( SEQ_SE_SAVE );
+      (*seq) ++;
+      break;
     }
     break;
 
@@ -451,22 +460,88 @@ static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk )
   OS_Printf("size of Regulation = \n");
   OS_Printf("%5d(0x%4x)\n", sizeof(REGULATION), sizeof(REGULATION) );
   OS_Printf("size of WBT DL Regulation = \n");
-  OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_RULE), sizeof(WBT_DL_RULE) );
+  OS_Printf("%5d(0x%4x)\n", sizeof(WBTDL_RULE), sizeof(WBTDL_RULE) );
   OS_Printf("size of WBT DL Pokemon = \n");
-  OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_POKEMON), sizeof(WBT_DL_POKEMON) );
+  OS_Printf("%5d(0x%4x)\n", sizeof(WBTDL_POKEMON), sizeof(WBTDL_POKEMON) );
   OS_Printf("size of WBT DL Character = \n");
-  OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_CHARACTER), sizeof(WBT_DL_CHARACTER) );
+  OS_Printf("%5d(0x%4x)\n", sizeof(WBTDL_CHARACTER), sizeof(WBTDL_CHARACTER) );
   OS_Printf("size of WBT DL DATA = \n");
-  OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_DATA), sizeof(WBT_DL_DATA) );
+  OS_Printf("%5d(0x%4x)\n", sizeof(WBTDL_DATA), sizeof(WBTDL_DATA) );
   OS_Printf("size of WBT SAVE DATA = \n");
   OS_Printf("%5d(0x%4x)\n", WBTSAVE_GetWorkSize(), WBTSAVE_GetWorkSize() );
   OS_Printf("%d\n", WBTEXSAVE_GetWorkSize() );
   return FALSE;
 }
+//=============================================================================
+//=============================================================================
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static void debugCommand_CreateWBTDLData( DEBUG_WBT_WORK * p_wk )
+{
+  WBTDL_DATA * wbtdl_data;
+  
+  wbtdl_data = GFL_HEAP_AllocMemoryLo( p_wk->heapID, sizeof(WBTDL_DATA) );
 
-//======================================================================
+  GFL_STD_MemClear32( wbtdl_data, sizeof(WBTDL_DATA) );
+
+  //ダミーデータ生成
+  {
+    GFL_MSGDATA	*msgman;						// メッセージマネージャー
+    STRBUF * tempbuf;
+    msgman  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+                ARCID_DEBUG_MESSAGE, NARC_debug_message_debug_wbt_dat, p_wk->heapID);
+    tempbuf = GFL_STR_CreateBuffer( 128, p_wk->heapID );
+
+    wbtdl_data->cassette_version = 0xffff;  //仮：全バージョン遊べる？
+    wbtdl_data->lang_id = LANG_JAPAN;
+    GFL_MSG_GetString( msgman, DEBUG_STR_WBT_DL01, tempbuf );
+    GFL_STR_GetStringCode( tempbuf, wbtdl_data->tournament_name, WBTDL_TOURNAMENT_NAME_LEN );
+    GFL_MSG_GetString( msgman, DEBUG_STR_WBT_DL02, tempbuf );
+    GFL_STR_GetStringCode( tempbuf, wbtdl_data->regulation_explain, WBTDL_TOURNAMENT_REG_EXPLAIN_LEN );
+    GFL_MSG_GetString( msgman, DEBUG_STR_WBT_DL03, tempbuf );
+    GFL_STR_GetStringCode( tempbuf, wbtdl_data->contents_explain, WBTDL_TOURNAMENT_EXPLAIN_LEN );
+
+    PokeRegulation_LoadData( REG_WBT_SUBWAY_SINGLE, (REGULATION *)&(wbtdl_data->regulation) );
+
+    //トレーナーに関するデータは生成していない
+    WBTEXSAVE_SetCrc( (WBTEXSAVE*)wbtdl_data );
+
+    GFL_STR_DeleteBuffer( tempbuf );
+    GFL_MSG_Delete( msgman );
+  }
+
+
+  //セーブ
+  {
+    GAMEDATA * gamedata = GAMESYSTEM_GetGameData( p_wk->gmSys );
+    LOAD_RESULT load_res;
+    SAVE_RESULT save_ret;
+    WBTEXSAVE * save_p;
+    SAVE_CONTROL_WORK* save;
+
+    save = GAMEDATA_GetSaveControlWork( gamedata );
+    load_res = SaveControl_Extra_Load( save, SAVE_EXTRA_ID_WBT_00, HEAPID_PROC );
+    OS_Printf("WBT00 Load Result = %d\n", load_res );
+    save_p = SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_WBT_00, EXGMDATA_ID_WBT_00 );
+    GFL_STD_MemCopy32( wbtdl_data, save_p, sizeof(WBTDL_DATA) );
+
+    GAMEDATA_ExtraSaveAsyncStart( gamedata, SAVE_EXTRA_ID_WBT_00 ); 
+
+    do {
+      save_ret = GAMEDATA_ExtraSaveAsyncMain( gamedata, SAVE_EXTRA_ID_WBT_00 ); 
+    } while ( save_ret != SAVE_RESULT_OK && save_ret != SAVE_RESULT_NG );
+    OS_Printf("WBT00 Save Result = %d\n", save_ret );
+
+    // セーブ終了
+    SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_WBT_00 ); // 外部データを解放
+  }
+
+  GFL_HEAP_FreeMemory( wbtdl_data );
+}
+
+//=============================================================================
 //  デバッグメニュー WBTリスト表示へ
-//======================================================================
+//=============================================================================
 //----------------------------------------------------------------------------
 /**
  *  @brief  デバッグ用WBTトーナメントリスト表示イベント

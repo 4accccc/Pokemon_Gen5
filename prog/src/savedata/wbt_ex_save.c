@@ -34,12 +34,12 @@ SDK_COMPILER_ASSERT( WBTEXSAVE_WORK_SIZE <= SAVESIZE_EXTRA_WBT );
 //=====================================
 struct _WBTEXSAVE
 {
-  WBT_DL_DATA wbt_dl_data;
+  WBTDL_DATA wbt_dl_data;
 };
 enum {
-  WBT_DL_DATA_SIZE = sizeof(WBTEXSAVE),
+  WBTDL_DATA_SIZE = sizeof(WBTEXSAVE),
 };
-SDK_COMPILER_ASSERT( WBT_DL_DATA_SIZE <= SAVESIZE_EXTRA_WBT );
+SDK_COMPILER_ASSERT( WBTDL_DATA_SIZE <= SAVESIZE_EXTRA_WBT );
 
 //=============================================================================
 /**
@@ -56,7 +56,7 @@ SDK_COMPILER_ASSERT( WBT_DL_DATA_SIZE <= SAVESIZE_EXTRA_WBT );
 //-----------------------------------------------------------------------------
 u32 WBTEXSAVE_GetWorkSize( void )
 {
-  return WBT_DL_DATA_SIZE;
+  return WBTDL_DATA_SIZE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -69,3 +69,48 @@ void WBTEXSAVE_WorkInit( WBTEXSAVE *p_wk )
 {
   GFL_STD_MemClear( p_wk, WBTEXSAVE_GetWorkSize() );
 }
+
+//=============================================================================
+//=============================================================================
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  WBTダウンロードデータの存在チェック
+ *
+ *	@param	p_wk  ワーク
+ *	@return BOOL  TRUEのとき、データが存在する
+ */
+//-----------------------------------------------------------------------------
+BOOL WBTEXSAVE_IsExists( const WBTEXSAVE *p_wk )
+{
+  u16 crc;
+  crc = *(u32*)( ((u8*)p_wk) + sizeof(WBTEXSAVE) - sizeof(u32) );
+  return ( crc == GFL_STD_CrcCalc( p_wk, sizeof(WBTEXSAVE) - sizeof(u32) ) );
+}
+
+#ifdef  PM_DEBUG
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  WBTダウンロードデータのCRCセット
+ *
+ *  @param  p_wk
+ *
+ *  @note   ダウンロードするだけなので、ゲーム内でCRCをセットする機会はないはず
+ */
+//-----------------------------------------------------------------------------
+void WBTEXSAVE_SetCrc( WBTEXSAVE * p_wk )
+{
+  u32 * crc;
+  crc = (u32*)( ((u8*)p_wk) + sizeof(WBTEXSAVE) - sizeof(u32) );
+  *crc = GFL_STD_CrcCalc( p_wk, sizeof(WBTEXSAVE) - sizeof(u32) );
+}
+#endif
+
+
+
+
+
+
+
+
+
+

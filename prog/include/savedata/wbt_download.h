@@ -23,10 +23,10 @@
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
-  WBT_DL_POKENUMBER_MAX = MATH_ROUNDUP( MONSNO_END, 8 ) / 8,
-  //WBT_DL_POKEITEM_MAX = MATH_ROUNDUP( ITEM_DATA_MAX, 8 ) / 8,
-  WBT_DL_POKEITEM_MAX = (608/8),
-  WBT_DL_POKEWAZA_MAX = MATH_ROUNDUP( WAZANO_MAX, 8 ) / 8,
+  WBTDL_POKENUMBER_MAX = MATH_ROUNDUP( MONSNO_END, 8 ) / 8,
+  //WBTDL_POKEITEM_MAX = MATH_ROUNDUP( ITEM_DATA_MAX, 8 ) / 8,
+  WBTDL_POKEITEM_MAX = (608/8),
+  WBTDL_POKEWAZA_MAX = MATH_ROUNDUP( WAZANO_MAX, 8 ) / 8,
 
   DUMMY_SHOOTER_ITEM_BIT_TBL_MAX = 7,
 };
@@ -48,10 +48,10 @@ typedef struct {
   u8 both_item;     ///<同じアイテムを許可するか
 
   ///ポケモン制限フラグ（ずかんIDと1対1)
-  u8 veto_poke_bit[ WBT_DL_POKENUMBER_MAX ];
+  u8 veto_poke_bit[ WBTDL_POKENUMBER_MAX ];
 
   ///所持どうぐ制限（どうぐIDと1対1）
-  u8 veto_item_bit[ WBT_DL_POKEITEM_MAX ];
+  u8 veto_item_bit[ WBTDL_POKEITEM_MAX ];
 
   u16 dummy_must_poke;
   u8  dummy_must_poke_form;
@@ -68,20 +68,29 @@ typedef struct {
   u8 btl_rule;      ///<BtlRule
   u8  dummy_btl_count; 
 
-}WBT_DL_RULE;
+}WBTDL_RULE;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
   u16 monsno;
-  u8 form_no;
   STRCODE nickname[MONS_NAME_SIZE+EOM_SIZE];
-  u8 rare_flag  :1;
-  u8 sex        :2;
-  u16 waza_id[PTL_WAZA_MAX];
-  u8 tokusei;
-  u8 seikaku;
   u16 item_no;
+  u8 rare_flag  :1;
+  u8 pad1        :7;
+  u8 tokusei;
+	u8	hp_exp;								//HP努力値
+	u8	pow_exp;							//攻撃力努力値
+	u8	def_exp;							//防御力努力値
+	u8	agi_exp;							//素早さ努力値
+	u8	spepow_exp;							//特攻努力値
+	u8	spedef_exp;							//特防努力値
+  u16 waza_id[PTL_WAZA_MAX];
+  u8  pp_count1:2;
+  u8  pp_count2:2;
+  u8  pp_count3:2;
+  u8  pp_count4:2;
+  u8 seikaku;
 
 	u32	hp_rnd			:5;					//		HP乱数
 	u32	pow_rnd			:5;					//		攻撃力乱数
@@ -89,45 +98,43 @@ typedef struct {
 	u32	agi_rnd			:5;					//		素早さ乱数
 	u32	spepow_rnd		:5;					//		特攻乱数
 	u32	spedef_rnd		:5;					//		特防乱数
-  u32 pad         :2;
+  u32 sex         :2;
 
-	u8	hp_exp;								//11h	HP努力値
-	u8	pow_exp;							//12h	攻撃力努力値
-	u8	def_exp;							//13h	防御力努力値
-	u8	agi_exp;							//14h	素早さ努力値
-	u8	spepow_exp;							//15h	特攻努力値
-	u8	spedef_exp;							//16h	特防努力値
+  u8 form_no;
+  u8 ball_id;
+
+  u8 level;
 
   u8  friend_rate;        ///<なつき度
 
-}WBT_DL_POKEMON;
+}WBTDL_POKEMON;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef enum {
-  WBT_DL_MATCH_TRAINER_RANDOM = 0,  ///<ランダム（ROMデータから）
-  WBT_DL_MATCH_TRAINER_DATA,        ///<DLデータ指定
-  WBT_DL_MATCH_TRAINER_ROM,         ///<ROMデータ指定
-}WBT_DL_MATCH_TRAINER;
+  WBTDL_MATCH_TRAINER_RANDOM = 0,  ///<ランダム（ROMデータから）
+  WBTDL_MATCH_TRAINER_DATA,        ///<DLデータ指定
+  WBTDL_MATCH_TRAINER_ROM,         ///<ROMデータ指定
+}WBTDL_MATCH_TRAINER;
 
 typedef struct {
-  u8 type;  ///<WBT_DL_MATCH_TRAINER
+  u8 type;  ///<WBTDL_MATCH_TRAINER
   u8 pri;
   u16 id;
-}WBT_DL_MATCH;
+}WBTDL_MATCH;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
-  WBT_DL_MSG_LEN = 36 * 2 + 1,
-  WBT_DL_TRAINER_TITLE_LEN = 10 + 1,
+  WBTDL_MSG_LEN = 36 * 2 + 1,
+  WBTDL_TRAINER_TITLE_LEN = 10 + 1,
 
-  WBT_DL_TOURNAMENT_NAME_LEN = 20 + 1,
+  WBTDL_TOURNAMENT_NAME_LEN = 20 + 1,
 
-  WBT_DL_TOURNAMENT_REG_EXPLAIN_LEN = (36+1) * 3,
-  WBT_DL_TOURNAMENT_EXPLAIN_LEN = (36+1) * 3,
+  WBTDL_TOURNAMENT_REG_EXPLAIN_LEN = (36+1) * 3,
+  WBTDL_TOURNAMENT_EXPLAIN_LEN = (36+1) * 3,
 
-  WBT_DL_CHAR_MAX = 4,
+  WBTDL_CHAR_MAX = 4,
 };
 
 //------------------------------------------------------------------
@@ -136,24 +143,27 @@ enum {
  */
 //------------------------------------------------------------------
 typedef struct {
+  WBTDL_POKEMON pokemon[ TEMOTI_POKEMAX ];
+
   STRCODE name[ SAVELEN_TRAINER_NAME ];
-  STRCODE title[ WBT_DL_TRAINER_TITLE_LEN ];
-  u16 obj_id;
-  WBT_DL_POKEMON pokemon[ TEMOTI_POKEMAX ];
-  u8 priority_bit;
+  STRCODE title[ WBTDL_TRAINER_TITLE_LEN ];
+  STRCODE msg_before[ WBTDL_MSG_LEN ];   ///<対戦前MSG
+  STRCODE msg_win[ WBTDL_MSG_LEN ];      ///<相手の負けMSG
+  STRCODE msg_lose[ WBTDL_MSG_LEN ];     ///<相手の勝ちMSG
+  STRCODE msg_announce[ WBTDL_MSG_LEN ]; ///<決勝戦　前口上
+  u8 title_id;            ///<肩書きID
+  u8  msg_before_id;      ///<対戦前MSGのID
+  u8  msg_after_win_id;   ///<対戦後勝ちメッセージのID
+  u8  msg_after_lose_id;  ///<対戦後負けメッセージのID
+  u8  msg_win_id;         ///<相手の負けMSGのID
+  u8  msg_lose_id;        ///<相手の勝ちMSGのID
+  u8  msg_announce_id;    ///<決勝戦前口上のメッセージID
+  u8 priority_bit;        ///<優先順位
+  u16 obj_id;             ///<OBJ指定
   u8 type;
-  u16 ai_bit; 
-  STRCODE msg_before[ WBT_DL_MSG_LEN ];   ///<対戦前MSG
-  STRCODE msg_win[ WBT_DL_MSG_LEN ];      ///<相手の負けMSG
-  STRCODE msg_lose[ WBT_DL_MSG_LEN ];     ///<相手の勝ちMSG
-  STRCODE msg_announce[ WBT_DL_MSG_LEN ]; ///<決勝戦　前口上
-  u8  msg_before_id;
-  u8  msg_after_win_id;
-  u8  msg_after_lose_id;
-  u8  msg_win_id;
-  u8  msg_lose_id;
-  u8  msg_announce_id;
-}WBT_DL_CHARACTER;
+  u8 lang_id;             ///<国コード
+  u16 ai_bit;             ///<AI指定
+}WBTDL_CHARACTER;
 
 //------------------------------------------------------------------
 /**
@@ -161,39 +171,39 @@ typedef struct {
  */
 //------------------------------------------------------------------
 typedef struct {
+  ///受信可能なカセットバージョン
+  u32 cassette_version;
+
   ///配信開始年月日
   u8 year, month, day;
 
   ///言語ＩＤ 日=1、英=2、仏=3、伊=4、独=5、西=7、韓=8
   u8 lang_id;
 
-  ///受信可能なカセットバージョン
-  u32 cassette_version;
-
   ///トーナメントＩＤ
   u16 tournament_id;
 
   ///トーナメント名
-  STRCODE tournament_name[ WBT_DL_TOURNAMENT_NAME_LEN ];
+  STRCODE tournament_name[ WBTDL_TOURNAMENT_NAME_LEN ];
 
   ///トーナメントの内容説明
-  STRCODE contents_explain[ WBT_DL_TOURNAMENT_EXPLAIN_LEN ];
+  STRCODE contents_explain[ WBTDL_TOURNAMENT_EXPLAIN_LEN ];
 
   ///トーナメントにおいてのレギュレーション説明
-  STRCODE regulation_explain[ WBT_DL_TOURNAMENT_REG_EXPLAIN_LEN ];
+  STRCODE regulation_explain[ WBTDL_TOURNAMENT_REG_EXPLAIN_LEN ];
 
   ///レギュレーション指定
-  WBT_DL_RULE regulation;
+  WBTDL_RULE regulation;
   //REGULATION regulation;
 
   ///ダウンロードトレーナーデータ
-  WBT_DL_CHARACTER character[ WBT_DL_CHAR_MAX ];
+  WBTDL_CHARACTER character[ WBTDL_CHAR_MAX ];
 
   ///組み合わせデータ
-  WBT_DL_MATCH match[ WBT_TRAINER_NUM - 1 ];
+  WBTDL_MATCH match[ WBT_TRAINER_NUM - 1 ];
 
   u32 crc;
-}WBT_DL_DATA;
+}WBTDL_DATA;
 
 
 //============================================================================================
@@ -206,7 +216,7 @@ typedef struct {
  */
 //------------------------------------------------------------------
 enum {
-  WBT_DL_TOTAL_NUM = 12,
+  WBTDL_TOTAL_NUM = 12,
 };
 
 //------------------------------------------------------------------
@@ -215,11 +225,37 @@ enum {
  */
 //------------------------------------------------------------------
 typedef struct {
-  WBT_DL_DATA data[ WBT_DL_TOTAL_NUM ];
+  WBTDL_DATA data[ WBTDL_TOTAL_NUM ];
   u32 crc;
-}WBT_DL_TOTAL_DATA;
+}WBTDL_TOTAL_DATA;
 
 
+//============================================================================================
+//
+//  ダウンロードデータ用レギュレーションアクセス関数
+//
+//  内部仕様が変更になる可能性があるため、直接アクセスせずに
+//  この関数を使用すること！
+//
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline const u8 * WBTDL_DATA_GetVetoPokemonBit( const WBTDL_DATA * wbtdl_data )
+{
+  return wbtdl_data->regulation.veto_poke_bit;
+}
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline const u8 * WBTDL_DATA_GetVetoItemBit( const WBTDL_DATA * wbtdl_data )
+{
+  return wbtdl_data->regulation.veto_item_bit;
+}
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline BOOL WBTDL_DATA_IsVetoWazaNo( const WBTDL_DATA * wbtdl_data, u16 waza_no )
+{
+  return ( waza_no != WAZANO_HURIIFOORU );
+}
 

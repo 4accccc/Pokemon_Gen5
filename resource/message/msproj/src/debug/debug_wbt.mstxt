@@ -510,4 +510,214 @@
 				Time="2011-06-23T11:45:41" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_WBT_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダウンロードデータ生成</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:48:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-06-23T11:45:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダウンロードデータ生成</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:48:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-06-23T11:45:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_WBT_DL01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダウンロードサンプル</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:43:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-06-23T11:45:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダウンロードサンプル</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:43:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-06-23T11:45:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_WBT_DL02">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメント制限
+０１２３４５６７８９０１２３４５６７
+０１２３４５６７８９０１２３４５６７</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:44:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:43:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメント制限
+０１２３４５６７８９０１２３４５６７
+０１２３４５６７８９０１２３４５６７</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:44:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:44:01" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_WBT_DL03">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメント内容
+０１２３４５６７８９０１２３４５６７
+０１２３４５６７８９０１２３４５６７</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:44:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:44:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメント内容
+０１２３４５６７８９０１２３４５６７
+０１２３４５６７８９０１２３４５６７</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:44:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:44:31" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_WBT_DL04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＤＬトレ１</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:48:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:45:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＤＬトレ１</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:48:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:45:16" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_WBT_DL05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＤＬトレ２</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:48:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:45:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＤＬトレ２</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:48:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:45:24" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_WBT_DL06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＤＬトレ３</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:47:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:45:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＤＬトレ３</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:47:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:45:31" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_WBT_DL07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＤＬトレ４</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:47:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:45:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＤＬトレ４</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:47:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-02T05:45:38" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
