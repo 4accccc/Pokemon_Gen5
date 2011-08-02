@@ -313,11 +313,11 @@
 　画面半分ほど凍りついた状態で
 　主人公に氷が向かって行く（ゲーチス視点に切り替え）
 ・途中で
-　BLACK2→boss_01b
-　WHITE2→boss_01w</Comment>
+　Black2→boss_01b
+　White2→boss_01w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:29:26" />
+				Time="2011-08-02T05:17:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -363,13 +363,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACK２ver
+・Black2ver
 ・デモ中のメッセージ（早口で表示）
 ・主人公に氷が迫るデモに
 　雷が落ちる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:30:31" />
+				Time="2011-08-02T05:15:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -415,13 +415,13 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITE２ver
+・White2ver
 ・デモ中のメッセージ（早口で表示）
 ・主人公に氷が迫るデモに
 　火柱が落ちる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:30:31" />
+				Time="2011-08-02T05:16:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -472,11 +472,11 @@ N</Text>
 			Language="JPN">
 			<Comment>♂
 ・続けて
-　BLACK2→boss_02b
-　WHITE2→boss_02w</Comment>
+　Black2→boss_02b
+　White2→boss_02w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:31:31" />
+				Time="2011-08-02T05:17:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -535,11 +535,11 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACK２ver
+・Black2ver
 ・続けてmu_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:32:47" />
+				Time="2011-08-02T05:15:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -605,11 +605,11 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITE２ver
+・White2ver
 ・続けてshin_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:32:47" />
+				Time="2011-08-02T05:16:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -820,11 +820,11 @@ N</Text>
 			Language="JPN">
 			<Comment>♂
 ・続けて
-　BLACK2→swsage01_08b
-　WHITE2→swsage01_08w</Comment>
+　Black2→swsage01_08b
+　White2→swsage01_08w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:35:52" />
+				Time="2011-08-02T05:16:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1028,11 +1028,11 @@ N</Text>
 			<Comment>♂
 ・表示後、動作モデルが杖を掲げるアニメ
 ・デモへ移行
-　BLACK2ver→swsage01_10b
-　WHITE２ver→swsage01_10w</Comment>
+　Black2→swsage01_10b
+　White2→swsage01_10w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:40:32" />
+				Time="2011-08-02T05:16:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1411,11 +1411,11 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACK２ver
+・Black2ver
 ・合体キュレムと戦闘するまで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:40:38" />
+				Time="2011-08-02T05:15:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1473,11 +1473,11 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITE２ver
+・White2ver
 ・合体キュレムと戦闘するまで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:40:45" />
+				Time="2011-08-02T05:16:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2286,13 +2286,13 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACK２ver
+・Black2ver
 ・表示後、Ｎと連れ立って
 　ジャイアントホール入り口へ歩き出す
 　※ＢＷで画面奥に向かったのと逆</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:50:02" />
+				Time="2011-08-02T05:15:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2537,12 +2537,12 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACK２ver
+・Black2ver
 ・出入り口前
 ・続けてboss_13b</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:03:36" />
+				Time="2011-08-02T05:15:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2598,12 +2598,12 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITE2ver
+・White2ver
 ・出入り口前
 ・続けてboss_13w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:41:18" />
+				Time="2011-08-02T05:16:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2626,13 +2626,13 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミの　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
 めざす　みちは　どんなものか？▼
 その　りそうを　たしかめるため
 ポケモンリーグへ　むかいたまえ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:46:50" />
+				Time="2011-08-02T05:10:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2640,13 +2640,13 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミの　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
 目指す　道は　どんなものか？▼
 その理想を　確かめるため
 ポケモンリーグへ　向かいたまえ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:48:50" />
+				Time="2011-08-02T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2655,12 +2655,12 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACK２ver
-・以降、主人公フリームーブ可能
-・r23に行くまでメッセージ繰り返し</Comment>
+・Black2ver
+・表示後、N,退場
+・以降、主人公フリームーブ可能</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:51:23" />
+				Time="2011-08-02T05:15:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2683,13 +2683,13 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミの　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
 めざす　みちは　どんなものか？▼
 その　しんじつを　たしかめるため
 ポケモンリーグへ　むかいたまえ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:47:01" />
+				Time="2011-08-02T05:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2697,13 +2697,13 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミの　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
 目指す　道は　どんなものか？▼
 その理想を　確かめるため
 ポケモンリーグへ　向かいたまえ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:48:58" />
+				Time="2011-08-02T05:11:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2712,12 +2712,12 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITE2ver
-・以降、主人公フリームーブ可能
-・r23に行くまでメッセージ繰り返し</Comment>
+・White2ver
+・表示後、N,退場
+・以降、主人公フリームーブ可能</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:41:25" />
+				Time="2011-08-02T05:16:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
