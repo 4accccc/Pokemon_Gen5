@@ -69,7 +69,7 @@ static BOOL s_debug_permission = FALSE;
 
 //TODO 拡張の数減らしたので一時的に不正ビーコンが漂っている
 //#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
-#define RESORT_VALID_ASSERT(...) OS_TPrintf( __VA_ARGS__ )
+#define RESORT_VALID_ASSERT(...) RESORT_Printf( __VA_ARGS__ )
 
 static inline RESORT_GET_TrainerView( u8 view, u8 sex ) 
 {
@@ -2089,7 +2089,6 @@ void RESORT_PROXY_DATA_Exit( RESORT_PROXY_DATA *p_wk )
 void RESORT_PROXY_DATA_InitInstance( RESORT_PROXY_DATA *p_wk )
 {
   GFL_STD_MemClear(p_wk, sizeof(RESORT_PROXY_DATA) );
-  p_wk->type  = RESORT_PROXY_TYPE_MAX;
 }
 
 //----------------------------------------------------------------------------
@@ -2103,7 +2102,7 @@ void RESORT_PROXY_DATA_InitInstance( RESORT_PROXY_DATA *p_wk )
 //-----------------------------------------------------------------------------
 BOOL RESORT_PROXY_DATA_IsEmpty( const RESORT_PROXY_DATA *cp_wk )
 {
-  return cp_wk->type == RESORT_PROXY_TYPE_MAX;
+  return cp_wk->name[0] == 0 || cp_wk->version == 0;
 }
 //----------------------------------------------------------------------------
 /**

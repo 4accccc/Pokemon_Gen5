@@ -404,7 +404,7 @@ extern RESORT_PROXY_DATA * RESORT_PROXY_BUFF_GetData( RESORT_PROXY_BUFF *p_wk, u
 #define RESORT_RECV_BUFF_SIZE( num )  (RESORT_RECV_BUFF_HEADER_SIZE+(RESORT_RECV_DATA_SIZE*num))
 
 //拡張バッファのサイズ
-#define RECEPTION_BUFF_RECV_MAX (8)
+#define RESONANCE_RESORT_BUFF_RECV_EX_NUM (8)
 
 //-------------------------------------
 ///	受信バッファ

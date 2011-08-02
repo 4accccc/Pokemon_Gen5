@@ -34,18 +34,15 @@
 
 #define PEOPLE_TYPE_ASSERT2( p_people, type1, type2 ) GF_ASSERT( RESORT_PEOPLE_GetPeopleData(p_people, RESORT_PEOPLE_DATA_PARAM_TYPE) == type1 || RESORT_PEOPLE_GetPeopleData(p_people, RESORT_PEOPLE_DATA_PARAM_TYPE) == type2 )
 
-static RESORT_BINARY_SHOP * Resort_Scrcmd_GetBinaryShop( FIELDMAP_WORK *p_fieldmap );
-static RESORT_BINARY_SPOT * Resort_Scrcmd_GetBinarySpot( FIELDMAP_WORK *p_fieldmap );
 static RESORT_PEOPLE_SYS * Resort_Scrcmd_GetPeopleSys( FIELDMAP_WORK *p_field );
-static RESORT_DATA_MANAGER * Resort_Scrcmd_GetDataManager( FIELDMAP_WORK *p_field );
-static RESORT_BINARY_CITY *Resort_Scrcmd_GetBinaryCity( FIELDMAP_WORK *p_fieldmap );
-static u16 Resort_Scrcmd_GetMmdlID( FIELDMAP_WORK *p_fieldmap );
+static u16 Resort_Scrcmd_GetMmdlID( FIELDMAP_WORK *p_field );
 static RESORT_NPC_SYS * Resort_Scrcmd_GetNpcSys( FIELDMAP_WORK *p_field );
 static s32 PrmExp_Up( s32 exp, s32 other, s32 up );
 static GMEVENT* EVENT_StartBlendBrightness( GMEVENT* parent, GAMESYS_WORK* gsys, int plane, int now, int next, int sync );
 
 
-extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys );
+extern RESORT_SYSTEM * Resort_Scrcmd_GetSystem( FIELDMAP_WORK *p_field );
+extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_field, RESORT_PEOPLE_SYS *p_people_sys );
 
 //=============================================================================
 /**
@@ -121,10 +118,9 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   u16 param     = VMGetU16( p_core );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(p_gamesys) );
-  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
 
-  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
 
@@ -199,8 +195,12 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
   const u16 heapID = FIELDMAP_GetHeapID( p_field );
-  RESORT_BINARY_CITY *p_binary_city = Resort_Scrcmd_GetBinaryCity( p_field );
-  RESORT_BINARY_SPOT *p_binary_spot = Resort_Scrcmd_GetBinarySpot( p_field );
+
+
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+
+  RESORT_BINARY_SPOT *p_spot = RESORT_SYSTEM_GetBinarySpot( p_sys );
+  RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity( p_sys );
 
   switch( param )
   {
@@ -223,12 +223,12 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
 
           u32 index;
           u32 rnd;
-          index = RESORT_BINARY_CITY_GetIndexByCityLv( p_binary_city, lv );
+          index = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
 
           rnd = GFUser_GetPublicRand(100);
           for( i = 0; i < 3; i++ )
           {
-            u16 percent = RESORT_BINARY_CITY_GetData( p_binary_city, index, RESORT_BINARY_CITY_PARAM_GROUP_00+i );
+            u16 percent = RESORT_BINARY_CITY_GetData( p_city, index, RESORT_BINARY_CITY_PARAM_GROUP_00+i );
             if( percent > rnd )
             {
               break;
@@ -249,9 +249,9 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
           int rnd;
           int j;
           int cnt = 0;
-          for( j = 0; j < RESORT_BINARY_SPOT_GetMax(p_binary_spot); j++ )
+          for( j = 0; j < RESORT_BINARY_SPOT_GetMax(p_spot); j++ )
           {
-            u16 group = RESORT_BINARY_SPOT_GetData( p_binary_spot, j, RESORT_BINARY_SPOT_PARAM_GROUP );
+            u16 group = RESORT_BINARY_SPOT_GetData( p_spot, j, RESORT_BINARY_SPOT_PARAM_GROUP );
             if( group == i )
             {
               cnt++;
@@ -263,14 +263,14 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
           rnd = GFUser_GetPublicRand(cnt);
 
           cnt = 0;
-          for( j = 0; j < RESORT_BINARY_SPOT_GetMax(p_binary_spot); j++ )
+          for( j = 0; j < RESORT_BINARY_SPOT_GetMax(p_spot); j++ )
           {
-            u16 group = RESORT_BINARY_SPOT_GetData( p_binary_spot, j, RESORT_BINARY_SPOT_PARAM_GROUP );
+            u16 group = RESORT_BINARY_SPOT_GetData( p_spot, j, RESORT_BINARY_SPOT_PARAM_GROUP );
             if( group == i )
             {
               if( cnt == rnd )
               {
-                data = RESORT_BINARY_SPOT_GetData( p_binary_spot, j, RESORT_BINARY_SPOT_PARAM_MSG_00 );
+                data = RESORT_BINARY_SPOT_GetData( p_spot, j, RESORT_BINARY_SPOT_PARAM_MSG_00 );
                 RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, data );
                 break;
               }
@@ -322,7 +322,10 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   u16 param  = VMGetU16( p_core );
   u32 peopleID;
-  RESORT_DATA_MANAGER *p_data_manager = Resort_Scrcmd_GetDataManager( p_field );
+
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+
+  RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
 
@@ -355,9 +358,6 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
 
   case RESORT_JOBCHANGE_SECETARY:
     RESORT_DATA_MANAGER_RecvToSecretary( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
-    break;
-  case RESORT_JOBCHANGE_VISITOR:
-    RESORT_DATA_MANAGER_RecvToVisitor( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
     break;
   default:
     GF_ASSERT(0);
@@ -430,12 +430,13 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   u16 param = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 idx   = VMGetU16(p_core);
 
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(p_gamesys) );
-  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_CITY_DATA *p_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
-  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
-  RESORT_BINARY_SHOP *p_shop = Resort_Scrcmd_GetBinaryShop( p_field );
-  RESORT_BINARY_CITY *p_city = Resort_Scrcmd_GetBinaryCity( p_field );
+
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+
+  RESORT_CITY_DATA *p_city_data = RESORT_SYSTEM_GetCityData( p_sys );
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
+  RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
+  RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
 
@@ -643,11 +644,12 @@ VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(p_gamesys) );
-  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
-  RESORT_DATA_MANAGER *p_data_manager = Resort_Scrcmd_GetDataManager( p_field );
+
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
+  RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
+
   u16 type    = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 idx     = SCRCMD_GetVMWorkValue(p_core, p_wk );
 
@@ -735,9 +737,12 @@ VMCMD_RESULT EvCmdResortJobChangeEx( VMHANDLE *p_core, void *p_wk_adrs )
   u16 param = VMGetU16(p_core);
   u16 idx = VMGetU16(p_core);
 
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+
+  RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
+
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
-  RESORT_DATA_MANAGER *p_data_manager = Resort_Scrcmd_GetDataManager( p_field );
 
   switch( param )
   {
@@ -768,9 +773,6 @@ VMCMD_RESULT EvCmdResortJobChangeEx( VMHANDLE *p_core, void *p_wk_adrs )
 
   case RESORT_JOBCHANGE_SECETARY:
     RESORT_DATA_MANAGER_RecvToSecretary( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
-    break;
-  case RESORT_JOBCHANGE_VISITOR:
-    RESORT_DATA_MANAGER_RecvToVisitor( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
     break;
   default:
     GF_ASSERT(0);
@@ -1108,8 +1110,10 @@ VMCMD_RESULT EvCmdResortGetInstitutionData( VMHANDLE *p_core, void *p_wk_adrs )
   u16 param       = VMGetU16( p_core );
   u16 *p_ret_wk   = SCRCMD_GetVMWork( p_core, p_wk );
 
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+
   RESORT_PEOPLE_SYS *p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
-  RESORT_BINARY_SHOP *p_shop = Resort_Scrcmd_GetBinaryShop( p_field );
+  RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
 
   return VMCMD_RESULT_CONTINUE;
@@ -1201,13 +1205,15 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(p_gamesys) );
-  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
-  RESORT_CITY_DATA *p_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
-  RESORT_BINARY_SPOT *p_spot = Resort_Scrcmd_GetBinarySpot( p_field );
-  RESORT_BINARY_SHOP *p_shop = Resort_Scrcmd_GetBinaryShop( p_field );
-  RESORT_BINARY_CITY *p_city = Resort_Scrcmd_GetBinaryCity( p_field );
+
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
+  RESORT_CITY_DATA *p_city_data = RESORT_SYSTEM_GetCityData( p_sys );
+  RESORT_BINARY_SPOT *p_spot = RESORT_SYSTEM_GetBinarySpot( p_sys );
+  RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
+  RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity( p_sys );
+
   WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
   const u16 heapID = FIELDMAP_GetHeapID( p_field );
 
@@ -1867,7 +1873,10 @@ VMCMD_RESULT EvCmdResortGetServiceData( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
-  RESORT_BINARY_SHOP *p_shop = Resort_Scrcmd_GetBinaryShop( p_field );
+
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+  RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
+
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
   void *p_data_adrs = RESORT_PEOPLE_GetDataAdrs( p_people );
@@ -1994,63 +2003,22 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ショップを取得
+ *	@brief  システムを取得
  *
- *	@param	FIELDMAP_WORK *p_fieldmap   フィールド
+ *	@param	FIELDMAP_WORK *p_field   フィールド
  *
- *	@return ショップ
+ *	@return システム
  */
 //-----------------------------------------------------------------------------
-static RESORT_BINARY_SHOP * Resort_Scrcmd_GetBinaryShop( FIELDMAP_WORK *p_fieldmap )
+RESORT_SYSTEM * Resort_Scrcmd_GetSystem( FIELDMAP_WORK *p_field )
 {
-  if( GMK_TMP_CheckAssignID( p_fieldmap, RESORT_FIELD_ASSIGN_ID ) )
+  if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
   {
-    return RESORT_FIELD_GetBinaryShop( p_fieldmap );
+    return RESORT_FIELD_GetResortSys( p_field );
   }
   else
   {
-    return RESORT_RECEPTION_GetBinaryShop( p_fieldmap );
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  アピールを取得
- *
- *	@param	FIELDMAP_WORK *p_fieldmap   フィールド
- *
- *	@return アピール
- */
-//-----------------------------------------------------------------------------
-static RESORT_BINARY_SPOT * Resort_Scrcmd_GetBinarySpot( FIELDMAP_WORK *p_fieldmap )
-{
-  if( GMK_TMP_CheckAssignID( p_fieldmap, RESORT_FIELD_ASSIGN_ID ) )
-  {
-    return RESORT_FIELD_GetBinarySpot( p_fieldmap );
-  }
-  else
-  {
-    return RESORT_RECEPTION_GetBinarySpot( p_fieldmap );
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  街データを取得
- *
- *	@param	FIELDMAP_WORK *p_fieldmap   フィールド
- *
- *	@return 街バイナリデータ
- */
-//-----------------------------------------------------------------------------
-static RESORT_BINARY_CITY *Resort_Scrcmd_GetBinaryCity( FIELDMAP_WORK *p_fieldmap )
-{
-  if( GMK_TMP_CheckAssignID( p_fieldmap, RESORT_FIELD_ASSIGN_ID ) )
-  {
-    return RESORT_FIELD_GetBinaryCity( p_fieldmap );
-  }
-  else
-  {
-    return RESORT_RECEPTION_GetBinaryCity( p_fieldmap );
+    return RESORT_RECEPTION_GetResortSys( p_field );
   }
 }
 
@@ -2078,31 +2046,9 @@ static RESORT_PEOPLE_SYS * Resort_Scrcmd_GetPeopleSys( FIELDMAP_WORK *p_field )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  データマネージャー取得
- *
- *	@param	FIELDMAP_WORK *p_field  フィールド
- *
- *	@return データマネージャーシステム
- */
-//-----------------------------------------------------------------------------
-static RESORT_DATA_MANAGER * Resort_Scrcmd_GetDataManager( FIELDMAP_WORK *p_field )
-{
-  if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
-  {
-    return RESORT_RECEPTION_GetDataManager( p_field );
-  }
-  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
-  {
-    return RESORT_FIELD_GetDataManager( p_field );
-  }
-  GF_ASSERT(0);
-  return NULL;
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  目の前の人物を取得
  *
- *	@param	FIELDMAP_WORK *p_fieldmap フィールド
+ *	@param	FIELDMAP_WORK *p_field フィールド
  *	@param	*p_people_sys             人物システム
  *
  *	@return 目の前の人物を取
@@ -2110,16 +2056,16 @@ static RESORT_DATA_MANAGER * Resort_Scrcmd_GetDataManager( FIELDMAP_WORK *p_fiel
  *	@note   field_event_check.cのgetFrontTalkOBJ関数とほぼ同じことをしています
  */
 //-----------------------------------------------------------------------------
-RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys )
+RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_field, RESORT_PEOPLE_SYS *p_people_sys )
 {
   enum
   {
     FRONT_TALKOBJ_HEIGHT_DIFF =  (FX32_CONST(16)), //話しかけ可能なOBJのY値差分
   };
 
-  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-  FLDMAPPER *p_mapper = FIELDMAP_GetFieldG3Dmapper( p_fieldmap );
+  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_field );
+  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( p_field );
+  FLDMAPPER *p_mapper = FIELDMAP_GetFieldG3Dmapper( p_field );
 
   s16 gx, gy, gz;
   RESORT_PEOPLE *p_people;
@@ -2160,16 +2106,16 @@ RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_
 /**
  *	@brief　目の前の人のMMDLIDを取得
  *
- *	@param	FIELDMAP_WORK *p_fieldmap  フィールドマップ
+ *	@param	FIELDMAP_WORK *p_field  フィールドマップ
  *
  *	@return MMDLID
  */
 //-----------------------------------------------------------------------------
-static u16 Resort_Scrcmd_GetMmdlID( FIELDMAP_WORK *p_fieldmap )
+static u16 Resort_Scrcmd_GetMmdlID( FIELDMAP_WORK *p_field )
 {
   s16 gx, gy, gz;
-  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_field );
+  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( p_field );
   RESORT_PEOPLE *p_people;
   MMDL* p_frontmmdl;
 

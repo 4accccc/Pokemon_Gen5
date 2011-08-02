@@ -96,6 +96,7 @@ typedef struct
 {
   MMDLSYS *p_mmdlsys;                 //動作モデルシステム
   RESORT_DATA_MANAGER *p_data_manager;//データマネージャー
+  RESORT_ABSTRUCT_MANAGER *p_abstruct;//データ抽象
   u32 max;                            //動作上限数
   RESORT_PLACEID placeID;                      //人物管理システムが動く場所
 } RESORT_PEOPLE_SYS_PARAM;
@@ -113,8 +114,7 @@ extern u32 RESORT_PEOPLE_SYS_GetPeopleMax( const RESORT_PEOPLE_SYS *cp_wk );
 //人物を一人登録
 typedef struct
 {
-  RESORT_PEOPLE_TYPE people_type;
-  void *p_data_adrs;
+  RESORT_ABSTRUCT_DATA *p_data;
   RESORT_PLACEID placeID;
 }RESORT_PEOPLE_SYS_ADD_PARAM;
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_AddNew( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param );

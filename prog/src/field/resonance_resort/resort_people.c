@@ -54,8 +54,7 @@ struct _RESORT_PEOPLE
 //=====================================
 typedef struct
 {
-  RESORT_PEOPLE_TYPE people_type;
-  void *p_data_adrs;
+  RESORT_ABSTRUCT_DATA *p_data;
   u16 peopleID;
   RESORT_PLACEID placeID;
   MMDLSYS * p_mmdlsys;
@@ -152,13 +151,13 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
   RESORT_PEOPLE *p_wk = GFL_HEAP_AllocClearMemory(heapID, sizeof(RESORT_PEOPLE));
   p_wk->peopleID    = cp_param->peopleID;
   p_wk->p_mmdlsys   = cp_param->p_mmdlsys;
-  p_wk->p_abstruct_data = RESORT_ABSTRUCT_DATA_Init( heapID, cp_param->p_data_adrs, PeopleTypeToResortDataType( cp_param->people_type ) );
+  p_wk->p_abstruct_data = cp_param->p_data;
+  p_wk->people_type = RESORT_ABSTRUCT_DATA_GetPeopleType( p_wk->p_abstruct_data );
 
   kind = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TYPE, NULL );
-  p_wk->cp_binary   = RESORT_BINARY_SearchData( cp_param->cp_binary, cp_param->people_type, kind );
+  p_wk->cp_binary   = RESORT_BINARY_SearchData( cp_param->cp_binary, p_wk->people_type, kind );
 
-  p_wk->people_type = cp_param->people_type;
-  p_wk->cp_function = &sc_people_function[ cp_param->people_type ];
+  p_wk->cp_function = &sc_people_function[ p_wk->people_type ];
 
   {
     MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
@@ -170,7 +169,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
       header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
       p_wk->cp_function->SetupMmdHeader( p_wk, &header );
 
-      RESORT_MAP_GetPlaceGridPosByIndex( cp_param->placeID, cp_param->people_type, kind, cp_param->peopleID, &grid_x, &grid_z, &dir );
+      RESORT_MAP_GetPlaceGridPosByIndex( cp_param->placeID, p_wk->people_type, kind, cp_param->peopleID, &grid_x, &grid_z, &dir );
       header.dir = dir;
 
       MMDLHEADER_SetGridPos( &header, grid_x, grid_z, 0 );
@@ -194,7 +193,6 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
 //-----------------------------------------------------------------------------
 static void RESORT_PEOPLE_Exit( RESORT_PEOPLE *p_wk )
 {
-  RESORT_ABSTRUCT_DATA_Exit( p_wk->p_abstruct_data );
   GFL_HEAP_FreeMemory( p_wk );
 }
 
@@ -710,6 +708,7 @@ static BOOL Action_JumpEnd( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_pla
     return FALSE;
   }
 }
+
 //=============================================================================
 /**
  *					l•¨ŠÇ—ƒ[ƒN
@@ -822,21 +821,11 @@ void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk )
   {
     if( !RESORT_DATA_MANAGER_IsPlaceEmpty( p_wk->param.p_data_manager, placeID, peopleID ) )
     {
-      void *p_data_adrs;
-      RESORT_DATA_MANAGER_TYPE type;
-      u16 data_idx;
-
-      RESORT_DATA_MANAGER_GetPlaceData( p_wk->param.p_data_manager, placeID, peopleID, &type, &data_idx );
-      p_data_adrs = RESORT_DATA_MANAGER_GetDataAdrs( p_wk->param.p_data_manager, type, data_idx );
-
-      {
-        RESORT_PEOPLE_SYS_ADD_PARAM param;
-        GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
-        param.people_type = RESORT_DATA_MANAGER_GetPeopleType( type );
-        param.p_data_adrs = p_data_adrs;
-        param.placeID     = p_wk->param.placeID;
-        RESORT_PEOPLE_SYS_Add( p_wk, &param, peopleID );
-      }
+      RESORT_PEOPLE_SYS_ADD_PARAM param;
+      GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
+      param.p_data      =  RESORT_DATA_MANAGER_GetAbstructDataByPlace( p_wk->param.p_data_manager, placeID, peopleID );
+      param.placeID     = p_wk->param.placeID;
+      RESORT_PEOPLE_SYS_Add( p_wk, &param, peopleID );
     }
   }
 }
@@ -859,8 +848,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RES
   {
     RESORT_PEOPLE_INIT_PARAM init_param;
     GFL_STD_MemClear( &init_param, sizeof(RESORT_PEOPLE_INIT_PARAM) );
-    init_param.people_type  = cp_param->people_type;
-    init_param.p_data_adrs  = cp_param->p_data_adrs;
+    init_param.p_data       = cp_param->p_data;
     init_param.peopleID     = peopleID;
     init_param.placeID      = cp_param->placeID;
     init_param.cp_binary    = p_wk->p_binary;

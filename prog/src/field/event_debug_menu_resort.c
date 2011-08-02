@@ -95,41 +95,11 @@ static const DEBUG_MENU_INITIALIZER DebugSubMenuData = {
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_MoveField( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MoveReceotion( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveEmbassy( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveInstitution0( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveInstitution1( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveInstitution2( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveInstitution3( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveInstitution4( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveInstitution5( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveInstitution6( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveInstitution7( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveCondominium0( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveCondominium1( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveCondominium2( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveCondominium3( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveCondominium4( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MoveCondominium5( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList_Move[] =
 {
   { DEBUG_FIELD_RESORT_21, debugMenuCallProc_MoveField, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_22, debugMenuCallProc_MoveReceotion, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_23, debugMenuCallProc_MoveEmbassy, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_24, debugMenuCallProc_MoveInstitution0, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_25, debugMenuCallProc_MoveInstitution1, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_26, debugMenuCallProc_MoveInstitution2, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_27, debugMenuCallProc_MoveInstitution3, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_28, debugMenuCallProc_MoveInstitution4, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_29, debugMenuCallProc_MoveInstitution5, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_30, debugMenuCallProc_MoveInstitution6, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_31, debugMenuCallProc_MoveInstitution7, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_32, debugMenuCallProc_MoveCondominium0, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_33, debugMenuCallProc_MoveCondominium1, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_34, debugMenuCallProc_MoveCondominium2, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_35, debugMenuCallProc_MoveCondominium3, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_36, debugMenuCallProc_MoveCondominium4, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_37, debugMenuCallProc_MoveCondominium5, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMenuData_Move = {
@@ -436,112 +406,6 @@ static BOOL debugMenuCallProc_MoveReceotion( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT_ChangeEvent( p_wk->gmEvent, event );
   return TRUE;
 }
-static BOOL debugMenuCallProc_MoveEmbassy( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_EMBASSY );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveInstitution0( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_INSTITUTION_00 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveInstitution1( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_INSTITUTION_01 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveInstitution2( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_INSTITUTION_02 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveInstitution3( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_INSTITUTION_03 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveInstitution4( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_INSTITUTION_04 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveInstitution5( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_INSTITUTION_05 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveInstitution6( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_INSTITUTION_06 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveInstitution7( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_INSTITUTION_07 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveCondominium0( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_CONDOMINIUM_00 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveCondominium1( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_CONDOMINIUM_01 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveCondominium2( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_CONDOMINIUM_02 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveCondominium3( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_CONDOMINIUM_03 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveCondominium4( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_CONDOMINIUM_04 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-static BOOL debugMenuCallProc_MoveCondominium5( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
-                                                p_wk->fieldWork, RESORT_ZONE_ID_CONDOMINIUM_05 );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
-  return TRUE;
-}
-
 static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
@@ -579,7 +443,7 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
     if( RESORT_RESIDENT_DATA_IsEmpty( p_dst ) )
     {
       RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
-      RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, i, RESORT_PLACEID_INSTITUTION_00+i, i );
+      RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, i, RESORT_ZONE_ID_FIELD, i );
     }
   }
 
@@ -817,7 +681,7 @@ static BOOL PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       1,
       RESORT_SHOP_ID_MARKET_00,
       RESORT_RESIDENT_TYPE_MARKET,
-      RESORT_PLACEID_INSTITUTION_00,
+      RESORT_PLACEID_FIELD,
     },
     {
       RESORT_NAME_22,
@@ -826,7 +690,7 @@ static BOOL PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       11,
       RESORT_SHOP_ID_PARLOR_00,
       RESORT_RESIDENT_TYPE_PARLOR,
-      RESORT_PLACEID_INSTITUTION_01,
+      RESORT_PLACEID_FIELD,
     },
     {
       RESORT_NAME_23,
@@ -835,7 +699,7 @@ static BOOL PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       4,
       RESORT_SHOP_ID_BREEDER_00,
       RESORT_RESIDENT_TYPE_BREEDER,
-      RESORT_PLACEID_INSTITUTION_02,
+      RESORT_PLACEID_FIELD,
     },
   };
 
@@ -926,8 +790,7 @@ static BOOL PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
   }
 
   //‚¨“X
-  if( RESORT_PLACEID_INSTITUTION_00 <= sc_presen_data[cnt].placeID 
-    && sc_presen_data[cnt].placeID <= RESORT_PLACEID_INSTITUTION_07 )
+  if( people_type == RESORT_PEOPLE_TYPE_RESIDENT )
   {
 
     RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_recv );

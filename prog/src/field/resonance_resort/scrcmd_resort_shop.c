@@ -270,7 +270,6 @@ static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
 static void string_alloc( SHOP_BUY_APP_WORK *wk );  
 
 static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( FIELDMAP_WORK *p_fieldmap );
-static RESORT_BINARY_SHOP * Resort_Scrcmd_GetBinaryShop( FIELDMAP_WORK *p_fieldmap );
 
 static void ItemList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
 static void SelectPeople_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
@@ -297,6 +296,7 @@ static void InstitutionList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
 
 
 //scrcmd_resort.cのソースを使う
+extern RESORT_SYSTEM * Resort_Scrcmd_GetSystem( FIELDMAP_WORK *p_field );
 extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys );
 
 //--------------------------------------------------------------------
@@ -324,6 +324,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
   void** scr_subproc_work = SCRIPT_SetSubProcWorkPointerAdrs( sc );
   FLDMSGBG *     fldmsg   = FIELDMAP_GetFldMsgBG( fieldmap );
+  RESORT_SYSTEM *resort_sys = Resort_Scrcmd_GetSystem( fieldmap );
 
   // ショップ用ワーク確保
   SHOP_BUY_CALL_WORK* sbw = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(SHOP_BUY_CALL_WORK));
@@ -338,13 +339,8 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.ret_service_param = ret_service_param;
   sbw->wk.ret_service_idx = ret_service_idx;
   sbw->wk.ret_price = ret_price;
-  sbw->wk.p_shop    = Resort_Scrcmd_GetBinaryShop( fieldmap );
-
-  {
-
-    RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork( gamedata) );
-    sbw->wk.p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
-  }
+  sbw->wk.p_shop    = RESORT_SYSTEM_GetBinaryShop( resort_sys );
+  sbw->wk.p_all_people = RESORT_SYSTEM_GetPeopleAllData( resort_sys );
 
   // スクリプトからのパラメータで分岐
   // ここで関数分岐等も行い、実際の処理に分岐を挟まないようにしている
@@ -2808,26 +2804,6 @@ static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( FIELDMAP_WORK *p_fieldm
   }
 
   return Resort_Scrcmd_GetFrontPeople( p_fieldmap, p_people_sys );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  ショップを取得
- *
- *	@param	FIELDMAP_WORK *p_fieldmap   フィールド
- *
- *	@return ショップ
- */
-//-----------------------------------------------------------------------------
-static RESORT_BINARY_SHOP * Resort_Scrcmd_GetBinaryShop( FIELDMAP_WORK *p_fieldmap )
-{
-  if( GMK_TMP_CheckAssignID( p_fieldmap, RESORT_FIELD_ASSIGN_ID ) )
-  {
-    return RESORT_FIELD_GetBinaryShop( p_fieldmap );
-  }
-  else
-  {
-    return RESORT_RECEPTION_GetBinaryShop( p_fieldmap );
-  }
 }
 
 //アイテム・サービスリストの場合

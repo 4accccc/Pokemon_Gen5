@@ -212,15 +212,15 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
   },
   {
     FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
-    RESORT_RECEPTION_Setup, //リゾート迎賓館
-    RESORT_RECEPTION_End, //リゾート迎賓館
-    RESORT_RECEPTION_Move, //リゾート迎賓館
-  },
-  {
-    FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
     RESORT_FIELD_Setup,     //リゾートフィールド
     RESORT_FIELD_End, //リゾートフィールド
     RESORT_FIELD_Move, //リゾートフィールド
+  },
+  {
+    FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
+    RESORT_RECEPTION_Setup, //リゾート迎賓館
+    RESORT_RECEPTION_End, //リゾート迎賓館
+    RESORT_RECEPTION_Move, //リゾート迎賓館
   },
   {
     FS_OVERLAY_ID(infinity_dungeon_gimmick),  // 無限ダンジョン
@@ -233,12 +233,6 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     WBT_GIMMICK_Setup,      // WBT
     WBT_GIMMICK_End,      // WBT
     WBT_GIMMICK_Move,      // WBT
-  },
-  {
-    FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
-    RESORT_FIELD_Setup,     //リゾートフィールド
-    RESORT_FIELD_End, //リゾートフィールド
-    RESORT_FIELD_Move, //リゾートフィールド
   },
   {
     FS_OVERLAY_ID(field_gym_poison),                            //60

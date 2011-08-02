@@ -34,6 +34,7 @@
 #include "resort_npc.h"
 #include "resort_binary.h"
 #include "scrcmd_resort_def.h"
+#include "resort_sys.h"
 
 //mine
 #include "resort_field.h"
@@ -61,7 +62,9 @@ typedef struct _RESORT_FIELD_BUFF RESORT_FIELD_BUFF;
 //=====================================
 typedef struct
 {
-  GAMEDATA* p_gamedata; //ゲームデータ
+  RESORT_RECV_BUFF *p_recv_buff;
+  RESORT_RECV_BUFF *p_recv_tmp_buff;
+  RESORT_PROXY_BUFF *p_proxy_buff;
   void *p_wk_adrs;      //コールバックに与える引数
   void (*UpdateRecvCallback)( void *p_wk_adrs, RESORT_RECV_DATA *p_recv, RESORT_RECV_DATA_UPDATE update ); //データに更新があれば更新間隔ごとに呼ばれる
   void (*UpdateProxyCallback)( void *p_wk_adrs, RESORT_PROXY_DATA *p_proxy ); //データに更新があれば更新間隔ごとに呼ばれる
@@ -71,10 +74,6 @@ typedef struct
 static RESORT_FIELD_BUFF * RESORT_FIELD_BUFF_Init( HEAPID heapID, const RESORT_FIELD_BUFF_INIT_PARAM *cp_param );
 static void RESORT_FIELD_BUFF_Exit( RESORT_FIELD_BUFF *p_wk );
 static void RESORT_FIELD_BUFF_Main( RESORT_FIELD_BUFF *p_wk );
-
-static RESORT_RECV_BUFF * RESORT_FIELD_BUFF_GetRecvSvBuff( RESORT_FIELD_BUFF *p_wk ); 
-static RESORT_RECV_BUFF * RESORT_FIELD_BUFF_GetRecvTmpBuff( RESORT_FIELD_BUFF *p_wk ); 
-static RESORT_PROXY_BUFF * RESORT_FIELD_BUFF_GetProxyBuff( RESORT_FIELD_BUFF *p_wk );
 
 //=============================================================================
 /**
@@ -86,11 +85,10 @@ static RESORT_PROXY_BUFF * RESORT_FIELD_BUFF_GetProxyBuff( RESORT_FIELD_BUFF *p_
 //=====================================
 typedef struct _RESORT_FIELD_PEOPLE RESORT_FIELD_PEOPLE;
 
-static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, FIELDMAP_WORK *p_fieldmap );
+static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYSTEM *p_sys, MMDLSYS *p_mmdlsys );
 static void RESORT_FIELD_PEOPLE_Exit( RESORT_FIELD_PEOPLE *p_wk );
 static void RESORT_FIELD_PEOPLE_Main( RESORT_FIELD_PEOPLE *p_wk, FIELD_PLAYER *p_player );
 static RESORT_PEOPLE_SYS * RESORT_FIELD_PEOPLE_GetPeopleSys( RESORT_FIELD_PEOPLE *p_wk );
-static RESORT_DATA_MANAGER * RESORT_FIELD_PEOPLE_GetDataManager( RESORT_FIELD_PEOPLE *p_wk );
 static void RESORT_FIELD_PEOPLE_Action( RESORT_FIELD_PEOPLE *p_wk, RESORT_PEOPLE *p_people, u16 param );
 
 //=============================================================================
@@ -105,9 +103,7 @@ typedef struct
 {
   RESORT_FIELD_PEOPLE *p_people_sys;
   RESORT_NPC_SYS      *p_npc_sys;
-  RESORT_BINARY_SHOP  *p_binary_shop;
-  RESORT_BINARY_SPOT  *p_binary_spot;
-  RESORT_BINARY_CITY  *p_binary_city;
+  RESORT_SYSTEM       *p_sys;
 } RESORT_FIELD_WORK;
 
 //=============================================================================
@@ -127,14 +123,29 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
 {
   const HEAPID heapID = FIELDMAP_GetHeapID(p_fieldmap);
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork(p_fieldmap) );
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
-  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
 
   //汎用ワーク確保
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID, heapID, sizeof(RESORT_FIELD_WORK));
 
+  //リゾートシステム作成
+  {
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
+    RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
+    void **pp_buff = GAMEDATA_GetResortBuffer( p_gamedata );
+
+    RESORT_ALL_DATA_PARAM param;
+    GFL_STD_MemClear( &param, sizeof(RESORT_ALL_DATA_PARAM) );
+    param.p_all_people    = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort_sv);
+    param.p_recv_sv_buff  = RESONANCE_RESORT_SV_GetDataBuff(p_resort_sv);
+    param.p_recv_tmp_buff = *pp_buff;
+    param.p_proxy_buff    = RESONANCE_RESORT_SV_GetProxyBuff(p_resort_sv);
+    param.p_city_data     = RESONANCE_RESORT_SV_GetCityData(p_resort_sv);
+
+    p_wk->p_sys = RESORT_SYSTEM_Init( &param, heapID );
+  }
+
   //人物システム
-  p_wk->p_people_sys = RESORT_FIELD_PEOPLE_Init( heapID, p_fieldmap );
+  p_wk->p_people_sys = RESORT_FIELD_PEOPLE_Init( heapID, p_wk->p_sys, GAMEDATA_GetMMdlSys(p_gamedata) );
 
   //NPCシステム
   {
@@ -142,16 +153,9 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     GFL_STD_MemClear( &param, sizeof(RESORT_NPC_SYS_PARAM) );
     param.p_mmdlsys = GAMEDATA_GetMMdlSys(p_gamedata);
     param.max   = RESORT_FIELD_NPC_MAX;
-    param.p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+    param.p_city = RESORT_SYSTEM_GetCityData( p_wk->p_sys );
     param.placeID  = RESORT_MAP_ZoneIDToPlaceID( FIELDMAP_GetZoneID(p_fieldmap) );
     p_wk->p_npc_sys = RESORT_NPC_SYS_Init( &param, heapID );
-  }
-
-  //バイナリ情報
-  {
-    p_wk->p_binary_shop = RESORT_BINARY_SHOP_Init( heapID );
-    p_wk->p_binary_spot = RESORT_BINARY_SPOT_Init( heapID );
-    p_wk->p_binary_city = RESORT_BINARY_CITY_Init( heapID );
   }
 
   NAGI_Printf( "レゾナンスsetup\n" );
@@ -168,12 +172,9 @@ void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap )
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
 
 
-  RESORT_BINARY_CITY_Exit( p_wk->p_binary_city );
-  RESORT_BINARY_SPOT_Exit( p_wk->p_binary_spot );
-  RESORT_BINARY_SHOP_Exit( p_wk->p_binary_shop );
   RESORT_NPC_SYS_Exit( p_wk->p_npc_sys );
   RESORT_FIELD_PEOPLE_Exit( p_wk->p_people_sys );
-
+  RESORT_SYSTEM_Exit( p_wk->p_sys );
 
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
@@ -209,64 +210,6 @@ RESORT_PEOPLE_SYS * RESORT_FIELD_GetPeopleSys( FIELDMAP_WORK *p_fieldmap )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  データマネージャーを取得
- *
- *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
- *
- *	@return データマネージャー
- */
-//-----------------------------------------------------------------------------
-RESORT_DATA_MANAGER * RESORT_FIELD_GetDataManager( FIELDMAP_WORK *p_fieldmap )
-{
-  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
-  return RESORT_FIELD_PEOPLE_GetDataManager( p_wk->p_people_sys );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  ショップデータを取得
- *
- *	@param	FIELDMAP_WORK *p_fieldmap   フィールドマップ
- *
- *	@return ショップデータ
- */
-//-----------------------------------------------------------------------------
-RESORT_BINARY_SHOP * RESORT_FIELD_GetBinaryShop( FIELDMAP_WORK *p_fieldmap )
-{
-  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
-  return p_wk->p_binary_shop;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  アピールデータ
- *
- *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
- *
- *	@return アピールデータ
- */
-//-----------------------------------------------------------------------------
-RESORT_BINARY_SPOT * RESORT_FIELD_GetBinarySpot( FIELDMAP_WORK *p_fieldmap )
-{
-  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
-  return p_wk->p_binary_spot;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  街データ取得
- *
- *	@param	FIELDMAP_WORK *p_fieldmap   フィールドマップ
- *
- *	@return 街データ
- */
-//-----------------------------------------------------------------------------
-RESORT_BINARY_CITY * RESORT_FIELD_GetBinaryCity(  FIELDMAP_WORK *p_fieldmap )
-{
-  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
-  return p_wk->p_binary_city;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  NPCシステムを取得
  *
  *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
@@ -278,6 +221,20 @@ RESORT_NPC_SYS * RESORT_FIELD_GetNpcSys( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
   return p_wk->p_npc_sys;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾートシステムを取得
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap   フィールドマップ
+ *
+ *	@return リゾートシステム
+ */
+//-----------------------------------------------------------------------------
+RESORT_SYSTEM * RESORT_FIELD_GetResortSys( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  return p_wk->p_sys;
 }
 
 //=============================================================================
@@ -328,17 +285,13 @@ static RESORT_FIELD_BUFF * RESORT_FIELD_BUFF_Init( HEAPID heapID, const RESORT_F
 
   //セーブからバッファを取得
   {
-    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( cp_param->p_gamedata );
-    RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
-    p_wk->p_sv_buff     = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
-    p_wk->p_proxy_buff  = RESONANCE_RESORT_SV_GetProxyBuff( p_resort_sv );
+    p_wk->p_sv_buff     = cp_param->p_recv_buff;
+    p_wk->p_proxy_buff  = cp_param->p_proxy_buff;
   }
 
   //迎賓館のみ存在する拡張バッファを登録
   {
-    void **pp_buff = GAMEDATA_GetResortBuffer( cp_param->p_gamedata );
-    GF_ASSERT( *pp_buff != NULL );
-    p_wk->p_recep_buff  = *pp_buff;
+    p_wk->p_recep_buff  = cp_param->p_recv_tmp_buff;
     GAMEBEACON_Set_ResortRecvBuffer( p_wk->p_recep_buff );
   }
 
@@ -371,25 +324,6 @@ static void RESORT_FIELD_BUFF_Main( RESORT_FIELD_BUFF *p_wk )
     Reception_Buff_UpdateProxy( p_wk );
     p_wk->update_frame = 0;
   }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  バッファ管理　バッファ取得
- *
- *	@param	RESORT_FIELD_BUFF *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static RESORT_RECV_BUFF * RESORT_FIELD_BUFF_GetRecvSvBuff( RESORT_FIELD_BUFF *p_wk )
-{
-  return p_wk->p_sv_buff;
-}
-static RESORT_RECV_BUFF * RESORT_FIELD_BUFF_GetRecvTmpBuff( RESORT_FIELD_BUFF *p_wk )
-{
-  return p_wk->p_recep_buff;
-}
-static RESORT_PROXY_BUFF * RESORT_FIELD_BUFF_GetProxyBuff( RESORT_FIELD_BUFF *p_wk )
-{
-  return p_wk->p_proxy_buff;
 }
 //----------------------------------------------------------------------------
 /**
@@ -496,7 +430,6 @@ struct _RESORT_FIELD_PEOPLE
   RESORT_PEOPLE_SYS *p_people_sys;
   RESORT_FIELD_BUFF    *p_buff;
   GFL_TCBLSYS       *p_tcblsys;
-  RESORT_DATA_MANAGER *p_data_manager;
 } ;
 
 //-------------------------------------
@@ -512,17 +445,15 @@ static void Reception_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_
  *	@brief  人物管理ワーク作成
  *
  *	@param	HEAPID heapID ヒープID
- *	@param  fieldmap     フィールド	
+ *	@param  fieldmap      フィールド	
+ *	@param  sys           システム
  *
  *	@return 人物管理ワーク
  */
 //-----------------------------------------------------------------------------
-static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, FIELDMAP_WORK *p_fieldmap )
+static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYSTEM *p_sys, MMDLSYS *p_mmdlsys )
 {
   RESORT_FIELD_PEOPLE *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_FIELD_PEOPLE));
-
-  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork(p_fieldmap) );
-
   //TCBL
   p_wk->p_tcblsys = GFL_TCBL_Init( heapID, heapID, RESORT_FIELD_PEOPLE_MAX, sizeof(RESORT_FIELD_PEOPLE_ACT) );
 
@@ -530,28 +461,17 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, FIELDMAP_W
   {
     RESORT_FIELD_BUFF_INIT_PARAM param;
     GFL_STD_MemClear( &param, sizeof( RESORT_FIELD_BUFF_INIT_PARAM ) );
-    param.p_gamedata = p_gamedata;
+    param.p_recv_buff     = RESORT_SYSTEM_GetRecvBuff( p_sys );
+    param.p_recv_tmp_buff = RESORT_SYSTEN_GetRecvTmpBuff( p_sys );
+    param.p_proxy_buff    = RESORT_SYSTEM_GetProxyBuff( p_sys );
     param.p_wk_adrs = p_wk;
     param.UpdateRecvCallback = Reception_People_UpdateRecvCallback;
     param.UpdateProxyCallback = Reception_People_UpdateProxyCallback;
     param.update_interval = RESORT_FIELD_PEOPLE_UPDATE_INTERVAL;
+
+
+    GF_ASSERT( param.p_recv_tmp_buff != NULL );
     p_wk->p_buff = RESORT_FIELD_BUFF_Init( heapID, &param );
-  }
-
-  //データマネージャー
-  {
-    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
-    RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
-
-    RESORT_DATA_MANAGER_INIT_PARAM param;
-    GFL_STD_MemClear( &param, sizeof(RESORT_DATA_MANAGER_INIT_PARAM) );
-    param.p_all_people    = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort_sv);
-    param.p_recv_sv_buff  = RESORT_FIELD_BUFF_GetRecvSvBuff( p_wk->p_buff );
-    param.p_recv_tmp_buff = RESORT_FIELD_BUFF_GetRecvTmpBuff( p_wk->p_buff );
-    param.p_proxy_buff    = RESORT_FIELD_BUFF_GetProxyBuff( p_wk->p_buff );
-    param.p_city_data     = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
-    
-    p_wk->p_data_manager = RESORT_DATA_MANAGER_Init( &param, heapID );
   }
 
   //人物システム
@@ -559,8 +479,9 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, FIELDMAP_W
 
     RESORT_PEOPLE_SYS_PARAM param;
     GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_PARAM) );
-    param.p_mmdlsys = GAMEDATA_GetMMdlSys(p_gamedata);
-    param.p_data_manager = p_wk->p_data_manager;
+    param.p_mmdlsys = p_mmdlsys;
+    param.p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
+    param.p_abstruct  = RESORT_SYSTEM_GetAbstructManager( p_sys );
     param.max = RESORT_FIELD_PEOPLE_MAX;
     param.placeID = RESORT_PLACEID_RECEPTION;
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
@@ -580,7 +501,6 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, FIELDMAP_W
 static void RESORT_FIELD_PEOPLE_Exit( RESORT_FIELD_PEOPLE *p_wk )
 {
   RESORT_PEOPLE_SYS_Exit( p_wk->p_people_sys );
-  RESORT_DATA_MANAGER_Exit( p_wk->p_data_manager );
   RESORT_FIELD_BUFF_Exit( p_wk->p_buff );
   GFL_TCBL_DeleteAll( p_wk->p_tcblsys );
   GFL_TCBL_Exit( p_wk->p_tcblsys );
@@ -611,19 +531,6 @@ static void RESORT_FIELD_PEOPLE_Main( RESORT_FIELD_PEOPLE *p_wk, FIELD_PLAYER *p
 static RESORT_PEOPLE_SYS * RESORT_FIELD_PEOPLE_GetPeopleSys( RESORT_FIELD_PEOPLE *p_wk )
 {
   return p_wk->p_people_sys;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データマネージャーを取得
- *
- *	@param	RESORT_FIELD_PEOPLE *p_wk  ワーク
- *
- *	@return データマネージャー
- */
-//-----------------------------------------------------------------------------
-static RESORT_DATA_MANAGER * RESORT_FIELD_PEOPLE_GetDataManager( RESORT_FIELD_PEOPLE *p_wk )
-{
-  return p_wk->p_data_manager;
 }
 //----------------------------------------------------------------------------
 /**
@@ -675,11 +582,12 @@ static void Reception_People_UpdateRecvCallback( void *p_wk_adrs, RESORT_RECV_DA
   }
   else
   {
+#if 0
     //いないなら人物作成
     RESORT_PEOPLE_SYS_ADD_PARAM param;
     GFL_STD_MemClear(&param,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
 
-    param.people_type = RESORT_PEOPLE_TYPE_TOURIST;
+    //TODO
     param.p_data_adrs = p_recv;
     param.placeID      = RESORT_PLACEID_RECEPTION;
 
@@ -688,6 +596,7 @@ static void Reception_People_UpdateRecvCallback( void *p_wk_adrs, RESORT_RECV_DA
 
     //人物作成したら、上から落下してくるタスクを登録
     Reception_People_CreateEnterTask( p_wk->p_tcblsys, p_people );
+#endif
   }
 }
 //----------------------------------------------------------------------------
@@ -713,6 +622,7 @@ static void Reception_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_
   }
   else
   {
+#if 0
     RESORT_PEOPLE_SYS_ADD_PARAM param;
     GFL_STD_MemClear(&param,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
     param.people_type = RESORT_PEOPLE_TYPE_PROXY;
@@ -722,6 +632,7 @@ static void Reception_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_
 
     //人物作成したら、上から落下してくるタスクを登録
     Reception_People_CreateEnterTask( p_wk->p_tcblsys, p_people );
+#endif
   }
 }
 

@@ -11,8 +11,7 @@
 #pragma once
 #include "field/fieldmap_proc.h"  //for FIELDMAP_WORK
 #include "resort_people.h"
-#include "resort_npc.h"
-#include "resort_data_manager.h"
+#include "resort_sys.h"
 
 //=============================================================================
 /**
@@ -38,9 +37,5 @@ extern void RESORT_RECEPTION_End( FIELDMAP_WORK *p_fieldmap );
 extern void RESORT_RECEPTION_Move( FIELDMAP_WORK *p_fieldmap );
 
 //スクリプトコマンドに使用
-extern void RESORT_RECEPTION_Action( FIELDMAP_WORK *p_fieldmap, u16 param );
 extern RESORT_PEOPLE_SYS * RESORT_RECEPTION_GetPeopleSys( FIELDMAP_WORK *p_fieldmap );
-extern RESORT_DATA_MANAGER * RESORT_RECEPTION_GetDataManager( FIELDMAP_WORK *p_fieldmap );
-extern RESORT_BINARY_SHOP * RESORT_RECEPTION_GetBinaryShop( FIELDMAP_WORK *p_fieldmap );
-extern RESORT_BINARY_SPOT * RESORT_RECEPTION_GetBinarySpot( FIELDMAP_WORK *p_fieldmap );
-extern RESORT_BINARY_CITY * RESORT_RECEPTION_GetBinaryCity( FIELDMAP_WORK *p_fieldmap );
+extern RESORT_SYSTEM * RESORT_RECEPTION_GetResortSys( FIELDMAP_WORK *p_fieldmap );
