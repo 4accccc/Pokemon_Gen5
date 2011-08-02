@@ -343,14 +343,14 @@
         <language name="JPN" width="256">「すきなひとの　ちょうさ」</language>
         <language name="JPN_KANJI" width="256">「好きな人の調査」</language>
       </row><row id="str_topic_5">
-        <language name="JPN" width="256">「みんなの　このみを　ちょうさ」</language>
-        <language name="JPN_KANJI" width="256">「みんなの好みを調査」</language>
+        <language name="JPN" width="256">「みんなの　しょうらいを　ちょうさ」</language>
+        <language name="JPN_KANJI" width="256">「みんなの将来を調査」</language>
       </row><row id="str_topic_6">
         <language name="JPN" width="256">「みんなの　しゅみを　ちょうさ」</language>
         <language name="JPN_KANJI" width="256">「みんなの趣味を調査」</language>
       </row><row id="str_topic_7">
-        <language name="JPN" width="256">「がっこうせいかつを　ちょうさ」</language>
-        <language name="JPN_KANJI" width="256">「学校生活を調査」</language>
+        <language name="JPN" width="256">「もしも……だったら　を　ちょうさ」</language>
+        <language name="JPN_KANJI" width="256">「もしも……だったらを調査」</language>
       </row><row id="str_topic_8">
         <language name="JPN" width="256">「どんな　あそびがすきか　ちょうさ」</language>
         <language name="JPN_KANJI" width="256">「どんな遊びが好きか調査」</language>
@@ -358,9 +358,9 @@
         <language name="JPN" width="256">「ポケモンのことをくわしくちょうさ」</language>
         <language name="JPN_KANJI" width="256">「ポケモンの事を詳しく調査」</language>
       </row><row id="str_topic_0_caption">
-        <language name="JPN" width="256">ポケットモンスターブラック・ホワイトを
+        <language name="JPN" width="256">ブラック２・ホワイト２を
 どのように　あそんでいるか　ちょうさします</language>
-        <language name="JPN_KANJI" width="256">ポケットモンスターブラック・ホワイトを
+        <language name="JPN_KANJI" width="256">ブラック２・ホワイト２を
 どのように遊んでいるか調査します</language>
       </row><row id="str_topic_1_caption">
         <language name="JPN" width="256">じぶんの　まわりには　どんなひとが
@@ -383,24 +383,24 @@
         <language name="JPN_KANJI" width="256">どんな人が好きなのか
 その傾向を調査します</language>
       </row><row id="str_topic_5_caption">
-        <language name="JPN" width="256">みんなが　どんなきせつや　たべものが
-すきなのかを　ちょうさします</language>
-        <language name="JPN_KANJI" width="256">みんながどんな季節や食べ物が
-好きなのかを調査します</language>
+        <language name="JPN" width="256">みんなの　しょうらいの　もくひょうや
+なりたいものを　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">みんなの　将来の目標や
+なりたいものを調査します</language>
       </row><row id="str_topic_6_caption">
         <language name="JPN" width="256">みんなが　どんな　しゅみを
 もっているのか　ちょうさします</language>
         <language name="JPN_KANJI" width="256">みんながどんな趣味を
 持っているのか調査します</language>
       </row><row id="str_topic_7_caption">
-        <language name="JPN" width="256">みんなが　どんな　がっこうせいかつを
-すごしているのか　ちょうさします</language>
-        <language name="JPN_KANJI" width="256">みんながどんな学校生活を
-過ごしているのか調査します</language>
+        <language name="JPN" width="256">もしも……だったら　どうする？
+みんなの　いけんを　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">もしも……だったら　どうする？
+みんなの意見を　調査します</language>
       </row><row id="str_topic_8_caption">
-        <language name="JPN" width="256">みんなが　どんな　あそびや　スポーツが
+        <language name="JPN" width="256">みんなが　どんな　あそびや　ゲームが
 すきなのか　ちょうさします</language>
-        <language name="JPN_KANJI" width="256">みんながどんな遊びやスポーツが
+        <language name="JPN_KANJI" width="256">みんながどんな遊びやゲームが
 好きなのか調査します</language>
       </row><row id="str_topic_9_caption">
         <language name="JPN" width="256">ポケモンに　ついて　みんなのかんそうを
@@ -408,8 +408,8 @@
         <language name="JPN_KANJI" width="256">ポケモンについてみんなの感想を
 詳しく調査します</language>
       </row><row id="str_question_00">
-        <language name="JPN" width="256">・ブラックとホワイト　どっち？</language>
-        <language name="JPN_KANJI" width="256">・ブラックとホワイト　どっち？</language>
+        <language name="JPN" width="256">・ブラック２とホワイト２　どっち？</language>
+        <language name="JPN_KANJI" width="256">・ブラック２とホワイト２　どっち？</language>
       </row><row id="str_question_01">
         <language name="JPN" width="256">・おとこと　おんな　どっち？</language>
         <language name="JPN_KANJI" width="256">・男と女　どっち？</language>
@@ -435,20 +435,20 @@
         <language name="JPN" width="256">・さいしょにえらんだ　ポケモンは？</language>
         <language name="JPN_KANJI" width="256">・最初に選んだポケモンは？</language>
       </row><row id="str_question_09">
-        <language name="JPN" width="256">・あそびにいくなら？</language>
-        <language name="JPN_KANJI" width="256">・遊びに行くなら？</language>
+        <language name="JPN" width="256">・ともだちと　どう　あそぶ？</language>
+        <language name="JPN_KANJI" width="256">・友達と　どう遊ぶ？</language>
       </row><row id="str_question_10">
-        <language name="JPN" width="256">・すきな　がっこうの　じかんは？</language>
-        <language name="JPN_KANJI" width="256">・好きな学校の時間は？</language>
+        <language name="JPN" width="256">・タイムマシンが　あったら？</language>
+        <language name="JPN_KANJI" width="256">・タイムマシンが　あったら？</language>
       </row><row id="str_question_11">
         <language name="JPN" width="256">・じぶんにとって　だいじなのは？</language>
         <language name="JPN_KANJI" width="256">・自分にとって大事なのは？</language>
       </row><row id="str_question_12">
-        <language name="JPN" width="256">・どの　きせつが　すき？</language>
-        <language name="JPN_KANJI" width="256">・どの季節が好き？</language>
+        <language name="JPN" width="256">・どんな　ひとに　なりたい？</language>
+        <language name="JPN_KANJI" width="256">・どんな人になりたい？</language>
       </row><row id="str_question_13">
-        <language name="JPN" width="256">・どんな　たべものが　すき？</language>
-        <language name="JPN_KANJI" width="256">・どんな食べ物が好き？</language>
+        <language name="JPN" width="256">・ゆめを　おう？　げんじつを　みる？</language>
+        <language name="JPN_KANJI" width="256">・夢を追う？　現実を見る？</language>
       </row><row id="str_question_14">
         <language name="JPN" width="256">・すきな　にんげんの　タイプは？</language>
         <language name="JPN_KANJI" width="256">・好きな人間のタイプは？</language>
@@ -456,14 +456,14 @@
         <language name="JPN" width="256">・ポケモンの　おもしろいところは？</language>
         <language name="JPN_KANJI" width="256">・ポケモンの面白いところは？</language>
       </row><row id="str_question_16">
-        <language name="JPN" width="256">・すきな　べんきょうは？</language>
-        <language name="JPN_KANJI" width="256">・好きな勉強は？</language>
+        <language name="JPN" width="256">・どんな　まほうが　ほしい？</language>
+        <language name="JPN_KANJI" width="256">・どんな　魔が欲しい？</language>
       </row><row id="str_question_17">
-        <language name="JPN" width="256">・にがてな　べんきょうは？</language>
-        <language name="JPN_KANJI" width="256">・苦手な勉強は？</language>
+        <language name="JPN" width="256">・おかねもちになったら　どうする？</language>
+        <language name="JPN_KANJI" width="256">・お金持ちになったら　どうする？</language>
       </row><row id="str_question_18">
-        <language name="JPN" width="256">・もし　なれるとしたら？</language>
-        <language name="JPN_KANJI" width="256">・もし　なれるとしたら？</language>
+        <language name="JPN" width="256">・ポケモンを　どれくらいあそんでる？</language>
+        <language name="JPN_KANJI" width="256">・ポケモンを　どれくらい遊んでる？</language>
       </row><row id="str_question_19">
         <language name="JPN" width="256">・きゅうじつは　なにをしてる？</language>
         <language name="JPN_KANJI" width="256">・休日は何をしてる？</language>
@@ -477,11 +477,11 @@
         <language name="JPN" width="256">・どんな　えいがが　すき？</language>
         <language name="JPN_KANJI" width="256">・どんな映画が好き？</language>
       </row><row id="str_question_23">
-        <language name="JPN" width="256">・すきな　スポーツは？</language>
-        <language name="JPN_KANJI" width="256">・好きなスポーツは？</language>
+        <language name="JPN" width="256">・すきな　ゲームは？</language>
+        <language name="JPN_KANJI" width="256">・好きなゲームは？</language>
       </row><row id="str_question_24">
-        <language name="JPN" width="256">・すきないろは　どれ？</language>
-        <language name="JPN_KANJI" width="256">・好きな色はどれ？</language>
+        <language name="JPN" width="256">・がんばりたいことは？</language>
+        <language name="JPN_KANJI" width="256">・がんばりたいことは？</language>
       </row><row id="str_question_25">
         <language name="JPN" width="256">・どんな　しゅみを　もってる？</language>
         <language name="JPN_KANJI" width="256">・どんな趣味をもってる？</language>
@@ -498,9 +498,9 @@
         <language name="JPN" width="256">・ゲームプレイじかんは？</language>
         <language name="JPN_KANJI" width="256">・ゲームプレイ時間は？</language>
       </row><row id="str_question_00_caption">
-        <language name="JPN" width="256">ポケットモンスターブラック・ホワイト
+        <language name="JPN" width="256">ブラック２・ホワイト２
 あそんでいるのは　どっち？　のアンケート</language>
-        <language name="JPN_KANJI" width="256">ポケットモンスターブラック・ホワイト
+        <language name="JPN_KANJI" width="256">ブラック２・ホワイト２
 遊んでいるのは　どっち？　のアンケート</language>
       </row><row id="str_question_01_caption">
         <language name="JPN" width="256">おとこと　おんな　どっちが　おおい？
@@ -543,30 +543,30 @@
         <language name="JPN_KANJI" width="256">旅のはじめに選んだポケモンは　
 どのポケモン？　のアンケート</language>
       </row><row id="str_question_09_caption">
-        <language name="JPN" width="256">きゅうじつに　もしそとに　あそびにいくなら
-どこにする？　をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">休日に　もし外に遊びに行くなら
-どこにする？　を集めたアンケート</language>
+        <language name="JPN" width="256">ともだちと　いっしょに　あそぶときは
+どう　あそびたい？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">友達と　一緒に　遊ぶときは
+どう　遊びたい？　のアンケート</language>
       </row><row id="str_question_10_caption">
-        <language name="JPN" width="256">がっこうせいかつで　いちばんすきなのは
-どのじかん？　をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">学校生活で　一番好きなのは
-どの時間？　を集めたアンケート</language>
+        <language name="JPN" width="256">タイムマシンが　あったら
+どの　じだいに　いきたい？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">タイムマシンが　あったら
+どの　時代に　行きたい？　のアンケート</language>
       </row><row id="str_question_11_caption">
         <language name="JPN" width="256">じぶんにとって　たいせつなのは　かぞく？
 ともだち？　それとも　じぶん？　のアンケート</language>
         <language name="JPN_KANJI" width="256">自分にとって大切なのは家族？友達？
 それとも自分？　のアンケート</language>
       </row><row id="str_question_12_caption">
-        <language name="JPN" width="256">みんなの　すきなきせつは　どのきせつ？
+        <language name="JPN" width="256">しょうらい　どんな　ひとに　なりたい？
 をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">みんなの好きな季節はどの季節？
-を集めた　アンケート</language>
+        <language name="JPN_KANJI" width="256">将来　どんな人になりたい？
+を集めたアンケート</language>
       </row><row id="str_question_13_caption">
-        <language name="JPN" width="256">みんなの　すきなたべものは
-どんな　たべもの？　をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">みんなの好きな食べ物は
-どんな食べ物？　を集めたアンケート</language>
+        <language name="JPN" width="256">ゆめを　おうか　げんじつを　みるか
+もくひょうは　どっち？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">夢を追うか　現実を見るか
+目標は　どっち？　のアンケート</language>
       </row><row id="str_question_14_caption">
         <language name="JPN" width="256">みんなの　すきなひとは
 どんな　タイプのひと？　のアンケート</language>
@@ -578,20 +578,20 @@
         <language name="JPN_KANJI" width="256">ポケットモンスターの　どんな部分が
 面白い？　を集めたアンケート</language>
       </row><row id="str_question_16_caption">
-        <language name="JPN" width="256">がっこうの　べんきょうで　すきなものは？
-をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">学校の勉強で好きなものは？
-を集めたアンケート</language>
+        <language name="JPN" width="256">もしも　まほうが　つかえたら
+どんなことを　したい？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">もしも　魔が　使えたら
+どんなことを　したい？　のアンケート</language>
       </row><row id="str_question_17_caption">
-        <language name="JPN" width="256">がっこうの　べんきょうで　きらいなものは？
-をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">学校の勉強で嫌いなものは？
-を集めたアンケート</language>
+        <language name="JPN" width="256">もし　たくさん　おかねを　もっていたら
+どうする？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">もし　たくさん　お金を　持っていたら
+どうする？　のアンケート</language>
       </row><row id="str_question_18_caption">
-        <language name="JPN" width="256">ポケットモンスターの　せかいで　もし
-なれるなら　なにになりたい？　のアンケート</language>
-        <language name="JPN_KANJI" width="256">ポケットモンスターの世界で　もし
-なれるなら何になりたい？　のアンケート</language>
+        <language name="JPN" width="256">ポケモンシリーズを　どれくらい　ながく
+あそんでいる？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">ポケモンシリーズを　どれくらい長く
+遊んでいる？　を集めた　アンケート</language>
       </row><row id="str_question_19_caption">
         <language name="JPN" width="256">きゅうじつは　どんなことをしている？
 をあつめた　アンケート</language>
@@ -613,15 +613,15 @@
         <language name="JPN_KANJI" width="256">みんなの好きな映画はどんな映画？
 を集めたアンケート</language>
       </row><row id="str_question_23_caption">
-        <language name="JPN" width="256">みんなの　すきな　スポーツは
-どんな　スポーツ？　をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">みんなの好きなスポーツはどんなスポーツ？
+        <language name="JPN" width="256">みんなの　すきな　ゲームは
+どんな　ジャンル？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">みんなの好きなゲームはどんなジャンル？
 を集めたアンケート</language>
       </row><row id="str_question_24_caption">
-        <language name="JPN" width="256">このなかで　えらぶなら　どのいろが　すき？
-をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">この中で選ぶなら　どの色が好き？
-を集めたアンケート</language>
+        <language name="JPN" width="256">しょうらい　いちばん　ちからをいれて
+がんばりたいことは　なに？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">将来　一番　力を入れて
+がんばりたいことは　何？　のアンケート</language>
       </row><row id="str_question_25_caption">
         <language name="JPN" width="256">みんなは　どんなことを　しゅみにしている？
 をあつめた　アンケート</language>
@@ -633,9 +633,9 @@
         <language name="JPN_KANJI" width="256">みんなはどんな事を仕事にしている？
 を集めたアンケート</language>
       </row><row id="str_question_27_caption">
-        <language name="JPN" width="256">ポケットモンスターブラック・ホワイトで
+        <language name="JPN" width="256">ブラック２・ホワイト２で
 どのジムリーダーがすき？　のアンケート</language>
-        <language name="JPN_KANJI" width="256">ポケットモンスターブラック・ホワイトで
+        <language name="JPN_KANJI" width="256">ブラック２・ホワイト２で
 どのジムリーダーが好き？　のアンケート</language>
       </row><row id="str_question_28_caption">
         <language name="JPN" width="256">ポケモンの　どのタイプが　すき？
@@ -643,9 +643,9 @@
         <language name="JPN_KANJI" width="256">ポケモンの　どのタイプが好き？
 を集めたアンケート</language>
       </row><row id="str_question_29_caption">
-        <language name="JPN" width="256">ポケットモンスターブラック・ホワイトで
+        <language name="JPN" width="256">ブラック２・ホワイト２で
 あそんだじかんを　あつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">ポケットモンスターブラック・ホワイトで
+        <language name="JPN_KANJI" width="256">ブラック２・ホワイト２で
 遊んだ時間を　集めたアンケート</language>
       </row>
 

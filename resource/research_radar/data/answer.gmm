@@ -331,11 +331,11 @@
         <language name="JPN" width="256">むかいとう</language>
         <language name="JPN_KANJI" width="256">無回答</language>
       </row><row id="answer_1">
-        <language name="JPN" width="256">ブラック</language>
-        <language name="JPN_KANJI" width="256">ブラック</language>
+        <language name="JPN" width="256">ブラック２</language>
+        <language name="JPN_KANJI" width="256">ブラック２</language>
       </row><row id="answer_2">
-        <language name="JPN" width="256">ホワイト</language>
-        <language name="JPN_KANJI" width="256">ホワイト</language>
+        <language name="JPN" width="256">ホワイト２</language>
+        <language name="JPN_KANJI" width="256">ホワイト２</language>
       </row><row id="answer_3">
         <language name="JPN" width="256">おとこ</language>
         <language name="JPN_KANJI" width="256">男</language>
@@ -391,23 +391,23 @@
         <language name="JPN" width="256">ツタージャ</language>
         <language name="JPN_KANJI" width="256">ツタージャ</language>
       </row><row id="answer_21">
-        <language name="JPN" width="256">うみ</language>
-        <language name="JPN_KANJI" width="256">海</language>
+        <language name="JPN" width="256">きょうそう</language>
+        <language name="JPN_KANJI" width="256">競争</language>
       </row><row id="answer_22">
-        <language name="JPN" width="256">かわ</language>
-        <language name="JPN_KANJI" width="256">川</language>
+        <language name="JPN" width="256">きょうりょく</language>
+        <language name="JPN_KANJI" width="256">協力</language>
       </row><row id="answer_23">
-        <language name="JPN" width="256">やま</language>
-        <language name="JPN_KANJI" width="256">山</language>
+        <language name="JPN" width="256">ー</language>
+        <language name="JPN_KANJI" width="256">ー</language>
       </row><row id="answer_24">
-        <language name="JPN" width="256">じゅぎょう</language>
-        <language name="JPN_KANJI" width="256">授業</language>
+        <language name="JPN" width="256">かこにいく</language>
+        <language name="JPN_KANJI" width="256">過去に行く</language>
       </row><row id="answer_25">
-        <language name="JPN" width="256">やすみじかん</language>
-        <language name="JPN_KANJI" width="256">休み時間</language>
+        <language name="JPN" width="256">みらいにいく</language>
+        <language name="JPN_KANJI" width="256">未来に行く</language>
       </row><row id="answer_26">
-        <language name="JPN" width="256">きゅうしょく</language>
-        <language name="JPN_KANJI" width="256">給食</language>
+        <language name="JPN" width="256">ひつようない</language>
+        <language name="JPN_KANJI" width="256">必要ない</language>
       </row><row id="answer_27">
         <language name="JPN" width="256">かぞく</language>
         <language name="JPN_KANJI" width="256">家族</language>
@@ -418,29 +418,29 @@
         <language name="JPN" width="256">じぶん</language>
         <language name="JPN_KANJI" width="256">自分</language>
       </row><row id="answer_30">
-        <language name="JPN" width="256">はる</language>
-        <language name="JPN_KANJI" width="256">春</language>
+        <language name="JPN" width="256">かっこいいひと</language>
+        <language name="JPN_KANJI" width="256">かっこいい人</language>
       </row><row id="answer_31">
-        <language name="JPN" width="256">なつ</language>
-        <language name="JPN_KANJI" width="256">夏</language>
+        <language name="JPN" width="256">かしこいひと</language>
+        <language name="JPN_KANJI" width="256">賢い人</language>
       </row><row id="answer_32">
-        <language name="JPN" width="256">あき</language>
-        <language name="JPN_KANJI" width="256">秋</language>
+        <language name="JPN" width="256">おもしろいひと</language>
+        <language name="JPN_KANJI" width="256">面白い人</language>
       </row><row id="answer_33">
-        <language name="JPN" width="256">ふゆ</language>
-        <language name="JPN_KANJI" width="256">冬</language>
+        <language name="JPN" width="256">ふしぎなひと</language>
+        <language name="JPN_KANJI" width="256">不思議な人</language>
       </row><row id="answer_34">
-        <language name="JPN" width="256">あまい</language>
-        <language name="JPN_KANJI" width="256">甘い</language>
+        <language name="JPN" width="256">ゆめをおう</language>
+        <language name="JPN_KANJI" width="256">夢を追う</language>
       </row><row id="answer_35">
-        <language name="JPN" width="256">からい</language>
-        <language name="JPN_KANJI" width="256">辛い</language>
+        <language name="JPN" width="256">げんじつをみる</language>
+        <language name="JPN_KANJI" width="256">現実を見る</language>
       </row><row id="answer_36">
-        <language name="JPN" width="256">すっぱい</language>
-        <language name="JPN_KANJI" width="256">酸っぱい</language>
+        <language name="JPN" width="256">ー</language>
+        <language name="JPN_KANJI" width="256">ー</language>
       </row><row id="answer_37">
-        <language name="JPN" width="256">にがい</language>
-        <language name="JPN_KANJI" width="256">苦い</language>
+        <language name="JPN" width="256">ー</language>
+        <language name="JPN_KANJI" width="256">ー</language>
       </row><row id="answer_38">
         <language name="JPN" width="256">おもしろい</language>
         <language name="JPN_KANJI" width="256">面白い</language>
@@ -466,41 +466,41 @@
         <language name="JPN" width="256">ポケモン</language>
         <language name="JPN_KANJI" width="256">ポケモン</language>
       </row><row id="answer_46">
-        <language name="JPN" width="256">こくご</language>
-        <language name="JPN_KANJI" width="256">国語</language>
+        <language name="JPN" width="256">そらをとぶ</language>
+        <language name="JPN_KANJI" width="256">空を飛ぶ</language>
       </row><row id="answer_47">
-        <language name="JPN" width="256">さんすう</language>
-        <language name="JPN_KANJI" width="256">算数</language>
+        <language name="JPN" width="256">とうめいになる</language>
+        <language name="JPN_KANJI" width="256">透明になる</language>
       </row><row id="answer_48">
-        <language name="JPN" width="256">りか</language>
-        <language name="JPN_KANJI" width="256">理科</language>
+        <language name="JPN" width="256">じかんをとめる</language>
+        <language name="JPN_KANJI" width="256">時間を止める</language>
       </row><row id="answer_49">
-        <language name="JPN" width="256">しゃかい</language>
-        <language name="JPN_KANJI" width="256">社会</language>
+        <language name="JPN" width="256">こころをよむ</language>
+        <language name="JPN_KANJI" width="256">心を読む</language>
       </row><row id="answer_50">
-        <language name="JPN" width="256">こくご</language>
-        <language name="JPN_KANJI" width="256">国語</language>
+        <language name="JPN" width="256">つかう</language>
+        <language name="JPN_KANJI" width="256">使う</language>
       </row><row id="answer_51">
-        <language name="JPN" width="256">さんすう</language>
-        <language name="JPN_KANJI" width="256">算数</language>
+        <language name="JPN" width="256">ためる</language>
+        <language name="JPN_KANJI" width="256">貯める</language>
       </row><row id="answer_52">
-        <language name="JPN" width="256">りか</language>
-        <language name="JPN_KANJI" width="256">理科</language>
+        <language name="JPN" width="256">じまんする</language>
+        <language name="JPN_KANJI" width="256">自慢する</language>
       </row><row id="answer_53">
-        <language name="JPN" width="256">しゃかい</language>
-        <language name="JPN_KANJI" width="256">社会</language>
+        <language name="JPN" width="256">きふする</language>
+        <language name="JPN_KANJI" width="256">寄付する</language>
       </row><row id="answer_54">
-        <language name="JPN" width="256">トレーナー</language>
-        <language name="JPN_KANJI" width="256">トレーナー</language>
+        <language name="JPN" width="256">０ー５ねん</language>
+        <language name="JPN_KANJI" width="256">０ー５ねん</language>
       </row><row id="answer_55">
-        <language name="JPN" width="256">ポケモンはかせ</language>
-        <language name="JPN_KANJI" width="256">ポケモン博士</language>
+        <language name="JPN" width="256">５ー１０ねん</language>
+        <language name="JPN_KANJI" width="256">５ー１０ねん</language>
       </row><row id="answer_56">
-        <language name="JPN" width="256">プラズマだん</language>
-        <language name="JPN_KANJI" width="256">プラズマ団</language>
+        <language name="JPN" width="256">１０ー１５ねん</language>
+        <language name="JPN_KANJI" width="256">１０ー１５ねん</language>
       </row><row id="answer_57">
-        <language name="JPN" width="256">ポケモン</language>
-        <language name="JPN_KANJI" width="256">ポケモン</language>
+        <language name="JPN" width="256">１５ねんー</language>
+        <language name="JPN_KANJI" width="256">１５ねんー</language>
       </row><row id="answer_58">
         <language name="JPN" width="256">そとであそぶ</language>
         <language name="JPN_KANJI" width="256">外で遊ぶ</language>
@@ -565,41 +565,41 @@
         <language name="JPN" width="256">ホラー</language>
         <language name="JPN_KANJI" width="256">ホラー</language>
       </row><row id="answer_79">
-        <language name="JPN" width="256">やきゅう</language>
-        <language name="JPN_KANJI" width="256">野球</language>
+        <language name="JPN" width="256">アクション</language>
+        <language name="JPN_KANJI" width="256">アクション</language>
       </row><row id="answer_80">
-        <language name="JPN" width="256">サッカー</language>
-        <language name="JPN_KANJI" width="256">サッカー</language>
+        <language name="JPN" width="256">パズル</language>
+        <language name="JPN_KANJI" width="256">パズル</language>
       </row><row id="answer_81">
-        <language name="JPN" width="256">バスケ</language>
-        <language name="JPN_KANJI" width="256">バスケ</language>
+        <language name="JPN" width="256">ＲＰＧ</language>
+        <language name="JPN_KANJI" width="256">ＲＰＧ</language>
       </row><row id="answer_82">
-        <language name="JPN" width="256">アメフト</language>
-        <language name="JPN_KANJI" width="256">アメフト</language>
+        <language name="JPN" width="256">アドベンチャー</language>
+        <language name="JPN_KANJI" width="256">アドベンチャー</language>
       </row><row id="answer_83">
-        <language name="JPN" width="256">ホッケー</language>
-        <language name="JPN_KANJI" width="256">ホッケー</language>
+        <language name="JPN" width="256">シミュレーション</language>
+        <language name="JPN_KANJI" width="256">シミュレーション</language>
       </row><row id="answer_84">
-        <language name="JPN" width="256">かくとうぎ</language>
-        <language name="JPN_KANJI" width="256">格闘技</language>
+        <language name="JPN" width="256">スポーツ</language>
+        <language name="JPN_KANJI" width="256">スポーツ</language>
       </row><row id="answer_85">
-        <language name="JPN" width="256">あか</language>
-        <language name="JPN_KANJI" width="256">赤</language>
+        <language name="JPN" width="256">しごと</language>
+        <language name="JPN_KANJI" width="256">仕事</language>
       </row><row id="answer_86">
-        <language name="JPN" width="256">みどり</language>
-        <language name="JPN_KANJI" width="256">緑</language>
+        <language name="JPN" width="256">ひとづきあい</language>
+        <language name="JPN_KANJI" width="256">人付き合い</language>
       </row><row id="answer_87">
-        <language name="JPN" width="256">あお</language>
-        <language name="JPN_KANJI" width="256">青</language>
+        <language name="JPN" width="256">しゅみ</language>
+        <language name="JPN_KANJI" width="256">趣味</language>
       </row><row id="answer_88">
-        <language name="JPN" width="256">きいろ</language>
-        <language name="JPN_KANJI" width="256">黄色</language>
+        <language name="JPN" width="256">けんこう</language>
+        <language name="JPN_KANJI" width="256">健康</language>
       </row><row id="answer_89">
-        <language name="JPN" width="256">しろ</language>
-        <language name="JPN_KANJI" width="256">白</language>
+        <language name="JPN" width="256">えらくなる</language>
+        <language name="JPN_KANJI" width="256">偉くなる</language>
       </row><row id="answer_90">
-        <language name="JPN" width="256">くろ</language>
-        <language name="JPN_KANJI" width="256">黒</language>
+        <language name="JPN" width="256">ー</language>
+        <language name="JPN_KANJI" width="256">ー</language>
       </row><row id="answer_91">
         <language name="JPN" width="256">うんどう</language>
         <language name="JPN_KANJI" width="256">運動</language>
@@ -649,38 +649,38 @@
         <language name="JPN" width="256">フリーター</language>
         <language name="JPN_KANJI" width="256">フリーター</language>
       </row><row id="answer_107">
-        <language name="JPN" width="256">ポッド</language>
-        <language name="JPN_KANJI" width="256">ポッド</language>
+        <language name="JPN" width="256">チェレン</language>
+        <language name="JPN_KANJI" width="256">チェレン</language>
       </row><row id="answer_108">
-        <language name="JPN" width="256">デント</language>
-        <language name="JPN_KANJI" width="256">デント</language>
+        <language name="JPN" width="256">ホミカ</language>
+        <language name="JPN_KANJI" width="256">ホミカ</language>
       </row><row id="answer_109">
-        <language name="JPN" width="256">コーン</language>
-        <language name="JPN_KANJI" width="256">コーン</language>
-      </row><row id="answer_110">
-        <language name="JPN" width="256">アロエ</language>
-        <language name="JPN_KANJI" width="256">アロエ</language>
-      </row><row id="answer_111">
         <language name="JPN" width="256">アーティ</language>
         <language name="JPN_KANJI" width="256">アーティ</language>
-      </row><row id="answer_112">
+      </row><row id="answer_110">
         <language name="JPN" width="256">カミツレ</language>
         <language name="JPN_KANJI" width="256">カミツレ</language>
-      </row><row id="answer_113">
+      </row><row id="answer_111">
         <language name="JPN" width="256">ヤーコン</language>
         <language name="JPN_KANJI" width="256">ヤーコン</language>
-      </row><row id="answer_114">
+      </row><row id="answer_112">
         <language name="JPN" width="256">フウロ</language>
         <language name="JPN_KANJI" width="256">フウロ</language>
-      </row><row id="answer_115">
-        <language name="JPN" width="256">ハチク</language>
-        <language name="JPN_KANJI" width="256">ハチク</language>
-      </row><row id="answer_116">
-        <language name="JPN" width="256">アイリス</language>
-        <language name="JPN_KANJI" width="256">アイリス</language>
-      </row><row id="answer_117">
+      </row><row id="answer_113">
         <language name="JPN" width="256">シャガ</language>
         <language name="JPN_KANJI" width="256">シャガ</language>
+      </row><row id="answer_114">
+        <language name="JPN" width="256">シズイ</language>
+        <language name="JPN_KANJI" width="256">シズイ</language>
+      </row><row id="answer_115">
+        <language name="JPN" width="256">ー</language>
+        <language name="JPN_KANJI" width="256">ー</language>
+      </row><row id="answer_116">
+        <language name="JPN" width="256">ー</language>
+        <language name="JPN_KANJI" width="256">ー</language>
+      </row><row id="answer_117">
+        <language name="JPN" width="256">ー</language>
+        <language name="JPN_KANJI" width="256">ー</language>
       </row><row id="answer_118">
         <language name="JPN" width="256">ノーマル</language>
         <language name="JPN_KANJI" width="256">ノーマル</language>

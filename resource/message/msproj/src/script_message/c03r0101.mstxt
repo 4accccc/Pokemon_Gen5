@@ -1596,10 +1596,10 @@ assistantm_01_06へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラックと　ホワイト　おおいのは？</Text>
+			<Text>ブラック２と　ホワイト２　おおいのは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1607,10 +1607,10 @@ assistantm_01_06へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラックと　ホワイト　多いのは？</Text>
+			<Text>ブラック２と　ホワイト２　多いのは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:25:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1621,12 +1621,14 @@ assistantm_01_06へ続く
 			<Comment>・選択肢
 依頼を受けるときに経由
 
-『ブラックと　ホワイト　おおいのは？』　
+『ブラック２と　ホワイト２　おおいのは？』　
 時間調査　⇒　assistantm_01_13a
-人数調査　⇒　assistantm_01_14a</Comment>
+人数調査　⇒　assistantm_01_14a
+
+※以降、赤いBackColorはＳＷＡＮで変更したもの</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:52:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1644,7 +1646,7 @@ assistantm_01_06へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2304,10 +2306,10 @@ assistantm_01_06へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きせつに　ついて</Text>
+			<Text>しょうらいに　ついて</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:27:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2315,10 +2317,10 @@ assistantm_01_06へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>季節に　ついて</Text>
+			<Text>将来に　ついて</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:27:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2352,7 +2354,7 @@ assistantm_01_06へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2363,10 +2365,10 @@ assistantm_01_06へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げいじゅつに　ついて</Text>
+			<Text>きょうかん　される　うたは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:27:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2374,10 +2376,10 @@ assistantm_01_06へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>芸術に　ついて</Text>
+			<Text>共感される　歌は？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:27:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2411,7 +2413,7 @@ assistantm_01_06へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2540,10 +2542,10 @@ assistantm_01_06へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いちばん　すきな　がっこうの　じかんは？</Text>
+			<Text>タイムマシンが　あったら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2551,10 +2553,10 @@ assistantm_01_06へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１番　好きな　学校の　時間は？</Text>
+			<Text>タイムマシンが　あったら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2588,7 +2590,7 @@ assistantm_01_06へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2599,10 +2601,10 @@ assistantm_01_06へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>べんきょうに　ついて</Text>
+			<Text>もしも……だったら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:13:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2610,10 +2612,10 @@ assistantm_01_06へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勉強に　ついて</Text>
+			<Text>もしも……だったら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:13:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2647,7 +2649,7 @@ assistantm_01_06へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2658,10 +2660,10 @@ assistantm_01_06へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いちばん　にんきの　スポーツは？</Text>
+			<Text>いちばん　にんきの　ゲームは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:28:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2669,10 +2671,10 @@ assistantm_01_06へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１番　人気の　スポーツは？</Text>
+			<Text>１番　人気の　ゲームは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:28:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2706,7 +2708,7 @@ assistantm_01_06へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2776,10 +2778,10 @@ assistantm_01_06へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いちばん　なりたいものは？</Text>
+			<Text>ポケモンを　どれくらい　あそんでる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:25:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2787,10 +2789,10 @@ assistantm_01_06へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１番　なりたいものは？</Text>
+			<Text>ポケモンを　どれくらい　遊んでる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:25:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2824,7 +2826,7 @@ assistantm_01_06へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3013,15 +3015,15 @@ assistantm_01_06へ続く
 			<Text>この　ちょうさは……▼
 わたし　からの　いらいだな▼
 ２じかん　いじょう　ちょうさして
-ブラックと　ホワイト▽
+ブラック２と　ホワイト２▽
 どちらが　おおいかを▽
 しらべてくる　ちょうさだ▼
 わたしも　ポケモンを
 はじめようと　おもってね▽
 にんきのあるほうを　しりたいんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:31:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3032,15 +3034,15 @@ assistantm_01_06へ続く
 			<Text>この調査は……▼
 わたし　からの　依頼だな▼
 ２時間　以上　調査して
-ブラックと　ホワイト▽
+ブラック２と　ホワイト２▽
 どちらが　多いかを▽
 調べてくる　調査だ▼
 わたしも　ポケモンを
 はじめようと　思ってね▽
 人気のあるほうを　知りたいんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:31:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3051,7 +3053,7 @@ assistantm_01_06へ続く
 			<Comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『じかんちょうさ』を選択し、
-『ブラックと　ホワイト　おおいのは？』を選択
+『ブラック２と　ホワイト２　おおいのは？』を選択
 
 初期から選択可能
 
@@ -3059,8 +3061,8 @@ assistantm_01_15へ続く
 
 ※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:31:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3079,7 +3081,7 @@ assistantm_01_15へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3974,16 +3976,18 @@ assistantm_01_15へ続く
 			<Text>この　ちょうさは……▼
 わたし　からの　いらいだな▼
 １２じかん　いじょう　ちょうさして
-いちばん　すきな　きせつと▽
-いちばん　すきな　たべものを▽
+どんなひとに　なりたいかと▽
+ゆめをおうか　げんじつをみるか　を▽
 しらべてくる　ちょうさだ▼
-きせつに　あわせて　おいしいものを
-ごちそう　したいだろう？▼
-だれに？
-それは　ひみつだ！▼</Text>
+わたしも　そろそろ
+しょうらいを　みすえて▽
+じんせいせっけいを▽
+しなければな……▼
+おとなになると
+いろいろ　あるんだよ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3994,16 +3998,17 @@ assistantm_01_15へ続く
 			<Text>この調査は……▼
 わたし　からの　依頼だな▼
 １２時間　以上　調査して
-１番　好きな　季節と▽
-１番　好きな　食べ物を▽
+どんな人に　なりたいかと▽
+夢を追うか　現実を見るか　を▽
 調べてくる　調査だ▼
-季節に　あわせて　美味しいものを
-ごちそう　したいだろう？▼
-だれに？
-それは　秘密だ！▼</Text>
+わたしも　そろそろ
+将来を　見据えて▽
+人生設計を　しなければな……▼
+大人になると
+いろいろ　あるんだよ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:32:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4042,7 +4047,7 @@ assistantm_01_15へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4054,17 +4059,20 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ちょうさは……▼
-とある　げいじゅつか　からの
+とある　さくしか　からの
 いらいだな▼
 １２じかん　いじょう　ちょうさして
-いちばん　すきな　いろと▽
+しょうらい　がんばりたい　ことと▽
 いちばん　すきな　おんがくを▽
 しらべてくる　ちょうさだ▼
-ちょうさの　けっかを
-さくひんに　やくだてたいそうだ▼</Text>
+おおぜいが　きょうかん　できる
+うたを　つくりたいので▽
+みんなの　もくひょうと▽
+おんがくの　しゅみを▽
+さんこうに　さくし　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:33:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4073,16 +4081,18 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　芸術家　からの　依頼だな▼
+とある　作詞家　からの　依頼だな▼
 １２時間　以上　調査して
-１番　好きな　色と▽
+将来　がんばりたい　ことと▽
 １番　好きな　音楽を▽
 調べてくる　調査だ▼
-調査の　結果を
-作品に　役立てたいそうだ▼</Text>
+大勢が　共感できる
+歌を　作りたいので▽
+みんなの　目標と　音楽の　趣味を▽
+参考に　作詞　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:34:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4121,7 +4131,7 @@ assistantm_01_15へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4290,15 +4300,18 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ちょうさは……▼
-とある　がくせい　からの　いらいだな▼
+とある　えいがかんとく　からの
+いらいだな▼
 １６じかん　いじょう　ちょうさして
-いちばん　すきな　がっこうの　じかんを▽
+タイムマシンが　あったら▽
+かこに　いきたいか▽
+みらいに　いきたいかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
-がっこうせいかつに　やくだてたいそうだ▼</Text>
+シナリオに　やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:35:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4307,15 +4320,17 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　学生　からの　依頼だな▼
+とある　映画監督　からの　依頼だな▼
 １６時間　以上　調査して
-１番　好きな　学校の　時間を▽
+タイムマシンが　あったら
+過去に　行きたいか
+未来に　生きたいかを
 調べてくる　調査だ▼
 調査の　結果を
-学校生活に　役立てたいそうだ▼</Text>
+シナリオに　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:36:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4354,7 +4369,7 @@ assistantm_01_15へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4366,17 +4381,19 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ちょうさは……▼
-とある　せんせい　からの
+とある　マンガか　からの
 いらいだな▼
 １６じかん　いじょう　ちょうさして
-いちばん　すきな　べんきょうと▽
-いちばん　にがてな　べんきょうを▽
+もしも　まほうが　つかえたら▽
+どんなことを　したいかと▽
+もしも　おかねもちに　なったら▽
+どうしたいかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
-じゅぎょうに　やくだてたいそうだ▼</Text>
+ものがたりに　やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:19:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4385,16 +4402,18 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　先生　からの　依頼だな▼
+とある　マンガ家　からの　依頼だな▼
 １６時間　以上　調査して
-１番　好きな　勉強と▽
-１番　苦手な　勉強を▽
+もしも　魔法が　使えたら▽
+どんなことを　したいかと▽
+もしも　お金持ちに　なったら
+どうしたいかを▽
 調べてくる　調査だ▼
 調査の　結果を
-授業に　役立てたいそうだ▼</Text>
+物語に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:19:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4433,7 +4452,7 @@ assistantm_01_15へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4445,16 +4464,16 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ちょうさは……▼
-とある　スポーツせんしゅ　からの
+とある　ゲームがいしゃ　からの
 いらい　だな▼
 ２０じかん　いじょう　ちょうさして
-いちばん　にんきのある　スポーツを▽
+いちばん　にんきのある　ゲームを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
-しあいに　やくだてたいそうだ▼</Text>
+ゲームせいさくに　やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4463,16 +4482,16 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　スポーツ選手　からの
+とある　ゲーム会社　からの
 依頼だな▼
 ２０時間　以上　調査して
-１番　人気のある　スポーツを▽
+１番　人気のある　ゲームを▽
 調べてくる　調査だ▼
 調査の　結果を
-試合に　役立てたいそうだ▼</Text>
+ゲーム製作に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4511,7 +4530,7 @@ assistantm_01_15へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4527,15 +4546,16 @@ assistantm_01_15へ続く
 ２０じかん　いじょう　ちょうさして
 いちばん　にんきのある▽
 きゅうじつの　すごしかたと▼
-いちばん　にんきのある　あそびばを
+ともだちと　どうあそぶのが
+にんき　なのかを▽
 しらべてくる　ちょうさだ▼
 じつは　つぎの　しゅうまつに
-デートの　よていでな▼
-はやりの　ばしょを
-しらべておきたいんだ▼</Text>
+ともだちと　あう　よていでな▼
+いつもとは　ひとあじ　ちがう
+きゅうじつに　したいんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:39:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4547,15 +4567,15 @@ assistantm_01_15へ続く
 わたし　からの　依頼だな▼
 ２０時間　以上　調査して
 １番　人気のある　休日の　過ごし方と▽
-１番　人気のある　遊び場を▽
+友達と　どう遊ぶのが　人気かを▽
 調べてくる　調査だ▼
 じつは　次の　週末に
-デートの　予定でな▼
-流行の　場所を
-調べておきたいんだ▼</Text>
+友達と　会う　予定でな▼
+いつもとは　一味　違う
+休日に　したいんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4594,7 +4614,7 @@ assistantm_01_15へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4609,14 +4629,15 @@ assistantm_01_15へ続く
 とある　ポケモンファン　からの
 いらい　だな▼
 ２０じかん　いじょう　ちょうさして
-いちばん　なりたいものを▽
+ポケモンシリーズを　どれくらい▽
+ながく　あそんでいるかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 ポケモンの　せんでんに▽
 やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:40:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4628,13 +4649,14 @@ assistantm_01_15へ続く
 とある　ポケモンファン　からの
 依頼だな▼
 ２０時間　以上　調査して
-１番　なりたいものを▽
+ポケモンシリーズを　どれくらい▽
+長く　遊んでいるかを
 調べてくる　調査だ▼
 調査の　結果を　ポケモンの
 宣伝に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:40:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4673,7 +4695,7 @@ assistantm_01_15へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4924,15 +4946,15 @@ assistantm_01_23○へ続く
 			<Text>この　ちょうさは……▼
 わたし　からの　いらいだな▼
 ５にん　いじょうと　すれちがって
-ブラックと　ホワイト▽
+ブラック２と　ホワイト２▽
 どちらが　おおいかを▽
 しらべてくる　ちょうさだ▼
 わたしも　ポケモンを
 はじめようと　おもってね▽
 にんきのある　ほうを　しりたいんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:54:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4943,15 +4965,15 @@ assistantm_01_23○へ続く
 			<Text>この調査は……▼
 わたし　からの　依頼だな▼
 ５人　以上と　すれ違って
-ブラックと　ホワイト▽
+ブラック２と　ホワイト２▽
 どちらが　多いかを▽
 調べてくる　調査だ▼
 わたしも　ポケモンを
 はじめようと　思ってね▽
 人気のあるほうを　知りたいんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:54:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4991,7 +5013,7 @@ assistantm_01_23○へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5895,16 +5917,18 @@ assistantm_01_23○へ続く
 			<Text>この　ちょうさは……▼
 わたし　からの　いらいだな▼
 ３０にん　いじょうと　すれちがって
-いちばん　すきな　きせつと▽
-いちばん　すきな　たべものを▽
+どんなひとに　なりたいかと▽
+ゆめをおうか　げんじつをみるか　を▽
 しらべてくる　ちょうさだ▼
-きせつに　あわせて　おいしいものを
-ごちそう　したいだろう？▼
-だれに？
-それは　ひみつだ！▼</Text>
+わたしも　そろそろ
+しょうらいを　みすえて▽
+じんせいせっけいを▽
+しなければな……▼
+おとなに　なると
+いろいろ　あるんだよ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:46:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5915,16 +5939,17 @@ assistantm_01_23○へ続く
 			<Text>この調査は……▼
 わたし　からの　依頼だな▼
 ３０人　以上と　すれ違って
-１番　好きな　季節と▽
-１番　好きな　食べ物を▽
+どんな人に　なりたいかと▽
+夢を追うか　現実を見るか　を▽
 調べてくる　調査だ▼
-季節に　あわせて　美味しいものを
-ごちそう　したいだろう？▼
-だれに？
-それは　秘密だ！▼</Text>
+わたしも　そろそろ
+将来を　据えて▽
+人生設計を　しなければな……▼
+大人に　なると
+いろいろ　あるんだよ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:46:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5964,7 +5989,7 @@ assistantm_01_23○へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5976,17 +6001,20 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ちょうさは……▼
-とある　げいじゅつか　からの
+とある　さくしか　からの
 いらいだな▼
 ３０にん　いじょうと　すれちがって
-いちばん　すきな　いろと▽
+しょうらい　がんばりたい　ことと▽
 いちばん　すきな　おんがくを▽
 しらべてくる　ちょうさだ▼
-ちょうさの　けっかを
-さくひんに　やくだてたいそうだ▼</Text>
+おおぜいが　きょうかん　できる
+うたを　つくりたいので▽
+みんなの　もくひょうと▽
+おんがくの　しゅみを▽
+さんこうに　さくし　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:45:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5997,14 +6025,16 @@ assistantm_01_23○へ続く
 			<Text>この調査は……▼
 とある　芸術家　からの　依頼だな▼
 ３０人　以上と　すれ違って
-１番　好きな　色と▽
+将来　がんばりたい　ことと▽
 １番　好きな　音楽を▽
 調べてくる　調査だ▼
-調査の　結果を
-作品に　役立てたいそうだ▼</Text>
+大勢が　共感できる
+歌を　作りたいので▽
+みんなの　目標と　音楽の　趣味を▽
+参考に　作詞　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:45:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6044,7 +6074,7 @@ assistantm_01_23○へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6215,16 +6245,18 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ちょうさは……▼
-とある　がくせい　からの
+とある　えいがかんとく　からの
 いらいだな▼
 ４０にん　いじょうと　すれちがって
-いちばん　すきな　がっこうの　じかんを▽
+タイムマシンが　あったら▽
+かこに　いきたいか▽
+みらいに　いきたいかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
-がっこうせいかつに　やくだてたいそうだ▼</Text>
+シナリオに　やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6233,15 +6265,17 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　学生　からの　依頼だな▼
+とある　映画監督　からの　依頼だな▼
 ４０人　以上と　すれ違って
-１番　好きな　学校の　時間を▽
+タイムマシンが　あったら
+過去に　行きたいか
+未来に　生きたいかを
 調べてくる　調査だ▼
 調査の　結果を
-学校生活に　役立てたいそうだ▼</Text>
+シナリオに　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6281,7 +6315,7 @@ assistantm_01_23○へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6293,17 +6327,19 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ちょうさは……▼
-とある　せんせい　からの
+とある　マンガか　からの
 いらいだな▼
 ４０にん　いじょうと　すれちがって
-いちばん　すきな　べんきょうと▽
-いちばん　にがてな　べんきょうを▽
+もしも　まほうが　つかえたら▽
+どんなことを　したいかと▽
+もしも　おかねもちに　なったら▽
+どうしたいかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
-じゅぎょうに　やくだてたいそうだ▼</Text>
+ものがたりに　やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:18:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6312,16 +6348,18 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　先生　からの　依頼だな▼
+とある　マンガ家　からの　依頼だな▼
 ４０人　以上と　すれ違って
-１番　好きな　勉強と▽
-１番　苦手な　勉強を▽
+もしも　魔法が　使えたら▽
+どんなことを　したいかと▽
+もしも　お金持ちに　なったら
+どうしたいかを▽
 調べてくる　調査だ▼
 調査の　結果を
-授業に　役立てたいそうだ▼</Text>
+物語に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:18:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6361,7 +6399,7 @@ assistantm_01_23○へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6373,16 +6411,16 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ちょうさは……▼
-とある　スポーツせんしゅ　からの
-いらいだな▼
+とある　ゲームがいしゃ　からの
+いらい　だな▼
 ５０にん　いじょうと　すれちがって
-いちばん　にんきのある　スポーツを▽
+いちばん　にんきのある　ゲームを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
-しあいに　やくだてたいそうだ▼</Text>
+ゲームせいさくに　やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:49:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6391,16 +6429,16 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　スポーツ選手　からの
+とある　ゲーム会社　からの
 依頼だな▼
 ５０人　以上と　すれ違って
-１番　人気のある　スポーツを▽
+１番　人気のある　ゲームを▽
 調べてくる　調査だ▼
 調査の　結果を
-試合に　役立てたいそうだ▼</Text>
+ゲーム製作に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:49:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6440,7 +6478,7 @@ assistantm_01_23○へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6456,15 +6494,16 @@ assistantm_01_23○へ続く
 ５０にん　いじょうと　すれちがって
 いちばん　にんきのある▽
 きゅうじつの　すごしかたと▼
-いちばん　にんきのある　あそびばを
+ともだちと　どうあそぶのが
+にんき　なのかを▽
 しらべてくる　ちょうさだ▼
 じつは　つぎの　しゅうまつに
-デートの　よていでな▼
-はやりの　ばしょを
-しらべておきたいんだ▼</Text>
+ともだちと　あう　よていでな▼
+いつもとは　ひとあじ　ちがう
+きゅうじつに　したいんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6476,15 +6515,15 @@ assistantm_01_23○へ続く
 わたし　からの　依頼だな▼
 ５０人　以上と　すれ違って
 １番　人気のある　休日の　過ごし方と▽
-１番　人気のある　遊び場を▽
+友達と　どう遊ぶのが　人気かを▽
 調べてくる　調査だ▼
 じつは　次の　週末に
-デートの　予定でな▼
-流行の　場所を
-調べておきたいんだ▼</Text>
+友達と　会う　予定でな▼
+いつもとは　一味　違う
+休日に　したいんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6524,7 +6563,7 @@ assistantm_01_23○へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6539,14 +6578,15 @@ assistantm_01_23○へ続く
 とある　ポケモンファン　からの
 いらいだな▼
 ５０にん　いじょうと　すれちがって
-いちばん　なりたいものを▽
+ポケモンシリーズを　どれくらい▽
+ながく　あそんでいるかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 ポケモンの　せんでんに▽
 やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:51:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6558,13 +6598,14 @@ assistantm_01_23○へ続く
 とある　ポケモンファン　からの
 依頼だな▼
 ５０人　以上と　すれ違って
-１番　なりたいものを▽
+ポケモンシリーズを　どれくらい▽
+長く　遊んでいるかを
 調べてくる　調査だ▼
 調査の　結果を　ポケモンの
 宣伝に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:51:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6604,7 +6645,7 @@ assistantm_01_23○へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6913,12 +6954,12 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]は
-『ブラックと　ホワイト▽
+『ブラック２と　ホワイト２▽
 おおいのは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:51:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6927,12 +6968,12 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]は
-『ブラックと　ホワイト▽
+『ブラック２と　ホワイト２▽
 多いのは？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:51:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6968,7 +7009,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7703,11 +7744,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]は
-『きせつに　ついて』の▽
+『しょうらいに　ついて』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:52:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7716,11 +7757,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]は
-『季節に　ついて』の▽
+『将来に　ついて』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7756,7 +7797,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7768,11 +7809,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]は
-『げいじゅつに　ついて』の▽
+『きょうかん　される　うたは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:52:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7781,11 +7822,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]は
-『芸術に　ついて』の▽
+『共感される　歌は？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7821,7 +7862,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7963,12 +8004,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]は
-『いちばん　すきな　がっこうの▽
-じかんは？』の▽
+『タイムマシンが　あったら？の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:52:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7977,11 +8017,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]は
-『１番　好きな　学校の　時間は？』の▽
+『タイムマシンが　あったら？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:52:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8017,7 +8057,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8029,11 +8069,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]は
-『べんきょうに　ついて』の▽
+『もしも……だったら？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:20:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8042,11 +8082,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]は
-『勉強に　ついて』の▽
+『もしも……だったら？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:20:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8082,7 +8122,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8094,12 +8134,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]は
-『いちばん　にんきの▽
-スポーツは？』の▽
+『いちばん　にんきの　ゲームは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:53:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8108,11 +8147,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]は
-『１番　人気の　スポーツは？』の▽
+『１番　人気の　ゲームは？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8148,7 +8187,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8225,11 +8264,12 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]は
-『いちばん　なりたいものは？』の▽
+『ポケモンを▽
+どれくらい　あそんでる？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:26:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8238,11 +8278,12 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]は
-『１番　なりたいものは？』の▽
+『ポケモンを▽
+どれくらい　遊んでる？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:26:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8278,7 +8319,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8666,7 +8707,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『ブラックと　ホワイト
+			<Text>まだ　『ブラック２と　ホワイト２
 おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
@@ -8676,8 +8717,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:55:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8685,7 +8726,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『ブラックと　ホワイト
+			<Text>まだ　『ブラック２と　ホワイト２
 多いのは？』の▽
 調査が　終わっていないぞ▼
 あと　[Digit:2digits Idx="2" ]時間は
@@ -8694,8 +8735,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:55:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8734,7 +8775,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -9608,7 +9649,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『きせつに　ついて』の
+			<Text>まだ　『しょうらいに　ついて』の
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
@@ -9617,8 +9658,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:55:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9626,7 +9667,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『季節に　ついて』の
+			<Text>まだ　『将来に　ついて』の
 調査が　終わっていないぞ▼
 あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
@@ -9634,8 +9675,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:56:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9674,7 +9715,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -9685,7 +9726,8 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『げいじゅつに　ついて』の
+			<Text>まだ　『きょうかん　される
+うたは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
@@ -9694,8 +9736,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:57:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9703,7 +9745,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『芸術に　ついて』の
+			<Text>まだ　『共感される　歌は？』の
 調査が　終わっていないぞ▼
 あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
@@ -9711,8 +9753,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:56:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9751,7 +9793,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -9917,8 +9959,8 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『いちばん　すきな
-がっこうの　じかんは？』の▽
+			<Text>まだ　『タイムマシンが
+あったら？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
@@ -9927,8 +9969,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:57:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9936,8 +9978,8 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『１番　好きな
-学校の　時間は？』の▽
+			<Text>まだ　『タイムマシンが
+あったら？』の▽
 調査が　終わっていないぞ▼
 あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
@@ -9945,8 +9987,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:58:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9985,7 +10027,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -9996,7 +10038,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『べんきょうに　ついて』の
+			<Text>まだ　『もしも……だったら？』の
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
@@ -10005,8 +10047,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:20:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10014,7 +10056,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『勉強に　ついて』の
+			<Text>まだ　『もしも……だったら？』の
 調査が　終わっていないぞ▼
 あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
@@ -10022,8 +10064,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:20:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10062,7 +10104,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10074,7 +10116,7 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>まだ　『いちばん　にんきの
-スポーツは？』の▽
+ゲームは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
@@ -10083,8 +10125,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:59:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10093,7 +10135,7 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　人気の
-スポーツは？』の▽
+ゲームは？』の▽
 調査が　終わっていないぞ▼
 あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
@@ -10101,8 +10143,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T06:59:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10141,7 +10183,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10229,8 +10271,8 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『いちばん　なりたい
-ものは？』の▽
+			<Text>まだ　『ポケモンを
+どれくらい　あそんでる？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
@@ -10239,8 +10281,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:27:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10248,7 +10290,8 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『１番　なりたいものは？』の
+			<Text>まだ　『ポケモンを
+どれくらい　遊んでる？』の▽
 調査が　終わっていないぞ▼
 あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
@@ -10256,8 +10299,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:27:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10296,7 +10339,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10465,7 +10508,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『ブラックと　ホワイト
+			<Text>まだ　『ブラック２と　ホワイト２
 おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
@@ -10475,8 +10518,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:01:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10484,7 +10527,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『ブラックと　ホワイト
+			<Text>まだ　『ブラック２と　ホワイト２
 多いのは？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
@@ -10493,8 +10536,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:01:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10532,7 +10575,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -11395,7 +11438,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『きせつに　ついて』の
+			<Text>まだ　『しょうらいに　ついて』の
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
@@ -11404,8 +11447,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:01:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11413,7 +11456,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『季節に　ついて』の
+			<Text>まだ　『将来に　ついて』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -11421,8 +11464,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:01:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11460,7 +11503,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -11471,7 +11514,8 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『げいじゅつに　ついて』の
+			<Text>まだ　『きょうかん　される
+うたは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
@@ -11480,8 +11524,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:01:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11489,7 +11533,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『芸術に　ついて』の
+			<Text>まだ　『共感される　歌は？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -11497,8 +11541,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:02:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11536,7 +11580,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -11700,8 +11744,8 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『いちばん　すきな
-がっこうの　じかんは？』の▽
+			<Text>まだ　『タイムマシンが
+あったら？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
@@ -11710,8 +11754,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:02:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11719,8 +11763,8 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『１番　好きな
-学校の　時間は？』の▽
+			<Text>まだ　『タイムマシンが
+あったら？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -11728,8 +11772,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:02:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11767,7 +11811,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -11778,7 +11822,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『べんきょうに　ついて』の
+			<Text>まだ　『もしも……だったら？』の
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
@@ -11787,8 +11831,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11796,7 +11840,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『勉強に　ついて』の
+			<Text>まだ　『もしも……だったら？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -11804,8 +11848,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:20:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11843,7 +11887,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -11855,7 +11899,7 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>まだ　『いちばん　にんきの
-スポーツは？』の▽
+ゲームは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
@@ -11864,8 +11908,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:03:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11874,7 +11918,7 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　人気の
-スポーツは？』の▽
+ゲームは？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -11882,8 +11926,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:03:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11921,7 +11965,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -12008,8 +12052,8 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『いちばん　なりたい
-ものは？』の▽
+			<Text>まだ　『ポケモンを
+どれくらい　あそんでる？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
@@ -12018,8 +12062,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:27:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12027,7 +12071,8 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『１番　なりたいものは？』の
+			<Text>まだ　『ポケモンを
+どれくらい　遊んでる？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -12035,8 +12080,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:27:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12074,7 +12119,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -12241,7 +12286,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『ブラックと　ホワイト
+			<Text>まだ　『ブラック２と　ホワイト２
 おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
@@ -12251,8 +12296,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:10:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12260,7 +12305,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『ブラックと　ホワイト
+			<Text>まだ　『ブラック２と　ホワイト２
 多いのは？』の▽
 調査が　終わっていないぞ▼
 あと　[Digit:3digits Idx="1" ]人の
@@ -12269,8 +12314,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:10:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12309,7 +12354,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -13183,7 +13228,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『きせつに　ついて』の
+			<Text>まだ　『しょうらいに　ついて』の
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
@@ -13192,8 +13237,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:10:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13201,7 +13246,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『季節に　ついて』の
+			<Text>まだ　『将来に　ついて』の
 調査が　終わっていないぞ▼
 あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
@@ -13209,8 +13254,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:10:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13249,7 +13294,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -13260,7 +13305,8 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『げいじゅつに　ついて』の
+			<Text>まだ　『きょうかん　される
+うたは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
@@ -13269,8 +13315,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:11:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13278,7 +13324,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『芸術に　ついて』の
+			<Text>まだ　『共感される　歌は？』の
 調査が　終わっていないぞ▼
 あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
@@ -13286,8 +13332,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:11:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13326,7 +13372,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -13492,8 +13538,8 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『いちばん　すきな
-がっこうの　じかんは？』の▽
+			<Text>まだ　『タイムマシンが
+あったら？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
@@ -13502,8 +13548,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:17:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13511,8 +13557,8 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『１番　好きな
-学校の　時間は？』の▽
+			<Text>まだ　『タイムマシンが
+あったら？』の▽
 調査が　終わっていないぞ▼
 あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
@@ -13520,8 +13566,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:17:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13560,7 +13606,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -13571,7 +13617,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『べんきょうに　ついて』の
+			<Text>まだ　『もしも……だったら？』の
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
@@ -13580,8 +13626,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:20:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13589,7 +13635,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『勉強に　ついて』の
+			<Text>まだ　『もしも……だったら？』の
 調査が　終わっていないぞ▼
 あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
@@ -13597,8 +13643,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:20:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13637,7 +13683,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -13649,7 +13695,7 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>まだ　『いちばん　にんきの
-スポーツは？』の▽
+ゲームは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
@@ -13658,8 +13704,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:17:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13668,7 +13714,7 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　人気の
-スポーツは？』の▽
+ゲームは？』の▽
 調査が　終わっていないぞ▼
 あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
@@ -13676,8 +13722,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:17:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13716,7 +13762,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -13804,8 +13850,8 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　『いちばん　なりたい
-ものは？』の▽
+			<Text>まだ　『ポケモンを
+どれくらい　あそんでる？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
@@ -13814,8 +13860,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:27:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13823,7 +13869,8 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　『１番　なりたいものは？』の
+			<Text>まだ　『ポケモンを
+どれくらい　遊んでる？』の▽
 調査が　終わっていないぞ▼
 あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
@@ -13831,8 +13878,8 @@ assistantm_01_17へ続く
 それとも　受けている
 依頼を　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:27:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13871,7 +13918,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -14101,12 +14148,12 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『ブラックと　ホワイト
+			<Text>『ブラック２と　ホワイト２
 おおいのは？』の　ちょうさを▽
 たいちょうに　ほうこくした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:18:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14114,12 +14161,12 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『ブラックと　ホワイト
+			<Text>『ブラック２と　ホワイト２
 多いのは？』の　調査を▽
 隊長に　報告した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:18:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14154,7 +14201,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -14859,11 +14906,12 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『きせつに　ついて』の　ちょうさを
+			<Text>『しょうらいに　ついて』の
+ちょうさを▽
 たいちょうに　ほうこくした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:19:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14871,11 +14919,11 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『季節に　ついて』の
+			<Text>『将来に　ついて』の
 調査を　隊長に　報告した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:19:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14910,7 +14958,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -14921,12 +14969,12 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『げいじゅつに　ついて』の
+			<Text>『きょうかんされる　うたは？』の
 ちょうさを▽
 たいちょうに　ほうこくした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:20:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14934,11 +14982,11 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『芸術に　ついて』の
+			<Text>『共感される　歌は？』の
 調査を　隊長に　報告した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:20:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14973,7 +15021,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15109,12 +15157,12 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『いちばん　すきな　がっこうの
-じかんは？』の　ちょうさを▽
+			<Text>『タイムマシンが　あったら？』の
+ちょうさを▽
 たいちょうに　ほうこくした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:20:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15122,11 +15170,11 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『１番　好きな　学校の　時間は？』の
+			<Text>『タイムマシンが　あったら？』の
 調査を　隊長に　報告した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:21:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15161,7 +15209,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15172,12 +15220,12 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『べんきょうに　ついて』の
+			<Text>『もしも……だったら？』の
 ちょうさを▽
 たいちょうに　ほうこくした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:21:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15185,11 +15233,11 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『勉強に　ついて』の
+			<Text>『もしも……だったら？』の
 調査を　隊長に　報告した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:21:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15224,7 +15272,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15236,11 +15284,11 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>『いちばん　にんきの
-スポーツは？』の　ちょうさを▽
+ゲームは？』の　ちょうさを▽
 たいちょうに　ほうこくした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:21:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15248,11 +15296,11 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『１番　人気の　スポーツは？』の
+			<Text>『１番　人気の　ゲームは？』の
 調査を　隊長に　報告した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:21:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15287,7 +15335,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15361,12 +15409,13 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『いちばん　なりたいものは？』の
-ちょうさを▽
+			<Text>『ポケモンを
+どれくらい　あそんでる？』
+の　ちょうさを▽
 たいちょうに　ほうこくした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:27:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15374,11 +15423,12 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『１番　なりたいものは？』の
+			<Text>『ポケモンを
+どれくらい　遊んでる？』の▽
 調査を　隊長に　報告した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:27:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15413,7 +15463,7 @@ assistantm_01_17へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15552,14 +15602,14 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
-ブラックと　ホワイトでは
+ブラック２と　ホワイト２では
 『[Name:Answer Idx="0" ]』が　おおいようだな▼
 さんこうになった▼
 どちらで　あそんでも　たのしそうだな
 ますます　まよって　しまいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:23:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15568,14 +15618,14 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
-ブラックと　ホワイトでは
+ブラック２と　ホワイト２では
 『[Name:Answer Idx="0" ]』が　多いようだな▼
 参考になった▼
 どちらで　遊んでも　楽しそうだな
 ますます　迷って　しまいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:23:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15611,7 +15661,7 @@ assistantm_01_25へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -16427,16 +16477,17 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
-いちばん　すきな　きせつは
+いちばん　なりたい　ひとは
 『[Name:Answer Idx="0" ]』の　ようだな▼
-いちばん　すきな　たべものは
-『[Name:Answer Idx="1" ]』たべものの　ようだな▼
-さんこうになったよ▼
-きせつごとに　おいしいものも　かわる
-あじが　わかる　おとなに　なりたまえ▼</Text>
+ゆめをおうか　げんじつをみるか　は
+『[Name:Answer Idx="1" ]』が▽
+おおい　ようだな▼
+さんこうになった▼
+しかし　じぶんの　しょうらいの　ことは
+じぶんで　かんがえなければな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16445,16 +16496,17 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
-１番　好きな　季節は
+１番　なりたい人は
 『[Name:Answer Idx="0" ]』の　ようだな▼
-１番　好きな　食べ物は
-『[Name:Answer Idx="1" ]』食べ物の　ようだな▼
-参考になったよ▼
-季節ごとに　美味しい物も　変わる
-味が　わかる　大人に　なりたまえ▼</Text>
+夢を追うか　現実を見るかは
+『[Name:Answer Idx="1" ]』が▽
+多い　ようだな▼
+参考になった▼
+しかし　自分の　将来の　ことは
+自分で　考えなければな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:59:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16493,7 +16545,7 @@ assistantm_01_25へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -16505,17 +16557,16 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
-いちばん　すきな　いろは
+しょうらい　がんばりたい　ことは
 『[Name:Answer Idx="0" ]』の　ようだな▼
 いちばん　すきな　おんがくは
 『[Name:Answer Idx="1" ]』の　ようだな▼
-はやっているものが
-よいとは　かぎらない▼
-じぶんの　すきなものを
-だいじに　するべきだな▼</Text>
+しかし　このアンケートで
+ほんとうに　きょうかん　できる▽
+うたが　できるのだろうか……？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16524,17 +16575,16 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
-１番　好きな　色は
+将来　がんばりたい　ことは
 『[Name:Answer Idx="0" ]』の　ようだな▼
 １番　好きな　音楽は
 『[Name:Answer Idx="1" ]』の　ようだな▼
-流行っているものが
-よいとは　限らない▼
-自分の　好きなものを
-大事に　するべきだな▼</Text>
+しかし　このアンケートで
+本当に　共感できる▽
+歌が　できるのだろうか……？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:40:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16573,7 +16623,7 @@ assistantm_01_25へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -16736,15 +16786,14 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
-いちばん　すきな
-がっこうの　じかんは▽
-『[Name:Answer Idx="0" ]』の　ようだな▼
-がっこうか……　なつかしいな▼
-むかしは　がっこうに　いるだけでも
-たのしかったものだ▼</Text>
+タイムマシンが　あったら
+『[Name:Answer Idx="0" ]』　ようだな▼
+とはいえ　やっぱり
+いま　げんざいを　たのしむのが▽
+いちばん　じゃないかな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:44:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16753,14 +16802,14 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
-１番　好きな　学校の　時間は
-『[Name:Answer Idx="0" ]』の　ようだな▼
-学校か……　懐かしいな▼
-昔は　学校に　いるだけでも
-楽しかったものだ▼</Text>
+タイムマシンが　あったら
+『[Name:Answer Idx="0" ]』　ようだな▼
+とはいえ　やっぱり
+今　現在を　楽しむのが▽
+１番　じゃないかな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T07:44:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16796,7 +16845,7 @@ assistantm_01_25へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -16808,16 +16857,17 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
-いちばん　すきな　べんきょうは
-『[Name:Answer Idx="0" ]』の　ようだな▼
-いちばん　にがてな　べんきょうは
-『[Name:Answer Idx="1" ]』の　ようだな▼
-いい　おとなに　なるには
-あそびと　べんきょう▽
-どちらも　がんばらないとな▼</Text>
+まほうが　つかえたら
+『[Name:Answer Idx="0" ]』まほうが▽
+つかいたい　ようだな▼
+おかねもちに　なったら
+『[Name:Answer Idx="1" ]』ようだな▼
+ありそうも　ないことを
+いろいろ　そうぞう　してみるのは▽
+ワクワクして　たのしいものだな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:26:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16826,15 +16876,17 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
-１番　好きな　勉強は
-『[Name:Answer Idx="0" ]』の　ようだな▼
-１番　苦手な　勉強は
-『[Name:Answer Idx="1" ]』の　ようだな▼
-いい　大人に　なるには　遊びと　勉強
-どちらも　がんばらないとな▼</Text>
+魔法が　使えたら
+『[Name:Answer Idx="0" ]』魔法が▽
+使いたい　ようだな▼
+お金持ちに　なったら
+『[Name:Answer Idx="1" ]』ようだな▼
+ありそうも　ないことを
+いろいろ　想像してみるのは▽
+ワクワクして　楽しいものだな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:28:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16873,7 +16925,7 @@ assistantm_01_25へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -16885,14 +16937,14 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
-いちばん　にんきのある　スポーツは
+いちばん　にんきのある　ゲームは
 『[Name:Answer Idx="0" ]』の　ようだな▼
-からだを　うごかすことも
-だいじだからな▼
-けんこうが　いちばんだ▼</Text>
+あまり　やらない　ジャンルの
+ゲームも　あそんでみると▽
+あたらしい　はっけんが　あるかもな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T08:58:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16901,13 +16953,14 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
-１番　人気のある　スポーツは
+１番　人気のある　ゲームは
 『[Name:Answer Idx="0" ]』の　ようだな▼
-体を　動かすことも　大事だからな
-健康が　１番だ▼</Text>
+あまり　やらない　ジャンルの
+ゲームも　遊んでみると▽
+新しい　発見が　あるかもな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T08:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16943,7 +16996,7 @@ assistantm_01_25へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -16958,16 +17011,15 @@ assistantm_01_25へ続く
 いちばん　にんきのある
 きゅうじつの　すごしかたは▽
 『[Name:Answer Idx="0" ]』の　ようだな▼
-いちばん　にんきのある　あそびばは
-『[Name:Answer Idx="1" ]』の　ようだな▼
+どう　あそぶかは
+『[Name:Answer Idx="1" ]』が▽
+にんきの　ようだな▼
 さんこうになった▼
 これで　しゅうまつは
-たのしいデートが　できそうだ▼
-デートあいて？
-それは　ひみつだ▼</Text>
+たのしく　すごせそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:01:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16978,16 +17030,15 @@ assistantm_01_25へ続く
 			<Text>ふむふむ……　なるほど……▼
 １番　人気のある　休日の　過ごし方は
 『[Name:Answer Idx="0" ]』の　ようだな▼
-１番　人気のある　遊び場は
-『[Name:Answer Idx="1" ]』の　ようだな▼
+どう　遊ぶかは
+『[Name:Answer Idx="1" ]』が▽
+人気の　ようだな▼
 参考になった▼
 これで　週末は
-楽しいデートが　できそうだ▼
-デート相手？
-それは　秘密だ▼</Text>
+楽しく　過ごせそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:02:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17026,7 +17077,7 @@ assistantm_01_25へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -17038,15 +17089,14 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
-いちばん　なりたいものは
-『[Name:Answer Idx="0" ]』の　ようだな▼
-なにかに　あこがれるのも
-わるくないが▼
-まずは　じぶんに
-じしんを　もつことだな▼</Text>
+ポケモンを　どれくらい　あそんでいるかは
+『[Name:Answer Idx="0" ]』が▽
+いちばん　おおい　ようだな▼
+とはいえ　ゲームばかりでなく
+ちゃんと　べんきょうも　しないとな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:11:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17055,13 +17105,14 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
-１番　なりたいものは
-『[Name:Answer Idx="0" ]』の　ようだな▼
-何かに　あこがれるのも　悪くないが
-まずは　自分に　自信をもつことだな▼</Text>
+ポケモンを　どれくらい　遊んでいるかは
+『[Name:Answer Idx="0" ]』が▽
+１番　多いようだな▼
+とはいえ　ゲームばかりでなく
+ちゃんと　勉強も　しないとな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:11:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17097,7 +17148,7 @@ assistantm_01_25へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -19083,10 +19134,10 @@ assistantm_01_31へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みんなの　このみ</Text>
+			<Text>みんなの　しょうらい</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:48:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19094,10 +19145,10 @@ assistantm_01_31へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんなの　好み</Text>
+			<Text>みんなの　将来</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:48:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19108,11 +19159,11 @@ assistantm_01_31へ続く
 			<Comment>・選択肢
 答えるアンケートを選択するときに経由
 
-『みんなの　このみ』　
+『みんなの　しょうらい』　
 ⇒　woman2_08へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:49:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -19130,7 +19181,7 @@ assistantm_01_31へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -19199,10 +19250,10 @@ assistantm_01_31へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>がっこうせいかつ</Text>
+			<Text>もしも……だったら</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:49:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19210,10 +19261,10 @@ assistantm_01_31へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>学校生活</Text>
+			<Text>もしも……だったら</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:49:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19224,11 +19275,11 @@ assistantm_01_31へ続く
 			<Comment>・選択肢
 答えるアンケートを選択するときに経由
 
-『がっこうせいかつ』　
+『もしも……だったら』　
 ⇒　woman2_08へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:49:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -19246,7 +19297,7 @@ assistantm_01_31へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -19753,10 +19804,10 @@ assistantm_01_31へ続く
 			Language="JPN">
 			<Text>それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
-『みんなの　このみ』に　ついてよ▼</Text>
+『みんなの　しょうらい』に　ついてよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:54:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19766,10 +19817,10 @@ assistantm_01_31へ続く
 			Language="JPN_KANJI">
 			<Text>それじゃ　はじめるわよ
 今回の　アンケートは……▼
-『みんなの　好み』に　ついてよ▼</Text>
+『みんなの　将来』に　ついてよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:54:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19804,7 +19855,7 @@ assistantm_01_31へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -19881,10 +19932,10 @@ assistantm_01_31へ続く
 			Language="JPN">
 			<Text>それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
-『がっこうせいかつ』に　ついてよ▼</Text>
+『もしも……だったら』に　ついてよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19894,10 +19945,10 @@ assistantm_01_31へ続く
 			Language="JPN_KANJI">
 			<Text>それじゃ　はじめるわよ
 今回の　アンケートは……▼
-『学校生活』に　ついてよ▼</Text>
+『もしも……だったら』に　ついてよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:55:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19932,7 +19983,7 @@ assistantm_01_31へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -20311,10 +20362,11 @@ assistantm_01_31へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『アナタが　すきな　きせつは？』</Text>
+			<Text>『アナタは　しょうらい
+どんな　ひとに　なりたい？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:43:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20322,10 +20374,11 @@ assistantm_01_31へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『アナタが　好きな　季節は？』</Text>
+			<Text>『アナタは　将来
+どんな　人に　なりたい？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T09:43:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20334,12 +20387,12 @@ assistantm_01_31へ続く
 		<CommentCell
 			Language="JPN">
 			<Comment>・アンケート隊員
-『みんなの　このみ』アンケート１問目
+『みんなの　しょうらい』アンケート１問目
 このメッセージの表示後、選択ウインドウを表示
 回答の選択後、woman2__14へ続く</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:56:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -20358,7 +20411,7 @@ assistantm_01_31へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -20396,8 +20449,8 @@ assistantm_01_31へ続く
 このメッセージの表示後、選択ウインドウを表示
 回答の選択後、woman2__14へ続く</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:58:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -20427,11 +20480,11 @@ assistantm_01_31へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『アナタが　すきな
-がっこうの　じかんは？』</Text>
+			<Text>『もしも　タイムマシンが　あったら
+どの　じだいに　いきたい？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T04:00:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20439,11 +20492,11 @@ assistantm_01_31へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『アナタが　好きな
-学校の　時間は？』</Text>
+			<Text>『もしも　タイムマシンが　あったら
+どの　時代に　行きたい？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T04:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20452,12 +20505,12 @@ assistantm_01_31へ続く
 		<CommentCell
 			Language="JPN">
 			<Comment>・アンケート隊員
-『がっこうせいかつ』アンケート１問目
+『もしも……だったら』アンケート１問目
 このメッセージの表示後、選択ウインドウを表示
 回答の選択後、woman2__14へ続く</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T03:59:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -20476,7 +20529,7 @@ assistantm_01_31へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -20487,11 +20540,11 @@ assistantm_01_31へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『アナタが　あそびに　いくなら
-どこ？』</Text>
+			<Text>『アナタが　ともだちと　あそぶなら
+どう　あそびたい？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:09:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20499,11 +20552,11 @@ assistantm_01_31へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『アナタが　遊びに　行くなら
-どこ？』</Text>
+			<Text>『アナタが　友達と　遊ぶなら
+どう　遊びたい？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:08:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20536,7 +20589,7 @@ assistantm_01_31へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -20841,10 +20894,11 @@ assistantm_01_31へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『アナタが　すきな　たべものは？』</Text>
+			<Text>『アナタは　ゆめを　おう？
+それとも　げんじつを　みる？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:10:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20852,10 +20906,11 @@ assistantm_01_31へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『アナタが　好きな　食べ物は？』</Text>
+			<Text>『アナタは　夢を　追う？
+それとも　現実を　見る？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:13:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20864,12 +20919,12 @@ assistantm_01_31へ続く
 		<CommentCell
 			Language="JPN">
 			<Comment>・アンケート隊員
-『みんなの　このみ』アンケート２問目
+『みんなの　しょうらい』アンケート２問目
 このメッセージの表示後、選択ウインドウを表示
 回答の選択後、woman2__14へ続く</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:10:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -20888,7 +20943,7 @@ assistantm_01_31へ続く
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -20958,11 +21013,11 @@ TVばんぐみは？』</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『アナタが　すきな
-べんきょうは？』</Text>
+			<Text>『アナタは　まほうが　つかえたら
+どんなことを　したい？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T10:02:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20970,10 +21025,11 @@ TVばんぐみは？』</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『アナタが　好きな　勉強は？』</Text>
+			<Text>『アナタは　魔法が　使えたら
+どんなことを　したい？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T10:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20982,12 +21038,12 @@ TVばんぐみは？』</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>・アンケート隊員
-『がっこうせいかつ』アンケート２問目
+『もしも……だったら』アンケート２問目
 このメッセージの表示後、選択ウインドウを表示
 回答の選択後、woman2__14へ続く</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:13:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -21006,7 +21062,7 @@ TVばんぐみは？』</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21076,10 +21132,11 @@ TVばんぐみは？』</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『アナタが　もし　なれるなら？』</Text>
+			<Text>『アナタは　ポケモンを
+どれくらい　あそんでる？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:14:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21087,10 +21144,11 @@ TVばんぐみは？』</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『アナタが　もし　なれるなら？』</Text>
+			<Text>『アナタは　ポケモンを
+どれくらい　遊んでる？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:14:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21123,7 +21181,7 @@ TVばんぐみは？』</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21359,10 +21417,11 @@ TVばんぐみは？』</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『アナタの　すきな　いろは？』</Text>
+			<Text>『アナタが　しょうらい
+がんばりたいことは？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:15:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21370,10 +21429,11 @@ TVばんぐみは？』</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『アナタの　好きな　色は？』</Text>
+			<Text>『アナタが　将来
+がんばりたいことは？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:15:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21382,12 +21442,12 @@ TVばんぐみは？』</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>・アンケート隊員
-『みんなの　このみ』アンケート３問目
+『みんなの　しょうらい』アンケート３問目
 このメッセージの表示後、選択ウインドウを表示
 回答の選択後、woman2__14へ続く</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:14:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -21406,7 +21466,7 @@ TVばんぐみは？』</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21475,11 +21535,11 @@ TVばんぐみは？』</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『アナタが　にがてな
-べんきょうは？』</Text>
+			<Text>『もし　たくさん　おかねを
+もっていたら　どうする？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:17:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21487,10 +21547,11 @@ TVばんぐみは？』</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『アナタが　苦手な　勉強は？』</Text>
+			<Text>『もし　たくさん　お金を
+持っていたら　どうする？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:18:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21499,12 +21560,12 @@ TVばんぐみは？』</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>・アンケート隊員
-『がっこうせいかつ』アンケート３問目
+『もしも……だったら』アンケート３問目
 このメッセージの表示後、選択ウインドウを表示
 回答の選択後、woman2__14へ続く</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:16:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -21523,7 +21584,7 @@ TVばんぐみは？』</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21534,10 +21595,10 @@ TVばんぐみは？』</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『アナタが　すきな　スポーツは？』</Text>
+			<Text>『アナタが　すきな　ゲームは？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:18:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21545,10 +21606,10 @@ TVばんぐみは？』</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『アナタが　好きな　スポーツは？』</Text>
+			<Text>『アナタが　好きな　ゲームは？』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:18:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21581,7 +21642,7 @@ TVばんぐみは？』</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22100,11 +22161,11 @@ woman2_17○へ続く（それぞれ対応したものへ）</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょうさレーダーに
-『みんなの　このみを　ちょうさ』が▽
-ふえた！▼</Text>
+『みんなの　しょうらいを▽
+ちょうさ』が　ふえた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:19:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22113,11 +22174,11 @@ woman2_17○へ続く（それぞれ対応したものへ）</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>調査レーダーに
-『みんなの　好みを　調査』が▽
+『みんなの　将来を　調査』が▽
 増えた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:19:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22152,7 +22213,7 @@ woman2_17○へ続く（それぞれ対応したものへ）</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22228,11 +22289,11 @@ woman2_17○へ続く（それぞれ対応したものへ）</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょうさレーダーに
-『がっこうせいかつを　ちょうさ』が▽
-ふえた！▼</Text>
+『もしも……だったら　を▽
+ちょうさ』が　ふえた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:20:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22241,10 +22302,11 @@ woman2_17○へ続く（それぞれ対応したものへ）</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>調査レーダーに
-『学校生活を　調査』が　増えた！▼</Text>
+『もしも……だったら　を▽
+調査』が　増えた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-02T05:21:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22279,7 +22341,7 @@ woman2_17○へ続く（それぞれ対応したものへ）</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

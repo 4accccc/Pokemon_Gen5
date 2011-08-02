@@ -4,9 +4,9 @@
 #define TOPIC_ID_POKEMON (2) //「「すきなポケモンの　ちょうさ」」
 #define TOPIC_ID_TREND (3) //「「みんなの　りそうを　ちょうさ」」
 #define TOPIC_ID_PARTNER (4) //「「すきなひとの　ちょうさ」」
-#define TOPIC_ID_FAVARITE (5) //「「みんなの　このみを　ちょうさ」」
+#define TOPIC_ID_FAVARITE (5) //「「みんなの　しょうらいを　ちょうさ」」
 #define TOPIC_ID_HOBBY (6) //「「みんなの　しゅみを　ちょうさ」」
-#define TOPIC_ID_SCOOL (7) //「「がっこうせいかつを　ちょうさ」」
+#define TOPIC_ID_SCOOL (7) //「「もしも……だったら　を　ちょうさ」」
 #define TOPIC_ID_PLAY (8) //「「どんな　あそびがすきか　ちょうさ」」
 #define TOPIC_ID_DETAIL (9) //「「ポケモンのことをくわしくちょうさ」」
 #define TOPIC_ID_NUM   (10)    // 調査項目IDの数
