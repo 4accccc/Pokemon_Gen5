@@ -308,6 +308,57 @@ BOOL PERSON_STATE_GetSeasonDateFlag( const PERSON_STATE *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  交換したかどうかを設定
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param	enable  TRUE交換した  FALSE交換してない
+ */
+//-----------------------------------------------------------------------------
+void PERSON_STATE_SetTradeFlag( PERSON_STATE *p_wk, BOOL enable )
+{
+  p_wk->is_trade = enable;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  交換したかどうかチェック
+ *
+ *	@param	const PERSON_STATE *cp_wk   ワーク
+ *
+ *	@return TRUE交換した  FALSE交換してない
+ */
+//-----------------------------------------------------------------------------
+BOOL PERSON_STATE_GetTradeFlag( const PERSON_STATE *cp_wk )
+{
+  return cp_wk->is_trade;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  交換したポケモン番号保存
+ *
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param	monsno  交換したポケモン番号
+ */
+//-----------------------------------------------------------------------------
+void PERSON_STATE_SetTradeMonsno( PERSON_STATE *p_wk, u16 monsno )
+{
+  p_wk->trade_monsno = monsno;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  交換したポケモン番号取得
+ *
+ *	@param	const PERSON_STATE *cp_wk   ワーク
+ *
+ *	@return 交換したポケモン番号
+ */
+//-----------------------------------------------------------------------------
+u16 PERSON_STATE_GetTradeMonsno( const PERSON_STATE *cp_wk )
+{
+  return cp_wk->trade_monsno;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  約束の期日チェック
  *
  *	@param	PERSON_STATE *p_wk  ワーク

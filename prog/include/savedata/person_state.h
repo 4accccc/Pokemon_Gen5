@@ -51,10 +51,13 @@ struct _PERSON_STATE
 {
   u8  state[PERSON_STATE_MAX];
   u8  is_ltvt[PERSON_STATE_MAX];
-  u8  is_secret_displeased;   //不機嫌かどうか
   u8  secret_date_event;   //デートイベント状態→ONのときはサブイベント発生まち、電話できない PERSON_STATE_SECRET_DATEの値
-  u8  is_secret_once_day_call;//１日１回電話フラグ
-  u8  is_season_date;         //１季節に１回のデートフラグ
+  u8  is_secret_once_day_call:1;//１日１回電話フラグ
+  u8  is_season_date:1;         //１季節に１回のデートフラグ
+  u8  is_secret_displeased:1;   //不機嫌かどうか
+  u8  is_trade:1;               //交換フラグ
+  u8  dummy:4;
+  u16 trade_monsno;           //交換ポケモン種別
   GFDATE  secret_date;        //デートの日
 };
 
@@ -96,6 +99,12 @@ extern BOOL PERSON_STATE_GetSecretOnceDayCallFlag( const PERSON_STATE *cp_wk );
 
 extern void PERSON_STATE_SetSeasonDateFlag( PERSON_STATE *p_wk, BOOL enable );
 extern BOOL PERSON_STATE_GetSeasonDateFlag( const PERSON_STATE *cp_wk );
+
+extern void PERSON_STATE_SetTradeFlag( PERSON_STATE *p_wk, BOOL enable );
+extern BOOL PERSON_STATE_GetTradeFlag( const PERSON_STATE *cp_wk );
+
+extern void PERSON_STATE_SetTradeMonsno( PERSON_STATE *p_wk, u16 monsno );
+extern u16 PERSON_STATE_GetTradeMonsno( const PERSON_STATE *cp_wk );
 
 #ifdef PM_DEBUG
 extern void DEBUG_PERSON_STATE_GetDate( const PERSON_STATE *cp_wk, RTCDate *p_date );
