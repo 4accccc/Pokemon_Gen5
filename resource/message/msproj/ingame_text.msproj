@@ -304,6 +304,86 @@
 			<Directory
 				Name="pokewood">
 				<ContentItem
+					Name="pw_briefing001.mstxt" />
+				<ContentItem
+					Name="pw_briefing002.mstxt" />
+				<ContentItem
+					Name="pw_briefing003.mstxt" />
+				<ContentItem
+					Name="pw_briefing004.mstxt" />
+				<ContentItem
+					Name="pw_briefing005.mstxt" />
+				<ContentItem
+					Name="pw_briefing006.mstxt" />
+				<ContentItem
+					Name="pw_briefing007.mstxt" />
+				<ContentItem
+					Name="pw_briefing008.mstxt" />
+				<ContentItem
+					Name="pw_briefing009.mstxt" />
+				<ContentItem
+					Name="pw_briefing010.mstxt" />
+				<ContentItem
+					Name="pw_briefing011.mstxt" />
+				<ContentItem
+					Name="pw_briefing012.mstxt" />
+				<ContentItem
+					Name="pw_briefing013.mstxt" />
+				<ContentItem
+					Name="pw_briefing014.mstxt" />
+				<ContentItem
+					Name="pw_briefing015.mstxt" />
+				<ContentItem
+					Name="pw_briefing016.mstxt" />
+				<ContentItem
+					Name="pw_briefing017.mstxt" />
+				<ContentItem
+					Name="pw_briefing018.mstxt" />
+				<ContentItem
+					Name="pw_briefing019.mstxt" />
+				<ContentItem
+					Name="pw_briefing020.mstxt" />
+				<ContentItem
+					Name="pw_briefing021.mstxt" />
+				<ContentItem
+					Name="pw_briefing022.mstxt" />
+				<ContentItem
+					Name="pw_briefing023.mstxt" />
+				<ContentItem
+					Name="pw_briefing024.mstxt" />
+				<ContentItem
+					Name="pw_briefing025.mstxt" />
+				<ContentItem
+					Name="pw_briefing026.mstxt" />
+				<ContentItem
+					Name="pw_briefing027.mstxt" />
+				<ContentItem
+					Name="pw_briefing028.mstxt" />
+				<ContentItem
+					Name="pw_briefing029.mstxt" />
+				<ContentItem
+					Name="pw_briefing030.mstxt" />
+				<ContentItem
+					Name="pw_briefing031.mstxt" />
+				<ContentItem
+					Name="pw_briefing032.mstxt" />
+				<ContentItem
+					Name="pw_briefing033.mstxt" />
+				<ContentItem
+					Name="pw_briefing034.mstxt" />
+				<ContentItem
+					Name="pw_briefing035.mstxt" />
+				<ContentItem
+					Name="pw_briefing036.mstxt" />
+				<ContentItem
+					Name="pw_briefing037.mstxt" />
+				<ContentItem
+					Name="pw_briefing038.mstxt" />
+				<ContentItem
+					Name="pw_briefing039.mstxt" />
+				<ContentItem
+					Name="pw_briefing040.mstxt" />
+				<ContentItem
 					Name="pw_hint001.mstxt" />
 				<ContentItem
 					Name="pw_hint002.mstxt" />
