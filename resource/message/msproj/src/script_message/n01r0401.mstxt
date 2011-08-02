@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『……きたね</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……きたね[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:08:05" />
+				Time="2011-08-02T12:17:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『……きたね</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……来たね[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:09:06" />
+				Time="2011-08-02T12:17:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90,11 +90,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・
+・下を向いて
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T10:59:40" />
+				Time="2011-08-02T12:13:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -119,12 +119,12 @@
 			<Text>さあ　いこう▼
 この　しろの　いちばん　おく……
 ボクにとって　たいせつな　ばしょで▽
-キミと　むきあいたい……！▼
+キミと　むきあねば　ならない……！▼
 さあ
 ついてきたまえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:18:16" />
+				Time="2011-08-02T12:21:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -135,12 +135,12 @@
 			<Text>さあ　いこう▼
 この　しろの　いちばん　おく……
 ボクにとって　たいせつな　ばしょで▽
-キミと　むきあいたい……！▼
+キミと　むきあねば　ならない……！▼
 さあ
 ついてきたまえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:18:44" />
+				Time="2011-08-02T12:21:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -149,10 +149,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・メッセージ表示後
+　GRIDX＝13、GRIDZ＝20まで移動
+・続けてboss_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:43:51" />
+				Time="2011-08-02T12:13:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -209,14 +211,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・GRIDX＝13、GRIDZ＝20まで移動し
-　このメッセージ表示
 ・このメッセージ表示後
 　Ｎ、主人公の後ろに移動
 　連れ歩き開始</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:43:49" />
+				Time="2011-08-02T12:13:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -238,12 +238,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『……まっていたよ▼
-さあ　この　しろの　いちばん
+			<Text>Ｎ『さあ！▼
+この　しろの　いちばん
 おくまで　ボクを　つれていくんだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:23:11" />
+				Time="2011-08-02T12:22:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -251,12 +251,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『……まっていたよ▼
-さあ　この　しろの　いちばん
+			<Text>Ｎ『さあ！▼
+この　しろの　いちばん
 おくまで　ボクを　つれていくんだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:23:53" />
+				Time="2011-08-02T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
