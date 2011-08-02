@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『……きたね</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……きたね[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:52:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『……きたね</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……きたね[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:52:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -58,12 +58,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　２３ばんどうろ　から
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]この　２３ばんどうろ　から
 つらなる　チャンピオンロード▽
-そのさきに　ポケモンリーグが　ある</Text>
+そのさきに　ポケモンリーグが　ある[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:52:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -71,12 +71,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　２３ばんどうろ　から
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]この　２３ばんどうろ　から
 つらなる　チャンピオンロード▽
-そのさきに　ポケモンリーグが　ある</Text>
+そのさきに　ポケモンリーグが　ある[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:53:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -111,13 +111,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンしょうぶ　とは
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンしょうぶ　とは
 ポケモンを　きずつけること……▼
 そうとらえ　きらっていたが
-そんな　たんじゅんな　ものでは　ない</Text>
+そんな　たんじゅんな　ものでは　ない[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:52:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -125,13 +125,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン勝負　とは
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモン勝負　とは
 ポケモンを　傷つけること……▼
 そうとらえ　忌避していたが
-そんな　単純な　ものでは　ない</Text>
+そんな　単純な　ものでは　ない[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:53:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -167,7 +167,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンしょうぶ　とは！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンしょうぶ　とは！▼
 かちまけを　きめる……
 それいじょう　に！▼
 じぶんと！　じぶんの　ポケモンと！
@@ -182,10 +182,10 @@
 ことなる　そんざいを　うけいれ▽
 せかいは　かがくはんおうを　おこす！▼
 ポケモンしょうぶは　その
-ちいさくて　おおきな　いっぽ　なんだ！</Text>
+ちいさくて　おおきな　いっぽ　なんだ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -193,7 +193,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン勝負とは！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモン勝負とは！▼
 勝敗を　決する……
 それ以上に！▼
 自分と！　自分の　ポケモンと！
@@ -208,10 +208,10 @@
 異なる　存在を　受け入れ▽
 世界は　科学反応を　起こす！▼
 ポケモン勝負は　その
-小さくて　大きな　一歩なんだ！</Text>
+小さくて　大きな　一歩なんだ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -247,15 +247,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>これが　ボクの　トモダチ
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
 ゼクロムが　おしえてくれた▼
 そして　せかいを　たびして　えた
 ボクの　すうしき！▼
-この　いみを　
-キミじしんで　かんがえてほしい</Text>
+この　いみを
+キミじしんで　かんがえてほしい[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:52:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -263,15 +263,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>これが　ボクの　トモダチ
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
 ゼクロムが　教えてくれた▼
 そして　世界を　旅して　えた
 ボクの　数式！▼
-この　意味を　
-キミ自身で　考えてほしい</Text>
+この　意味を
+キミ自身で　考えてほしい[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:52:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -306,15 +306,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>これが　ボクの　トモダチ
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
 レシラムが　おしえてくれた▼
 そして　せかいを　たびして　えた
 ボクの　すうしき！▼
-この　いみを　
-キミじしんで　かんがえてほしい</Text>
+この　いみを
+キミじしんで　かんがえてほしい[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -322,15 +322,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>これが　ボクの　トモダチ
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
 レシラムが　教えてくれた▼
 そして　世界を　旅して　えた
 ボクの　数式！▼
-この　意味を　
-キミ自身で　考えてほしい</Text>
+この　意味を
+キミ自身で　考えてほしい[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:52:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -365,13 +365,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おや……？
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]おや……？
 キミは……▼
 あのとき　ボクを　たすけてくれた
-[Name:PokemonName ]だね　アリガトウ！</Text>
+[Name:PokemonName ]だね　アリガトウ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:53:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -379,13 +379,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おや……？
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]おや……？
 キミは……▼
 あのとき　ボクを　助けてくれた
-[Name:PokemonName ]だね　アリガトウ！</Text>
+[Name:PokemonName ]だね　アリガトウ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:53:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -423,15 +423,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うん！
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
 キミと　キミの　ポケモンなら！▼
 ポケモンリーグを　かちぬき
 キミたちだけの　りそうを　みる！▼
 ボクに　みえるのは
-そんな　みらい　だね</Text>
+そんな　みらい　だね[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:53:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -439,15 +439,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うん！
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
 キミと　キミの　ポケモンなら！▼
 ポケモンリーグを　勝ち抜き
 キミたちだけの　理想を　みる！▼
 ボクに　みえるのは
-そんな　未来だね</Text>
+そんな　未来だね[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:53:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -483,15 +483,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うん！
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
 キミと　キミの　ポケモンなら！▼
 ポケモンリーグを　かちぬき
 キミたちだけの　しんじつを　みる！▼
 ボクに　みえるのは
-そんな　みらい　だね</Text>
+そんな　みらい　だね[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:53:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -499,15 +499,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うん！
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
 キミと　キミの　ポケモンなら！▼
 ポケモンリーグを　勝ち抜き
 キミたちだけの　真実を　みる！▼
 ボクに　みえるのは
-そんな　未来だね</Text>
+そんな　未来だね[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T09:59:33" />
+				Time="2011-08-02T10:53:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

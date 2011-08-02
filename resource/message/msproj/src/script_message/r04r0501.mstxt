@@ -685,4 +685,45 @@
 				Time="2011-07-26T11:29:47" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_r04r0501_select_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タマゴ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T11:32:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T11:32:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タマゴ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T11:32:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T11:32:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・タマゴ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T11:32:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T11:32:30" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>
