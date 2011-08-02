@@ -3001,14 +3001,16 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
 //-----------------------------------------------------------------------------
 static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
 { 
+  OS_TPrintf( "ZONEID=%d\n", zone_id );
+
   //迎賓館のみ存在する拡張バッファをつくって登録
   if( ZONEDATA_IsResonanceResort( zone_id ) )
   {
-    //迎賓館にいったらバッファ作成
+    //リゾートいったらバッファ作成
     void **pp_buff = GAMEDATA_GetResortBuffer( gamedata );
     if( *pp_buff == NULL )
     {
-      *pp_buff = RESORT_RECV_BUFF_Init( HEAPID_PROC, RECEPTION_BUFF_RECV_MAX );
+      *pp_buff = RESORT_RECV_BUFF_Init( HEAPID_PROC, RESONANCE_RESORT_BUFF_RECV_EX_NUM );
     }
   }
   else
