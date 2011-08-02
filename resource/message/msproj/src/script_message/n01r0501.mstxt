@@ -2,14 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_n01r0501_boss_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>ここが　えっけんのま……
+さあ　すすみたまえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T05:30:59" />
+				Time="2011-08-02T11:46:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ここが　えっけんのま……
+さあ　すすみたまえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T05:30:59" />
+				Time="2011-08-02T11:46:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +30,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♂
+・posイベント
+　GRIDX＝、GRIDZ＝に移動
+・メッセージ表示後から連れ歩き終了
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T05:30:59" />
+				Time="2011-08-02T12:08:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T05:30:59" />
+				Time="2011-08-02T10:50:30" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -49,7 +55,209 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0501_boss_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えっけんのま
+その　おくに　すすんでほしい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:10:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T11:35:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えっけんのま
+その　おくに　すすんでほしい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:10:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T11:35:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・n01r0502のposを踏むまで繰り返し
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T10:55:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T10:55:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0501_boss_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すまない
+そのわざは　やめてくれないか</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:10:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すまない
+そのわざは　やめてくれないか</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:10:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・禁則処理：あなをほる</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0501_boss_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すまない
+そのどうぐは　やめてくれないか</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:10:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すまない
+そのどうぐは　やめてくれないか</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:10:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・禁則処理：あなぬけのヒモ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0501_boss_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もうすぐ
+しろの　おくに　つくよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:09:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もうすぐ
+しろの　おくに　つくよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:09:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・振り向き会話
+　このマップでは繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:09:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-02T12:05:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
