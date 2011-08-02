@@ -17,7 +17,6 @@
 extern void TdCmn_init_data( T_DOWNLOAD_MAIN_WORK* wk );
 extern void TdCmn_exit_data( T_DOWNLOAD_MAIN_WORK* wk );
 
-//extern void TdCmn_init_bg_info( T_DOWNLOAD_MAIN_WORK* wk );
 extern void TdCmn_init_sub_bg( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 
 // 文字列
@@ -54,8 +53,8 @@ extern u32  TdCmn_main_framelist( T_DOWNLOAD_MAIN_WORK * wk );
 extern s32  TdCmn_is_main_framelist( T_DOWNLOAD_MAIN_WORK * wk, const u32 mode );
 extern void TdCmn_exit_framelist( T_DOWNLOAD_MAIN_WORK * wk );
 extern void TdCmn_calc_framelist( T_DOWNLOAD_MAIN_WORK * wk );
-extern void TdCmn_disp_framelist_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 num );
-extern void TdCmn_set_framelist_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode );
+extern void TdCmn_disp_panel_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
+extern void TdCmn_set_panel_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 smode );
 //
 // パレットチェンジ
 extern void TdCmn_main_chgpal( T_DOWNLOAD_MAIN_WORK* wk );
@@ -81,8 +80,9 @@ extern void TdCmn_main_keycursor( T_DOWNLOAD_MAIN_WORK* wk );
 //
 extern void TdCmn_stop_anim_speed( T_DOWNLOAD_MAIN_WORK *wk, const BOOL bflg );
 //
-extern void TdCmn_disp_panel_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 num );
 extern void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode );
-extern void TdCmn_set_panel_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode );
+//
+//extern void TdCmn_chk_up_disp( T_DOWNLOAD_MAIN_WORK * wk, const BOOL flg );
+extern void TdCmn_chk_up_disp( T_DOWNLOAD_MAIN_WORK * wk, const BOOL keyflg, const BOOL tpflg, const BOOL fflg );
 
 

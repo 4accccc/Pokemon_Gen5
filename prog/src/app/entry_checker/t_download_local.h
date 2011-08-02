@@ -87,6 +87,15 @@ enum{
 	T_DOWNLOAD_AREA_JOIN_TP_PANEL_01,
 	T_DOWNLOAD_AREA_JOIN_TP_PANEL_02,
 };
+// セーブ用
+enum{
+	T_DOWNLOAD_AREA_SAVE_TP_RETURN = 0,				// RETURN
+	T_DOWNLOAD_AREA_SAVE_TP_LEFT,
+	T_DOWNLOAD_AREA_SAVE_TP_RIGHT,
+	T_DOWNLOAD_AREA_SAVE_TP_PANEL_00,
+	T_DOWNLOAD_AREA_SAVE_TP_PANEL_01,
+	T_DOWNLOAD_AREA_SAVE_TP_PANEL_02,
+};
 
 //----------
 // clwork
@@ -211,6 +220,14 @@ enum{
 	T_DOWNLOAD_INFO_MAX,
 };
 
+//--------------
+// 判定
+//--------------
+enum{
+	T_DOWNLOAD_PANEL_FRAME = 0,						// パネル(リストフレーム)
+	T_DOWNLOAD_PANEL_3,								// パネル(3枚表示)
+};
+
 //=============================================================================
 /**
  *								構造体定義
@@ -266,12 +283,14 @@ typedef struct
 	s32						ScrollOffy;						// BG3のスクロールoffset
 	u32						PFlag;							// Canvas用フラグ
 	s32						JoinCurPos;						// 参加カーソル
+	s32						SaveCurPos;						// セーブカーソル
 	//
 	// パレットチェンジ用
 	s32						PCount;							///< カウンタ
 	u16						PBufStart[0x10];				///< 開始
 	u16						PBufEnd[0x10];					///< 終了
 	u16						PBufNow[0x10];					///< 現在
+	u16						FontPal[0x20];					///< パレット用
 	//
 	// list
 	FRAMELIST_WORK			*frame_list_work;					// リスト
