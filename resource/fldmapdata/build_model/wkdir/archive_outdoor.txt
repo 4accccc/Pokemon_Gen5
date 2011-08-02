@@ -434,3 +434,5 @@
 "nsbmdfiles/c15_fountain_01.nsbmd"
 "nsbmdfiles/c15_gate_01.nsbmd"
 "nsbmdfiles/c15_wood_01.nsbmd"
+"nsbmdfiles/c15_whouse_01.nsbmd"
+"nsbmdfiles/c15_trailer_01.nsbmd"

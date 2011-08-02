@@ -435,4 +435,6 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/c15_fountain_01.nsbmd \
 	$(RESDIR)/c15_gate_01.nsbmd \
 	$(RESDIR)/c15_wood_01.nsbmd \
+	$(RESDIR)/c15_whouse_01.nsbmd \
+	$(RESDIR)/c15_trailer_01.nsbmd \
 

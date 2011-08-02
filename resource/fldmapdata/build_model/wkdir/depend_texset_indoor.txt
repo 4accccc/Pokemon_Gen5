@@ -3396,7 +3396,31 @@ DEP_TEXSET_IMD_INDOOR072 = \
 	$(SRCDIR)/ja_board06.imd \
 	$(SRCDIR)/ja_board07.imd \
 	$(SRCDIR)/ja_board08.imd \
-	$(SRCDIR)/ja_board09.imd
+	$(SRCDIR)/ja_board09.imd \
+	$(SRCDIR)/ja_public01.imd \
+	$(SRCDIR)/ja_public02.imd \
+	$(SRCDIR)/ja_public03.imd \
+	$(SRCDIR)/ja_public04.imd \
+	$(SRCDIR)/ja_public05.imd \
+	$(SRCDIR)/ja_public06.imd \
+	$(SRCDIR)/ja_public07.imd \
+	$(SRCDIR)/ja_public08.imd \
+	$(SRCDIR)/ja_public09.imd \
+	$(SRCDIR)/ja_public10.imd \
+	$(SRCDIR)/ja_public11.imd \
+	$(SRCDIR)/ja_public12.imd \
+	$(SRCDIR)/ja_public13.imd \
+	$(SRCDIR)/ja_public14.imd \
+	$(SRCDIR)/ja_public15.imd \
+	$(SRCDIR)/ja_public16.imd \
+	$(SRCDIR)/ja_public17.imd \
+	$(SRCDIR)/ja_public18.imd \
+	$(SRCDIR)/ja_public19.imd \
+	$(SRCDIR)/ja_public20.imd \
+	$(SRCDIR)/ja_public21.imd \
+	$(SRCDIR)/ja_public22.imd \
+	$(SRCDIR)/ja_public23.imd \
+	$(SRCDIR)/ja_public24.imd
 
 texset/indoor072.imd: $(DEP_TEXSET_IMD_INDOOR072) texset/tmp/indoor072.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor072.list

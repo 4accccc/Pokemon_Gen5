@@ -188,4 +188,28 @@ DEP_INDOOR	=	\
 	$(RESDIR)/d25_obj04.nsbmd \
 	$(RESDIR)/d25_obj05.nsbmd \
 	$(RESDIR)/p_gun01.nsbmd \
+	$(RESDIR)/ja_public01.nsbmd \
+	$(RESDIR)/ja_public02.nsbmd \
+	$(RESDIR)/ja_public03.nsbmd \
+	$(RESDIR)/ja_public04.nsbmd \
+	$(RESDIR)/ja_public05.nsbmd \
+	$(RESDIR)/ja_public06.nsbmd \
+	$(RESDIR)/ja_public07.nsbmd \
+	$(RESDIR)/ja_public08.nsbmd \
+	$(RESDIR)/ja_public09.nsbmd \
+	$(RESDIR)/ja_public10.nsbmd \
+	$(RESDIR)/ja_public11.nsbmd \
+	$(RESDIR)/ja_public12.nsbmd \
+	$(RESDIR)/ja_public13.nsbmd \
+	$(RESDIR)/ja_public14.nsbmd \
+	$(RESDIR)/ja_public15.nsbmd \
+	$(RESDIR)/ja_public16.nsbmd \
+	$(RESDIR)/ja_public17.nsbmd \
+	$(RESDIR)/ja_public18.nsbmd \
+	$(RESDIR)/ja_public19.nsbmd \
+	$(RESDIR)/ja_public20.nsbmd \
+	$(RESDIR)/ja_public21.nsbmd \
+	$(RESDIR)/ja_public22.nsbmd \
+	$(RESDIR)/ja_public23.nsbmd \
+	$(RESDIR)/ja_public24.nsbmd \
 
