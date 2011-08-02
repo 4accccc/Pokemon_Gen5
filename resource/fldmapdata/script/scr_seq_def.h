@@ -14210,21 +14210,38 @@
       _ASM_DATACONV_IS_CONV_MUSICAL ret_wk
 
   .macro  _ASM_DATACONV_IS_CONV_MUSICAL ret_wk
-  .short  EV_SEQ_DATACONV_IS_CONV_MUSICAL
+  .short  EV_SEQ_DATACONV_GET_DATA
+  .short  DATACONV_GET_IS_CONVERT_MUSICAL
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * _DATACONV_IS_CONV_MUSICAL ミュージカルがすでにコンバート済みか
+ * @param ret_wk  TRUEならばコンバート済み  FALSEならまだ
+ */
+//--------------------------------------------------------------
+#define _DATACONV_IS_OVER_SCORE( ret_wk ) \
+      _ASM_DATACONV_IS_OVER_SCORE ret_wk
+
+  .macro  _ASM_DATACONV_IS_OVER_SCORE ret_wk
+  .short  EV_SEQ_DATACONV_GET_DATA
+  .short  DATACONV_GET_OVER_SCORE
   .short  \ret_wk
   .endm
 
 //--------------------------------------------------------------
 /**
  * _DATACONV_CONV_MUSICAL ミュージカルをコンバート
- * @param ret_wk  TRUEならばコンバート済み  FALSEならまだ
+ * @param ret_wk  TRUEならばアイテム追加  FALSEならすでにすべて持っていた
  */
 //--------------------------------------------------------------
-#define _DATACONV_CONV_MUSICAL() \
-      _ASM_DATACONV_CONV_MUSICAL
+#define _DATACONV_CONV_MUSICAL( ret_wk ) \
+      _ASM_DATACONV_CONV_MUSICAL ret_wk
 
-  .macro  _ASM_DATACONV_CONV_MUSICAL
+  .macro  _ASM_DATACONV_CONV_MUSICAL ret_wk
   .short  EV_SEQ_DATACONV_CONV_MUSICAL
+  .short  \ret_wk
   .endm
 
 //======================================================================

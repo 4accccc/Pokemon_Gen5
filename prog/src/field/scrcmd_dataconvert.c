@@ -162,7 +162,7 @@ VMCMD_RESULT EvCmdDataConv_WordSetOwnerName( VMHANDLE *p_core, void *p_wk_adrs )
  *	@return 結果コード
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdDataConv_IsConvertMusical( VMHANDLE *p_core, void *p_wk_adrs )
+VMCMD_RESULT EvCmdDataConv_GetData( VMHANDLE *p_core, void *p_wk_adrs )
 {
   SCRCMD_WORK *p_scrcmd = p_wk_adrs;
   SCRIPT_WORK *p_sc = SCRCMD_WORK_GetScriptWork( p_scrcmd );
@@ -170,9 +170,21 @@ VMCMD_RESULT EvCmdDataConv_IsConvertMusical( VMHANDLE *p_core, void *p_wk_adrs )
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
   MUSICAL_SAVE *p_musical = MUSICAL_SAVE_GetMusicalSave( p_sv );
+  DATA_CONVERT_SAVE *p_dataconv = SaveControl_GetDataConvert( p_sv );
+  u16 param    = SCRCMD_GetVMWorkValue( p_core, p_wk_adrs );
   u16 *p_ret  = SCRCMD_GetVMWork( p_core, p_scrcmd );
 
-  *p_ret = MUSICAL_SAVE_IsConvertItem( p_musical );
+  switch( param )
+  {
+  case DATACONV_GET_IS_CONVERT_MUSICAL:
+    *p_ret = MUSICAL_SAVE_IsConvertItem( p_musical );
+    break;
+  case DATACONV_GET_OVER_SCORE:
+    *p_ret = DATA_CONVERT_SAVE_GetData( p_dataconv, DATA_CONVERT_GET_ID_MUSICAL_POINT, NULL ) < MUSICAL_SAVE_GetSumPoint( p_musical );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -197,17 +209,24 @@ VMCMD_RESULT EvCmdDataConv_ConvertMusical( VMHANDLE *p_core, void *p_wk_adrs )
   DATA_CONVERT_SAVE *p_dataconv = SaveControl_GetDataConvert( p_sv );
   MUSICAL_SAVE *p_musical = MUSICAL_SAVE_GetMusicalSave( p_sv );
 
+  u16 *p_ret  = SCRCMD_GetVMWork( p_core, p_scrcmd );
+
   const u8 *cp_item_bit = (const u8 *)DATA_CONVERT_SAVE_GetData( p_dataconv, DATA_CONVERT_GET_ID_MUSICAL_ITEMBIT, NULL );
   int i;
 
+  *p_ret = FALSE;
 
   //アイテムコンバート
   for( i = 0; i < MUSICAL_ITEM_MAX_REAL; i++ )
   {
     if( cp_item_bit[i/8] & (i%8) )
     {
-      OS_TPrintf( "musical item[%d] convert!", i );
-      MUSICAL_SAVE_AddItem( p_musical, i );
+      if( MUSICAL_SAVE_ChackHaveItem( p_musical, i ) == FALSE )
+      {
+        OS_TPrintf( "musical item[%d] add!", i );
+        MUSICAL_SAVE_AddItem( p_musical, i );
+        *p_ret = TRUE;
+      }
     }
   }
 

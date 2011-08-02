@@ -3071,4 +3071,208 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_swan_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……おやおや？▼
+スーパースターの
+つかっていた　グッズと▼
+おなじグッズを　すでに
+すべて　おもちの　ようですね▼
+さすが　です！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-02T05:27:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……おやおや？▼
+スーパースターの
+つかっていた　グッズと▼
+おなじグッズを　すでに
+すべて　おもちの　ようですね▼
+さすが　です！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-02T05:27:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:49:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_convert_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>むかし　ステキな　ミュージカルを
+みせてくれる　トレーナー　が　いて▽
+わたし　ずいぶん　むちゅうだったの▼
+また　あんな　スーパースターが
+あらわれない　かしら……</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-02T05:28:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むかし　ステキな　ミュージカルを
+みせてくれる　トレーナー　が　いて▽
+わたし　ずいぶん　むちゅうだったの▼
+また　あんな　スーパースターが
+あらわれない　かしら……</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-02T05:28:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:49:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_convert_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら！　あなた……▼
+わたしが　むかし　だいファンだった
+[Name:TrainerName ]さん　に▽
+なんだか　にてる　かも……？▼
+でもまだ　[Name:TrainerName ]さん　の
+カリスマせい　には　およんでないわね</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-02T05:28:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら！　あなた……▼
+わたしが　むかし　だいファンだった
+[Name:TrainerName ]さん　に▽
+なんだか　にてる　かも……？▼
+でもまだ　[Name:TrainerName ]さん　の
+カリスマせい　には　およんでないわね</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-02T05:28:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:49:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_convert_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら！！！　あなた……▼
+わたしが　むかし　だいファンだった
+[Name:TrainerName ]さん　に▼
+まけず　おとらず　ステキな
+ミュージカルを　する　かたね！！▼
+すっかり　ファンになっちゃった
+ステキな　ぶたいを　ありがとう</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-02T05:29:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら！！！　あなた……▼
+わたしが　むかし　だいファンだった
+[Name:TrainerName ]さん　に▼
+まけず　おとらず　ステキな
+ミュージカルを　する　かたね！！▼
+すっかり　ファンになっちゃった
+ステキな　ぶたいを　ありがとう</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-02T05:29:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:22:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-01T07:49:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

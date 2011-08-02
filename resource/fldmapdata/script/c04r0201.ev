@@ -35,11 +35,13 @@ _EVENT_DATA    ev_c04r0201_stylistpoke_01
 _EVENT_DATA    ev_c04r0201_gentleman_01
 _EVENT_DATA    ev_c04r0201_man2_01
 _EVENT_DATA    ev_c04R0201_init
+_EVENT_DATA    ev_scene_c04r0201_musical_first
 _EVENT_DATA    ev_bg_c04r0201_musical_shot
 _EVENT_DATA    ev_c04r0201_girl4_01
 _EVENT_DATA    ev_bg_c04r0201_statue_01
 _EVENT_DATA    ev_c04r0201_policeman_01
 _EVENT_DATA    ev_c04r0201_clown_01
+_EVENT_DATA    ev_c04r0201_conv_girl_01
 _EVENT_DATA_END
 
 
@@ -51,7 +53,7 @@ INIT_EVENT_START  ev_c04R0201_init
   //ミュージカル初回イベント用
   IF $WK_SCENE_C04R0201 == 0 THEN
     //オーナーの位置を変更
-    _OBJ_POS_CHANGE( C04R0201_OWNER_01, 14, 0, 13, DIR_DOWN )
+    _OBJ_POS_CHANGE( C04R0201_OWNER_01, 14, 0, 13, DIR_UP )
 
   ENDIF
 
@@ -61,11 +63,21 @@ INIT_EVENT_END
 /************************************************************/
 /*				ミュージカル初回訪問イベント				*/
 /************************************************************/
-ev_musical_first:
+EVENT_START		ev_scene_c04r0201_musical_first
 {
 	DEFINE_LOCAL LWK_IS_EXIST
+	DEFINE_LOCAL LWK_GET_ITEM
 
   _DATACONV_IS_EXIST( DATACONV_ID_MUSICAL, LWK_IS_EXIST )
+
+  //サポート＆主人公：受付前へ進む
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_first_player_walk_01 )
+	_OBJ_ANIME_WAIT()
+
+
+  //オーナー：近寄ってくる
+	_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_come_01 )
+	_OBJ_ANIME_WAIT()
 
   IF $LWK_IS_EXIST == TRUE THEN
     //コンバート用データある
@@ -104,14 +116,18 @@ ev_musical_first:
 	  _MSGWIN_CLOSE()
 
 	  //オーナー：グッズケースを渡す
-	  //_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
-	  //_OBJ_ANIME_WAIT()
+	  _OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
+	  _OBJ_ANIME_WAIT()
 
 	  //グッズケース入手
 	  _ITEM_EVENT_KEYWAIT( ITEM_GUZZUKEESU, 1 )
 
+	  //オーナー：一歩さがる
+	  _OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_03 )
+	  _OBJ_ANIME_WAIT()
+
     //グッズコンバート
-    _DATACONV_CONV_MUSICAL()
+    _DATACONV_CONV_MUSICAL( LWK_GET_ITEM )
     
     //あなたなら　きっと　しんせだいの
 	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_swan_03a, C04R0201_OWNER_01 )
@@ -134,15 +150,15 @@ ev_musical_first:
 	  _MSGWIN_CLOSE()
 	
 	  //オーナー：グッズケースを渡す
-	  //_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
-	  //_OBJ_ANIME_WAIT()
+	  _OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
+	  _OBJ_ANIME_WAIT()
 	
 	  //グッズケース入手
 	  _ITEM_EVENT_KEYWAIT( ITEM_GUZZUKEESU, 1 )
 	
 	  //オーナー：一歩さがる
-	  //_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_03 )
-	  //_OBJ_ANIME_WAIT()
+	  _OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_03 )
+	  _OBJ_ANIME_WAIT()
 	
 	  //そのグッズケースの中に
 	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_03, C04R0201_OWNER_01 )
@@ -188,9 +204,15 @@ ev_musical_first:
 	
 	//オーナーを元の位置へ配置
 	_OBJ_POS_CHANGE( C04R0201_OWNER_01, 17, 6, 3, DIR_DOWN )
+
+
+  //========================================//
+  //初回話しかけイベント無効
+	$WK_SCENE_C04R0201 = 1
+  //========================================//
 	
 }
-_RET
+EVENT_END
 
 
 //ドレスアップ参加フロー
@@ -310,10 +332,8 @@ _ANIME_LABEL	anm_first_owner_move_01
 //オーナー：グッズケースを渡す
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_first_owner_move_02
-	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WAIT_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -441,30 +461,26 @@ EVENT_START		ev_c04r0201_owner_01
 {
   DEFINE_LOCAL LWK_IS_CONV
 	DEFINE_LOCAL LWK_IS_EXIST
+	DEFINE_LOCAL LWK_GET_ITEM
 
   //すでに何かイベントを行ったか？
   _TALK_OBJ_START()
 
-  IF $WK_SCENE_C04R0201 == 0 THEN
-    //もし最初の話しかけなら初回イベントへ
-    _CALL ev_musical_first
 
-  	//初回話しかけイベント無効
-	  $WK_SCENE_C04R0201 = 1
-  ELSE
+  _DATACONV_IS_EXIST( DATACONV_ID_MUSICAL, LWK_IS_EXIST )
+  _DATACONV_IS_CONV_MUSICAL( LWK_IS_CONV )
 
-    _DATACONV_IS_EXIST( DATACONV_ID_MUSICAL, LWK_IS_EXIST )
-    _DATACONV_IS_CONV_MUSICAL( LWK_IS_CONV )
+  IF $LWK_IS_EXIST == TRUE && $LWK_IS_CONV == FALSE THEN
+    //受け取っていない
 
-    IF $LWK_IS_EXIST == TRUE && $LWK_IS_CONV == FALSE THEN
-      //受け取っていない
+    //ふーむ！　やはり　あなたには
+	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_01, C04R0201_OWNER_01 )
+	  _MSGWIN_CLOSE()
 
-      //ふーむ！　やはり　あなたには
-	    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_01, C04R0201_OWNER_01 )
-	    _MSGWIN_CLOSE()
+    //グッズコンバート
+    _DATACONV_CONV_MUSICAL( LWK_GET_ITEM )
 
-      //グッズコンバート
-      _DATACONV_CONV_MUSICAL()
+    IF $LWK_GET_ITEM == TRUE THEN
 
       //プレイヤー名　は　グッズの　つめあわせを　もらった
       _PLAYER_NAME( 0 )
@@ -475,13 +491,19 @@ EVENT_START		ev_c04r0201_owner_01
 
       //あなたなら　きっと　それらの　グッズ
 	    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_02, C04R0201_OWNER_01 )
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
 
     ELSE
-      //受け取っているなら通常のイベントアイテム入手処理へ
-      _CALL ev_owner_normal
+
+      //おやおや？　すでにおもちの
+	    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_03, C04R0201_OWNER_01 )
     ENDIF
+
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+    //受け取っているなら通常のイベントアイテム入手処理へ
+    _CALL ev_owner_normal
   ENDIF
 }
 EVENT_END
@@ -707,4 +729,30 @@ EVENT_START   ev_c04r0201_clown_01
 
 EVENT_END
 
+/************************************************************/
+/*            コンバートのもとの持ち主のことをいう人        */
+/************************************************************/
+EVENT_START    ev_c04r0201_conv_girl_01
 
+	DEFINE_LOCAL LWK_IS_EXIST
+	DEFINE_LOCAL LWK_OVER_SCORE
+
+  _DATACONV_IS_EXIST( DATACONV_ID_MUSICAL, LWK_IS_EXIST )
+  _DATACONV_IS_OVER_SCORE( LWK_OVER_SCORE )
+
+  _TALK_OBJ_START()
+
+  IF $LWK_IS_EXIST == FALSE THEN
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_convert_01 )
+  ELSE
+    _DATACONV_SET_NAME( DATACONV_ID_MUSICAL )
+    IF $LWK_OVER_SCORE == TRUE THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_convert_02 )
+    ELSE
+      _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_convert_03 )
+    ENDIF
+  ENDIF
+
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
