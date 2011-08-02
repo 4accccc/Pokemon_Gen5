@@ -349,6 +349,7 @@ typedef struct
 	s32						TrainerId;						// トレーナーID
 	s32						ScrollOffy;						// オフセット
 	s32						DispMaxNum;						// 最大数
+	s32						TotalWinCount;					// 総優勝回数
 	s16						CountBuffer[TMT_MAX+2];			// カウント
 	s16						DispBuffer[TMT_MAX+2];			// 表示のバッファ
 	// list
@@ -1041,6 +1042,7 @@ static void wr_init( WIN_RECORD_MAIN_WORK* wk )
 	wk->TrainerId	= 0;
 	wk->DispMaxNum	= 0;
 	wk->ScrollOffy	= 0;
+	wk->TotalWinCount = 0;
 	//
 	// カウント表示用バッファ
 	for(i=0;i<TMT_MAX+2;i++){
@@ -1900,7 +1902,8 @@ static void wr_disp_up_string( WIN_RECORD_MAIN_WORK* wk )
 	//
 	// 回数
 	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
-	STRTOOL_SetNumber( strbuf2, 1234, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+//	STRTOOL_SetNumber( strbuf2, 1234, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+	STRTOOL_SetNumber( strbuf2, wk->TotalWinCount, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 	WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
 	// 最終出力バッファ
 	expbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
@@ -1969,6 +1972,7 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 	u16		cnt;
 	s32		i;
 	s32		j;
+	s32		num;
 	u32		tmp;
 	BOOL	bflg;
 	
@@ -2015,6 +2019,21 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 	if(wk->DispMaxNum <= WIN_RECORD_DISP_PANEL_MAX){
 		wk->Flag |= FLG_MW_NO_SCROLL;
 	}
+	
+	// 総優勝回数を計算
+	num = 0;
+	for(i=0;i<wk->DispMaxNum;i++){
+		j = wk->DispBuffer[i];
+		num += wk->CountBuffer[j];
+	}
+	// リミット
+	if(num >= WIN_RECORD_MAX_COUNT){
+		num = WIN_RECORD_MAX_COUNT;
+	}
+	wk->TotalWinCount = num;
+#if 0
+	OS_Printf("total win count :%d\n",wk->TotalWinCount);
+#endif
 	
 #if 0
 	OS_Printf("boy :%d\n",wk->TrainerId);
