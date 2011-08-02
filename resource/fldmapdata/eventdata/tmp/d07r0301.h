@@ -22,6 +22,10 @@
 #define FLD_ITEM_242                       1
 #define FLD_ITEM_247                       2
 #define FLD_ITEM_248                       3
+#define TR_VETERANW_13                     4
+#define TR_WORKER1_10                      5
+#define TR_WORKER1_11                      6
+#define TR_MOUNT_23                        7
 
 #endif //ZONE_D07R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

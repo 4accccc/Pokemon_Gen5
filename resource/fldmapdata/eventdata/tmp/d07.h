@@ -16,6 +16,5 @@
 #define ZONE_D07_EVB_H
 
 #define D07_BOARD_01                      0
-#define D07_HIDE_ITEM_01                  1
 
 #endif //ZONE_D07_EVB_H

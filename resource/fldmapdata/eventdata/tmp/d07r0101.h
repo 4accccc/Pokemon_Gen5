@@ -30,6 +30,9 @@
 #define FLD_ITEM_243                       2
 #define FLD_ITEM_246                       3
 #define FLD_ITEM_250                       4
+#define TR_WORKER2_36                      5
+#define TR_VETERANM_16                     6
+#define TR_MOUNT_24                        7
 
 #endif //ZONE_D07R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

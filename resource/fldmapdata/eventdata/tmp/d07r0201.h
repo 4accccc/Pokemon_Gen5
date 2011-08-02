@@ -18,13 +18,14 @@
 #define ZONE_D07R0201_EVC_H
 
 #define FLD_ITEM_241                       0
+#define TR_WORKER2_39                      1
+#define TR_VETERANW_12                     2
+#define TR_WORKER2_40                      3
 
 #endif //ZONE_D07R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D07R0201_EVB_H
 #define ZONE_D07R0201_EVB_H
 
-#define D07R0201_HIDE_ITEM_01             0
-#define D07R0201_HIDE_ITEM_02             1
 
 #endif //ZONE_D07R0201_EVB_H

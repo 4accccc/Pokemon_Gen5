@@ -21,12 +21,13 @@
 #define D07R0401_WORKMAN_01                2
 #define FLD_ITEM_244                       3
 #define FLD_ITEM_249                       4
+#define TR_WORKER1_09                      5
+#define TR_VETERANM_15                     6
 
 #endif //ZONE_D07R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D07R0401_EVB_H
 #define ZONE_D07R0401_EVB_H
 
-#define D07R0401_HIDE_ITEM_01             0
 
 #endif //ZONE_D07R0401_EVB_H

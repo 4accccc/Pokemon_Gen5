@@ -13,6 +13,13 @@
 #ifndef ZONE_D24R0301_EVC_H
 #define ZONE_D24R0301_EVC_H
 
+#define TR_ELITEW_33                       0
+#define TR_MOUNT_21                        1
+#define TR_KARATE_21                       2
+#define TR_MOUNT_22                        3
+#define TR_RANGERW_23                      4
+#define TR_BATTLEG_20                      5
+#define TR_BACKPACKERM_25                  6
 
 #endif //ZONE_D24R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d24r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
