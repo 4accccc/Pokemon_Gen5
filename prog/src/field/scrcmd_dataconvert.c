@@ -143,6 +143,7 @@ VMCMD_RESULT EvCmdDataConv_WordSetOwnerName( VMHANDLE *p_core, void *p_wk_adrs )
   u8 sex = DATA_CONVERT_SAVE_GetSex( p_dataconv, id );
   const STRCODE *cp_name = (const STRCODE *)DATA_CONVERT_SAVE_GetName( p_dataconv, id );
   STRBUF *p_str = GFL_STR_CreateBuffer( 64, GFL_HEAP_LOWID(heapID) );
+  GFL_STR_SetStringCode(  p_str, cp_name );
 
   GF_ASSERT( DATA_CONVERT_SAVE_IsExist( p_dataconv, id ) );
 
@@ -180,7 +181,7 @@ VMCMD_RESULT EvCmdDataConv_GetData( VMHANDLE *p_core, void *p_wk_adrs )
     *p_ret = MUSICAL_SAVE_IsConvertItem( p_musical );
     break;
   case DATACONV_GET_OVER_SCORE:
-    *p_ret = DATA_CONVERT_SAVE_GetData( p_dataconv, DATA_CONVERT_GET_ID_MUSICAL_POINT, NULL ) < MUSICAL_SAVE_GetSumPoint( p_musical );
+    *p_ret = ( DATA_CONVERT_SAVE_GetData( p_dataconv, DATA_CONVERT_GET_ID_MUSICAL_POINT, NULL ) < MUSICAL_SAVE_GetSumPoint( p_musical ) );
     break;
   default:
     GF_ASSERT(0);
