@@ -297,59 +297,11 @@ VMCMD_RESULT EvCmdTV_CM_GetMsg( VMHANDLE *core, void *wk )
 
   u16 *ret = SCRCMD_GetVMWork( core, work );
 
-  // どの項目を紹介するか？（項目なので割る２してる）
-  rnd = GFUser_GetPublicRand( (CM_TV_MAX/2) );
+  // どの項目を紹介するか？
+  rnd = GFUser_GetPublicRand( CM_TV_MAX );
+  msg = msg_tv_04_01;
 
-  // 何を紹介するかでメッセージ分岐
-  //
-  switch( rnd ){
-  case 0:
-    {
-      OS_Printf("ハイリンクフェス紹介\n");
-
-      // セーブデータが存在するかチェック
-      // @TODO
-      if( 1 ) { msg = msg_tv_04_01; }
-      else    { msg = msg_tv_04_02; }
-    }
-    break;
-  case 1:
-    {
-      OS_Printf("ポケウッド紹介\n");
-
-      // セーブデータが存在するかチェック
-      // @TODO
-      if( 1 ) { msg = msg_tv_04_03; }
-      else    { msg = msg_tv_04_04; }
-    }
-    break;
-  case 2:
-    {
-      OS_Printf("ジョイントアベニュー紹介\n");
-
-      // セーブデータが存在するかチェック
-      // @TODO
-      if( 1 ) { msg = msg_tv_04_05; }
-      else    { msg = msg_tv_04_06; }
-    }
-    break;
-  case 3:
-    {
-      OS_Printf("WBT紹介\n");
-
-      // セーブデータが存在するかチェック
-      // @TODO
-      if( 1 ) { msg = msg_tv_04_07; }
-      else    { msg = msg_tv_04_08; }
-    }
-    break;
-  default:
-    *ret = msg_tv_04_01;
-    GF_ASSERT(0);
-    return VMCMD_RESULT_CONTINUE;
-  }
-
-  *ret = msg;
+  *ret = ( msg + rnd );
 
   return VMCMD_RESULT_CONTINUE;
 
