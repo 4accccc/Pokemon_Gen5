@@ -1067,6 +1067,11 @@
   // 飛行ジム
   DEF_CMD( EvCmdGymFly_Init, EV_SEQ_GYM_FLY_INIT )
 
+  // テレビ番組CM挿入チェック
+  DEF_CMD( EvCmdTV_CM_Check, EV_SEQ_TV_CM_CHECK )
+  // テレビ番組CMメッセージ抽選
+  DEF_CMD( EvCmdTV_CM_GetMsg, EV_SEQ_TV_CM_GET_MSG )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

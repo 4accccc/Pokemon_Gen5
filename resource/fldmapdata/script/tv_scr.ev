@@ -9,6 +9,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_tv_01_scr.h"
+  .include  "tv_scr_local.h"
 
 //----------------------------------------------------------------------
 //               スクリプトテーブル
@@ -16,26 +17,136 @@
 _EVENT_DATA   ev_tv
 _EVENT_DATA_END
 
+DEFINE_LOCAL reg_return
+DEFINE_LOCAL select_tv    // 選択したTV番組
+DEFINE_LOCAL cm_insert    // CMが挿入された(確立が変わる)
+
 EVENT_START ev_tv
 {
-  DEFINE_LOCAL msg
+  DEFINE_LOCAL i_loop
+  DEFINE_LOCAL i_seq
+
   //開始
   _TALK_START_SE_PLAY()
-  //テレビ見たレコード加算
-  _ADD_RECORD( RECID_WATCH_TV, 1 )
-  {
-    DEFINE_LOCAL clear
-    IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN    //ゲームクリア前
-      $clear = FALSE
-    ELSE                                        //ゲームクリア後
-      $clear = TRUE
-    ENDIF
 
-    _TV_GET_MSG(clear, msg)
-  }
-  _SYSWIN_MSG( msg, POS_DOWN )
-  _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
+  // 変数初期化
+  $i_loop = TRUE
+  $i_seq  = SEQ_MENU
+  $cm_insert = FALSE
+  
+  // みない　を選択するまで繰り返し
+  WHILE $i_loop == TRUE
+    SWITCH $i_seq
+    CASE SEQ_MENU THEN          // 番組選択
+      _CALL sub_tv_menu
+      $i_seq = $reg_return
+
+    CASE SEQ_TALENT THEN        // タレント
+      $select_tv = SELECT_TALENT
+      _CALL sub_tv_msg
+      $i_seq = SEQ_CONTINUE
+
+    CASE SEQ_BATTLE THEN        // バトル
+      $select_tv = SELECT_BATTLE
+      _CALL sub_tv_msg
+      $i_seq = SEQ_CONTINUE
+
+    CASE SEQ_VARIETY THEN       // バラエティ
+      $select_tv = SELECT_VARIETY
+      _CALL sub_tv_msg
+      $i_seq = SEQ_CONTINUE
+
+    CASE SEQ_CONTINUE THEN      // 再度見るか？
+      _CALL sub_tv_continue
+      $i_seq = $reg_return
+
+    CASE SEQ_EXIT THEN
+      $i_loop = FALSE     // 終了
+    ENDSWITCH
+  ENDWHILE
 }
 EVENT_END
+
+
+//==============================================================
+//サブルーチン：番組選択
+//==============================================================
+sub_tv_menu:
+{
+  DEFINE_LOCAL  i_ret
+
+  // どの　ばんぐみを　みますか？
+	_SYSWIN_MSG( msg_tv_05_01, POS_DOWN )
+
+  // 分岐　タレント・バトル・バラエティ・みない
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
+
+	_BMPMENU_MAKE_LIST( msg_tv_05_02, SEQ_TALENT )	// タレント
+	_BMPMENU_MAKE_LIST( msg_tv_05_03, SEQ_BATTLE )	// バトル
+	_BMPMENU_MAKE_LIST( msg_tv_05_04, SEQ_VARIETY )	// バラエティ
+	_BMPMENU_MAKE_LIST( msg_tv_05_05, SEQ_EXIT )	  // みない
+
+	//メニュー表示
+	_BMPMENU_START()
+  _SYSWIN_CLOSE()
+
+  IF $i_ret == EV_WIN_B_CANCEL THEN
+    $reg_return = SEQ_EXIT
+  ELSE
+    $reg_return = $i_ret
+  ENDIF
+}
+_RET
+
+//==============================================================
+//サブルーチン：もういちど番組見るか？
+//==============================================================
+sub_tv_continue:
+{
+  // まだ　みますか？
+	_SYSWIN_MSG( msg_tv_05_06, POS_DOWN )
+
+  _YES_NO_WIN( SCWK_ANSWER )    // ここではクローズしない
+
+  IF $SCWK_ANSWER == SCR_YES THEN
+    $reg_return = SEQ_MENU  // 見る
+  ELSE
+    $reg_return = SEQ_EXIT  // 見ない
+  ENDIF
+
+  _SYSWIN_CLOSE()
+}
+_RET
+
+//==============================================================
+//サブルーチン：TVメッセージ
+//==============================================================
+sub_tv_msg:
+{
+  DEFINE_LOCAL msg
+  DEFINE_LOCAL is_cm
+
+  //テレビ見たレコード加算
+  _ADD_RECORD( RECID_WATCH_TV, 1 )
+
+  // TVメッセージ
+  _TV_GET_MSG( select_tv, msg)
+
+  _SYSWIN_MSG( msg, POS_DOWN )
+  _LAST_KEYWAIT()
+
+  // CM抽選
+  _TV_CM_CHECK( cm_insert, is_cm )
+
+  // CM流すか？
+  IF $is_cm == TRUE THEN
+    $cm_insert = TRUE       // CMが挿入されたフラグ
+    _TV_CM_GET_MSG( msg )
+    _SYSWIN_MSG( msg, POS_DOWN )
+    _LAST_KEYWAIT()
+  ENDIF
+  
+  _SYSWIN_CLOSE()
+}
+_RET
 

@@ -32,6 +32,8 @@
 
   .include	"wbt_hall_def.h"
 
+  .include  "tv_scr_def.h"
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -944,6 +946,7 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_5,   5 ) // ぎょえ
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_6,   6 ) // わざおしえショップ
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_7,   7 ) // アジト船パスワード入力(ゾーン限定)
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_8,   8 ) // TV番組
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -990,6 +993,8 @@ EVENT_START   ev_debug_ichiraku
   CASE 7 THEN
     _HIDE_SHIP_PASSWORD_INPUT( SCWK_ANSWER )
     _DEBUG_PRINT_WK( SCWK_ANSWER )
+  CASE 8 THEN
+    _GLOBAL_CALL  SCRID_TV
     
   ENDSWITCH
 

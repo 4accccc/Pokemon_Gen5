@@ -11900,15 +11900,43 @@
 //--------------------------------------------------------------
 /**
  * @brief テレビ番組メッセージ抽選
- * @param   clear ゲームクリアしてるか？
+ * @param   select_tv 選択した番組項目
  * @param   msg   抽選結果メッセージ
  */
 //--------------------------------------------------------------
-#define _TV_GET_MSG( clear, msg ) _ASM_TV_GET_MSG clear, msg
+#define _TV_GET_MSG( select_tv, msg ) _ASM_TV_GET_MSG select_tv, msg
 
-  .macro _ASM_TV_GET_MSG clear, msg
+  .macro _ASM_TV_GET_MSG select_tv, msg
   .short EV_SEQ_TV_GET_MSG
-  .short \clear
+  .short \select_tv
+  .short \msg
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief テレビ番組CM挿入チェック
+ * @param   cm_insert CMが挿入されたことあるかフラグ
+ * @param   ret_wk    TRUE:CM挿入 FALSE:挿入しない
+ */
+//--------------------------------------------------------------
+#define _TV_CM_CHECK( cm_insert, ret_wk ) _ASM_TV_CM_CHECK cm_insert, ret_wk
+
+  .macro _ASM_TV_CM_CHECK cm_insert, ret_wk
+  .short EV_SEQ_TV_CM_CHECK
+  .short \cm_insert
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief テレビ番組CMメッセージ抽選
+ * @param   msg   抽選結果メッセージ
+ */
+//--------------------------------------------------------------
+#define _TV_CM_GET_MSG( msg ) _ASM_TV_CM_GET_MSG msg
+
+  .macro _ASM_TV_CM_GET_MSG  msg
+  .short EV_SEQ_TV_CM_GET_MSG
   .short \msg
   .endm
 
