@@ -9141,11 +9141,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なるほど　キミみたいな　トレーナーが
-あそこに　たどりつくんだ……▼</Text>
+			<Text>なるほど　キミみたいな　てんさいが
+あそこに　たどりつくのか……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-20T07:46:26" />
+				Time="2011-07-29T08:28:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9153,11 +9153,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なるほど　キミみたいな　トレーナーが
-あそこに　たどり着くんだ……▼</Text>
+			<Text>なるほど　キミみたいな　天才が
+あそこに　たどりつくのか……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-20T07:47:37" />
+				Time="2011-07-29T08:31:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

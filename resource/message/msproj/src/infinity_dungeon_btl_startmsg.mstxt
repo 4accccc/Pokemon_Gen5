@@ -8135,10 +8135,10 @@
 			<Text>大好きクラブの　総力をあげて
 このダンジョンを　攻略する！▼
 先に　最下層に
-たどり着くのは　我々だ！▼</Text>
+たどりつくのは　我々だ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T08:05:04" />
+				Time="2011-07-29T08:41:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10544,13 +10544,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人生　夏休み中の
-お父さんに　かわって▼
-わたしが　家族を　養うの！
+			<Text>人生　夏休み中の　お父さんに
+かわって　わたしが家族を　養うの！▽
 賞金は　渡さないわよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T11:00:51" />
+				Time="2011-07-29T09:00:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10797,10 +10796,10 @@
 すっごい　危険な雰囲気だけど
 だ……大丈夫なのかしら？▼
 ……ちがうわよ！　ビビってないって！
-わたしも　ここまできた　つわものよ▼</Text>
+わたしも　ここまで来た　つわものよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-15T01:57:53" />
+				Time="2011-07-29T08:44:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

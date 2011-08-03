@@ -131,10 +131,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>わざマシンを　たくさん　あつめたら
+ごほうびに　ステキなものを▽
+プレゼントしてあげる！▼
+いろんな　わざマシンを　みせてね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:34" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T02:18:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -142,10 +145,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>わざマシンを　たくさん　あつめてきたら
+ごほうびに　ステキなものを▽
+プレゼントしてあげる！▼
+いろんな　わざマシンを　見せてね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:39" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T05:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -162,10 +168,19 @@
 		<AttributeCell
 			Name="Character">
 			<Text>WOMAN3
-エプロン女性</Text>
+エプロン女性
+　聞いた所、そのままフローが、
+　ヒントかごほうびに行くので、
+　表示されないかも。
+　会話２回目はこの会話
+（プレゼントをあげることを示すため）
+　会話３回目以降は
+　『全ての条件を満たさないケース』の
+　ランダム項目に、このメッセージが入る
+　感じでしょうか？　2011/7/29　吉川メモ）</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:07:45" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:17:03" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -180,10 +195,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>あっ！　わざマシンマスター！
+たくさんの　わざマシンを　みせてくれて▽
+ほんとうに　ありがとうね！▼
+じゆうじざいに　わざを　つかいこなし
+きょうてきを　バッタバッタと▽
+たおしちゃいなさい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:43:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -191,10 +211,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>あっ！　わざマシンマスター！
+たくさんの　わざマシンを　見せてくれて▽
+本当に　ありがとうね！▼
+自由自在に　わざを使いこなして
+強敵を　バッタバッタと▽
+倒しちゃいなさい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:44:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -229,10 +254,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ふむふむ……
+あなたは　[Digit:2digits ]　この　わざマシンを▽
+もっているみたい▼
+もっと　たくさん　あつめてきたら
+ステキなものを　プレゼントしちゃう！▼
+がんばってね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T10:23:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -240,10 +270,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ふむふむ……
+あなたは　[Digit:2digits ]　個の　わざマシンを▽
+持っているみたい▼
+もっと　たくさん　あつめてきたら
+ステキなものを　プレゼントしちゃう！▼
+がんばってね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T10:23:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -260,10 +295,12 @@
 		<AttributeCell
 			Name="Character">
 			<Text>WOMAN3
-エプロン女性</Text>
+エプロン女性
+￥道具数タグ　仮に二桁の0番を入力。
+　吉川</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:07:45" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T02:38:22" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -278,10 +315,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>いっぱい　わざマシンを　あつめたわね
+おねえさんに　みせてちょうだい▼
+……おお～！　これは　はじめてみた！
+へぇ～　こんなのも　あったんだ！！▼
+……こだわりの　わざマシンばかりね！
+ありがと！　こうふんしちゃった！▼
+ごほうびに　[Name:Item ]　を
+プレゼントしちゃう！　うけとって！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T03:02:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -289,10 +333,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>いっぱい　わざマシンを　あつめたわね
+お姉さんに　見せてちょうだい▼
+……おお～！　これは　初めて見た！
+へぇ～　こんなのも　あったんだ！！▼
+……こだわりの　わざマシンばかりね！
+ありがと！　興奮しちゃった！▼
+ごほうびに　[Name:Item ]　を
+プレゼントしちゃう！　受け取って！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T03:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -309,10 +360,12 @@
 		<AttributeCell
 			Name="Character">
 			<Text>WOMAN3
-エプロン女性</Text>
+エプロン女性
+￥道具名タグ　仮に道具タグ0番を入力。
+　 吉川</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:07:45" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:02:29" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -327,10 +380,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>まだまだ　イッシュには　たくさんの
+わざマシンが　あるはずよ！▼
+いいもの　あげちゃうから
+もっともっと　あつめてきてちょうだい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T03:10:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -338,10 +394,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>まだまだ　イッシュには　たくさんの
+わざマシンが　あるはずよ！▼
+いいもの　あげちゃうから
+もっともっと　あつめてきてちょうだい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T03:30:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -376,10 +435,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ふぅー！　おみごと！
+わざあり　いっぽん！　ってかんじ！▼
+よのなかには　こんなに　たくさんの
+わざマシンが　あったのね！▼
+あなたの　おかげで　わざの
+おくぶかさを　しることができたわ！▼
+わざマシンマスター！
+ほんとうに　ありがとう！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:41:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -387,10 +453,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ふぅー！　お見事！
+わざあり　一本！　って感じ！▼
+世の中には　こんなに　たくさんの
+わざマシンが　あったのね！▼
+あなたの　おかげで　わざの
+奥深さを　知ることができたわ！▼
+わざマシンマスター！
+本当に　ありがとう！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -425,10 +498,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>どう？　わざマシンは　あつまってる？▼
+しんせつな　ひとが　わざマシンを
+プレゼントしてくれたりするから▼
+はずかしがらずに　いろんな　ひとと
+はなしてみると　いいんじゃないかしら▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:10:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -436,10 +513,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>どう？　わざマシンは　あつまってる？▼
+親切な人が　わざマシンを
+プレゼントしてくれたりするから▼
+恥ずかしがらずに　いろんな　人と
+話してみると　いいんじゃないかしら？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -474,10 +555,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ポケモンずかんの　データを
+あつめてる　はかせにね▼
+たくさんポケモンが　とうろくされた
+ずかんを　みせると　わざマシンが▽
+もらえることが　あるんだって▼
+あなたの　しりあいに　そういう
+ポケモンはかせって　いない？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:13:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -485,10 +572,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ポケモン図鑑の　データを
+あつめている　博士にね▼
+たくさんポケモンが　登録された
+図鑑を　見せると　わざマシンが▽
+もらえることが　あるんだって▼
+あなたの　知り合いに　そういう
+ポケモン博士って　いない？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:13:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -523,10 +616,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ライモンシティにある
+バトルサブウェイって　しってる？▼
+そこでトレーナたちを　たおしまくって
+ＢＰを　ためれば　わざマシンを▽
+かうことができるわよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T07:22:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -534,10 +631,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ライモンシティにある
+バトルサブウェイって　知ってる？▼
+そこでトレーナたちを　倒しまくって
+ＢＰを　ためれば　わざマシンを▽
+買うことができるわよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T06:25:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -572,10 +673,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>うーん……わざマシンが
+あんまり　あつまっていないようね▼
+フィールドは　しらべてるかしら？
+おちているものも　あるみたいよ▼
+かなり　ややこしい　ばしょにも
+あるみたいだから▽
+くまなく　さがしてみなさい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T05:43:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -583,10 +690,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>うーん……わざマシンが
+あんまり　あつまっていないようね▼
+フィールドは　調べているかしら？
+落ちているものも　あるみたいよ▼
+かなり　ややこしい　場所にも
+あるみたいだから▽
+くまなく　探してみなさい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-29T05:44:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -621,10 +734,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>わざマシンあつめに　いきづまったら
+いろんなショップで　おかいものして▽
+きぶんてんかん　ってのもいいかもね▼
+わざマシンを　うってる　おみせも
+けっこう　あるしね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-08-03T05:23:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -632,10 +749,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>わざマシンあつめに　いきづまったら
+いろんなショップで　お買い物して▽
+気分転換　ってのもいいかもね▼
+わざマシンを　売ってる　お店も
+結構　あるしね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-27T06:08:42" />
+				User="swan_scenario:W00293"
+				Time="2011-08-03T05:23:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
