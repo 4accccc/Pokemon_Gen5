@@ -3043,10 +3043,10 @@
 		Label="msg_debug_mizu_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>D27 カードキー所持</Text>
+			<Text>D27カードキー所持</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00226"
-				Time="2011-07-29T03:25:36" />
+				Time="2011-08-02T02:24:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -3054,14 +3054,110 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>D27 カードキー所持</Text>
+			<Text>D27カードキー所持</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00226"
-				Time="2011-07-29T03:25:40" />
+				Time="2011-08-02T02:24:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
 				Time="2011-07-29T03:25:40" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_mizu_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>D27搭乗1回目</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>D27搭乗1回目</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:36" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_mizu_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>D27搭乗2回目</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>D27搭乗2回目</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:46" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_mizu_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>D27搭乗3回目</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>D27搭乗3回目</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-02T02:24:56" />
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
