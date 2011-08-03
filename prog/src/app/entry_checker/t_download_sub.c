@@ -698,6 +698,8 @@ static void td_init_obj_res_cmn( T_DOWNLOAD_MAIN_WORK* wk, const s32 drawtype );
 static void td_init_obj( T_DOWNLOAD_MAIN_WORK* wk );
 static void td_exit_obj( T_DOWNLOAD_MAIN_WORK* wk );
 //
+static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk );
+//
 // リスト処理
 static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
 static void td_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
@@ -975,9 +977,11 @@ static void td_exit_string( T_DOWNLOAD_MAIN_WORK* wk )
 	// PrintStream後処理
 	if(wk->MsgBuffer){
 		GFL_STR_DeleteBuffer( wk->MsgBuffer );
+		wk->MsgBuffer = 0;
 	}
 	if(wk->PrintStream){
 		PRINTSYS_PrintStreamDelete( wk->PrintStream );
+		wk->PrintStream = 0;
 	}
 }
 
@@ -1521,7 +1525,6 @@ s32  TdCmn_chk_yesnowin( T_DOWNLOAD_MAIN_WORK* wk )
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-#if 0	// printstreamは少し残し
 //-----------------------------------------------------------------------------
 /**
  *	@brief  会話ウインドウ(セット)
@@ -1533,27 +1536,25 @@ s32  TdCmn_chk_yesnowin( T_DOWNLOAD_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void TdCmn_set_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mesid )
+void TdCmn_set_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id )
 {
 	// PrintStream終了時にはdeleteしないとtaskが残ってしまうようだ
-	// 念のため0check
 	if( wk->PrintStream ){
 		PRINTSYS_PrintStreamDelete( wk->PrintStream );
+		wk->PrintStream = 0;
 	}
 	// Msgの再構築
 	if(wk->MsgBuffer){
 		GFL_STR_DeleteBuffer( wk->MsgBuffer );
+		wk->MsgBuffer = 0;
 	}
-	// メッセージ仮バッファセット(仮)
-//	wk->MsgBuffer = GFL_MSG_CreateString( wk->msg[0], mesid );
-	wk->MsgBuffer = GFL_MSG_CreateString( wk->msg[0], td_mes_d00_tbl[0] );
+	// メッセージバッファ
+	wk->MsgBuffer = GFL_MSG_CreateString( wk->msg[0], td_mes_d00_tbl[id] );
 	//
-	// stream設定=>ここのwk->MsgBufferは終わるまで削除してはいけない
+	// stream設定 => ここのwk->MsgBufferは終わるまで削除してはいけない
 	wk->PrintStream = PRINTSYS_PrintStream(
 				wk->PrintUtil[mode].win, 0, 0, wk->MsgBuffer, wk->font,
 				MSGSPEED_GetWait(), wk->MsgTcblSys, 4, wk->heapID, MES_SYSWIN_CLEAR_COLOR );
-	// スクリーン転送らしい
-	GFL_BMPWIN_MakeTransWindow( wk->PrintUtil[mode].win );
 }
 
 //-----------------------------------------------------------------------------
@@ -1575,11 +1576,12 @@ BOOL TdCmn_main_meswin( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	//
 	// 文字送りカーソル処理
-//	APP_KEYCURSOR_Main( wk->MsgCursorWork, wk->PrintStream, wk->PrintUtil[CVS_MAIN_MESWIN].win );
+	APP_KEYCURSOR_Main( wk->MsgCursorWork, wk->PrintStream, wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_MESWIN_01].win );
 	// streamの入力処理をまとめて処理してくれるらしい
-//	bflg = APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->PrintSysWork , wk->PrintStream );
-	// 連結部分がうまくいかないため自前で処理
-	bflg = td_update_printstream( wk );
+	// 内部でkey/touchの判定もしてくれるようだ
+	bflg = APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->PrintSysWork , wk->PrintStream );
+	// 連結部分がうまくいかないため自前で処理(?)
+//	bflg = td_update_printstream( wk );
 	if( bflg == TRUE ){
 		// 終了
 		return( FALSE );
@@ -1587,31 +1589,6 @@ BOOL TdCmn_main_meswin( T_DOWNLOAD_MAIN_WORK* wk )
 	return( TRUE );
 }
 
-#endif		// 保留
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  会話ウインドウ全クリア(frmのクリア)(要修正)
- *
- *	@param	T_DOWNLOAD_MAIN_WORK* wk
- *	@param	const s32			(0:全クリア、1:スクリーンクリア)
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-void TdCmn_clear_frame( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
-{
-	// clear
-	if(mode == 0){
-		GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
-	}
-	// screen clear
-	else{
-		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
-	}
-}
-
-#if 0		// printsteamは少し残し
 //-----------------------------------------------------------------------------
 /**
  *	@brief  stream文字送り(yes/no)
@@ -1650,7 +1627,28 @@ static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	return( bflg );
 }
-#endif		// 保留
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  会話ウインドウ全クリア(frmのクリア)(要修正)
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const s32			(0:全クリア、1:スクリーンクリア)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdCmn_clear_frame( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
+{
+	// clear
+	if(mode == 0){
+		GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
+	}
+	// screen clear
+	else{
+		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+	}
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -1663,7 +1661,7 @@ static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id )
+void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id, const s32 smode )
 {
 	STRBUF		*strbuf;
 	
@@ -1681,10 +1679,14 @@ void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id )
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[mode].win ), MES_SYSWIN_CLEAR_COLOR );
 	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[mode].win );
 	//
-	// メッセージ表示
-	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_d00_tbl[id] );
-	TdCmn_disp_string( wk, mode, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
-	GFL_STR_DeleteBuffer( strbuf );
+	if(smode == 0){			// 一発だし
+		// メッセージ表示
+		strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_d00_tbl[id] );
+		TdCmn_disp_string( wk, mode, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+		GFL_STR_DeleteBuffer( strbuf );
+	}else{					// stream表示
+		TdCmn_set_meswin( wk, mode, id );
+	}
 }
 
 //----------------------------------------------------------------------------------------------------------------
@@ -1697,7 +1699,7 @@ void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id )
  *
  *	@param	T_DOWNLOAD_MAIN_WORK* wk
  *	@param	const s32				(CMNの番号:フラグと対応)
- *	@param	const s32				(0:通常、1:off)
+ *	@param	const s32				(0:on、1:off、-1:初期化)
  *
  *	@retval
  */
@@ -1706,8 +1708,9 @@ void TdCmn_set_cmn_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 smo
 {
 	// アニメ再生
 	TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_CMN, mode, td_cmn_btn_tbl[mode*4+1+smode] );
+	//
 	if(smode == 0){
-		wk->Flag |= (1<<mode);
+		wk->CmnFlag |= (1<<(mode));
 	}
 }
 
@@ -2626,18 +2629,21 @@ void TdCmn_set_passive( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  輝度の変更(要検討)
+ *	@brief  文字送りカーソルの処理
  *
  *	@param	T_DOWNLOAD_MAIN_WORK* wk
- *	@param	const BOOL			(TRUE:暗い、FALSE:戻し)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void TdCmn_main_keycursor( T_DOWNLOAD_MAIN_WORK* wk )
+void TdCmn_main_keycursor( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 {
 	if( wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_MESWIN_01].win ){
-		APP_KEYCURSOR_MainNotStream( wk->MsgCursorWork, wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_MESWIN_01].win );
+		if(mode == 0){		// 一発だし
+			APP_KEYCURSOR_MainNotStream( wk->MsgCursorWork, wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_MESWIN_01].win );
+		}else{				// stream
+			APP_KEYCURSOR_Main( wk->MsgCursorWork, wk->PrintStream, wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_MESWIN_01].win );
+		}
 	}
 }
 
@@ -2727,6 +2733,7 @@ static void td_set_up_visible( T_DOWNLOAD_MAIN_WORK * wk, const BOOL bflg )
 		vflg = VISIBLE_OFF;
 	}
 	GFL_BG_SetVisible( GFL_BG_FRAME1_S, vflg );
+	GFL_BG_SetVisible( GFL_BG_FRAME2_S, vflg );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2822,4 +2829,135 @@ static void td_chg_fontpal( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg )
 	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN , 0x20*7, &wk->FontPal[off], 0x20 );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  マークの判定
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdCmn_chk_mark_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mmin, const s32 mmax, const s32 nnum )
+{
+	// 左右ボタン
+	if(mode == 0){
+		// 念のため
+		if(wk->CmnFlag & (T_DOWNLOAD_FLG_ANM_LEFT|T_DOWNLOAD_FLG_ANM_RIGHT)){
+			return;
+		}
+		// 最小チェック
+		if((mmin >= nnum)){
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_LEFT, 1 );
+		}else{
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_LEFT,  -1 );
+		}
+		//
+		// 最大チェック
+		if((nnum >= mmax)){
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RIGHT, 1 );
+		}else{
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RIGHT, -1 );
+		}
+	}
+	else if(mode == 1){
+		// 念のため
+		if(wk->CmnFlag & (T_DOWNLOAD_FLG_ANM_UP|T_DOWNLOAD_FLG_ANM_DOWN)){
+			return;
+		}
+		// 最小チェック
+		if((mmin >= nnum)){
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_UP, 1 );
+		}else{
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_UP,  -1 );
+		}
+		//
+		// 最大チェック
+		if((nnum >= mmax)){
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_DOWN, 1 );
+		}else{
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_DOWN, -1 );
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アニメの終了判定
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const s32				(0:とび先終了判定あり、1:アニメ終了判定のみ)
+ *
+ *	@retval BOOL					(TRUE:終了、FALSE:なし)
+ */
+//-----------------------------------------------------------------------------
+BOOL TdCmn_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
+{
+	s16		flg=0;
+	s16		wnum=0;
+	BOOL	bflg=FALSE;
+	BOOL	rflg=FALSE;
+	
+	// 左アニメ再生中
+	if(wk->CmnFlag & T_DOWNLOAD_FLG_ANM_LEFT){
+		wnum = T_DOWNLOAD_CLWKID_CMN_LEFT;
+		flg = 1;
+	}
+	// 右アニメ再生中
+	else if(wk->CmnFlag & T_DOWNLOAD_FLG_ANM_RIGHT){
+		wnum = T_DOWNLOAD_CLWKID_CMN_RIGHT;
+		flg = 1;
+	}
+	// ×アニメ再生中
+	else if(wk->CmnFlag & T_DOWNLOAD_FLG_ANM_CROSS){
+		wnum = T_DOWNLOAD_CLWKID_CMN_CROSS;
+		flg = 1;
+	}
+	// 戻るアニメ再生中
+	else if(wk->CmnFlag & T_DOWNLOAD_FLG_ANM_RETURN){
+		wnum = T_DOWNLOAD_CLWKID_CMN_RETURN;
+		flg = 1;
+	}
+	// 下アニメ再生中
+	else if(wk->CmnFlag & T_DOWNLOAD_FLG_ANM_DOWN){
+		wnum = T_DOWNLOAD_CLWKID_CMN_DOWN;
+		flg = 1;
+	}
+	// 上アニメ再生中
+	else if(wk->CmnFlag & T_DOWNLOAD_FLG_ANM_UP){
+		wnum = T_DOWNLOAD_CLWKID_CMN_UP;
+		flg = 1;
+	}
+
+	// アニメ終了判定を行う
+	if(flg == 1){
+		bflg = TdCmn_is_anime_end( wk, T_DOWNLOAD_CLWKMODE_CMN, wnum );
+		if(bflg == FALSE){
+			flg = 2;
+			// アニメの終了
+			// とりあえず通常に戻しておく
+			// =>最終で待つでもよいはず
+//			TdCmn_set_cmn_anim( wk, wnum, 0 );
+			wk->CmnFlag &= ~(1<<wnum);
+			//
+			// 終了判定ありの場合
+			if(mode == 0){
+				// 戻るボタン(飛び先変更はある)
+				if((wnum == T_DOWNLOAD_CLWKID_CMN_CROSS)||(wnum == T_DOWNLOAD_CLWKID_CMN_RETURN)){
+					// ×ボタン終了
+					if(wnum == T_DOWNLOAD_CLWKID_CMN_CROSS){
+						wk->CmnFlag |= T_DOWNLOAD_FLG_CROSS_END;
+					}
+					// RETURNボタン終了
+					else if(wnum == T_DOWNLOAD_CLWKID_CMN_RETURN){
+						wk->CmnFlag |= T_DOWNLOAD_FLG_RET_END;
+					}
+				}
+			}
+			rflg = TRUE;
+		}
+	}
+	//
+	return( rflg );
+}
 

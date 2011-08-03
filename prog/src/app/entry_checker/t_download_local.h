@@ -143,9 +143,19 @@ enum{
 // CmnFlag(共通)
 //---------------
 enum{
-	T_DOWNLOAD_FLG_UPDATE		= (1<<0),			// 更新
-	T_DOWNLOAD_FLG_PALCHG		= (1<<1),			// パレットチェンジ
-	T_DOWNLOAD_FLG_CUR_ANIM		= (1<<2),			// カーソルアニメ中
+	T_DOWNLOAD_FLG_ANM_LEFT		= (1<<0),			// 左矢印アニメ
+	T_DOWNLOAD_FLG_ANM_RIGHT	= (1<<1),			// 右矢印アニメ
+	T_DOWNLOAD_FLG_ANM_CROSS	= (1<<2),			// ×アニメ
+	T_DOWNLOAD_FLG_ANM_RETURN	= (1<<3),			// 戻るアニメ
+	//
+	T_DOWNLOAD_FLG_ANM_DOWN		= (1<<4),			// 下矢印アニメ
+	T_DOWNLOAD_FLG_ANM_UP		= (1<<5),			// 上矢印アニメ
+	T_DOWNLOAD_FLG_RET_END		= (1<<6)	,		// RETURNで終了
+	T_DOWNLOAD_FLG_CROSS_END	= (1<<7),			// ×で終了
+	//
+	T_DOWNLOAD_FLG_UPDATE		= (1<<15),			// 更新
+	T_DOWNLOAD_FLG_PALCHG		= (1<<16),			// パレットチェンジ
+	T_DOWNLOAD_FLG_CUR_ANIM		= (1<<17),			// カーソルアニメ中
 };
 
 //--------------

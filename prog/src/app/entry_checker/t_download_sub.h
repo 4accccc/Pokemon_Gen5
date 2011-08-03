@@ -38,7 +38,11 @@ extern s16  TdCmn_get_empty( T_DOWNLOAD_MAIN_WORK *wk, const s32 num );
 extern void TdCmn_init_yesnowin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 extern void TdCmn_exit_yesnowin( T_DOWNLOAD_MAIN_WORK* wk );
 extern s32  TdCmn_chk_yesnowin( T_DOWNLOAD_MAIN_WORK* wk );
-extern void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id );
+//
+extern void TdCmn_set_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id );
+extern BOOL TdCmn_main_meswin( T_DOWNLOAD_MAIN_WORK* wk );
+//
+extern void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id, const s32 smode );
 extern void TdCmn_clear_frame( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 //
 extern void TdCmn_set_cmn_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 smode );
@@ -76,13 +80,15 @@ extern s32  TdCmn_chk_tp( T_DOWNLOAD_MAIN_WORK *wk, const s32 tpmode, const s32 
 //
 extern void TdCmn_set_passive( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg );
 //
-extern void TdCmn_main_keycursor( T_DOWNLOAD_MAIN_WORK* wk );
+extern void TdCmn_main_keycursor( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 //
 extern void TdCmn_stop_anim_speed( T_DOWNLOAD_MAIN_WORK *wk, const BOOL bflg );
 //
 extern void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode );
 //
-//extern void TdCmn_chk_up_disp( T_DOWNLOAD_MAIN_WORK * wk, const BOOL flg );
 extern void TdCmn_chk_up_disp( T_DOWNLOAD_MAIN_WORK * wk, const BOOL keyflg, const BOOL tpflg, const BOOL fflg );
+//
+extern void TdCmn_chk_mark_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mmin, const s32 mmax, const s32 nnum );
+extern BOOL TdCmn_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 
 
