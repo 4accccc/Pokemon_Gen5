@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/12 15:48:51
+#save date:2011/08/01 14:05:16
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03r0302.wms
 #SECTION START:OBJ_EVENT
@@ -9,12 +9,12 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c03r0302.wms
 #hold event type:
 1
 #hold event number:
-3
+4
 #event number: 0
 #type
 1
 #ID name
-C03R0302_SCIENTISTM_03
+C03R0302_SCIENTISTM_01
 #OBJ CODE Number
 ASSISTANTM
 #MOVE CODE Number
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C03R0302_SCIENTISTM_03
+SCRID_C03R0302_SCIENTISTM_01
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -45,19 +45,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C03R0302_BUSINESS1_02
+C03R0302_BUSINESSMAN_01
 #OBJ CODE Number
 BUSINESSMAN
 #MOVE CODE Number
-MV_RND_H
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C03R0302_BUSINESS1_02
+SCRID_C03R0302_BUSINESSMAN_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -65,13 +65,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+0
 #Move Limit Z Number
 0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 136
+-184 0 184
 #event number: 2
 #type
 1
@@ -103,6 +103,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -232 0 72
+#event number: 3
+#type
+1
+#ID name
+C03R0302_BUSINESSMAN_02
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0302_BUSINESSMAN_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

@@ -5,5 +5,6 @@
 #define _R18_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_R18_DPLEADER5_01 (1)
 
 #endif //_R18_DEF_H_

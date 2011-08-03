@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r04r1001.h"
-  //.include  "r04r1001.h"
+  .include  "r04r1001.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,8 +21,21 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r04r1001
+_EVENT_DATA    ev_r04r1001_waitress_01
 _EVENT_DATA_END
+
+  //ポケモンチェック変数一覧
+  DEFINE_LOCAL LWK_PARTY_NUM      //手持ちポケモンの数
+  DEFINE_LOCAL LWK_COUNT_POKE_NUM //WHILE文01のカウンタ（手持ちポケモンの数）
+
+  DEFINE_LOCAL LWK_POKE_MONSNO    //ポケモンの番号（帰り値）
+  DEFINE_LOCAL LWK_POKE_FORMNO    //ポケモンのフォルム（帰り値）
+
+  DEFINE_LOCAL LWK_POKE_ATARI     //あたり
+  DEFINE_LOCAL LWK_RND            //乱数
+  DEFINE_LOCAL LWK_EGG_CHK        //タマゴであるか
+  DEFINE_LOCAL LWK_NUM_SELECT     //メニューセレクト変数
+  DEFINE_LOCAL LWK_WHILE_CLEAR    //繰り返し処理完了
 
 
 /**************************************************************/
@@ -30,9 +45,225 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  ウェイトレス：話しかけ（鳴き声イベント）                  */
 /**************************************************************/
-ev_r04r1001:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START  ev_r04r1001_waitress_01
+
+  _TALK_OBJ_START()
+
+  //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+
+  //ウェイトレス：ね！　ポケモンなぎごえモノマネ
+  _BALLOONWIN_OBJMSG_POS( msg_r04r1001_waitress_01, R04R1001_WAITRESS_01, POS_DOWN )
+
+  //手持ちのポケモンが２種類以上？
+  IF $LWK_PARTY_NUM >= 2 THEN
+
+    //鳴き声モノマネを聞く？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //鳴き声モノマネへ
+      _CALL ev_r04r1001_nakigoe_01
+
+    ELSE    //いいえ
+
+      //ウェイトレス：ほんもの　ソックリですよ？
+      _BALLOONWIN_OBJMSG_POS( msg_r04r1001_waitress_03, R04R1001_WAITRESS_01, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ELSE
+
+    _AB_KEYWAIT_MARK()
+
+    //ウェイトレス：って　ポケモンが　すくなすぎ……！
+    _BALLOONWIN_OBJMSG_POS( msg_r04r1001_waitress_08, R04R1001_WAITRESS_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+//鳴き声モノマネ01
+ev_r04r1001_nakigoe_01:
+
+  //手持ちのポケモンの数を確認（タマゴ、瀕死を含む全て）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+  //手持ちの中からお題となるポケモンを抽出（繰り返し処理）
+  WHILE $LWK_WHILE_CLEAR == 0 
+
+    //乱数取得
+    _GET_RND( LWK_RND, LWK_PARTY_NUM )
+
+    //選出されたポケモンはタマゴか
+    _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_RND )
+    IF $LWK_EGG_CHK == FALSE THEN
+
+      //抽出ポケモンのNOを取得
+      _GET_PARTY_POKE_PARAM( LWK_POKE_MONSNO, LWK_RND, SCR_POKEPARA_MONSNO )
+      //抽出ポケモンのフォルムを取得
+      _GET_PARTY_POKE_PARAM( LWK_POKE_FORMNO, LWK_RND, SCR_POKEPARA_FORMNO )
+
+      //取得したら、繰り返し処理を終了
+      $LWK_WHILE_CLEAR = 1
+
+      //当たりポケモン格納
+      $LWK_POKE_ATARI += $LWK_RND
+
+    ENDIF
+
+  ENDWHILE
+
+  //ウェイトレス：では　あなたが　つれている
+  _BALLOONWIN_OBJMSG_POS( msg_r04r1001_waitress_02, R04R1001_WAITRESS_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  _TIME_WAIT( 8 )
+
+  //ポケモンの鳴き声再生
+  _VOICE_PLAY( LWK_POKE_MONSNO, LWK_POKE_FORMNO )
+  _VOICE_WAIT()
+
+  _TIME_WAIT( 8 )
+
+  //ウェイトレス：さっきの　なきごえモノマネは
+  _BALLOONWIN_OBJMSG_POS( msg_r04r1001_waitress_04, R04R1001_WAITRESS_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+
+  //選択画面作成
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_NUM_SELECT )
+
+  //手持ちのポケモンの数を確認（タマゴ、瀕死を含む全て）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+  //手持ちの中からお題となるポケモンを抽出（繰り返し処理）
+  WHILE $LWK_PARTY_NUM > $LWK_COUNT_POKE_NUM
+
+    IF $LWK_COUNT_POKE_NUM == 0 THEN   //１匹目
+
+      //このポケモンがタマゴの場合、選択肢を「タマゴ」に
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_POKE_NUM )
+      IF $LWK_EGG_CHK == FALSE THEN
+        _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_01, 0 )
+      ELSE
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_07, 0 )
+      ENDIF
+
+    ELSIF $LWK_COUNT_POKE_NUM == 1 THEN   //２匹目
+
+      //このポケモンがタマゴの場合、選択肢を「タマゴ」に
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_POKE_NUM )
+      IF $LWK_EGG_CHK == FALSE THEN
+        _TEMOTI_MONS_NAME( 1, LWK_COUNT_POKE_NUM )
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_02, 1 )
+      ELSE
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_07, 1 )
+      ENDIF
+
+    ELSIF $LWK_COUNT_POKE_NUM == 2 THEN   //３匹目
+
+      //このポケモンがタマゴの場合、選択肢を「タマゴ」に
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_POKE_NUM )
+      IF $LWK_EGG_CHK == FALSE THEN
+        _TEMOTI_MONS_NAME( 2, LWK_COUNT_POKE_NUM )
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_03, 2 )
+      ELSE
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_07, 2 )
+      ENDIF
+
+    ELSIF $LWK_COUNT_POKE_NUM == 3 THEN   //４匹目
+
+      //このポケモンがタマゴの場合、選択肢を「タマゴ」に
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_POKE_NUM )
+      IF $LWK_EGG_CHK == FALSE THEN
+        _TEMOTI_MONS_NAME( 3, LWK_COUNT_POKE_NUM )
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_04, 3 )
+      ELSE
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_07, 3 )
+      ENDIF
+
+    ELSIF $LWK_COUNT_POKE_NUM == 4 THEN   //５匹目
+
+      //このポケモンがタマゴの場合、選択肢を「タマゴ」に
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_POKE_NUM )
+      IF $LWK_EGG_CHK == FALSE THEN
+        _TEMOTI_MONS_NAME( 4, LWK_COUNT_POKE_NUM )
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_05, 4 )
+      ELSE
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_07, 4 )
+      ENDIF
+
+    ELSIF $LWK_COUNT_POKE_NUM == 5 THEN   //６匹目
+
+      //このポケモンがタマゴの場合、選択肢を「タマゴ」に
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_POKE_NUM )
+      IF $LWK_EGG_CHK == FALSE THEN
+        _TEMOTI_MONS_NAME( 5, LWK_COUNT_POKE_NUM )
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_06, 5 )
+      ELSE
+        _BMPMENU_MAKE_LIST( msg_r04r1001_select_07, 5 )
+      ENDIF
+
+    ENDIF
+
+    //カウント
+    $LWK_COUNT_POKE_NUM += 1
+
+  ENDWHILE
+
+  //選択
+  _BMPMENU_START()
+
+  //「あたり」を選択
+  IF $LWK_NUM_SELECT == $LWK_POKE_ATARI THEN
+
+    //正解している場合（初回）
+    IF FLAG_OFF( FE_NAKIGOE_ITEMGET_01 ) THEN
+
+      //ウェイトレス：いつも　きいてる　ポケモンの
+      _BALLOONWIN_OBJMSG_POS( msg_r04r1001_waitress_05, R04R1001_WAITRESS_01, POS_DOWN )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //アイテム（おいしいみず）入手    【仮】入手アイテムは仮です
+      _ITEM_EVENT_NOWAIT( ITEM_OISIIMIZU, 1 )
+
+      //========================================//
+      //アイテム入手フラグON
+      _FLAG_SET( FE_NAKIGOE_ITEMGET_01 )
+      //========================================//
+
+    ELSE
+
+      //ウェイトレス：ですよね！　パートナーの　なきごえを
+      _BALLOONWIN_OBJMSG_POS( msg_r04r1001_waitress_06, R04R1001_WAITRESS_01, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ELSE
+    //正解ポケモン名取得
+    _TEMOTI_MONS_NAME( 0, LWK_POKE_ATARI )
+    //ウェイトレス：おしい！　くやしい！　かなしいです！
+    _BALLOONWIN_OBJMSG_POS( msg_r04r1001_waitress_07, R04R1001_WAITRESS_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+_RET
+
+
+
 

@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c03r0301.h"
   .include  "c03r0301.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,24 +21,304 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_c03r0301_statue_01
-_EVENT_DATA		ev_bg_c03r0301_painting_01
+_EVENT_DATA   ev_bg_c03r0301_statue_01
+_EVENT_DATA   ev_bg_c03r0301_painting_01
+_EVENT_DATA   ev_c03r0301_informationw_01
+_EVENT_DATA   ev_c03r0301_businessman_01
+_EVENT_DATA   ev_c03r0301_trainerw_01
+_EVENT_DATA   ev_c03r0301_cleaningm_01
+_EVENT_DATA   ev_pos_c03r0301_cleaningm_01
 _EVENT_DATA_END
 
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+//繰り返し処理用変数定義
+DEFINE_LOCAL  LWK_NUM_SELECT
+DEFINE_LOCAL  LWK_WHILE_END
+
+
 /**************************************************************/
-/* 			石像		C03R0301						  */
+/*  石像  C03R0301                                            */
 /**************************************************************/
-EVENT_START		ev_bg_c03r0301_statue_01
-	_PLAINWIN_MSG_DOWN( msg_c03r0301_statue_01 )
-	_LAST_KEYWAIT()	
-	_PLAINWIN_CLOSE()
+EVENT_START   ev_bg_c03r0301_statue_01
+  _PLAINWIN_MSG_DOWN( msg_c03r0301_statue_01 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
-/* 			絵		C03R0301						  */
+/*  絵  C03R0301                                              */
 /**************************************************************/
-EVENT_START		ev_bg_c03r0301_painting_01
-	_PLAINWIN_MSG_DOWN( msg_c03r0301_painting1_01 )
-	_LAST_KEYWAIT()	
-	_PLAINWIN_CLOSE()
+EVENT_START   ev_bg_c03r0301_painting_01
+  _PLAINWIN_MSG_DOWN( msg_c03r0301_painting1_01 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
 EVENT_END
+
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c03r0301_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0301_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ビジネスマン：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c03r0301_businessman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0301_businessman_10 )
+EVENT_END
+
+/**************************************************************/
+/*  エリート♀：話しかけ（アイテム入手）                      */
+/**************************************************************/
+EVENT_START   ev_c03r0301_trainerw_01
+
+  _TALK_OBJ_START()
+
+  //アイテム入手済み？
+  IF FLAG_OFF( FE_C03R0301_ITEMGET_01 ) THEN
+
+    //エリート♀：きみの　もってる　ソレって
+    _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_01, C03R0301_TRAINERW_01, POS_DOWN )
+
+    //数値リセット
+    $LWK_WHILE_END = 0
+
+    //決定するまで繰り返し
+    WHILE $LWK_WHILE_END == 0
+
+      //最初に選んだポケモンは？
+      _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+      _BMPMENU_MAKE_LIST( msg_c03r0301_trainerw_06, 0 ) //ツタージャ
+      _BMPMENU_MAKE_LIST( msg_c03r0301_trainerw_07, 1 ) //ミジュマル
+      _BMPMENU_MAKE_LIST( msg_c03r0301_trainerw_08, 2 ) //ポカブ
+      _BMPMENU_MAKE_LIST( msg_c03r0301_trainerw_09, 3 ) //やめる
+
+      _BMPMENU_START()
+
+      //「ツタージャ」を選択
+      IF $LWK_NUM_SELECT == 0 THEN
+
+        //エリート♀：ツタージャなの？
+        _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_10, C03R0301_TRAINERW_01, POS_DOWN )
+        _YES_NO_WIN( SCWK_ANSWER )
+
+        IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+          //エリート♀：ツタージャね！
+          _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_02, C03R0301_TRAINERW_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+          _MSGWIN_CLOSE()
+
+          //アイテム（きせきのタネ）入手
+          _ITEM_EVENT_NOWAIT( ITEM_KISEKINOTANE, 1 )
+
+          //========================================//
+          //フラグON
+          _FLAG_SET( FE_C03R0301_ITEMGET_01 )
+          //========================================//
+
+          //エリート♀：ポケモンに　もたせることで
+          _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_05, C03R0301_TRAINERW_01, POS_DOWN )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+          //繰り返し処理終了
+          $LWK_WHILE_END = 1
+
+        ELSE    //いいえ
+
+          //エリート♀：じゃあ　さいしょに　えらんだ
+          _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_13, C03R0301_TRAINERW_01, POS_DOWN )
+
+        ENDIF
+
+      //「ミジュマル」を選択
+      ELSIF $LWK_NUM_SELECT == 1 THEN
+
+        //エリート♀：ミジュマルなの？
+        _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_11, C03R0301_TRAINERW_01, POS_DOWN )
+        _YES_NO_WIN( SCWK_ANSWER )
+
+        IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+          //エリート♀：ミジュマルね！
+          _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_03, C03R0301_TRAINERW_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+          _MSGWIN_CLOSE()
+
+          //アイテム（しんぴのしずく）入手
+          _ITEM_EVENT_NOWAIT( ITEM_SINPINOSIZUKU, 1 )
+
+          //========================================//
+          //フラグON
+          _FLAG_SET( FE_C03R0301_ITEMGET_01 )
+          //========================================//
+
+          //エリート♀：ポケモンに　もたせることで
+          _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_05, C03R0301_TRAINERW_01, POS_DOWN )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+          //繰り返し処理終了
+          $LWK_WHILE_END = 1
+
+        ELSE    //いいえ
+
+          //エリート♀：じゃあ　さいしょに　えらんだ
+          _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_13, C03R0301_TRAINERW_01, POS_DOWN )
+
+        ENDIF
+
+      //「ポカブ」を選択
+      ELSIF $LWK_NUM_SELECT == 2 THEN
+
+        //エリート♀：ポカブなの？
+        _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_12, C03R0301_TRAINERW_01, POS_DOWN )
+        _YES_NO_WIN( SCWK_ANSWER )
+
+        IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+          //エリート♀：ポカブね！
+          _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_04, C03R0301_TRAINERW_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+          _MSGWIN_CLOSE()
+
+          //アイテム（もくたん）入手
+          _ITEM_EVENT_NOWAIT( ITEM_MOKUTAN, 1 )
+
+          //========================================//
+          //フラグON
+          _FLAG_SET( FE_C03R0301_ITEMGET_01 )
+          //========================================//
+
+          //エリート♀：ポケモンに　もたせることで
+          _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_05, C03R0301_TRAINERW_01, POS_DOWN )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+          //繰り返し処理終了
+          $LWK_WHILE_END = 1
+
+        ELSE    //いいえ
+
+          //エリート♀：じゃあ　さいしょに　えらんだ
+          _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_13, C03R0301_TRAINERW_01, POS_DOWN )
+
+        ENDIF
+
+      //「やめる」を選択／キャンセルした
+      ELSE
+
+        //エリート♀：おしえてくれる　きになったら
+        _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_14, C03R0301_TRAINERW_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //繰り返し処理終了
+        $LWK_WHILE_END = 1
+
+      ENDIF
+
+    ENDWHILE
+
+  ELSE
+
+    //エリート♀：ポケモンに　もたせることで
+    _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_05, C03R0301_TRAINERW_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  清掃員：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c03r0301_cleaningm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0301_cleaningm_04 )
+EVENT_END
+
+/**************************************************************/
+/*  POS：清掃員イベント                                       */
+/**************************************************************/
+EVENT_START   ev_pos_c03r0301_cleaningm_01
+
+  //アニメ：清掃員「！」
+  _OBJ_ANIME( C03R0301_CLEANINGM_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+  //アニメ：清掃員隣接
+  $LCW_POSZ -= 1
+  _OBJ_ANIME_AUTO( C03R0301_CLEANINGM_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C03R0301_CLEANINGM_01, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
+
+  //清掃員：この　ビルで　はたらく
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0301_cleaningm_01, C03R0301_CLEANINGM_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+
+  //清掃員：おっと！　よければ　これを
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0301_cleaningm_02, C03R0301_CLEANINGM_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アイテム（がくしゅうそうち）入手
+  _ITEM_EVENT_NOWAIT( ITEM_GAKUSYUUSOUTI, 1 )
+
+  //清掃員：それは　がくしゅうそうち！▼
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0301_cleaningm_03, C03R0301_CLEANINGM_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+
+  //清掃員：わたしは　おそうじおじさん♪
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0301_cleaningm_04, C03R0301_CLEANINGM_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：清掃員移動
+  _OBJ_ANIME_AUTO( C03R0301_CLEANINGM_01, 5, 8, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C03R0301_CLEANINGM_01, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
+
+  //========================================//
+  //清掃員非表示
+  _FLAG_SET( FV_C03R0301_CLEANINGM_01 )
+  //POSイベント進行
+  $WK_SCENE_C03R0301_BTLCOM_01 = 1
+  //========================================//
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+

@@ -9,6 +9,11 @@
 #ifndef ZONE_C01R0501_EVC_H
 #define ZONE_C01R0501_EVC_H
 
+#define C01R0501_TRAINERM_01               0
+#define C01R0501_GENTLEMAN_01              1
+#define C01R0501_GIRL1_01                  2
+#define C01R0501_BOY2_01                   3
+#define C01R0501_BOY3_01                   4
 
 #endif //ZONE_C01R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

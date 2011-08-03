@@ -11,6 +11,7 @@
 
 #define R18_ROCK_01                        0
 #define R18_ROCK_02                        1
+#define R18_DPLEADER5_01                   2
 
 #endif //ZONE_R18_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r18.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

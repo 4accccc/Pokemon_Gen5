@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c03r0303.h"
   .include  "c03r0303.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,4 +21,178 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_pos_c03r0303_cleaningm_01
+_EVENT_DATA   ev_c03r0303_cleaningm_01
+_EVENT_DATA   ev_c03r0303_boy3_01
 _EVENT_DATA_END
+
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+
+/**************************************************************/
+/*  POS：清掃員イベント                                       */
+/**************************************************************/
+EVENT_START   ev_pos_c03r0303_cleaningm_01
+
+  //アニメ：清掃員「！」
+  _OBJ_ANIME( C03R0303_CLEANINGM_01, anm_turn_gyoe_d )
+  _OBJ_ANIME_WAIT()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+  //アニメ：清掃員隣接
+  IF $LCW_POSX == 10 THEN
+    $LCW_POSZ -= 1
+    _OBJ_ANIME_AUTO( C03R0303_CLEANINGM_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( C03R0303_CLEANINGM_01, anm_common_turn_d )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME_AUTO( C03R0303_CLEANINGM_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  //清掃員：おお！　きみは　エントランスで
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0303_cleaningm_01, C03R0303_CLEANINGM_01, POS_UR )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+  //アニメ：男の子（社長）隣接
+  _OBJ_ANIME( C03R0303_CLEANINGM_01, anm_walk_r_turn_d )
+  _OBJ_ANIME( C03R0303_BOY3_01, anm_walk2_l )
+  _OBJ_ANIME_WAIT()
+
+  IF $LCW_POSX == 11 THEN
+    $LCW_POSZ -= 1
+    _OBJ_ANIME_AUTO( C03R0303_BOY3_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( C03R0303_BOY3_01, anm_common_turn_d )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    $LCW_POSZ -= 1
+    _OBJ_ANIME_AUTO( C03R0303_BOY3_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  //男の子：この　バトルカンパニーが！▼
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0303_boy3_01, C03R0303_BOY3_01, POS_UL )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //トレーナー戦呼び出し【仮】トレーナーIDは仮のもの
+  //_TRAINER_BTL_SET( schoolb_14, 0 ) 
+  _TRAINER_BTL_SET( TRID_GENTLE_05, 0 ) 
+
+  //結果チェック
+  _CALL ev_battle_check
+
+  //勝利時
+  //男の子：……まけた▼
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0303_boy3_02, C03R0303_BOY3_01, POS_UL )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //清掃員：かったときは　ポケモンの　おかげ
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0303_cleaningm_02, C03R0303_CLEANINGM_01, POS_UR )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //========================================//
+  //POSイベント進行
+  $WK_SCENE_C03R0303_BTLCOM_01 = 1
+  //========================================//
+
+EVENT_END
+
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならエリート勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならエリート敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+/**************************************************************/
+/*  清掃員：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c03r0303_cleaningm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0303_cleaningm_03 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子（社長）：話しかけ                                  */
+/**************************************************************/
+EVENT_START   ev_c03r0303_boy3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0303_boy3_03 )
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//☆共通処理：右に1歩歩く＋振り向き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_r_turn_d
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：左に1歩歩く＋振り向き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_l_turn_d
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：右に2歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk2_r
+  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：左に2歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk2_l
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//「！」＋振り向き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_turn_gyoe_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+

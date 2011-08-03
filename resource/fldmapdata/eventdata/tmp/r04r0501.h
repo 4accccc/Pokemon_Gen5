@@ -10,6 +10,7 @@
 #ifndef ZONE_R04R0501_EVC_H
 #define ZONE_R04R0501_EVC_H
 
+#define R04R0501_WAITRESS_01               0
 
 #endif //ZONE_R04R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r04r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

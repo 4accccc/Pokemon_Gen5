@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c03r0302.h"
   .include  "c03r0302.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,63 +21,134 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03r0302_business1_02
-_EVENT_DATA    ev_c03r0302_scientistm_03
+_EVENT_DATA    ev_c03r0302_scientistm_01
+_EVENT_DATA    ev_c03r0302_businessman_01
+_EVENT_DATA    ev_c03r0302_businessman_02
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*  C03R0302 BUSINES1の会話用イベントスクリプト*/
+/*  助手♂：話しかけ（アイテム入手）                          */
 /**************************************************************/
-EVENT_START   ev_c03r0302_business1_02
-
-	_TALK_OBJ_START()
-  
-  //【仮】メッセージと動作モデルが仮
-  
-	//初回話しかけ
-	IF FLAG_OFF( FE_C03R0302_ITEM_02 ) THEN
-	
-		//おっ会社見学？プレゼントだよ
-		_BALLOONWIN_OBJMSG( msg_c03r0302_businessman_01 ,C03R0302_BUSINESS1_02)
-		_BALLOONWIN_CLOSE()
-		
-		//クイックボール入手
-		_ITEM_EVENT_KEYWAIT ( ITEM_KUIKKUBOORU , 3)
-		
-		//ものすごくうれしいから さらにプレゼントだよ
-		_BALLOONWIN_OBJMSG( msg_c03r0302_businessman_02 ,C03R0302_BUSINESS1_02)
-		_BALLOONWIN_CLOSE()
-		
-		//タイマーボール入手
-		_ITEM_EVENT_KEYWAIT ( ITEM_TAIMAABOORU , 3)
-		
-		//ボール解説
-		_BALLOONWIN_OBJMSG( msg_c03r0302_businessman_03 ,C03R0302_BUSINESS1_02)
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-
-		//==================================//
-
-		//フラグセットしてイベント終了
-		_FLAG_SET( FE_C03R0302_ITEM_02 )
-
-		//==================================//
-
-	ELSE
-
-		//ボール解説
-		_BALLOONWIN_OBJMSG( msg_c03r0302_businessman_03 ,C03R0302_BUSINESS1_02)
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	ENDIF
-
+EVENT_START   ev_c03r0302_scientistm_01
+  _EASY_TALK_ITEM_EVENT( ITEM_PINTORENZU, 1, FE_C03R0302_ITEM_01, msg_c03r0302_assistantm_01, msg_c03r0302_assistantm_02, msg_c03r0302_assistantm_02 )
 EVENT_END
 
 /**************************************************************/
-/*  C03R0302 SCIENTISTM_03：がくしゅうそうちをくれる*/
+/*  ビジネスマン01：話しかけ（トレーナー戦／アイテム入手）    */
 /**************************************************************/
-EVENT_START   ev_c03r0302_scientistm_03
-  //【仮】もらえるどうぐが仮
-	_EASY_TALK_ITEM_EVENT(ITEM_PINTORENZU, 1, FE_C03R0302_ITEM_01 , msg_c03r0302_assistantm_01 , msg_c03r0302_assistantm_02 , msg_c03r0302_assistantm_02 )
+EVENT_START   ev_c03r0302_businessman_01
+
+  _TALK_OBJ_START()
+
+  //アイテム入手済み？
+  IF FLAG_OFF( FE_C03R0302_ITEM_02 ) THEN
+
+    //ビジネスマン：おっ！？　かいしゃけんがく？
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman1_01 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し【仮】トレーナーIDは仮のもの
+    //_TRAINER_BTL_SET( BUSINESS1_10, 0 ) 
+    _TRAINER_BTL_SET( TRID_GENTLE_05, 0 ) 
+
+    //結果チェック
+    _CALL ev_battle_check
+
+    //勝利時
+    //ビジネスマン：なんという　じつりょく！
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman1_02 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //アイテム（クイックボール×10）入手
+    _ITEM_EVENT_NOWAIT( ITEM_KUIKKUBOORU, 10 )
+
+    //ビジネスマン：クイックボールは　ポケモンと
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman1_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //フラグON
+    _FLAG_SET( FE_C03R0302_ITEM_02 )
+    //========================================//
+
+  ELSE
+
+    //ビジネスマン：クイックボールは　ポケモンと
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman1_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
 EVENT_END
+
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならエリート勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならエリート敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+/**************************************************************/
+/*  ビジネスマン02：話しかけ（トレーナー戦／アイテム入手）    */
+/**************************************************************/
+EVENT_START   ev_c03r0302_businessman_02
+
+  _TALK_OBJ_START()
+
+  //アイテム入手済み？
+  IF FLAG_OFF( FE_C03R0302_ITEM_03 ) THEN
+
+    //ビジネスマン：もしかして　ポケモンしゅぎょう？
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman2_01 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し【仮】トレーナーIDは仮のもの
+    //_TRAINER_BTL_SET( BUSINESS1_11, 0 ) 
+    _TRAINER_BTL_SET( TRID_GENTLE_05, 0 ) 
+
+    //結果チェック
+    _CALL ev_battle_check
+
+    //勝利時
+    //ビジネスマン：その　うでまえ　なら
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman2_02 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //アイテム（タイマーボール×10）入手
+    _ITEM_EVENT_NOWAIT( ITEM_TAIMAABOORU, 10 )
+
+    //ビジネスマン：タイマーボールは　ポケモンと
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman2_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //フラグON
+    _FLAG_SET( FE_C03R0302_ITEM_03 )
+    //========================================//
+
+  ELSE
+
+    //ビジネスマン：タイマーボールは　ポケモンと
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman2_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+
+

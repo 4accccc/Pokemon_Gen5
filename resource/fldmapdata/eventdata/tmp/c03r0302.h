@@ -8,9 +8,10 @@
 #ifndef ZONE_C03R0302_EVC_H
 #define ZONE_C03R0302_EVC_H
 
-#define C03R0302_SCIENTISTM_03             0
-#define C03R0302_BUSINESS1_02              1
+#define C03R0302_SCIENTISTM_01             0
+#define C03R0302_BUSINESSMAN_01            1
 #define FLD_ITEM_23                        2
+#define C03R0302_BUSINESSMAN_02            3
 
 #endif //ZONE_C03R0302_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0302.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

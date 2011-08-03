@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_r18.h"
   .include  "r18.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,4 +21,160 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_r18_dpleader5_01
 _EVENT_DATA_END
+
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+
+/**************************************************************/
+/*  マキシ：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r18_dpleader5_01   //【仮】モデルがまだ無かったのでrsleader5(センリ)を代用
+
+  _TALK_OBJ_START()
+
+  //マキシ：リングは　おれの　うみ♪
+  _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_01 )
+  _AB_KEYWAIT_MARK()
+
+  //WBTで勝負したことがあるか
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN    //【仮】クリアフラグで分岐中
+
+    //マキシ：おお！　おまえか！
+    _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_02 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+    //アニメ：マキシ退場
+    IF $LCW_POSX == 625 && $LCW_POSZ == 712 THEN
+      _OBJ_ANIME_AUTO( R18_DPLEADER5_01, 626, 719, FORCE_TYPE_NPC, 8, DIR_LR )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+      _OBJ_ANIME_WAIT()
+    ELSE
+      _OBJ_ANIME_AUTO( R18_DPLEADER5_01, 626, 719, FORCE_TYPE_NPC, 8, DIR_UD )
+      _TIME_WAIT( 8 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+    _OBJ_DEL( R18_DPLEADER5_01 )
+
+    //========================================//
+    //マキシを非表示に
+    _FLAG_SET( FV_R18_DPLEADER5_01 )
+    //========================================//
+
+  ELSE
+
+    //マキシ：いま　うたっていたのは　おれさま！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_03 )
+
+    //テーマソングを知っている？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //マキシ：そうだぁ！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_04 )
+      _AB_KEYWAIT_MARK()
+
+    ELSE    //いいえ
+
+      //マキシ：なんと　しらないのかぁ！！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_05 )
+      _AB_KEYWAIT_MARK()
+
+    ENDIF
+
+    //マキシ：ここで　とうとつに
+    _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_06 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+    //【仮】マキシを暗転中に退場
+    _TIME_WAIT( 15 )  //暗転前の間
+
+    //暗転
+    _BLACK_OUT_SLOW()
+    _DISP_FADE_END_CHECK()
+
+    //マキシ削除
+    _OBJ_DEL( R18_DPLEADER5_01 )
+
+    //========================================//
+    //マキシを非表示に
+    _FLAG_SET( FV_R18_DPLEADER5_01 )
+    //========================================//
+
+    //暗転復帰
+    _BLACK_IN_SLOW()
+    _DISP_FADE_END_CHECK()
+
+    _TIME_WAIT( 45 )  //暗転後の間
+    //【仮】ここまで
+
+/*
+    //アニメ：マキシ退場
+    IF $LCW_POSX == 625 && $LCW_POSZ == 712 THEN
+      _OBJ_ANIME_AUTO( R18_DPLEADER5_01, 626, 719, FORCE_TYPE_NPC, 8, DIR_LR )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+      _OBJ_ANIME_WAIT()
+    ELSE
+      _OBJ_ANIME_AUTO( R18_DPLEADER5_01, 626, 719, FORCE_TYPE_NPC, 8, DIR_UD )
+      _TIME_WAIT( 8 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+    _OBJ_DEL( R18_DPLEADER5_01 )
+
+    //========================================//
+    //マキシを非表示に
+    _FLAG_SET( FV_R18_DPLEADER5_01 )
+    //========================================//
+*/
+
+  ENDIF
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+

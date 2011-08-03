@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c01r0501.h"
   .include  "c01r0501.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,80 +21,611 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_c01r0501_board_01
+_EVENT_DATA   ev_bg_c01r0501_board_01
+_EVENT_DATA   ev_c01r0501_trainerm_01
+_EVENT_DATA   ev_c01r0501_gentleman_01
+_EVENT_DATA   ev_c01r0501_girl1_01
+_EVENT_DATA   ev_c01r0501_boy2_01
+_EVENT_DATA   ev_c01r0501_boy3_01
 _EVENT_DATA_END
 
+//クイズ用変数定義
+DEFINE_LOCAL  LWK_NUM_SELECT
+DEFINE_LOCAL  LWK_WHILE_END
+DEFINE_LOCAL  LWK_QUIZ1_CLEA
+
+
 /**************************************************************/
-/*  C01R0501 BOARDの会話用イベントスクリプト*/
+/*  C01R0501 BOARDの会話用イベントスクリプト                  */
 /**************************************************************/
 EVENT_START   ev_bg_c01r0501_board_01
-	//ローカル変数を定義
-	DEFINE_LOCAL	LWK_STATE_SELECT
+  //ローカル変数を定義
+  DEFINE_LOCAL  LWK_STATE_SELECT
 
-	_TALK_START_SE_PLAY()
-	
-	//こくばんに　ポケモンが　たたかっているときに　おこる
-	_SYSWIN_MSG( msg_c01r0501_board_01 , POS_DOWN )
-	
-	//『やめる』が選択されるまで繰り返し
-	WHILE $LWK_STATE_SELECT != 5
-		
-		//どれについて　みますか？
-		_SYSWIN_MSG( msg_c01r0501_board_02 , POS_DOWN )
-			
-		//分岐・どく・まひ・ねむり・やけど・こおり・やめる
-		_BMPMENU_INIT_RIGHT(MENU_X1, MENU_Y1, 0, 1, LWK_STATE_SELECT )
-		
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_01, 0 )	//どく
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_02, 1 )	//まひ
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_03, 2 )	//ねむり
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_04, 3 )	//やけど
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_05, 4 )	//こおり
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_06, 5 )	//やめる
-		//メニュー表示
-		_BMPMENU_START()
-		
-		//選択結果で分岐
-			
-			//どく選択
-			IF $LWK_STATE_SELECT == 0 THEN
-				
-				//どくを　うけると　たいりょくが　へっていきます
-				_SYSWIN_MSG( msg_c01r0501_board_03 , POS_DOWN )
-					
-			//まひ選択
-			ELSIF $LWK_STATE_SELECT == 1 THEN
-				
-				//まひすると　すばやさが　さがり
-				_SYSWIN_MSG( msg_c01r0501_board_04 , POS_DOWN )
-					
-			//ねむり選択
-			ELSIF $LWK_STATE_SELECT == 2 THEN
-			
-				//ねむって　しまうと　その　あいだ　こうげき　できません
-				_SYSWIN_MSG( msg_c01r0501_board_05 , POS_DOWN )
-				
-			//やけど選択
-			ELSIF $LWK_STATE_SELECT == 3 THEN
-				
-				//やけどに　なると　こうげきりょくが　さがるだけでなく
-				_SYSWIN_MSG( msg_c01r0501_board_06 , POS_DOWN )
-				
-			//こおり選択
-			ELSIF $LWK_STATE_SELECT == 4 THEN
-				
-				//こおって　しまうと　なにも　できなくなります
-				_SYSWIN_MSG( msg_c01r0501_board_07 , POS_DOWN )
-				
-			//キャンセル
-			ELSE
-				$LWK_STATE_SELECT = 5	//やめるを選択したことにする
-				
-			ENDIF
-		
-		ENDWHILE
-	
-	//ウインドウを閉じて終了
-	_SYSWIN_CLOSE()
-	
+  _TALK_START_SE_PLAY()
+
+  //こくばんに　ポケモンが　たたかっているときに　おこる
+  _SYSWIN_MSG( msg_c01r0501_board_01, POS_DOWN )
+
+  //『やめる』が選択されるまで繰り返し
+  WHILE $LWK_STATE_SELECT != 5
+
+    //どれについて　みますか？
+    _SYSWIN_MSG( msg_c01r0501_board_02, POS_DOWN )
+
+    //分岐・どく・まひ・ねむり・やけど・こおり・やめる
+    _BMPMENU_INIT_RIGHT(MENU_X1, MENU_Y1, 0, 1, LWK_STATE_SELECT )
+
+    _BMPMENU_MAKE_LIST( msg_c01r0501_board_win_01, 0 )  //どく
+    _BMPMENU_MAKE_LIST( msg_c01r0501_board_win_02, 1 )  //まひ
+    _BMPMENU_MAKE_LIST( msg_c01r0501_board_win_03, 2 )  //ねむり
+    _BMPMENU_MAKE_LIST( msg_c01r0501_board_win_04, 3 )  //やけど
+    _BMPMENU_MAKE_LIST( msg_c01r0501_board_win_05, 4 )  //こおり
+    _BMPMENU_MAKE_LIST( msg_c01r0501_board_win_06, 5 )  //やめる
+
+    //メニュー表示
+    _BMPMENU_START()
+
+    //選択結果で分岐
+
+      //どく選択
+      IF $LWK_STATE_SELECT == 0 THEN
+
+        //どくを　うけると　たいりょくが　へっていきます
+        _SYSWIN_MSG( msg_c01r0501_board_03, POS_DOWN )
+
+      //まひ選択
+      ELSIF $LWK_STATE_SELECT == 1 THEN
+
+        //まひすると　すばやさが　さがり
+        _SYSWIN_MSG( msg_c01r0501_board_04, POS_DOWN )
+
+      //ねむり選択
+      ELSIF $LWK_STATE_SELECT == 2 THEN
+
+        //ねむって　しまうと　その　あいだ　こうげき　できません
+        _SYSWIN_MSG( msg_c01r0501_board_05, POS_DOWN )
+
+      //やけど選択
+      ELSIF $LWK_STATE_SELECT == 3 THEN
+
+        //やけどに　なると　こうげきりょくが　さがるだけでなく
+        _SYSWIN_MSG( msg_c01r0501_board_06, POS_DOWN )
+
+      //こおり選択
+      ELSIF $LWK_STATE_SELECT == 4 THEN
+
+        //こおって　しまうと　なにも　できなくなります
+        _SYSWIN_MSG( msg_c01r0501_board_07, POS_DOWN )
+
+      //キャンセル
+      ELSE
+        $LWK_STATE_SELECT = 5   //やめるを選択したことにする
+
+      ENDIF
+
+    ENDWHILE
+
+  //ウインドウを閉じて終了
+  _SYSWIN_CLOSE()
+
 EVENT_END
+
+
+/**************************************************************/
+/*  エリート♂：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c01r0501_trainerm_01
+
+  _TALK_OBJ_START()
+
+  //クイズの進行状態確認
+  IF $WK_SCENE_C01R0501_QUIZ1_01 >= 0 && $WK_SCENE_C01R0501_QUIZ1_01 <= 2 THEN
+
+    //数値リセット
+    $LWK_WHILE_END = 0
+
+    //クイズ繰り返し処理
+    WHILE $LWK_WHILE_END == 0
+
+      //２問目以降？
+      IF $WK_SCENE_C01R0501_QUIZ1_01 >= 1 && $WK_SCENE_C01R0501_QUIZ1_01 <= 2 THEN
+
+        //エリート♂：また　キミの　ちえを！
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_06, C01R0501_TRAINERM_01, POS_DOWN )
+
+        //知恵を貸す？
+        _YES_NO_WIN( SCWK_ANSWER )
+
+        IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //何もなし
+
+        ELSE    //いいえ
+
+          //繰り返し処理停止
+          $LWK_WHILE_END = 1
+
+        ENDIF
+
+      ENDIF
+
+      //１問目
+      IF $WK_SCENE_C01R0501_QUIZ1_01 == 0 && $LWK_WHILE_END == 0 THEN
+
+        //エリート♂：ちょっと　いいかい！？▼
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_01, C01R0501_TRAINERM_01, POS_DOWN )
+
+        //知恵を貸す？
+        _YES_NO_WIN( SCWK_ANSWER )
+
+        IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+          //エリート♂：おお！　ありがとう▼
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_02, C01R0501_TRAINERM_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+
+          //エリート♂：まずは　どうぐ　について
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_04, C01R0501_TRAINERM_01, POS_DOWN )
+
+          //特性「ふゆう」の相手に技「すりかえ」で渡すアイテムは「くろいてっきゅう」で良いか？
+          _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+          _BMPMENU_MAKE_LIST( msg_c01r0501_select1_01, 0 ) //いい
+          _BMPMENU_MAKE_LIST( msg_c01r0501_select1_02, 1 ) //OK
+          _BMPMENU_MAKE_LIST( msg_c01r0501_select1_03, 2 ) //大丈夫
+
+          _BMPMENU_START()
+
+          //どれを選んでも正解
+          IF $LWK_NUM_SELECT == 0 || $LWK_NUM_SELECT == 1 || $LWK_NUM_SELECT == 2 THEN
+
+            //エリート♂：おお！　やっぱり！？▼
+            _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_05, C01R0501_TRAINERM_01, POS_DOWN )
+            _AB_KEYWAIT_MARK()
+
+            //========================================//
+            //イベント進行
+            $WK_SCENE_C01R0501_QUIZ1_01 = 1
+            //========================================//
+
+          //キャンセル用
+          ELSE
+
+            //繰り返し処理停止
+            $LWK_WHILE_END = 1
+
+          ENDIF
+
+        ELSE
+
+          //繰り返し処理停止
+          $LWK_WHILE_END = 1
+
+        ENDIF
+
+      //２問目
+      ELSIF $WK_SCENE_C01R0501_QUIZ1_01 == 1 && $LWK_WHILE_END == 0 THEN
+
+        //エリート♂：こんどは　わざに　ついて
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_07, C01R0501_TRAINERM_01, POS_DOWN )
+
+        //特性「ふゆう」の相手にじめんタイプの技が当たるようになる技は？
+        _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+        _BMPMENU_MAKE_LIST( msg_c01r0501_select2_01, 0 ) //うちおとす
+        _BMPMENU_MAKE_LIST( msg_c01r0501_select2_02, 1 ) //じゅうりょく
+        _BMPMENU_MAKE_LIST( msg_c01r0501_select2_03, 2 ) //いえき
+
+        _BMPMENU_START()
+
+        //「うちおとす」を選択
+        IF $LWK_NUM_SELECT == 0 THEN
+
+          //エリート♂：そうか　うちおとす　か！▼
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_08, C01R0501_TRAINERM_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+
+          //========================================//
+          //イベント進行
+          $WK_SCENE_C01R0501_QUIZ1_01 = 2
+          //========================================//
+
+        //「じゅうりょく」選択
+        ELSIF $LWK_NUM_SELECT == 1 THEN
+
+          //エリート♂：そうか　じゅうりょく　か！▼
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_09, C01R0501_TRAINERM_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+
+          //========================================//
+          //イベント進行
+          $WK_SCENE_C01R0501_QUIZ1_01 = 2
+          //========================================//
+
+        //「いえき」を選択
+        ELSIF $LWK_NUM_SELECT == 2 THEN
+
+          //エリート♂：そうか　いえき　か！▼
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_10, C01R0501_TRAINERM_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+
+          //========================================//
+          //イベント進行
+          $WK_SCENE_C01R0501_QUIZ1_01 = 2
+          //========================================//
+
+        //キャンセル用
+        ELSE
+
+          //繰り返し処理停止
+          $LWK_WHILE_END = 1
+
+        ENDIF
+
+      //３問目
+      ELSIF $WK_SCENE_C01R0501_QUIZ1_01 == 2 && $LWK_WHILE_END == 0 THEN
+
+        //エリート♂：さいごは　とくせいに　ついて
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_11, C01R0501_TRAINERM_01, POS_DOWN )
+
+        //特性「ふゆう」の相手にじめんタイプの技を当てたれる特性は？
+        _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+        _BMPMENU_MAKE_LIST( msg_c01r0501_select3_01, 0 ) //かたやぶり
+        _BMPMENU_MAKE_LIST( msg_c01r0501_select3_02, 1 ) //テラボルテージ
+        _BMPMENU_MAKE_LIST( msg_c01r0501_select3_03, 2 ) //ターボブレイズ
+
+        _BMPMENU_START()
+
+        //「かたやぶり」を選択
+        IF $LWK_NUM_SELECT == 0 THEN
+
+          //エリート♂：やっぱり　かたやぶり　かあ！▼
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_12, C01R0501_TRAINERM_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+
+          //========================================//
+          //イベント進行
+          $WK_SCENE_C01R0501_QUIZ1_01 = 3
+          //========================================//
+
+          //繰り返し処理停止
+          $LWK_WHILE_END = 1
+
+        //「テラボルテージ」を選択
+        ELSIF $LWK_NUM_SELECT == 1 THEN
+
+          //エリート♂：やっぱり　テラボルテージ　かあ！▼
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_13, C01R0501_TRAINERM_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+
+          //========================================//
+          //イベント進行
+          $WK_SCENE_C01R0501_QUIZ1_01 = 3
+          //========================================//
+
+          //繰り返し処理停止
+          $LWK_WHILE_END = 1
+
+        //「ターボブレイズ」を選択
+        ELSIF $LWK_NUM_SELECT == 2 THEN
+
+          //エリート♂：やっぱり　ターボブレイズかあ！▼
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_14, C01R0501_TRAINERM_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+
+          //========================================//
+          //イベント進行
+          $WK_SCENE_C01R0501_QUIZ1_01 = 3
+          //========================================//
+
+          //繰り返し処理停止
+          $LWK_WHILE_END = 1
+
+        //キャンセル用
+        ELSE
+
+          //繰り返し処理停止
+          $LWK_WHILE_END = 1
+
+        ENDIF
+
+      ENDIF
+
+    ENDWHILE
+
+    //クイズを全問正解している
+    IF $WK_SCENE_C01R0501_QUIZ1_01 == 3 THEN
+
+      //エリート♂：ありがとう！　キミの　おかげで
+      _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_15, C01R0501_TRAINERM_01, POS_DOWN )
+      _AB_KEYWAIT_MARK()
+
+      //エリート♂：さあ！　ボクの　むてきの
+      _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_16, C01R0501_TRAINERM_01, POS_DOWN )
+
+      //エリートと戦う？
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //ウィンドウ消し
+        _AB_KEYWAIT_MARK()
+        _MSGWIN_CLOSE()
+
+        //トレーナー戦呼び出し【仮】トレーナーIDは仮のもの
+        _TRAINER_BTL_SET( TRID_GENTLE_05, 0 ) 
+
+        //結果チェック
+        _CALL ev_battle_check
+
+        //勝利時
+        //========================================//
+        //イベント進行
+        $WK_SCENE_C01R0501_QUIZ1_01 = 4 
+        //========================================//
+
+        //エリート♂：うーん……▼
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_17, C01R0501_TRAINERM_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ELSE    //いいえ
+
+        //エリート♂：ぼくと　たたかうなら　また　きてくれ
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_18, C01R0501_TRAINERM_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    //クイズを全問正解していない（キャンセル枠）
+    ELSE
+
+      //エリート♂：そうか……　しかたない▼
+      _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_03, C01R0501_TRAINERM_01, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //クイズの進行状態確認
+  ELSIF $WK_SCENE_C01R0501_QUIZ1_01 == 3 THEN
+
+    //エリート♂：さあ！　ボクの　むてきの
+    _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_16, C01R0501_TRAINERM_01, POS_DOWN )
+
+    //エリートと戦う？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //ウィンドウ消し
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //トレーナー戦呼び出し【仮】トレーナーIDは仮のもの
+      _TRAINER_BTL_SET( TRID_GENTLE_05, 0 ) 
+
+      //結果チェック
+      _CALL ev_battle_check
+
+      //勝利時
+      //========================================//
+      //イベント進行
+      $WK_SCENE_C01R0501_QUIZ1_01 = 4 
+      //========================================//
+
+      //エリート♂：うーん……▼
+      _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_17, C01R0501_TRAINERM_01, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ELSE    //いいえ
+
+      //エリート♂：ぼくと　たたかうなら　また　きてくれ
+      _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_18, C01R0501_TRAINERM_01, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //クイズの進行状態確認
+  ELSIF $WK_SCENE_C01R0501_QUIZ1_01 == 4 THEN
+
+    //エリート♂：うーん……▼
+    _BALLOONWIN_OBJMSG_POS( msg_c01r0501_trainerm_17, C01R0501_TRAINERM_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならエリート勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならエリート敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+
+/**************************************************************/
+/*  ジェントルマン：話しかけ                                  */
+/**************************************************************/
+EVENT_START   ev_c01r0501_gentleman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_gentleman_01 )
+EVENT_END
+
+/**************************************************************/
+/*  女の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c01r0501_girl1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_girl1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子01：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c01r0501_boy2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子02：話しかけ（木の実と状態異常クイズ）              */
+/**************************************************************/
+EVENT_START   ev_c01r0501_boy3_01
+
+  _TALK_OBJ_START()
+
+  //クイズに全問正解した？
+  IF FLAG_OFF( FE_C01R0501_QUIZ2_01 ) THEN
+
+    //男の子02：よろしければ　かんたんな
+    _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_01, C01R0501_BOY3_01, POS_DOWN )
+
+    //クイズをする？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //男の子02：では　もんだい　です▼
+      _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_02, C01R0501_BOY3_01, POS_DOWN )
+
+      //混乱状態を治す木の実は何？
+      _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+      _BMPMENU_MAKE_LIST( msg_c01r0501_quiz1_01, 0 ) //キーのみ
+      _BMPMENU_MAKE_LIST( msg_c01r0501_quiz1_02, 1 ) //ナナシのみ
+      _BMPMENU_MAKE_LIST( msg_c01r0501_quiz1_03, 2 ) //モモンのみ
+
+      _BMPMENU_START()
+
+      //「キーのみ」を選択
+      IF $LWK_NUM_SELECT == 0 THEN
+
+        //男の子02：せいかい　です！
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_03, C01R0501_BOY3_01, POS_DOWN )
+        _AB_KEYWAIT_MARK()
+
+        //１問目正解（イベント進行）
+        $LWK_QUIZ1_CLEA = 1
+
+      //「ナナシのみ」を選択
+      ELSIF $LWK_NUM_SELECT == 1 THEN
+
+        //男の子02：ざんねん……　ハズレです
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_08, C01R0501_BOY3_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      //「モモンのみ」を選択
+      ELSIF $LWK_NUM_SELECT == 2 THEN
+
+        //男の子02：ざんねん……　ハズレです
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_08, C01R0501_BOY3_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      //キャンセル用
+      ELSE
+
+        //男の子02：クイズが　したくなったら
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_07, C01R0501_BOY3_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+      //１問目に正解している場合は２問目に
+      IF $LWK_QUIZ1_CLEA == 1 THEN
+
+        //男の子02：では　ポケモンの　わざ
+        _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_04, C01R0501_BOY3_01, POS_DOWN )
+
+        //技「いばる」を使われたポケモンはどんな状態異常になるでしょう？
+        _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+        _BMPMENU_MAKE_LIST( msg_c01r0501_quiz2_01, 0 ) //ねむり
+        _BMPMENU_MAKE_LIST( msg_c01r0501_quiz2_02, 1 ) //ひるみ
+        _BMPMENU_MAKE_LIST( msg_c01r0501_quiz2_03, 2 ) //こんらん
+
+        _BMPMENU_START()
+
+        //「ねむり」を選択
+        IF $LWK_NUM_SELECT == 0 THEN
+
+          //男の子02：ざんねん……　ハズレです
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_08, C01R0501_BOY3_01, POS_DOWN )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+        //「ひるみ」を選択
+        ELSIF $LWK_NUM_SELECT == 1 THEN
+
+          //男の子02：ざんねん……　ハズレです
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_08, C01R0501_BOY3_01, POS_DOWN )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+        //「こんらん」を選択
+        ELSIF $LWK_NUM_SELECT == 2 THEN
+
+          //男の子02：だいせいかい　です！
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_05, C01R0501_BOY3_01, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+          _MSGWIN_CLOSE()
+          //アイテム（キーのみ×３）入手
+          _ITEM_EVENT_NOWAIT( ITEM_KIINOMI, 3 )
+
+          //========================================//
+          //フラグON
+          _FLAG_SET( FE_C01R0501_QUIZ2_01 )
+          //========================================//
+
+          //男の子02：ダブルバトルで　キーのみを　もった
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_06, C01R0501_BOY3_01, POS_DOWN )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+        //キャンセル用
+        ELSE
+
+          //男の子02：クイズが　したくなったら
+          _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_07, C01R0501_BOY3_01, POS_DOWN )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+        ENDIF
+
+      ENDIF
+
+    ELSE    //いいえ
+
+      //男の子02：クイズが　したくなったら
+      _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_07, C01R0501_BOY3_01, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //クイズ全問正解済み
+  ELSE
+
+    //男の子02：ダブルバトルで　キーのみを　もった
+    _BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_06, C01R0501_BOY3_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+
+
