@@ -29,19 +29,23 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・posイベント
 ・初回
+・posイベント
+　GRIDX＝8、GRIDZ＝13~15
+　子供部屋から出現して
+　GRIDX＝10、GRIDZ＝14でメッセージ表現
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:14:36" />
+				Time="2011-08-03T07:50:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T10:59:30" />
+				Time="2011-08-03T09:22:03" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -63,12 +67,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここは……
-プラズマだんの　しろ
+			<Text>ここは……▼
+プラズマだんの　しろ▼
 ゲーチスの　ゆめのあと……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:08:56" />
+				Time="2011-08-03T05:17:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -76,12 +80,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここは……
-プラズマだんの　しろ
-ゲーチスの　ゆめのあと……</Text>
+			<Text>ここは……▼
+プラズマ団の　城▼
+ゲーチスの　夢の跡……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:09:06" />
+				Time="2011-08-03T05:17:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -90,18 +94,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・下を向いて
+・右を向いて
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:13:16" />
+				Time="2011-08-03T07:50:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T10:59:40" />
+				Time="2011-08-03T09:22:03" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -116,15 +121,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さあ　いこう▼
-この　しろの　いちばん　おく……
+			<Text>この　しろの　いちばん　おく……
 ボクにとって　たいせつな　ばしょで▽
-キミと　むきあねば　ならない……！▼
+キミと　むきあわねば　ならない……！▼
 さあ
 ついてきたまえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:21:51" />
+				Time="2011-08-03T07:54:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -132,15 +136,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さあ　いこう▼
-この　しろの　いちばん　おく……
-ボクにとって　たいせつな　ばしょで▽
-キミと　むきあねば　ならない……！▼
+			<Text>この城の　一番　奥……
+ボクにとって　大切な　場所で▽
+キミと　向き合わねば　ならない……！▼
 さあ
 ついてきたまえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:21:54" />
+				Time="2011-08-03T07:54:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -158,10 +161,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:14:51" />
+				Time="2011-08-03T09:22:03" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -179,13 +183,13 @@
 			<Text>いや▼
 ボクが　あんない　するより
 キミが　ここで　なにに▽
-きょうみを　しめすか　きになる▼
+きょうみを　しめすのか……？▼
 ということだ　キミ！▼
-この　しろの　いちばん
-おくまで　ボクを　つれていくんだ</Text>
+この　しろの　いちばん　おくまで
+ボクを　つれていくんだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:23:46" />
+				Time="2011-08-03T07:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -194,15 +198,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いや▼
-ボクが　あんない　するより
+ボクが　案内するより
 キミが　ここで　なにに▽
-きょうみを　しめすか　きになる▼
+興味を　示すのか……？▼
 ということだ　キミ！▼
-この　しろの　いちばん
-おくまで　ボクを　つれていくんだ</Text>
+この城の　一番　奥まで
+ボクを　連れていくんだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:23:52" />
+				Time="2011-08-03T07:55:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -220,10 +224,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:14:51" />
+				Time="2011-08-03T09:22:03" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -238,12 +243,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『さあ！▼
-この　しろの　いちばん
-おくまで　ボクを　つれていくんだ</Text>
+			<Text>Ｎ『さあ！
+ボクを　あんない　したまえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:22:07" />
+				Time="2011-08-03T08:00:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -251,12 +255,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『さあ！▼
-この　しろの　いちばん
-おくまで　ボクを　つれていくんだ</Text>
+			<Text>Ｎ『さあ！
+ボクを　あんない　したまえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:22:10" />
+				Time="2011-08-03T08:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -266,19 +269,21 @@
 			Language="JPN">
 			<Comment>♂
 ・posイベント
+　GRIDX＝8、GRIDZ＝13~15
+　メッセージ表示後、連れ歩き
 ・n01r0502でＮと戦闘せず外にでた場合用
-　（n01r0402で脱出）
-※swanで新規作成</Comment>
+　（n01r0402で、あなをほるなど）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:54:47" />
+				Time="2011-08-03T08:01:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:14:51" />
+				Time="2011-08-03T09:22:03" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -329,10 +334,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:21:29" />
+				Time="2011-08-03T09:22:03" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -379,10 +385,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:21:48" />
+				Time="2011-08-03T09:22:03" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -429,10 +436,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:21:48" />
+				Time="2011-08-03T09:22:03" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -447,11 +455,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　へやは
-キミだけで　みてくれないか</Text>
+			<Text>……では　いこうか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:55" />
+				Time="2011-08-03T08:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -459,11 +466,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　へやは
-キミだけで　みてくれないか</Text>
+			<Text>……では　いこうか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:01:15" />
+				Time="2011-08-03T08:42:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -472,14 +478,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・子供部屋へのposを踏んだとき
-　GRIDX＝10、GRIDZ＝9
-・はい/いいえの選択肢表示
-　はい　→boss_07
-　いいえ→boss_08</Comment>
+・子供部屋から出てきたとき
+</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:34" />
+				Time="2011-08-03T08:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -490,7 +493,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
+			<CellData>#004080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -501,10 +504,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……わかった</Text>
+			<Text>すまない
+そのわざは　やめてくれないか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:01:12" />
+				Time="2011-08-03T08:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -512,10 +516,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……わかった</Text>
+			<Text>すまない
+そのわざは　やめてくれないか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:01:15" />
+				Time="2011-08-03T08:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -524,19 +529,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・はい選択時
-・メッセージ表示後、主人公だけ
-　n01r0402へ</Comment>
+・禁則処理：あなをほる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:01:06" />
+				Time="2011-08-03T08:36:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:58:50" />
+				Time="2011-08-03T09:22:05" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -551,10 +555,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さあ　つれていってくれたまえ</Text>
+			<Text>すまない
+そのどうぐは　やめてくれないか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:00:09" />
+				Time="2011-08-03T08:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -562,10 +567,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さあ　つれていってくれたまえ</Text>
+			<Text>すまない
+そのどうぐは　やめてくれないか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:00:12" />
+				Time="2011-08-03T08:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -574,20 +580,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・いいえ選択時
-・n01r0402から出てきたときも同じ
-・メッセージ表示後、連れ歩き開始
-　→一歩前に移動させる？</Comment>
+・禁則処理：あなぬけのヒモ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:00:46" />
+				Time="2011-08-03T08:36:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:58:50" />
+				Time="2011-08-03T09:22:05" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -602,11 +606,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すまない
-そのわざは　やめてくれないか</Text>
+			<Text>ゼクロムたちも
+なんだか　たのしそう　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:28:00" />
+				Time="2011-08-03T08:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -614,11 +618,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すまない
-そのわざは　やめてくれないか</Text>
+			<Text>ゼクロムたちも
+なんだか　たのしそう　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:41:00" />
+				Time="2011-08-03T08:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -627,17 +631,20 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・禁則処理：あなをほる</Comment>
+・振り向き会話
+・Black2ver
+　このマップでは繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:19:50" />
+				Time="2011-08-03T08:36:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:14:51" />
+				Time="2011-08-03T09:22:05" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -652,113 +659,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すまない
-そのどうぐは　やめてくれないか</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>すまない
-そのどうぐは　やめてくれないか</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・禁則処理：あなぬけのヒモ</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>Ｎ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0401_boss_14"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゼクロムたちも
-なんだか　たのしそう　だよ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゼクロムたちも
-なんだか　たのしそう　だよ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・振り向き会話
-・Black2ver
-　このマップでは繰り返し</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>Ｎ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0401_boss_15"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
 			<Text>レシラムたちも
 なんだか　たのしそう　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
+				Time="2011-08-03T08:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -770,7 +675,7 @@
 なんだか　たのしそう　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
+				Time="2011-08-03T08:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -784,14 +689,15 @@
 　このマップでは繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
+				Time="2011-08-03T08:36:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
+				Time="2011-08-03T09:22:05" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

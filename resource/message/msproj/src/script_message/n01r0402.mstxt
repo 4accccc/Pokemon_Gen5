@@ -2,6 +2,266 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_n01r0401_boss_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『……ここは
+ボクの　せかい　だった　ばしょ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:14:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:13:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ『……ここは
+ボクの　せかい　だった　ばしょ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・連れ歩きでこの部屋に入ったとき
+　初回のみイベント発生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:14:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:12:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0401_boss_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ははおやと　はなれ
+もりの　おくで
+ポケモンに　そだてられていた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:33:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:33:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ははおやと　はなれ
+もりの　おくで
+ポケモンに　そだてられていた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:35:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:20:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0401_boss_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あるひのこと　ボクの　まえに
+おやと　なのる　おとこが　あらわれた
+それが　ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:33:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:33:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あるひのこと　ボクの　まえに
+おやと　なのる　おとこが　あらわれた
+それが　ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:35:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:20:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0401_boss_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かれが　ボクに　あたえてくれたのは
+ハルモニア　という　なまえ▼
+かずおおくの　ちしきと▼
+こころを　ふかくふかく　とざし
+はなすことも　できない　ポケモン▼
+それが　ボクの　すべて　だった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:33:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:33:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かれが　ボクに　あたえてくれたのは
+ハルモニア　という　なまえ▼
+かずおおくの　ちしきと▼
+こころを　ふかくふかく　とざし
+はなすことも　できない　ポケモン▼
+それが　ボクの　すべて　だった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:35:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:20:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0401_boss_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……そとで　まっているよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……そとで　まっているよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、Nだけ外に
+・このときあなをほるなど使用可能</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:34:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:20:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_n01r0402_bg_01"
 		Style="Large">
 		<LanguageCell
