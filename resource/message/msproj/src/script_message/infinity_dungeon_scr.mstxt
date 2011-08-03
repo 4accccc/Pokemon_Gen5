@@ -10800,14 +10800,13 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さま！▼
 ……　まさか　すべての　エリアを？▼
-おどろきました　この　しせつで
-はじめての　かいきょですよ！▼
+おどろきました
 おめでとうございます▼
 エリアせいはを　たたえ
 こちらの　きねんひんを　さしあげます</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:21:44" />
+				Time="2011-08-03T02:58:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -10817,14 +10816,13 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]様！▼
 ……　まさか　全ての　エリアを？▼
-驚きました　この　施設で
-はじめての　快挙ですよ！▼
+驚きました
 おめでとうございます▼
 エリア制覇を　称え
 こちらの　記念品を　差し上げます</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:38:58" />
+				Time="2011-08-03T02:58:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -11319,13 +11317,12 @@
 			<Text>[Name:TrainerName Idx="0" ]！▼
 ……　まさか　すべての　エリアを？▼
 こいつは　おどろいだぜ
-この　しせつでは　はじめてだぞ▼
 たいしたやつだ　おまえは！▼
 エリアせいはの　きねんだ
 こいつを　もっていきな！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:06:53" />
+				Time="2011-08-03T02:58:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -11336,13 +11333,12 @@
 			<Text>[Name:TrainerName Idx="0" ]！▼
 ……　まさか　全ての　エリアを？▼
 こいつは　驚いたぜ
-この　施設では　はじめてだぞ▼
 大した奴だ　お前は▼
 エリア制覇の　記念だ
 こいつを　持っていきな！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:07:50" />
+				Time="2011-08-03T02:58:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
