@@ -14,11 +14,15 @@
 #include "gamesystem/game_data.h"
 #include "system/gf_date.h"
 
-
 #define CGEAR_PANELTYPE_GET_ICON_TYPE(type) ((type) | 0x80)
 #define CGEAR_PANELTYPE_GET_LAST_IR(type) ((type) | 0x40)
 #define CGEAR_PANELTYPE_GET_LAST_WIFI(type) ((type) | 0x20)
 #define CGEAR_PANELTYPE_GET_LAST_WIRELESS(type) ((type) | 0x10)
+
+//ポジション情報はC-GEAR修正仕様.xls->[ボタン配置位置]シートを参照のこと
+#define PANEL_INIT_POS_IR       (12)
+#define PANEL_INIT_POS_WIRELESS (21)
+#define PANEL_INIT_POS_WIFI     (9)
 
 //----------------------------------------------------------
 /**
@@ -28,6 +32,7 @@
 
 struct _CGEAR_SAVEDATA {
 	u8  type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
+  u8  panel_pos[CGEAR_PANEL_MAX];
   u8  ring_col[C_GEAR_RING_NUM];
   u8  CGearPowerON;
   u8  CGearON;
@@ -36,7 +41,6 @@ struct _CGEAR_SAVEDATA {
   u16 CGearPictCRC;
   u8  CGearPictureON;
 };
-
 
 static u8 _inittable[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT]={
 	{CGEAR_PANELTYPE_NONE,
@@ -78,8 +82,6 @@ static u8 _inittable[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT]={
 		CGEAR_PANELTYPE_NONE},
 };
 
-
-
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   構造体サイズを得る
@@ -120,6 +122,10 @@ void CGEAR_SV_Init(CGEAR_SAVEDATA* pSV)
   for( i = 0;i < C_GEAR_RING_NUM;i++ ){
     pSV->ring_col[i] = i;
   }
+
+  pSV->panel_pos[CGEAR_PANEL_IR] = PANEL_INIT_POS_IR;
+  pSV->panel_pos[CGEAR_PANEL_WIRELESS] = PANEL_INIT_POS_WIRELESS;
+  pSV->panel_pos[CGEAR_PANEL_WIFI] = PANEL_INIT_POS_WIFI;
 }
 
 
@@ -258,6 +264,39 @@ u8 CGEAR_SV_GetCGearRingColor(const CGEAR_SAVEDATA* pSV, u8 ring_id )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief   CGEAR パネル位置をセット
+ * @param   panel_id CGEAR_PANEL_ID型
+ * @param   pos ポジションNo
+ */
+//--------------------------------------------------------------------------------------------
+void CGEAR_SV_SetCGearPanelPos( CGEAR_SAVEDATA* pSV, CGEAR_PANEL_ID panel_id, u8 pos )
+{
+  if( panel_id >= CGEAR_PANEL_MAX ){
+    GF_ASSERT(0);
+    return;
+  }
+  pSV->panel_pos[panel_id] = pos;
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   CGEAR パネルポジションを得る
+ * @param   panel_id CGEAR_PANEL_ID型
+ * @return  ポジションNo
+ */
+//--------------------------------------------------------------------------------------------
+u8 CGEAR_SV_GetCGearPanelPos(const CGEAR_SAVEDATA* pSV, CGEAR_PANEL_ID panel_id )
+{
+  if( panel_id >= CGEAR_PANEL_MAX ){
+    GF_ASSERT(0);
+    return 0;
+  }
+  return pSV->panel_pos[panel_id];
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief   CGEARパネルタイプを得る
  * @param   x     パネル横位置
  * @param   y     パネル縦位置
@@ -304,7 +343,6 @@ BOOL CGEAR_SV_IsPanelTypeIcon(const CGEAR_SAVEDATA* pSV,int x, int y)
   if( pSV->type[x][y] & 0x80 ){
   	return TRUE;
   }
-
   return FALSE;
 }
 
@@ -340,12 +378,10 @@ BOOL CGEAR_SV_IsPanelTypeLast(const CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANE
   }else if( type == CGEAR_PANELTYPE_WIRELESS ){
     bit = 0x10;
   }
-
   // 上位1ビットはカット
   if( pSV->type[x][y] & bit ){
     return TRUE;
   }
-
   return FALSE;
 }
 
@@ -410,7 +446,6 @@ u8* CGEAR_SV_GetPanelTypeBuff( CGEAR_SAVEDATA* pSV )
 {
   return &pSV->type[0][0];
 }
-
 
 //----------------------------------------------------------------------------
 /**
