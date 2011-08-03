@@ -3240,7 +3240,7 @@
 		<language name="JPN_KANJI" width="216">モキチ</language>
 	</row>
 
-	<row id="breederm_1_01">
+	<row id="breederw_1_01">
 		<language name="JPN" width="216">１０Ｗ</language>
 		<language name="JPN_KANJI" width="216">１０Ｗ</language>
 	</row>
@@ -3250,7 +3250,7 @@
 		<language name="JPN_KANJI" width="216">アビドス</language>
 	</row>
 
-	<row id="breederw_1_01">
+	<row id="breederm_1_01">
 		<language name="JPN" width="216">２０Ｗ</language>
 		<language name="JPN_KANJI" width="216">２０Ｗ</language>
 	</row>
@@ -3260,7 +3260,7 @@
 		<language name="JPN_KANJI" width="216">２０Ｂ</language>
 	</row>
 
-	<row id="rangerm_1_01">
+	<row id="rangerw_1_01">
 		<language name="JPN" width="216">３０Ｗ</language>
 		<language name="JPN_KANJI" width="216">３０Ｗ</language>
 	</row>
@@ -3270,7 +3270,7 @@
 		<language name="JPN_KANJI" width="216">３０Ｂ</language>
 	</row>
 
-	<row id="rangerw_1_01">
+	<row id="rangerm_1_01">
 		<language name="JPN" width="216">４０Ｗ</language>
 		<language name="JPN_KANJI" width="216">４０Ｗ</language>
 	</row>
@@ -3280,7 +3280,7 @@
 		<language name="JPN_KANJI" width="216">４０Ｂ</language>
 	</row>
 
-	<row id="veteranm_3_03">
+	<row id="veteranw_3_03">
 		<language name="JPN" width="216">５０Ｗ</language>
 		<language name="JPN_KANJI" width="216">５０Ｗ</language>
 	</row>
@@ -3290,7 +3290,7 @@
 		<language name="JPN_KANJI" width="216">５０Ｂ</language>
 	</row>
 
-	<row id="elitem_2_01">
+	<row id="elitew_2_01">
 		<language name="JPN" width="216">６０Ｗ</language>
 		<language name="JPN_KANJI" width="216">６０Ｗ</language>
 	</row>
@@ -3300,7 +3300,7 @@
 		<language name="JPN_KANJI" width="216">６０Ｂ</language>
 	</row>
 
-	<row id="elitew_2_01">
+	<row id="elitem_2_01">
 		<language name="JPN" width="216">７０Ｗ</language>
 		<language name="JPN_KANJI" width="216">７０Ｗ</language>
 	</row>
@@ -3310,7 +3310,7 @@
 		<language name="JPN_KANJI" width="216">７０Ｂ</language>
 	</row>
 
-	<row id="veteranm_3_01">
+	<row id="veteranw_3_01">
 		<language name="JPN" width="216">８０Ｗ</language>
 		<language name="JPN_KANJI" width="216">８０Ｗ</language>
 	</row>
@@ -3320,7 +3320,7 @@
 		<language name="JPN_KANJI" width="216">８０Ｂ</language>
 	</row>
 
-	<row id="veteranw_3_01">
+	<row id="veteranm_3_01">
 		<language name="JPN" width="216">９０Ｗ</language>
 		<language name="JPN_KANJI" width="216">９０Ｗ</language>
 	</row>
@@ -4925,7 +4925,7 @@
 		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
-	<row id="veteranm_3_02">
+	<row id="veteranw_3_02">
 		<language name="JPN" width="216">１００Ｗ</language>
 		<language name="JPN_KANJI" width="216">１００Ｗ</language>
 	</row>

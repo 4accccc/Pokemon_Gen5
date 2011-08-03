@@ -83,7 +83,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 18,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_06
 	},
-	{ // No.019 LEADER2♀ポケモントレーナー
+	{ // No.019 LEADER2♀アロエ
 		 19,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
@@ -223,7 +223,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 52,PTL_SEX_MALE,
 		SEQ_BGM_EYE_11
 	},
-	{ // No.054 LEADER7♂ポケモントレーナー
+	{ // No.054 LEADER7♂ハチク
 		 53,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -487,103 +487,103 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		101,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.120 RGLEADER1♂ポケモントレーナー
+	{ // No.120 RGLEADER1♂タケシ
 		102,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.121 RGLEADER2♀ポケモントレーナー
+	{ // No.121 RGLEADER2♀カスミ
 		103,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.122 RGLEADER3♂ポケモントレーナー
+	{ // No.122 RGLEADER3♂マチス
 		104,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.123 RGLEADER4♀ポケモントレーナー
+	{ // No.123 RGLEADER4♀エリカ
 		105,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.124 RGLEADER5♀ポケモントレーナー
+	{ // No.124 RGLEADER5♀ナツメ
 		106,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.125 RGLEADER6♂ポケモントレーナー
+	{ // No.125 RGLEADER6♂カツラ
 		107,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.126 RGLEADER7♂ポケモントレーナー
+	{ // No.126 RGLEADER7♂サカキ
 		108,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.127 GSLEADER1♂ポケモントレーナー
+	{ // No.127 GSLEADER1♂ハヤト
 		109,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.128 GSLEADER2♂ポケモントレーナー
+	{ // No.128 GSLEADER2♂ツクシ
 		110,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.129 GSLEADER3♀ポケモントレーナー
+	{ // No.129 GSLEADER3♀アカネ
 		111,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.130 GSLEADER4♂ポケモントレーナー
+	{ // No.130 GSLEADER4♂マツバ
 		112,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.131 GSLEADER5♂ポケモントレーナー
+	{ // No.131 GSLEADER5♂シジマ
 		113,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.132 GSLEADER6♀ポケモントレーナー
+	{ // No.132 GSLEADER6♀ミカン
 		114,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.133 GSLEADER7♂ポケモントレーナー
+	{ // No.133 GSLEADER7♂ヤナギ
 		115,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.134 GSLEADER8♀ポケモントレーナー
+	{ // No.134 GSLEADER8♀イブキ
 		116,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.135 GSLEADER9♀ポケモントレーナー
+	{ // No.135 GSLEADER9♀アンズ
 		117,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.136 RSLEADER1♀ポケモントレーナー
+	{ // No.136 RSLEADER1♀ツツジ
 		118,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.137 RSLEADER2♂ポケモントレーナー
+	{ // No.137 RSLEADER2♂トウキ
 		119,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.138 RSLEADER3♂ポケモントレーナー
+	{ // No.138 RSLEADER3♂テッセン
 		120,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.139 RSLEADER4♀ポケモントレーナー
+	{ // No.139 RSLEADER4♀アスナ
 		121,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.140 RSLEADER5♂ポケモントレーナー
+	{ // No.140 RSLEADER5♂センリ
 		122,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.141 RSLEADER6♀ポケモントレーナー
+	{ // No.141 RSLEADER6♀ナギ
 		123,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.142 RSLEADER7♂ポケモントレーナー
+	{ // No.142 RSLEADER7♂フウ
 		124,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.143 RSLEADER8♀ポケモントレーナー
+	{ // No.143 RSLEADER8♀ラン
 		125,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.144 ELEADER1♂ポケモントレーナー
+	{ // No.144 ELEADER1♂アダン
 		126,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -675,51 +675,51 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 92,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.167 DPLEADER1♂ポケモントレーナー
+	{ // No.167 DPLEADER1♂ヒョウタ
 		129,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.168 DPLEADER2♀ポケモントレーナー
+	{ // No.168 DPLEADER2♀ナタネ
 		130,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.169 DPLEADER3♀ポケモントレーナー
+	{ // No.169 DPLEADER3♀メリッサ
 		131,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.170 DPLEADER4♀ポケモントレーナー
+	{ // No.170 DPLEADER4♀スモモ
 		132,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.171 DPLEADER5♂ポケモントレーナー
+	{ // No.171 DPLEADER5♂マキシ
 		133,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.172 DPLEADER6♂ポケモントレーナー
+	{ // No.172 DPLEADER6♂トウガン
 		134,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.173 DPLEADER7♀ポケモントレーナー
+	{ // No.173 DPLEADER7♀スズナ
 		135,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.174 DPLEADER8♂ポケモントレーナー
+	{ // No.174 DPLEADER8♂デンジ
 		136,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.175 RGCHAMPION♂ポケモントレーナー
+	{ // No.175 RGCHAMPION♂グリーン
 		137,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.176 GSCHAMPION♂ポケモントレーナー
+	{ // No.176 GSCHAMPION♂ワタル
 		138,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.177 RSCHAMPION♂ポケモントレーナー
+	{ // No.177 RSCHAMPION♂ダイゴ
 		139,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.178 ECHAMPION♂ポケモントレーナー
+	{ // No.178 ECHAMPION♂ミクリ
 		140,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
