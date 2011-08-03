@@ -74,7 +74,7 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
 {
   int msg_base;
   int msg;
-  int rnd;
+  u32 rnd;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
@@ -225,21 +225,21 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTV_CM_Check( VMHANDLE *core, void *wk )
 {
-  int   rnd;
+  u32   rnd;
   BOOL  insert_flag = FALSE;
   SCRCMD_WORK *work = wk;
 
   u16 cm_insert = SCRCMD_GetVMWorkValue( core, work );
   u16 *ret = SCRCMD_GetVMWork( core, work );
 
-  rnd = GFUser_GetPublicRand( 0 );
+  rnd = GFUser_GetPublicRand( CM_RAND_MAX );
 
   if( cm_insert )
   {
     OS_Printf("CM 抽選 10% ");
     // CM挿入されたことあるので確立下がる
     // 10%
-    if( (rnd % CM_RAND_MAX) < CM_RAND_AFTER )
+    if( rnd < CM_RAND_AFTER )
     {
       insert_flag = TRUE;
     }
@@ -248,7 +248,7 @@ VMCMD_RESULT EvCmdTV_CM_Check( VMHANDLE *core, void *wk )
   {
     OS_Printf("CM 抽選 20% ");
     // 20%
-    if( (rnd % CM_RAND_MAX) < CM_RAND_FIRST )
+    if( rnd < CM_RAND_FIRST )
     {
       insert_flag = TRUE;
     }
@@ -259,6 +259,7 @@ VMCMD_RESULT EvCmdTV_CM_Check( VMHANDLE *core, void *wk )
     if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L)
     {
       insert_flag = TRUE;
+      OS_Printf("デバッグ強制 ");
     }
   }
 #endif  //PM_DEBUG
@@ -288,7 +289,7 @@ VMCMD_RESULT EvCmdTV_CM_Check( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdTV_CM_GetMsg( VMHANDLE *core, void *wk )
 {
   int msg;
-  int rnd;
+  u32 rnd;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
