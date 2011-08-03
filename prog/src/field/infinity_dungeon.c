@@ -34,6 +34,7 @@
 #include "infinity_dungeon_gimmick.h"
 #include "gmk_tmp_wk.h"
 #include "arc/fieldmap/fldmmdl_objcode.h"   //for OBJCODE
+#include "../../../resource/fldmapdata/eventdata/define/total_header.h"
 
 // グローバル変数
 #ifdef PM_DEBUG
@@ -110,7 +111,7 @@ struct _INF_DUNGEON_DATA{
   INF_DUNGEON_SEED  seed;
   ROOM_DATA         room_data[INFINITYDUNGEON_FLOOR_MAX][ROOM_MAX];
   DUNGEON_TRAINER   tr_data[INFINITYDUNGEON_FLOOR_MAX];
-  u32               recover_data[INFINITY_DUNGEON_RECOVERTR_MAX];
+  u16               recover_data[INFINITY_DUNGEON_RECOVERTR_MAX];
   u8                version;
 };
 
@@ -437,6 +438,9 @@ static const struct
 // トレーナーデータ
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_area_data.cdat"
 
+// チュートリアルマップデータ
+#include "../../../resource/infinity_dungeon/data/infinity_dungeon_tutorial_data.cdat"
+
 //-------------------------------------
 ///	イベントチェンジ用ワーク
 //=====================================
@@ -516,6 +520,8 @@ static void AddDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , const GRID_DATA *p_grid_da
 static void SetDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data);
 static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,
     int *room_id_array ,int cnt,u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index );
+static BOOL SetTutorialMap( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
+static void SetTutorialTrainerData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
 
 // グリッド
 static void SetGridPos( VecFx32 *vec ,s32 x ,s32 y ,s32 z );
@@ -779,20 +785,47 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       GAMESYS_WORK *p_gsys  = GMEVENT_GetGameSysWork( event );
       InitWorkData( p_wk ,p_gsys );
 
-      // フェードアウト
-      MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
-      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+ 
+      // 部屋移動と階移動でフェードを切り替える
+      if( p_wk->map_change_type == MAP_CHAGE_TYPE_FOOR )
+      {
+        // フェードアウト
+        MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
+        GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_WAIT ) );
+      }
+      else
+      {
+        // フェードアウト
+        MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
+        GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+      }
+
+      // 無限ダンジョン関連の岩データ位置をリセットする
+      {
+        MMDLSYS * mmdlsys = FIELDMAP_GetMMdlSys( p_wk->p_field_work );
+        MMDLSYS_ROCKPOS_ResetFallParam( mmdlsys ,ZONE_ID_D31R0801 ,D31R0801_ROOCK_01 );
+        MMDLSYS_ROCKPOS_ResetFallParam( mmdlsys ,ZONE_ID_D31R0801 ,D31R0801_ROOCK_02 );
+        MMDLSYS_ROCKPOS_ResetFallParam( mmdlsys ,ZONE_ID_D31R0801 ,D31R0801_ROOCK_03 );
+        MMDLSYS_ROCKPOS_ResetFallParam( mmdlsys ,ZONE_ID_D31R0801 ,D31R0801_ROOCK_04 );
+      }
+      
+
       (*seq)++;
       break;
     }
   case 1:
     {
-      // マップ移動
-      NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
-      SetNextZoneData( p_wk );
-      GMEVENT_CallEvent(event,
-          EVENT_ChangeMapPosNoFade(p_wk->p_gsys, p_wk->p_field_work, p_next_map_data->zone_id, &p_next_map_data->warp_pos,GetFieldDir( p_wk->warp_dir ) ));
-      (*seq)++;
+      // フェードチェック
+      if( !GFL_FADE_CheckFade() )
+      {
+
+        // マップ移動
+        NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
+        SetNextZoneData( p_wk );
+        GMEVENT_CallEvent(event,
+            EVENT_ChangeMapPosNoFade(p_wk->p_gsys, p_wk->p_field_work, p_next_map_data->zone_id, &p_next_map_data->warp_pos,GetFieldDir( p_wk->warp_dir ) ));
+        (*seq)++;
+      }
       break;
     }
   case 2:
@@ -833,8 +866,17 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
           SetTrainer(p_wk,p_next_room);
         }
       }
+ 
+      // 部屋移動と階移動でフェードを切り替える
+      if( p_wk->map_change_type == MAP_CHAGE_TYPE_FOOR )
+      {
+        GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( p_wk->p_gsys, p_wk->p_field_work ,30 ) );
+      }
+      else
+      {
+        GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+      }
 
-      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
       (*seq)++;
       break;
     }
@@ -2064,7 +2106,7 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
 
     // 部屋タイプを初期化
     {
-    const INF_ROOM_SETUP_PARAM *sc_room_setup = &sc_room_setup_param[area_no];
+      const INF_ROOM_SETUP_PARAM *sc_room_setup = &sc_room_setup_param[area_no];
       for( i = 0; i<INFINITYDUNGEON_FLOOR_MAX; i++ )
       {
         for( j = 0; j<ROOM_MAX; j++ )
@@ -2995,13 +3037,164 @@ static void GetFloorData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dung
   int i;
   u32 area_no = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
   INF_DUNGEON_SEED *p_seed = &p_dungeon_data->seed;
+  BOOL is_tutorial;
 
-  // ダンジョンデータを生成(エリアに対応したサイズで生成する)
-  SetDungeonData( p_dungeon_data ,area_no ,p_seed->dungeon_data_seed ,sc_floor_size[area_no].fs_x ,sc_floor_size[area_no].fs_y);
- 
-  // トレーナーデータをセット
-  SetTrainerData( p_dungeon_data ,area_no ,p_seed->tr_data_seed );
- 
+  // チュートリアルMAPをセットする
+  is_tutorial = SetTutorialMap( p_save ,p_dungeon_data );
+
+  // チュートリアルMAPをセットしなかったときは、ダンジョンを自動生成
+  if( is_tutorial == FALSE )
+  {
+    // ダンジョンデータを生成(エリアに対応したサイズで生成する)
+    SetDungeonData( p_dungeon_data ,area_no ,p_seed->dungeon_data_seed ,sc_floor_size[area_no].fs_x ,sc_floor_size[area_no].fs_y);
+
+    // トレーナーデータをセット
+    SetTrainerData( p_dungeon_data ,area_no ,p_seed->tr_data_seed );
+  }
+  else
+  {
+    // チュートリアル用トレーナーデータをセットする
+    SetTutorialTrainerData( p_save ,p_dungeon_data );
+  }
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  チュートリアルMAPをセットする
+ *
+ *	@param	*p_save 
+ *	@param	*p_dungeon_data 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SetTutorialMap( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data )
+{
+  u8 dungeon_status;
+  FIELD_WFBC_CORE_TYPE wfbc_type;
+
+  // バージョンからWFBCの状態を取得
+  if( p_dungeon_data->version == VERSION_B2 )
+  {
+    wfbc_type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+  }
+  else
+  {
+    wfbc_type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
+  }
+
+  // 自分と同じバージョンの時のみチュートリアルマップにさしかえる
+  if ( GET_VERSION() == p_dungeon_data->version )
+  {
+    // ダンジョンの状態を取得
+    dungeon_status = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save ,wfbc_type );
+
+    // チュートリアル用マップに差替え(エリア2クリアまでさしかえ)
+    if( (dungeon_status < INF_TUTORIAL_DATA_CNT) )
+    {
+      u8 tutorial_data_index = dungeon_status;
+      const ROOM_DATA *p_w_tutorialmap_table[] =
+      {
+        sc_tutorial_rooo_data_w1,
+        sc_tutorial_rooo_data_w2,
+      };
+      const ROOM_DATA *p_b_tutorialmap_table[] =
+      {
+        sc_tutorial_rooo_data_b1,
+        sc_tutorial_rooo_data_b2,
+      };
+
+      // データをクリア
+      GFL_STD_MemFill(p_dungeon_data->room_data, 0, sizeof(p_dungeon_data->room_data));
+
+      // ダンジョンの状態を設定
+      if( p_dungeon_data->version == VERSION_B2 )
+      {
+        GFL_STD_MemCopy( p_b_tutorialmap_table[tutorial_data_index], p_dungeon_data->room_data, sizeof(sc_tutorial_rooo_data_b1));
+      }
+      else
+      {
+        GFL_STD_MemCopy( p_w_tutorialmap_table[tutorial_data_index], p_dungeon_data->room_data, sizeof(sc_tutorial_rooo_data_b1));
+      }
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  チュートリアルトレーナーをセットする
+ *
+ *	@param	*p_save 
+ *	@param	*p_dungeon_data 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetTutorialTrainerData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data )
+{
+  u8 dungeon_status;
+  FIELD_WFBC_CORE_TYPE wfbc_type;
+
+  // バージョンからWFBCの状態を取得
+  if( p_dungeon_data->version == VERSION_B2 )
+  {
+    wfbc_type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+  }
+  else
+  {
+    wfbc_type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
+  }
+
+  // ダンジョンの状態を取得
+  dungeon_status = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save ,wfbc_type );
+
+  // チュートリアル用トレーナーをセットする
+  {
+    u8 tutorial_data_index = dungeon_status;
+
+    // トレーナーデータ配列一覧
+    const u16 *p_w_tutorialtr_table[][2] =
+    {
+      {
+        sc_tutorial_tr_data_w1,
+        sc_tutorial_rectr_data_w1,
+      },
+      {
+        sc_tutorial_tr_data_w2,
+        sc_tutorial_rectr_data_w2,
+      },
+    };
+    const u16 *p_b_tutorialtr_table[][2] =
+    {
+      {
+        sc_tutorial_tr_data_b1,
+        sc_tutorial_rectr_data_b1,
+      },
+      {
+        sc_tutorial_tr_data_b2,
+        sc_tutorial_rectr_data_b2,
+      },
+    };
+    
+    // データをクリア
+    GFL_STD_MemFill(p_dungeon_data->tr_data, 0, sizeof(p_dungeon_data->tr_data));
+    GFL_STD_MemFill(p_dungeon_data->recover_data, 0, sizeof(p_dungeon_data->recover_data));
+
+    // ダンジョンの通常トレーナーを設定
+    if( p_dungeon_data->version == VERSION_B2 )
+    {
+      GFL_STD_MemCopy( p_b_tutorialtr_table[tutorial_data_index][0], &p_dungeon_data->tr_data[0], sizeof(DUNGEON_TRAINER));
+      GFL_STD_MemCopy16( p_b_tutorialtr_table[tutorial_data_index][1], p_dungeon_data->recover_data, sizeof(p_dungeon_data->recover_data));
+    }
+    else
+    {
+      GFL_STD_MemCopy( p_w_tutorialtr_table[tutorial_data_index][0], &p_dungeon_data->tr_data[0], sizeof(DUNGEON_TRAINER));
+      GFL_STD_MemCopy16( p_w_tutorialtr_table[tutorial_data_index][1], p_dungeon_data->recover_data, sizeof(p_dungeon_data->recover_data));
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -3194,7 +3387,7 @@ u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_
 {
   u32 i;
   u32 master_seed;
-  u32 *p_trid;
+  u16 *p_trid;
 
   // トレーナーIDリストを取得
   p_trid = p_dungeon_data->recover_data;
@@ -3202,6 +3395,7 @@ u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_
   // 検索
   for( i= 0; i<INFINITY_DUNGEON_RECOVERTR_MAX; i++ )
   {
+    ONOUE_Printf("trid =%d\n",p_trid[i]);
     if( p_trid[i] == tr_id )
     {
       return i;

@@ -13,13 +13,16 @@ include ../user.def
 #------------------------------------------------------------------------------
 #　生成ファイル名
 #------------------------------------------------------------------------------
+TUTORIAL_XLS_FILE = tutorial_data.xls
 XLS_FILE = room_data.xls
 POS_CSV_FILE = tr_move_type.csv
+TUTORIAL_CSV_FILE = tutorial_data.csv
 POS_FILE = infinity_dungeon_tr_move_type.cdat
 ROOM_CSV_FILE = room_type.csv
 ROOM_FILE = infinity_dungeon_room_pos_type.cdat
 ROOM_DATA_CSV_FILE = room_data.csv
 ROOM_DATA_FILE = infinity_dungeon_room_setup_data.cdat
+TUTORIAL_FILE = infinity_dungeon_tutorial_data.cdat
 
 # トレーナー抽選データ
 TR_XLS_FILE = tr_area_data.xls
@@ -50,7 +53,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += $(POS_CSV_FILE) $(ROOM_CSV_FILE) $(ROOM_DATA_CSV_FILE) $(POS_FILE) $(ROOM_FILE) $(ROOM_DATA_FILE) $(TR_DATA_CSV_FILE)
+LDIRT_CLEAN += $(POS_CSV_FILE) $(ROOM_CSV_FILE) $(ROOM_DATA_CSV_FILE) $(POS_FILE) $(ROOM_FILE) $(ROOM_DATA_FILE) $(TR_DATA_CSV_FILE) $(TUTORIAL_FILE) $(TUTORIAL_CSV_FILE)
 endif
 
 .PHONY:	do-build
@@ -58,10 +61,13 @@ endif
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 #パーソナルデータ生成
-do-build: $(POS_CSV_FILE) $(ROOM_CSV_FILE) $(TR_DATA_CSV_FILE) $(ROOM_DATA_CSV_FILE) $(POS_FILE) $(ROOM_FILE) $(ROOM_DATA_FILE)  $(TR_DATA_FILE)
+do-build: $(POS_CSV_FILE) $(ROOM_CSV_FILE) $(TR_DATA_CSV_FILE) $(ROOM_DATA_CSV_FILE) $(POS_FILE) $(ROOM_FILE) $(ROOM_DATA_FILE)  $(TR_DATA_FILE) $(TUTORIAL_FILE)
 
 $(POS_CSV_FILE): $(XLS_FILE) trainer_move_type_cnv.rb
 	@ruby $(EXCELCONV) $(XLS_FILE) -n 0 -s > $(POS_CSV_FILE)
+
+$(TUTORIAL_CSV_FILE): $(TUTORIAL_XLS_FILE)
+	@ruby $(EXCELCONV) $(TUTORIAL_XLS_FILE) -n 0 -s > $(TUTORIAL_CSV_FILE)
 
 $(ROOM_CSV_FILE): $(XLS_FILE) trainer_room_pos_type_cnv.rb
 	@ruby $(EXCELCONV) $(XLS_FILE) -n 1 -s > $(ROOM_CSV_FILE)
@@ -71,6 +77,9 @@ $(ROOM_DATA_CSV_FILE): $(XLS_FILE) room_data_cnv.rb
 
 $(TR_DATA_CSV_FILE): $(TR_XLS_FILE) trainer_area_data_cnv.rb
 	@ruby $(EXCELCONV) $(TR_XLS_FILE) -n 0 -s > $(TR_DATA_CSV_FILE)
+
+$(TUTORIAL_FILE) : $(TUTORIAL_CSV_FILE) tutorial_data_cnv.rb
+	@ruby tutorial_data_cnv.rb $(TUTORIAL_FILE) $(TUTORIAL_CSV_FILE)
 
 $(POS_FILE):$(POS_CSV_FILE)
 	@ruby trainer_move_type_cnv.rb $(POS_FILE) $(POS_CSV_FILE)

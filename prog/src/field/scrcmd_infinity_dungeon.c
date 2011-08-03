@@ -823,6 +823,12 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
   u16 param_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 area_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  
+  //セーブデータの取得
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  INFINITYDUNGEON_SAVE *p_save    = SaveData_GetINFINITYDUNGEON( p_save_data );
 
   switch( param_id )
   {
@@ -836,6 +842,11 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
   case SCR_INFDUNGEON_PARAM_FLOOR_NUM:
     {
       *p_ret_wk = INFINITYDUNGEON_SAVE_GetFloorNum( area_id );
+    }
+    break;
+  case SCR_INFDUNGEON_PARAM_ROOM_ID:
+    {
+      *p_ret_wk = INFINITYDUNGEON_SAVE_GetRoomID( p_save );
     }
     break;
   default:

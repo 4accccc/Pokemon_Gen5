@@ -5391,6 +5391,24 @@ BOOL MMDLSYS_ROCKPOS_CheckRockFalled(
 
 //--------------------------------------------------------------
 /**
+ * MMDL_ROCKPOS 指定した岩の位置保存情報をリセットする
+ * @param mmdl  MMDL*
+ * @retval int 保持している位置番号。MMDL_ROCKPOS_MAX=保持無し。
+ */
+//--------------------------------------------------------------
+void MMDLSYS_ROCKPOS_ResetFallParam( const MMDLSYS *mmdlsys, const u16 zone_id, const u16 obj_id )
+{
+  s32 no = rockpos_GetPosNumber( zone_id, obj_id );
+  if( no != MMDL_ROCKPOS_MAX ){
+    MMDL_ROCKPOS *rockpos = &mmdlsys->rockpos[no];
+    rockpos->pos.x = ROCKPOS_INIT;
+    rockpos->pos.y = ROCKPOS_INIT;
+    rockpos->pos.z = ROCKPOS_INIT;
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * OBJコードは怪力で押すタイプかチェック
  * @param code OBJコード
  * @retval BOOL TRUE=怪力で押せる

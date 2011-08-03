@@ -8,6 +8,8 @@
 #ifndef ZONE_D31R0501_EVC_H
 #define ZONE_D31R0501_EVC_H
 
+#define D31R0501_MUGENBOSS                 0
+#define D31R0501_WKOBJCODE00               1
 
 #endif //ZONE_D31R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d31r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
