@@ -666,8 +666,9 @@ static void *TDownload_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procI
   WBT_DOWNLOAD_SYS_WORK   *p_wk = p_wk_adrs;
 
   T_DOWNLOAD_PARAM *p_param = GFL_HEAP_AllocClearMemory( heapID, sizeof(T_DOWNLOAD_PARAM) );
-  p_param->gamesys = p_wk->p_param->p_gamesys;
-  p_param->data = p_wk->p_buffer;
+  p_param->gamesys  = p_wk->p_param->p_gamesys;
+  p_param->data     = p_wk->p_buffer;
+  p_param->status   = T_DOWNLOAD_STATUS_SELECT;
 
   //TODO
 #ifdef DEBUG_WBT_DOWNLOAD_CREATE_DATA
