@@ -27,7 +27,7 @@ ANMID_MELODYER,MDLSIZE_32x32:4:4:20:t4x4x20.imd:t4x4x20:mmdl_anm/tmp/fmmdl_anm_m
 ANMID_SHINMU_A,MDLSIZE_64x64:8:8:15:t8x8x15.imd:t8x8x15:mmdl_anm/tmp/fmmdl_anm_shinmu_a.csv,
 ANMID_SHINMU_B,MDLSIZE_64x64:8:8:15:t8x8x15.imd:t8x8x15:mmdl_anm/tmp/fmmdl_anm_shinmu_b.csv,
 ANMID_SHINMU_C,MDLSIZE_64x64:8:8:15:t8x8x15.imd:t8x8x15:mmdl_anm/tmp/fmmdl_anm_shinmu_c.csv,
-ANMID_NONFLIP_SWLEADER4,MDLSIZE_32x32:4:4:16:t4x4x16.imd:t4x4x16:mmdl_anm/tmp/fmmdl_anm_nonflip_swleader4.csv,
+ANMID_NONFLIP_SWLEADER4,MDLSIZE_32x32:4:4:18:t4x4x18.imd:t4x4x18:mmdl_anm/tmp/fmmdl_anm_nonflip_swleader4.csv,
 #END,,
 
 パラメータ内訳：対応モデル:横キャラ数:縦キャラ数:総パターン数:対応imd名:対応ダミーncg&nclファイル名:アニメ定義ファイルcsv
@@ -119,4 +119,4 @@ ANMID_NONFLIP_SWLEADER4
 //パターン数 15 ゼクレシキュレムアニメ　待機正面・ぐったり・飛び立ち上昇・飛行
 //パターン数 15 ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
 //パターン数 15 ゼクレシキュレムアニメ　上昇
-//パターン数 16 スワンカミツレ　フリップ無しアニメ＋芝居1パターン
+//パターン数 18 スワンカミツレ　フリップ無しアニメ＋芝居1パターン

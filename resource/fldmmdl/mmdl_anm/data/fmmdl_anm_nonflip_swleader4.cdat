@@ -5,7 +5,7 @@
  * @autor	miyuki iwasawa
  * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
  * 
- * original = fmmdl_anm_nonflip_swleader4.xls  pattern_num = 16
+ * original = fmmdl_anm_nonflip_swleader4.xls  pattern_num = 18
  */
 //=========================================================================
 
@@ -14,11 +14,19 @@
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActNonFlip_SWLeader4_Act0[] = {
   {  3, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
-  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
-  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
-  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
-  { 15, ANMFLIP_OFF, ANMFLIP_OFF, 30 },  ///<
-  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF, 20 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<☆
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<☆
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<☆
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<☆
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF, 30 },  ///<
+  { 17, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
   {  3, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
   { GFL_BBDACT_ANMCOM_END,0,0,0 },
 };

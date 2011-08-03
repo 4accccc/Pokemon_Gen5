@@ -5,7 +5,7 @@
  * @autor	miyuki iwasawa
  * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
  * 
- * original = fmmdl_anm_nonflip_swleader4.xls  pattern_num = 16
+ * original = fmmdl_anm_nonflip_swleader4.xls  pattern_num = 18
  */
 //=========================================================================
 
@@ -18,7 +18,7 @@
 
 
 ///フレーム数定義
-#define DRAW_ANMFRM_NONFLIP_SWLEADER4_ACT0  ( 67 )
+#define DRAW_ANMFRM_NONFLIP_SWLEADER4_ACT0  ( 101 )
 
 
 #endif //__H_FMMDL_ANM_NONFLIP_SWLEADER4_H__
