@@ -77,8 +77,8 @@
 #define PSTATUS_SUB_CELL_BALL_Y (   8 )
 
 //ポケのタッチ範囲
-#define PSTATUS_SUB_TOUCH_TOP ( 32-32)
-#define PSTATUS_SUB_TOUCH_BOTTOM ( 120+32)
+#define PSTATUS_SUB_TOUCH_TOP ( 0 )
+#define PSTATUS_SUB_TOUCH_BOTTOM ( 120 )
 #define PSTATUS_SUB_TOUCH_LEFT ( 152-32)
 #define PSTATUS_SUB_TOUCH_RIGHT ( 255)
 //トリガのときだけ狭く(リボン操作とかと被るから
@@ -106,6 +106,16 @@
 
 //前→後ろアニメ定義
 #define PSTATUS_SUB_FLIP_TIME (3)
+
+// マークの座標
+#define PSTATUS_MARK_DISC_X       (179)   // ○
+#define PSTATUS_MARK_TRIANGLE_X   (190)   // △
+#define PSTATUS_MARK_SQUARE_X     (201)   // □
+#define PSTATUS_MARK_HEART_X      (212)   // ハート
+#define PSTATUS_MARK_STAR_X       (223)   // ☆
+#define PSTATUS_MARK_DIAMOND_X    (234)   // ◇
+
+#define PSTATUS_MARK_Y            (127)   // マーク共通Y座標
 
 //======================================================================
 //	enum
@@ -245,6 +255,7 @@ static const BOOL PSTATUS_SUB_SubActionUpdateFloat( PSTATUS_WORK *work , PSTATUS
 
 
 static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
+static void PSTATUS_SUB_UpdateMarkTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
 static void PSTATUS_SUB_UpdateTPAction( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
 static void PSTATUS_SUB_ResetTPActionWork( PSTATUS_TP_ACTION_WORK *tpWork , u32 tpx , u32 tpy );
 static void PSTATUS_SUB_AddCountTPActionWork( PSTATUS_TP_ACTION_WORK *tpWork , u32 tpx , u32 tpy , PSTATUS_SUB_MOVE_DIR dir );
@@ -291,6 +302,7 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
       subWork->state == PSS_DISP_BACK )
   {
     PSTATUS_SUB_UpdateTP( work , subWork );
+    PSTATUS_SUB_UpdateMarkTP( work , subWork );     // マークタッチ
     PSTATUS_SUB_SubActionUpdate( work , subWork );
   }
   else
@@ -433,8 +445,8 @@ void PSTATUS_SUB_InitCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
   }
   {
     static const u8 markPosX[SSMT_MAX] = 
-    { 208 , 216 , 224 , 232 , 240 , 248 , 164 , 176 };
-    static const u8 markPosY = 128;
+    { PSTATUS_MARK_DISC_X, PSTATUS_MARK_TRIANGLE_X, PSTATUS_MARK_SQUARE_X, PSTATUS_MARK_HEART_X, PSTATUS_MARK_STAR_X, PSTATUS_MARK_DIAMOND_X, 152 , 160 };
+    static const u8 markPosY = PSTATUS_MARK_Y;
     static const u8 markAnmSeq[SSMT_MAX] = 
     { 0 , 2 , 4 , 6 , 8 , 10 , 12 , 13 };
     u8 i;
@@ -1246,6 +1258,61 @@ static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork
   {
     //タマゴは別処理
   }
+}
+
+// マークのタッチ判定
+static void PSTATUS_SUB_UpdateMarkTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  u32 tpx,tpy;
+  //当たり判定作成
+  GFL_UI_TP_HITTBL hitTbl[7] =
+  {
+    { PSTATUS_MARK_Y, PSTATUS_MARK_Y+16, PSTATUS_MARK_DISC_X, PSTATUS_MARK_DISC_X+10 },
+    { PSTATUS_MARK_Y, PSTATUS_MARK_Y+16, PSTATUS_MARK_TRIANGLE_X, PSTATUS_MARK_TRIANGLE_X+10 },
+    { PSTATUS_MARK_Y, PSTATUS_MARK_Y+16, PSTATUS_MARK_SQUARE_X, PSTATUS_MARK_SQUARE_X+10 },
+    { PSTATUS_MARK_Y, PSTATUS_MARK_Y+16, PSTATUS_MARK_HEART_X, PSTATUS_MARK_HEART_X+10 },
+    { PSTATUS_MARK_Y, PSTATUS_MARK_Y+16, PSTATUS_MARK_STAR_X, PSTATUS_MARK_STAR_X+10 },
+    { PSTATUS_MARK_Y, PSTATUS_MARK_Y+16, PSTATUS_MARK_DIAMOND_X, PSTATUS_MARK_DIAMOND_X+10 },
+
+    { GFL_UI_TP_HIT_END ,0,0,0 },
+  };
+  
+  // タマゴもマーキングできる
+  //if( work->isEgg == FALSE )
+  {
+    const int  retCont = GFL_UI_TP_HitTrg( hitTbl );
+
+    if( retCont != GFL_UI_TP_HIT_NONE )
+    {
+      // マークにタッチした
+      u8 i;
+      u8 bitMask = 1;
+      POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+      u32 boxMark = PPP_Get( ppp , ID_PARA_mark , NULL );
+
+      // タッチしたマークを反転する
+      boxMark ^= (1<<retCont);
+
+      // 
+      PPP_Put( ppp, ID_PARA_mark, boxMark );
+
+
+      // マークの表示更新
+      for( i=0;i<POKEPARA_MARKING_ELEMS_MAX;i++ )
+      {
+        if( boxMark & bitMask )
+        {
+          GFL_CLACT_WK_SetAnmSeq( subWork->clwkMark[SSMT_BOX_DISC+i] , i*2 + 1 );
+        }
+        else
+        {
+          GFL_CLACT_WK_SetAnmSeq( subWork->clwkMark[SSMT_BOX_DISC+i] , i*2 );
+        }
+        bitMask = bitMask<<1;
+      }
+    }
+  }
+  
 }
 
 static void PSTATUS_SUB_UpdateTPAction( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
