@@ -21,6 +21,7 @@
 #include "net_app/wifi_login.h"
 #include "net_app/wifi_logout.h"
 #include "system/net_err.h"
+#include "savedata/wbt_download.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -36,6 +37,10 @@
 
 //外部
 #include "wbt_download_net.h"
+
+#ifdef PM_DEBUG
+#define DEBUG_CHECK_DATA_NONE
+#endif //PM_DEBUG
 
 //=============================================================================
 /**
@@ -480,27 +485,30 @@ static void Wbt_Download_Net_Seq_Wifi( WBTDLNET_SEQ_WORK *p_seqwk, int *p_seq, v
 
   case SEQ_CHECK_DATA:
     {
+      const WBTDL_TOTAL_DATA *cp_data = (const WBTDL_TOTAL_DATA *)COMMON_DOWNLOAD_GetDownloadData( p_wk->p_common_download );
       BOOL is_success = FALSE;
       switch( COMMON_DOWNLOAD_GetDownloadResult( p_wk->p_common_download ) )
       {
       case COMMON_DOWNLOAD_RESULT_SUCCESS:   //受信成功
+#ifndef DEBUG_CHECK_DATA_NONE
         //データチェック
-        if( 0 ) //TODO
+        if( !WBTDL_TOTAL_DATA_CheckCRC( cp_data ) )
         {
           //CRCエラー
           WBTDLNET_TEXT_Print( p_wk->p_text, p_wk->p_msg, wbt_dl_error_01, WBTDLNET_TEXT_TYPE_STREAM );
         }
-        else if( 0 )  //TODO
+        else if( !WBTDL_TOTAL_DATA_CheckVersion( cp_data ) )
         {
           //カセットバージョンが違う
           WBTDLNET_TEXT_Print( p_wk->p_text, p_wk->p_msg, wbt_dl_error_04, WBTDLNET_TEXT_TYPE_STREAM );
         }
-        else if( 0 )  //TODO
+        else if( !WBTDL_TOTAL_DATA_CheckLang( cp_data ) )
         {
           //言語コードが違う
           WBTDLNET_TEXT_Print( p_wk->p_text, p_wk->p_msg, wbt_dl_error_05, WBTDLNET_TEXT_TYPE_STREAM );
         }
         else
+#endif
         {
           //正常
           is_success = TRUE;

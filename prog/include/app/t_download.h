@@ -21,6 +21,7 @@
 #include "field/wbt.h"
 //system
 #include "gamesystem/gamesystem.h"
+#include "savedata/wbt_download.h"
 
 //=============================================================================
 /**
@@ -59,6 +60,8 @@ typedef enum {
 // トーナメントダウンロード
 typedef struct{
 	GAMESYS_WORK		*gamesys;
+
+  WBTDL_TOTAL_DATA  *data;
 	//
 	T_DOWNLOAD_STATUS	status;
 	u16 *				result_work;	///<結果 (1:フリー移動に戻る、0:パソコン画面に戻る)

@@ -30,6 +30,4 @@ extern GMEVENT * WBT_EVENT_TrainerBattle( GAMESYS_WORK *gsys, void * parent_work
 //
 extern GMEVENT * WIN_RECORD_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work );
 
-//
-extern GMEVENT * T_DOWNLOAD_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work );
 

@@ -22,7 +22,8 @@ FS_EXTERN_OVERLAY( wbt_download );
 //=====================================
 typedef struct
 {
-  GAMEDATA *p_gamedata;
+	GAMESYS_WORK		*p_gamesys; //t_download.‚É•K—v
+  GAMEDATA        *p_gamedata;
 } WBT_DOWNLOAD_SYS_PARAM;
 
 //=============================================================================

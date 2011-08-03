@@ -51,6 +51,7 @@
 #include "savedata/wbt_save.h"  //WBTSAVE
 #include "app/wbt_list.h"
 #include "event_wbt.h"  //WBT_EVENT_ShowTournamentList
+#include "event_wbt_wifi.h"
 
 #include "field/eventwork.h"  //EVENTWORK_
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_GAMECLEAR
@@ -1061,18 +1062,8 @@ static BOOL debugMenuCallProc_WinRecord( DEBUG_WBT_WORK *p_wk )
 static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk )
 {
 	GMEVENT 			*new_event;
-	T_DOWNLOAD_PARAM 	*td_param;
-	td_param = T_DOWNLOAD_PARAM_Create( HEAPID_PROC, p_wk->gmSys, p_wk->t_status, NULL, NULL );
-	//
-	// ‚È‚­‚Ä‚à‘åä•v‚È‚Ì‚Å•Û—¯
-//	WIN_RECORD_PARAM_Setup_Debug(
-//		p_wk->gmSys, wr_param,
-//		WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
-	// debug—p
-	//td_param->status = p_wk->t_status;
-	//
 	new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
-      FS_OVERLAY_ID(notwifi_event_wbt), T_DOWNLOAD_EVENT_Show, (void *)td_param );
+      FS_OVERLAY_ID(event_wbt_download), T_DOWNLOAD_EVENT_Show, NULL );
 	GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 	//
 	OS_Printf( "T Download Start\n" );

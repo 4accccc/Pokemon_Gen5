@@ -338,6 +338,11 @@ SRCS_OVERLAY_EVENT_BTLRECORDER  =  field/event_battlerecorder.c
 #GROUP_OVERLAY_MAINEVENT
 SRCS_OVERLAY_EVENT_GTS  =  field/event_gts.c
 
+#WBTWiFiダウンロード
+#===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_WBT_DOWNLOAD  =  field/event_wbt_wifi.c
+
 #デバック
 #===> main
 #GROUP_OVERLAY_MAINEVENT

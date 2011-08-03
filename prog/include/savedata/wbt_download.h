@@ -258,4 +258,39 @@ static inline BOOL WBTDL_DATA_IsVetoWazaNo( const WBTDL_DATA * wbtdl_data, u16 w
 {
   return ( waza_no != WAZANO_HURIIFOORU );
 }
+static inline BOOL WBTDL_DATA_CheckVersion( const WBTDL_DATA * wbtdl_data )
+{
+  return wbtdl_data->cassette_version == PM_VERSION;
+}
+static inline BOOL WBTDL_DATA_CheckLang( const WBTDL_DATA * wbtdl_data )
+{
+  return wbtdl_data->lang_id == PM_LANG;
+}
+static inline BOOL WBTDL_TOTAL_DATA_CheckCRC( const WBTDL_TOTAL_DATA *cp_data )
+{
+  return cp_data->crc == GFL_STD_CrcCalc( cp_data, sizeof(WBTDL_TOTAL_DATA)-sizeof(cp_data->crc) );
+}
+static inline BOOL WBTDL_TOTAL_DATA_CheckVersion( const WBTDL_TOTAL_DATA *cp_data )
+{
+  BOOL check  = TRUE;
+  int i;
+  for( i = 0; i < WBTDL_TOTAL_NUM; i++ )
+  {
+    const WBTDL_DATA *cp_wbtdl = &cp_data->data[i];
+    check &= WBTDL_DATA_CheckVersion( cp_wbtdl );
+  }
 
+  return check;
+}
+static inline BOOL WBTDL_TOTAL_DATA_CheckLang( const WBTDL_TOTAL_DATA *cp_data )
+{
+  BOOL check  = TRUE;
+  int i;
+  for( i = 0; i < WBTDL_TOTAL_NUM; i++ )
+  {
+    const WBTDL_DATA *cp_wbtdl = &cp_data->data[i];
+    check &= WBTDL_DATA_CheckLang( cp_wbtdl );
+  }
+
+  return check;
+}

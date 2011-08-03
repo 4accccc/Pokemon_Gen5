@@ -29,7 +29,7 @@ typedef enum
 
 
 //データの最大サイズ
-#define WBT_DOWNLOAD_MAX_SIZE     (48000)
+#define WBT_DOWNLOAD_MAX_SIZE     (0xE000)
 
 //=============================================================================
 /**

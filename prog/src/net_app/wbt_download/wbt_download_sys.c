@@ -21,10 +21,17 @@
 #include "system/net_err.h"
 
 #include "wbt_download_net.h"
+#include "app/t_download.h"
+#include "savedata/wbt_download.h"
 
 //外部参照
 #include "net_app/wbt_download_sys.h"
 
+
+#ifdef PM_DEBUG
+#define DEBUG_WBT_DOWNLOAD_WIFI_THROUGH
+#define DEBUG_WBT_DOWNLOAD_CREATE_DATA
+#endif
 
 //=============================================================================
 /**
@@ -82,6 +89,8 @@ typedef struct
   WBT_DOWNLOAD_SYS_STATE  state;
 } WBT_DOWNLOAD_SYS_WORK;
 
+SDK_COMPILER_ASSERT( sizeof(WBTDL_TOTAL_DATA) < WBT_DOWNLOAD_MAX_SIZE );
+
 //=============================================================================
 /**
  *					プロトタイプ宣言
@@ -117,9 +126,13 @@ static void WiFiLogout_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 //WbtDownload
 static void *WbtDlNet_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
 static void WbtDlNet_FreeParam( void *p_param_adrs, void *p_wk_adrs );
-//WbtList
-static void *WbtList_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
-static void WbtList_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+//TDownload
+static void *TDownload_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
+static void TDownload_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+
+#ifdef PM_DEBUG
+static void Debug_CreateWbtDlData( WBTDL_TOTAL_DATA *p_data );
+#endif
 
 //=============================================================================
 /**
@@ -172,12 +185,11 @@ static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]  =
     WbtDlNet_FreeParam,
   },
   //SUBPROCID_WBT_LIST
-  //TODO 仮にWiFiLoout画面を呼び出すようになっている
   {
-    FS_OVERLAY_ID(wifi_login),
-    &WiFiLogout_ProcData,
-    WbtList_AllocParam,
-    WbtList_FreeParam,
+    FS_OVERLAY_ID(entry_checker),
+    &TDownloadProcData,
+    TDownload_AllocParam,
+    TDownload_FreeParam,
   },
 };
 
@@ -217,7 +229,21 @@ static GFL_PROC_RESULT Wbt_Download_Sys_Proc_Init
 
    //モジュール作成
   SUBPROC_Init( &p_wk->subproc, sc_subproc_data, p_wk, HEAPID_WBT_DOWNLOAD_SYS );
+
+#ifdef DEBUG_WBT_DOWNLOAD_WIFI_THROUGH
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_WBT_LIST );
+  }
+  else
+  {
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_WIFI_LOGIN );
+  }
+#else
+
   SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_WIFI_LOGIN );
+
+#endif
 
   return GFL_PROC_RES_FINISH;
 }
@@ -462,8 +488,7 @@ static void *WiFiLogin_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procI
 {
   WBT_DOWNLOAD_SYS_WORK   *p_wk = p_wk_adrs;
 
-  WIFILOGIN_PARAM *p_param = GFL_HEAP_AllocMemory( heapID, sizeof(WIFILOGIN_PARAM) );
-  GFL_STD_MemClear( p_param, sizeof(WIFILOGIN_PARAM) );
+  WIFILOGIN_PARAM *p_param = GFL_HEAP_AllocClearMemory( heapID, sizeof(WIFILOGIN_PARAM) );
   p_param->gamedata     = p_wk->p_param->p_gamedata;
   p_param->bg           = WIFILOGIN_BG_NORMAL;
   p_param->display      = WIFILOGIN_DISPLAY_UP;
@@ -527,7 +552,7 @@ static void *WiFiLogout_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_proc
 {
   WBT_DOWNLOAD_SYS_WORK   *p_wk = p_wk_adrs;
 
-  WIFILOGOUT_PARAM *p_param = GFL_HEAP_AllocMemory( heapID, sizeof(WIFILOGOUT_PARAM) );
+  WIFILOGOUT_PARAM *p_param = GFL_HEAP_AllocClearMemory( heapID, sizeof(WIFILOGOUT_PARAM) );
   p_param->gamedata = p_wk->p_param->p_gamedata;
   p_param->bg       = WIFILOGIN_BG_NORMAL;
   p_param->display  = WIFILOGIN_DISPLAY_UP;
@@ -581,7 +606,7 @@ static void *WbtDlNet_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID
 {
   WBT_DOWNLOAD_SYS_WORK   *p_wk = p_wk_adrs;
 
-  WBT_DOWNLOAD_NET_PARAM *p_param = GFL_HEAP_AllocMemory( heapID, sizeof(WBT_DOWNLOAD_NET_PARAM) );
+  WBT_DOWNLOAD_NET_PARAM *p_param = GFL_HEAP_AllocClearMemory( heapID, sizeof(WBT_DOWNLOAD_NET_PARAM) );
 
   p_param->p_gamedata = p_wk->p_param->p_gamedata;
   p_param->p_buffer   = p_wk->p_buffer;;
@@ -636,16 +661,18 @@ static void WbtDlNet_FreeParam( void *p_param_adrs, void *p_wk_adrs )
  *  @return 引数
  */
 //-----------------------------------------------------------------------------
-static void *WbtList_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID )
+static void *TDownload_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID )
 {
   WBT_DOWNLOAD_SYS_WORK   *p_wk = p_wk_adrs;
 
-  WIFILOGOUT_PARAM *p_param = GFL_HEAP_AllocMemory( heapID, sizeof(WIFILOGOUT_PARAM) );
-  p_param->gamedata = p_wk->p_param->p_gamedata;
-  p_param->bg       = WIFILOGIN_BG_NORMAL;
-  p_param->display  = WIFILOGIN_DISPLAY_UP;
-  p_param->bgm      = WIFILOGIN_BGM_NORMAL;
-  p_param->fade     = WIFILOGIN_FADE_DEFAULT;
+  T_DOWNLOAD_PARAM *p_param = GFL_HEAP_AllocClearMemory( heapID, sizeof(T_DOWNLOAD_PARAM) );
+  p_param->gamesys = p_wk->p_param->p_gamesys;
+  p_param->data = p_wk->p_buffer;
+
+  //TODO
+#ifdef DEBUG_WBT_DOWNLOAD_CREATE_DATA
+  Debug_CreateWbtDlData( p_wk->p_buffer );
+#endif
 
   return p_param;
 }
@@ -657,12 +684,165 @@ static void *WbtList_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID 
  *  @param  *p_wk_adrs                ワーク
  */
 //-----------------------------------------------------------------------------
-static void WbtList_FreeParam( void *p_param_adrs, void *p_wk_adrs )
+static void TDownload_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 {
   WBT_DOWNLOAD_SYS_WORK   *p_wk = p_wk_adrs;
-  WIFILOGOUT_PARAM         *p_param = p_param_adrs; 
+  T_DOWNLOAD_PARAM         *p_param = p_param_adrs; 
 
   /* 何も呼ばなければPROC終了 */
 
   GFL_HEAP_FreeMemory( p_param );
 }
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグデータ作成
+ *
+ *	@param	WBTDL_TOTAL_DATA *p_data データ
+ */
+//-----------------------------------------------------------------------------
+static void Debug_CreateWbtDlData( WBTDL_TOTAL_DATA *p_total_data )
+{
+  GFL_STD_MemClear( p_total_data, sizeof(WBTDL_TOTAL_DATA) );
+
+
+  {
+    int i;
+    int j;
+    int k;
+    for( i = 0; i < WBTDL_TOTAL_NUM; i++ )
+    {
+      WBTDL_DATA *p_data  = &p_total_data->data[i];
+      WBTDL_RULE *p_rule  = &p_data->regulation;
+      p_data->cassette_version = PM_VERSION;
+      p_data->year    = 11;
+      p_data->month   = 8;
+      p_data->day     = 3;
+      p_data->lang_id = PM_LANG;
+      p_data->tournament_id = i;
+      GFL_STD_MemFill16( p_data->tournament_name, L'０', WBTDL_TOURNAMENT_NAME_LEN*sizeof(STRCODE) );
+      p_data->tournament_name[0] = L'て';
+      p_data->tournament_name[1] = L'す';
+      p_data->tournament_name[2] = L'と';
+      p_data->tournament_name[3] = L'　';
+      p_data->tournament_name[4] = L'た';
+      p_data->tournament_name[5] = L'い';
+      p_data->tournament_name[6] = L'か';
+      p_data->tournament_name[7] = L'い';
+      p_data->tournament_name[WBTDL_TOURNAMENT_NAME_LEN-1] = GFL_STR_GetEOMCode();
+      GFL_STD_MemFill16( p_data->contents_explain, L'０', WBTDL_TOURNAMENT_EXPLAIN_LEN*sizeof(STRCODE) );
+      p_data->contents_explain[0] = L'な';
+      p_data->contents_explain[1] = L'い';
+      p_data->contents_explain[2] = L'よ';
+      p_data->contents_explain[3] = L'う';
+      p_data->contents_explain[WBTDL_TOURNAMENT_EXPLAIN_LEN-1] = GFL_STR_GetEOMCode();
+      GFL_STD_MemFill16( p_data->regulation_explain, L'０', WBTDL_TOURNAMENT_REG_EXPLAIN_LEN*sizeof(STRCODE) );
+      p_data->regulation_explain[0] = L'レ';
+      p_data->regulation_explain[1] = L'ギ';
+      p_data->regulation_explain[2] = L'ュ';
+      p_data->regulation_explain[3] = L'レ';
+      p_data->regulation_explain[4] = L'ー';
+      p_data->regulation_explain[5] = L'シ';
+      p_data->regulation_explain[6] = L'ョ';
+      p_data->regulation_explain[7] = L'ン';
+      p_data->regulation_explain[WBTDL_TOURNAMENT_REG_EXPLAIN_LEN-1] = GFL_STR_GetEOMCode();
+
+      p_rule->num_lo  = 3;
+      p_rule->num_hi  = 3;
+      p_rule->level   = 50;
+      p_rule->level_range   = 3;
+      p_rule->level_total = 0;
+      p_rule->both_pokemon  = FALSE;
+      p_rule->both_item     = FALSE;
+      p_rule->nick_name     = FALSE;
+      p_rule->btl_rule      = BTL_RULE_SINGLE;
+
+      for( j = 0; j < WBTDL_CHAR_MAX; j++ )
+      {
+        WBTDL_CHARACTER *p_chara = &p_data->character[i];
+        for( k = 0; k < TEMOTI_POKEMAX; k++ )
+        {
+          WBTDL_POKEMON *p_poke = &p_chara->pokemon[k];
+          p_poke->monsno  = k+1;
+          GFL_STD_MemFill16( p_poke->nickname, L'０', (MONS_NAME_SIZE+EOM_SIZE)*sizeof(STRCODE) );
+          p_poke->nickname[0]  = L'ニ';
+          p_poke->nickname[1]  = L'ッ';
+          p_poke->nickname[2]  = L'ク';
+          p_poke->nickname[3]  = L'ネ';
+          p_poke->nickname[4]  = L'ー';
+          p_poke->nickname[5]  = L'ム';
+          p_poke->nickname[MONS_NAME_SIZE]  = GFL_STR_GetEOMCode();
+
+          p_poke->waza_id[0] = 1;
+          p_poke->level     = 50;
+        }
+        GFL_STD_MemFill16( p_chara->name, L'０', SAVELEN_TRAINER_NAME*sizeof(STRCODE) );
+        p_chara->name[0]  = L'な';
+        p_chara->name[1]  = L'ま';
+        p_chara->name[2]  = L'え';
+        p_chara->name[3]  = L'０'+j;
+        p_chara->name[SAVELEN_TRAINER_NAME-1]  = GFL_STR_GetEOMCode();
+        GFL_STD_MemFill16( p_chara->title, L'０', WBTDL_TRAINER_TITLE_LEN*sizeof(STRCODE) );
+        p_chara->title[0] = L'タ';
+        p_chara->title[1] = L'イ';
+        p_chara->title[2] = L'ト';
+        p_chara->title[3] = L'ル';
+        p_chara->title[WBTDL_TRAINER_TITLE_LEN-1] = GFL_STR_GetEOMCode();
+        GFL_STD_MemFill16( p_chara->msg_before, L'０', WBTDL_MSG_LEN*sizeof(STRCODE) );
+        p_chara->msg_before[0]  = L'た';
+        p_chara->msg_before[1]  = L'い';
+        p_chara->msg_before[2]  = L'せ';
+        p_chara->msg_before[3]  = L'ん';
+        p_chara->msg_before[4]  = L'ま';
+        p_chara->msg_before[5]  = L'え';
+        p_chara->msg_before[WBTDL_MSG_LEN-1]  = GFL_STR_GetEOMCode();
+        GFL_STD_MemFill16( p_chara->msg_win, L'０', WBTDL_MSG_LEN*sizeof(STRCODE) );
+        p_chara->msg_win[0]  = L'か';
+        p_chara->msg_win[1]  = L'ち';
+        p_chara->msg_win[2]  = L'せ';
+        p_chara->msg_win[3]  = L'り';
+        p_chara->msg_win[4]  = L'ふ';
+        p_chara->msg_win[WBTDL_MSG_LEN-1]  = GFL_STR_GetEOMCode();
+        GFL_STD_MemFill16( p_chara->msg_lose, L'０', WBTDL_MSG_LEN*sizeof(STRCODE) );
+        p_chara->msg_lose[0]  = L'ま';
+        p_chara->msg_lose[1]  = L'け';
+        p_chara->msg_lose[2]  = L'せ';
+        p_chara->msg_lose[3]  = L'り';
+        p_chara->msg_lose[4]  = L'ふ';
+        p_chara->msg_lose[WBTDL_MSG_LEN-1]  = GFL_STR_GetEOMCode();
+
+        GFL_STD_MemFill16( p_chara->msg_announce, L'０', WBTDL_MSG_LEN*sizeof(STRCODE) );
+        p_chara->msg_announce[0]  = L'け';
+        p_chara->msg_announce[1]  = L'っ';
+        p_chara->msg_announce[2]  = L'し';
+        p_chara->msg_announce[3]  = L'ょ';
+        p_chara->msg_announce[4]  = L'う';
+        p_chara->msg_announce[5]  = L'ま';
+        p_chara->msg_announce[6]  = L'え';
+        p_chara->msg_announce[WBTDL_MSG_LEN-1]  = GFL_STR_GetEOMCode();
+
+        p_chara->title_id           = 1;
+        p_chara->msg_before_id      = 1;
+        p_chara->msg_after_win_id   = 2;
+        p_chara->msg_after_lose_id  = 3;
+        p_chara->msg_win_id         = 4;
+        p_chara->msg_lose_id        = 5;
+        p_chara->msg_announce_id    = 6;
+        p_chara->obj_id             = 0xe + j;
+        p_chara->lang_id            = PM_LANG;
+      }
+
+      for( j = 0; j < WBT_TRAINER_NUM - 1; j++ )
+      {
+        WBTDL_MATCH *p_match = &p_data->match[i];
+        p_match->type = WBTDL_MATCH_TRAINER_DATA;
+        p_match->pri = j;
+        p_match->id   = j;
+      }
+
+      p_data->crc = GFL_STD_CrcCalc( p_data, sizeof(WBTDL_DATA)-sizeof(p_data->crc) );
+    }
+    p_total_data->crc = GFL_STD_CrcCalc( p_total_data, sizeof(WBTDL_TOTAL_DATA)-sizeof(p_total_data->crc) );
+  }
+}
+#endif

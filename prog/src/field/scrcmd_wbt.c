@@ -48,6 +48,8 @@
 
 #include "msg/script/msg_wbt_lobby.h" //msg_wbt_info_ng_
 
+#include "event_wbt_wifi.h"
+
 //============================================================================================
 //============================================================================================
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_NULL == WBTCUP_NULL );
@@ -913,9 +915,8 @@ VMCMD_RESULT EvCmdWBTECheckerDownLoad( VMHANDLE * core, void * wk )
   u16 app_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
-  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys, T_DOWNLOAD_STATUS_SELECT, ret_wk, NULL );
 	new_event = GMEVENT_CreateOverlayEventCall( gsys,
-      FS_OVERLAY_ID(notwifi_event_wbt), T_DOWNLOAD_EVENT_Show, (void *)td_param );
+      FS_OVERLAY_ID(event_wbt_download), T_DOWNLOAD_EVENT_Show, NULL );
   //åãâ ÇéÛÇØéÊÇÈÉèÅ[ÉNÇê›íËÇ∑ÇÈ
   //WBTSYS_SetScriptAnswerWork( wbtsys, ret_wk );
   TAMADA_Printf("EvCmdWBTECheckerDownLoad\n");
