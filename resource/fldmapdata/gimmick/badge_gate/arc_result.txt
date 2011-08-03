@@ -1,36 +1,36 @@
 
 fileID:  byte(s) name
 ----------------------------------------
-     0:     6600 /swanbg_01.nsbmd
-     1:     5684 /swanbg_01_start.nsbmd
-     2:     6460 /swanbg_01_end.nsbmd
-     3:     5672 /swanbg_02.nsbmd
-     4:     4688 /swanbg_02_start.nsbmd
-     5:     5520 /swanbg_02_end.nsbmd
-     6:     7352 /swanbg_03.nsbmd
-     7:     6388 /swanbg_03_start.nsbmd
-     8:     7136 /swanbg_03_end.nsbmd
-     9:     6768 /swanbg_04.nsbmd
-    10:     5836 /swanbg_04_start.nsbmd
-    11:     6592 /swanbg_04_end.nsbmd
-    12:     6744 /swanbg_05.nsbmd
-    13:     5796 /swanbg_05_start.nsbmd
-    14:     6540 /swanbg_05_end.nsbmd
-    15:     7512 /swanbg_06.nsbmd
-    16:     6576 /swanbg_06_start.nsbmd
-    17:     7356 /swanbg_06_end.nsbmd
-    18:    10288 /swanbg_07.nsbmd
-    19:     9384 /swanbg_07_start.nsbmd
-    20:    10100 /swanbg_07_end.nsbmd
-    21:     7664 /swanbg_08.nsbmd
-    22:     6676 /swanbg_08_start.nsbmd
-    23:     7408 /swanbg_08_end.nsbmd
-    24:    30012 /swanbg_09.nsbmd
-    25:    23976 /swanbg_09_start.nsbmd
-    26:    14472 /swanbg_09_end.nsbmd
-    27:      148 /swanbg_01.nsbca
-    28:    14944 /swanbg_09.nsbca
-    29:      292 /swanbg_01.nsbta
+     0:     7612 /swanbg_01.nsbmd
+     1:     6088 /swanbg_01_start.nsbmd
+     2:     6572 /swanbg_01_end.nsbmd
+     3:     6684 /swanbg_02.nsbmd
+     4:     5092 /swanbg_02_start.nsbmd
+     5:     5588 /swanbg_02_end.nsbmd
+     6:     8308 /swanbg_03.nsbmd
+     7:     6848 /swanbg_03_start.nsbmd
+     8:     7300 /swanbg_03_end.nsbmd
+     9:     7780 /swanbg_04.nsbmd
+    10:     6260 /swanbg_04_start.nsbmd
+    11:     6740 /swanbg_04_end.nsbmd
+    12:     7756 /swanbg_05.nsbmd
+    13:     6152 /swanbg_05_start.nsbmd
+    14:     6660 /swanbg_05_end.nsbmd
+    15:     8524 /swanbg_06.nsbmd
+    16:     6960 /swanbg_06_start.nsbmd
+    17:     7504 /swanbg_06_end.nsbmd
+    18:    11304 /swanbg_07.nsbmd
+    19:     9752 /swanbg_07_start.nsbmd
+    20:    10264 /swanbg_07_end.nsbmd
+    21:     8888 /swanbg_08.nsbmd
+    22:     7316 /swanbg_08_start.nsbmd
+    23:     7700 /swanbg_08_end.nsbmd
+    24:    37020 /swanbg_09.nsbmd
+    25:    28580 /swanbg_09_start.nsbmd
+    26:    21092 /swanbg_09_end.nsbmd
+    27:      992 /swanbg_01.nsbca
+    28:    39572 /swanbg_09.nsbca
+    29:      732 /swanbg_01.nsbta
     30:     1372 /swanbg_09.nsbta
     31:      764 /swanbg_roop_01.nsbta
     32:      764 /swanbg_roop_09.nsbta
