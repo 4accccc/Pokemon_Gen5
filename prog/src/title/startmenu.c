@@ -2409,10 +2409,6 @@ static void PutReportInfo( START_MENU_WORK * wk )
 {
   GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], TRUE );
 
-	GFL_ARC_UTIL_TransVramScreen(
-		ARCID_STARTMENU, NARC_startmenu_report_lz_NSCR,
-		GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_STARTMENU );
-
   {
     int i;
     BOOL is_change = FALSE;
@@ -2447,6 +2443,16 @@ static void PutReportInfo( START_MENU_WORK * wk )
     if( is_change )
     {
 	    GFL_BMPWIN_MakeScreen( wk->util[BMPWIN_KEYINFO].win );
+
+    	GFL_ARC_UTIL_TransVramScreen(
+		    ARCID_STARTMENU, NARC_startmenu_report2_lz_NSCR,
+		    GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_STARTMENU );
+    }
+    else
+    {
+	    GFL_ARC_UTIL_TransVramScreen(
+		  ARCID_STARTMENU, NARC_startmenu_report_lz_NSCR,
+		  GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_STARTMENU );
     }
 
 	  GFL_BG_LoadScreenV_Req( BMPWIN_REPORT_FRM );

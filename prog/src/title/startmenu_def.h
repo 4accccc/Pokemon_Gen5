@@ -75,32 +75,32 @@ enum {
 #define	BMPWIN_TITLE_SY			( 3 )
 //「レポート情報」
 #define	BMPWIN_REPORT_PX		( 5 )
-#define	BMPWIN_REPORT_PY		( 3 )
+#define	BMPWIN_REPORT_PY		( 2 )
 #define	BMPWIN_REPORT_SX		( 18 )
 #define	BMPWIN_REPORT_SY		( 3 )
 // プレイヤー名
 #define	BMPWIN_NAME_PX			( 10 )
-#define	BMPWIN_NAME_PY			( 6 )
+#define	BMPWIN_NAME_PY			( 5 )
 #define	BMPWIN_NAME_SX			( 8 )
 #define	BMPWIN_NAME_SY			( 2 )
 // セーブ場所
 #define	BMPWIN_PLACE_PX			( 10 )
-#define	BMPWIN_PLACE_PY			( 8 )
+#define	BMPWIN_PLACE_PY			( 7 )
 #define	BMPWIN_PLACE_SX			( 15 )
 #define	BMPWIN_PLACE_SY			( 2 )
 // プレイ時間
 #define	BMPWIN_TIME_PX			( 5 )
-#define	BMPWIN_TIME_PY			( 13 )
+#define	BMPWIN_TIME_PY			( 12 )
 #define	BMPWIN_TIME_SX			( 18 )
 #define	BMPWIN_TIME_SY			( 2 )
 // 図鑑
 #define	BMPWIN_ZUKAN_PX			( 15 )
-#define	BMPWIN_ZUKAN_PY			( 11 )
+#define	BMPWIN_ZUKAN_PY			( 10 )
 #define	BMPWIN_ZUKAN_SX			( 13 )
 #define	BMPWIN_ZUKAN_SY			( 2 )
 // バッジ
 #define	BMPWIN_BADGE_PX			( 5 )
-#define	BMPWIN_BADGE_PY			( 11 )
+#define	BMPWIN_BADGE_PY			( 10 )
 #define	BMPWIN_BADGE_SX			( 10 )
 #define	BMPWIN_BADGE_SY			( 2 )
 //キーシステムせってい
@@ -296,7 +296,7 @@ enum {
 
 // 座標
 #define	PLAYER_OBJ_PX		( 48 )
-#define	PLAYER_OBJ_PY		( 60 )
+#define	PLAYER_OBJ_PY		( 52 )
 #define	NEW_OBJ_PX			( 208 )
 #define	WICON_OBJ_PX		( 208 )
 #define	KEY_00_OBJ_PX		( 48 )

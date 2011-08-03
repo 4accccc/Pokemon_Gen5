@@ -10,6 +10,7 @@
 "list_frame1_lz.NSCR"
 "list_frame2_lz.NSCR"
 "report_lz.NSCR"
+"report2_lz.NSCR"
 
 "obj_u_lz.NCGR"
 "obj_u.NCLR"
