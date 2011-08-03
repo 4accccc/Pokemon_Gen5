@@ -294,8 +294,8 @@
 いま　はやっているものは？▼
 そんな　ぎもんを
 キミは　かんじたことは　ないか？▼
-ここは　すれちがい
-ちょうさたいほんぶ▼
+ここは
+すれちがい　ちょうさたいほんぶ▼
 キミの　ような　まよえる　こひつじに
 しんじつを　おしえる　ばしょだ▼
 ……キミは　いいめを　しているな
@@ -303,8 +303,8 @@
 ……よろしい！　キミを　とくべつに
 ちょうさたいいんに　にんめいしよう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:50:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -440,18 +440,19 @@ assistantm_01_03へ続く
 			Language="JPN_KANJI">
 			<Text>隊員の　仕事は　ただひとつ！
 調査依頼を　調査することだ▼
-まず　わたしから　調査依頼を　受ける▼
+まず　わたしから
+調査依頼を　受ける▼
 そして　調査レーダーで　
 調べたい　調査を　選ぶ▼
 あとは　たくさんの人と　すれ違えば
 レーダーが　情報を　集めてくれる▼
-もちろん　調査に　たいして
+もちろん　調査に　対して
 報酬も　用意している▼
 [Name:TrainerName Idx="1" ]隊員！
 キミの　活躍を　期待しているぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:51:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -545,13 +546,13 @@ assistantm_01_06へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キミは　すべての　いらいを
-おえている▼
+			<Text>キミは　すべての
+いらいを　おえている▼
 これからは　じぶんの　しりたいことを
 すきなだけ　しらべてくれたまえ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:51:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -559,12 +560,13 @@ assistantm_01_06へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キミは　すべての　依頼を　終えている▼
+			<Text>キミは　すべての
+依頼を　終えている▼
 これからは　自分の　知りたいことを
 好きなだけ　調べてくれたまえ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:51:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1279,10 +1281,10 @@ assistantm_01_06へ続く
 			Language="JPN">
 			<Text>わかった▼
 いらいを　うけたくなったら
-またきてくれ</Text>
+また　きてくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:51:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1292,10 +1294,10 @@ assistantm_01_06へ続く
 			Language="JPN_KANJI">
 			<Text>わかった▼
 依頼を　受けたくなったら
-また来てくれ</Text>
+また　来てくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:52:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1475,10 +1477,10 @@ assistantm_01_06へ続く
 			Language="JPN">
 			<Text>わかった……▼
 いらいを　うけたくなったら
-またきてくれ</Text>
+また　きてくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:51:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1488,10 +1490,10 @@ assistantm_01_06へ続く
 			Language="JPN_KANJI">
 			<Text>わかった……▼
 依頼を　受けたくなったら
-また来てくれ</Text>
+また　来てくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1625,10 +1627,10 @@ assistantm_01_06へ続く
 時間調査　⇒　assistantm_01_13a
 人数調査　⇒　assistantm_01_14a
 
-※以降、赤いBackColorはＳＷＡＮで変更したもの</Comment>
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T09:52:43" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:03:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2333,10 +2335,12 @@ assistantm_01_06へ続く
 
 『きせつに　ついて』　
 時間調査　⇒　assistantm_01_13m
-人数調査　⇒　assistantm_01_14m</Comment>
+人数調査　⇒　assistantm_01_14m
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:04:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2392,10 +2396,12 @@ assistantm_01_06へ続く
 
 『げいじゅつに　ついて』　
 時間調査　⇒　assistantm_01_13n
-人数調査　⇒　assistantm_01_14n</Comment>
+人数調査　⇒　assistantm_01_14n
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:04:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2569,10 +2575,12 @@ assistantm_01_06へ続く
 
 『いちばん　すきな　がっこうの　じかんは？』　
 時間調査　⇒　assistantm_01_13q
-人数調査　⇒　assistantm_01_14q</Comment>
+人数調査　⇒　assistantm_01_14q
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:05:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2628,10 +2636,12 @@ assistantm_01_06へ続く
 
 『べんきょうに　ついて』　
 時間調査　⇒　assistantm_01_13r
-人数調査　⇒　assistantm_01_14r</Comment>
+人数調査　⇒　assistantm_01_14r
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:05:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2687,10 +2697,12 @@ assistantm_01_06へ続く
 
 『いちばん　にんきの　スポーツは？』　
 時間調査　⇒　assistantm_01_13s
-人数調査　⇒　assistantm_01_14s</Comment>
+人数調査　⇒　assistantm_01_14s
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:05:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2805,10 +2817,12 @@ assistantm_01_06へ続く
 
 『いちばん　なりたいものは？』　
 時間調査　⇒　assistantm_01_13u
-人数調査　⇒　assistantm_01_14u</Comment>
+人数調査　⇒　assistantm_01_14u
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:05:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3020,10 +3034,10 @@ assistantm_01_06へ続く
 しらべてくる　ちょうさだ▼
 わたしも　ポケモンを
 はじめようと　おもってね▽
-にんきのあるほうを　しりたいんだ▼</Text>
+どちらが　にんきか　しりたいんだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T05:31:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:05:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3039,10 +3053,10 @@ assistantm_01_06へ続く
 調べてくる　調査だ▼
 わたしも　ポケモンを
 はじめようと　思ってね▽
-人気のあるほうを　知りたいんだ▼</Text>
+どちらが　人気か　知りたいんだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T05:31:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:06:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3059,10 +3073,12 @@ assistantm_01_06へ続く
 
 assistantm_01_15へ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T05:31:25" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:05:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3112,7 +3128,7 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　ポケモン博士　からの
+とある　ポケモン博士からの
 依頼だな▼
 ２時間　以上　調査して
 １番　選ばれた▽
@@ -3121,8 +3137,8 @@ assistantm_01_15へ続く
 調査の　結果を
 研究に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:06:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3192,7 +3208,7 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　母親　からの　依頼だな▼
+とある　母親からの　依頼だな▼
 ４時間　以上　調査して
 １番　多い　プレイ時間を▼
 調べてくる　調査だ▼
@@ -3200,8 +3216,8 @@ assistantm_01_15へ続く
 子供の　プレイ時間と▽
 比べたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:06:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3271,15 +3287,15 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　新聞社　からの　依頼だな▼
+とある　新聞社からの　依頼だな▼
 ４時間　以上　調査して
 男と　女　どっちが　多いかを▽
 調べてくる　調査だ▼
 調査の　結果を
 明日の　朝刊に　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:07:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3348,15 +3364,15 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　雑誌記者　からの　依頼だな▼
+とある　雑誌記者からの　依頼だな▼
 ４時間　以上　調査して
 １番　多い　仕事を▽
 調べてくる　調査だ▼
 調査の　結果を
 特集記事に　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:06:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3425,7 +3441,7 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　レジャー会社　からの
+とある　レジャー会社からの
 依頼だな▼
 ４時間　以上　調査して
 １番　多い　趣味を▽
@@ -3433,8 +3449,8 @@ assistantm_01_15へ続く
 調査の　結果を
 企画の　参考に　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:06:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3582,7 +3598,7 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　少女　からの　依頼だな▼
+とある　少女からの　依頼だな▼
 ８時間　以上　調査して
 どんな　ポケモンが▽
 １番　人気が　あるかを▽
@@ -3590,8 +3606,8 @@ assistantm_01_15へ続く
 調査の　結果を
 宿題として　提出したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:06:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3661,7 +3677,7 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　トレーナー　からの　依頼だな▼
+とある　トレーナーからの　依頼だな▼
 ８時間　以上　調査して
 １番　人気のある▽
 ポケモンの　タイプを▽
@@ -3669,8 +3685,8 @@ assistantm_01_15へ続く
 調査の　結果を
 対戦に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:07:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3740,7 +3756,7 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　不動産屋　からの　依頼だな▼
+とある　不動産屋からの　依頼だな▼
 ８時間　以上　調査して
 都会と　田舎▽
 どっちに　住みたいかを▽
@@ -3748,8 +3764,8 @@ assistantm_01_15へ続く
 調査の　結果を
 仕事に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:07:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3981,13 +3997,12 @@ assistantm_01_15へ続く
 しらべてくる　ちょうさだ▼
 わたしも　そろそろ
 しょうらいを　みすえて▽
-じんせいせっけいを▽
-しなければな……▼
-おとなになると
+じんせいせっけいを　しなければな……▼
+おとなに　なると
 いろいろ　あるんだよ……▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:29:52" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:55:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3999,7 +4014,7 @@ assistantm_01_15へ続く
 わたし　からの　依頼だな▼
 １２時間　以上　調査して
 どんな人に　なりたいかと▽
-夢を追うか　現実を見るか　を▽
+夢を追うか　現実をみるか　を▽
 調べてくる　調査だ▼
 わたしも　そろそろ
 将来を　見据えて▽
@@ -4007,8 +4022,8 @@ assistantm_01_15へ続く
 大人になると
 いろいろ　あるんだよ……▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:32:22" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4025,10 +4040,12 @@ assistantm_01_15へ続く
 
 assistantm_01_15へ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:21:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4081,18 +4098,18 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　作詞家　からの　依頼だな▼
+とある　作詞家からの　依頼だな▼
 １２時間　以上　調査して
 将来　がんばりたい　ことと▽
 １番　好きな　音楽を▽
 調べてくる　調査だ▼
 大勢が　共感できる
-歌を　作りたいので▽
+歌を　つくりたいので▽
 みんなの　目標と　音楽の　趣味を▽
 参考に　作詞　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:34:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:56:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4109,10 +4126,12 @@ assistantm_01_15へ続く
 
 assistantm_01_15へ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:21:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4161,7 +4180,7 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　アイドル歌手　からの
+とある　アイドル歌手からの
 依頼だな▼
 １６時間　以上　調査して
 １番　好きな　音楽を▽
@@ -4169,8 +4188,8 @@ assistantm_01_15へ続く
 調査の　結果を
 新曲に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:07:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4303,15 +4322,15 @@ assistantm_01_15へ続く
 とある　えいがかんとく　からの
 いらいだな▼
 １６じかん　いじょう　ちょうさして
-タイムマシンが　あったら▽
-かこに　いきたいか▽
+タイムマシンが　あったら▼
+かこに　いきたいか
 みらいに　いきたいかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 シナリオに　やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:35:23" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:21:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4320,17 +4339,17 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　映画監督　からの　依頼だな▼
+とある　映画監督からの　依頼だな▼
 １６時間　以上　調査して
-タイムマシンが　あったら
+タイムマシンが　あったら▼
 過去に　行きたいか
-未来に　生きたいかを
+未来に　行きたいかを▽
 調べてくる　調査だ▼
 調査の　結果を
 シナリオに　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:36:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:21:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4347,10 +4366,12 @@ assistantm_01_15へ続く
 
 assistantm_01_15へ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:21:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4385,15 +4406,15 @@ assistantm_01_15へ続く
 いらいだな▼
 １６じかん　いじょう　ちょうさして
 もしも　まほうが　つかえたら▽
-どんなことを　したいかと▽
-もしも　おかねもちに　なったら▽
+どんなことを　したいかと▼
+もしも　おかねもちに　なったら
 どうしたいかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 ものがたりに　やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T09:19:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4402,18 +4423,18 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　マンガ家　からの　依頼だな▼
+とある　マンガ家からの　依頼だな▼
 １６時間　以上　調査して
 もしも　魔法が　使えたら▽
-どんなことを　したいかと▽
+どんなことを　したいかと▼
 もしも　お金持ちに　なったら
 どうしたいかを▽
 調べてくる　調査だ▼
 調査の　結果を
 物語に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T09:19:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:56:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4430,10 +4451,12 @@ assistantm_01_15へ続く
 
 assistantm_01_15へ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:44:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4482,7 +4505,7 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　ゲーム会社　からの
+とある　ゲーム会社からの
 依頼だな▼
 ２０時間　以上　調査して
 １番　人気のある　ゲームを▽
@@ -4490,8 +4513,8 @@ assistantm_01_15へ続く
 調査の　結果を
 ゲーム製作に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:38:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:08:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4508,10 +4531,12 @@ assistantm_01_15へ続く
 
 assistantm_01_15へ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:44:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4566,16 +4591,16 @@ assistantm_01_15へ続く
 			<Text>この調査は……▼
 わたし　からの　依頼だな▼
 ２０時間　以上　調査して
-１番　人気のある　休日の　過ごし方と▽
-友達と　どう遊ぶのが　人気かを▽
+１番　人気のある　休日の　過ごし方と▼
+友達と　どう遊ぶのが　人気かを
 調べてくる　調査だ▼
 じつは　次の　週末に
 友達と　会う　予定でな▼
 いつもとは　一味　違う
 休日に　したいんだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:39:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:56:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4592,10 +4617,12 @@ assistantm_01_15へ続く
 
 assistantm_01_15へ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:44:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4646,17 +4673,17 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　ポケモンファン　からの
+とある　ポケモンファンからの
 依頼だな▼
 ２０時間　以上　調査して
 ポケモンシリーズを　どれくらい▽
-長く　遊んでいるかを
+長く　遊んでいるかを▽
 調べてくる　調査だ▼
 調査の　結果を　ポケモンの
 宣伝に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:40:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:22:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4673,10 +4700,12 @@ assistantm_01_15へ続く
 
 assistantm_01_15へ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:44:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4726,7 +4755,7 @@ assistantm_01_15へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　ジムリーダー　からの
+とある　ジムリーダーからの
 依頼だな▼
 ２４時間　以上　調査して
 １番　人気のある　ジムリーダーを▽
@@ -4734,8 +4763,8 @@ assistantm_01_15へ続く
 調査の　結果を
 ジム運営に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4810,15 +4839,16 @@ assistantm_01_15へ続く
 わたし　からの　依頼だな▼
 ２４時間　以上　調査して
 １番　だと思う▽
-ポケモンの　面白い　ところを▽
+ポケモンの　おもしろい　ところを▽
 調べてくる　調査だ▼
 ……大人になると　いろいろ　ある▼
 わたしは　今後
 ポケモン　一筋に　生きることにした！▼
-ポケモンの　面白さを　研究するのだ▼</Text>
+ポケモンの　おもしろさを
+研究するのだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4991,10 +5021,12 @@ assistantm_01_23○へ続く
 通常　⇒　assistantm_01_15へ続く
 すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:44:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5044,7 +5076,7 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　ポケモン博士　からの
+とある　ポケモン博士からの
 依頼だな▼
 ５人　以上と　すれ違って
 １番　選ばれた　最初の　ポケモンを▽
@@ -5052,8 +5084,8 @@ assistantm_01_23○へ続く
 調査の　結果を
 研究に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5124,15 +5156,15 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　母親　からの　依頼だな▼
+とある　母親からの　依頼だな▼
 １０人　以上と　すれ違って
 １番　多い　プレイ時間を▽
 調べてくる　調査だ▼
 調査の　結果を　子供の　プレイ時間と
 比べたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:23:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5203,15 +5235,15 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　新聞社　からの　依頼だな▼
+とある　新聞社からの　依頼だな▼
 １０人　以上と　すれ違って
 男と　女　どっちが　多いかを▽
 調べてくる　調査だ▼
 調査の　結果を
 明日の　朝刊に　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:23:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5281,15 +5313,15 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　雑誌記者　からの　依頼だな▼
+とある　雑誌記者からの　依頼だな▼
 １０人　以上と　すれ違って
 １番　多い　仕事を▽
 調べてくる　調査だ▼
 調査の　結果を
 特集記事に　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:08:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5359,7 +5391,7 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　レジャー会社　からの
+とある　レジャー会社からの
 依頼だな▼
 １０人　以上と　すれ違って
 １番　多い　趣味を▽
@@ -5367,8 +5399,8 @@ assistantm_01_23○へ続く
 調査の　結果を
 企画の　参考に　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5598,7 +5630,7 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　トレーナー　からの　依頼だな▼
+とある　トレーナーからの　依頼だな▼
 ２０人　以上と　すれ違って
 １番　人気のある▽
 ポケモンの　タイプを▽
@@ -5606,8 +5638,8 @@ assistantm_01_23○へ続く
 調査の　結果を
 対戦に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5678,7 +5710,7 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　不動産屋　からの　依頼だな▼
+とある　不動産屋からの　依頼だな▼
 ２０人　以上と　すれ違って
 都会と　田舎▽
 どっちに　住みたいかを▽
@@ -5686,8 +5718,8 @@ assistantm_01_23○へ続く
 調査の　結果を
 仕事に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:08:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5922,13 +5954,12 @@ assistantm_01_23○へ続く
 しらべてくる　ちょうさだ▼
 わたしも　そろそろ
 しょうらいを　みすえて▽
-じんせいせっけいを▽
-しなければな……▼
+じんせいせっけいを　しなければな……▼
 おとなに　なると
 いろいろ　あるんだよ……▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:46:21" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:57:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5940,7 +5971,7 @@ assistantm_01_23○へ続く
 わたし　からの　依頼だな▼
 ３０人　以上と　すれ違って
 どんな人に　なりたいかと▽
-夢を追うか　現実を見るか　を▽
+夢を追うか　現実をみるか　を▽
 調べてくる　調査だ▼
 わたしも　そろそろ
 将来を　据えて▽
@@ -5948,8 +5979,8 @@ assistantm_01_23○へ続く
 大人に　なると
 いろいろ　あるんだよ……▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:46:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:57:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5967,10 +5998,12 @@ assistantm_01_23○へ続く
 通常　⇒　assistantm_01_15へ続く
 すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:44:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6023,18 +6056,18 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　芸術家　からの　依頼だな▼
+とある　芸術家からの　依頼だな▼
 ３０人　以上と　すれ違って
 将来　がんばりたい　ことと▽
 １番　好きな　音楽を▽
 調べてくる　調査だ▼
 大勢が　共感できる
-歌を　作りたいので▽
+歌を　つくりたいので▽
 みんなの　目標と　音楽の　趣味を▽
 参考に　作詞　したいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:45:56" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:57:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6052,10 +6085,12 @@ assistantm_01_23○へ続く
 通常　⇒　assistantm_01_15へ続く
 すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:45:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6104,7 +6139,7 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　アイドル歌手　からの
+とある　アイドル歌手からの
 依頼だな▼
 ４０人　以上と　すれ違って
 １番　好きな　音楽を▽
@@ -6112,8 +6147,8 @@ assistantm_01_23○へ続く
 調査の　結果を
 新曲に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:23:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6265,17 +6300,17 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　映画監督　からの　依頼だな▼
+とある　映画監督からの　依頼だな▼
 ４０人　以上と　すれ違って
-タイムマシンが　あったら
+タイムマシンが　あったら▼
 過去に　行きたいか
-未来に　生きたいかを
+未来に　行きたいかを▽
 調べてくる　調査だ▼
 調査の　結果を
 シナリオに　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:47:01" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:58:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6293,10 +6328,12 @@ assistantm_01_23○へ続く
 通常　⇒　assistantm_01_15へ続く
 すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:45:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6331,15 +6368,15 @@ assistantm_01_23○へ続く
 いらいだな▼
 ４０にん　いじょうと　すれちがって
 もしも　まほうが　つかえたら▽
-どんなことを　したいかと▽
-もしも　おかねもちに　なったら▽
+どんなことを　したいかと▼
+もしも　おかねもちに　なったら
 どうしたいかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 ものがたりに　やくだてたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T09:18:25" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6348,18 +6385,18 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　マンガ家　からの　依頼だな▼
+とある　マンガ家からの　依頼だな▼
 ４０人　以上と　すれ違って
 もしも　魔法が　使えたら▽
-どんなことを　したいかと▽
+どんなことを　したいかと▼
 もしも　お金持ちに　なったら
 どうしたいかを▽
 調べてくる　調査だ▼
 調査の　結果を
 物語に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T09:18:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6377,10 +6414,12 @@ assistantm_01_23○へ続く
 通常　⇒　assistantm_01_15へ続く
 すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:45:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6429,7 +6468,7 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　ゲーム会社　からの
+とある　ゲーム会社からの
 依頼だな▼
 ５０人　以上と　すれ違って
 １番　人気のある　ゲームを▽
@@ -6437,8 +6476,8 @@ assistantm_01_23○へ続く
 調査の　結果を
 ゲーム製作に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:49:54" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:08:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6456,10 +6495,12 @@ assistantm_01_23○へ続く
 通常　⇒　assistantm_01_15へ続く
 すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:45:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6514,16 +6555,16 @@ assistantm_01_23○へ続く
 			<Text>この調査は……▼
 わたし　からの　依頼だな▼
 ５０人　以上と　すれ違って
-１番　人気のある　休日の　過ごし方と▽
-友達と　どう遊ぶのが　人気かを▽
+１番　人気のある　休日の　過ごし方と▼
+友達と　どう遊ぶのが　人気かを
 調べてくる　調査だ▼
 じつは　次の　週末に
 友達と　会う　予定でな▼
 いつもとは　一味　違う
 休日に　したいんだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:50:25" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:58:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6541,10 +6582,12 @@ assistantm_01_23○へ続く
 通常　⇒　assistantm_01_15へ続く
 すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:45:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6595,17 +6638,17 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　ポケモンファン　からの
+とある　ポケモンファンからの
 依頼だな▼
 ５０人　以上と　すれ違って
 ポケモンシリーズを　どれくらい▽
-長く　遊んでいるかを
+長く　遊んでいるかを▽
 調べてくる　調査だ▼
 調査の　結果を　ポケモンの
 宣伝に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:51:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:58:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6623,10 +6666,12 @@ assistantm_01_23○へ続く
 通常　⇒　assistantm_01_15へ続く
 すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
 
-※「依頼の　確認」からの移行の場合は　assistantm_01_06へ</Comment>
+※「依頼の　確認」からの移行の場合は　assistantm_01_06へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:45:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6676,7 +6721,7 @@ assistantm_01_23○へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この調査は……▼
-とある　ジムリーダー　からの
+とある　ジムリーダーからの
 依頼だな▼
 １００人　以上と　すれ違って
 １番　人気のある　ジムリーダーを▽
@@ -6684,8 +6729,8 @@ assistantm_01_23○へ続く
 調査の　結果を
 ジム運営に　役立てたいそうだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:10:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6987,10 +7032,12 @@ assistantm_01_23○へ続く
 
 assistantm_01_17へ続く
 
-[トレーナー名:1]＝主人公名</Comment>
+[トレーナー名:1]＝主人公名
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7775,10 +7822,12 @@ assistantm_01_17へ続く
 
 assistantm_01_17へ続く
 
-[トレーナー名:1]＝主人公名</Comment>
+[トレーナー名:1]＝主人公名
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7840,10 +7889,12 @@ assistantm_01_17へ続く
 
 assistantm_01_17へ続く
 
-[トレーナー名:1]＝主人公名</Comment>
+[トレーナー名:1]＝主人公名
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8035,10 +8086,12 @@ assistantm_01_17へ続く
 
 assistantm_01_17へ続く
 
-[トレーナー名:1]＝主人公名</Comment>
+[トレーナー名:1]＝主人公名
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8100,10 +8153,12 @@ assistantm_01_17へ続く
 
 assistantm_01_17へ続く
 
-[トレーナー名:1]＝主人公名</Comment>
+[トレーナー名:1]＝主人公名
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8165,10 +8220,12 @@ assistantm_01_17へ続く
 
 assistantm_01_17へ続く
 
-[トレーナー名:1]＝主人公名</Comment>
+[トレーナー名:1]＝主人公名
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8297,10 +8354,12 @@ assistantm_01_17へ続く
 
 assistantm_01_17へ続く
 
-[トレーナー名:1]＝主人公名</Comment>
+[トレーナー名:1]＝主人公名
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8464,12 +8523,12 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>では　ちょうさが　
-しゅうりょうしたら▽
-わたしの　ところに▽
+しゅうりょう　したら▼
+わたしの　ところに
 ほうこくに　きてくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:10:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8525,12 +8584,12 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>では　ちょうさが　
-しゅうりょうしたら▽
-わたしの　ところに▽
-ほうこくに　きてくれ▼</Text>
+しゅうりょう　したら▼
+わたしの　ところに
+ほうこくに　きてくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:10:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8712,13 +8771,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:55:27" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:29:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8753,10 +8811,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[2桁:2]＝残りの調査必要時間</Comment>
+[2桁:2]＝残りの調査必要時間
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8791,13 +8851,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:29:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8870,13 +8929,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8949,13 +9007,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9027,13 +9084,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:29:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9105,13 +9161,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:29:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9183,13 +9238,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:29:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9261,13 +9315,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:29:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9339,13 +9392,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:29:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9418,13 +9470,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9497,13 +9548,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9576,13 +9626,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9653,13 +9702,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:55:56" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9693,10 +9741,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[2桁:2]＝残りの調査必要時間</Comment>
+[2桁:2]＝残りの調査必要時間
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -9731,13 +9781,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:57:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9771,10 +9820,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[2桁:2]＝残りの調査必要時間</Comment>
+[2桁:2]＝残りの調査必要時間
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -9809,13 +9860,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9886,13 +9936,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9964,13 +10013,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:57:47" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10005,10 +10053,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[2桁:2]＝残りの調査必要時間</Comment>
+[2桁:2]＝残りの調査必要時間
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -10042,13 +10092,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T09:20:22" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10082,10 +10131,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[2桁:2]＝残りの調査必要時間</Comment>
+[2桁:2]＝残りの調査必要時間
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -10120,13 +10171,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T06:59:06" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10161,10 +10211,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[2桁:2]＝残りの調査必要時間</Comment>
+[2桁:2]＝残りの調査必要時間
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:47:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -10198,13 +10250,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10276,13 +10327,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:27:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:28:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10317,10 +10367,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[2桁:2]＝残りの調査必要時間</Comment>
+[2桁:2]＝残りの調査必要時間
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -10355,13 +10407,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10434,13 +10485,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:27:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10513,13 +10563,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:01:15" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:27:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10553,10 +10602,12 @@ assistantm_01_17へ続く
 このメッセージの表示後、選択ウインドウを表示
 
 『はい』　⇒　assistantm_01_10へ
-『いいえ』　⇒　assistantm_01_12へ</Comment>
+『いいえ』　⇒　assistantm_01_12へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -10591,13 +10642,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:27:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10669,13 +10719,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:27:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10747,13 +10796,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:27:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10824,13 +10872,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:27:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10901,13 +10948,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:27:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10978,13 +11024,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:27:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11055,13 +11100,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:12:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11132,13 +11176,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:12:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11210,13 +11253,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:12:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11288,13 +11330,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:12:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11366,13 +11407,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:30:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11442,13 +11482,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:01:35" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:30:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11481,10 +11520,12 @@ assistantm_01_17へ続く
 このメッセージの表示後、選択ウインドウを表示
 
 『はい』　⇒　assistantm_01_10へ
-『いいえ』　⇒　assistantm_01_12へ</Comment>
+『いいえ』　⇒　assistantm_01_12へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -11519,13 +11560,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:01:51" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11558,10 +11598,12 @@ assistantm_01_17へ続く
 このメッセージの表示後、選択ウインドウを表示
 
 『はい』　⇒　assistantm_01_10へ
-『いいえ』　⇒　assistantm_01_12へ</Comment>
+『いいえ』　⇒　assistantm_01_12へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -11596,13 +11638,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:30:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11672,13 +11713,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11749,13 +11789,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:02:35" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:30:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11789,10 +11828,12 @@ assistantm_01_17へ続く
 このメッセージの表示後、選択ウインドウを表示
 
 『はい』　⇒　assistantm_01_10へ
-『いいえ』　⇒　assistantm_01_12へ</Comment>
+『いいえ』　⇒　assistantm_01_12へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -11826,13 +11867,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T09:20:38" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:30:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11865,10 +11905,12 @@ assistantm_01_17へ続く
 このメッセージの表示後、選択ウインドウを表示
 
 『はい』　⇒　assistantm_01_10へ
-『いいえ』　⇒　assistantm_01_12へ</Comment>
+『いいえ』　⇒　assistantm_01_12へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -11903,13 +11945,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:03:22" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:30:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11943,10 +11984,12 @@ assistantm_01_17へ続く
 このメッセージの表示後、選択ウインドウを表示
 
 『はい』　⇒　assistantm_01_10へ
-『いいえ』　⇒　assistantm_01_12へ</Comment>
+『いいえ』　⇒　assistantm_01_12へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -11980,13 +12023,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:30:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12057,13 +12099,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:27:15" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12097,10 +12138,12 @@ assistantm_01_17へ続く
 このメッセージの表示後、選択ウインドウを表示
 
 『はい』　⇒　assistantm_01_10へ
-『いいえ』　⇒　assistantm_01_12へ</Comment>
+『いいえ』　⇒　assistantm_01_12へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -12135,13 +12178,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12213,13 +12255,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12291,13 +12332,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:10:00" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12332,10 +12372,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[3桁:1]＝残りのすれ違い必要人数</Comment>
+[3桁:1]＝残りのすれ違い必要人数
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -12370,13 +12412,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12449,13 +12490,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12528,13 +12568,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12606,13 +12645,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12684,13 +12722,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12762,13 +12799,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12840,13 +12876,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12918,13 +12953,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12997,13 +13031,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13076,13 +13109,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13155,13 +13187,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13232,13 +13263,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:10:54" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:31:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13272,10 +13302,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[3桁:1]＝残りのすれ違い必要人数</Comment>
+[3桁:1]＝残りのすれ違い必要人数
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -13310,13 +13342,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:11:22" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13350,10 +13381,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[3桁:1]＝残りのすれ違い必要人数</Comment>
+[3桁:1]＝残りのすれ違い必要人数
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -13388,13 +13421,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13465,13 +13497,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13543,13 +13574,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:17:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13584,10 +13614,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[3桁:1]＝残りのすれ違い必要人数</Comment>
+[3桁:1]＝残りのすれ違い必要人数
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -13621,13 +13653,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T09:20:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13661,10 +13692,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[3桁:1]＝残りのすれ違い必要人数</Comment>
+[3桁:1]＝残りのすれ違い必要人数
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -13699,13 +13732,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:17:50" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13740,10 +13772,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[3桁:1]＝残りのすれ違い必要人数</Comment>
+[3桁:1]＝残りのすれ違い必要人数
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -13777,13 +13811,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13855,13 +13888,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:27:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13896,10 +13928,12 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[3桁:1]＝残りのすれ違い必要人数</Comment>
+[3桁:1]＝残りのすれ違い必要人数
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -13934,13 +13968,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14013,13 +14046,12 @@ assistantm_01_17へ続く
 ちょうさが　おわっていないぞ▼
 あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
-がんばって　ちょうさを
-つづけてくれ▼
+がんばって　ちょうさを　つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14087,12 +14119,13 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょうさいらいは　うけていないようだ▼
+			<Text>ちょうさいらいは
+うけていない　ようだ▼
 いらいを　うけたくなったら
-またきてくれ</Text>
+また　きてくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14100,12 +14133,13 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>調査依頼は　受けていないようだ▼
+			<Text>調査依頼は
+受けていないようだ▼
 依頼を　受けたくなったら
-また来てくれ</Text>
+また　来てくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:32:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14179,10 +14213,12 @@ assistantm_01_17へ続く
 タイトルを表示
 各依頼ごとの報告メッセージ表示へ
 
-依頼報告　⇒　assistantm_01_24aへ</Comment>
+依頼報告　⇒　assistantm_01_24aへ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -14936,10 +14972,12 @@ assistantm_01_17へ続く
 タイトルを表示
 各依頼ごとの報告メッセージ表示へ
 
-依頼報告　⇒　assistantm_01_24mへ</Comment>
+依頼報告　⇒　assistantm_01_24mへ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -14999,10 +15037,12 @@ assistantm_01_17へ続く
 タイトルを表示
 各依頼ごとの報告メッセージ表示へ
 
-依頼報告　⇒　assistantm_01_24nへ</Comment>
+依頼報告　⇒　assistantm_01_24nへ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -15187,10 +15227,12 @@ assistantm_01_17へ続く
 タイトルを表示
 各依頼ごとの報告メッセージ表示へ
 
-依頼報告　⇒　assistantm_01_24qへ</Comment>
+依頼報告　⇒　assistantm_01_24qへ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:48:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -15250,10 +15292,12 @@ assistantm_01_17へ続く
 タイトルを表示
 各依頼ごとの報告メッセージ表示へ
 
-依頼報告　⇒　assistantm_01_24rへ</Comment>
+依頼報告　⇒　assistantm_01_24rへ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -15313,10 +15357,12 @@ assistantm_01_17へ続く
 タイトルを表示
 各依頼ごとの報告メッセージ表示へ
 
-依頼報告　⇒　assistantm_01_24sへ</Comment>
+依頼報告　⇒　assistantm_01_24sへ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -15410,12 +15456,12 @@ assistantm_01_17へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>『ポケモンを
-どれくらい　あそんでる？』
-の　ちょうさを▽
+どれくらい　あそんでる？』の▽
+ちょうさを▽
 たいちょうに　ほうこくした！▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T07:27:41" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:34:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15441,10 +15487,12 @@ assistantm_01_17へ続く
 タイトルを表示
 各依頼ごとの報告メッセージ表示へ
 
-依頼報告　⇒　assistantm_01_24uへ</Comment>
+依頼報告　⇒　assistantm_01_24uへ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -15639,10 +15687,12 @@ assistantm_01_17へ続く
 assistantm_01_25へ続く
 
 [簡易会話単語:2]＝調査レーダーの
-『ホワイトとブラック　どっち？』の多かったものを表示</Comment>
+『ホワイトとブラック　どっち？』の多かったものを表示
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -15831,10 +15881,10 @@ assistantm_01_25へ続く
 男と　女では
 『[Name:Answer Idx="0" ]』が　多いようだな▼
 ポケモンは　だれでも　楽しめる！
-みんなが　楽しんで　欲しいな▼</Text>
+みんなが　楽しんで　ほしいな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:34:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16099,10 +16149,10 @@ assistantm_01_25へ続く
 『[Name:Answer Idx="0" ]』ポケモンの　ようだな▼
 いろいろな　ポケモンが　いるからな▼
 たくさんの　ポケモンと
-であいたいものだ▼</Text>
+であいたい　ものだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:34:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16115,10 +16165,10 @@ assistantm_01_25へ続く
 『[Name:Answer Idx="0" ]』ポケモンの　ようだな▼
 いろいろな　ポケモンが　いるからな▼
 たくさんの　ポケモンと
-出会いたいものだ▼</Text>
+出会いたい　ものだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:34:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16399,10 +16449,10 @@ assistantm_01_25へ続く
 さんこうになった▼
 ひとの　みりょくには　いろいろある▼
 わたしの　みりょくに
-なぜ　きがつかないかね……▼</Text>
+なぜ　きが　つかないかね……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:35:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16523,10 +16573,12 @@ assistantm_01_25へ続く
 『どの　きせつが　すき？』の多かったものを表示
 
 [簡易会話単語:18]＝調査レーダーの
-『どんな　たべものが　すき？』の多かったものを表示</Comment>
+『どんな　たべものが　すき？』の多かったものを表示
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -16601,10 +16653,12 @@ assistantm_01_25へ続く
 『すきないろは　どれ？』の多かったものを表示
 
 [簡易会話単語:20]＝調査レーダーの
-『どんな　おんがくが　すき？』の多かったものを表示</Comment>
+『どんな　おんがくが　すき？』の多かったものを表示
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -16823,10 +16877,12 @@ assistantm_01_25へ続く
 assistantm_01_25へ続く
 
 [簡易会話単語:23]＝調査レーダーの
-『すきな　がっこうの　じかんは？』の多かったものを表示</Comment>
+『すきな　がっこうの　じかんは？』の多かったものを表示
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -16903,10 +16959,12 @@ assistantm_01_25へ続く
 『すきな　べんきょうは？』の多かったものを表示
 
 [簡易会話単語:25]＝調査レーダーの
-『にがてな　べんきょうは？』の多かったものを表示</Comment>
+『にがてな　べんきょうは？』の多かったものを表示
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -16974,10 +17032,12 @@ assistantm_01_25へ続く
 assistantm_01_25へ続く
 
 [簡易会話単語:26]＝調査レーダーの
-『すきな　スポーツは？』の多かったものを表示</Comment>
+『すきな　スポーツは？』の多かったものを表示
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -17055,10 +17115,12 @@ assistantm_01_25へ続く
 『きゅうじつは　なにしてる？』の多かったものを表示
 
 [簡易会話単語:28]＝調査レーダーの
-『あそびにいくなら？』の多かったものを表示</Comment>
+『あそびにいくなら？』の多かったものを表示
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -17126,10 +17188,12 @@ assistantm_01_25へ続く
 assistantm_01_25へ続く
 
 [簡易会話単語:29]＝調査レーダーの
-『もし　なれるなら？』の多かったものを表示</Comment>
+『もし　なれるなら？』の多かったものを表示
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -17235,14 +17299,14 @@ assistantm_01_25へ続く
 いちばんだと　おもう　ポケモンの
 おもしろい　ところは▽
 『[Name:Answer Idx="0" ]』の　ようだな▼
-さんこうになった▼
+さんこうに　なった▼
 ポケモンには　たのしみかたが
 たくさん　あるな▼
 ポケモンの　たのしさは
 むげんだい　だな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:37:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17254,13 +17318,13 @@ assistantm_01_25へ続く
 １番だと　思う
 ポケモンの　面白い　ところは▽
 『[Name:Answer Idx="0" ]』の　ようだな▼
-参考になった▼
+参考に　なった▼
 ポケモンには　楽しみ方が
 たくさん　あるな▼
 ポケモンの　楽しさは　無限大だな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:37:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18413,12 +18477,12 @@ assistantm_01_31へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>ここは　すれちがい
-ちょうさたいほんぶよ▼
-にゅうたいきぼうなら
+ちょうさたいほんぶ　よ▼
+にゅうたい　きぼう　なら
 たいちょうに　はなしかけてね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:38:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18581,12 +18645,12 @@ assistantm_01_31へ続く
 			<Text>じつは　アナタに　ちょっと
 たのみたいことが　あるの▼
 いま　たいいんの　みんなに
-アンケートを　おねがいしているのよ▼
+アンケートを　おねがい　しているの▼
 アナタも　アンケートに
-きょうりょくしてね▼</Text>
+きょうりょく　してね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:38:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18597,12 +18661,12 @@ assistantm_01_31へ続く
 			<Text>じつは　アナタに　ちょっと
 頼みたいことが　あるの▼
 今　隊員の　みんなに
-アンケートを　お願いしているのよ▼
+アンケートを　お願いしているの▼
 アナタも　アンケートに
 協力してね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:38:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18647,12 +18711,12 @@ assistantm_01_31へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またアナタに　アンケートを
-おねがいしたいんだけど……▽
+			<Text>また　アナタに　アンケートを
+おねがい　したいんだけど……▽
 いいかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:07:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18660,12 +18724,12 @@ assistantm_01_31へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>またアナタに　アンケートを
-お願いしたいんだけど……▽
+			<Text>また　アナタに　アンケートを
+お願い　したいんだけど……▽
 いいかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18713,11 +18777,11 @@ assistantm_01_31へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>しょうがないわね▼
-そのきになったら
+その　きになったら
 こえを　かけてね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:38:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18726,10 +18790,11 @@ assistantm_01_31へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>しょうがないわね▼
-その気になったら　声を　かけてね</Text>
+その気になったら
+声を　かけてね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:07:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18773,12 +18838,12 @@ assistantm_01_31へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>あら？　もう　ぜんぶのアンケートに
-こたえてくれたみたいね▼
+こたえてくれた　みたいね▼
 こたえた　アンケートを
 もういちど　こたえる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18787,12 +18852,12 @@ assistantm_01_31へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あら？　もう　全部のアンケートに
-答えてくれたみたいね▼
+答えてくれた　みたいね▼
 答えた　アンケートを
 もう一度　答える？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:38:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18838,11 +18903,11 @@ assistantm_01_31へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それじゃ　こたえる　アンケートを
-えらんでくれる？</Text>
+			<Text>それじゃ　こたえる
+アンケートを　えらんでくれる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18850,11 +18915,11 @@ assistantm_01_31へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それじゃ　答える　アンケートを
-選んでくれる？</Text>
+			<Text>それじゃ　答える
+アンケートを　選んでくれる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:08:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19160,10 +19225,12 @@ assistantm_01_31へ続く
 答えるアンケートを選択するときに経由
 
 『みんなの　しょうらい』　
-⇒　woman2_08へ</Comment>
+⇒　woman2_08へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T03:49:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -19276,10 +19343,12 @@ assistantm_01_31へ続く
 答えるアンケートを選択するときに経由
 
 『もしも……だったら』　
-⇒　woman2_08へ</Comment>
+⇒　woman2_08へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T03:49:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -19486,11 +19555,10 @@ assistantm_01_31へ続く
 			Language="JPN">
 			<Text>アンケートは　なんども　
 こたえられるから▽
-こたえを　かえたくなったら▽
-いってね</Text>
+こたえを　かえたくなったら　いってね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:39:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19547,11 +19615,10 @@ assistantm_01_31へ続く
 			Language="JPN">
 			<Text>それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
-『どんなひとが　いるか』に
-ついてよ▼</Text>
+『どんなひとが　いるか』に　ついてよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:39:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19833,10 +19900,12 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11eへ</Comment>
+各アンケート　⇒　msg_c03r0101_woman2_11eへ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -19961,10 +20030,12 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11gへ</Comment>
+各アンケート　⇒　msg_c03r0101_woman2_11gへ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -20389,10 +20460,12 @@ assistantm_01_31へ続く
 			<Comment>・アンケート隊員
 『みんなの　しょうらい』アンケート１問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く</Comment>
+回答の選択後、woman2__14へ続く
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T03:56:27" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -20507,10 +20580,12 @@ assistantm_01_31へ続く
 			<Comment>・アンケート隊員
 『もしも……だったら』アンケート１問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く</Comment>
+回答の選択後、woman2__14へ続く
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T03:59:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -20567,10 +20642,12 @@ assistantm_01_31へ続く
 			<Comment>・アンケート隊員
 『どんな　あそびが　すきか』アンケート１問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く</Comment>
+回答の選択後、woman2__14へ続く
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -20921,10 +20998,12 @@ assistantm_01_31へ続く
 			<Comment>・アンケート隊員
 『みんなの　しょうらい』アンケート２問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く</Comment>
+回答の選択後、woman2__14へ続く
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T05:10:23" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -21040,10 +21119,12 @@ TVばんぐみは？』</Text>
 			<Comment>・アンケート隊員
 『もしも……だったら』アンケート２問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く</Comment>
+回答の選択後、woman2__14へ続く
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T05:13:23" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -21159,10 +21240,12 @@ TVばんぐみは？』</Text>
 			<Comment>・アンケート隊員
 『ポケモン』アンケート２問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く</Comment>
+回答の選択後、woman2__14へ続く
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:49:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -21444,10 +21527,12 @@ TVばんぐみは？』</Text>
 			<Comment>・アンケート隊員
 『みんなの　しょうらい』アンケート３問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く</Comment>
+回答の選択後、woman2__14へ続く
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T05:14:47" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:50:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -21562,10 +21647,12 @@ TVばんぐみは？』</Text>
 			<Comment>・アンケート隊員
 『もしも……だったら』アンケート３問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く</Comment>
+回答の選択後、woman2__14へ続く
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-02T05:16:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:50:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -21620,10 +21707,12 @@ TVばんぐみは？』</Text>
 			<Comment>・アンケート隊員
 『どんな　あそびが　すきか』アンケート３問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く</Comment>
+回答の選択後、woman2__14へ続く
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:50:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -21846,11 +21935,11 @@ TVばんぐみは？』</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうだ　このアンケートようし
+			<Text>そうだ！　このアンケートようし
 アナタにも　あげるわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:40:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21858,11 +21947,11 @@ TVばんぐみは？』</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうだ　このアンケート用紙
+			<Text>そうだ！　このアンケート用紙
 アナタにも　あげるわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:40:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22191,10 +22280,12 @@ woman2_17○へ続く（それぞれ対応したものへ）</Comment>
 対応アンケート追加処理
 
 全てのアンケートに答えた　⇒　woman2_19へ
-答えていないアンケートがある　⇒　woman2_21へ</Comment>
+答えていないアンケートがある　⇒　woman2_21へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:50:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -22319,10 +22410,12 @@ woman2_17○へ続く（それぞれ対応したものへ）</Comment>
 対応アンケート追加処理
 
 全てのアンケートに答えた　⇒　woman2_19へ
-答えていないアンケートがある　⇒　woman2_21へ</Comment>
+答えていないアンケートがある　⇒　woman2_21へ
+
+※swanで内容修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:50:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -22480,11 +22573,11 @@ woman2_17○へ続く（それぞれ対応したものへ）</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それと……　これは　アンケートに
+			<Text>それと……　アンケートに
 こたえてくれた　おれいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:40:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22492,11 +22585,11 @@ woman2_17○へ続く（それぞれ対応したものへ）</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それと……　これは　アンケートに
+			<Text>それと……　アンケートに
 答えてくれた　お礼よ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:40:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22607,11 +22700,10 @@ woman2_18へ続く</Comment>
 			Language="JPN">
 			<Text>アンケートは　なんども
 こたえられるから▽
-こたえを　かえたくなったら▽
-いってね</Text>
+こたえを　かえたくなったら　いってね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:18:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23171,12 +23263,12 @@ woman2_23へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは
-かんしゃの　きもちを▽
+			<Text>こんにちは▼
+かんしゃの　きもちを
 わすれていない？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:18:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23226,12 +23318,12 @@ woman2_23へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら　モンスターボールを
-おとしたわよ▽
+			<Text>あら？
+モンスターボールを　おとしたわよ▽
 はい　どうぞ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:41:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23239,12 +23331,12 @@ woman2_23へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら　モンスターボールを
-落としたわよ▽
+			<Text>あら？
+モンスターボールを　落としたわよ▽
 はい　どうぞ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23339,14 +23431,14 @@ girl4_04へ続く
 			<Text>……　……
 ……　……▼
 こら！　まちなさい！▼
-おせわになったひとには
-かんしゃする！▼
+おせわに　なった　ひとには
+かんしゃ　する！▼
 ささいなことだけど　だいじなことよ▼
 さあ　あなたの　かんしゃの　きもちを
 おしえてもらえるかしら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:17:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23402,12 +23494,12 @@ girl4_04へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よかったら　またあなたの
+			<Text>よかったら　また　あなたの
 かんしゃの　きもちを▽
 おしえてくれるかしら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:09:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23415,12 +23507,12 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よかったら　またあなたの
+			<Text>よかったら　また　あなたの
 感謝の　気持ちを▽
 教えてくれるかしら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T08:09:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23561,13 +23653,13 @@ girl4_04へ続く
 			<Text>すてきな　ことばね
 こころが　あたたかくなるわ▼
 だれかが　あなたを
-たすけてくれたときは▽
+たすけてくれた　ときは▽
 かんしゃの　きもちを　つたえてあげて▼
-そのきもちは　きっと　あいてに　
-つたわるはずよ</Text>
+その　きもちは　きっと
+あいてに　つたわるはずよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:16:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23578,13 +23670,13 @@ girl4_04へ続く
 			<Text>素敵な　言葉ね
 心が　温かくなるわ▼
 だれかが　あなたを　
-助けてくれたときは▽
+助けてくれた　ときは▽
 感謝の　気持ちを　伝えてあげて▼
-その気持ちは　きっと　相手に　
-伝わるはずよ</Text>
+その気持ちは　きっと
+相手に　伝わるはずよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:16:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23706,12 +23798,12 @@ girl4_04へ続く
 [Name:TrainerName Idx="1" ]隊員▼
 Ｂランクまで　アップしたんだ
 がんばってるみたいだね▼
-ランクが　上がったら
+ランクが　あがったら
 新しい　依頼も　増えるから▽
 隊長に　話しててみるといいよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:16:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23752,16 +23844,16 @@ girl4_04へ続く
 			<Text>たいいんランクって　しってる？▼
 あ　Ａランクの
 [Name:TrainerName Idx="1" ]たいいん▼
-もうＡランクたいいん　なんだね
-すごいな……▽
-オレも　がんばって▽
+もう　Ａランクたいいん　なんだね
+すごいな……▼
+オレも　がんばって
 ちょうさしないと！▼
 Ａランクの　いらいは
-むずかしいらしいから▽
+むずかしい　らしいから▽
 がんばって　ちょうさしてね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:16:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23772,14 +23864,14 @@ girl4_04へ続く
 			<Text>隊員ランクって　知ってる？▼
 あ　Ａランクの
 [Name:TrainerName Idx="1" ]隊員▼
-もうＡランク隊員なんだね
+もう　Ａランク隊員なんだね
 すごいな……▽
 オレも　がんばって　調査しないと！▼
 Ａランクの　依頼は　難しいらしいから
 がんばって　調査してね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:15:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23944,16 +24036,16 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>じぶんの　じょうほうを
-しりたいときは▽
-おくの　かべにある▽
+しりたいときは▼
+おくの　かべにある
 えんグラフを　しらべてごらん▼
 あそこには　たいいんじょうほうが
 かかれているんだ▼
 もちろん　キミのことも
 ちょうさずみさ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:15:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24599,12 +24691,11 @@ girl4_04へ続く
 			<Text>あたらしい　たいいんが
 アンケートを　こたえないのよ▼
 アンケートに　こたえれば
-もっと　いろいろ　ちょうさが▽
-できるようになるのに……▽
-もったいないな……</Text>
+もっと　いろいろな　ちょうさが▽
+できるのに……　もったいないな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:14:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24616,11 +24707,10 @@ girl4_04へ続く
 アンケートを　答えないのよ▼
 アンケートに　答えれば
 もっと　いろいろな　調査が▽
-できるようになるのに……▽
-もったいないな……</Text>
+できるのに……　もったいないな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-03T03:14:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
