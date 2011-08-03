@@ -10350,7 +10350,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_b_01">
+		Label="msg_info_b_01_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いらっしゃいませ
@@ -10377,7 +10378,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_b_02">
+		Label="msg_info_b_02_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>どの　エリアに
@@ -10404,7 +10406,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_b_03">
+		Label="msg_info_b_03_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょうせんなさいますか？</Text>
@@ -10429,7 +10432,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_b_04">
+		Label="msg_info_b_04_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じゅんびは　よろしいですか？
@@ -10456,7 +10460,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_help_b_01">
+		Label="msg_info_help_b_01_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>この　しせつは　トレーナーの
@@ -10499,9 +10504,17 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:23:38" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝プレイヤー名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:19:33" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_help_b_02">
+		Label="msg_info_help_b_02_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>エリアクリアには　エリアの
@@ -10556,7 +10569,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_attention_b">
+		Label="msg_info_attention_b_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さま！▼
@@ -10593,9 +10607,19 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:26:32" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝プレイヤー名
+・ニックネーム＝ポケモン名
+・2桁＝エリアの数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:19:47" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_b_cancel">
+		Label="msg_info_b_cancel_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　またの　ごりようを
@@ -10622,7 +10646,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_b_01">
+		Label="msg_info_clear_b_01_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さま！▼
@@ -10653,9 +10678,18 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:27:53" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝プレイヤー名
+・2桁＝エリアの数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:20:22" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_b_02">
+		Label="msg_info_clear_b_02_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あわせて　エリア[Digit:2digits Idx="0" ]への
@@ -10684,9 +10718,17 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:31:14" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・2桁＝エリアの数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:20:29" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_b_03">
+		Label="msg_info_clear_b_03_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さま▼
@@ -10717,9 +10759,17 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:32:20" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝プレイヤー名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:20:00" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_b_04">
+		Label="msg_info_clear_b_04_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こちらの　エレベーターには
@@ -10762,7 +10812,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_b_05">
+		Label="msg_info_clear_b_05_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>とにかく　エリア６いこうの　
@@ -10795,7 +10846,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_b_06">
+		Label="msg_info_clear_b_06_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さま！▼
@@ -10828,9 +10880,17 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:38:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝プレイヤー名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:20:03" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_b_07">
+		Label="msg_info_clear_b_07_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>これからも　さいきょうの
@@ -10859,8 +10919,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_w_01"
-		Style="">
+		Label="msg_info_w_01_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>よう！　よくきたな
@@ -10887,8 +10947,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_w_02"
-		Style="">
+		Label="msg_info_w_02_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>どの　エリアに
@@ -10915,8 +10975,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_w_03"
-		Style="">
+		Label="msg_info_w_03_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょうせんするか？</Text>
@@ -10941,8 +11001,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_w_04"
-		Style="">
+		Label="msg_info_w_04_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じゅんびが　できたようだな
@@ -10969,8 +11029,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_help_w_01"
-		Style="">
+		Label="msg_info_help_w_01_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>この　しせつは　おまえら
@@ -11014,8 +11074,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_help_w_02"
-		Style="">
+		Label="msg_info_help_w_02_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>エリアクリアには　エリアの　
@@ -11072,8 +11132,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_attention_w"
-		Style="">
+		Label="msg_info_attention_w_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]！▼
@@ -11108,16 +11168,25 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝プレイヤー名
+・ニックネーム＝ポケモン名
+・2桁＝エリアの数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:21:04" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_w_cancel"
-		Style="">
+		Label="msg_info_w_cancel_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それじゃ　またきてくれよ</Text>
+			<Text>それじゃ　またきてくれよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:59:45" />
+				Time="2011-08-03T09:15:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -11125,10 +11194,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それじゃ　また来てくれよ</Text>
+			<Text>それじゃ　また来てくれよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:59:54" />
+				Time="2011-08-03T09:15:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -11136,8 +11205,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_w_01"
-		Style="">
+		Label="msg_info_clear_w_01_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]！▼
@@ -11166,10 +11235,18 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝プレイヤー名
+・2桁＝エリアの数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:21:04" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_w_02"
-		Style="">
+		Label="msg_info_clear_w_02_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それと　エリア[Digit:2digits Idx="0" ]への
@@ -11196,10 +11273,17 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・2桁＝エリアの数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:21:11" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_w_03"
-		Style="">
+		Label="msg_info_clear_w_03_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]▼
@@ -11230,10 +11314,17 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝プレイヤー名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:21:19" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_w_04"
-		Style="">
+		Label="msg_info_clear_w_04_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こっちの　エレベーターが
@@ -11274,8 +11365,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_w_05"
-		Style="">
+		Label="msg_info_clear_w_05_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>とにかく　エリア6いこうの　
@@ -11310,8 +11401,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_w_06"
-		Style="">
+		Label="msg_info_clear_w_06_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]！▼
@@ -11344,10 +11435,17 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝プレイヤー名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:21:23" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_clear_w_07"
-		Style="">
+		Label="msg_info_clear_w_07_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>これで　まんぞくするなよ？▼
@@ -11376,7 +11474,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_menu_01"
+		Label="msg_info_menu_01_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -11423,7 +11521,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_menu_02"
+		Label="msg_info_menu_02_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -11470,7 +11568,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_menu_03"
+		Label="msg_info_menu_03_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -11517,7 +11615,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_elevator_01"
+		Label="msg_elevator_01_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -11564,7 +11662,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_elevator_02"
+		Label="msg_elevator_02_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -11590,10 +11688,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>・2桁＝階層の数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:25:05" />
+				Time="2011-08-03T09:24:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -11611,7 +11709,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_elevator_03"
+		Label="msg_elevator_03_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -11658,7 +11756,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_elevator_04"
+		Label="msg_elevator_04_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -11705,7 +11803,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_info_w_area"
+		Label="msg_info_area_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -11729,6 +11827,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:47:36" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・2桁＝エリアの数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:24:10" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#c0c0c0</CellData>
@@ -11738,7 +11843,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="new_msg_event_item_name"
+		Label="msg_event_item_name_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -11761,6 +11866,964 @@
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:48:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_01_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん？　キミは
+あたらしい　ちょうせんしゃかい？▼
+ふむふむ　……▼
+まずは　なにを　すればいいか
+わからないって　かおを　しているね▼
+よし！
+しょしんしゃの　キミに　アドバイスだ▼
+エリアを　クリアするには
+ボストレーナーを　たおすひつようが▽
+あることは　しってるね？▼
+ボストレーナーを　やみくもに
+さがすのも　いいけど▼
+まずは　ほかの　トレーナーと
+たたかってごらん▼
+かれらは　このばしょを　よくしっている▼
+ボストレーナーの　ばしょも
+しっているはずだよ▼
+それじゃ　がんばってね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:15:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:13:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん？　キミは
+新しい　挑戦者かい？▼
+ふむふむ　……▼
+まずは　なにを　すればいいか
+わからないって　顔を　しているね▼
+よし！
+初心者の　キミに　アドバイスだ▼
+エリアを　クリアするには
+ボストレーナーを　倒す必要が▽
+あることは　知ってるね？▼
+ボストレーナーを　闇雲に
+探すのも　いいけど▼
+まずは　他の　トレーナーと
+戦ってごらん▼
+かれらは　この場所を　よく知っている▼
+ボストレーナーの　場所も
+知っているはずだよ▼
+それじゃ　がんばってね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:16:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:15:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_01_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん？　キミは
+あたらしい　ちょうせんしゃかい？▼
+ふむふむ　……▼
+まずは　なにを　すればいいか
+わからないって　かおを　しているね▼
+よし！
+しょしんしゃの　キミに　アドバイスだ▼
+エリアを　クリアするには
+ボストレーナーを　たおすひつようが▽
+あることは　しってるね？▼
+ボストレーナーを　やみくもに
+さがすのも　いいけど▼
+まずは　ほかの　トレーナーと
+たたかってごらん▼
+かれらは　このばしょを　よくしっている▼
+ボストレーナーの　ばしょも
+しっているはずだよ▼
+それじゃ　がんばってね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:15:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:13:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん？　キミは
+新しい　挑戦者かい？▼
+ふむふむ　……▼
+まずは　なにを　すればいいか
+わからないって　顔を　しているね▼
+よし！
+初心者の　キミに　アドバイスだ▼
+エリアを　クリアするには
+ボストレーナーを　倒す必要が▽
+あることは　知ってるね？▼
+ボストレーナーを　闇雲に
+探すのも　いいけど▼
+まずは　他の　トレーナーと
+戦ってごらん▼
+かれらは　この場所を　よく知っている▼
+ボストレーナーの　場所も
+知っているはずだよ▼
+それじゃ　がんばってね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:16:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:15:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_02_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっと！　またあったね
+ちょうしは　どうだい？▼
+ここでは　どうぐが
+つかえないからね▼
+ポケモンも　キミも　
+そろそろ　つかれて▽
+きたんじゃないかな？▼
+そんなときは　ナースや
+ドクターを　さがしてごらん▼
+かれらに　はなしかければ
+かいふくして　くれるはずさ▼
+でも　いちどは　たたかう
+ひつようが　あるけど▼
+それじゃ　またね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:56:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:17:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっと！　また会ったね
+調子は　どうだい？▼
+ここでは　どうぐが
+使えないからね▼
+ポケモンも　キミも　
+そろそろ　疲れて▽
+来たんじゃないかな？▼
+そんなときは　ナースや
+ドクターを　探してごらん▼
+かれらに　話しかければ
+回復して　くれるはずさ▼
+でも　一度は　戦う
+必要が　あるけど▼
+それじゃ　またね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:56:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:17:53" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_03_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら？　キミが
+うわさの　ちょうせんしゃね▼
+なかなか　みどころが　あるって
+きいているわよ▼
+わたしは　このエリアを
+まかされている　[Name:TrainerName Idx="0" ]よ▼
+わたしも　しょしんしゃの
+キミに　アドバイス　してあげる▼
+ここに　エレベーターが　あるわね？▼
+もし　キミが　これいじょうの
+ちょうせんは　きけんだと　おもったら▼
+エレベーターで　うけつけに
+もどりなさい▼
+ここでの　しょうぶは
+しんけんしょうぶ！▼
+まけたら　おかねを　とられるわ▼
+いちりゅうの　トレーナーは
+ひきぎわも　こころえて　いるものよ▼
+ただし！　このエリアの　ちょうせんは
+しっぱいに　なるから　きをつけてね▼
+キミが　どこまで　がんばれるか
+たのしみに　しているわ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:27:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:25:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら？　キミが
+噂の　挑戦者ね▼
+なかなか　見所が　あるって
+聞いているわよ▼
+わたしは　このエリアを
+任されている　[Name:TrainerName Idx="0" ]よ▼
+わたしも　初心者の
+キミに　アドバイス　してあげる▼
+ここに　エレベーターが　あるわね？▼
+もし　キミが　これ以上の
+挑戦は　危険だと　思ったら▽
+エレベーターで　受付に　戻りなさい▼
+ここでの　勝負は　真剣勝負！▼
+負けたら　お金を　取られるわ▼
+一流の　トレーナーは
+引き際も　心得て　いるものよ▼
+ただし！　このエリアの　挑戦は
+失敗に　なるから　気をつけてね▼
+キミが　どこまで　がんばれるか
+楽しみに　しているわ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:32:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:27:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝ボストレーナー名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:25:55" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_04_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここまでは　これたようね
+やるわね▼
+がんばっている　あなたに
+もうひとつ　いいことを▽
+おしえてあげる▼
+みちに　まよった！▼
+げんきな　ポケモンも　いない！▼
+いま　すぐ　ここから　でたい！▼
+そんなときって　あるわよね？▼
+Cギアを　みてみて▼
+ふだんとは　ちがう　ボタンが
+あるでしょう？▼
+これを　おせば　すぐに　うけつけに
+もどることが　できるわ▼
+とうぜん　リタイアしたら　
+このエリアの　ちょうせんは▽
+しっぱいに　なるから　きをつけてね▼
+それじゃ　キミが　わたしの　ところに
+くるのを　たのしみに　しているわ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:33:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:32:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここまでは　来れたようね
+やるわね▼
+がんばっている　あなたに
+もうひとつ　いいことを▽
+教えてあげる▼
+道に　迷った！▼
+元気な　ポケモンも　いない！▼
+今　すぐ　ここから　出たい！▼
+そんなときって　あるわよね？▼
+Cギアを　見てみて▼
+普段とは　違う　ボタンが
+あるでしょう？▼
+これを　押せば　すぐに　受付に
+戻ることが　できるわ▼
+当然　リタイアしたら
+このエリアの　挑戦は▽
+失敗に　なるから　気をつけてね▼
+それじゃ　キミが　わたしの　ところに
+来るのを　楽しみに　しているわ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:36:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:33:56" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_05_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このエリアも　このていどか▼
+じいちゃんに　しゅぎょうだって
+いわれてきたけど▽
+ぜんぜん　たいしたことないな▼
+ん？　おまえも　ちょうせんしゃか？▼
+おれの　なまえは　バンジロウ！▼
+いずれ　チャンピオンを　こえるおとこだ▼
+おまえのほうが　ここの　トレーナーより
+つよそうだな▼
+そのうち　しょうぶ　しようぜ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:38:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:36:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>このエリアも　この程度か▼
+じいちゃんに　修行だって
+言われて来たけど▽
+全然　たいしたないな▼
+ん？　おまえも　挑戦者か？▼
+おれの　名前は　バンジロウ！▼
+いずれ　チャンピオンを　越える男だ▼
+おまえの方が　ここの　トレーナーより
+強そうだな▼
+そのうち　勝負　しようぜ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:38:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:37:30" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_06_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キミは　くろのまてんろうの
+ちょうせんしゃかい？▼
+え？　わたしは　すこし　ちがうな▼
+わたしは　この　しせつを
+しらべているんだ▼
+キミは　ぎもんに　おもわないかい？▼
+2ねんまえには　こんな　たてものは
+なかったし▼
+いったい　なんの　ものくてきで
+この　たてものを　つくったのか　……▼
+ほんとうに　ここは　なぞだらけだよ▼
+それじゃ　またあおう▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:39:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:38:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キミは　黒の摩天楼の
+挑戦者かい？▼
+え？　わたしは　少し　違うな▼
+わたしは　この　施設を
+調べているんだ▼
+キミは　疑問に　思わないかい？▼
+2年前には　こんな　建物は
+なかったし▼
+いったい　何の　目的で
+この　建物を　作ったのか　……▼
+本当に　ここは　謎だらけだよ▼
+それじゃ　また会おう▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:40:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:39:10" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_07_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おや？　またあったね▼
+あれから　いろいろ　しらべて
+すこし　ここの　ことが　わかったよ▼
+この　たてものは　ある　ざいだんが
+つくったものらしい▼
+その　もくてきなんだが
+まだ　はっきりは　わからないんだ▼
+うわさでは　トレーナーの　たたかいを
+どこかで　みて　たのしんで　いるとか▼
+チャンピオンを　こえる
+さいきょうの　トレーナーを▽
+さがしているとか▼
+いろいろな　うわさが　あるんだが
+どれも　かくしょうが　なくてね▼
+しらべれば　しらべるほど
+おもしろい　ばしょだよ　ここは▼
+それじゃ　またあおう▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:41:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:40:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おや？　また会ったね▼
+あれから　いろいろ　調べて
+少し　ここの　ことが　わかったよ▼
+この　建物は　ある　財団が
+作ったものらしい▼
+その　目的なんだが
+まだ　はっきりは　わからないんだ▼
+噂では　トレーナーの　戦いを
+どこかで　見て　楽しんでいるとか▼
+チャンピオンを　越える
+最強の　トレーナーを▽
+探しているとか▼
+いろいろな　噂が　あるんだが
+どれも　確証が　なくてね▼
+調べれば　調べるほど
+面白い　場所だよ　ここは▼
+それじゃ　また会おう▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:43:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:42:28" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_08_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん？▼
+おまえ　このまえ　エリア2で
+あったな▼
+ここまで　これるってことは
+やっぱり　おまえ　つよいようだな▼
+おれは　このエリアも　らくしょうで
+クリアしたところだぜ▼
+もっと　もっと　しゅぎょうして
+じいちゃんを　こえるんだ！▼
+おまえとも　つぎに　あったときは　
+しんけんしょうぶを　してもらうぜ！▼
+それじゃ　またあおうぜ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:47:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:43:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん？▼
+おまえ　この前　エリア2で
+会ったな▼
+ここまで　来れるってことは
+やっぱり　おまえ　強いようだな▼
+おれは　このエリアも　楽勝で
+クリアしたところだぜ▼
+もっと　もっと　修行して
+じいちゃんを　越えるんだ！▼
+おまえとも　次に　会ったときは　
+真剣勝負を　してもらうぜ！▼
+それじゃ　また会おうぜ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:47:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:46:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_01_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら？　あなたは
+あたらしい　ちょうせんしゃね？▼
+あらら　……▼
+ここで　なにを　すればいいか
+わからないって　かおを　してるわね▼
+いいわ！▼
+しょしんしゃの　あなたに
+とくべつに　ヒントを　あげちゃう▼　
+エリアを　クリアするには
+ボストレーナーを　たおすひつようが▽
+あるのは　しってるわね？▼
+ボストレーナーを　がんばって
+さがしても　いいんだけど▼　
+まずは　ほかの　トレーナーと
+たたかってみて▼
+ここにいる　ひとなら　このばしょを
+よく　しっているわ▼
+ボストレーナーの　ばしょも
+しっているはずよ▼
+それじゃ　がんばてね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:52:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:51:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら？　あなたは
+新しい　挑戦者ね？▼
+あらら　……▼
+ここで　なにを　すればいいか
+わからないって　顔を　してるわね▼
+いいわ！▼
+初心者の　あなたに
+特別に　ヒントを　あげちゃう▼
+エリアを　クリアするには
+ボストレーナーを　倒す必要が▽
+あるのは　知ってるわね？▼
+ボストレーナーを　がんばって
+探しても　いいんだけど▼　
+まずは　ほかの　トレーナーと
+戦ってみて▼
+ここいる　人なら　この場所を
+よく　知っているわ▼
+ボストレーナーの　場所も
+知っているはずよ▼
+それじゃ　がんばてね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:54:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:52:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_02_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら　またあったわね
+ちょうしは　どうかしら？▼
+そうそう　ここでは　どうぐが
+つかえないのは　しってる？▼
+ポケモンも　あなたも
+そろそろ　つかれて▽
+きたんじゃ　ないかしら？▼
+そんなときは　ナースや
+ドクターを　さがしてみて▼
+はなしかければ
+かいふくして　くれるはずよ▼
+でも　いちどは　たたかう
+ひつようが　あるけどね▼
+それじゃ　またね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:55:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:55:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら　また会ったわね
+調子は　どうかしら？▼
+そうそう　ここでは　どうぐが
+使えないのは　知ってる？▼
+ポケモンも　あなたも
+そろそろ　疲れて▽
+来たんじゃ　ないかしら？▼
+そんなときは　ナースや
+ドクターを　探してみて▼
+話しかければ
+回復して　くれるはずよ▼
+でも　一度は　戦う
+必要が　あるけどね▼
+それじゃ　またね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:56:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:56:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_03_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん？　キミが　
+うわさの　ちょうせんしゃかい？▼
+みかけに　よらず　すごうでって
+きいているよ▼
+ボクは　このエリアを
+まかされている　[Name:TrainerName Idx="0" ]だ▼
+まだまだ　しょしんしゃの　キミに
+いいことを　おしえて　あげよう▼
+ここに　エレベーターが　あるだろう？▼
+もし　キミが　これいじょうの
+ちょうせんは　きけんだと　おもったら▼
+エレベーターで　うけつけに
+もどると　いい▼
+ここでの　しょうぶは
+しんけんしょうぶだ▼
+エリアの　ちょうせんは
+しっぱいに　なるが▼
+まけて　おかねを　とられるよりは
+ましだろう？▼
+それじゃ　キミと　たたかえるのを
+たのしみに　しているよ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:58:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:57:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん？　キミが　
+噂の　挑戦者かい？▼
+見かけに　よらず　凄腕って
+聞いているよ▼
+ボクは　このエリアを
+任されている　[Name:TrainerName Idx="0" ]だ▼
+まだまだ　初心者の　キミに
+いいことを　教えて　あげよう▼
+ここに　エレベーターが　あるだろう？▼
+もし　キミが　これ以上の
+挑戦は　危険だと　思ったら▼
+エレベーターで　受付に
+戻ると　いい▼
+ここでの　勝負は
+真剣勝負だ▼
+エリアの　挑戦は
+失敗に　なるが▼
+負けて　お金を　取られるよりは
+ましだろう？▼
+それじゃ　キミと　戦えるのを
+楽しみに　しているよ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:59:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・トレーナー名＝ボストレーナー名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T09:58:33" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_04_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>がんばっているようだね▼
+キミなら　ここまで　くると
+おもっていたよ▼
+それじゃ　もうひとつ　ヒントを
+あげよう▼
+みちに　まよった！▼
+げんきな　ポケモンも　いない！▼
+いま　すぐ　ここから　でたい！▼
+いままで　そんなことに
+ならなかったかい？▼
+Cギアを　みてごらん▼
+ふだんとは　ちがう　ボタンが
+あるだろう？▼
+これを　おせば　すぐに　うけつけに
+もどることが　できるんだ▼
+とうぜん　リタイアしたら　
+このエリアの　ちょうせんは▽
+しっぱいに　なるけどね▼
+それじゃ　ボクは　ちょうせんしゃを
+またせて　もらうことに　するよ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:00:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>がんばっているようだね▼
+キミなら　ここまで　来ると
+思っていたよ▼
+それじゃ　もうひとつ　ヒントを
+あげよう▼
+道に　迷った！▼
+元気な　ポケモンも　いない！▼
+今　すぐ　ここから　出たい！▼
+今まで　そんなことに
+ならなかったかい？▼
+Cギアを　見てごらん▼
+普段とは　違う　ボタンが
+あるだろう？▼
+これを　押せば　すぐに　受付に
+戻ることが　できるんだ▼
+当然　リタイアしたら　
+このエリアの　挑戦は▽
+失敗に　なるけどね▼
+それじゃ　ボクは　挑戦者を
+待たせて　もらうことに　するよ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:02:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:01:58" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_05_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このエリアも　このていどか▼
+じいちゃんに　しゅぎょうだって
+いわれてきたけど▽
+ぜんぜん　たいしたことないな▼
+ん？　おまえも　ちょうせんしゃか？▼
+おれの　なまえは　バンジロウ！▼
+いずれ　チャンピオンを　こえるおとこだ▼
+おまえのほうが　ここの　トレーナーより
+つよそうだな▼
+そのうち　しょうぶ　しようぜ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:03:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:03:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>このエリアも　この程度か▼
+じいちゃんに　修行だって
+言われて来たけど▽
+全然　たいしたないな▼
+ん？　おまえも　挑戦者か？▼
+おれの　名前は　バンジロウ！▼
+いずれ　チャンピオンを　越える男だ▼
+おまえの方が　ここの　トレーナーより
+強そうだな▼
+そのうち　勝負　しようぜ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:03:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:03:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_06_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キミは　しろのじゅどうの
+ちょうせんしゃか？▼
+え？　おれは　すこし　ちがうな▼
+おれは　より　つよくなるための
+しょうぎょうさ▼
+それにしても　なんのために
+このばしょを▽
+ていきょうして　いるんだろうな▼
+2ねんまえには　こんなばしょは
+なかっただろう？▼
+ふしぎだよな▼
+まあ　おれは　しゅぎょうが
+できるなら　それでいいけどな▼
+それじゃ　またな▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:04:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:03:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キミは　白の樹洞の
+挑戦者か？▼
+え？　おれは　少し　違うな▼
+おれは　より　強くなるための
+修行さ▼
+それにしても　何のために
+この場所を▽
+提供して　いるんだろうな▼
+2年前には　こんな場所は
+なかっただろう？▼
+不思議だよな▼
+まあ　おれは　修行が
+できるなら　それでいいけどな▼
+それじゃ　またな▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:05:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:05:00" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_07_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっと　またあえたな
+たんさくは　すすんでいるか？▼
+そうそう　おもしろいはなしを
+きいたから　おしえてやるよ▼
+うわさなんだが　このばしょは
+まだまだ　たんさくが　おわって▽
+いないらしい▼
+こうして　トレーナーに
+たんれんの　ばしょとして▽
+ていきょうしながら▼
+たんさくを　いまだに　すすめて
+いるんだとさ▼
+キミのような　ちょうせんしゃが
+いつか　このばしょの　さいしんぶに▽
+とうたつするのかも　しれないな▼
+それじゃ　またな▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:06:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:05:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっと　また会えたな
+探索は　進んでいるか？▼
+そうそう　面白い話を
+聞いたから　教えてやるよ▼
+噂なんだが　この場所は
+まだまだ　探索が　終って▽
+いないらしい▼
+こうして　トレーナーに　
+鍛錬の　場所として▽
+提供しながら▼
+探索を　今だに　進めて
+いるんだとさ▼
+キミのような　挑戦者が
+いつか　この場所の　最深部に▽
+到達するのかも　しれないな▼
+それじゃ　またな▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:07:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:06:40" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_08_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん？▼
+おまえ　このまえ　エリア2で
+あったな▼
+ここまで　これるってことは
+やっぱり　おまえ　つよいようだな▼
+おれは　このエリアも　らくしょうで
+クリアしたところだぜ▼
+もっと　もっと　しゅぎょうして
+じいちゃんを　こえるんだ！▼
+おまえとも　つぎに　あったときは　
+しんけんしょうぶを　してもらうぜ！▼
+それじゃ　またあおうぜ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:07:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:07:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん？▼
+おまえ　この前　エリア2で
+会ったな▼
+ここまで　来れるってことは
+やっぱり　おまえ　強いようだな▼
+おれは　このエリアも　楽勝で
+クリアしたところだぜ▼
+もっと　もっと　修行して
+じいちゃんを　越えるんだ！▼
+おまえとも　次に　会ったときは　
+真剣勝負を　してもらうぜ！▼
+それじゃ　また会おうぜ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:07:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-03T10:07:50" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
