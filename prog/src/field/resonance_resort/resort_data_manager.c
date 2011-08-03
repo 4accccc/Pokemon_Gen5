@@ -123,9 +123,11 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
       RESORT_PLACEID placeID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_PLACE_ID, NULL );
 
       GF_ASSERT(p_wk->info[ placeID ].people_type[peopleID] == RESORT_DATA_BUFFER_TYPE_NULL );
-      GF_ASSERT( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX );
-      p_wk->info[ placeID ].people_type[ peopleID ]  = RESORT_DATA_BUFFER_TYPE_RESIDENT;
-      p_wk->info[ placeID ].people_index[ peopleID ] = cnt++;
+      if( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX )
+      {
+        p_wk->info[ placeID ].people_type[ peopleID ]  = RESORT_DATA_BUFFER_TYPE_RESIDENT;
+        p_wk->info[ placeID ].people_index[ peopleID ] = cnt++;
+      }
     }
   }
 }
