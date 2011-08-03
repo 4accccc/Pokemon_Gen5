@@ -464,7 +464,8 @@ DEP_TEXSET_IMD_OUTDOOR009 = \
 	$(SRCDIR)/c5_rbuild_02.imd \
 	$(SRCDIR)/c5_rbuild_03.imd \
 	$(SRCDIR)/door_c05_hotel.imd \
-	$(SRCDIR)/wbtgate_01.imd
+	$(SRCDIR)/wbtgate_01.imd \
+	$(SRCDIR)/sikiken_01.imd
 
 texset/outdoor009.imd: $(DEP_TEXSET_IMD_OUTDOOR009) texset/tmp/outdoor009.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor009.list
@@ -1549,7 +1550,8 @@ DEP_TEXSET_IMD_OUTDOOR036 = \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
-	$(SRCDIR)/c04_gym_02.imd
+	$(SRCDIR)/c04_gym_02.imd \
+	$(SRCDIR)/c04_poke02.imd
 
 texset/outdoor036.imd: $(DEP_TEXSET_IMD_OUTDOOR036) texset/tmp/outdoor036.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor036.list
