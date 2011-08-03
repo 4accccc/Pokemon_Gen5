@@ -17,6 +17,8 @@
 #define D06R0201_SWGOLD1_01                2
 #define FLD_ITEM_94                        3
 #define FLD_ITEM_95                        4
+#define TR_RANGERW_25                      5
+#define TR_SCIENTISTW_12                   6
 
 #endif //ZONE_D06R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

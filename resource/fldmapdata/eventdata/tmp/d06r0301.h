@@ -12,6 +12,10 @@
 #define FLD_ITEM_96                        0
 #define FLD_ITEM_97                        1
 #define FLD_ITEM_98                        2
+#define TR_MOUNT_26                        3
+#define TR_ELITEW_34                       4
+#define TR_GUITARW_03                      5
+#define TR_ELITEM_36                       6
 
 #endif //ZONE_D06R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

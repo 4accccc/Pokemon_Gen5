@@ -17,14 +17,14 @@
 #define FLD_ITEM_90                        1
 #define FLD_ITEM_88                        2
 #define FLD_ITEM_91                        3
-#define TR_SCIENTISTM_05                   4
-#define TR_ELITEM_03                       5
-#define TR_SCIENTISTW_03                   6
-#define TR_ELITEM_02                       7
-#define TR_MOUNT_02                        8
+#define TR_SCIENTISTM_16                   4
+#define TR_GUITARW_02                      5
+#define TR_ELITEM_35                       6
+#define TR_ELITEW_35                       7
+#define TR_RANGERM_25                      8
 #define FLD_ITEM_92                        9
 #define FLD_ITEM_93                       10
-#define TR_SCIENTISTM_04                  11
+#define TR_MOUNT_25                       11
 #define D06R0101_SWBELL_01                12
 #define D06R0101_BOSS_01                  13
 
@@ -33,7 +33,6 @@
 #ifndef ZONE_D06R0101_EVB_H
 #define ZONE_D06R0101_EVB_H
 
-#define D06R0101_HIDE_ITEM_01             0
-#define D06R0101_HIDE_ITEM_02             1
+#define D06R0101_HIDE_ITEM_02             0
 
 #endif //ZONE_D06R0101_EVB_H
