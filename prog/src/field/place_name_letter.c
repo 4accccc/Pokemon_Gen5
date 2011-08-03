@@ -1501,7 +1501,7 @@ static void PN_SHAKE_Init( PN_SHAKE *wk, const PN_SHAKE_INIT_PARAM *param )
   wk->nowValue  = FX_SinIdx( wk->param.startRot );
   wk->param     = *param;
 
-  OS_Printf( "start=%d end=%d\n", param->startFrame, param->endFrame );
+  //OS_Printf( "start=%d end=%d\n", param->startFrame, param->endFrame );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1527,7 +1527,7 @@ static void PN_SHAKE_Main( PN_SHAKE *wk )
   {
     wk->nowValue  = FX_SinIdx( wk->param.endRot );
   }
-  OS_Printf( "val%f\n", FX_FX32_TO_F32(wk->nowValue) );
+  //OS_Printf( "val%f\n", FX_FX32_TO_F32(wk->nowValue) );
 }
 //----------------------------------------------------------------------------
 /**

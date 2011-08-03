@@ -89,6 +89,17 @@ static void dumpAreaData(const AREADATA * areadata)
 AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 area_ofs_id)
 {
   AREADATA * areadata;
+#if 0
+  TAMADA_Printf(" area_id=%3d, ofs_id=%2d\n", area_id, area_ofs_id );
+  if ( AREADATA_HasSeason(area_id) )
+  {
+    TAMADA_Printf(" OUTDOOR:%d\n", (area_id - AREA_ID_OUT01) / 4 + 1 );
+  }
+  else
+  {
+    TAMADA_Printf(" INDOOR:%d\n", area_id - AREA_ID_IN01 + 1 );
+  }
+#endif
   area_id += area_ofs_id;
 
   CHECK_AREA_RANGE(area_id);
