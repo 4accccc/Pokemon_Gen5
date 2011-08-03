@@ -5465,6 +5465,10 @@
 		<language name="JPN" width="256">BGM-REZO-RIZO</language>
 		<language name="JPN_KANJI" width="256">BGM-REZO-RIZO</language>
 	</row>
+	<row id="msg_seq_bgm_fes">
+		<language name="JPN" width="256">BGM-FES</language>
+		<language name="JPN_KANJI" width="256">BGM-FES</language>
+	</row>
 	<row id="msg_seq_bgm_sw_demo_opening">
 		<language name="JPN" width="256">BGM-SW-DEMO-OPENING</language>
 		<language name="JPN_KANJI" width="256">BGM-SW-DEMO-OPENING</language>
@@ -5641,10 +5645,6 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1299">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
 	<row id="msg_seq_me_asa">
 		<language name="JPN" width="256">ME-ASA</language>
 		<language name="JPN_KANJI" width="256">ME-ASA</language>
