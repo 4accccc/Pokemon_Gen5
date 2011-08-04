@@ -133,30 +133,8 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 people_type,
     break;
   case RESORT_PLACEID_FIELD:
     {
-      static const struct
-      {
-        s16 x;
-        s16 z;
-      }sc_pos_data[]  =
-      {
-        {3,5},
-        {16,5},
-        {28,5},
-        {3,18},
-        {28,18},
-        {3,31},
-        {16,31},
-        {28,31},
-        //デバッグ用秘書位置 TODO
-        {13,10},
-        {13,13},
-        {13,16},
-        {19,10},
-        {19,13},
-        {19,16},
-      };
-      *p_x  = sc_pos_data[peopleID].x;
-      *p_z  = sc_pos_data[peopleID].z;
+      *p_x  = 11+peopleID%10;
+      *p_z  = 9+peopleID/10*2;
     }
     break;
   default:

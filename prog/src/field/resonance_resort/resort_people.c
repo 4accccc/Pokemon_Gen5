@@ -875,15 +875,15 @@ static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RES
 //-----------------------------------------------------------------------------
 RESORT_PEOPLE * RESORT_PEOPLE_SYS_AddNew( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param )
 {
-  int i;
-  for( i = 0; i < p_wk->param.max; i++ )
+  u32 peopleID = RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( p_wk->param.p_data_manager, cp_param->placeID );
+
+  //ŠJ‚¢‚Ä‚¢‚é‚Æ‚±‚ë‚ðŒŸõ‚µ‚Ä’Ç‰Á
+  if( peopleID != RESORT_PEOPLE_ID_NULL  )
   {
-    //ŠJ‚¢‚Ä‚¢‚é‚Æ‚±‚ë‚ðŒŸõ‚µ‚Ä’Ç‰Á
-    if( p_wk->p_people[i] == NULL )
-    {
-      NAGI_Printf( "AddNew=%d\n", i );
-      return RESORT_PEOPLE_SYS_Add( p_wk, cp_param,  i );
-    }
+    RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_Add( p_wk, cp_param,  peopleID );
+    NAGI_Printf( "AddNew=%d\n", peopleID );
+    RESORT_DATA_MANAGER_Update( p_wk->param.p_data_manager );
+    return p_people;
   }
 
   GF_ASSERT(0);

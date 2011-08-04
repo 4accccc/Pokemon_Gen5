@@ -30,7 +30,7 @@
 typedef struct
 {
   u8  people_index[RESORT_DATA_MANAGER_MAX];
-  u8  people_type[RESORT_DATA_MANAGER_MAX];
+  u8  people_buffer_type[RESORT_DATA_MANAGER_MAX];
 }RESORT_DATA_MANAGER_INFO;
 
 //-------------------------------------
@@ -94,7 +94,6 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
   };
 
   int i, j;
-  int cnt;
 
   //クリア
   for( i = 0; i < RESORT_PLACEID_MAX; i++ )
@@ -103,12 +102,11 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
     //人物IDクリア
     for( j = 0; j < RESORT_DATA_MANAGER_MAX; j++ )
     {
-      p_info->people_type[j]  = RESORT_DATA_BUFFER_TYPE_NULL;
+      p_info->people_buffer_type[j]  = RESORT_DATA_BUFFER_TYPE_NULL;
       p_info->people_index[j] = RESORT_DATA_MANAGER_INDEX_NULL;
     }
   }
 
-  cnt = 0;
   RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->p_abstruct, sc_tbl, NELEMS(sc_tbl) );
   while(1)
   {
@@ -122,15 +120,44 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
       u16 peopleID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
       RESORT_PLACEID placeID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_PLACE_ID, NULL );
 
-      GF_ASSERT(p_wk->info[ placeID ].people_type[peopleID] == RESORT_DATA_BUFFER_TYPE_NULL );
+      //登録されていないのを除く
       if( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX )
       {
-        p_wk->info[ placeID ].people_type[ peopleID ]  = RESORT_DATA_BUFFER_TYPE_RESIDENT;
-        p_wk->info[ placeID ].people_index[ peopleID ] = cnt++;
+        GF_ASSERT_MSG(p_wk->info[ placeID ].people_buffer_type[peopleID] == RESORT_DATA_BUFFER_TYPE_NULL, "assert placeID%d peopleID%d buffer%d\n", placeID, peopleID, p_wk->info[ placeID ].people_buffer_type[peopleID] );
+
+        p_wk->info[ placeID ].people_buffer_type[ peopleID ]  = RESORT_ABSTRUCT_DATA_GetBufferType( p_data );
+        p_wk->info[ placeID ].people_index[ peopleID ] = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_data );
+        OS_TFPrintf( 2, "placeID%d peopleID%d buffer_type%d bufferIndex%d\n", placeID, peopleID, p_wk->info[ placeID ].people_buffer_type[ peopleID ], p_wk->info[ placeID ].people_index[ peopleID ] );
       }
     }
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファタイプからデータタイプへの変換
+ *
+ *	@param	RESORT_DATA_BUFFER_TYPE type バッファタイプ
+ *
+ *	@return データタイプ
+ */
+//-----------------------------------------------------------------------------
+u16 RESORT_DATA_BUFFER_TYPE_ToDataType( RESORT_DATA_BUFFER_TYPE type )
+{
+  static const RESORT_DATA_TYPE sc_to_data_type[] =
+  {
+    RESORT_DATA_TYPE_RESIDENT,
+    RESORT_DATA_TYPE_VISITOR,
+    RESORT_DATA_TYPE_SECRETARY,
+    RESORT_DATA_TYPE_RECV,
+    RESORT_DATA_TYPE_RECV,
+    RESORT_DATA_TYPE_PROXY,
+  };
+  GF_ASSERT( type < NELEMS(sc_to_data_type ) );
+
+  return sc_to_data_type[ type ];
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  指定の場所に存在しているかチェック
@@ -148,7 +175,7 @@ BOOL RESORT_DATA_MANAGER_IsPlaceEmpty( const RESORT_DATA_MANAGER *cp_wk, RESORT_
   GF_ASSERT( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX );
 
   return cp_wk->info[ placeID ].people_index[ peopleID ] == RESORT_DATA_MANAGER_INDEX_NULL
-    && cp_wk->info[ placeID ].people_type[ peopleID ] == RESORT_DATA_BUFFER_TYPE_NULL;
+    && cp_wk->info[ placeID ].people_buffer_type[ peopleID ] == RESORT_DATA_BUFFER_TYPE_NULL;
 }
 //----------------------------------------------------------------------------
 /**
@@ -169,10 +196,19 @@ RESORT_ABSTRUCT_DATA * RESORT_DATA_MANAGER_GetAbstructDataByPlace( const RESORT_
  
   GF_ASSERT_MSG( !RESORT_DATA_MANAGER_IsPlaceEmpty( cp_wk, placeID, peopleID ), "空のデータをとってはいけない\n" );
 
-  type  = cp_wk->info[ placeID ].people_type[ peopleID ];
+  type  = cp_wk->info[ placeID ].people_buffer_type[ peopleID ];
   index = cp_wk->info[ placeID ].people_index[ peopleID ];
 
-  return RESORT_ABSTRUCT_MANAGER_GetDataByIndex( cp_wk->p_abstruct, type, index );
+  if( type == RESORT_DATA_BUFFER_TYPE_NULL 
+      || index == RESORT_DATA_MANAGER_INDEX_NULL )
+  {
+    GF_ASSERT(0);
+    return NULL;
+  }
+  else
+  {
+    return RESORT_ABSTRUCT_MANAGER_GetDataByIndex( cp_wk->p_abstruct, type, index );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -459,6 +495,8 @@ struct _RESORT_ABSTRUCT_DATA
   void *p_data_adrs;
   const RESORT_ABSTRUCT_DATA_FUNCTION *cp_func;
   BOOL is_create;
+  RESORT_DATA_BUFFER_TYPE buffer_type;
+  u32 index;
   RESORT_DATA_TYPE type;
 };
 
@@ -523,19 +561,21 @@ static const RESORT_ABSTRUCT_DATA_FUNCTION sc_abstruct_function[RESORT_DATA_TYPE
  *
  *	@param	HEAPID heapID   ヒープID
  *	@param	*p_data_adrs    データワーク NULLを指定すると内部でデータを作る
- *	@param	type            タイプ
+ *	@param	type            バッファータイプ
+ *	@param  index           バッファのインデックス
  *
  *	@return　データ抽象操作
  */
 //-----------------------------------------------------------------------------
-RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_DATA_Init( HEAPID heapID, void *p_data_adrs, RESORT_DATA_TYPE type )
+RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_DATA_Init( HEAPID heapID, void *p_data_adrs, RESORT_DATA_BUFFER_TYPE type, u16 index )
 {
   RESORT_ABSTRUCT_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_ABSTRUCT_DATA) );
 
-  RESORT_ABSTRUCT_DATA_Setup( p_wk, p_data_adrs, type );
+  RESORT_ABSTRUCT_DATA_Setup( p_wk, p_data_adrs, type, index );
 
   if( p_data_adrs == NULL )
   {
+    GF_ASSERT(0);
     p_wk->p_data_adrs = p_wk->cp_func->Init( heapID );
     p_wk->is_create = TRUE;
   }
@@ -569,13 +609,15 @@ void RESORT_ABSTRUCT_DATA_Exit( RESORT_ABSTRUCT_DATA *p_wk )
  *	@param	type            タイプ
  */
 //-----------------------------------------------------------------------------
-void RESORT_ABSTRUCT_DATA_Setup( RESORT_ABSTRUCT_DATA *p_wk, void *p_data_adrs, RESORT_DATA_TYPE type )
+void RESORT_ABSTRUCT_DATA_Setup( RESORT_ABSTRUCT_DATA *p_wk, void *p_data_adrs, RESORT_DATA_TYPE type, u32 index )
 {
   GF_ASSERT( p_data_adrs != NULL );
   GF_ASSERT( p_wk->is_create == FALSE );
-  GF_ASSERT( type < RESORT_DATA_TYPE_MAX );
-  p_wk->cp_func   = &sc_abstruct_function[ type ];
-  p_wk->type = type;
+  GF_ASSERT( type < RESORT_DATA_BUFFER_TYPE_MAX );
+  p_wk->buffer_type = type;
+  p_wk->index = index;
+  p_wk->type = RESORT_DATA_BUFFER_TYPE_ToDataType(type);
+  p_wk->cp_func   = &sc_abstruct_function[ p_wk->type ];
 
   if( p_data_adrs )
   {
@@ -657,9 +699,36 @@ void * RESORT_ABSTRUCT_DATA_GetDataAdrs( RESORT_ABSTRUCT_DATA *p_wk )
  *	@return 人物タイプ
  */
 //-----------------------------------------------------------------------------
-u16 RESORT_ABSTRUCT_DATA_GetPeopleType( const RESORT_ABSTRUCT_DATA *cp_wk )
+RESORT_DATA_TYPE RESORT_ABSTRUCT_DATA_GetPeopleType( const RESORT_ABSTRUCT_DATA *cp_wk )
 {
   return cp_wk->type;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファタイプを取得
+ *
+ *	@param	const RESORT_ABSTRUCT_DATA *cp_wk ワーク
+ *
+ *	@return バッファタイプ
+ */
+//-----------------------------------------------------------------------------
+RESORT_DATA_BUFFER_TYPE RESORT_ABSTRUCT_DATA_GetBufferType( const RESORT_ABSTRUCT_DATA *cp_wk )
+{
+  return cp_wk->buffer_type;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファのインデックスを取得
+ *
+ *	@param	const RESORT_ABSTRUCT_DATA *cp_wk ワーク
+ *
+ *	@return インデックス
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_ABSTRUCT_DATA_GetBufferIndex( const RESORT_ABSTRUCT_DATA *cp_wk )
+{
+  return cp_wk->index;
 }
 
 //=============================================================================
@@ -760,36 +829,42 @@ RESORT_ABSTRUCT_MANAGER * RESORT_ABSTRUCT_MANAGER_Init( const RESORT_ALL_DATA_PA
 
   for( i = DATA_INDEX_RESIDENT_START; i < DATA_INDEX_RESIDENT_END; i++ )
   {
-    RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( cp_param->p_all_people, i-DATA_INDEX_RESIDENT_START );
-    p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_TYPE_RESIDENT );
+    u16 index = i-DATA_INDEX_RESIDENT_START;
+    RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( cp_param->p_all_people, index );
+    p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_BUFFER_TYPE_RESIDENT, index );
   }
   for( i = DATA_INDEX_VISITOR_START; i < DATA_INDEX_VISITOR_END; i++ )
   {
-    RESORT_VISITOR_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetVisitor( cp_param->p_all_people, i-DATA_INDEX_VISITOR_START );
-    p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_TYPE_VISITOR );
+    u16 index = i-DATA_INDEX_VISITOR_START;
+    RESORT_VISITOR_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetVisitor( cp_param->p_all_people, index );
+    p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_BUFFER_TYPE_VISITOR, index );
   }
   for( i = DATA_INDEX_SECRETARY_START; i < DATA_INDEX_SECRETARY_END; i++ )
   {
-    RESORT_SECRETARY_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetSecretary( cp_param->p_all_people, i-DATA_INDEX_SECRETARY_START );
-    p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_TYPE_SECRETARY );
+    u16 index = i-DATA_INDEX_SECRETARY_START;
+    RESORT_SECRETARY_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetSecretary( cp_param->p_all_people, index );
+    p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_BUFFER_TYPE_SECRETARY, index );
   }
   for( i = DATA_INDEX_TOURIST_START; i < DATA_INDEX_TOURIST_END; i++ )
   {
-    RESORT_RECV_DATA *p_data = RESORT_RECV_BUFF_GetData(cp_param->p_recv_sv_buff, i-DATA_INDEX_TOURIST_START );
-    p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_TYPE_RECV );
+    u16 index = i-DATA_INDEX_TOURIST_START;
+    RESORT_RECV_DATA *p_data = RESORT_RECV_BUFF_GetData(cp_param->p_recv_sv_buff, index );
+    p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_BUFFER_TYPE_RECV_SV_BUFF, index );
   }
   if( cp_param->p_recv_tmp_buff )
   {
     for( i = DATA_INDEX_TOURIST_EX_START; i < DATA_INDEX_TOURIST_EX_END; i++ )
     {
-      RESORT_RECV_DATA *p_data = RESORT_RECV_BUFF_GetData(cp_param->p_recv_tmp_buff, i-DATA_INDEX_TOURIST_EX_START );
-      p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_TYPE_RECV );
+      u16 index = i-DATA_INDEX_TOURIST_EX_START;
+      RESORT_RECV_DATA *p_data = RESORT_RECV_BUFF_GetData(cp_param->p_recv_tmp_buff, index );
+      p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_BUFFER_TYPE_RECV_TMP_BUFF, index );
     }
   }
   for( i = DATA_INDEX_PROXY_START; i < DATA_INDEX_PROXY_END; i++ )
   {
-    RESORT_PROXY_DATA *p_data = RESORT_PROXY_BUFF_GetData(cp_param->p_proxy_buff, i-DATA_INDEX_PROXY_START );
-    p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_TYPE_PROXY );
+    u16 index = i-DATA_INDEX_PROXY_START;
+    RESORT_PROXY_DATA *p_data = RESORT_PROXY_BUFF_GetData(cp_param->p_proxy_buff, index );
+    p_wk->p_data[ i ] = RESORT_ABSTRUCT_DATA_Init( heapID, p_data, RESORT_DATA_BUFFER_TYPE_PROXY_BUFF, index );
   } 
 
   return p_wk;
@@ -839,11 +914,12 @@ void RESORT_ABSTRUCT_MANAGER_BeginIterator( RESORT_ABSTRUCT_MANAGER * p_wk, cons
  *	@param	RESORT_DATA_BUFFER_TYPE *cp_tbl サーチするタイプの配列
  *	@param	tbl_max   上記の配列要素数
  *
- *	@return データ
+ *	@return データ  NULLで終了
  */
 //-----------------------------------------------------------------------------
 RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_MANAGER_NextIterator( RESORT_ABSTRUCT_MANAGER * p_wk, const RESORT_DATA_BUFFER_TYPE *cp_tbl, u32 tbl_max )
 {
+  OS_TPrintf( "iterator %d\n", p_wk->current );
   if( p_wk->tbl_index < tbl_max )
   {
     if( sc_type[ cp_tbl[p_wk->tbl_index] ].start <= p_wk->current && p_wk->current < sc_type[ cp_tbl[p_wk->tbl_index] ].end )

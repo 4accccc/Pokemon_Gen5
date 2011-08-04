@@ -430,6 +430,7 @@ struct _RESORT_FIELD_PEOPLE
   RESORT_PEOPLE_SYS *p_people_sys;
   RESORT_FIELD_BUFF    *p_buff;
   GFL_TCBLSYS       *p_tcblsys;
+  RESORT_SYSTEM     *p_sys;
 } ;
 
 //-------------------------------------
@@ -454,6 +455,7 @@ static void Reception_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_
 static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYSTEM *p_sys, MMDLSYS *p_mmdlsys )
 {
   RESORT_FIELD_PEOPLE *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_FIELD_PEOPLE));
+  p_wk->p_sys = p_sys;
   //TCBL
   p_wk->p_tcblsys = GFL_TCBL_Init( heapID, heapID, RESORT_FIELD_PEOPLE_MAX, sizeof(RESORT_FIELD_PEOPLE_ACT) );
 
@@ -483,7 +485,7 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
     param.p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
     param.p_abstruct  = RESORT_SYSTEM_GetAbstructManager( p_sys );
     param.max = RESORT_FIELD_PEOPLE_MAX;
-    param.placeID = RESORT_PLACEID_RECEPTION;
+    param.placeID = RESORT_PLACEID_FIELD;
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
     RESORT_PEOPLE_SYS_EraseMMdl( p_wk->p_people_sys );  //拡張バッファで戻ってくることを考えて一旦消す
     RESORT_PEOPLE_SYS_AddAll( p_wk->p_people_sys );
@@ -578,25 +580,22 @@ static void Reception_People_UpdateRecvCallback( void *p_wk_adrs, RESORT_RECV_DA
   if( p_people )
   {
     //いるならなら置き換え動作
-    Reception_People_CreateReplaceTask( p_wk->p_tcblsys, p_people );
+    //Reception_People_CreateReplaceTask( p_wk->p_tcblsys, p_people );
   }
   else
   {
-#if 0
     //いないなら人物作成
     RESORT_PEOPLE_SYS_ADD_PARAM param;
     GFL_STD_MemClear(&param,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
 
-    //TODO
-    param.p_data_adrs = p_recv;
-    param.placeID      = RESORT_PLACEID_RECEPTION;
+    param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByAdrs( RESORT_SYSTEM_GetAbstructManager(p_wk->p_sys), p_recv );
+    param.placeID = RESORT_PLACEID_FIELD;
 
     p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );
-    RESORT_PEOPLE_SetVisible( p_people, FALSE );
+    RESORT_PEOPLE_SetVisible( p_people, TRUE );
 
     //人物作成したら、上から落下してくるタスクを登録
-    Reception_People_CreateEnterTask( p_wk->p_tcblsys, p_people );
-#endif
+    //Reception_People_CreateEnterTask( p_wk->p_tcblsys, p_people );
   }
 }
 //----------------------------------------------------------------------------
@@ -622,17 +621,14 @@ static void Reception_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_
   }
   else
   {
-#if 0
     RESORT_PEOPLE_SYS_ADD_PARAM param;
     GFL_STD_MemClear(&param,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
-    param.people_type = RESORT_PEOPLE_TYPE_PROXY;
-    param.p_data_adrs = p_proxy;
-    param.placeID      = RESORT_PLACEID_RECEPTION;
+    param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByAdrs( RESORT_SYSTEM_GetAbstructManager(p_wk->p_sys), p_proxy );
+    param.placeID = RESORT_PLACEID_FIELD;
     p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );
 
     //人物作成したら、上から落下してくるタスクを登録
-    Reception_People_CreateEnterTask( p_wk->p_tcblsys, p_people );
-#endif
+    //Reception_People_CreateEnterTask( p_wk->p_tcblsys, p_people );
   }
 }
 

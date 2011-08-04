@@ -51,7 +51,6 @@ extern void RESORT_MAPCREATE_Setup( RESORT_MAPCREATE *p_wk, u16 zoneID, const RE
 
 extern int RESORT_MAPCREATE_SetUpBlock( RESORT_MAPCREATE *p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, FLD_G3D_MAP* g3Dmap, int build_count, int map_index, HEAPID heapID );
 
-extern void RESORT_MAPCREATE_EventDataOverWrite( RESORT_MAPCREATE *p_wk, EVENTDATA_SYSTEM* p_evdata );
 
 //----------------------------------------------------------------------------
 /**

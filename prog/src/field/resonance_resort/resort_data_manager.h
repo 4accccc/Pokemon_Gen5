@@ -33,28 +33,6 @@ typedef enum
 }RESORT_DATA_TYPE;
 
 //-------------------------------------
-///	データ抽象型
-//=====================================
-typedef struct _RESORT_ABSTRUCT_DATA RESORT_ABSTRUCT_DATA;
-
-extern RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_DATA_Init( HEAPID heapID, void *p_data_adrs, RESORT_DATA_TYPE type );
-extern void RESORT_ABSTRUCT_DATA_Exit( RESORT_ABSTRUCT_DATA *p_wk );
-
-extern void RESORT_ABSTRUCT_DATA_Setup( RESORT_ABSTRUCT_DATA *p_wk, void *p_data_adrs, RESORT_DATA_TYPE type );
-extern void RESORT_ABSTRUCT_DATA_InitInstance( RESORT_ABSTRUCT_DATA *p_wk );
-extern BOOL RESORT_ABSTRUCT_DATA_IsEmpty( const RESORT_ABSTRUCT_DATA *cp_wk );
-extern u32 RESORT_ABSTRUCT_DATA_GetData( const RESORT_ABSTRUCT_DATA *cp_wk, int param, void *p_ret_adrs );
-extern void RESORT_ABSTRUCT_DATA_SetData( RESORT_ABSTRUCT_DATA *p_wk, int param, u32 data );
-extern void * RESORT_ABSTRUCT_DATA_GetDataAdrs( RESORT_ABSTRUCT_DATA *p_wk );
-
-extern u16 RESORT_ABSTRUCT_DATA_GetPeopleType( const RESORT_ABSTRUCT_DATA *cp_wk );
-
-//=============================================================================
-/**
- *					データ抽象型マネージャ
-*/
-//=============================================================================
-//-------------------------------------
 ///	データタイプ
 //=====================================
 typedef enum
@@ -68,6 +46,31 @@ typedef enum
   RESORT_DATA_BUFFER_TYPE_MAX,
   RESORT_DATA_BUFFER_TYPE_NULL = RESORT_DATA_BUFFER_TYPE_MAX,
 } RESORT_DATA_BUFFER_TYPE;
+
+//-------------------------------------
+///	データ抽象型
+//=====================================
+typedef struct _RESORT_ABSTRUCT_DATA RESORT_ABSTRUCT_DATA;
+
+extern RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_DATA_Init( HEAPID heapID, void *p_data_adrs, RESORT_DATA_BUFFER_TYPE type, u16 index );
+extern void RESORT_ABSTRUCT_DATA_Exit( RESORT_ABSTRUCT_DATA *p_wk );
+
+extern void RESORT_ABSTRUCT_DATA_Setup( RESORT_ABSTRUCT_DATA *p_wk, void *p_data_adrs, RESORT_DATA_TYPE type, u32 index );
+extern void RESORT_ABSTRUCT_DATA_InitInstance( RESORT_ABSTRUCT_DATA *p_wk );
+extern BOOL RESORT_ABSTRUCT_DATA_IsEmpty( const RESORT_ABSTRUCT_DATA *cp_wk );
+extern u32 RESORT_ABSTRUCT_DATA_GetData( const RESORT_ABSTRUCT_DATA *cp_wk, int param, void *p_ret_adrs );
+extern void RESORT_ABSTRUCT_DATA_SetData( RESORT_ABSTRUCT_DATA *p_wk, int param, u32 data );
+extern void * RESORT_ABSTRUCT_DATA_GetDataAdrs( RESORT_ABSTRUCT_DATA *p_wk );
+
+extern RESORT_DATA_TYPE RESORT_ABSTRUCT_DATA_GetPeopleType( const RESORT_ABSTRUCT_DATA *cp_wk );
+extern RESORT_DATA_BUFFER_TYPE RESORT_ABSTRUCT_DATA_GetBufferType( const RESORT_ABSTRUCT_DATA *cp_wk );
+extern u32 RESORT_ABSTRUCT_DATA_GetBufferIndex( const RESORT_ABSTRUCT_DATA *cp_wk );
+
+//=============================================================================
+/**
+ *					データ抽象型マネージャ
+*/
+//=============================================================================
 
 //-------------------------------------
 ///	データ抽象型
@@ -129,7 +132,7 @@ extern void RESORT_DATA_MANAGER_Exit( RESORT_DATA_MANAGER *p_wk );
 extern void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk );
 
 //各データの抽象
-extern u32 RESORT_DATA_MANAGER_GetPeopleType( RESORT_DATA_BUFFER_TYPE type );
+extern u16 RESORT_DATA_BUFFER_TYPE_ToDataType( RESORT_DATA_BUFFER_TYPE type );
 
 //お店がチェック
 extern BOOL RESORT_DATA_MANAGER_IsEmptyInstitution( const RESORT_DATA_MANAGER *cp_wk );

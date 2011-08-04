@@ -205,6 +205,8 @@ void FIELD_DATA_PATCH_OverWriteAttrEx( const FIELD_DATA_PATCH* cp_sys, NormalVtx
   cp_read_buff = (const NormalVtxSt*)(addr); //ƒwƒbƒ_[•ª‚¸‚ç‚·
 
   NAGI_Printf( "attr height %d width %d\n", cp_attr->height, cp_attr->width );
+  NAGI_Printf( "buff height %d width %d\n", p_buff->height, p_buff->width );
+  NAGI_Printf( "write gridx %d gridz %d\n", write_grid_x, write_grid_z );
   GF_ASSERT( cp_attr->height >= (read_grid_z + size_grid_z) );
   GF_ASSERT( cp_attr->width >= (read_grid_x + size_grid_x) );
 

@@ -139,31 +139,6 @@ int RESORT_MAPCREATE_SetUpBlock( RESORT_MAPCREATE *p_wk, NormalVtxFormat* p_attr
 
 //----------------------------------------------------------------------------
 /**
- *	@brief イベントデータの上書きを行う
- *
- *	@param	RESORT_MAPCREATE *p_wk  ワーク
- *	@param	p_evdata                イベントデータ
- */
-//-----------------------------------------------------------------------------
-void RESORT_MAPCREATE_EventDataOverWrite( RESORT_MAPCREATE *p_wk, EVENTDATA_SYSTEM* p_evdata )
-{
-  int i;
-
-  //住人の数だけ配置を行う
-  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-  {
-    const RESORT_RESIDENT_DATA *cp_resident = RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk->cp_people_all, i);
-    if( RESORT_RESIDENT_DATA_IsEmpty( cp_resident ) )
-    {
-      u16 doorID = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_DOOR_ID );
-
-      //空なら施設がない＝ドアがない
-      EVENTDATA_SYS_DelConnectEventIdx( p_evdata, doorID );
-    }
-  }
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  マップ設定ブロック配置 フィールド
  *
  *	@param	p_wk     ワーク
@@ -189,11 +164,13 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
     u16 grid_x = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_X );
     u16 grid_z = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
 
+    u16 size_x  = 5;
+    u16 size_z  = 5;
+
     //住民が存在して、住民の施設がブロック内にある場合に配置モデルを3dmdを配置
-    //住民が存在しなくてブロック内の場合、ドアを消去
     //ブロック外のときは処理をしない
 
-    if( map_index == (grid_x / 32 + (grid_z / 32)*2 ) )
+    if( map_index == (grid_z / 32) || map_index == (grid_z+size_z)/32 )
     {
       const RESORT_RESIDENT_DATA *cp_resident = RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk->cp_people_all, i);
       if( !RESORT_RESIDENT_DATA_IsEmpty( cp_resident ) )
@@ -204,11 +181,31 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
         u32 local_grid_x = grid_x % 32;
         u32 local_grid_z = grid_z % 32;
 
+        u32 read_grid_x = 0;
+        u32 read_grid_z = 0;
+
+        if( map_index == (grid_z / 32) )
+        {
+          //開始座標が入っていた場合、
+          //サイズがオーバーしていれば縮める
+          if( local_grid_z + size_z >= 32 )
+          {
+            size_z  = 32 - local_grid_z;
+          }
+        }
+        else
+        {
+          //後尾座標が入っていなかった場合
+          read_grid_z   = 32 - local_grid_z;
+          size_z        = size_z - read_grid_z;
+          local_grid_z  = 0;
+        }
+
         //建物を書き換え
         FIELD_DATA_PATCH_WriteBuildModel( p_patch, bmodel, 0 );
 
         // アトリビュートのオーバーライト
-        FIELD_DATA_PATCH_OverWriteAttrEx( p_patch, p_attr, 0, 0, local_grid_x, local_grid_z, 5, 5 );
+        FIELD_DATA_PATCH_OverWriteAttrEx( p_patch, p_attr, read_grid_x, read_grid_z, local_grid_x, local_grid_z, size_x, size_z );
 
         //3dmdを配置
         build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z );
