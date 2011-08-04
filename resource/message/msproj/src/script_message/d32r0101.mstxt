@@ -2,14 +2,22 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_d32r0101_fighterm_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>ムムッ！▼
+ここを　とおりたければ
+がんじょうな　オレと▽
+オレの　ダンゴロに　かつのだ！▼
+しかし　オレと　オレの　ダンゴロは
+バッジを　７ついじょう　もつ▽
+つわものとしか　たたかわない！▼
+それが　オレと　オレの　ダンゴロの
+がんじょうな　ポリシー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:05:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +25,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ムムッ！▼
+ここを　通りたければ
+がんじょうな　オレと▽
+オレの　ダンゴロに　勝つのだ！▼
+しかし　オレと　オレの　ダンゴロは
+バッジを　７つ以上　持つ▽
+ツワモノとしか　戦わない！▼
+それが　オレと　オレの　ダンゴロの
+がんじょうな　ポリシー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:18:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +44,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♂
+・GRIDX＝5、GRIDZ＝48
+・バッジが６個以下のとき</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:11:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>FIGHTERM</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:10:42" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -46,6 +64,326 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_fighterm_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ムムッ！▼
+オレと　オレの　ダンゴロは
+バッジを　７ついじょう　もつ▽
+きみのような　つわものを▽
+まっていた！▼
+ここを　とおりたければ
+がんじょうな　オレと▽
+オレの　ダンゴロを　たおすのだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:05:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:05:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ムムッ！▼
+オレと　オレの　ダンゴロは
+バッジを　７つ以上　持つ▼
+きみのような
+ツワモノを　待っていた！▼
+ここを　通りたければ
+がんじょうな　オレと▽
+オレの　ダンゴロを　倒すのだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:19:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:06:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・バッジが７個のとき
+・はい/いいえの選択肢表示
+　はい　→fighterm_03
+　いいえ→fighterm_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:18:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:10:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_fighterm_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いっておくが　オレの　ダンゴロは
+がんじょう＆がんじょう　だぜ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:17:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:14:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いっておくが　オレの　ダンゴロは
+がんじょう＆がんじょう　だぜ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:17:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:14:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+・続けてトレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:15:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:14:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_fighterm_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんと　まあ……
+ふがいない　へんじ　だな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:17:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:05:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんと　まあ……
+ふがいない　返事だな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:19:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:06:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:14:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:10:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_fighterm_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ムムッ！▼
+きみの　つよさは　ほんものだ！▼
+オレと　オレの　ダンゴロも
+もっと　がんじょうに　なるべく▽
+しゅぎょうを　つづけるぞ……▼
+さらばだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:14:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:14:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ムムッ！▼
+きみの　強さは　本物だ！▼
+オレと　オレの　ダンゴロも
+もっと　がんじょうに　なるべく▽
+修行を　続けるぞ……▼
+さらばだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:19:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:14:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー戦闘後
+・フィールド復帰したら自動で表示
+　表示後、画面暗転で削除
+※アニメで上に消えて行くでもOKですよ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:14:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:14:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_poke49a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ガンッ！　ガンッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:09:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:09:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ガンッ！　ガンッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:09:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:09:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝4、GRIDZ＝48
+・戦闘後、削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:10:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ダンゴロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:05:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_poke49b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジョジョーッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:09:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:09:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジョジョーッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:09:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:09:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝6、GRIDZ＝48
+・戦闘後、削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:10:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ダンゴロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T12:07:42" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
