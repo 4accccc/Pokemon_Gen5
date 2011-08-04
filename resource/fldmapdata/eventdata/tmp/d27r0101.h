@@ -13,6 +13,26 @@
 #ifndef ZONE_D27R0101_EVC_H
 #define ZONE_D27R0101_EVC_H
 
+#define D27R0101_SWRIVAL_01                0
+#define D27R0101_SWLEADER1_01              1
+#define D27R0101_SWPLAZMAM_01              2
+#define D27R0101_SWPLAZMAM_07              3
+#define D27R0101_SWPLAZMAM_02              4
+#define D27R0101_SWPLAZMAM_03              5
+#define D27R0101_SWPLAZMAM_04              6
+#define D27R0101_SWPLAZMAM_05              7
+#define D27R0101_SWPLAZMAW_01              8
+#define D27R0101_SWPLAZMAM_08              9
+#define D27R0101_SWPLAZMAM_09             10
+#define D27R0101_SWPLAZMAM_10             11
+#define D27R0101_SWPLAZMAM_11             12
+#define D27R0101_SWPLAZMAW_02             13
+#define D27R0101_SWPLAZMAM1_02_01         14
+#define D27R0101_SWPLAZMAM1_02_02         15
+#define D27R0101_SWSAGE7_01               16
+#define D27R0101_NINJA_01                 17
+#define D27R0101_NINJA_02                 18
+#define D27R0101_NINJA_03                 19
 
 #endif //ZONE_D27R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

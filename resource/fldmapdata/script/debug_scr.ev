@@ -269,6 +269,9 @@ _RET
 /**************************************************************/
 EVENT_START   ev_debug_mizuguchi
 
+    //バージョン取得
+    DEFINE_LOCAL LCWK_VERSION
+
 		$SCWK_TEMP2 = 0
 		//メニュー作成
 		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP2 )
@@ -280,7 +283,10 @@ EVENT_START   ev_debug_mizuguchi
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_05, 4 )	//D07R0401イベント初期化
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_06, 5 )	//C03R0301イベント初期化
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_07, 6 )	//C08初期化
-		_BMPMENU_MAKE_LIST( msg_debug_mizu_08, 7 )	//C08初期化
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_08, 7 )	//D27カードキー所持
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_09, 8 )	//D27搭乗1回目
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_10, 9 )	//D27搭乗2回目
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_11, 10 )	//D27搭乗3回目
 		//メニュー表示
 		_BMPMENU_START()
 	
@@ -330,10 +336,80 @@ EVENT_START   ev_debug_mizuguchi
        _FLAG_SET(FV_C08_NINJA_02)  //ソウリュウシティ：ダークトリニティ（戦わないやつ）
        _FLAG_SET(FV_C08R0101_SWLEADER7_01) //シャガ家：シャガ
        _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, FALSE, FALSE ) //マップ復帰
-		ELSIF $SCWK_TEMP2 == 7 THEN
-		    _FLAG_SET(FE_D27_CARDKEY_01)
-		    
-		ELSE
+    ELSIF $SCWK_TEMP2 == 7 THEN
+      
+      //D27カードキー所持
+      _FLAG_SET(FE_D27_CARDKEY_01)
+      
+    ELSIF $SCWK_TEMP2 == 8 THEN
+      
+      //D27搭乗一回目
+      _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R0101_SWPLASMA_01)
+      _FLAG_RESET(FV_D27R0101_SWLEADER1_01)
+      _FLAG_SET(FV_D27R0101_SWPLASMA_02)
+      _FLAG_SET(FV_D27R0101_SWSAGE7_01)
+      _FLAG_SET(FV_D27R0101_NINJA_01)
+      
+      //ワーク初期化
+      $WK_SCENE_D27R0101_FIRST_01 = 1
+      $WK_SCENE_D27R0101_SECONDW_01 = 0
+      $WK_SCENE_D27R0101_SECONDB_01 = 0
+      $WK_SCENE_D05 = 4
+      
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D27R0101, 10, 32, DIR_RIGHT )
+      
+    ELSIF $SCWK_TEMP2 == 9 THEN
+      
+      //D27搭乗二回目
+      _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_SET(FV_D27R0101_SWPLASMA_01)
+      _FLAG_SET(FV_D27R0101_SWLEADER1_01)
+      _FLAG_RESET(FV_D27R0101_SWPLASMA_02)
+      _FLAG_SET(FV_D27R0101_SWSAGE7_01)
+      _FLAG_SET(FV_D27R0101_NINJA_01)
+      
+      //ワーク初期化
+      $WK_SCENE_D27R0101_FIRST_01 = 2
+      
+      // ROMバージョン取得
+      _GET_ROM_VERSION( LCWK_VERSION )
+      
+      //B2
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        $WK_SCENE_D27R0101_SECONDW_01 = 0
+        $WK_SCENE_D27R0101_SECONDB_01 = 1
+      ELSE
+        $WK_SCENE_D27R0101_SECONDW_01 = 1
+        $WK_SCENE_D27R0101_SECONDB_01 = 0
+      ENDIF
+      
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D27R0101, 11, 31, DIR_RIGHT )
+      
+    ELSIF $SCWK_TEMP2 == 10 THEN
+      
+      //D27搭乗三回目
+      _FLAG_SET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_SET(FV_D27R0101_SWPLASMA_01)
+      _FLAG_SET(FV_D27R0101_SWLEADER1_01)
+      _FLAG_SET(FV_D27R0101_SWPLASMA_02)
+      _FLAG_SET(FV_D27R0101_SWSAGE7_01)
+      _FLAG_SET(FV_D27R0101_NINJA_01)
+      _FLAG_RESET(FV_D27R0201_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R1201_SWRIVAL_01)
+      
+      //ワーク初期化
+      $WK_SCENE_D27R0101_FIRST_01 = 2
+      $WK_SCENE_D27R0101_SECONDW_01 = 4
+      $WK_SCENE_D27R0101_SECONDB_01 = 4
+      
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D27R0101, 11, 31, DIR_RIGHT )
+      
+      
+    ELSE
 			//C04R0101でんきジム実験
 			$WK_SCENE_C04GYM0101_SHOWEND = 1
 		ENDIF

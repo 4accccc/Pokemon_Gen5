@@ -60,37 +60,33 @@ EVENT_START ev_d27_hint_01
   //戦闘前
   IF FLAG_OFF( FE_D27_HINT_01 ) THEN
     
-    
     //B2
     IF $LCWK_VERSION == VERSION_B2 THEN
       _OBJ_ANIME( D27R1001_HINT_01, anm_common_gyoe )
+      _OBJ_ANIME_WAIT()
+      //【仮】トレーナー曲再生
+      _TRAINER_BGM_SET(  TRID_TANPAN_19 )
     //W2
     ELSE
       _OBJ_ANIME( D27R2101_HINT_01, anm_common_gyoe )
+      _OBJ_ANIME_WAIT()
+      //【仮】トレーナー曲再生
+      _TRAINER_BGM_SET(  TRID_TANPAN_19 )
     ENDIF
-    
-    _OBJ_ANIME_WAIT()
-    
-    
-     //【仮】戦闘前メッセージ
-     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     //_AB_KEYWAIT_MARK()
-     //_MSGWIN_CLOSE()
+     
+     //戦闘前メッセージ
+     _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint1_start )
+     _AB_KEYWAIT_MARK()
+     _MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      //W2
      ELSE
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      ENDIF
      
      //結果チェック
@@ -133,32 +129,30 @@ EVENT_START ev_d27_hint_02
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
        _OBJ_ANIME( D27R1001_HINT_02, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
      //W2
      ELSE
        _OBJ_ANIME( D27R2201_HINT_02, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
      ENDIF
-     
-     _OBJ_ANIME_WAIT()
-
-     //【仮】戦闘前メッセージ
-     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     //_AB_KEYWAIT_MARK()
-     //_MSGWIN_CLOSE()
+    
+     //戦闘前メッセージ
+     _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint2_start )
+     _AB_KEYWAIT_MARK()
+     _MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      //W2
      ELSE
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      ENDIF
      
      //結果チェック
@@ -201,32 +195,30 @@ EVENT_START ev_d27_hint_03
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
        _OBJ_ANIME( D27R1001_HINT_03, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
      //W2
      ELSE
        _OBJ_ANIME( D27R1801_HINT_03, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
      ENDIF
      
-     _OBJ_ANIME_WAIT()
-
-     //【仮】戦闘前メッセージ
-     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     //_AB_KEYWAIT_MARK()
-     //_MSGWIN_CLOSE()
+     //戦闘前メッセージ
+     _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint3_start )
+     _AB_KEYWAIT_MARK()
+     _MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      //W2
      ELSE
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      ENDIF
      
      //結果チェック
@@ -269,31 +261,30 @@ EVENT_START ev_d27_hint_04
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
        _OBJ_ANIME( D27R1001_HINT_04, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
      //W2
      ELSE
        _OBJ_ANIME( D27R2101_HINT_04, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
      ENDIF
     
-     _OBJ_ANIME_WAIT()
-     //【仮】戦闘前メッセージ
-     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     //_AB_KEYWAIT_MARK()
-     //_MSGWIN_CLOSE()
+     //戦闘前メッセージ
+     _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint4_start )
+     _AB_KEYWAIT_MARK()
+     _MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      //W2
      ELSE
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      ENDIF
      
      //結果チェック
@@ -321,69 +312,13 @@ EVENT_END
 /*  ヒント5                         */
 /**************************************************************/
 EVENT_START ev_d27_hint_05
-   _TALK_OBJ_START()
-  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
-  
-  //ROMのバージョンを取得
-  _GET_ROM_VERSION( LCWK_VERSION )
-  
-  //5はメッセージ固定
-  $LCWK_MSGID = msg_hide_ship_hint5_01
-  //$LCWK_MSGID += $LCWK_PASSID
-  
-  //戦闘前
-  IF FLAG_OFF( FE_D27_HINT_05 ) THEN
     
-     //B2
-     IF $LCWK_VERSION == VERSION_B2 THEN
-       _OBJ_ANIME( D27R1001_HINT_05, anm_common_gyoe )
-     //W2
-     ELSE
-       _OBJ_ANIME( D27R2001_HINT_05, anm_common_gyoe )
-     ENDIF
-     
-     _OBJ_ANIME_WAIT()
-    
-     //【仮】戦闘前メッセージ
-     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     //_AB_KEYWAIT_MARK()
-     //_MSGWIN_CLOSE()
-     
-     //B2
-     IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
-     //W2
-     ELSE
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
-     ENDIF
-     
-     //結果チェック
-     _CALL ev_battle_check
-     
-     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
-     _LAST_KEYWAIT()
-     _MSGWIN_CLOSE()
-    
-    //========================================//
-    //戦闘終了フラグセット
-    _FLAG_SET( FE_D27_HINT_05 )
-    //========================================//
-    
-  //戦闘後
-  ELSE
-    _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-  ENDIF
-  
+  //うそつきヒント
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint5_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+   
 EVENT_END
 
 /**************************************************************/
@@ -405,32 +340,30 @@ EVENT_START ev_d27_hint_06
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
        _OBJ_ANIME( D27R1001_HINT_06, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
      //W2
      ELSE
        _OBJ_ANIME( D27R1901_HINT_06, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
      ENDIF
-     
-     _OBJ_ANIME_WAIT()
-     
-     //【仮】戦闘前メッセージ
-     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     //_AB_KEYWAIT_MARK()
-     //_MSGWIN_CLOSE()
+    
+     //戦闘前メッセージ
+     _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint6_start )
+     _AB_KEYWAIT_MARK()
+     _MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      //W2
      ELSE
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      ENDIF
      
      //結果チェック
@@ -473,32 +406,30 @@ EVENT_START ev_d27_hint_07
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
        _OBJ_ANIME( D27R1001_HINT_07, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
      //W2
      ELSE
        _OBJ_ANIME( D27R2201_HINT_07, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
+       //【仮】トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
      ENDIF
-     
-     _OBJ_ANIME_WAIT()
-
-     //【仮】戦闘前メッセージ
-     //_BALLOONWIN_TALKOBJ_MSG( msg_id )
-     //_AB_KEYWAIT_MARK()
-     //_MSGWIN_CLOSE()
+    
+     //戦闘前メッセージ
+     _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint7_start )
+     _AB_KEYWAIT_MARK()
+     _MSGWIN_CLOSE()
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      //W2
      ELSE
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
        //【仮】トレーナー戦呼び出し
        _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-     
      ENDIF
      
      //結果チェック
