@@ -2,72 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_w21_swleader1_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>チェレン『あの　ふねで
-いけそうな　ばしょを　さがしている▼
-だけど　いまの　ところ
-みつかっていないし　てがかり　なしさ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-07T03:21:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T09:32:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>チェレン『あの　船で
-行けそうな　場所を　探している▼
-だけど　いまの　ところ
-みつかっていないし　手掛かりなしさ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-07T03:22:12" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T09:32:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・c14ジムバッジ取得前
-・GRIDX＝、GRIDZ＝
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-07T03:21:44" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWLEADER1
-ジムリーダー・チェレン</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T09:31:58" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_w21_swrival_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『チェレンさん
-ようすは　どうですか？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……みつけたな！
+オマエ　なかなか　やるな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:31:23" />
+				Time="2011-08-04T09:52:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -75,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『チェレンさん
-様子は　どうですか？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……みつけたな！
+オマエ　なかなか　やるな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:39:42" />
+				Time="2011-08-04T09:52:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -91,11 +34,11 @@
 ・c14ジムバッジ取得後
 ・posイベント
 　GRIDX＝、GRIDZ＝
-・続けてswleader1_02
+・続けてswrival_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:40:10" />
+				Time="2011-08-04T09:55:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -114,59 +57,52 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swleader1_02"
+		Label="msg_w21_swrival_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『なにも　うごきは　ないね▼
-もっとも　こちらにも
-かんぱんに　あがったり　なかに▽
-しのびこむ　すべが　ないけどね▼
-だからこそ　かれらも
-わざと　ここに　いるんだろうけど……▼</Text>
+			<Text>……しかし
+どこから　あがれば　いいんだ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:41:09" />
+				Time="2011-08-04T09:55:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:19:50" />
+				Time="2011-08-04T09:55:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『なにも　動きは　ないね▼
-もっとも　こちらにも
-甲板に　あがったり▽
-船内に　忍びこむ　術が　ないけどね▼
-だからこそ　かれらも
-わざと　ここに　いるんだろうけど……▼</Text>
+			<Text>……しかし
+どこから　あがれば　いいんだ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:41:21" />
+				Time="2011-08-04T09:55:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:19:50" />
+				Time="2011-08-04T09:55:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・プラズマフリゲートをみながら
 ・続けてswleader8_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:40:18" />
+				Time="2011-08-04T10:30:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWLEADER1
-ジムリーダー・チェレン</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:19:16" />
+				Time="2011-08-04T09:52:25" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -275,7 +211,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swrival_02"
+		Label="msg_w21_swrival_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -304,10 +240,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてswleader8_03</Comment>
+・続けてswleader8_03
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:42:24" />
+				Time="2011-08-04T09:56:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -424,10 +361,10 @@
 			Language="JPN">
 			<Comment>♂
 ・主人公たちの方を向いてメッセージ表示
-・続けてswleader1_03</Comment>
+・続けてswrival_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:43:03" />
+				Time="2011-08-04T09:56:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -446,15 +383,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swleader1_03"
+		Label="msg_w21_swrival_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『たすかりました！
-ありがとう　ございます！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……あんがとよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:26:07" />
+				Time="2011-08-04T09:56:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -462,11 +398,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『助かりました！
-ありがとう　ございます！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……あんがとよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:53:24" />
+				Time="2011-08-04T09:56:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -482,15 +417,15 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWLEADER1
-ジムリーダー・チェレン</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:21:07" />
+				Time="2011-08-04T09:56:24" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -568,11 +503,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うえで　さわいで　しまったから
-みんな　まちかまえて　いるたい！▼</Text>
+			<Text>さわいで　しまったから
+なんにんか　でてきたけどな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:47:37" />
+				Time="2011-08-04T09:58:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -580,11 +515,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>上で　騒いでしまったから
-みんな　待ち構えて　いるたい！▼</Text>
+			<Text>騒いで　しまったから
+何人か　でてきたけどな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:47:41" />
+				Time="2011-08-04T09:58:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -666,7 +601,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swrival_03"
+		Label="msg_w21_swrival_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -718,7 +653,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swrival_04"
+		Label="msg_w21_swrival_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -772,7 +707,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swrival_05"
+		Label="msg_w21_swrival_07"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -801,12 +736,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・d27アジト船攻略後のでも終了してから
-・続けて
+・d27アジト船
+　2回目攻略後のデモ終了してから
+※船内から退去後の挙動は仮
+・チェレンも配置されている
+・続けてswleader1_01
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:33:55" />
+				Time="2011-08-04T10:27:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -825,17 +763,19 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swleader1_04"
+		Label="msg_w21_swleader1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『おそらく　だけど……
+			<Text>チェレン『ゴメン……
+おそくなって▼
+で　とんださきは　おそらく　だけど
 ジャイアントホール　だね▼
 いちど　アララギはかせと　あって
-たいさくを　ねったほうが　いいかな▼</Text>
+たいさくを　ねったほうが　いい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:46:45" />
+				Time="2011-08-04T10:08:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -843,13 +783,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『おそらく　だけど……
+			<Text>チェレン『ゴメン……
+遅くなって▼
+で　飛び先は　おそらく　だけど
 ジャイアントホール　だね▼
 一度　アララギ博士と　会って
-対策を　練ったほうが　いいかな▼</Text>
+対策を　練ったほうが　いい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:47:12" />
+				Time="2011-08-04T10:09:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -858,10 +800,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてswrival_06</Comment>
+・続けてswrival_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:50:47" />
+				Time="2011-08-04T10:24:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -880,7 +822,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swrival_06"
+		Label="msg_w21_swrival_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -911,11 +853,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてswrival_07
+・続けてswrival_09
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:50:28" />
+				Time="2011-08-04T10:24:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -934,7 +876,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swrival_07"
+		Label="msg_w21_swrival_09"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -991,18 +933,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swleader1_05"
+		Label="msg_w21_swleader1_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……つらいな▼
-プラズマだんに　うばわれた
-じぶんの　ポケモンと▼
-プラズマだんに　つかわれている
-あの　キュレムを　かさねて　いるのか▼</Text>
+			<Text>チェレン『キュレム！▼
+プラズマだんは　キュレムの　ちからを
+あくよう　しようと　しているのか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:35:07" />
+				Time="2011-08-04T10:17:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1010,14 +950,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……つらいな▼
-プラズマ団に　奪われた
-自分の　ポケモンと▼
-プラズマ団に　使役されている
-あの　キュレムを　重ねて　いるのか▼</Text>
+			<Text>チェレン『キュレム！▼
+プラズマ団は　キュレムの　能力を
+悪用しようと　しているのか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:34:53" />
+				Time="2011-08-04T10:24:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1027,11 +965,11 @@
 			Language="JPN">
 			<Comment>♂
 ・続けて
-　BALCK2→swleader1_06b
-　WHITE2→swleader1_06w</Comment>
+　Black2→swleader1_06b
+　White2→swleader1_06w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:50:10" />
+				Time="2011-08-04T10:29:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1050,19 +988,19 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swleader1_06b"
+		Label="msg_w21_swleader1_03b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『プラズマだんを
-どうすれば　とめられるのか……？▼
+			<Text>どうやって
+プラズマだんを　とめる……？▼
 キュレムが　でんせつの
 ドラゴンポケモン　ならば▼
 たいこう　できるのは　レシラム……
 もしくは　ゼクロム　だけど……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:49:05" />
+				Time="2011-08-04T10:18:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1070,15 +1008,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『プラズマ団を
-どうすれば　とめられるのか……？▼
+			<Text>どうやって
+プラズマ団を　とめる……？▼
 キュレムが　伝説の
 ドラゴンポケモン　ならば▼
 対抗できるのは　レシラム……
 もしくは　ゼクロム　だけど……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:49:10" />
+				Time="2011-08-04T10:20:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1087,12 +1025,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACK2ver
+・Black2ver
+・削除タイミングはd10到達時（暫定）
 ・ここでチェレンがいっているのは
 　前作主人公、そしてNのこと</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:50:00" />
+				Time="2011-08-04T10:20:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1102,20 +1041,28 @@
 				User="matsumiya:W00224"
 				Time="2011-06-18T05:29:19" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w21_swleader1_06w">
+		Label="msg_w21_swleader1_03w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『プラズマだんを
-どうすれば　とめられるのか……？▼
+			<Text>どうやって
+プラズマだんを　とめる……？▼
 キュレムが　でんせつの
 ドラゴンポケモン　ならば▼
 たいこう　できるのは　ゼクロム……
 もしくは　レシラム　だけど……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:49:17" />
+				Time="2011-08-04T10:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1123,15 +1070,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『プラズマ団を
-どうすれば　とめられるのか……？▼
+			<Text>どうやって
+プラズマ団を　とめる……？▼
 キュレムが　伝説の
 ドラゴンポケモン　ならば▼
 対抗できるのは　ゼクロム……
 もしくは　レシラム　だけど……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:49:21" />
+				Time="2011-08-04T10:20:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1140,12 +1087,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITE2ver
+・White2ver
+・削除タイミングはd10到達時（暫定）
 ・ここでチェレンがいっているのは
 　前作主人公、そしてNのこと</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:50:04" />
+				Time="2011-08-04T10:20:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1155,6 +1103,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-18T05:40:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_w21_sign1_01"

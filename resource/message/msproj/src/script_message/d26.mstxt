@@ -705,4 +705,48 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d26_poke23_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くあぁああああぁん！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T09:00:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T09:00:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くあぁああああぁん！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T09:00:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T09:00:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・posイベント
+　表示後、Nの城方面へ移動</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T09:00:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE23
+ポケモン・ゾロアーク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T09:00:10" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>

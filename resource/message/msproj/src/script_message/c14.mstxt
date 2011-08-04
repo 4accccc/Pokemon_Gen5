@@ -122,11 +122,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……あの　キュレム
-たすけてやらねーとな</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……イッシュを
+こおりづけに　されて　たまるかよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:53:25" />
+				Time="2011-08-04T09:48:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -134,11 +134,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……あの　キュレム
-助けてやらねーとな</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……イッシュを
+氷漬けに　されて　たまるかよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:53:32" />
+				Time="2011-08-04T09:48:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -299,13 +299,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『バッジが　そろったか▼
 ほんとうなら　ポケモンリーグに
 ちょうせん　できるけど▽
-プラズマだん　たいじに　ちからを　かせ▼
-チェレンさんから　れんらくが　あって
-２１ばんすいどうに　あいつらの▽
-ふねが　やってきたってよ！▼</Text>
+さきに　プラズマだん　だからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:25:51" />
+				Time="2011-08-04T09:45:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -316,13 +313,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『バッジが　そろったか▼
 本当なら　ポケモンリーグに
 挑戦できるけど▽
-プラズマ団　掃討を　手伝え▼
-チェレンさんから　連絡が　あって
-２１番水道に　あいつらの▽
-船が　やってきたってよ！▼</Text>
+先に　プラズマ団だからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:26:05" />
+				Time="2011-08-04T09:45:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -334,10 +328,11 @@
 ・c08ジムバッジ取得後
 ・posイベント
 　GRIDX＝GRIDZ＝
-・続けてswleader8_03</Comment>
+・続けてswleader8_03
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:43:28" />
+				Time="2011-08-04T09:26:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -361,14 +356,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>シズイ『よう！　おはんら！▼
-２１ばんすいどうに　あらわれた
-あの　くろい　ふね▽
-プラズマだんの　もの　なんね▼
-で　プラズマだん　って
+きこえたけど　プラズマだん　って
 なにしておる　れんちゅう　よ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:24:32" />
+				Time="2011-08-04T09:41:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -377,14 +369,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>シズイ『よう！　おはんら！▼
-２１番水道に　現れた
-あの　黒い　帆船▽
-プラズマ団の　もん　なんね▼
-で　プラズマ団　って
+きこえたけど　プラズマ団　って
 なにしておる　連中よ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:24:55" />
+				Time="2011-08-04T09:41:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -422,7 +411,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『プラズマだん　ってのは
-オレの　ポケモンは　うばうし▼
+いもうとの　ポケモンは　うばうし▼
 ポケモンの　ちからで
 イッシュを　こおりづけに　して▽
 しはい　しようと　もくろんでいる▼
@@ -430,7 +419,7 @@
 というか　しらないのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:45:01" />
+				Time="2011-08-04T09:49:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -439,7 +428,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『プラズマ団　ってのは
-人の　ポケモンは　奪うし▼
+妹の　ポケモンは　奪うし▼
 ポケモンの　力で
 イッシュを　氷漬けに　して▽
 支配しようと　目論んでいる▼
@@ -447,7 +436,7 @@
 というか　知らないのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T05:12:18" />
+				Time="2011-08-04T09:49:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -456,10 +445,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてswleader8_04</Comment>
+・続けてswleader8_04
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:43:32" />
+				Time="2011-08-04T09:26:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -772,11 +762,12 @@
 			<Text>[Name:TrainerName Idx="1" ]『なんだ
 おおらかというか　むせきにんというか▼
 なんか　きせいを　そがれたけど
-あいては　プラズマだんだ！▽
-きを　ひきしめて　いくぜ▼</Text>
+あいては　プラズマだん　だからな！▼
+きを　ひきしめろ！　って　そのまえに
+どこに　いるか　さがさないと……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:09:27" />
+				Time="2011-08-04T09:44:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -787,11 +778,12 @@
 			<Text>[Name:TrainerName Idx="1" ]『なんだ
 おおらかというか　無責任というか▼
 なんか　気勢を　削がれたけど
-相手は　プラズマ団だ！▽
-気を　ひきしめて　行くぜ▼</Text>
+相手は　プラズマ団だからな！▼
+気を　引き締めろ！　って　その前に
+どこに　いるか　探さないと……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:09:14" />
+				Time="2011-08-04T09:44:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -818,65 +810,6 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c14_swleader1_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>チェレン『エネルギーが　ないのか
-プラズマだんの　ふねは　うごかないね▼
-あえて　きみたちを
-きけんに　まきこむ　わけ　だからね▼
-できるかぎりの　じゅんびは　しておきたい
-というわけで　ジムバッジを　よろしく！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T10:07:22" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T09:33:01" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>チェレン『エネルギーが　ないのか
-プラズマ団の　船は　動かないね▼
-あえて　きみたちを
-危険に　まきこむ　わけ　だからね▼
-できるかぎりの　準備は　しておきたい
-というわけで　ジムバッジを　よろしく！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T10:07:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T09:33:01" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・暫定ラベル、現状未使用</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T10:02:46" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWLEADER1
-ジムリーダー・チェレン</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T09:33:16" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1010,10 +943,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>キャッキャ　うふふふ！
-つかまえて　ごらんなさい！</Text>
+捕まえて　ごらんなさい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T03:56:10" />
+				Time="2011-08-04T09:43:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1251,11 +1184,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このさき　すいちゅうばし
-・かりメッセージ</Text>
+			<Text>このさき　マリンチューブ
+あるく　すいぞくかん</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T10:10:27" />
+				Time="2011-08-04T09:26:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1263,11 +1196,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このさき　すいちゅうばし
-・かりメッセージ</Text>
+			<Text>この先　マリンチューブ
+歩く　水族館</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T10:10:30" />
+				Time="2011-08-04T09:27:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
