@@ -668,6 +668,7 @@
 #define FV_D31R0601_MUGENBOSS_01           750 /* 0x02ee 無限ダンジョンB：ボス */
 #define FV_D31R0501_MUGENBOSS_01           751 /* 0x02ef 無限ダンジョンW：ボス */
 #define FV_C03R0301_CLEANINGM_01           752 /* 0x02f0 バトルカンパニー：1F清掃員 */
+#define FV_D01R0101_RATI2_01               753 /* 0x02f1 夢の跡地：ラティアス・ラティオス */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2299,6 +2300,8 @@
 #define TMFLG_T02_LOW                     2766 /* 0x0ace カラクサタウン：１日１回小ささチェックイベント */
 #define TMFLG_T02_HIGH                    2767 /* 0x0acf カラクサタウン：１日１回大きさチェックイベント */
 #define TMFLG_C14R0501_POKEWALK           2768 /* 0x0ad0 セイガイハシティ：１日１回散歩イベント */
+#define TMFLG_D07R0401_QUIZ_TRUE          2769 /* 0x0ad1 ネジ山：１日１回重機マニアクイズ正解 */
+#define TMFLG_D07R0401_QUIZ_FALSE         2770 /* 0x0ad2 ネジ山：１日１回重機マニアクイズ不正解 */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 

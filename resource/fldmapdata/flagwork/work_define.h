@@ -247,6 +247,7 @@
 #define WK_SCENE_D27R1201_BARRIER_01     16635 /* 0x40fb プラズマフリゲート：バリアー制御POS */
 #define WK_SCENE_C03R0301_BTLCOM_01      16636 /* 0x40fc バトルカンパニー：POS制御ワーク */
 #define WK_SCENE_C03R0303_BTLCOM_01      16637 /* 0x40fd バトルカンパニー：POS制御ワーク */
+#define WK_SCENE_D07R0401_QUIZ_01        16638 /* 0x40fe ネジ山：重機マニアイベント進行制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
