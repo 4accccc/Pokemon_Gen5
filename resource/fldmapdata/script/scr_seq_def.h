@@ -12784,6 +12784,20 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief WBT:ダウンロードデータをセット
+ * @param[in] num ダウンロードデータの番号指定
+ */
+//--------------------------------------------------------------
+#define _WBT_SET_DL_DATA( num ) \
+    _ASM_WBT_SET_DL_DATA num
+
+    .macro _ASM_WBT_SET_DL_DATA num
+    .short  EV_SEQ_WBT_SET_DL_DATA
+    .short  \num
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief WBT:ダウンロードデータの数を取得
  * @param[out]  ret_wk  ダウンロードデータの数
  */
@@ -12929,6 +12943,28 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _BTL_UTIL_PARTY_SELECT_CALL
+ * @brief パーティ選択ウィンドウ呼び出し
+ *
+ * @param regulation  poke_tool/regulation_def.hに定義されたコード
+ * @param ret_wk  どのパーティを選択したかを取得 btl_util_scr_local.h
+ *                SCR_BTL_PARTY_SELECT_TEMOTI  手持ちを選択
+ *                SCR_BTL_PARTY_SELECT_BTLBOX  バトルボックスを選択
+ *                SCR_BTL_PARTY_SELECT_NG      どちらも適合しない
+ *                SCR_BTL_PARTY_SELECT_CANCEL  キャンセル
+ */
+//--------------------------------------------------------------
+#define _WBT_BTL_UTIL_PARTY_SELECT_CALL( ret_wk )  \
+    _ASM_WBT_BTL_UTIL_PARTY_SELECT_CALL  ret_wk
+
+  .macro  _ASM_WBT_BTL_UTIL_PARTY_SELECT_CALL ret_wk 
+  .short  EV_SEQ_WBT_BTL_UTIL_PARTY_SELECT
+  .short  \ret_wk
+  .endm
+
+
+//--------------------------------------------------------------
+/**
  * @brief   WBT:トーナメントリスト表示
  * @param[in] num   トーナメント状態指定  ※script_def.hのSCR_WBT_LIST_～を参照
  */
@@ -12958,19 +12994,22 @@
 //--------------------------------------------------------------
 /**
  * @brief WBT:ダウンロードデータの選択画面を呼び出す
- * @param[out]  ret_wk  選択したダウンロードデータの番号
- * @retval  0   選択しなかった
- * @retval  1-3 選択した番号
+ * @param[out]  ret_wk  選択動作結果
+ * @param[out]  curpos  選択したダウンロードデータの番号
+ * @retval  ret_wk    
+ * @retval  curpos = 0   選択しなかった
+ * @retval  curpos = 1-3 選択した番号
  *
  * ダウンロードデータ選択画面を呼び出し、選択したものを返す
  */
 //--------------------------------------------------------------
-#define _WBT_SELECT_DL_DATA( ret_wk )  \
-    _ASM_WBT_SELECT_DL_DATA ret_wk
+#define _WBT_SELECT_DL_DATA( ret_wk, curpos )  \
+    _ASM_WBT_SELECT_DL_DATA ret_wk, curpos
 
-    .macro _ASM_WBT_SELECT_DL_DATA ret_wk
+    .macro _ASM_WBT_SELECT_DL_DATA ret_wk, curpos
     .short  EV_SEQ_WBT_SELECT_DL_DATA
     .short  \ret_wk
+    .short  \curpos
     .endm
 
 //--------------------------------------------------------------

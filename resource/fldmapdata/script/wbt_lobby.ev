@@ -211,12 +211,11 @@ DEFINE_LOCAL  LWK_TEMP
       //DLデータ選択
       $LWK_WBT_SELECT_DL = 0
       _CALL ev_select_download
+      _WBT_SET_DL_DATA( LWK_WBT_SELECT_DL )
       IF $LWK_WBT_SELECT_DL == 0 THEN
         //未選択→トーナメント選択へ戻る
         $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_TOURNAMENT
       ELSE
-        //仮：ここでルールの設定処理を呼び出す
-        _WBT_SET_BATTLE_RULE( SCR_WBT_RULE_SINGLE )
         //DLデータ選択→ポケモンのチェック＆選択へ
         $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_POKE
       ENDIF
@@ -448,21 +447,24 @@ _RET
 /**************************************************************/
 ev_regist_check:
 
-  _WBT_GET_REGULATION_ID( LWK_REG )
-  _BTL_UTIL_PARTY_SELECT_CALL( LWK_REG, SCWK_ANSWER )
+  _WBT_BTL_UTIL_PARTY_SELECT_CALL( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_CANCEL THEN
     _RET
   ELSIF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_NG THEN
-    _MSGWIN_CLOSE()
+    //_MSGWIN_CLOSE()
     _WBT_GET_NG_MSG_ID( SCWK_ANSWER )
     SWITCH $SCWK_ANSWER
+    CASE msg_wbt_info_ng_download THEN
+      _SYSWIN_MSG( msg_wbt_info_ng_download, POS_DOWN )
+      _MSGWIN_CLOSE()
     CASE msg_wbt_info_ng_all_single, msg_wbt_info_ng_all_double, msg_wbt_info_ng_all_triple, msg_wbt_info_ng_all_rotation THEN
       _SYSWIN_MSG( SCWK_ANSWER, POS_DOWN )
       _SYSWIN_MSG( msg_wbt_info_ng_all, POS_DOWN )
       _MSGWIN_CLOSE()
     DEFAULT
       _SYSWIN_MSG( SCWK_ANSWER, POS_DOWN )
+      _WBT_GET_REGULATION_ID( LWK_REG )
       _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL2( LWK_REG )
     ENDSWITCH
     _RET
@@ -805,7 +807,7 @@ ELSE
 	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_14, SCWK_TARGET_OBJID, POS_DL )
   _MSGWIN_CLOSE()
 
-  _WBT_SELECT_DL_DATA( LWK_WBT_SELECT_DL )
+  _WBT_SELECT_DL_DATA( SCWK_ANSWER, LWK_WBT_SELECT_DL )
 
 ENDIF
 
