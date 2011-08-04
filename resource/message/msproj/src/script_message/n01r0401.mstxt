@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『……きたね</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……きたね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:46:03" />
+				Time="2011-08-04T08:52:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『……きたね</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……来たね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:46:05" />
+				Time="2011-08-04T08:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67,12 +67,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここは……▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ここは……▼
 プラズマだんの　しろ▼
-ゲーチスの　ゆめのあと……</Text>
+ゲーチスの　ゆめのあと……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T05:17:19" />
+				Time="2011-08-04T08:51:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -80,12 +80,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここは……▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ここは……▼
 プラズマ団の　城▼
-ゲーチスの　夢の跡……</Text>
+ゲーチスの　夢の跡……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T05:17:42" />
+				Time="2011-08-04T08:52:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -121,14 +121,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　しろの　いちばん　おく……
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]この　しろの　いちばん　おく……
 ボクにとって　たいせつな　ばしょで▽
 キミと　むきあわねば　ならない……！▼
 さあ
-ついてきたまえ！</Text>
+ついてきたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T07:54:43" />
+				Time="2011-08-04T08:51:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -136,14 +136,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この城の　一番　奥……
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]この城の　一番　奥……
 ボクにとって　大切な　場所で▽
 キミと　向き合わねば　ならない……！▼
 さあ
-ついてきたまえ！</Text>
+ついてきたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T07:54:38" />
+				Time="2011-08-04T08:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -180,16 +180,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いや▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]いや▼
 ボクが　あんない　するより
 キミが　ここで　なにに▽
 きょうみを　しめすのか……？▼
 ということだ　キミ！▼
 この　しろの　いちばん　おくまで
-ボクを　つれていくんだ</Text>
+ボクを　つれていくんだ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T07:55:42" />
+				Time="2011-08-04T08:51:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -197,16 +197,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いや▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]いや▼
 ボクが　案内するより
 キミが　ここで　なにに▽
 興味を　示すのか……？▼
 ということだ　キミ！▼
 この城の　一番　奥まで
-ボクを　連れていくんだ</Text>
+ボクを　連れていくんだ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T07:55:23" />
+				Time="2011-08-04T08:52:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -243,11 +243,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『さあ！
-ボクを　あんない　したまえ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]さあ！
+ボクを　あんない　したまえ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:00:29" />
+				Time="2011-08-04T08:51:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -255,11 +255,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『さあ！
-ボクを　案内したまえ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]さあ！
+ボクを　案内したまえ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T05:16:15" />
+				Time="2011-08-04T08:52:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -298,11 +298,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『キミは……！
-そとに　でると　いうのか！？</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミは……！▼
+この　ながれで
+そとに　でると　いうのか！？[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:26:56" />
+				Time="2011-08-04T08:51:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -310,11 +311,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『キミは……！
-そとに　でると　いうのか！？</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミは……！▼
+この　流れで
+外に　でると　いうのか！？[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:41:00" />
+				Time="2011-08-04T08:53:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -353,11 +355,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……わかった
-では　ここで　まっているよ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わかった
+では　ここで　まっているよ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:27:07" />
+				Time="2011-08-04T08:52:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -365,11 +367,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……わかった
-では　ここで　待っているよ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わかった
+では　ここで　待っているよ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T05:11:45" />
+				Time="2011-08-04T08:52:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -404,11 +406,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……わかった
-では　おくまで　つれていきたまえ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わかった
+では　おくまで　つれていきたまえ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:27:20" />
+				Time="2011-08-04T08:52:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -416,11 +418,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……わかった
-では　奥まで　連れていきたまえ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わかった
+では　奥まで　連れていきたまえ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T05:12:02" />
+				Time="2011-08-04T08:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -455,10 +457,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……では　いこうか</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……では　いこうか[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:42:29" />
+				Time="2011-08-04T08:52:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -466,10 +468,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……では　行こうか</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……では　行こうか[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T05:12:48" />
+				Time="2011-08-04T08:52:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -479,10 +481,10 @@
 			Language="JPN">
 			<Comment>♂
 ・子供部屋から出てきたとき
-</Comment>
+　連れ歩き再開</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:36" />
+				Time="2011-08-04T08:51:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -504,11 +506,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すまない
-そのわざは　やめてくれないか</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]もうしわけないが……
+その　わざは　やめてくれないか[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:57" />
+				Time="2011-08-04T08:33:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -516,11 +518,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すまない
-そのわざは　やめてくれないか</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]申し訳ないが……
+その技は　やめてくれないか[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:57" />
+				Time="2011-08-04T08:38:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -555,11 +557,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すまない
-そのどうぐは　やめてくれないか</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]もうしわけないが……
+その　どうぐは　つかわないでほしい[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:57" />
+				Time="2011-08-04T08:33:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -567,11 +569,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すまない
-そのどうぐは　やめてくれないか</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]申し訳ないが……
+その道具は　使わないでほしい[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:57" />
+				Time="2011-08-04T08:38:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -606,11 +608,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゼクロムたちも
-なんだか　たのしそう　だよ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ここで　ボクは……▼
+めがみたちに　ヒトとして
+めんどうを　みてもらい……▼
+しちけんじん　たちから
+さまざまな　ちしきを　おそわった……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:57" />
+				Time="2011-08-04T08:52:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -618,11 +623,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゼクロムたちも
-なんだか　たのしそう　だよ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ここで　ボクは……▼
+女神たちに　ヒトとして
+面倒を　みてもらい……▼
+七賢人たち　から
+さまざまな　知識を　教わった……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:57" />
+				Time="2011-08-04T08:53:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -632,64 +640,10 @@
 			Language="JPN">
 			<Comment>♂
 ・振り向き会話
-・Black2ver
-　このマップでは繰り返し</Comment>
+・このマップでは繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:57" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BOSS
-Ｎ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:22:05" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0401_boss_13"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>レシラムたちも
-なんだか　たのしそう　だよ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:57" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>レシラムたちも
-なんだか　たのしそう　だよ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:57" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-02T11:59:03" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・振り向き会話
-・White2ver
-　このマップでは繰り返し</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T08:36:57" />
+				Time="2011-08-04T08:34:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -32,10 +32,12 @@
 ・posイベント
 ・メッセージのみ表示
 　表示後、画面下からＮ登場
-・続けて</Comment>
+・続けて
+　Black2→boss_02b
+　White2→boss_02w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:03:33" />
+				Time="2011-08-04T08:25:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -90,11 +92,11 @@
 			Language="JPN">
 			<Comment>♂
 ・Black2ver
-・続けて
+・続けてboss_03
 ※今回は横向きで対峙させる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:03:02" />
+				Time="2011-08-04T08:25:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -149,10 +151,10 @@
 			Language="JPN">
 			<Comment>♂
 ・White2ver
-・続けて</Comment>
+・続けてboss_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:02:57" />
+				Time="2011-08-04T08:25:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -210,10 +212,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてboss_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:02:48" />
+				Time="2011-08-04T08:25:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -415,10 +417,10 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・あわせて鳴き声再生
-・続けて</Comment>
+・続けてboss_06b</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:09:25" />
+				Time="2011-08-04T08:26:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -465,10 +467,10 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・あわせて鳴き声再生
-・続けて</Comment>
+・続けてboss_06w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:09:26" />
+				Time="2011-08-04T08:26:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -519,10 +521,10 @@
 			Language="JPN">
 			<Comment>♂
 ・Black2ver
-・続けてboss_</Comment>
+・続けてboss_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:34:58" />
+				Time="2011-08-04T08:26:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -573,10 +575,10 @@
 			Language="JPN">
 			<Comment>♂
 ・White2ver
-・続けてboss_</Comment>
+・続けてboss_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:35:00" />
+				Time="2011-08-04T08:26:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -625,11 +627,11 @@
 			Language="JPN">
 			<Comment>♂
 ・はい/いいえの選択肢表示
-・はい　→boss_
-　いいえ→boss_</Comment>
+・はい　→boss_08
+　いいえ→boss_09</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:35:04" />
+				Time="2011-08-04T08:26:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -890,10 +892,10 @@
 			<Comment>♂
 ・Black2ver
 ・戦闘後
-・続けて</Comment>
+・続けてboss_11</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:07:24" />
+				Time="2011-08-04T08:26:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -947,10 +949,10 @@
 			<Comment>♂
 ・White2ver
 ・戦闘後
-・続けて</Comment>
+・続けてboss_11</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:07:25" />
+				Time="2011-08-04T08:26:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1005,13 +1007,13 @@
 			Language="JPN">
 			<Comment>♂
 ・続けて
-　Black2＋♂→boss_00
-　Black2＋♀→boss_
-　White2＋♂→boss_
-　White2＋♀→boss_</Comment>
+　Black2＋♂→boss_12b
+　Black2＋♀→boss_13b
+　White2＋♂→boss_12w
+　White2＋♀→boss_13w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T05:45:11" />
+				Time="2011-08-04T08:26:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1302,10 +1304,10 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・あわせて鳴き声再生
-・続けてboss_</Comment>
+・続けてboss_14b</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:35:11" />
+				Time="2011-08-04T08:27:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1345,10 +1347,10 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・あわせて鳴き声再生
-・続けてboss_</Comment>
+・続けてboss_14w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:35:12" />
+				Time="2011-08-04T08:27:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1409,10 +1411,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてboss_</Comment>
+・続けてboss_15</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:35:19" />
+				Time="2011-08-04T08:27:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1480,10 +1482,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてboss_</Comment>
+・続けてboss_15</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:35:16" />
+				Time="2011-08-04T08:27:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1534,11 +1536,11 @@
 ・ゼクロム/レシラムが
 　ストーンに戻る演出
 ・続けて
-　Black2→boss_
-　White2→boss_</Comment>
+　Black2→boss_16b
+　White2→boss_16w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:35:28" />
+				Time="2011-08-04T08:27:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1591,11 +1593,11 @@
 ・Black2ver
 ・アイテム入手処理
 　No617「ダークストーン」
-・続けてboss_
+・続けてboss_17b
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:35:33" />
+				Time="2011-08-04T08:27:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1648,11 +1650,11 @@
 ・White2ver
 ・アイテム入手処理
 　No616「ライトストーン」
-・続けてboss_
+・続けてboss_17w
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:35:31" />
+				Time="2011-08-04T08:27:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1773,7 +1775,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_19"
+		Label="msg_n01r0502_boss_18"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">

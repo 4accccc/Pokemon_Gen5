@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『……ここは
-ボクの　せかい　だった　ばしょ</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ここは
+ボクの　せかい　だった　ばしょ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:14:32" />
+				Time="2011-08-04T08:53:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『……ここは
-ボクの　世界だった　場所</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ここは
+ボクの　世界だった　場所[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T03:56:41" />
+				Time="2011-08-04T08:54:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -33,10 +33,10 @@
 			<Comment>♂
 ・連れ歩きでこの部屋に入ったとき
 　初回のみイベント発生
-※swanで新規作成</Comment>
+・続けてboss_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:14:53" />
+				Time="2011-08-04T08:44:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -59,12 +59,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ははおやと　はなれ
-もりの　おくで▽
-ポケモンに　そだてられていた</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは　おさないころに　ふかい
+もりの　おくに　おきざりに　された▼
+そんな　ボクを　そだててくれたのは
+もりの　ポケモンたち　だった……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T03:57:21" />
+				Time="2011-08-04T08:53:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -72,12 +73,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>母親と　離れ
-森の　奥で▽
-ポケモンに　育てられていた</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは　幼いころに
+深い　森の奥に　置き去りに　された▼
+そんな　ボクを　育ててくれたのは
+森の　ポケモンたち　だった……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T03:57:16" />
+				Time="2011-08-04T08:54:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -85,10 +87,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・部屋の中央に移動し
+　上向きでメッセージ表示
+・続けてboss_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:35:00" />
+				Time="2011-08-04T08:45:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -111,12 +116,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あるひのこと　ボクの　まえに
-おやと　なのる　おとこが　あらわれた
-それが　ゲーチス</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]あるひのこと　ボクの　まえに
+おやと　なのる　おとこが　あらわれた▼
+それが　ゲーチス[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:33:53" />
+				Time="2011-08-04T08:53:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -124,12 +129,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ある日のこと　ボクの　前に
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ある日のこと　ボクの　前に
 親と　名乗る　男が　現れた▼
-それが　ゲーチス</Text>
+それが　ゲーチス[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T03:57:42" />
+				Time="2011-08-04T08:54:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -137,10 +142,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・主人公と向き合ってメッセージ表示
+・続けてboss_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:35:02" />
+				Time="2011-08-04T08:45:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -163,15 +170,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かれが　ボクに　あたえてくれたのは
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]カレが　ボクに　あたえてくれたのは
 ハルモニア　という　なまえ▼
 おうとしての　かずおおくの　ちしき▼
-こころを　ふかくふかく　とざし
+かたく　かたく　こころを　とざし
 はなすことも　できない　ポケモン▼
-そして　この　へや……</Text>
+そして　この　へや……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T03:58:40" />
+				Time="2011-08-04T08:53:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -179,15 +186,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カレが　ボクに　与えてくれたのは
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]カレが　ボクに　与えてくれたのは
 ハルモニア　という　名前▼
 王としての　数多くの　知識▼
-心を　深く深く　閉ざし
+かたく　かたく　こころを　閉ざし
 話すことも　できない　ポケモン▼
-そして　この部屋……</Text>
+そして　この部屋……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T03:58:35" />
+				Time="2011-08-04T08:54:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -195,10 +202,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・左右を見てから
+　主人公と向き合いメッセージ表示
+・続けてboss_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:35:02" />
+				Time="2011-08-04T08:45:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -221,10 +231,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……そとで　まっているよ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……そとに　いるよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:34:03" />
+				Time="2011-08-04T08:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -232,10 +242,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……外で　待っているよ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……外に　いるよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T03:58:59" />
+				Time="2011-08-04T08:54:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

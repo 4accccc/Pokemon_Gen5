@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここが　えっけんのま……
-さあ　すすみたまえ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ここが　もくてきの　ばしょ……
+さあ　すすみたまえ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:46:36" />
+				Time="2011-08-04T08:48:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここが　えっけんのま……
-さあ　すすみたまえ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ここが　目的の　場所……
+さあ　進みたまえ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:46:38" />
+				Time="2011-08-04T08:55:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67,11 +67,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>えっけんのま
-その　おくに　すすんでほしい</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]おくに　すすんでほしい[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:10:02" />
+				Time="2011-08-04T08:55:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -79,11 +78,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>えっけんのま
-その　おくに　すすんでほしい</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]奥に　進んでほしい[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:10:05" />
+				Time="2011-08-04T08:55:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -119,11 +117,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すまない
-そのわざは　やめてくれないか</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]もうしわけないが……
+その　わざは　やめてくれないか[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:10:15" />
+				Time="2011-08-04T08:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -131,11 +129,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すまない
-そのわざは　やめてくれないか</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]申し訳ないが……
+その技は　やめてくれないか[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:10:15" />
+				Time="2011-08-04T08:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -170,11 +168,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すまない
-そのどうぐは　やめてくれないか</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]もうしわけないが……
+その　どうぐは　つかわないでほしい[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:10:15" />
+				Time="2011-08-04T08:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -182,11 +180,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すまない
-そのどうぐは　やめてくれないか</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]申し訳ないが……
+その道具は　使わないでほしい[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:10:15" />
+				Time="2011-08-04T08:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -221,11 +219,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『ボクは……　ダレにも
-みえない　ものが　みたいんだ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは……　ダレにも
+みえない　ものが　みたいんだ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:31:39" />
+				Time="2011-08-04T08:49:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -233,11 +231,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『ボクは……　ダレにも
-みえない　ものが　みたいんだ</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは……　ダレにも
+みえない　ものが　みたいんだ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:31:42" />
+				Time="2011-08-04T08:49:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
