@@ -204,6 +204,8 @@ init_flags:
   //C06PC0101
   _FLAG_SET( FV_C06PC0101_GIRL3_01 )      //フキヨセシティ：女の子
 
+  //d01r0101
+  _FLAG_SET( FV_D01R0101_RATI2_01 )
 
 }
 _RET

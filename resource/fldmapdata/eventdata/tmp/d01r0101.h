@@ -21,6 +21,7 @@
 #define FLD_ITEM_295                       6
 #define FLD_ITEM_296                       7
 #define FLD_ITEM_297                       8
+#define D01R0101_RATI2_01                  9
 
 #endif //ZONE_D01R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d01r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -19,4 +19,43 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_init_d01r0101
+_EVENT_DATA    ev_recover_d01r0101
+_EVENT_DATA    ev_zone_d01r0101
 _EVENT_DATA_END
+
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+/************************************************************/
+/*					ZONE_CHANGE_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d01r0101
+
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  // B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    $OBJCHRWORK0 = TPOKE_0407
+  ELSE
+    $OBJCHRWORK0 = TPOKE_0408
+  ENDIF
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d01r0101
+
+//
+
+INIT_EVENT_END
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d01r0101
+
+//
+
+INIT_EVENT_END
