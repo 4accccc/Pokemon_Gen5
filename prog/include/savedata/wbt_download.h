@@ -127,9 +127,10 @@ typedef struct {
 //------------------------------------------------------------------
 enum {
   WBTDL_MSG_LEN = 36 * 2 + 1,
-  WBTDL_TRAINER_TITLE_LEN = 10 + 1,
 
   WBTDL_TOURNAMENT_NAME_LEN = 20 + 1,
+
+  WBTDL_TRAINER_TITLE_LEN = BUFLEN_TRAINER_TYPE_NAME,
 
   WBTDL_TOURNAMENT_REG_EXPLAIN_LEN = (36+1) * 3,
   WBTDL_TOURNAMENT_EXPLAIN_LEN = (36+1) * 3,
@@ -160,7 +161,7 @@ typedef struct {
   u8  msg_announce_id;    ///<決勝戦前口上のメッセージID
   u8 priority_bit;        ///<優先順位
   u16 obj_id;             ///<OBJ指定
-  u8 type;
+  u8 sex;                 ///<性別
   u8 lang_id;             ///<国コード
   u16 ai_bit;             ///<AI指定
 }WBTDL_CHARACTER;
@@ -239,6 +240,9 @@ typedef struct {
 //
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief 禁止ポケモン指定ビット列の取得
+ */
 //------------------------------------------------------------------
 static inline const u8 * WBTDL_DATA_GetVetoPokemonBit( const WBTDL_DATA * wbtdl_data )
 {
@@ -246,6 +250,9 @@ static inline const u8 * WBTDL_DATA_GetVetoPokemonBit( const WBTDL_DATA * wbtdl_
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief  禁止アイテム指定ビット列の取得
+ */
 //------------------------------------------------------------------
 static inline const u8 * WBTDL_DATA_GetVetoItemBit( const WBTDL_DATA * wbtdl_data )
 {
@@ -253,23 +260,34 @@ static inline const u8 * WBTDL_DATA_GetVetoItemBit( const WBTDL_DATA * wbtdl_dat
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 禁止わざかどうかの判定
+ */
 //------------------------------------------------------------------
 static inline BOOL WBTDL_DATA_IsVetoWazaNo( const WBTDL_DATA * wbtdl_data, u16 waza_no )
 {
   return ( waza_no != WAZANO_HURIIFOORU );
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static inline BOOL WBTDL_DATA_CheckVersion( const WBTDL_DATA * wbtdl_data )
 {
   return wbtdl_data->cassette_version == PM_VERSION;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static inline BOOL WBTDL_DATA_CheckLang( const WBTDL_DATA * wbtdl_data )
 {
   return wbtdl_data->lang_id == PM_LANG;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static inline BOOL WBTDL_TOTAL_DATA_CheckCRC( const WBTDL_TOTAL_DATA *cp_data )
 {
   return cp_data->crc == GFL_STD_CrcCalc( cp_data, sizeof(WBTDL_TOTAL_DATA)-sizeof(cp_data->crc) );
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static inline BOOL WBTDL_TOTAL_DATA_CheckVersion( const WBTDL_TOTAL_DATA *cp_data )
 {
   BOOL check  = TRUE;
@@ -282,6 +300,8 @@ static inline BOOL WBTDL_TOTAL_DATA_CheckVersion( const WBTDL_TOTAL_DATA *cp_dat
 
   return check;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static inline BOOL WBTDL_TOTAL_DATA_CheckLang( const WBTDL_TOTAL_DATA *cp_data )
 {
   BOOL check  = TRUE;
@@ -294,12 +314,37 @@ static inline BOOL WBTDL_TOTAL_DATA_CheckLang( const WBTDL_TOTAL_DATA *cp_data )
 
   return check;
 }
+
+//------------------------------------------------------------------
+// バトルルールの取得
+//------------------------------------------------------------------
+static inline BOOL WBTDL_DATA_GetBtlRule( const WBTDL_DATA * wbtdl_data )
+{
+  return wbtdl_data->regulation.btl_rule;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline const WBTDL_MATCH * WBTDL_DATA_GetMatchData( const WBTDL_DATA * wbtdl_data )
+{
+  return wbtdl_data->match;
+}
+
 //------------------------------------------------------------------
 // トーナメント名の取得
 //------------------------------------------------------------------
 static inline const STRCODE * WBTDL_DATA_GetTournamentName( const WBTDL_DATA * wbtdl_data )
 {
-  return( &wbtdl_data->tournament_name[0] );
+  return wbtdl_data->tournament_name;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline const WBTDL_CHARACTER * WBTDL_DATA_GetCharacter(
+    const WBTDL_DATA * wbtdl_data, u8 dl_tr_id )
+{
+  GF_ASSERT( dl_tr_id < WBTDL_CHAR_MAX );
+  return &( wbtdl_data->character[ dl_tr_id ] );
 }
 
 //------------------------------------------------------------------
@@ -324,13 +369,5 @@ static inline const STRCODE * WBTDL_DATA_GetRegulationExplain( const WBTDL_DATA 
 static inline const u16 WBTDL_DATA_GetTournamentId( const WBTDL_DATA * wbtdl_data )
 {
   return( wbtdl_data->tournament_id );
-}
-
-//------------------------------------------------------------------
-// バトルルールの取得
-//------------------------------------------------------------------
-static inline const u8 WBTDL_DATA_GetBtlRule( const WBTDL_DATA * wbtdl_data )
-{
-  return( wbtdl_data->regulation.btl_rule );
 }
 
