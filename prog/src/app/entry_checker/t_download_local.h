@@ -10,6 +10,7 @@
 //=============================================================================
 #pragma once
 
+#include "savedata/wbt_download.h"
 #include "app/t_download.h"
 
 //=============================================================================
@@ -238,6 +239,14 @@ enum{
 	T_DOWNLOAD_PANEL_3,								// パネル(3枚表示)
 };
 
+//--------------
+// 判定
+//--------------
+enum{
+	T_DOWNLOAD_DATA_SAVE = 0,						// セーブデータ参照
+	T_DOWNLOAD_DATA_LIST,							// リストデータ参照
+};
+
 //=============================================================================
 /**
  *								構造体定義
@@ -295,6 +304,9 @@ typedef struct
 	s32						JoinCurPos;						// 参加カーソル
 	s32						SaveCurPos;						// セーブカーソル
 	//
+	s32						SaveMaxNum;						// セーブ数
+	s32						ListMaxNum;						// リスト最大数
+	//
 	// パレットチェンジ用
 	s32						PCount;							///< カウンタ
 	u16						PBufStart[0x10];				///< 開始
@@ -314,5 +326,8 @@ typedef struct
 	s32						CurrentPageNum[T_DOWNLOAD_INFO_MAX]; // カレントページ数
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
+	//
+//	WBTDL_DATA				*CurrentWbtdl;					// カレント
+	WBTDL_DATA				*WbtSaveData[3];				// セーブデータ用
 } T_DOWNLOAD_MAIN_WORK;
 

@@ -49,7 +49,7 @@ extern void TdCmn_set_cmn_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const 
 //
 extern void TdCmn_main_bg_scroll( T_DOWNLOAD_MAIN_WORK * wk );
 //
-extern void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 num );
+extern void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
 //
 // ÉtÉåÅ[ÉÄ
 extern void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode );
@@ -69,8 +69,9 @@ extern void TdCmn_chk_info_disp_scrollbar( T_DOWNLOAD_MAIN_WORK* wk, const s32 m
 //
 extern void TdCmn_main_scrollbar( T_DOWNLOAD_MAIN_WORK * wk );
 //
-extern void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode );
-extern void TdCmn_init_info_mode( T_DOWNLOAD_MAIN_WORK * wk );
+extern void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num, const s32 snum );
+extern void TdCmn_init_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
+
 extern s32  TdCmn_calc_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 extern void TdCmn_set_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 num );
 //
@@ -84,7 +85,7 @@ extern void TdCmn_main_keycursor( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 //
 extern void TdCmn_stop_anim_speed( T_DOWNLOAD_MAIN_WORK *wk, const BOOL bflg );
 //
-extern void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode );
+extern void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
 //
 extern void TdCmn_chk_up_disp( T_DOWNLOAD_MAIN_WORK * wk, const BOOL keyflg, const BOOL tpflg, const BOOL fflg );
 //

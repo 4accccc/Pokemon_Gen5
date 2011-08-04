@@ -1,0 +1,39 @@
+//=============================================================================
+/**
+ *
+ *	@file		t_download_save.h
+ *	@brief  	トーナメントダウンロード画面(save関連)
+ *	@author
+ *	@date
+ *
+ */
+//=============================================================================
+#pragma once
+
+//-----------------
+// 定義
+//-----------------
+enum{
+	T_DOWNLOAD_SAVE_STR_NAME 		= 0,		// トーナメント名
+	T_DOWNLOAD_SAVE_STR_EXPLAIN_00,				// 内容説明
+	T_DOWNLOAD_SAVE_STR_EXPLAIN_01,				// レギュレーション説明
+};
+
+enum{
+	T_DOWNLOAD_SAVE_ITEM_POKE		= 0,		// ポケモン
+	T_DOWNLOAD_SAVE_ITEM_ITEM,					// アイテム
+	T_DOWNLOAD_SAVE_ITEM_SKILL,					// スキル
+};
+
+//-----------------
+// 宣言
+//-----------------
+extern s32  TdSave_init_data( T_DOWNLOAD_MAIN_WORK* wk );
+extern void TdSave_exit_data( T_DOWNLOAD_MAIN_WORK* wk );
+
+extern s32  TdSave_init_list_data( T_DOWNLOAD_MAIN_WORK* wk );
+
+extern void TdSave_get_str( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, const s32 mode, STRBUF* strbuf );
+extern s32  TdSave_get_item_num( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, const s32 mode );
+extern s32  TdSave_get_item_id( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, const s32 mode, const s32 inum );
+

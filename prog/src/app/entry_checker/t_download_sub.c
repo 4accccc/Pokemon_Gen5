@@ -36,6 +36,7 @@
 //
 #include "t_download_graphic.h"
 #include "t_download_local.h"
+#include "t_download_save.h"
 
 #include "t_download_sub.h"
 
@@ -301,7 +302,7 @@ static const T_DOWNLOAD_BGSCN_DATA *td_bgscn_sub_tbl[] = {
 //---------------
 // (printutilと対応)
 static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
-	{ GFL_BG_FRAME1_S,	4,	3,	26,	2,	2,},		// 上：トーナメントリスト名
+	{ GFL_BG_FRAME1_S,	3,	3,	26,	2,	2,},		// 上：トーナメントリスト名
 	{ GFL_BG_FRAME1_S,	2,	7,	12,	2,	2,},		// 上：ルール(左)
 	{ GFL_BG_FRAME1_S,	18,	7,	12,	2,	2,},		// 上：ルール(右)
 	{ GFL_BG_FRAME1_S,	2,	9,	28,	6,	2,},		// 上：レベル制限
@@ -698,7 +699,7 @@ static void td_init_obj_res_cmn( T_DOWNLOAD_MAIN_WORK* wk, const s32 drawtype );
 static void td_init_obj( T_DOWNLOAD_MAIN_WORK* wk );
 static void td_exit_obj( T_DOWNLOAD_MAIN_WORK* wk );
 //
-static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk );
+//static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk );
 //
 // リスト処理
 static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
@@ -1598,6 +1599,7 @@ BOOL TdCmn_main_meswin( T_DOWNLOAD_MAIN_WORK* wk )
  *	@retval BOOL				(TRUE:終了、FALSE:まだ)
  */
 //-----------------------------------------------------------------------------
+#if 0	// しばらく保留
 static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk )
 {
 	// APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->PrintSysWork , wk->PrintStream );
@@ -1627,6 +1629,7 @@ static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	return( bflg );
 }
+#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -1744,32 +1747,60 @@ void TdCmn_main_bg_scroll( T_DOWNLOAD_MAIN_WORK * wk )
  * @brief	上画面表示まとめ
  *
  * @param	T_DOWNLOAD_MAIN_WORK*		wk
- * @param	const s32					(番号)
+ * @param	const s32					(0:セーブ、1:リスト)
+ * @param	const s32					(0-2:スロット番号)
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
+void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num )
 {
-	STRBUF		*strbuf;
-	//
-	// トーナメント名(中央そろえ)
-	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[0] );
-	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_TNAME, 120, 0, strbuf, PRINTTOOL_MODE_CENTER, PRINTSYS_LSB_Make(12,13,0));
+	s32		i;
+	s32		id;
+	STRBUF* strbuf;
+	STRBUF* strbuf2;
+	STRBUF* expbuf;
+	const WBTDL_DATA	*wbtl;
+	
+	// セーブデータ
+	if(mode == T_DOWNLOAD_DATA_SAVE){
+		wbtl = wk->WbtSaveData[num];
+	}
+	// リストデータ
+	else{
+		wbtl = &wk->Param->data->data[num];
+	}
+	// いったんクリア
+	for(i=0;i<6;i++){
+		TdCmn_clear_canvas( wk, T_DOWNLOAD_MSG_UP_TNAME+i );
+	}
+	
+	// トーナメント名
+	strbuf  = GFL_STR_CreateBuffer( 128, wk->heapID );
+	expbuf  = GFL_STR_CreateBuffer( 128, wk->heapID );
+	TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_NAME, strbuf );			// トーナメント名取得
+	WORDSET_RegisterWord( wk->Wordset, 0, strbuf, 0, TRUE, PM_LANG );
+	strbuf2 = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[0] );
+	WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf2 );
+	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_TNAME, 104, 0, expbuf, PRINTTOOL_MODE_CENTER, PRINTSYS_LSB_Make(12,13,0));
 	GFL_STR_DeleteBuffer( strbuf );
+	GFL_STR_DeleteBuffer( strbuf2 );
+	GFL_STR_DeleteBuffer( expbuf );
 	//
 	// ルール(左)
 	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[1] );
 	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_RULE_00, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
 	GFL_STR_DeleteBuffer( strbuf );
 	//
-	// ルール(右)(注意)
-	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_u000_tbl[0] );
+	// ルール(右)
+	id = WBTDL_DATA_GetBtlRule( wbtl );
+	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_u000_tbl[(id&0x03)] );
 	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_RULE_01, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
 	GFL_STR_DeleteBuffer( strbuf );
 	//
-	// ルール説明(test)
-	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[3] );
+	// ルール説明
+	strbuf = GFL_STR_CreateBuffer( 256, wk->heapID );
+	TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_EXPLAIN_00, strbuf );		// ルール説明取得
 	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_EXP_00, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
 	GFL_STR_DeleteBuffer( strbuf );
 	//
@@ -1778,8 +1809,9 @@ void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
 	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_INFO, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
 	GFL_STR_DeleteBuffer( strbuf );
 	//
-	// 内容説明(test)
-	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[3] );
+	// 内容説明
+	strbuf = GFL_STR_CreateBuffer( 256, wk->heapID );
+	TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_EXPLAIN_01, strbuf );		// 内容説明取得
 	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_EXP_01, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
 	GFL_STR_DeleteBuffer( strbuf );
 }
@@ -1866,11 +1898,21 @@ void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 //--------------------------------------------------------------------------------------------
 static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num )
 {
+	s16		i;
+	u16		tid[2];
 	BOOL	bflg=FALSE;
 	//
-	// 選択済み
-	if((mode == T_DOWNLOAD_MODE_SAVE)||(mode == T_DOWNLOAD_MODE_JOIN)){
-		bflg = TRUE;
+	// リストの情報のtournamentidと
+	// セーブの情報のtournamentidが一致しているかチェック
+	// フレーム情報
+	tid[0] = WBTDL_DATA_GetTournamentId( &wk->Param->data->data[num] );
+	// セーブ情報
+	for(i=0;i<wk->SaveMaxNum;i++){
+		tid[1] = WBTDL_DATA_GetTournamentId( wk->WbtSaveData[i] );
+		if(tid[0] == tid[1]){
+			bflg = TRUE;
+			break;
+		}
 	}
 	// 結果
 	return( bflg );
@@ -2070,6 +2112,27 @@ static void td_liststr_print( T_DOWNLOAD_MAIN_WORK *wk, int pos, PRINT_UTIL *pri
 
 static void td_PrintStrBuf( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int strIdx, PRINTSYS_LSB col, int y, int pos )
 {
+	STRBUF*		strbuf;
+	STRBUF*		strbuf2;
+	STRBUF*		expbuf;
+	const WBTDL_DATA*	wbtl;
+	
+	// アドレスセット
+	wbtl = &wk->Param->data->data[pos];
+	
+	// トーナメント名
+	strbuf  = GFL_STR_CreateBuffer( 128, wk->heapID );
+	expbuf  = GFL_STR_CreateBuffer( 128, wk->heapID );
+	// セーブデータを取得
+	TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_NAME, strbuf );
+	WORDSET_RegisterWord( wk->Wordset, 0, strbuf, 0, TRUE, PM_LANG );
+	strbuf2 = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[0] );
+	WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf2 );
+	PRINT_UTIL_PrintColor( print_util, que, 0, y, expbuf, wk->font, col );
+	GFL_STR_DeleteBuffer( strbuf );
+	GFL_STR_DeleteBuffer( strbuf2 );
+	GFL_STR_DeleteBuffer( expbuf );
+#if 0
 	int width, bmp_width, x;
 //	STRBUF* strbuf = GFL_MSG_CreateString( msg, strIdx );
 	STRBUF* strbuf2;
@@ -2097,6 +2160,7 @@ static void td_PrintStrBuf( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, PR
 	GFL_STR_DeleteBuffer( strbuf2 );
 	GFL_STR_DeleteBuffer( strbuf3 );
 	GFL_STR_DeleteBuffer( expandbuf );
+#endif
 }
 
 static void td_strbuf_print( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param, int pos )
@@ -2338,15 +2402,17 @@ void TdCmn_main_scrollbar( T_DOWNLOAD_MAIN_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief	詳細情報表示(判定が必要)
+ * @brief	詳細情報表示
  *
  * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ * @param	const s32					(0:セーブ、1:リスト)
+ * @param	const s32					(番号)
  * @param	const s32					(種類)
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
+void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num, const s32 snum )
 {
 	s32		i;
 	s32		j;
@@ -2354,8 +2420,18 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 	s32		buf[2];
 	s32		pnum;
 	s32		offset;
+	s32		id;
 	STRBUF	*exp;
 	STRBUF	*strbuf;
+	const WBTDL_DATA* wbtdl;
+	
+	// アドレスをセット
+	if(mode == T_DOWNLOAD_DATA_SAVE){
+		wbtdl = wk->WbtSaveData[num];
+	}else{
+		wbtdl = &wk->Param->data->data[num];
+	}
+	
 	//
 	// 1画面をクリアする
 	for(i=0;i<CANVAS_INFO_NUM;i++){
@@ -2365,11 +2441,11 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 	// 最大ページ数になっている
 	// =>途中までの表示となる
 	pnum = 10;
-	if(wk->CurrentPageNum[mode] == (wk->PageMaxNum[mode]-1)){
-		buf[0] = wk->ItemNum[mode]%10;		// 表示数
+	if(wk->CurrentPageNum[snum] == (wk->PageMaxNum[snum]-1)){
+		buf[0] = wk->ItemNum[snum]%10;		// 表示数
 		if(buf[0] == 0){
 			// 項目数が0の場合
-			if(wk->ItemNum[mode] == 0){
+			if(wk->ItemNum[snum] == 0){
 				flg = 1;
 			}
 			pnum = 10;
@@ -2377,7 +2453,7 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 			pnum = buf[0];
 		}
 	}
-	offset = wk->CurrentPageNum[mode]*10;
+	offset = wk->CurrentPageNum[snum]*10;
 	//
 	// 1回だけでよいはず
 	exp = GFL_STR_CreateBuffer( 128, wk->heapID );
@@ -2396,16 +2472,17 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 			break;
 		}
 		// 通常の場合
-		strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_info_tbl[mode] );
-		if(mode == 0){			// ポケモン
-//			WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, 1+2*i );
-			WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, 1+offset+j );
-		}else if(mode == 1){	// 道具
-//			WORDSET_RegisterItemName( wk->Wordset, 0, 1+2*i );
-			WORDSET_RegisterItemName( wk->Wordset, 0, 1+offset+j );
+		strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_info_tbl[snum] );
+		if(snum == 0){			// ポケモン
+			// 指定した番号のidを返す
+			id = TdSave_get_item_id( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_POKE, 1+offset+j );
+			WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, id );
+		}else if(snum == 1){	// 道具
+			id = TdSave_get_item_id( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_ITEM, 1+offset+j );
+			WORDSET_RegisterItemName( wk->Wordset, 0, id );
 		}else{					// 技
-//			WORDSET_RegisterWazaName( wk->Wordset, 0, 1+2*i );
-			WORDSET_RegisterWazaName( wk->Wordset, 0, 1+offset+j );
+			id = TdSave_get_item_id( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_SKILL, 1+offset+j );
+			WORDSET_RegisterWazaName( wk->Wordset, 0, id );
 		}
 		WORDSET_ExpandStr( wk->Wordset, exp, strbuf );
 		TdCmn_disp_string( wk, T_DOWNLOAD_MSG_DOWN_INFO_00+i, 0, 0, exp, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
@@ -2417,16 +2494,16 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 		//----
 		// 右
 		//----
-		strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_info_tbl[mode] );
-		if(mode == 0){			// ポケモン
-//			WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, 1+2*i+1 );
-			WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, 1+offset+j );
-		}else if(mode == 1){	// 道具
-//			WORDSET_RegisterItemName( wk->Wordset, 0, 1+2*i+1 );
-			WORDSET_RegisterItemName( wk->Wordset, 0, 1+offset+j );
+		strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_info_tbl[snum] );
+		if(snum == 0){			// ポケモン
+			id = TdSave_get_item_id( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_POKE, 1+offset+j );
+			WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, id );
+		}else if(snum == 1){	// 道具
+			id = TdSave_get_item_id( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_ITEM, 1+offset+j );
+			WORDSET_RegisterItemName( wk->Wordset, 0, id );
 		}else{					// 技
-//			WORDSET_RegisterWazaName( wk->Wordset, 0, 1+2*i+1 );
-			WORDSET_RegisterWazaName( wk->Wordset, 0, 1+offset+j );
+			id = TdSave_get_item_id( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_SKILL, 1+offset+j );
+			WORDSET_RegisterWazaName( wk->Wordset, 0, id );
 		}
 		WORDSET_ExpandStr( wk->Wordset, exp, strbuf );
 		TdCmn_disp_string( wk, T_DOWNLOAD_MSG_DOWN_INFO_00+i, 104, 0, exp, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
@@ -2444,20 +2521,43 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
  * @brief	詳細情報初期化(判定が必要)
  *
  * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ * @param	const s32					(0:セーブ、1:リスト)
+ * @param	const s32					(番号)
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-void TdCmn_init_info_mode( T_DOWNLOAD_MAIN_WORK * wk )
+void TdCmn_init_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num )
 {
 	s32		i;
 	s32		buf[2];
+	const WBTDL_DATA* wbtdl;
 	
-	// アイテム数を調べる(仮)
-	wk->ItemNum[0] = 64;
-//	wk->ItemNum[1] = 12;
-	wk->ItemNum[1] = 4;
-	wk->ItemNum[2] = 36;
+	// アドレスをセット
+	if(mode == T_DOWNLOAD_DATA_SAVE){
+		wbtdl = wk->WbtSaveData[num];
+	}else{
+		wbtdl = &wk->Param->data->data[num];
+	}
+#if 1
+	wk->ItemNum[0] = TdSave_get_item_num( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_POKE );
+	wk->ItemNum[1] = TdSave_get_item_num( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_ITEM );
+	wk->ItemNum[2] = 1;
+#else
+	// セーブ
+	if(mode == T_DOWNLOAD_DATA_SAVE){
+		wk->ItemNum[0] = TdSave_get_item_num( wk, wk->WbtSaveData[num], T_DOWNLOAD_SAVE_ITEM_POKE );
+		wk->ItemNum[1] = TdSave_get_item_num( wk, wk->WbtSaveData[num], T_DOWNLOAD_SAVE_ITEM_ITEM );
+		wk->ItemNum[2] = 1;
+	}
+	// リスト
+	else{
+		// アイテム数を調べる(仮)
+//		wk->ItemNum[0] = 64;
+//		wk->ItemNum[1] = 4;
+//		wk->ItemNum[2] = 36;
+	}
+#endif
 	//
 	for(i=0;i<T_DOWNLOAD_INFO_MAX;i++){
 		// 0の場合は1ページとしておく
@@ -2687,13 +2787,41 @@ void TdCmn_stop_anim_speed( T_DOWNLOAD_MAIN_WORK *wk, const BOOL bflg )
  * @brief	カーソル表示(パネル3用)
  *
  * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ * @param	const s32					(0:セーブ、1:リスト)
  * @param	const s32					(番号)
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
+void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num )
 {
+	STRBUF* strbuf;
+	STRBUF* strbuf2;
+	STRBUF* expbuf;
+	const WBTDL_DATA	*wbtl;
+	
+	// セーブデータ
+	if(mode == T_DOWNLOAD_DATA_SAVE){
+		wbtl = wk->WbtSaveData[num];
+	}
+	// リストデータ(要修正)
+	else{
+		wbtl = wk->WbtSaveData[num];
+	}
+	
+	// トーナメント名
+	strbuf = GFL_STR_CreateBuffer( 128, wk->heapID );
+	expbuf = GFL_STR_CreateBuffer( 128, wk->heapID );
+	// セーブデータを取得
+	TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_NAME, strbuf );
+	WORDSET_RegisterWord( wk->Wordset, 0, strbuf, 0, TRUE, PM_LANG );
+	strbuf2 = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[0] );
+	WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf2 );
+	TdCmn_disp_string( wk, CANVAS_JOIN_OFFSET+mode, 0, 4, expbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,2));
+	GFL_STR_DeleteBuffer( strbuf );
+	GFL_STR_DeleteBuffer( strbuf2 );
+	GFL_STR_DeleteBuffer( expbuf );
+#if 0
 	STRBUF* strbuf2;
 	STRBUF* strbuf3;
 	STRBUF* expandbuf;
@@ -2712,6 +2840,7 @@ void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 	GFL_STR_DeleteBuffer( strbuf2 );
 	GFL_STR_DeleteBuffer( strbuf3 );
 	GFL_STR_DeleteBuffer( expandbuf );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------

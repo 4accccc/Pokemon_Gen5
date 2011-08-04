@@ -294,3 +294,43 @@ static inline BOOL WBTDL_TOTAL_DATA_CheckLang( const WBTDL_TOTAL_DATA *cp_data )
 
   return check;
 }
+//------------------------------------------------------------------
+// トーナメント名の取得
+//------------------------------------------------------------------
+static inline const STRCODE * WBTDL_DATA_GetTournamentName( const WBTDL_DATA * wbtdl_data )
+{
+  return( &wbtdl_data->tournament_name[0] );
+}
+
+//------------------------------------------------------------------
+// トーナメントの内容説明の取得
+//------------------------------------------------------------------
+static inline const STRCODE * WBTDL_DATA_GetContentsExplain( const WBTDL_DATA * wbtdl_data )
+{
+  return( &wbtdl_data->contents_explain[0] );
+}
+
+//------------------------------------------------------------------
+// トーナメントのレギュレーション説明の取得
+//------------------------------------------------------------------
+static inline const STRCODE * WBTDL_DATA_GetRegulationExplain( const WBTDL_DATA * wbtdl_data )
+{
+  return( &wbtdl_data->regulation_explain[0] );
+}
+
+//------------------------------------------------------------------
+// トーナメントIDの取得
+//------------------------------------------------------------------
+static inline const u16 WBTDL_DATA_GetTournamentId( const WBTDL_DATA * wbtdl_data )
+{
+  return( wbtdl_data->tournament_id );
+}
+
+//------------------------------------------------------------------
+// バトルルールの取得
+//------------------------------------------------------------------
+static inline const u8 WBTDL_DATA_GetBtlRule( const WBTDL_DATA * wbtdl_data )
+{
+  return( wbtdl_data->regulation.btl_rule );
+}
+
