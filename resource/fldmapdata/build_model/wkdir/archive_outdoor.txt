@@ -438,3 +438,4 @@
 "nsbmdfiles/c15_trailer_01.nsbmd"
 "nsbmdfiles/c04_poke02.nsbmd"
 "nsbmdfiles/sikiken_01.nsbmd"
+"nsbmdfiles/jagate_02.nsbmd"

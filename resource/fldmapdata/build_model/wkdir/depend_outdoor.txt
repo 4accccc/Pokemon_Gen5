@@ -439,4 +439,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/c15_trailer_01.nsbmd \
 	$(RESDIR)/c04_poke02.nsbmd \
 	$(RESDIR)/sikiken_01.nsbmd \
+	$(RESDIR)/jagate_02.nsbmd \
 
