@@ -1481,11 +1481,12 @@
 めちゃくちゃ　やるきなんだー！▼
 はたらいてる　ショップにも　ガンガン
 しんせいひん　ならべたりしてさー！▼
-あのどうくつを　クリアした　[Name:TrainerName ]
-ってひとに　しげきされたんだって！▼</Text>
+あのどうくつを　クリアした
+[Name:TrainerName ]　ってひとに▽
+しげきされたんだって！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T10:53:40" />
+				Time="2011-08-04T08:15:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1497,11 +1498,12 @@
 めちゃくちゃ　やる気なんだー！▼
 働いてる　ショップにも　ガンガン
 新製品を　並べたりしてさー！▼
-あのどうくつを　クリアした　[Name:TrainerName ]
-って人に　刺激されたんだって！▼</Text>
+あのどうくつを　クリアした
+[Name:TrainerName ]　って人に▽
+刺激されたんだって！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T10:54:48" />
+				Time="2011-08-04T08:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3293,13 +3295,13 @@
 			Language="JPN">
 			<Text>カルロス『たびの　じゅんびをしようと
 ショップに　いってみたら▽
-ずいぶん　しなぞろえが　よくなってたよ▼
+かなり　しなぞろえが　よくなってたよ▼
 でさ　ショップの　にいちゃんが
 [Name:TrainerName ]に　まけてられないって▽
 いってたけど　どういういみだろ？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T09:58:06" />
+				Time="2011-08-04T08:17:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4358,7 +4360,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ガクト『おお！　[Name:TrainerName ]じゃないか！▼
+			<Text>ガクト『おお！　[Name:TrainerName ]！▼
 はなしには　きいてるよ
 どうくつ　だいぶ　ふかいところまで▽
 もぐったみたいだな！▼
@@ -4366,7 +4368,7 @@
 かわって　さいかそうまで　いってくれ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T10:05:59" />
+				Time="2011-08-04T08:17:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4374,7 +4376,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ガクト『おお！　[Name:TrainerName ]じゃないか！▼
+			<Text>ガクト『おお！　[Name:TrainerName ]！▼
 話には　聞いてるよ
 どうくつ　だいぶ　深い所まで▽
 潜ったみたいだな！▼
@@ -4382,7 +4384,7 @@
 代わって　最下層まで　行ってくれ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:03:45" />
+				Time="2011-08-04T08:18:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4425,14 +4427,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ガクト『もりの　みんなを
-だいひょうして　[Name:TrainerName ]の▼
+だいひょうして　[Name:TrainerName ]　の▼
 しろのたいじゅクリアを
 いわわせてもらうよ！▼
 おめでとう！
 ほんとうに　よく　がんばったね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:48:54" />
+				Time="2011-08-04T08:18:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4441,14 +4443,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ガクト『森の　みんなを
-代表して　[Name:TrainerName ]の▼
+代表して　[Name:TrainerName ]　の▼
 白の大樹クリアを
 祝わせてもらうよ！▼
 おめでとう！
 本当に　良く　頑張ったね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:48:50" />
+				Time="2011-08-04T08:18:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6471,11 +6473,11 @@
 かけだしのころに　かんじた
 ポケモンしょうぶの　たのしさを▽
 おもいだしたわ！▼
-[Name:TrainerName ]は　あそこで　なにか
+[Name:TrainerName ]　は　あそこで　なにか
 たいせつなものを　みつけられた？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:12:21" />
+				Time="2011-08-04T08:18:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6488,11 +6490,11 @@
 駆け出しのころに　感じた
 純粋な　ポケモン勝負の　楽しさを▽
 思い出したわ！▼
-[Name:TrainerName ]は　あそこで　なにか
+[Name:TrainerName ]　は　あそこで　なにか
 大切なものを　見つけられた？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:12:49" />
+				Time="2011-08-04T08:18:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7029,7 +7031,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>グレース『あなたが　[Name:TrainerName ]ね！▼
+			<Text>グレース『あなたが　[Name:TrainerName ]　ね！▼
 まごが　すごいトレーナーが
 もりにきた　なんてさわいでるから▽
 ついつい　みにきちゃった！▼
@@ -7037,7 +7039,7 @@
 みためは　ずいぶん　かわいいのね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:14:14" />
+				Time="2011-08-04T08:19:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7045,7 +7047,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グレース『あなたが　[Name:TrainerName ]ね！▼
+			<Text>グレース『あなたが　[Name:TrainerName ]　ね！▼
 孫が　すごいトレーナーが
 森に来た　なんて騒いでるから▽
 ついつい　見にきちゃった！▼
@@ -7053,7 +7055,7 @@
 見た目は　ずいぶん　かわいいのね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:14:25" />
+				Time="2011-08-04T08:19:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
