@@ -277,31 +277,25 @@
 #define WK_OTHER_SPORTS_RND_TR5          16674 /* 0x4122 リトルコートのランダム配置トレーナー３人目 */
 #define WK_OTHER_WHEEL_SEASON            16675 /* 0x4123 観覧車イベント：季節を保存しておくワーク。 C04P01のゾーンチェンジで季節を取得し、前回から季節が変化していたら、観覧車トレーナー用のタイムフラグをリセットする */
 #define WK_OTHER_D11R0101_PAIR           16676 /* 0x4124 下水道：アイリス連れ歩きセリフ */
-		/* not used 16677(0x4125) */
-		/* not used 16678(0x4126) */
-		/* not used 16679(0x4127) */
-#define WK_OTHER_R05_KINOMI              16680 /* 0x4128 スワン5番道路木の実販売 */
-		/* not used 16681(0x4129) */
-		/* not used 16682(0x412a) */
-		/* not used 16683(0x412b) */
-		/* not used 16684(0x412c) */
-		/* not used 16685(0x412d) */
-#define WK_OTHER_BSUBWAY_RECEIPT         16686 /* 0x412e バトルサブウェイ、受付制御 */
-#define WK_OTHER_BSUBWAY_TEST            16687 /* 0x412f バトルサブウェイ、テスト */
-#define WK_OTHER_BSUBWAY_TRAIN           16688 /* 0x4130 バトルサブウェイ、列車内制御 */
-#define WK_OTHER_BSUBWAY_HOME            16689 /* 0x4131 バトルサブウェイ、ホーム制御 */
-#define WK_OTHER_KASEKI_NUM              16690 /* 0x4132 化石復元イベント用ワーク 化石ポケモン預かり状態か識別するためのワーク。アイテムナンバーを格納。 */
-#define WK_OTHER_PASSENGERBOAT           16691 /* 0x4133 遊覧船イベント用ワーク 遊覧船のイベント状態を保存するワーク。船内案内済みか判定に使用 00 初期状態 01 乗船後、案内イベント済み 02 全てのトレーナーを倒した */
-#define WK_OTHER_STATION_CONNECT         16692 /* 0x4134 C04とギアステーションの接続イベント用ワーク 00 ギアステーションからC04にでる階段前のPOSイベント有効 01 ギアステーション入場アニメ有効（シーンチェンジスクリプト） */
-#define WK_OTHER_C03R0201_GALLERY        16693 /* 0x4135 日替わりタイプ指定ポケモン見せ用ワーク */
-#define WK_OTHER_UN                      16694 /* 0x4136 国連イベント用ワーク 00 参加していない（受付がゲートを塞いでいる） 01 参加状態（受付を通過している→受付をどかした状態にする） */
-#define WK_OTHER_DISCOVER_EGG            16695 /* 0x4137 ３番道路：育て屋でタマゴが発見されたときに教えてくれるPOSイベント用のワーク 00 なし 01 POSイベント有効。「おーい！」と声をかけてくれる。 */
-#define WK_OTHER_C05R0701_WAZA           16696 /* 0x4138 日替わり指定わざ見せ用ワーク */
-#define WK_OTHER_C12_RIVAL_PAIR          16697 /* 0x4139 スワン：ヒオウギシティ連れ歩き用ワーク 0&#xff5e;2でセリフを変える */
-#define WK_OTHER_FISHING_MONSNUM         16698 /* 0x413a ビレッジブリッジ：日替わり指定ポケモン格納用ワーク */
-#define WK_OTHER_C05R0301_WAZA           16699 /* 0x413b 日替わり指定わざ見せ用ワーク */
-#define WK_OTHER_R9R0201_ITEMBUY         16700 /* 0x413c アールナイン：１日１回買い物お願いお嬢様イベント制御用ワーク */
-#define WK_OTHER_H03_BOUON_MONSNUM       16701 /* 0x413d シリンダーブリッジ：特性「ぼうおん」のポケモンを見せた後、そのポケモン名を固定する */
+#define WK_OTHER_R05_KINOMI              16677 /* 0x4125 スワン5番道路木の実販売 */
+#define WK_OTHER_BSUBWAY_RECEIPT         16678 /* 0x4126 バトルサブウェイ、受付制御 */
+#define WK_OTHER_BSUBWAY_TEST            16679 /* 0x4127 バトルサブウェイ、テスト */
+#define WK_OTHER_BSUBWAY_TRAIN           16680 /* 0x4128 バトルサブウェイ、列車内制御 */
+#define WK_OTHER_BSUBWAY_HOME            16681 /* 0x4129 バトルサブウェイ、ホーム制御 */
+#define WK_OTHER_KASEKI_NUM              16682 /* 0x412a 化石復元イベント用ワーク 化石ポケモン預かり状態か識別するためのワーク。アイテムナンバーを格納。 */
+#define WK_OTHER_PASSENGERBOAT           16683 /* 0x412b 遊覧船イベント用ワーク 遊覧船のイベント状態を保存するワーク。船内案内済みか判定に使用 00 初期状態 01 乗船後、案内イベント済み 02 全てのトレーナーを倒した */
+#define WK_OTHER_STATION_CONNECT         16684 /* 0x412c C04とギアステーションの接続イベント用ワーク 00 ギアステーションからC04にでる階段前のPOSイベント有効 01 ギアステーション入場アニメ有効（シーンチェンジスクリプト） */
+#define WK_OTHER_C03R0201_GALLERY        16685 /* 0x412d 日替わりタイプ指定ポケモン見せ用ワーク */
+#define WK_OTHER_UN                      16686 /* 0x412e 国連イベント用ワーク 00 参加していない（受付がゲートを塞いでいる） 01 参加状態（受付を通過している→受付をどかした状態にする） */
+#define WK_OTHER_DISCOVER_EGG            16687 /* 0x412f ３番道路：育て屋でタマゴが発見されたときに教えてくれるPOSイベント用のワーク 00 なし 01 POSイベント有効。「おーい！」と声をかけてくれる。 */
+#define WK_OTHER_C05R0701_WAZA           16688 /* 0x4130 日替わり指定わざ見せ用ワーク */
+#define WK_OTHER_C12_RIVAL_PAIR          16689 /* 0x4131 スワン：ヒオウギシティ連れ歩き用ワーク 0&#xff5e;2でセリフを変える */
+#define WK_OTHER_FISHING_MONSNUM         16690 /* 0x4132 ビレッジブリッジ：日替わり指定ポケモン格納用ワーク */
+#define WK_OTHER_C05R0301_WAZA           16691 /* 0x4133 日替わり指定わざ見せ用ワーク */
+#define WK_OTHER_R9R0201_ITEMBUY         16692 /* 0x4134 アールナイン：１日１回買い物お願いお嬢様イベント制御用ワーク */
+#define WK_OTHER_H03_BOUON_MONSNUM       16693 /* 0x4135 シリンダーブリッジ：特性「ぼうおん」のポケモンを見せた後、そのポケモン名を固定する */
+#define WK_OTHER_R02_HAADOROKKU          16694 /* 0x4136 2番道路：特性「ハードロック」のポケモンを見せた後、そのポケモン名を固定する */
+#define WK_OTHER_R04_PARA_CHECK_01       16695 /* 0x4137 パラメータチェッカーで指定されたパラメータ格納用ワーク。 ブラック版は「すばやさ」、ホワイト版は「ＨＰ」をチェックする */
 
 #define WK_AREA_END                      16702 /* 0x413e  */
 

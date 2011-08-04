@@ -2302,6 +2302,8 @@
 #define TMFLG_C14R0501_POKEWALK           2768 /* 0x0ad0 セイガイハシティ：１日１回散歩イベント */
 #define TMFLG_D07R0401_QUIZ_TRUE          2769 /* 0x0ad1 ネジ山：１日１回重機マニアクイズ正解 */
 #define TMFLG_D07R0401_QUIZ_FALSE         2770 /* 0x0ad2 ネジ山：１日１回重機マニアクイズ不正解 */
+#define TMFLG_R04_PARA_CHECK_01           2771 /* 0x0ad3 4番道路民家：パラメータチェックイベント起動 */
+#define TMFLG_R04_PARA_CLEAR_01           2772 /* 0x0ad4 4番道路民家：パラメータチェックイベントクリア */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 
