@@ -1279,6 +1279,10 @@ static void PSTATUS_SUB_UpdateMarkTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *sub
   
   // タマゴもマーキングできる
   //if( work->isEgg == FALSE )
+  //
+  // 技入れ替え不可設定の場合はマークタッチできない
+  // 関連⇒BUGFIX_AF_GFBTS2017_100806
+  if( work->psData->mode != PST_MODE_NO_WAZACHG_NEW )
   {
     const int  retCont = GFL_UI_TP_HitTrg( hitTbl );
 
