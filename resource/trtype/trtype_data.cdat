@@ -919,6 +919,18 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		185,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
+	{ // No.228 KARATE_1♂ポケモントレーナー
+		 50,PTL_SEX_MALE,
+		SEQ_BGM_EYE_08
+	},
+	{ // No.229 BATTLEG_1♀ポケモントレーナー
+		 63,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_08
+	},
+	{ // No.230 SCIENTISTW_1♀ポケモントレーナー
+		 46,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_09
+	},
 };
 
 const u16 DATA_TrainerBackCGIndex[][2] = {
