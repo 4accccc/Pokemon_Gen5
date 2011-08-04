@@ -426,7 +426,7 @@ msg_wbt_menu_wcs</Comment>
 エキスパートトーナメントを▽
 せんたくしたばあい　ほのおタイプの▽
 ポケモンしか　つかえません▼
-そのうえで　すべて　ちがうポケモンで▽
+そのうえで　すべて　ちがうポケモンで
 さんかして　ください▼
 もたせる　どうぐも　すべて
 ちがうものでなければ　なりません▼
@@ -443,7 +443,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:34:44" />
+				Time="2011-08-04T11:00:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -459,7 +459,7 @@ msg_wbt_menu_wcs</Comment>
 エキスパートトーナメントを▽
 選択した場合　ほのおタイプの▽
 ポケモンしか　使えません▼
-その上で　すべて　ちがうポケモンで▽
+その上で　すべて　ちがうポケモンで
 参加して　ください▼
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
@@ -476,7 +476,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:35:43" />
+				Time="2011-08-04T11:00:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1525,11 +1525,11 @@ msg_wbt_menu_wcs</Comment>
 さんかするので　よりスリリングな▽
 たたかいを　たのしむことが　できます▼
 ゆうしょうすると　ちょっぴりおおめに
-バトルポイントが　もらえますし▽
+バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:16:17" />
+				Time="2011-08-04T10:59:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1549,11 +1549,11 @@ msg_wbt_menu_wcs</Comment>
 参加するので　よりスリリングな▽
 戦いを　楽しむことが　できます▼
 優勝すると　ちょっぴり多めに
-バトルポイントが　もらえますし▽
+バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:16:25" />
+				Time="2011-08-04T10:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1596,11 +1596,11 @@ msg_wbt_menu_wcs</Comment>
 より　めずらしいポケモンを▽
 ミックスして　たたかうことができます▼
 ゆうしょうすると　ちょっぴりおおめに
-バトルポイントが　もらえますし▽
+バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:15:59" />
+				Time="2011-08-04T10:59:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1624,11 +1624,11 @@ msg_wbt_menu_wcs</Comment>
 より　珍しいポケモンを▽
 ミックスして　戦うことができます▼
 優勝すると　ちょっぴり多めに
-バトルポイントが　もらえますし▽
+バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:16:05" />
+				Time="2011-08-04T10:59:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1665,8 +1665,8 @@ msg_wbt_menu_wcs</Comment>
 トリプルバトルの
 さんかポケモンは　６ひき▼
 ローテーションバトルの
-さんかポケモンは　４ひき▼
-……と　なっておりますので
+さんかポケモンは　４ひき▽
+と　なっておりますので▽
 ごちゅういください▼
 また　バトルポイントをもらえる
 トーナメントで　トリプルバトルや▽
@@ -1676,7 +1676,7 @@ msg_wbt_menu_wcs</Comment>
 うまく　ごかつようください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T07:23:35" />
+				Time="2011-08-04T11:01:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1694,8 +1694,8 @@ msg_wbt_menu_wcs</Comment>
 トリプルバトルの
 参加ポケモンは　６匹▼
 ローテーションバトルの
-参加ポケモンは　４匹▼
-……と　なっておりますので
+参加ポケモンは　４匹▽
+と　なっておりますので▽
 ご注意ください▼
 また　バトルポイントをもらえる
 トーナメントで　トリプルバトルや▽
@@ -1705,7 +1705,7 @@ msg_wbt_menu_wcs</Comment>
 うまく　ご活用ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T07:24:08" />
+				Time="2011-08-04T11:02:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
