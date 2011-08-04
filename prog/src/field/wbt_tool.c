@@ -46,6 +46,15 @@ typedef struct {
   u8 reward[4];       ///<ごほうびのBP数
 }WBT_TOURNAMENT_DATA;
 
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef struct {
+  u16 name_id;          ///<ルール名のMsgID
+  u8  need_pokemon_num; ///<必要なポケモン数
+  BtlRule  btl_rule;        ///<対応するバトルルール定義
+}WBT_RULE_DATA;
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
@@ -166,6 +175,34 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
 };
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static const WBT_RULE_DATA WBTRuleData[] =
+{
+  {// WBTRULE_NULL（ダミーデータ）
+    msg_wbtsys_rule_single,
+    3, BTL_RULE_SINGLE,
+  },
+  {// WBTRULE_SINGLE
+    msg_wbtsys_rule_single,
+    3, BTL_RULE_SINGLE,
+  },
+  {// WBTRULE_DOUBLE
+    msg_wbtsys_rule_double,
+    4, BTL_RULE_DOUBLE,
+  },
+  {// WBTRULE_TRIPLE
+    msg_wbtsys_rule_triple,
+    6, BTL_RULE_TRIPLE,
+  },
+  {// WBTRULE_ROTATION
+    msg_wbtsys_rule_rotation,
+    6, BTL_RULE_ROTATION,
+  }
+};
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
 /**
  * @brief トーナメント名文字列をセット
  * @todo  ダウンロードデータへの対応（引数がWBTSYSになる）
@@ -203,42 +240,6 @@ void WBTTOOL_GetTournamentName( WBTCUP wbtcup, STRBUF * strbuf )
 
 //------------------------------------------------------------------
 /**
- * @brief ルール名文字列をセット
- */
-//------------------------------------------------------------------
-void WBTTOOL_GetRuleName( WBTRULE rule, STRBUF * strbuf )
-{
-  HEAPID heapID = HEAPID_FIELDMAP;
-  GFL_MSGDATA     *man;
-  u16 msg_id;
-  switch ( rule )
-  {
-  case WBTRULE_NULL:
-    GF_ASSERT( 0 );
-    /* FALL THROUGH */
-  case WBTRULE_SINGLE:
-    msg_id = msg_wbtsys_rule_single;
-    break;
-  case WBTRULE_DOUBLE:
-    msg_id = msg_wbtsys_rule_double;
-    break;
-  case WBTRULE_TRIPLE:
-    msg_id = msg_wbtsys_rule_triple;
-    break;
-  case WBTRULE_ROTATION:
-    msg_id = msg_wbtsys_rule_rotation;
-    break;
-  }
-  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, heapID );
-  if( man )
-  {
-    GFL_MSG_GetString( man, msg_id, strbuf );
-    GFL_MSG_Delete( man );
-  }
-}
-
-//------------------------------------------------------------------
-/**
  * @brief WBTロムトレーナー名を取得
  */
 //------------------------------------------------------------------
@@ -253,6 +254,61 @@ void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf )
     GFL_MSG_Delete( man );
   }
 }
+//------------------------------------------------------------------
+/**
+ * @brief WBTロムトレーナータイプ名を取得
+ * @todo  「ポケモントレーナー」ばっかりのWBTでの肩書アーカイブからに置き換える
+ */
+//------------------------------------------------------------------
+void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, u8 tr_id, STRBUF * strbuf )
+{
+  GFL_MSGDATA     *man;
+  u16 msg_id = tr_id;
+  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trtype_dat, heapID );
+  if( man )
+  {
+    GFL_MSG_GetString( man, msg_id, strbuf );
+    GFL_MSG_Delete( man );
+  }
+}
+
+
+//============================================================================================
+//
+//  ルール関連データ取得
+//
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static WBTRULE checkWBTRuleRange( WBTRULE wbt_rule )
+{
+  if ( WBTRULE_SINGLE > wbt_rule && wbt_rule > WBTRULE_ROTATION )
+  {
+    GF_ASSERT( 0 );
+    wbt_rule = WBTRULE_SINGLE;
+  }
+  return wbt_rule;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief ルール名文字列をセット
+ */
+//------------------------------------------------------------------
+void WBTTOOL_GetRuleName( WBTRULE rule, STRBUF * strbuf )
+{
+  HEAPID heapID = HEAPID_FIELDMAP;
+  GFL_MSGDATA     *man;
+  u16 msg_id;
+  rule = checkWBTRuleRange( rule );
+  msg_id = WBTRuleData[rule].name_id;
+  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, heapID );
+  if( man )
+  {
+    GFL_MSG_GetString( man, msg_id, strbuf );
+    GFL_MSG_Delete( man );
+  }
+}
 
 //------------------------------------------------------------------
 /**
@@ -261,20 +317,8 @@ void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf )
 //------------------------------------------------------------------
 u8 WBTTOOL_GetPartyMaxByRule( WBTRULE rule )
 {
-  switch ( rule )
-  {
-  default:
-  case WBTRULE_NULL:
-    GF_ASSERT( 0 );
-    /* FALL THROUGH */
-  case WBTRULE_SINGLE:
-    return 3;
-  case WBTRULE_DOUBLE:
-    return 4;
-  case WBTRULE_TRIPLE:
-  case WBTRULE_ROTATION:
-    return 6;
-  }
+  rule = checkWBTRuleRange( rule );
+  return WBTRuleData[ rule ].need_pokemon_num;
 }
 
 //------------------------------------------------------------------
@@ -284,12 +328,23 @@ u8 WBTTOOL_GetPartyMaxByRule( WBTRULE rule )
 //------------------------------------------------------------------
 BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule )
 {
-  SDK_COMPILER_ASSERT( BTL_RULE_SINGLE == WBTRULE_SINGLE - 1);
-  SDK_COMPILER_ASSERT( BTL_RULE_DOUBLE == WBTRULE_DOUBLE - 1);
-  SDK_COMPILER_ASSERT( BTL_RULE_TRIPLE == WBTRULE_TRIPLE - 1);
-  SDK_COMPILER_ASSERT( BTL_RULE_ROTATION == WBTRULE_ROTATION - 1);
-  GF_ASSERT( wbt_rule <= WBTRULE_ROTATION );
-  return wbt_rule - 1;
+  wbt_rule = checkWBTRuleRange( wbt_rule );
+  return WBTRuleData[ wbt_rule ].btl_rule;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+WBTRULE WBTTOOL_BtlRuleToWBTRule( BtlRule btl_rule )
+{
+SDK_COMPILER_ASSERT( BTL_RULE_SINGLE == WBTRULE_SINGLE - 1);
+SDK_COMPILER_ASSERT( BTL_RULE_DOUBLE == WBTRULE_DOUBLE - 1);
+SDK_COMPILER_ASSERT( BTL_RULE_TRIPLE == WBTRULE_TRIPLE - 1);
+SDK_COMPILER_ASSERT( BTL_RULE_ROTATION == WBTRULE_ROTATION - 1);
+
+  WBTRULE wbt_rule;
+
+  wbt_rule = btl_rule + 1;
+  wbt_rule = checkWBTRuleRange( wbt_rule );
+  return wbt_rule;
 }
 
 //============================================================================================
@@ -357,32 +412,6 @@ u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed )
 
 #include "field/eventwork.h"  //EVENTWORK_
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_GAMECLEAR
-
-//-----------------------------------------------------------------------------
-/**
- * @brief WBTの様々なイベント判定を取得する
- * @param gamedata
- * @param cond_id   wbt_tool.hのWBT_COND_IDを参照
- * @return  BOOL    結果を
- */
-//-----------------------------------------------------------------------------
-BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id )
-{
-  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
-  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
-
-  switch ( cond_id )
-  {
-  case WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT:
-  default:
-    GF_ASSERT( 0 );
-  }
-  return FALSE;
-}
-
-
-
-
 
 enum {
   CHAMP_OPEN_COUNT = 10,  ///<仮：１０回クリアでチャンプトーナメント解除
