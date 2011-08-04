@@ -137,7 +137,7 @@ void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * 
     wbtlist_param->stage = WBTLIST_STAGE_2ND;
     break;
   }
-  WBTTOOL_GetTournamentName( WBTSYS_GetWBTCup(wbtsys), wbtlist_param->tournament_name );
+  WBTSYS_GetTournamentName( wbtsys, WBTSYS_GetWBTCup(wbtsys), wbtlist_param->tournament_name );
   WBTTOOL_GetRuleName( WBTSYS_GetRule(wbtsys), wbtlist_param->tournament_rule );
 }
 

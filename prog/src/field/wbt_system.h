@@ -88,6 +88,7 @@ extern u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys );
 #ifdef  PM_DEBUG
 extern void WBTTRAINER_DEBUG_dump( const WBTTRAINER * wbt_tr );
 extern void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys );
+extern void WBTSYS_DEBUG_PrintRegulation( const REGULATION * cp_data );
 #endif
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -103,6 +104,7 @@ extern u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr );
 extern u16 WBTTRAINER_GetBattleTrainerType( const WBTTRAINER * wbt_tr );
 extern WBT_TRTYPE WBTTRAINER_GetWBTTrainerType( const WBTTRAINER * wbt_tr );
 extern void WBTTRAINER_CopyName( const WBTTRAINER * wbt_tr, STRBUF * buf );
+extern void WBTTRAINER_CopyTitle( const WBTTRAINER * wbt_tr, STRBUF * buf );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf );
@@ -111,12 +113,18 @@ extern u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentTrainerType( WBTSYS * wbtsys );
 extern void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm );
 
+extern void WBTSYS_GetTournamentName( WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf );
+
+extern BOOL WBTSYS_GetDownLoadCount( WBTSYS * wbtsys, GAMEDATA * gamedata );
+extern void WBTSYS_LoadDLData( WBTSYS * wbtsys, GAMEDATA * gamedata );
+extern void WBTSYS_UnloadDLData( WBTSYS * wbtsys );
+
 //------------------------------------------------------------------
 //  in wbt_calc_result.c
 //------------------------------------------------------------------
+extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
 extern const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys );
 extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
-extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
 
 //------------------------------------------------------------------
 //  in wbt_makematch.c

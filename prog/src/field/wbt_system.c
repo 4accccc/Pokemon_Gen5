@@ -28,6 +28,11 @@
 #include "tr_tool/ex_trainer_def.h" //TRID_OFFSET_WBT
 #include "savedata/etc_save.h"    //ETC_SAVE_WORK
 
+#include "savedata/save_tbl.h"
+#include "savedata/save_control.h"
+#include "savedata/wbt_ex_save.h"
+#include "savedata/wbt_download.h"
+
 #include "sound/swan_sound_data.sadl"
 #ifdef  PM_DEBUG
 //#define DEBUG_WEAK_PARTY  //定義すると手持ちが激しく弱くなる
@@ -41,6 +46,8 @@ static void WBTTRAINER_Release( WBTTRAINER * wbt_tr );
 static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
 static void WBTTRAINER_SetRomTrainer( HEAPID heapID, WBTTRAINER * wbt_tr, u8 tr_id );
 static void WBTTRAINER_SetWBPlayer( HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
+static void WBTTRAINER_SetDLTrainer(
+    WBTSYS * wbtsys, WBTTRAINER * wbt_tr, GAMEDATA * gamedata, u32 dl_tr_id );
 
 //============================================================================================
 //============================================================================================
@@ -101,9 +108,17 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_l
     {
     case WBT_TRCODE_PLAYER:
       WBTTRAINER_SetPlayer( wbt_tr, gamedata );
+      WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->btl_tr_type, wbt_tr->title );
       break;
     case WBT_TRCODE_WBHERO:
       WBTTRAINER_SetWBPlayer( wbtsys->heapID, wbt_tr, gamedata );
+      WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->btl_tr_type, wbt_tr->title );
+      break;
+    case WBT_TRCODE_DL1:
+    case WBT_TRCODE_DL2:
+    case WBT_TRCODE_DL3:
+    case WBT_TRCODE_DL4:
+      WBTTRAINER_SetDLTrainer( wbtsys, wbt_tr, gamedata, tr_list[i] - WBT_TRCODE_DL1 );
       break;
     default:
       WBTTRAINER_SetRomTrainer( wbtsys->heapID, wbt_tr, tr_list[i] );
@@ -113,6 +128,7 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_l
         ETC_SAVE_WORK * etcsave = SaveData_GetEtc( sv_ctrl_work );
         GFL_STR_SetStringCode( wbt_tr->name, EtcSave_GetRivalName( etcsave ) );
       }
+      WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->btl_tr_type, wbt_tr->title );
       break;
     }
   }
@@ -252,6 +268,24 @@ static u8 WBTSYS_GetRevisePokeLevel( const WBTSYS * wbtsys )
   return 50;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief トーナメント名を取得する
+ */
+//------------------------------------------------------------------
+void WBTSYS_GetTournamentName( WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf )
+{
+  if ( wbtcup == WBTCUP_DOWNLOAD )
+  {
+    GF_ASSERT( wbtsys->dldata_loaded );
+    GFL_STR_SetStringCodeOrderLength( strbuf, WBTDL_DATA_GetTournamentName( &wbtsys->wbtdl_data ),
+        WBTDL_TOURNAMENT_NAME_LEN );
+  }
+  else
+  {
+    WBTTOOL_GetTournamentName( wbtcup, strbuf );
+  }
+}
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -266,6 +300,7 @@ static void WBTTRAINER_Init( WBTTRAINER * wbt_tr, HEAPID heapID )
   wbt_tr->mmdl_id = SWHERO;
   wbt_tr->btl_tr_type = TRTYPE_HERO;
   wbt_tr->name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
+  wbt_tr->title = GFL_STR_CreateBuffer( WBTDL_TRAINER_TITLE_LEN, heapID );
 }
 
 //------------------------------------------------------------------
@@ -273,6 +308,7 @@ static void WBTTRAINER_Init( WBTTRAINER * wbt_tr, HEAPID heapID )
 static void WBTTRAINER_Release( WBTTRAINER * wbt_tr )
 {
   GFL_STR_DeleteBuffer( wbt_tr->name );
+  GFL_STR_DeleteBuffer( wbt_tr->title );
 }
 
 //------------------------------------------------------------------
@@ -342,6 +378,20 @@ static void WBTTRAINER_SetWBPlayer( HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static void WBTTRAINER_SetDLTrainer(
+    WBTSYS * wbtsys, WBTTRAINER * wbt_tr, GAMEDATA * gamedata, u32 dl_tr_id )
+{
+  const WBTDL_CHARACTER * dl_char = WBTDL_DATA_GetCharacter( &(wbtsys->wbtdl_data), dl_tr_id );
+  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_DL, dl_tr_id, dl_char->sex,
+      dl_char->priority_bit, POKETYPE_NORMAL, SWHERO, TRTYPE_HERO );
+  GFL_STR_SetStringCodeOrderLength( wbt_tr->name, dl_char->name, SAVELEN_TRAINER_NAME );
+  GFL_STR_SetStringCodeOrderLength( wbt_tr->title, dl_char->title, WBTDL_TRAINER_TITLE_LEN );
+
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr )
 {
   return wbt_tr->pri;
@@ -371,6 +421,12 @@ WBT_TRTYPE WBTTRAINER_GetWBTTrainerType( const WBTTRAINER * wbt_tr )
 void WBTTRAINER_CopyName( const WBTTRAINER * wbt_tr, STRBUF * buf )
 {
   GFL_STR_CopyBuffer( buf, wbt_tr->name );
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTTRAINER_CopyTitle( const WBTTRAINER * wbt_tr, STRBUF * buf )
+{
+  GFL_STR_CopyBuffer( buf, wbt_tr->title );
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -428,6 +484,11 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
   cond.wbtcup = wbtsys->wbtcup;
   cond.poketype = wbtsys->poketype;
   cond.seed64 = wbtsys->seed64;
+  cond.wbtdl_match = NULL;
+  if ( wbtsys->dldata_loaded )
+  {
+    cond.wbtdl_match = WBTDL_DATA_GetMatchData( &wbtsys->wbtdl_data );
+  }
 
   WBTSYS_MakeEntryList( gamedata, &cond, tr_list );
 
@@ -443,6 +504,8 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
 #endif
 }
 
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 /**
  * @brief 自分のトレーナーデータを取得する
@@ -555,6 +618,101 @@ void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
   }
 }
 
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief
+ * @todo
+ */
+//------------------------------------------------------------------
+static BOOL checkWBTDownLoad( GAMEDATA * gamedata, u32 dl_id )
+{
+  SAVE_CONTROL_WORK* save;
+  WBTEXSAVE * save_p;
+  SAVE_EXTRA_ID save_id;
+
+  LOAD_RESULT load_res;
+  BOOL result = FALSE;
+
+  save_id = SAVE_EXTRA_ID_WBT_00 + dl_id - 1;
+
+  save = GAMEDATA_GetSaveControlWork( gamedata );
+  load_res = SaveControl_Extra_Load( save, save_id, HEAPID_PROC );
+  if ( load_res == LOAD_RESULT_OK )
+  {
+    save_p = SaveControl_Extra_DataPtrGet( save, save_id, EXGMDATA_ID_WBT_00 );
+    result = WBTEXSAVE_IsExists( save_p );
+  }
+  SaveControl_Extra_Unload( save, save_id ); // 外部データを解放
+  return result;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL WBTSYS_GetDownLoadCount( WBTSYS * wbtsys, GAMEDATA * gamedata )
+{
+  int count, dl_id;
+  for ( count = 0, dl_id = 1; dl_id <= WBT_DOWNLOAD_NUM; dl_id ++ )
+  {
+    if (checkWBTDownLoad( gamedata, dl_id ) == TRUE )
+    {
+      count ++;
+    }
+  }
+  return count;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_UnloadDLData( WBTSYS * wbtsys )
+{
+  GFL_STD_MemClear32( &wbtsys->wbtdl_data, sizeof(WBTDL_DATA) );
+  wbtsys->dldata_loaded = FALSE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_LoadDLData( WBTSYS * wbtsys, GAMEDATA * gamedata )
+{
+  SAVE_CONTROL_WORK* save;
+  WBTEXSAVE * save_p;
+  SAVE_EXTRA_ID save_id;
+  LOAD_RESULT load_res;
+
+  BOOL result = FALSE;
+
+  if ( wbtsys->select_dl_data == 0 )
+  {
+    WBTSYS_UnloadDLData( wbtsys );
+    return;
+  }
+
+  save_id = SAVE_EXTRA_ID_WBT_00 + wbtsys->select_dl_data - 1;
+
+  save = GAMEDATA_GetSaveControlWork( gamedata );
+  load_res = SaveControl_Extra_Load( save, save_id, HEAPID_PROC );  //外部データを確保
+
+  if ( load_res == LOAD_RESULT_OK )
+  {
+    save_p = SaveControl_Extra_DataPtrGet( save, save_id, EXGMDATA_ID_WBT_00 );
+    result = WBTEXSAVE_IsExists( save_p );
+  }
+  if ( result )
+  {
+    GFL_STD_MemCopy32( save_p, &wbtsys->wbtdl_data, sizeof(WBTDL_DATA) );
+    wbtsys->rule = WBTTOOL_BtlRuleToWBTRule( WBTDL_DATA_GetBtlRule( &wbtsys->wbtdl_data ) );
+  }
+  else
+  {
+    GFL_STD_MemClear32( &wbtsys->wbtdl_data, sizeof(WBTDL_DATA) );
+  }
+  SaveControl_Extra_Unload( save, save_id ); // 外部データを解放
+
+  wbtsys->dldata_loaded = result;
+}
+
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 /**
  * @brief レギュレーション指定IDの取得
@@ -594,16 +752,34 @@ u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys )
   return tbl[ wbtsys->rule - 1 ];
 }
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline void WBTDL_DATA_CopyRegulation( const WBTDL_DATA * wbtdl_data, REGULATION * reg )
+{
+  GFL_STD_MemCopy( &wbtdl_data->regulation, reg, sizeof(REGULATION) );
+}
+//------------------------------------------------------------------
 /**
  * @brief レギュレーションの取得
  */
 //------------------------------------------------------------------
 const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
 {
-  u32 reg_type;
-  reg_type = WBTSYS_GetRegulationID( wbtsys );
+  if (wbtsys->wbtcup == WBTCUP_DOWNLOAD )
+  {
+    GF_ASSERT( wbtsys->dldata_loaded );
+    WBTDL_DATA_CopyRegulation( &wbtsys->wbtdl_data, &wbtsys->wbtreg.base_reg );
+  }
+  else
+  {
+    u32 reg_type;
+    reg_type = WBTSYS_GetRegulationID( wbtsys );
 
-  PokeRegulation_LoadData( reg_type, &wbtsys->wbtreg.base_reg );
+    PokeRegulation_LoadData( reg_type, &wbtsys->wbtreg.base_reg );
+  }
+
+#ifdef PM_DEBUG
+  WBTSYS_DEBUG_PrintRegulation( &wbtsys->wbtreg.base_reg );
+#endif
   return &wbtsys->wbtreg.base_reg;
 }
 
@@ -624,6 +800,35 @@ const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys )
   return &wbtsys->wbtreg.ex_reg;
 }
 
+#ifdef PM_DEBUG
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_DEBUG_PrintRegulation( const REGULATION * cp_data )
+{
+  OS_TPrintf( "reg size =%d\n", sizeof(REGULATION));
+  OS_TPrintf( "cupno    =%d\n", cp_data->cupNo);
+  OS_TPrintf( "rule_num =%d\n", cp_data->ruleNo); ///< 大会ルール番号
+  OS_TPrintf( "num_lo   =%d\n", cp_data->NUM_LO); ///<    #参加数下限
+  OS_TPrintf( "num_hi   =%d\n", cp_data->NUM_HI); ///<    #参加数上限
+  OS_TPrintf( "level    =%d\n", cp_data->LEVEL);  ///<    #参加レベル
+  OS_TPrintf( "lv_range =%d\n", cp_data->LEVEL_RANGE); ///<    #レベル範囲
+  OS_TPrintf( "lv_total =%d\n", cp_data->LEVEL_TOTAL); ///<    #レベル合計
+  OS_TPrintf( "both_poke=%d\n", cp_data->BOTH_POKE); ///<    #同じポケモン
+  OS_TPrintf( "both_item=%d\n", cp_data->BOTH_ITEM);  ///<    #同じどうぐ             60
+  OS_TPrintf( "veto_poke=0x%x\n", cp_data->VETO_POKE_BIT[REG_POKENUM_MAX_BYTE]);  ///<    #参加禁止ポケモン 142
+  OS_TPrintf( "veto_item=0x%d\n", cp_data->VETO_ITEM[REG_ITEMNUM_MAX_BYTE]); ///<    #持ち込み禁止道具 218
+  OS_TPrintf( "must_poke=%d\n", cp_data->MUST_POKE);   ///<    #必須ポケモン
+  OS_TPrintf( "must_form=%d\n", cp_data->MUST_POKE_FORM);   ///<    #必須ポケモンフォルム
+  OS_TPrintf( "shooter  =%d\n", cp_data->SHOOTER);    ///<    #シューター
+  OS_TPrintf( "time_vs  =%d\n", cp_data->TIME_VS);     ///<    #対戦時間
+  OS_TPrintf( "time_cmd =%d\n", cp_data->TIME_COMMAND); ///<    #入力時間
+  OS_TPrintf( "nick_view=%d\n", cp_data->NICKNAME); ///<    #ニックネーム表示
+  OS_TPrintf( "camera   =%d\n", cp_data->CAMERA);  ///<     #カメラモード
+  OS_TPrintf( "show_poke=%d\n", cp_data->SHOW_POKE);  ///<    #ポケモン見せ合い
+  OS_TPrintf( "show_time=%d\n", cp_data->SHOW_POKE_TIME);  ///<ポケモン見せ合い時間
+  OS_TPrintf( "btl_type =%d\n", cp_data->BATTLE_TYPE);    ///< バトルタイプ  230
+}
+#endif
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------

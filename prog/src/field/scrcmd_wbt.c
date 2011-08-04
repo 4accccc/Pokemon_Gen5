@@ -48,6 +48,8 @@
 
 #include "msg/script/msg_wbt_lobby.h" //msg_wbt_info_ng_
 
+#include "scrcmd_fld_battle.h"  //BtlPartySelectCheck
+
 #include "event_wbt_wifi.h"
 
 //============================================================================================
@@ -268,6 +270,7 @@ VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk )
   WBTSYS * wbtsys = getWBTSys( wk );
 
   GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( wk );
+
   WBTSYS_MakeMatch( wbtsys, gamedata );
   TAMADA_Printf("EvCmdWBTSystemEntry\n");
 
@@ -361,6 +364,38 @@ VMCMD_RESULT EvCmdWBTGetRegulationID( VMHANDLE * core, void *wk )
   TAMADA_Printf("EvCmdWBTGetRegulationID = %d\n", *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ダウンロードレギュレーションの判定
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTBtlUtilPartySelect( VMHANDLE * core, void *wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  u16* ret_wk = SCRCMD_GetVMWork(core,work);  //結果を返すワーク
+  
+  {
+    BOOL same;
+    GMEVENT* event;
+    HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+    const REGULATION* regu = WBTSYS_GetRegulation( wbtsys );
+
+    same = Regulation_GetParam( regu, REGULATION_BOTH_POKE );
+
+    event = BtlPartySelectCheck( gsys, same, regu, ret_wk, heapID );
+
+    if(event == NULL){
+      return VMCMD_RESULT_CONTINUE;
+    }
+    SCRIPT_CallEvent( sc, event );
+  }
+  return VMCMD_RESULT_SUSPEND;
+}
 
 //--------------------------------------------------------------
 /**
@@ -382,21 +417,28 @@ VMCMD_RESULT EvCmdWBTGetNGMessageID( VMHANDLE * core, void * wk )
 
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   WBTSYS * wbtsys = getWBTSys( wk );
-  u32 reg_id = WBTSYS_GetRegulationID( wbtsys );
-  int i;
   u32 msg_id = msg_wbt_info_ng_all_single;
 
-  for ( i = 0; i < NELEMS(reg_msg_tbl); i += 2 )
-  {
-    if ( reg_msg_tbl[i+0] == reg_id )
-    {
-      msg_id = reg_msg_tbl[i+1];
-      break;
-    }
+  if ( WBTSYS_GetWBTCup( wbtsys ) == WBTCUP_DOWNLOAD )
+  { //ダウンロードトーナメントは説明しきれないので簡潔に
+    msg_id = msg_wbt_info_ng_download;
   }
-  if ( WBTSYS_GetWBTCup(wbtsys) == WBTCUP_POKETYPE )
-  {
-    msg_id += 4;
+  else
+  { //通常のトーナメントは設定レギュレーションのIDでメッセージを振り分ける
+    int i;
+    u32 reg_id = WBTSYS_GetRegulationID( wbtsys );
+    for ( i = 0; i < NELEMS(reg_msg_tbl); i += 2 )
+    {
+      if ( reg_msg_tbl[i+0] == reg_id )
+      {
+        msg_id = reg_msg_tbl[i+1];
+        break;
+      }
+    }
+    if ( WBTSYS_GetWBTCup(wbtsys) == WBTCUP_POKETYPE )
+    {
+      msg_id += 4;
+    }
   }
   *ret_wk = msg_id;
   TAMADA_Printf("EvCmdWBTGetNGMessageID = %d\n", *ret_wk );
@@ -559,11 +601,13 @@ VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTGetDownLoadCount( VMHANDLE * core, void * wk )
 {
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  SCRCMD_WORK * work = wk;
+  GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( work );
   WBTSYS * wbtsys = getWBTSys( wk );
 
-  //仮
-  *ret_wk = 3;
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  *ret_wk = WBTSYS_GetDownLoadCount( wbtsys, gamedata );
   TAMADA_Printf("EvCmdWBTGetDownLoadCount == %d\n", *ret_wk );
 
   return VMCMD_RESULT_CONTINUE;
@@ -595,13 +639,25 @@ VMCMD_RESULT EvCmdWBTGetDownLoadName( VMHANDLE * core, void * wk )
  * @brief スクリプトコマンド：WBTDLデータのナンバーセット
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTSetDLNumber( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdWBTSetDLData( VMHANDLE * core, void * wk )
 {
-  u16 number = SCRCMD_GetVMWorkValue( core, wk );
+  SCRCMD_WORK * work = wk;
+  GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( work );
   WBTSYS * wbtsys = getWBTSys( wk );
+
+  u16 number = SCRCMD_GetVMWorkValue( core, wk );
+
   //numberをWBT_SYSTEMにセット
   WBTSYS_SetSelectDLData( wbtsys, number );
-  TAMADA_Printf("EvCmdWBTSetDLNumber <= %d\n", number );
+  if ( WBTSYS_GetWBTCup(wbtsys) == WBTCUP_DOWNLOAD )
+  { //ダウンロードデータを読み込み
+    WBTSYS_LoadDLData( wbtsys, gamedata );
+  }
+  else
+  {
+    GF_ASSERT( 0 );
+  }
+  TAMADA_Printf("EvCmdWBTSetDLData <= %d\n", number );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -746,7 +802,6 @@ VMCMD_RESULT EvCmdWBTAnnounce( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：トーナメント名のセット
- * @todo  ダウンロードデータへの対応
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
@@ -761,7 +816,7 @@ VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
 
   {
     STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
-    WBTTOOL_GetTournamentName( wbtcup, strbuf );
+    WBTSYS_GetTournamentName( wbtsys, wbtcup, strbuf );
     WORDSET_RegisterWord( wordset, idx, strbuf, PM_NEUTRAL, TRUE, PM_LANG );
   }
   TAMADA_Printf("EvCmdWBTSetTournamentName(%d,%d)\n", idx, wbtcup);
@@ -862,8 +917,9 @@ VMCMD_RESULT EvCmdWBTSelectDLData( VMHANDLE * core, void * wk )
 	T_DOWNLOAD_PARAM * td_param;
 
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 * cur_pos = SCRCMD_GetVMWork( core, wk );
 
-  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys, T_DOWNLOAD_STATUS_JOIN, NULL, ret_wk );
+  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys, T_DOWNLOAD_STATUS_JOIN, ret_wk, cur_pos );
 	new_event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID(notwifi_event_wbt), T_DOWNLOAD_EVENT_Show, (void *)td_param );
   TAMADA_Printf("EvCmdWBTSelectDLData\n");

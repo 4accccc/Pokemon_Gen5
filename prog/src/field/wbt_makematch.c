@@ -311,7 +311,6 @@ static BOOL checkEnableEntryRomTrainer( const WBT_MATCH_CONDITION * cond, const 
   case WBTCUP_SHUFFLEMASTER:
   case WBTCUP_RENTAL:
   case WBTCUP_RENTALMASTER:
-  case WBTCUP_DOWNLOAD:
     GF_ASSERT( 0 );
     break;
 
@@ -334,6 +333,8 @@ static BOOL checkEnableEntryRomTrainer( const WBT_MATCH_CONDITION * cond, const 
     return rom_data->entry_hodomoe_event;
   case WBTCUP_WORLD:
     return rom_data->entry_world;
+  case WBTCUP_DOWNLOAD:
+    return TRUE;  //仮：とりいそぎ、ROM上のトレーナーは全員参戦可能にする
   }
   return FALSE;
 }
@@ -361,6 +362,35 @@ static void makeEntryTable( MAKE_ENTRY_WORK * mew )
   TAMADA_Printf("CANDIDATES:%d\n", mew_CountEntry( mew, ENTRY_CANDIDATE, WBT_TRPRI_NULL, BTLCOND_NON ) );
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void entryDownloadTournament( const WBTDL_MATCH * wbtdl_match, u16 * tr_list )
+{
+  int index = 0;
+
+  GFL_STD_MemClear( tr_list, sizeof(u16) * WBT_TRAINER_NUM );
+  tr_list[ index ++ ] = WBT_TRCODE_PLAYER;
+  for ( ; index < WBT_TRAINER_NUM; index ++ )
+  {
+    const WBTDL_MATCH * match = &wbtdl_match[ index - 1 ];
+    switch ( match->type )
+    {
+    default:
+      GF_ASSERT( 0 );
+      /* FALL THROUGH */
+    case WBTDL_MATCH_TRAINER_RANDOM:
+      //仮：実際は戦わないモブがあたるはず
+      tr_list[ index ] = 72 + GFUser_GetPublicRand0( 10 );
+      break;
+    case WBTDL_MATCH_TRAINER_ROM:
+      tr_list[ index ] = match->id;
+      break;
+    case WBTDL_MATCH_TRAINER_DATA:
+      tr_list[ index ] = WBT_TRCODE_DL1 + match->id;
+      break;
+    }
+  }
+}
 //-----------------------------------------------------------------------------
 /**
  * @brief チャンピオントーナメント出場者選出
@@ -509,7 +539,6 @@ void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond
   case WBTCUP_SHUFFLEMASTER:
   case WBTCUP_RENTAL:
   case WBTCUP_RENTALMASTER:
-  case WBTCUP_DOWNLOAD:
     GF_ASSERT_MSG( 0, "仮：まだできていません！\n");
     /* FALL THROUGH */
 
@@ -537,6 +566,9 @@ void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond
     break;
   case WBTCUP_HODOMOE_EVENT:
     entryHodomoeEventTournament( mew, tr_list );
+    break;
+  case WBTCUP_DOWNLOAD:
+    entryDownloadTournament( cond->wbtdl_match, tr_list );
     break;
   }
 

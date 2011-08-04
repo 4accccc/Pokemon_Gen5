@@ -12,6 +12,7 @@
 #include "wbt_system.h"
 #include "poke_tool/poke_tool.h"
 #include "gamesystem/btl_setup.h"
+#include "savedata/wbt_download.h"
 
 //============================================================================================
 //============================================================================================
@@ -64,6 +65,7 @@ struct _WBTTRAINER{
   u16 mmdl_id;      ///<動作モデルコード
   u16 btl_tr_type;  ///<トレーナータイプ（tr_tool/trtype_def.h)
   STRBUF * name;    ///<名前
+  STRBUF * title;   ///<肩書
 };
 
 //------------------------------------------------------------------
@@ -86,6 +88,7 @@ struct _WBT_MATCH_CONDITION{
 
   u64 seed64;
 
+  const WBTDL_MATCH * wbtdl_match;
 };
 
 //------------------------------------------------------------------
@@ -122,6 +125,10 @@ struct _WBT_SYSTEM {
 
   ///WBT用レギュレーション
   WBTREG wbtreg;
+
+  BOOL dldata_loaded;
+  ///WBTダウンロードデータ
+  WBTDL_DATA wbtdl_data;
 
   ///ポケモン選択関連
     u8 use_btlbox;  ///<バトルボックスを使用するかどうか？フラグ

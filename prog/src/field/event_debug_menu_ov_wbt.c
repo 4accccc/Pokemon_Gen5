@@ -470,9 +470,9 @@ static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk )
   OS_Printf("%5d(0x%4x)\n", sizeof(WBTDL_DATA), sizeof(WBTDL_DATA) );
   OS_Printf("size of WBT SAVE DATA = \n");
   OS_Printf("%5d(0x%4x)\n", WBTSAVE_GetWorkSize(), WBTSAVE_GetWorkSize() );
-  OS_Printf("%d\n", WBTEXSAVE_GetWorkSize() );
   return FALSE;
 }
+
 //=============================================================================
 //=============================================================================
 //----------------------------------------------------------------------------
@@ -502,14 +502,24 @@ static void debugCommand_CreateWBTDLData( DEBUG_WBT_WORK * p_wk )
     GFL_MSG_GetString( msgman, DEBUG_STR_WBT_DL03, tempbuf );
     GFL_STR_GetStringCode( tempbuf, wbtdl_data->contents_explain, WBTDL_TOURNAMENT_EXPLAIN_LEN );
 
-    PokeRegulation_LoadData( REG_WBT_SUBWAY_SINGLE, (REGULATION *)&(wbtdl_data->regulation) );
+    PokeRegulation_LoadData( REG_WBT_SINGLE, (REGULATION *)&(wbtdl_data->regulation) );
 
-    //トレーナーに関するデータは生成していない
+    //トレーナー手持ちに関するデータは生成していない
+    {
+      int i;
+      for ( i = 0; i < WBT_TRAINER_NUM - 1; i ++ )
+      {
+        wbtdl_data->match[i].type = WBTDL_MATCH_TRAINER_ROM;
+        wbtdl_data->match[i].pri  = 3;
+        wbtdl_data->match[i].id   = i;
+      }
+    }
     WBTEXSAVE_SetCrc( (WBTEXSAVE*)wbtdl_data );
 
     GFL_STR_DeleteBuffer( tempbuf );
     GFL_MSG_Delete( msgman );
   }
+  WBTSYS_DEBUG_PrintRegulation( (const REGULATION *)&(wbtdl_data->regulation) );
 
 
   //セーブ
