@@ -14172,6 +14172,24 @@
   .short  EV_SEQ_KEYSYS_GET_DIFFICULTY
   .short  \ret_wk
   .endm
+
+//--------------------------------------------------------------
+/**
+ * _KEYSYS_CALL_DEMO キー取得デモを呼び出し
+ * @param get_key   KEYSYS_TYPE_DIFFICULT_EASY  …  （白の難易度簡単キー）
+ *                  KEYSYS_TYPE_DIFFICULT_HARD  …  （黒の難易度難しいキー）
+ *                  KEYSYS_TYPE_CITY_WFBC     …    （白＆黒  自分の街キー）
+ *
+ */
+//--------------------------------------------------------------
+#define _KEYSYS_CALL_DEMO( get_key ) \
+      _ASM_KEYSYS_CALL_DEMO get_key
+
+  .macro  _ASM_KEYSYS_CALL_DEMO get_key
+  .short  EV_SEQ_KEYSYS_CALL_DEMO
+  .short  \get_key
+  .endm
+
 //======================================================================
 //
 //  キーシステム

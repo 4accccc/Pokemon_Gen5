@@ -1048,7 +1048,7 @@
   // キーシステム
   DEF_CMD( EvCmdKeySys_GetWfbc, EV_SEQ_KEYSYS_GET_WFBC )
   DEF_CMD( EvCmdKeySys_GetDifficulty, EV_SEQ_KEYSYS_GET_DIFFICULTY )
-  NO_CMD()
+  DEF_CMD( EvCmdKeySys_CallKeyGetDemo, EV_SEQ_KEYSYS_CALL_DEMO )
   NO_CMD()
 
   //データコンバート
