@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｎ『……ここは
-ボクの　せかい　だった　ばしょ</Text>
+ボクの　世界だった　場所</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:34:06" />
+				Time="2011-08-04T03:56:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -40,10 +40,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:12:55" />
+				Time="2011-08-03T09:22:00" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -59,11 +60,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ははおやと　はなれ
-もりの　おくで
+もりの　おくで▽
 ポケモンに　そだてられていた</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:33:38" />
+				Time="2011-08-04T03:57:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -71,12 +72,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ははおやと　はなれ
-もりの　おくで
-ポケモンに　そだてられていた</Text>
+			<Text>母親と　離れ
+森の　奥で▽
+ポケモンに　育てられていた</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:34:06" />
+				Time="2011-08-04T03:57:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -91,10 +92,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:20:12" />
+				Time="2011-08-03T09:22:00" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -122,12 +124,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あるひのこと　ボクの　まえに
-おやと　なのる　おとこが　あらわれた
+			<Text>ある日のこと　ボクの　前に
+親と　名乗る　男が　現れた▼
 それが　ゲーチス</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:34:06" />
+				Time="2011-08-04T03:57:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -142,10 +144,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:20:12" />
+				Time="2011-08-03T09:22:00" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -162,13 +165,13 @@
 			Language="JPN">
 			<Text>かれが　ボクに　あたえてくれたのは
 ハルモニア　という　なまえ▼
-かずおおくの　ちしきと▼
+おうとしての　かずおおくの　ちしき▼
 こころを　ふかくふかく　とざし
 はなすことも　できない　ポケモン▼
-それが　ボクの　すべて　だった……</Text>
+そして　この　へや……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:33:59" />
+				Time="2011-08-04T03:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -176,15 +179,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かれが　ボクに　あたえてくれたのは
-ハルモニア　という　なまえ▼
-かずおおくの　ちしきと▼
-こころを　ふかくふかく　とざし
-はなすことも　できない　ポケモン▼
-それが　ボクの　すべて　だった……</Text>
+			<Text>カレが　ボクに　与えてくれたのは
+ハルモニア　という　名前▼
+王としての　数多くの　知識▼
+心を　深く深く　閉ざし
+話すことも　できない　ポケモン▼
+そして　この部屋……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:34:06" />
+				Time="2011-08-04T03:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -199,10 +202,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:20:12" />
+				Time="2011-08-03T09:22:00" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -228,10 +232,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……そとで　まっているよ</Text>
+			<Text>……外で　待っているよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:34:06" />
+				Time="2011-08-04T03:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -248,10 +252,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:20:12" />
+				Time="2011-08-03T09:22:00" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

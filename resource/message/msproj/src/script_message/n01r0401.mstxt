@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……きたね[Ctrl2:CtrlSpeed ]</Text>
+			<Text>Ｎ『……きたね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:17:25" />
+				Time="2011-08-03T10:46:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……来たね[Ctrl2:CtrlSpeed ]</Text>
+			<Text>Ｎ『……きたね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T12:17:25" />
+				Time="2011-08-03T10:46:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -256,10 +256,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｎ『さあ！
-ボクを　あんない　したまえ</Text>
+ボクを　案内したまえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:00:32" />
+				Time="2011-08-04T05:16:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -366,10 +366,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……わかった
-では　ここで　まっているよ</Text>
+では　ここで　待っているよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:41:00" />
+				Time="2011-08-04T05:11:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -417,10 +417,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……わかった
-では　おくまで　つれていきたまえ</Text>
+では　奥まで　連れていきたまえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T11:41:00" />
+				Time="2011-08-04T05:12:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -466,10 +466,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……では　いこうか</Text>
+			<Text>……では　行こうか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T08:42:32" />
+				Time="2011-08-04T05:12:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

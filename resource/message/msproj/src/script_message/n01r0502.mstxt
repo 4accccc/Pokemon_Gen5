@@ -6,24 +6,36 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そこだ！</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そこだ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:31:56" />
+				Time="2011-08-04T08:03:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-03T09:30:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そこだ！[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:03:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:44:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
 ・posイベント
 ・メッセージのみ表示
-　表示後、画面下から</Comment>
+　表示後、画面下からＮ登場
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:42:04" />
+				Time="2011-08-04T08:03:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42,30 +54,47 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_02"
+		Label="msg_n01r0502_boss_02b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キミは～
-
-２ねんまえの　ここで
-ボクは　しんねんを　かけて
-ある　トレーナーと　たたかった</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]２ねんまえの　ことだ▼
+ボクは　ポケモンの　ため▼
+りそうの　せかいに　するため▼
+しんねんを　かけて
+ある　トレーナーと　たたかった！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:45:06" />
+				Time="2011-08-04T08:14:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-03T09:32:02" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]２年前の　ことだ▼
+ボクは　ポケモンの　ため▼
+理想の　世界に　するため▼
+信念を　かけて
+ある　トレーナーと　戦った！[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:14:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:44:35" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・今回は横向きでタイジさせる</Comment>
+・Black2ver
+・続けて
+※今回は横向きで対峙させる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:13:11" />
+				Time="2011-08-04T08:03:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -84,18 +113,18 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_03b"
+		Label="msg_n01r0502_boss_02w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　トレーナー
-アデク（チェレン）
-レシラムと共に世界をまわった
-ヒトを見た
-ポケモンを観た</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]２ねんまえの　ことだ▼
+ボクは　ポケモンの　ため▼
+しんじつの　せかいに　するため▼
+しんねんを　かけて
+ある　トレーナーと　たたかった！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:47:47" />
+				Time="2011-08-04T08:14:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -103,10 +132,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]２年前の　ことだ▼
+ボクは　ポケモンの　ため▼
+真実の　世界に　するため▼
+信念を　かけて
+ある　トレーナーと　戦った！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:42" />
+				Time="2011-08-04T08:14:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -115,10 +148,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・White2ver
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:45:12" />
+				Time="2011-08-04T08:02:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -137,14 +171,20 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_03w"
+		Label="msg_n01r0502_boss_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……そして　やぶれた▼
+と　どうじに
+だいじな　ことを　しった！▼
+せかいを　ゆたかに　するためには
+ことなる　かんがえを　うけいれること▼
+それが　せかいを
+かえるための　すうしき　だと[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:45:38" />
+				Time="2011-08-04T08:14:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -152,15 +192,29 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……そして　敗れた▼
+と　同時に
+大事な　ことを　知った！▼
+世界を　豊かに　するためには
+異なる　考えを　受け入れること▼
+それが　世界を
+変えるための　数式だと[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:45:38" />
+				Time="2011-08-04T08:14:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-03T09:45:38" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:02:48" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>BOSS
@@ -182,12 +236,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キミも　せかいを　かえる……▼
-それだけの　つよさを　もった
-トレーナー　なのか　たしかめたい▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ことなる　かんがえを　うけいれる……▼
+キミも　それだけの
+こころの　つよさを　もつ▽
+トレーナーなのか　たしかめたい[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:47:24" />
+				Time="2011-08-04T08:15:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -195,10 +250,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]異なる　考えを　受け入れる……▼
+キミも　それだけの
+心の　強さを　持つ▽
+トレーナーなのか　確かめたい[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:42" />
+				Time="2011-08-04T08:14:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -207,10 +265,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・続けて
+　Black2→mu_02
+　White2→shin_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:49" />
+				Time="2011-08-04T07:34:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -229,14 +289,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_05"
+		Label="msg_n01r0502_boss_05b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]おいで　ゼクロム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]おいで　ゼクロム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:45:36" />
+				Time="2011-08-04T08:04:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -244,10 +304,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]おいで　ゼクロム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]おいで　ゼクロム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:45:36" />
+				Time="2011-08-04T08:04:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -256,10 +316,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・続けてmu_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:49" />
+				Time="2011-08-04T07:34:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -278,14 +338,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_06"
+		Label="msg_n01r0502_boss_05w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]おいで　レシラム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]おいで　レシラム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:41:41" />
+				Time="2011-08-04T08:04:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -293,10 +353,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]おいで　レシラム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]おいで　レシラム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:41:41" />
+				Time="2011-08-04T08:04:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -305,10 +365,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・続けてshin_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:49" />
+				Time="2011-08-04T07:34:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -327,7 +387,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_shin_01"
+		Label="msg_n01r0502_mu_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -362,11 +422,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SHIN
+			<Text>MU
 ポケモン・ゼクロム</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:09:06" />
+				Time="2011-08-04T05:51:44" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -377,7 +437,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_mu_01"
+		Label="msg_n01r0502_shin_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -412,11 +472,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MU
+			<Text>SHIN
 ポケモン・レシラム</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:09:06" />
+				Time="2011-08-04T05:51:44" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -427,114 +487,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_07"
+		Label="msg_n01r0502_boss_06b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミが　どれほどの　トレーナーか
+どんな　りそうを　のぞむのか▽
+ゼクロムも　しりたいそうだよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:15:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:42" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:45:38" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:42" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:49" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BOSS
-Ｎ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:51:31" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0502_boss_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:42" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:42" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:42" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:42" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:32:49" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BOSS
-Ｎ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:51:31" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0502_boss_09"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゼクロムも
-キミが　どれほどの　りそうを～
-しりたいだって</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T09:53:28" />
+				Time="2011-08-04T08:15:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -542,10 +504,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミが　どれほどの　トレーナーか
+どんな　理想を　望むのか▽
+ゼクロムも　知りたいそうだよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:39" />
+				Time="2011-08-04T08:15:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -554,10 +518,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・Black2ver
+・続けてboss_</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:54:03" />
+				Time="2011-08-04T07:34:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -576,16 +541,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_10"
+		Label="msg_n01r0502_boss_06w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レシラムも
-キミが　どれほどの　しんじつを～
-しりたいだって</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミが　どれほどの　トレーナーか
+どんな　しんじつを　おいもとめるのか▽
+レシラムも　しりたいそうだよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:53:21" />
+				Time="2011-08-04T08:15:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -593,10 +558,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミが　どれほどの　トレーナーか
+どんな　真実を　追い求めるのか▽
+レシラムも　知りたいそうだよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:39" />
+				Time="2011-08-04T08:15:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -605,10 +572,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・White2ver
+・続けてboss_</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:54:03" />
+				Time="2011-08-04T07:35:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -627,14 +595,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_11"
+		Label="msg_n01r0502_boss_07"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>準備は　いいよね？</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクと　たたかう……
+その　じゅんびは　できているかい？[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:55:30" />
+				Time="2011-08-04T08:15:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -642,10 +611,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクと　戦う……
+その準備は　できているかい？[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:39" />
+				Time="2011-08-04T08:15:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -655,11 +625,11 @@
 			Language="JPN">
 			<Comment>♂
 ・はい/いいえの選択肢表示
-・はい　→
-　いいえ→</Comment>
+・はい　→boss_
+　いいえ→boss_</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:55:49" />
+				Time="2011-08-04T07:35:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -678,15 +648,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_12"
+		Label="msg_n01r0502_boss_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みせてほしい！
-キミの　かくごを！！</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]みせてほしい！
+キミの　かくごを！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:55:58" />
+				Time="2011-08-04T08:15:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -694,10 +664,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]みせてほしい！
+キミの　覚悟を！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:39" />
+				Time="2011-08-04T08:15:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -706,10 +677,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・はい</Comment>
+・はい選択時
+・Black2→mu_02
+　White2→shin_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:56:02" />
+				Time="2011-08-04T05:52:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -728,14 +701,117 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_13"
+		Label="msg_n01r0502_mu_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いつでも　いいよ</Text>
+			<Text>ババリバリッシュ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:57:24" />
+				Time="2011-08-04T05:32:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:32:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ババリバリッシュ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:32:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:32:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・Black2ver
+・あわせて鳴き声再生
+・続けてトレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:33:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MU
+ポケモン・ゼクロム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:51:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_shin_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ンバーニンガガッ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:32:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:32:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ンバーニンガガッ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:32:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:32:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・White2ver
+・あわせて鳴き声再生
+・続けてトレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:33:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SHIN
+ポケモン・レシラム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:51:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]いつでも　いいよ
+ボクは　いつまでも　まつ！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:15:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -743,10 +819,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]いつでも　いいよ
+ボクは　いつまでも　待つ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:39" />
+				Time="2011-08-04T08:15:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -755,10 +832,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・いいえ</Comment>
+・いいえ選択時
+・再度会話はboss_11</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:56:05" />
+				Time="2011-08-04T05:40:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -777,16 +855,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_14b"
+		Label="msg_n01r0502_boss_10b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクと　レシラムが　やぶれた▼
-キミの　おもい　りそう
-それが　ボクたちを　うわまわったね</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクと　レシラムが　やぶれた▼
+キミの　おもい
+りそうを　おいもとめる　きもち▽
+それが　ボクたちを　うわまわったね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:58:38" />
+				Time="2011-08-04T08:15:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -794,12 +873,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクと　レシラムが　やぶれた▼
-キミの　おもい　りそう
-それが　ボクたちを　うわまわったね</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクと　レシラムが　敗れた▼
+キミの　想い
+理想を　追い求める　気持ち▽
+それが　ボクたちを　上回ったね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:58:33" />
+				Time="2011-08-04T08:15:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -808,10 +888,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・戦闘後</Comment>
+・Black2ver
+・戦闘後
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:57:32" />
+				Time="2011-08-04T08:07:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -830,16 +912,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_14w"
+		Label="msg_n01r0502_boss_10w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクと　ゼクロムが　やぶれた▼
-キミの　おもい　しんじつ
-それが　ボクたちを　うわまわったね</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクと　ゼクロムが　やぶれた▼
+キミの　おもい
+しんじつを　しりたい　きもち▽
+それが　ボクたちを　うわまわったね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T09:58:54" />
+				Time="2011-08-04T08:15:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -847,10 +930,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクと　ゼクロムが　敗れた▼
+キミの　想い
+真実を　知りたい　気持ち▽
+それが　ボクたちを　上回ったね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:40" />
+				Time="2011-08-04T08:15:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -859,10 +945,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・White2ver
+・戦闘後
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:04:36" />
+				Time="2011-08-04T08:07:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -881,17 +969,18 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_15"
+		Label="msg_n01r0502_boss_11"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キミも　また
-せかいを　かえるほどの　トレーナー
-
-あのトレーナーと比べる必要もなく</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミと　たたかっているとき
+２ねんまえを　おもいだした……▼
+そして　すこしだけど
+キミのこと　りかいできた……▽
+そんな　きが　するよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:03:32" />
+				Time="2011-08-04T08:15:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -899,10 +988,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミと　戦っているとき
+２年前を　思い出した……▼
+そして　少しだけど
+キミのこと　理解できた……▽
+そんな　気が　するよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:40" />
+				Time="2011-08-04T08:15:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -911,10 +1004,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・続けて
+　Black2＋♂→boss_00
+　Black2＋♀→boss_
+　White2＋♂→boss_
+　White2＋♀→boss_</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:04:36" />
+				Time="2011-08-04T05:45:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -933,16 +1030,19 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_16b"
+		Label="msg_n01r0502_boss_12b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そして　ゼクロム
-いままで　ありがとう
-これからは　カレに～</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そして　ゼクロム
+いままで　ありがとう▼
+キミとの　たびは
+とても　すばらしかったよ▼
+これからは　カレのため
+その　ちからを　つかうんだ……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:04:08" />
+				Time="2011-08-04T08:15:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -950,10 +1050,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そして　ゼクロム
+いままで　ありがとう▼
+キミとの　旅は
+とても　すばらしかったよ▼
+これからは　カレのため
+その力を　使うんだ……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:40" />
+				Time="2011-08-04T08:15:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -962,10 +1067,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・Black2ver＋主人公♂</Comment>
+・Black2ver＋主人公♂
+・ゼクロムの方を向いてメッセージ表示
+・続けてmu_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:21" />
+				Time="2011-08-04T05:50:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -984,16 +1091,19 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_17b"
+		Label="msg_n01r0502_boss_13b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そして　ゼクロム
-いままで　ありがとう
-これからは　カノジョに</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そして　ゼクロム
+いままで　ありがとう▼
+キミとの　たびは
+とても　すばらしかったよ▼
+これからは　カノジョのため
+その　ちからを　つかうんだ……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:04:18" />
+				Time="2011-08-04T08:16:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1001,10 +1111,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そして　ゼクロム
+いままで　ありがとう▼
+キミとの　旅は
+とても　すばらしかったよ▼
+これからは　カノジョのため
+その力を　使うんだ……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:40" />
+				Time="2011-08-04T08:16:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1013,10 +1128,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・Black2ver＋主人公♀</Comment>
+・Black2ver＋主人公♀
+・ゼクロムの方を向いてメッセージ表示
+・続けてmu_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:23" />
+				Time="2011-08-04T05:52:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1035,16 +1152,19 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_16w"
+		Label="msg_n01r0502_boss_12w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そしてレシラム
-いままでありがとう
-これからは　カレに</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そして　レシラム
+いままで　ありがとう▼
+キミとの　たびは
+とても　すばらしかったよ▼
+これからは　カレのため
+その　ちからを　つかうんだ……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:03:57" />
+				Time="2011-08-04T08:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1052,10 +1172,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そして　レシラム
+いままで　ありがとう▼
+キミとの　旅は
+とても　すばらしかったよ▼
+これからは　カレのため
+その力を　使うんだ……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:40" />
+				Time="2011-08-04T08:16:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1064,10 +1189,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・White2ver＋主人公♂</Comment>
+・White2ver＋主人公♂
+・レシラムの方を向いてメッセージ表示
+・続けてshin_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:06" />
+				Time="2011-08-04T05:52:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1086,16 +1213,19 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_17w"
+		Label="msg_n01r0502_boss_13w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そしてレシラム
-いままでありがとう
-これからは　カノジョに</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そして　レシラム
+いままで　ありがとう▼
+キミとの　たびは
+とても　すばらしかったよ▼
+これからは　カノジョのため
+その　ちからを　つかうんだ……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:03:57" />
+				Time="2011-08-04T08:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1103,10 +1233,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そして　レシラム
+いままで　ありがとう▼
+キミとの　旅は
+とても　すばらしかったよ▼
+これからは　カノジョのため
+その力を　使うんだ……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:40" />
+				Time="2011-08-04T08:16:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1115,10 +1250,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・White2ver＋主人公♀</Comment>
+・White2ver＋主人公♀
+・レシラムの方を向いてメッセージ表示
+・続けてshin_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:06:09" />
+				Time="2011-08-04T05:52:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1137,7 +1274,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_shin_02"
+		Label="msg_n01r0502_mu_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1165,75 +1302,83 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・あわせて鳴き声再生
-・続けて</Comment>
+・続けてboss_</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:09:29" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SHIN
-ポケモン・ゼクロム</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:09:01" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0502_mu_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……シュボ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:11:12" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:09:32" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……シュボ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:11:12" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:09:32" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ポケモン
-・あわせて鳴き声再生
-・続けて</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:09:29" />
+				Time="2011-08-04T07:35:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>MU
-ポケモン・レシラム</Text>
+ポケモン・ゼクロム</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:08:59" />
+				Time="2011-08-04T05:51:32" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_18b"
+		Label="msg_n01r0502_shin_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクだって　寂しい
-だけど　君たちの　役目は
-人が～
-そのとき稲光を～</Text>
+			<Text>……シュボ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:22:08" />
+				Time="2011-08-03T10:11:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:09:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……シュボ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:11:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:09:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・続けてboss_</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T07:35:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SHIN
+ポケモン・レシラム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T05:51:28" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_14b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクだって　さびしい▼
+だけど　キミの　やくめは
+りそうを　おいもとめる▽
+ヒトを　みちびくこと▼
+ボクは　いろんなことを
+キミから　おそわった▼
+それを　じぶんの　ちからで
+ほかの　ヒトたちに　つたえていく▼
+だいじょうぶ　だよ
+ボクは　ポケモンと　はなせる▼
+そう！　ポケモンと　ヒトの
+かけはしに　なってみせるから……[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:16:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1241,13 +1386,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクだって　寂しい
-だけど　君たちの　役目は
-人が～
-そのとき稲光を～</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクだって　さびしい▼
+だけど　キミの　役目は
+理想を　追い求める▽
+ヒトを　導くこと▼
+ボクは　いろんなことを
+キミから　教わった▼
+それを　自分の　力で
+他の　ヒトたちに　伝えていく▼
+大丈夫だよ
+ボクは　ポケモンと　話せる▼
+そう！　ポケモンと　ヒトの
+架け橋に　なってみせるから……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:22:05" />
+				Time="2011-08-04T08:16:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1256,10 +1409,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・続けてboss_</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
+				Time="2011-08-04T07:35:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1278,17 +1431,25 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_n01r0502_boss_18w"
+		Label="msg_n01r0502_boss_14w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクだって　寂しい
-だけど　君たちの　役目は
-人が～
-そのとき火柱を～</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクだって　さびしい▼
+だけど　キミの　やくめは
+しんじつを　おいもとめる▽
+ヒトを　みちびくこと▼
+ボクは　いろんなことを
+キミから　おそわった▼
+それを　じぶんの　ちからで
+ほかの　ヒトたちに　つたえていく▼
+だいじょうぶ　だよ
+ボクは　ポケモンと　はなせる▼
+そう！　ポケモンと　ヒトの
+かけはしに　なってみせるから……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:22:08" />
+				Time="2011-08-04T08:16:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1296,13 +1457,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクだって　寂しい
-だけど　君たちの　役目は
-人が～
-そのとき火柱を～</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクだって　さびしい▼
+だけど　キミの　役目は
+真実を　追い求める▽
+ヒトを　導くこと▼
+ボクは　いろんなことを
+キミから　教わった▼
+それを　自分の　力で
+他の　ヒトたちに　伝えていく▼
+大丈夫だよ
+ボクは　ポケモンと　話せる▼
+そう！　ポケモンと　ヒトの
+架け橋に　なってみせるから……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:22:06" />
+				Time="2011-08-04T08:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1311,10 +1480,281 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・続けてboss_</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
+				Time="2011-08-04T07:35:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]だから……▼
+オヤスミ……[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:16:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:19:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]だから……▼
+オヤスミ……[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:16:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
 				Time="2011-08-03T10:20:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ゼクロム/レシラムが
+　ストーンに戻る演出
+・続けて
+　Black2→boss_
+　White2→boss_</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T07:35:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_16b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName ]！▼
+きみを　しんじて
+この　ダークストーンを　たくす！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:16:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName ]！▼
+きみを　信じて
+この　ダークストーンを　託す！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:16:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・アイテム入手処理
+　No617「ダークストーン」
+・続けてboss_
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T07:35:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_16w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName ]！▼
+きみを　しんじて
+この　ライトストーンを　たくす！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:16:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName ]！▼
+きみを　信じて
+この　ライトストーンを　託す！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:16:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・アイテム入手処理
+　No616「ライトストーン」
+・続けてboss_
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T07:35:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_17b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ダークストーンを　もって
+リュウラセンのとう　へ　いくんだ！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:16:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ダークストーンを　持って
+リュウラセンの塔へ　行くんだ！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:16:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T06:48:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_17w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ライトストーンを　もって
+リュウラセンのとう　へ　いくんだ！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:16:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ライトストーンを　持って
+リュウラセンの塔へ　行くんだ！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T08:17:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-03T10:20:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-04T06:48:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1337,60 +1777,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあもう一度オヤスミ……</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]リュウラセンのとうに　いきたまえ▼
+ボクは……▼
+２ねんまえんの
+あの　トレーナーを　さがす▼
+そして　アリガトウ▼
+そう　つたえる　つもりだよ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:19:56" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:19:55" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BOSS
-Ｎ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0502_boss_20b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>主人公
-君にこのライトストーンを託す</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:05" />
+				Time="2011-08-04T08:16:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1398,210 +1793,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]リュウラセンの塔に　行きたまえ▼
+ボクは……▼
+２年前の
+あの　トレーナーを　探す▼
+そして　アリガトウ▼
+そう　伝える　つもりだよ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BOSS
-Ｎ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0502_boss_20w"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>主人公
-君にこのライトストーンを託す</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:05" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:05" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BOSS
-Ｎ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0502_boss_21b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>その～をもって
-リュウラセンの塔へ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:05" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:05" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BOSS
-Ｎ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0502_boss_21w"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>その～をもって
-リュウラセンの塔へ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:05" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:05" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:16" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BOSS
-Ｎ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#408080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0502_boss_22"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ボクは……
-しばらくココで</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:05" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:05" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:17" />
+				Time="2011-08-04T08:17:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1610,10 +1810,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・これ以降の処理未定
+・条件を満たすとトレーナー戦闘が
+　できるようにする予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T10:20:17" />
+				Time="2011-08-04T07:02:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
