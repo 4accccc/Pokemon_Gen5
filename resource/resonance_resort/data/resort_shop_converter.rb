@@ -228,7 +228,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     end
 
     begin
-      data.write_u16( bmodeldata.search( "NARC_output_buildmodel_outdoor_#{model}_nsbmd", "#{row}行ファイル" ) )
+      data.write_u16( bmodeldata.search( "NARC_output_buildmodel_indoor_#{model}_nsbmd", "#{row}行ファイル" ) )
     rescue HeaderSearchError
       exit(1)
     end

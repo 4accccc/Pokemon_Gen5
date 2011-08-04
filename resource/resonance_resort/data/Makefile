@@ -30,9 +30,9 @@ targetpresent = resort_present
 #ˆË‘¶‚·‚éƒtƒ@ƒCƒ‹–¼
 #------------------------------------------------------------------------------
 xlsname			= resonance_resort_data
-msgfile 		= ..\..\..\prog\include\msg\script/msg_resort_scr.h #TODO
-scriptfile	= ..\..\fldmapdata\script\resort_scr_def.h #TODO
-bmodelfile 	= ../../fldmapdata/build_model/output/buildmodel_outdoor.naix
+msgfile 		= ..\..\..\prog\include\msg\script/msg_resort_scr.h
+scriptfile	= ..\..\fldmapdata\script\resort_scr_def.h
+bmodelfile 	= ../../fldmapdata/build_model/output/buildmodel_indoor.naix
 fieldevent	= ../../fldmapdata/eventdata/tmp/c16.h
 landpatch 	= ../../fldmapdata/land_data_patch/land_data_patch_def.h
 objcode 		= ../../fldmmdl/fldmmdl_objcode.h

@@ -156,7 +156,6 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
 {
   int i;
 
-  FIELD_DATA_PATCH* p_patch = FIELD_DATA_PATCH_Create( LAND_DATA_PATCH_RESORT_INSTITUTION_ON, GFL_HEAP_LOWID(heapID) );
 
   //住人の数だけ配置を行う
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
@@ -176,7 +175,12 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
       if( !RESORT_RESIDENT_DATA_IsEmpty( cp_resident ) )
       {
         const RESORT_BINARY_SHOP_DATA *cp_binary_shop = RESORT_BINARY_SHOP_SearchDataByData( p_wk->p_shop_data, (RESORT_RESIDENT_DATA *)cp_resident );
+
+        u16 patch = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop, RESORT_BINARY_SHOP_PARAM_IN_3DMD );
         u16 bmodel = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop, RESORT_BINARY_SHOP_PARAM_OUT_MODEL );
+
+        FIELD_DATA_PATCH* p_patch = FIELD_DATA_PATCH_Create( patch, GFL_HEAP_LOWID(heapID) );
+
         // g3Dmapローカルのグリッド座標を求める
         u32 local_grid_x = grid_x % 32;
         u32 local_grid_z = grid_z % 32;
@@ -209,11 +213,12 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
 
         //3dmdを配置
         build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z );
+
+        FIELD_DATA_PATCH_Delete( p_patch );
       }
     }
   }
 
-  FIELD_DATA_PATCH_Delete( p_patch );
 
   return build_count;
 }
