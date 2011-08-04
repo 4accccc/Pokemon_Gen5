@@ -143,6 +143,85 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 people_type,
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  住民の座標
+ *
+ *	@param	u16 buffer_index  バッファ番号
+ *	@param	*p_x  X座標
+ *	@param	*p_x  Y座標
+ *	@param	*p_dir  方向
+ */
+//-----------------------------------------------------------------------------
+void RESORT_MAP_GetResidentGridPos( u16 buffer_index, u16 shop_rank, u16 *p_x, u16 *p_z, u16 *p_dir )
+{
+  static const struct
+  {
+    u16 x;
+    u16 z;
+    u32 dir;
+  }sc_resident_pos[]  =
+  {
+    {
+      22,
+      63,
+      DIR_LEFT,
+    },
+    {
+      8,
+      56,
+      DIR_RIGHT,
+    },
+    {
+      22,
+      49,
+      DIR_LEFT,
+    },
+    {
+      8,
+      42,
+      DIR_RIGHT,
+    },
+    {
+      22,
+      35,
+      DIR_LEFT,
+    },
+    {
+      8,
+      28,
+      DIR_RIGHT,
+    },
+    {
+      22,
+      21,
+      DIR_LEFT,
+    },
+    {
+      8,
+      14,
+      DIR_RIGHT,
+    },
+  };
+
+  GF_ASSERT( buffer_index < NELEMS(sc_resident_pos) );
+
+  *p_x    = sc_resident_pos[buffer_index].x;
+  *p_z    = sc_resident_pos[buffer_index].z;
+  *p_dir  = sc_resident_pos[buffer_index].dir;
+
+  if( shop_rank == 3 )
+  {
+    if( *p_dir == DIR_RIGHT )
+    {
+      (*p_x)--;
+    }
+    else
+    {
+      (*p_x)++;
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  秘書タイプ
  *
  *	@param	u16 type  秘書タイプ

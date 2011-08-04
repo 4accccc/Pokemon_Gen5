@@ -169,7 +169,16 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
       header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
       p_wk->cp_function->SetupMmdHeader( p_wk, &header );
 
-      RESORT_MAP_GetPlaceGridPosByIndex( cp_param->placeID, p_wk->people_type, kind, cp_param->peopleID, &grid_x, &grid_z, &dir );
+      if( p_wk->people_type == RESORT_PEOPLE_TYPE_RESIDENT )
+      {
+        RESORT_MAP_GetResidentGridPos( RESORT_ABSTRUCT_DATA_GetBufferIndex(p_wk->p_abstruct_data), 0, &grid_x, &grid_z, &dir );
+      }
+      else
+      {
+        RESORT_MAP_GetPlaceGridPosByIndex( cp_param->placeID, p_wk->people_type, kind, cp_param->peopleID, &grid_x, &grid_z, &dir );
+      }
+
+
       header.dir = dir;
 
       MMDLHEADER_SetGridPos( &header, grid_x, grid_z, 0 );
