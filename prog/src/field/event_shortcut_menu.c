@@ -1045,7 +1045,8 @@ static BOOL ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void 
       //フィールドに戻る場合
       if( param->result == EVENT_PROCLINK_RESULT_EXIT ||
           param->result == EVENT_PROCLINK_RESULT_ITEM ||
-          param->result == EVENT_PROCLINK_RESULT_SKILL )
+          param->result == EVENT_PROCLINK_RESULT_SKILL||
+          param->result == EVENT_PROCLINK_RESULT_RETIRE )
       {	
         /* なにもしない */
         p_wk->seq = SEQ_EXIT;

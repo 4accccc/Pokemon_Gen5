@@ -56,12 +56,13 @@ DEFINE_LOCAL LWK_NOW_AREA
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_retire
 {
-//  // エレベータ移動音
-//  _CALL play_elevator_move_se
-//
-//  _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
-//  _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
-//  _SE_STOP()
+  // 内部でフェードが呼ばれるので、後からエレベータ音を鳴らす
+  _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
+
+  // エレベータ移動音
+  _CALL play_elevator_move_se
+  _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
+  _SE_STOP()
 }
 EVENT_END
 

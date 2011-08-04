@@ -234,6 +234,7 @@ static const u16 FIELD_MENU_ITEM_MSG_ARR[FMIT_MAX] =
   FLDMAPMENU_STR_ITEM05,    // 「レポート」
   FLDMAPMENU_STR_ITEM06,    // 「せってい」
   FLDMAPMENU_STR_ITEM09,    // 「」空白
+  FLDMAPMENU_STR_ITEM10,    // 「リタイア」
 };
 
 
@@ -279,10 +280,16 @@ static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX+2][3] =
   { NARC_field_menu_menu_icon_zukan2_NCGR,
     NARC_field_menu_menu_icon_zukan2_NCER,
     NARC_field_menu_menu_icon_zukan2_NANR},
+  // リタイア
+  { NARC_field_menu_menu_icon_retire_NCGR,
+    NARC_field_menu_menu_icon_retire_NCER,
+    NARC_field_menu_menu_icon_retire_NANR},
+
 };
 
 #define GIRLS_BAG_RES     ( 8 )
 #define GIRLS_ZUKAN_RES   ( 9 )
+#define GIRLS_RETIRE_RES  ( 10 )
 
 //--------------------------------------------------------------
 //  初期化
@@ -643,7 +650,7 @@ static const u32 menu_screen_table[] = {
  NARC_field_menu_menu_bg_4_NSCR,    // ポケモン・図鑑両方無し
  NARC_field_menu_menu_bg_5_NSCR,    // 遊覧船
  NARC_field_menu_menu_bg_5_NSCR,    // パレス
- NARC_field_menu_menu_bg_5_NSCR,    // バッグなし
+ NARC_field_menu_menu_bg_NSCR,      // バッグなし・リタイアボタン有り
 };
 
 
@@ -948,7 +955,7 @@ static const FIELD_MENU_ITEM_TYPE typeArr[FIELD_MENU_TYPE_MAX][7] =
     FMIT_TRAINERCARD,
     FMIT_REPORT,
     FMIT_CONFING,
-    FMIT_NONE,
+    FMIT_RETIRE,
     FMIT_EXIT,
   },
 };
@@ -1050,6 +1057,12 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
         initWork.ncgArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_ZUKAN_RES][0];
         initWork.nceArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_ZUKAN_RES][1];
         initWork.anmArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_ZUKAN_RES][2];
+      }
+      // リタイアボタンの時もitemType=リソースIDではないので差換える
+      if(itemType==FMIT_RETIRE){
+        initWork.ncgArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_RETIRE_RES][0];
+        initWork.nceArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_RETIRE_RES][1];
+        initWork.anmArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_RETIRE_RES][2];
       }
     }
     else

@@ -339,6 +339,31 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="FLDMAPMENU_STR_ITEM10">
+		<LanguageCell
+			Language="JPN">
+			<Text>リタイア</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-01T02:35:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-01T02:35:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リタイア</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-01T02:36:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-01T02:36:00" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="FLDMAPMENU_STR08"
 		Style="Large">
 		<LanguageCell

@@ -28,6 +28,7 @@
 #include "field_menu.h"
 #include "dowsing/dowsing.h"
 #include "c_gear/wbt_subscreen.h"
+#include "field/inf_dungeon_retire.h"
 
 #include "sound/snd_viewer.h"
 #include "sound/pm_sndsys.h"
@@ -95,6 +96,7 @@ struct _FIELD_SUBSCREEN_WORK {
     REPORT_WORK * reportWork;
     CGEAR_POWER_ONOFF * cgear_power_onoff;
     WBTSUBSCRN_WORK * wbtSubScrnWork;
+    INFRETIRESUBSCRN_WORK * inf_retire_work;
   };
   u16 angle_h;
   u16 angle_v;
@@ -198,6 +200,9 @@ static void init_cgear_power_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSC
 static void update_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
+static void init_inf_retire_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
+static void update_inf_retire_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
+static void exit_inf_Retire_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -310,6 +315,15 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     NULL ,
     exit_wbt_subscreen,
     actioncallback_wbt_subscreen,
+  },
+  { // 無限ダンジョンリタイア
+    FIELD_SUBSCREEN_INF_RETIRE,
+    init_inf_retire_subscreen,
+    update_inf_retire_subscreen,
+    NULL ,
+    NULL,
+    exit_inf_Retire_subscreen,
+    NULL,
   },
 #if PM_DEBUG
   { // デバッグライト制御パネル
@@ -1810,4 +1824,50 @@ static void exit_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork )
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(cgear_onoff));
 }
 
+
+//-----------------------------------------------------------------------------
+// 無限ダンジョン
+//----------------------------------------------------------------------------
+/**
+ *  @brief  無限ダンジョン リタイア　
+ *
+ *	@param	* pWork
+ *	@param	prevMode 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void init_inf_retire_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
+{
+  pWork->inf_retire_work = INFRETIRESUBSCRN_Init( pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap), HEAPID_FIELD_SUBSCREEN );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン　リタイア メイン
+ *
+ *	@param	pWork
+ *	@param	bActive 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void update_inf_retire_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive )
+{
+  INFRETIRESUBSCRN_Main( pWork->inf_retire_work );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン　リタイア 終了
+ *
+ *	@param	pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void exit_inf_Retire_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+  INFRETIRESUBSCRN_Exit( pWork->inf_retire_work );
+}
 

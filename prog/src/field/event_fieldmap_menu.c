@@ -32,6 +32,10 @@
 #include "field/field_skill.h"
 #include "field/event_subscreen.h"
 
+#include "script.h"
+
+#include "../../../resource/fldmapdata/script/infinity_dungeon_scr_def.h" // for SCRID_INFINITY_DUNGEON_RETIRE
+
 //======================================================================
 //  define
 //======================================================================
@@ -59,6 +63,8 @@ typedef enum
 
   FMENUSTATE_USE_ITEM,
   FMENUSTATE_RETURN_ITEM,
+  
+  FMENUSTATE_INFDUNGEON_RETIRE,
   
 }FMENU_STATE;
 
@@ -327,6 +333,10 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     {
       mwk->state  = FMENUSTATE_EXIT_MENU;
     }
+    else if( mwk->link.result == EVENT_PROCLINK_RESULT_RETIRE )
+    {
+      mwk->state  = FMENUSTATE_INFDUNGEON_RETIRE;
+    }
     break;
 
     //-------------------------------------
@@ -355,6 +365,35 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
   case FMENUSTATE_RETURN_ITEM:
     //GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
     return (GMEVENT_RES_FINISH);
+
+
+    //-------------------------------------
+    ///   無限ダンジョンリタイア
+    //=====================================
+  case FMENUSTATE_INFDUNGEON_RETIRE:
+    {
+      FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork);
+      // サブスクリーンを切り替えてから、RETIREイベント呼び出し
+      if( FIELD_SUBSCREEN_CanChange( subscreen ) )
+      {
+        GMEVENT *p_event;
+        //フィールド復帰
+        {
+          MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( mwk->fieldWork );
+          MMDLSYS_ClearPauseMoveProc( fldMdlSys );
+        }
+
+        // 無限ダンジョンイベント呼び出し
+        p_event = SCRIPT_SetEventScript( mwk->gmSys, SCRID_INFINITY_DUNGEON_RETIRE, NULL, FIELDMAP_GetHeapID( mwk->fieldWork ));
+        GMEVENT_ChangeEvent(mwk->gmEvent , p_event);
+      }
+      else
+      {
+        ONOUE_Printf("サブスクリーン切り替え処理\n");
+      }
+    }
+    break;
+
   }
 
   return( GMEVENT_RES_CONTINUE );
@@ -381,6 +420,7 @@ static EVENT_PROCLINK_CALL_TYPE FldMapGetProclinkToMenuItem( FIELD_MENU_ITEM_TYP
     EVENT_PROCLINK_CALL_REPORT,//  FMIT_REPORT,
     EVENT_PROCLINK_CALL_CONFIG,//  FMIT_CONFING,
     -1,//  FMIT_NONE,
+    EVENT_PROCLINK_CALL_RETIRE,//  FMIT_RETIRE,
   };
 
   GF_ASSERT( type < FMIT_MAX );
@@ -457,6 +497,10 @@ static BOOL FldMapMenu_InitBefore_Callback( const EVENT_PROCLINK_PARAM *param, v
 
   case EVENT_PROCLINK_RESULT_RETURN:
     GAMEDATA_SetSubScreenMode( gamedata, FIELD_SUBSCREEN_TOPMENU );
+    break;
+
+  case EVENT_PROCLINK_RESULT_RETIRE:
+    GAMEDATA_SetSubScreenMode( gamedata, FIELD_SUBSCREEN_NORMAL );
     break;
 
   case EVENT_PROCLINK_RESULT_EXIT:

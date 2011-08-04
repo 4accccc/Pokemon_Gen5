@@ -55,6 +55,9 @@
 // レコード
 #include "savedata/record.h"
 
+// 無限ダンジョンリタイアイベント
+#include "inf_dungeon_retire_event.h"
+
 //-------------------------------------
 /// 各アプリのオーバーレイ
 //=====================================
@@ -96,15 +99,6 @@ FS_EXTERN_OVERLAY(medalbox);
 //-------------------------------------
 /// RETURN関数の戻り値
 //=====================================
-typedef enum
-{
-  RETURNFUNC_RESULT_RETURN,     // メニューに戻る
-  RETURNFUNC_RESULT_EXIT,       // メニューも抜けて歩ける状態まで戻る
-  RETURNFUNC_RESULT_USE_SKILL,  // メニューを抜けて技を使う
-  RETURNFUNC_RESULT_USE_ITEM,   // メニュを抜けてアイテムを使う
-  RETURNFUNC_RESULT_NEXT,       // 次のプロセスへ行く
-} RETURNFUNC_RESULT;
-
 typedef enum
 {
   PROCLINK_MODE_LIST_TO_MAIL_CREATE,  //バッグ→リスト→手紙を持たせる→作成画面
@@ -240,6 +234,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_LiveCaster(PROCLINK_WORK* wk,void* para
 static void * FMenuCallProc_MedalBox(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 static RETURNFUNC_RESULT FMenuReturnProc_MedalBox(PROCLINK_WORK* wk,void* param_adrs);
 
+static void FMenuEvent_Retire( PROCLINK_WORK* wk, u32 param );
 
 //呼び出しワークが単純な構造体だった時の共通解放処理
 static void FMenuReleaseProc_ReleaseSimpleWork( void *param_adrs );
@@ -330,6 +325,12 @@ static const struct
     FMenuCallProc_Config,
     FMenuReturnProc_Config,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
+  },
+  //EVENT_PROCLINK_CALL_RETIRE,       
+  {
+    0 , NULL , NULL, NULL, 
+    FMenuEvent_Retire,
     FMenuReleaseProc_ReleaseSimpleWork,
   },
 
@@ -553,6 +554,12 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
       wk->param->result = EVENT_PROCLINK_RESULT_SKILL;
       *seq  = SEQ_END;
     }
+    else if( wk->result == RETURNFUNC_RESULT_RETIRE )
+    { 
+      //リタイアが選択された場合
+      wk->param->result = EVENT_PROCLINK_RESULT_RETIRE;
+      *seq  = SEQ_END;
+    }
     break;
 
   case SEQ_END:
@@ -564,7 +571,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     { 
       wk->param->result = EVENT_PROCLINK_RESULT_EXIT;
     }
-    //アイテムと技はもう入っている
+    //アイテムと技とリタイアはもう入っている
     return GMEVENT_RES_FINISH;
 
   //-------------------------------------
@@ -718,7 +725,12 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     else if( wk->result == RETURNFUNC_RESULT_USE_SKILL )
     { 
       //技が選択された場合
-      wk->param->result = EVENT_PROCLINK_RESULT_SKILL;
+      wk->param->result = EVENT_PROCLINK_RESULT_DOWSINGMACHINE;
+    }
+    else if( wk->result == RETURNFUNC_RESULT_RETIRE )
+    { 
+      //リタイアが選択された場合
+      wk->param->result = EVENT_PROCLINK_RESULT_RETIRE;
     }
 
     //次へ
@@ -2613,6 +2625,25 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
   return GMEVENT_RES_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョンリタイアイベント
+ *
+ *	@param	wk
+ *	@param	param 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void FMenuEvent_Retire( PROCLINK_WORK* wk, u32 param )
+{
+  GMEVENT * subevent;
+  subevent = INFRETIRE_EventCreate( wk->param->gsys ,wk->param->field_wk ,wk->param->subscreen_mode ,&wk->result);
+
+  // 終了方法をイベント内で処理している
+  GMEVENT_CallEvent(wk->event, subevent);
+}
+
 //----------------------------------------------------------------------------------
 /**
  * @brief 呼び出しワークが単純な構造体だった時の共通解放処理
@@ -2625,3 +2656,5 @@ static void FMenuReleaseProc_ReleaseSimpleWork( void *param_adrs )
   // 通常アプリの呼び出しワークは普通解放する
   GFL_HEAP_FreeMemory( param_adrs );
 }
+
+

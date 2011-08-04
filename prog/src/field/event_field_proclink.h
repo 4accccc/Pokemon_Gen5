@@ -39,6 +39,7 @@ typedef enum
   EVENT_PROCLINK_CALL_TRAINERCARD,  //トレーナーカード
   EVENT_PROCLINK_CALL_REPORT,       //レポート
   EVENT_PROCLINK_CALL_CONFIG,       //コンフィグ
+  EVENT_PROCLINK_CALL_RETIRE,       //リタイア
 
   //それ以外のプロセス
   EVENT_PROCLINK_CALL_STATUS,       //ステータス
@@ -54,7 +55,7 @@ typedef enum
 } EVENT_PROCLINK_CALL_TYPE;
 
 //-------------------------------------
-/// 結果
+/// 結果（プロックリンクが返すパラメータ）
 //=====================================
 typedef enum
 { 
@@ -63,7 +64,22 @@ typedef enum
   EVENT_PROCLINK_RESULT_SKILL,      //メニューを抜けてフィールド技を使う
   EVENT_PROCLINK_RESULT_ITEM,       //メニューを抜けてアイテムを使う
   EVENT_PROCLINK_RESULT_DOWSINGMACHINE,       //メニューを抜けてダウジングマシンを使いながら歩ける状態になる
+  EVENT_PROCLINK_RESULT_RETIRE,     //メニューを抜けて無限ダンジョンリタイア処理を行う
 } EVENT_PROCLINK_RESULT;
+
+//-------------------------------------
+/// 結果（プロックリンク各プロセスから受け取るパラメータ）
+//=====================================
+typedef enum
+{
+  RETURNFUNC_RESULT_RETURN,     // メニューに戻る
+  RETURNFUNC_RESULT_EXIT,       // メニューも抜けて歩ける状態まで戻る
+  RETURNFUNC_RESULT_USE_SKILL,  // メニューを抜けて技を使う
+  RETURNFUNC_RESULT_USE_ITEM,   // メニュを抜けてアイテムを使う
+  RETURNFUNC_RESULT_NEXT,       // 次のプロセスへ行く
+  RETURNFUNC_RESULT_RETIRE,     // メニュを抜けて無限ダンジョンリタイア処理を作る
+} RETURNFUNC_RESULT;
+
 
 //=============================================================================
 /**

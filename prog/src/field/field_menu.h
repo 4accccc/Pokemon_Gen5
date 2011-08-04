@@ -22,7 +22,7 @@ enum{
   FIELD_MENU_NO_POKEMON_NO_ZUKAN,   // 図鑑無し・ポケモン無し
   FIELD_MENU_PLEASURE_BOAT,         // 遊覧船内
   FIELD_MENU_PALACE,                ///< パレス・裏フィールドにいる場合
-  FIELD_MENU_NO_BAG,                // バッグなし
+  FIELD_MENU_NO_BAG,                // バッグなし・リタイア（無限ダンジョン内）
 
   FIELD_MENU_TYPE_MAX,
 };

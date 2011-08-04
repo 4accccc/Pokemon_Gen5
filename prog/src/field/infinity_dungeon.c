@@ -554,6 +554,7 @@ static void pop_dig_pos( INF_DIG_DATA *p_dig_data );
 static void RndArray( u32 *p_array , int size ,GFL_STD_RandContext *rand_context );
 static BOOL CheckDigEnd( ROOM_DATA *p_room_data ,int fs_x ,int fs_y);
 static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_no ,int rmv_num ,GFL_STD_RandContext *rand_context );
+static BOOL IsMoveElevator( MAP_CHAGE_EVENT_WORK *p_wk );
 
 #ifdef PM_DEBUG
 static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_SAVE *p_save );
@@ -786,12 +787,17 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       InitWorkData( p_wk ,p_gsys );
 
  
-      // 部屋移動と階移動でフェードを切り替える
-      if( p_wk->map_change_type == MAP_CHAGE_TYPE_FOOR )
+      // エレベーター移動の場合と、部屋移動でフェード方法を変える
+      if( IsMoveElevator( p_wk ) )
       {
         // フェードアウト
         MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
-        GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_WAIT ) );
+        //GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_WAIT ) );
+
+        // 遅いフェードアウト
+        GFL_FADE_SetMasterBrightReq(
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FIELD_FADE_SLOW_WAIT );
+
       }
       else
       {
@@ -867,10 +873,10 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
         }
       }
  
-      // 部屋移動と階移動でフェードを切り替える
-      if( p_wk->map_change_type == MAP_CHAGE_TYPE_FOOR )
+      // エレベーター移動の場合と、部屋移動でフェード方法を変える
+      if( IsMoveElevator( p_wk ) )
       {
-        GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( p_wk->p_gsys, p_wk->p_field_work ,30 ) );
+        GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_WAIT ) );
       }
       else
       {
@@ -3404,6 +3410,24 @@ u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_
 
   GF_ASSERT_MSG(0,"ID位置が発見できませんでした");
   return 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エレベータでの移動か調べる
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval TRUEの時エレベータでの移動
+ */
+//-----------------------------------------------------------------------------
+static BOOL IsMoveElevator( MAP_CHAGE_EVENT_WORK *p_wk )
+{
+  if( (p_wk->map_change_type == MAP_CHAGE_TYPE_FOOR) || (p_wk->warp_dir == WARP_INFORMATION) )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 #ifdef PM_DEBUG
