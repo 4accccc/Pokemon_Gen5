@@ -1062,13 +1062,33 @@ static BOOL debugMenuCallProc_WinRecord( DEBUG_WBT_WORK *p_wk )
 static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk )
 {
 	GMEVENT 			*new_event;
-	new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
-      FS_OVERLAY_ID(event_wbt_download), T_DOWNLOAD_EVENT_Show, NULL );
+	T_DOWNLOAD_PARAM 	*td_param;
+
+  if( p_wk->t_status == T_DOWNLOAD_STATUS_SELECT )
+  {
+    new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+        FS_OVERLAY_ID(event_wbt_download), T_DOWNLOAD_EVENT_ShowWifi, NULL );
+  }
+  else
+  {
+    td_param = T_DOWNLOAD_PARAM_Create( HEAPID_PROC, p_wk->gmSys, p_wk->t_status, NULL, NULL );
+    //
+    // ‚È‚­‚Ä‚à‘åä•v‚È‚Ì‚Å•Û—¯
+    //	WIN_RECORD_PARAM_Setup_Debug(
+    //		p_wk->gmSys, wr_param,
+    //		WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
+    // debug—p
+    //td_param->status = p_wk->t_status;
+    //
+    new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+        FS_OVERLAY_ID(notwifi_event_wbt), T_DOWNLOAD_EVENT_Show, (void *)td_param );
+  }
 	GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 	//
 	OS_Printf( "T Download Start\n" );
 	return TRUE;
 }
+
 
 #if 0
 //--------------------------------------------------------------

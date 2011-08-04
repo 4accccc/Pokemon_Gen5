@@ -916,7 +916,7 @@ VMCMD_RESULT EvCmdWBTECheckerDownLoad( VMHANDLE * core, void * wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
 	new_event = GMEVENT_CreateOverlayEventCall( gsys,
-      FS_OVERLAY_ID(event_wbt_download), T_DOWNLOAD_EVENT_Show, NULL );
+      FS_OVERLAY_ID(event_wbt_download), T_DOWNLOAD_EVENT_ShowWifi, NULL );
   //åãâ ÇéÛÇØéÊÇÈÉèÅ[ÉNÇê›íËÇ∑ÇÈ
   //WBTSYS_SetScriptAnswerWork( wbtsys, ret_wk );
   TAMADA_Printf("EvCmdWBTECheckerDownLoad\n");

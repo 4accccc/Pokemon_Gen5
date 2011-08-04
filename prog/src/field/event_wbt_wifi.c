@@ -89,7 +89,7 @@ static GMEVENT_RESULT eventTDownload( GMEVENT *p_event, int *p_seq, void *p_wk_a
  *  @return 終了コード
  */
 //-----------------------------------------------------------------------------
-GMEVENT * T_DOWNLOAD_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
+GMEVENT * T_DOWNLOAD_EVENT_ShowWifi( GAMESYS_WORK * gsys, void *p_adrs )
 {
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   T_DOWNLOAD_EVENT_WORK *p_param;

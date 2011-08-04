@@ -30,4 +30,4 @@ FS_EXTERN_OVERLAY( event_wbt_download );
 */
 //=============================================================================
 //
-extern GMEVENT * T_DOWNLOAD_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work );
+extern GMEVENT * T_DOWNLOAD_EVENT_ShowWifi( GAMESYS_WORK * gsys, void *p_adrs );

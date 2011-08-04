@@ -230,6 +230,9 @@ static GFL_PROC_RESULT Wbt_Download_Sys_Proc_Init
    //ÉÇÉWÉÖÅ[ÉãçÏê¨
   SUBPROC_Init( &p_wk->subproc, sc_subproc_data, p_wk, HEAPID_WBT_DOWNLOAD_SYS );
 
+  //ëﬁî
+  PMSND_PushBGM();
+
 #ifdef DEBUG_WBT_DOWNLOAD_WIFI_THROUGH
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   {
@@ -531,6 +534,7 @@ static void WiFiLogin_FreeParam( void *p_param_adrs, void *p_wk_adrs )
     break;
 
   case WIFILOGIN_RESULT_CANCEL:
+    PMSND_PopBGM();
     // âΩÇ‡åƒÇŒÇ»ÇØÇÍÇŒPROCèIóπ
     break;
   }
@@ -588,6 +592,7 @@ static void WiFiLogout_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   }
 
   PMSND_FadeOutBGM( PMSND_FADE_FAST );
+  PMSND_PopBGM();
 
   GFL_HEAP_FreeMemory( p_param );
 }
