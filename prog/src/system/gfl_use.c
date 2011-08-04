@@ -47,6 +47,16 @@
 
 #endif //PM_DEBUG
 
+
+//SDK_TWLはハイブリッドロムおよびDSi専用モード時に定義される
+//マルチブートイメージはNITRO専用ROMでしか生成できない
+//この関係を間違って使わないためのおまじない
+#ifdef  SDK_TWL
+#ifdef MULTI_BOOT_MAKE
+#error  NITRO専用モードなのにマルチブートでない！！
+#endif
+#endif
+
 //=============================================================================================
 //=============================================================================================
 //------------------------------------------------------------------
@@ -64,22 +74,45 @@ enum {
 //本番用ROMではメモリーを100K多めに割り当てる
 #ifdef BUGFIX_BTS7931_20100726
 
+enum {
+  HEAPSIZE_SYSTEM   =   0x6000,
+  HEAPSIZE_APP_BASE = 0x186000,
+};
+
 #ifdef PM_DEBUG
 
-#define HEAPSIZE_SYSTEM (0x006000)
-#define HEAPSIZE_APP    (0x185000)   // PL,GSでは約0x13A000
-#define HEAPSIZE_DSI    (0x486000)   // DSIは16M
+//デバッグ時のメモリ定義
+enum {
+  //ハイブリッドROM:NITROモード時
+  HEAPSIZE_APP      = HEAPSIZE_APP_BASE + 0,
+  //NITRO専用ROM（マルチブートROMイメージ）
+  HEAPSIZE_APP_NTR  = HEAPSIZE_APP_BASE +   0x4000,
+  //ハイブリッドROM:TWLモード時
+  HEAPSIZE_DSI      = HEAPSIZE_APP_BASE + 0x300000,
+};
+
+//#define HEAPSIZE_SYSTEM (0x006000)
+//#define HEAPSIZE_APP    (0x185000)   // PL,GSでは約0x13A000
+//#define HEAPSIZE_DSI    (0x486000)   // DSIは16M
 //NITROでmakeした時にHEAPID_EXTRA用に4000増やす
-#define HEAPSIZE_APP_NTR    (0x186000)   // PL,GSでは約0x13A000
+//#define HEAPSIZE_APP_NTR    (0x186000)   // PL,GSでは約0x13A000
 
 #else //PM_DEBUG
 
 //こちらが本番用メモリ
-#define HEAPSIZE_SYSTEM (0x006000)
-#define HEAPSIZE_APP    (0x182000+GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE)   // PL,GSでは約0x13A000
-#define HEAPSIZE_DSI    (0x486000)   // DSIは16M
+enum {
+  //ハイブリッドROM:NITROモード時
+  HEAPSIZE_APP      = HEAPSIZE_APP_BASE +        0 + GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE,
+  //NITRO専用ROM（マルチブートROMイメージ）
+  HEAPSIZE_APP_NTR  = HEAPSIZE_APP_BASE +   0x4000 + GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE,
+  //ハイブリッドROM:TWLモード時
+  HEAPSIZE_DSI      = HEAPSIZE_APP_BASE + 0x300000,
+};
+//#define HEAPSIZE_SYSTEM (0x006000)
+//#define HEAPSIZE_APP    (0x182000+GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE)   // PL,GSでは約0x13A000
+//#define HEAPSIZE_DSI    (0x486000)   // DSIは16M
 //NITROでmakeした時にHEAPID_EXTRA用に4000増やす
-#define HEAPSIZE_APP_NTR    (0x186000+GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE)   // PL,GSでは約0x13A000
+//#define HEAPSIZE_APP_NTR    (0x186000+GFL_NET_DWC_RANDOMMATCH_FINAL_HEAPSIZE)   // PL,GSでは約0x13A000
 
 #endif //PM_DEBUG
 
@@ -105,25 +138,23 @@ typedef struct {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+#if defined(SDK_TWL)
 static const HEAP_INIT_HEADER hih[]={
   { HEAPSIZE_SYSTEM,  OS_ARENA_MAIN },
-#ifdef DEBUG_ONLY_FOR_taya
-  { 0x182000,   OS_ARENA_MAIN },
-//  { HEAPSIZE_APP,   OS_ARENA_MAIN },
-#else
-#if (defined(SDK_TWL))
   { HEAPSIZE_APP,   OS_ARENA_MAIN },
-#else
-  { HEAPSIZE_APP_NTR,   OS_ARENA_MAIN },
-#endif
-#endif
 };
 
 static const HEAP_INIT_HEADER hihDSi[]={  //DSI用
   { HEAPSIZE_SYSTEM,  OS_ARENA_MAIN },
   { HEAPSIZE_DSI,   OS_ARENA_MAIN },
 };
+#else
 
+static const HEAP_INIT_HEADER hihNitro[] = { //NITRO専用(マルチブートロム）
+  { HEAPSIZE_SYSTEM,  OS_ARENA_MAIN },
+  { HEAPSIZE_APP_NTR,   OS_ARENA_MAIN },
+};
+#endif
 
 static GFL_USE_WORK * gfl_work = NULL;
 static int        GFL_USE_VintrCounter;
@@ -201,7 +232,7 @@ void GFLUser_Init(void)
     GFL_HEAP_Init(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
   }
 #else
-  GFL_HEAP_Init(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
+  GFL_HEAP_Init(&hihNitro[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
 #endif
 
 
