@@ -8,6 +8,7 @@
 //======================================================================
 
 #pragma once
+#include "savedata/regulation.h"  //REGULATION
 
 //--------------------------------------------------------------
 /**
@@ -26,4 +27,11 @@ extern VMCMD_RESULT EvCmdBtlUtilSetRegulationOutPokeName( VMHANDLE * core, void 
  */
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdBtlUtilPartySelect( VMHANDLE * core, void *wk );
+
+//--------------------------------------------------------------
+/**
+ * @brief EvCmdBtlUtilPartySelect用イベント生成
+ */
+//--------------------------------------------------------------
+extern GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation, u16* ret_wk, HEAPID heapID );
 

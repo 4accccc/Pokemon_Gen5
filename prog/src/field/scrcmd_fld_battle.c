@@ -56,8 +56,6 @@ static u16 btlutil_SetTagRegulationOutPokeName( GAMEDATA* gdata,
 static u16* btlutil_CreateRegulationOutPokeArray(
     const REGULATION* regu, GAMEDATA* gdata, u16* num,HEAPID heapID );
 
-static GMEVENT* BtlPartySelectCheck(
-    GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation, u16* ret_wk, HEAPID heapID );
 static GMEVENT_RESULT event_BtlPartySelect(GMEVENT * event, int *  seq, void * work);
 
 //////////////////////////////////////////////////////////////////////////
@@ -193,7 +191,7 @@ static u16* btlutil_CreateRegulationOutPokeArray(
 /*
  *  @brief  パーティ選択イベント生成
  */
-static GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation, u16* ret_wk, HEAPID heapID )
+GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation, u16* ret_wk, HEAPID heapID )
 {
   PARTY_SELECT_WORK* wk;
   GAMEDATA* gdata;
