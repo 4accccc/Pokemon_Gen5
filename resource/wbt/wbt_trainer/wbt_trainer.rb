@@ -102,7 +102,7 @@ class COL
     AI
     BTL_BGM
     WIN_BGM
-    JOBNAME
+    TITLE
     ACE_POKE
     MSG_1ST_START
     MSG_2ND_START
@@ -119,7 +119,7 @@ end
 #----------------------------------------------------------------------------
 class WBT_TRDATA
 
-  attr_reader :name
+  attr_reader :name, :title
 
   def initialize( column )
     @no = column[COL::NO].to_i
@@ -138,7 +138,7 @@ class WBT_TRDATA
     @ai = column[COL::AI]
     @btl_bgm = column[COL::BTL_BGM]
     @win_bgm = column[COL::WIN_BGM]
-    @jobname = column[COL::JOBNAME]
+    @title = column[COL::TITLE]
     @ace_poke = column[COL::ACE_POKE]
     @msg_1st_start = 0 #column[COL::MSG_1ST_START]
     @msg_2nd_start = 0 #column[COL::MSG_2ND_START]
@@ -153,6 +153,8 @@ class WBT_TRDATA
 
     if @mmdl_id == "可変" then @mmdl_id = "WKOBJCODE00" end
     raise Exception, "異常なデータです！" if @name == nil
+    raise Exception, "異常なデータです！" if @title == nil
+
     @ace_poke_no = if $monsno_hash.has_key?(@ace_poke) then
                      $monsno_hash[@ace_poke]
                    else
@@ -263,6 +265,16 @@ def make_trname_gmm( trdata_list, template_gmm )
   trname_gmm.close_gmm
 end
 
+def make_trtitle_gmm( trdata_list, template_gmm )
+  trtitle_gmm = GMM::new
+  trtitle_gmm.open_gmm( template_gmm, "wbt_trtitle.gmm" )
+  trdata_list.each_with_index{|trdata, idx|
+    trtitle = trdata.title
+    trtitle_gmm.make_row_kanji( sprintf("WBT_TRTITLE_%02d",idx), trtitle, trtitle )
+  }
+  trtitle_gmm.close_gmm
+end
+
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 trdata_list = read_trdata_list( ARGV[0] ) 
@@ -270,6 +282,7 @@ if ARGV.size == 1 then
   puts put_trdata_source( trdata_list )
 elsif ARGV.size == 2 then
   make_trname_gmm( trdata_list, ARGV[1] )
+  make_trtitle_gmm( trdata_list, ARGV[1] )
 end
 
 

@@ -14,6 +14,7 @@ USERS	= tamada suginaka_katsunori
 #------------------------------------------------------------------------------
 targetname = wbt_trlist
 trname_gmm = wbt_trname.gmm
+trtitle_gmm = wbt_trtitle.gmm
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
@@ -61,8 +62,8 @@ LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
 LDIRT_CLEAN += *.dat *.bin $(targetname).narc $(targetname).naix arc_result.txt
-LDIRT_CLEAN += $(GMMDIR)/$(trname_gmm)
-LDIRT_CLEAN += $(trname_gmm)
+LDIRT_CLEAN += $(GMMDIR)/$(trname_gmm) $(GMMDIR)/$(trtitle_gmm)
+LDIRT_CLEAN += $(trname_gmm) $(trtitle_gmm)
 endif
 
 
@@ -100,7 +101,7 @@ wbt_trainer.bin: $(DATATXT)
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc $(GMMDIR)/$(trname_gmm)
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(GMMDIR)/$(trname_gmm) $(GMMDIR)/$(trtitle_gmm)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -124,7 +125,10 @@ $(DATATXT):	$(DATAFILE)
 $(GMMDIR)/$(trname_gmm):	$(trname_gmm)
 	$(COPY) $(trname_gmm) $(GMMDIR)
 
-$(trname_gmm):	$(DATATXT)
+$(GMMDIR)/$(trtitle_gmm):	$(trtitle_gmm)
+	$(COPY)	$(trtitle_gmm) $(GMMDIR)
+
+$(trname_gmm) $(trtitle_gmm) :	$(DATATXT)
 	ruby wbt_trainer.rb $(DATATXT) $(GMMDIR)/../template.gmm
 
 #wbt_trainer.dat: $(DATATXT)
