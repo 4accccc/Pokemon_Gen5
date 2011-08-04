@@ -5325,6 +5325,11 @@
 		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
+	<row id="karate_22">
+		<language name="JPN" width="216">ガンジロウ</language>
+		<language name="JPN_KANJI" width="216">ガンジロウ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

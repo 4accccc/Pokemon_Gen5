@@ -986,7 +986,8 @@
 #define	TRID_FISHING_28   ( 973 ) 
 #define	TRID_RANGERM_26   ( 974 ) 
 #define	TRID_RANGERW_26   ( 975 ) 
-#define TRID_MAX  ( 976 )
+#define	TRID_KARATE_22   ( 976 ) 
+#define TRID_MAX  ( 977 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;
