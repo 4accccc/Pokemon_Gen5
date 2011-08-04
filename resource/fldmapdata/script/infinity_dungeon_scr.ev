@@ -290,15 +290,15 @@ dungeon_information:
 
   // あいさつ
 	IF $LWK_D_VERSION == VERSION_B2 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_info_greet_b_01 , SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS( msg_info_b_01_00 , SCWK_TARGET_OBJID, POS_DL )
   ELSE 
-    _BALLOONWIN_OBJMSG_POS( msg_info_greet_w_01 , SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS( msg_info_w_01_00 , SCWK_TARGET_OBJID, POS_DL )
   ENDIF
 
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_LIST_RET )
-  _BMPMENU_MAKE_LIST( msg_info_menu_01, 0 )  //せつめい
-  _BMPMENU_MAKE_LIST( msg_info_menu_02, 1 )  //ちょうせんする
-  _BMPMENU_MAKE_LIST( msg_info_menu_03, 2 )  //やめる
+  _BMPMENU_MAKE_LIST( msg_info_menu_01_00, 0 )  //せつめい
+  _BMPMENU_MAKE_LIST( msg_info_menu_02_00, 1 )  //ちょうせんする
+  _BMPMENU_MAKE_LIST( msg_info_menu_03_00, 2 )  //やめる
   _BMPMENU_START()
 
   IF $LWK_LIST_RET != EV_WIN_B_CANCEL THEN
@@ -310,28 +310,30 @@ dungeon_information:
 
         // せつめい
         IF $LWK_D_VERSION == VERSION_B2 THEN
-          _BALLOONWIN_OBJMSG_POS( msg_info_help_b_01 , SCWK_TARGET_OBJID, POS_DL )
-          _BALLOONWIN_OBJMSG_POS( msg_info_help_b_02 , SCWK_TARGET_OBJID, POS_DL )
-          _BALLOONWIN_OBJMSG_POS( msg_info_help_b_03 , SCWK_TARGET_OBJID, POS_DL )
+          _BALLOONWIN_OBJMSG_POS( msg_info_help_b_01_00 , SCWK_TARGET_OBJID, POS_DL )
+          _BALLOONWIN_OBJMSG_POS( msg_info_help_b_02_00 , SCWK_TARGET_OBJID, POS_DL )
         ELSE 
-          _BALLOONWIN_OBJMSG_POS( msg_info_help_w_01 , SCWK_TARGET_OBJID, POS_DL )
-          _BALLOONWIN_OBJMSG_POS( msg_info_help_w_02 , SCWK_TARGET_OBJID, POS_DL )
-          _BALLOONWIN_OBJMSG_POS( msg_info_help_w_03 , SCWK_TARGET_OBJID, POS_DL )
+          _BALLOONWIN_OBJMSG_POS( msg_info_help_w_01_00 , SCWK_TARGET_OBJID, POS_DL )
+          _BALLOONWIN_OBJMSG_POS( msg_info_help_w_02_00 , SCWK_TARGET_OBJID, POS_DL )
         ENDIF
 
         $SCWK_ANSWER = 1
      CASE 1 THEN
         // どのえりあにちょうせんしますか？
         IF $LWK_D_VERSION == VERSION_B2 THEN
-          _BALLOONWIN_OBJMSG_POS( msg_info_b_001 , SCWK_TARGET_OBJID, POS_DL )
+          _BALLOONWIN_OBJMSG_POS( msg_info_b_02_00 , SCWK_TARGET_OBJID, POS_DL )
         ELSE 
-          _BALLOONWIN_OBJMSG_POS( msg_info_w_001 , SCWK_TARGET_OBJID, POS_DL )
+          _BALLOONWIN_OBJMSG_POS( msg_info_w_02_00 , SCWK_TARGET_OBJID, POS_DL )
         ENDIF
        _CALL select_area
         $SCWK_ANSWER = 0
      CASE 2 THEN
-        // きゃんせる
-        _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel , SCWK_TARGET_OBJID, POS_DL )
+        // キャンセル
+        IF $LWK_D_VERSION == VERSION_B2 THEN
+          _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel_00 , SCWK_TARGET_OBJID, POS_DL )
+        ELSE 
+          _BALLOONWIN_OBJMSG_POS( msg_info_w_cancel_00 , SCWK_TARGET_OBJID, POS_DL )
+        ENDIF
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         $SCWK_ANSWER = 0
@@ -355,6 +357,14 @@ select_area:
   DEFINE_LOCAL LWK_LIST_NUM
   DEFINE_LOCAL LWK_LIST_COUNT
   DEFINE_LOCAL LWK_MENU_NUM
+
+  DEFINE_LOCAL LWK_NOT_EGG_PARTY_NUM //手持ちポケモンの数
+  DEFINE_LOCAL LWK_PARTY_NUM //手持ちポケモンの数
+  DEFINE_LOCAL LWK_COUNT_NUM //WHILE文のカウンタ
+  DEFINE_LOCAL LWK_RET_LEVEL //レベルチェックの返り値
+  DEFINE_LOCAL LWK_ERROR     //制限に満たないポケモンの数
+  DEFINE_LOCAL LWK_LIMIT_LV  //制限レベル
+  DEFINE_LOCAL LWK_ERROR_INDEX  // 最後にエラーになったポケモンインデックス
   
   // ROMバージョン取得
   _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
@@ -378,67 +388,182 @@ select_area:
     $LWK_LIST_NUM += 1
 	  _NUMBER( 0 , LWK_LIST_NUM , 2 )
 	  
-    IF $LWK_D_VERSION == VERSION_B2 THEN
-      _BMPMENU_MAKE_LIST( msg_info_b_area, LWK_LIST_COUNT )
-    ELSE 
-      _BMPMENU_MAKE_LIST( msg_info_w_area, LWK_LIST_COUNT )
-    ENDIF
+    _BMPMENU_MAKE_LIST( msg_info_area_00, LWK_LIST_COUNT )
 
     $LWK_LIST_COUNT += 1
   ENDWHILE
 
   // やめる
-  IF $LWK_D_VERSION == VERSION_B2 THEN
-    _BMPMENU_MAKE_LIST( msg_elevator_b_004, 0xff )
-  ELSE 
-    _BMPMENU_MAKE_LIST( msg_elevator_b_004, 0xff )
-  ENDIF
+  _BMPMENU_MAKE_LIST( msg_elevator_04_00, 0xff )
 
   // メニュー開始
   _BMPMENU_START()
 
   // キャンセル判定
   IF ($LWK_AREA_MENU != EV_WIN_B_CANCEL)&&($LWK_AREA_MENU != 0xff) THEN
-    
+
+    // レベル制限の値を取得
+    SWITCH $LWK_AREA_MENU
+    CASE 0 THEN
+      $LWK_LIMIT_LV = 0
+    CASE 1 THEN
+      $LWK_LIMIT_LV = 0
+    CASE 2 THEN
+      $LWK_LIMIT_LV = 0
+    CASE 3 THEN
+      $LWK_LIMIT_LV = 0
+    CASE 4 THEN
+      $LWK_LIMIT_LV = 0
+    CASE 5 THEN
+      $LWK_LIMIT_LV = 50
+    CASE 6 THEN
+      $LWK_LIMIT_LV = 70
+    CASE 7 THEN
+      $LWK_LIMIT_LV = 75
+    CASE 8 THEN
+      $LWK_LIMIT_LV = 80
+    CASE 9 THEN
+      $LWK_LIMIT_LV = 85
+    ENDSWITCH
+
+    _GET_PARTY_POKE_COUNT ( LWK_PARTY_NUM , POKECOUNT_MODE_TOTAL)
+    _GET_PARTY_POKE_COUNT ( LWK_NOT_EGG_PARTY_NUM , POKECOUNT_MODE_NOT_EGG )
+
+    //カウンターが手持ちポケモンの数より大きくなるまで以下の処理を繰り返す
+    WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+      //指定POSのポケモンのLVを取得
+      _GET_PARTY_POKE_PARAM ( LWK_RET_LEVEL , LWK_COUNT_NUM , SCR_POKEPARA_LEVEL )
+
+      // タマゴチェック
+      _CHECK_TEMOTI_EGG( SCWK_ANSWER , LWK_COUNT_NUM )
+      // 制限レベル0の時は、タマゴも連れて行ける
+      IF ($SCWK_ANSWER == TRUE) && ( $LWK_LIMIT_LV > 0 ) THEN
+        $LWK_ERROR += 1
+        $LWK_ERROR_INDEX = $LWK_COUNT_NUM
+      ELSE
+        // レベルチェック
+        IF $LWK_RET_LEVEL < $LWK_LIMIT_LV THEN
+          $LWK_ERROR += 1
+          $LWK_ERROR_INDEX = $LWK_COUNT_NUM
+        ENDIF
+      ENDIF
+
+      //カウントアップ
+      $LWK_COUNT_NUM +=1
+    ENDWHILE
+
+    IF $LWK_ERROR > 0 THEN
+      _CHECK_TEMOTI_EGG( SCWK_ANSWER , LWK_ERROR_INDEX )
+
+      // 進入制限にひっかかった
+      IF $SCWK_ANSWER == TRUE THEN
+        _PLAYER_NAME(0)
+        $LWK_AREA_MENU += 1 // ゼロオリジン修正
+        _NUMBER( 1, LWK_AREA_MENU ,2 )
+        // タマゴ制限
+        IF $LWK_D_VERSION == VERSION_B2 THEN
+          _BALLOONWIN_OBJMSG_POS( msg_info_attention_b_02_00 , SCWK_TARGET_OBJID, POS_DL )
+        ELSE 
+          _BALLOONWIN_OBJMSG_POS( msg_info_attention_w_02_00 , SCWK_TARGET_OBJID, POS_DL )
+        ENDIF
+      ELSE
+        _PLAYER_NAME(0)
+        _TEMOTI_NICK_NAME( 1 , LWK_ERROR_INDEX )
+        $LWK_AREA_MENU += 1 // ゼロオリジン修正
+        _NUMBER( 2, LWK_AREA_MENU ,2 )
+        _NUMBER( 3, LWK_LIMIT_LV ,2 )
+        // レベル制限
+        IF $LWK_D_VERSION == VERSION_B2 THEN
+          _BALLOONWIN_OBJMSG_POS( msg_info_attention_b_01_00 , SCWK_TARGET_OBJID, POS_DL )
+        ELSE 
+          _BALLOONWIN_OBJMSG_POS( msg_info_attention_w_01_00 , SCWK_TARGET_OBJID, POS_DL )
+        ENDIF
+      ENDIF
+      
+      $SCWK_ANSWER = SCR_NO
+    ELSE
+
     // 確認
     IF $LWK_D_VERSION == VERSION_B2 THEN
-      _BALLOONWIN_OBJMSG_POS( msg_info_single_b_01 , SCWK_TARGET_OBJID, POS_DL )
-      _BALLOONWIN_OBJMSG_POS( msg_info_b_003 , SCWK_TARGET_OBJID, POS_DL )
+      _BALLOONWIN_OBJMSG_POS( msg_info_b_03_00 , SCWK_TARGET_OBJID, POS_DL )
     ELSE 
-      _BALLOONWIN_OBJMSG_POS( msg_info_single_w_01 , SCWK_TARGET_OBJID, POS_DL )
-      _BALLOONWIN_OBJMSG_POS( msg_info_w_003 , SCWK_TARGET_OBJID, POS_DL )
+      _BALLOONWIN_OBJMSG_POS( msg_info_w_03_00 , SCWK_TARGET_OBJID, POS_DL )
+    ENDIF
+      _YES_NO_WIN( SCWK_ANSWER )
     ENDIF
 
-    _YES_NO_WIN( SCWK_ANSWER )
-
     IF $SCWK_ANSWER == SCR_YES THEN
-       
+
       // じゅんびはよろしいですね
       IF $LWK_D_VERSION == VERSION_B2 THEN
-        _BALLOONWIN_OBJMSG_POS( msg_info_b_004 , SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_OBJMSG_POS( msg_info_b_04_00 , SCWK_TARGET_OBJID, POS_DL )
       ELSE 
-        _BALLOONWIN_OBJMSG_POS( msg_info_w_004 , SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_OBJMSG_POS( msg_info_w_04_00 , SCWK_TARGET_OBJID, POS_DL )
       ENDIF
       _BALLOONWIN_CLOSE()
-   
+
       // みちをあける
-      _OBJ_ANIME( OBJ_INFORMATION, anm_move_make_room_l )
-	    _OBJ_ANIME_WAIT()
+      IF $LWK_AREA_MENU < 5 THEN
+        _OBJ_ANIME( OBJ_INFORMATION, anm_move_make_room_r )
+      ELSE
+        _OBJ_ANIME( OBJ_INFORMATION, anm_move_make_room_l )
+      ENDIF
+      _OBJ_ANIME_WAIT()
+
+      // エレベーターに乗り込む演出
+      _CAMERA_START()
+      _CAMERA_PURGE()
+      IF $LWK_AREA_MENU < 5 THEN
+        _CAMERA_MOVE(5080,0,315392,491520,143360,491520, 40 ) 
+      ELSE
+        _CAMERA_MOVE(5080,0,315392,741376,143360,491520, 40 ) 
+      ENDIF
 
       // 主人公をエレベータまで移動
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in_01 )
-	    _OBJ_ANIME_WAIT()
-      
+      IF $LWK_AREA_MENU < 5 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in_01_l )
+      ELSE
+        _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in_01_r )
+      ENDIF
+      _OBJ_ANIME_WAIT()
+    
       // エレベータを開ける
-      _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
+      IF $LWK_AREA_MENU < 5 THEN
+        _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
+      ELSE
+        _INFINITY_DUNGEON_ACTION_ELEVATOR( 1 ,TRUE)
+      ENDIF
 
       // エレベータに乗り込む
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in_02 )
-	    _OBJ_ANIME_WAIT()
- 
+      _OBJ_ANIME_WAIT()
+
+      // カメラ移動待ち
+      _CAMERA_WAIT_MOVE()
+
       // エレベータを閉める
-      _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
-      
+      IF $LWK_AREA_MENU < 5 THEN
+        _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
+      ELSE
+        _INFINITY_DUNGEON_ACTION_ELEVATOR( 1 ,FALSE)
+      ENDIF
+
+      // バージョンによって上下にカメラ移動
+      IF $LWK_D_VERSION == VERSION_B2 THEN
+        IF $LWK_AREA_MENU < 5 THEN
+          _CAMERA_MOVE(5080,0,315392,491520,544768,491520, 40 ) 
+        ELSE
+          _CAMERA_MOVE(5080,0,315392,741376,544768,491520, 40 ) 
+        ENDIF
+      ELSE
+        IF $LWK_AREA_MENU < 5 THEN
+          _CAMERA_MOVE(5080,0,315392,491520,-86016,491520, 40 ) 
+        ELSE
+          _CAMERA_MOVE(5080,0,315392,741376,-86016,491520, 40 ) 
+        ENDIF
+      ENDIF
+
       // エレベータ移動音
       _CALL play_elevator_move_se
 
@@ -450,30 +575,41 @@ select_area:
 
       // 選択したエリアのスタート位置を取得
       _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_START_FLOOR  ,LWK_AREA_MENU ,LWK_START_FLOOR )
-  
+
       // スタートフロアまで移動
       _INFINITY_DUNGEON_MOVE_FLOOR( LWK_START_FLOOR )
       _SE_STOP()
-  
+
+      // カメラ演出終了
+      _CAMERA_WAIT_MOVE()
+      _CAMERA_BIND()        // カメラバインド
+      _CAMERA_END()
+
       // ボストレーナーの見た目を設定
       _INFINITY_DUNGEON_GET_BOSS_OBJ_CODE(OBJCHRWORK0)
-  
+
       // エレベータから出る
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
     ELSE
       // やめる
-      _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel , SCWK_TARGET_OBJID, POS_DL )
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
+      IF $LWK_D_VERSION == VERSION_B2 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel_00 , SCWK_TARGET_OBJID, POS_DL )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+      ELSE 
+        _BALLOONWIN_OBJMSG_POS( msg_info_w_cancel_00 , SCWK_TARGET_OBJID, POS_DL )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+      ENDIF
     ENDIF
   ELSE
     // やめる
     IF $LWK_D_VERSION == VERSION_B2 THEN
-      _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel , SCWK_TARGET_OBJID, POS_DL )
+      _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel_00 , SCWK_TARGET_OBJID, POS_DL )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
     ELSE 
-      _BALLOONWIN_OBJMSG_POS( msg_info_w_cancel , SCWK_TARGET_OBJID, POS_DL )
+      _BALLOONWIN_OBJMSG_POS( msg_info_w_cancel_00 , SCWK_TARGET_OBJID, POS_DL )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
     ENDIF
@@ -1440,9 +1576,19 @@ play_elevator_stop_se:
 _RET
 
 //--------------------------------------------------------------------
-// 受付がみちをあける
+// 受付がみちをあける（左にどける）
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_make_room_l
+	_ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 受付がみちをあける(右にどける)
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_make_room_r
 	_ANIME_DATA	AC_WALK_U_8F,1
   _ANIME_DATA	AC_WALK_R_8F,1
   _ANIME_DATA AC_STAY_WALK_L_8F,1
@@ -1458,11 +1604,20 @@ _ANIME_LABEL	anm_move_default_l
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-// エレベータまで移動(主人公)
+// エレベータまで移動左(主人公)
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_move_elev_in_01
+_ANIME_LABEL	anm_move_elev_in_01_l
 	_ANIME_DATA	AC_WALK_U_8F,2
   _ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// エレベータまで移動右(主人公)
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_elev_in_01_r
+	_ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
