@@ -726,7 +726,7 @@ static void Debug_CreateWbtDlData( WBTDL_TOTAL_DATA *p_total_data )
       p_data->day     = 3;
       p_data->lang_id = PM_LANG;
       p_data->tournament_id = i;
-      GFL_STD_MemFill16( p_data->tournament_name, L'‚O', WBTDL_TOURNAMENT_NAME_LEN*sizeof(STRCODE) );
+      GFL_STD_MemFill16( p_data->tournament_name, i+L'‚O', WBTDL_TOURNAMENT_NAME_LEN*sizeof(STRCODE) );
       p_data->tournament_name[0] = L'‚Ä';
       p_data->tournament_name[1] = L'‚·';
       p_data->tournament_name[2] = L'‚Æ';

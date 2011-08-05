@@ -28,6 +28,8 @@
 #include "app/app_printsys_common.h"
 #include "app/app_keycursor.h"
 //
+#include "system/time_icon.h"
+//
 #include "savedata/save_tbl.h"
 #include "savedata/save_control.h"
 #include "savedata/wbt_ex_save.h"
@@ -45,16 +47,37 @@
  *								定義
  */
 //=============================================================================
+// SaveFlag
+enum{
+	FLG_SAVE_START		= (1<<0),		// 開始
+	//
+	FLG_SAVE_SLOT_0		= (1<<4),		// slot 0
+	FLG_SAVE_SLOT_1		= (1<<5),		// slot 1
+	FLG_SAVE_SLOT_2		= (1<<6),		// slot 2
+};
+
 //=============================================================================
 /**
  *								データ
  */
 //=============================================================================
+//--------------
+// セーブ情報
+//--------------
+static const s32 td_save_id_tbl[] = {
+	SAVE_EXTRA_ID_WBT_00, EXGMDATA_ID_WBT_00,		// slot 0
+	SAVE_EXTRA_ID_WBT_01, EXGMDATA_ID_WBT_01,		// slot 1
+	SAVE_EXTRA_ID_WBT_02, EXGMDATA_ID_WBT_02,		// slot 2
+};
+	
 //=============================================================================
 /**
  *								宣言
  */
 //=============================================================================
+static BOOL td_load_init_data( T_DOWNLOAD_MAIN_WORK* wk, const s32 num );
+static void td_set_save_after( T_DOWNLOAD_MAIN_WORK * wk );
+
 //=============================================================================
 /**
  *								関数
@@ -62,49 +85,71 @@
 //=============================================================================
 //-----------------------------------------------------------------------------
 /**
- *	@brief  データ関連初期化(しばらくはテスト)
+ *	@brief  セーブデータ読み込み
  *
  *	@param	T_DOWNLOAD_MAIN_WORK* wk
  *
- *	@retval
+ *	@retval s32					個数
  */
 //-----------------------------------------------------------------------------
 s32 TdSave_init_data( T_DOWNLOAD_MAIN_WORK* wk )
 {
-	s32					i;
-	s32					cnt=0;
+	s32		i;
+	s32		cnt=0;
+	BOOL	bflg;
+	
+	// 取得
+	for(i=0;i<3;i++){
+		bflg = td_load_init_data( wk, i );
+		if(bflg == TRUE){
+			wk->SaveFlag |= (1<<(4+i));
+			cnt++;
+		}
+	}
+	//
+	OS_Printf("save cnt :%d\n", cnt);
+	return( cnt );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  データ読み込み
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const s32			(番号:0-2)
+ *
+ *	@retval BOOL				(TRUE:成功、FALSE:失敗)
+ */
+//-----------------------------------------------------------------------------
+static BOOL td_load_init_data( T_DOWNLOAD_MAIN_WORK* wk, const s32 num )
+{
 	GAMEDATA*	 		gamedata;
 	SAVE_CONTROL_WORK*	save;
 	WBTEXSAVE*			save_p;
 	LOAD_RESULT			load_res;
+	BOOL				bflg=FALSE;
 	//
-	// メモリ確保
-	for(i=0;i<3;i++){
-		wk->WbtSaveData[i] = GFL_HEAP_AllocMemoryLo( wk->heapID, sizeof(WBTDL_DATA) );
-		GFL_STD_MemClear32( wk->WbtSaveData[i], sizeof(WBTDL_DATA) );
-	}
+	// メモリは確保してしまう
+	wk->WbtSaveData[num] = GFL_HEAP_AllocMemoryLo( wk->heapID, sizeof(WBTDL_DATA) );
+	GFL_STD_MemClear32( wk->WbtSaveData[num], sizeof(WBTDL_DATA) );
 	//
-	// ロードしてセット(とりあえず1個のみチェック)
+	// ロードしてセット
 	gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
 	save = GAMEDATA_GetSaveControlWork( gamedata );
-	load_res = SaveControl_Extra_Load( save, SAVE_EXTRA_ID_WBT_00, wk->heapID );
-	OS_Printf("WBT00 Load Result = %d\n", load_res );
+	load_res = SaveControl_Extra_Load( save, td_save_id_tbl[2*num], wk->heapID );
+//	OS_Printf("Result = %d:%d\n", num,load_res );
 	//
 	// 成功時のみセット
 	if(load_res == LOAD_RESULT_OK){
-		save_p = SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_WBT_00, EXGMDATA_ID_WBT_00 );
+		save_p = SaveControl_Extra_DataPtrGet( save, td_save_id_tbl[2*num], td_save_id_tbl[2*num+1] );
 		// save_p => WbtSaveData[]へ
-		GFL_STD_MemCopy32( save_p, wk->WbtSaveData[0], sizeof(WBTDL_DATA) );
-		GFL_STD_MemCopy32( save_p, wk->WbtSaveData[1], sizeof(WBTDL_DATA) );		// test
-		GFL_STD_MemCopy32( save_p, wk->WbtSaveData[2], sizeof(WBTDL_DATA) );		// test
-		// test
-		cnt = 1;
+		GFL_STD_MemCopy32( save_p, wk->WbtSaveData[num], sizeof(WBTDL_DATA) );
+		bflg = TRUE;
 	}
-	// ここまでで、wbtdl_dataにデータが格納されているはず
-	// 終了
-	SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_WBT_00 ); // 外部データを解放
+	// 外部データを開放
+	SaveControl_Extra_Unload( save, td_save_id_tbl[2*num] );
 	//
-	return( cnt );
+	return( bflg );
 }
 
 //-----------------------------------------------------------------------------
@@ -300,5 +345,243 @@ s32 TdSave_get_item_id( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, const
 	}
 	//
 	return( 0 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  セーブ初期化
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const s32			(番号:0-11)
+ *	@param	const s32			(番号:0-2)
+ *
+ *	@retval BOOL				(TRUE:成功、FALSE:失敗)
+ */
+//-----------------------------------------------------------------------------
+void TdSave_init_save( T_DOWNLOAD_MAIN_WORK* wk, const s32 src, const s32 dest )
+{
+	GAMEDATA*	 		gamedata;
+	SAVE_CONTROL_WORK*	save;
+	WBTEXSAVE*			save_p;
+	LOAD_RESULT			load_res;
+	const WBTDL_DATA*	wbtdl;
+	//
+	// 念のため
+	if(wk->SaveFlag & FLG_SAVE_START){
+		OS_Printf("save flag error(init)\n");
+		return;
+	}
+	// アドレス指定
+	wbtdl = &wk->Param->data->data[src];
+	//
+	// セーブ先を保存
+//	wk->SaveCurrent = dest;
+	wk->SaveSrc		= src;
+	wk->SaveDest	= dest;
+	//
+	// 領域をセット
+	gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
+	save = GAMEDATA_GetSaveControlWork( gamedata );
+	load_res = SaveControl_Extra_Load( save, td_save_id_tbl[2*dest], wk->heapID );
+	save_p = SaveControl_Extra_DataPtrGet( save, td_save_id_tbl[2*dest], td_save_id_tbl[2*dest+1] );
+	// データをセット
+	// wbtdl => save_p
+	GFL_STD_MemCopy32( wbtdl, save_p, sizeof(WBTDL_DATA) );
+	//
+	// 開始
+	GAMEDATA_ExtraSaveAsyncStart( gamedata, td_save_id_tbl[2*dest] ); 
+	wk->SaveFlag |= FLG_SAVE_START;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  セーブ中
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval BOOL				(TRUE:セーブ中、FALSE:終了)
+ */
+//-----------------------------------------------------------------------------
+BOOL TdSave_main_save( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	s32					num;
+	GAMEDATA*	 		gamedata;
+	SAVE_CONTROL_WORK*	save;
+	SAVE_RESULT			save_ret;
+	BOOL				bflg=TRUE;
+	const WBTDL_DATA*	wbtdl;
+	//
+	// 念のため
+	if(!(wk->SaveFlag & FLG_SAVE_START)){
+		OS_Printf("save flag error(main)\n");
+		return( FALSE);
+	}
+	// 先をセット
+	num = wk->SaveDest;
+	//
+	gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
+	save = GAMEDATA_GetSaveControlWork( gamedata );
+	//
+	// セーブ実行
+	save_ret = GAMEDATA_ExtraSaveAsyncMain( gamedata, td_save_id_tbl[2*num] );
+	//
+	// 終了
+	if((save_ret == SAVE_RESULT_OK)||(save_ret == SAVE_RESULT_NG)){
+		// 開放
+		SaveControl_Extra_Unload( save, td_save_id_tbl[2*num] );
+		wk->SaveFlag &= ~FLG_SAVE_START;
+		//
+		//--------------------------
+		// 後処理
+		// (実データをコピーしておく)
+		// download -> local
+		//--------------------------
+		td_set_save_after( wk );
+		//
+		bflg = FALSE;
+	}
+	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タイムアイコン初期化
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdSave_init_timeicon( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	// セーブのタイミングで作成するらしい
+	// (時間アイコン表示)
+	wk->TimeIconWork = TIMEICON_CreateTcbl( wk->MsgTcblSys, 
+											wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_MESWIN_01].win, 15,
+											TIMEICON_DEFAULT_WAIT, wk->heapID );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タイムアイコン処理
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdSave_main_timeicon( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	if(wk->TimeIconWork){
+		TIMEICON_Main( wk->TimeIconWork );
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タイムアイコン破棄
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdSave_exit_timeicon( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	if(wk->TimeIconWork){
+		TIMEICON_Exit( wk->TimeIconWork );
+		wk->TimeIconWork = 0;
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  空いているスロット番号を返す
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval s32					(-1:空きなし、0-2:空きの場所)
+ */
+//-----------------------------------------------------------------------------
+s32 TdSave_get_save_pos( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	s32		num;
+	
+	num = wk->SaveMaxNum;
+	if(num > 2){
+		return( -1 );
+	}
+	//
+	return( num );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	リストの中にセーブデータがあるかどうか
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ * @param	const s32					(番号:0-9)
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+BOOL TdSave_chk_save_list( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
+{
+	s16		i;
+	u16		tid[2];
+	BOOL	bflg=FALSE;
+	//
+	// リストの情報のtournamentidと
+	// セーブの情報のtournamentidが一致しているかチェック
+	// フレーム情報
+	tid[0] = WBTDL_DATA_GetTournamentId( &wk->Param->data->data[num] );
+	// セーブ情報
+	for(i=0;i<wk->SaveMaxNum;i++){
+		tid[1] = WBTDL_DATA_GetTournamentId( wk->WbtSaveData[i] );
+		if(tid[0] == tid[1]){
+			bflg = TRUE;
+			break;
+		}
+	}
+	// 結果
+	return( bflg );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	セーブ後処理
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void td_set_save_after( T_DOWNLOAD_MAIN_WORK * wk )
+{
+	s32		i;
+	s32		cnt;
+	const WBTDL_DATA*	wbtdl;
+	
+	//--------------------------
+	// (実データをコピーしておく)
+	// download -> local
+	//--------------------------
+	wbtdl = &wk->Param->data->data[wk->SaveSrc];
+	GFL_STD_MemCopy32( wbtdl, wk->WbtSaveData[wk->SaveDest], sizeof(WBTDL_DATA) );
+	wk->SaveFlag |= (1<<(4+wk->SaveDest));
+	//
+	cnt = 0;
+	for(i=0;i<3;i++){
+		if(wk->SaveFlag & (1<<(4+i))){
+			cnt++;
+		}
+	}
+	// 念のため
+	if(cnt > 3){
+		OS_Printf("save max error\n");
+		cnt = 3;
+	}
+	// 最大数をセット
+	wk->SaveMaxNum = cnt;
 }
 

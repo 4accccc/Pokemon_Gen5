@@ -10,6 +10,8 @@
 //=============================================================================
 #pragma once
 
+#include "system/time_icon.h"
+
 #include "savedata/wbt_download.h"
 #include "app/t_download.h"
 
@@ -293,6 +295,8 @@ typedef struct
 	APP_TASKMENU_ITEMWORK	appitem[3];
 	APP_TASKMENU_RES		*pAppTaskRes;
 	//
+	TIMEICON_WORK			*TimeIconWork;					// セーブ中のタイムアイコン
+	//
 	s32						Step;							// ステップ
 	s32						Mode;							// モード
 	u32						Flag;							// フラグ
@@ -301,8 +305,11 @@ typedef struct
 	s32						InfoCurPos;						// 詳細カーソル位置(0-2)
 	s32						ScrollOffy;						// BG3のスクロールoffset
 	u32						PFlag;							// Canvas用フラグ
+	u32						SaveFlag;						// セーブフラグ
 	s32						JoinCurPos;						// 参加カーソル
 	s32						SaveCurPos;						// セーブカーソル
+	s32						SaveSrc;						// セーブ元
+	s32						SaveDest;						// セーブ先
 	//
 	s32						SaveMaxNum;						// セーブ数
 	s32						ListMaxNum;						// リスト最大数
@@ -327,7 +334,6 @@ typedef struct
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 	//
-//	WBTDL_DATA				*CurrentWbtdl;					// カレント
 	WBTDL_DATA				*WbtSaveData[3];				// セーブデータ用
 } T_DOWNLOAD_MAIN_WORK;
 

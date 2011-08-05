@@ -702,7 +702,7 @@ static void td_exit_obj( T_DOWNLOAD_MAIN_WORK* wk );
 //static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk );
 //
 // リスト処理
-static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
+//static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
 static void td_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void td_listcallback_move( void *work, u32 pos, BOOL flag );
 static void td_listcallback_scroll( void *work, s8 mv );
@@ -1876,7 +1876,8 @@ void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 	// 項目追加(タイトル文字をセット)
 	for(i=0;i<header.itemMax;i++){
 		flg = 0;
-		bflg = td_chk_framelist( wk, mode, i );
+//		bflg = td_chk_framelist( wk, mode, i );
+		bflg = TdSave_chk_save_list( wk, i );
 		if(bflg == TRUE){
 			flg = 1;
 		}
@@ -1887,6 +1888,7 @@ void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 	FRAMELIST_Init( wk->frame_list_work );
 }
 
+#if 0
 //--------------------------------------------------------------------------------------------
 /**
  * @brief	フレームの判定(正式な判定が必要)
@@ -1917,6 +1919,7 @@ static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s
 	// 結果
 	return( bflg );
 }
+#endif
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2132,35 +2135,6 @@ static void td_PrintStrBuf( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, PR
 	GFL_STR_DeleteBuffer( strbuf );
 	GFL_STR_DeleteBuffer( strbuf2 );
 	GFL_STR_DeleteBuffer( expbuf );
-#if 0
-	int width, bmp_width, x;
-//	STRBUF* strbuf = GFL_MSG_CreateString( msg, strIdx );
-	STRBUF* strbuf2;
-	STRBUF* strbuf3;
-	STRBUF* expandbuf;
-	//
-	x = 0;
-	// トーナメント名
-//	x = TdCmn_mes_pos_tbl[0];
-//	PRINT_UTIL_PrintColor( print_util, que, x, y, strbuf, wk->font, col );
-//	GFL_STR_DeleteBuffer( strbuf );
-	//
-	// 回数表示
-	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
-//	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[wk->DispBuffer[pos]], 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-	STRTOOL_SetNumber( strbuf2, pos, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-	WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
-	// 最終出力バッファ
-	expandbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
-	strbuf3 = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[0] );
-	WORDSET_ExpandStr( wk->Wordset, expandbuf, strbuf3 );
-	//
-//	x = wr_mes_pos_tbl[1];
-	PRINT_UTIL_PrintColor( print_util, que, x, y, expandbuf, wk->font, col );
-	GFL_STR_DeleteBuffer( strbuf2 );
-	GFL_STR_DeleteBuffer( strbuf3 );
-	GFL_STR_DeleteBuffer( expandbuf );
-#endif
 }
 
 static void td_strbuf_print( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param, int pos )
@@ -2539,25 +2513,10 @@ void TdCmn_init_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 
 	}else{
 		wbtdl = &wk->Param->data->data[num];
 	}
-#if 1
+	// アイテム数
 	wk->ItemNum[0] = TdSave_get_item_num( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_POKE );
 	wk->ItemNum[1] = TdSave_get_item_num( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_ITEM );
 	wk->ItemNum[2] = 1;
-#else
-	// セーブ
-	if(mode == T_DOWNLOAD_DATA_SAVE){
-		wk->ItemNum[0] = TdSave_get_item_num( wk, wk->WbtSaveData[num], T_DOWNLOAD_SAVE_ITEM_POKE );
-		wk->ItemNum[1] = TdSave_get_item_num( wk, wk->WbtSaveData[num], T_DOWNLOAD_SAVE_ITEM_ITEM );
-		wk->ItemNum[2] = 1;
-	}
-	// リスト
-	else{
-		// アイテム数を調べる(仮)
-//		wk->ItemNum[0] = 64;
-//		wk->ItemNum[1] = 4;
-//		wk->ItemNum[2] = 36;
-	}
-#endif
 	//
 	for(i=0;i<T_DOWNLOAD_INFO_MAX;i++){
 		// 0の場合は1ページとしておく
@@ -2656,9 +2615,12 @@ void TdCmn_disp_title_info( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32
 	// ここは即転送が必要らしい
 //	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[mode].win );
 	//
+	wk->PFlag |= (1<<T_DOWNLOAD_MSG_DOWN_TITLE);
+#if 0
 	// スクリーンを作る必要があるようだ
 	GFL_BMPWIN_MakeScreen( wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_TITLE].win );
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_TITLE].win) );
+#endif
 	//
 	id = 0;
 	if(mode == T_DOWNLOAD_MODE_SELECT){
@@ -2686,10 +2648,6 @@ s32 TdCmn_chk_tp( T_DOWNLOAD_MAIN_WORK *wk, const s32 tpmode, const s32 mode )
 {
 	s32	id = GFL_UI_TP_HIT_NONE;
 	//
-	// キーモードは処理しない(大丈夫?)
-//	if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY ){
-//		return( id );
-//	}
 	// タッチペン判定
 	if(tpmode == 0){
 		id = GFL_UI_TP_HitTrg( td_rect_tbl[mode] );
@@ -2806,8 +2764,11 @@ void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s
 	}
 	// リストデータ(要修正)
 	else{
-		wbtl = wk->WbtSaveData[num];
+		wbtl = &wk->Param->data->data[num];
 	}
+	
+	// いったんクリア
+	TdCmn_clear_canvas( wk, CANVAS_JOIN_OFFSET+num );
 	
 	// トーナメント名
 	strbuf = GFL_STR_CreateBuffer( 128, wk->heapID );
@@ -2817,30 +2778,10 @@ void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s
 	WORDSET_RegisterWord( wk->Wordset, 0, strbuf, 0, TRUE, PM_LANG );
 	strbuf2 = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[0] );
 	WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf2 );
-	TdCmn_disp_string( wk, CANVAS_JOIN_OFFSET+mode, 0, 4, expbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,2));
+	TdCmn_disp_string( wk, CANVAS_JOIN_OFFSET+num, 0, 4, expbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,2));
 	GFL_STR_DeleteBuffer( strbuf );
 	GFL_STR_DeleteBuffer( strbuf2 );
 	GFL_STR_DeleteBuffer( expbuf );
-#if 0
-	STRBUF* strbuf2;
-	STRBUF* strbuf3;
-	STRBUF* expandbuf;
-	
-	// 回数表示(test)
-	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
-//	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[wk->DispBuffer[pos]], 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-	STRTOOL_SetNumber( strbuf2, mode, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-	WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
-	// 最終出力バッファ
-	expandbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
-	strbuf3 = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[0] );
-	WORDSET_ExpandStr( wk->Wordset, expandbuf, strbuf3 );
-	TdCmn_disp_string( wk, CANVAS_JOIN_OFFSET+mode, 0, 4, expandbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,2));
-	//
-	GFL_STR_DeleteBuffer( strbuf2 );
-	GFL_STR_DeleteBuffer( strbuf3 );
-	GFL_STR_DeleteBuffer( expandbuf );
-#endif
 }
 
 //--------------------------------------------------------------------------------------------

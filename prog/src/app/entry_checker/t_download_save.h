@@ -37,3 +37,14 @@ extern void TdSave_get_str( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, c
 extern s32  TdSave_get_item_num( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, const s32 mode );
 extern s32  TdSave_get_item_id( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, const s32 mode, const s32 inum );
 
+extern void TdSave_init_save( T_DOWNLOAD_MAIN_WORK* wk, const s32 src, const s32 dest );
+extern BOOL TdSave_main_save( T_DOWNLOAD_MAIN_WORK* wk );
+
+extern void TdSave_init_timeicon( T_DOWNLOAD_MAIN_WORK* wk );
+extern void TdSave_main_timeicon( T_DOWNLOAD_MAIN_WORK* wk );
+extern void TdSave_exit_timeicon( T_DOWNLOAD_MAIN_WORK* wk );
+
+extern s32  TdSave_get_save_pos( T_DOWNLOAD_MAIN_WORK* wk );
+extern BOOL TdSave_chk_save_list( T_DOWNLOAD_MAIN_WORK * wk, const s32 num );
+
+
