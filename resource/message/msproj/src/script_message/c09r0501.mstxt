@@ -194,10 +194,10 @@
 そして　あたしたち……▼
 いままでいじょうに　わかりあえたよ！▼
 うん！
-じゃあ　ついてきて！</Text>
+じゃあ　いきましょ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T06:43:10" />
+				Time="2011-08-05T07:45:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -215,10 +215,10 @@
 そして　あたしたち……▼
 いままで以上に　わかりあえたよ！▼
 うん！
-じゃあ　ついてきて！</Text>
+じゃあ　行きましょ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T06:43:14" />
+				Time="2011-08-05T07:45:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -229,11 +229,12 @@
 			<Comment>♀
 ・戦闘後メッセージ
 　フィールドに復帰すると自動で表示
-・続けてc09r0601へ
+・表示後、アイリスが押すような格好で
+　主人公と一緒にc09r0601へ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T06:43:28" />
+				Time="2011-08-05T07:45:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

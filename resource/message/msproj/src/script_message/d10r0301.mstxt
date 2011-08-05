@@ -148,6 +148,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-05T03:40:40" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d10r0301_hakaim3_01"
@@ -190,6 +197,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-05T03:40:40" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d10r0301_swplazmam1_01"

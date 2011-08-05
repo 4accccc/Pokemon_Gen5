@@ -114,11 +114,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そういうわけで　きみ！▼
-[Digit:3digits Idx="1" ]より　ＨＰがある
+[Digit:3digits Idx="1" ]より　こうげきが　たかい
 ポケモンを　つれていないかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:55:24" />
+				Time="2011-08-05T08:11:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -127,11 +127,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そういうわけで　きみ！▼
-[Digit:3digits Idx="1" ]より　攻撃がある
+[Digit:3digits Idx="1" ]より　攻撃が　高い
 ポケモンを　連れていないかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T03:51:48" />
+				Time="2011-08-05T08:11:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
