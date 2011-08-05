@@ -169,7 +169,14 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
       header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
       p_wk->cp_function->SetupMmdHeader( p_wk, &header );
 
-      if( p_wk->people_type == RESORT_PEOPLE_TYPE_RESIDENT )
+      if( p_wk->people_type == RESORT_PEOPLE_TYPE_TOURIST
+          || p_wk->people_type == RESORT_PEOPLE_TYPE_PROXY )
+      {
+        grid_x  = 0;
+        grid_z  = 0;
+        dir = DIR_UP;
+      }
+      else if( p_wk->people_type == RESORT_PEOPLE_TYPE_RESIDENT )
       {
         RESORT_MAP_GetResidentGridPos( RESORT_ABSTRUCT_DATA_GetBufferIndex(p_wk->p_abstruct_data), 0, &grid_x, &grid_z, &dir );
       }
@@ -848,6 +855,21 @@ void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk )
       param.p_data      =  RESORT_DATA_MANAGER_GetAbstructDataByPlace( p_wk->param.p_data_manager, placeID, peopleID );
       param.placeID     = p_wk->param.placeID;
       RESORT_PEOPLE_SYS_Add( p_wk, &param, peopleID );
+    }
+  }
+
+  //作成してバインドできなかったMMDLは消す
+  //->拡張バッファ対策(セーブ復帰時は拡張ばっふぁが消えている)
+  {
+    MMDL *p_mmdl;
+    u32 no;
+    while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&p_mmdl,&no) == TRUE ){
+      if( MMDL_GetOBJID(p_mmdl) >= RESORT_PEOPLE_MMDLID_OFS
+          && MMDL_GetZoneID(p_mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID)
+          && RESORT_PEOPLE_SYS_GetPeopleByMmdl(p_wk,p_mmdl) == NULL )
+      {
+        MMDL_Delete( p_mmdl );
+      }
     }
   }
 }
