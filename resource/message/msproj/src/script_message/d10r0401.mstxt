@@ -1822,10 +1822,10 @@ N</Text>
 			Language="JPN">
 			<Comment>♂
 ・戦闘後、フィールドに戻ると表示
-・続けてswsage01_16</Comment>
+・続けてswsage01_17</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:44:19" />
+				Time="2011-08-05T05:18:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1939,10 +1939,10 @@ N</Text>
 			Language="JPN">
 			<Comment>♂
 ・一歩。上に向かってからメッセージ表示
-・続けてswsage01_15</Comment>
+・続けてswsage01_18</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:46:52" />
+				Time="2011-08-05T05:18:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2038,10 +2038,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてboss_06</Comment>
+・続けてboss_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:48:44" />
+				Time="2011-08-05T05:18:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
