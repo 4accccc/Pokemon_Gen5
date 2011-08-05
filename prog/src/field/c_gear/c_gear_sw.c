@@ -4071,6 +4071,15 @@ static void _gearStartUpObjDrawEnabel(C_GEAR_WORK* pWork,BOOL bFlg)
 //-----------------------------------------------------------------------------
 static void _gearStartUpAnimeStart(C_GEAR_WORK* pWork)
 {
+  //リング色をBOOT時カラーに
+  _gearRingColorChangeBoot( pWork );
+
+  //パネルのステータスカラーアニメ初期化
+  _PanelPaletteAnimeColClear( pWork );
+
+  // 全OAM　非表示
+  _gearAllObjDrawEnable( pWork, FALSE );
+
 #if 0
   int i;
   GFL_CLWK_DATA cellInitData;
@@ -4143,19 +4152,8 @@ static BOOL _gearStartUpMainBoot(C_GEAR_WORK* pWork)
 {
   switch(pWork->state_seq){
   case STARTUP_BOOT_SEQ_ANIME_START:
-    //リング色をBOOT時カラーに
-//    _gearRingColorChangeBoot( pWork );
-    {
-      int i;
-      for( i = 0;i < RING_NUM;i++ ){
-        _gearRingColorPalAnmCore( pWork, i, 16, _BLACK_COLOR[pWork->sex] ); //一度黒く
-      }
-    }
-    //パネルのステータスカラーアニメ初期化
-    _PanelPaletteAnimeColClear( pWork );
-
-    // 全OAM　非表示
-    _gearAllObjDrawEnable( pWork, FALSE );
+    //起動アップアニメの初期描画状態にする
+    _gearStartUpAnimeStart( pWork );
     pWork->state_seq ++;
     break;
   case STARTUP_BOOT_SEQ_WIPE_IN:
@@ -4711,9 +4709,16 @@ static void _gearRingColorChangeBoot(C_GEAR_WORK* pWork )
 {
   int i;
 
+#if 0
   for( i = 0; i < RING_NUM;i++){
     _gearRingColorChangeCore( pWork, i, RING_COLOR_BOOT_NO );
   }
+#else
+  _gearRingColorChangeInit( pWork );  //初期色を転送した上で一度黒くしておく
+  for( i = 0;i < RING_NUM;i++ ){
+    _gearRingColorPalAnmCore( pWork, i, 16, _BLACK_COLOR[pWork->sex] );
+  }
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -5413,13 +5418,14 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
 {
 
+#if 0 
   if(pWork->startCounter==0){
-    _PFadeSetBlack(pWork);
+//    _PFadeSetBlack(pWork);
 //    _gearAllObjDrawEnable( pWork, TRUE );
 //    _gearMarkObjDrawEnable(pWork,FALSE);
-
+    
     // 起動演出中のスリープにも対応。
-    _gearStartUpAnimeEnd( pWork );
+//    _gearStartUpAnimeEnd( pWork );
 
     // 枠部分を表示
 //    _gearBootInitScreen( pWork ); // 1回表示するため。
@@ -5427,7 +5433,7 @@ static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
     _PanelPaletteAnimeColClear( pWork );
 
   }
-
+#endif
   pWork->startCounter++;
   if( pWork->startCounter >= _SLEEP_START_TIME_WAIT ){
     pWork->startCounter = 0;
@@ -5502,8 +5508,11 @@ static void _SLEEPGO_FUNC(void* pWk)
   //停止分を一度パレット転送して最新にしてしまう
   if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
 
+  //スリープ復帰時の初期描画状態を作っておく
+  _gearStartUpAnimeStart(pWork);
   // OAMをブラックアウトさせておく
-  _PFadeSetBlack(pWork);
+//  _PFadeSetBlack(pWork);
+
   // 枠部分を表示
 //  _gearBootInitScreen( pWork ); // 1回表示するため。
 
