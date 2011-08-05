@@ -339,4 +339,29 @@
 				Time="2011-07-19T08:37:19" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_BRIEFING">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらすじアプリ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-08-01T12:52:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-01T12:52:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらすじアプリ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-08-01T12:52:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-01T12:52:57" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

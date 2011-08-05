@@ -11,6 +11,7 @@
 
 #include "pokewood_setup.h"
 
+
 //============================================================================================
 //
 //  PKWD COUNT画面関連
@@ -121,6 +122,41 @@ PKWD_SELECT_SCREEN_PARAM * PKWD_SELECT_SCREEN_PARAM_Create( HEAPID heapID, GAMES
 ///  PKWD BOOK用パラメータOBJECT削除
 //------------------------------------------------------------------
 void PKWD_SELECT_SCREEN_PARAM_Delete( PKWD_SELECT_SCREEN_PARAM * param )
+{
+	// 必要であれば削除を追加
+	GFL_HEAP_FreeMemory( param );
+}
+
+
+//============================================================================================
+//
+//  PKWD BRIEFING 画面関連
+//
+//============================================================================================
+//------------------------------------------------------------------
+///  PKWD BRIEFING 用パラメータOBJECT生成
+//------------------------------------------------------------------
+PKWD_BRIEFING_PARAM * PKWD_BRIEFING_PARAM_Create( HEAPID heapID, GAMESYS_WORK *gsys, int scenario_no )
+{
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+	MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
+	POKEWOOD_SAVEDATA * pokewood_sv = GAMEDATA_GetPokewoodSavedata( gamedata );
+	PKWD_BRIEFING_PARAM 	*param;
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
+	
+	param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_BRIEFING_PARAM) );
+	// 初期化
+  param->sv          = sv;
+//  param->pokewood_sv = pokewood_sv;
+  param->mystatus    = mystatus;
+
+	return param;
+}
+
+//------------------------------------------------------------------
+///  PKWD BOOK用パラメータOBJECT削除
+//------------------------------------------------------------------
+void PKWD_BRIEFING_PARAM_Delete( PKWD_BRIEFING_PARAM * param )
 {
 	// 必要であれば削除を追加
 	GFL_HEAP_FreeMemory( param );

@@ -1,0 +1,311 @@
+//==============================================================================
+/**
+ * @file  pkwd_briefing.cdat
+ * @brief ポケウッドあらすじ画面用モデリングデータ定義
+ * @author  mori
+ * @date  2011.08.04 
+ *
+ * @note resource/battle/wb_battle_bg.xlsに登録されているモデリングデータを
+ *       表示するようにしています。なので、上記のテーブルからファイルが
+ *       無くなるとコンパイルが通らなくなりますので注意。
+ */
+//==============================================================================
+
+//=======================================================
+//読み込む3Dリソース
+//=======================================================
+//ポケウッド１
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl1[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//ポケウッド2
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl2[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field02a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field02a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//ポケウッド3
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl3[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//ポケウッド4
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl4[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//ポケウッド5
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl5[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//ポケウッド6
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl6[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//ポケウッド7
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl7[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//ポケウッド8
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl8[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//ポケウッド9
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl9[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//ポケウッド10
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl10[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+
+
+//=======================================================
+// 3Dアニメ定義
+//=======================================================
+// ポケウッド1
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl1[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// ポケウッド2
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl2[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// ポケウッド3
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl3[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// ポケウッド4
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl4[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// ポケウッド5
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl5[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// ポケウッド6
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl6[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// ポケウッド7
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl7[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// ポケウッド8
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl8[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// ポケウッド9
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl9[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// ポケウッド10
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl10[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+
+//=======================================================
+//3Dオブジェクト設定テーブル
+//=======================================================
+// ポケウッド1
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl1[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルリソースID
+    0,                       //モデルデータID(リソース内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャリソースID
+    g3Dutil_anmTbl1,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl1), //アニメリソース数
+  },
+};
+// ポケウッド2
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl2[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルリソースID
+    0,                       //モデルデータID(リソース内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャリソースID
+    g3Dutil_anmTbl2,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl2), //アニメリソース数
+  },
+};
+// ポケウッド3
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl3[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルリソースID
+    0,                       //モデルデータID(リソース内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャリソースID
+    g3Dutil_anmTbl3,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl3), //アニメリソース数
+  },
+};
+// ポケウッド4
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl4[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルリソースID
+    0,                       //モデルデータID(リソース内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャリソースID
+    g3Dutil_anmTbl4,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl4), //アニメリソース数
+  },
+};
+// ポケウッド5
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl5[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルリソースID
+    0,                       //モデルデータID(リソース内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャリソースID
+    g3Dutil_anmTbl5,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl5), //アニメリソース数
+  },
+};
+// ポケウッド6
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl6[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルリソースID
+    0,                       //モデルデータID(リソース内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャリソースID
+    g3Dutil_anmTbl6,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl6), //アニメリソース数
+  },
+};
+// ポケウッド7
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl7[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルリソースID
+    0,                       //モデルデータID(リソース内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャリソースID
+    g3Dutil_anmTbl7,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl7), //アニメリソース数
+  },
+};
+// ポケウッド8
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl8[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルリソースID
+    0,                       //モデルデータID(リソース内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャリソースID
+    g3Dutil_anmTbl8,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl8), //アニメリソース数
+  },
+};
+// ポケウッド9
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl9[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルリソースID
+    0,                       //モデルデータID(リソース内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャリソースID
+    g3Dutil_anmTbl9,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl9), //アニメリソース数
+  },
+};
+// ポケウッド10
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl10[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルリソースID
+    0,                       //モデルデータID(リソース内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャリソースID
+    g3Dutil_anmTbl10,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl10), //アニメリソース数
+  },
+};
+
+// モデリング登録テーブル
+static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
+  { // ポケウッド１
+    g3Dutil_resTbl1,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl1),   //リソース数
+    g3Dutil_objTbl1,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl1),   //オブジェクト数
+  },
+  { // ポケウッド2
+    g3Dutil_resTbl2,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl2),   //リソース数
+    g3Dutil_objTbl2,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl2),   //オブジェクト数
+  },
+  { // ポケウッド3
+    g3Dutil_resTbl3,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl3),   //リソース数
+    g3Dutil_objTbl3,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl3),   //オブジェクト数
+  },
+  { // ポケウッド4
+    g3Dutil_resTbl4,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl4),   //リソース数
+    g3Dutil_objTbl4,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl4),   //オブジェクト数
+  },
+  { // ポケウッド5
+    g3Dutil_resTbl5,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl5),   //リソース数
+    g3Dutil_objTbl5,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl5),   //オブジェクト数
+  },
+  { // ポケウッド6
+    g3Dutil_resTbl6,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl6),   //リソース数
+    g3Dutil_objTbl6,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl6),   //オブジェクト数
+  },
+  { // ポケウッド7
+    g3Dutil_resTbl7,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl7),   //リソース数
+    g3Dutil_objTbl7,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl7),   //オブジェクト数
+  },
+  { // ポケウッド8
+    g3Dutil_resTbl8,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl8),   //リソース数
+    g3Dutil_objTbl8,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl8),   //オブジェクト数
+  },
+  { // ポケウッド9
+    g3Dutil_resTbl9,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl9),   //リソース数
+    g3Dutil_objTbl9,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl9),   //オブジェクト数
+  },
+  { // ポケウッド10
+    g3Dutil_resTbl10,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl10),   //リソース数
+    g3Dutil_objTbl10,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl10),   //オブジェクト数
+  },
+};
+
+
+
+
+// リソーステーブル数とアニメOBJ数をテーブルにしたもの
+static const int  resource_count_tbl[][2]={
+  { NELEMS(g3Dutil_resTbl1),   NELEMS(g3Dutil_objTbl1)  },  // ポケウッド1
+  { NELEMS(g3Dutil_resTbl2),   NELEMS(g3Dutil_objTbl2)  },  // ポケウッド2
+  { NELEMS(g3Dutil_resTbl3),   NELEMS(g3Dutil_objTbl3)  },  // ポケウッド3
+  { NELEMS(g3Dutil_resTbl4),   NELEMS(g3Dutil_objTbl4)  },  // ポケウッド4
+  { NELEMS(g3Dutil_resTbl5),   NELEMS(g3Dutil_objTbl5)  },  // ポケウッド5
+  { NELEMS(g3Dutil_resTbl6),   NELEMS(g3Dutil_objTbl6)  },  // ポケウッド6
+  { NELEMS(g3Dutil_resTbl7),   NELEMS(g3Dutil_objTbl7)  },  // ポケウッド7
+  { NELEMS(g3Dutil_resTbl8),   NELEMS(g3Dutil_objTbl8)  },  // ポケウッド8
+  { NELEMS(g3Dutil_resTbl9),   NELEMS(g3Dutil_objTbl9)  },  // ポケウッド9
+  { NELEMS(g3Dutil_resTbl10),  NELEMS(g3Dutil_objTbl10) },  // ポケウッド10
+};
+
+
+
+//#define G3DUTIL_RESCOUNT  (NELEMS(g3Dutil_resTbl))
+//#define G3DUTIL_OBJCOUNT  (NELEMS(g3Dutil_objTbl))

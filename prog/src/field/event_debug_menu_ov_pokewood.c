@@ -79,6 +79,7 @@ static BOOL debugMenuCallProc_PokewoodShow4( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodAnnounce( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodSelect( POKEWOOD_FUNC_WORK * wk );
+static BOOL debugMenuCallProc_PokewoodBriefing( POKEWOOD_FUNC_WORK * wk );
 
 //-----------------------------------------------------------------------------
 ///リスト メニューヘッダー
@@ -121,6 +122,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_ANNOUNCE, (void*)debugMenuCallProc_PokewoodAnnounce, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_BOOK, (void*)debugMenuCallProc_PokewoodBook, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_SELECT_SCREEN, (void*)debugMenuCallProc_PokewoodSelect, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_BRIEFING, (void*)debugMenuCallProc_PokewoodBriefing, GFL_OVERLAY_BLANK_ID },
 };
 
 //-----------------------------------------------------------------------------
@@ -448,3 +450,30 @@ static BOOL debugMenuCallProc_PokewoodSelect( POKEWOOD_FUNC_WORK * wk )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	あらすじ画面デバッグ呼び出し
+ *
+ * @param   wk		
+ *
+ * @retval  BOOL		
+ */
+//----------------------------------------------------------------------------------
+static BOOL debugMenuCallProc_PokewoodBriefing( POKEWOOD_FUNC_WORK * wk )
+{
+  GMEVENT *event = wk->gmEvent;
+	GMEVENT *new_event;
+	PKWD_BRIEFING_PARAM  *param = PKWD_BRIEFING_PARAM_Create( HEAPID_PROC, wk->gmSys, 0 );
+
+	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_BRIEFING_EVENT_Call, (void *)param );
+
+  PKWD_BRIEFING_PARAM_Delete( param );
+
+	GMEVENT_ChangeEvent( event, new_event );
+
+	OS_Printf( "Pkwd Briefing Start\n" );
+  
+	return TRUE;
+  
+}

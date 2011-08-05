@@ -23,6 +23,7 @@
 #include "app/pkwd_count.h"
 #include "app/pkwd_book.h"
 #include "app/pkwd_selectscreen.h"
+#include "app/pkwd_briefing.h"
 #include "field_sound_system.h"
 #include "message.naix"
 
@@ -158,7 +159,8 @@ typedef struct {
   HEAPID heapID;
 
   u16 EncEffNo;
-  PKWD_COUNT_PARAM pkwd_count_param;
+  PKWD_COUNT_PARAM    pkwd_count_param;
+  PKWD_BRIEFING_PARAM pkwd_briefing_param;
 //  int musicDefault;
 }POKEWOOD_REPLAY_EVENT_WORK, PREW;
 
@@ -518,6 +520,14 @@ static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work
   return GMEVENT_RES_CONTINUE;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	上映前アプリパラメータ作成
+ *
+ * @param   param		
+ * @param   bsp		
+ */
+//----------------------------------------------------------------------------------
 static void _init_pkwd_count_param( PKWD_COUNT_PARAM *param, BATTLE_SETUP_PARAM *bsp )
 {
   STRBUF *str       = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, HEAPID_PROC );
@@ -537,10 +547,44 @@ static void _init_pkwd_count_param( PKWD_COUNT_PARAM *param, BATTLE_SETUP_PARAM 
   param->sex      = MyStatus_GetMySex( bsp->playerStatus[0] );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	上映前アプリ後始末
+ *
+ * @param   param		
+ */
+//----------------------------------------------------------------------------------
 static void _delete_pkwd_count_param( PKWD_COUNT_PARAM *param )
 {
   // 取得しポケモン名文字列の解放
   GFL_STR_DeleteBuffer( param->message );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	あらすじアプリパラメータ作成
+ *
+ * @param   param		
+ * @param   bsp		
+ */
+//----------------------------------------------------------------------------------
+static void _init_pkwd_briefing_param( PKWD_BRIEFING_PARAM *param, BATTLE_SETUP_PARAM *bsp, MYSTATUS *mystatus )
+{
+  param->scenario_no  = bsp->pokewoodSenario;
+  param->mystatus     = mystatus;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	上映前アプリ後始末
+ *
+ * @param   param		
+ */
+//----------------------------------------------------------------------------------
+static void _delete_pkwd_briefing_param( PKWD_BRIEFING_PARAM *param )
+{
+  // 現状なにもなし
+  return;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -568,6 +612,8 @@ enum{
   PW_SHOW_SEQ_FIELDMAP_EXIT,
   PW_SHOW_SEQ_TITLE_APP,
   PW_SHOW_SEQ_TITLE_APP_END,
+  PW_SHOW_SEQ_BRIEFING_APP,
+  PW_SHOW_SEQ_BRIEFING_APP_END,
   PW_SHOW_SEQ_CALL_BATTLE,
   PW_SHOW_SEQ_FREE_BSP,
   PW_SHOW_SEQ_FIELD_BGM_PLAY,
@@ -577,7 +623,7 @@ enum{
   PW_SHOW_SEQ_END,
 };
 //-----------------------------------------------------------------------------
-// ポケウッド撮影イベント
+// ポケウッド上映イベント
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void * work )
 {
@@ -588,6 +634,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
   FIELD_SOUND * fsnd  = GAMEDATA_GetFieldSound( gamedata );
+  MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
 
   switch( *seq ) {
   // 戦闘用ＢＧＭセット
@@ -611,16 +658,26 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
     (*seq)++;
     break;
-  // 撮影ならバトルへ、上映なら事前アプリの後バトルへ
+  // 事前アプリ実行
   case PW_SHOW_SEQ_TITLE_APP:
     _init_pkwd_count_param( &prew->pkwd_count_param, pbew->bp );
     GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_announce), &PkwdCountProcData, &prew->pkwd_count_param );
     (*seq)++;
     break;
-
   // タイトルアプリ終了待ち
   case PW_SHOW_SEQ_TITLE_APP_END:
     _delete_pkwd_count_param( &prew->pkwd_count_param );
+    (*seq)++;
+    break;
+  // あらすじアプリ実行
+  case PW_SHOW_SEQ_BRIEFING_APP:
+    _init_pkwd_briefing_param( &prew->pkwd_briefing_param, pbew->bp, mystatus );
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_briefing), &PkwdBriefingProcData, &prew->pkwd_briefing_param );
+    (*seq)++;
+    break;
+  // あらすじアプリ終了待ち
+  case PW_SHOW_SEQ_BRIEFING_APP_END:
+    _delete_pkwd_briefing_param( &prew->pkwd_briefing_param );
     (*seq)++;
     break;
   // バトル呼び出し
@@ -684,7 +741,7 @@ enum{
 };
 
 //-----------------------------------------------------------------------------
-// ポケウッド上映イベント
+// ポケウッド撮影イベント
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * work )
 {
@@ -726,7 +783,7 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, pbew->bp );
     (*seq)++;
     break;
-  // 撮影時はセーブ
+  // セーブ
   case PW_REC_SEQ_SAVE:
     if(pbew->bp->result!=BTL_RESULT_RUN)
     { // 逃げてなかったらセーブする
@@ -1093,7 +1150,7 @@ static GMEVENT_RESULT eventPkwdSelectScreen( GMEVENT *p_event, int *p_seq, void 
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  PKWD_BOOK呼び出し
+ *  @brief  PKWD_SELECT_SCREEN呼び出し
  *
  *
  *  @return 終了コード
@@ -1162,6 +1219,92 @@ static GMEVENT_RESULT eventPkwdSelectScreen( GMEVENT *p_event, int *p_seq, void 
 //      PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
 //      PKWDSYS_SetPlayNo( *pkwdsys, *(p_wk->param.result) );
     }
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
+
+//============================================================================================
+//
+//    ポケウッドあらすじ画面呼び出し
+//
+//============================================================================================
+//-------------------------------------
+///   PKWD_BRIEFING_EVENT_PARAM定義
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK       *gsys;
+  FIELDMAP_WORK      *fieldmap;
+  PKWD_BRIEFING_PARAM    param;
+} PKWD_BRIEFING_EVENT_WORK;
+
+static GMEVENT_RESULT eventPkwdBriefing( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PKWD_BOOK呼び出し
+ *
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * PKWD_BRIEFING_EVENT_Call( GAMESYS_WORK * gsys, void * parent_work )
+{
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  PKWD_BRIEFING_PARAM *param = (PKWD_BRIEFING_PARAM *)parent_work;
+  PKWD_BRIEFING_EVENT_WORK *p_param;
+  GMEVENT * new_event;
+
+  //イベント作成
+  new_event = GMEVENT_Create( gsys, NULL, eventPkwdBriefing, sizeof(PKWD_BRIEFING_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( new_event );
+  GFL_STD_MemClear( p_param, sizeof(PKWD_BRIEFING_EVENT_WORK) );
+
+  p_param->gsys       = gsys;
+  p_param->fieldmap   = fieldmap;
+  p_param->param      = *param;
+
+  OS_Printf( "PKWD BRIEFING Start\n" );
+
+  return new_event;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PkwdSelectScreen呼び出し用イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT eventPkwdBriefing( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_EXIT,
+  };
+
+  PKWD_BRIEFING_EVENT_WORK *p_wk = p_wk_adrs;
+  GMEVENT * call_event;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+        FS_OVERLAY_ID( pkwd_briefing ), &PkwdBriefingProcData, &p_wk->param );
+    GMEVENT_CallEvent( p_event, call_event );
+    *p_seq  = SEQ_EXIT;
+    break;
+
+  case SEQ_EXIT:
+    OS_Printf( "Pkwd Briefing End\n");
     return GMEVENT_RES_FINISH;
   }
 

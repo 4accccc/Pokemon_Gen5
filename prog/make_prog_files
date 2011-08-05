@@ -2700,6 +2700,11 @@ SRCS_OVERLAY_PKWD_BOOK = app/pkwd_book/pkwd_book.c \
 SRCS_OVERLAY_PKWD_SELECTSCREEN = app/pkwd_selectscreen/pkwd_selectscreen.c \
                       app/pkwd_selectscreen/pkwd_selectscreen_graphic.c
 
+# ポケウッドあらすじアプリ
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_PKWD_BRIEFING = app/pkwd_briefing/pkwd_briefing.c
+
+
 # エントリーチェッカー
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_ENTRY_CHECKER = app/entry_checker/win_record.c \
