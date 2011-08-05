@@ -12,6 +12,9 @@
 
 #define FLD_ITEM_107                       0
 #define R07R0103_OL_01                     1
+#define TR_ESPM_11                         2
+#define TR_ESPM_12                         3
+#define TR_DAISUKIW_04                     4
 
 #endif //ZONE_R07R0103_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07r0103.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -14,6 +14,8 @@
 #define FLD_ITEM_106                       1
 #define R07R0102_WOMAN3_01                 2
 #define R07R0102_GIRL3_01                  3
+#define TR_ESPW_10                         4
+#define TR_DAISUKIM_05                     5
 
 #endif //ZONE_R07R0102_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07r0102.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

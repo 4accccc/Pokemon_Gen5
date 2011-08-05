@@ -13,6 +13,9 @@
 #define FLD_ITEM_108                       0
 #define FLD_ITEM_109                       1
 #define R07R0104_MAID_01                   2
+#define TR_MADAM_06                        3
+#define TR_GENTLE_07                       4
+#define TR_ESPW_11                         5
 
 #endif //ZONE_R07R0104_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07r0104.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

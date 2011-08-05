@@ -15,6 +15,11 @@
 #define FLD_ITEM_255                       2
 #define FLD_ITEM_256                       3
 #define FLD_ITEM_257                       4
+#define TR_TANPAN_27                       5
+#define TR_MINI_21                         6
+#define TR_FUTAGO_08                       7
+#define TR_FUTAGO_08_2                     8
+#define TR_TANPAN_28                       9
 
 #endif //ZONE_R14R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r14r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
