@@ -43,15 +43,17 @@ EVENT_START ev_wbt_hall_01
 	DEFINE_LOCAL	LWK_YELL_POSX	//サブウィンのX座標
 	DEFINE_LOCAL	LWK_YELL_POSY	//サブウィンのY座標
 	DEFINE_LOCAL	LWK_SUBWIN_NUM	//サブウィンのNo
-  DEFINE_LOCAL  LWK_WIN_OR_LOSE
+	DEFINE_LOCAL	LWK_NOWBTL		//声援分岐に使用
+	DEFINE_LOCAL	LWK_WIN_OR_LOSE
+	DEFINE_LOCAL	LWK_FIRST		//初回イベントかどうかを取得
 
 	_CALL ev_first_game
 	
 	//負けた場合
-  IF $SCWK_ANSWER != SCR_WBT_BATTLE_RESULT_WIN THEN
+	IF $SCWK_ANSWER != SCR_WBT_BATTLE_RESULT_WIN THEN
 	
-    //WBT会場　終了処理
-    _CALL ev_wbt_hall_exit
+		//WBT会場　終了処理
+		_CALL ev_wbt_hall_exit
 	
 	//勝った場合
 	ELSE
@@ -60,10 +62,10 @@ EVENT_START ev_wbt_hall_01
 		_CALL ev_second_game
 	
 		//負けた場合
-    IF $SCWK_ANSWER != SCR_WBT_BATTLE_RESULT_WIN THEN
+		IF $SCWK_ANSWER != SCR_WBT_BATTLE_RESULT_WIN THEN
 		
-      //WBT会場　終了処理
-      _CALL ev_wbt_hall_exit
+			//WBT会場　終了処理
+			_CALL ev_wbt_hall_exit
 		
 		//勝った場合
 		ELSE
@@ -71,20 +73,20 @@ EVENT_START ev_wbt_hall_01
 			//決勝戦へ
 			_CALL ev_final_game
 			
-      IF $SCWK_ANSWER != SCR_WBT_BATTLE_RESULT_WIN THEN
-			//負けた場合
-				
-        //プレイヤー負け（相手が勝ち）演出のナンバー指定
-        $LWK_WIN_OR_LOSE = SCR_WBT_BATTLE_RESULT_LOSE
-        _CALL ev_final_result
+    		//負けた場合
+    		IF $SCWK_ANSWER != SCR_WBT_BATTLE_RESULT_WIN THEN
 
-			ELSE
+				//プレイヤー負け（相手が勝ち）演出のナンバー指定
+				$LWK_WIN_OR_LOSE = SCR_WBT_BATTLE_RESULT_LOSE
+				_CALL ev_final_result
+
 			//勝った場合
+			ELSE
 			
-        //プレイヤー勝ち演出のナンバー指定
-        $LWK_WIN_OR_LOSE = SCR_WBT_BATTLE_RESULT_WIN
-        _CALL ev_final_result
+				//プレイヤー勝ち演出のナンバー指定
+				$LWK_WIN_OR_LOSE = SCR_WBT_BATTLE_RESULT_WIN
 				
+				_CALL ev_final_result
 
 				//WBTシステムに状態を通知：勝利！
 				_WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_WIN )
@@ -146,13 +148,13 @@ _RET
 /**************************************************************/
 EVENT_START		ev_debug_wbt_second_game
 
-  //↓↓↓　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
-  _WBT_SYSTEM_START()
-  _WBT_SET_WBT_CUP( SCR_WBT_CUP_HODOMOE )
-  _WBT_SET_BATTLE_RULE( SCR_WBT_RULE_SINGLE )
-  _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_1ST )
-  _WBT_SYSTEM_ENTRY()
-  //↑↑↑　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
+//↓↓↓　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
+_WBT_SYSTEM_START()
+_WBT_SET_WBT_CUP( SCR_WBT_CUP_HODOMOE )
+_WBT_SET_BATTLE_RULE( SCR_WBT_RULE_SINGLE )
+_WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_1ST )
+_WBT_SYSTEM_ENTRY()
+//↑↑↑　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
 
 	_WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
 	_OBJ_ADD_EX( 21,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
@@ -236,33 +238,135 @@ _WBT_LIST_CALL( SCR_WBT_LIST_1ST_START )
 
 //WBTシステムに状態を通知：1回戦へ
 _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_1ST )
-//対戦者出現
-_WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
-_OBJ_ADD_EX( 14,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
+
+//初回イベントトーナメントかどうかをチェック
+_WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_HODOMOE_EVENT, LWK_FIRST )
+
+//初回イベントの場合
+IF $LWK_FIRST == 0 THEN
+
+	//対戦者・プレイヤー指定座標に表示
+	_WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
+	_OBJ_ADD_EX( 3,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
+	_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 42, 0, 15, DIR_LEFT )
+
+	//対戦者非表示
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_on )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vanish_on )
+	_OBJ_ANIME_WAIT()
+
+	_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
 	
-//カメラ移動・中央固定　
-_CAMERA_START()		//カメラ操作開始
-_CAMERA_PURGE()		//カメラのバインドを解く
+	//カメラ操作　プレイヤー入場口にカメラを合わせる
+	_CAMERA_MOVE( 3544,0,970752,2801664,131103,1081344,1 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()
 
-//カメラ操作　ステージ中央にカメラを合わせる
-_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
-_CAMERA_WAIT_MOVE()
+	//バックの歓声ＳＥ再生
+	_SE_PLAY(SEQ_SE_SW_WBT_01)
 
-//背景ビジョンにロゴ表示
-_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
+	//暗転復帰
+	_MAP_FADE_BLACK_IN()
+	_MAP_FADE_END_CHECK()
 
-//ブラックイン開始
-_MAP_FADE_BLACK_IN_SLOW()
+	//初挑戦！
+	_PLAINWIN_MSG_UP( msg_wbt_announce_13 )
+	_PLAINWIN_CLOSE()
+
+	//プレイヤー非表示解除後
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vanish_off )
+	_OBJ_ANIME_WAIT()
+
+	//プレイヤー中央のステージまで歩き出す
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_3rd_in )
+
+	//カメラプレイヤー追従
+	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,146 )		//一番最後の引数は移動にかかるフレーム数
+
+	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()
+
+	_TIME_WAIT( 30 )
+
+	//カメラを対戦者側に移動
+	_CAMERA_MOVE( 3544,0,970752,208896,131103,1081344,60 )	//一番最後の引数は移動にかかるフレーム数
+
+	//暗転処理
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
 	
-//対戦者・プレイヤーをステージ中央まで移動させる
-_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_1st_in )
-_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_in )
+	_TIME_WAIT( 60 )
 	
-_MAP_FADE_END_CHECK()
+	//暗転復帰
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
 
-_OBJ_ANIME_WAIT()
+	//対戦者の前口上メッセージ表示　ＭＳＧ表示専用コマンド
+	_WBT_ANNOUNCE( POS_UP )
+	_MSGWIN_CLOSE()
 
-_TIME_WAIT( 30 )
+	//対戦者非表示解除後
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_off )
+	_OBJ_ANIME_WAIT()
+
+	//歓声ＳＥ再生
+	_SE_PLAY(SEQ_SE_SW_WBT_01)
+
+	//対戦者中央のステージまで歩き出す
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
+
+	//カメラ対戦者追従
+	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,146 )	//一番最後の引数は移動にかかるフレーム数
+
+	_TIME_WAIT( 30 )
+
+	//暗転処理
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+
+	_TIME_WAIT( 70 )
+
+	//暗転復帰
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()
+
+//それ以外の場合
+ELSE
+
+	//対戦者出現
+	_WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
+	_OBJ_ADD_EX( 14,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
+
+	//カメラ移動・中央固定　
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　ステージ中央にカメラを合わせる
+	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()
+
+	//背景ビジョンにロゴ表示
+	_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
+
+	//ブラックイン開始
+	_MAP_FADE_BLACK_IN_SLOW()
+	
+	//対戦者・プレイヤーをステージ中央まで移動させる
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_1st_in )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_in )
+
+	_MAP_FADE_END_CHECK()
+
+	_OBJ_ANIME_WAIT()
+
+	_TIME_WAIT( 30 )
+
+ENDIF
 
 //１回戦の対戦者名を格納する
 _WBT_SET_ENEMY_NAME( 0 )
@@ -406,8 +510,15 @@ _SE_PLAY(SEQ_SE_SW_WBT_02)
 _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_2nd_in )
 _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_2nd_in )
 
+//========================================/
+
+//声援用・２回戦
+$LWK_NOWBTL = 0
+
+//========================================/
+
 //声援表示
-_CALL ev_first_yell
+_CALL ev_yell_scr
 
 IF $LOCALWORK14 == 1 THEN
 	_SUBWIN_CLOSE( 1 )
@@ -541,162 +652,6 @@ _ANIME_LABEL	anm_enemy_2nd_in
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*		WBT２回戦用・声援スクリプト							  */
-/**************************************************************/
-ev_first_yell:
-
-_WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_NULL, LWK_WIN_COUNT )
-
-//優勝回数が１以下の場合
-IF $LWK_WIN_COUNT <= 1 THEN
-	
-	//優勝回数1回の場合は２０％
-	$LWK_PROBABILITY = 19
-	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg
-
-//優勝回数が５以上の場合
-ELSIF $LWK_WIN_COUNT >= 5 THEN
-
-	//優勝回数1回の場合は４０％
-	$LWK_PROBABILITY = 39
-	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg
-
-//優勝回数が１０以上の場合
-ELSIF $LWK_WIN_COUNT >= 10 THEN
-
-	//優勝回数1回の場合は６０％
-	$LWK_PROBABILITY = 59
-	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg
-
-//優勝回数が３０以上の場合
-ELSIF $LWK_WIN_COUNT >= 30 THEN
-
-	//優勝回数1回の場合は８０％
-	$LWK_PROBABILITY = 79
-	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg
-
-//異常処理
-ELSE
-
-ENDIF
-
-_RET
-
-/**************************************************************/
-/*		２回戦用　声援　メッセージ表示のコール				  */
-/**************************************************************/
-ev_rnd_yell_msg:
-
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
-	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
-	
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
-
-	//X座標・Y座標・ナンバー決め
-	$LWK_YELL_POSX = 1
-	$LWK_YELL_POSY = 1
-
-	//プレイヤー名を格納
-	_PLAYER_NAME(0)
-
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	ENDSWITCH
-	
-	//========================================/
-	
-	//サブウィンドウチェック
-	$LOCALWORK14 = 1
-	
-	//========================================/
-	
-ENDIF
-
-//声援決め乱数　２回目
-_GET_RND( LWK_RND,100 )
-
-//優勝回数に応じた確率で２つ目のメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
-
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
-
-	//X座標・Y座標・ナンバー決め
-	$LWK_YELL_POSX = 20
-	$LWK_YELL_POSY = 20
-
-	//対戦者名を格納
-	_WBT_SET_ENEMY_NAME( 0 )
-
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_2nd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	ENDSWITCH
-
-	//========================================/
-	
-	//サブウィンドウチェック
-	$LOCALWORK15 = 1
-	
-	//========================================/
-
-ENDIF
-	
-//タイムウェイト
-_TIME_WAIT( 60 )
-
-_RET
-
-/**************************************************************/
 /*		ＷＢＴ決勝戦										  */
 /**************************************************************/
 ev_final_game:
@@ -769,8 +724,15 @@ _WBT_GMK_EFFECT_START(SCR_WBT_EFFECT_NORMAL,SCR_WBT_EFFECT_POS_R)
 //カメラプレイヤー追従
 _CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,152 )		//一番最後の引数は移動にかかるフレーム数
 
+//========================================/
+
+//声援用・決勝戦自分
+$LWK_NOWBTL = 1
+
+//========================================/
+
 //声援表示
-_CALL ev_yell_final_player
+_CALL ev_yell_scr
 
 IF $LOCALWORK5 == 1 THEN 
 	//サブウィンクローズ
@@ -822,8 +784,15 @@ _WBT_GMK_EFFECT_START(SCR_WBT_EFFECT_NORMAL,SCR_WBT_EFFECT_POS_L)
 //カメラ対戦者追従
 _CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,152 )	//一番最後の引数は移動にかかるフレーム数
 
+//========================================/
+
+//声援用・決勝戦相手
+$LWK_NOWBTL = 2
+
+//========================================/
+
 //声援表示
-_CALL ev_yell_final_enemy
+_CALL ev_yell_scr
 
 IF $LOCALWORK11 == 1 THEN 
 	//サブウィンクローズ
@@ -982,282 +951,207 @@ ev_final_result:
         _RET
 
 /**************************************************************/
-/*		前口上スクリプト									  */
+/*		WBT・声援スクリプト									  */
 /**************************************************************/
-ev_introductory_remarks:
-
-_PLAYER_NAME( 0 ) //タグ０にプレイヤー名を登録
+ev_yell_scr:
 
 _WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_NULL, LWK_WIN_COUNT )
 
-//優勝回数が０の場合
-IF $LWK_WIN_COUNT == 0 THEN
-
-	//前口上メッセージ表示
-	_PLAINWIN_MSG_UP( msg_wbt_player_title_01 )
-	_PLAINWIN_CLOSE()
-
-//優勝回数が１の場合
-ELSIF $LWK_WIN_COUNT == 1 THEN
-
-	//前口上メッセージ表示
-	_PLAINWIN_MSG_UP( msg_wbt_player_title_02 )
-	_PLAINWIN_CLOSE()
-
-//優勝回数が３以上の場合
-ELSIF $LWK_WIN_COUNT >= 3 THEN
-
-	//前口上メッセージ表示
-	_PLAINWIN_MSG_UP( msg_wbt_player_title_03 )
-	_PLAINWIN_CLOSE()
-
-	//乱数取得
-	_GET_RND( LWK_MSG,10 )
-
-//優勝回数が５以上の場合
-ELSIF $LWK_WIN_COUNT >= 5 THEN
-
-	//乱数取得
-	_GET_RND( LWK_MSG,5 )
-	
-	//前口上メッセージ表示
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_04 )
-	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_05 )
-	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_06 )
-	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_07 )
-	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_08 )
-	ENDSWITCH
-	_PLAINWIN_CLOSE()
-
-//優勝回数が１０以上の場合
-ELSIF $LWK_WIN_COUNT >= 10 THEN
-
-	//乱数取得
-	_GET_RND( LWK_MSG,5 )
-	
-	//前口上メッセージ表示
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_09 )
-	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_10 )
-	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_11 )
-	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_12 )
-	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_13 )
-	ENDSWITCH
-	_PLAINWIN_CLOSE()
-
-//優勝回数が２０以上の場合
-ELSIF $LWK_WIN_COUNT >= 20 THEN
-
-	//乱数取得
-	_GET_RND( LWK_MSG,5 )
-	
-	//前口上メッセージ表示
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_14 )
-	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_15 )
-	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_16 )
-	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_17 )
-	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_18 )
-	ENDSWITCH
-	_PLAINWIN_CLOSE()
-
 //優勝回数が３０以上の場合
-ELSIF $LWK_WIN_COUNT >= 30 THEN
-
-	//乱数取得
-	_GET_RND( LWK_MSG,5 )
+IF $LWK_WIN_COUNT >= 30 THEN
 	
-	//前口上メッセージ表示
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_19 )
-	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_20 )
-	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_21 )
-	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_22 )
-	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_23 )
-	ENDSWITCH
-	_PLAINWIN_CLOSE()
-
-//優勝回数が５０以上の場合
-ELSIF $LWK_WIN_COUNT >= 50 THEN
-
-	//乱数取得
-	_GET_RND( LWK_MSG,5 )
-	
-	//前口上メッセージ表示
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_24 )
-	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_25 )
-	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_26 )
-	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_27 )
-	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_28 )
-	ENDSWITCH
-	_PLAINWIN_CLOSE()
-
-//優勝回数が１００以上の場合
-ELSIF $LWK_WIN_COUNT >= 100 THEN
-
-	//乱数取得
-	_GET_RND( LWK_MSG,5 )
-	
-	//前口上メッセージ表示
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_29 )
-	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_30 )
-	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_31 )
-	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_32 )
-	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_wbt_player_title_33 )
-	ENDSWITCH
-	_PLAINWIN_CLOSE()
-
-//異常処理
-ELSE
-
-ENDIF
-
-_RET
-
-/**************************************************************/
-/*		決勝戦　プレイヤー用声援スクリプト					  */
-/**************************************************************/
-ev_yell_final_player:
-
-_WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_NULL, LWK_WIN_COUNT )
-
-//優勝回数が１以下の場合
-IF $LWK_WIN_COUNT <= 1 THEN
-	
-	//優勝回数1回の場合は２０％
-	$LWK_PROBABILITY = 19
-	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg_final
-
-//優勝回数が５以上の場合
-ELSIF $LWK_WIN_COUNT >= 5 THEN
-
-	//優勝回数５回の場合は４０％
-	$LWK_PROBABILITY = 39
-	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg_final
-
-//優勝回数が１０以上の場合
-ELSIF $LWK_WIN_COUNT >= 10 THEN
-
-	//優勝回数１０回の場合は６０％
-	$LWK_PROBABILITY = 59
-	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg_final
-
-//優勝回数が３０以上の場合
-ELSIF $LWK_WIN_COUNT >= 30 THEN
-
-	//優勝回数３０回の場合は８０％
+	//８０％
 	$LWK_PROBABILITY = 79
-	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg_final
+
+//優勝回数が１０以上の場合
+ELSIF $LWK_WIN_COUNT >= 10 THEN
+
+	//６０％
+	$LWK_PROBABILITY = 59
+
+//優勝回数が５以上の場合
+ELSIF $LWK_WIN_COUNT >= 5 THEN
+
+	//４０％
+	$LWK_PROBABILITY = 39
+
+//優勝回数が０以上の場合
+ELSIF $LWK_WIN_COUNT >= 0 THEN
+
+	//２０％
+	$LWK_PROBABILITY = 19
 
 //異常処理
 ELSE
 
 ENDIF
 
+_CALL ev_rnd_yell_msg
+
 _RET
 
 /**************************************************************/
-/*		決勝戦用　声援メッセージ　コールスクリプト			  */
+/*		声援　メッセージ表示のコール				  */
 /**************************************************************/
-ev_rnd_yell_msg_final:
+ev_rnd_yell_msg:
 
 //声援決め乱数
 _GET_RND( LWK_RND,100 )
 
-//プレイヤー名を格納
-_PLAYER_NAME( 0 )
-
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
-
-	//１個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 1
-	$LWK_YELL_POSY = 1
-
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
-
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	ENDSWITCH
-
-	//========================================/
+SWITCH $LWK_NOWBTL
+CASE 0 THEN//2回戦目の場合
 	
-	//サブウィンドウチェック
-	$LOCALWORK1 = 1
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
 	
-	//========================================/
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
 
-ENDIF
+		//X座標・Y座標・ナンバー決め
+		$LWK_YELL_POSX = 1
+		$LWK_YELL_POSY = 1
 
-//タイムウェイト
-_TIME_WAIT( 20 )
+		//プレイヤー名を格納
+		_PLAYER_NAME(0)
 
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		ENDSWITCH
 	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK14 = 1
+		
+		//========================================/
+	
+	ENDIF
+
+	//声援決め乱数　２回目
+	_GET_RND( LWK_RND,100 )
+
+	//優勝回数に応じた確率で２つ目のメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
+	
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
+	
+		//X座標・Y座標・ナンバー決め
+		$LWK_YELL_POSX = 20
+		$LWK_YELL_POSY = 20
+
+		//対戦者名を格納
+		_WBT_SET_ENEMY_NAME( 0 )
+
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_2nd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		ENDSWITCH
+
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK15 = 1
+		
+		//========================================/
+	
+	ENDIF
+
+	//タイムウェイト
+	_TIME_WAIT( 60 )
+
+CASE 1 THEN//決勝戦自分入場時
+
+	//プレイヤー名を格納
+	_PLAYER_NAME( 0 )
+	
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
+
+		//１個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 1
+		$LWK_YELL_POSY = 1
+
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
+
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		ENDSWITCH
+
+		//========================================/
+	
+		//サブウィンドウチェック
+		$LOCALWORK1 = 1
+		
+		//========================================/
+	
+	ENDIF
+
+	//タイムウェイト
+	_TIME_WAIT( 20 )
+	
+	//声援決め乱数
+	_GET_RND( LWK_RND,100 )
+
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//２個目のメッセージの座標位置・サブウィンナンバー定義
 	$LWK_YELL_POSX = 18
@@ -1296,582 +1190,688 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 	
 	//========================================/
 
-ENDIF
+	ENDIF
 
-IF $LOCALWORK1 == 1 THEN 
-	//サブウィンクローズ
-	_SUBWIN_CLOSE( 1 )
-ENDIF
+	IF $LOCALWORK1 == 1 THEN 
+		//サブウィンクローズ
+		_SUBWIN_CLOSE( 1 )
+	ENDIF
 
-//タイムウェイト
-_TIME_WAIT( 20 )
+	//タイムウェイト
+	_TIME_WAIT( 20 )
 
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
+	//声援決め乱数
+	_GET_RND( LWK_RND,100 )
 	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
 
-	//３個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 1
-	$LWK_YELL_POSY = 18
-
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
-
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	ENDSWITCH
-
-	//========================================/
+		//３個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 1
+		$LWK_YELL_POSY = 18
 	
-	//サブウィンドウチェック
-	$LOCALWORK3 = 1
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
 	
-	//========================================/
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		ENDSWITCH
 
-ENDIF
-
-IF $LOCALWORK2 == 1 THEN 
-	//サブウィンクローズ
-	_SUBWIN_CLOSE( 2 )
-ENDIF
-
-//タイムウェイト
-_TIME_WAIT( 20 )
-
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK3 = 1
+		
+		//========================================/
 	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
+	ENDIF
 
-	//４個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 18
-	$LWK_YELL_POSY = 1
+	IF $LOCALWORK2 == 1 THEN 
+		//サブウィンクローズ
+		_SUBWIN_CLOSE( 2 )
+	ENDIF
 
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
+	//タイムウェイト
+	_TIME_WAIT( 20 )
 
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	ENDSWITCH
-
-	//========================================/
+	//声援決め乱数
+	_GET_RND( LWK_RND,100 )
 	
-	//サブウィンドウチェック
-	$LOCALWORK4 = 1
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
+
+		//４個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 18
+		$LWK_YELL_POSY = 1
+
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
+
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		ENDSWITCH
+
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK4 = 1
+		
+		//========================================/
+
+	ENDIF
+
+	IF $LOCALWORK3 == 1 THEN 
+		//サブウィンクローズ
+		_SUBWIN_CLOSE( 3 )
+	ENDIF
+
+	//タイムウェイト
+	_TIME_WAIT( 20 )
+
+	//声援決め乱数
+	_GET_RND( LWK_RND,100 )
 	
-	//========================================/
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
 
-ENDIF
-
-IF $LOCALWORK3 == 1 THEN 
-	//サブウィンクローズ
-	_SUBWIN_CLOSE( 3 )
-ENDIF
-
-//タイムウェイト
-_TIME_WAIT( 20 )
-
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
+		//５個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 1
+		$LWK_YELL_POSY = 18
 	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
 
-	//５個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 1
-	$LWK_YELL_POSY = 18
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		ENDSWITCH
 	
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK5 = 1
+		
+		//========================================/
 
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	ENDSWITCH
+	ENDIF
+
+	IF $LOCALWORK4 == 1 THEN 
+		//サブウィンクローズ
+		_SUBWIN_CLOSE( 4 )
+	ENDIF
+
+	//タイムウェイト
+	_TIME_WAIT( 20 )
+
+	//声援決め乱数
+	_GET_RND( LWK_RND,100 )
 	
-	//========================================/
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
+
+		//６個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 19
+		$LWK_YELL_POSY = 1
+
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
+
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		ENDSWITCH
+
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK6 = 1
+		
+		//========================================/
+
+	ENDIF
+
+CASE 2 THEN//決勝戦相手入場時
+
+	//対戦者名を格納
+	_WBT_SET_ENEMY_NAME( 0 )
+
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
+
+		//１個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 1
+		$LWK_YELL_POSY = 1
+		
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
+
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		ENDSWITCH
+
+		//タイムウェイト
+		_TIME_WAIT( 20 )
+
+		//========================================/
 	
-	//サブウィンドウチェック
-	$LOCALWORK5 = 1
+		//サブウィンドウチェック
+		$LOCALWORK7 = 1
 	
-	//========================================/
+		//========================================/
 
-ENDIF
+	ENDIF
 
-IF $LOCALWORK4 == 1 THEN 
-	//サブウィンクローズ
-	_SUBWIN_CLOSE( 4 )
-ENDIF
-
-//タイムウェイト
-_TIME_WAIT( 20 )
-
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
+	//声援決め乱数
+	_GET_RND( LWK_RND,100 )
 	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
 
-	//６個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 19
-	$LWK_YELL_POSY = 1
+		//２個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 18
+		$LWK_YELL_POSY = 18
 
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
 
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	ENDSWITCH
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		ENDSWITCH
 
-	//========================================/
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK8 = 1
 	
-	//サブウィンドウチェック
-	$LOCALWORK6 = 1
-	
-	//========================================/
+		//========================================/
 
-ENDIF
+	ENDIF
+
+	IF $LOCALWORK7 == 1 THEN 
+		//サブウィンクローズ
+		_SUBWIN_CLOSE( 1 )
+	ENDIF
+
+	//タイムウェイト
+	_TIME_WAIT( 20 )
+
+	//声援決め乱数
+	_GET_RND( LWK_RND,100 )
+	
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
+
+		//３個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 18
+		$LWK_YELL_POSY = 1
+	
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
+
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		ENDSWITCH
+
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK9 = 1
+		
+		//========================================/
+
+	ENDIF
+
+	IF $LOCALWORK8 == 1 THEN 
+		//サブウィンクローズ
+		_SUBWIN_CLOSE( 2 )
+	ENDIF
+
+	//タイムウェイト
+	_TIME_WAIT( 20 )
+
+	//声援決め乱数
+	_GET_RND( LWK_RND,100 )
+	
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
+
+		//４個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 1
+		$LWK_YELL_POSY = 18
+	
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
+
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		ENDSWITCH
+	
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK10 = 1
+	
+		//========================================/
+
+	ENDIF
+
+	IF $LOCALWORK9 == 1 THEN 
+		//サブウィンクローズ
+		_SUBWIN_CLOSE( 3 )
+	ENDIF
+	
+	//タイムウェイト
+	_TIME_WAIT( 20 )
+
+	//声援決め乱数
+	_GET_RND( LWK_RND,100 )
+	
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
+
+		//５個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 19
+		$LWK_YELL_POSY = 5
+
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
+
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		ENDSWITCH
+
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK11 = 1
+		
+		//========================================/
+
+	ENDIF
+
+	IF $LOCALWORK10 == 1 THEN 
+		//サブウィンクローズ
+		_SUBWIN_CLOSE( 4 )
+	ENDIF
+
+	//タイムウェイト
+	_TIME_WAIT( 20 )
+
+	//声援決め乱数
+	_GET_RND( LWK_RND,100 )
+	
+	//優勝回数に応じた確率でメッセージ表示
+	IF $LWK_RND <= LWK_PROBABILITY THEN
+
+		//６個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 1
+		$LWK_YELL_POSY = 19
+
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
+
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		ENDSWITCH
+
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK12 = 1
+		
+		//========================================/
+
+	ENDIF
+
+DEFAULT//異常処理
+	_DEBUG_PRINT_WK( LWK_NOWBTL )
+ENDSWITCH
 
 _RET
 
 /**************************************************************/
-/*		決勝戦　対戦者用声援スクリプト						  */
+/*		前口上スクリプト									  */
 /**************************************************************/
-ev_yell_final_enemy:
+ev_introductory_remarks:
+
+_PLAYER_NAME( 0 ) //タグ０にプレイヤー名を登録
 
 _WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_NULL, LWK_WIN_COUNT )
 
-//優勝回数が１以下の場合
-IF $LWK_WIN_COUNT <= 1 THEN
-	
-	//優勝回数1回の場合は２０％
-	$LWK_PROBABILITY = 19
-	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg_final_enemy
+//優勝回数が０の場合
+IF $LWK_WIN_COUNT == 0 THEN
 
-//優勝回数が５以上の場合
-ELSIF $LWK_WIN_COUNT >= 5 THEN
+	//前口上メッセージ表示
+	_PLAINWIN_MSG_UP( msg_wbt_player_title_01 )
 
-	//優勝回数５回の場合は４０％
-	$LWK_PROBABILITY = 39
+//優勝回数が１の場合
+ELSIF $LWK_WIN_COUNT == 1 THEN
+
+	//前口上メッセージ表示
+	_PLAINWIN_MSG_UP( msg_wbt_player_title_02 )
+
+//優勝回数が１００以上の場合
+ELSIF $LWK_WIN_COUNT >= 100 THEN
+
+	//乱数取得
+	_GET_RND( LWK_MSG,5 )
 	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg_final_enemy
+	//前口上メッセージ表示
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_29 )
+	CASE 1 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_30 )
+	CASE 2 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_31 )
+	CASE 3 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_32 )
+	CASE 4 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_33 )
+	ENDSWITCH
+
+//優勝回数が５０以上の場合
+ELSIF $LWK_WIN_COUNT >= 50 THEN
+
+	//乱数取得
+	_GET_RND( LWK_MSG,5 )
+	
+	//前口上メッセージ表示
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_24 )
+	CASE 1 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_25 )
+	CASE 2 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_26 )
+	CASE 3 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_27 )
+	CASE 4 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_28 )
+	ENDSWITCH
+	
+//優勝回数が３０以上の場合
+ELSIF $LWK_WIN_COUNT >= 30 THEN
+
+	//乱数取得
+	_GET_RND( LWK_MSG,5 )
+	
+	//前口上メッセージ表示
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_19 )
+	CASE 1 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_20 )
+	CASE 2 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_21 )
+	CASE 3 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_22 )
+	CASE 4 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_23 )
+	ENDSWITCH
+
+//優勝回数が２０以上の場合
+ELSIF $LWK_WIN_COUNT >= 20 THEN
+
+	//乱数取得
+	_GET_RND( LWK_MSG,5 )
+	
+	//前口上メッセージ表示
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_14 )
+	CASE 1 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_15 )
+	CASE 2 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_16 )
+	CASE 3 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_17 )
+	CASE 4 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_18 )
+	ENDSWITCH
 
 //優勝回数が１０以上の場合
 ELSIF $LWK_WIN_COUNT >= 10 THEN
 
-	//優勝回数１０回の場合は６０％
-	$LWK_PROBABILITY = 59
+	//乱数取得
+	_GET_RND( LWK_MSG,5 )
 	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg_final_enemy
+	//前口上メッセージ表示
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_09 )
+	CASE 1 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_10 )
+	CASE 2 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_11 )
+	CASE 3 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_12 )
+	CASE 4 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_13 )
+	ENDSWITCH
 
-//優勝回数が３０以上の場合
-ELSIF $LWK_WIN_COUNT >= 30 THEN
+//優勝回数が５以上の場合
+ELSIF $LWK_WIN_COUNT >= 5 THEN
 
-	//優勝回数３０回の場合は８０％
-	$LWK_PROBABILITY = 79
+	//乱数取得
+	_GET_RND( LWK_MSG,5 )
 	
-	//メッセージ表示のコールスクリプト
-	_CALL ev_rnd_yell_msg_final_enemy
+	//前口上メッセージ表示
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_04 )
+	CASE 1 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_05 )
+	CASE 2 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_06 )
+	CASE 3 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_07 )
+	CASE 4 THEN
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_08 )
+	ENDSWITCH
+
+//優勝回数が２以上の場合
+ELSIF $LWK_WIN_COUNT >= 2 THEN
+
+	//前口上メッセージ表示
+	_PLAINWIN_MSG_UP( msg_wbt_player_title_03 )
+
+	//乱数取得
+	_GET_RND( LWK_MSG,10 )
 
 //異常処理
 ELSE
 
 ENDIF
 
-_RET
-
-/**************************************************************/
-/*		決勝戦用　声援メッセージ　コールスクリプト			  */
-/**************************************************************/
-ev_rnd_yell_msg_final_enemy:
-
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
-
-//対戦者名を格納
-_WBT_SET_ENEMY_NAME( 0 )
-
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
-
-	//１個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 1
-	$LWK_YELL_POSY = 1
-	
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
-
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
-	ENDSWITCH
-
-	//タイムウェイト
-	_TIME_WAIT( 20 )
-
-	//========================================/
-	
-	//サブウィンドウチェック
-	$LOCALWORK7 = 1
-	
-	//========================================/
-
-ENDIF
-
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
-	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
-
-	//２個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 18
-	$LWK_YELL_POSY = 18
-
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
-
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	ENDSWITCH
-
-	//========================================/
-	
-	//サブウィンドウチェック
-	$LOCALWORK8 = 1
-	
-	//========================================/
-
-ENDIF
-
-IF $LOCALWORK7 == 1 THEN 
-	//サブウィンクローズ
-	_SUBWIN_CLOSE( 1 )
-ENDIF
-
-//タイムウェイト
-_TIME_WAIT( 20 )
-
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
-	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
-
-	//３個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 18
-	$LWK_YELL_POSY = 1
-	
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
-
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
-	ENDSWITCH
-
-	//========================================/
-	
-	//サブウィンドウチェック
-	$LOCALWORK9 = 1
-	
-	//========================================/
-
-ENDIF
-
-IF $LOCALWORK8 == 1 THEN 
-	//サブウィンクローズ
-	_SUBWIN_CLOSE( 2 )
-ENDIF
-
-//タイムウェイト
-_TIME_WAIT( 20 )
-
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
-	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
-
-	//４個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 1
-	$LWK_YELL_POSY = 18
-	
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
-
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
-	ENDSWITCH
-	
-	//========================================/
-	
-	//サブウィンドウチェック
-	$LOCALWORK10 = 1
-	
-	//========================================/
-
-ENDIF
-
-IF $LOCALWORK9 == 1 THEN 
-	//サブウィンクローズ
-	_SUBWIN_CLOSE( 3 )
-ENDIF
-//タイムウェイト
-_TIME_WAIT( 20 )
-
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
-	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
-
-	//５個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 19
-	$LWK_YELL_POSY = 5
-
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
-
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
-	ENDSWITCH
-
-	//========================================/
-	
-	//サブウィンドウチェック
-	$LOCALWORK11 = 1
-	
-	//========================================/
-
-ENDIF
-
-IF $LOCALWORK10 == 1 THEN 
-	//サブウィンクローズ
-	_SUBWIN_CLOSE( 4 )
-ENDIF
-
-//タイムウェイト
-_TIME_WAIT( 20 )
-
-//声援決め乱数
-_GET_RND( LWK_RND,100 )
-	
-//優勝回数に応じた確率でメッセージ表示
-IF $LWK_RND <= LWK_PROBABILITY THEN
-
-	//６個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 1
-	$LWK_YELL_POSY = 19
-
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
-
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
-	ENDSWITCH
-
-	//========================================/
-	
-	//サブウィンドウチェック
-	$LOCALWORK12 = 1
-	
-	//========================================/
-
-ENDIF
+_PLAINWIN_CLOSE()
 
 _RET
