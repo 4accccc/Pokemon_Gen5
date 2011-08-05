@@ -2759,11 +2759,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼
-地方選択を促す▼</Text>
+			<Text>おまえ　ジムリーダーの　はなしを
+ききたそうな　かおをしてるな！▼
+どの　ちほうの　ジムリーダーに
+ついて　しりたいんだ？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:26:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T07:36:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2771,11 +2773,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ▼
-地方選択を促す▼</Text>
+			<Text>おまえ　ジムリーダーの　話を
+聞きたそうな　顔をしているな！▼
+どの　地方の　ジムリーダーに
+ついて　知りたいんだ？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:26:19" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2816,11 +2820,11 @@ msg_wbt_subev_area_05
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼
-ジムリーダー選択を促す▼</Text>
+			<Text>どの　ジムリーダーの
+はなしを　ききたいんだ？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:26:27" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T07:36:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2828,11 +2832,11 @@ msg_wbt_subev_area_05
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ▼
-ジムリーダー選択を促す▼</Text>
+			<Text>どの　ジムリーダーの
+話を　聞きたいんだ？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:26:30" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T07:36:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2872,11 +2876,11 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼
-会話終了メッセージ</Text>
+			<Text>はなしを　ききたかったら
+いつでも　こいよ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:24:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:03:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2884,11 +2888,11 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ▼
-会話終了メッセージ</Text>
+			<Text>話を　聞きたかったら
+いつでも　こいよ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:24:14" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:03:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"

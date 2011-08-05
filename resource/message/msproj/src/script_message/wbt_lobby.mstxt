@@ -423,11 +423,12 @@ msg_wbt_menu_wcs</Comment>
 ポケモンだけしか　さんかできない▽
 とくしゅな　トーナメントです▼
 たとえば　ほのおタイプの
-エキスパートトーナメントを▽
-せんたくしたばあい　ほのおタイプの▽
+タイプエキスパートトーナメントを▽
+えらんだばあい　ほのおタイプの▽
 ポケモンしか　つかえません▼
-そのうえで　すべて　ちがうポケモンで
-さんかして　ください▼
+おなじタイプの　なかでも
+すべて　ちがう　ポケモンで▽
+さんか　してください▼
 もたせる　どうぐも　すべて
 ちがうものでなければ　なりません▼
 くわえて　どうぐでは　こころのしずく
@@ -443,7 +444,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T11:00:42" />
+				Time="2011-08-05T08:48:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -456,11 +457,12 @@ msg_wbt_menu_wcs</Comment>
 ポケモンだけしか　参加できない▽
 特殊な　トーナメントです▼
 たとえば　ほのおタイプの
-エキスパートトーナメントを▽
+タイプエキスパートトーナメントを▽
 選択した場合　ほのおタイプの▽
 ポケモンしか　使えません▼
-その上で　すべて　ちがうポケモンで
-参加して　ください▼
+同じタイプの　中でも
+すべて　ちがう　ポケモンで▽
+参加してください▼
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
 加えて　道具では　こころのしずく
@@ -476,7 +478,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T11:00:45" />
+				Time="2011-08-05T08:54:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -690,8 +692,8 @@ msg_wbt_menu_wcs</Comment>
 			Language="JPN">
 			<Text>ホドモエトーナメントは
 なんでもアリな　トーナメントです▼
-どんなポケモンや　どうぐも
-つかうことができます▼
+すべての　ポケモンと　どうぐを
+りようすることができます▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ２５と　させていただきます▼
@@ -700,7 +702,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T09:32:07" />
+				Time="2011-08-05T08:26:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -710,8 +712,8 @@ msg_wbt_menu_wcs</Comment>
 			Language="JPN_KANJI">
 			<Text>ホドモエトーナメントは
 なんでもアリな　トーナメントです▼
-どんなポケモンや　道具も
-使うことができます▼
+すべての　ポケモンと　道具を
+利用することができます▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ２５と　させていただきます▼
@@ -720,7 +722,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:37:19" />
+				Time="2011-08-05T08:27:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -1244,11 +1246,10 @@ msg_wbt_menu_wcs</Comment>
 ポケモンの　かずに　おうじて▽
 バトルポイントが　もらえます▼
 かんぜんしょうり　めざして
-がんばって　ください！▼
-</Text>
+がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T09:27:40" />
+				Time="2011-08-05T05:51:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1322,12 +1323,12 @@ msg_wbt_menu_wcs</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ＷＣＳ２０１１トーナメントは
-ＷＣＳを　かちぬいた　きょうてきと▽
-たたかえる　トーナメントです▼
+ＷＣＳを　かちぬいた　トレーナーと▽
+たいせんできる　トーナメントです▼
 イッシュちほうの
 ポケモンのみが　さんかできます▼
-すべて　ちがう　ポケモンで
-さんかして　ください▼
+すべて　ちがう　ポケモンを
+せんたくして　ください▼
 もたせる　どうぐも　すべて
 ちがうものでなければ　なりません▼
 バトルルールは
@@ -1337,7 +1338,7 @@ msg_wbt_menu_wcs</Comment>
 めいよの　ために　たたかいましょう！▼　</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:48:06" />
+				Time="2011-08-05T07:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1346,12 +1347,12 @@ msg_wbt_menu_wcs</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＷＣＳ２０１１トーナメントは
-ＷＣＳに　出場した　強敵と▽
-戦える　トーナメントです▼
+ＷＣＳに　出場した　トレーナーと▽
+対戦できる　トーナメントです▼
 イッシュ地方の
 ポケモンのみが　参加できます▼
-すべて　ちがう　ポケモンで
-参加して　ください▼
+すべて　ちがう　ポケモンを
+選択して　ください▼
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
 バトルルールは
@@ -1361,7 +1362,7 @@ msg_wbt_menu_wcs</Comment>
 名誉の　ために　戦いましょう！▼　</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:48:42" />
+				Time="2011-08-05T07:06:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1397,11 +1398,11 @@ msg_wbt_menu_wcs</Comment>
 ランダムで　えらばれますので▽
 うんも　たいせつな　ようそとなります▼
 ゆうしょうすると
-バトルポイントが　もらえますよ▽
+バトルポイントが　もらえます▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T07:22:29" />
+				Time="2011-08-05T07:02:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1417,11 +1418,11 @@ msg_wbt_menu_wcs</Comment>
 ランダムで　選ばれますので▽
 運も　重要な　要素となります▼
 優勝すると
-バトルポイントが　もらえますよ▽
+バトルポイントが　もらえます▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T07:22:37" />
+				Time="2011-08-05T07:02:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1459,11 +1460,11 @@ msg_wbt_menu_wcs</Comment>
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
 ゆうしょうすると
-バトルポイントが　もらえますよ▽
+バトルポイントが　もらえます▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T07:22:46" />
+				Time="2011-08-05T07:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1482,11 +1483,11 @@ msg_wbt_menu_wcs</Comment>
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
 優勝すると
-バトルポイントが　もらえますよ▽
+バトルポイントが　もらえます▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T07:22:52" />
+				Time="2011-08-05T07:03:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1666,8 +1667,7 @@ msg_wbt_menu_wcs</Comment>
 さんかポケモンは　６ひき▼
 ローテーションバトルの
 さんかポケモンは　４ひき▽
-と　なっておりますので▽
-ごちゅういください▼
+と　なっております▼
 また　バトルポイントをもらえる
 トーナメントで　トリプルバトルや▽
 ローテーションバトルを　えらんで▼
@@ -1676,7 +1676,7 @@ msg_wbt_menu_wcs</Comment>
 うまく　ごかつようください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T11:01:57" />
+				Time="2011-08-05T05:16:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1695,8 +1695,7 @@ msg_wbt_menu_wcs</Comment>
 参加ポケモンは　６匹▼
 ローテーションバトルの
 参加ポケモンは　４匹▽
-と　なっておりますので▽
-ご注意ください▼
+と　なっております▼
 また　バトルポイントをもらえる
 トーナメントで　トリプルバトルや▽
 ローテーションバトルを　選んで▼
@@ -1705,7 +1704,7 @@ msg_wbt_menu_wcs</Comment>
 うまく　ご活用ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T11:02:09" />
+				Time="2011-08-05T05:16:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2673,12 +2672,18 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼
-ちほうの　リーダーズトーナメントに
-さんか　できるように　なりました！▼</Text>
+			<Text>……おおっ！　いろんな　ちほうの
+リーダーズトーナメントに▽
+さんか　できるようになりましたよ！▼
+たいかいに　しゅつじょうする
+トレーナーは　みんな　ゆうめいな▽
+ジムリーダーの　かたがたです▼
+いままでいじょうに　てごわい
+あいてに　なるとおもいますが▽
+がんばって　くださいね！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T07:56:03" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T03:59:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2686,12 +2691,18 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ▼
-ちほうの　リーダーズトーナメントに
-さんか　できるように　なりました！▼</Text>
+			<Text>……おおっ！　いろんな　地方の
+リーダーズトーナメントに▽
+参加　できるようになりましたよ！▼
+大会に　出場する
+トレーナーは　みんな　有名な▽
+ジムリーダーの　方々です▼
+いままで以上に　てごわい
+相手に　なると思いますが▽
+がんばって　くださいね！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T07:56:07" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T03:59:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3957,51 +3968,39 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮　さんかできる　じょうけんを
+			<Text>さんかできる　じょうけんを
 みたして　いません！▼
-</Text>
+ダウンロードトーナメントの
+ルールを　ごかくにんください▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-08-03T03:41:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:18:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:09:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮　参加できる　条件を
+			<Text>参加できる　条件を
 満たして　いません！▼
-</Text>
+ダウンロードトーナメントの
+ルールを　ご確認ください▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-08-03T03:41:15" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:18:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:09:19" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ＮＧ：ダウンロード用</Comment>
-			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-08-03T03:40:25" />
-		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>システムメッセージ
 </Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-28T14:47:08" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:09:33" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -4074,10 +4073,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　さんかする
-ポケモンを　えらんで　ください▼</Text>
+ポケモンを　えらんで　ください！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T02:15:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4086,10 +4085,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　参加する
-ポケモンを　選んでください▼</Text>
+ポケモンを　選んでください！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T02:15:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4187,11 +4186,12 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さんか　うけつけが　おわりました
-では　こちらへ……▼</Text>
+			<Text>……はい！　これで
+さんか　うけつけは　おわりです▽
+では　こちらへ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T08:03:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4199,11 +4199,12 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>参加受付が　完了しました
-では　こちらへ……▼</Text>
+			<Text>……はい！　これで
+参加受付は　完了です▽
+では　こちらへ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T08:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4305,13 +4306,17 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうせいな　ちゅうせんによって
-こんかい　えらばせていただいた▽
-ポケモンは　こちらと　なります！▼
-どうぞ　ごかくにんください！▼</Text>
+			<Text>それでは　ドキドキの
+ポケモンちゅうせん　タイムです！▽
+んんんん～……▼
+……　……　……
+……　……　……▼
+じゃん！　でました！▼
+こんかい　レンタルさせていただく
+ポケモンは　こちらと　なります！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T07:27:01" />
+				Time="2011-08-05T05:31:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4319,13 +4324,17 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>公正な　抽選によって
-今回　選ばせていただいた▽
-ポケモンは　こちらと　なります！▼
-どうぞ　ご確認ください！▼</Text>
+			<Text>それでは　ドキドキの
+ポケモン抽選　タイムです！▽
+んんんん～……▼
+……　……　……
+……　……　……▼
+じゃん！　出ました！▼
+今回　レンタルさせていただく
+ポケモンは　こちらと　なります！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T07:27:14" />
+				Time="2011-08-05T05:31:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4369,12 +4378,12 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN">
 			<Text>ただいま　スペシャルな
 トーナメントを　じゅんびちゅうです▼
-すこし　じかんが　かかりそうですので
+すこし　じかんが　かかりそうなので
 たびを　つづけながら▽
 おまちくださいませ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T08:37:05" />
+				Time="2011-08-05T08:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4384,12 +4393,12 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN_KANJI">
 			<Text>ただいま　スペシャルな
 トーナメントを　準備中です▼
-少し　時間が　かかりそうですので
+少し　時間が　かかりそうなので
 旅を　続けながら▽
 お待ちくださいませ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T08:37:26" />
+				Time="2011-08-05T08:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4718,18 +4727,17 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼
+			<Text>……あっ！　そうそう！▼
 あと[Digit:1digit Idx="0" ]かい
+ワールドリーダーズトーナメントで▽
 ゆうしょう　すれば▼
-チャンピオンズトーナメントへの
-さんかけんりが　もらえますよ▼
-じょうけん▼
-ワールドトーナメントリーダーズを
-１０かいゆうしょうで　かいきん▼
-</Text>
+チャンピオンズトーナメントへ
+さんかできるように　なりますよ！▼
+うえの　ランクを　めざして
+がんばって　くださいね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T03:43:09" />
+				Time="2011-08-05T06:38:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4737,15 +4745,17 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ▼
-あと[Digit:1digit Idx="0" ]かい
-ゆうしょう　すれば▼
-チャンピオンズトーナメントへの
-さんかけんりが　もらえますよ▼
-</Text>
+			<Text>……あっ！　そうそう！▼
+あと[Digit:1digit Idx="0" ]回
+ワールドリーダーズトーナメントで▽
+優勝すれば▼
+チャンピオンズトーナメントへ
+参加できるように　なりますよ！▼
+うえの　ランクを　目指して　
+がんばって　くださいね！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-22T07:50:24" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T02:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4825,17 +4835,14 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-この　トーナメントに▽
-ゆうしょう　すると▼
-ちほうトーナメントに
-さんか　できますよ▼
-じょうけん▼
-イッシュリーダーズトーナメント
-クリア▼</Text>
+			<Text>イッシュリーダーズトーナメントに
+ゆうしょうすると▼
+かくちの　ちほうトーナメントに
+さんか　できるようになりますよ▽
+がんばって　くださいね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T03:27:05" />
+				Time="2011-08-05T08:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4843,14 +4850,14 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ
-この　トーナメントに▽
-ゆうしょう　すると▼
-ちほうトーナメントに
-さんか　できますよ▼</Text>
+			<Text>イッシュリーダーズトーナメントに
+優勝すると▼
+各地の　地方トーナメントに
+参加できるようになりますよ▽
+がんばって　くださいね！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:51:08" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T08:18:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4872,39 +4879,39 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-この　トーナメントに▽
-ゆうしょう　すると▼
-ワールドリーダーズトーナメントに
-さんか　できますよ▼
-じょうけん
-すべての　リーダズトーナメントを
+			<Text>……あっ！　しあいまえに
+おしらせが　あります！▼
+かくちほう　すべての
+リーダーズトーナメントに▽
 ゆうしょうすると▼
-ワールドリーダーズトーナメントが
-でてくる▼
-</Text>
+ワールドリーダーズトーナメントと
+タイプエキスパートトーナメントに▽
+さんか　できるようになるんです▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T03:26:05" />
+				Time="2011-08-05T03:34:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:50:04" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T05:34:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ
-この　トーナメントに▽
-ゆうしょう　すると▼
-ワールドリーダーズトーナメントに
-さんか　できますよ▼</Text>
+			<Text>……あっ！　試合前に
+お知らせが　あります！▼
+各地方　すべての
+リーダーズトーナメントに▽
+優勝すると▼
+ワールドリーダーズトーナメントと
+タイプエキスパートトーナメントに▽
+参加できるようになるんです▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:52:22" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T05:36:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:50:04" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T05:34:46" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4922,17 +4929,14 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-この　トーナメントに▽
-ゆうしょう　すると▼
+			<Text>ワールドリーダーズトーナメントに
+１０かい　ゆうしょうすると▼
 チャンピオンズトーナメントに
-さんか　できますよ▼
-じょうけん▼
-ワールドリーダーズトーナメントを
-１０かい　ゆうしょう▼</Text>
+さんか　できるようになりますよ▽
+がんばってくださいね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T03:28:01" />
+				Time="2011-08-05T03:23:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4940,14 +4944,14 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ
-この　トーナメントに▽
-ゆうしょう　すると▼
+			<Text>ワールドリーダーズトーナメントに
+１０回　優勝すると▼
 チャンピオンズトーナメントに
-さんか　できますよ▼</Text>
+参加　できるようになりますよ！▽
+がんばってくださいね！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:54:05" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T03:24:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4969,37 +4973,35 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-この　トーナメントに▽
+			<Text>かくちほう　すべての
+リーダーズトーナメントと▽
+レンタルトーナメントに▽
 ゆうしょう　すると▼
 レンタルマスタートーナメントに
-さんか　できますよ▼
-じょうけん
-レンタルと　すべての▼
-リーダーズトーナメントを
-クリアするとでてくる▼</Text>
+さんか　できるようになります！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T03:29:22" />
+				Time="2011-08-05T03:25:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:50:04" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T05:34:47" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ
-この　トーナメントに▽
-ゆうしょう　すると▼
+			<Text>各地方　すべての
+リーダーズトーナメントと▽
+レンタルトーナメントに▽
+優勝　すると▼
 レンタルマスタートーナメントに
-さんか　できますよ▼</Text>
+参加　できるようになります！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:53:53" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T03:25:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:50:04" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T05:34:47" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5017,36 +5019,35 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-この　トーナメントに▽
+			<Text>かくちほう　すべての
+リーダーズトーナメントと▽
+ミックストーナメントに▽
 ゆうしょう　すると▼
 ミックスマスタートーナメントに
-さんか　できますよ▼
-ミックスと　すべての▼
-リーダーズトーナメントを
-クリアするとでてくる▼</Text>
+さんか　できるようになります！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T03:30:41" />
+				Time="2011-08-05T03:17:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:50:04" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T05:34:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ
-この　トーナメントに▽
-ゆうしょう　すると▼
+			<Text>各地方　すべての
+リーダーズトーナメントと▽
+ミックストーナメントに▽
+優勝　すると▼
 ミックスマスタートーナメントに
-さんか　できますよ▼</Text>
+参加　できるようになります！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T07:36:48" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T03:17:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:50:04" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T05:34:48" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6181,10 +6182,11 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮　優勝記録の説明</Text>
+			<Text>いままでの　ゆうしょうかいすうを
+みることができます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:20:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6192,10 +6194,11 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮　優勝記録の説明</Text>
+			<Text>いままでの　優勝回数を
+見ることができます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:21:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6221,10 +6224,11 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮　ダウンロードの説明</Text>
+			<Text>Wi-Fiコネクションを　しようして
+トーナメントを　ダウンロードできます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6232,10 +6236,11 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮　ダウンロードの説明</Text>
+			<Text>Wi-Fiコネクションを　使用して
+トーナメントを　ダウンロードできます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6261,10 +6266,11 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮　スイッチを切るの説明</Text>
+			<Text>エントリーチェッカーの
+スイッチを　きります</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:57:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6272,10 +6278,11 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮　スイッチを切るの説明</Text>
+			<Text>エントリーチェッカーの
+スイッチを　切ります</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T06:57:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6517,16 +6524,13 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-この　トーナメントに▽
-ゆうしょう　すると▼
-タイプエキスパートトーナメントに
-さんか　できますよ▼
-すべての　リーダーズトーナメントを
-クリアするとでてくる▼</Text>
+			<Text>さんかじょうけんが
+おなじなので▼
+msg_wbt_notice_02に
+まとめました▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T03:31:22" />
+				Time="2011-08-05T05:42:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6534,14 +6538,13 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ
-この　トーナメントに▽
-ゆうしょう　すると▼
-タイプエキスパートトーナメントに
-さんか　できますよ▼</Text>
+			<Text>さんかじょうけんが
+おなじなので▼
+msg_wbt_notice_02に
+まとめました▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T07:34:35" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T05:42:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6556,6 +6559,13 @@ msg_wbt_info_11へ</Comment>
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-29T07:34:44" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-08-05T05:39:55" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
