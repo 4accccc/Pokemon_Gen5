@@ -441,4 +441,6 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/sikiken_01.nsbmd \
 	$(RESDIR)/jagate_02.nsbmd \
 	$(RESDIR)/bigicicle_02.nsbmd \
+	$(RESDIR)/c12_cloud01.nsbmd \
+	$(RESDIR)/‚ƒ12_sky.nsbmd \
 

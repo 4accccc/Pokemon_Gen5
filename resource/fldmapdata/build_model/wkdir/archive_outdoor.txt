@@ -440,3 +440,5 @@
 "nsbmdfiles/sikiken_01.nsbmd"
 "nsbmdfiles/jagate_02.nsbmd"
 "nsbmdfiles/bigicicle_02.nsbmd"
+"nsbmdfiles/c12_cloud01.nsbmd"
+"nsbmdfiles/‚ƒ12_sky.nsbmd"
