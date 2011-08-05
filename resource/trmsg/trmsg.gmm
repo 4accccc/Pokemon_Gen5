@@ -21376,6 +21376,13 @@ può accadere ancora di tutto!</language>
 テストメッセージ</language>
 	</row>
 
+	<row id="TRID_KARATE_22_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">がんじょうを　うわまわる　つよさ……
+きみ！　がんじょうブレイカー　だな！</language>
+		<language name="JPN_KANJI" width="216">がんじょうを　上回る　強さ……
+きみ！　がんじょうブレイカー　だな！</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
