@@ -2429,4 +2429,30 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="DMPSTR_STAR"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スター</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-08-05T08:54:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-05T08:54:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text />
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-08-05T08:54:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-05T08:54:43" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
