@@ -683,20 +683,6 @@ BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
 
 
 
-static void wbt_SetPokeParty( const BSUBWAY_POKEMON *btpwd, POKEPARTY *p_party, u16 level, const int inMemNum, HEAPID temp_heapID )
-{
-  int i;
-  POKEMON_PARAM*  pp;
-  PokeParty_Init( p_party, TEMOTI_POKEMAX );
-  pp = GFL_HEAP_AllocMemoryLo( temp_heapID, POKETOOL_GetWorkSize() );
-
-  for( i = 0; i < inMemNum; i++ ){
-    MakePokePara( &(btpwd[i]), pp , level );
-    PokeParty_Add( p_party, pp );
-  }
-  GFL_HEAP_FreeMemory( pp );
-}
-
 //--------------------------------------------------------------
 /**
  * WBT用BATTLE_SETUP_PARAM作成
@@ -764,6 +750,23 @@ BATTLE_SETUP_PARAM * FBI_TOOL_WBT_CreateBattleParam(
 
   
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+static void wbt_SetPokeParty( POKEPARTY *p_party,
+    const BSUBWAY_POKEMON *btpwd, u16 level, const int inMemNum, HEAPID temp_heapID )
+{
+  int i;
+  POKEMON_PARAM*  pp;
+  PokeParty_Init( p_party, TEMOTI_POKEMAX );
+  pp = GFL_HEAP_AllocMemoryLo( temp_heapID, POKETOOL_GetWorkSize() );
+
+  for( i = 0; i < inMemNum; i++ ){
+    MakePokePara( &(btpwd[i]), pp, level );
+    PokeParty_Add( p_party, pp );
+  }
+  GFL_HEAP_FreeMemory( pp );
+}
+
+//--------------------------------------------------------------
 /**
  */
 //--------------------------------------------------------------
@@ -773,27 +776,19 @@ void FBI_TOOL_WBT_SetEnemyData( BATTLE_SETUP_PARAM * bsp,
     int inMemNum, int level, HEAPID temp_heapID )
 {
   //敵トレーナーセット
+  BSP_TRAINER_DATA *tr_data;
+  BTL_CLIENT_ID client = BTL_CLIENT_ENEMY1;
+
+  //トレーナーデータ確保
+  tr_data = bsp->tr_data[client];
+
+  // AIトレーナーをセット(ai_bit=最強)
   {
-    BSP_TRAINER_DATA *tr_data;
-    BTL_CLIENT_ID client = BTL_CLIENT_ENEMY1;
-
-    //トレーナーデータ確保
-    tr_data = bsp->tr_data[client];
-
-
-    // AIトレーナーをセット(ai_bit=最強)
-    {
-      u16 play_mode = BSWAY_MODE_SINGLE;  //とりあえずWIFI以外にしておく
-      EntryAITrainer( play_mode, bt_trd->player_id, bt_trd,
-          tr_data, 0x00000087, TRUE,TRUE );
-    }
-    
-    //敵ポケモンセット
-    wbt_SetPokeParty( btpwd, bsp->party[client], level, inMemNum, temp_heapID );
-
+    u16 play_mode = BSWAY_MODE_SINGLE;  //とりあえずWIFI以外にしておく
+    EntryAITrainer( play_mode, bt_trd->player_id, bt_trd, tr_data, 0x00000087, TRUE,TRUE );
   }
-
-  //return dst;
+  //敵ポケモンセット
+  wbt_SetPokeParty( bsp->party[client], btpwd, level, inMemNum, temp_heapID );
 }
 
 

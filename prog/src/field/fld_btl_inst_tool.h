@@ -66,6 +66,7 @@ extern u16 FBI_TOOL_GetTrtype(ARCID tr_arcID, u16 tr_no, HEAPID heapID );
 //WBT‚ÅŽg—p
 extern BATTLE_SETUP_PARAM * FBI_TOOL_WBT_CreateBattleParam(
     GAMESYS_WORK *gsys, const POKEPARTY *my_party, BtlRule rule );
+
 extern void FBI_TOOL_WBT_SetEnemyData( BATTLE_SETUP_PARAM * bsp,
     const BSUBWAY_TRAINER * bt_trd,
     const BSUBWAY_POKEMON * btpwd,

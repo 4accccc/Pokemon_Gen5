@@ -265,7 +265,7 @@ const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos )
 //------------------------------------------------------------------
 static u8 WBTSYS_GetRevisePokeLevel( const WBTSYS * wbtsys )
 {
-  return 50;
+  return 100;
 }
 
 //------------------------------------------------------------------
@@ -798,6 +798,13 @@ const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys )
   return &wbtsys->wbtreg.ex_reg;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static u8 WBTSYS_GetPartyMax( WBTSYS * wbtsys )
+{
+  return WBTTOOL_GetPartyMaxByRule( wbtsys->rule );
+}
+
 #ifdef PM_DEBUG
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -830,6 +837,9 @@ void WBTSYS_DEBUG_PrintRegulation( const REGULATION * cp_data )
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief ポケモンリスト選択結果の反映処理
+ */
 //------------------------------------------------------------------
 void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, PLIST_DATA * plist_data )
 {
@@ -879,6 +889,9 @@ static POKEPARTY * getUsePokeParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief ポケモンリスト呼び出しパラメータの設定
+ */
 //------------------------------------------------------------------
 void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA * plist_data )
 {
@@ -950,7 +963,7 @@ POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
   base_party = getUsePokeParty( wbtsys, gamedata );
   entry_pp = GFL_HEAP_AllocMemoryLo( wbtsys->heapID, POKETOOL_GetWorkSize() );
   PP_Clear( entry_pp );
-  max = WBTTOOL_GetPartyMaxByRule( wbtsys->rule );
+  max = WBTSYS_GetPartyMax( wbtsys );
 #ifdef DEBUG_WEAK_PARTY
   max = 1;
 #endif
@@ -990,6 +1003,32 @@ POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 
 //============================================================================================
 //============================================================================================
+#include "field/eventwork.h"  //EVENTWORK_
+#include "../../../resource/fldmapdata/flagwork/work_define.h"  //WK_SYS_FIRST_POKETYPE
+#include "../../../resource/fldmapdata/script/user_define.h"    //FIRST_POKETYPE_
+
+//--------------------------------------------------------------
+/**
+ * @brief 最初の3体選択結果でトレーナーIDを振り分ける
+ */
+//--------------------------------------------------------------
+static u32 getWBTRivalTrainerID( GAMESYS_WORK * gsys )
+{
+  EVENTWORK * evwork = GAMEDATA_GetEventWork( GAMESYSTEM_GetGameData( gsys ) );
+  u16 * first_choice = EVENTWORK_GetEventWorkAdrs( evwork, WK_SYS_FIRST_POKETYPE );
+  switch ( *first_choice )
+  {
+  default:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case FIRST_POKETYPE_KUSA:
+    return TRID_SWRIVAL_07;
+  case FIRST_POKETYPE_HONOO:
+    return TRID_SWRIVAL_08;
+  case FIRST_POKETYPE_MIZU:
+    return TRID_SWRIVAL_09;
+  }
+}
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static u16 GetRand( GFL_STD_RandContext *rand_context )
@@ -1289,24 +1328,57 @@ static void makeRomTrainerData(
 //------------------------------------------------------------------
 BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys )
 {
+  HEAPID tempHeapID = GFL_HEAP_LOWID( wbtsys->heapID );
   BATTLE_SETUP_PARAM * bp;
 
-  BSUBWAY_TRAINER * bt_trd;
-  BSUBWAY_POKEMON * btpwd;
-
   const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
-  POKEPARTY *party;
-  WBTRULE wbt_rule = WBTSYS_GetRule( wbtsys );
-  BSWAY_PLAYMODE mode = WBTTOOL_WBTRuleToBtlRule( wbt_rule );
-  int num = WBTTOOL_GetPartyMaxByRule( wbt_rule );
+  int num = WBTSYS_GetPartyMax( wbtsys );
 
-  bt_trd = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, sizeof(BSUBWAY_TRAINER) );
-  btpwd = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, sizeof(BSUBWAY_POKEMON) * 6 );
+  {
+    WBTRULE wbt_rule = WBTSYS_GetRule( wbtsys );
+    BSWAY_PLAYMODE mode = WBTTOOL_WBTRuleToBtlRule( wbt_rule );
+    POKEPARTY *party;
+    party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
+    bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode );
+    GFL_HEAP_FreeMemory( party );
+  }
 
-  party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
-  makeRomTrainerData( bt_trd, btpwd, WBTSYS_GetWBTCup( wbtsys ), wbt_tr, num, HEAPID_PROC );
-  bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode );
-  FBI_TOOL_WBT_SetEnemyData( bp, bt_trd, btpwd, num, 50, HEAPID_PROC );
+  switch ( wbt_tr->wbt_tr_type )
+  {
+  case WBT_TRTYPE_ROM:
+    {
+      BSUBWAY_TRAINER * bt_trd;
+      BSUBWAY_POKEMON * btpwd;
+      u32 tempHeapSize = GFL_HEAP_GetHeapFreeSize( tempHeapID );
+
+      bt_trd = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(BSUBWAY_TRAINER) );
+      btpwd = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(BSUBWAY_POKEMON) * 6 );
+
+      makeRomTrainerData( bt_trd, btpwd, WBTSYS_GetWBTCup( wbtsys ), wbt_tr, num, tempHeapID );
+      FBI_TOOL_WBT_SetEnemyData( bp, bt_trd, btpwd, num, 50, tempHeapID );
+
+      if ( wbt_tr->btl_tr_type == TRTYPE_SWRIVAL )
+      {//ライバルの場合、ポケモンデータを上書き
+        u32 tr_id = getWBTRivalTrainerID( gsys );
+        TT_EncountTrainerPokeDataMake( tr_id, bp->party[BTL_CLIENT_ENEMY1], tempHeapID );
+      }
+
+      GFL_HEAP_FreeMemory( btpwd );
+      GFL_HEAP_FreeMemory( bt_trd );
+
+      GF_ASSERT( tempHeapSize == GFL_HEAP_GetHeapFreeSize( tempHeapID ) );
+    }
+    break;
+  default:
+  case WBT_TRTYPE_PLAYER:
+  case WBT_TRTYPE_DL:
+    {
+    }
+    GF_ASSERT( 0 );
+    break;
+  }
+
+  //レギュレーションにあわせてレベル調整
   PokeRegulation_ModifyLevelPokeParty( WBTSYS_GetRegulation(wbtsys), bp->party[BTL_CLIENT_ENEMY1] );
   //名前を書き換える
   WBTTRAINER_CopyName( wbt_tr, bp->tr_data[BTL_CLIENT_ENEMY1]->name );
@@ -1314,10 +1386,6 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
   BATTLE_PARAM_SetTrainerTypeName( bp, BTL_CLIENT_ENEMY1, wbt_tr->title );
 
   WBTSYS_GetOpponentBGM( wbtsys, &bp->musicDefault, &bp->musicWin );
-
-  GFL_HEAP_FreeMemory( party );
-  GFL_HEAP_FreeMemory( btpwd );
-  GFL_HEAP_FreeMemory( bt_trd );
   return bp;
 }
 
