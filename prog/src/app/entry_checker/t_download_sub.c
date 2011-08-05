@@ -23,6 +23,9 @@
 #include "system/bmp_winframe.h"
 #include "ui/frame_list.h"
 //
+#include "sound/pm_sndsys.h"
+#include "t_download_snd_def.h"
+//
 #include "arc_def.h"
 //
 #include "app/app_menu_common.h"
@@ -149,6 +152,8 @@ enum{
 	SCRL_TOP_Y			= 32,			// レール上部のY座標
 	SCRL_DOWN_Y			= 160,			// レール下部のY座標
 	SCRL_BAR_SIZE		= 16,			// バーのサイズ
+	//
+	SCRL_WAIT_LEN		= 1,			// se用
 };
 
 //=============================================================================
@@ -2571,19 +2576,45 @@ s32 TdCmn_calc_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
  *	@param	T_DOWNLOAD_MAIN_WORK* wk
  *	@param	const s32				(番号)
  *	@param	const s32				(段階)
+ *	@param	const s32				(0:段階の座標にセット、1:フリーの座標にセット)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void TdCmn_set_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 num )
+BOOL TdCmn_set_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 num, const s32 smode )
 {
 	GFL_CLACTPOS 	cp_pos;
+	s32				tmp;
+	u32				buf[2];
+	BOOL			bflg=FALSE;
 	
 	// 座標の取得
 	GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_BAR], &cp_pos, CLSYS_DEFREND_MAIN );
 	//
-	// 表示座標を求める
-	cp_pos.y = SCROLLBAR_GetPosY( wk->PageMaxNum[mode]-1, num, SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
+	// 段階の座標にセット
+	if(smode == 0){
+		// 表示座標を求める
+		cp_pos.y = SCROLLBAR_GetPosY( wk->PageMaxNum[mode]-1, num, SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
+	}
+	// フリーの座標にセット
+	else{
+		// タッチしている
+		if( GFL_UI_TP_GetPointCont( &buf[0], &buf[1] ) == TRUE ){
+			//
+			// 距離の差分を求める
+			tmp = cp_pos.y-buf[1];
+			if(tmp < 0){
+				tmp = -tmp;
+			}
+			// 一定距離あり、上下端でなければ鳴らす
+			if(tmp > SCRL_WAIT_LEN){
+				if((cp_pos.y != 40)&&(cp_pos.y != 152)){
+					bflg = TRUE;
+				}
+			}
+			cp_pos.y = buf[1];
+		}
+	}
 	//
 	// 念のため補正
 	if( cp_pos.y < 40 ){
@@ -2592,6 +2623,8 @@ void TdCmn_set_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s
 		cp_pos.y = 152;
 	}
 	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_BAR], &cp_pos, CLSYS_DEFREND_MAIN );
+	//
+	return( bflg );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3029,5 +3062,38 @@ BOOL TdCmn_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 	}
 	//
 	return( rflg );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	カーソル位置情報のon/off(消したときの対応)
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*	wk
+ * @param	const BOOL				(TRUE:消す、FALSE:戻す)
+ * @param	const s32				(番号:0-2)
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+void TdCmn_set_del_save( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg, const s32 num )
+{
+	// 消す
+	if(bflg == TRUE){
+		// 上画面表示
+		td_set_up_visible( wk, FALSE );
+		// いったんクリア
+		TdCmn_clear_canvas( wk, CANVAS_JOIN_OFFSET+num );
+		// パネル表示
+		TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_PANEL_00+num, FALSE );
+		// カーソル非表示
+		TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, FALSE );
+	}
+	// 戻し
+	else{
+		// 上画面表示
+		td_set_up_visible( wk, TRUE );
+		//
+		// 文字列、パネルは復帰時に別で処理してくれる
+	}
 }
 

@@ -15,6 +15,7 @@
 #define SND_T_DOWNLOAD_DECIDE	( SEQ_SE_DECIDE1 )		///< 決定音
 #define SND_T_DOWNLOAD_CANCEL	( SEQ_SE_CANCEL1 )		///< キャンセル音
 #define SND_T_DOWNLOAD_SELECT	( SEQ_SE_SELECT1 )		///< 選択音
+#define SND_T_DOWNLOAD_BAR		( SEQ_SE_SYS_06  )		///< スクロールバー
 //
 
 #endif  //__T_DOWNLOAD_SND_DEF_H__

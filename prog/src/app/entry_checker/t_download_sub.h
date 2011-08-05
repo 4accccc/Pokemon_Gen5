@@ -73,7 +73,7 @@ extern void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, con
 extern void TdCmn_init_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
 
 extern s32  TdCmn_calc_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
-extern void TdCmn_set_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 num );
+extern BOOL TdCmn_set_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 num, const s32 smode );
 //
 extern void TdCmn_disp_title_info( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 smode );
 //
@@ -91,5 +91,7 @@ extern void TdCmn_chk_up_disp( T_DOWNLOAD_MAIN_WORK * wk, const BOOL keyflg, con
 //
 extern void TdCmn_chk_mark_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mmin, const s32 mmax, const s32 nnum );
 extern BOOL TdCmn_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
-
+//
+extern void TdCmn_set_del_save( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg, const s32 num );
+//
 

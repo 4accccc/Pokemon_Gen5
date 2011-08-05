@@ -696,9 +696,8 @@ static void td_init_join( T_DOWNLOAD_MAIN_WORK* wk )
 	if(wk->DispMaxNum == 0){
 		wk->Flag |= FLG_MW_NOITEM;
 	}
-	//
+	// パネル表示
 	for(i=0;i<wk->DispMaxNum;i++){
-		// パネル表示(test)
 		TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_PANEL_00+i, TRUE );
 	}
 	// バー非表示
@@ -831,7 +830,6 @@ static BOOL td_chk_tp_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 		// 上画面処理
 		TdCmn_chk_up_disp( wk, FALSE, TRUE, TRUE );
 		//
-//		TdCmn_disp_panel_cursor( wk, T_DOWNLOAD_PANEL_3, wk->JoinCurPos );
 		wk->Flag |= FLG_MW_JOIN_UPDATE;
 		// 決定アニメ
 		TdCmn_set_panel_cursor( wk, 1 );
@@ -875,6 +873,8 @@ static BOOL td_chk_key_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 		if(GFL_UI_KEY_GetTrg() != 0){
 			// 上画面処理
 			TdCmn_chk_up_disp( wk, TRUE, FALSE, FALSE );
+			// SE
+			PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 		}
 		mflg = 1;
 	}
@@ -882,19 +882,29 @@ static BOOL td_chk_key_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 	if(mflg == 0){
 		// 上
 		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-			wk->JoinCurPos--;
-			if(wk->JoinCurPos <= 0){
-				wk->JoinCurPos = 0;
+			if(wk->JoinCurPos != 0){
+				// SE
+				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+				//
+				wk->JoinCurPos--;
+				if(wk->JoinCurPos <= 0){
+					wk->JoinCurPos = 0;
+				}
+				sflg = 1;
 			}
-			sflg = 1;
 		}
 		// 下
 		else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-			wk->JoinCurPos++;
-			if(wk->JoinCurPos >= (wk->DispMaxNum-1)){
-				wk->JoinCurPos = (wk->DispMaxNum-1);
+			if(wk->JoinCurPos != (wk->DispMaxNum-1)){
+				// SE
+				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+				//
+				wk->JoinCurPos++;
+				if(wk->JoinCurPos >= (wk->DispMaxNum-1)){
+					wk->JoinCurPos = (wk->DispMaxNum-1);
+				}
+				sflg = 1;
 			}
-			sflg = 1;
 		}
 		// 決定
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
@@ -1169,14 +1179,14 @@ static void td_init_info( T_DOWNLOAD_MAIN_WORK* wk )
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, FALSE );
 	
 	// バー非表示
-	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, TRUE );
+//	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, TRUE );
 	
 	// 左右矢印非表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_LEFT,  FALSE );
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_RIGHT, FALSE );
 	// 上下矢印非表示
-	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_UP,   TRUE );
-	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_DOWN, TRUE );
+//	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_UP,   TRUE );
+//	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_DOWN, TRUE );
 	// ×非表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_CROSS,  FALSE );
 	
@@ -1278,6 +1288,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 	s32		sflg=0;
 	s32		num;
 	BOOL	bflg=FALSE;
+	BOOL	bbflg;
 	s32		oldpos = wk->CurrentPageNum[wk->InfoCurPos];
 	s32		ret = TdCmn_chk_tp( wk, 0, wk->Mode );		// trg
 	s32		cret = TdCmn_chk_tp( wk, 1, wk->Mode );		// cont
@@ -1348,19 +1359,27 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 	else{
 		// スクロールバー
 		if(cret == T_DOWNLOAD_AREA_TD_TP_SCROLL){
-			sflg = 2;
+			// 1ページよりある時のみ対応
+			if(wk->PageMaxNum[wk->InfoCurPos] > 1){
+				sflg = 2;
+			}
 		}
 	}
 	// カーソル切り替え
 	if(sflg == 1){
 		// スクロールバー更新
-		TdCmn_set_scrollbar_info( wk, wk->InfoCurPos, wk->CurrentPageNum[wk->InfoCurPos] );
+		TdCmn_set_scrollbar_info( wk, wk->InfoCurPos, wk->CurrentPageNum[wk->InfoCurPos], 0 );
 		wk->Flag |= FLG_MW_INFO_UPDATE;
 		wk->Flag |= FLG_MW_TITLE_UPDATE;
 		// マーク判定
 		TdCmn_chk_mark_anim( wk, 1, 0, wk->PageMaxNum[wk->InfoCurPos]-1, wk->CurrentPageNum[wk->InfoCurPos] );
 	}
 	else if(sflg == 2){
+		// ドラッグ中はフリーの座標に表示
+		bbflg = TdCmn_set_scrollbar_info( wk, wk->InfoCurPos, 0, 1 );
+		if(bbflg == TRUE){
+			PMSND_PlaySE( SND_T_DOWNLOAD_BAR );
+		}
 		// カーソル位置
 		num = TdCmn_calc_scrollbar_info( wk, wk->InfoCurPos );
 		if(num != -1){
@@ -1368,7 +1387,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 			if(num != oldpos){
 				// スクロールバー位置更新
 				wk->CurrentPageNum[wk->InfoCurPos] = num;
-				TdCmn_set_scrollbar_info( wk, wk->InfoCurPos, num );
+//				TdCmn_set_scrollbar_info( wk, wk->InfoCurPos, num, 0 );
 				wk->Flag |= FLG_MW_INFO_UPDATE;
 				// マーク判定
 				TdCmn_chk_mark_anim( wk, 1, 0, wk->PageMaxNum[wk->InfoCurPos]-1, wk->CurrentPageNum[wk->InfoCurPos] );
@@ -1494,7 +1513,7 @@ static BOOL td_chk_key_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 	// カーソル切り替え
 	if(sflg != 0){
 		// スクロールバー更新
-		TdCmn_set_scrollbar_info( wk, wk->InfoCurPos, wk->CurrentPageNum[wk->InfoCurPos] );
+		TdCmn_set_scrollbar_info( wk, wk->InfoCurPos, wk->CurrentPageNum[wk->InfoCurPos], 0 );
 		wk->Flag |= FLG_MW_INFO_UPDATE;
 		//
 		if(sflg == 1){
@@ -1748,6 +1767,8 @@ static void td_chk_input_select( T_DOWNLOAD_MAIN_WORK* wk )
 		if(GFL_UI_KEY_GetTrg() != 0){
 			// 上画面処理
 			TdCmn_chk_up_disp( wk, FALSE, FALSE, TRUE );
+			// SE
+			PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 		}
 	}
 	
@@ -2301,7 +2322,7 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 			// カーソル非表示
 			TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, FALSE );
 			//----------------
-			// セーブ処理(test)
+			// セーブ処理
 			//----------------
 			// 空きにセット
 			num = TdSave_get_save_pos( wk );
@@ -2435,6 +2456,8 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 		if(GFL_UI_KEY_GetTrg() != 0){
 			// 上画面処理
 			TdCmn_chk_up_disp( wk, TRUE, FALSE, FALSE );
+			// SE
+			PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 		}
 		mflg = 1;
 	}
@@ -2442,19 +2465,29 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 	if(mflg == 0){
 		// 上
 		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-			wk->SaveCurPos--;
-			if(wk->SaveCurPos <= 0){
-				wk->SaveCurPos = 0;
+			if(wk->SaveCurPos != 0){
+				// SE
+				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+				//
+				wk->SaveCurPos--;
+				if(wk->SaveCurPos <= 0){
+					wk->SaveCurPos = 0;
+				}
+				sflg = 1;
 			}
-			sflg = 1;
 		}
 		// 下
 		else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-			wk->SaveCurPos++;
-			if(wk->SaveCurPos >= (wk->DispMaxNum-1)){
-				wk->SaveCurPos = (wk->DispMaxNum-1);
+			if(wk->SaveCurPos != (wk->DispMaxNum-1)){
+				// SE
+				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+				//
+				wk->SaveCurPos++;
+				if(wk->SaveCurPos >= (wk->DispMaxNum-1)){
+					wk->SaveCurPos = (wk->DispMaxNum-1);
+				}
+				sflg = 1;
 			}
-			sflg = 1;
 		}
 		// 決定
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
@@ -2789,7 +2822,7 @@ static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk )
 				TdCmn_exit_yesnowin( wk );
 				// はい=>本当に削除
 				if(tmp == 0){
-					// 削除画面(test)
+					// 削除画面
 					TdCmn_clear_frame( wk, 1 );
 					TdCmn_disp_title_info( wk, wk->Mode, 0 );
 					// 削除しました(stream)
@@ -2797,6 +2830,8 @@ static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk )
 					// 輝度変更=>そのまま
 					// アニメ停止
 					TdCmn_stop_anim_speed( wk, TRUE );
+					// 削除した処理
+					TdCmn_set_del_save( wk, TRUE, wk->SaveCurPos );
 					// 削除してセーブにつながる処理
 					wk->Step = STEP_LV4;
 				}
@@ -2859,13 +2894,16 @@ static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk )
 		case STEP_LV4:
 			bflg = TdCmn_main_meswin( wk );
 			if(bflg == FALSE){
-				// カーソル表示
-				TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, FALSE );
+				// カーソル非表示
+//				TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, FALSE );
+				// 削除した処理
+//				TdCmn_set_del_save( wk, TRUE, wk->SaveCurPos );
+				//
 				// ウインドウ
 				TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_01, T_DOWNLOAD_WIN_NOW_SAVING, 0 );
 				wk->Step = STEP_LV5;
 				//----------------
-				// セーブ処理(test)
+				// セーブ処理
 				//----------------
 				TdSave_init_save( wk, wk->AllCurPos[T_DOWNLOAD_LIST_SELECT], wk->SaveCurPos );
 				TdSave_init_timeicon( wk );
@@ -2890,6 +2928,9 @@ static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk )
 				PMSND_PlaySE( SND_T_DOWNLOAD_DECIDE );
 				//
 				// 後処理
+				// 削除した状況を復帰
+				TdCmn_set_del_save( wk, FALSE, wk->SaveCurPos );
+				//
 				for(i=0;i<wk->DispMaxNum;i++){
 					TdCmn_disp_panel_string( wk, T_DOWNLOAD_DATA_SAVE, i );
 					// パネル表示

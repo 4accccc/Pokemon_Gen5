@@ -762,6 +762,10 @@ static void Debug_CreateWbtDlData( WBTDL_TOTAL_DATA *p_total_data )
       p_rule->both_item     = FALSE;
       p_rule->nick_name     = FALSE;
       p_rule->btl_rule      = BTL_RULE_SINGLE;
+      p_rule->veto_poke_bit[0] = 0xfe;
+      p_rule->veto_poke_bit[1] = 0xff;
+      p_rule->veto_poke_bit[2] = 0xff;
+      p_rule->veto_poke_bit[3] = 0xff;
 
       for( j = 0; j < WBTDL_CHAR_MAX; j++ )
       {
