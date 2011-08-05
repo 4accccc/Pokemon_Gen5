@@ -55,7 +55,9 @@ typedef struct{
   void *p_resort_buff;                ///<リゾート用拡張バッファ
   u16 resort_extend_count;            ///<リゾート用拡張切り替えカウント
 
-  GAME_BEACON_TYPE  beacon_type;      ///<typeがG_BEACON_TYPE_COMMONの時BWと互換性のあるビーコンを送信する
+  u8  cgear_info_flags;               ///<調査隊の調査依頼を達成していることをCギアに通知(GAMEBEACON_CGEAR_INFO_FLAG)
+
+  GAMEBEACON_TYPE  beacon_type;       ///<typeがGAMEBEACON_TYPE_COMMONの時BWと互換性のあるビーコンを送信する
                                       ///<swanとbwではアンケートに互換性がないため、ビーコン送受信の1ターンごとに
                                       ///<swan専用ビーコンとbw互換のビーコンを交互に切り替えて発信する。
 #ifdef PM_DEBUG

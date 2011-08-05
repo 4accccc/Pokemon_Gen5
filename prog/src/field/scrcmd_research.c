@@ -274,6 +274,8 @@ VMCMD_RESULT EvCmdFinishResearch( VMHANDLE *core, void *wk )
   {
     MISC_SetResearchQuestionID( misc, i, QUESTION_ID_DUMMY );
   }
+  //Cギア用の調査依頼を達成通知フラグをクリア
+  GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_RADAR );
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_FINISH_RESEARCH\n" );

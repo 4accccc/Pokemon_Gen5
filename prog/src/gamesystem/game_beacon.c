@@ -29,6 +29,7 @@
 #include "field/research_team_def.h"
 #include "system/gfl_use.h"
 #include "field/zonedata.h"
+#include "field/research_team.h"
 #include "savedata/resonance_resort_sv.h"
 
 #include "game_beacon_local.h"
@@ -81,7 +82,7 @@ GAMEBEACON_SYSTEM * GameBeaconSys = NULL;
 //==============================================================================
 static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send);
 static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
-static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAME_BEACON_TYPE type );
+static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAMEBEACON_TYPE type );
 static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
 static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no);
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
@@ -116,7 +117,7 @@ void GAMEBEACON_Init(HEAPID heap_id)
   
   GameBeaconSys = GFL_HEAP_AllocClearMemory(heap_id, sizeof(GAMEBEACON_SYSTEM));
   GameBeaconSys->end_log = -1;
-  GameBeaconSys->beacon_type = GAME_BEACON_TYPE_COMMON;      //初期タイプはBW互換
+  GameBeaconSys->beacon_type = GAMEBEACON_TYPE_COMMON;      //初期タイプはBW互換
   GAMEBEACON_Set_ResortDataEnable( TRUE );
 }
 
@@ -236,7 +237,7 @@ void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info)
 /**
  * ゲームビーコン送信タイプを切り替える
  *
- * 呼び出されるたびに、GAME_BEACON_TYPE_SWAN_ONLYとGAME_BEACON_TYPE_COMMONを切り替える
+ * 呼び出されるたびに、GAMEBEACON_TYPE_SWAN_ONLYとGAMEBEACON_TYPE_COMMONを切り替える
  */
 //==================================================================
 void GAMEBEACON_BeaconTypeSwap(void)
@@ -246,10 +247,10 @@ void GAMEBEACON_BeaconTypeSwap(void)
   if( bsys == NULL ){
     return; //スルー
   }
-  if( bsys->beacon_type == GAME_BEACON_TYPE_COMMON ){
-    bsys->beacon_type = GAME_BEACON_TYPE_SWAN_ONLY;
+  if( bsys->beacon_type == GAMEBEACON_TYPE_COMMON ){
+    bsys->beacon_type = GAMEBEACON_TYPE_SWAN_ONLY;
   }else{
-    bsys->beacon_type = GAME_BEACON_TYPE_COMMON;
+    bsys->beacon_type = GAMEBEACON_TYPE_COMMON;
   }
 }
 
@@ -270,6 +271,51 @@ void GAMEBEACON_SendBeaconUpdate(void)
       GameBeaconSys->send.beacon_update = FALSE;
     }
   }
+}
+
+//==================================================================
+/**
+ * Cギアにビーコンの状態を通知するフラグをセットする
+ */
+//==================================================================
+void GAMEBEACON_SetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag )
+{
+  GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
+ 
+  if( bsys == NULL ){
+    return; //スルー
+  }
+  bsys->cgear_info_flags |= (1<<flag);
+}
+
+//==================================================================
+/**
+ * Cギアにビーコンの状態を通知するフラグをリセットする
+ */
+//==================================================================
+void GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag )
+{
+  GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
+ 
+  if( bsys == NULL ){
+    return; //スルー
+  }
+  bsys->cgear_info_flags &= ( 0xff ^ (1<<flag) );
+}
+
+//==================================================================
+/**
+ * Cギアにビーコンの状態を通知するフラグをゲットする
+ */
+//==================================================================
+BOOL GAMEBEACON_GetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag )
+{
+  GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
+ 
+  if( bsys == NULL ){
+    return FALSE; //スルー
+  }
+  return ( bsys->cgear_info_flags >> flag ) & 0x01;
 }
 
 //--------------------------------------------------------------
@@ -378,8 +424,8 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
           MISC_AddResearchCount(misc, j, 1);
         }
       }
-    }
-  }
+    } //end of for()
+  } //end of アンケート反映
 #if 0
   // 調査隊反映
   {
@@ -429,18 +475,18 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
  * 受信ビーコンのタイプを切り替えるために、ビーコン情報を上書きする
  *
  * @param   info		
- * @param   type  GAME_BEACON_TYPE(GAME_BEACON_TYPE_COMMONならBW互換、TYPE_SWAN_ONLYならSwan専用)
+ * @param   type  GAMEBEACON_TYPE(GAMEBEACON_TYPE_COMMONならBW互換、TYPE_SWAN_ONLYならSwan専用)
  *
  * ビーコンデータはSwanをメインターゲットに生成しておき、
  * BW互換にしたい時、BWが受け取れないパラメータをクリアする
  */
 //--------------------------------------------------------------
-static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAME_BEACON_TYPE type )
+static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAMEBEACON_TYPE type )
 {
   int i;
 
   //BW互換のビーコンとswan専用ビーコンを切り替えるためにデータを改変
-  if( type == GAME_BEACON_TYPE_SWAN_ONLY || (info->version_bit==GAMEBEACON_RECV_VERSION_SWAN)){
+  if( type == GAMEBEACON_TYPE_SWAN_ONLY || (info->version_bit==GAMEBEACON_RECV_VERSION_SWAN)){
     //スワン専用ビーコンなので、BW受信可フラグを強制Off
     info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;
   }else{
@@ -519,6 +565,40 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
       FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_MAP, FALSE );
     }
     FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_NORMAL, FALSE );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 受信ビーコンをチェックして、Cギアに通知する情報があれば通知フラグをたてる
+ *
+ * @param   bsys		
+ * @param   GAMEBEACON_INFO *
+ */
+//--------------------------------------------------------------
+static void BeaconInfo_CheckCGearInfo(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info, BOOL new_f )
+{
+  if( bsys->gsys == NULL ){
+    GF_ASSERT(0);
+    return;
+  }
+
+  if( RESEARCH_TEAM_CheckCurrentResearchFinishForCGear( bsys->gamedata ) ){
+    //調査依頼を達成しているので通知する
+    GAMEBEACON_SetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_RADAR );
+  }
+
+  if( new_f ){
+    //新着が来た
+    GAMEBEACON_SetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_HOT );
+    return;
+  }
+  //デルパワービーコンが来たかどうか？(FMISSION_GPOWERは考えない)
+  switch( info->action.action_no ){
+  case GAMEBEACON_ACTION_GPOWER :
+  case GAMEBEACON_ACTION_DISTRIBUTION_GPOWER:
+    GAMEBEACON_SetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_HOT );
+    break;
   }
 }
 
@@ -614,7 +694,8 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     }
   }
   BeaconInfo_SetFestMissionLog( bsys, info );
-  
+  BeaconInfo_CheckCGearInfo( bsys, info, !same_player );
+ 
   if(same_player == TRUE){
     bsys->log[i].info = *info;
     bsys->log[i].time = 0;

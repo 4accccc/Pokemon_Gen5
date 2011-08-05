@@ -281,6 +281,7 @@ void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *inf
     //ã‘‚«
     tbl->entry[ret] = entry;
   }
+  GAMEBEACON_SetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FMISSION );
 }
 
 //------------------------------------------------------------------
@@ -309,6 +310,10 @@ void FMISSION_ENTRY_TBL_Update( LINK_FESTIVAL* fest_sys )
         }
         FMISSION_ENTRY_Clear( &tbl->entry[tbl->entry_num-1] );
         --tbl->entry_num;
+
+        if( tbl->entry_num == 0 ){
+          GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FMISSION );
+        }
       }
     }
   }

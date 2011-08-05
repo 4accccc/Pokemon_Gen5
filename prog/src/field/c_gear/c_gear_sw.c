@@ -673,16 +673,16 @@ enum{
 
 #define TP_CIRCLE_CENTER_X  (16*8)
 #define TP_CIRCLE_CENTER_Y  (12*8)
-#define TP_CIRCLE0_OUT_R    (4*8+2)
-#define TP_CIRCLE0_IN_R     (TP_CIRCLE0_OUT_R-5)
-#define TP_CIRCLE1_OUT_R    (6*8+2)
-#define TP_CIRCLE1_IN_R     (TP_CIRCLE1_OUT_R-5)
-#define TP_CIRCLE2_OUT_R    (8*8+4+2)
-#define TP_CIRCLE2_IN_R     (TP_CIRCLE2_OUT_R-5)
-#define TP_CIRCLE3_OUT_R    (11*8+2)
-#define TP_CIRCLE3_IN_R     (TP_CIRCLE3_OUT_R-5)
-#define TP_CIRCLE4_OUT_R    (14*8+2)
-#define TP_CIRCLE4_IN_R     (TP_CIRCLE4_OUT_R-5)
+#define TP_CIRCLE0_OUT_R    (4*8+4)
+#define TP_CIRCLE0_IN_R     (TP_CIRCLE0_OUT_R-8)
+#define TP_CIRCLE1_OUT_R    (6*8+4)
+#define TP_CIRCLE1_IN_R     (TP_CIRCLE1_OUT_R-8)
+#define TP_CIRCLE2_OUT_R    (8*8+4+4)
+#define TP_CIRCLE2_IN_R     (TP_CIRCLE2_OUT_R-8)
+#define TP_CIRCLE3_OUT_R    (11*8+4)
+#define TP_CIRCLE3_IN_R     (TP_CIRCLE3_OUT_R-8)
+#define TP_CIRCLE4_OUT_R    (14*8+4)
+#define TP_CIRCLE4_IN_R     (TP_CIRCLE4_OUT_R-8)
 
 // タイプ
 //#define _CLACT_TYPE_MAX (3)
@@ -1347,10 +1347,11 @@ static BOOL _BUTTONPAL_Update( BUTTON_PAL_FADE* p_fwk );
 // CGEAR演出イベント
 static GMEVENT* EVENT_ButtonEffectWaitCall( C_GEAR_WORK* pWork, u32 createEvent );
 static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk );
-
+static void _cgear_CheckTVTStatus( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_status );
 
 //スリープチェック
 static void _cgear_SleepCheck( C_GEAR_WORK* pWork, BOOL bAction );
+static void _cgear_CheckMissionPartner( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_status );
 
 //static void CGEAR_SW_PATTERN_SetUp( CGEAR_SAVEDATA* pCGSV, ARCHANDLE* handle, u32 pattern, HEAPID heapID );
 
@@ -5757,17 +5758,12 @@ C_GEAR_WORK* CGEAR_SW_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSu
 }
 
 
-
 //------------------------------------------------------------------------------
 /**
  * @brief   PROCMain
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
-
-
-
 void CGEAR_SW_Main( C_GEAR_WORK* pWork,BOOL bAction )
 {
   if( pWork->GetOpenTrg == _CGEAR_SLEEP_START ){
@@ -5780,53 +5776,11 @@ void CGEAR_SW_Main( C_GEAR_WORK* pWork,BOOL bAction )
   {
     INTRUDE_CONNECT intrude_status = Intrude_GetIntrudeStatus(GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys));
 
-    
     // ミッション乱入のお誘いが来ているかチェック
-    if( intrude_status == INTRUDE_CONNECT_MISSION_PARTNER ){
-
-      if( pWork->intrude == FALSE ){
-        // 強制的にアニメーションをリセットして、Wirelessパネルを乱入通知アニメに切り替える
-        _PanelPalette_EXSet( pWork, TRUE, FALSE );
-        pWork->intrude = TRUE;
-      }
-    }else{
-
-      // ミッション乱入のお誘いは終わったので、パネル表示を元に戻す
-      if(pWork->intrude == TRUE){
-        _PanelPalette_EXSet( pWork, FALSE, FALSE );
-        pWork->intrude = FALSE;
-      }
-    }
-
+    _cgear_CheckMissionPartner( pWork, intrude_status );
     
     // トランシーバー反応処理
-    if( intrude_status == INTRUDE_CONNECT_NULL ){ 
-      
-      u32 bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)));
-      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
-
-      // トランシーバー再生処理
-      if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){ // トランシーバー
-        if( pWork->tvt_snd == FALSE ){
-          //OS_TPrintf("よびだし\n");
-          pWork->tvt_snd = TRUE;
-          // 強制的にアニメーションをリセット
-          _PanelPalette_EXSet( pWork, TRUE, TRUE );
-        }
-        FSND_RequestTVTRingTone( fsnd);
-
-      // トランシーバー停止処理
-      }else if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
-
-        if( pWork->tvt_snd ){
-          FSND_StopTVTRingTone( fsnd );
-          pWork->tvt_snd = FALSE;
-          _PanelPalette_EXSet( pWork, FALSE, FALSE );
-        }
-      }
-    }
-
-    
+    _cgear_CheckTVTStatus( pWork, intrude_status );
   }
 
   
@@ -6610,6 +6564,8 @@ static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk
           FS_OVERLAY_ID( notwifi_event_research_radar ), EVENT_ResearchRadar, (void*)fieldWork );
     break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
+    GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_HOT );
+
     p_cevent= EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BeaconViewCheck(pWork->subscreen));
     break;
   case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
@@ -6740,6 +6696,71 @@ static void _cgear_SleepCheck( C_GEAR_WORK* pWork, BOOL bAction )
     }
 
     pWork->bAction = bAction;
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ミッション乱入のお誘いチェック 
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _cgear_CheckMissionPartner( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_status )
+{
+  // ミッション乱入のお誘いが来ているかチェック
+  if( intrude_status == INTRUDE_CONNECT_MISSION_PARTNER ){
+
+    if( pWork->intrude == FALSE ){
+      // 強制的にアニメーションをリセットして、Wirelessパネルを乱入通知アニメに切り替える
+      _PanelPalette_EXSet( pWork, TRUE, FALSE );
+      pWork->intrude = TRUE;
+    }
+  }else{
+
+    // ミッション乱入のお誘いは終わったので、パネル表示を元に戻す
+    if(pWork->intrude == TRUE){
+      _PanelPalette_EXSet( pWork, FALSE, FALSE );
+      pWork->intrude = FALSE;
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   トランシーバーチェック 
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _cgear_CheckTVTStatus( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_status )
+{
+  u32 bit;
+  FIELD_SOUND* fsnd;
+
+  if( intrude_status != INTRUDE_CONNECT_NULL ){ 
+    return;
+  }
+      
+  bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)));
+  fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+
+  // トランシーバー再生処理
+  if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){ // トランシーバー
+    if( pWork->tvt_snd == FALSE ){
+      //OS_TPrintf("よびだし\n");
+      pWork->tvt_snd = TRUE;
+      // 強制的にアニメーションをリセット
+      _PanelPalette_EXSet( pWork, TRUE, TRUE );
+    }
+    FSND_RequestTVTRingTone( fsnd);
+
+  // トランシーバー停止処理
+  }else if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
+
+    if( pWork->tvt_snd ){
+      FSND_StopTVTRingTone( fsnd );
+      pWork->tvt_snd = FALSE;
+      _PanelPalette_EXSet( pWork, FALSE, FALSE );
+    }
   }
 }
 

@@ -14,7 +14,9 @@
 #include "savedata/questionnaire_save.h" 
 #include "savedata/questionnaire_index.h" 
 #include "gamesystem/game_beacon.h"
-
+#include "gamesystem/game_data.h"
+#include "field/eventwork.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 typedef struct {
 
@@ -216,6 +218,38 @@ u16 RESEARCH_TEAM_CheckCurrentResearchFinish( SAVE_CONTROL_WORK* save )
     GF_ASSERT(0);
   }
   return RESEARCH_REQ_STATE_FALSE_NORM_COUNT;
+}
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼の達成をチェックする(Cギアへの通知用)
+ *
+ * @param gdata
+ * @retval TRUE  達成した
+ * @retval FALSE 達成していないor達成して評価済み
+ *
+ * 評価済みフラグがすでに立っている依頼の場合、TRUEを返さない
+ */
+//=============================================================================
+BOOL RESEARCH_TEAM_CheckCurrentResearchFinishForCGear( GAMEDATA* gdata )
+{
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+  const MISC* misc  = SaveData_GetMiscConst( save );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+
+  u8 RID = MISC_GetResearchRequestID( misc ); // 調査依頼IDを取得
+ 
+  if( RID == RESEARCH_REQ_ID_NONE ){
+    return FALSE;
+  }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_REQ_WB_COUNT+RID ) ){
+    return FALSE; //すでに評価済み
+  }
+
+  if( RESEARCH_TEAM_CheckCurrentResearchFinish( save ) == RESEARCH_REQ_STATE_ACHIEVE ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //=============================================================================

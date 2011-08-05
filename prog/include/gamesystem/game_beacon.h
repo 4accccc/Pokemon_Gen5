@@ -30,9 +30,16 @@
 #define GAMEBEACON_RECV_VERSION_SWAN  (0xFFFC)  //スワン以降の全バージョン受け取り可(BW受け取り不可)
 
 typedef enum{
-  GAME_BEACON_TYPE_COMMON,    ///<BWと互換する(bwとswan両方で受け取る)
-  GAME_BEACON_TYPE_SWAN_ONLY, ///<BWと互換しないSWAN専用ビーコン
-}GAME_BEACON_TYPE;
+  GAMEBEACON_TYPE_COMMON,    ///<BWと互換する(bwとswan両方で受け取る)
+  GAMEBEACON_TYPE_SWAN_ONLY, ///<BWと互換しないSWAN専用ビーコン
+}GAMEBEACON_TYPE;
+
+typedef enum{
+  GAMEBEACON_CGEAR_INFO_RADAR,     ///<すれ違い調査達成の通知
+  GAMEBEACON_CGEAR_INFO_HOT,       ///<Gパワー,新規ビーコン検知の通知
+  GAMEBEACON_CGEAR_INFO_FMISSION,  ///<フェスミッションビーコン検知の通知
+  GAMEBEACON_CGEAR_INFO_FLAG_MAX,
+}GAMEBEACON_CGEAR_INFO_FLAG;
 
 ///詳細No
 typedef enum{
@@ -158,6 +165,9 @@ extern void GAMEBEACON_Setting(GAMEDATA *gamedata);
 extern void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info);
 extern void GAMEBEACON_BeaconTypeSwap(void);
 extern void GAMEBEACON_SendBeaconUpdate(void);
+extern void GAMEBEACON_SetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag );
+extern void GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag );
+extern BOOL GAMEBEACON_GetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag );
 
 //--------------------------------------------------------------
 //  ビーコン情報取得

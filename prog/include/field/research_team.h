@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include "savedata/save_control.h"
 #include "savedata/questionnaire_save.h" 
+#include "gamesystem/game_data.h"
 
 // 調査タイプを取得する
 extern int RESEARCH_TEAM_GetResearchType( u8 requestID );
@@ -24,6 +25,9 @@ extern int RESEARCH_TEAM_GetNormTime( u8 requestID );
 
 //調査中の依頼の達成をチェックする(受けた依頼の達成チェックに使用)
 extern u16 RESEARCH_TEAM_CheckCurrentResearchFinish( SAVE_CONTROL_WORK* save );
+
+//調査中の依頼の達成をチェックする(Cギアへの通知用)
+extern BOOL RESEARCH_TEAM_CheckCurrentResearchFinishForCGear( GAMEDATA* gdata );
 
 //指定した依頼をすでに達成しているかどうかをチェックする(依頼を受けようとした際の事前チェックに使用)
 extern u16 RESEARCH_TEAM_CheckRequestFinishInAdvance( SAVE_CONTROL_WORK* save, u8 RID );

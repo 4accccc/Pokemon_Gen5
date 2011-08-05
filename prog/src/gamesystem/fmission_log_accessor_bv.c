@@ -72,6 +72,10 @@ BOOL FMISSION_ENTRY_TBL_GetData( FMISSION_ENTRY_TBL* tbl, FEST_MISSION* fmwk, ST
   FMISSION_ENTRY_Clear( &tbl->entry[FMISSION_ENTRY_TBL_END] );
   --tbl->entry_num;
 
+  if( tbl->entry_num == 0){
+    GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FMISSION );
+  }
+
   return ret;
 }
 
