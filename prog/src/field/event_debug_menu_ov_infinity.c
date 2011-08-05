@@ -91,6 +91,8 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_INFINITY_TR_POS_TYPE , (void*)DEBUG_STR_INFINITY_TR_POS_TYPE , GFL_OVERLAY_BLANK_ID },  // トレーナー位置固定
   { DEBUG_STR_INFINITY_SEED_CHANGE , (void*)DEBUG_STR_INFINITY_SEED_CHANGE , GFL_OVERLAY_BLANK_ID },  // シード
   { DEBUG_STR_INFINITY_PRESENTATION , (void*)DEBUG_STR_INFINITY_PRESENTATION , GFL_OVERLAY_BLANK_ID },  // プレゼン
+  { DEBUG_STR_INFINITY_BLACK_VERSION , (void*)DEBUG_STR_INFINITY_BLACK_VERSION , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_WHITE_VERSION , (void*)DEBUG_STR_INFINITY_WHITE_VERSION , GFL_OVERLAY_BLANK_ID },  // ジャンプ
 };
 
 ///リスト メニューヘッダー
@@ -477,6 +479,27 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
       }
       break;
 
+    case DEBUG_STR_INFINITY_BLACK_VERSION:
+      {
+        // BLACKバージョンに切り替えてからジャンプ
+        FIELD_WFBC_CORE* p_wk = GAMEDATA_GetMyWFBCCoreData( work->p_gamedata );
+        p_wk->type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+        FIELD_WFBC_CORE_SetUpZoneData( p_wk );
+        JumpZone(work,ZONE_ID_D31R0201); 
+        (*seq)=3; 
+        break;
+      }
+
+    case DEBUG_STR_INFINITY_WHITE_VERSION:
+      {
+        // ホワイトバージョンに切り替えてからジャンプ
+        FIELD_WFBC_CORE* p_wk = GAMEDATA_GetMyWFBCCoreData( work->p_gamedata );
+        p_wk->type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
+        FIELD_WFBC_CORE_SetUpZoneData( p_wk );
+        JumpZone(work,ZONE_ID_D31R0101); 
+        (*seq)=3; 
+        break;
+      }
 
       // ジャンプ
     case DEBUG_STR_INFINITY_JUMP_1: JumpZone(work,ZONE_ID_D31R0201); (*seq)=3; break;

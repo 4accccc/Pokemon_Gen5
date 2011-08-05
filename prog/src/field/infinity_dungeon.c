@@ -1191,7 +1191,16 @@ static void SetReceptionElevatorPos( MAP_CHAGE_EVENT_WORK *p_wk )
 {
   NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
 
-  const GRID_DATA *p_pos = GetReceptionElevatorPos( p_wk ,RECEPTION_ELEVATOR_NORMAL);
+  const GRID_DATA *p_pos;
+
+  if( p_wk->now_area <= INF_LEFT_ELEVATOR_AREA )
+  {
+    p_pos = GetReceptionElevatorPos( p_wk ,RECEPTION_ELEVATOR_L );
+  }
+  else
+  {
+    p_pos = GetReceptionElevatorPos( p_wk ,RECEPTION_ELEVATOR_R );
+  }
 
   SetGridPos( &p_next_map_data->warp_pos ,p_pos->x , p_pos->y , p_pos->z);
 }

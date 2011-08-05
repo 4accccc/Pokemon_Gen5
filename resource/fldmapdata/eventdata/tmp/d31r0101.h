@@ -9,7 +9,7 @@
 #ifndef ZONE_D31R0101_EVC_H
 #define ZONE_D31R0101_EVC_H
 
-#define OBJ_INFORMATION                    0
+#define D31R0101_WORKMAN2_00               0
 
 #endif //ZONE_D31R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d31r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
