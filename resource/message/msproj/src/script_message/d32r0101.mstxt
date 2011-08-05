@@ -53,10 +53,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>FIGHTERM</Text>
+			<Text>FIGHTERM
+トレーナーID：karate_22</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:10:42" />
+				Time="2011-08-05T02:57:45" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -125,10 +126,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>FIGHTERM</Text>
+			<Text>FIGHTERM
+トレーナーID：karate_22</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:10:44" />
+				Time="2011-08-05T02:57:47" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -176,10 +178,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>FIGHTERM</Text>
+			<Text>FIGHTERM
+トレーナーID：karate_22</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:14:31" />
+				Time="2011-08-05T02:57:47" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -226,10 +229,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>FIGHTERM</Text>
+			<Text>FIGHTERM
+トレーナーID：karate_22</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:10:44" />
+				Time="2011-08-05T02:57:47" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -287,10 +291,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>FIGHTERM</Text>
+			<Text>FIGHTERM
+トレーナーID：karate_22</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:14:31" />
+				Time="2011-08-05T02:57:47" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
