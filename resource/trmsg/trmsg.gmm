@@ -1248,13 +1248,6 @@
 とにかく　勝負しようよねェ！</language>
 	</row>
 
-	<row id="TRID_BOSS_02_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">まだ　みらいは　みえない……
-せかいは　きまっていない……</language>
-		<language name="JPN_KANJI" width="216">まだ　未来は　みえない……
-世界は　未確定……</language>
-	</row>
-
 	<row id="TRID_RIVAL_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">やっと　トレーナーになれた……
 ここから　はじまる！</language>
@@ -1379,20 +1372,6 @@
 すごく　がんばったよね！！</language>
 		<language name="JPN_KANJI" width="216">……どっちの　ポケモンも
 すごく　がんばったよね！！</language>
-	</row>
-
-	<row id="TRID_BOSS_01_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">もっと！　キミの　ポケモンの
-こえを　きかせてくれ！</language>
-		<language name="JPN_KANJI" width="216">もっと！　キミの　ポケモンの
-声を　聴かせてくれ！</language>
-	</row>
-
-	<row id="TRID_BOSS_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">そんな　ことを　いう
-ポケモンが　いるのか……！？</language>
-		<language name="JPN_KANJI" width="216">そんな　ことを　いう
-ポケモンが　いるのか……！？</language>
 	</row>
 
 	<row id="TRID_ESPM_01_TRMSG_FIGHT_START">
@@ -21381,6 +21360,62 @@ può accadere ancora di tutto!</language>
 きみ！　がんじょうブレイカー　だな！</language>
 		<language name="JPN_KANJI" width="216">がんじょうを　上回る　強さ……
 きみ！　がんじょうブレイカー　だな！</language>
+	</row>
+
+	<row id="TRID_BOSS_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">もっと！　キミの　ポケモンの
+こえを　きかせてくれ！</language>
+		<language name="JPN_KANJI" width="216">もっと！　キミの　ポケモンの
+声を　聴かせてくれ！</language>
+	</row>
+
+	<row id="TRID_BOSS_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">まだ　さいごの　トモダチが　いる！
+ボクたちは　あきらめないよ！</language>
+		<language name="JPN_KANJI" width="216">まだ　最後の　トモダチが　いる！
+ボクたちは　あきらめないよ！</language>
+	</row>
+
+	<row id="TRID_BOSS_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">トモダチの　いたみを　うけ
+ボクが　えらぶのは……！</language>
+		<language name="JPN_KANJI" width="216">トモダチの　痛みを　受け
+ボクが　えらぶのは……！</language>
+	</row>
+
+	<row id="TRID_BOSS_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">きみの　ぜんしんから　あふれる
+ポケモンへの　ラブ！　かんじたよ！</language>
+		<language name="JPN_KANJI" width="216">きみの　全身から　あふれる
+ポケモンへの　ラブ！　感じたよ！</language>
+	</row>
+
+	<row id="TRID_BOSS_02_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">もっと！　キミの　ポケモンの
+こえを　きかせてくれ！</language>
+		<language name="JPN_KANJI" width="216">もっと！　キミの　ポケモンの
+声を　聴かせてくれ！</language>
+	</row>
+
+	<row id="TRID_BOSS_02_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">まだ　さいごの　トモダチが　いる！
+ボクたちは　あきらめないよ！</language>
+		<language name="JPN_KANJI" width="216">まだ　最後の　トモダチが　いる！
+ボクたちは　あきらめないよ！</language>
+	</row>
+
+	<row id="TRID_BOSS_02_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">トモダチの　いたみを　うけ
+ボクが　えらぶのは……！</language>
+		<language name="JPN_KANJI" width="216">トモダチの　痛みを　受け
+ボクが　えらぶのは……！</language>
+	</row>
+
+	<row id="TRID_BOSS_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">きみの　ぜんしんから　あふれる
+ポケモンへの　ラブ！　かんじたよ！</language>
+		<language name="JPN_KANJI" width="216">きみの　全身から　あふれる
+ポケモンへの　ラブ！　感じたよ！</language>
 	</row>
 
 	<flowchart-group-list>
