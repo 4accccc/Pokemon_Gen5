@@ -692,7 +692,8 @@ msg_wbt_menu_wcs</Comment>
 			Language="JPN">
 			<Text>ホドモエトーナメントは
 なんでもアリな　トーナメントです▼
-すべての　ポケモンと　どうぐを
+すべての　ポケモンと
+ポケモンに　もたせる　どうぐを▽
 りようすることができます▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
@@ -702,7 +703,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T08:26:44" />
+				Time="2011-08-05T09:17:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -712,7 +713,8 @@ msg_wbt_menu_wcs</Comment>
 			Language="JPN_KANJI">
 			<Text>ホドモエトーナメントは
 なんでもアリな　トーナメントです▼
-すべての　ポケモンと　道具を
+すべての　ポケモンと
+ポケモンに　もたせる　道具を▽
 利用することができます▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
@@ -722,7 +724,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T08:27:10" />
+				Time="2011-08-05T09:17:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -1395,14 +1397,14 @@ msg_wbt_menu_wcs</Comment>
 たたかっていただく▽
 とくしゅな　トーナメントです▼
 レンタルさせていただく　ポケモンは
-ランダムで　えらばれますので▽
+ちゅうせんで　えらばれますので▽
 うんも　たいせつな　ようそとなります▼
 ゆうしょうすると
 バトルポイントが　もらえます▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T07:02:43" />
+				Time="2011-08-05T09:28:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1415,14 +1417,14 @@ msg_wbt_menu_wcs</Comment>
 戦っていただく▽
 特殊な　トーナメントです▼
 レンタルさせていただく　ポケモンは
-ランダムで　選ばれますので▽
+抽選で　選ばれますので▽
 運も　重要な　要素となります▼
 優勝すると
 バトルポイントが　もらえます▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T07:02:37" />
+				Time="2011-08-05T09:27:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1456,6 +1458,10 @@ msg_wbt_menu_wcs</Comment>
 きほんは　１ひきの　こうかんですが
 トリプルバトルに　かんしては▽
 ２ひき　こうかん　していただきます▼
+こうかんした　ポケモンは
+しあいしゅうりょうごに　もちぬしの▽
+もとに　もどされますので▽
+ごあんしんください▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
@@ -1464,7 +1470,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T07:02:58" />
+				Time="2011-08-05T09:33:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1479,6 +1485,9 @@ msg_wbt_menu_wcs</Comment>
 基本は　１匹づつの　交換ですが
 トリプルバトルに　かんしては▽
 ２匹　交換　していただきます▼
+交換した　ポケモンは
+試合終了後に　持ち主の　もとに▽
+戻されますので　ご安心ください▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
@@ -1487,7 +1496,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T07:03:02" />
+				Time="2011-08-05T09:55:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1588,6 +1597,10 @@ msg_wbt_menu_wcs</Comment>
 きほんは　１ひきの　こうかんですが
 トリプルバトルに　かんしては▽
 ２ひき　こうかん　していただきます▼
+こうかんした　ポケモンは
+しあいしゅうりょうごに　もちぬしの▽
+もとに　もどされますので▽
+ごあんしんください▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
@@ -1601,7 +1614,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:59:31" />
+				Time="2011-08-05T09:32:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1616,6 +1629,9 @@ msg_wbt_menu_wcs</Comment>
 基本は　１匹の　交換ですが
 トリプルバトルに　かんしては▽
 ２匹　交換　していただきます▼
+交換した　ポケモンは
+試合終了後に　持ち主の　もとに▽
+戻されますので　ご安心ください▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
@@ -1629,7 +1645,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:59:36" />
+				Time="2011-08-05T09:56:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3469,14 +3485,14 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　３匹以上　用意し▼
 持たせる　道具も　すべて
-違う　道具に　してください▼</Text>
+ちがう　道具に　してください▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-08-04T06:59:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:39:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3534,14 +3550,14 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　４匹以上　用意し▼
 持たせる　道具も　すべて
-違う　道具に　してください▼</Text>
+ちがう　道具に　してください▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-08-04T06:59:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:39:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3599,14 +3615,14 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　６匹　用意し▼
 持たせる　道具も　すべて
-違う　道具に　してください▼</Text>
+ちがう　道具に　してください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-05T06:20:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:39:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3664,14 +3680,14 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　４匹以上　用意し▼
 持たせる　道具も　すべて
-違う　道具に　してください▼</Text>
+ちがう　道具に　してください▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-08-04T06:59:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:39:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3729,14 +3745,14 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　３匹以上　用意し▼
 持たせる　道具も　すべて
-違う　道具に　してください▼</Text>
+ちがう　道具に　してください▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-08-04T07:00:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:39:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3794,14 +3810,14 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　４匹以上　用意し▼
 持たせる　道具も　すべて
-違う　道具に　してください▼</Text>
+ちがう　道具に　してください▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-08-04T07:00:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:39:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3859,14 +3875,14 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　６匹　用意し▼
 持たせる　道具も　すべて
-違う　道具に　してください▼</Text>
+ちがう　道具に　してください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-05T06:20:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:39:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3924,14 +3940,14 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　４匹以上　用意し▼
 持たせる　道具も　すべて
-違う　道具に　してください▼</Text>
+ちがう　道具に　してください▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-08-04T07:00:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="swan_scenario:W00293"
+				Time="2011-08-05T09:39:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3970,11 +3986,13 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN">
 			<Text>さんかできる　じょうけんを
 みたして　いません！▼
+さんかするときに　じょうけんを
+くわしくみることが　できますので▼
 ダウンロードトーナメントの
 ルールを　ごかくにんください▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T06:18:11" />
+				Time="2011-08-05T09:41:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3984,11 +4002,13 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN_KANJI">
 			<Text>参加できる　条件を
 満たして　いません！▼
+参加時に　条件を
+詳しくみることが　できますので▼
 ダウンロードトーナメントの
 ルールを　ご確認ください▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T06:18:40" />
+				Time="2011-08-05T09:41:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -4491,7 +4511,7 @@ msg_wbt_info_11へ</Comment>
 いけるはずですよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T07:53:47" />
+				Time="2011-08-05T09:42:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4733,11 +4753,10 @@ msg_wbt_info_11へ</Comment>
 ゆうしょう　すれば▼
 チャンピオンズトーナメントへ
 さんかできるように　なりますよ！▼
-うえの　ランクを　めざして
 がんばって　くださいね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T06:38:40" />
+				Time="2011-08-05T09:43:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4751,11 +4770,10 @@ msg_wbt_info_11へ</Comment>
 優勝すれば▼
 チャンピオンズトーナメントへ
 参加できるように　なりますよ！▼
-うえの　ランクを　目指して　
 がんばって　くださいね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T02:38:14" />
+				Time="2011-08-05T09:44:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4933,10 +4951,10 @@ msg_wbt_info_11へ</Comment>
 １０かい　ゆうしょうすると▼
 チャンピオンズトーナメントに
 さんか　できるようになりますよ▽
-がんばってくださいね！▼</Text>
+がんばって　くださいね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T03:23:54" />
+				Time="2011-08-05T09:46:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4948,10 +4966,10 @@ msg_wbt_info_11へ</Comment>
 １０回　優勝すると▼
 チャンピオンズトーナメントに
 参加　できるようになりますよ！▽
-がんばってくださいね！▼</Text>
+がんばって　くださいね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T03:24:00" />
+				Time="2011-08-05T09:46:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6279,10 +6297,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>エントリーチェッカーの
-スイッチを　切ります</Text>
+スイッチを　きります</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T06:57:56" />
+				Time="2011-08-05T09:52:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
