@@ -17,6 +17,10 @@
 #define D27R1001_HINT_05                   6
 #define D27R1001_HINT_04                   7
 #define D27_POKE10_02                      8
+#define D27R1001_STOPPER_01                9
+#define D27R1001_STOPPER_02               10
+#define D27R1001_SWSAGE7_01               11
+#define D27R1001_SWPLAZMAM_01             12
 
 #endif //ZONE_D27R1001_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1001.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -24,5 +28,7 @@
 #define ZONE_D27R1001_EVB_H
 
 #define BG_D27R1001_PASS_01               0
+#define BG_D27R1001_PANEL_01              1
+#define BG_D27R1001_PANEL_02              2
 
 #endif //ZONE_D27R1001_EVB_H

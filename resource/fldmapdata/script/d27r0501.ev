@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d27r0501.h"
-  //.include  "d27r0501.h"
+  .include  "d27r0501.h"
+
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +21,288 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d27r0501
+_EVENT_DATA    ev_zone_d27r0501
+_EVENT_DATA    ev_init_d27r0501
+_EVENT_DATA    ev_recover_d27r0501
+_EVENT_DATA    ev_scene_d27r0501_swsage7_01
 _EVENT_DATA_END
 
+/************************************************************/
+/*					ZONE_CHANGE_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d27r0501
+  
+  //
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d27r0501:
-//  _END
+INIT_EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d27r0501:
-  //とりあえず最初のラベルだけ生成している
-  _END
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d27r0501
+  
+  //
+  
+INIT_EVENT_END
 
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d27r0501
+
+  //
+
+INIT_EVENT_END
+
+/************************************************************/
+/*					SCENE_CHANGE：ヴィオ戦  						*/
+/************************************************************/
+INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
+
+  //========================================//
+  //ヴィオ・ダークトリニティ表示
+  _FLAG_RESET( FV_D27R0501_SWSAGE7_01 )
+  _FLAG_RESET( FV_D27R0501_NINJA_01 )
+  //========================================//
+  
+  //アニメ：主人公中央へ移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 12, 13, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //七賢人動作モデル生成
+  _OBJ_ADD( D27R0501_SWSAGE7_01 )
+  
+  //【仮】アニメ：ヴィオワープして登場・主人公振り向き
+  _OBJ_ANIME( D27R0501_SWSAGE7_01, anm_swsage7_warp_in )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ヴィオ：そのポケモンは……
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_01 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ヴィオ：キュレム！
+  _GIZAWIN_OBJMSG_POS( msg_d27r0101_sage7_02_02 , D27R0501_SWSAGE7_01, POS_DEFAULT )
+  _GIZAWIN_CLOSE()
+  
+  //ヴィオ：さて……
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_04 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】トレーナー戦
+  _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+  _CALL ev_battle_check
+  
+  //ヴィオ：むぅ！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_05 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル動作モデル生成
+  _OBJ_ADD_EX( 12, 17, DIR_UP, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
+  
+  //【仮】アニメ：ライバルワープして登場
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swrival_warp_in )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( D27R0501_SWSAGE7_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  //ライバル：ここは……！？
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_01 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル「！」
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：あの　ポケモンは……
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_02 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ヴィオ：そうとも
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_06 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：きまってるだろ！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_03 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ヴィオ：チョロネコくらい
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_07 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：……しんだ
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_04 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ヴィオ：こじんの
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_08 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  
+  //ヴィオ：……さて
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_09 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：ふざけるな！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_05 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //キュレム：ヒュララ……
+  _VOICE_PLAY(MONSNO_653,0)
+  _PLAINWIN_MSG_DOWN( msg_d27r0501_poke10_02_01 )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //ダークトリニティ動作モデル生成
+  _OBJ_ADD( D27R0501_NINJA_01 )
+  _OBJ_ADD( D27R0501_NINJA_02 )
+  
+  //アニメ：ダークトリニティ登場
+  _OBJ_ANIME( D27R0501_NINJA_01, anm_ninja_coming_01 )
+  _OBJ_ANIME( D27R0501_NINJA_02, anm_ninja_coming_01 )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //【仮】W21に遷移
+  
+  //暗転処理
+  _BLACK_OUT_SLOW()
+  _DISP_FADE_END_CHECK()
+  
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  _OBJ_DEL( D27R0501_SWSAGE7_01 )
+  _OBJ_DEL( D27R0501_NINJA_01 )
+  _OBJ_DEL( D27R0501_NINJA_02 )
+  
+  //暗転復帰
+  _BLACK_IN_SLOW()
+  _DISP_FADE_END_CHECK()
+  
+  //========================================//
+  //ヴィオ・ダークトリニティ非表示
+  _FLAG_SET( FV_D27R0501_SWSAGE7_01 )
+  _FLAG_SET( FV_D27R0501_NINJA_01 )
+  //D27R0701 SCENE_CHANGE無効
+  $WK_SCENE_D27R0501_SWSAGE7_01 = 2
+  //========================================//
+
+INIT_EVENT_END
+
+ev_battle_check:	
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+//--------------------------------------------------------------------
+//	ヴィオ：ワープして登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swsage7_warp_in
+	_ANIME_DATA	AC_WARP_DOWN,1
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：ワープして登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_warp_in
+  _ANIME_DATA	AC_WARP_DOWN,1
+  _ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ダークトリニティ：登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_coming_01
+	_ANIME_DATA	AC_NINJA_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ダークトリニティ：退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_bye_01
+	_ANIME_DATA	AC_NINJA_ACT1,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

@@ -12,6 +12,8 @@
   .include  "msg_d27r0601.h"
   .include  "d27r0601.h"
 
+  //@author Mizuguchi_Mai
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -20,6 +22,16 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_d27r0601_warp_01
+_EVENT_DATA    ev_zone_d27r0601
+_EVENT_DATA    ev_init_d27r0601
+_EVENT_DATA    ev_recover_d27r0601
+_EVENT_DATA    ev_scene_d27r0601_swsage1_01
+_EVENT_DATA    ev_d27r0601_ninja_01
+_EVENT_DATA    ev_d27r0601_ninja_02
+_EVENT_DATA    ev_d27r0601_ninja_03
+_EVENT_DATA    ev_d27r0601_swrival_01
+_EVENT_DATA    ev_d27r0601_poke32_01
+_EVENT_DATA    ev_pos_d27r0601_stopper_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -34,6 +46,431 @@ DEFINE_LOCAL LCWK_VERSION
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+/************************************************************/
+/*					ZONE_CHANGE_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d27r0601
+  
+  //
+
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d27r0601
+  
+  //【仮】ダークトリニティ戦終了前
+  IF $WK_SCENE_D27R0601_SWSAGE1_01 == 4 && FLAG_OFF( FV_D27R0601_SWRIVAL_01 ) THEN
+    _OBJ_POS_CHANGE(D27R0601_SWRIVAL_01,8,0,6,DIR_RIGHT)
+    _OBJ_POS_CHANGE(D27R0601_POKE32_01,9,0,6,DIR_LEFT)
+  //【仮】ダークトリニティ戦終了後
+  ELSIF $WK_SCENE_D27R0601_SWSAGE1_01 >= 2 && FLAG_OFF( FV_D27R0601_SWRIVAL_01 ) THEN
+    _OBJ_POS_CHANGE(D27R0601_SWRIVAL_01,8,0,6,DIR_RIGHT)
+    _OBJ_POS_CHANGE(D27R0601_POKE32_01,10,0,6,DIR_DOWN)
+  
+  ENDIF
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d27r0601
+
+  //
+
+INIT_EVENT_END
+
+/************************************************************/
+/*					SCENE_CHANGE：  						*/
+/************************************************************/
+INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
+  
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  //========================================//
+  //ダークトリニティ・ライバル表示
+  _FLAG_RESET( FV_D27R0601_NINJA_01 )
+  _FLAG_RESET( FV_D27R0601_SWRIVAL_01 )
+  //========================================//
+  
+  //アニメ：主人公中央に移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 11, 7, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //カメラ操作　ゲーチスを中央に
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,753664,0,212992,80 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //ゲーチス：……きましたか
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_swsage01_03_01 , D27R0601_SWSAGE1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ゲーチス振り返る
+  _OBJ_ANIME( D27R0601_SWSAGE1_01 ,anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ゲーチス：アクロマめ
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_swsage01_03_02 , D27R0601_SWSAGE1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ゲーチス1歩右へ
+  _OBJ_ANIME_AUTO( D27R0601_SWSAGE1_01 , 12, 2, FORCE_TYPE_NOT, 16, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //ゲーチス：さてアナタは
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_swsage01_03_03 , D27R0601_SWSAGE1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ゲーチス1歩下へ
+  _OBJ_ANIME_AUTO( D27R0601_SWSAGE1_01 , 12, 3, FORCE_TYPE_NOT, 16, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //ゲーチス：キュレムが
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_swsage01_03_04 , D27R0601_SWSAGE1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ゲーチス1歩下へ
+  _OBJ_ANIME_AUTO( D27R0601_SWSAGE1_01 , 13, 5, FORCE_TYPE_NOT, 16, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //ゲーチス：キュレムはからっぽ
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_swsage01_03_05 , D27R0601_SWSAGE1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //アニメ：ゲーチス1歩下へ
+  _OBJ_ANIME_AUTO( D27R0601_SWSAGE1_01 , 13, 7, FORCE_TYPE_NOT, 16, DIR_LR)
+  _TIME_WAIT( 40 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r)
+  _OBJ_ANIME_WAIT()
+  
+  //ゲーチス：そうです！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_swsage01_03_06 , D27R0601_SWSAGE1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ダークトリニティ動作モデル生成
+  _OBJ_ADD( D27R0601_NINJA_01 )
+  
+  //アニメ：ダークトリニティ出現
+  _OBJ_ANIME( D27R0601_NINJA_01 , anm_ninja_coming_01)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( D27R0601_NINJA_01 , anm_staystep_r)
+  _OBJ_ANIME( D27R0601_SWSAGE1_01 , anm_staystep_l)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
+  //ダークトリニティ：ゲーチスさま
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja1_03_01 , D27R0601_NINJA_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ゲーチス：いよいよ！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_swsage01_03_07 , D27R0601_SWSAGE1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ゲーチス退場
+  _OBJ_ANIME( D27R0601_SWSAGE1_01 , anm_swsage1_bye_01)
+  _TIME_WAIT( 32 )
+  _OBJ_ANIME( D27R0601_NINJA_01 , anm_staystep_d)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //ゲーチス動作モデル削除
+  _OBJ_DEL( D27R0601_SWSAGE1_01 )
+  
+  //ライバル動作モデル生成
+  _OBJ_ADD( D27R0601_SWRIVAL_01 )
+  
+  //アニメ：ライバルワープパネルに登場
+  _OBJ_ANIME( D27R0601_SWRIVAL_01 ,anm_swrival_warp_in )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：ダークトリニティふりむく
+  _OBJ_ANIME( D27R0601_NINJA_01 ,anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER ,anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：まてよ
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_03_01 , D27R0601_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ダークトリニティ：……ああ
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja1_03_02 , D27R0601_NINJA_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //レパルダス動作モデル生成
+  _OBJ_ADD( D27R0601_POKE32_01 )
+  
+  //レパルダス：グルルゥー！
+  _VOICE_PLAY(MONSNO_653,0)
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_poke32_03_01 , D27R0601_POKE32_01 ,POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル「！」
+  _OBJ_ANIME( D27R0601_SWRIVAL_01 ,anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //ダークトリニティ：5ねんまえ
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja1_03_03 , D27R0601_NINJA_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：そんな
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_03_02 , D27R0601_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ダークトリニティ：もろいな
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja1_03_04 , D27R0601_NINJA_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ダークトリニティと主人公向き合う
+  _OBJ_ANIME( D27R0601_NINJA_01 ,anm_staystep_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER ,anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //【仮】トレーナー戦
+  _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+  _CALL ev_battle_check
+  
+  _OBJ_ADD( D27R0601_NINJA_02 )
+  _OBJ_ADD( D27R0601_NINJA_03 )
+  
+  //アニメ：ダークトリニティ出現
+  _OBJ_ANIME( D27R0601_NINJA_02 , anm_ninja_coming_01)
+  _OBJ_ANIME( D27R0601_NINJA_03 , anm_ninja_coming_01)
+  _OBJ_ANIME_WAIT()
+
+  //========================================//
+  //ゲーチス非表示
+  _FLAG_SET( FV_D27R0601_SWSAGE1_01 )
+  //D27R0701 SCENE_CHANGE無効
+  $WK_SCENE_D27R0601_SWSAGE1_01 = 2
+  //D27R0701 STOPPER有効
+  $WK_SCENE_D27R0601_STOPPER_01 = 1
+  //========================================//
+
+INIT_EVENT_END
+
+//--------------------------------------------------------------------
+//	ライバル：ワープして登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_warp_in
+  _ANIME_DATA	AC_WARP_DOWN,1
+  _ANIME_DATA	AC_WALK_U_8F,3
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ゲーチス：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swsage1_bye_01
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/* ダークトリニティ（１）：話しかけ                                         */
+/**************************************************************/
+EVENT_START   ev_d27r0601_ninja_01
+  _TALK_OBJ_START()
+  //【仮】条件で会話分岐
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja1_03_04 , D27R0601_NINJA_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* ダークトリニティ（２）：話しかけ                                         */
+/**************************************************************/
+EVENT_START   ev_d27r0601_ninja_02
+  
+  //【仮】戦闘済みかチェック
+  _TRAINER_FLAG_CHECK( TRID_SCHOOLB_11, SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == FALSE THEN
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja2_03_01 , D27R0601_NINJA_02 ,POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //戦闘処理
+    _TRAINER_BTL_SET( TRID_SCHOOLB_11, 0 )
+    _CALL ev_battle_check
+    
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja2_03_02 , D27R0601_NINJA_02 ,POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    //========================================//
+    //トレーナー戦進行状況に++
+    $WK_SCENE_D27R0601_SWSAGE1_01 += 1
+    //【仮】トレーナーフラグセット
+    _TRAINER_FLAG_SET( TRID_SCHOOLB_11 )
+    //========================================//
+    
+    //全員に勝ったなら終了イベントを起動
+    IF $WK_SCENE_D27R0601_SWSAGE1_01 == 4 THEN
+      _CALL ev_d27r0601_ninjabtl_end
+    ENDIF
+  
+  //戦闘後
+  ELSE
+  
+    //【仮】条件で会話分岐
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0601_ninja2_03_02 )
+    
+  ENDIF
+  
+EVENT_END
+
+/**************************************************************/
+/* ダークトリニティ（３）：話しかけ                                         */
+/**************************************************************/
+EVENT_START   ev_d27r0601_ninja_03
+  
+  //【仮】戦闘済みかチェック
+  _TRAINER_FLAG_CHECK( TRID_SCHOOLG_09, SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == FALSE THEN
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja3_03_01 , D27R0601_NINJA_03 ,POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //戦闘処理
+    _TRAINER_BTL_SET( TRID_SCHOOLG_09, 0 )
+    _CALL ev_battle_check
+    
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja3_03_02 , D27R0601_NINJA_03 ,POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    //========================================//
+    //トレーナー戦進行状況に++
+    $WK_SCENE_D27R0601_SWSAGE1_01 += 1
+    //【仮】トレーナーフラグセット
+    _TRAINER_FLAG_SET( TRID_SCHOOLG_09 )
+    //========================================//
+    
+    //全員に勝ったなら終了イベントを起動
+    IF $WK_SCENE_D27R0601_SWSAGE1_01 == 4 THEN
+      _CALL ev_d27r0601_ninjabtl_end
+    ENDIF
+  
+  //戦闘後
+  ELSE
+  
+    //【仮】条件で会話分岐
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0601_ninja2_03_02 )
+    
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/* CALL：ダークトリニティ戦終了イベント */
+/**************************************************************/
+ev_d27r0601_ninjabtl_end:
+  
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
+  //ダークトリニティ：……まあいい
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja1_03_05 , D27R0601_NINJA_01 ,POS_DEFAULT )
+  
+  //ダークトリニティ：ライバルの方を向く
+  _OBJ_ANIME( D27R0601_NINJA_01 , anm_staystep_l)
+  _OBJ_ANIME_WAIT()
+  
+  //ダークトリニティ：オマエ……
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja1_03_06 , D27R0601_NINJA_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：レパルダス移動
+  _OBJ_ANIME( D27R0601_POKE32_01 , anm_walk_l)
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：ダークトリニティ退場
+  _OBJ_ANIME( D27R0601_NINJA_01 , anm_ninja_bye_01)
+  _OBJ_ANIME( D27R0601_NINJA_02 , anm_ninja_bye_01)
+  _OBJ_ANIME( D27R0601_NINJA_03 , anm_ninja_bye_01)
+  _OBJ_ANIME_WAIT()
+  
+  //ダークトリニティ動作モデル削除
+  _OBJ_DEL( D27R0601_NINJA_01 )
+  _OBJ_DEL( D27R0601_NINJA_02 )
+  _OBJ_DEL( D27R0601_NINJA_03 )
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：なあ
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_03_03 , D27R0601_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //D27R0701 STOPPER無効
+  $WK_SCENE_D27R0601_STOPPER_01 = 2
+  //ダークトリニティ非表示
+  _FLAG_SET( FV_D27R0601_NINJA_01 )
+  //========================================//
+  
+_RET
+
+/************************************************************/
+/*					話しかけ：ライバル				*/
+/************************************************************/
+EVENT_START	ev_d27r0601_swrival_01
+  
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  //【仮】条件で会話分岐
+  
+  //ダークトリニティ戦終了前
+  IF $WK_SCENE_D27R0601_SWSAGE1_01 < 4 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swrival_03_02 )
+    
+  //ダークトリニティ戦終了後
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swrival_03_03 )
+  ENDIF
+  
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：レパルダス				*/
+/************************************************************/
+EVENT_START	ev_d27r0601_poke32_01
+  _EASY_TALK_POKEVOICE( MONSNO_547, msg_d27r0601_poke32_03_01 )
+EVENT_END
+
+
+/************************************************************/
+/*					【仮】POS：STOPPER				*/
+/************************************************************/
+EVENT_START	ev_pos_d27r0601_stopper_01
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_u)
+  _OBJ_ANIME_WAIT()
+  
+EVENT_END
 
 /************************************************************/
 /*					特殊接続				*/
@@ -58,3 +495,100 @@ EVENT_START	ev_pos_d27r0601_warp_01
   
 EVENT_END
 
+//--------------------------------------------------------------
+//	ダークトリニティ：登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_coming_01
+	_ANIME_DATA	AC_NINJA_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ダークトリニティ：退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_bye_01
+	_ANIME_DATA	AC_NINJA_ACT1,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+ev_battle_check:	
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+_RET
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

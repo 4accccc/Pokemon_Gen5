@@ -8,6 +8,7 @@
 #ifndef ZONE_D27R0401_EVC_H
 #define ZONE_D27R0401_EVC_H
 
+#define D27R0401_SWBOSS_01                 0
 
 #endif //ZONE_D27R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

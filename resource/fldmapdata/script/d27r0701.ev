@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d27r0701.h"
-  //.include  "d27r0701.h"
+  .include  "d27r0701.h"
+
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +21,212 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d27r0701
+_EVENT_DATA    ev_d27r0701_swplazmam_01
+_EVENT_DATA    ev_zone_d27r0701
+_EVENT_DATA    ev_init_d27r0701
+_EVENT_DATA    ev_recover_d27r0701
+_EVENT_DATA    ev_scene_d27r0701_plazmam_01
 _EVENT_DATA_END
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+//パスワード正解取得
+DEFINE_LOCAL LCWK_MSGID
+DEFINE_LOCAL LCWK_PASSID
+/************************************************************/
+/*					ZONE_CHANGE_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d27r0701
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d27r0701:
-//  _END
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  IF $WK_SCENE_D27R0501_SWSAGE7_01 == 2 THEN
+  
+    //乗船2回目終了ならばヒント人を非表示に
+   _FLAG_SET( FV_D27R0701_SWPLAZMAM_01 )
+   
+  ELSIF $WK_SCENE_D27R0501_SWSAGE7_01 == 0 && $LCWK_VERSION == VERSION_B2 THEN
+    //乗船2回目ならばヒント人を表示
+   _FLAG_RESET( FV_D27R0701_SWPLAZMAM_01 )
+  ELSIF $WK_SCENE_D27R0501_SWSAGE7_01 == 0 && $LCWK_VERSION == VERSION_W2 THEN
+    //乗船2回目ならばヒント人を表示
+   _FLAG_RESET( FV_D27R0701_SWPLAZMAM_01 )
+  ENDIF
+  
+INIT_EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d27r0701:
-  //とりあえず最初のラベルだけ生成している
-  _END
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d27r0701
+  
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //乗船2回目でホワイトならばヒント人の位置を変更
+  IF $WK_SCENE_D27R0501_SWSAGE7_01 == 0 && $LCWK_VERSION == VERSION_W2 THEN
+    _OBJ_POS_CHANGE(D27R0701_SWPLAZMAM_01,16,0,25,DIR_UP)
+  ENDIF
+INIT_EVENT_END
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d27r0701
 
+  //
+
+INIT_EVENT_END
+
+/************************************************************/
+/*					SCENE_CHANGE：元プラズマ団員  						*/
+/************************************************************/
+EVENT_START	ev_scene_d27r0701_plazmam_01
+
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R0701_SWPLAZMAM_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //ネオプラズマ：おっと！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_01 , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ブラックとホワイトで分岐
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME_AUTO( D27R0701_SWPLAZMAM_01 , 16, 24, FORCE_TYPE_NPC, 8, DIR_UD)
+  ELSE
+    _OBJ_ANIME_AUTO( D27R0701_SWPLAZMAM_01 , 16, 43, FORCE_TYPE_NPC, 8, DIR_UD)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //ネオプラズマ：おれは
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_02 , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_03b , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
+    
+  //W2
+  ELSE
+    
+    //【仮】正解のIDでメッセージラベルを差し替え
+    //$LCWK_MSGID = msg_d27r0701_swplazmam1_02_03w
+    //$LCWK_MSGID += $LCWK_PASSID
+    //_BALLOONWIN_OBJMSG_POS( LCWK_PASSID , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
+    
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_03w , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
+  ENDIF
+  
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //D27R0701 SCENE_CHANGE無効
+  $WK_SCENE_D27R0701_PLAZMAM_01 = 2
+  //========================================//
+  
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：元プラズマ団員  						*/
+/************************************************************/
+EVENT_START	ev_d27r0701_swplazmam_01
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  //正解ID取得
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0701_swplazmam1_02_03b )
+    
+  //W2
+  ELSE
+    
+    //【仮】正解のIDでメッセージラベルを差し替え
+    //$LCWK_MSGID = msg_d27r0701_swplazmam1_02_03w
+    //$LCWK_MSGID += $LCWK_PASSID
+    //_EASY_BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0701_swplazmam1_02_03w )
+  ENDIF
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

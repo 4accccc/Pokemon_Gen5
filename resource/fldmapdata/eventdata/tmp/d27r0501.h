@@ -10,6 +10,9 @@
 #define ZONE_D27R0501_EVC_H
 
 #define D27_POKE10_01                      0
+#define D27R0501_SWSAGE7_01                1
+#define D27R0501_NINJA_01                  2
+#define D27R0501_NINJA_02                  3
 
 #endif //ZONE_D27R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -421,7 +421,7 @@ EVENT_START	ev_d27r0101_swrival_01
     $WK_SCENE_D27R0101_FIRST_01 = 4
     //乗船1回目の人物を全て非表示に
     _FLAG_SET(FV_D27R0101_SWRIVAL_01)
-    _FLAG_SET(FV_D27R0101_SWPLASMA_01)
+    _FLAG_SET(FV_D27R0101_SWPLAZMA_01)
     _FLAG_SET(FV_D27R0101_SWLEADER1_01)
     _FLAG_SET(FV_D27R0101_SWSAGE7_01)
     _FLAG_SET(FV_D27R0101_NINJA_01)
@@ -870,7 +870,7 @@ EVENT_START	ev_scene_d27r0101_secondbtl_01
   //========================================//
   //ライバル・プラズマ団を非表示に
   _FLAG_SET( FV_D27R0101_SWRIVAL_01 )
-  _FLAG_SET(FV_D27R0101_SWPLASMA_02)
+  _FLAG_SET(FV_D27R0101_SWPLAZMA_02)
   //========================================//
   
 EVENT_END
@@ -1129,7 +1129,7 @@ ev_battle_check:
       
       //========================================//
       //プラズマ船員1を非表示に
-      _FLAG_SET( FV_D27R0101_SWPLASMA_01 )
+      _FLAG_SET( FV_D27R0101_SWPLAZMA_01 )
       //========================================//
     ENDIF
     

@@ -147,6 +147,10 @@ EVENT_START	ev_reserve_d27r0201_rival_01
   //========================================//
   //ライバルを非表示
   _FLAG_SET( FV_D27R0201_SWRIVAL_01 )
+  //D27R0701のSCENE_CHANGEを起動
+  $WK_SCENE_D27R0701_PLAZMAM_01 = 1
+  //D27R0501のSCENE_CHANGEを起動
+  $WK_SCENE_D27R0501_SWSAGE7_01 = 1
   //========================================//
 
 EVENT_END
