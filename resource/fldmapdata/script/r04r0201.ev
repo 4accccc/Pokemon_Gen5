@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r04r0201.h"
-  //.include  "r04r0201.h"
+  .include  "r04r0201.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +21,97 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_r04r0201_middlewoman2_01
+_EVENT_DATA   ev_r04r0201_poke20_01
 _EVENT_DATA_END
+
+//体力の満タンではないポケモンのための変数定義
+DEFINE_LOCAL LWK_PARTY_NUM  //手持ちポケモンの数
+DEFINE_LOCAL LWK_COUNT_NUM  //WHILE文のカウンタ
+DEFINE_LOCAL LWK_RET_HP     //HPチェックの帰り値
+DEFINE_LOCAL LWK_RET_PP     //PPチェックの帰り値
+DEFINE_LOCAL LWK_DAME       //HPかPPが満タンではないポケモンの数
+DEFINE_LOCAL LWK_EGG_CHK    //タマゴであるか
+
+
+/**************************************************************/
+/*  おばさん：話しかけ（回復処理）                            */
+/**************************************************************/
+EVENT_START   ev_r04r0201_middlewoman2_01
+
+  _TALK_OBJ_START()
+
+  //手持ちのポケモンの数を確認（全てのポケモン）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+  //手持ちのポケモンの中にHPかPPが満タンではないポケモンがいるか確認（繰り返し処理）
+  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+    //指定POSのポケモンはタマゴか
+    _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
+    IF $LWK_EGG_CHK == FALSE THEN
+
+      //指定POSのポケモンのHPを取得
+      _CHECK_TEMOTI_HP( LWK_RET_HP, LWK_COUNT_NUM )
+
+      //指定POSのポケモンのPPを取得
+      _CHECK_TEMOTI_PP( LWK_RET_PP, LWK_COUNT_NUM )
+
+      //チェックしたポケモンのHP（またはPP）が満タンではないのならば
+      IF $LWK_RET_HP == FALSE || $LWK_RET_PP == FALSE THEN
+        //HPかPPが満タンではないポケモンの数に＋１
+        $LWK_DAME += 1
+
+      ENDIF
+
+    ENDIF
+
+    //カウント
+    $LWK_COUNT_NUM += 1
+
+  ENDWHILE
+
+  //手持ちにHPかPPが満タンではないポケモンがいた場合
+  IF $LWK_DAME >= 1 THEN
+
+    //おばさん：なんだい　おつかれかい？
+    _BALLOONWIN_TALKOBJ_MSG( msg_r04r0201_middlewoman2_02 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    _TIME_WAIT( 8 )  //暗転前の間
+
+    //暗転して手持ちポケモンを回復
+    _BLACK_OUT()
+    _DISP_FADE_END_CHECK()
+
+    _TEMOTI_POKEMON_KAIFUKU()   //回復処理
+    _ME_PLAY( SEQ_ME_ASA )
+    _ME_WAIT()
+
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+
+    _TIME_WAIT( 8 )  //暗転後の間
+
+  //手持ちのポケモンはHPもPPも満タン
+  ELSE
+
+    //おばさん：そんなに　げんきなら　すなあらしでも
+    _BALLOONWIN_TALKOBJ_MSG( msg_r04r0201_middlewoman2_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+/**************************************************************/
+/*  ワルビル：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r04r0201_poke20_01
+  _EASY_TALK_POKEVOICE( MONSNO_505, msg_r04r0201_poke20_01 )
+EVENT_END
+
+

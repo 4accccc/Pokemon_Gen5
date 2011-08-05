@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_r06r0203.h"
   .include  "r06r0203.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,4 +21,84 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_r06r0203_oldman_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  おじいさん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_r06r0203_oldman_01
+
+  //ポケモンチェック変数一覧
+  DEFINE_LOCAL LWK_PARTY_NUM    //手持ちポケモンの数
+  DEFINE_LOCAL LWK_COUNT_NUM    //WHILE文のカウンタ
+  DEFINE_LOCAL LWK_RET_MONSNO   //ナンバーチェックの帰り値
+  DEFINE_LOCAL LWK_POKE_CLEAR   //条件を満たしたポケモンの有無
+  DEFINE_LOCAL LWK_EGG_CHK      //タマゴであるか
+
+  _TALK_OBJ_START()
+
+  //おじいさん：なんじゅうねんも　さがしもとめた
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0203_oldman_01 )
+  _AB_KEYWAIT_MARK()
+
+  //手持ちのポケモンの数を確認（全てのポケモン）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+  //手持ちのポケモンの中に条件を満たしたポケモンがいるか確認（繰り返し処理）
+  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+    //指定POSのポケモンのNOを取得
+    _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+
+    //指定POSのポケモンはタマゴか
+    _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
+
+    //チェックしたポケモンはコバルオンか（なおかつタマゴではないか）
+    IF $LWK_RET_MONSNO == 638 && $LWK_EGG_CHK == FALSE THEN
+      //条件を満たしていたら「１」
+      $LWK_POKE_CLEAR = 1
+
+    ENDIF
+
+    //カウント
+    $LWK_COUNT_NUM += 1
+
+  ENDWHILE
+
+  //手持ちにコバルオンがいる
+  IF $LWK_POKE_CLEAR == 1 THEN
+
+    _MSGWIN_CLOSE()
+    //アニメ：おじいさん「！」
+    _OBJ_ANIME( R06R0203_OLDMAN_01, anm_common_gyoe )
+    _OBJ_ANIME_WAIT()
+
+    _TIME_WAIT( 8 )
+
+    //おじいさん：コバルオン　ではないか……！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0203_oldman_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+
+    //おじいさん：いまだ　にんげんを　にくんでいるのか▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0203_oldman_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+

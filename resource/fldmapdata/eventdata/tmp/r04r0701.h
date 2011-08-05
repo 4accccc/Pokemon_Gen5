@@ -9,6 +9,8 @@
 #ifndef ZONE_R04R0701_EVC_H
 #define ZONE_R04R0701_EVC_H
 
+#define R04R0701_VETERANW_01               0
+#define R04R0701_POKE49_01                 1
 
 #endif //ZONE_R04R0701_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r04r0701.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

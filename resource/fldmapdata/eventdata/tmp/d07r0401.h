@@ -23,6 +23,7 @@
 #define FLD_ITEM_249                       4
 #define TR_WORKER1_09                      5
 #define TR_VETERANM_15                     6
+#define D07R0401_WORKMAN_02                7
 
 #endif //ZONE_D07R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

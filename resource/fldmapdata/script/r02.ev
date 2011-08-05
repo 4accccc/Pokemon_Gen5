@@ -8,6 +8,8 @@
   .include  "../../../prog/include/msg/script/msg_r02.h"
   .include  "r02.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -15,37 +17,198 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
-
-_EVENT_DATA	   ev_bg_r02_board1_01
-_EVENT_DATA	   ev_bg_r02_board2_01
-_EVENT_DATA	   ev_bg_r02_board3_01
+_EVENT_DATA   ev_zone_r02
+_EVENT_DATA   ev_bg_r02_board1_01
+_EVENT_DATA   ev_bg_r02_board2_01
+_EVENT_DATA   ev_bg_r02_board3_01
+_EVENT_DATA   ev_r02_pipe_01
+_EVENT_DATA   ev_r02_boy2_01
+_EVENT_DATA   ev_r02_boy2_02
+_EVENT_DATA   ev_r02_girl2_01
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//                                                                  //
+//  ハードロッカーイベントに LOCALWORK0～1 まで使用しています。     //
+//  同マップ内の使用を禁止します。                                  //
+//                                                                  //
+//------------------------------------------------------------------//
+
+
+/************************************************************/
+/*  ZONE_CHANGE_SCRIPT                                      */
+/************************************************************/
+INIT_EVENT_START  ev_zone_r02
+
+  //特性「ハードロック」見せイベントが終了してる？
+  IF $WK_OTHER_R02_HAADOROKKU == 0 THEN
+    $OBJCHRWORK0 = PIPE     //可変OBJ01の見た目を笛吹きに
+  ELSE
+    $OBJCHRWORK0 = GUITARW  //可変OBJ01の見た目をロッカーに
+  ENDIF
+
+INIT_EVENT_END
+
 /**************************************************************/
-/*  R02 看板1のイベントスクリプト*/
+/*  R02 看板1のイベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_r02_board1_01
-
-	_EASY_BGWIN_MSG(msg_r02_sign1_01, TYPE_ROAD) //看板1:2番道路
-
+  _EASY_BGWIN_MSG(msg_r02_sign1_01, TYPE_ROAD) //看板1:2番道路
 EVENT_END
 
 /**************************************************************/
-/*  R02 看板2のイベントスクリプト*/
+/*  R02 看板2のイベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_r02_board2_01
-
-	_EASY_BGWIN_MSG(msg_r02_sign2_01, TYPE_ROAD) //看板2:2番道路
-
+  _EASY_BGWIN_MSG(msg_r02_sign2_01, TYPE_ROAD) //看板2:2番道路
 EVENT_END
 
 /**************************************************************/
-/*  R02 看板3のイベントスクリプト*/
+/*  R02 看板3のイベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_r02_board3_01
-
-	_EASY_BGWIN_MSG(msg_r02_sign3_01, TYPE_INFO) //看板3:お得な掲示板
+  _EASY_BGWIN_MSG(msg_r02_sign3_01, TYPE_INFO) //看板3:お得な掲示板
   _FLAG_SET( MDL_FLAG_BOARD_R02_03 )
+EVENT_END
+
+/**************************************************************/
+/*  お姉さん：話しかけ（特性「ハードロック」見せイベント）    */
+/**************************************************************/
+EVENT_START   ev_r02_pipe_01
+
+  //ポケモンチェック変数一覧
+  DEFINE_LOCAL LWK_PARTY_NUM          //手持ちポケモンの数
+  DEFINE_LOCAL LWK_COUNT_NUM          //WHILE文のカウンタ
+  DEFINE_LOCAL LWK_POKE_TOKUSEI       //ポケモンの特性
+  DEFINE_LOCAL LWK_POKE_TOKUSEI_CLEAR //条件の特性を持つポケモン
+  DEFINE_LOCAL LWK_EGG_CHK            //タマゴであるか
+  DEFINE_LOCAL LWK_BAG_CHK            //バッグの中身チェック
+
+  //特性「ハードロック」のポケモンを見せた後か    【仮】ぼうおんのワークで代用中
+  IF $WK_OTHER_R02_HAADOROKKU == 0 THEN
+
+    _TALK_OBJ_START()
+
+    //手持ちのポケモンの数を確認（全てのポケモン）
+    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+    //手持ちのポケモンの中に条件を満たしたポケモンがいるか確認（繰り返し処理）
+    WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+      //指定POSのポケモンの特性を取得
+      _GET_PARTY_POKE_PARAM( LWK_POKE_TOKUSEI, LWK_COUNT_NUM, SCR_POKEPARA_TOKUSEI )
+
+      //指定POSのポケモンはタマゴか
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
+
+      //指定POSのポケモンの特性は「ハードロック」か（なおかつタマゴではないか）
+      IF $LWK_POKE_TOKUSEI == TOKUSYU_HAADOROKKU && $LWK_EGG_CHK == FALSE && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+
+        //条件を満たしたポケモンの名前を取得して保存する
+        _GET_PARTY_POKE_MONSNO( WK_OTHER_R02_HAADOROKKU, LWK_COUNT_NUM )
+        //条件を満たしたポケモンの名前取得
+        _MONS_NAME( 0, WK_OTHER_R02_HAADOROKKU )
+        //条件を満たしたポケモンがいた（値セット）
+        $LWK_POKE_TOKUSEI_CLEAR = 1
+
+      ENDIF
+
+      //カウント
+      $LWK_COUNT_NUM += 1
+
+    ENDWHILE
+
+    //お姉さん：わたしに　ピッタリの
+    _BALLOONWIN_TALKOBJ_MSG( msg_r02_hardrock_01 )
+
+    //手持ちに特性「ハードロック」のポケモンがいた
+    IF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
+
+      _AB_KEYWAIT_MARK()
+      //お姉さん：こ　この　《ポケモン》……
+      _BALLOONWIN_TALKOBJ_MSG( msg_r02_hardrock_02 )
+      _AB_KEYWAIT_MARK()
+
+      //アイテム入手処理
+      //バッグ空きチェック【仮】アイテムは仮です
+      _ADD_ITEM_CHK( ITEM_MASUTAABOORU, 1, LWK_BAG_CHK )
+
+      //バッグがいっぱい
+      IF $LWK_BAG_CHK == 0 THEN
+
+        //お姉さん：って　それいじょう
+        _BALLOONWIN_TALKOBJ_MSG( msg_r02_hardrock_03 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //条件を満たしたポケモン名リセット
+        $WK_OTHER_R02_HAADOROKKU = 0
+
+      //バッグに空きがある
+      ELSE
+
+        _MSGWIN_CLOSE()
+        //アイテム「マスターボール」入手  【仮】
+        _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_MASUTAABOORU, 1 )
+
+        //イベント進行（マップチェンジするとメッセージが変わる）
+        $LOCALWORK0 = 1
+
+      ENDIF
+
+    ELSE
+
+      //会話終了
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //特性「ハードロック」のポケモンを見せた後（マップチェンジ前）
+  ELSIF $LOCALWORK0 == 1 THEN
+
+    _TALK_OBJ_START()
+    //お姉さん：なんでしょう……
+    _BALLOONWIN_TALKOBJ_MSG( msg_r02_hardrock_04 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //特性「ハードロック」のポケモンを見せた後（マップチェンジ後）
+  ELSE
+
+    _TALK_START_SE_PLAY()
+    //条件を満たしたポケモンの名前取得
+    _MONS_NAME( 0, WK_OTHER_R02_HAADOROKKU )
+
+    //お姉さん：ギャリリーン！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r02_hardrock_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
 
 EVENT_END
+
+
+/**************************************************************/
+/*  男の子01：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r02_boy2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r02_boy2a_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子02：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r02_boy2_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r02_boy2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  女の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r02_girl2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r02_girl2_01 )
+EVENT_END
+
+

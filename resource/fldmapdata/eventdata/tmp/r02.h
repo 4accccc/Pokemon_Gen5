@@ -15,6 +15,10 @@
 #define TR_TANPAN_25                       3
 #define TR_VETERANW_09                     4
 #define TR_MINI_19                         5
+#define R02_BOY2_01                        6
+#define R02_BOY2_02                        7
+#define R02_GIRL2_01                       8
+#define R02_PIPE_01                        9
 
 #endif //ZONE_R02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

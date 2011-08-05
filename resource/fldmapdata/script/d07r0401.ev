@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_d07r0401.h"
   .include  "d07r0401.h"
 
+  //@author fujimura_souichirou（重機マニアイベント追加）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,88 +21,462 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d07r0401_workman_01
-_EVENT_DATA    ev_zone_d07r0401
+_EVENT_DATA   ev_d07r0401_workman_01
+_EVENT_DATA   ev_zone_d07r0401
+_EVENT_DATA   ev_d07r0401_workman_02
 _EVENT_DATA_END
 
-
 //------------------------------注意--------------------------------//
-//																	//
-//	LOCALWORK15を使用しました。同マップ内の使用を禁止します。		//
-//			LOCALWORK15⇒ランダムに選ばれるカセキ結果格納箇所		//
-//																	//
+//                                                                  //
+//  LOCALWORK15を使用しました。同マップ内の使用を禁止します。       //
+//  LOCALWORK15⇒ランダムに選ばれるカセキ結果格納箇所               //
+//                                                                  //
 //------------------------------------------------------------------//
 
 /************************************************************/
-/*				ZONE_CHANGE_LABEL				*/
+/*  ZONE_CHANGE_LABEL                                       */
 /************************************************************/
-INIT_EVENT_START ev_zone_d07r0401
+INIT_EVENT_START   ev_zone_d07r0401
 {
-	
-	//冬以外の季節でストッパー石を非表示
-	_FLAG_SET( FV_D07_STONE_01 )
-	
-	//季節チェック
-	DEFINE_LOCAL SCWK_SEASON
-	_GET_SEASON_ID( SCWK_SEASON )
-	
-	//冬だったら岩を表示
-	IF $SCWK_SEASON == PMSEASON_WINTER THEN
-		_FLAG_RESET( FV_D07_STONE_01 )
-	ENDIF
+
+  //冬以外の季節でストッパー石を非表示
+  _FLAG_SET( FV_D07_STONE_01 )
+
+  //季節チェック
+  DEFINE_LOCAL SCWK_SEASON
+  _GET_SEASON_ID( SCWK_SEASON )
+
+  //冬だったら岩を表示
+  IF $SCWK_SEASON == PMSEASON_WINTER THEN
+    _FLAG_RESET( FV_D07_STONE_01 )
+  ENDIF
 }
 INIT_EVENT_END
 
 /**************************************************************/
-/* クリア後カセキ入手イベント*/
+/*  クリア後カセキ入手イベント                                */
 /**************************************************************/
 EVENT_START   ev_d07r0401_workman_01
 
-	//ゲームクリアしていなかったら
-	IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0401_fossil_01 )
+  //ゲームクリアしていなかったら
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0401_fossil_01 )
 
-	//クリア後・本日のアイテム入手はまだである
-	ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && FLAG_OFF( TMFLG_D07R0401_FOSSIL ) THEN
-	
-		_TALK_OBJ_START()
-		_BALLOONWIN_OBJMSG( msg_d07r0401_fossil_02 , D07R0401_WORKMAN_01 )
-		_BALLOONWIN_CLOSE()
-		
-		//乱数で0～7のうちのひとつを選んで格納する
-		_GET_RND( LOCALWORK15,7 )
-		
-		//乱数の結果によって入手するアイテムを変更
-		IF $LOCALWORK15 == 0 THEN
-			_ITEM_EVENT_KEYWAIT ( ITEM_NEKKONOKASEKI , 1)
-		ELSIF $LOCALWORK15 == 1 THEN
-			_ITEM_EVENT_KEYWAIT ( ITEM_TUMENOKASEKI , 1)
-		ELSIF $LOCALWORK15 == 2 THEN
-			_ITEM_EVENT_KEYWAIT ( ITEM_KAINOKASEKI , 1)
-		ELSIF $LOCALWORK15 == 3 THEN
-			_ITEM_EVENT_KEYWAIT ( ITEM_KOURANOKASEKI , 1)
-		ELSIF $LOCALWORK15 == 4 THEN
-			_ITEM_EVENT_KEYWAIT ( ITEM_HIMITUNOKOHAKU , 1)
-		ELSIF $LOCALWORK15 == 5 THEN
-			_ITEM_EVENT_KEYWAIT ( ITEM_TATENOKASEKI , 1)
-		ELSE
-			_ITEM_EVENT_KEYWAIT ( ITEM_ZUGAINOKASEKI , 1)
-		ENDIF
-		
-		_BALLOONWIN_OBJMSG( msg_d07r0401_fossil_03 , D07R0401_WORKMAN_01 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-		
-		//==================================//
-			
-		//今日のイベントは終了
-		_FLAG_SET ( TMFLG_D07R0401_FOSSIL )
-		
-		//==================================//
-		
-	//クリア後・本日のカセキ入手後
-	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0401_fossil_03 )
-	ENDIF
+  //クリア後・本日のアイテム入手はまだである
+  ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && FLAG_OFF( TMFLG_D07R0401_FOSSIL ) THEN
+
+    _TALK_OBJ_START()
+    _BALLOONWIN_OBJMSG( msg_d07r0401_fossil_02, D07R0401_WORKMAN_01 )
+    _BALLOONWIN_CLOSE()
+
+    //乱数で0～7のうちのひとつを選んで格納する
+    _GET_RND( LOCALWORK15, 7 )
+
+    //乱数の結果によって入手するアイテムを変更
+    IF $LOCALWORK15 == 0 THEN
+      _ITEM_EVENT_KEYWAIT ( ITEM_NEKKONOKASEKI, 1 )
+    ELSIF $LOCALWORK15 == 1 THEN
+      _ITEM_EVENT_KEYWAIT ( ITEM_TUMENOKASEKI, 1 )
+    ELSIF $LOCALWORK15 == 2 THEN
+      _ITEM_EVENT_KEYWAIT ( ITEM_KAINOKASEKI, 1 )
+    ELSIF $LOCALWORK15 == 3 THEN
+      _ITEM_EVENT_KEYWAIT ( ITEM_KOURANOKASEKI, 1 )
+    ELSIF $LOCALWORK15 == 4 THEN
+      _ITEM_EVENT_KEYWAIT ( ITEM_HIMITUNOKOHAKU, 1 )
+    ELSIF $LOCALWORK15 == 5 THEN
+      _ITEM_EVENT_KEYWAIT ( ITEM_TATENOKASEKI, 1 )
+    ELSE
+      _ITEM_EVENT_KEYWAIT ( ITEM_ZUGAINOKASEKI, 1 )
+    ENDIF
+
+    _BALLOONWIN_OBJMSG( msg_d07r0401_fossil_03, D07R0401_WORKMAN_01 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+    //==================================//
+    //今日のイベントは終了
+    _FLAG_SET ( TMFLG_D07R0401_FOSSIL )
+    //==================================//
+
+  //クリア後・本日のカセキ入手後
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0401_fossil_03 )
+  ENDIF
 
 EVENT_END
+
+/**************************************************************/
+/*  働くおじさん：話しかけ（重機マニアクイズ）                */
+/**************************************************************/
+EVENT_START   ev_d07r0401_workman_02
+
+//クイズ用変数定義
+DEFINE_LOCAL  LWK_NUM_SELECT
+DEFINE_LOCAL  LWK_WHILE_END
+DEFINE_LOCAL  LWK_QUIZ1_CLEA
+
+  _TALK_OBJ_START()
+
+  //初めて話しかけた
+  IF $WK_SCENE_D07R0401_QUIZ_01 == 0 THEN
+
+    //========================================//
+    //イベント進行
+    $WK_SCENE_D07R0401_QUIZ_01 = 1
+    //========================================//
+
+    //働くおじさん：どーも　こんにちは！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_01, D07R0401_WORKMAN_02, POS_DOWN )
+
+    //働く車は好きかな？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_NO THEN  //いいえ
+
+      //「はい」と答えるまで繰り返し
+      WHILE $SCWK_ANSWER == SCR_NO 
+
+        //働くおじさん：え！？　ゴメン
+        _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_03, D07R0401_WORKMAN_02, POS_DOWN )
+        _YES_NO_WIN( SCWK_ANSWER )
+
+      ENDWHILE
+
+    ENDIF
+
+    //働くおじさん：おお！　やっぱり！？
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_02, D07R0401_WORKMAN_02, POS_DOWN )
+    _AB_KEYWAIT_MARK()
+
+    //重機クイズ１問目へ
+    _CALL ev_d07r0401_juuki_01
+
+  //クイズの途中
+  ELSIF $WK_SCENE_D07R0401_QUIZ_01 >= 1 && $WK_SCENE_D07R0401_QUIZ_01 <= 5 THEN
+
+    //今日のクイズに正解した
+    IF FLAG_ON( TMFLG_D07R0401_QUIZ_TRUE ) THEN
+
+      //働くおじさん：よっ　みらいの　じゅうきマニア！▼
+      _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_12, D07R0401_WORKMAN_02, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    //今日のクイズに失敗した
+    ELSIF FLAG_ON( TMFLG_D07R0401_QUIZ_FALSE ) THEN
+
+      //働くおじさん：まちがえた　もんだいは
+      _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_13, D07R0401_WORKMAN_02, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    //今日はまだクイズを受けていない
+    ELSE
+
+      //働くおじさん：やあ！　まってたよ！
+      _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_04, D07R0401_WORKMAN_02, POS_DOWN )
+      _AB_KEYWAIT_MARK()
+
+      //クイズ問題へジャンプ
+      SWITCH $WK_SCENE_D07R0401_QUIZ_01
+      CASE 1 THEN
+        _CALL ev_d07r0401_juuki_01
+      CASE 2 THEN
+        _CALL ev_d07r0401_juuki_02
+      CASE 3 THEN
+        _CALL ev_d07r0401_juuki_03
+      CASE 4 THEN
+        _CALL ev_d07r0401_juuki_04
+      CASE 5 THEN
+        _CALL ev_d07r0401_juuki_05
+      ENDSWITCH
+
+    ENDIF
+
+  //クイズクリア後
+  ELSIF $WK_SCENE_D07R0401_QUIZ_01 == 6 THEN
+
+    //メダル未開放
+    IF FLAG_OFF( TMFLG_D07R0401_QUIZ_TRUE ) THEN   //【仮】フラグは仮のもの
+
+      //働くおじさん：じゅうきマニアとしての
+      _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_15, D07R0401_WORKMAN_02, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ELSE
+
+      //働くおじさん：しんじだいの　じゅうきマニア
+      _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_16, D07R0401_WORKMAN_02, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+
+//重機クイズ１問目
+ev_d07r0401_juuki_01:
+
+  //働くおじさん：さびた　クレーンしゃが▽
+  _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_05, D07R0401_WORKMAN_02, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+
+  //さびたクレーン車が名物なのはどこ？
+  _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select1_01, 0 ) //タチワキシティ
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select1_02, 1 ) //ホドモエシティ
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select1_03, 2 ) //サザナミタウン
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select1_04, 3 ) //セイガイハシティ
+
+  _BMPMENU_START()
+
+  //正解は「１：タチワキシティ」
+  IF $LWK_NUM_SELECT == 0 THEN
+
+    //働くおじさん：おみごと！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_10, D07R0401_WORKMAN_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //今日のクイズ正解フラグON
+    _FLAG_SET( TMFLG_D07R0401_QUIZ_TRUE )
+    //イベント進行
+    $WK_SCENE_D07R0401_QUIZ_01 = 2
+    //========================================//
+
+  //不正解／キャンセルした
+  ELSE
+
+    //働くおじさん：ンー　おしい！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_11, D07R0401_WORKMAN_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //今日のクイズ不正解フラグON
+    _FLAG_SET( TMFLG_D07R0401_QUIZ_FALSE )
+    //========================================//
+
+  ENDIF
+
+_RET
+
+
+//重機クイズ２問目
+ev_d07r0401_juuki_02:
+
+  //働くおじさん：トレーラーは　ぜんぶで▽
+  _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_06, D07R0401_WORKMAN_02, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+
+  //トレーラーのボディーカラーは赤と青と何色？
+  _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select2_01, 0 ) //みどり
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select2_02, 1 ) //きいろ
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select2_03, 2 ) //しろ
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select2_04, 3 ) //くろ
+
+  _BMPMENU_START()
+
+  //正解は「２：きいろ」
+  IF $LWK_NUM_SELECT == 1 THEN
+
+    //働くおじさん：おみごと！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_10, D07R0401_WORKMAN_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //今日のクイズ正解フラグON
+    _FLAG_SET( TMFLG_D07R0401_QUIZ_TRUE )
+    //イベント進行
+    $WK_SCENE_D07R0401_QUIZ_01 = 3
+    //========================================//
+
+  //不正解／キャンセルした
+  ELSE
+
+    //働くおじさん：ンー　おしい！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_11, D07R0401_WORKMAN_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //今日のクイズ不正解フラグON
+    _FLAG_SET( TMFLG_D07R0401_QUIZ_FALSE )
+    //========================================//
+
+  ENDIF
+
+_RET
+
+
+//重機クイズ３問目
+ev_d07r0401_juuki_03:
+
+  //働くおじさん：いま　なんもんめ？
+  _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_07, D07R0401_WORKMAN_02, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+
+  //今の問題は何問目？
+  _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select3_01, 0 ) //１もんめ
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select3_02, 1 ) //２もんめ
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select3_03, 2 ) //３もんめ
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select3_04, 3 ) //４もんめ
+
+  _BMPMENU_START()
+
+  //正解は「３：３もんめ」
+  IF $LWK_NUM_SELECT == 2 THEN
+
+    //働くおじさん：おみごと！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_10, D07R0401_WORKMAN_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //今日のクイズ正解フラグON
+    _FLAG_SET( TMFLG_D07R0401_QUIZ_TRUE )
+    //イベント進行
+    $WK_SCENE_D07R0401_QUIZ_01 = 4
+    //========================================//
+
+  //不正解／キャンセルした
+  ELSE
+
+    //働くおじさん：ンー　おしい！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_11, D07R0401_WORKMAN_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //今日のクイズ不正解フラグON
+    _FLAG_SET( TMFLG_D07R0401_QUIZ_FALSE )
+    //========================================//
+
+  ENDIF
+
+_RET
+
+
+//重機クイズ４問目
+ev_d07r0401_juuki_04:
+
+  //働くおじさん：きいろい　ドリルカーが　あるのは
+  _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_08, D07R0401_WORKMAN_02, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+
+  //黄色いドリルーカーがあるのはどこのジム？
+  _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select4_01, 0 ) //セイガイハシティジム
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select4_02, 1 ) //ソウリュウシティジム
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select4_03, 2 ) //フキヨセシティジム
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select4_04, 3 ) //ホドモエシティジム
+
+  _BMPMENU_START()
+
+  //正解は「３：ホドモエシティジム」
+  IF $LWK_NUM_SELECT == 3 THEN
+
+    //働くおじさん：おみごと！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_10, D07R0401_WORKMAN_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //今日のクイズ正解フラグON
+    _FLAG_SET( TMFLG_D07R0401_QUIZ_TRUE )
+    //イベント進行
+    $WK_SCENE_D07R0401_QUIZ_01 = 5
+    //========================================//
+
+  //不正解／キャンセルした
+  ELSE
+
+    //働くおじさん：ンー　おしい！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_11, D07R0401_WORKMAN_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //今日のクイズ不正解フラグON
+    _FLAG_SET( TMFLG_D07R0401_QUIZ_FALSE )
+    //========================================//
+
+  ENDIF
+
+_RET
+
+
+//重機クイズ５問目
+ev_d07r0401_juuki_05:
+
+  //働くおじさん：ブルドーザーは▽
+  _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_09, D07R0401_WORKMAN_02, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+
+  //ネジ山にブルドーザーは何台ある？
+  _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select5_01, 0 ) //１だい
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select5_02, 1 ) //２だい
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select5_03, 2 ) //３だい
+  _BMPMENU_MAKE_LIST( msg_d07r0401_select5_04, 3 ) //４だい
+
+  _BMPMENU_START()
+
+  //正解は「２：２だい」
+  IF $LWK_NUM_SELECT == 1 THEN
+
+    //働くおじさん：おみごと！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_10, D07R0401_WORKMAN_02, POS_DOWN )
+    _AB_KEYWAIT_MARK()
+
+    //働くおじさん：おおっ！　キミ　すごいよ！▼
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_14, D07R0401_WORKMAN_02, POS_DOWN )
+    _AB_KEYWAIT_MARK()
+
+    //働くおじさん：じゅうきマニアとしての
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_15, D07R0401_WORKMAN_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //メダル条件達成
+    _SET_MEDAL_ACHIVE( MDLID_JUUKIMANIA )
+    //今日のクイズ正解フラグON
+    _FLAG_SET( TMFLG_D07R0401_QUIZ_TRUE )
+    //イベント進行
+    $WK_SCENE_D07R0401_QUIZ_01 = 6
+    //========================================//
+
+  //不正解／キャンセルした
+  ELSE
+
+    //働くおじさん：ンー　おしい！
+    _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_11, D07R0401_WORKMAN_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //今日のクイズ不正解フラグON
+    _FLAG_SET( TMFLG_D07R0401_QUIZ_FALSE )
+    //========================================//
+
+  ENDIF
+
+_RET
+
+
+
+

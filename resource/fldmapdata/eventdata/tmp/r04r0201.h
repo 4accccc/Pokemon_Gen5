@@ -9,6 +9,8 @@
 #ifndef ZONE_R04R0201_EVC_H
 #define ZONE_R04R0201_EVC_H
 
+#define R04R0201_POKE20_01                 0
+#define R04R0201_MIDDLEWOMAN2_01           1
 
 #endif //ZONE_R04R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r04r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

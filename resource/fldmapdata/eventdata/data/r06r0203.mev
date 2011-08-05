@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/10 18:02:35
+#save date:2011/08/04 11:52:47
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r06r0203.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r06r0203.wms
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #type
 1
@@ -72,6 +72,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -8 -16 8
+#event number: 2
+#type
+1
+#ID name
+R06R0203_OLDMAN_01
+#OBJ CODE Number
+OLDMAN1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R06R0203_OLDMAN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 -40
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

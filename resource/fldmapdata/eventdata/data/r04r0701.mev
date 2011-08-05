@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/21 18:37:16
+#save date:2011/08/04 17:30:33
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r04r0701.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,69 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r04r0701.wms
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#type
+1
+#ID name
+R04R0701_VETERANW_01
+#OBJ CODE Number
+VETERANW
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_R04R0701_VETERANW_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 184
+#event number: 1
+#type
+1
+#ID name
+R04R0701_POKE49_01
+#OBJ CODE Number
+POKE49
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R04R0701_POKE49_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
