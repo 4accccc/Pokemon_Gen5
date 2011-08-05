@@ -75,6 +75,23 @@ extern BOOL BATTLE_PARAM_CheckBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_
  */
 extern void BATTLE_PARAM_SetRegulation( BATTLE_SETUP_PARAM* bp, const REGULATION *reg, HEAPID heapID );
 
+/**
+ *  @brief  トレーナー肩書の文字列をBATTLE_PARAMにセットする
+ *  @param  bp        確保済みのBATTLE_SETUP_PARAM構造体型ワークへのポインタ
+ *  @param  clientID  セット位置のバトルクライアントID
+ *  @param  strbuf    セットする文字列
+ *
+ *  セットする文字列はBATTLE_SETUP_PARAMの外で確保・開放すること。
+ *  内部ではポインタとして参照するが、一切操作はしない。
+ */
+static inline void BATTLE_PARAM_SetTrainerTypeName(
+    BATTLE_SETUP_PARAM* bp, u8 clientID, const STRBUF * strbuf )
+{
+  GF_ASSERT( clientID < BTL_CLIENT_NUM );
+  GF_ASSERT( bp->tr_type_name[ clientID ] == NULL );
+  bp->tr_type_name[ clientID ] = strbuf;
+}
+
 ////////////////////////////////////////////////////////////////////////
 //
 /*

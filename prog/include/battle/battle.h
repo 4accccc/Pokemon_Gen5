@@ -306,6 +306,7 @@ typedef struct {
 
   // トレーナーデータ
   BSP_TRAINER_DATA*  tr_data[BTL_CLIENT_NUM];
+  const STRBUF * tr_type_name[BTL_CLIENT_NUM];  ///<swan追加：トレーナー肩書
 
   // セーブデータ系
   GAMEDATA*         gameData;     ///< GameData

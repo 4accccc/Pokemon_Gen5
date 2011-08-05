@@ -128,7 +128,7 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_l
         ETC_SAVE_WORK * etcsave = SaveData_GetEtc( sv_ctrl_work );
         GFL_STR_SetStringCode( wbt_tr->name, EtcSave_GetRivalName( etcsave ) );
       }
-      WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->btl_tr_type, wbt_tr->title );
+      WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->tr_id, wbt_tr->title );
       break;
     }
   }
@@ -563,7 +563,6 @@ u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys )
 //------------------------------------------------------------------
 /**
  * @brief 対戦相手の名前を取得する
- * @todo  ダウンロードデータへの対応
  */
 //------------------------------------------------------------------
 void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf )
@@ -623,7 +622,6 @@ void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
 //------------------------------------------------------------------
 /**
  * @brief
- * @todo
  */
 //------------------------------------------------------------------
 static BOOL checkWBTDownLoad( GAMEDATA * gamedata, u32 dl_id )
@@ -984,6 +982,7 @@ POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 #endif
     PokeParty_Add( entry_party, entry_pp );
   }
+  PokeRegulation_ModifyLevelPokeParty( WBTSYS_GetRegulation(wbtsys), entry_party );
   GFL_HEAP_FreeMemory( entry_pp );
 
   return entry_party;
@@ -1308,15 +1307,13 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
   makeRomTrainerData( bt_trd, btpwd, WBTSYS_GetWBTCup( wbtsys ), wbt_tr, num, HEAPID_PROC );
   bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode );
   FBI_TOOL_WBT_SetEnemyData( bp, bt_trd, btpwd, num, 50, HEAPID_PROC );
+  PokeRegulation_ModifyLevelPokeParty( WBTSYS_GetRegulation(wbtsys), bp->party[BTL_CLIENT_ENEMY1] );
   //名前を書き換える
   WBTTRAINER_CopyName( wbt_tr, bp->tr_data[BTL_CLIENT_ENEMY1]->name );
+  //肩書STRBUFにポインタをつなぐ
+  BATTLE_PARAM_SetTrainerTypeName( bp, BTL_CLIENT_ENEMY1, wbt_tr->title );
 
   WBTSYS_GetOpponentBGM( wbtsys, &bp->musicDefault, &bp->musicWin );
-#ifdef PM_DEBUG
-  //おかしいBGMよけ2011.07.29
-  bp->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
-  bp->musicWin = SEQ_BGM_WIN2;
-#endif
 
   GFL_HEAP_FreeMemory( party );
   GFL_HEAP_FreeMemory( btpwd );

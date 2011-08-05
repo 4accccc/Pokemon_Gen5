@@ -265,7 +265,18 @@ static void register_PokeName( u8 pokeID, u8 bufID )
 static void register_TrainerType( WORDSET* wset, u8 bufIdx, u8 clientID )
 {
   u32 trType = BTL_MAIN_GetClientTrainerType( SysWork.mainModule, clientID );
-  WORDSET_RegisterTrTypeName( wset, bufIdx, trType );
+  const BATTLE_SETUP_PARAM * bsp = BTL_MAIN_GetBSPConst( SysWork.mainModule );
+  const STRBUF * tr_type_name = bsp->tr_type_name[ clientID ];
+  GF_ASSERT( tr_type_name == NULL || GFL_STR_CheckBufferValid( tr_type_name ) == TRUE );
+
+  if( tr_type_name != NULL && GFL_STR_CheckBufferValid( tr_type_name ) )
+  {
+    //bsp->tr_type_nameがセットされている場合は、それをトレーナー肩書として使用する
+    WORDSET_RegisterWord( wset, bufIdx, tr_type_name, TT_TrainerTypeSexGet(trType), TRUE, PM_LANG );
+  }
+  else {
+    WORDSET_RegisterTrTypeName( wset, bufIdx, trType );
+  }
 }
 static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID )
 {

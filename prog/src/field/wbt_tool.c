@@ -243,10 +243,10 @@ void WBTTOOL_GetTournamentName( WBTCUP wbtcup, STRBUF * strbuf )
  * @brief WBTロムトレーナー名を取得
  */
 //------------------------------------------------------------------
-void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf )
+void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf )
 {
   GFL_MSGDATA     *man;
-  u16 msg_id = tr_id;
+  u16 msg_id = wbt_tr_id;
   man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_trname_dat, heapID );
   if( man )
   {
@@ -257,14 +257,16 @@ void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf )
 //------------------------------------------------------------------
 /**
  * @brief WBTロムトレーナータイプ名を取得
- * @todo  「ポケモントレーナー」ばっかりのWBTでの肩書アーカイブからに置き換える
+ * @param[in]  heapID
+ * @param[in]  wbt_tr_id
+ * @param[out] strbuf
  */
 //------------------------------------------------------------------
-void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, u8 tr_id, STRBUF * strbuf )
+void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf )
 {
   GFL_MSGDATA     *man;
-  u16 msg_id = tr_id;
-  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trtype_dat, heapID );
+  u16 msg_id = wbt_tr_id;
+  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_trtitle_dat, heapID );
   if( man )
   {
     GFL_MSG_GetString( man, msg_id, strbuf );
