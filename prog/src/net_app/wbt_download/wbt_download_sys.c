@@ -765,7 +765,7 @@ static void Debug_CreateWbtDlData( WBTDL_TOTAL_DATA *p_total_data )
 
       for( j = 0; j < WBTDL_CHAR_MAX; j++ )
       {
-        WBTDL_CHARACTER *p_chara = &p_data->character[i];
+        WBTDL_CHARACTER *p_chara = &p_data->character[j];
         for( k = 0; k < TEMOTI_POKEMAX; k++ )
         {
           WBTDL_POKEMON *p_poke = &p_chara->pokemon[k];
@@ -840,7 +840,7 @@ static void Debug_CreateWbtDlData( WBTDL_TOTAL_DATA *p_total_data )
 
       for( j = 0; j < WBT_TRAINER_NUM - 1; j++ )
       {
-        WBTDL_MATCH *p_match = &p_data->match[i];
+        WBTDL_MATCH *p_match = &p_data->match[j];
         p_match->type = WBTDL_MATCH_TRAINER_DATA;
         p_match->pri = j;
         p_match->id   = j;
