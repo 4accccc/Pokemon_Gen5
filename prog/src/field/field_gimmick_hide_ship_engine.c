@@ -6,6 +6,7 @@
  *	@author	Katsuhiko=Ichiraku
  *	@date		2011.07.08
  *
+ *  後から固定パイプとか足したのですごい複雑になってしまいました。
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
@@ -88,12 +89,63 @@
 
 // 接続が動作するパイプのID
 // (エフェクトの有無をチェックするため)
-#define PIPE_CONNECT_NUM    (2)     // パイプ同士の接続がある総数
+enum{
+  COMP_PIPE_CONNECT_NUM = 2,  // パイプ同士
+  FIX_PIPE_CONNECT_NUM = 12,  // 片方固定パイプ
+  PIPE_CONNECT_NUM = COMP_PIPE_CONNECT_NUM + FIX_PIPE_CONNECT_NUM , // = 14
+};
+#define FIX_PIPE_ID         (0xff)   // 固定パイプを指すID
 static const int pipe_connect_tbl[ PIPE_CONNECT_NUM ][2] = {
+  // パイプ同士
   { 3, 4 },
   { 11, 12 },
+
+  // 片方が固定パイプ
+  { 0, FIX_PIPE_ID },
+  { 1, FIX_PIPE_ID },
+  { 2, FIX_PIPE_ID },
+  { 5, FIX_PIPE_ID },
+  { 6, FIX_PIPE_ID },
+  { 7, FIX_PIPE_ID },
+  { 8, FIX_PIPE_ID },
+  { 9, FIX_PIPE_ID },
+  { 10, FIX_PIPE_ID },
+  { 13, FIX_PIPE_ID },
+  { 14, FIX_PIPE_ID },
+  { 15, FIX_PIPE_ID },
 };
 
+// パイプIDからそれに接続する固定パイプIDのテーブル
+static int pipe_2_fixpipe[ FIX_PIPE_CONNECT_NUM ] = {
+  0,  // 0
+  1,  // 1
+  6,  // 2
+  2,  // 5
+  10, // 6
+  3,  // 7
+  14, // 8
+  7,  // 9
+  15, // 10
+  11, // 13
+  16, // 14
+  17, // 15
+};
+
+
+// 出し入れがあるパイプ
+// プログラムでの定義順
+//
+//   　　■　　■　　■
+//   　　｜　　｜　　｜
+//   　　①　　｜　　⑨
+// ■―②■③―■―⑩■⑪―■
+//　 　　④　　｜　　⑫
+//　 　　⑤　　｜　　⑬
+// ■―⑥■⑦―■―⑭■⑮―■
+//　 　　⑧　　｜　　⑯
+//　 　　｜　　｜　　｜
+//   　　■　　■　　■
+//
 //-------------------------------------
 ///	パイプ初期設定データ
 //=====================================
@@ -122,6 +174,44 @@ static const PIPE_INIT_PARAM pipe_init_tbl[ PIPE_NUM ] = {
   { { BUTTON_4_X, PIPE_Y, BUTTON_4_Z }, DIR_DOWN },    // パイプ16
 };
 
+// 固定パイプ
+// プログラムでの定義順
+//
+//   　　■　　■　　■
+//   　　①　　⑤　　⑮
+//   　　｜　　⑥　　｜
+// ■②―■―⑦■⑧―■―⑯■
+//　 　　｜　　⑨　　｜
+//　 　　｜　　⑩　　｜
+// ■③―■―⑪■⑫―■―⑰■
+//　 　　｜　　⑬　　｜
+//　 　　④　　⑭　　⑱
+//   　　■　　■　　■
+//
+#define FIX_PIPE_NUM    (18)
+#define FIX_PIPE_POS(x) ( x * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE )
+static const PIPE_INIT_PARAM fix_pipe_init_tbl[ FIX_PIPE_NUM ] = {
+  { { FIX_PIPE_POS(8), PIPE_Y, FIX_PIPE_POS(37) }, DIR_DOWN },      // 固定パイプ1
+  { { FIX_PIPE_POS(1), PIPE_Y, FIX_PIPE_POS(44) }, DIR_RIGHT },     // 固定パイプ2
+  { { FIX_PIPE_POS(1), PIPE_Y, FIX_PIPE_POS(51) }, DIR_RIGHT },     // 固定パイプ3
+  { { FIX_PIPE_POS(8), PIPE_Y, FIX_PIPE_POS(58) }, DIR_UP },        // 固定パイプ4
+  { { FIX_PIPE_POS(15), PIPE_Y, FIX_PIPE_POS(37) }, DIR_DOWN },      // 固定パイプ5
+  { { FIX_PIPE_POS(15), PIPE_Y, FIX_PIPE_POS(44) }, DIR_UP },        // 固定パイプ6
+  { { FIX_PIPE_POS(15), PIPE_Y, FIX_PIPE_POS(44) }, DIR_LEFT },      // 固定パイプ7
+  { { FIX_PIPE_POS(15), PIPE_Y, FIX_PIPE_POS(44) }, DIR_RIGHT },     // 固定パイプ8
+  { { FIX_PIPE_POS(15), PIPE_Y, FIX_PIPE_POS(44) }, DIR_DOWN },      // 固定パイプ9
+  { { FIX_PIPE_POS(15), PIPE_Y, FIX_PIPE_POS(51) }, DIR_UP },        // 固定パイプ10
+  { { FIX_PIPE_POS(15), PIPE_Y, FIX_PIPE_POS(51) }, DIR_LEFT },      // 固定パイプ11
+  { { FIX_PIPE_POS(15), PIPE_Y, FIX_PIPE_POS(51) }, DIR_RIGHT },     // 固定パイプ12
+  { { FIX_PIPE_POS(15), PIPE_Y, FIX_PIPE_POS(51) }, DIR_DOWN },      // 固定パイプ13
+  { { FIX_PIPE_POS(15), PIPE_Y, FIX_PIPE_POS(58) }, DIR_UP },        // 固定パイプ14
+  { { FIX_PIPE_POS(22), PIPE_Y, FIX_PIPE_POS(37) }, DIR_DOWN },      // 固定パイプ15
+  { { FIX_PIPE_POS(29), PIPE_Y, FIX_PIPE_POS(44) }, DIR_LEFT },      // 固定パイプ16
+  { { FIX_PIPE_POS(29), PIPE_Y, FIX_PIPE_POS(51) }, DIR_LEFT },      // 固定パイプ17
+  { { FIX_PIPE_POS(22), PIPE_Y, FIX_PIPE_POS(58) }, DIR_UP },        // 固定パイプ18
+};
+
+
 
 // 拡張高さ
 #define EX_HEIGHT_NUM             (16)    // 総数
@@ -137,6 +227,7 @@ typedef struct {
 } EX_HEIGHT_DATA;
 
 // 拡張高さのデータは上からの連番です。
+// 　出し入れパイプと同じ
 //
 //   ①　｜　⑨
 // ②■③■⑩■⑪
@@ -285,6 +376,25 @@ enum{
   OBJ_PIPE_14,                  // パイプ
   OBJ_PIPE_15,                  // パイプ
   OBJ_PIPE_16,                  // パイプ
+
+  OBJ_FIX_PIPE_1,               // 固定パイプ
+  OBJ_FIX_PIPE_2,               // 固定パイプ
+  OBJ_FIX_PIPE_3,               // 固定パイプ
+  OBJ_FIX_PIPE_4,               // 固定パイプ
+  OBJ_FIX_PIPE_5,               // 固定パイプ
+  OBJ_FIX_PIPE_6,               // 固定パイプ
+  OBJ_FIX_PIPE_7,               // 固定パイプ
+  OBJ_FIX_PIPE_8,               // 固定パイプ
+  OBJ_FIX_PIPE_9,               // 固定パイプ
+  OBJ_FIX_PIPE_10,              // 固定パイプ
+  OBJ_FIX_PIPE_11,              // 固定パイプ
+  OBJ_FIX_PIPE_12,              // 固定パイプ
+  OBJ_FIX_PIPE_13,              // 固定パイプ
+  OBJ_FIX_PIPE_14,              // 固定パイプ
+  OBJ_FIX_PIPE_15,              // 固定パイプ
+  OBJ_FIX_PIPE_16,              // 固定パイプ
+  OBJ_FIX_PIPE_17,              // 固定パイプ
+  OBJ_FIX_PIPE_18,              // 固定パイプ
 
   OBJ_EFFECT_01_1,              // エフェクト
   OBJ_EFFECT_01_2,              // エフェクト
@@ -582,6 +692,150 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     ANM_PIPE_NUM,           // アニメリソース数
   },
   // OBJ_PIPE_16
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_1
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_2
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_3
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_4
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_5
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_6
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_7
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_8
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_9
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_10
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_11
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_12
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_13
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_14
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_15
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_16
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_17
+  {
+    RESID_PIPE_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_PIPE_MDL,         // テクスチャリソースID
+    anm_pipe,               // アニメテーブル(複数指定のため)
+    ANM_PIPE_NUM,           // アニメリソース数
+  },
+  // OBJ_FIX_PIPE_18
   {
     RESID_PIPE_MDL,         // モデルリソースID
     0,                      // モデルデータID(リソース内部INDEX)
@@ -1030,6 +1284,31 @@ static void HIDE_SHIP_Init( HIDE_SHIP_TMP *p_wk )
     }
   }
 
+  // 全固定パイプモデルの設定
+  for( i=0; i<FIX_PIPE_NUM; i++ )
+  {
+    u16 obj_idx = OBJ_FIX_PIPE_1 + i;
+    int j;
+    
+    // 接続されているパイプかチェック
+    for( j=0; j<FIX_PIPE_CONNECT_NUM; j++ )
+    {
+      if( i == pipe_2_fixpipe[ j ] )
+      {
+        int pipe_id = pipe_connect_tbl[ (j+COMP_PIPE_CONNECT_NUM) ][0];
+        ICHI_Printf(" fixpipe %d pipe %d ", i, pipe_id);
+        // 接続されているパイプが引っ込んでるか？
+        if( p_wk->pipe_flag[ pipe_id ] == FALSE )
+        {
+          ICHI_Printf("OFFにした");
+          ANM_PIPE_OFF_Play( p_wk, obj_idx );
+        }
+        ICHI_Printf("\n");
+        break;
+      }
+    }
+  }
+
   //=====================================
   // ボタンの設定
   //
@@ -1279,6 +1558,35 @@ static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk )
 
     }
   }
+
+  //=====================================
+  // 固定パイプ
+  {
+    int i;
+
+    for( i=0; i<FIX_PIPE_NUM; i++ )
+    {
+      int obj_idx = OBJ_FIX_PIPE_1 + i;
+      
+      // 汎用設定
+      EXPOBJ_ObjSetOne( p_wk->exp_obj, obj_idx, ANM_PIPE_NUM, fix_pipe_init_tbl[i].pos );
+
+      // 回転
+      {
+        u16 rtbl[DIR_MAX4][3] = {{0,0x4000,0},{0,0xc000,0},{0,0x8000,0},{0,0,0}};
+        u16 *rot = rtbl[ fix_pipe_init_tbl[i].dir ];
+        GFL_G3D_OBJSTATUS *status;
+
+        status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx );
+        GFL_CALC3D_MTX_CreateRot( rot[0], rot[1], rot[2], &status->rotate );
+      }
+
+      // 光ONにする
+      ANM_PIPE_ON_Play( p_wk, obj_idx );
+    }
+  }
+
+
 
   //=====================================
   // エフェクト
@@ -2160,6 +2468,8 @@ static FIELD_TASK_RETVAL tcb_PipeInTask( void* wk )
         if( PIPE_CONNECT_GetFlag( p_wk->p_gmk_wk, p_wk->obj_idx, &connect_idx ) == TRUE )
         {
           GF_ASSERT( connect_idx );
+
+          // 光らせるのOFF
           ANM_PIPE_OFF_Play( p_wk->p_gmk_wk, connect_idx );
         }
       }
@@ -2253,6 +2563,7 @@ static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk )
         else
         {
           GF_ASSERT( connect_idx );
+
           // 反対側も光らせる
           ANM_PIPE_ON_Play( p_wk->p_gmk_wk, connect_idx );
         }
@@ -2342,7 +2653,19 @@ static BOOL PIPE_CONNECT_GetFlag( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx, u16 *p_
     if( pipe_idx == (pipe_obj_idx - OBJ_PIPE_1) )
     {
       pipe_idx = pipe_connect_tbl[i][1];    // 反対側
+
+      // 片方が固定パイプならば100%突き出している
+      if( pipe_idx == FIX_PIPE_ID )
+      {
+        int fix_pipe_id = pipe_2_fixpipe[ (i-COMP_PIPE_CONNECT_NUM) ];
+        ICHI_Printf("固定パイプに変換%d ⇒ %d \n", (i-COMP_PIPE_CONNECT_NUM), fix_pipe_id );
+        *p_connect_idx = (OBJ_FIX_PIPE_1 + fix_pipe_id );
+        return TRUE;
+      }
+
+      // 反対側のOBJIDを代入
       *p_connect_idx = (OBJ_PIPE_1 + pipe_idx);
+
       // 反対側のフラグを返す
       return p_wk->pipe_flag[ pipe_idx ];
     }
@@ -2353,7 +2676,9 @@ static BOOL PIPE_CONNECT_GetFlag( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx, u16 *p_
     if( pipe_idx == (pipe_obj_idx - OBJ_PIPE_1) )
     {
       pipe_idx = pipe_connect_tbl[i][0];    // 反対側
+      // 反対側のOBJIDを代入
       *p_connect_idx = (OBJ_PIPE_1 + pipe_idx);
+
       // 反対側のフラグを返す
       return p_wk->pipe_flag[ pipe_idx ];
     }
