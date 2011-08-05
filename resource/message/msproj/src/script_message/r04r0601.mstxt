@@ -64,10 +64,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぼくはね　ポケモンの
-ＨＰに　こだわってるね！</Text>
+こうげきに　こだわってるね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:55:24" />
+				Time="2011-08-05T03:50:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -76,10 +76,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぼくはね　ポケモンの
-ＨＰに　こだわってるね！</Text>
+攻撃に　こだわってるね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:55:24" />
+				Time="2011-08-05T03:51:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -127,11 +127,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そういうわけで　きみ！▼
-[Digit:3digits Idx="1" ]より　ＨＰがある
+[Digit:3digits Idx="1" ]より　攻撃がある
 ポケモンを　連れていないかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:55:24" />
+				Time="2011-08-05T03:51:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -172,11 +172,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きみの　[Name:PokemonName ]！
-ぼく　ごのみの　ＨＰだね！▼
+ぼく　ごのみの　こうげきだね！▼
 うれしくなったから　これを　あげよう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:55:24" />
+				Time="2011-08-05T03:50:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -185,11 +185,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>きみの　[Name:PokemonName ]！
-ぼく好みの　ＨＰだね！▼
+ぼく好みの　攻撃だね！▼
 うれしくなったから　これを　あげよう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:55:24" />
+				Time="2011-08-05T03:51:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -229,12 +229,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きみの　[Name:PokemonName ]！　まさに
-ぼく　ごのみの　ＨＰだね！▼
+ぼく　ごのみの　こうげきだね！▼
 すごく　うれしくなったよ！
 これを　たくさん　あげよう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:55:24" />
+				Time="2011-08-05T03:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -243,12 +243,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>きみの　[Name:PokemonName ]！　まさに
-ぼく好みの　ＨＰだね！▼
+ぼく好みの　攻撃だね！▼
 すごく　うれしくなったよ！
 これを　たくさん　あげよう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:55:24" />
+				Time="2011-08-05T03:51:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -288,13 +288,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さまざまな　ＨＰ♪
+			<Text>さまざまな　こうげき♪
 さまざまな　ポケモンたち♪▼
 なんだか　たのしいな！　きみ
 また　あしたも　あそびに　おいでよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:55:24" />
+				Time="2011-08-05T03:51:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -302,13 +302,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さまざまな　ＨＰ♪
+			<Text>さまざまな　攻撃♪
 さまざまな　ポケモンたち♪▼
 なんだか　楽しいな！　きみ
 また　明日も　遊びに　おいでよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:55:24" />
+				Time="2011-08-05T03:51:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -345,13 +345,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いいんだよ！　ポケモンの　よさは
-ＨＰ　だけじゃないからね▼
+こうげき　だけじゃないからね▼
 でも　きょうは　なんだか
-ＨＰが　[Digit:3digits Idx="1" ]より▽
+こうげきが　[Digit:3digits Idx="1" ]より▽
 たかい　ポケモンに　あいたいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:10:05" />
+				Time="2011-08-05T03:51:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -360,13 +360,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいんだよ！　ポケモンの　よさは
-ＨＰ　だけじゃないからね▼
-でも　今日は　なんだか　ＨＰが
-[Digit:3digits Idx="1" ]より▽
+攻撃　だけじゃないからね▼
+でも　今日は　なんだか
+攻撃が　[Digit:3digits Idx="1" ]より▽
 高い　ポケモンに　会いたいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:10:19" />
+				Time="2011-08-05T03:51:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -59,7 +59,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d10r0301_hakaim_01"
+		Label="msg_d10r0301_hakaim1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -94,10 +94,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>HAKAIM
-元プラズマ団♂</Text>
+元プラズマ団♂その１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T03:23:16" />
+				Time="2011-08-05T03:38:11" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -108,7 +108,91 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d10r0301_swplazmam_01"
+		Label="msg_d10r0301_hakaim2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・キュレムイベント前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKAIM
+元プラズマ団♂その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:40:40" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0301_hakaim3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・キュレムイベント前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKAIM
+元プラズマ団♂その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:40:40" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0301_swplazmam1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -143,10 +227,206 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-プラズマ団♂</Text>
+プラズマ団♂その１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T03:23:27" />
+				Time="2011-08-05T03:38:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0301_swplazmam2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・キュレムイベント前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:40:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0301_swplazmam3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・キュレムイベント前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:40:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0301_swplazmam4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・キュレムイベント前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:40:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0301_swplazmam5_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・キュレムイベント前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:39:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-05T03:40:42" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
