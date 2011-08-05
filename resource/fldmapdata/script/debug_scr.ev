@@ -21,6 +21,7 @@
   .include  "d06.h"
   .include  "d06r0101.h"
   .include  "d08r0901.h"
+  .include  "d01r0101.h"
   
 
   .include "c08r0401_def.h"
@@ -1023,6 +1024,7 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_6,   6 ) // わざおしえショップ
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_7,   7 ) // アジト船パスワード入力(ゾーン限定)
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_8,   8 ) // TV番組
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_9,   9 ) // ラティオス・ラティアスイベント用(ゾーン限定)
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1071,6 +1073,12 @@ EVENT_START   ev_debug_ichiraku
     _DEBUG_PRINT_WK( SCWK_ANSWER )
   CASE 8 THEN
     _GLOBAL_CALL  SCRID_TV
+  CASE 9 THEN
+		_FLAG_RESET( FV_D01R0101_RATI2_01 )
+    _OBJ_POS_CHANGE( D01R0101_RATI2_01, 19, 0, 26 , DIR_LEFT )
+    _OBJ_TRANS( D01R0101_RATI2_01, 12, 0, 26, 90 )
+    //_OBJ_POS_CHANGE( D01R0101_RATI2_01, 13, 5, 20 , DIR_RIGHT )
+    //_OBJ_TRANS( D01R0101_RATI2_01, 26, 5, 15, 80 )
     
   ENDSWITCH
 

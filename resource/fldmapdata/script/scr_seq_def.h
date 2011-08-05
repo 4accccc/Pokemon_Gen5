@@ -2012,6 +2012,31 @@
 .short  EV_SEQ_OBJ_TURN
 .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _OBJ_TRANS
+ * @brie  動作モデルが指定した位置まで動作フレーム数で移動する
+ * @param obj_id    対象のOBJID
+ * @param gx        指定位置のグリッドX座標 (マイナス座標不可)
+ * @param gy        指定位置のグリッドY座標 (マイナス座標不可)
+ * @param gz        指定位置のグリッドZ座標 (マイナス座標不可)
+ * @param frame     動作フレーム数
+ *
+ * @note  接地はしないので注意!
+ */
+//--------------------------------------------------------------
+#define _OBJ_TRANS( obj_id, gx, gy, gz, frame ) \
+  _ASM_OBJ_TRANS obj_id, gx, gy, gz, frame
+
+  .macro  _ASM_OBJ_TRANS obj_id, gx, gy, gz, frame
+  .short  EV_SEQ_OBJ_TRANS
+  .short  \obj_id 
+  .short  \gx
+  .short  \gy
+  .short  \gz
+  .short  \frame
+  .endm
+
 //======================================================================
 //  連れ歩き関連
 //======================================================================

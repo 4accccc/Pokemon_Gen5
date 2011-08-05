@@ -698,4 +698,6 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, TRUE, TRUE }, // _GYM_FLY_INIT (695)
   { TRUE, FALSE, FALSE }, // _TV_CM_CHECK (696)
   { TRUE, FALSE, FALSE }, // _TV_CM_GET_MSG (697)
+  { TRUE, FALSE, FALSE }, // _OBJ_TRANS (698)
+  { FALSE, FALSE, FALSE }, // NO_CMD (699)
 };

@@ -1072,6 +1072,10 @@
   // テレビ番組CMメッセージ抽選
   DEF_CMD( EvCmdTV_CM_GetMsg, EV_SEQ_TV_CM_GET_MSG )
 
+  //動作モデル　イベント関連
+  DEF_CMD( EvCmdObjTrans, EV_SEQ_OBJ_TRANS )
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

@@ -523,6 +523,106 @@ GMEVENT * EVENT_HighJump( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_sta
   return event;
 }
 
+//=============================================================================
+/**
+ *          汎用動作モデル移動
+ */
+//=============================================================================
+
+//-------------------------------------
+///	汎用動作モデル移動イベント用ワーク
+//=====================================
+typedef struct {
+  FIELDMAP_WORK* fieldmap;  // 動作対象フィールドマップ
+  int               frame;  // 現在のフレーム数
+  int            endFrame;  // 最終フレーム数
+  VecFx32        startPos;  // 移動開始位置
+  VecFx32          endPos;  // 最終位置
+  MMDL              *mmdl;  // 対象モデル
+} OBJ_TRANS_EVENT_WORK;
+
+// イベント関数
+static GMEVENT_RESULT EVENTFUNC_ObjTrans(GMEVENT * event, int *seq, void*work)
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  OBJ_TRANS_EVENT_WORK *p_wk = (OBJ_TRANS_EVENT_WORK*)work;
+
+  // 処理シーケンス
+  enum {
+    SEQ_START,
+    SEQ_MOVE,
+    SEQ_END,
+  };
+
+  switch( *seq ){
+  case SEQ_START:
+    ICHI_Printf("mmdl status bit %x \n", MMDL_GetStatusBit(p_wk->mmdl ));
+    ICHI_Printf("mmdl move bit %x \n", MMDL_GetMoveBit(p_wk->mmdl ));
+
+    // 動作ポーズを解除
+    MMDL_OffMoveBitMoveProcPause( p_wk->mmdl );
+
+    *seq = SEQ_MOVE;
+    break;
+  case SEQ_MOVE:
+    // 座標を更新
+    p_wk->frame++;
+
+    {
+      VecFx32 v0, v1, v2;
+      fx32 w1 = FX_F32_TO_FX32( (float)p_wk->frame / (float)p_wk->endFrame );
+      fx32 w0 = FX32_ONE - w1;
+      GFL_CALC3D_VEC_MulScalar( &p_wk->startPos, w0, &v0 );
+      GFL_CALC3D_VEC_MulScalar( &p_wk->endPos,   w1, &v1 );
+      VEC_Add( &v0, &v1, &v2 );
+      MMDL_SetVectorPos( p_wk->mmdl, &v2 ); // 移動
+    }
+
+    // 終了チェック
+    if( p_wk->endFrame <= p_wk->frame )
+    {
+      *seq = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  汎用動作モデル移動
+ *
+ *	@param	GAMESYS_WORK * gsys ゲームシステムポインタ
+ *	@param	MMDL *mmdl          動作モデル
+ *	@param	VecFx32* cp_start   開始座標
+ *	@param	VecFx32* cp_end     終了座標
+ *	@param	int c_frame         動作フレーム数
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * EVENT_ObjTrans( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_start, const VecFx32* cp_end, const int c_frame )
+{
+  GMEVENT * event;
+  OBJ_TRANS_EVENT_WORK*  work;
+
+  event = GMEVENT_Create( gsys, NULL, EVENTFUNC_ObjTrans, sizeof(OBJ_TRANS_EVENT_WORK) );
+
+  work = GMEVENT_GetEventWork( event );
+  work->fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
+  work->frame     = 0;
+  work->endFrame  = c_frame;
+  work->mmdl      = mmdl;
+
+  VEC_Set( &work->startPos, cp_start->x, cp_start->y, cp_start->z );
+  VEC_Set( &work->endPos, cp_end->x, cp_end->y, cp_end->z );
+
+  return event;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief 指定オブジェの一歩移動アニメを即開始する

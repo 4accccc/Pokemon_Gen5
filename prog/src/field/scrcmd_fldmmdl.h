@@ -55,6 +55,9 @@ extern VMCMD_RESULT EvCmdObjFallIn( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdCheckPlayerIllegalOBJCode( VMHANDLE *core, void *wk );
 
+// 汎用動作モデル移動コマンド
+extern VMCMD_RESULT EvCmdObjTrans( VMHANDLE *core, void *wk );
+
 //======================================================================
 //  railマップ専用
 //======================================================================

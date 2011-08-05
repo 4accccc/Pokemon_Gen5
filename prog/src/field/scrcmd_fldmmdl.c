@@ -795,11 +795,11 @@ VMCMD_RESULT EvCmdObjAnimeAuto( VMHANDLE *core, void *wk )
     // パラメータセット
     param.p_scwk  = work;
     param.p_fieldMap_wk = fparam->fieldMap;
-    param.target_x  = SCRCMD_GetVMWorkValue( core, work );;
-    param.target_z  = SCRCMD_GetVMWorkValue( core, work );;
+    param.target_x  = SCRCMD_GetVMWorkValue( core, work );
+    param.target_z  = SCRCMD_GetVMWorkValue( core, work );
     param.force_type= SCRCMD_GetVMWorkValue( core, work );
-    param.ac_frame  = SCRCMD_GetVMWorkValue( core, work );;
-    param.first_line= SCRCMD_GetVMWorkValue( core, work );;
+    param.ac_frame  = SCRCMD_GetVMWorkValue( core, work );
+    param.first_line= SCRCMD_GetVMWorkValue( core, work );
 
     // 経路算出
     EvRouteCalc( p_list, p_mmdl, &param );
@@ -1894,6 +1894,62 @@ VMCMD_RESULT EvCmdCheckPlayerIllegalOBJCode( VMHANDLE *core, void *wk )
 
   *ret_wk = FIELD_PLAYER_CheckIllegalOBJCode( fld_player );
   return VMCMD_RESULT_CONTINUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ * @brief  動作モデル　汎用移動
+ *
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdObjTrans( VMHANDLE *core, void *wk )
+{
+  GMEVENT *event;
+  MMDL    *p_mmdl;       // 対象のフィールドOBJのポインタ
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK   *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  VecFx32 start, end;
+
+  // 引数
+  u16 obj_id  = SCRCMD_GetVMWorkValue(core,work); //obj ID
+  u16 gx      = SCRCMD_GetVMWorkValue( core, work );
+  u16 gy      = SCRCMD_GetVMWorkValue( core, work );
+  u16 gz      = SCRCMD_GetVMWorkValue( core, work );
+  u16 frame   = SCRCMD_GetVMWorkValue( core, work );
+
+
+  // OBJIDからモデル取得
+  p_mmdl = FieldObjPtrGetByObjId( work, obj_id );
+
+  // エラーチェック
+  if( p_mmdl == NULL ){
+    OS_Printf( "obj_id = %d\n", obj_id );
+    GF_ASSERT( (0) && "対象のフィールドOBJのポインタ取得失敗！" );
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  // 今の座標と終了座標を求める
+  MMDL_GetVectorPos( p_mmdl, &start );
+  end.x = GRID_TO_FX32( gx ) + MMDL_VEC_X_GRID_OFFS_FX32;
+  end.y = GRID_TO_FX32( gy );
+  end.z = GRID_TO_FX32( gz ) + MMDL_VEC_Z_GRID_OFFS_FX32;
+
+  // 汎用移動イベント作成
+  event = EVENT_ObjTrans( gsys, p_mmdl, &start, &end, frame );
+
+  if( event == NULL )
+  {
+    GF_ASSERT(0);
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //======================================================================

@@ -16,6 +16,8 @@ extern GMEVENT * EVENT_PlayerOneStepAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 // ネジやまで使用　ハイジャンプ
 extern GMEVENT * EVENT_HighJump( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_start, const VecFx32* cp_end );
 
+// 汎用移動
+extern GMEVENT * EVENT_ObjTrans( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_start, const VecFx32* cp_end, const int c_frame );
 
 // 指定オブジェの一歩移動アニメを即開始する
 extern GFL_TCB* FldMMdlOneStepAnimeStart( MMDL* mmdl, u16 dir );
