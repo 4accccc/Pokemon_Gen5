@@ -58,7 +58,6 @@ struct _RESORT_MAPCREATE
 */
 //=============================================================================
 static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, FLD_G3D_MAP* g3Dmap, int build_count, int map_index, HEAPID heapID );
-static int Resort_Mapcreate_SetUpBlockRoom( RESORT_MAPCREATE *p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, FLD_G3D_MAP* g3Dmap, int build_count, int map_index, HEAPID heapID );
 
 
 //----------------------------------------------------------------------------
@@ -222,62 +221,3 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
 
   return build_count;
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  マップ設定ブロック配置　室内
- *
- *	@param	p_wk     ワーク
- *	@param  p_attr    アトリビュート
- *	@param	p_bm      buildmodel
- *	@param	g3Dmap    マップブロック管理
- *	@param  build_count 配置モデルカウント
- *	@param	map_index   マップインデックス
- *	@param	heapID    ヒープID 
- *
- *	@retval build_count 追加後
- */
-//-----------------------------------------------------------------------------
-static int Resort_Mapcreate_SetUpBlockRoom( RESORT_MAPCREATE *p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, FLD_G3D_MAP* g3Dmap, int build_count, int map_index, HEAPID heapID )
-{
-  int i;
-  const RESORT_RESIDENT_DATA *cp_resident = NULL;
-
-  //この室内に住んでいる住人を検索
-  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-  {
-    const RESORT_RESIDENT_DATA *cp_temp = RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk->cp_people_all, i);
-    if( !RESORT_RESIDENT_DATA_IsEmpty( cp_temp ) )
-    {
-      RESORT_PLACEID placeID = RESORT_RESIDENT_DATA_GetData( cp_temp, RESORT_DATA_PARAM_PLACE_ID, NULL );
-      //住人が二人施設にいないという前提
-      if( p_wk->zoneID == RESORT_MAP_PlaceIDToZoneID( placeID ) )
-      {
-        cp_resident = cp_temp;
-        break;
-      }
-    }
-  }
-
-  if( cp_resident )
-  {
-    //if( map_index == (grid_x / 32 + (grid_z / 32)*2 ) )
-    {
-      const RESORT_BINARY_SHOP_DATA *cp_binary_shop = RESORT_BINARY_SHOP_SearchDataByData( p_wk->p_shop_data, (RESORT_RESIDENT_DATA *)cp_resident );
-      u16 patch = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop, RESORT_BINARY_SHOP_PARAM_IN_3DMD );
-
-
-      FIELD_DATA_PATCH* p_patch = FIELD_DATA_PATCH_Create( patch, GFL_HEAP_LOWID(heapID) );
-
-      // アトリビュートのオーバーライト
-      FIELD_DATA_PATCH_OverWriteAttr( p_patch, p_attr, 0, 0 );
-
-      //3dmdを配置
-      build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, 0, 0 );
-
-
-      FIELD_DATA_PATCH_Delete( p_patch );
-    }
-  }
-  return build_count;
-}
-
