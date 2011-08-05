@@ -87,10 +87,11 @@
 			Language="JPN">
 			<Comment>♂
 ・プラズマフリゲートをみながら
-・続けてswleader8_01</Comment>
+・続けてswleader8_01
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T10:30:09" />
+				Time="2011-08-05T03:59:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -410,10 +411,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてswleader8_05</Comment>
+・続けてswleader8_05
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:43:08" />
+				Time="2011-08-05T03:59:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -631,10 +633,11 @@
 			Language="JPN">
 			<Comment>♂
 ・c14を向きながらメッセージ表示
-・続けてswrival_04</Comment>
+・続けてswrival_04
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:50:35" />
+				Time="2011-08-05T03:59:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -685,10 +688,11 @@
 			Language="JPN">
 			<Comment>♂
 ・表示後、ライバルがタラップを上がっていく
-・彼らが移動を終えると主人公操作可能に</Comment>
+・彼らが移動を終えると主人公操作可能に
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:08:07" />
+				Time="2011-08-05T03:59:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -911,10 +915,11 @@
 			<Comment>♂
 ・ｒ22方面を見てメッセージ表示
 ・表示後、r22方面へ移動
-・続けてswleader1_05</Comment>
+・続けてswleader1_05
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:50:43" />
+				Time="2011-08-05T03:59:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
