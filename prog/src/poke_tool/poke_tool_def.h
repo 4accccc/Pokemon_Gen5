@@ -195,8 +195,10 @@ struct pokemon_paso_param4
 
 	u8	get_level		:7;						//1dh	捕まえたレベル
 	u8	oyasex			:1;						//1dh	親の性別
-	u8	get_ground_id;							//1eh	捕まえた場所の地形アトリビュート（ミノッチ用）
-	u16	dummy_p4_1;								//20h	あまり
+	u8	get_ground_id;						//1eh	捕まえた場所の地形アトリビュート（ミノッチ用）
+	u8	dummy_p4_1;								//1fh	あまり(ただしHGSSで追加ボール情報が格納されていた場所なので
+	                              //    ポケシフターでアクセスしている。BWのPPとしては必ず0が入っている。)
+  u8  star_point;               //20h ポケウッドスターポイント
 };
 
 struct pokemon_para_data11

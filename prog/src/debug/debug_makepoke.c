@@ -915,6 +915,9 @@ static void update_dst( DMP_MAINWORK* wk )
   //Ｎポケフラグ
   PP_Put( wk->dst, ID_PARA_n_poke_flag, box_getvalue(wk,INPUTBOX_ID_NPOKE));
 
+  // スターポイント
+  PP_Put( wk->dst, ID_PARA_star_point, box_getvalue(wk,INPUTBOX_ID_STAR));
+
   {
     u32 i;
     for(i=0; i<PTL_WAZA_MAX; ++i)
@@ -1733,6 +1736,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
   case INPUTBOX_ID_BIRTH_YEAR:
   case INPUTBOX_ID_BIRTH_MONTH:
   case INPUTBOX_ID_BIRTH_DAY:
+  case INPUTBOX_ID_STAR:
     {
       const INPUT_BOX_PARAM* p = &InputBoxParams[ updateBoxID ];
       u32 value = box_getvalue( wk, updateBoxID );

@@ -50,7 +50,8 @@ void  PPCONV_ConvertPPPFromPokeShifter( POKEMON_PASO_PARAM* ppp )
 
   //シャチになって未使用となった領域を０クリア
   PPP_Put( ppp, ID_PARA_dummy_p2_3, 0 );  //プラチナ new_get_place new_birth_place
-  PPP_Put( ppp, ID_PARA_dummy_p4_1, 0 );  //HGSS get_ball humor
+  PPP_Put( ppp, ID_PARA_dummy_p4_1, 0 );  //HGSS get_ball
+  PPP_Put( ppp, ID_PARA_star_point, 0 );  //HGSS humor
   
   //名前変換
   {

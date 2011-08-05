@@ -237,6 +237,11 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
     LX_FORM_BOX,        LY_FORM_BOX, CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
     ID_PARA_form_no, PAGE_0, INPUTBOX_NUM_ARG_FORM, 0,
   },
+  // スター
+  { INPUTBOX_TYPE_NUM,  DMPSTR_STAR,  LX_STAR_CAP,  LY_STAR_CAP,
+    LX_STAR_BOX,        LY_STAR_BOX,  CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
+    ID_PARA_star_point, PAGE_0,       99,  0,
+  },
 
   //---------------------------------------------------
   // ２ページ目

@@ -410,10 +410,12 @@ enum{
   ID_PARA_birth_place,          //タマゴが孵化した・捕獲した場所
   ID_PARA_pokerus,              //ポケルス
   ID_PARA_get_ball,             //捕まえたボール
-  ID_PARA_get_level,              //捕まえたレベル
+  ID_PARA_get_level,            //捕まえたレベル
   ID_PARA_oyasex,               //親の性別
-  ID_PARA_get_ground_id,            //捕まえた場所の地形アトリビュート（ミノッチ用）
-  ID_PARA_dummy_p4_1,             //あまり
+  ID_PARA_get_ground_id,        //捕まえた場所の地形アトリビュート（ミノッチ用）
+  ID_PARA_dummy_p4_1,           //あまり (ただしHGSSで追加ボール情報が格納されていた場所なので
+                                //        ポケシフターでアクセスしている。BWのPPとしては必ず0が入っている。)
+
 
   ID_PARA_condition,              //コンディション
   ID_PARA_level,                //レベル
@@ -453,7 +455,8 @@ enum{
 #endif  //PM_DEBUG
 
   //以下スワンで追加
-  ID_PARA_n_poke_flag,         //特殊野性ポケモン(Nポケ,主ポケ)フラグ
+  ID_PARA_n_poke_flag,         // 特殊野性ポケモン(Nポケ,主ポケ)フラグ
+  ID_PARA_star_point,          // ポケウッドスターポイント
 
   ID_PARA_end                 //パラメータを追加するときは、ここから上に追加
 };
@@ -811,6 +814,9 @@ extern  PtlSeikakuChgValue  POKETOOL_GetSeikakuChangeValue( u8 chr, u8 cond );
 //デフォルト名に戻す(WiFi等の不正名前などで使用しています)
 extern void PP_SetDefaultNickName( POKEMON_PARAM* pp );
 extern void PPP_SetDefaultNickName( POKEMON_PASO_PARAM* ppp );
+
+// ポケウッドスターポイントをスターランクに変換する(PP_Get(ID_PARA_star_point,,)の値を入れる
+extern int POKETOOL_StarPoint2Rank( u8 star_point );
 
 #endif __ASM_NO_DEF_
 

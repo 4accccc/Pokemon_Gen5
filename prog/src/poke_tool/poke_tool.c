@@ -3165,6 +3165,9 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
         ret = POKETOOL_GetPersonalParam( ppp1->monsno, ppp2->form_no, POKEPER_ID_type1 + ( id - ID_PARA_type1 ) );
       }
       break;
+    case ID_PARA_star_point:
+      ret = ppp4->star_point;
+      break;
   }
   return  ret;
 }
@@ -3627,6 +3630,9 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
       break;
     case ID_PARA_dummy_p4_1:            //あまり
       ppp4->dummy_p4_1 = arg;
+      break;
+    case ID_PARA_star_point:
+      ppp4->star_point = arg;
       break;
 
     case ID_PARA_power_rnd:
@@ -4413,4 +4419,42 @@ u8 POKETOOL_CheckPokeFormNo_Field( u16 mons_no, u8 form_no )
     }
   }
   return form_no;
+}
+
+
+enum{
+  STAR_POINT_RANK1_MIN =   0,
+  STAR_POINT_RANK2_MIN =  20,
+  STAR_POINT_RANK3_MIN =  40,
+  STAR_POINT_RANK4_MIN =  70,
+  STAR_POINT_RANK5_MIN =  95,
+  STAR_POINT_RANK5_MAX =  99,
+};
+
+//=============================================================================================
+/**
+ * @brief	  ポケウッドスターポイントをスターランクに変換する
+ *
+ * @param   star_point	PP_Get(ID_PARA_star_point,,,)で取得した値
+ *
+ * @retval  int		0 - 4
+ */
+//=============================================================================================
+int POKETOOL_StarPoint2Rank( u8 star_point )
+{
+  int rank=0;
+
+  GF_ASSERT_MSG( star_point<STAR_POINT_RANK5_MAX, "スターポイントが99を超えています = %d\n", star_point );
+  if( star_point>=STAR_POINT_RANK1_MIN && star_point<STAR_POINT_RANK2_MIN ){
+    rank=0;
+  }else if( star_point>=STAR_POINT_RANK2_MIN && star_point<STAR_POINT_RANK3_MIN ){
+    rank=1;
+  }else if( star_point>=STAR_POINT_RANK3_MIN && star_point<STAR_POINT_RANK4_MIN ){
+    rank=2;
+  }else if( star_point>=STAR_POINT_RANK4_MIN && star_point<STAR_POINT_RANK5_MIN ){
+    rank=3;
+  }else if( star_point>=STAR_POINT_RANK5_MIN && star_point<=STAR_POINT_RANK5_MAX ){
+    rank=4;
+  }
+  return rank;
 }
