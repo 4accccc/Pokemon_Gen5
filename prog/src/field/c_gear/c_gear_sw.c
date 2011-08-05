@@ -183,18 +183,19 @@ enum{
 
 //リング色変え処理用
 #define RING_NUM                ( C_GEAR_RING_NUM )
-#define RING_COLOR_MAX          ( C_GEAR_RING_COLOR_MAX+1 )    //リングカラー数+Offカラー
+#define RING_COLOR_MAX          ( C_GEAR_RING_COLOR_MAX+1 )    //リングカラー数+BOOT時カラー
 
+#define RING_COLOR_SET_NUM   (3)
 enum{
-  RING_COLOR_SET_BG,    //BG用
-  RING_COLOR_SET_OBJ,   //OBJ用のノーマル色
-  RING_COLOR_SET_OBJ_D, //OBJ用の暗色
-  RING_COLOR_SET_NUM,
+  RING_COLOR_SET_BG = 0,    //BG用
+  RING_COLOR_SET_OBJ = RING_COLOR_SET_NUM,   //OBJ用のノーマル色
+  RING_COLOR_SET_OBJ_D = RING_COLOR_SET_OBJ+RING_COLOR_SET_NUM, //OBJ用の暗色
 };
+
 #define RING_COLOR_SET_NUM_ALL  ( RING_COLOR_SET_NUM*3 ) //1セット3色
 #define RING_COLOR_DEF_NO 　    ( 0 )  //リングカラーのデフォルト
 #define RING_COLOR_BASE_NO      ( RING_COLOR_MAX-2 )  //リングの地味カラーNo
-#define RING_COLOR_OFF_NO       ( RING_COLOR_MAX-1 )  //リングのOffカラーNo
+#define RING_COLOR_BOOT_NO       ( RING_COLOR_MAX-1 ) //リングのBOOT時のカラーNo
 
 #define RING_COLOR_TRANS_POS_BG_PALNO  (1) //転送場所のパレットNo
 #define RING_COLOR_TRANS_POS_BG_START  ((RING_COLOR_TRANS_POS_BG_PALNO*16)+1) //転送場所のパレットNo
@@ -221,11 +222,13 @@ static const u32 sc_CROSS_COLOR_RES_IDX[CROSS_COLOR_MAX] = {
 //#define OAM_PFADE_NORMAL_MSK  ( (1<<0x1) | (1<<0x2) | (1<<0x3) | (1<<0x5) | (1<<0x6) | (1<<0x7) | (1<<0x8) | (1<<0x9) | (1<<0xB) | (1<<0xC) | (1<<0xD) | (1<<0xE) | (1<<0xF) )
 #define OAM_PFADE_NORMAL_MSK  ( 0xFF )
 #define OAM_PFADE_CROSS_MSK   ( 1<<CROSS_COLOR_TRANS_POS_PALNO )
+#define OAM_PFADE_MSK_ALL    (0x3FFF)
 
 //-------------------------------------
 ///	BGパレットフェード
 //=====================================
 #define BG_PFADE_NORMAL_MSK  ( (1<<0x1) | (1<<0x2) | (1<<0x3) | (1<<0x4) | (1<<0x5) )
+#define BG_PFADE_MSK_ALL    (0x3FFF)
 
 // パレット　通信受信アニメの数値
 #if 0
@@ -481,13 +484,14 @@ enum{
   ACT_BATTERY,
   ACT_LOGO,
   ACT_POWER,
-  //電源Off時は非表示
+  //↑電源Off時でも表示
   ACT_HELP,
   ACT_CUSTOM,
-  ACT_CROSS,
   ACT_S_RADAR,
+  //↑Ring4に属してる(ACT_LOGO以外)
+  ACT_CROSS,
   ACT_CONNECT,
-
+  //↑Ring1に属してる
   ACT_IR,
   ACT_IR_RING,
   ACT_IR_STR,
@@ -505,9 +509,11 @@ enum{
 };
 
 #define ACT_TIME_MAX    (ACT_T_MIN2-ACT_T_HOUR1+1)
-#define ACT_NORMAL_MAX  (ACT_MAX-ACT_AMPM_BASE)
-#define ACT_COMMON_MAX  ( ACT_POWER )
+#define ACT_NORMAL_MAX  (ACT_MAX-ACT_AMPM_BASE) //初期化時だけ使用してる
+#define ACT_COMMON_MAX  ( ACT_POWER ) //電源Offでも表示するOBJIDのmax
 #define ACT_PANEL_SET_NUM (3)
+#define ACT_R4_OBJ_START  (ACT_T_HOUR1) //Ring4に属してる
+#define ACT_R4_OBJ_END    (ACT_S_RADAR)
 
 enum{
  ACTANM_N10,
@@ -536,12 +542,6 @@ enum{
  ACTANM_S_IR,
  ACTANM_S_WIRELESS,
  ACTANM_S_WIFI,
-};
-
-enum{
- ACTANM_IR,
- ACTANM_WIRELESS,
- ACTANM_WIFI,
  ACTANM_RING_IR,
  ACTANM_RING_WIRELESS,
  ACTANM_RING_WIFI,
@@ -554,10 +554,16 @@ enum{
 };
 
 enum{
-  ANM_OFS_PANEL_NORMAL,
-  ANM_OFS_PANEL_RING = (ACT_PANEL_SET_NUM*1),
-  ANM_OFS_PANEL_LOOP = (ACT_PANEL_SET_NUM*2),
-  ANM_OFS_PANEL_EFF = (ACT_PANEL_SET_NUM*3),
+ ACTANM_IR,
+ ACTANM_WIRELESS,
+ ACTANM_WIFI,
+};
+
+enum{
+  ANM_OFS_PANEL_NORMAL = ACTANM_IR,
+  ANM_OFS_PANEL_RING = ACTANM_RING_IR,
+  ANM_OFS_PANEL_LOOP = ACTANM_LOOP_IR,
+  ANM_OFS_PANEL_EFF = ACTANM_E_IR,
 };
 
 #if 0
@@ -929,6 +935,7 @@ static const PANEL_POS_DATA DATA_PanelPosTbl[] = {
 //-------------------------------------
 ///	起動アニメーション
 //=====================================
+#if 0
 #define STARTUP_ANIME_OBJ_MAX ( 18 )      // 起動アニメーションに必要なオブジェ数
 #define STARTUP_ANIME_INDEX_START ( ACTANM_AMPM )  // 各オブジェに設定するアニメーション開始インデックス
 #define STARTUP_ANIME_POS_X (128)
@@ -936,17 +943,20 @@ static const PANEL_POS_DATA DATA_PanelPosTbl[] = {
 #define STARTUP_OAM_ALPHA_ANIME_FRAME_MAX ( 8 )
 #define STARTUP_TBL_ALPHA_TIME_WAIT ( 8 )
 #define STARTUP_END_TIME_WAIT ( 8 )
+#endif
+#define STARTUP_ANM_MODE_BOOT     (0) //初回起動
+#define STARTUP_ANM_MODE_WAKEUP   (1) //スリープ復帰
+#define STARTUP_ANM_RING_ANM_INTERVAL (5)
 enum
 {
-  STARTUP_SEQ_ANIME_START,
-  STARTUP_SEQ_WIPE_IN,
-  STARTUP_SEQ_ANIME_WAIT,
-  STARTUP_SEQ_OAM_ALPHA_WAIT,
-  STARTUP_SEQ_TBL_IN_WAIT,
-  STARTUP_SEQ_TBL_ALPHA_WAIT,
-  STARTUP_SEQ_END,
+  STARTUP_BOOT_SEQ_ANIME_START,
+  STARTUP_BOOT_SEQ_WIPE_IN,
+  STARTUP_BOOT_SEQ_ANIME_WAIT,
+  STARTUP_BOOT_SEQ_END,
+  STARTUP_BOOT_SEQ_SKIP,
 
-  STARTUP_SEQ_SKIP,
+  STARTUP_WAKEUP_SEQ_ANIME_START = 0,
+  STARTUP_WAKEUP_SEQ_ANIME_WAIT,
 };
 
 
@@ -1069,18 +1079,20 @@ struct _C_GEAR_WORK {
   GFL_CLWK  *cellCross;
   GFL_CLWK  *cellCrossBase;
   GFL_CLWK  *cellRadar;
-#endif
   GFL_CLWK  *cellStartUp[STARTUP_ANIME_OBJ_MAX];
+#endif
   u16 crossColor[CROSS_COLOR_MAX]; //すれ違いカラー
 
   STARTUP_ENDCALLBACK* pCall;
   void* pWork;
 
-  GFL_TCBSYS* pfade_tcbsys;
+  GFL_TCBLSYS* tcbsys;      //通常tcb動作用
+  GFL_TCBSYS* pfade_tcbsys; //PaletteFadeReq専用
   GFL_TCB*                    vblank_tcb;
   void* pfade_tcbsys_wk;
   PALETTE_FADE_PTR            pfade_ptr;
-  
+ 
+  int eff_task_ct;
   int createEvent;
   int doEvent;
 
@@ -1189,7 +1201,6 @@ static void _setUpSubAlpha( C_GEAR_WORK* pWork );
 // スクリーン操作
 //static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type);
 //static void _gearBootInitScreen(C_GEAR_WORK* pWork);
-static BOOL _gearBootMain(C_GEAR_WORK* pWork);
 //static BOOL _gearStartUpMain(C_GEAR_WORK* pWork);
 
 //static void _gearStartUpAllOff(C_GEAR_WORK* pWork);
@@ -1205,6 +1216,7 @@ static GFL_CLWK* _gearObjAdd(C_GEAR_WORK* pWork, s16 x, s16 y, u8 anm, u8 bg_pri
 static void _gearObjSetPanelView(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id,  PANEL_VIEW_MODE mode );
 static void _gearObjGetPanelPos( C_GEAR_WORK* pWork, CGEAR_PANEL_ID id, GFL_CLACTPOS* pos );
 static void _gearObjSetPanelPos(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id, s16 x, s16 y );
+static void _gearObjSetPanelVisible(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id, BOOL visible_f );
 static void _gearObjSetPos( GFL_CLWK* p_cell, s16 x, s16 y );
 static void _gearObjSetAnmSeq( GFL_CLWK* p_cell, int anm_id );
 static void _gearObjCreate(C_GEAR_WORK* pWork);
@@ -1215,14 +1227,20 @@ static void _gearObjCreate(C_GEAR_WORK* pWork);
 // OAM操作
 //static void _gearMarkObjDrawEnable(C_GEAR_WORK* pWork,BOOL bFlg);
 static void _gearAllObjDrawEnable(C_GEAR_WORK* pWork,BOOL bFlg);
-static void _gearStartUpObjDrawEnabel(C_GEAR_WORK* pWork,BOOL bFlg);
-static void _gearStartStartUpObjAnime(C_GEAR_WORK* pWork);
-static void _gearEndStartUpObjAnime(C_GEAR_WORK* pWork);
-static BOOL _gearIsEndStartUpObjAnime(const C_GEAR_WORK* cpWork);
+//static void _gearStartUpObjDrawEnabel(C_GEAR_WORK* pWork,BOOL bFlg);
+static void _gearStartUpAnimeStart(C_GEAR_WORK* pWork);
+static void _gearStartUpAnimeEnd(C_GEAR_WORK* pWork);
+static BOOL _gearStartUpMainBoot(C_GEAR_WORK* pWork);
+static BOOL _gearStartUpMainWakeUp(C_GEAR_WORK* pWork);
+static void _taskAdd_StartUpRingAnm( C_GEAR_WORK* pWork, u8 mode, u8 ring_id, u8 ring_col, u8 wait, int* task_ct );
+//static BOOL _gearIsEndStartUpObjAnime(const C_GEAR_WORK* cpWork);
 
 static void _gearRingColorChangeCore(C_GEAR_WORK* pWork, u8 ring_id, u8 col_no );
+static void _gearRingColorPalAnmCore(C_GEAR_WORK* pWork, u8 ring_id, u8 evy, u16 color  );
+static void _gearRingObjVisibleSet(C_GEAR_WORK* pWork, u8 ring_id, BOOL visible_f );
 static void _gearRingColorChangePanel(C_GEAR_WORK* pWork, CGEAR_PANEL_ID id, u8 col_no );
 static void _gearRingColorChangeInit(C_GEAR_WORK* pWork );
+static void _gearRingColorChangeBoot(C_GEAR_WORK* pWork );
 
 static u8 _gearPanelRingIDGet( C_GEAR_WORK* pWork, CGEAR_PANEL_ID id );
 static void _gearPanelPosSet( C_GEAR_WORK* pWork, CGEAR_PANEL_ID id, u8 pos );
@@ -1478,7 +1496,7 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
   
   // もしもうあるならアニメを再始動
   if( sel_select_wk->cellSelect ){
-    _gearObjSetAnmSeq( sel_select_wk->cellSelect, ACTANM_IR+pWork->select_panel );
+    _gearObjSetAnmSeq( sel_select_wk->cellSelect, ACTANM_E_IR+pWork->select_panel );
     _gearObjSetPos( sel_select_wk->cellSelect, x, y );
     return;
   }
@@ -2807,9 +2825,12 @@ static void _PFadeSetDefaultPal( C_GEAR_WORK* pWork, BOOL comm )
 static void _PFadeSetBlack( C_GEAR_WORK* pWork )
 {
   // 黒く
+/*
   PaletteFadeReq(
     pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, 16, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
+*/
+  ColorConceChangePfd( pWork->pfade_ptr, FADE_SUB_OBJ, OAM_PFADE_MSK_ALL, 16, _BLACK_COLOR[pWork->sex] );
 }
 
 //----------------------------------------------------------------------------
@@ -2840,15 +2861,17 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[anm_stop_tbl[i]], !on_flag );
   }
 
-  // 黒く
+  /*
   PaletteFadeReq(
     pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
 
-  // 黒く
   PaletteFadeReq(
     pWork->pfade_ptr, PF_BIT_SUB_BG, BG_PFADE_NORMAL_MSK,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
+  */
+  ColorConceChangePfd( pWork->pfade_ptr, FADE_SUB_OBJ, OAM_PFADE_MSK_ALL, evy, _BLACK_COLOR[pWork->sex] );
+  ColorConceChangePfd( pWork->pfade_ptr, FADE_SUB_BG, BG_PFADE_NORMAL_MSK, evy, _BLACK_COLOR[pWork->sex] );
 }
 
 //----------------------------------------------------------------------------
@@ -2881,9 +2904,12 @@ static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL off_flag )
   }
   
   // ビーコンアイコンをパレットフェードで黒く
+  /*
   PaletteFadeReq(
     pWork->pfade_ptr, PF_BIT_SUB_OBJ, OAM_PFADE_CROSS_MSK,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
+  */
+  ColorConceChangePfd( pWork->pfade_ptr, FADE_SUB_OBJ, OAM_PFADE_CROSS_MSK, evy, _BLACK_COLOR[pWork->sex] );
 }
 
 
@@ -2933,86 +2959,7 @@ static void _gearBootInitScreen(C_GEAR_WORK* pWork)
   }
   GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
 }
-#endif
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  スリープ復帰アニメ
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static BOOL _gearBootMain(C_GEAR_WORK* pWork)
-{
-  int i;
-  int x , y;
-//  int yloop[2] = {PANEL_HEIDHT1,PANEL_HEIGHT2};
-
-  switch( pWork->state_seq ){
-  case BOOT_ANIME_SEQ_ALL_ON:
-#if 0
-    // まず全体を点等
-    for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
-      for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
-        _PanelMarkAnimeStart( &pWork->panel_mark[ x ][ y ], pWork, PANEL_COLOR_TYPE_BASE, PANEL_ANIME_TYPE_ON, CGEAR_PANELTYPE_BASE, PANEL_ANIME_DEF_FRAME );
-      }
-    }
-#endif
-    pWork->state_seq ++;
-    break;
-
-  case BOOT_ANIME_SEQ_ALL_WAIT:
-//    if( _PanelMarkAnimeSysIsAnime( pWork ) == FALSE ){
-
-      pWork->state_seq ++;
-//    }
-    break;
-
-  case BOOT_ANIME_SEQ_SMOOTHIN_MAIN:
-#if 0
-    {
-      u32 panel_type;
-      for(i=0;i < elementof(screenTable);i++){
-        if(screenTable[i].time == pWork->startCounter){
-          panel_type = _cgearSave_GetPanelType( pWork, screenTable[i].x, screenTable[i].y );
-          _PanelMarkAnimeStart( &pWork->panel_mark[ screenTable[i].x ][ screenTable[i].y ], 
-              pWork, sc_PANEL_TYPE_TO_COLOR[ panel_type ], PANEL_ANIME_TYPE_OFF, panel_type, screenTable[i].frame );
-        }
-      }
-
-      if( pWork->startCounter >= screenTable[ NELEMS(screenTable)-1 ].time ){
-        _PFadeFromBlack(pWork);
-        _gearMarkObjDrawEnable(pWork,TRUE);
-        pWork->state_seq ++;
-      }
-
-      // ずっとカウントアップ
-      pWork->startCounter++;
-    }
-#else
-    pWork->state_seq ++;
-#endif
-    break;
-    
-  case BOOT_ANIME_SEQ_END:
-//    if( (_PanelMarkAnimeSysIsAnime( pWork ) == FALSE) && (_PFadeIsFade( pWork ) == FALSE) ){
-      return TRUE;
-//    }
-    break;
-
-  default:
-    break;
-  }
-
-
-  // パネルアニメのシステムメイン
-//  _PanelMarkAnimeSysMain( pWork );
-
-  return FALSE;
-}
-
-#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  スタートアップ　スクリーンアニメ　メイン
@@ -3902,6 +3849,21 @@ static void _gearObjSetPanelPos(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id, s16 x, 
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   パネルのVisibleセット
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _gearObjSetPanelVisible(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id, BOOL visible_f )
+{
+  int i;
+
+  for( i = 0;i < ACT_PANEL_SET_NUM; i++ ){
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_IR+i+(id*ACT_PANEL_SET_NUM)], visible_f );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   OBJの座標セット
  * @retval  none
  */
@@ -3945,11 +3907,11 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
       _gearObjAdd( pWork, POS_T_NUM_X+(POS_T_NUM_OX*i), POS_T_NUM_Y, ACTANM_N10, CGEAR_CLACT_BG_PRI, ACT_SPRI_PARTS, _CLACT_RES_COMMON );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_T_HOUR1+i], FALSE );
   }
+  IWASAWA_Printf("ObjCreqte %d\n", ACTANM_RING_IR );
   GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ ACT_T_COLON ], ACTANM_N_COLON );
 
   for(i=0;i < ACT_NORMAL_MAX ;i++)
   {
-    u8 anm;
     static const struct {
       u8  anm;
       u8  x,y;
@@ -3966,26 +3928,25 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
       
       { ACTANM_HELP,      POS_HELP_X, POS_HELP_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_CUSTOM,    POS_CUSTOM_X, POS_CUSTOM_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_CROSS,     POS_CROSS_X, POS_CROSS_Y, ACT_SPRI_CROSS, _CLACT_RES_COMMON },
       { ACTANM_S_RADAR,   POS_S_RADAR_X, POS_S_RADAR_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_CROSS,     POS_CROSS_X, POS_CROSS_Y, ACT_SPRI_CROSS, _CLACT_RES_COMMON },
       { ACTANM_CONNECT,   POS_CONNECT_X, POS_CONNECT_Y, ACT_SPRI_CROSS, _CLACT_RES_COMMON },
       
       { ACTANM_IR,            POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
-      { ACTANM_RING_IR,       POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_PANEL },
+      { ACTANM_RING_IR,       POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
       { ACTANM_S_IR,          POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
       { ACTANM_WIRELESS,      POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
-      { ACTANM_RING_WIRELESS, POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_PANEL },
+      { ACTANM_RING_WIRELESS, POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
       { ACTANM_S_WIRELESS,    POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
       { ACTANM_WIFI,          POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
-      { ACTANM_RING_WIFI,     POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_PANEL },
+      { ACTANM_RING_WIFI,     POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
       { ACTANM_S_WIFI,        POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
       
-      { ACTANM_E_IR,      POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_EFFECT, _CLACT_RES_PANEL },
+      { ACTANM_E_IR,      POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_EFFECT, _CLACT_RES_COMMON },
     };
 
     //セルの生成
-    anm = prm[i].anm;
-    pWork->cellCursor[ACT_AMPM_BASE+i] = _gearObjAdd( pWork, prm[i].x, prm[i].y, anm, CGEAR_CLACT_BG_PRI, prm[i].s_pri, prm[i].res_idx );
+    pWork->cellCursor[ACT_AMPM_BASE+i] = _gearObjAdd( pWork, prm[i].x, prm[i].y, prm[i].anm, CGEAR_CLACT_BG_PRI, prm[i].s_pri, prm[i].res_idx );
   }
   if( OS_IsRunOnTwl() ){  //DSIならバッテリー表示パターンを変更
     GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_BATTERY], ACTANM_BATT3 );
@@ -3995,7 +3956,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
   {
     GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[ACT_IR_RING+(i*ACT_PANEL_SET_NUM)], TRUE ); //SRTアニメ反映
   }
-  _editMarkONOFF(pWork,FALSE);
+//  _editMarkONOFF(pWork,FALSE);
   _timeAnimation(pWork);
 //  _typeAnimation(pWork);
 }
@@ -4084,6 +4045,7 @@ static void _gearAllObjDrawEnable(C_GEAR_WORK* pWork,BOOL bFlg)
   
 }
 
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  起動アニメーションの表示　ON・OFF
@@ -4100,13 +4062,16 @@ static void _gearStartUpObjDrawEnabel(C_GEAR_WORK* pWork,BOOL bFlg)
   }
 }
 
+#endif
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  起動アニメーションの開始
  */
 //-----------------------------------------------------------------------------
-static void _gearStartStartUpObjAnime(C_GEAR_WORK* pWork)
+static void _gearStartUpAnimeStart(C_GEAR_WORK* pWork)
 {
+#if 0
   int i;
   GFL_CLWK_DATA cellInitData;
 
@@ -4135,6 +4100,7 @@ static void _gearStartStartUpObjAnime(C_GEAR_WORK* pWork)
     GFL_CLACT_WK_ResetAnm( pWork->cellStartUp[i] );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellStartUp[i], TRUE );
   }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -4142,8 +4108,14 @@ static void _gearStartStartUpObjAnime(C_GEAR_WORK* pWork)
  *	@brief  起動アニメーションの終了
  */
 //-----------------------------------------------------------------------------
-static void _gearEndStartUpObjAnime(C_GEAR_WORK* pWork)
+static void _gearStartUpAnimeEnd(C_GEAR_WORK* pWork)
 {
+  //生きてるタスクがあれば全て殺す
+  GFL_TCBL_DeleteAll( pWork->tcbsys );
+
+  _gearAllObjDrawEnable( pWork, TRUE );
+  _gearRingColorChangeInit( pWork );
+#if 0
   int i;
 
   if( pWork->cellStartUp[0] ){
@@ -4154,8 +4126,258 @@ static void _gearEndStartUpObjAnime(C_GEAR_WORK* pWork)
       pWork->cellStartUp[i] =NULL;
     }
   }
+#endif
 }
 
+//========================================================================
+//起動時のアニメーションのシーケンス
+//========================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動アニメ部分
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL _gearStartUpMainBoot(C_GEAR_WORK* pWork)
+{
+  switch(pWork->state_seq){
+  case STARTUP_BOOT_SEQ_ANIME_START:
+    //リング色をBOOT時カラーに
+//    _gearRingColorChangeBoot( pWork );
+    {
+      int i;
+      for( i = 0;i < RING_NUM;i++ ){
+        _gearRingColorPalAnmCore( pWork, i, 16, _BLACK_COLOR[pWork->sex] ); //一度黒く
+      }
+    }
+    //パネルのステータスカラーアニメ初期化
+    _PanelPaletteAnimeColClear( pWork );
+
+    // 全OAM　非表示
+    _gearAllObjDrawEnable( pWork, FALSE );
+    pWork->state_seq ++;
+    break;
+  case STARTUP_BOOT_SEQ_WIPE_IN:
+    //サブ画面フェード待ち
+    if( _modeSelectWaitSubFadeEnd( pWork ) == FALSE ){
+      break;
+    }
+    //リングパレットアニメ登録
+    pWork->eff_task_ct = 0;
+    {
+      int i;
+
+      for( i = 0;i < RING_NUM;i++ ){
+        _taskAdd_StartUpRingAnm( pWork, STARTUP_ANM_MODE_BOOT,
+          i, pWork->ring_col[i], STARTUP_ANM_RING_ANM_INTERVAL*i, &pWork->eff_task_ct );
+      }
+    }
+    pWork->state_seq ++;
+    break;
+  case STARTUP_BOOT_SEQ_ANIME_WAIT:
+    if( pWork->eff_task_ct ){
+      break;
+    }
+//    _gearStartUpAnimeEnd(  pWork );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スリープ復帰アニメ部分
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL _gearStartUpMainWakeUp(C_GEAR_WORK* pWork)
+{
+  switch(pWork->state_seq){
+  case STARTUP_WAKEUP_SEQ_ANIME_START:
+    pWork->eff_task_ct = 0;
+    {
+      int i;
+
+      for( i = RING_NUM-1;i >= 0; i-- ){
+        _taskAdd_StartUpRingAnm( pWork, STARTUP_ANM_MODE_WAKEUP,
+          i, pWork->ring_col[i], STARTUP_ANM_RING_ANM_INTERVAL*((RING_NUM-1)-i), &pWork->eff_task_ct );
+      }
+    }
+    pWork->state_seq ++;
+    break;
+  case STARTUP_WAKEUP_SEQ_ANIME_WAIT:
+    if( pWork->eff_task_ct ){
+      break;
+    }
+    _gearStartUpAnimeEnd(  pWork );
+    return TRUE;
+  }
+  return FALSE;
+
+#if 0
+  int i;
+  int x , y;
+  int yloop[2] = {PANEL_HEIDHT1,PANEL_HEIGHT2};
+
+  switch( pWork->state_seq ){
+  case BOOT_ANIME_SEQ_ALL_ON:
+    // まず全体を点等
+    for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
+      for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
+        _PanelMarkAnimeStart( &pWork->panel_mark[ x ][ y ], pWork, PANEL_COLOR_TYPE_BASE, PANEL_ANIME_TYPE_ON, CGEAR_PANELTYPE_BASE, PANEL_ANIME_DEF_FRAME );
+      }
+    }
+    pWork->state_seq ++;
+    break;
+
+  case BOOT_ANIME_SEQ_ALL_WAIT:
+    if( _PanelMarkAnimeSysIsAnime( pWork ) == FALSE ){
+
+      pWork->state_seq ++;
+    }
+    break;
+
+  case BOOT_ANIME_SEQ_SMOOTHIN_MAIN:
+    {
+      u32 panel_type;
+      for(i=0;i < elementof(screenTable);i++){
+        if(screenTable[i].time == pWork->startCounter){
+          panel_type = _cgearSave_GetPanelType( pWork, screenTable[i].x, screenTable[i].y );
+          _PanelMarkAnimeStart( &pWork->panel_mark[ screenTable[i].x ][ screenTable[i].y ], 
+              pWork, sc_PANEL_TYPE_TO_COLOR[ panel_type ], PANEL_ANIME_TYPE_OFF, panel_type, screenTable[i].frame );
+        }
+      }
+
+      if( pWork->startCounter >= screenTable[ NELEMS(screenTable)-1 ].time ){
+        _PFadeFromBlack(pWork);
+        _gearMarkObjDrawEnable(pWork,TRUE);
+        pWork->state_seq ++;
+      }
+
+      // ずっとカウントアップ
+      pWork->startCounter++;
+    }
+    break;
+    
+  case BOOT_ANIME_SEQ_END:
+    if( (_PanelMarkAnimeSysIsAnime( pWork ) == FALSE) && (_PFadeIsFade( pWork ) == FALSE) ){
+      return TRUE;
+    }
+    break;
+
+  default:
+    break;
+  }
+
+
+  // パネルアニメのシステムメイン
+  _PanelMarkAnimeSysMain( pWork );
+
+  return FALSE;
+#endif
+}
+
+//========================================================================
+//起動時のリングパレットアニメーション
+//========================================================================
+typedef struct{
+  C_GEAR_WORK* cgw;
+
+  u8  mode;
+  u8  ring_id;
+  u8  ring_col;
+  u8  pal_pos;
+  u8  ini_wait;
+  s8  evy;
+  s8  end_evy;
+  s8  dif;
+  u8  seq;
+
+  int*  task_ct;
+}TASKWK_STARTUP_RINGANM;
+
+static void tcb_StartUpRingAnm( GFL_TCBL *tcb , void* tcb_wk);
+
+/*
+ *  @brief  起動リングアニメ登録
+ */
+static void _taskAdd_StartUpRingAnm( C_GEAR_WORK* pWork, u8 mode, u8 ring_id, u8 ring_col, u8 wait, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_STARTUP_RINGANM* twk;
+
+  tcb = GFL_TCBL_Create( pWork->tcbsys, tcb_StartUpRingAnm, sizeof(TASKWK_STARTUP_RINGANM), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_STARTUP_RINGANM ));
+
+  twk->cgw = pWork;
+  twk->mode = mode;
+  twk->ring_id = ring_id;
+  twk->ring_col = ring_col;
+  twk->ini_wait = wait;
+
+  twk->evy = -16;
+  twk->end_evy = 0;
+  twk->dif = 2;
+  _gearRingColorChangeCore( pWork, ring_id, ring_col ); //カラーをセット
+  _gearRingColorPalAnmCore( pWork, ring_id, 16, _BLACK_COLOR[pWork->sex] ); //一度黒く
+
+  if( task_ct != NULL ){
+    twk->task_ct = task_ct;
+    (*twk->task_ct)++;
+  }
+}
+
+static void tcb_StartUpRingAnm( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_STARTUP_RINGANM* twk = (TASKWK_STARTUP_RINGANM*)tcb_wk;
+  C_GEAR_WORK* pWork = twk->cgw;
+  u16 color[2];
+
+  color[0] = 0x7FFF;  //白
+  color[1] = _BLACK_COLOR[pWork->sex];  //黒
+
+  switch( twk->seq ){
+  case 0: //初期ウェイト
+    if( twk->ini_wait--  <= 0 ){
+      twk->seq++;
+    }
+    return;
+  case 1: //オリジナルカラー+8までフェード
+    twk->evy += twk->dif;
+    _gearRingColorPalAnmCore( pWork, twk->ring_id, MATH_ABS(twk->evy), color[(twk->evy<=0)] );
+    if( twk->evy != twk->end_evy ){
+      return;
+    }
+
+    if( twk->mode == STARTUP_ANM_MODE_BOOT ){
+      twk->dif = -2;
+      twk->end_evy = -16;
+    }else{
+      twk->dif = 0;
+      twk->end_evy = 0;
+      _gearRingObjVisibleSet( pWork, twk->ring_id, TRUE );
+    }
+    twk->seq++;
+    return;
+  case 2: //終端カラーまで戻す
+    twk->evy += twk->dif;
+    _gearRingColorPalAnmCore( pWork, twk->ring_id, MATH_ABS(twk->evy), color[(twk->evy<=0)] );
+    if( twk->evy != twk->end_evy ){
+      return;
+    }
+    break;
+  }
+  if( twk->task_ct != NULL ){
+    (*twk->task_ct)--;
+  }
+  GFL_TCBL_Delete(tcb);
+}
+
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  起動アニメーションの終了待ち
@@ -4177,8 +4399,6 @@ static BOOL _gearIsEndStartUpObjAnime(const C_GEAR_WORK* cpWork)
   return TRUE;
 }
 
-
-#if 0
 //------------------------------------------------------------------------------
 /**
  * @brief   すれ違いOBJの初期化
@@ -4325,7 +4545,7 @@ static void _gearRingColorChangePanel(C_GEAR_WORK* pWork, CGEAR_PANEL_ID id, u8 
 {
   u16*  pal = pWork->palRing[ col_no ];
 
-  PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ*RING_COLOR_SET_NUM],
+  PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ],
     FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_PANEL_START+(id*16), RING_COLOR_SET_NUM*2 );
 }
 
@@ -4342,7 +4562,7 @@ static void _gearRingColorChangeCore(C_GEAR_WORK* pWork, u8 ring_id, u8 col_no )
   u16*  pal = pWork->palRing[ col_no ];
 
   //リングベースの3色を転送
-  PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_BG*RING_COLOR_SET_NUM],
+  PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_BG],
       FADE_SUB_BG, ring_id*RING_COLOR_SET_NUM+RING_COLOR_TRANS_POS_BG_START, siz );
   
   //パネルリングカラー転送
@@ -4356,16 +4576,110 @@ static void _gearRingColorChangeCore(C_GEAR_WORK* pWork, u8 ring_id, u8 col_no )
   //関連づいたOBJのリング色を転送
   switch( ring_id ){
   case 2: //内から3番目
+    PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ],
+      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R2_START1, siz );
+    PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ_D],
+      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R2_START2, siz );
+    break;
+  case 4: //一番外側
+    PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ],
+      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R4_START1, siz );
+    PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ_D],
+      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R4_START2, siz );
+    break;
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リング色パレットアニメコア
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _gearRingColorPalAnmCore(C_GEAR_WORK* pWork, u8 ring_id, u8 evy, u16 color  )
+{
+  int i;
+  //リングベースの3色に適用
+  SoftFadePfd( pWork->pfade_ptr, FADE_SUB_BG,
+      ring_id*RING_COLOR_SET_NUM+RING_COLOR_TRANS_POS_BG_START, RING_COLOR_SET_NUM, evy, color );
+//  PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_BG*RING_COLOR_SET_NUM],
+//      FADE_SUB_BG, ring_id*RING_COLOR_SET_NUM+RING_COLOR_TRANS_POS_BG_START, siz );
+  
+  //パネルリングカラー転送
+  for( i = 0;i < CGEAR_PANEL_MAX;i++) {
+    if( ring_id != _gearPanelRingIDGet( pWork, i ) ){ //属しているリングが異なればスルー
+      continue;
+    } 
+    SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
+      RING_COLOR_TRANS_POS_OBJ_PANEL_START+(ring_id*16), RING_COLOR_SET_NUM, evy, color );
+//    _gearRingColorChangePanel( pWork, i, col_no );
+  }
+
+  //関連づいたOBJのリング色を転送
+  switch( ring_id ){
+  case 1: //内から2番目
+
+    break;
+  case 2: //内から3番目
+    /*
     PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ*RING_COLOR_SET_NUM],
       FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R2_START1, siz );
     PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ_D*RING_COLOR_SET_NUM],
       FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R2_START2, siz );
+    */
+    SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
+      RING_COLOR_TRANS_POS_OBJ_R2_START1, RING_COLOR_SET_NUM, evy, color );
+    SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
+      RING_COLOR_TRANS_POS_OBJ_R2_START2, RING_COLOR_SET_NUM, evy, color );
     break;
   case 4: //一番外側
+    /*
     PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ*RING_COLOR_SET_NUM],
       FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R4_START1, siz );
     PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ_D*RING_COLOR_SET_NUM],
       FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R4_START2, siz );
+    */
+    SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
+      RING_COLOR_TRANS_POS_OBJ_R4_START1, RING_COLOR_SET_NUM, evy, color );
+    SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
+      RING_COLOR_TRANS_POS_OBJ_R4_START2, RING_COLOR_SET_NUM, evy, color );
+    break;
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リングに属するOBJの表示非表示をセット
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _gearRingObjVisibleSet(C_GEAR_WORK* pWork, u8 ring_id, BOOL visible_f )
+{
+  int i;
+
+  //パネル表示制御
+  for( i = 0;i < CGEAR_PANEL_MAX;i++) {
+    if( ring_id == _gearPanelRingIDGet( pWork, i ) ){ //属しているリングが異なればスルー
+      _gearObjSetPanelVisible( pWork, i, visible_f );
+    } 
+  }
+
+  //関連づいたOBJの表示制御
+  switch( ring_id ){
+  case 1: //内から2番目
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_CROSS], visible_f );
+    if( pWork->connect_flag ){ //一人も通信バッファにいない時は、CONNECT表示は強制Off
+      GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_CONNECT], visible_f );
+    }
+    break;
+  case 2: //内から3番目
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_LOGO], visible_f );
+    break;
+  case 4: //一番外側
+    for( i = ACT_R4_OBJ_START; i <= ACT_R4_OBJ_END; i++){
+      if( i == ACT_LOGO ) continue; //ACT_LOGOのみr3 ちょっと仲間はずれ
+      GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], visible_f );
+    }
     break;
   }
 }
@@ -4384,6 +4698,21 @@ static void _gearRingColorChangeInit(C_GEAR_WORK* pWork )
   for( i = 0; i < RING_NUM;i++){
     pWork->ring_col[i] = CGEAR_SV_GetCGearRingColor( pWork->pCGSV, i );
     _gearRingColorChangeCore( pWork, i, pWork->ring_col[i] );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リング色変更 ブート時
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _gearRingColorChangeBoot(C_GEAR_WORK* pWork )
+{
+  int i;
+
+  for( i = 0; i < RING_NUM;i++){
+    _gearRingColorChangeCore( pWork, i, RING_COLOR_BOOT_NO );
   }
 }
 
@@ -4617,7 +4946,7 @@ static void _arcGearRelease(C_GEAR_WORK* pWork)
 {
 
 ///  _gearCrossObjDelete(pWork);
-  _gearEndStartUpObjAnime( pWork );
+  _gearStartUpAnimeEnd( pWork );
 
   {
     int i;
@@ -4914,8 +5243,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait2(C_GEAR_WORK* pWork)
 {
-  
-  if(_gearBootMain(pWork) == FALSE){
+  if(_gearStartUpMainWakeUp(pWork) == FALSE){
     if(pWork->pCall){
       pWork->pCall(pWork->pWork);
     }
@@ -4938,9 +5266,8 @@ static void _modeSelectMenuWait2(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 {
-  if( _modeSelectWaitSubFadeEnd( pWork ) == TRUE ){
-    _gearAllObjDrawEnable( pWork, TRUE );
-    _CHANGE_STATE(pWork, _modeSelectMenuWait2);
+  if( _gearStartUpMainBoot( pWork ) ){
+    _CHANGE_STATE( pWork, _modeSelectMenuWait2 );
   }
 
 #if 0
@@ -4966,7 +5293,7 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 
 
     // 起動アニメだけ表示
-    _gearStartStartUpObjAnime( pWork );
+    _gearStartUpAnimeStart( pWork );
     _gearStartUpObjDrawEnabel( pWork, TRUE );
     pWork->state_seq ++;
     break;
@@ -5002,7 +5329,7 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
     }
     
     _gearStartUpObjDrawEnabel( pWork, FALSE );
-    _gearEndStartUpObjAnime( pWork );
+    _gearStartUpAnimeEnd( pWork );
     // OAMブラックアウト
     _PFadeSetBlack(pWork);
 
@@ -5036,10 +5363,8 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
     
     pWork->startCounter ++;
     if( pWork->startCounter >= STARTUP_TBL_ALPHA_TIME_WAIT ){
-#if 0
       // 最終フレームで全消し
       _gearStartUpAllOff( pWork );
-#endif
       pWork->startCounter = 0;
       pWork->state_seq++;
     }
@@ -5060,16 +5385,14 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 
 
   case STARTUP_SEQ_SKIP:
-    _gearEndStartUpObjAnime( pWork );
+    _gearStartUpAnimeEnd( pWork );
     // OAMブラックアウト
     _PFadeSetBlack(pWork);
 
     // アニメストップ
     _PanelMarkAnimeSysAllStop( pWork );
-#if 0
     // 全消し
     _gearStartUpAllOff( pWork );
-#endif
     pWork->startCounter = STARTUP_END_TIME_WAIT;
 
     pWork->state_seq = STARTUP_SEQ_END;
@@ -5092,11 +5415,11 @@ static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
 
   if(pWork->startCounter==0){
     _PFadeSetBlack(pWork);
-    _gearAllObjDrawEnable( pWork, TRUE );
+//    _gearAllObjDrawEnable( pWork, TRUE );
 //    _gearMarkObjDrawEnable(pWork,FALSE);
 
     // 起動演出中のスリープにも対応。
-    _gearEndStartUpObjAnime( pWork );
+    _gearStartUpAnimeEnd( pWork );
 
     // 枠部分を表示
 //    _gearBootInitScreen( pWork ); // 1回表示するため。
@@ -5170,19 +5493,22 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
 static void _SLEEPGO_FUNC(void* pWk)
 {
   C_GEAR_WORK* pWork = pWk;
+  
+  //生きてるタスクがあれば全て殺す
+  GFL_TCBL_DeleteAll( pWork->tcbsys );
 
-  // パレットフェード停止
+  // パレットフェードを強制停止
   _PFadeStop(pWork);
-  //パレット転送
+  //停止分を一度パレット転送して最新にしてしまう
   if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
 
-  // OAMブラックアウト
+  // OAMをブラックアウトさせておく
   _PFadeSetBlack(pWork);
   // 枠部分を表示
 //  _gearBootInitScreen( pWork ); // 1回表示するため。
 
   //パレット転送
-  if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
+//  if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
 
   pWork->GetOpenTrg=_CGEAR_SLEEP_START;
 }
@@ -5225,9 +5551,13 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
   pWork->createEvent = FIELD_SUBSCREEN_ACTION_NONE;
   pWork->doEvent = FIELD_SUBSCREEN_ACTION_NONE;
 
-  pWork->handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR_SW, HEAPID_FIELD_SUBSCREEN );
+  pWork->handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR_SW, pWork->heapID );
 
-  pWork->pfade_tcbsys_wk = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, GFL_TCB_CalcSystemWorkSize(4) );
+  //エフェクト用tcbシステム追加
+  pWork->tcbsys = GFL_TCBL_Init( pWork->heapID, pWork->heapID, 16, 128 );
+  
+  //PaletteFadeReq()がTCBLを受け付けないので専用に作る
+  pWork->pfade_tcbsys_wk = GFL_HEAP_AllocClearMemory( pWork->heapID, GFL_TCB_CalcSystemWorkSize(4) );
   pWork->pfade_tcbsys = GFL_TCB_Init( 4, pWork->pfade_tcbsys_wk );
 
   if( power_effect ){
@@ -5254,7 +5584,7 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
   // 現在VRAMにあるパレットを壊さないように、VRAMからパレット内容をコピーする
   PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_OBJ, 0, 0x20*OAM_USE_PLTT_NUM );
   PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_BG, 0, 0x20*BG_USE_PLTT_NUM );
-  _PFadeSetDefaultPal( pWork, pWork->power_flag );  //パネルステートアニメ初期化
+//  _PFadeSetDefaultPal( pWork, pWork->power_flag );  //パネルステートアニメ初期化
   _gearPanelPosSetInit( pWork );  //パネル位置初期化
   _gearRingColorChangeInit( pWork );  //リング色初期化
   PaletteFadeTrans( pWork->pfade_ptr );
@@ -5294,12 +5624,6 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
 
   }
 
-
-
-  //SleepMode_ColorUpdateExの結果を実行
-  if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
-
-
   // もしお誘いフラグが足っていたら切る
   {
     GAME_COMM_SYS_PTR p_gcommsys = GAMESYSTEM_GetGameCommSysPtr( pGameSys );
@@ -5338,14 +5662,17 @@ static void cgear_ExitWork( C_GEAR_WORK* pWork )
   GFL_NET_ResetIconForcePosition();
   GFL_NET_ReloadIconTopOrBottom( FALSE, pWork->heapID );
 
+  GFL_TCB_DeleteTask( pWork->vblank_tcb );
+  
+  // タスク
+  GFL_TCB_Exit( pWork->pfade_tcbsys );
+  GFL_HEAP_FreeMemory( pWork->pfade_tcbsys_wk );
+  GFL_TCBL_Exit( pWork->tcbsys );
+
   // パレットフェード
   PaletteFadeWorkAllocFree( pWork->pfade_ptr, FADE_SUB_OBJ );
   PaletteFadeWorkAllocFree( pWork->pfade_ptr, FADE_SUB_BG );
   PaletteFadeFree( pWork->pfade_ptr );
-  // タスク
-  GFL_TCB_Exit( pWork->pfade_tcbsys );
-  GFL_HEAP_FreeMemory( pWork->pfade_tcbsys_wk );
-  GFL_TCB_DeleteTask( pWork->vblank_tcb );
 
   // Wireless以外の画面にいくならライブキャスターのSEをとめる
   if( pWork->doEvent != FIELD_SUBSCREEN_ACTION_WIRELESS ){
@@ -5437,7 +5764,6 @@ void CGEAR_SW_Main( C_GEAR_WORK* pWork,BOOL bAction )
   if( pWork->GetOpenTrg == _CGEAR_SLEEP_START ){
     return ;
   }
-  
   // スリープチェック
   _cgear_SleepCheck( pWork, bAction );
 
@@ -5501,9 +5827,9 @@ void CGEAR_SW_Main( C_GEAR_WORK* pWork,BOOL bAction )
       _CHANGE_STATE(pWork,_modeSelectMenuWait1);
     }else{
 
-      // 起動演出中のスリープにも対応。
-      _gearEndStartUpObjAnime( pWork );
-      _gearAllObjDrawEnable( pWork, TRUE );
+      // 起動演出中のスリープにも対応してブートアニメを強制終了
+      _gearStartUpAnimeEnd( pWork );
+//      _gearAllObjDrawEnable( pWork, TRUE );
 
       //
 //      _gearPanelBgCreate(pWork);	// パネル作成
@@ -5523,7 +5849,7 @@ void CGEAR_SW_Main( C_GEAR_WORK* pWork,BOOL bAction )
     }
   }
 
-
+  if( pWork->tcbsys ) GFL_TCBL_Main( pWork->tcbsys );
   if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
 }
 
@@ -6160,9 +6486,12 @@ static BOOL _BUTTONPAL_Update( BUTTON_PAL_FADE* p_fwk )
   frame_index = (p_fwk->frame++/2)%2;
 
   // パレットカラーを調整
+/*
   PaletteFadeReq(
     p_fwk->p_fade_ptr, PF_BIT_SUB_OBJ, p_fwk->msk,   -120, 0, frame_index*9, 0x0, p_fwk->p_fade_tcbsys
     );
+*/
+  ColorConceChangePfd( p_fwk->p_fade_ptr, FADE_SUB_OBJ, p_fwk->msk, frame_index*9, 0x0000 );
 
 #endif
   return FALSE;
