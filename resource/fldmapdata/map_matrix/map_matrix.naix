@@ -391,7 +391,8 @@ enum {
 	NARC_map_matrix_bwgym0201_mat_bin = 377,
 	NARC_map_matrix_bwgym0202_mat_bin = 378,
 	NARC_map_matrix_bwgym0401_mat_bin = 379,
-	NARC_map_matrix_pwood_mat_bin = 380
+	NARC_map_matrix_pwood_mat_bin = 380,
+	NARC_map_matrix_pwood04_mat_bin = 381
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

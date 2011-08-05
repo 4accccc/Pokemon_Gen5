@@ -379,3 +379,4 @@
 "bwgym0202.bin"
 "bwgym0401.bin"
 "PWOOD.bin"
+"PWOOD04.bin"
