@@ -732,10 +732,11 @@
 			<Comment>ポケモン
 ・Black2ver
 ・あわせて鳴き声再生
-・続けてトレーナー戦闘に</Comment>
+・続けてトレーナー戦闘に
+　トレーナーID：boss_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T05:33:11" />
+				Time="2011-08-05T03:17:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -783,10 +784,11 @@
 			<Comment>ポケモン
 ・White2ver
 ・あわせて鳴き声再生
-・続けてトレーナー戦闘に</Comment>
+・続けてトレーナー戦闘に
+　トレーナーID：boss_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T05:33:18" />
+				Time="2011-08-05T03:17:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
