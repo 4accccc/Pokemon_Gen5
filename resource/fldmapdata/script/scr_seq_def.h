@@ -13766,14 +13766,13 @@
 /**
  * @def _INFINITY_DUNGEON_INIT_SEED
  * @brief 無限ダンジョン生成用シードを初期化する
- * @param ret_wk    状態を受け取るワーク
  *
  */
 //--------------------------------------------------------------
 #define _INFINITY_DUNGEON_INIT_SEED() \
     _ASM_INFINITY_DUNGEON_INIT_RAND_SEED
 
-    .macro  _ASM_INFINITY_DUNGEON_INIT_RAND_SEED ret_wk
+    .macro  _ASM_INFINITY_DUNGEON_INIT_RAND_SEED
     .short  EV_SEQ_INFINITY_DUNGEON_INIT_SEED
     .endm
 
@@ -14081,6 +14080,19 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_INIT_LIFT_BAN_ELEVATOR
+ * @brief 無限ダンジョンのエレベータを開放する
+ *
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_INIT_LIFT_BAN_ELEVATOR() \
+    _ASM_INFINITY_DUNGEON_INIT_LIFT_BAN_ELEVATOR
+
+    .macro  _ASM_INFINITY_DUNGEON_INIT_LIFT_BAN_ELEVATOR
+    .short  EV_SEQ_INFINITY_DUNGEON_LIFT_BAN_ELEVATOR
+    .endm
 
 //--------------------------------------------------------------
 /**

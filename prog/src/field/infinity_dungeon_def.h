@@ -83,3 +83,5 @@
 #define INFINITY_DUNGEON_MAP_STATUS_BOSS_WIN    (1)
 #define INFINITY_DUNGEON_MAP_STATUS_LOSE        (2)
 
+// 左エレベーターを使用するエリア番号最大(ゼロオリジン)
+#define INF_LEFT_ELEVATOR_AREA (4)  

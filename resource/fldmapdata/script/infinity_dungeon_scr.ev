@@ -725,22 +725,41 @@ EVENT_START  ev_infinity_dungeon_comeback
       $LWK_DUNGEON_STATUS+=1
       _INFINITY_DUNGEON_SET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
 
+            //　現在のフロアと比較して、カメラを動かす
+      _CAMERA_START()
+      _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
+
       IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_5 THEN
         // エリア５クリア
         _CALL item_get
         IF $LWK_D_VERSION == VERSION_B2 THEN
           _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_03_00 , LWK_INFOOBJ_ID, POS_DOWN )
+          // エレベータにカメラをを寄せる
+          _CAMERA_MOVE(5720,0,970752,753664,-143360,-143360, 30 ) 
           _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_04_00 , LWK_INFOOBJ_ID, POS_DOWN )
           _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_05_00 , LWK_INFOOBJ_ID, POS_DOWN )
           _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel_00 , LWK_INFOOBJ_ID, POS_DL )
         ELSE
           _BALLOONWIN_OBJMSG_POS( msg_info_clear_w_03_00 , LWK_INFOOBJ_ID, POS_DOWN )
+          // エレベータにカメラをを寄せる
+          _CAMERA_MOVE(5720,0,970752,753664,-143360,-143360, 30 ) 
           _BALLOONWIN_OBJMSG_POS( msg_info_clear_w_04_00 , LWK_INFOOBJ_ID, POS_DOWN )
           _BALLOONWIN_OBJMSG_POS( msg_info_clear_w_05_00 , LWK_INFOOBJ_ID, POS_DOWN )
           _BALLOONWIN_OBJMSG_POS( msg_info_w_cancel_00 , LWK_INFOOBJ_ID, POS_DL )
         ENDIF
         _BALLOONWIN_CLOSE()
-        // TODO エレベーター開放ギミック再生
+
+        // カメラ待ち
+        _CAMERA_WAIT_MOVE()
+
+        // エレベータ開放イベント再生
+        _INFINITY_DUNGEON_INIT_LIFT_BAN_ELEVATOR()
+
+        // カメラを戻す
+        _CAMERA_DEF_MOVE( 20 )
+        _CAMERA_WAIT_MOVE()
+        _CAMERA_BIND()        // カメラバインド
+        _CAMERA_END()
 
         // キー入手（自分の色のダンジョンクリア時のみ）
         IF $LWK_ROM_VERSION == $LWK_D_VERSION THEN

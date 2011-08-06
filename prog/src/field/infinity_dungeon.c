@@ -3398,8 +3398,6 @@ u32 INFINITY_DUNGEON_GetHintMessage( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_D
     trhint_wk.p_save = p_save;
   }
 
-  hint_type = INFTR_HINT_TYPE_MEDIC_DIR;
-
   // ヒントメッセージ取得
   return hint_msg_proc_table[hint_type]( &trhint_wk );
 }

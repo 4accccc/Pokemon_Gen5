@@ -40,6 +40,7 @@
   DEF_CMD( EvCmdInfinityDungeonGetTrIDByIDPos, EV_SEQ_INFINITY_DUNGEON_GET_TRID_BY_IDPOS )
   DEF_CMD( EvCmdInfinityDungeonGetVersion, EV_SEQ_INFINITY_DUNGEON_GET_VERSION )
   DEF_CMD( EvCmdInfinityDungeonGetDungeonData, EV_SEQ_INFINITY_DUNGEON_GET_PARAM )
+  DEF_CMD( EvCmdInfinityDungeonLiftBanElevator, EV_SEQ_INFINITY_DUNGEON_LIFT_BAN_ELEVATOR )
  
   END_CMD
   //スクリプトコマンドテーブル終了
