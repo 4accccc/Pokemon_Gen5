@@ -145,6 +145,17 @@ EVENT_START  ev_infinity_dungeon_elevator
  
   // ROMバージョンでの判断
 	_INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
+  
+  // カメラ移動開始
+  _CAMERA_START()
+  _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
+  
+  // エレベータにカメラをを寄せる
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+    _CAMERA_MOVE(5080,0,839680,425984,-4096,-122880, 20 ) 
+  ELSE
+    _CAMERA_MOVE(5080,0,839680,425984,-4096,-122880, 20 ) 
+  ENDIF
 
   // エレベータを開ける
   _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
@@ -155,6 +166,9 @@ EVENT_START  ev_infinity_dungeon_elevator
 
   // エレベータを閉める
   _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
+  
+  // カメラ待ち
+  _CAMERA_WAIT_MOVE()
 
   // 案内メッセージ
 	IF $LWK_D_VERSION == VERSION_B2 THEN
@@ -222,13 +236,10 @@ EVENT_START  ev_infinity_dungeon_elevator
   IF ($LWK_SELECT_FLOOR != EV_WIN_B_CANCEL)&&($LWK_SELECT_FLOOR != 0xff) THEN
     IF $LWK_SELECT_FLOOR != 0xf0 THEN
       
-      //　現在のフロアと比較して、カメラを動かす
-      _CAMERA_START()
-      _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
-      IF $LWK_SELECT_FLOOR < $LWK_NOW_FLOOR_NUM THEN
-        _CAMERA_MOVE(4312,0,970752,425984,311296,163840, 20 ) 
+      IF $LWK_SELECT_FLOOR > $LWK_NOW_FLOOR_NUM THEN
+        _CAMERA_MOVE(5080,0,839680,425984,311296,-122880, 20 ) 
       ELSE
-        _CAMERA_MOVE(4312,0,970752,425984,311296,163840, 20 ) 
+        _CAMERA_MOVE(5080,0,839680,425984,-212992,-122880, 20 ) 
       ENDIF
 
       // エレベータ移動音
@@ -252,8 +263,12 @@ EVENT_START  ev_infinity_dungeon_elevator
       _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
       _SE_STOP()
+
+      _CAMERA_BIND()        // カメラバインド
+      _CAMERA_END()
     ENDIF
   ELSE
+
     // エレベータを開ける
     _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
     
@@ -261,8 +276,15 @@ EVENT_START  ev_infinity_dungeon_elevator
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
     _OBJ_ANIME_WAIT()
 
+    // カメラを戻す
+    _CAMERA_DEF_MOVE( 20 )
+
     // エレベータを閉める
     _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
+
+    _CAMERA_WAIT_MOVE()
+    _CAMERA_BIND()        // カメラバインド
+    _CAMERA_END()
   ENDIF
 }
 EVENT_END
