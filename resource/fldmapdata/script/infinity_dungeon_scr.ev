@@ -814,8 +814,6 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_talk_battle_trainer
 {
-  DEFINE_LOCAL  LWK_BOSS_FLOOR
-  
   _TALK_OBJ_START()
 
   // OBJID=LWK_TRID_POS
@@ -849,19 +847,24 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
       _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( LWK_TRID_POS , TRUE )
       // レコードを加算：無限ダンジョントレーナーを倒した数
       _ADD_RECORD( RECID_INF_TRAINER_WIN, 1 )
+
+      //ヒントメッセージ
+      _INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE( SCWK_ANSWER )
+      IF $SCWK_ANSWER == INF_SRC_MSG_TYPE_HINT THEN
+        _CALL talk_hint
+      ELSE
+        // 回復メッセージ呼び出し
+        _CALL recover_trainer
+      ENDIF
+
     ELSE
       _TRAINER_LOSE()
     ENDIF
   ELSE
+    //ヒントメッセージ
     _INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE( SCWK_ANSWER )
     IF $SCWK_ANSWER == INF_SRC_MSG_TYPE_HINT THEN
-      // ヒントメッセージ
-      _INFINITY_DUNGEON_GET_HINT_MSG_ID( LWK_HINT_MSG_ID )
-      _INFINITY_DUNGEON_GET_BOSS_FLOOR( LWK_BOSS_FLOOR )
-      _NUMBER( 0 , LWK_BOSS_FLOOR , 3 )
-      _BALLOONWIN_OBJMSG_POS( LWK_HINT_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
+      _CALL talk_hint
     ELSE
       // 回復メッセージ呼び出し
       _CALL recover_trainer
@@ -911,6 +914,15 @@ EVENT_START  ev_infinity_dungeon_move_battle_trainer
       _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( LWK_TRID_POS , TRUE )
       // レコードを加算：無限ダンジョントレーナーを倒した数
       _ADD_RECORD( RECID_INF_TRAINER_WIN, 1 )
+      
+      //ヒントメッセージ
+      _INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE( SCWK_ANSWER )
+      IF $SCWK_ANSWER == INF_SRC_MSG_TYPE_HINT THEN
+        _CALL talk_hint
+      ELSE
+        // 回復メッセージ呼び出し
+        _CALL recover_trainer
+      ENDIF
     ELSE
       _TRAINER_LOSE()
     ENDIF
@@ -1458,25 +1470,25 @@ item_get:
     $LWK_ITEM_ID_02 = ITEM_BUROMUHEKISIN
     $LWK_ITEM_ID_03 = ITEM_RIZOTIUMU
     $LWK_ITEM_ID_04 = ITEM_KITOSAN
-    $LWK_ITEM_ID_05 = ITEM_HUSIGINAAME
+    $LWK_ITEM_ID_05 = ITEM_INDOMETASIN
     $LWK_ITEM_MAX = 5
-    $LWK_GET_NUM = 1
+    $LWK_GET_NUM = 2
    CASE 3 THEN
     $LWK_ITEM_ID_01 = ITEM_TAURIN
     $LWK_ITEM_ID_02 = ITEM_BUROMUHEKISIN
     $LWK_ITEM_ID_03 = ITEM_RIZOTIUMU
     $LWK_ITEM_ID_04 = ITEM_KITOSAN
-    $LWK_ITEM_ID_05 = ITEM_HUSIGINAAME
+    $LWK_ITEM_ID_05 = ITEM_INDOMETASIN
     $LWK_ITEM_MAX = 5
-    $LWK_GET_NUM = 1
+    $LWK_GET_NUM = 2
    CASE 4 THEN
     $LWK_ITEM_ID_01 = ITEM_TAURIN
     $LWK_ITEM_ID_02 = ITEM_BUROMUHEKISIN
     $LWK_ITEM_ID_03 = ITEM_RIZOTIUMU
     $LWK_ITEM_ID_04 = ITEM_KITOSAN
-    $LWK_ITEM_ID_05 = ITEM_HUSIGINAAME
+    $LWK_ITEM_ID_05 = ITEM_INDOMETASIN
     $LWK_ITEM_MAX = 5
-    $LWK_GET_NUM = 1
+    $LWK_GET_NUM = 2
    CASE 5 THEN
     $LWK_ITEM_ID_01 = ITEM_ZAROKUNOMI
     $LWK_ITEM_ID_02 = ITEM_NEKOBUNOMI
@@ -1758,6 +1770,77 @@ play_elevator_stop_se:
   ELSE
     _SE_PLAY( SEQ_SE_SW_MDUN_WH_04 )
   ENDIF
+}
+_RET
+
+//--------------------------------------------------------------------
+// ヒントメッセージを話す
+//--------------------------------------------------------------------
+talk_hint:
+{
+  DEFINE_LOCAL  LWK_BOSS_FLOOR
+
+  // ヒントメッセージ
+  _INFINITY_DUNGEON_GET_HINT_MSG_ID( LWK_HINT_MSG_ID )
+  _INFINITY_DUNGEON_GET_BOSS_FLOOR( LWK_BOSS_FLOOR )
+  _NUMBER( 0 , LWK_BOSS_FLOOR , 2 )
+
+  // エリアIDを取得する
+  _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
+
+  // エリアごとのボスポケモン名をセット
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+      SWITCH $LWK_NOW_AREA
+      CASE 0 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 1 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 2 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 3 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 4 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 5 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 6 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 7 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 8 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 9 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      ENDSWITCH
+    ELSE
+      SWITCH $LWK_NOW_AREA
+      CASE 0 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 1 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 2 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 3 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 4 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 5 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 6 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 7 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 8 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      CASE 9 THEN
+        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+      ENDSWITCH
+  ENDIF
+
+  _BALLOONWIN_OBJMSG_POS( LWK_HINT_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
 }
 _RET
 

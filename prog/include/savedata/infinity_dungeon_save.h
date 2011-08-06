@@ -32,7 +32,6 @@ typedef struct _INFINITYDUNGEON_SAVE INFINITYDUNGEON_SAVE;
 extern int INFINITYDUNGEON_SAVE_GetWorkSize(void);
 extern void INFINITYDUNGEON_SAVE_Init(INFINITYDUNGEON_SAVE *p_save);
 extern INFINITYDUNGEON_SAVE* SaveData_GetINFINITYDUNGEON( SAVE_CONTROL_WORK * p_save );
-extern u8 INFINITY_DUNGEON_SAVE_GetHintLevel( const INFINITYDUNGEON_SAVE *p_save );
 extern void INFINITYDUNGEON_SAVE_InitDungeonData(INFINITYDUNGEON_SAVE *p_save);
 extern u8 INFINITYDUNGEON_SAVE_GetAreaStartFloor( u8 area_id );
 extern u8 INFINITYDUNGEON_SAVE_GetFloorNum( u8 area_id );

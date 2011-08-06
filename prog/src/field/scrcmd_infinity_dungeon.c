@@ -461,7 +461,6 @@ VMCMD_RESULT EvCmdInfinityDungeonGetTrainerBattleFlag( VMHANDLE *p_core, void *p
 VMCMD_RESULT EvCmdInfinityDungeonGetHintMsgID( VMHANDLE *p_core, void *p_wk_adrs )
 {
   int i,j;
-  u8 hint_level;
   SCRCMD_WORK   *p_wk = p_wk_adrs;
   GAMESYS_WORK  *p_gamesys  = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA      *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
@@ -476,10 +475,9 @@ VMCMD_RESULT EvCmdInfinityDungeonGetHintMsgID( VMHANDLE *p_core, void *p_wk_adrs
 
   // セーブデータから必要情報を取得
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-  hint_level = INFINITY_DUNGEON_SAVE_GetHintLevel( p_save );
 
   // ヒントメッセージIDを設定する
-  *p_ret_wk = INFINITY_DUNGEON_GetHintMessage( p_save ,p_dungeon_data ,hint_level ,obj_code);
+  *p_ret_wk = INFINITY_DUNGEON_GetHintMessage( p_save ,p_dungeon_data ,obj_code);
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -650,6 +648,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetBossFloor( VMHANDLE *p_core, void *p_wk_adrs
   u8  area_id;
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   u32 boss_floor;
+  u8 start_floor;
   
   // エリアIDを取得
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
@@ -658,8 +657,10 @@ VMCMD_RESULT EvCmdInfinityDungeonGetBossFloor( VMHANDLE *p_core, void *p_wk_adrs
   // ボス部屋の位置を検索
   boss_floor = INFINITY_DUNGEON_GetBossFloor( p_dungeon_data );
 
+  start_floor = INFINITYDUNGEON_SAVE_GetAreaStartFloor( area_id );
+
   // ボスのいるフロアを返す
-  *p_ret_wk = boss_floor + (area_id * INFINITYDUNGEON_FLOOR_MAX) + 1;
+  *p_ret_wk = boss_floor + start_floor + 1; // ゼロオリジン修正
 
   return VMCMD_RESULT_CONTINUE;
 }
