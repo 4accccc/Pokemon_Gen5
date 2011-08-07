@@ -753,7 +753,9 @@
 //  無限ダンジョン関連定義
 //--------------------------------------------------------------
 
-#define SCR_INFDUNGEON_PARAM_START_FLOOR  (0) ///<無限ダンジョン：ダンジョン内のスタートFLOOR
-#define SCR_INFDUNGEON_PARAM_FLOOR_NUM    (1) ///<無限ダンジョン：ダンジョン内の階数
-#define SCR_INFDUNGEON_PARAM_ROOM_ID      (2) ///<無限ダンジョン：現在のルームID
+#define SCR_INFDUNGEON_PARAM_START_FLOOR        (0) ///<無限ダンジョン：ダンジョン内のスタートFLOOR
+#define SCR_INFDUNGEON_PARAM_FLOOR_NUM          (1) ///<無限ダンジョン：ダンジョン内の階数
+#define SCR_INFDUNGEON_PARAM_ROOM_ID            (2) ///<無限ダンジョン：現在のルームID
+#define SCR_INFDUNGEON_PARAM_TRAINER_COUNT      (3) ///<無限ダンジョン：ダンジョン内のトレーナー人数
+#define SCR_INFDUNGEON_PARAM_WIN_TRAINER_COUNT  (4) ///<無限ダンジョン：ダンジョン内のトレーナー人数
 

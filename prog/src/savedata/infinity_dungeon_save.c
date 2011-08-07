@@ -22,6 +22,8 @@
 extern BOOL g_debug_inf_is_presentation;
 #endif
 
+#define TRAINER_FLAG_MAX (32) // 1階に存在するトレーナーの最大数
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -177,6 +179,34 @@ BOOL INFINITYDUNGEON_SAVE_GetTrainerFlag( const INFINITYDUNGEON_SAVE *p_save ,in
     return TRUE;
   }
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  戦闘勝利済みトレーナーの数を取得
+ *
+ *	@param	*p_save 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u16 INFINITYDUNGEON_SAVE_GetWinTrainerCount( const INFINITYDUNGEON_SAVE *p_save )
+{
+  u32 i,n;
+  u32 cnt = 0;
+  for( i = 0; i < INFINITYDUNGEON_FLOOR_MAX; i++ )
+  {
+    for( n = 0; n < TRAINER_FLAG_MAX; n++ )
+    {
+      if( INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,i ,n ) == TRUE )
+      {
+        cnt++;
+      }
+    }
+  }
+
+  ONOUE_Printf("無限ダンジョン内勝利済みトレーナーの数を取得：%u\n",cnt);
+  return cnt;
 }
 
 //----------------------------------------------------------------------------

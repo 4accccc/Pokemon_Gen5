@@ -402,6 +402,39 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_w_boss_start_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとう　かいし　ほわいと　最上階　別ばーじょん▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:00:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:00:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せんとう　かいし　ほわいと　最上階　別ばーじょん▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:00:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:00:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最上階でかつ、バージョン違いに登場するトレーナー用</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:00:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_b_boss_start_00"
 		Style="Large">
 		<LanguageCell
@@ -812,6 +845,38 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_b_boss_start_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとう　かいし　ブラック▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せんとう　かいし　ブラック▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最上階、色違い用</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_w_boss_first_start_00"
 		Style="Large">
 		<LanguageCell
@@ -1210,6 +1275,38 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_w_boss_first_start_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょかい　せんとう　かいし（ホワイト）▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しょかい　せんとう　かいし（ホワイト）▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:05:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:05:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最上階、色違い用</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:05:02" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_b_boss_first_start_00"
@@ -1626,6 +1723,39 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_b_boss_first_start_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょかい　せんとう　かいし（ブラック）▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:02:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:02:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しょかい　せんとう　かいし（ブラック）▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:02:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最上階、色違い用</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:02:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_w_boss_end_00"
 		Style="Large">
 		<LanguageCell
@@ -2024,6 +2154,45 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_w_boss_end_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとう　しゅうりょう　ホワイト▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:01:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:01:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せんとう　しゅうりょう　ホワイト▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:01:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:01:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最上階、色違い用</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:02:03" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>最上階、色違い用</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:02:09" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_b_boss_end_00"
@@ -2435,6 +2604,38 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_b_boss_end_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとう　しゅうりょう　ブラック▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せんとう　しゅうりょう　ブラック▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最上階色違い用</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:04:38" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_b_boss_first_end_00"
@@ -2859,6 +3060,38 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_b_boss_first_end_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょかい　せんとう　おわり（ブラック）▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:03:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:03:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しょかい　せんとう　おわり（ブラック）▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:03:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:03:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最上階、色違い用</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:03:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_w_boss_first_end_00"
 		Style="Large">
 		<LanguageCell
@@ -3257,6 +3490,38 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_w_boss_first_end_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょかい　せんとう　おわり（ホワイト）▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:05:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:05:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しょかい　せんとう　おわり（ホワイト）▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:05:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:05:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最上階、色違い用</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:05:25" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_hint_level_0_00"
@@ -12908,6 +13173,422 @@ Cギアを　見てごらん▼
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-03T10:07:50" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_01_01_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_01_02_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_01_03_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_01_04_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_01_05_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_01_01_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_01_02_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_01_03_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_01_04_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_01_05_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_02_01_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラック　ちゅうかんべや　イベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T08:34:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブラック　ちゅうかんべや　イベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T08:34:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_02_02_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラック　ちゅうかんべや　イベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T08:34:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブラック　ちゅうかんべや　イベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T08:34:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_02_01_00"
+		Style="">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほわいと　ちゅうかんべや　イベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほわいと　ちゅうかんべや　イベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:45" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_02_02_00"
+		Style="">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほわいと　ちゅうかんべや　イベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほわいと　ちゅうかんべや　イベント　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:33:45" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_03_01_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼすべや　イベント　ほわいと　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:34:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:34:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼすべや　イベント　ほわいと　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:34:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:34:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_03_01_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼすべや　イベント　ブラック　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T08:34:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:34:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼすべや　イベント　ブラック　▼</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T08:34:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:34:55" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

@@ -232,38 +232,38 @@ static const GRID_DATA sc_black_warp_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
 static const GRID_DATA sc_white_warp_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
   // エレベーター部屋
   {
-    { 8 , 0 , 17}, // 下
-    { 8 , 0 , 1}, // 上
-    { 16 , 0 , 9}, // 右
-    { 0 , 0 , 9}, // 左
+    { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
   },
   // ボス部屋
   {
-    { 8 , 0 , 18}, // 下
-    { 8 , 0 , 18}, // 上
-    { 8 , 0 , 18}, // 右
-    { 8 , 0 , 18}, // 左
+    { 6 , 0 , 14},// 下
+    { 6 , 0 , 14},// 上
+    { 6 , 0 , 14},// 右
+    { 6 , 0 , 14},// 左
   },
   // 特殊部屋１
   {
-    { 8 , 0 , 17}, // 下
-    { 8 , 0 , 1}, // 上
-    { 16 , 0 , 9}, // 右
-    { 0 , 0 , 9}, // 左
+    { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
   },
   // 特殊部屋２
   {
-    { 8 , 0 , 17}, // 下
-    { 8 , 0 , 1}, // 上
-    { 16 , 0 , 9}, // 右
-    { 0 , 0 , 9}, // 左
+    { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
   },
   // 通常部屋
   {
-    { 8 , 0 , 17}, // 下
-    { 8 , 0 , 1}, // 上
-    { 16 , 0 , 9}, // 右
-    { 0 , 0 , 9}, // 左
+     { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
   },
 };
 
@@ -313,38 +313,38 @@ static const GRID_DATA sc_black_bmodel_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = 
 static const GRID_DATA sc_white_bmodel_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
   // エレベーター部屋
   {
-    { 8 , 0 , 1}, // 上
-    { 8 , 0 , 17}, // 下
-    { 0 , 0 , 9}, // 左
-    { 16 , 0 , 9}, // 右
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
   },
   // ボス部屋
   {
-    { 8 , 0 , 18}, // 上
-    { 8 , 0 , 18}, // 下
-    { 8 , 0 , 18}, // 左
-    { 8 , 0 , 18}, // 右
+    { 6 , 0 , 14},// 上
+    { 6 , 0 , 14},// 下
+    { 6 , 0 , 14},// 左
+    { 6 , 0 , 14},// 右
   },
   // 特殊部屋１
   {
-    { 8 , 0 , 1}, // 上
-    { 8 , 0 , 17}, // 下
-    { 0 , 0 , 9}, // 左
-    { 16 , 0 , 9}, // 右
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
   },
   // 特殊部屋２
   {
-    { 8 , 0 , 1}, // 上
-    { 8 , 0 , 17}, // 下
-    { 0 , 0 , 9}, // 左
-    { 16 , 0 , 9}, // 右
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
   },
   // 通常部屋
   {
-    { 8 , 0 , 1}, // 上
-    { 8 , 0 , 17}, // 下
-    { 0 , 0 , 9}, // 左
-    { 16 , 0 , 9}, // 右
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
   },
 };
 
@@ -3004,6 +3004,7 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
   INF_DUNGEON_DATA *p_dungeon_data;
   u32 tr_seed;
   u32 floor_id;
+  u8  version;
   u8  id_pos = obj_id;
 
   // セーブデータの取得
@@ -3021,6 +3022,8 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
 
   // トレーナーID
   tr_id = INFINITY_DUNGEON_GetTrIDByIDPos( p_dungeon_data ,floor_id ,id_pos );
+
+  version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
 
   // 乱数を作成
   GFL_STD_RandInit( &rand_context, tr_seed );
@@ -3060,7 +3063,7 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
         &tr_data,
         NULL ,TRID_OFFSET_INFINITY_DUNGEON ,
         sc_level_table[area_no].level_max ,
-        sc_level_table[area_no].level_min , 0 , &rand_context);
+        sc_level_table[area_no].level_min , 0 ,version ,area_no, &rand_context);
 
     GFL_HEAP_FreeMemory(party);
 
@@ -3831,6 +3834,35 @@ static BOOL IsMoveElevator( MAP_CHAGE_EVENT_WORK *p_wk )
     return TRUE;
   }
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダンジョン内のトレーナー人数を調べる
+ *
+ *	@param	*p_dungeon_data 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u32 INFINITY_DUNGEON_TrainerCount( INF_DUNGEON_DATA *p_dungeon_data )
+{
+  u32 member_num =0;
+  int i,n;
+  for( i = 0; i < INFINITYDUNGEON_FLOOR_MAX ;i++ )
+  {
+    for( n = 0; n < ROOM_MAX ;n++ )
+    {
+      u8 tr_pos_type = p_dungeon_data->room_data[i][n].tr_pos_type;
+      if( tr_pos_type != INF_TR_ROOM_POS_TYPE_NONE )
+      {
+          member_num += GetMemberNum(tr_pos_type);
+      }
+    }
+  }
+
+  ONOUE_Printf("無限ダンジョン内トレーナーの数を取得：%u\n",member_num);
+  return member_num;
 }
 
 #ifdef PM_DEBUG

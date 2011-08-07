@@ -60,5 +60,6 @@ extern void INFINITYDUNGEON_SAVE_SetRecoverFlag( INFINITYDUNGEON_SAVE *p_save ,i
 extern void INFINITYDUNGEON_SAVE_SetMapStatus( INFINITYDUNGEON_SAVE *p_save ,u8 map_status);
 extern void INFINITYDUNGEON_SAVE_SetFloorID( INFINITYDUNGEON_SAVE *p_save ,u8 floor_id);
 extern void INFINITYDUNGEON_SAVE_SetRoomID( INFINITYDUNGEON_SAVE *p_save ,u8 room_id);
+extern u16 INFINITYDUNGEON_SAVE_GetWinTrainerCount( const INFINITYDUNGEON_SAVE *p_save );
 
 extern KEY_SYSTEM_SAVE * INFINITYDUNGEON_SAVE_GetKeySystem( INFINITYDUNGEON_SAVE *p_save );

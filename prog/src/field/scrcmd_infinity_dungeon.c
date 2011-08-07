@@ -50,30 +50,34 @@ typedef struct {
 //-------------------------------------
 //	ボスデータ
 //===================================== 
-static const INF_BOSS_DATA sc_boss_data[] = {
-  // ホワイト
-  { TRID_BREEDERM_1_01 , BREEDERM},
-  { TRID_BREEDERW_1_01 , BREEDERW},
-  { TRID_RANGERM_1_01 , RANGERM},
-  { TRID_RANGERW_1_01 , RANGERW},
-  { TRID_BCHAMP_1_01 , TBOSS},
+// ホワイト
+static const INF_BOSS_DATA sc_boss_data_w[] = {
+  { TRID_BREEDERM_1_01 , BREEDERW},
+  { TRID_BREEDERW_1_01 , BREEDERM},
+  { TRID_RANGERM_1_01 , RANGERW},
+  { TRID_RANGERW_1_01 , RANGERM},
+  { TRID_VETERANW_3_01 , VETERANW}, // TODO 指定のトレーナーIDに書き換える
   { TRID_ELITEM_2_01 , TRAINERM},
   { TRID_ELITEW_2_01 , TRAINERW},
   { TRID_VETERANM_3_01 , VETERANM},
   { TRID_VETERANW_3_01 , VETERANW},
-  { TRID_BCHAMP2_1_01 , TBOSS},
+  { TRID_MUGENBOSS_01 , MUGENBOSS},
+  { TRID_VETERANW_3_01 , VETERANM}, // TODO 指定のトレーナーIDに書き換える
+};
 
-  // ブラック
+// ブラック
+static const INF_BOSS_DATA sc_boss_data_b[] = {
   { TRID_BREEDERM_2_01 , BREEDERM},
   { TRID_BREEDERW_2_01 , BREEDERW},
   { TRID_RANGERM_2_01 , RANGERM},
   { TRID_RANGERW_2_01 , RANGERW},
-  { TRID_BCHAMP_2_01 , TBOSSBL},
-  { TRID_ELITEM_3_01 , TRAINERM},
-  { TRID_ELITEW_3_01 , TRAINERW},
-  { TRID_VETERANM_4_01 , VETERANM},
-  { TRID_VETERANW_4_01 , VETERANW},
-  { TRID_BCHAMP2_2_01 , TBOSSBL},
+  { TRID_VETERANM_4_03 , VETERANM},
+  { TRID_ELITEM_3_01 , TRAINERW},
+  { TRID_ELITEW_3_01 , TRAINERM},
+  { TRID_VETERANM_4_01 , VETERANW},
+  { TRID_VETERANW_4_01 , VETERANM},
+  { TRID_MUGENBOSS_02 , MUGENBOSS},
+  { TRID_VETERANM_4_02 , VETERANW},
 };
 
 //=============================================================================
@@ -81,6 +85,7 @@ static const INF_BOSS_DATA sc_boss_data[] = {
  *					プロトタイプ宣言
 */
 //=============================================================================
+static const INF_BOSS_DATA* GetBossData( SCRCMD_WORK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -389,30 +394,12 @@ VMCMD_RESULT EvCmdInfinityDungeonLiftBanElevator( VMHANDLE *p_core, void *p_wk_a
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdInfinityDungeonGetBossNo( VMHANDLE *p_core, void *p_wk_adrs )
 {
-  INFINITYDUNGEON_SAVE  *p_save;
   SCRCMD_WORK *p_wk = p_wk_adrs;
-  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
-  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
-  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
-  u8  area_id;
-  u32 version;
-  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-
-  // エリアIDを取得
-  area_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
-
-  // バージョン指定
-  version = GET_VERSION();
-
-  // オフセット分ずらす
-  if( version == VERSION_B2 )
-  {
-    area_id += 10;
-  }
+  const INF_BOSS_DATA* p_boss = GetBossData( p_wk );
 
   // ボスインデックスを返す
-  *p_ret_wk = sc_boss_data[area_id].tr_id;
+  *p_ret_wk = p_boss->tr_id;
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -518,32 +505,12 @@ VMCMD_RESULT EvCmdInfinityDungeonGetHintMsgID( VMHANDLE *p_core, void *p_wk_adrs
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdInfinityDungeonGetBossOBJCode( VMHANDLE *p_core, void *p_wk_adrs )
 {
-  INFINITYDUNGEON_SAVE  *p_save;
   SCRCMD_WORK *p_wk = p_wk_adrs;
-  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
-  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
-  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
-  u8  area_id;
-  u32 version;
-  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-
-  // エリアIDを取得
-  area_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
-
-  // バージョン指定
-  version = GET_VERSION();
-
-  // オフセット分ずらす
-  if( version == VERSION_B2 )
-  {
-    area_id += 10;
-  }
+  const INF_BOSS_DATA* p_boss = GetBossData( p_wk );
 
   // OBJ_CODEを返す
-  *p_ret_wk = sc_boss_data[area_id].obj_code;
-
-  ONOUE_Printf("見た目を設定\n");
+  *p_ret_wk = p_boss->obj_code;
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -874,6 +841,16 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
       *p_ret_wk = INFINITYDUNGEON_SAVE_GetRoomID( p_save );
     }
     break;
+  case SCR_INFDUNGEON_PARAM_TRAINER_COUNT:
+    {
+      *p_ret_wk = INFINITY_DUNGEON_TrainerCount( p_dungeon_data );
+    }
+    break;
+case SCR_INFDUNGEON_PARAM_WIN_TRAINER_COUNT:
+    {
+      *p_ret_wk = INFINITYDUNGEON_SAVE_GetWinTrainerCount( p_save );
+    }
+    break;
   default:
     {
       GF_ASSERT(0);
@@ -882,5 +859,61 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
   }
 
   return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンドワークから、現在のボスデータを取得する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static const INF_BOSS_DATA* GetBossData( SCRCMD_WORK *p_wk )
+{
+  u8  area_id;
+  u32 rom_version;
+  u32 dungeon_version;
+  INFINITYDUNGEON_SAVE  *p_save;
+  const INF_BOSS_DATA* p_boss;
+
+  // 無限ダンジョンデータを取得
+  GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
+  INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+
+  // セーブデータを取得
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gsys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+
+  // エリアIDを取得
+  area_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
+
+  // バージョン指定
+  rom_version = GET_VERSION();
+  dungeon_version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+
+  // バージョンごとにテーブルを取得
+  if( dungeon_version == VERSION_B2 )
+  {
+    p_boss = sc_boss_data_b;
+  }
+  else
+  {
+    p_boss = sc_boss_data_w;
+  }
+
+  // 最上階の場合でかつ、バージョン違いの場合はインデックスをずらす
+  if( area_id == INFINITY_DUNGEON_AREA_ID_10 )
+  {
+    if( rom_version == dungeon_version )
+    {
+      area_id ++;
+    }
+  }
+
+  return &p_boss[area_id];
 }
 

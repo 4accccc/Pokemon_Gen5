@@ -60,6 +60,7 @@ extern BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
     u32 trid_offset,
     const u16 level_max, const u16 level_min,
     const int level_correction,
+    const u8 version, const u32 area_no,
     GFL_STD_RandContext *rand_context);
 extern u16 FBI_TOOL_GetTrtype(ARCID tr_arcID, u16 tr_no, HEAPID heapID );
 

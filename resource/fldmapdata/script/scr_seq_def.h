@@ -14064,8 +14064,11 @@
  * @def _INFINITY_DUNGEON_GET_PARAM
  * @brief 無限ダンジョン:ダンジョンのパラメータを返す
  * @param param_id パラメータID
- *        SCR_INFDUNGEON_PARAM_START_FLOOR  (0) // 現在のダンジョンの開始階
- *        SCR_INFDUNGEON_PARAM_FLOOR_NUM    (1) // 現在のダンジョンの開始階数
+ *        SCR_INFDUNGEON_PARAM_START_FLOOR        (0) // 現在のダンジョンの開始階
+ *        SCR_INFDUNGEON_PARAM_FLOOR_NUM          (1) // 現在のダンジョンの開始階数
+ *        SCR_INFDUNGEON_PARAM_ROOM_ID            (2) // 現在の部屋番号
+ *        SCR_INFDUNGEON_PARAM_TRAINER_COUNT      (3) // ダンジョン内のトレーナー数
+ *        SCR_INFDUNGEON_PARAM_WIN_TRAINER_COUNT  (4) // 勝利済みのトレーナー数
  * @param area_id  エリアID
  * @param ret_wk   パラメータ格納先
  */
