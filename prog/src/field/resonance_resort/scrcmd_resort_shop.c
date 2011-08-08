@@ -1616,15 +1616,18 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
       {
         RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution(p_resident);
         u32 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-        u16 shop = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL );
+
+        const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( wk->p_shop, p_resident );
+        u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+
         u16 y = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_MEET_YEAR, NULL );
         u16 m = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_MEET_MONTH, NULL );
         u16 d = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_MEET_DAY, NULL );
         STRBUF *p_shopname = RESORT_DATA_MANAGER_CreateShopName( wk->p_shop, p_resident, wk->heapId );
 
         GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(wk->heapId) );
-        STRBUF *p_shoplabel = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop );
-        STRBUF *p_shopinfo  = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04_01 + shop);
+        STRBUF *p_shoplabel = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop_type );
+        STRBUF *p_shopinfo  = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04_01 + shop_type);
 
         STRBUF *p_name_str;
         STRBUF *p_info_str;
@@ -1746,11 +1749,13 @@ static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
   {
     RESORT_RESIDENT_DATA *p_resident = wk->lineup[i].p_data_adrs;
 
-    u16 shop = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL );
+    const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( wk->p_shop, p_resident );
+    u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+
     STRBUF *p_shopname = RESORT_DATA_MANAGER_CreateShopName( wk->p_shop, p_resident, wk->heapId );
 
     GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(wk->heapId) );
-    STRBUF *p_shopinfo = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop );
+    STRBUF *p_shopinfo = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop_type );
 
     STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_02 );
     STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04 );

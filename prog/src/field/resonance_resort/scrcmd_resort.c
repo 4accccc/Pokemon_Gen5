@@ -194,12 +194,14 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  void *p_people_data = RESORT_PEOPLE_GetDataAdrs( p_people );
   const u16 heapID = FIELDMAP_GetHeapID( p_field );
 
 
   RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
 
   RESORT_BINARY_SPOT *p_spot = RESORT_SYSTEM_GetBinarySpot( p_sys );
+  RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
   RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity( p_sys );
 
   switch( param )
@@ -285,14 +287,24 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_MSGID_APPEAL:
     {
-      u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
-      *p_ret_wk = data + resort_appeal_00;  //TODO ê´ï ëŒâûÇ∑ÇÈÅH
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, (RESORT_RESIDENT_DATA *)p_people_data );
+
+      u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+
+      GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
+
+      *p_ret_wk = shop_type + resort_appeal_00;
     }
     break;
   case RESORT_MSGID_SHOP_INFO:
     {
-      u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TYPE, NULL );
-      *p_ret_wk = data + resort_shopinfo_00;  //TODO ê´ï ëŒâûÇ∑ÇÈÅH
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, (RESORT_RESIDENT_DATA *)p_people_data );
+
+      u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+
+      GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
+
+      *p_ret_wk = shop_type + resort_shopinfo_00;
     }
     break;
   case RESORT_MSGID_GOSSIP:
@@ -333,8 +345,8 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
   {
   case RESORT_JOBCHANGE_RESIDENT_AUTO:
     {
-      u32 type = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
-      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people), type );
+      //TODO
+      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
     }
     break;
 
@@ -351,8 +363,8 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_JOBCHANGE_RESIDENT_GYM:
   case RESORT_JOBCHANGE_RESIDENT_HOUSE:
     {
-      u32 type = param-1;
-      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people), type );
+      //u32 type = param-1;
+      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
     }
     break;
 
@@ -439,6 +451,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  void *p_people_data = RESORT_PEOPLE_GetDataAdrs( p_people );
 
   RESORT_RESIDENT_DATA *p_data;
 
@@ -517,7 +530,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
       STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_PHRASE_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
 
       u32 sex = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
-      RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_PHRASE, phrase );
+      RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, phrase );
 
       GFL_STR_SetStringCode( p_str, phrase );
     
@@ -601,9 +614,16 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_WORD_SHOP_LABEL:
     {
-      u32 data = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_TYPE, NULL );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, (RESORT_RESIDENT_DATA *)p_people_data );
+
+      u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+
+
+
       GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
-      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_shoplabel_00+data );
+      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_shoplabel_00+shop_type );
+
+      GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
 
       WORDSET_RegisterWord( p_wordset, idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
       GFL_STR_DeleteBuffer(p_str);
@@ -748,8 +768,9 @@ VMCMD_RESULT EvCmdResortJobChangeEx( VMHANDLE *p_core, void *p_wk_adrs )
   {
   case RESORT_JOBCHANGE_RESIDENT_AUTO:
     {
-      u32 type = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
-      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people), type );
+      //TODO
+      //u32 type = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
     }
     break;
 
@@ -766,8 +787,9 @@ VMCMD_RESULT EvCmdResortJobChangeEx( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_JOBCHANGE_RESIDENT_GYM:
   case RESORT_JOBCHANGE_RESIDENT_HOUSE:
     {
-      u32 type = param-1;
-      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people), type );
+      //TODO
+      //u32 type = param-1;
+      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
     }
     break;
 
@@ -1679,7 +1701,7 @@ VMCMD_RESULT EvCmdResortGetMouthComm( VMHANDLE *p_core, void *p_wk_adrs )
 
           {
             STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_PHRASE_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
-            RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_PHRASE, name );
+            RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT6_PHRASE, name );
             GFL_STR_SetStringCode( p_str, name );
             WORDSET_RegisterWord( p_wordset, 1, p_str, PM_NEUTRAL, TRUE, PM_LANG );
             GFL_STR_DeleteBuffer(p_str);

@@ -285,7 +285,7 @@ BOOL RESORT_DATA_MANAGER_IsRecvToResident( const RESORT_DATA_MANAGER *cp_wk, con
  *	@param	type  転職タイプ　RESORT_RESIDENT_TYPE_xxx
  */
 //-----------------------------------------------------------------------------
-void RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src, u16 type )
+void RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src )
 {
   u16 peopleID;
   RESORT_ABSTRUCT_DATA *p_dst_adrs;
@@ -296,7 +296,7 @@ void RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_
     p_dst = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_dst_adrs );
 
     //データを転職
-    RESORT_RESIDENT_DATA_SetRecv( p_dst, p_src, peopleID, RESORT_PLACEID_FIELD, type );
+    RESORT_RESIDENT_DATA_SetRecv( p_dst, p_src, peopleID, RESORT_PLACEID_FIELD );
 
     //アップデート
     RESORT_DATA_MANAGER_Update( p_wk );
