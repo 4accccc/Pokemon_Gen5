@@ -163,7 +163,8 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
     u16 grid_z = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
 
     u16 size_x  = 5;
-    u16 size_z  = 5;
+    u16 size_origin_z = 5;
+    u16 size_z  = size_origin_z;
 
     //住民が存在して、住民の施設がブロック内にある場合に配置モデルを3dmdを配置
     //ブロック外のときは処理をしない
@@ -183,7 +184,6 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
         // g3Dmapローカルのグリッド座標を求める
         u32 local_grid_x = grid_x % 32;
         u32 local_grid_z = grid_z % 32;
-
         u32 read_grid_x = 0;
         u32 read_grid_z = 0;
 
@@ -205,6 +205,7 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
         }
 
         //建物を書き換え
+        //TODO
         {
           u16 rotate  = 0;
           if( i % 2 == 1 )
@@ -215,10 +216,11 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
         }
 
         // アトリビュートのオーバーライト
+        //NAGI_Printf( "rx%d rz%d lx%d lz%d sx%d sz%d \n", read_grid_x, read_grid_z, local_grid_x, local_grid_z, size_x, size_z );
         FIELD_DATA_PATCH_OverWriteAttrEx( p_patch, p_attr, read_grid_x, read_grid_z, local_grid_x, local_grid_z, size_x, size_z );
 
         //3dmdを配置
-        build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z );
+        build_count = FIELD_LAND_DATA_PATCH_AddBuildModelEx( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z, local_grid_x, local_grid_z, size_x, size_z );
 
         FIELD_DATA_PATCH_Delete( p_patch );
       }

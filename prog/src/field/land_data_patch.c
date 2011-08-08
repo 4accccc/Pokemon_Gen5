@@ -124,7 +124,6 @@ void FIELD_DATA_PATCH_WriteBuildModelEx( FIELD_DATA_PATCH *p_sys, BMODEL_ID bmod
 {
   FIELD_DATA_PATCH_WriteBuildModel(p_sys, bmodelID, index);
 
-
   {
     LayoutFormat* p_3dmd = FIELD_LAND_DATA_PATCH_Get3DmdData( p_sys );
     PositionSt* p_position = (PositionSt*)&p_3dmd->posData;
@@ -283,8 +282,59 @@ int FIELD_LAND_DATA_PATCH_AddBuildModel( const FIELD_DATA_PATCH* cp_sys, FIELD_B
   return count_start + cp_3dmd->count;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マップ情報の部分書き換えパッチ  配置モデルの追加登録  描画範囲を見る版
+ *
+ *	@param	cp_sys          システム
+ *	@param	p_bmodel        配置モデル管理システム
+ *	@param	g3Dmap          ３Dマップ情報
+ *	@param	count_start     配置モデル登録開始カウント値
+ *	@param  grid_x          ｘグリッド
+ *	@param  grid_z          ｚグリッド
+ *	@param  limit_x         描画範囲X
+ *	@param  limit_z         描画範囲Z
+ *	@param  size_x          サイズX
+ *	@param  size_z          サイズZ
+ *
+ *	@return モデル登録　終了カウント値
+ */
+//-----------------------------------------------------------------------------
+int FIELD_LAND_DATA_PATCH_AddBuildModelEx( const FIELD_DATA_PATCH* cp_sys, FIELD_BMODEL_MAN * p_bmodel, FLD_G3D_MAP * g3Dmap, int count_start, u32 grid_x, u32 grid_z, u32 limit_x, u32 limit_z, u32 size_x, u32 size_z )
+{
+  const LayoutFormat* cp_3dmd;
+  const PositionSt* cp_position;
+  PositionSt regist;
+  int i;
+  int cnt = 0;
 
+  // 配置情報を取得
+  cp_3dmd = FIELD_LAND_DATA_PATCH_Get3DmdData( cp_sys );
+  cp_position = (const PositionSt*)&cp_3dmd->posData;
 
+  NAGI_Printf( "3dmd count %d\n", cp_3dmd->count );
+
+  // 追加登録
+  for( i=0; i<cp_3dmd->count; i++ )
+  {
+    GFL_STD_MemCopy( &cp_position[i], &regist, sizeof(PositionSt) );
+
+    NAGI_Printf( "bmodel idx = %d\n", regist.resourceID );
+    NAGI_Printf( "regist pos x=%d z=%d sx=%d sz=%d \n", FX32_TO_GRID( regist.xpos ), FX32_TO_GRID( regist.zpos ), grid_x, grid_z );
+    NAGI_Printf( "limit pos x=%d z=%d w=%d h=%d\n", limit_x, limit_z, size_x, size_z );
+
+    if( regist.xpos+GRID_TO_FX32(16) < GRID_TO_FX32(size_x)
+      && GRID_TO_FX32(16)-regist.zpos < GRID_TO_FX32(size_z))
+    {
+      regist.xpos += GRID_TO_FX32( grid_x );
+      regist.zpos -= GRID_TO_FX32( grid_z );
+      FIELD_BMODEL_MAN_ResistMapObject( p_bmodel, g3Dmap, &regist, count_start + cnt);
+      cnt++;
+    }
+  }
+
+  return count_start + cnt;
+}
 
 
 

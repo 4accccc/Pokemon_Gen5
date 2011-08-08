@@ -65,6 +65,7 @@ extern void FIELD_DATA_PATCH_OverWriteAttrEx( const FIELD_DATA_PATCH* cp_sys, No
 
 // îzíuÉÇÉfÉãê›íË
 extern int FIELD_LAND_DATA_PATCH_AddBuildModel( const FIELD_DATA_PATCH* cp_sys, FIELD_BMODEL_MAN * p_bmodel, FLD_G3D_MAP * g3Dmap, int count_start, u32 grid_x, u32 grid_z );
+extern int FIELD_LAND_DATA_PATCH_AddBuildModelEx( const FIELD_DATA_PATCH* cp_sys, FIELD_BMODEL_MAN * p_bmodel, FLD_G3D_MAP * g3Dmap, int count_start, u32 grid_x, u32 grid_z, u32 limit_x, u32 limit_z, u32 size_x, u32 size_z );
 
 #ifdef _cplusplus
 }	// extern "C"{
