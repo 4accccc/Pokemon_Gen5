@@ -290,6 +290,8 @@ EVENT_START   ev_debug_mizuguchi
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_11, 10 )	//D27搭乗3回目
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_12, 11 )	//D27・ヴィオ戦前
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_13, 12 )	//D27・アクロマ戦前
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_14, 13 )	//D27・アクロマ戦前
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_15, 14 )	//D27・アクロマ戦前
 		//メニュー表示
 		_BMPMENU_START()
 	
@@ -520,6 +522,10 @@ EVENT_START   ev_debug_mizuguchi
       //マップ遷移
       _MAP_CHANGE( ZONE_ID_D27R1001, 15, 19, DIR_UP )
     
+    ELSIF $SCWK_TEMP2 == 13 THEN
+      _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
+    ELSIF $SCWK_TEMP2 == 14 THEN
+      _FLAG_RESET( FE_D10_PLAZMA_FRIGATE_01 )
     ELSE
 			//C04R0101でんきジム実験
 			$WK_SCENE_C04GYM0101_SHOWEND = 1

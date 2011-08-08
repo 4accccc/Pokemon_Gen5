@@ -5,5 +5,7 @@
 #define _D10R0401_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_ZONE_D10R0401 (1)
+#define SCRID_INIT_D10R0401 (2)
 
 #endif //_D10R0401_DEF_H_
