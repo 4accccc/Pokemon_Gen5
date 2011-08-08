@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-08-06T21:18:06" source="in01_local_texset.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-08-08T17:05:59" source="in01_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-08-06T21:18:06" source="in01_local_texset.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-08-08T17:05:59" source="in01_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -903,14 +903,14 @@
 		path="C:/home/swan_data3d/field/in01/chip/tex/in01_rappa.tga"
 	>
 		<bitmap size="64">
-			0000 4668 0dd8 0000 0000 7778 dcc8 0000
-			3000 8412 cc99 0000 1000 7513 c9b9 000d
-			0000 756c cbac 000d 3000 8512 cbac 000c
-			1000 8513 c9a9 00dc c000 7578 cc99 00dc
-			8000 4566 ccc8 00cc 7000 5466 ccc7 00cc
-			4800 5466 cc84 00cc 6480 4666 c855 00cc
-			7648 cccc 8467 00dc cc78 cccc 87cc 000c
-			888d 7777 c888 000d cdd0 8888 0ddc 0000
+			0000 4669 0ee9 0000 0000 7779 edd9 0000
+			3000 9412 ddaa 0000 1000 7513 daca 000e
+			0000 756d dcbd 000e 3000 9512 dcbd 000d
+			1000 9513 daba 00ed d000 7579 ddaa 00ed
+			9000 4566 ddd9 00dd 7000 5466 ddd7 00dd
+			4900 5466 dd94 00dd 6490 4666 d955 00dd
+			7649 8888 9467 00ed 8879 8888 9788 000d
+			999e 8888 d999 000e dee0 9999 0eed 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="45" name="in01_rappa2"
@@ -921,14 +921,14 @@
 		path="C:/home/swan_data3d/field/in01/chip/tex/in01_rappa2.tga"
 	>
 		<bitmap size="64">
-			0000 abab 0ccb 0000 0000 799b cddb 0000
-			3000 ba12 dd55 0000 1000 a813 d545 000c
-			0000 a89d d46d 000c 3000 b812 d46d 000d
-			1000 b813 d565 00cd d000 a8ab dd55 00cd
-			b000 7899 dddb 00dd a000 8799 ddda 00dd
-			8a00 8799 ddb7 00dd 97c0 7999 db88 00dd
-			a98b dddd b79a 00cd ddab dddd badd 000d
-			bbbc aaaa dbbb 000c dcc0 bbbb 0ccd 0000
+			0000 acac 0ddc 0000 0000 799c deec 0000
+			3000 ca12 ee55 0000 1000 a813 e545 000d
+			0000 a89e e46e 000d 3000 c812 e46e 000e
+			1000 c813 e565 00de e000 a8ac ee55 00de
+			c000 7899 eeec 00ee a000 8799 eeea 00ee
+			8a00 8799 eec7 00ee 97d0 7999 ec88 00ee
+			a98c bbbb c79a 00de bbac bbbb cabb 000e
+			cccd bbbb eccc 000d edd0 cccc 0dde 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="46" name="in01_saku"
@@ -3265,12 +3265,12 @@
 		2e38 3259 1573 21d6 25f7 2170 5eff 7fff
 	</tex_palette>
 	<tex_palette index="44" name="in01_rappa2_pl" color_size="16">
-		6d7b 49c5 66a9 5647 1371 120b 1a8e 2b7d
-		3bbf 22fa 1a57 11b4 2d90 212c 7fff 7fff
+		7fff 49c5 66a9 5647 1371 120b 1a8e 2b7d
+		3bbf 22fa 1a57 0d2e 11b4 2d90 212c 7fff
 	</tex_palette>
 	<tex_palette index="45" name="in01_rappa_pl" color_size="16">
-		6d7b 1647 272c 1eaa 2b7d 3bbf 22fa 1a57
-		11b4 14d4 1cf8 2d7c 294b 35ae 7fff 7fff
+		7fff 1647 272c 1eaa 2b7d 3bbf 22fa 1a57
+		0d2e 11b4 14d4 1cf8 2d7c 294b 35ae 7fff
 	</tex_palette>
 	<tex_palette index="46" name="in01_saku2_pl" color_size="8">
 		6a1c 2e9a 15f6 2238 0d94 1131 110f 7fff
