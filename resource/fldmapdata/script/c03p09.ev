@@ -13,6 +13,7 @@
   .include  "c03p09.h"
 
   //@author fujimura_souichirou（ヒウンアイスイベント）
+  //@author Mizuguchi_Mai（群集移植）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -33,6 +34,8 @@ _EVENT_DATA    ev_c03p09_customer_05
 _EVENT_DATA    ev_zone_c03p09
 _EVENT_DATA    ev_pos_c03p09_customer_05
 _EVENT_DATA    ev_c03p09_waitress_call_01
+_EVENT_DATA		ev_init_c03p09
+_EVENT_DATA		ev_recover_c03p09
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -72,6 +75,24 @@ INIT_EVENT_START  ev_zone_c03p09
       ENDIF
 
   ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*           FIELD_INIT_LABEL								  */
+/**************************************************************/
+INIT_EVENT_START	ev_init_c03p09
+
+	//群集の起動
+	_CROWD_PEOPLE_START()
+	
+INIT_EVENT_END
+
+INIT_EVENT_START	ev_recover_c03p09
+
+	//群集の起動
+
+  _CROWD_PEOPLE_START()
 
 INIT_EVENT_END
 

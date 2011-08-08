@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03p08.h"
   .include  "c03p08.h"
+  
+  //@author Mizuguchi_Mai（群集移植）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,7 +22,27 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_bg_c03p08_sign_01
+_EVENT_DATA		ev_init_c03p08
+_EVENT_DATA		ev_recover_c03p08
 _EVENT_DATA_END
+
+/**************************************************************/
+/*           FIELD_INIT_LABEL								  */
+/**************************************************************/
+INIT_EVENT_START	ev_init_c03p08
+
+	//群集の起動
+	_CROWD_PEOPLE_START()
+	
+INIT_EVENT_END
+
+INIT_EVENT_START	ev_recover_c03p08
+
+	//群集の起動
+
+  _CROWD_PEOPLE_START()
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*		C03P08		SIGN									  */

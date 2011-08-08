@@ -13,6 +13,7 @@
   .include  "c03p10.h"
 
   //@author fujimura_souichirou（ヒウン名所巡りイベント）
+  //@author Mizuguchi_Mai（群集移植）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,7 +24,28 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_bg_c03p10_sign_01
 _EVENT_DATA   ev_c03p10_informationw_01
+_EVENT_DATA		ev_init_c03p10
+_EVENT_DATA		ev_recover_c03p10
 _EVENT_DATA_END
+
+/**************************************************************/
+/*           FIELD_INIT_LABEL								  */
+/**************************************************************/
+INIT_EVENT_START	ev_init_c03p10
+
+	//群集の起動
+	_CROWD_PEOPLE_START()
+	
+INIT_EVENT_END
+
+INIT_EVENT_START	ev_recover_c03p10
+
+	//群集の起動
+
+  _CROWD_PEOPLE_START()
+
+INIT_EVENT_END
+
 
 /**************************************************************/
 /*  看板                                                      */
