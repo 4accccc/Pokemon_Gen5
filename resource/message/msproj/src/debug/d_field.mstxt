@@ -13225,10 +13225,10 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デザイナーさん用設定</Text>
+			<Text>１デザイナーさん用設定</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-08T09:10:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13236,10 +13236,10 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デザイナーさん用設定</Text>
+			<Text>１デザイナーさん用設定</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-08T09:10:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13306,6 +13306,72 @@ LR→補完"</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_FIELD_RESORT_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２デザイナーさん用設定</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-08T09:11:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２デザイナーさん用設定</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-08T09:11:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_FIELD_RESORT_42"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>３プレゼン用旅行者追加</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-08T09:11:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>３プレゼン用旅行者追加</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-08T09:11:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
