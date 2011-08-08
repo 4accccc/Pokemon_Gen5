@@ -53,6 +53,7 @@
 #include "savedata/save_tbl.h"
 #include "savedata/perapvoice.h"
 #include "savedata/resonance_resort_sv.h"
+#include "savedata/pokewood_savedata.h"
 
 #include "savedata/person_state.h"
 #include "app/local_tvt/local_tvt_call.h"
@@ -131,6 +132,9 @@ static u32 DebugGetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetPerap(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetPerap(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPokewoodStar(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPokewoodStar(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+
 
 static u32 DebugGetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
@@ -1119,6 +1123,22 @@ static void DebugSetPerap(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u
 {
   // 何も反映させない
   return;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ペラップ混乱確率表示（表示のみ）
+ */
+//--------------------------------------------------------------
+static u32 DebugGetPokewoodStar(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(GAMESYSTEM_GetGameData( gsys ));
+  return POKEWOOD_SAVEDATA_GetStarPoint(ps);
+}
+static void DebugSetPokewoodStar(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(GAMESYSTEM_GetGameData( gsys ));
+  POKEWOOD_SAVEDATA_SetStarPoint( ps, value );
 }
 
 

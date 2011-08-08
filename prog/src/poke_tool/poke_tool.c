@@ -4424,11 +4424,11 @@ u8 POKETOOL_CheckPokeFormNo_Field( u16 mons_no, u8 form_no )
 
 enum{
   STAR_POINT_RANK1_MIN =   0,
-  STAR_POINT_RANK2_MIN =  20,
-  STAR_POINT_RANK3_MIN =  40,
-  STAR_POINT_RANK4_MIN =  70,
-  STAR_POINT_RANK5_MIN =  95,
-  STAR_POINT_RANK5_MAX =  99,
+  STAR_POINT_RANK2_MIN = 100,
+  STAR_POINT_RANK3_MIN = 150,
+  STAR_POINT_RANK4_MIN = 200,
+  STAR_POINT_RANK5_MIN = 250,
+  STAR_POINT_RANK5_MAX = 255,
 };
 
 //=============================================================================================
@@ -4444,7 +4444,6 @@ PtlStarRank POKETOOL_StarPoint2Rank( u8 star_point )
 {
   int rank=0;
 
-  GF_ASSERT_MSG( star_point<STAR_POINT_RANK5_MAX, "スターポイントが99を超えています = %d\n", star_point );
   if( star_point>=STAR_POINT_RANK1_MIN && star_point<STAR_POINT_RANK2_MIN ){
     rank=PTL_STAR_RANK_0;
   }else if( star_point>=STAR_POINT_RANK2_MIN && star_point<STAR_POINT_RANK3_MIN ){

@@ -17,6 +17,9 @@
 
 #define POKEWOOD_RECSAVEDATA_MAX  ( 8 ) //正確にはpokewood_rec.hを参照
 
+//----------------------------------------------------
+// ポケウッドセーブデータ実体
+//----------------------------------------------------
 struct _POKEWOOD_SAVEDATA{
 
   u32 open_flag[POKEWOOD_ARRAY_NUM];          ///< ポケウッド解放フラグ      8
@@ -25,8 +28,9 @@ struct _POKEWOOD_SAVEDATA{
   u8  showed_flag[POKEWOOD_RECSAVEDATA_MAX];  ///< 上映済みフラグ
 
   POKEWOOD_BOXOFFICE_RECORD boxoffice_record[POKEWOOD_BOXOFFICE_DATA_MAX];  // 興行成績ランキング 32*10+24
+  s16 star_point;                             ///< プレイヤーのスターポイント
 
-  u8 array[156];
+  u8 array[154];
 };
 
 //---------------------------------------------------------------------------
@@ -250,4 +254,79 @@ void POKEWOOD_SAVEDATA_SetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no, BOOL value
 
   sv->success_flag[offset] |= (1<<shift);
 
+}
+
+enum{
+  POKEWOOD_STAR_POINT_MIN =  0,
+  POKEWOOD_STAR_POINT_MAX = 99,
+};
+
+
+//=============================================================================================
+/**
+ * @brief	プレイヤーのスターポイントを返す
+ *
+ * @param   sv		
+ *
+ * @retval  u8		0-99
+ */
+//=============================================================================================
+int POKEWOOD_SAVEDATA_GetStarPoint( POKEWOOD_SAVEDATA *sv )
+{
+  GF_ASSERT(sv);
+  
+  // 範囲外は0に修正
+  if(sv->star_point>POKEWOOD_STAR_POINT_MAX || sv->star_point<POKEWOOD_STAR_POINT_MIN){
+    sv->star_point = 0;
+  }
+  return sv->star_point;
+}
+
+//=============================================================================================
+/**
+ * @brief	プレイヤーのスターポイントを足す
+ *
+ * @param   sv		
+ * @param   value		
+ */
+//=============================================================================================
+void POKEWOOD_SAVEDATA_AddStarPoint( POKEWOOD_SAVEDATA *sv, int value )
+{
+  GF_ASSERT(sv);
+  sv->star_point += value;
+  if(sv->star_point>POKEWOOD_STAR_POINT_MAX){
+    sv->star_point = POKEWOOD_STAR_POINT_MAX;
+  }
+
+}
+
+//=============================================================================================
+/**
+ * @brief	プレイヤーのスターポイントを引く
+ *
+ * @param   sv		
+ * @param   value		
+ */
+//=============================================================================================
+void POKEWOOD_SAVEDATA_DecStarPoint( POKEWOOD_SAVEDATA *sv, int value )
+{
+  GF_ASSERT(sv);
+  sv->star_point -= value;
+  if(sv->star_point<POKEWOOD_STAR_POINT_MIN){
+    sv->star_point = POKEWOOD_STAR_POINT_MIN;
+  }
+}
+
+//=============================================================================================
+/**
+ * @brief	プレイヤーのスターポイントを直接設定する
+ *
+ * @param   sv		  
+ * @param   value		設定したい値
+ */
+//=============================================================================================
+void POKEWOOD_SAVEDATA_SetStarPoint( POKEWOOD_SAVEDATA *sv, int value )
+{
+  POKEWOOD_SAVEDATA_DecStarPoint( sv, POKEWOOD_STAR_POINT_MAX );
+  POKEWOOD_SAVEDATA_AddStarPoint( sv, value );
 }

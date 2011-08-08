@@ -87,6 +87,9 @@ static const DEBUG_NUMINPUT_PARAM tv_param = {
 static const DEBUG_NUMINPUT_PARAM perap_param = {
  0, 30, DebugGetPerap, DebugSetPerap,
 };
+static const DEBUG_NUMINPUT_PARAM pokewood_star_param = {
+ 0, 99, DebugGetPokewoodStar, DebugSetPokewoodStar,
+};
 
 static const DEBUG_NUMINPUT_LIST DNI_FortuneList[] = {
   //gmm_id, param, dni_param
@@ -95,6 +98,7 @@ static const DEBUG_NUMINPUT_LIST DNI_FortuneList[] = {
   { dni_bp, 0, &bp_param },
   { dni_tv, 0, &tv_param },
   { dni_perap_level, 0, &perap_param },
+  { dni_pokewood_point, 0, &pokewood_star_param },
 };
 
 //////////////////////////////////////////////////////

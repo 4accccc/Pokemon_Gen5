@@ -240,7 +240,7 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   // ÉXÉ^Å[
   { INPUTBOX_TYPE_NUM,  DMPSTR_STAR,  LX_STAR_CAP,  LY_STAR_CAP,
     LX_STAR_BOX,        LY_STAR_BOX,  CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_star_point, PAGE_0,       99,  0,
+    ID_PARA_star_point, PAGE_0,       255,  0,
   },
 
   //---------------------------------------------------
