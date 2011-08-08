@@ -53,11 +53,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざの　おすすめ　です
-むしくい？（仮）</Text>
+			<Text>トレーナーさん！▼
+あなたに　オススメする　わざは
+ズバリ　むしくい！▼
+むしくいは　わざが　あたったとき
+あいてが　きのみを　もっていると▼
+きのみを　うばって　その　こうかを
+つかうことが　できるのです！▼
+オレンのみや　オボンのみを　うばえば
+あいてに　ダメージを　あたえ▽
+じぶんは　たいりょく　かいふく！▽
+いっせき　にちょう　ですぞ！▼
+むしタイプの　ポケモンが
+おおく　おぼえることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T02:53:16" />
+				Time="2011-08-05T10:25:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65,11 +76,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざの　おすすめ　です
-むしくい？（仮）</Text>
+			<Text>トレーナーさん！▼
+あなたに　オススメする　技は
+ズバリ　むしくい！▼
+むしくいは　技が　当たったとき
+相手が　きのみを　持っていると▼
+きのみを　奪って　その効果を
+使うことが　できるのです！▼
+オレンのみや　オボンのみを　奪えば
+相手に　ダメージを　与え▽
+自分は　体力　回復！▽
+一石二鳥ですぞ！▼
+むしタイプの　ポケモンが
+多く　覚えることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T02:53:52" />
+				Time="2011-08-05T10:25:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -105,11 +127,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざの　おすすめ　です
-ほしがる？（仮）</Text>
+			<Text>トレーナーさん！▼
+あなたに　オススメする　わざは
+ズバリ　ほしがる！▼
+ほしがるは　わざが　あたったとき
+あいてが　もちものを　もっていると▽
+それを　うばうことが　できるのです！▼
+やせいの　ポケモンから
+もちものを　うばえば▽
+せんとうが　おわったあとも▽
+その　もちものを▽
+じぶんの　ものに▽
+することが　できますぞ！▼
+かわいらしい　ポケモンが
+おおく　おぼえることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T02:53:26" />
+				Time="2011-08-05T10:08:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -117,11 +151,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざの　おすすめ　です
-ほしがる？（仮）</Text>
+			<Text>トレーナーさん！▼
+あなたに　オススメする　技は
+ズバリ　ほしがる！▼
+ほしがるは　技が　当たったとき
+相手が　持ち物を　持っていると▽
+それを　うばうことが　できるのです！▼
+野生の　ポケモンから
+持ち物を　奪えば▽
+戦闘が　終わったあとも▼
+その持ち物を
+自分の　物に▽
+することが　できますぞ！▼
+可愛らしい　ポケモンが
+多く　覚えることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T02:53:52" />
+				Time="2011-08-05T10:26:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -157,11 +203,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざの　おすすめ　です
-いかりのまえば？（仮）</Text>
+			<Text>トレーナーさん！▼
+あなたに　オススメする　わざは
+ズバリ　いかりのまえば！▼
+いかりのまえばは　あいての
+ポケモンの　たいりょくを▽
+はんぶんに　する　わざです！▼
+つかう　ポケモンの
+ちからが　よわかった▼
+あいての　ポケモンの
+まもりが　かたかったり　しても▼
+かくじつに　ダメージを
+あたえることが　できますぞ！▼
+おおきな　はを　もった　ポケモンが
+おおく　おぼえることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T02:53:33" />
+				Time="2011-08-05T10:27:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -169,11 +227,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざの　おすすめ　です
-いかりのまえば？（仮）</Text>
+			<Text>トレーナーさん！▼
+あなたに　オススメする　技は
+ズバリ　いかりのまえば！▼
+いかりのまえばは　相手の
+ポケモンの　体力を▽
+半分に　する　技です！▼
+使う　ポケモンの
+力が　よわかったり▼
+相手の　ポケモンの
+守りが　堅かったり　しても▼
+確実に　ダメージを
+与えることが　できますぞ！▼
+大きな　歯を　もった　ポケモンが
+多く　覚えることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T02:53:52" />
+				Time="2011-08-05T10:27:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -209,11 +279,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざの　おすすめ　です
-けたぐり？（仮）</Text>
+			<Text>トレーナーさん！▼
+あなたに　オススメする　わざは
+ズバリ　けたぐり！▼
+けたぐりは　あいての　ポケモンが
+おもければ　おもいほど▽
+いりょくが　あがる　わざ！▼
+かくとうタイプの　わざですので
+おもたい　ポケモンが　おおい▽
+いわタイプや　はがねタイプの▽
+ポケモンに　たかい　こうかを▽
+はっき　しますぞ！▼
+２ほんあしで　たつ　ポケモンが
+おおく　おぼえることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T02:53:40" />
+				Time="2011-08-05T10:08:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -221,11 +302,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざの　おすすめ　です
-けたぐり？（仮）</Text>
+			<Text>トレーナーさん！▼
+あなたに　オススメする　技は
+ズバリ　けたぐり！▼
+けたぐりは　あいての　ポケモンが
+重ければ　重いほど▽
+威力が　あがる　技！▼
+かくとうタイプの　技ですので
+重たい　ポケモンが　多い▽
+いわタイプや　はがねタイプの▽
+ポケモンに　高い　効果を▽
+発揮しますぞ！▼
+２本足で　立つ　ポケモンが
+多く　覚えることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T02:53:52" />
+				Time="2011-08-05T10:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -261,11 +353,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざの　おすすめ　です
-さわぐ？（仮）</Text>
+			<Text>トレーナーさん！▼
+あなたに　オススメする　わざは
+ズバリ　さわぐ！▼
+さわぐは　いちど　つかうと
+３ターンのあいだ▽
+さわぎつづける　わざです！▼
+さわいでいる　ポケモンは
+ほかの　わざを　つかえず▼
+じぶんも　あいても
+ポケモンを　ねむらせることが▽
+できなく　なります！▼
+これが　メリットになるか
+デメリットに　なるかは▽
+あなたしだい　ですぞ！▼
+こえが　うるさそうな　ポケモンが
+おおく　おぼえることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T02:53:49" />
+				Time="2011-08-05T10:28:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -273,11 +379,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざの　おすすめ　です
-さわぐ？（仮）</Text>
+			<Text>トレーナーさん！▼
+あなたに　オススメする　技は
+ズバリ　さわぐ！▼
+さわぐは　いちど　つかうと
+３ターンのあいだ▽
+さわぎつづける　技です！▼
+さわいでいる　ポケモンは
+他の　技を　使えず▼
+自分も　相手も
+ポケモンを　ねむらせることが▽
+できなく　なります！▼
+これが　メリットになるか
+デメリットに　なるかは▽
+あなたしだい　ですぞ！▼
+声が　うるさそうな　ポケモンが
+多く　覚えることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T02:53:52" />
+				Time="2011-08-05T10:28:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

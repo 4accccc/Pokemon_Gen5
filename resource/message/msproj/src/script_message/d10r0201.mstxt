@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なかまが　くるまで　て
-いつまで　なんだろうな？</Text>
+いつまで　なんだろうな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:18:23" />
+				Time="2011-08-05T08:21:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なかまが　くるまで　て
-いつまで　なんだろうな？</Text>
+			<Text>仲間が　来るまで　て
+いつまで　なんだろうな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T11:50:37" />
+				Time="2011-08-05T08:21:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -32,12 +32,12 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX＝60、GRIDZ＝17
-・プラズマフリゲート2回目クリアまで
 ・どちらに話しかけてもこのセリフから
-　続けてswplazmam2_01</Comment>
+　続けてswplazmam2_01
+・プラズマフリゲート2回目クリアまで</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:15:57" />
+				Time="2011-08-05T08:33:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -72,11 +72,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このさきは　だいじな　ばしょだって！
-つまり　みはりも　だいじな　しごとさ</Text>
+			<Text>この先は　大事な　場所だって！
+つまり　見張りも　大事な　仕事さ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:15:36" />
+				Time="2011-08-05T08:22:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -105,11 +105,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ジャマする　ヤツは
+			<Text>[Name:TrainerName Idx="1" ]『
+ジャマする　ヤツは
 ぜんぶ　ぶっとばしていくぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:38:34" />
+				Time="2011-08-05T08:33:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -159,10 +160,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おーい！
-あつまれ　ってよ！▼</Text>
+ここは　もういい　ってよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:21:23" />
+				Time="2011-08-05T08:34:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -171,10 +172,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おーい！
-あつまれ　ってよ！▼</Text>
+ここは　もういい　ってよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:22:27" />
+				Time="2011-08-05T08:34:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -212,11 +213,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いよいよ　はじまるのか！
+			<Text>いよいよ　だな！
 よし　いそごう！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:22:23" />
+				Time="2011-08-05T08:34:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -224,11 +225,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いよいよ　はじまるのか！
+			<Text>いよいよ　だな！
 よし　いそごう！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:22:27" />
+				Time="2011-08-05T08:34:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -279,10 +280,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>おれです　おれ！
+元プラズマ団　です！▼
+ロットさまに　頼まれ
+スパイを　やっている……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:09:07" />
+				Time="2011-08-05T08:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -319,10 +323,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キュレムを　つかって～</Text>
+			<Text>このさきに～
+キュレムを～</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:43:56" />
+				Time="2011-08-05T08:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -532,12 +537,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『フンッ！
-いろいろ～
-ここで～
+ここで　はなしてる　ばあいじゃないぜ
 いくぞ！　主人公名！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T07:24:38" />
+				Time="2011-08-05T08:28:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
