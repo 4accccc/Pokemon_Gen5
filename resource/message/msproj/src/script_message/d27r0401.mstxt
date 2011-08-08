@@ -71,15 +71,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたくしは　しりあいに　たのまれ
-けんきゅうを　てつだっていました！▼
-わたくしの　のぞみは　ポケモンの
-ちからを　かんぜんに　ひきだすこと！▼
+			<Text>わたくしは　知り合いに　頼まれ
+研究を　手伝っていました！▼
+わたくしの　望みは　ポケモンの
+能力を　完全に　ひきだすこと！▼
 それが　できるなら
-しゅだんは　なんでも　いいのです！▼</Text>
+手段は　なんでも　いいのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:50:59" />
+				Time="2011-08-08T07:32:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -121,10 +121,10 @@
 むじひな　アプローチで　むりやり▽
 ポケモンの　つよさを　ひきだしても！▼
 そう　そして　そのけっか
-せかいが　ほろんだ　としても！！</Text>
+せかいが　ほろぶ　としても！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T11:08:33" />
+				Time="2011-08-08T07:30:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -133,16 +133,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたがた　トレーナーの　ように
-こころと　こころの　こうりゅうで▽
-ポケモンの　つよさを　はっきさせても！▼
-プラズマだんの　ように
-むじひな　アプローチで　むりやり▽
-ポケモンの　つよさを　ひきだしても！▼
-そう　そして　そのけっか
-せかいが　ほろんだ　としても！！</Text>
+心と　心の　交流で▽
+ポケモンの　強さを　発揮させても！▼
+プラズマ団の　ように
+無慈悲な　アプローチで　無理やり▽
+ポケモンの　強さを　ひきだしても！▼
+そう　そして　その結果
+世界が　滅ぶ　としても！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:50:59" />
+				Time="2011-08-08T07:30:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -182,14 +182,14 @@
 かずおおくの　ポケモントレーナーと▽
 しょうぶを　していたのは▼
 ポケモンの　つよさを　ひきだす……
-その　ちからを　みていたからです！▼
+その　ししつを　みていたからです！▼
 そういう　いみで
 あなたは　ゆうしゅう　です！▼
 あなたが　わたくしの　のぞむ
 こたえを　もっているか　たしかめる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:39:13" />
+				Time="2011-08-08T07:32:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -198,18 +198,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それは　さておきッ！▼
-わたくしが　イッシュの　かくちで
-かずおおくの　ポケモントレーナーと▽
-しょうぶを　していたのは▼
-ポケモンの　つよさを　ひきだす……
-その　ちからを　みていたからです！▼
-そういう　いみで
-あなたは　ゆうしゅう　です！▼
-あなたが　わたくしの　のぞむ
-こたえを　もっているか　たしかめる！▼</Text>
+わたくしが　イッシュの　各地で
+数多くの　ポケモントレーナーと▽
+勝負を　していたのは▼
+ポケモンの　強さを　ひきだす……
+その資質を　みていたからです！▼
+そういう　意味で
+あなたは　優秀です！▼
+あなたが　わたくしの　望む
+答えを　持っているか　確かめる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:50:59" />
+				Time="2011-08-08T07:32:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -261,15 +261,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『……つよい！▼
-あなたは　つよい　トレーナーだ！▼
+			<Text>アクロマ『……強い！▼
+あなたは　強い　トレーナーだ！▼
 そこで　たずねたいことが　ある！
 あなたは　ポケモンと　トレーナーは▼
-わかりあうことで　さらなる　たかみを
-めざせると　かんがえていますかっ！</Text>
+わかりあうことで　さらなる　高みを
+目指せると　考えていますかっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:50:55" />
+				Time="2011-08-08T07:33:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -281,11 +281,11 @@
 ・アジト船３回目
 ・トレーナー戦闘後
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→</Comment>
+　はい　→swboss_03_06
+　いいえ→swboss_03_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T08:16:13" />
+				Time="2011-08-08T07:32:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -308,14 +308,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なるほど……！▼
-それは　りそう　かもしれない
-だが　その　しんねんを　もって！▼
+			<Text>なるほど……！
+それは　りそう　かもしれない▼
+だが　あなたが
+その　しんねんを　もって！▼
 ポケモンと　むきあっていることが
-つよさの　りゆうには　なる！</Text>
+つよさの　りゆうには　なっている！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:51:49" />
+				Time="2011-08-08T07:49:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -323,14 +324,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なるほど……！▼
-それは　りそう　かもしれない
-だが　その　しんねんを　もって！▼
-ポケモンと　むきあっていることが
-つよさの　りゆうには　なる！</Text>
+			<Text>なるほど……！
+それは　理想かもしれない▼
+だが　あなたが
+その　信念を　もって！▼
+ポケモンと　向き合っていることが
+強さの　理由には　なっている！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:51:55" />
+				Time="2011-08-08T07:49:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -339,10 +341,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船３回目</Comment>
+・アジト船３回目
+・はい選択時</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:46:54" />
+				Time="2011-08-08T07:40:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -365,14 +368,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なるほど……！▼
-それは　しんじつ　かもしれない
-だが　その　かくごを　もって！▼
+			<Text>なるほど……！
+それが　しんじつ　なのかもしれない▼
+だが　あなたが
+その　かくごを　もって！▼
 ポケモンと　むきあっていることが
-つよさの　りゆうに　なる！</Text>
+つよさの　りゆうに　なっている！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:51:57" />
+				Time="2011-08-08T07:49:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -380,14 +384,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なるほど……！▼
-それは　しんじつ　かもしれない
-だが　その　かくごを　もって！▼
-ポケモンと　むきあっていることが
-つよさの　りゆうに　なる！</Text>
+			<Text>なるほど……！
+それが　真実なのかもしれない▼
+だが　あなたが
+その　覚悟を　もって！▼
+ポケモンと　向き合っていることが
+強さの　理由に　なっている！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:51:59" />
+				Time="2011-08-08T07:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -396,10 +401,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船３回目</Comment>
+・アジト船３回目
+・いいえ選択時</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T07:47:21" />
+				Time="2011-08-08T07:40:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -422,7 +428,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くりかえしますが　わたしは
+			<Text>くりかえしますが　わたくしは
 ポケモンを　つよくするなら▽
 しゅだんは　なんでも　いいのです！▼
 ひとと　ポケモンの　こうりゅう　だけ
@@ -432,7 +438,7 @@
 ちからを　はっき　させてもいいのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:57:22" />
+				Time="2011-08-08T07:43:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -440,17 +446,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くりかえしますが　わたしは
-ポケモンを　つよくするなら▽
-しゅだんは　なんでも　いいのです！▼
-ひとと　ポケモンの　こうりゅう　だけ
-とどかない　たかみが　あるなら▼
-そこに　こころは　なくても
-かがくてきアプローチのみで▽
-ちからを　はっき　させてもいいのです</Text>
+			<Text>繰り返しますが　わたくしは
+ポケモンを　強くするなら▽
+手段は　なんでも　いいのです！▼
+人と　ポケモンの　交流だけ
+届かない　高みが　あるなら▼
+そこに　心は　なくても
+科学的アプローチのみ　で▽
+能力を　発揮させてもいいのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:57:25" />
+				Time="2011-08-08T07:43:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -459,10 +465,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船３回目</Comment>
+・アジト船３回目
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T07:47:21" />
+				Time="2011-08-08T07:43:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -485,7 +492,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ですが　あなたは　わたしに
+			<Text>ですが　あなたは　わたくしに
 かのうせいを　みせてくれた！▼
 あなたが　かつのか
 プラズマだんが　かつのか▼
@@ -496,7 +503,7 @@
 では　ぶうんを！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:57:08" />
+				Time="2011-08-08T07:43:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -504,18 +511,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ですが　あなたは　わたしに
-かのうせいを　みせてくれた！▼
-あなたが　かつのか
-プラズマだんが　かつのか▼
+			<Text>ですが　あなたは　わたくしに
+可能性を　みせてくれた！▼
+あなたが　勝つのか
+プラズマ団が　勝つのか▼
 わたくしにとって
-ひとと　ポケモンの！▼
-かかわりは　どう　あるべきかを
-きめる　たたかいでも　あるのです▼
-では　ぶうんを！</Text>
+人と　ポケモンの！▼
+関わりは　どう　あるべきかを
+決める　戦いでも　あるのです▼
+では　武運を！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:57:16" />
+				Time="2011-08-08T07:44:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -524,10 +531,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船３回目</Comment>
+・アジト船３回目
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T07:47:21" />
+				Time="2011-08-08T07:43:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

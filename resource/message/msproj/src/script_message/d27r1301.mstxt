@@ -1,3 +1,802 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d27r1301_pass_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうちが　ある……▼
+パスワードを　いれるみたいだが
+カードキーが　ひつよう　そうだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>装置が　ある……▼
+パスワードを　入力するみたいだが
+カードキーが　必要そうだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・Black2ver
+・カードキー（仮）を持っていない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>入力端末</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_pass_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうちが　ある……
+パスワードを　いれるみたいだ▼
+パスワードを　いれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>装置が　ある……
+パスワードを　入力するみたいだ▼
+パスワードを　入力しますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・Black2ver
+・カードキー（仮）を持っている
+・はい/いいえの選択肢表示
+　はい　→入力画面へ
+　いいえ→終了
+・パスワード関連は
+　hide_ship_passwordで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>入力端末</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_pass_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　パスワードは
+まちがって　います</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　パスワードは
+間違って　います</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント：船首楼
+・Black2ver
+・カードキーを持っている
+・入力ワードが不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>入力端末</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_switch_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バリアが　かいじょ　された！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バリアが　解除された！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・White2ver
+・バリアーが解除されたとき
+・すべて解除されたときは
+　続けてswitch_02
+</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>装置</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_switch_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すべての　バリアが　かいじょ　され
+さきに　すすめるように　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すべての　バリアが　解除され
+先に　進めるように　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・Black2ver
+　White2ver共通
+・すべてのバリアーが解除されたとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>装置</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_swplazmam1_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『おっと！
+また　あいましたね！▼
+おれです　もとプラズマだん　の！
+というか　まっていましたよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団『おっと！
+また　会いましたね！▼
+おれです　元プラズマ団の！
+というか　待っていましたよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・船尾楼からのワープパネルで移動後に
+　イベント発生
+・したっぱに！マーク表示後
+　主人公に隣接してメッセージ表示
+・続けてswplazmam1_02_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ
+※正体は元プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_swplazmam1_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロットさまに　れんらく　したのに
+だれも　たすけに　こないし……▼
+それに　ツライんですよ
+まわりの　れんちゅう　ったら▽
+Ｎさまの　ことを　ののしって……▼
+Ｎさまは　あやまちに　きづかれ
+じぶんの　みちを▼
+じぶんで　きめて　すすまれたのに
+それを　うらぎり　と　いうんですよ▽
+みんな　かって　ですよね……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ロットさまに　連絡したのに
+だれも　助けに　こないし……▼
+それに　ツライんですよ
+周りの　連中ったら▽
+Ｎさまの　ことを　ののしって……▼
+Ｎさまは　過ちに　気づかれ
+自分の　道を▼
+自分で　決めて　進まれたのに
+それを　裏切りと　いうんですよ▽
+みんな　勝手ですよね……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・続けてswplazmam1_02_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ
+※正体は元プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_swplazmam1_02_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああ！　そうでした！▼
+この　フロアはですね
+パイプの　めいろと　なっています▼
+スイッチを　ふむことで
+パイプが　つながったり　とぎれたり▼
+ちなみに　パイプの　うえを
+あるいて　すすめますよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああ！　そうでした！▼
+この　フロアはですね
+パイプの　迷路と　なっています▼
+スイッチを　踏むことで
+パイプが　つながったり　とぎれたり▼
+ちなみに　パイプの　上を
+歩いて　進めますよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・続けてswplazmam1_02_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ
+※正体は元プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_swplazmam1_02_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それにしても……▼
+おれたち　もとプラズマだんと
+いまも　プラズマだんの　れんちゅう▼
+どうして　おなじ　なかま　だったのに
+こんなに　ちがっちゃったのかな……？▼
+ああ！　この　フロアはですね
+パイプの　めいろと　なっています▼
+スイッチを　ふむことで
+パイプが　つながったり　とぎれたり▼
+ちなみに　パイプの　うえを
+あるいて　すすめますよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それにしても……▼
+おれたち　元プラズマ団と
+いまも　プラズマ団の　連中▼
+どうして　同じ　仲間だったのに
+こんなに　違っちゃったのかな……？▼
+ああ！　この　フロアはですね
+パイプの　迷路と　なっています▼
+スイッチを　踏むことで
+パイプが　つながったり　とぎれたり▼
+ちなみに　パイプの　上を
+歩いて　進めますよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・d10r0401クリアまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ
+※正体は元プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_sage7_03_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィオ『その　そうちは　こわせぬ▼
+ということは　キュレムを
+そこから　すくいだすことは　できない▼
+といっても　あきらめきれぬだろう？
+いんどうを　わたすのが　やさしさだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『その装置は　壊せぬ▼
+ということは　キュレムを
+そこから　救い出すことは　できない▼
+といっても　あきらめきれぬだろう？
+引導を　渡すのが　優しさだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・バリア解除後のposイベント
+　画面下から来てメッセージ表示
+・メッセージ表示後、トレーナー戦闘へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_sage7_03_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィオ『むうう！
+またしても　まけるとは……！▼
+だが　さいごに　わらうのは
+われわれ　プラズマだんで　ある！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『むうう！
+またしても　負けるとは……！▼
+だが　最後に　笑うのは
+われわれ　プラズマ団で　ある！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_machine1_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふねの　おんどを
+コントロール　しているようだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>船内の　温度を
+コントロールしているようだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:19:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝13、GRIDZ＝10
+・キュレムがいるときは続けてpoke10_02_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>制御装置その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_machine2_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふねの　エネルギーシステムを
+せいぎょ　している　そうちだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>船の　エネルギーシステムを
+制御している　装置だ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝17、GRIDZ＝10
+・キュレムがいるときは続けてpoke10_02_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>制御装置その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_poke10_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒュララ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒュララ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE10
+ポケモン・キュレム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:38:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>

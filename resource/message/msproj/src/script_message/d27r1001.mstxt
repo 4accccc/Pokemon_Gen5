@@ -273,13 +273,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『おっと！
+			<Text>プラズマ団『おっと！
 また　会いましたね！▼
 おれです　元プラズマ団の！
 というか　待っていましたよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:22:47" />
+				Time="2011-08-08T07:50:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -328,12 +328,11 @@
 Ｎさまは　あやまちに　きづかれ
 じぶんの　みちを▼
 じぶんで　きめて　すすまれたのに
-それを　うらぎり　と　いうんですよ▼
-かってに　きたいして
-かってに　しつぼう　してね……</Text>
+それを　うらぎり　と　いうんですよ▽
+みんな　かって　ですよね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:21:59" />
+				Time="2011-08-08T08:18:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -349,12 +348,11 @@
 Ｎさまは　過ちに　気づかれ
 自分の　道を▼
 自分で　決めて　進まれたのに
-それを　裏切りと　いうんですよ▼
-勝手に　期待して
-勝手に　失望してね……</Text>
+それを　裏切りと　いうんですよ▽
+みんな　勝手ですよね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:23:41" />
+				Time="2011-08-08T08:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -637,6 +635,108 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d27r1001_machine1_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふねの　おんどを
+コントロール　しているようだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:37:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:29:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>船内の　温度を
+コントロールしているようだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:37:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:35:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝13、GRIDZ＝10
+・キュレムがいるときは続けてpoke10_02_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:28:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>制御装置その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:27:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1001_machine2_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふねの　エネルギーシステムを
+せいぎょ　している　そうちだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:37:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:33:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>船の　エネルギーシステムを
+制御している　装置だ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:37:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:37:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝17、GRIDZ＝10
+・キュレムがいるときは続けてpoke10_02_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:28:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>制御装置その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T08:29:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d27r1001_poke10_02_01"
 		Style="Large">
 		<LanguageCell
@@ -644,32 +744,30 @@
 			<Text>ヒュララ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:31:58" />
+				Time="2011-08-08T08:26:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:31:58" />
+				Time="2011-08-08T08:26:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヒュララ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:31:58" />
+				Time="2011-08-08T08:26:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:31:58" />
+				Time="2011-08-08T08:26:40" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・あわせて鳴き声
-・装置を調べたとき用
-※暫定</Comment>
+・あわせて鳴き声</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:32:21" />
+				Time="2011-08-08T08:30:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -677,7 +775,7 @@
 ポケモン・キュレム</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:31:58" />
+				Time="2011-08-08T08:26:40" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
