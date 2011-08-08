@@ -1998,6 +1998,9 @@ d35r0101_def.h: d35r0101.ev
 c04r1101_def.h: c04r1101.ev
 	$(EV_DEF) c04r1101.ev $(SCR_OFFS_ID_H)
 
+c15r0401_def.h: c15r0401.ev
+	$(EV_DEF) c15r0401.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)

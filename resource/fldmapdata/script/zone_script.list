@@ -1220,5 +1220,7 @@ SCRIPTFILES += \
 	sp_d35r0101.ev \
 	c04r1101.ev \
 	sp_c04r1101.ev \
+	c15r0401.ev \
+	sp_c15r0401.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
