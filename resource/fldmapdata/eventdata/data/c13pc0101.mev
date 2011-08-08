@@ -1,5 +1,5 @@
 #event data
-#save date:2011/05/16 12:34:30
+#save date:2011/08/08 15:02:41
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c13pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -329,7 +329,46 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+3
+#event number: 0
+#Bg Event Label
+BG_C13PC0101_GEONET_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_GEONET
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 48 168
+#event number: 1
+#Bg Event Label
+BG_C13PC0101_GEONET_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_GEONET
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 48 152
+#event number: 2
+#Bg Event Label
+BG_C13PC0101_GEONET_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_GEONET
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 48 152
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

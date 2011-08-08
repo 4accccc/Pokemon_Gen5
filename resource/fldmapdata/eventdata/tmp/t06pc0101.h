@@ -13,7 +13,7 @@
 #define T06PC0101_DELIVERY                 1
 #define T06PC0101_SHOPM1_01                2
 #define T06PC0101_SHOPM1_02                3
-#define T07PC0101_PCWOMAN                  4
+#define T06PC0101_PCWOMAN                  4
 #define T06PC0101_CONNECT_00               5
 #define T06PC0101_CONNECT_02               6
 #define T06PC0101_CONNECT_01               7
