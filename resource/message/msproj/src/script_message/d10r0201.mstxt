@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なかまが　くるまで　て
+			<Text>なかまが　くるまで　とは
 いつまで　なんだろうな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T08:21:54" />
+				Time="2011-08-08T13:00:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仲間が　来るまで　て
+			<Text>仲間が　来るまで　とは
 いつまで　なんだろうな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T08:21:50" />
+				Time="2011-08-08T13:00:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -105,12 +105,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『
-ジャマする　ヤツは
+			<Text>[Name:TrainerName Idx="1" ]『さきに　きてたのか▼
+ジャマな　れんちゅうは
 ぜんぶ　ぶっとばしていくぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T08:33:50" />
+				Time="2011-08-08T13:01:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -133,10 +133,11 @@
 ・posイベント
 　GRIDX＝0、GRIDZ＝0
 ・メッセージ表示後、？マーク表示
-・続けてswplazmam_01</Comment>
+・続けてswplazmam_01
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:38:53" />
+				Time="2011-08-08T13:04:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -323,11 +324,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このさきに～
-キュレムを～</Text>
+			<Text>プラズマだんは
+この　さきに　あつまって＝▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T08:56:34" />
+				Time="2011-08-08T13:03:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -378,11 +379,11 @@
 			<Text>[Name:TrainerName Idx="1" ]『なるほどね
 てきの　てきは　みかた　ってことか▼
 むかしは　ひとの　ポケモンを
-うばっていた　くせに▽
+うばっていた　くせにな▼
 それで　つみほろぼしの　つもりかよ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T07:44:34" />
+				Time="2011-08-08T13:02:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -390,10 +391,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なるほどね
+敵の　敵は　味方ってことか▼
+昔は　他人の　ポケモンを
+奪っていた　くせにな▼
+それで　罪滅ぼしの　つもりかよ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:48:32" />
+				Time="2011-08-08T13:04:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -403,10 +408,11 @@
 			Language="JPN">
 			<Comment>♂
 ・
-・続けて</Comment>
+・続けて
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T06:47:39" />
+				Time="2011-08-08T13:04:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -536,12 +542,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『フンッ！
-ここで　はなしてる　ばあいじゃないぜ
-いくぞ！　主人公名！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……フンッ！
+いそぐぜ！　[Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T08:28:12" />
+				Time="2011-08-08T13:05:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -549,10 +554,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……フンッ！
+急ぐぜ！　[Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T07:16:10" />
+				Time="2011-08-08T13:05:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -562,10 +568,12 @@
 			Language="JPN">
 			<Comment>♂
 ・画面下へ移動
-・続けて</Comment>
+・続けて
+・0＝主人公名
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T07:31:41" />
+				Time="2011-08-08T13:05:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
