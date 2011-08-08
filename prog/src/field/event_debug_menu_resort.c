@@ -64,8 +64,8 @@ static BOOL debugMenuCallProc_PresenRecvAdd( DEBUG_MENU_EVENT_WORK *p_wk );
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
   { DEBUG_FIELD_RESORT_18, debugMenuCallProc_ChangeMap, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_39, debugMenuCallProc_PresenSetup, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_40, debugMenuCallProc_PresenRecvAdd, GFL_OVERLAY_BLANK_ID },
+//  { DEBUG_FIELD_RESORT_39, debugMenuCallProc_PresenSetup, GFL_OVERLAY_BLANK_ID },
+//  { DEBUG_FIELD_RESORT_40, debugMenuCallProc_PresenRecvAdd, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_16, debugMenuCallProc_Input, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_01, debugMenuCallProc_SetRecv, GFL_OVERLAY_BLANK_ID },
@@ -443,7 +443,10 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
     if( RESORT_RESIDENT_DATA_IsEmpty( p_dst ) )
     {
       RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
-      RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, i, RESORT_ZONE_ID_FIELD, i );
+
+      RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_WANT_JOB, 12 );
+
+      RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, 31-i, RESORT_PLACEID_FIELD );
     }
   }
 
@@ -503,18 +506,17 @@ static BOOL debugMenuCallProc_DesignerSetup( DEBUG_MENU_EVENT_WORK *p_wk )
   //まず住人を全部いれる
   debugMenuCallProc_AllResident( p_wk );
 
-  //0,1,2をマーケットLv1,2,3,にする
   {
     SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
     RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
     RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
     int i;
-    for( i = 0; i < 3; i++ )
+    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
     {
       RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, RESORT_RESIDENT_TYPE_MARKET );
+      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 12  );
       RESORT_RESIDENT_DATA_JobChange( p_resident );
     }
   }

@@ -182,6 +182,7 @@ const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_
   GF_ASSERT_MSG(0, "people_type%d kind%d\n", people_type, kind);
   return NULL;
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief　データ取得（メッセージから）
@@ -315,25 +316,10 @@ void RESORT_BINARY_SHOP_Exit( RESORT_BINARY_SHOP *p_wk )
 u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, const RESORT_RESIDENT_DATA *cp_data )
 {
   RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( (RESORT_RESIDENT_DATA *)cp_data ); 
-  u16 shop  = RESORT_RESIDENT_DATA_GetData( cp_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
-  u16 type  = 0; //TODO
-  u16 lv    = RESORT_INSTITUTION_DATA_GetData(p_institution,RESORT_INSTITUTION_DATA_PARAM_LV );
-  int i;
+  int i  = RESORT_RESIDENT_DATA_GetData( cp_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
 
-  for( i = 0; i < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk); i++ )
-  {
-    const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_GetStruct(cp_wk->p_shop, i);
-    if( cp_shop->param[ RESORT_BINARY_SHOP_PARAM_SHOP ] == shop
-      &&  cp_shop->param[ RESORT_BINARY_SHOP_PARAM_TYPE ] == type
-      &&  cp_shop->param[ RESORT_BINARY_SHOP_PARAM_LV ] == lv )
-    {
-      return i;
-    }
-  }
-
-  GF_ASSERT_MSG(0, "shop%d type%d lv%d\n", shop, type, lv);
-
-  return 0;
+  GF_ASSERT( i < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk) );
+  return i;
 }
 //----------------------------------------------------------------------------
 /**

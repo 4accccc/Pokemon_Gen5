@@ -39,12 +39,22 @@
 //mine
 #include "resort_field.h"
 
+
+#ifdef PM_DEBUG
+#define DEBUG_RESORT_FIELD_PRINT_ON
+#endif
+
+#if defined(DEBUG_RESORT_FIELD_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada) )
+#define RESORT_FIELD_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
+#else
+#define RESORT_FIELD_Printf(...)  /* */
+#endif
+
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
-#define RESORT_FIELD_PEOPLE_MAX   (32)
 #define RESORT_FIELD_NPC_MAX     (32)
 
 //=============================================================================
@@ -94,6 +104,21 @@ static void RESORT_CROWD_PEOPLE_Add( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p
 
 //=============================================================================
 /**
+ *          騒音管理
+ */
+//=============================================================================
+//-------------------------------------
+///	騒音管理
+//=====================================
+typedef struct _RESORT_CROWD_NOISE  RESORT_CROWD_NOISE;
+
+static RESORT_CROWD_NOISE * RESORT_CROWD_NOISE_Init( HEAPID heapID, FLDMSGBG* p_msgbg, RESORT_ABSTRUCT_MANAGER *p_abstruct );
+static void RESORT_CROWD_NOISE_Exit( RESORT_CROWD_NOISE *p_wk );
+static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WORK* cp_fieldmap );
+static void RESORT_CROWD_NOISE_Clear( RESORT_CROWD_NOISE *p_wk );
+
+//=============================================================================
+/**
  *          人物管理
  */
 //=============================================================================
@@ -120,6 +145,7 @@ typedef struct
   RESORT_FIELD_PEOPLE *p_people_sys;
   RESORT_NPC_SYS      *p_npc_sys;
   RESORT_SYSTEM       *p_sys;
+  RESORT_CROWD_NOISE  *p_noise;
 } RESORT_FIELD_WORK;
 
 //=============================================================================
@@ -174,7 +200,12 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     p_wk->p_npc_sys = RESORT_NPC_SYS_Init( &param, heapID );
   }
 
-  NAGI_Printf( "レゾナンスsetup\n" );
+  //騒音
+  {
+    p_wk->p_noise = RESORT_CROWD_NOISE_Init( heapID, FIELDMAP_GetFldMsgBG(p_fieldmap), RESORT_SYSTEM_GetAbstructManager( p_wk->p_sys ) );
+  }
+
+  RESORT_FIELD_Printf( "レゾナンスsetup\n" );
 }
 //----------------------------------------------------------------------------
 /**
@@ -187,7 +218,7 @@ void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
 
-
+  RESORT_CROWD_NOISE_Exit( p_wk->p_noise );
   RESORT_NPC_SYS_Exit( p_wk->p_npc_sys );
   RESORT_FIELD_PEOPLE_Exit( p_wk->p_people_sys );
   RESORT_SYSTEM_Exit( p_wk->p_sys );
@@ -208,6 +239,7 @@ void RESORT_FIELD_Move( FIELDMAP_WORK *p_fieldmap )
 
   RESORT_FIELD_PEOPLE_Main( p_wk->p_people_sys, FIELDMAP_GetFieldPlayer(p_fieldmap) );
   RESORT_NPC_SYS_Main( p_wk->p_npc_sys );
+  RESORT_CROWD_NOISE_Main( p_wk->p_noise, p_fieldmap );
 }
 
 //----------------------------------------------------------------------------
@@ -471,7 +503,7 @@ static void RESORT_CROWD_LINE_Exit( RESORT_CROWD_LINE *p_wk );
 static void RESORT_CROWD_LINE_Main( RESORT_CROWD_LINE *p_wk );
 static void RESORT_CROWD_LINE_SetUp( RESORT_CROWD_LINE *p_wk );
 static void RESORT_CLOWD_LINE_Register( RESORT_CROWD_LINE *p_wk, u16 index, RESORT_CROWD_PEOPLE_WK *p_people );
-static void RESORT_CLOWD_LINE_GetRegisterData( const RESORT_CROWD_PEOPLE_WK *cp_people, u16 *p_line, u16 *p_index );
+static BOOL RESORT_CLOWD_LINE_GetRegisterData( RESORT_PEOPLE *p_people, u16 *p_line, u16 *p_index );
 
 //-------------------------------------
 ///	群集管理
@@ -612,17 +644,16 @@ static void RESORT_CROWD_PEOPLE_Add( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p
     {
       if( !RESORT_CROWD_PEOPLE_WK_IsExist(&p_wk->wk[i]) )
       {
-        //ワークへの設定
-        RESORT_CROWD_PEOPLE_WK_SetUp( &p_wk->wk[i], p_people );
-
-        //隊列への登録
+        u16 line;
+        u16 index;
+        if( RESORT_CLOWD_LINE_GetRegisterData( p_people, &line, &index ) )
         {
-          u16 line;
-          u16 index;
-          RESORT_CLOWD_LINE_GetRegisterData( &p_wk->wk[i], &line, &index );
+          //ワークへの設定
+          RESORT_CROWD_PEOPLE_WK_SetUp( &p_wk->wk[i], p_people );
+
+          //隊列への登録
           RESORT_CLOWD_LINE_Register( &p_wk->line[line], index, &p_wk->wk[i] );
         }
-
         break;
       }
     }
@@ -1199,9 +1230,11 @@ static void RESORT_CLOWD_LINE_Register( RESORT_CROWD_LINE *p_wk, u16 index, RESO
  *	@param	const RESORT_CROWD_PEOPLE_WK *cp_people ワーク
  *	@param	*p_line   何番目の列か
  *	@param	*p_index  列の中で何番目か
+ *
+ *	@retval TRUE登録する  FALSE取得登録しない
  */
 //-----------------------------------------------------------------------------
-static void RESORT_CLOWD_LINE_GetRegisterData( const RESORT_CROWD_PEOPLE_WK *cp_people, u16 *p_line, u16 *p_index )
+static BOOL RESORT_CLOWD_LINE_GetRegisterData( RESORT_PEOPLE *p_people, u16 *p_line, u16 *p_index )
 { 
   static const struct
   {
@@ -1239,7 +1272,7 @@ static void RESORT_CLOWD_LINE_GetRegisterData( const RESORT_CROWD_PEOPLE_WK *cp_
 
   int i;
 
-  RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( cp_people->p_people );
+  RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
   RESORT_DATA_BUFFER_TYPE buffer_type   = RESORT_ABSTRUCT_DATA_GetBufferType(p_abstruct);
   u16                     buffer_index  = RESORT_ABSTRUCT_DATA_GetBufferIndex(p_abstruct);
   for( i = 0; i < NELEMS(sc_register_data); i++ )
@@ -1252,11 +1285,579 @@ static void RESORT_CLOWD_LINE_GetRegisterData( const RESORT_CROWD_PEOPLE_WK *cp_
 
       GF_ASSERT( (*p_line) < RESORT_CROWD_MOVE_LINE_MAX );
       GF_ASSERT( (*p_index) < RESORT_CROWD_MOVE_LINE_PEOPLE_MAX );
-      return;
+      return TRUE;
     }
   }
 
+  return FALSE;
+}
+
+
+//=============================================================================
+/**
+ *          騒音管理
+ */
+//=============================================================================
+
+#define RESORT_CROWD_NOISE_MAX  (8)
+
+//-------------------------------------
+///	騒音ワーク
+//=====================================
+typedef struct 
+{
+  STRBUF  *p_str;
+  u16 flag;
+  u8 x;
+  u8 y;
+  u16 id;
+  s16 wait;
+} RESORT_CROWD_NOISE_WK;
+
+static void RESORT_CROWD_NOISE_WK_Init( RESORT_CROWD_NOISE_WK *p_wk, u16 id, HEAPID heapID );
+static void RESORT_CROWD_NOISE_WK_Exit( RESORT_CROWD_NOISE_WK *p_wk );
+static void RESORT_CROWD_NOISE_WK_Main( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg );
+static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data );
+static void RESORT_CROWD_NOISE_WK_Off( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg );
+static void RESORT_CROWD_NOISE_WK_Clear( RESORT_CROWD_NOISE_WK *p_wk );
+
+//-------------------------------------
+///	騒音管理
+//=====================================
+struct _RESORT_CROWD_NOISE
+{
+  s16 wait;
+  s16 wait_max;
+  u32 add_idx;
+  FLDMSGBG                  *p_msgbg;
+  RESORT_ABSTRUCT_MANAGER   *p_abstruct;
+  RESORT_ABSTRUCT_DATA      *p_src_data;
+  RESORT_CROWD_NOISE_WK wk[RESORT_CROWD_NOISE_MAX];
+};
+
+static void Resort_Crowd_Noise_CheckBufferNum( RESORT_CROWD_NOISE *p_wk );
+static RESORT_ABSTRUCT_DATA * Resort_Crowd_Noise_GetDrawLotsData( RESORT_CROWD_NOISE *p_wk );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音初期化
+ *
+ *	@param	HEAPID heapID ヒープID
+ *	@param	p_msgbg   フィールドメッセージBG
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+static RESORT_CROWD_NOISE * RESORT_CROWD_NOISE_Init( HEAPID heapID, FLDMSGBG* p_msgbg, RESORT_ABSTRUCT_MANAGER *p_abstruct )
+{
+  RESORT_CROWD_NOISE *p_wk = GFL_HEAP_AllocClearMemory( heapID,sizeof(RESORT_CROWD_NOISE) );
+  p_wk->p_msgbg     = p_msgbg;
+  p_wk->p_abstruct  = p_abstruct;
+
+
+  {
+    int i;
+    for( i = 0; i < RESORT_CROWD_NOISE_MAX; i++ )
+    {
+      RESORT_CROWD_NOISE_WK_Init( &p_wk->wk[i], i, heapID );
+    }
+  }
+
+  Resort_Crowd_Noise_CheckBufferNum( p_wk );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音破棄
+ *
+ *	@param	RESORT_CROWD_NOISE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_Exit( RESORT_CROWD_NOISE *p_wk )
+{
+  {
+    int i;
+    for( i = 0; i < RESORT_CROWD_NOISE_MAX; i++ )
+    {
+      RESORT_CROWD_NOISE_WK_Off( &p_wk->wk[i], p_wk->p_msgbg );
+      RESORT_CROWD_NOISE_WK_Exit( &p_wk->wk[i] );
+    }
+  }
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音メイン処理
+ *
+ *	@param	RESORT_CROWD_NOISE *p_wk    ワーク
+ *	@param	FIELDMAP_WORK* cp_fieldmap フィールドマップ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WORK* cp_fieldmap )
+{
+  if( FIELDMAP_CheckDoEvent( cp_fieldmap ) == FALSE )
+  {
+    p_wk->wait++;
+
+    // ウエイトたったら、ランダムメッセージ表示
+    if( p_wk->wait >= p_wk->wait_max )
+    {
+      // 表示
+      u32 src = p_wk->add_idx;
+
+      do
+      {
+        p_wk->add_idx = GFL_STD_MtRand(RESORT_CROWD_NOISE_MAX);
+      }while( src == p_wk->add_idx );
+
+      p_wk->p_src_data = Resort_Crowd_Noise_GetDrawLotsData( p_wk );
+
+      if( p_wk->p_src_data != NULL )
+      {
+        RESORT_CROWD_NOISE_WK_Start( &p_wk->wk[ p_wk->add_idx ], p_wk->p_msgbg, p_wk->p_src_data );
+
+        // ウエイト初期化
+        p_wk->wait = 0;
+      }
+      Resort_Crowd_Noise_CheckBufferNum( p_wk );
+    }
+
+    // メッセージ表示
+    {
+      int i;
+
+      for( i = 0; i < RESORT_CROWD_NOISE_MAX; i++ )
+      {
+        RESORT_CROWD_NOISE_WK_Main( &p_wk->wk[i], p_wk->p_msgbg );
+      }
+    }
+  }
+  else
+  {
+    RESORT_CROWD_NOISE_Clear( p_wk );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音をクリア
+ *
+ *	@param	RESORT_CROWD_NOISE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_Clear( RESORT_CROWD_NOISE *p_wk )
+{
+  {
+    int i;
+    for( i = 0; i < RESORT_CROWD_NOISE_MAX; i++ )
+    {
+      RESORT_CROWD_NOISE_WK_Off( &p_wk->wk[i], p_wk->p_msgbg );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファの数をチェックしてデータ変更する
+ *
+ *	@param	RESORT_CROWD_NOISE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Crowd_Noise_CheckBufferNum( RESORT_CROWD_NOISE *p_wk )
+{
+  static const RESORT_DATA_BUFFER_TYPE  sc_type[] =
+  {
+    RESORT_DATA_BUFFER_TYPE_RESIDENT,
+    RESORT_DATA_BUFFER_TYPE_RECV_SV_BUFF,
+    RESORT_DATA_BUFFER_TYPE_RECV_TMP_BUFF,
+    RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,
+  };
+  u32 cnt = 0;
+
+  RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
+
+  while(TRUE)
+  {
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
+    if( p_data == NULL )
+    {
+      break;
+    }
+    if( !RESORT_ABSTRUCT_DATA_IsEmpty(p_data) )
+    {
+      cnt++;
+    }
+  }
+
+  if( cnt >= 16 )
+  {
+    p_wk->wait_max  = 2*60;
+  }
+  else if( cnt >= 10 )
+  {
+    p_wk->wait_max  = 4*60;
+  }
+  else if( cnt >= 4 )
+  {
+    p_wk->wait_max  = 8*60;
+  }
+  else if( cnt >=1 )
+  {
+    p_wk->wait_max  = 16*60;
+  }
+  else
+  {
+    p_wk->wait_max  = 0;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データを抽選
+ *
+ *	@param	RESORT_CROWD_NOISE *p_wk  ワーク
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+static RESORT_ABSTRUCT_DATA * Resort_Crowd_Noise_GetDrawLotsData( RESORT_CROWD_NOISE *p_wk )
+{
+  enum
+  {
+    DRAWLOTS_BUFFER_MAX =  RESORT_RESIDENT_DATA_NUM +
+    RESONANCE_RESORT_SV_RECV_BUFF_NUM +
+    RESONANCE_RESORT_BUFF_RECV_EX_NUM +
+    RESONANCE_RESORT_SV_PROXY_BUFF_NUM,
+  };
+
+  static const RESORT_DATA_BUFFER_TYPE  sc_type[] =
+  {
+    RESORT_DATA_BUFFER_TYPE_RESIDENT,
+    RESORT_DATA_BUFFER_TYPE_RECV_SV_BUFF,
+    RESORT_DATA_BUFFER_TYPE_RECV_TMP_BUFF,
+    RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,
+  };
+
+  static RESORT_DATA_BUFFER_TYPE s_type[DRAWLOTS_BUFFER_MAX];
+  static u16 s_index[DRAWLOTS_BUFFER_MAX];
+  int cnt = 0;
+  int resident_cnt  = 0;
+  int tourist_cnt   = 0;
+
+  RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
+
+  while(TRUE)
+  {
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
+    if( p_data == NULL )
+    {
+      break;
+    } 
+    if( !RESORT_ABSTRUCT_DATA_IsEmpty(p_data) )
+    {
+      s_type[cnt]   = RESORT_ABSTRUCT_DATA_GetBufferType(p_data);
+      s_index[cnt]  = RESORT_ABSTRUCT_DATA_GetBufferIndex(p_data);
+
+      if( s_type[cnt] == RESORT_DATA_BUFFER_TYPE_RESIDENT )
+      {
+        resident_cnt++;
+      }
+      else
+      {
+        tourist_cnt++;
+      }
+
+      cnt++;
+    }
+  }
+
+  RESORT_FIELD_Printf( "cnt[%d], res[%d] tou[%d]\n", cnt, resident_cnt, tourist_cnt );
+
+  if( cnt == 0 )
+  {
+    return NULL;
+  }
+  else if( cnt == 1 )
+  {
+    return RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_wk->p_abstruct, s_type[0], s_index[0] );
+  }
+  else
+  {
+    BOOL is_resident;
+    if( resident_cnt > 0 && tourist_cnt > 0 )
+    {
+      u16 rnd = GFL_STD_MtRand( 100 );
+      if( rnd < 25 )
+      {
+        is_resident = TRUE;
+      }
+      else
+      {
+        is_resident = FALSE;
+      }
+    }
+    else if( resident_cnt == 0 )
+    {
+      is_resident = FALSE;
+    }
+    else
+    {
+      is_resident = TRUE;
+    }
+
+    if( is_resident == TRUE && resident_cnt == 1 )
+    {
+      RESORT_ABSTRUCT_DATA *p_data;
+      int i;
+      for( i = 0; i < cnt; i++ )
+      {
+        if( s_type[i] == RESORT_DATA_BUFFER_TYPE_RESIDENT )
+        {
+          break;
+        }
+      }
+      GF_ASSERT( i < cnt );
+
+      p_data = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_wk->p_abstruct, s_type[i], s_index[i] );
+
+      //住人データがひとつだけのなので、以前のとかぶってた場合は住人以外にする
+      if( p_data == p_wk->p_src_data )
+      {
+        int tourist_num  = 0;
+        int tourist_max = GFL_STD_MtRand( tourist_cnt );
+        int i;
+        for( i = 0; i < cnt; i++ )
+        {
+          if( s_type[i] != RESORT_DATA_BUFFER_TYPE_RESIDENT )
+          {
+            if( tourist_num++ == tourist_max )
+            {
+              return RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_wk->p_abstruct, s_type[i], s_index[i] );
+
+            }
+          }
+        }
+        GF_ASSERT(0);
+      }
+      else
+      {
+        return p_data;
+      }
+    }
+    else if( is_resident == FALSE && tourist_cnt == 1 )
+    {
+      RESORT_ABSTRUCT_DATA *p_data;
+      int i;
+      for( i = 0; i < cnt; i++ )
+      {
+        if( s_type[i] != RESORT_DATA_BUFFER_TYPE_RESIDENT )
+        {
+          break;
+        }
+      }
+      GF_ASSERT( i < cnt );
+
+      p_data = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_wk->p_abstruct, s_type[i], s_index[i] );
+
+      //住人データがひとつだけのなので、以前のとかぶってた場合は住人以外にする
+      if( p_data == p_wk->p_src_data )
+      {
+        int resident_num  = 0;
+        int resident_max = GFL_STD_MtRand( resident_cnt );
+        int i;
+        for( i = 0; i < cnt; i++ )
+        {
+          if( s_type[i] == RESORT_DATA_BUFFER_TYPE_RESIDENT )
+          {
+            if( resident_num++ == resident_max )
+            {
+              return RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_wk->p_abstruct, s_type[i], s_index[i] );
+
+            }
+          }
+        }
+        GF_ASSERT(0);
+      }
+      else
+      {
+        return p_data;
+      }
+    }
+    else
+    {
+      if( is_resident )
+      {
+        RESORT_ABSTRUCT_DATA *p_data  = NULL;
+        do
+        {
+          int resident_num  = 0;
+          int resident_max = GFL_STD_MtRand( resident_cnt );
+          int i;
+          for( i = 0; i < cnt; i++ )
+          {
+            if( s_type[i] == RESORT_DATA_BUFFER_TYPE_RESIDENT )
+            {
+              if( resident_num++ == resident_max )
+              {
+                 p_data = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_wk->p_abstruct, s_type[i], s_index[i] );
+                 break;
+              }
+            }
+          }
+        }
+        while( p_data == p_wk->p_src_data );
+
+        GF_ASSERT( p_data != NULL );
+
+        return p_data;
+      }
+      else
+      {
+        RESORT_ABSTRUCT_DATA *p_data  = NULL;
+        do
+        {
+          int tourist_num  = 0;
+          int tourist_max = GFL_STD_MtRand( tourist_cnt );
+          int i;
+          for( i = 0; i < cnt; i++ )
+          {
+            if( s_type[i] != RESORT_DATA_BUFFER_TYPE_RESIDENT )
+            {
+              if( tourist_num++ == tourist_max )
+              {
+                 p_data = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_wk->p_abstruct, s_type[i], s_index[i] );
+                 break;
+              }
+            }
+          }
+        }
+        while( p_data == p_wk->p_src_data );
+
+        GF_ASSERT( p_data != NULL );
+
+        return p_data;
+      }
+    }
+  }
   GF_ASSERT(0);
+  return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音ワーク初期化
+ *
+ *	@param	RESORT_CROWD_NOISE_WK *p_wk ワーク
+ *	@param	id ID
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_WK_Init( RESORT_CROWD_NOISE_WK *p_wk, u16 id, HEAPID heapID )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_CROWD_NOISE_WK));
+  p_wk->p_str = GFL_STR_CreateBuffer( RESORT_PHRASE_LEN+EOM_SIZE, heapID );
+  p_wk->id    = id;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音ワーク破棄
+ *
+ *	@param	RESORT_CROWD_NOISE_WK *p_wkワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_WK_Exit( RESORT_CROWD_NOISE_WK *p_wk )
+{
+  GFL_STR_DeleteBuffer( p_wk->p_str );
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_CROWD_NOISE_WK));
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音ワークメイン
+ *
+ *	@param	RESORT_CROWD_NOISE_WK *p_wk ワーク
+ *	@param	p_msgbg フィールドメッセージ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_WK_Main( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg )
+{
+  if( p_wk->flag == FALSE )
+  {
+    return ;
+  }
+  
+  // waitまって消える
+  p_wk->wait++;
+  if( p_wk->wait >= 60 )
+  {
+    RESORT_CROWD_NOISE_WK_Off(p_wk, p_msgbg);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音ワーク描画開始
+ *
+ *	@param	RESORT_CROWD_NOISE_WK *p_wk ワーク
+ *	@param	p_msgbg                     フィールドメッセージ
+ *	@param	p_msgdata                   メッセージ
+ *	@param	noise_msg_start       
+ *	@param	noise_msg_num 
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data )
+{
+  static const GFL_POINT sc_pos[] =
+  {
+    { 2, 2},
+    {18, 2},
+    { 2, 6},
+    {18, 6},
+    { 2,10},
+    {18,10},
+    { 2,14},
+    {18,14},
+  };
+
+  GF_ASSERT( p_wk->id < NELEMS(sc_pos) );
+
+  p_wk->flag = TRUE;
+  p_wk->wait = 0;
+
+  {
+    STRCODE code[RESORT_PHRASE_LEN+EOM_SIZE];
+    RESORT_ABSTRUCT_DATA_GetData( cp_data, RESORT_DATA_PARAM_EXT6_PHRASE, code );
+    GFL_STR_SetStringCode( p_wk->p_str, code );
+  }
+  
+  FLDSUBMSGWIN_AddStrBuf( p_msgbg,
+    p_wk->p_str, p_wk->id, sc_pos[p_wk->id].x, sc_pos[p_wk->id].y, 12, 2 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  描画OFF
+ *
+ *	@param	RESORT_CROWD_NOISE_WK *p_wk ワーク
+ *	@param	p_msgbg フィールドメッセージ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_WK_Off( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg )
+{
+  if( p_wk->flag == FALSE )
+  {
+    return ;
+  }
+  
+  FLDSUBMSGWIN_Delete( p_msgbg, p_wk->id );
+  RESORT_CROWD_NOISE_WK_Clear( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音ワーククリア
+ *
+ *	@param	RESORT_CROWD_NOISE_WK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_WK_Clear( RESORT_CROWD_NOISE_WK *p_wk )
+{
+  p_wk->wait = 0;
+  p_wk->flag = FALSE;
 }
 
 //=============================================================================
@@ -1268,7 +1869,7 @@ static void RESORT_CLOWD_LINE_GetRegisterData( const RESORT_CROWD_PEOPLE_WK *cp_
 ///	定数
 //=====================================
 //動作上限数
-#define RESORT_FIELD_PEOPLE_MAX (32)
+#define RESORT_FIELD_PEOPLE_MAX (64)
 //更新間隔
 #define RESORT_FIELD_PEOPLE_UPDATE_INTERVAL (0)
 
