@@ -477,6 +477,7 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	wk->frame_list_work = 0;
 	//
+	wk->CurrentWbt = 0;
 	for(i=0;i<3;i++){
 		wk->WbtSaveData[i] = 0;
 	}
@@ -1377,9 +1378,9 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 	else if(sflg == 2){
 		// ドラッグ中はフリーの座標に表示
 		bbflg = TdCmn_set_scrollbar_info( wk, wk->InfoCurPos, 0, 1 );
-		if(bbflg == TRUE){
-			PMSND_PlaySE( SND_T_DOWNLOAD_BAR );
-		}
+//		if(bbflg == TRUE){
+//			PMSND_PlaySE( SND_T_DOWNLOAD_BAR );
+//		}
 		// カーソル位置
 		num = TdCmn_calc_scrollbar_info( wk, wk->InfoCurPos );
 		if(num != -1){
@@ -1391,6 +1392,8 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 				wk->Flag |= FLG_MW_INFO_UPDATE;
 				// マーク判定
 				TdCmn_chk_mark_anim( wk, 1, 0, wk->PageMaxNum[wk->InfoCurPos]-1, wk->CurrentPageNum[wk->InfoCurPos] );
+				// 切り替え時のみらしい
+				PMSND_PlaySE( SND_T_DOWNLOAD_BAR );
 			}
 		}
 	}

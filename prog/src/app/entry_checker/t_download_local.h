@@ -334,6 +334,7 @@ typedef struct
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 	//
+	WBTDL_DATA				*CurrentWbt;					// カレント(上画面の切り替えタイミング)
 	WBTDL_DATA				*WbtSaveData[3];				// セーブデータ用
 } T_DOWNLOAD_MAIN_WORK;
 

@@ -1671,7 +1671,11 @@ void TdCmn_clear_frame( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 //-----------------------------------------------------------------------------
 void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id, const s32 smode )
 {
+	s32			flg=0;
 	STRBUF		*strbuf;
+	STRBUF		*strbuf2;
+	STRBUF		*expbuf;
+	const WBTDL_DATA	*wbtl;
 	
 	//-----------------
 	// ウインドウ表示
@@ -1689,9 +1693,39 @@ void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id, 
 	//
 	if(smode == 0){			// 一発だし
 		// メッセージ表示
-		strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_d00_tbl[id] );
-		TdCmn_disp_string( wk, mode, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
-		GFL_STR_DeleteBuffer( strbuf );
+		switch(id){
+			case T_DOWNLOAD_WIN_JOIN_01:
+			case T_DOWNLOAD_WIN_WHAT_00:
+			case T_DOWNLOAD_WIN_DEL_00:
+			case T_DOWNLOAD_WIN_DEL_01:
+				flg = 1;
+				break;
+		}
+		
+		// 通常
+		if(flg == 0){
+			strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_d00_tbl[id] );
+			TdCmn_disp_string( wk, mode, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+			GFL_STR_DeleteBuffer( strbuf );
+		}else{
+			wbtl = wk->CurrentWbt;
+			if(wbtl == 0){
+				OS_Printf("wbt error\n");
+			}
+			//
+			strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_d00_tbl[id] );
+			// セーブデータからトーナメント名を取得
+			strbuf2  = GFL_STR_CreateBuffer( 128, wk->heapID );
+			expbuf   = GFL_STR_CreateBuffer( 128, wk->heapID );
+			TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_NAME, strbuf2 );
+			WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+			//
+			WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf );
+			TdCmn_disp_string( wk, mode, 0, 0, expbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+			GFL_STR_DeleteBuffer( strbuf );
+			GFL_STR_DeleteBuffer( strbuf2 );
+			GFL_STR_DeleteBuffer( expbuf );
+		}
 	}else{					// stream表示
 		TdCmn_set_meswin( wk, mode, id );
 	}
@@ -1819,6 +1853,9 @@ void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num 
 	TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_EXPLAIN_01, strbuf );		// 内容説明取得
 	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_EXP_01, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
 	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// カレントをセット
+	wk->CurrentWbt = (WBTDL_DATA *)wbtl;
 }
 
 //----------------------------------------------------------------------------------------------------------------
@@ -2521,7 +2558,7 @@ void TdCmn_init_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 
 	// アイテム数
 	wk->ItemNum[0] = TdSave_get_item_num( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_POKE );
 	wk->ItemNum[1] = TdSave_get_item_num( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_ITEM );
-	wk->ItemNum[2] = 1;
+	wk->ItemNum[2] = TdSave_get_item_num( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_SKILL );
 	//
 	for(i=0;i<T_DOWNLOAD_INFO_MAX;i++){
 		// 0の場合は1ページとしておく

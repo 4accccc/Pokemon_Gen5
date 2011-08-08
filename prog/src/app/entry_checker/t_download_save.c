@@ -248,6 +248,7 @@ s32 TdSave_get_item_num( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, cons
 	s32		j;
 	s32		k=0;
 	const u8	*cadr;
+	BOOL	bflg;
 	//
 	// ƒ|ƒPƒ‚ƒ“
 	if(mode == T_DOWNLOAD_SAVE_ITEM_POKE){
@@ -275,9 +276,21 @@ s32 TdSave_get_item_num( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, cons
 			}
 		}
 	}
-	// ‹Z
+	// ‹Z(max 1‚Â‚Ì‚Ý‚Å‚æ‚¢‚ç‚µ‚¢)
 	else if(mode == T_DOWNLOAD_SAVE_ITEM_SKILL){
-		// •Û—¯
+		//
+		k=0;
+		for(i=WAZANO_HATAKU;i<WAZANO_MAX;i++){
+			bflg = WBTDL_DATA_IsVetoWazaNo( wbtdl, i );
+//			if(bflg == TRUE){
+			if(bflg == FALSE){
+				k++;
+			}
+		}
+		// ”O‚Ì‚½‚ß
+		if(k >= 1){
+			k = 1;
+		}
 	}
 	//
 	return( k );
@@ -301,6 +314,7 @@ s32 TdSave_get_item_id( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, const
 	s32		j;
 	s32		k=0;
 	const u8	*cadr;
+	BOOL	bflg;
 	//
 	// ƒ|ƒPƒ‚ƒ“
 	if(mode == T_DOWNLOAD_SAVE_ITEM_POKE){
@@ -338,10 +352,17 @@ s32 TdSave_get_item_id( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, const
 			}
 		}
 	}
-	// ‹Z
+	// ‹Z(1‚Â‚Ì‚Ý‚Å‚æ‚¢‚ç‚µ‚¢)
 	else if(mode == T_DOWNLOAD_SAVE_ITEM_SKILL){
+		for(i=WAZANO_HATAKU;i<WAZANO_MAX;i++){
+			bflg = WBTDL_DATA_IsVetoWazaNo( wbtdl, i );
+//			if(bflg == TRUE){
+			if(bflg == FALSE){
+				return( i );
+			}
+		}
 		// •Û—¯
-		return( 1 );
+		return( 0 );
 	}
 	//
 	return( 0 );
