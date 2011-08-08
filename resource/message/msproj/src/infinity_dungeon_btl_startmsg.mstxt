@@ -30,7 +30,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -76,7 +76,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -118,7 +118,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -164,7 +164,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -206,7 +206,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -248,7 +248,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -294,7 +294,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -336,7 +336,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -378,7 +378,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -424,7 +424,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -466,7 +466,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -508,7 +508,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -554,7 +554,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -596,7 +596,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -638,7 +638,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -680,7 +680,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -710,11 +710,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああん？　なにを　見てんだオイッ！
+			<Text>ああん？　なにを　みてんだオイッ！
 ボールを出しな　勝負だ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-06T10:25:06" />
+				Time="2011-08-08T05:51:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -722,7 +722,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -764,7 +764,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -810,7 +810,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -856,7 +856,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -898,7 +898,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -936,19 +936,19 @@
 白の大樹の　どうくつか！▼
 遠くから　来たかいが　あったな
 最下層まで　探検するぞ！▼
-そして　全ての　トレーナーを
+そして　すべての　トレーナーを
 倒してやるわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-20T05:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="swan_scenario:W00293"
+				Time="2011-08-08T06:06:27" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -990,7 +990,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1036,7 +1036,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1078,7 +1078,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1120,7 +1120,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1162,7 +1162,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1204,7 +1204,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1246,7 +1246,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1292,7 +1292,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1334,7 +1334,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1376,7 +1376,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1406,11 +1406,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクには　未来が　見えている！
+			<Text>ボクには　未来が　みえている！
 ……さぁ　戦おう！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T01:59:54" />
+				Time="2011-08-08T05:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1418,7 +1418,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1460,7 +1460,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1506,7 +1506,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1548,7 +1548,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1590,7 +1590,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1632,7 +1632,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1674,7 +1674,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1716,7 +1716,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1746,11 +1746,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勉強で　疲れた時には
+			<Text>勉強で　疲れたときには
 ポケモン勝負に　かぎるよね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-04T05:44:11" />
+				Time="2011-08-08T06:04:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1758,7 +1758,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1793,10 +1793,10 @@
 			<Text>ウウーッ！　迷ったー！
 どこへ　進めばいいんだー！▼
 ……なんだい　キミは　このボクより
-先に　行こうって言うの！？▼</Text>
+先に　行こうって　いうの！？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T02:46:59" />
+				Time="2011-08-08T05:47:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1804,7 +1804,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1846,7 +1846,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1892,7 +1892,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1934,7 +1934,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -1980,7 +1980,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2022,7 +2022,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2064,7 +2064,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2106,7 +2106,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-04T06:58:45" />
@@ -2141,7 +2141,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2185,7 +2185,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2231,7 +2231,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2277,7 +2277,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2326,7 +2326,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2372,7 +2372,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2418,7 +2418,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2464,7 +2464,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2506,7 +2506,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2552,7 +2552,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2602,7 +2602,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2644,7 +2644,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2686,7 +2686,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2732,7 +2732,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2774,7 +2774,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2822,7 +2822,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2864,7 +2864,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2899,14 +2899,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>親方に　修行してこいと
-言われて　ここに来ました▼
+いわれて　ここに来ました▼
 ……でも　これって　パン屋の
 修行に　なるんでしょうか？▼
 ええい　考えまい！
 勝負ですよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T10:54:11" />
+				Time="2011-08-08T05:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2914,7 +2914,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2960,7 +2960,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -2991,10 +2991,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>一生懸命　育てたポケモン
-ほらっ　見てちょうだい！▼</Text>
+ほらっ　みてちょうだい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T02:18:10" />
+				Time="2011-08-08T05:52:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3002,7 +3002,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3048,7 +3048,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3090,7 +3090,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3140,7 +3140,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3190,7 +3190,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3236,7 +3236,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3278,7 +3278,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3324,7 +3324,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3366,7 +3366,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3412,7 +3412,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3454,7 +3454,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3500,7 +3500,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3542,7 +3542,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3588,7 +3588,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3630,7 +3630,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3676,7 +3676,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3726,7 +3726,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3772,7 +3772,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3814,7 +3814,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3860,7 +3860,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3902,7 +3902,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3952,7 +3952,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -3998,7 +3998,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4031,12 +4031,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぼくは　超能力で　肩こりを
-治す事が　できるんだ！▼
+治すことが　できるんだ！▼
 えっ……必要ない？
 くっそー！　ばかに　しやがって！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T08:06:55" />
+				Time="2011-08-08T06:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4044,7 +4044,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4086,7 +4086,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4116,11 +4116,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>夢を　見たの……夢で　わたしは
+			<Text>夢を　みたの……夢で　わたしは
 あなたと　戦い　そして……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T08:17:03" />
+				Time="2011-08-08T05:52:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4128,7 +4128,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4178,7 +4178,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4220,7 +4220,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4266,7 +4266,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4308,7 +4308,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4354,7 +4354,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4396,7 +4396,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4438,7 +4438,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4480,7 +4480,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4530,7 +4530,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4572,7 +4572,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4618,7 +4618,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4671,7 +4671,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4713,7 +4713,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4746,12 +4746,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おうおう！　べらんめぇウエーターとは
-おれの事でい！▼
+おれのことでい！▼
 意地でも　丁寧に　ならないからな
 ほらっ　勝負だ！　かかってこい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T10:45:21" />
+				Time="2011-08-08T06:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4759,7 +4759,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4801,7 +4801,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4843,7 +4843,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4889,7 +4889,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4935,7 +4935,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -4977,7 +4977,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5023,7 +5023,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5065,7 +5065,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5107,7 +5107,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5153,7 +5153,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5203,7 +5203,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5251,7 +5251,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5293,7 +5293,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5337,7 +5337,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5376,10 +5376,10 @@
 かずかずの　困難を　乗り越えて
 おじさんは　ここに　立っている！▼
 苦労知らずの　子供が
-おじさんに　勝つ事が　できるかな？▼</Text>
+おじさんに　勝つことが　できるかな？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-06T07:59:13" />
+				Time="2011-08-08T06:03:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5387,7 +5387,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5429,7 +5429,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5474,7 +5474,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5504,11 +5504,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたの　ポケモン　見せなさいよ！
+			<Text>あなたの　ポケモン　みせなさいよ！
 ほらっ！　いいじゃないの　ねぇ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-06T08:27:02" />
+				Time="2011-08-08T05:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5516,7 +5516,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5562,7 +5562,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5604,7 +5604,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5650,7 +5650,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5696,7 +5696,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5738,7 +5738,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5788,7 +5788,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5834,7 +5834,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5880,7 +5880,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5924,7 +5924,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -5966,7 +5966,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6008,7 +6008,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6050,7 +6050,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6096,7 +6096,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6142,7 +6142,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6188,7 +6188,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6220,13 +6220,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やっと　５合目と　言った所だな
+			<Text>やっと　５合目と　いった所だな
 まだまだ　先は　長いぞ▼
 ……どれ　これより下に
-進む力があるか　見てやるわ！▼</Text>
+進む力があるか　みてやるわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-06T06:52:49" />
+				Time="2011-08-08T05:52:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6234,7 +6234,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6276,7 +6276,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6318,7 +6318,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6364,7 +6364,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6410,7 +6410,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6448,11 +6448,11 @@
 ばくだいな　金が　使われてんだ▼
 おれみたいな　下っ端には
 理由は　分からないがな▼
-言われた通りに
+いわれた通りに
 こうやって　対戦するだけさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-08T09:39:55" />
+				Time="2011-08-08T05:48:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6460,7 +6460,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6506,7 +6506,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6548,7 +6548,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6598,7 +6598,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6644,7 +6644,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6677,12 +6677,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>分からないか？
-おれたちは　見られてるんだ！▼
+おれたちは　みられてるんだ！▼
 おれたちの　勝負は
 監視　されている！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T10:11:01" />
+				Time="2011-08-08T05:52:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6690,7 +6690,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6736,7 +6736,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6778,7 +6778,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6824,7 +6824,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6870,7 +6870,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6916,7 +6916,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6936,11 +6936,11 @@
 			Language="JPN">
 			<Text>ふんふん　ここにも
 かんしカメラを　せっちして　っと……▼
-……うわぁ！　おまえ　見たな！
+……うわぁ！　おまえ　みたな！
 くちふうじを　させてもらう！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-07T06:49:17" />
+				Time="2011-08-08T05:52:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6950,11 +6950,11 @@
 			Language="JPN_KANJI">
 			<Text>ふんふん　ここにも
 監視カメラを　設置して　っと……▼
-……うわぁ！　おまえ　見たな！
+……うわぁ！　おまえ　みたな！
 口封じを　させてもらう！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-07T06:49:42" />
+				Time="2011-08-08T05:53:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6962,7 +6962,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -6992,11 +6992,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>見よ！　これぞ　わたしが　長年かけて
+			<Text>みよ！　これぞ　わたしが　長年かけて
 作りあげた　研究結果だ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-07T06:54:52" />
+				Time="2011-08-08T05:53:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7004,7 +7004,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7054,7 +7054,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7100,7 +7100,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7142,7 +7142,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7188,7 +7188,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7234,7 +7234,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7280,7 +7280,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7326,7 +7326,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7368,7 +7368,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7410,7 +7410,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7456,7 +7456,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7506,7 +7506,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7552,7 +7552,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7598,7 +7598,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7648,7 +7648,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7690,7 +7690,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7732,7 +7732,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7782,7 +7782,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7812,11 +7812,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>見てなさい！　このポケモンたちで
+			<Text>みてなさい！　このポケモンたちで
 あたしは　トップを目指す！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T10:24:15" />
+				Time="2011-08-08T05:53:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7824,7 +7824,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7874,7 +7874,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7916,7 +7916,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -7953,12 +7953,12 @@
 			<Text>お母さんから　手紙がきたの
 実家に　帰ってこい　だって▼
 どうせ　お見合いしろとでも
-言うつもりなんでしょうけど……▼
+いうつもりなんでしょうけど……▼
 ここをクリアーするまでは
 そんなの嫌よ！　戦いましょ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-07T10:49:50" />
+				Time="2011-08-08T05:48:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7966,7 +7966,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8008,7 +8008,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8054,7 +8054,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8087,20 +8087,20 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>一流のトレーナーは
-道具も　全て　一流だ！▼
+道具も　すべて　一流だ！▼
 高名な職人により　みがきぬかれた
-モンスターボールを　見るがいい！▼</Text>
+モンスターボールを　みるがいい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T08:03:55" />
+				Time="2011-08-08T05:53:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="swan_scenario:W00293"
+				Time="2011-08-08T06:06:28" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8146,7 +8146,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8188,7 +8188,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8234,7 +8234,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8276,7 +8276,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8322,7 +8322,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8372,7 +8372,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8409,12 +8409,12 @@
 			<Text>遠足に　連れてきた
 子供たちに　置いて行かれました……▼
 一生懸命　探していたら
-こんな　落書きを　見つけたんです▼
+こんな　落書きを　みつけたんです▼
 『せんせい　の　のろまー！』ですって
 キーッ！　ばかに　しないでください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-20T05:05:07" />
+				Time="2011-08-08T05:53:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8422,7 +8422,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8454,7 +8454,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>沢山の　園児を　泣きやませ
+			<Text>たくさんの　園児を　泣きやませ
 寝かしつけてきた　奥義の数々！▼
 あなたに　たえられるかしら？
 くらえっ！▼</Text>
@@ -8463,12 +8463,12 @@
 				Time="2011-07-08T06:55:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="swan_scenario:W00293"
+				Time="2011-08-08T06:07:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8510,7 +8510,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8552,7 +8552,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8587,14 +8587,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>伝説の　からておうが
-下のエリアに　行くのを見たぜ▼
+下のエリアに　行くのを　みたぜ▼
 あの　禍々しい気配……
 近づいただけでも　ブルっちまった▼
 ……なさけないって？
 おれだって　そこそこ　強いんだぜ？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-20T07:33:11" />
+				Time="2011-08-08T05:54:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8602,7 +8602,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8648,7 +8648,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8690,7 +8690,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8736,7 +8736,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8772,11 +8772,11 @@
 			<Text>ボウシの　トレーナー！
 おめぇ　調子に乗るなよ！▼
 おめぇの力が
-周りが言うほどの　もんじゃないって▽
+周りが　いうほどの　もんじゃないって▽
 おれが　証明してやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T08:12:16" />
+				Time="2011-08-08T05:48:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8784,7 +8784,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8830,7 +8830,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8876,7 +8876,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8922,7 +8922,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -8954,13 +8954,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>見つけたぞ！
+			<Text>みつけたぞ！
 うわさの　ボウシの　トレーナー！▼
 おれが　おまえを　止める！
 覚悟しろ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-08T05:27:11" />
+				Time="2011-08-08T05:54:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8968,7 +8968,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9003,14 +9003,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>人が　住んでたような　あとが
-たまに　見つかるんだが……▼
+たまに　みつかるんだが……▼
 ずっと前に　ここに　だれかが
 住んでいたっていうのかね？▼
 不気味な話だぜ……
 まっ　勝負でも　するか▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-08T08:39:59" />
+				Time="2011-08-08T05:54:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9018,7 +9018,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9064,7 +9064,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9110,7 +9110,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9130,11 +9130,11 @@
 			Language="JPN">
 			<Text>わるいことは　いわない
 もう　ひきかえしたほうがいい▼
-それが　ボクに　いえる
+それが　ボクが　いえる
 ゆいいつの　ちゅうこくだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-08T09:45:44" />
+				Time="2011-08-08T05:50:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9142,13 +9142,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>悪い事は　言わない
+			<Text>悪いことは　いわない
 もう　引き返したほうがいい▼
-それが　ボクに　言える
+それが　ボクが　いえる
 唯一の忠告だ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-20T07:39:23" />
+				Time="2011-08-08T06:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9156,7 +9156,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9202,7 +9202,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9252,7 +9252,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9298,7 +9298,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9348,7 +9348,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9394,7 +9394,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9444,7 +9444,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9490,7 +9490,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9536,7 +9536,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9566,11 +9566,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>見えた！　あなたの　戦い方は
-全て見切ったわ！▼</Text>
+			<Text>みえた！　あなたの　戦い方は
+すべて　見切ったわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T10:44:39" />
+				Time="2011-08-08T06:06:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9578,7 +9578,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9620,7 +9620,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9670,7 +9670,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9716,7 +9716,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9766,7 +9766,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9812,7 +9812,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9862,7 +9862,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9908,7 +9908,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -9950,7 +9950,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10000,7 +10000,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10046,7 +10046,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10096,7 +10096,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10142,7 +10142,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10188,7 +10188,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10220,11 +10220,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>マスターより　あなたの　お力を
-見てくるように　言われて参りました▼
+みてくるように　いわれて参りました▼
 それでは……行きますよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-11T09:42:48" />
+				Time="2011-08-08T05:55:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10232,7 +10232,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10264,13 +10264,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>占い雑誌　見てみたらさ
+			<Text>占い雑誌　みてみたらさ
 きょうの　運勢は　最悪！▼
 だけど　運命なんて　
 ねじふせてやるんだから！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-11T10:02:38" />
+				Time="2011-08-08T05:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10278,7 +10278,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10320,7 +10320,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10366,7 +10366,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10416,7 +10416,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10462,7 +10462,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10512,7 +10512,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10557,7 +10557,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10592,14 +10592,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なーんか　視線を　感じない？
-ほら　天井を見て▼
+ほら　天井を　みて▼
 あのカメラで　だれかが
-わたしたちの　戦いを　見ているの▼
+わたしたちの　戦いを　みているの▼
 のぞき　って　許せないよね！
 いつか　正体　つきとめてやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T02:15:23" />
+				Time="2011-08-08T05:55:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10607,7 +10607,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10642,14 +10642,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こないだ会った　男の子に
-師匠だなんて　言われちゃってさ▼
+師匠だなんて　いわれちゃってさ▼
 気分が良かったから
 いろいろ　教えちゃったよ▼
 ……適当な　でまかせをね
 なんだ　その目は！　勝負だ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T11:02:45" />
+				Time="2011-08-08T05:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10657,7 +10657,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10707,7 +10707,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10757,7 +10757,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10807,7 +10807,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10857,7 +10857,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10899,7 +10899,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10949,7 +10949,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -10995,7 +10995,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11037,7 +11037,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11079,7 +11079,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11129,7 +11129,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11175,7 +11175,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11225,7 +11225,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11267,7 +11267,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11317,7 +11317,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11363,7 +11363,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11409,7 +11409,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11455,7 +11455,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11501,7 +11501,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11547,7 +11547,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11589,7 +11589,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11635,7 +11635,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11681,7 +11681,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11727,7 +11727,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11777,7 +11777,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11823,7 +11823,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11859,13 +11859,13 @@
 			Language="JPN_KANJI">
 			<Text>おう　おめぇか！
 調子は　どうだい？▼
-ははっ　長い事　ここにいると
+ははっ　長いこと　ここにいると
 大体が　顔見知りに　なっちまう▼
 仲良く　やっていこうや！
 ほらっ　いつもの　勝負だ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-12T10:53:28" />
+				Time="2011-08-08T06:04:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11873,7 +11873,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11923,7 +11923,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -11969,7 +11969,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12004,10 +12004,10 @@
 			<Text>信じられない　スピードで
 このエリアまで　降りてきたそうだな▼
 みんな　おまえの　話をしてるぜ
-どこまでやるのか　見せてくれよ！▼</Text>
+どこまでやるのか　みせてくれよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T02:19:22" />
+				Time="2011-08-08T05:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12015,7 +12015,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12061,7 +12061,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12109,7 +12109,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12159,7 +12159,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12189,19 +12189,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おれは　全てを　否定する！
-目に見えるもの　全てに　ＮＯだ！▼</Text>
+			<Text>おれは　すべてを　否定する！
+目に　みえるもの　すべてに　ＮＯだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T03:34:11" />
+				Time="2011-08-08T05:56:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="swan_scenario:W00293"
+				Time="2011-08-08T06:06:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12247,7 +12247,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12279,21 +12279,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おれは　全ての場所で
+			<Text>おれは　すべての　場所で
 頂点に立ってきた！▼
 ここでも　一番に
 最上階に　行くんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-15T02:10:03" />
+				Time="2011-08-08T06:06:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="swan_scenario:W00293"
+				Time="2011-08-08T06:06:50" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12339,7 +12339,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12385,7 +12385,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12431,7 +12431,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12477,7 +12477,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12523,7 +12523,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12565,7 +12565,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12611,7 +12611,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12653,7 +12653,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12703,7 +12703,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12753,7 +12753,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12783,11 +12783,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>生まれた時から　九九が言えた
+			<Text>生まれたときから　九九が　いえた
 超天才の　ぼくと　やるかい？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T07:21:17" />
+				Time="2011-08-08T06:05:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12795,7 +12795,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12837,7 +12837,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12870,14 +12870,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ　初めて見る人！▼
+			<Text>あっ　初めてみる人！▼
 この辺りまで　来られる人は
 だいたい　限られてくるから▼
 新人さんは　すぐ分かるんだ！
 えへへっ！　しょうぶしよ♪▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T07:51:34" />
+				Time="2011-08-08T05:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12885,7 +12885,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12931,7 +12931,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -12977,7 +12977,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13023,7 +13023,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13073,7 +13073,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13107,11 +13107,11 @@
 			Language="JPN_KANJI">
 			<Text>疾風迅雷の　ウェイトレスとは
 わたしのこと！▼
-目にも　見えない　接客で
+目にも　みえない　接客で
 お客様を　ほんろうする！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T08:23:49" />
+				Time="2011-08-08T05:56:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13119,7 +13119,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13161,7 +13161,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13195,7 +13195,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あああっ！　見つけたー！
+			<Text>あああっ！　みつけたー！
 おれさ　前に　おまえに　負けてから▼
 メチャクチャ　がんばって
 ここまで　上がってきたんだ！▼
@@ -13203,7 +13203,7 @@
 今度は　忘れられなく　してやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-20T08:43:00" />
+				Time="2011-08-08T05:56:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13211,7 +13211,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13257,7 +13257,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13303,7 +13303,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13349,7 +13349,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13395,7 +13395,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13430,10 +13430,10 @@
 			<Text>ここまで来るの
 すっごい　大変だったろ？▼
 どんなポケモンで　勝ち抜いたんだ？
-ちょっと　見せてくれよ！▼</Text>
+ちょっと　みせてくれよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T09:49:52" />
+				Time="2011-08-08T05:57:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13441,7 +13441,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13483,7 +13483,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13533,7 +13533,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13575,7 +13575,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -13615,7 +13615,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13648,7 +13648,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13681,7 +13681,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13714,7 +13714,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13747,7 +13747,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13780,7 +13780,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13813,7 +13813,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13846,7 +13846,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13879,7 +13879,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13912,7 +13912,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13945,7 +13945,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -13978,7 +13978,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14011,7 +14011,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14044,7 +14044,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14077,7 +14077,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14110,7 +14110,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14143,7 +14143,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14176,7 +14176,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14209,7 +14209,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14242,7 +14242,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14275,7 +14275,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14308,7 +14308,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14341,7 +14341,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14374,7 +14374,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14407,7 +14407,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14440,7 +14440,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14473,7 +14473,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14506,7 +14506,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14539,7 +14539,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14572,7 +14572,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14605,7 +14605,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14638,7 +14638,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14671,7 +14671,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14704,7 +14704,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14737,7 +14737,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14770,7 +14770,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14803,7 +14803,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14836,7 +14836,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14869,7 +14869,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14902,7 +14902,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14935,7 +14935,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -14968,7 +14968,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15001,7 +15001,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15034,7 +15034,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15067,7 +15067,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15100,7 +15100,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15133,7 +15133,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15166,7 +15166,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15199,7 +15199,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15232,7 +15232,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15265,7 +15265,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15298,7 +15298,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15331,7 +15331,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15364,7 +15364,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15397,7 +15397,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15430,7 +15430,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15463,7 +15463,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15496,7 +15496,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15529,7 +15529,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15562,7 +15562,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15595,7 +15595,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15628,7 +15628,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15661,7 +15661,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15694,7 +15694,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15727,7 +15727,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15760,7 +15760,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15793,7 +15793,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15826,7 +15826,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15859,7 +15859,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15892,7 +15892,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15925,7 +15925,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15958,7 +15958,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -15991,7 +15991,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16024,7 +16024,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16057,7 +16057,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16090,7 +16090,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16123,7 +16123,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16156,7 +16156,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16189,7 +16189,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16222,7 +16222,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16255,7 +16255,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16288,7 +16288,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16321,7 +16321,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16354,7 +16354,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16387,7 +16387,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16420,7 +16420,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16453,7 +16453,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16486,7 +16486,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16519,7 +16519,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16552,7 +16552,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16585,7 +16585,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16618,7 +16618,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16651,7 +16651,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16684,7 +16684,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16717,7 +16717,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16750,7 +16750,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16783,7 +16783,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16816,7 +16816,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16849,7 +16849,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16882,7 +16882,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16915,7 +16915,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16948,7 +16948,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -16981,7 +16981,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17014,7 +17014,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17047,7 +17047,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17080,7 +17080,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17113,7 +17113,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17146,7 +17146,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17179,7 +17179,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17212,7 +17212,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17245,7 +17245,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17278,7 +17278,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17311,7 +17311,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17344,7 +17344,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17377,7 +17377,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17410,7 +17410,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17443,7 +17443,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17476,7 +17476,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17509,7 +17509,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17542,7 +17542,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17575,7 +17575,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17608,7 +17608,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17641,7 +17641,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17674,7 +17674,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17707,7 +17707,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17740,7 +17740,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17773,7 +17773,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17806,7 +17806,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17839,7 +17839,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17872,7 +17872,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17905,7 +17905,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17938,7 +17938,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -17971,7 +17971,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18004,7 +18004,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18037,7 +18037,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18070,7 +18070,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18103,7 +18103,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18136,7 +18136,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18169,7 +18169,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18202,7 +18202,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18235,7 +18235,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18268,7 +18268,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18301,7 +18301,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18334,7 +18334,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18367,7 +18367,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18400,7 +18400,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18433,7 +18433,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18466,7 +18466,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18499,7 +18499,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18532,7 +18532,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18565,7 +18565,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18598,7 +18598,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18631,7 +18631,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18664,7 +18664,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18697,7 +18697,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18730,7 +18730,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18763,7 +18763,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18796,7 +18796,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18829,7 +18829,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18862,7 +18862,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18895,7 +18895,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18928,7 +18928,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18961,7 +18961,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -18994,7 +18994,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19027,7 +19027,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19060,7 +19060,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19093,7 +19093,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19126,7 +19126,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19159,7 +19159,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19192,7 +19192,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19225,7 +19225,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19258,7 +19258,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19291,7 +19291,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19324,7 +19324,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19357,7 +19357,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19390,7 +19390,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19423,7 +19423,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19456,7 +19456,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19489,7 +19489,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19522,7 +19522,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19555,7 +19555,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19588,7 +19588,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19621,7 +19621,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19654,7 +19654,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19687,7 +19687,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19720,7 +19720,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19753,7 +19753,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19786,7 +19786,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19819,7 +19819,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19852,7 +19852,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19885,7 +19885,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19918,7 +19918,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19951,7 +19951,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -19984,7 +19984,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20017,7 +20017,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20050,7 +20050,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20083,7 +20083,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20116,7 +20116,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20149,7 +20149,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20182,7 +20182,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20215,7 +20215,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20248,7 +20248,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20281,7 +20281,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20314,7 +20314,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20347,7 +20347,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20380,7 +20380,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20413,7 +20413,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20446,7 +20446,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20479,7 +20479,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20512,7 +20512,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20545,7 +20545,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20578,7 +20578,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20611,7 +20611,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20644,7 +20644,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20677,7 +20677,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20710,7 +20710,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20743,7 +20743,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20776,7 +20776,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20809,7 +20809,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20842,7 +20842,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20875,7 +20875,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20908,7 +20908,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20941,7 +20941,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -20974,7 +20974,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21007,7 +21007,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21040,7 +21040,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21073,7 +21073,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21106,7 +21106,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21139,7 +21139,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21172,7 +21172,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21205,7 +21205,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21238,7 +21238,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21271,7 +21271,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21304,7 +21304,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21337,7 +21337,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21370,7 +21370,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21403,7 +21403,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21436,7 +21436,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21469,7 +21469,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21502,7 +21502,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21535,7 +21535,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21568,7 +21568,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21601,7 +21601,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEMAN1</Comment>
+			<Comment>だいすきクラブ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21634,7 +21634,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21667,7 +21667,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21700,7 +21700,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MIDDLEWOMAN1</Comment>
+			<Comment>だいすきクラブ 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21733,7 +21733,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21766,7 +21766,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BAKER</Comment>
+			<Comment>ベーカリー 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21799,7 +21799,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21832,7 +21832,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WOMAN3</Comment>
+			<Comment>ほいくし 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21865,7 +21865,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21898,7 +21898,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21931,7 +21931,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERM</Comment>
+			<Comment>からておう 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21964,7 +21964,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -21997,7 +21997,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22030,7 +22030,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>FIGHTERW</Comment>
+			<Comment>バトルガール 女 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22063,7 +22063,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22096,7 +22096,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BADMAN</Comment>
+			<Comment>スキンヘッズ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22129,7 +22129,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22162,7 +22162,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>POLICEMAN</Comment>
+			<Comment>おまわりさん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22195,7 +22195,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22228,7 +22228,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22261,7 +22261,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>MOUNTMAN</Comment>
+			<Comment>やまおとこ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22294,7 +22294,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22327,7 +22327,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22360,7 +22360,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN</Comment>
+			<Comment>さぎょういん１ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22393,7 +22393,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22426,7 +22426,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>CLEANINGM</Comment>
+			<Comment>せいそういん 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22459,7 +22459,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22492,7 +22492,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WORKMAN2</Comment>
+			<Comment>さぎょういん２ 男 w</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22525,7 +22525,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22558,7 +22558,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22591,7 +22591,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPM</Comment>
+			<Comment>サイキッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22624,7 +22624,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22657,7 +22657,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22690,7 +22690,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ESPW</Comment>
+			<Comment>サイキッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22723,7 +22723,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22756,7 +22756,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTM</Comment>
+			<Comment>けんきゅういん 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22789,7 +22789,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22822,7 +22822,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ASSISTANTW</Comment>
+			<Comment>けんきゅういん 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22855,7 +22855,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22888,7 +22888,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22921,7 +22921,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY3</Comment>
+			<Comment>じゅくがえり 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22954,7 +22954,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -22987,7 +22987,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23020,7 +23020,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL3</Comment>
+			<Comment>じゅくがえり 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23053,7 +23053,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23086,7 +23086,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITER</Comment>
+			<Comment>ウエーター 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23119,7 +23119,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23152,7 +23152,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>WAITRESS</Comment>
+			<Comment>ウエートレス 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23185,7 +23185,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23218,7 +23218,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23251,7 +23251,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY2</Comment>
+			<Comment>たんパンこぞう 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23284,7 +23284,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23317,7 +23317,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23350,7 +23350,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL2</Comment>
+			<Comment>ミニスカート 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23383,7 +23383,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23416,7 +23416,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERM</Comment>
+			<Comment>バックパッカー 男 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23449,7 +23449,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23482,7 +23482,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BACKPACKERW</Comment>
+			<Comment>バックパッカー 女 b</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:44:41" />
@@ -23515,7 +23515,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERM</Comment>
+			<Comment>ポケモンブリーダー男</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:30:10" />
@@ -23548,7 +23548,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERM</Comment>
+			<Comment>ポケモンブリーダー男</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:30:16" />
@@ -23581,7 +23581,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERM</Comment>
+			<Comment>ポケモンブリーダー男</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:30:18" />
@@ -23614,7 +23614,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERM</Comment>
+			<Comment>ポケモンブリーダー男</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:30:19" />
@@ -23647,7 +23647,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERM</Comment>
+			<Comment>ポケモンブリーダー男</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:30:21" />
@@ -23680,7 +23680,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERM</Comment>
+			<Comment>ポケモンブリーダー男</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:30:23" />
@@ -23713,7 +23713,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERM</Comment>
+			<Comment>ポケモンブリーダー男</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:30:25" />
@@ -23746,7 +23746,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERM</Comment>
+			<Comment>ポケモンブリーダー男</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:30:27" />
@@ -23779,7 +23779,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERM</Comment>
+			<Comment>ポケモンブリーダー男</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:30:29" />
@@ -23812,7 +23812,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERM</Comment>
+			<Comment>ポケモンブリーダー男</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:22" />
@@ -23845,7 +23845,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERW</Comment>
+			<Comment>ポケモンブリーダー女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:34" />
@@ -23878,7 +23878,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERW</Comment>
+			<Comment>ポケモンブリーダー女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:34" />
@@ -23911,7 +23911,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERW</Comment>
+			<Comment>ポケモンブリーダー女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:34" />
@@ -23944,7 +23944,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERW</Comment>
+			<Comment>ポケモンブリーダー女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:34" />
@@ -23977,7 +23977,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERW</Comment>
+			<Comment>ポケモンブリーダー女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:34" />
@@ -24010,7 +24010,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERW</Comment>
+			<Comment>ポケモンブリーダー女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:34" />
@@ -24043,7 +24043,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERW</Comment>
+			<Comment>ポケモンブリーダー女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:34" />
@@ -24076,7 +24076,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERW</Comment>
+			<Comment>ポケモンブリーダー女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:34" />
@@ -24109,7 +24109,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERW</Comment>
+			<Comment>ポケモンブリーダー女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:34" />
@@ -24142,7 +24142,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BREEDERW</Comment>
+			<Comment>ポケモンブリーダー女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:29:34" />
@@ -24177,7 +24177,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY4</Comment>
+			<Comment>お坊ちゃま 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24223,7 +24223,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY4</Comment>
+			<Comment>お坊ちゃま 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24254,10 +24254,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>親の七光りに　照らされて
-まばゆく輝く　ぼくの　攻撃を見よ！▼</Text>
+まばゆく輝く　ぼくの　攻撃をみよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T05:45:50" />
+				Time="2011-08-08T05:57:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24265,7 +24265,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY4</Comment>
+			<Comment>お坊ちゃま 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24305,7 +24305,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY4</Comment>
+			<Comment>お坊ちゃま 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24345,7 +24345,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>BOY4</Comment>
+			<Comment>お坊ちゃま 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24378,12 +24378,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>貧しい方々の　争いは
-いつ見ても　面白いですわ♪▼
+いつみても　面白いですわ♪▼
 わたしも　たまには
 やってみようかしら？　てい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T05:07:34" />
+				Time="2011-08-08T06:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24391,7 +24391,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL4</Comment>
+			<Comment>お嬢様 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24433,7 +24433,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL4</Comment>
+			<Comment>お嬢様 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24475,7 +24475,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL4</Comment>
+			<Comment>お嬢様 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24515,7 +24515,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL4</Comment>
+			<Comment>お嬢様 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24555,7 +24555,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GIRL4</Comment>
+			<Comment>お嬢様 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24605,7 +24605,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GENTLEMAN</Comment>
+			<Comment>ジェントル 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24651,7 +24651,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GENTLEMAN</Comment>
+			<Comment>ジェントル 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24683,13 +24683,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>若い時には　悪いこともした
+			<Text>若いときには　悪いこともした
 伸し上がるために　なんでもやった▼
 わしは　そこらの　ひ弱な
 ジェントルマンとは　違うぞ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T06:51:58" />
+				Time="2011-08-08T06:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24697,7 +24697,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GENTLEMAN</Comment>
+			<Comment>ジェントル 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24743,7 +24743,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GENTLEMAN</Comment>
+			<Comment>ジェントル 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24783,7 +24783,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>GENTLEMAN</Comment>
+			<Comment>ジェントル 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24829,7 +24829,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>LADY</Comment>
+			<Comment>マダム 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24879,7 +24879,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>LADY</Comment>
+			<Comment>マダム 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24921,7 +24921,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>LADY</Comment>
+			<Comment>マダム 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -24971,7 +24971,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>LADY</Comment>
+			<Comment>マダム 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25018,7 +25018,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>LADY</Comment>
+			<Comment>マダム 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25071,7 +25071,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>DOCTOR</Comment>
+			<Comment>ドクター 男 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25113,7 +25113,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>DOCTOR</Comment>
+			<Comment>ドクター 男 </Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:22:18" />
@@ -25145,13 +25145,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こう見えても　昔は
+			<Text>こうみえても　昔は
 村一番の　トレーナーだった！▼
 いざ　勝負だ！
 勝てたら　回復してやろう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:23:25" />
+				User="swan_scenario:W00293"
+				Time="2011-08-08T06:00:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25159,7 +25159,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>DOCTOR</Comment>
+			<Comment>ドクター 男 </Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:22:18" />
@@ -25190,10 +25190,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>治療して　欲しいのなら……
-命の　きらめきを　見せるのだ！▼</Text>
+命の　きらめきを　みせるのだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:23:51" />
+				User="swan_scenario:W00293"
+				Time="2011-08-08T06:00:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25201,7 +25201,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>DOCTOR</Comment>
+			<Comment>ドクター 男 </Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:22:18" />
@@ -25247,7 +25247,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>DOCTOR</Comment>
+			<Comment>ドクター 男 </Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:22:18" />
@@ -25293,7 +25293,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>DOCTOR</Comment>
+			<Comment>ドクター 男 </Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:22:18" />
@@ -25327,11 +25327,11 @@
 			Language="JPN_KANJI">
 			<Text>ここまで　来たということは
 ただものでは　ないのだろう？▼
-その力　見せてみろ！
+その力　みせてみろ！
 勝てたら　回復してやる！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:24:59" />
+				User="swan_scenario:W00293"
+				Time="2011-08-08T06:01:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25339,7 +25339,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>DOCTOR</Comment>
+			<Comment>ドクター 男 </Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:22:18" />
@@ -25385,7 +25385,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>DOCTOR</Comment>
+			<Comment>ドクター 男 </Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:22:18" />
@@ -25425,7 +25425,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>DOCTOR</Comment>
+			<Comment>ドクター 男 </Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:22:18" />
@@ -25465,7 +25465,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>DOCTOR</Comment>
+			<Comment>ドクター 男 </Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-04T03:22:18" />
@@ -25507,7 +25507,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>NURSE</Comment>
+			<Comment>ナース 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25549,7 +25549,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>NURSE</Comment>
+			<Comment>ナース 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25591,7 +25591,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>NURSE</Comment>
+			<Comment>ナース 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25633,7 +25633,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>NURSE</Comment>
+			<Comment>ナース 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25679,7 +25679,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>NURSE</Comment>
+			<Comment>ナース 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25721,7 +25721,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>NURSE</Comment>
+			<Comment>ナース 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25754,12 +25754,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふふっ！　わたしのことを
-見つけて　ホッとした？▼
+みつけて　ホッとした？▼
 勝負に　勝ったら　ちゃーんと
 回復　してあげるからね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T03:40:49" />
+				Time="2011-08-08T06:01:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25767,7 +25767,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>NURSE</Comment>
+			<Comment>ナース 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25807,7 +25807,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>NURSE</Comment>
+			<Comment>ナース 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25847,7 +25847,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>NURSE</Comment>
+			<Comment>ナース 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />
@@ -25887,7 +25887,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>NURSE</Comment>
+			<Comment>ナース 女 </Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:19" />

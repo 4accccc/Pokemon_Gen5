@@ -738,7 +738,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロコ『わわっ！　見ました！？
+			<Text>ヒロコ『わわっ！　みました！？
 ずーっと　商品が　変わってなかった▽
 あの　ぐうたらショップに▽
 新商品が　並んだんです！▼
@@ -746,7 +746,7 @@
 大雨でも　振らなきゃいいんですけど▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T09:29:21" />
+				Time="2011-08-08T05:35:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3314,10 +3314,10 @@
 ずいぶん　品ぞろえが　良くなってたよ▼
 でさ　ショップの　にいちゃんが
 [Name:TrainerName ]に　負けてられないって▽
-言ってたけど　どういう意味だろ？▼</Text>
+いってたけど　どういう意味だろ？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T09:58:12" />
+				Time="2011-08-08T05:34:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4313,12 +4313,12 @@
 			<Text>ガクト『神聖なる　白の大樹の下に
 突然　どうくつが現れた！▼
 調査員や　トレーナーが
-沢山　来ているみたいだけど▼
+たくさん　来ているみたいだけど▼
 地元民の我々が
 一番に　最下層に行くぞ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T10:12:25" />
+				Time="2011-08-08T05:35:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4915,13 +4915,13 @@
 			Language="JPN_KANJI">
 			<Text>ミホ『野原に　ねっころがるとか
 ぼんやりと　森の向こうに▽
-落ちていく　太陽を　見ているとか▼
+落ちていく　太陽を　みているとか▼
 そういう　なんでもないことが
 ここでは　最高に　楽しいって▽
 森の人たちが　教えてくれたの！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T06:07:18" />
+				Time="2011-08-08T05:41:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6491,10 +6491,10 @@
 純粋な　ポケモン勝負の　楽しさを▽
 思い出したわ！▼
 [Name:TrainerName ]　は　あそこで　なにか
-大切なものを　見つけられた？▼</Text>
+大切なものを　みつけられた？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T08:18:50" />
+				Time="2011-08-08T05:41:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7050,12 +7050,12 @@
 			<Text>グレース『あなたが　[Name:TrainerName ]　ね！▼
 孫が　すごいトレーナーが
 森に来た　なんて騒いでるから▽
-ついつい　見にきちゃった！▼
+ついつい　みにきちゃった！▼
 こわもての人かと　思ったら
 見た目は　ずいぶん　かわいいのね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T08:19:14" />
+				Time="2011-08-08T05:41:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
