@@ -38,7 +38,7 @@ typedef enum{
   GAMEBEACON_CGEAR_INFO_RADAR,     ///<すれ違い調査達成の通知
   GAMEBEACON_CGEAR_INFO_HOT,       ///<Gパワー,新規ビーコン検知の通知
   GAMEBEACON_CGEAR_INFO_FMISSION,  ///<フェスミッションビーコン検知の通知
-  GAMEBEACON_CGEAR_INFO_FLAG_MAX,
+  GAMEBEACON_CGEAR_INFO_MAX,
 }GAMEBEACON_CGEAR_INFO_FLAG;
 
 ///詳細No

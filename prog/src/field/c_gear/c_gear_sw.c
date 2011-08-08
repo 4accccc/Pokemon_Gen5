@@ -28,6 +28,7 @@
 #include "field/field_status.h"
 #include "field/field_status_local.h"
 
+#include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_accessor.h"
 #include "../../field/field_comm/intrude_work.h"
 #include "../../field/field_comm/intrude_main.h"
@@ -142,6 +143,14 @@ typedef enum{
   CGEAR_PANEL_MAX,
 }CGEAR_PANEL_ID;
 #endif
+
+//ビーコンからの通知フラグID各種
+enum{
+  INFO_FLAG_RADAR = GAMEBEACON_CGEAR_INFO_RADAR,
+  INFO_FLAG_HOT = GAMEBEACON_CGEAR_INFO_HOT,
+  INFO_FLAG_FMISSION = GAMEBEACON_CGEAR_INFO_FMISSION,
+  INFO_FLAG_MAX = GAMEBEACON_CGEAR_INFO_MAX,
+};
 
 enum{
   // パレットタイプ
@@ -536,7 +545,7 @@ enum{
  ACTANM_CONNECT_OFF,
  ACTANM_FMISSION,
  ACTANM_FMISSION_OFF,
- ACTANM_RIPPLE,
+ ACTANM_CONNECT_INFO,
  ACTANM_WIN,
  ACTANM_LOGO_ALL,
  ACTANM_S_IR,
@@ -1082,6 +1091,7 @@ struct _C_GEAR_WORK {
   GFL_CLWK  *cellStartUp[STARTUP_ANIME_OBJ_MAX];
 #endif
   u16 crossColor[CROSS_COLOR_MAX]; //すれ違いカラー
+  u8  info_flag[INFO_FLAG_MAX];  //ビーコンから通知されるフラグ
 
   STARTUP_ENDCALLBACK* pCall;
   void* pWork;
@@ -1347,11 +1357,12 @@ static BOOL _BUTTONPAL_Update( BUTTON_PAL_FADE* p_fwk );
 // CGEAR演出イベント
 static GMEVENT* EVENT_ButtonEffectWaitCall( C_GEAR_WORK* pWork, u32 createEvent );
 static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk );
-static void _cgear_CheckTVTStatus( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_status );
 
 //スリープチェック
 static void _cgear_SleepCheck( C_GEAR_WORK* pWork, BOOL bAction );
 static void _cgear_CheckMissionPartner( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_status );
+static void _cgear_CheckTVTStatus( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_status );
+static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork );
 
 //static void CGEAR_SW_PATTERN_SetUp( CGEAR_SAVEDATA* pCGSV, ARCHANDLE* handle, u32 pattern, HEAPID heapID );
 
@@ -4940,7 +4951,7 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
     _gearAllObjDrawEnable(pWork, TRUE);
 //    _gearMarkObjDrawEnable(pWork,TRUE);
   }
-
+  _cgear_CheckBeaconInfo( pWork );
 }
 
 
@@ -5677,6 +5688,7 @@ static void cgear_ExitWork( C_GEAR_WORK* pWork )
   // タスク
   GFL_TCB_Exit( pWork->pfade_tcbsys );
   GFL_HEAP_FreeMemory( pWork->pfade_tcbsys_wk );
+  GFL_TCBL_DeleteAll( pWork->tcbsys );
   GFL_TCBL_Exit( pWork->tcbsys );
 
   // パレットフェード
@@ -5781,6 +5793,9 @@ void CGEAR_SW_Main( C_GEAR_WORK* pWork,BOOL bAction )
     
     // トランシーバー反応処理
     _cgear_CheckTVTStatus( pWork, intrude_status );
+
+    //ビーコンからの通知チェック
+    _cgear_CheckBeaconInfo( pWork );
   }
 
   
@@ -6761,6 +6776,89 @@ static void _cgear_CheckTVTStatus( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_s
       pWork->tvt_snd = FALSE;
       _PanelPalette_EXSet( pWork, FALSE, FALSE );
     }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ビーコンからの通知チェック 
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork )
+{
+  int i;
+
+#ifdef PM_DEBUG
+  {
+    int cont = GFL_UI_KEY_GetCont();
+    int trg = GFL_UI_KEY_GetTrg();
+
+    if( trg & PAD_BUTTON_A ){
+      if( cont & PAD_BUTTON_START ){
+        GAMEBEACON_SetCGearInfoFlag( INFO_FLAG_RADAR );
+      }
+      if( cont & PAD_BUTTON_SELECT ){
+        GAMEBEACON_ResetCGearInfoFlag( INFO_FLAG_RADAR );
+      }
+    }
+    if( trg & PAD_BUTTON_B ){
+      if( cont & PAD_BUTTON_START ){
+        GAMEBEACON_SetCGearInfoFlag( INFO_FLAG_HOT );
+      }
+      if( cont & PAD_BUTTON_SELECT ){
+        GAMEBEACON_ResetCGearInfoFlag( INFO_FLAG_HOT );
+      }
+    }
+    if( trg & PAD_BUTTON_Y ){
+      if( cont & PAD_BUTTON_START ){
+        GAMEBEACON_SetCGearInfoFlag( INFO_FLAG_FMISSION );
+      }
+      if( cont & PAD_BUTTON_SELECT ){
+        GAMEBEACON_ResetCGearInfoFlag( INFO_FLAG_FMISSION );
+      }
+    }
+  }
+#endif  //PM_DEBUG
+
+  //調査レーダー
+  if( GAMEBEACON_GetCGearInfoFlag( INFO_FLAG_RADAR ) ){
+    if( !pWork->info_flag[INFO_FLAG_RADAR] ){
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_INFO );
+      pWork->info_flag[INFO_FLAG_RADAR] = TRUE;
+    }
+  }else{
+    if( pWork->info_flag[INFO_FLAG_RADAR] ){
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR );
+      pWork->info_flag[INFO_FLAG_RADAR] = FALSE;
+    }
+  }
+  
+  //フェスミッション
+  if( GAMEBEACON_GetCGearInfoFlag( INFO_FLAG_FMISSION ) ){
+    if( !pWork->info_flag[INFO_FLAG_FMISSION] ){
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_FMISSION );
+      pWork->info_flag[INFO_FLAG_FMISSION] = TRUE;
+      pWork->info_flag[INFO_FLAG_HOT] = FALSE;
+    }
+    return;
+  }
+  //フェスミッションフラグがOff
+  
+  //新規ビーコン＆デルパワー
+  if( GAMEBEACON_GetCGearInfoFlag( INFO_FLAG_HOT ) ){
+    if( !pWork->info_flag[INFO_FLAG_HOT] ){
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT_INFO );
+      pWork->info_flag[INFO_FLAG_HOT] = TRUE;
+      pWork->info_flag[INFO_FLAG_FMISSION] = FALSE;
+    }
+    return;
+  }
+  //ホットビーコンフラグOffでまだInfo表示だったら元に戻す
+  if( pWork->info_flag[INFO_FLAG_HOT] || pWork->info_flag[INFO_FLAG_FMISSION]){
+    _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT );
+    pWork->info_flag[INFO_FLAG_HOT] = FALSE;
+    pWork->info_flag[INFO_FLAG_FMISSION] = FALSE;
   }
 }
 
