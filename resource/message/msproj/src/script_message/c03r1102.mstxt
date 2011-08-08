@@ -1774,4 +1774,343 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_mdloyj_prizecomp_sub_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Medal ]！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:38:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Medal ]！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>サブウインドウ
+・0＝メダル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:28" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mdloyj_prizecomp_sub_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カッコイイ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:38:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:38:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カッコイイ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mdloyj_prizecomp_sub_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Medal ]！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:38:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Medal ]！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>サブウインドウ
+・0＝メダル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:30" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mdloyj_prizecomp_sub_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かんどうした！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:38:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:38:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>感動した！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mdloyj_prizecomp_sub_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Medal ]！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:38:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Medal ]！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>サブウインドウ
+・0＝メダル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:31" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mdloyj_prizecomp_sub_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サインちょうだい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:38:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:38:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サインちょうだい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:39:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mdlbg_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ようこそ　メダルじむきょくへ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:36:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:36:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ようこそ　メダル事務局へ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:38:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:37:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>入り口付近の置物</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:36:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＢＧメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:35:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mdlbg_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダルラリーの　せいせきが
+きろくしてある　グラフだ▼
+……▼
+[Name:TrainerName ]
+かくとくした　メダル　[Digit:3digits Idx="1" ]▽
+[Name:MedalistRank Idx="2" ]ランク▼
+……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:37:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:36:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダルラリーの　成績が
+記録してある　グラフだ▼
+……▼
+[Name:TrainerName ]
+獲得した　メダル　[Digit:3digits Idx="1" ]▽
+[Name:MedalistRank Idx="2" ]ランク▼
+……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:37:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:37:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>棒グラフの張り紙（正面壁面）
+※横幅３グリッド分
+・0＝主人公名
+・1＝所持タイトルメダル個数
+・2＝メダリストランク</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:36:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＢＧメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:35:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mdlbg_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たくさんの　しゅるいの
+メダルが　かざってある</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:36:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:36:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たくさんの　種類の
+メダルが　飾ってある</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:37:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:37:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>メダルの入った額縁(右壁面)</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:36:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＢＧメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T12:35:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
