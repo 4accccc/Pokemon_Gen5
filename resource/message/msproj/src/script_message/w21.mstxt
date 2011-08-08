@@ -831,11 +831,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『じゃ　そちらは
-チェレンさんたちに　まかせる▼
+チェレンさんに　まかせる▼
 オレは　いくよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:43:07" />
+				Time="2011-08-08T12:51:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -844,11 +844,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『じゃ　そちらは
-チェレンさんたちに　任せる▼
+チェレンさんに　任せる▼
 オレは　行くよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:47:19" />
+				Time="2011-08-08T12:51:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -887,10 +887,10 @@
 			<Text>だって　あの　ポケモン……
 キュレム　だっけ▼
 あいつの　なきごえ
-なんだか　かなしそう　だったしな▼</Text>
+なんだか　かなしそう　だった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:34:22" />
+				Time="2011-08-08T12:51:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -901,10 +901,10 @@
 			<Text>だって　あの　ポケモン……
 キュレム　だっけ▼
 あいつの　鳴き声
-なんだか　哀しそう　だったしな▼</Text>
+なんだか　哀しそう　だった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:34:15" />
+				Time="2011-08-08T12:51:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
