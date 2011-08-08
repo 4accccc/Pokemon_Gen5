@@ -1694,6 +1694,30 @@ $(DIR_WBTMP)/pwood01_01_01.tbl: $(DIR_RES)/pwood01_01_01.bin
 	@echo create_bintbl pwood01_01_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/pwood01_01_01.bin
 
+$(DIR_WBTMP)/freezemap10_05.tbl: $(DIR_RES)/freezemap10_05.bin
+	@echo create_bintbl freezemap10_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezemap10_05.bin
+
+$(DIR_WBTMP)/freezemap11_05.tbl: $(DIR_RES)/freezemap11_05.bin
+	@echo create_bintbl freezemap11_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezemap11_05.bin
+
+$(DIR_WBTMP)/freezemap14_05.tbl: $(DIR_RES)/freezemap14_05.bin
+	@echo create_bintbl freezemap14_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezemap14_05.bin
+
+$(DIR_WBTMP)/freezemap14_05_ex.tbl: $(DIR_RES)/freezemap14_05_ex.bin
+	@echo create_bintbl freezemap14_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezemap14_05_ex.bin
+
+$(DIR_WBTMP)/freezemap15_05.tbl: $(DIR_RES)/freezemap15_05.bin
+	@echo create_bintbl freezemap15_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezemap15_05.bin
+
+$(DIR_WBTMP)/freezemap15_05_ex.tbl: $(DIR_RES)/freezemap15_05_ex.bin
+	@echo create_bintbl freezemap15_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezemap15_05_ex.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin

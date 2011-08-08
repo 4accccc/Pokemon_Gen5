@@ -401,6 +401,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/pwood01_01_00.nsbmd \
 	$(DIR_TEMP)/pwood01_00_01.nsbmd \
 	$(DIR_TEMP)/pwood01_01_01.nsbmd \
+	$(DIR_TEMP)/freezemap10_05.nsbmd \
+	$(DIR_TEMP)/freezemap11_05.nsbmd \
+	$(DIR_TEMP)/freezemap14_05.nsbmd \
+	$(DIR_TEMP)/freezemap15_05.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \

@@ -401,6 +401,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/pwood01_01_00.3dppack \
 	$(DIR_OUTPUT)/pwood01_00_01.3dppack \
 	$(DIR_OUTPUT)/pwood01_01_01.3dppack \
+	$(DIR_OUTPUT)/freezemap10_05.3dppack \
+	$(DIR_OUTPUT)/freezemap11_05.3dppack \
+	$(DIR_OUTPUT)/freezemap14_05.3dppack \
+	$(DIR_OUTPUT)/freezemap15_05.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
