@@ -377,7 +377,7 @@
 #define FE_C03R0301_ITEMGET_01             361 /* 0x0169 バトルカンパニー：アイテム入手フラグ */
 #define FE_C03R0302_ITEM_03                362 /* 0x016a バトルカンパニー：アイテム入手フラグ */
 #define FE_NAKIGOE_ITEMGET_01              363 /* 0x016b 4番道路民家（r04r0501 */
-		/* not used   364(0x016c) */
+#define FE_D10_PLAZMA_FRIGATE_01           364 /* 0x016c ジャイアントホール：プラズマフリゲート起動フラグ */
 		/* not used   365(0x016d) */
 		/* not used   366(0x016e) */
 		/* not used   367(0x016f) */
@@ -673,6 +673,12 @@
 #define FV_W21_RIVAL_01                    755 /* 0x02f3 21番水路：ライバル */
 #define FV_W21_SWLEADER8_01                756 /* 0x02f4 21番水路：シズイ */
 #define FV_W21_SWLEADER1_01                757 /* 0x02f5 21番水路：チェレン */
+#define FV_H01_BRIDGE_MANIA_01             758 /* 0x02f6 スカイアローブリッジ：橋マニア */
+#define FV_H02_BRIDGE_MANIA_01             759 /* 0x02f7 ホドモエの跳ね橋：橋マニア */
+#define FV_H03_BRIDGE_MANIA_01             760 /* 0x02f8 シリンダーブリッジ：橋マニア */
+#define FV_H04_BRIDGE_MANIA_01             761 /* 0x02f9 ビレッジブリッジ：橋マニア */
+#define FV_H05_BRIDGE_MANIA_01             762 /* 0x02fa ワンダーブリッジ：橋マニア */
+#define FV_H06_BRIDGE_MANIA_01             763 /* 0x02fb マリンチューブ：橋マニア */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

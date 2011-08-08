@@ -256,6 +256,8 @@
 #define WK_SCENE_D27R1001_SWSAGE7_01     16644 /* 0x4104 プラズマフリゲートエンジン部屋：POS制御ワーク */
 #define WK_SCENE_D27R1301_SWSAGE7_01     16645 /* 0x4105 プラズマフリゲートエンジン部屋：POS制御ワーク */
 #define WK_SCENE_W21_01                  16646 /* 0x4106 21番水路：POS制御ワーク */
+#define WK_SCENE_T02R0401_GIRL4_01       16647 /* 0x4107 カラクサタウン民家：スランプピアノガールイベント進行制御ワーク */
+#define WK_SCENE_BRIDGE_MANIA_01         16648 /* 0x4108 h01&#xff5e;h06：橋マニア */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
