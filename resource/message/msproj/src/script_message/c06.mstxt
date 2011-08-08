@@ -307,13 +307,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかし　ポケモンの　ぶんぷって
-２ねんで　おおきく　かわるのよね▼
-だからこそ　けんきゅうは　おわらないし
+			<Text>しかし　ポケモンの　分布って
+２年で　大きく　変わるのよね▼
+だからこそ　研究は　終わらないし
 おもしろいと　いえるのだけど……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:31:40" />
+				Time="2011-08-08T09:10:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -857,16 +857,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギ『はーい！▼
-・良い研究ができた
-・次は山を越えて▼
-[Name:TrainerName ]
-わたしと　いっしょに
+さて　つぎは　やまを　こえても
+いい　ちょうさが▽
+おなじように　できると　いいわね！▼
+そ！　わたしと　いっしょに
 ひこうきに　のりましょ！▼
 というのも
-ポケモンずかんの　ためなんだけど</Text>
+ポケモンずかんの　ためなんだけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:00:04" />
+				Time="2011-08-08T09:17:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -875,13 +875,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『はーい！▼
-
-で　[Name:TrainerName ]　おねがい
-わたしと　いっしょに
-ソウリュウシティに　きてほしいの！</Text>
+さて　次は　山を　越えても
+いい　調査が▽
+同じように　できると　いいわね！▼
+そ！　わたしと　いっしょに
+飛行機に　乗りましょ！▼
+というのも
+ポケモン図鑑の　ためなんだけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:53:55" />
+				Time="2011-08-08T09:17:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1081,13 +1084,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこうき！　この　フォルム！
-まさに　とぶための　デザイン！▼
-そして　とぶための　メカニックも
-いっさいの　むだが　ないんです！</Text>
+			<Text>フキヨセの　ひこうき　だけど
+ひとを　のせるように　なったんだ！▼
+みんなの　ポケモンが
+そらをとぶを　つかえるわけじゃないし</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:03:43" />
+				Time="2011-08-08T09:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1095,13 +1098,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>飛行機！　この　フォルム！
-まさに　飛ぶための　デザイン！▼
-そして　飛ぶための　メカニックも
-いっさいの　無駄が　ないんです！</Text>
+			<Text>フキヨセの　飛行機だけど
+人を　乗せるように　なったんだ！▼
+みんなの　ポケモンが
+そらをとぶを　使えるわけじゃないし</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:03:50" />
+				Time="2011-08-08T09:39:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1109,10 +1112,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・メッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T09:33:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1188,14 +1192,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フウロさんの　おじいちゃん
-でんせつの　ひこうきのり　だったの▼
-あっ　フウロさん　てのは
-このまちの　ジムリーダー！▽
-やさしい　おねえさん　なんだから！</Text>
+			<Text>フウロさん　ってば
+でんせつの　ひこうきのり　だった▽
+おじいちゃんを　こえたわね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:03:18" />
+				Time="2011-08-08T09:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1203,14 +1205,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フウロさんの　おじいちゃん
-伝説の　飛行機乗り　だったの▼
-あっ　フウロさん　てのは
-この街の　ジムリーダー！▽
-優しい　お姉さん　なんだから！</Text>
+			<Text>フウロさん　ってば
+伝説の　飛行機乗り　だった▽
+おじいちゃんを　超えたわね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:04:06" />
+				Time="2011-08-08T09:39:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1218,10 +1218,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・メッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T09:32:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1243,14 +1244,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンと　ひと　とで
-あれはてた　とちを　きりひらき▽
-みんなが　くらせるように　したの▼
-きっと　これからも
-その　せいしんは　かわらないわ</Text>
+			<Text>この　フキヨセは　もともとは
+あれはてた　とち……▼
+ポケモンと　ひとが　きょうりょくして
+きりひらいた　ばしょ　なんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:03:26" />
+				Time="2011-08-08T10:03:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1258,14 +1258,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンと　人とで
-荒れ果てた　土地を　切り開き▽
-みんなが　暮らせるように　したの▼
-きっと　これからも
-その　精神は　変わらないわ</Text>
+			<Text>この　フキヨセは　元々は
+荒れ果てた　土地……▼
+ポケモンと　人が　協力して
+切り拓いた　場所なんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:03:37" />
+				Time="2011-08-08T10:03:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1273,10 +1272,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・メッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:03:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1298,13 +1298,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きをつけるなら　かっそうろで
-あそんでも　かまわんぞ▼
-うちの　かもつきが　とぶのは
-１にちに　１びん　ぐらいだしな</Text>
+			<Text>ひこうきは　かっそうろが　ないと
+とべないが　ポケモンには　いらん▼
+だけど　ひこうきは　ポケモンよりも
+たくさんの　ものが　はこべるよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:02:59" />
+				Time="2011-08-08T09:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1312,13 +1312,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>気をつけるなら　滑走路で
-遊んでも　かまわんぞ▼
-うちの　貨物機が　飛ぶのは
-１日に　１便　ぐらいだしな</Text>
+			<Text>飛行機は　滑走路が　ないと
+飛べないが　ポケモンには　いらん▼
+だけど　飛行機は　ポケモンよりも
+たくさんの　物が　運べるよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:03:05" />
+				Time="2011-08-08T09:40:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1326,10 +1326,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・メッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T09:38:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1351,12 +1352,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだんに　ポケモンを
-うばわれた　ひとって▽
+			<Text>２ねんまえ　までに　プラズマだんに
+ポケモンを　うばわれた　ひとって▽
 かなりの　かず　らしいわね……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T09:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1364,12 +1365,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団に　ポケモンを
-奪われた　人って▽
+			<Text>２年前までに　プラズマ団に
+ポケモンを　奪われた　人って▽
 かなりの数　らしいわね……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T09:56:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1405,13 +1406,11 @@
 			Language="JPN">
 			<Text>おいしい　やさいを　たべたいなら
 しぜんで　そだてるのが　いちばんさ▼
-さまざまに　かわる　てんこうのなか
-たえて　そだてば　おいしくなるよ▼
-ときどき　ポケモンに　たべられるのが
-その　しょうこ　ってもんだよ</Text>
+ときどき　ポケモンに　たべられる……
+ううん　ポケモンに　あげられるしね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:20:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1421,13 +1420,11 @@
 			Language="JPN_KANJI">
 			<Text>おいしい　野菜を　食べたいなら
 自然で　育てるのが　一番さ▼
-さまざまに　変わる　天候のなか
-耐えて　育てば　おいしくなるよ▼
-ときどき　ポケモンに　食べられるのが
-その　証拠って　もんだよ</Text>
+ときどき　ポケモンに　食べられる……
+ううん　ポケモンに　あげられるしね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:21:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1436,10 +1433,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITEver</Comment>
+・White2ver
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:24:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1468,15 +1466,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おんしつを　つかって
+			<Text>おんしつを　つかって　むだなく
 やさいを　そだてるのが　いちばんさ▼
-おんどや　えいようも
-すべて　システムで　かんりしてね▼
-いっさいの　むだなく　そだった
-やさいは　とびっきり　おいしいよ</Text>
+えいようが　すべて
+やさいの　おいしさに　なるんだよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:24:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1484,15 +1480,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>温室を　使って
+			<Text>温室を　使って　無駄なく
 野菜を　育てるのが　一番さ▼
-温度　湿度や　栄養も
-すべて　システムで　管理してね▼
-一切の　むだなく　育った
-野菜は　とびっきり　美味しいよ</Text>
+栄養が　すべて
+野菜の　おいしさに　なるんだよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:25:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1501,10 +1495,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACKver</Comment>
+・Black2ver
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:24:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1536,8 +1531,8 @@
 			<Text>あー！　ぼくらの
 たからもの　みつけたんだ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:13:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1546,10 +1541,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あー！　ぼくらの
-たからもの　みつけたんだ！！▼</Text>
+宝物　みつけたんだ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:14:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1561,10 +1556,11 @@
 ・msg_c06r0101_boy2_01表示後にセットされる
 　No367「つばめがえし」を入手すると登場し
 　主人公に隣接してメッセージ表示
+・ポケモン・コアルヒーも一緒に
 ・続けてbabygirl_01</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:03:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1593,10 +1589,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みつけたあ！！▼</Text>
+			<Text>みつけたわね！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T09:45:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1604,10 +1600,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みつけたあ！！▼</Text>
+			<Text>みつけたわね！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T09:45:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1619,11 +1615,11 @@
 ・続けて
 　主人公♂→boy2_02
 　主人公♀→boy2_03
-※swanでメッセージ変更
+※swanでメッセージ修正
 ※動作モデルを変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T08:18:22" />
+				Time="2011-08-08T10:13:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1654,16 +1650,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なんてね▼
-ぼくら　ポケモン　もってないし
-それまで　その　わざマシンを▽
-かくしておくつもり　だったんだ▼
-だけど　もったいないから
-おにいちゃん　つかって　いいよ▼
-ぼくら　また
-フウロねえちゃんから　もらうから！▼</Text>
+ぼくら　コアルヒーに
+つばめがえしを　おぼえさせたから▼
+その　わざマシンは
+おにいちゃんに　あげるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:13:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1672,16 +1665,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんてね▼
-ぼくら　ポケモン　持ってないし
-手に入れるまで　その　わざマシンを▽
-隠しておくつもり　だったんだ▼
-だけど　もったいないから
-お兄ちゃん　使っていいよ▼
-ぼくら　また
-フウロ姉ちゃんから　もらうから！▼</Text>
+ぼくら　コアルヒーに
+つばめがえしを　覚えさせたから▼
+その　わざマシンは
+お兄ちゃんに　あげるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:13:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1690,10 +1680,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてbabygirl_02</Comment>
+・続けてbabygirl_02
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:13:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1723,16 +1714,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なんてね▼
-ぼくら　ポケモン　もってないし
-それまで　その　わざマシンを
-かくしておく　つもりだったんだ▼
-だけど　もったいないから
-おねえちゃん　つかって　いいよ▼
-ぼくら　また
-フウロねえちゃんから　もらうから！▼</Text>
+ぼくら　コアルヒーに
+つばめがえしを　おぼえさせたから▼
+その　わざマシンは
+おねえちゃんに　あげるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:13:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1741,16 +1729,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんてね▼
-ぼくら　ポケモン　持ってないし
-手に入れるまで　その　わざマシンを▽
-隠しておくつもり　だったんだ▼
-だけど　もったいないから
-お姉ちゃん　使っていいよ▼
-ぼくら　また
-フウロ姉ちゃんから　もらうから！▼</Text>
+ぼくら　コアルヒーに
+つばめがえしを　覚えさせたから▽
+その　わざマシンは
+お姉ちゃんに　あげるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:13:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1759,10 +1744,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてbabygirl_02</Comment>
+・続けてbabygirl_02
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:13:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1791,10 +1777,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つかって　いーよー！！▼</Text>
+			<Text>つばめがえしは　かならず
+あたる　わざ！　つかうといいよ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:12:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1802,10 +1789,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つかって　いーよー！！▼</Text>
+			<Text>つばめがえしは　必ず　当たる技！
+使うと　いいよ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:12:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1814,12 +1802,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けてboy2_04
-※swanでメッセージ変更
+・続けてpoke40_01
+※swanでメッセージ修正
 ※動作モデルを変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T08:19:10" />
+				Time="2011-08-08T10:12:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1839,6 +1827,56 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06_poke40_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぐわ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:10:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:09:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぐわ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:10:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:09:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・続けてboy2_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:09:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE40
+ポケモン・コアルヒー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T10:09:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
