@@ -2367,11 +2367,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もう　２ねんも　このエリアにいるぞ
+			<Text>もう　はんとしも　このエリアにいるぞ
 さいのう　ないのかな　おれ……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T09:02:10" />
+				Time="2011-08-08T07:16:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2379,11 +2379,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もう２年も　このエリアにいるぞ
+			<Text>もう半年も　このエリアにいるぞ
 才能ないのかな　おれ……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T09:02:15" />
+				Time="2011-08-08T07:17:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7209,11 +7209,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うう……にんきものへの
-みちは　けわしいもんだな……▼</Text>
+			<Text>うう……にんきものへの　みちは
+けわしいもんだな……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-07T09:19:05" />
+				Time="2011-08-08T08:43:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7221,11 +7221,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うう……人気者への
-道は　けわしいもんだな……▼</Text>
+			<Text>うう……人気者への　道は
+けわしいもんだな……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-07T09:19:40" />
+				Time="2011-08-08T08:43:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12429,11 +12429,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もっと　賞金を稼いで
+			<Text>もっと　賞金を　かせいで
 大人になったら　楽したいのにー！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-20T08:44:43" />
+				Time="2011-08-08T08:57:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

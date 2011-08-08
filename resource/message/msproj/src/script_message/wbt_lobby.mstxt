@@ -466,8 +466,8 @@ msg_wbt_menu_wcs</Comment>
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
 加えて　道具では　こころのしずく
-技では　フリーフォールの▽
-使用が　禁止されています▼
+技では　フリーフォールの　使用が▽
+禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
 また　フラットルールにより
@@ -481,8 +481,8 @@ msg_wbt_menu_wcs</Comment>
 				Time="2011-08-05T08:54:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="swan_scenario:W00293"
+				Time="2011-08-08T09:39:29" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -540,11 +540,10 @@ msg_wbt_menu_wcs</Comment>
 ポケモンの　かずに　おうじて▽
 バトルポイントが　もらえます▼
 かんぜんしょうり　めざして
-がんばって　ください！▼
-</Text>
+がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T09:31:52" />
+				Time="2011-08-08T09:41:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -561,8 +560,8 @@ msg_wbt_menu_wcs</Comment>
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
 加えて　道具では　こころのしずく
-技では　フリーフォールの▽
-使用が　禁止されています▼
+技では　フリーフォールの　使用が▽
+禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
 また　フラットルールにより
@@ -580,7 +579,7 @@ msg_wbt_menu_wcs</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:36:55" />
+				Time="2011-08-08T09:39:30" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -796,8 +795,8 @@ msg_wbt_menu_wcs</Comment>
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
 加えて　道具では　こころのしずく
-技では　フリーフォールの▽
-使用が　禁止されています▼
+技では　フリーフォールの　使用が▽
+禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
 また　フラットルールにより
@@ -812,7 +811,7 @@ msg_wbt_menu_wcs</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:36:37" />
+				Time="2011-08-08T09:39:31" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -880,8 +879,8 @@ msg_wbt_menu_wcs</Comment>
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
 加えて　道具では　こころのしずく
-技では　フリーフォールの▽
-使用が　禁止されています▼
+技では　フリーフォールの　使用が▽
+禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
 また　フラットルールにより
@@ -896,7 +895,7 @@ msg_wbt_menu_wcs</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:36:42" />
+				Time="2011-08-08T09:39:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -971,8 +970,8 @@ msg_wbt_menu_wcs</Comment>
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
 加えて　道具では　こころのしずく
-技では　フリーフォールの▽
-使用が　禁止されています▼
+技では　フリーフォールの　使用が▽
+禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
 また　フラットルールにより
@@ -987,7 +986,7 @@ msg_wbt_menu_wcs</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:36:42" />
+				Time="2011-08-08T09:39:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1069,8 +1068,8 @@ msg_wbt_menu_wcs</Comment>
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
 加えて　道具では　こころのしずく
-技では　フリーフォールの▽
-使用が　禁止されています▼
+技では　フリーフォールの　使用が▽
+禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
 また　フラットルールにより
@@ -1085,7 +1084,7 @@ msg_wbt_menu_wcs</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:36:43" />
+				Time="2011-08-08T09:39:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1167,8 +1166,8 @@ msg_wbt_menu_wcs</Comment>
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
 加えて　道具では　こころのしずく
-技では　フリーフォールの▽
-使用が　禁止されています▼
+技では　フリーフォールの　使用が▽
+禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
 また　フラットルールにより
@@ -1183,7 +1182,7 @@ msg_wbt_menu_wcs</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:36:43" />
+				Time="2011-08-08T09:39:33" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1268,8 +1267,8 @@ msg_wbt_menu_wcs</Comment>
 もたせる　道具も　すべて
 ちがうものでなければ　なりません▼
 加えて　道具では　こころのしずく
-技では　フリーフォールの▽
-使用が　禁止されています▼
+技では　フリーフォールの　使用が▽
+禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
 また　フラットルールにより
@@ -1287,7 +1286,7 @@ msg_wbt_menu_wcs</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T10:36:45" />
+				Time="2011-08-08T09:39:33" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1487,7 +1486,7 @@ msg_wbt_menu_wcs</Comment>
 ２匹　交換　していただきます▼
 交換した　ポケモンは
 試合終了後に　持ち主の　もとに▽
-戻されますので　ご安心ください▼
+もどされますので　ご安心ください▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
@@ -1496,7 +1495,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-08T02:22:52" />
+				Time="2011-08-08T09:43:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1610,11 +1609,11 @@ msg_wbt_menu_wcs</Comment>
 より　めずらしいポケモンを▽
 ミックスして　たたかうことができます▼
 ゆうしょうすると　ちょっぴりおおめに
-バトルポイントが　もらえますので▽
+バトルポイントが　もらえます▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T09:32:21" />
+				Time="2011-08-08T09:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1631,7 +1630,7 @@ msg_wbt_menu_wcs</Comment>
 ２匹　交換　していただきます▼
 交換した　ポケモンは
 試合終了後に　持ち主の　もとに▽
-戻されますので　ご安心ください▼
+もどされますので　ご安心ください▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
@@ -1641,11 +1640,11 @@ msg_wbt_menu_wcs</Comment>
 より　珍しいポケモンを▽
 ミックスして　戦うことができます▼
 優勝すると　ちょっぴり多めに
-バトルポイントが　もらえますので▽
+バトルポイントが　もらえます▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T09:56:03" />
+				Time="2011-08-08T09:46:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -4802,11 +4801,11 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>みごと　トーナメントを　せいした
-[Name:TrainerName ]さまに　バトルポイントを
+[Name:TrainerName ]さまに　バトルポイントを▽
 おくらせていただきます！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T08:10:37" />
+				Time="2011-08-08T09:49:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4815,11 +4814,11 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>みごと　トーナメントを　制した
-[Name:TrainerName ]様に　バトルポイントを
+[Name:TrainerName ]様に　バトルポイントを▽
 おくらせていただきます！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T08:13:35" />
+				Time="2011-08-08T09:49:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6254,11 +6253,11 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Wi-Fiコネクションを　使用して
+			<Text>Ｗｉ－Ｆｉコネクションを　使用して
 トーナメントを　ダウンロードできます</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T06:54:47" />
+				Time="2011-08-08T09:51:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

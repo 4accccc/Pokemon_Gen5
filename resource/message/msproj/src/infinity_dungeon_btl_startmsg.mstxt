@@ -2436,13 +2436,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょうじょうを　めざして　３ねんめ
+			<Text>ちょうじょうを　めざして　１ねんめ
 いつになったら　たどりつけるのか……▼
 ふんっ　おまえなんかに
 ぬけがけは　させないぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-04T08:30:00" />
+				Time="2011-08-08T07:17:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2450,13 +2450,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>頂上を　目指して　３年目
+			<Text>頂上を　目指して　１年目
 いつになったら　たどり着けるのか……▼
 ふんっ　おまえなんかに
 抜け駆けは　させないぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-04T08:30:17" />
+				Time="2011-08-08T08:13:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4254,11 +4254,11 @@
 			Language="JPN_KANJI">
 			<Text>研究所の　安月給では
 生活が大変なのだ！▼
-ここで　稼いで　豊かな暮らしを
+ここで　かせいで　豊かな暮らしを
 手に入れてやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T08:53:53" />
+				Time="2011-08-08T08:57:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5282,10 +5282,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ちょちょいと　旅の資金を
-稼がせてもらうわよ　っと！▼</Text>
+かせがせてもらうわよ　っと！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T07:46:48" />
+				Time="2011-08-08T08:58:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5623,12 +5623,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アタシはね　おかねをためて
-じぶんのパンや　を　もちたいのさ▼
+じぶんのパンやを　もちたいのさ▼
 そのためにも　もーっと　しょうぶして
 かせがないとね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-06T09:09:46" />
+				Time="2011-08-08T08:13:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5639,10 +5639,10 @@
 			<Text>アタシはね　お金をためて
 じぶんのパン屋を　持ちたいのさ▼
 そのためにも　もーっと　勝負して
-稼がないとね！▼</Text>
+かせがないとね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-06T09:10:16" />
+				Time="2011-08-08T08:58:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9989,10 +9989,10 @@
 金さえ　あれば　夢も　希望も
 買い放題だ！▼
 今日も　たんまり
-賞金を　稼がせてもらうぞ！▼</Text>
+賞金を　かせがせてもらうぞ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T10:51:19" />
+				Time="2011-08-08T08:58:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10696,10 +10696,10 @@
 戦闘も　きつくなってきたし
 なんか　ヤバイ　においがするんだ▼
 ……だから　最後にさ
-記念に　と　戦ってくれないか？▼</Text>
+記念に　おれと　戦ってくれないか？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-20T08:02:58" />
+				Time="2011-08-08T08:13:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12874,10 +12874,10 @@
 この辺りまで　来られる人は
 だいたい　限られてくるから▼
 新人さんは　すぐ分かるんだ！
-えへへっ！　しょうぶしよ♪▼</Text>
+えへへっ！　勝負しよ♪▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-08T05:56:32" />
+				Time="2011-08-08T08:22:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
