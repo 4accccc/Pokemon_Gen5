@@ -161,42 +161,42 @@ void RESORT_MAP_GetResidentGridPos( u16 buffer_index, u16 shop_rank, u16 *p_x, u
   }sc_resident_pos[]  =
   {
     {
-      22,
+      21,
       63,
       DIR_LEFT,
     },
     {
-      8,
+      9,
       56,
       DIR_RIGHT,
     },
     {
-      22,
+      21,
       49,
       DIR_LEFT,
     },
     {
-      8,
+      9,
       42,
       DIR_RIGHT,
     },
     {
-      22,
+      21,
       35,
       DIR_LEFT,
     },
     {
-      8,
+      9,
       28,
       DIR_RIGHT,
     },
     {
-      22,
+      21,
       21,
       DIR_LEFT,
     },
     {
-      8,
+      9,
       14,
       DIR_RIGHT,
     },

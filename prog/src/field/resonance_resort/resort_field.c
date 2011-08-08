@@ -542,7 +542,7 @@ static RESORT_CROWD_PEOPLE * RESORT_CROWD_PEOPLE_Init( HEAPID heapID, MMDLSYS* p
   {
     static const u16 sc_line_x[]  =
     {
-      11,12,13,17,18,19
+      10,11,12,16,17,18
     };
 
     int i;

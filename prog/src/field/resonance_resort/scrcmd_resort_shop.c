@@ -1618,7 +1618,7 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
         u32 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
 
         const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( wk->p_shop, p_resident );
-        u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+        u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
         u16 y = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_MEET_YEAR, NULL );
         u16 m = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_MEET_MONTH, NULL );
@@ -1750,7 +1750,7 @@ static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
     RESORT_RESIDENT_DATA *p_resident = wk->lineup[i].p_data_adrs;
 
     const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( wk->p_shop, p_resident );
-    u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+    u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
     STRBUF *p_shopname = RESORT_DATA_MANAGER_CreateShopName( wk->p_shop, p_resident, wk->heapId );
 

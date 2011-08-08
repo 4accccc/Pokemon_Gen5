@@ -287,20 +287,20 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_MSGID_APPEAL:
     {
-      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, (RESORT_RESIDENT_DATA *)p_people_data );
+      u16 want_job = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( p_shop, want_job );
 
-      u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
-
-      GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
+      u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
       *p_ret_wk = shop_type + resort_appeal_00;
     }
     break;
   case RESORT_MSGID_SHOP_INFO:
     {
-      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, (RESORT_RESIDENT_DATA *)p_people_data );
+      u16 institutionID = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( p_shop, institutionID );
 
-      u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+      u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
       GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
 
@@ -616,7 +616,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
     {
       const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, (RESORT_RESIDENT_DATA *)p_people_data );
 
-      u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+      u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
 
 
@@ -869,32 +869,7 @@ VMCMD_RESULT EvCmdResortNewInstatitutionEntrance( VMHANDLE *p_core, void *p_wk_a
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdResortSearchReception( VMHANDLE *p_core, void *p_wk_adrs )
 {
-  SCRCMD_WORK *p_wk = p_wk_adrs;
-  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
-  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
-  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
-  
-  u16 param = VMGetU16(p_core);
-
-  RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-
-  {
-    int i;
-    for( i = 0; i < RESORT_PEOPLE_SYS_GetPeopleMax(p_people_sys); i++ )
-    {
-      RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_GetPeopleByIndex( p_people_sys, i );
-      if( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == param )
-      {
-        RESORT_PEOPLE_ActionReq( p_people, RESORT_PEOPLE_ACTION_JUMP_START );
-      }
-      else
-      {
-        RESORT_PEOPLE_ActionReq( p_people, RESORT_PEOPLE_ACTION_JUMP_END );
-      }
-    }
-  }
-  
-
+  //TODO ‚È‚­‚·
   return VMCMD_RESULT_CONTINUE;
 }
 

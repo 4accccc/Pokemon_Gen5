@@ -341,6 +341,11 @@ const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchDataByData( const RESOR
 
   return cp_shop;
 }
+const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_GetData( const RESORT_BINARY_SHOP *cp_wk,u16 index)
+{
+  GF_ASSERT(index < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk));
+  return RESORT_BINARY_GetStruct(cp_wk->p_shop, index);
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  ç≈ëÂílÇéÊìæ

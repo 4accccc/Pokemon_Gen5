@@ -45,8 +45,6 @@ struct _RESORT_PEOPLE
   RESORT_ABSTRUCT_DATA *p_abstruct_data;
   const RESORT_BINARY_PEOPLE_DATA *cp_binary;
   const RESORT_PEOPLE_FUNCTION *cp_function;
-  BOOL (*Action)( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
-  u32 action_seq;
 };
 
 //-------------------------------------
@@ -80,11 +78,6 @@ static void Visitor_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 //秘書
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
 
-//行動関数
-static BOOL Action_WarpDown( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
-static BOOL Action_WarpUp( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
-static BOOL Action_JumpStart( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
-static BOOL Action_JumpEnd( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
 //-------------------------------------
 ///	抽象動作
 //=====================================
@@ -221,15 +214,6 @@ static void RESORT_PEOPLE_Exit( RESORT_PEOPLE *p_wk )
 //-----------------------------------------------------------------------------
 static void RESORT_PEOPLE_Main( RESORT_PEOPLE *p_wk,FIELD_PLAYER *p_player )
 {
-  //アクション実行
-  if( p_wk->Action )
-  {
-    if( p_wk->Action( p_wk, &p_wk->action_seq, p_player ) )
-    {
-      //終了したらNULL
-      p_wk->Action = NULL;
-    }
-  }
 }
 
 //----------------------------------------------------------------------------
@@ -331,49 +315,6 @@ static void RESORT_PEOPLE_ClearData( RESORT_PEOPLE *p_wk )
 //-------------------------------------
 ///	PUBLIC
 //=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief 個別行動設定
- *
- *	@param	RESORT_PEOPLE *p_wk ワーク
- *	@param	action 行動させるもの
- */
-//-----------------------------------------------------------------------------
-void RESORT_PEOPLE_ActionReq( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_ACTION action )
-{
-  p_wk->action_seq = 0;
-
-  switch( action )
-  {
-  case RESORT_PEOPLE_ACTION_WARPDOWN:  //下にワープ
-    p_wk->Action = Action_WarpDown;
-    break;
-  case RESORT_PEOPLE_ACTION_WARPUP:    //上にワープ
-    p_wk->Action = Action_WarpUp;
-    break;
-  case RESORT_PEOPLE_ACTION_JUMP_START: //ジャンプ開始
-    p_wk->Action = Action_JumpStart;
-    break;
-  case RESORT_PEOPLE_ACTION_JUMP_END: //ジャンプ終了
-    p_wk->Action = Action_JumpEnd;
-    break;
-  default:
-    GF_ASSERT(0);
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  アクションをしていないかチェック
- *
- *	@param	const RESORT_PEOPLE *cp_wk ワーク
- *
- *	@return TRUEならば何もアクションをしていない　FALSEでアクション実行中
- */
-//-----------------------------------------------------------------------------
-BOOL RESORT_PEOPLE_IsActionEnd( const RESORT_PEOPLE *cp_wk )
-{
-  return cp_wk->Action == NULL;
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  表示設定
@@ -570,174 +511,6 @@ static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder
   p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary  );
 }
-//-------------------------------------
-///ACTION
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  ワープして落ちてくる
- *
- *	@param	RESORT_PEOPLE *p_wk　ワーク
- *	@param	*p_seq シーケンス
- *
- *	@return TRUEで行動終了　FALSEで続行
- */
-//-----------------------------------------------------------------------------
-static BOOL Action_WarpDown( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player )
-{
-  enum
-  {
-    SEQ_START,
-    SEQ_WAIT,
-    SEQ_END,
-  };
-  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
-
-  switch( *p_seq )
-  {
-  case SEQ_START:
-    if(MMDL_CheckPossibleAcmd(p_mmdl))
-    {
-      MMDL_GRIDPOS grid_pos, player_pos;
-      MMDL_GetGridPos( FIELD_PLAYER_GetMMdl( p_player ), &player_pos );
-      MMDL_GetGridPos( p_mmdl, &grid_pos );
-
-      if(grid_pos.gx != player_pos.gx || grid_pos.gz != player_pos.gz)
-      {
-        MMDL_SetAcmd(p_mmdl, AC_WARP_DOWN);
-        MMDL_SetStatusBitVanish( p_mmdl, FALSE );
-        (*p_seq)++;
-      }
-    }
-    break;
-  case SEQ_WAIT:
-    if(MMDL_CheckEndAcmd(p_mmdl))
-    {
-      MMDL_EndAcmd(p_mmdl);
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_END:
-    return TRUE;
-
-  default:
-    GF_ASSERT(0);
-  }
-
-  return FALSE;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  ワープしてあがっていく
- *
- *	@param	RESORT_PEOPLE *p_wk　ワーク
- *	@param	*p_seq シーケンス
- *
- *	@return TRUEで行動終了　FALSEで続行
- */
-//-----------------------------------------------------------------------------
-static BOOL Action_WarpUp( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player )
-{
-  enum
-  {
-    SEQ_START,
-    SEQ_WAIT,
-    SEQ_END,
-  };
-  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
-
-  switch( *p_seq )
-  {
-  case SEQ_START:
-    if(MMDL_CheckPossibleAcmd(p_mmdl))
-    {
-      MMDL_SetAcmd(p_mmdl, AC_WARP_UP);
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_WAIT:
-    if(MMDL_CheckEndAcmd(p_mmdl) == TRUE)
-    {
-      MMDL_EndAcmd(p_mmdl);
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_END:
-    return TRUE;
-
-  default:
-    GF_ASSERT(0);
-  }
-
-  return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ジャンプ開始
- *
- *	@param	RESORT_PEOPLE *p_wk　ワーク
- *	@param	*p_seq シーケンス
- *
- *	@return TRUEで行動終了　FALSEで続行
- */
-//-----------------------------------------------------------------------------
-static BOOL Action_JumpStart( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player )
-{
-  enum
-  {
-    SEQ_START,
-    SEQ_WAIT,
-  };
-  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
-
-  switch( *p_seq )
-  {
-  case SEQ_START:
-    if(MMDL_CheckPossibleAcmd(p_mmdl))
-    {
-      MMDL_SetAcmd(p_mmdl, AC_STAY_JUMP_D_16F);
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_WAIT:
-    if(MMDL_CheckEndAcmd(p_mmdl) == TRUE)
-    {
-      MMDL_EndAcmd(p_mmdl);
-      (*p_seq) = SEQ_START; //ジャンプし続ける
-    }
-    break;
-  default:
-    GF_ASSERT(0);
-  }
-
-  return FALSE;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  ジャンプ終了
- *
- *	@param	RESORT_PEOPLE *p_wk　ワーク
- *	@param	*p_seq シーケンス
- *
- *	@return TRUEで行動終了　FALSEで続行
- */
-//-----------------------------------------------------------------------------
-static BOOL Action_JumpEnd( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player )
-{
-  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
-
-  if(MMDL_CheckEndAcmd(p_mmdl))
-  {
-    MMDL_EndAcmd(p_mmdl);
-    return TRUE;
-  }
-  else
-  {
-    return FALSE;
-  }
-}
-
 //=============================================================================
 /**
  *					人物管理ワーク

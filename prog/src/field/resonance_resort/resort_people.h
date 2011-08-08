@@ -23,18 +23,6 @@
 */
 //=============================================================================
 //-------------------------------------
-///	行動
-//=====================================
-typedef enum
-{
-  RESORT_PEOPLE_ACTION_WARPDOWN,  //下にワープ
-  RESORT_PEOPLE_ACTION_WARPUP,    //上にワープ
-  RESORT_PEOPLE_ACTION_JUMP_START,  //ジャンプ開始
-  RESORT_PEOPLE_ACTION_JUMP_END,    //ジャンプ終了
-  RESORT_PEOPLE_ACTION_MAX,
-}RESORT_PEOPLE_ACTION;
-
-//-------------------------------------
 ///	人物ワーク
 //=====================================
 typedef struct _RESORT_PEOPLE RESORT_PEOPLE;
@@ -50,8 +38,6 @@ typedef enum
 ///	PUBLIC
 //=====================================
 //行動
-extern void RESORT_PEOPLE_ActionReq( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_ACTION action );
-extern BOOL RESORT_PEOPLE_IsActionEnd( const RESORT_PEOPLE *cp_wk );
 
 //設定
 extern void RESORT_PEOPLE_SetVisible( RESORT_PEOPLE *p_wk, BOOL is_visible );

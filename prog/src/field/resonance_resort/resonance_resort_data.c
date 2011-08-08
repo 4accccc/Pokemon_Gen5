@@ -2758,7 +2758,7 @@ void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk )
     RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
     const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_wk );
 
-    p_wk->type      = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+    p_wk->type      = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
     RESORT_BINARY_SHOP_Exit( p_shop );
   }
