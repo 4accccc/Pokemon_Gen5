@@ -2546,7 +2546,8 @@ DEP_TEXSET_IMD_OUTDOOR061 = \
 	$(SRCDIR)/c15_gate_01.imd \
 	$(SRCDIR)/c15_wood_01.imd \
 	$(SRCDIR)/c15_whouse_01.imd \
-	$(SRCDIR)/c15_trailer_01.imd
+	$(SRCDIR)/c15_trailer_01.imd \
+	$(SRCDIR)/c15_obj_01.imd
 
 texset/outdoor061.imd: $(DEP_TEXSET_IMD_OUTDOOR061) texset/tmp/outdoor061.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor061.list

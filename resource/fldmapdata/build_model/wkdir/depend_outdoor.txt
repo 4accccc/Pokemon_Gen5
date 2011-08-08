@@ -444,4 +444,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/c12_cloud01.nsbmd \
 	$(RESDIR)/‚ƒ12_sky.nsbmd \
 	$(RESDIR)/door_c14_gym.nsbmd \
+	$(RESDIR)/c15_obj_01.nsbmd \
 
