@@ -2189,7 +2189,7 @@ DEP_TEXSET_IMD_OUTDOOR053 = \
 	$(SRCDIR)/c12_gym_01.imd \
 	$(SRCDIR)/door_c12_01.imd \
 	$(SRCDIR)/c12_cloud01.imd \
-	$(SRCDIR)/‚ƒ12_sky.imd
+	$(SRCDIR)/c12_sky.imd
 
 texset/outdoor053.imd: $(DEP_TEXSET_IMD_OUTDOOR053) texset/tmp/outdoor053.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor053.list
