@@ -29,10 +29,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船３回目</Comment>
+・アジト船３回目
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:46:24" />
+				Time="2011-08-08T08:45:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -88,10 +89,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船３回目</Comment>
+・アジト船３回目
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:46:54" />
+				Time="2011-08-08T08:46:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -151,10 +153,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船３回目</Comment>
+・アジト船３回目
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T09:09:13" />
+				Time="2011-08-08T08:46:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -219,10 +222,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船３回目
-・トレーナー戦闘に</Comment>
+・メッセージ表示後、トレーナー戦闘に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:39:21" />
+				Time="2011-08-08T08:46:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -370,13 +373,13 @@
 			Language="JPN">
 			<Text>なるほど……！
 それが　しんじつ　なのかもしれない▼
-だが　あなたが
-その　かくごを　もって！▼
+だが　あなたは
+それでも　あきらめず！▼
 ポケモンと　むきあっていることが
 つよさの　りゆうに　なっている！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:49:29" />
+				Time="2011-08-08T08:46:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -387,12 +390,12 @@
 			<Text>なるほど……！
 それが　真実なのかもしれない▼
 だが　あなたが
-その　覚悟を　もって！▼
+それでも　あきらめず！▼
 ポケモンと　向き合っていることが
 強さの　理由に　なっている！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:49:44" />
+				Time="2011-08-08T08:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -466,10 +469,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船３回目
-・続けて</Comment>
+・続けてswboss_03_09</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:43:32" />
+				Time="2011-08-08T08:47:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -531,11 +534,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船３回目
-・続けて</Comment>
+・アジト船３回目</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:43:33" />
+				Time="2011-08-08T08:47:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
