@@ -378,7 +378,7 @@
 #define FE_C03R0302_ITEM_03                362 /* 0x016a バトルカンパニー：アイテム入手フラグ */
 #define FE_NAKIGOE_ITEMGET_01              363 /* 0x016b 4番道路民家（r04r0501 */
 #define FE_D10_PLAZMA_FRIGATE_01           364 /* 0x016c ジャイアントホール：プラズマフリゲート起動フラグ */
-		/* not used   365(0x016d) */
+#define FE_T05_MAIGO_CLEAR_01              365 /* 0x016d カナワタウン：迷子ポケモンクリアフラグ */
 		/* not used   366(0x016e) */
 		/* not used   367(0x016f) */
 		/* not used   368(0x0170) */
@@ -679,6 +679,9 @@
 #define FV_H04_BRIDGE_MANIA_01             761 /* 0x02f9 ビレッジブリッジ：橋マニア */
 #define FV_H05_BRIDGE_MANIA_01             762 /* 0x02fa ワンダーブリッジ：橋マニア */
 #define FV_H06_BRIDGE_MANIA_01             763 /* 0x02fb マリンチューブ：橋マニア */
+#define FV_C04_RAILMAN_01                  764 /* 0x02fc ライモンシティ：鉄道員 */
+#define FV_C04_POKE33_01                   765 /* 0x02fd ライモンシティ：ヤナップ */
+#define FV_T05_POKE33_01                   766 /* 0x02fe カナワタウン：ヤナップ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
