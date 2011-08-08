@@ -4440,21 +4440,21 @@ enum{
  * @retval  int		0 - 4
  */
 //=============================================================================================
-int POKETOOL_StarPoint2Rank( u8 star_point )
+PtlStarRank POKETOOL_StarPoint2Rank( u8 star_point )
 {
   int rank=0;
 
   GF_ASSERT_MSG( star_point<STAR_POINT_RANK5_MAX, "スターポイントが99を超えています = %d\n", star_point );
   if( star_point>=STAR_POINT_RANK1_MIN && star_point<STAR_POINT_RANK2_MIN ){
-    rank=0;
+    rank=PTL_STAR_RANK_0;
   }else if( star_point>=STAR_POINT_RANK2_MIN && star_point<STAR_POINT_RANK3_MIN ){
-    rank=1;
+    rank=PTL_STAR_RANK_1;
   }else if( star_point>=STAR_POINT_RANK3_MIN && star_point<STAR_POINT_RANK4_MIN ){
-    rank=2;
+    rank=PTL_STAR_RANK_2;
   }else if( star_point>=STAR_POINT_RANK4_MIN && star_point<STAR_POINT_RANK5_MIN ){
-    rank=3;
+    rank=PTL_STAR_RANK_3;
   }else if( star_point>=STAR_POINT_RANK5_MIN && star_point<=STAR_POINT_RANK5_MAX ){
-    rank=4;
+    rank=PTL_STAR_RANK_4;
   }
   return rank;
 }

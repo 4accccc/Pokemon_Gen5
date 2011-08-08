@@ -672,13 +672,14 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   {
     bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_N_POKE;
   }
-#if 0
-  // 主ポケかどうか？
-  //if( PP_CheckRare( pp ) == TRUE )  ここを主ポケ判定に変更する
+
+  // swan追加 mori
+  // スターポケかどうか？
+  if( POKETOOL_StarPoint2Rank( PP_Get( pp, ID_PARA_star_point,NULL) ) >= PTL_STAR_RANK_2 )
   {
-    bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_NUSHI;
+    bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_STAR;
   }
-#endif
+
   BTLV_MCSS_MakeMAW( bmw, pp, &bmw->btlv_mcss[ index ].maw, position );
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
   bmw->btlv_mcss[ index ].mcss = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &bmw->btlv_mcss[ index ].maw );

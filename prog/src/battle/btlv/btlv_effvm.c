@@ -7373,22 +7373,22 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     ICHI_Printf("Nポケフラグ %d ", ret);
     ICHI_Printf("statusFlag %x\n", BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) );
     break;
-  case BTLEFF_WORK_POS_AA_NUSHI:
-  case BTLEFF_WORK_POS_BB_NUSHI:
-  case BTLEFF_WORK_POS_A_NUSHI:
-  case BTLEFF_WORK_POS_B_NUSHI:
-  case BTLEFF_WORK_POS_C_NUSHI:
-  case BTLEFF_WORK_POS_D_NUSHI:
-  case BTLEFF_WORK_POS_E_NUSHI:
-  case BTLEFF_WORK_POS_F_NUSHI:
-    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_NUSHI ) & BTLV_MCSS_STATUS_FLAG_NUSHI ) != 0 );
-    ICHI_Printf("主ポケフラグ %d ", ret);
-    ICHI_Printf("statusFlag %x\n", BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_NUSHI ) );
+  case BTLEFF_WORK_POS_AA_STAR:
+  case BTLEFF_WORK_POS_BB_STAR:
+  case BTLEFF_WORK_POS_A_STAR:
+  case BTLEFF_WORK_POS_B_STAR:
+  case BTLEFF_WORK_POS_C_STAR:
+  case BTLEFF_WORK_POS_D_STAR:
+  case BTLEFF_WORK_POS_E_STAR:
+  case BTLEFF_WORK_POS_F_STAR:
+    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_STAR ) & BTLV_MCSS_STATUS_FLAG_STAR ) != 0 );
+    MORI_Printf("スターポケフラグ %d ", ret);
+    MORI_Printf("statusFlag %x\n", BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_STAR ) );
     break;
-  case BTLEFF_WORK_ATTACK_NUSHI:
-    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_NUSHI ) != 0 );
-    ICHI_Printf("主ポケフラグ %d ", ret);
-    ICHI_Printf("statusFlag %x\n", BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) );
+  case BTLEFF_WORK_ATTACK_STAR:
+    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_STAR ) != 0 );
+    MORI_Printf("スターポケフラグ %d ", ret);
+    MORI_Printf("statusFlag %x\n", BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) );
   default:
     //未知のパラメータです
     GF_ASSERT( 0 );

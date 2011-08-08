@@ -156,6 +156,7 @@ enum{
   BTLEFF_AA_POKE_VANISH_2_APPEAR,             // 自分ポケモンいないところから登場
 
   BTLEFF_CLAPPER_BOARD,                        // 撮影終了のカチンコ演出
+  BTLEFF_STAR_POKE,                            // スターポケモン登場演出
   
   BTLEFF_STATUS_EFFECT_END,
 };

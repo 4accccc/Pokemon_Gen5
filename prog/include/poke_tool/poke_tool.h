@@ -587,6 +587,16 @@ typedef enum
   PTL_RARE_SPEC_MAX,
 }PtlRareSpec;
 
+// ポケウッドスターランク（POKETOOL_StarPoint2Rank）
+typedef enum
+{
+  PTL_STAR_RANK_0,
+  PTL_STAR_RANK_1,
+  PTL_STAR_RANK_2,
+  PTL_STAR_RANK_3,
+  PTL_STAR_RANK_4,
+}PtlStarRank;
+
 #define  PTL_SEIKAKU_CHG_VALUE_FLAT (  0 )
 #define  PTL_SEIKAKU_CHG_VALUE_UP   (  1 )
 #define  PTL_SEIKAKU_CHG_VALUE_DOWN ( -1 )
@@ -816,7 +826,7 @@ extern void PP_SetDefaultNickName( POKEMON_PARAM* pp );
 extern void PPP_SetDefaultNickName( POKEMON_PASO_PARAM* ppp );
 
 // ポケウッドスターポイントをスターランクに変換する(PP_Get(ID_PARA_star_point,,)の値を入れる
-extern int POKETOOL_StarPoint2Rank( u8 star_point );
+extern PtlStarRank POKETOOL_StarPoint2Rank( u8 star_point );
 
 #endif __ASM_NO_DEF_
 
