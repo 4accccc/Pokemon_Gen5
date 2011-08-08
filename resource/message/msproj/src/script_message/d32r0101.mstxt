@@ -391,4 +391,195 @@
 				Time="2011-08-04T12:07:42" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_poke50_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おおきな　いわ　だけど……
+どうしてだか　かいりきで　おせない！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:25:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:25:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>大きな　岩だけど……
+どうしてだか　かいりきで　押せない！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:25:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:25:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・No00「？？？」未所有時
+・ストッパー状態</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:36:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE50
+ポケモン・イワパレス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:25:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_poke50_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>道具使用の確認</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:28:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:26:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぱれっしゅ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:26:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:26:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・No00「？？？」所有時
+・はい/いいえの選択肢表示
+　はい　→poke50_03
+　いいえ→終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:36:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE50
+ポケモン・イワパレス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:26:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_poke50_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぱれっしゅ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:26:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:26:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぱれっしゅ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:26:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:26:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・はい選択時
+・岩からイワパレスに
+・あわせて鳴き声再生、続けて戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:31:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE50
+ポケモン・イワパレス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:26:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_poke50_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？？？？？は
+こわれてしまった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:40:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:39:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？？？は
+こわれてしまった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:40:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:40:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・戦闘後、フィールドに戻ると表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:39:49" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

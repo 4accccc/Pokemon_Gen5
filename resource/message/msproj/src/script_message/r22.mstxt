@@ -29,13 +29,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
+・c14ジムバッジ取得で出現
 ・GRIDX＝726、GRIDZ＝138、右向き
 ・あわせて鳴き声再生
 ・その後、戦闘へ
 </Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T04:01:50" />
+				Time="2011-08-08T06:40:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -138,10 +139,11 @@
 			Language="JPN">
 			<Comment>♂
 ・テラキオンとの戦闘後、
-　画面左下（草むら上）から出現</Comment>
+　画面左下（草むら上）から出現
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T08:42:20" />
+				Time="2011-08-08T05:48:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -164,14 +166,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きっと　プラズマだんに　たいして
-きけんの　においを　かぎとり▼
-たいこう　できる
+			<Text>きっと　プラズマだんが　はっする
+きけんな　においを　かぎとり▼
+かれらに　たいこう　できる
 つよき　ポケモントレーナーを▽
 もとめて　いるのでしょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T08:58:02" />
+				Time="2011-08-08T06:51:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -179,14 +181,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きっと　プラズマ団に　対して
-危険の　においを　かぎとり▼
-対抗できる
+			<Text>きっと　プラズマ団が　発する
+危険な　においを　かぎとり▼
+彼らに　対抗できる
 強き　ポケモントレーナーを▽
 求めて　いるのでしょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:56:10" />
+				Time="2011-08-08T06:51:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -195,10 +197,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・画面下を向いてメッセージ表示
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T07:16:56" />
+				Time="2011-08-08T05:47:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -224,10 +227,10 @@
 			<Text>あなたの　まえに　あらわれたのは
 ぐうぜんか　ひつぜんか……！▼
 それはさておき　あなたは！
-プラズマだんと　たいこう　するのですか？▼</Text>
+プラズマだんと　たたかうのですか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T08:55:43" />
+				Time="2011-08-08T06:51:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -238,10 +241,10 @@
 			<Text>あなたの　前に　現われたのは
 偶然か　必然か……！▼
 それはさておき　あなたは！
-プラズマ団と　対抗するのですか？▼</Text>
+プラズマ団と　戦うのですか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:56:35" />
+				Time="2011-08-08T06:51:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -286,11 +289,11 @@
 トレーナー　じしんが　つよいからこそ
 ポケモンの　ことを　おもうからこそ▽
 ポケモンも　ちからを　はっき　できる！▼
-では　あなたと　ポケモンの
-たびの　ぶじを　いのって！▼</Text>
+よろしい！
+これは　わたくしから　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:58:57" />
+				Time="2011-08-08T06:56:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -306,11 +309,11 @@
 トレーナー自身が　強いからこそ
 ポケモンの　ことを　想うからこそ▽
 ポケモンも　力を　発揮できる！▼
-では　あなたと　ポケモンの
-旅の　無事を　祈って！▼</Text>
+よろしい！
+これは　わたくしから　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:59:09" />
+				Time="2011-08-08T06:57:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -320,12 +323,12 @@
 			Language="JPN">
 			<Comment>♂
 ・はい選択時
-・表示後、出現したルートをたどり
-　去っていく
-・画面外に消えると主人公操作可能</Comment>
+・アイテム入手処理
+　No000「？？？」
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T09:01:13" />
+				Time="2011-08-08T06:57:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -355,11 +358,11 @@
 あなたが　すべきことは
 ポケモンの　ちからを　はっきさせるべく▽
 ポケモンの　ことを　おもうこと！▼
-では　あなたと　ポケモンの
-たびの　ぶじを　いのって！▼</Text>
+よろしい！
+これは　わたくしから　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-05T06:51:20" />
+				Time="2011-08-08T06:57:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -374,11 +377,11 @@
 あなたが　すべきことは
 ポケモンの　力を　発揮させるべく▽
 ポケモンの　ことを　想うこと！▼
-では　あなたと　ポケモンの
-旅の　無事を　祈って！▼</Text>
+よろしい！
+これは　わたくしから　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-05T06:51:24" />
+				Time="2011-08-08T06:57:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -388,12 +391,12 @@
 			Language="JPN">
 			<Comment>♂
 ・いいえ選択時
-・表示後、出現したルートをたどり
-　去っていく
-・画面外に消えると主人公操作可能</Comment>
+・アイテム入手処理
+　No000「？？？」
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T09:01:19" />
+				Time="2011-08-08T06:57:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -402,6 +405,70 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-20T08:53:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r22_swboss_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それは！▼
+ポケモンを　かっせいか　させる
+そうちの　しさくひん！▼
+たたかっている
+ポケモンには　つかえませんが▽
+なにかの　やくに　たつでしょう！▼
+では　あなたと　ポケモンの
+たびの　ぶじを　いのって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T07:09:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:56:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それは！▼
+ポケモンを　活性化させる
+装置の　試作品！▼
+戦っている
+ポケモンには　使えませんが▽
+なにかの　役に　立つでしょう！▼
+では　あなたと　ポケモンの
+旅の　無事を　祈って！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T07:10:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:57:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、c14方向に消えて行く
+・画面外に消えると主人公操作可能</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:58:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-08T05:58:11" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

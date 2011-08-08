@@ -300,10 +300,12 @@
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミは……！▼
 この　ながれで
-そとに　でると　いうのか！？[Ctrl2:CtrlSpeed ]</Text>
+そとに　でると　いうのか！？▼
+ボクの　すうしきには　ない
+よそうがいの　パターンだ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:51:57" />
+				Time="2011-08-08T05:43:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -313,10 +315,12 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミは……！▼
 この　流れで
-外に　でると　いうのか！？[Ctrl2:CtrlSpeed ]</Text>
+外に　でると　いうのか！？▼
+ボクの　数式には　ない
+予想外の　パターンだ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:53:06" />
+				Time="2011-08-08T05:43:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

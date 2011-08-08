@@ -619,10 +619,10 @@
 			<Text>フウロ『もう！
 ほんとうに　おやこで　そっくり！▼
 ううん　ちがうわね
-おとうさんの　ほうが～▼</Text>
+おとうさんの　ほうが　てきとうかな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:07:18" />
+				Time="2011-08-08T03:53:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -630,10 +630,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>フウロ『もう！
+ほんとうに　父娘で　そっくり！▼
+ううん　違うわね
+お父さんの　方が　適当かな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:36:29" />
+				Time="2011-08-08T03:53:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -911,7 +914,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06_hakase2_12">
+		Label="msg_c06_hakase2_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それに　ソウリュウシティに
@@ -969,7 +973,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06_swleader6_07">
+		Label="msg_c06_swleader6_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>フウロ『あっ　まってよ　はかせ！▼
@@ -1022,7 +1027,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06_swleader6_08">
+		Label="msg_c06_swleader6_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じゃ　アナタも　きてね！▼</Text>
