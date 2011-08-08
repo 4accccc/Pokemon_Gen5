@@ -6213,10 +6213,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いままでの　優勝回数を
-見ることができます</Text>
+みることができます</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-05T06:21:12" />
+				Time="2011-08-08T06:30:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
