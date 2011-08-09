@@ -192,14 +192,15 @@
 			Language="JPN">
 			<Text>オレは　[Name:TrainerName Idx="1" ]！
 ヒオウギシティの　[Name:TrainerName Idx="1" ]だ！▼
-すうねんまえ　オマエら　プラズマだんに
-だいじな　ポケモンを　うばわれた▽
+５ねんまえ　オマエら　プラズマだんに
+いもうとの　だいじな▽
+ポケモンを　うばわれた▽
 なさけない　トレーナー　だよ！▼
 なにが　はなればなれ　だ！
 そうしたのは　オマエらだろ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T10:08:57" />
+				Time="2011-08-09T13:16:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -209,14 +210,15 @@
 			Language="JPN_KANJI">
 			<Text>オレは　[Name:TrainerName Idx="1" ]！
 ヒオウギシティの　[Name:TrainerName Idx="1" ]だ！▼
-数年前　オマエら　プラズマ団に
-大事な　ポケモンを　奪われた▽
+５年前　オマエら　プラズマ団に
+妹の　大事な▽
+ポケモンを　奪われた▽
 情けない　トレーナー　だよ！▼
 なにが　離ればなれ　だ！
 そうしたのは　オマエらだろ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T10:09:10" />
+				Time="2011-08-09T13:16:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -324,11 +326,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あやまるだけかよ！
-それで　おわり　なのかよ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『謝るだけかよ！
+それで　終わり　なのかよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:10:39" />
+				Time="2011-08-09T13:16:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -371,11 +373,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>で　オレの　ポケモンは！？▼
-ポケモン名＋特徴は？▼</Text>
+			<Text>で　いもうとの　ポケモンは！？▼
+チョロネコだよ　チョロネコは？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:21:10" />
+				Time="2011-08-09T13:16:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -383,11 +385,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>で　オレの　ポケモンは！？▼
-ポケモン名＋特徴は？▼</Text>
+			<Text>で　妹の　ポケモンは！？▼
+チョロネコだよ　チョロネコは？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:21:13" />
+				Time="2011-08-09T13:17:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -501,7 +503,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『もう　いいって！▼
-あやまられても　オレの　ポケモン
+あやまられても　いもうとの　ポケモン
 ここに　いないんだろ！▼
 [Name:TrainerName ]！
 オレは　ポケモンジムに　いく▼
@@ -509,7 +511,7 @@
 ぜんいん　やっつけるのさ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:27:49" />
+				Time="2011-08-09T13:17:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -518,7 +520,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『もう　いいって！▼
-あやまられても　オレの　ポケモン
+謝られても　妹の　ポケモン
 ここに　いないんだろ！▼
 [Name:TrainerName ]！
 オレは　ポケモンジムに　行く▼
@@ -526,7 +528,7 @@
 全員　やっつけるのさ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:27:16" />
+				Time="2011-08-09T13:17:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -635,13 +637,13 @@
 			Language="JPN">
 			<Text>[Name:TrainerName ]　ごらんのとおりだ
 わたしに　できる　おれいなど　ない▼
-むしろ　かわりに
+いや　むしろ　かわりに
 たのみを　きいてほしいのだ▼
 この　ポケモンの……
 ゾロアの　めんどうを　みてくれぬか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:13:59" />
+				Time="2011-08-09T13:17:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -651,13 +653,13 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]　ご覧のとおりだ
 わたしに　できる　お礼など　ない▼
-むしろ　代わりに
+いや　むしろ　代わりに
 頼みを　きいてほしいのだ▼
 この　ポケモンの……
 ゾロアの　面倒を　みてくれぬか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:16:51" />
+				Time="2011-08-09T13:17:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1107,10 +1109,11 @@
 			Language="JPN">
 			<Comment>♀
 ・愛の女神
-・クリア前まで</Comment>
+・クリア前まで
+※仮メッセージ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T10:14:52" />
+				Time="2011-08-09T13:08:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1217,17 +1220,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｎは　みなしご　でした▼
-なんでも　産まれて　すぐ
-ポケモンたちと　話せるような▽
-そぶりをみせ　気味悪がられて……▼
-森の中　ヒヒダルマや　ゾロアと
-一緒に　暮らしていたところ▼
-ゲーチスに　拾われた　とのことです▼
 わたしたちも　Ｎの世話を　するため
 集められた　みなしご　なのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:39:54" />
+				Time="2011-08-09T13:08:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1237,10 +1234,11 @@
 			Language="JPN">
 			<Comment>♀
 ・平和の女神
-・クリア前まで</Comment>
+・クリア前まで
+※仮メッセージ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T10:14:42" />
+				Time="2011-08-09T13:08:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1327,13 +1325,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎさまが　おもどりを　まっています
+			<Text>Ｎさまの　おもどりを　まっています
 Ｎさまは　ポケモンと　はなせます▼
-そうすれば　ここにいる
+そうすれば　ここに　いる
 ポケモンたちの　のぞみが　わかります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:42:29" />
+				Time="2011-08-09T13:06:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1341,13 +1339,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎさまが　おもどりを　まっています
-Ｎさまは　ポケモンと　はなせます▼
-そうすれば　ここにいる
-ポケモンたちの　のぞみが　わかります</Text>
+			<Text>Ｎさまの　お戻りを　待っています
+Ｎさまは　ポケモンと　話せます▼
+そうすれば　ここに　いる
+ポケモンたちの　望みが　わかります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:42:42" />
+				Time="2011-08-09T13:06:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1593,10 +1591,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デン！！</Text>
+			<Text>ききゅう！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-30T08:31:38" />
+				Time="2011-08-09T13:11:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1604,10 +1602,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デン！！</Text>
+			<Text>ききゅう！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-30T08:32:01" />
+				Time="2011-08-09T13:11:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
