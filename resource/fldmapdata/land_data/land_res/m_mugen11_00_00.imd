@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-08-04T10:48:03" source="m_mugen11_00_00.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-08-09T16:19:17" source="m_mugen11_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-08-04T10:48:03" source="m_mugen11_00_00.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-08-09T16:19:17" source="m_mugen11_00_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2601,7 +2601,7 @@
 </tex_palette_array>
 
 <material_array size="23">
-	<material index="0" name="in75_door01"
+	<material index="0" name="in75_door01_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2625,7 +2625,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="in75_door03"
+	<material index="1" name="in75_door03_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2649,7 +2649,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="in75_gake01"
+	<material index="2" name="in75_gake01_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2673,7 +2673,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="in75_gake01a"
+	<material index="3" name="in75_gake01a_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2697,7 +2697,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="in75_hana01"
+	<material index="4" name="in75_hana01_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2721,7 +2721,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="in75_hana02"
+	<material index="5" name="in75_hana02_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2745,31 +2745,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="in75_houshi01"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="19"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="31"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="6" tex_palette_idx="6"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="7" name="in75_houshi01_1"
+	<material index="6" name="in75_houshi01_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="19"
@@ -2793,7 +2769,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="in75_houshi01_2"
+	<material index="7" name="in75_houshi01_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="12"
@@ -2817,13 +2793,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="in75_ki01"
+	<material index="8" name="in75_houshi01_3"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="19"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="31"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -2834,14 +2810,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="8"
+		tex_image_idx="6" tex_palette_idx="6"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="in75_ki01_2"
+	<material index="9" name="in75_ki01_2_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2865,7 +2841,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="in75_ki01b"
+	<material index="10" name="in75_ki01_3"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2882,14 +2858,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="9" tex_palette_idx="10"
+		tex_image_idx="7" tex_palette_idx="8"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="12" name="in75_ki01b_2"
+	<material index="11" name="in75_ki01b_2_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2913,7 +2889,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="13" name="in75_mizu01"
+	<material index="12" name="in75_ki01b_3"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="9" tex_palette_idx="10"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="13" name="in75_mizu01_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2937,7 +2937,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="14" name="in75_mizu02"
+	<material index="14" name="in75_mizu02_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2961,7 +2961,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="15" name="in75_ne01"
+	<material index="15" name="in75_ne01_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2985,7 +2985,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="16" name="in75_ne01b"
+	<material index="16" name="in75_ne01b_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -3009,7 +3009,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="17" name="in75_ne02"
+	<material index="17" name="in75_ne02_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -3033,7 +3033,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="18" name="in75_ne02b"
+	<material index="18" name="in75_ne02b_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -3057,7 +3057,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="19" name="in75_ne03"
+	<material index="19" name="in75_ne03_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -3081,7 +3081,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="20" name="in75_ne03b"
+	<material index="20" name="in75_ne03b_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -3105,7 +3105,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="21" name="in75_yuka01"
+	<material index="21" name="in75_yuka01_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -3129,7 +3129,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="22" name="in75_yuka02"
+	<material index="22" name="in75_yuka02_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="6"
@@ -10919,13 +10919,13 @@
 		<display index="3" material="3" polygon="0" priority="0"/>
 		<display index="4" material="4" polygon="10" priority="0"/>
 		<display index="5" material="5" polygon="9" priority="0"/>
-		<display index="6" material="6" polygon="18" priority="0"/>
-		<display index="7" material="7" polygon="21" priority="0"/>
-		<display index="8" material="8" polygon="22" priority="0"/>
-		<display index="9" material="9" polygon="11" priority="0"/>
-		<display index="10" material="10" polygon="8" priority="0"/>
-		<display index="11" material="11" polygon="5" priority="0"/>
-		<display index="12" material="12" polygon="12" priority="0"/>
+		<display index="6" material="6" polygon="21" priority="0"/>
+		<display index="7" material="7" polygon="22" priority="0"/>
+		<display index="8" material="8" polygon="18" priority="0"/>
+		<display index="9" material="9" polygon="8" priority="0"/>
+		<display index="10" material="10" polygon="11" priority="0"/>
+		<display index="11" material="11" polygon="12" priority="0"/>
+		<display index="12" material="12" polygon="5" priority="0"/>
 		<display index="13" material="13" polygon="4" priority="0"/>
 		<display index="14" material="14" polygon="2" priority="0"/>
 		<display index="15" material="15" polygon="19" priority="0"/>
