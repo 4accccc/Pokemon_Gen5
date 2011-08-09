@@ -2,14 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_d10r0101_swplazmam1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>なかまが　くるまで　とは
+いつまで　なんだろうな？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>仲間が　来るまで　とは
+いつまで　なんだろうな？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +30,22 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♂
+・GRIDX＝61、GRIDZ＝38
+・どちらに話しかけてもこのセリフから
+　続けてswplazmam2_01
+・プラズマフリゲート2回目クリアまで</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:11:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ１</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -47,5 +54,668 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swplazmam2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このさきは　だいじポイント！
+つまり　みはりも　だいじワーク　さ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この先は　大事ポイント！
+つまり　見張りも　大事ワークさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝60、GRIDZ＝38
+・プラズマフリゲート2回目クリアまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:11:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swrival_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『もう　きてたのか▼
+ジャマする　れんちゅうは
+ぜんぶ　ぶっとばして　いくからな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『もう　来てたのか▼
+ジャマする　連中は
+全部　ぶっとばして　いくからな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・posイベント
+　GRIDX＝61、GRIDZ＝33（要調整）
+・メッセージ表示後、？マーク表示
+・続けてswplazmam_01
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:12:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swplazmam_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おーい！
+ここは　もういい　ってよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おーい！
+ここは　もういい　ってよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面下から登場してメッセージ
+・続けてswplazmam1_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:12:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ
+※正体は元プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swplazmam1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いよいよ　だな！
+よし　オレらも　いそごう！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いよいよ　だな！
+よし　オレらも　急ごう！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・したっぱ二人向き合ってからメッセージ表示
+・表示後、連れだって下方向に移動
+　その後、ライバルが押す形で主人公移動
+・続けてswrival_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:18:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swrival_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ひとりに　なったな
+どっちと　たたかうか　えらべよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:18:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:17:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ひとりに　なったな
+どっちと　たたかうか　えらべよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:18:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:18:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswplazmam_02
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:19:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:17:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swplazmam_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おれです　おれ！
+もとプラズマだん　です！▽
+ロットさまに　たのまれ　スパイを……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おれです　おれ！
+元プラズマ団　です！▽
+ロットさまに　頼まれ　スパイを……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・！マーク表示後にメッセージ
+・続けてswrival_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:19:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ
+※正体は元プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swrival_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なるほどね
+てきの　てきは　みかた　ってことか▼
+むかしは　ひとの　ポケモンを
+うばっていた　くせにな▼
+いまので　つみほろぼし　かよ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『なるほどね
+敵の　敵は　味方ってことか▼
+昔は　他人の　ポケモンを
+奪っていた　くせにな▼
+いまので　罪滅ぼし　かよ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswplazmam_03
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:19:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swplazmam_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……うう！　でも
+Ｎさま　ポケモンに　やさしかったし▼
+オレも　わるい　にんげんから
+ポケモンを　まもりたいって……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……うう！　でも
+Ｎさま　ポケモンに　やさしかったし▼
+オレも　わるい　にんげんから
+ポケモンを　まもりたいって……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswrival_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:19:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ
+※正体は元プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swrival_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……フンッ！
+オレは　いくぜ！　[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……フンッ！
+オレは　行くぜ！　[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面下へ倍速で移動
+・続けてswplazmam_04
+・0＝主人公名
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:19:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swplazmam_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああいう　ふうに　おもわれるのも
+じぶんらが　わるいからですよね……▼
+ポケモンのため　とはいえ
+けっきょは　じぶんらの▽
+やりたいことを　やってただけだし……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああいう　ふうに　おもわれるのも
+じぶんらが　わるいからですよね……▼
+ポケモンのため　とはいえ
+けっきょは　じぶんらの▽
+やりたいことを　やってただけだし……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・以降繰り返し
+・ゲーチス戦後に削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ
+※正体は元プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swplazmam3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なかまが　にげださないよう
+ここで　みはっているのだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仲間が　逃げださないよう
+ここで　見張っているのだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝2、GRIDZ＝22
+・ｖｓゲーチス勝利で削除
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0101_swplazmam4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だれひとり　とおさない！
+しちけんじんさまの　めいれい　だ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だれ一人　通さない！
+七賢人様の　命令だ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝2、GRIDZ＝23
+・ｖｓゲーチス勝利で削除
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-09T07:04:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
