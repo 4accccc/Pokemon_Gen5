@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-04-05T15:38:09" source="in74_ita.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-08-05T21:08:56" source="in74_ita.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="180"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="76 56"
+	compress_material="on" material_size="85 58"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -32,25 +32,7 @@
 </tex_rotate_data>
 
 <tex_translate_data size="1981">
-	0.000000 0.000000 0.008301 0.016846 0.025146 0.033691 0.041992 0.050537 0.058838 0.067139
-	0.075684 0.083984 0.092529 0.100830 0.109131 0.117676 0.125977 0.134521 0.142822 0.151367
-	0.159668 0.167969 0.176514 0.184814 0.193359 0.201660 0.210205 0.218506 0.226807 0.235352
-	0.243652 0.252197 0.260498 0.268799 0.277344 0.285645 0.294189 0.302490 0.311035 0.319336
-	0.327637 0.336182 0.344482 0.353027 0.361328 0.369629 0.378174 0.386475 0.395020 0.403320
-	0.411865 0.420166 0.428467 0.437012 0.445313 0.453857 0.462158 0.470703 0.479004 0.487305
-	0.495850 0.504150 0.512695 0.520996 0.529297 0.537842 0.546143 0.554688 0.562988 0.571533
-	0.579834 0.588135 0.596680 0.604980 0.613525 0.621826 0.630371 0.638672 0.646973 0.655518
-	0.663818 0.672363 0.680664 0.688965 0.697510 0.705811 0.714355 0.722656 0.731201 0.739502
-	0.747803 0.756348 0.764648 0.773193 0.781494 0.789795 0.798340 0.806641 0.815186 0.823486
-	0.832031 0.840332 0.848633 0.857178 0.865479 0.874023 0.882324 0.890869 0.899170 0.907471
-	0.916016 0.924316 0.932861 0.941162 0.949463 0.958008 0.966309 0.974854 0.983154 0.991699
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 0.000000 0.011230 0.022461 0.033447 0.044678 0.055908 0.067139 0.078125 0.089355
+	0.000000 0.000000 0.011230 0.022461 0.033447 0.044678 0.055908 0.067139 0.078125 0.089355
 	0.100586 0.111816 0.122803 0.134033 0.145264 0.156494 0.167480 0.178711 0.189941 0.201172
 	0.212402 0.223389 0.234619 0.245850 0.257080 0.268066 0.279297 0.290527 0.301758 0.312744
 	0.323975 0.335205 0.346436 0.357422 0.368652 0.379883 0.391113 0.402344 0.413330 0.424561
@@ -230,121 +212,153 @@
 	-0.026855 -0.025391 -0.024170 -0.022949 -0.021729 -0.020264 -0.019043 -0.017822 -0.016602 -0.015381
 	-0.014160 -0.012939 -0.011719 -0.010742 -0.009521 -0.008545 -0.007568 -0.006592 -0.005859 -0.004883
 	-0.004150 -0.003418 -0.002686 -0.002197 -0.001465 -0.000977 -0.000732 -0.000488 -0.000244 0.000000
-	0.000000
+	0.000000 0.000000 0.008301 0.016846 0.025146 0.033691 0.041992 0.050537 0.058838 0.067139
+	0.075684 0.083984 0.092529 0.100830 0.109131 0.117676 0.125977 0.134521 0.142822 0.151367
+	0.159668 0.167969 0.176514 0.184814 0.193359 0.201660 0.210205 0.218506 0.226807 0.235352
+	0.243652 0.252197 0.260498 0.268799 0.277344 0.285645 0.294189 0.302490 0.311035 0.319336
+	0.327637 0.336182 0.344482 0.353027 0.361328 0.369629 0.378174 0.386475 0.395020 0.403320
+	0.411865 0.420166 0.428467 0.437012 0.445313 0.453857 0.462158 0.470703 0.479004 0.487305
+	0.495850 0.504150 0.512695 0.520996 0.529297 0.537842 0.546143 0.554688 0.562988 0.571533
+	0.579834 0.588135 0.596680 0.604980 0.613525 0.621826 0.630371 0.638672 0.646973 0.655518
+	0.663818 0.672363 0.680664 0.688965 0.697510 0.705811 0.714355 0.722656 0.731201 0.739502
+	0.747803 0.756348 0.764648 0.773193 0.781494 0.789795 0.798340 0.806641 0.815186 0.823486
+	0.832031 0.840332 0.848633 0.857178 0.865479 0.874023 0.882324 0.890869 0.899170 0.907471
+	0.916016 0.924316 0.932861 0.941162 0.949463 0.958008 0.966309 0.974854 0.983154 0.991699
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000
 </tex_translate_data>
 
-<tex_srt_anm_array size="16">
-	<tex_srt_anm index="0" material_name="in74_ele02_1">
+<tex_srt_anm_array size="18">
+	<tex_srt_anm index="0" material_name="in74_008_1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="180" data_head="1"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="in74_008_2">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="180" data_head="181"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="2" material_name="in74_008_1">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="180" data_head="181"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="3" material_name="in74_saku01_5">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="180" data_head="361"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="4" material_name="in74_saku01_6">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="180" data_head="361"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="5" material_name="in74_saku01_4">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="180" data_head="541"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="6" material_name="in74_saku01_7">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="180" data_head="361"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="7" material_name="in74_pool05_1">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="180" data_head="721"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="8" material_name="in74_pool03_2">
+	<tex_srt_anm index="1" material_name="in74_saku01_5">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="180" data_head="181"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="9" material_name="in74_pool03_1">
+	<tex_srt_anm index="2" material_name="in74_saku01_6">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="180" data_head="181"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="3" material_name="in74_saku01_4">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="180" data_head="361"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="4" material_name="in74_saku01_7">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="180" data_head="181"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="5" material_name="in74_pool05_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="180" data_head="541"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="6" material_name="in74_pool03_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="180" data_head="1"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="7" material_name="in74_pool03_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="180" data_head="721"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="8" material_name="in74_pool01_2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="180" data_head="901"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="180" data_head="1081"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="10" material_name="in74_pool01_2">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="180" data_head="1081"/>
-		<tex_translate_t frame_step="1" data_size="180" data_head="1261"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="11" material_name="in74_pool01_1">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="180" data_head="1441"/>
-		<tex_translate_t frame_step="1" data_size="180" data_head="1621"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="12" material_name="in74_pool02_1">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="180" data_head="1801"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="13" material_name="in74_saku01_2">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="180" data_head="361"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="14" material_name="in74_saku01_3">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="180" data_head="361"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="15" material_name="in74_008_3">
+	<tex_srt_anm index="9" material_name="in74_008_2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="180" data_head="181"/>
+		<tex_translate_t frame_step="1" data_size="180" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="10" material_name="in74_pool01_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="180" data_head="1261"/>
+		<tex_translate_t frame_step="1" data_size="180" data_head="1441"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="11" material_name="in74_pool02_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="180" data_head="1621"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="12" material_name="in74_saku01_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="180" data_head="181"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="13" material_name="in74_saku01_3">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="180" data_head="181"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="14" material_name="in74_008_3">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="180" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="15" material_name="in74_ele02_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="180" data_head="1801"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="16" material_name="in74_008_4">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="180" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="17" material_name="in74_ele02_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="180" data_head="1801"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
