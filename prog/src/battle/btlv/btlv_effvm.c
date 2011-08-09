@@ -7389,6 +7389,7 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_STAR ) != 0 );
     MORI_Printf("スターポケフラグ %d ", ret);
     MORI_Printf("statusFlag %x\n", BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) );
+    break;
   default:
     //未知のパラメータです
     GF_ASSERT( 0 );
