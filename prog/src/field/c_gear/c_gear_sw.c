@@ -177,6 +177,7 @@ enum{
 //----------------------------------------------------------
 ///パレット関連定義
 //----------------------------------------------------------
+#define DECAL_COLOR_TRANS_POS_PALNO (0x0d)
 
 //パネルのステータスパレットアニメ用
 #define PANEL_COLOR_TRANS_POS_PALNO  (2)
@@ -607,7 +608,7 @@ enum{
 #define POS_AMPM_BASE_X   (8*6)
 #define POS_AMPM_BASE_Y   (22)
 #define POS_AMPM_BASE_R   (16)
-#define POS_T_NUM_X       (POS_AMPM_BASE_X-16)
+#define POS_T_NUM_X       (POS_AMPM_BASE_X-15)
 #define POS_T_NUM_Y       (POS_AMPM_BASE_Y-4)
 #define POS_AMPM_X        (POS_AMPM_BASE_X-8)
 #define POS_AMPM_Y        (POS_T_NUM_Y+8)
@@ -988,7 +989,7 @@ enum
 #define GEAR_BUTTON_FRAME   (GFL_BG_FRAME0_S)
 #define GEAR_FB_MESSAGE   (GFL_BG_FRAME3_S)
 
-#define CGEAR_CLACT_BG_PRI  ( 2 )
+#define CGEAR_CLACT_BG_PRI  ( 1 )
 
 
 
@@ -1151,8 +1152,6 @@ struct _C_GEAR_WORK {
   u8 sex;
   u8 power_flag;    // 電源がはいっているか？
   u8 connect_flag;  // 一人分でも通信バッファにデータがあるか？
-  u8 fmission_flag; // フェスミッション通知が来ているか？
-  u8 radar_flag;    // 調査隊依頼の達成通知が来ているか？
   u8 use_skip;    // スキップ許可
 
   u8 sleep_mode;  // イベント中のスリープモード
@@ -2861,6 +2860,8 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
     ACT_IR_RING,
     ACT_WIRELESS_RING,
     ACT_WIFI_RING,
+    ACT_CONNECT,
+    ACT_S_RADAR,
   };
 
   if(on_flag){
@@ -2900,19 +2901,22 @@ static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL off_flag )
   if(off_flag){
     evy = 8;
     GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_OFF );
+    GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT_OFF );
   }else{
     evy = 0;
-    if( pWork->radar_flag ){
+    if( pWork->info_flag[INFO_FLAG_RADAR] ){
       GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_INFO );
     }else{
       GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR );
     }
-  }
   
-  if( pWork->fmission_flag ){
-    GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_FMISSION+off_flag );
-  }else{
-    GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT+off_flag );
+    if( pWork->info_flag[INFO_FLAG_FMISSION] ){
+      GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_FMISSION );
+    }else if( pWork->info_flag[INFO_FLAG_HOT] ){
+      GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT_INFO );
+    }else{
+      GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT );
+    }
   }
   
   // ビーコンアイコンをパレットフェードで黒く
@@ -3327,27 +3331,12 @@ static void _createSubBg(C_GEAR_WORK* pWork)
   {
     GFL_BG_SetVisible( i, VISIBLE_OFF );
   }
+#if 0
   {
-    int frame = GEAR_MAIN_FRAME;
+    int frame = GEAR_BUTTON_FRAME;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x6000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
-      };
-    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_SetPriority( frame, 3 );
-    //  GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-  {
-    int frame = GEAR_DECAL_FRAME;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x6000,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x6800,GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -3358,12 +3347,27 @@ static void _createSubBg(C_GEAR_WORK* pWork)
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
-
   {
-    int frame = GEAR_BUTTON_FRAME;
+    int frame = GEAR_MAIN_FRAME;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x6000,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x6800,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_SetPriority( frame, 0 );
+    //  GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = GEAR_DECAL_FRAME;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x6800,GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -3374,7 +3378,54 @@ static void _createSubBg(C_GEAR_WORK* pWork)
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
+#else
+  {
+    int frame = GEAR_BUTTON_FRAME;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x04000, 0x2800,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_SetPriority( frame, 1 );
+
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = GEAR_MAIN_FRAME;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x04000, 0x2800,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_SetPriority( frame, 0 );
+    //  GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = GEAR_DECAL_FRAME;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_SetPriority( frame, 2 );
+
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+#endif
   // アルファ値設定
   _setUpSubAlpha( pWork );
 
@@ -3391,7 +3442,8 @@ static void _createSubBg(C_GEAR_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _setUpSubAlpha( C_GEAR_WORK* pWork )
 {
-  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, 9, 16 );
+//  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_OBJ, 9, 16 );
+  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_BG1, 9, 16 );
 }
 
 #if 0
@@ -3910,16 +3962,20 @@ static void _gearObjSetAnmSeq( GFL_CLWK* p_cell, int anm_id )
 //------------------------------------------------------------------------------
 static void _gearObjCreate(C_GEAR_WORK* pWork)
 {
-  int i;
+  int i,pos;
+  static const u8 num_ofs[] = { 0, POS_T_NUM_OX, (POS_T_NUM_OX-2), (POS_T_NUM_OX-1), POS_T_NUM_OX };
+
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
   
+  pos = POS_T_NUM_X;
   for( i = 0; i < ACT_TIME_MAX; i++ )
   {
+    pos += num_ofs[i];
     pWork->cellCursor[ACT_T_HOUR1+i] = 
-      _gearObjAdd( pWork, POS_T_NUM_X+(POS_T_NUM_OX*i), POS_T_NUM_Y, ACTANM_N10, CGEAR_CLACT_BG_PRI, ACT_SPRI_PARTS, _CLACT_RES_COMMON );
+      _gearObjAdd( pWork, pos, POS_T_NUM_Y, ACTANM_N10, CGEAR_CLACT_BG_PRI, ACT_SPRI_PARTS, _CLACT_RES_COMMON );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_T_HOUR1+i], FALSE );
+
   }
-  IWASAWA_Printf("ObjCreqte %d\n", ACTANM_RING_IR );
   GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ ACT_T_COLON ], ACTANM_N_COLON );
 
   for(i=0;i < ACT_NORMAL_MAX ;i++)
@@ -5474,20 +5530,35 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
       {
         u16 crc = GFL_STD_CrcCalc( pPic, CGEAR_PICTURTE_CHAR_SIZE+CGEAR_PICTURTE_PAL_SIZE+CGEAR_PICTURTE_SCR_SIZE );
         u16 crc2 = CGEAR_SV_GetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave));
-        u32 char_ofs = GEAR_BASE_CGX_SIZE;//GFL_ARCUTIL_TRANSINFO_GetPos( pWork->subchar );
+//        u32 char_ofs = GEAR_BASE_CGX_SIZE;//GFL_ARCUTIL_TRANSINFO_GetPos( pWork->subchar );
         if(crc == crc2){
           if(CGEAR_PICTURE_SAVE_IsPalette(pPic)){
             ret = TRUE;
+#if 0
             for(i=0;i<CGEAR_SW_DECAL_SIZEY;i++){
-              GFL_BG_LoadCharacter(GEAR_MAIN_FRAME,&pCGearWork[CGEAR_SW_DECAL_SIZEX * 32 * i],CGEAR_SW_DECAL_SIZEX * 32, char_ofs + (5 + i)*32);
+              GFL_BG_LoadCharacter(GEAR_DECAL_FRAME,&pCGearWork[CGEAR_SW_DECAL_SIZEX * 32 * i],CGEAR_SW_DECAL_SIZEX * 32, char_ofs + (5 + i)*32);
             }
-            GFL_BG_LoadPalette(GEAR_MAIN_FRAME,pPic->palette,CGEAR_PICTURTE_PAL_SIZE, 32*0x0a );
+#elsif 0
+            //5ライン分はコモンキャラクター領域
+            for(i=0;i<CGEAR_SW_DECAL_SIZEY;i++){
+              GFL_BG_LoadCharacter(GEAR_DECAL_FRAME,&pCGearWork[CGEAR_SW_DECAL_SIZEX * 32 * i],CGEAR_SW_DECAL_SIZEX * 32, (5 + i)*32);
+            }
+#else
+            GFL_BG_LoadCharacter(GEAR_DECAL_FRAME,pCGearWork,CGEAR_SW_DECAL_SIZE_MAX, 0 );
+#endif
+            GFL_BG_LoadPalette(GEAR_DECAL_FRAME,pPic->palette,CGEAR_PICTURTE_PAL_SIZE, 32*DECAL_COLOR_TRANS_POS_PALNO );
 
             GFL_BG_LoadScreenBuffer(GEAR_DECAL_FRAME,pPic->scr,CGEAR_PICTURTE_SCR_SIZE );
+#if 0
             screen = GFL_BG_GetScreenBufferAdrs( GEAR_DECAL_FRAME );
             for( i=0; i<CGEAR_PICTURTE_SCR_SIZE/2; i++ ){
               screen[i] += char_ofs;
+              screen[i] |= 0xa000;
             }
+            IWASAWA_Printf( "DecalSave = %d\n", CGEAR_PICTURE_SAVE_GetWorkSize());
+#endif
+            //スクリーンのパレットナンバーを書き換え
+            GFL_BG_ChangeScreenPalette( GEAR_DECAL_FRAME, 0, 0, 32, 24, DECAL_COLOR_TRANS_POS_PALNO );
             GFL_BG_LoadScreenReq(GEAR_DECAL_FRAME);
             TOMOYA_Printf( "Decal ON\n" );
           }
