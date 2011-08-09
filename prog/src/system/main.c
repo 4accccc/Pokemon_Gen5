@@ -65,14 +65,14 @@ static  void  _set_sound_mode( CONFIG *config );
 static void DEBUG_StackOverCheck(void);
 static void DEBUG_UI_AutoKey(void);
 
-#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
+#if defined(DEBUG_ONLY_FOR_shimoyamada) || defined(DEBUG_ONLY_FOR_nagihashi_toru)
+#define DEBUG_TIME_Printf(...) OS_TFPrintf(3,__VA_ARGS__)
+#endif  //defined
+#endif //PM_DEBUG
 
-#else
-
-#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
-
+#ifndef DEBUG_TIME_Printf
+#define DEBUG_TIME_Printf(...) /*  */
 #endif
-
 
 //------------------------------------------------------------------
 //  処理時間AVERAGE
@@ -547,25 +547,21 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count ++;
   if( now_time > 16000 ){
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount ++;
-#if DEBUG_MAIN_TIME_AVERAGE
-    OS_TPrintf( " update %d", DEBUG_MAIN_UPDATE_TYPE );
-    OS_TPrintf( " over tick %ld", now_time );
-    OS_TPrintf( " ave tick %d\n", (DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count) );
-#endif
+    DEBUG_TIME_Printf( " update %d", DEBUG_MAIN_UPDATE_TYPE );
+    DEBUG_TIME_Printf( " over tick %ld", now_time );
+    DEBUG_TIME_Printf( " ave tick %d\n", (DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count) );
   }
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max < now_time ){
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max = now_time;
   }
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count >= DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME ){
 
-#if DEBUG_MAIN_TIME_AVERAGE
-    OS_TPrintf( " ave tick %d", 
+    DEBUG_TIME_Printf( " ave tick %d", 
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count );
-    OS_TPrintf( " Over 120::%d",
+    DEBUG_TIME_Printf( " Over 120::%d",
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount );
-    OS_TPrintf( " Max %d\n",
+    DEBUG_TIME_Printf( " Max %d\n",
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max );
-#endif
 
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave = 0;
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0;
@@ -573,11 +569,9 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max       = 0;
   }
 
-#if DEBUG_MAIN_TIME_AVERAGE
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_NOW_TIME_DRAW_KEY & GFL_UI_KEY_GetCont() ){
-    OS_TPrintf( " update[%d] tick %ld\n", DEBUG_MAIN_UPDATE_TYPE, now_time );
+    DEBUG_TIME_Printf( " update[%d] tick %ld\n", DEBUG_MAIN_UPDATE_TYPE, now_time );
   }
-#endif
 
 }
 

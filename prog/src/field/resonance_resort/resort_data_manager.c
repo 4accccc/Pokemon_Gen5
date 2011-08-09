@@ -919,7 +919,6 @@ void RESORT_ABSTRUCT_MANAGER_BeginIterator( RESORT_ABSTRUCT_MANAGER * p_wk, cons
 //-----------------------------------------------------------------------------
 RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_MANAGER_NextIterator( RESORT_ABSTRUCT_MANAGER * p_wk, const RESORT_DATA_BUFFER_TYPE *cp_tbl, u32 tbl_max )
 {
-  OS_TPrintf( "iterator %d\n", p_wk->current );
   if( p_wk->tbl_index < tbl_max )
   {
     if( sc_type[ cp_tbl[p_wk->tbl_index] ].start <= p_wk->current && p_wk->current < sc_type[ cp_tbl[p_wk->tbl_index] ].end )

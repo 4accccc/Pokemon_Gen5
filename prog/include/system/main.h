@@ -48,7 +48,9 @@ enum{
 //  èàóùéûä‘AVERAGE ONÅEOFF
 //------------------------------------------------------------------
 #ifdef PM_DEBUG
-
+#if defined(DEBUG_ONLY_FOR_shimoyamada) || defined(DEBUG_ONLY_FOR_nagihashi_toru)
+#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#else
 //#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
-
+#endif
 #endif

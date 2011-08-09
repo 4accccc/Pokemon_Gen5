@@ -642,9 +642,7 @@ static void RESORT_CROWD_PEOPLE_Main( RESORT_CROWD_PEOPLE *p_wk )
     int i;
     for( i = 0; i < RESORT_CROWD_PEOPLE_BUFFER_MAX; i++ )
     {
-      OS_TPrintf( "%d\n",i );
       RESORT_CROWD_PEOPLE_WK_Main( &p_wk->wk[i], p_wk->p_mmdlsys, p_wk->cp_player );
-      OS_TPrintf( "%d\n",i );
     }
   }
 }
