@@ -250,7 +250,7 @@ static const KEYSYS_DISPLAY_FUNCTION sc_display_tbl[KEYSYS_DISPLAY_MAX] =
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  キーシステム用フロー設定
  *
  *	@param	KEY_SYSTEM_WORK *p_wk
  *	@param	heapID ヒープID
@@ -264,7 +264,22 @@ void KEYSYS_KEYFLOW_Init( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
 
   if( p_wk->p_param->mode == KEY_SYSTEM_MODE_GET )
   {
+    PMSND_PushBGM();
     KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_KEYSYS, 1 );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キーシステム用フロー破棄
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_KEYFLOW_Exit( KEY_SYSTEM_WORK *p_wk )
+{
+  if( p_wk->p_param->mode == KEY_SYSTEM_MODE_GET )
+  {
+    PMSND_PopBGM();
   }
 }
 

@@ -1238,6 +1238,7 @@ void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk )
 #endif //PM_DEBUG
 
   PMSND_StopBGM();
+  KEYSYS_KEYFLOW_Exit( p_wk );
 
   //念のためディスプレイ消去
   KEYSYS_DISPLAY_DeleteForce( p_wk->p_display );
