@@ -592,7 +592,7 @@ static BOOL debugMenuCallProc_DesignerSetup4( DEBUG_MENU_EVENT_WORK *p_wk )
       RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 15  );
+      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 36  );
       RESORT_RESIDENT_DATA_JobChange( p_resident );
     }
   }
@@ -614,7 +614,7 @@ static BOOL debugMenuCallProc_DesignerSetup5( DEBUG_MENU_EVENT_WORK *p_wk )
       RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 16  );
+      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 37  );
       RESORT_RESIDENT_DATA_JobChange( p_resident );
     }
   }
@@ -636,7 +636,7 @@ static BOOL debugMenuCallProc_DesignerSetup6( DEBUG_MENU_EVENT_WORK *p_wk )
       RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 17  );
+      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 38  );
       RESORT_RESIDENT_DATA_JobChange( p_resident );
     }
   }

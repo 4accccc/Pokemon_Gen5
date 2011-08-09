@@ -462,10 +462,8 @@ typedef struct _RESORT_CROWD_PEOPLE_WK
   u16 move_dir;
   u16 seq;
   s16 move_grid;
-  u16 interest_grid_z;
-  u16 interest_dir;
-  u16 interest_seq;
   u16 state;
+  u16 dummy;
   void (*InitMove)(struct _RESORT_CROWD_PEOPLE_WK* );
   void (*UpdateMove)(struct _RESORT_CROWD_PEOPLE_WK*, MMDLSYS*, const FIELD_PLAYER* );
 
@@ -479,6 +477,12 @@ typedef struct _RESORT_CROWD_PEOPLE_WK
     u8  seq;
     u8  dir;
   }kyoro;
+
+  u16 interest_grid_z[RESORT_RESIDENT_DATA_NUM];
+  u16 interest_dir[RESORT_RESIDENT_DATA_NUM];
+  u16 interest_seq;
+  u16 interest_cnt;
+  u16 interest_index;
 
 } RESORT_CROWD_PEOPLE_WK;
 
@@ -500,6 +504,10 @@ static BOOL Resort_Crowd_People_Wk_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx, s16
 static void Resort_Crowd_People_Wk_UpdateStreat( RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player );
 static void Resort_Crowd_People_Wk_InitKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk );
 static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player );
+
+static void Resort_Crowd_People_Wk_InitInterest( RESORT_CROWD_PEOPLE_WK *p_wk, const RESORT_BINARY_SHOP *cp_shop, const RESORT_BINARY_INSTITUTION *cp_institution, RESORT_PEOPLE_ALL_DATA *p_all_people );
+static BOOL Resort_Crowd_People_Wk_UpdateInterest( RESORT_CROWD_PEOPLE_WK *p_wk );
+static BOOL Resort_Crowd_People_Wk_CheckInterest( RESORT_CROWD_PEOPLE_WK *p_wk );
 
 //-------------------------------------
 ///	隊列ワーク
@@ -743,50 +751,13 @@ static void RESORT_CROWD_PEOPLE_WK_Main( RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* 
 static void RESORT_CROWD_PEOPLE_WK_SetUp( RESORT_CROWD_PEOPLE_WK *p_wk, RESORT_PEOPLE *p_people, const RESORT_BINARY_SHOP *cp_shop, const RESORT_BINARY_INSTITUTION *cp_institution, RESORT_PEOPLE_ALL_DATA *p_all_people )
 {
   GF_ASSERT( p_wk->p_people == NULL );
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_CROWD_PEOPLE_WK) );
   p_wk->p_people = p_people;
 
-  //自分のなりたいお店と、現在あるお店から
-  //興味があるグリッドを取得
-  {
-    u16 want_shop_type;
-    {
-      u16 want_job  = RESORT_PEOPLE_GetData( p_wk->p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
-      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( cp_shop, want_job );
-      GF_ASSERT( want_job < RESORT_BINARY_SHOP_DATA_GetMax(cp_shop) );
-      want_shop_type  = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
-
-    }
-
-    {
-      int i;
-      for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-      {
-        RESORT_RESIDENT_DATA *p_resi = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, i );
-        if( !RESORT_RESIDENT_DATA_IsEmpty( p_resi ) )
-        {
-
-          const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( cp_shop, p_resi );
-          if( want_shop_type == RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP )
-)
-          {
-            break;
-          }
-        }
-      }
-      if( i < RESORT_RESIDENT_DATA_NUM )
-      {
-        u16 z = RESORT_BINARY_INSTITUTION_GetData( cp_institution, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
-        p_wk->interest_grid_z = z + GFL_STD_MtRand(7);
-        p_wk->interest_dir = (i % 2 == 0 ? AC_DIR_R: AC_DIR_L);
-      }
-      else
-      {
-        p_wk->interest_grid_z = 0;
-      }
-    }
-  }
-
   RESORT_PEOPLE_SetVisible( p_wk->p_people, FALSE );
+
+  Resort_Crowd_People_Wk_InitInterest( p_wk, cp_shop, cp_institution, p_all_people );
+
   switch( RESORT_PEOPLE_GetPeopleData( p_wk->p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) )
   {
   case RESORT_PEOPLE_TYPE_TOURIST:
@@ -1106,7 +1077,7 @@ static void Resort_Crowd_People_Wk_UpdateStreat( RESORT_CROWD_PEOPLE_WK *p_wk, M
   enum
   {
     STATE_NORMAL,
-    STATE_INTERREST,
+    STATE_INTEREST,
   };
 
   if( RESORT_CROWD_PEOPLE_WK_IsExist(p_wk) )
@@ -1143,18 +1114,10 @@ static void Resort_Crowd_People_Wk_UpdateStreat( RESORT_CROWD_PEOPLE_WK *p_wk, M
         }
         else
         {
-          if( p_wk->state == STATE_INTERREST )
+          if( p_wk->state == STATE_INTEREST )
           {
-            if( p_wk->interest_seq == 0 )
+            if( Resort_Crowd_People_Wk_UpdateInterest(p_wk))
             {
-              MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
-              MMDL_SetAcmd( p_mmdl, AC_MARK_ONPU );
-              p_wk->seq = SEQ_WALKWAIT;
-              p_wk->interest_seq++;
-            }
-            else
-            {
-              p_wk->interest_seq = 0;
               p_wk->state = STATE_NORMAL;
             }
           }
@@ -1167,12 +1130,9 @@ static void Resort_Crowd_People_Wk_UpdateStreat( RESORT_CROWD_PEOPLE_WK *p_wk, M
             {
               /*  */
             }
-            else if( p_wk->interest_grid_z == p_wk->move_grid )
+            else if( Resort_Crowd_People_Wk_CheckInterest(p_wk) )
             {
-              MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
-              MMDL_SetAcmd( p_mmdl, p_wk->interest_dir );
-              p_wk->seq = SEQ_WALKWAIT;
-              p_wk->state = STATE_INTERREST;
+              p_wk->state = STATE_INTEREST;
             }
             else
             {
@@ -1281,14 +1241,7 @@ static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_w
         {
           if( p_wk->state == STATE_INTEREST )
           {
-            if( p_wk->interest_seq == 0 )
-            {
-              MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
-              MMDL_SetAcmd( p_mmdl, AC_MARK_ONPU );
-              p_wk->seq = SEQ_WALKWAIT;
-              p_wk->interest_seq++;
-            }
-            else
+            if( Resort_Crowd_People_Wk_UpdateInterest(p_wk ))
             {
               p_wk->state = STATE_NORMAL;
             }
@@ -1328,11 +1281,8 @@ static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_w
             {
               /*  */
             }
-            else if( p_wk->interest_grid_z == MMDL_GetGridPosZ(p_mmdl)
-                && p_wk->interest_seq == 0 )
+            else if( Resort_Crowd_People_Wk_CheckInterest(p_wk) )
             {
-              MMDL_SetAcmd( p_mmdl, p_wk->interest_dir );
-              p_wk->seq = SEQ_WALKWAIT;
               p_wk->state = STATE_INTEREST;
             }
             else if( p_wk->kyoro.start_grid == p_wk->move_grid )
@@ -1355,6 +1305,130 @@ static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_w
       break;
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  興味ある場所を初期化
+ *
+ *	@param	RESORT_CROWD_PEOPLE_WK *p_wk  ワーク
+ *	@param	RESORT_BINARY_SHOP *cp_shop   お店バイナリ
+ *	@param	RESORT_BINARY_INSTITUTION *cp_institution 施設バイナリ
+ *	@param	*p_all_people   人物情報
+ *
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Crowd_People_Wk_InitInterest( RESORT_CROWD_PEOPLE_WK *p_wk, const RESORT_BINARY_SHOP *cp_shop, const RESORT_BINARY_INSTITUTION *cp_institution, RESORT_PEOPLE_ALL_DATA *p_all_people )
+{
+  //自分のなりたいお店と、現在あるお店から
+  //興味があるグリッドを取得
+  {
+    u16 want_shop_type;
+    {
+      u16 want_job  = RESORT_PEOPLE_GetData( p_wk->p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( cp_shop, want_job );
+      GF_ASSERT( want_job < RESORT_BINARY_SHOP_DATA_GetMax(cp_shop) );
+      want_shop_type  = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
+
+      want_shop_type = RESORT_RESIDENT_TYPE_MARKET;
+    }
+
+    {
+      int i;
+      for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+      {
+        RESORT_RESIDENT_DATA *p_resi = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, i );
+        if( !RESORT_RESIDENT_DATA_IsEmpty( p_resi ) )
+        {
+
+          const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( cp_shop, p_resi );
+          if( want_shop_type == RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP )
+)
+          {
+            u16 z = RESORT_BINARY_INSTITUTION_GetData( cp_institution, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
+            p_wk->interest_grid_z[p_wk->interest_cnt] = z + GFL_STD_MtRand(7);
+            p_wk->interest_dir[p_wk->interest_cnt] = (i % 2 == 0 ? AC_DIR_R: AC_DIR_L);
+            p_wk->interest_cnt++;
+          }
+        }
+      }
+    }
+  }
+
+  p_wk->interest_index  = p_wk->interest_cnt;
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  興味の場所からチェック
+ *
+ *	@param	RESORT_CROWD_PEOPLE_WK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Crowd_People_Wk_UpdateInterest( RESORT_CROWD_PEOPLE_WK *p_wk )
+{
+  enum
+  {
+    SEQ_DIR_START,
+    SEQ_DIR_END,
+    SEQ_MARK_START,
+    SEQ_MARK_END,
+  };
+
+  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
+
+  switch( p_wk->interest_seq )
+  {
+  case SEQ_DIR_START:
+    MMDL_SetAcmd( p_mmdl, p_wk->interest_dir[p_wk->interest_index] );
+    p_wk->interest_seq++;
+    break;
+  case SEQ_DIR_END:
+    if( MMDL_CheckEndAcmd( p_mmdl ) )
+    {
+      p_wk->interest_seq++;
+    }
+    else
+    {
+      break;
+    }
+  case SEQ_MARK_START:
+    MMDL_SetAcmd( p_mmdl, AC_MARK_ONPU );
+    p_wk->interest_seq++;
+    break;
+  case SEQ_MARK_END:
+    if( MMDL_CheckEndAcmd( p_mmdl ) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  興味の場所かチェック
+ *
+ *	@param	RESORT_CROWD_PEOPLE_WK *p_wk  ワーク
+ *
+ *	@return TRUE興味の場所だった  FALSE通常
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Crowd_People_Wk_CheckInterest( RESORT_CROWD_PEOPLE_WK *p_wk )
+{
+  int i;
+
+  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
+  for( i = 0; i < p_wk->interest_cnt; i++ )
+  {
+    if( p_wk->interest_grid_z[i] == MMDL_GetGridPosZ(p_mmdl) 
+        && p_wk->interest_index != i )
+    {
+      p_wk->interest_seq  = 0;
+      p_wk->interest_index  = i;
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -2130,8 +2204,8 @@ static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* 
     GFL_STR_SetStringCode( p_wk->p_str, code );
   }
   
-  FLDSUBMSGWIN_AddStrBuf( p_msgbg,
-    p_wk->p_str, p_wk->id, sc_pos[p_wk->id].x, sc_pos[p_wk->id].y, 12, 2 );
+  FLDSUBMSGWIN_AddStrBufEx( p_msgbg,
+    p_wk->p_str, p_wk->id, sc_pos[p_wk->id].x, sc_pos[p_wk->id].y, 12, 2, GFL_STD_MtRand(TALKMSGWIN_TYPE_MAX) );
 }
 //----------------------------------------------------------------------------
 /**

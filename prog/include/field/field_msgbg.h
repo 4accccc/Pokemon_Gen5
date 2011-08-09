@@ -430,6 +430,9 @@ extern void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,
     int id, u8 x, u8 y, u8 sx, u8 sy );
 extern void FLDSUBMSGWIN_AddStrBuf( FLDMSGBG *fmb,
     const STRBUF *strBuf, int id, u8 x, u8 y, u8 sx, u8 sy );
+extern void FLDSUBMSGWIN_AddStrBufEx( FLDMSGBG *fmb,
+    const STRBUF *strBuf, int id, u8 x, u8 y, u8 sx, u8 sy, TALKMSGWIN_TYPE type );
+
 extern void FLDSUBMSGWIN_Delete( FLDMSGBG *fmb, int id );
 extern void FLDSUBMSGWIN_DeleteAll( FLDMSGBG *fmb );
 extern BOOL FLDSUBMSGWIN_CheckExistWindow( FLDMSGBG *fmb );

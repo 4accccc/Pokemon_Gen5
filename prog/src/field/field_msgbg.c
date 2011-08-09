@@ -3585,9 +3585,8 @@ struct _TAG_FLDSUBMSGWIN
 //--------------------------------------------------------------
 static void fldSubMsgWin_Add(
     FLDMSGBG *fmb, FLDSUBMSGWIN *subwin,
-    STRBUF *strBuf, u16 idx, u8 x, u8 y, u8 sx, u8 sy, int id )
+    STRBUF *strBuf, u16 idx, u8 x, u8 y, u8 sx, u8 sy, int id, TALKMSGWIN_TYPE type )
 {
-  TALKMSGWIN_TYPE type = TALKMSGWIN_TYPE_NORMAL;
 
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
@@ -3664,7 +3663,7 @@ void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,
   
   GFL_MSG_GetString( msgData, msgID, subwin->strBuf );
   fldSubMsgWin_Add( fmb, subwin, subwin->strBuf,
-      idx, x, y, sx, sy, id );
+      idx, x, y, sx, sy, id, TALKMSGWIN_TYPE_NORMAL );
 }
 
 //--------------------------------------------------------------
@@ -3681,6 +3680,24 @@ void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,
 void FLDSUBMSGWIN_AddStrBuf( FLDMSGBG *fmb,
     const STRBUF *strBuf, int id, u8 x, u8 y, u8 sx, u8 sy )
 {
+  FLDSUBMSGWIN_AddStrBufEx( fmb,
+    strBuf, id, x, y, sx, sy, TALKMSGWIN_TYPE_NORMAL );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDPLAINMSGWIN サブウィンドウセット  枠指定版
+ * @param fmb FLDMSGBG
+ * @param up_down 0=up,1=down
+ * @param strBuf 表示するSTRBUF 
+ * @retval nothing
+ * @note strBufはコピーして格納しますので、
+ * セット後、開放しても問題ありません。
+ */
+//--------------------------------------------------------------
+void FLDSUBMSGWIN_AddStrBufEx( FLDMSGBG *fmb,
+    const STRBUF *strBuf, int id, u8 x, u8 y, u8 sx, u8 sy, TALKMSGWIN_TYPE type )
+{
   int idx;
   
   FLDSUBMSGWIN *subwin = GFL_HEAP_AllocClearMemory(
@@ -3695,7 +3712,7 @@ void FLDSUBMSGWIN_AddStrBuf( FLDMSGBG *fmb,
   }
   
   fldSubMsgWin_Add(
-      fmb, subwin, subwin->strBuf, idx, x, y, sx, sy, id );
+      fmb, subwin, subwin->strBuf, idx, x, y, sx, sy, id, type );
 }
 
 //--------------------------------------------------------------
