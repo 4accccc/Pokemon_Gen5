@@ -2761,6 +2761,7 @@ DEP_TEXSET_IMD_OUTDOOR067 = \
 	$(SRCDIR)/door_pc.imd \
 	$(SRCDIR)/buill_03.imd \
 	$(SRCDIR)/buill_04.imd \
+	$(SRCDIR)/mall_01.imd \
 	$(SRCDIR)/door01.imd \
 	$(SRCDIR)/c0101.imd \
 	$(SRCDIR)/thouse_01.imd \
@@ -2771,6 +2772,7 @@ DEP_TEXSET_IMD_OUTDOOR067 = \
 	$(SRCDIR)/c8_buildb_04.imd \
 	$(SRCDIR)/c8_gym_01.imd \
 	$(SRCDIR)/c8_buildb_05.imd \
+	$(SRCDIR)/h3_gate_01.imd \
 	$(SRCDIR)/sign01.imd \
 	$(SRCDIR)/sign02.imd \
 	$(SRCDIR)/sign03.imd \
