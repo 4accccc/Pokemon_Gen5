@@ -26,6 +26,8 @@
 #define T05_ITEMTRADER_01                 12
 #define T05_ITEMTRADER_03                 13
 #define T05_ITEMTRADER_02                 14
+#define T05_POKE33_01                     15
+#define T05_GIRL3_01                      16
 
 #endif //ZONE_T05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

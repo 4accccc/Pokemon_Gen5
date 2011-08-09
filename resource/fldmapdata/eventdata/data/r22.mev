@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/13 18:33:13
+#save date:2011/08/05 18:35:30
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r22.wms
 #SECTION START:OBJ_EVENT
@@ -210,7 +210,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_R22_POKE5_01
 #Event Script Name
-SCRID_DUMMY
+SCRID_R22_POKE5_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number

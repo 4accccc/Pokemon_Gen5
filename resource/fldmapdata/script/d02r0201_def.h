@@ -6,7 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_ZONE_D02R0201 (1)
-#define SCRID_D02R0201_POKE6_01 (2)
-#define SCRID_D02R0201_RANGERM_01 (3)
+#define SCRID_D02R0201_RANGERM_01 (2)
 
 #endif //_D02R0201_DEF_H_

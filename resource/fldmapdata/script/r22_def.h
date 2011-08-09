@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_POS_R22_POKE5_01 (1)
+#define SCRID_R22_POKE5_01 (2)
 
 #endif //_R22_DEF_H_

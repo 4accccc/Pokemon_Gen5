@@ -218,6 +218,19 @@ init_flags:
   _FLAG_SET( FV_D27R1001_SWSAGE7_01 )
   _FLAG_SET( FV_D27R1301_SWSAGE7_01 )
 
+  //h01～h06:橋マニア
+  _FLAG_SET( FV_H02_BRIDGE_MANIA_01 )
+  _FLAG_SET( FV_H03_BRIDGE_MANIA_01 )
+  _FLAG_SET( FV_H04_BRIDGE_MANIA_01 )
+  _FLAG_SET( FV_H05_BRIDGE_MANIA_01 )
+  _FLAG_SET( FV_H06_BRIDGE_MANIA_01 )
+
+  //c04,t05:迷子イベント
+  _FLAG_SET( FV_C04_RAILMAN_01 )  //ライモンシティ：駅員
+  _FLAG_SET( FV_C04_POKE33_01 )   //ライモンシティ：ヤナップ
+  _FLAG_SET( FV_T05_POKE33_01 )   //カナワタウン：ヤナップ
+
+
 }
 _RET
 
@@ -279,7 +292,7 @@ INIT_EVENT_START  ev_init_gameclear_script
   //初回ゲームクリア時の処理を呼び出す
   IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
     //初回なら
-    _CALL	ev_first_gameclear
+    _CALL ev_first_gameclear
   ELSE
     //初めて殿堂入りした時の処理を呼び出す
     IF FLAG_OFF( SYS_FLAG_CHAMPION_WIN ) THEN
@@ -310,8 +323,20 @@ INIT_EVENT_START  ev_init_gameclear_script
 
   //ビリジオン未捕獲時の復活処理
   IF FLAG_ON( FV_R11_POKE6_01 ) && FLAG_OFF( FE_R11_POKE6_GET_01 ) THEN
-    //OBJを消していて、捕まえていなければ復活させる（思索の原）
-    _FLAG_RESET( FV_D02R0201_POKE6_01 )
+    //OBJを消していて、捕まえていなければ復活させる（１１番道路）
+    _FLAG_RESET( FV_R11_POKE6_01 )
+  ENDIF
+
+  //コバルオン未捕獲時の復活処理
+  IF FLAG_ON( FV_R13_POKE4_01 ) && FLAG_OFF( FE_R13_POKE4_GET_01 ) THEN
+    //OBJを消していて、捕まえていなければ復活させる（１３番道路）
+    _FLAG_RESET( FV_R13_POKE4_01 )
+  ENDIF
+
+  //テラキオン未捕獲時の復活処理
+  IF FLAG_ON( FV_R22_POKE5_01 ) && FLAG_OFF( FE_R22_POKE5_GET_01 ) THEN
+    //OBJを消していて、捕まえていなければ復活させる（２２番道路）
+    _FLAG_RESET( FV_R22_POKE5_01 )
   ENDIF
 
 

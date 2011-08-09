@@ -28,6 +28,8 @@
 #define C04_SWHEROINE_01                   5
 #define C04_TBOSSBL_01                     6
 #define C04_TBOSS_01                       7
+#define C04_POKE33_01                      8
+#define C04_RAILMAN_01                     9
 
 #endif //ZONE_C04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

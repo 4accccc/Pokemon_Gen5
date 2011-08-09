@@ -22,25 +22,27 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_bg_c04_board_01
-_EVENT_DATA    ev_bg_c04_board_02
-_EVENT_DATA    ev_bg_c04_board_03
-_EVENT_DATA    ev_bg_c04_board_04
-_EVENT_DATA    ev_bg_c04_board_05
-_EVENT_DATA    ev_bg_c04_board_06
-_EVENT_DATA    ev_reserve_c04_exit      //ギアステーションから出てきた時のアニメ
-_EVENT_DATA    ev_zone_c04
-_EVENT_DATA    ev_init_c04
-_EVENT_DATA    ev_bg_c04_board_07
-_EVENT_DATA    ev_bg_c04_board_08
-_EVENT_DATA    ev_pos_c04_swrival_01    //ライモンジムクリア後に発生
-_EVENT_DATA    ev_c04_swrival_01
-_EVENT_DATA    ev_c04_swplazmam_04
-_EVENT_DATA    ev_c04_swplazmam_02
-_EVENT_DATA    ev_c04_swplazmaw_01
-_EVENT_DATA    ev_c04_swheroine_01
-_EVENT_DATA    ev_C04_tbossbl_01
-_EVENT_DATA    ev_C04_tboss_01
+_EVENT_DATA   ev_bg_c04_board_01
+_EVENT_DATA   ev_bg_c04_board_02
+_EVENT_DATA   ev_bg_c04_board_03
+_EVENT_DATA   ev_bg_c04_board_04
+_EVENT_DATA   ev_bg_c04_board_05
+_EVENT_DATA   ev_bg_c04_board_06
+_EVENT_DATA   ev_reserve_c04_exit      //ギアステーションから出てきた時のアニメ
+_EVENT_DATA   ev_zone_c04
+_EVENT_DATA   ev_init_c04
+_EVENT_DATA   ev_bg_c04_board_07
+_EVENT_DATA   ev_bg_c04_board_08
+_EVENT_DATA   ev_pos_c04_swrival_01    //ライモンジムクリア後に発生
+_EVENT_DATA   ev_c04_swrival_01
+_EVENT_DATA   ev_c04_swplazmam_04
+_EVENT_DATA   ev_c04_swplazmam_02
+_EVENT_DATA   ev_c04_swplazmaw_01
+_EVENT_DATA   ev_c04_swheroine_01
+_EVENT_DATA   ev_C04_tbossbl_01
+_EVENT_DATA   ev_C04_tboss_01
+_EVENT_DATA   ev_c04_railman_01
+_EVENT_DATA   ev_c04_poke33_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -88,7 +90,6 @@ INIT_EVENT_START  ev_zone_c04
 
 INIT_EVENT_END
 
-
 /************************************************************/
 /*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
@@ -96,7 +97,6 @@ INIT_EVENT_START  ev_init_c04
 
 
 INIT_EVENT_END
-
 
 /************************************************************/
 /*  予約スクリプト：ギアステーションから出てくるアニメ      */
@@ -589,7 +589,6 @@ EVENT_START   ev_pos_c04_swrival_02
 
 EVENT_END
 
-
 /**************************************************************/
 /*  SWHEROINE(SWHERO)イベント01                               */
 /**************************************************************/
@@ -759,7 +758,6 @@ EVENT_START   ev_c04_swheroine_01
 }
 EVENT_END
 
-
 /**************************************************************/
 /* ノボリ：話しかけ                                           */
 /**************************************************************/
@@ -772,12 +770,87 @@ EVENT_START   ev_C04_tbossbl_01
 
 EVENT_END
 
-
 /**************************************************************/
 /* クダリ：話しかけ                                           */
 /**************************************************************/
 EVENT_START   ev_C04_tboss_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_tboss_01 )
+EVENT_END
+
+/**************************************************************/
+/*  鉄道員：話しかけ（迷子ポケモンイベント）                  */
+/**************************************************************/
+EVENT_START   ev_c04_railman_01
+
+  _TALK_OBJ_START()
+
+  //鉄道員：えっ！　カナワタウンで
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04_railman_01 )
+  _MSGWIN_CLOSE()
+
+  _TIME_WAIT( 4 )
+
+  //アニメ：鉄道員ヤナップと向かい合う
+  _OBJ_ANIME( C04_RAILMAN_01, anm_staystep_r )
+  _OBJ_ANIME( C04_POKE33_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+
+  //鉄道員：ずいぶん　とおくから　きたんだなあ▼
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04_railman_02 )
+  _MSGWIN_CLOSE()
+
+  //自機方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  SWITCH $LWK_DIR
+  CASE DIR_UP THEN
+    _OBJ_ANIME( C04_RAILMAN_01, anm_staystep_d )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( C04_RAILMAN_01, anm_staystep_l )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+
+  //鉄道員：わかった！　ぼくが　カナワタウンに
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04_railman_03 )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+  //アニメ：鉄道員とヤナップ退場
+  IF $LCW_POSZ == 438 THEN
+    _OBJ_ANIME_AUTO( C04_RAILMAN_01, 411, 437, FORCE_TYPE_NPC, 8, DIR_LR )
+    _OBJ_ANIME_AUTO( C04_POKE33_01, 412, 437, FORCE_TYPE_NPC, 8, DIR_LR )
+    _TIME_WAIT( 8 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME_AUTO( C04_RAILMAN_01, 411, 438, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_AUTO( C04_POKE33_01, 412, 438, FORCE_TYPE_NPC, 8, DIR_UD )
+    _TIME_WAIT( 16 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  _OBJ_DEL( C04_RAILMAN_01 )
+  _OBJ_DEL( C04_POKE33_01 )
+
+  _TIME_WAIT( 8 )
+
+  //========================================//
+  //ライモンシティに駅員とヤナップ非表示
+  _FLAG_SET( FV_C04_RAILMAN_01 )
+  _FLAG_SET( FV_C04_POKE33_01 )
+  //カナワタウンにヤナップ表示
+  _FLAG_RESET( FV_T05_POKE33_01 )
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  ヤナップ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c04_poke33_01
+  _EASY_TALK_POKEVOICE( MONSNO_593, msg_c04_poke33_01 )
 EVENT_END
 
 

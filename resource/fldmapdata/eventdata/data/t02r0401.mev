@@ -1,5 +1,5 @@
 #event data
-#save date:2011/03/22 15:30:43
+#save date:2011/08/05 12:57:15
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\t02r0401.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ T02R0401_GIRL4_01
 #OBJ CODE Number
 GIRL4
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -96,7 +96,7 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+1
 #Move Limit Z Number
 2
 #Pos Type

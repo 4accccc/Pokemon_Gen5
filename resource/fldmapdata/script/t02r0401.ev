@@ -8,151 +8,381 @@
   .include  "../../../prog/include/msg/script/msg_t02r0401.h"
   .include  "t02r0401.h"
 
-
-//--------------------------------------------------------------
-//               スクリプトテーブル
-//--------------------------------------------------------------
-_EVENT_DATA    ev_t02r0401_girl4_01
-_EVENT_DATA    ev_t02r0401_man2_01
-_EVENT_DATA    ev_t02r0401_poke19_01
-_EVENT_DATA_END
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
 
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA   ev_t02r0401_girl4_01
+_EVENT_DATA   ev_t02r0401_man2_01
+_EVENT_DATA   ev_t02r0401_poke19_01
+_EVENT_DATA_END
+
+//主人公座標取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+//ポケモンチェック変数一覧
+DEFINE_LOCAL LWK_PARTY_NUM    //手持ちポケモンの数
+DEFINE_LOCAL LWK_COUNT_NUM    //WHILE文のカウンタ
+DEFINE_LOCAL LWK_RET_MONSNO   //ナンバーチェックの帰り値
+DEFINE_LOCAL LWK_POKE_CLEAR   //条件を満たしたポケモンの有無
+DEFINE_LOCAL LWK_EGG_CHK      //タマゴであるか
+
+
 /************************************************************/
-/*	T02R0401 GIRL4の会話用イベントスクリプト				*/
+/*  お嬢様：話しかけ（ISS起動）                             */
 /************************************************************/
 EVENT_START   ev_t02r0401_girl4_01
-	//すでにピアノを弾いているかチェック 数字はISSでスイッチするトラックのフラグ番号
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,1 )
 
-	//ピアノ弾いてる/弾いていないで分岐
-	IF $SCWK_ANSWER == FALSE THEN
+  //スランプイベント中か
+  IF $WK_SCENE_T02R0401_GIRL4_01 <= 1 THEN
 
-		//ピアノ弾いていない
-		
-		//振り向きアリ
-		_TALK_OBJ_START()
-		
-		//私の好きな曲 弾いてあげましょうか？
-		_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_01 )
-		_YES_NO_WIN( SCWK_ANSWER )
-		
-		IF $SCWK_ANSWER == SCR_YES THEN
-			//では聞いてください
-			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_02 )
-			_MSGWIN_CLOSE()
-			
-			//ISSスイッチON：ピアノ音源のトラックを再生
-			_ISS_SWITCH_ON( 1 )
-			
-			//お嬢様：ピアノに向かう
-			_OBJ_ANIME( T02R0401_GIRL4_01 , anm_obj_dir_u )
-			_OBJ_ANIME_WAIT()
-			
-			
-		ELSE
-			//あら残念…
-			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_03 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-			
-		ENDIF
-	
-	
-	ELSE
+    //ピアノスランプイベントへ
+    _CALL ev_t02r0401_girl4_piano_01
 
-		//ピアノ弾いてる
-		
-		//振り向き無し
-		_TALK_START_TURN_NOT()
-		
-		//えんそうに むちゅうだ！
-		_SYSWIN_MSG( msg_t02r0401_girl4_04 , POS_DOWN )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-	
-	
-	ENDIF
+  //スランプイベント終了
+  ELSE
+
+    //すでにピアノを弾いているかチェック 数字はISSでスイッチするトラックのフラグ番号
+    _ISS_SWITCH_CHECK( SCWK_ANSWER, 1 )
+
+    //ピアノを弾いてるか
+    IF $SCWK_ANSWER == FALSE THEN
+
+      _TALK_OBJ_START()
+      //お嬢様：ひいて　あげましょうか？
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_09 )
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+        //お嬢様：ウフフ……
+        _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_10 )
+        _AB_KEYWAIT_MARK()
+        _MSGWIN_CLOSE()
+
+        //アニメ：ピアノに向かう
+        _OBJ_ANIME( T02R0401_GIRL4_01, anm_obj_dir_u )
+        _OBJ_ANIME_WAIT()
+
+        //ISSスイッチON：ピアノ音源のトラックを再生
+        _ISS_SWITCH_ON( 1 )
+
+      ELSE    //いいえ
+        //お嬢様：あら　ざんねん　ですわ……
+        _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_11 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    //ピアノを弾いてる
+    ELSE
+
+      _TALK_START_TURN_NOT()
+      //システム：えんそうに　むちゅうだ！！
+      _SYSWIN_MSG( msg_t02r0401_girl4_12, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
 
 EVENT_END
+
+
+//ピアノスランプイベント
+ev_t02r0401_girl4_piano_01:
+
+  _TALK_OBJ_START()
+
+  //イベント進行状況「コロボーシを見せる前」
+  IF $WK_SCENE_T02R0401_GIRL4_01 == 0 THEN
+
+    //手持ちのポケモンの数を確認（全てのポケモン）
+    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+    //手持ちのポケモンの中に条件を満たしたポケモンがいるか確認（繰り返し処理）
+    WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+      //指定POSのポケモンのNOを取得
+      _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+
+      //指定POSのポケモンはタマゴか
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
+
+      //チェックしたポケモンはコロボーシか（なおかつタマゴではないか）
+      IF $LWK_RET_MONSNO == 401 && $LWK_EGG_CHK == FALSE THEN
+        //条件を満たしていたら「１」
+        $LWK_POKE_CLEAR = 1
+
+      ENDIF
+
+      //カウント
+      $LWK_COUNT_NUM += 1
+
+    ENDWHILE
+
+    //お嬢様：さいきん　なんだか
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_01 )
+
+    //お嬢様：ねえ　ごぞんじ？▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_02 )
+
+    //手持ちに「コロボーシ」がいた
+    IF $LWK_POKE_CLEAR == 1 THEN
+
+      _MSGWIN_CLOSE()
+
+      //アニメ：お嬢様「！」
+      _OBJ_ANIME( T02R0401_GIRL4_01, anm_common_gyoe )
+      _OBJ_ANIME_WAIT()
+
+      _TIME_WAIT( 8 )
+
+      //お嬢様：コロボーシの　その　なきごえ……▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_03 )
+      _MSGWIN_CLOSE()
+
+      //アニメ：お嬢様ピアノに向かう
+      _OBJ_ANIME( T02R0401_GIRL4_01, anm_obj_dir_u )
+      _OBJ_ANIME_WAIT()
+
+      _TIME_WAIT( 32 )
+
+      //主人公の方向取得
+      _PLAYER_DIR_GET( LWK_DIR )
+
+      //アニメ：お嬢様主人公に振り向き
+      SWITCH $LWK_DIR
+      CASE DIR_UP THEN
+        _OBJ_ANIME( T02R0401_GIRL4_01, anm_obj_dir_d )
+      CASE DIR_RIGHT THEN
+        _OBJ_ANIME( T02R0401_GIRL4_01, anm_obj_dir_l )
+      CASE DIR_LEFT THEN
+        _OBJ_ANIME( T02R0401_GIRL4_01, anm_obj_dir_r )
+      ENDSWITCH
+      _OBJ_ANIME_WAIT()
+
+      //お嬢様：あとひとつ……
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //========================================//
+      //イベント進行
+      $WK_SCENE_T02R0401_GIRL4_01 = 1
+      //========================================//
+
+    ELSE
+
+      //会話終了
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //イベント進行状況「ゴニョニョを見せる前」
+  ELSIF $WK_SCENE_T02R0401_GIRL4_01 == 1 THEN
+
+    //手持ちのポケモンの数を確認（全てのポケモン）
+    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+    //手持ちのポケモンの中に条件を満たしたポケモンがいるか確認（繰り返し処理）
+    WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+      //指定POSのポケモンのNOを取得
+      _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+
+      //指定POSのポケモンはタマゴか
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
+
+      //チェックしたポケモンはゴニョニョか（なおかつタマゴではないか）
+      IF $LWK_RET_MONSNO == 293 && $LWK_EGG_CHK == FALSE THEN
+        //条件を満たしていたら「１」
+        $LWK_POKE_CLEAR = 1
+
+      ENDIF
+
+      //カウント
+      $LWK_COUNT_NUM += 1
+
+    ENDWHILE
+
+    //お嬢様：ゴニョニョって　ポケモンの　なきごえは
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_05 )
+
+    //手持ちに「ゴニョニョ」がいた
+    IF $LWK_POKE_CLEAR == 1 THEN
+
+      _MSGWIN_CLOSE()
+
+      //アニメ：お嬢様「！」
+      _OBJ_ANIME( T02R0401_GIRL4_01, anm_common_gyoe )
+      _OBJ_ANIME_WAIT()
+
+      _TIME_WAIT( 8 )
+
+      //お嬢様：ゴニョニョの　その　なきごえ……▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_06 )
+      _MSGWIN_CLOSE()
+
+      //アニメ：お嬢様ピアノに向かう
+      _OBJ_ANIME( T02R0401_GIRL4_01, anm_obj_dir_u )
+      _OBJ_ANIME_WAIT()
+
+      _TIME_WAIT( 16 )
+
+      //アニメ：お嬢様きょろきょろ
+      _OBJ_ANIME( T02R0401_GIRL4_01, anm_meet )
+      _OBJ_ANIME_WAIT()
+
+      //アニメ：お嬢様ピアノに向かう
+      _OBJ_ANIME( T02R0401_GIRL4_01, anm_obj_dir_u )
+      _OBJ_ANIME_WAIT()
+
+      _TIME_WAIT( 32 )
+
+      //主人公の方向取得
+      _PLAYER_DIR_GET( LWK_DIR )
+
+      //アニメ：お嬢様主人公に振り向き
+      SWITCH $LWK_DIR
+      CASE DIR_UP THEN
+        _OBJ_ANIME( T02R0401_GIRL4_01, anm_obj_dir_d )
+      CASE DIR_RIGHT THEN
+        _OBJ_ANIME( T02R0401_GIRL4_01, anm_obj_dir_l )
+      CASE DIR_LEFT THEN
+        _OBJ_ANIME( T02R0401_GIRL4_01, anm_obj_dir_r )
+      ENDSWITCH
+      _OBJ_ANIME_WAIT()
+
+      //お嬢様：あなたと　ポケモンの　おかげで
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_07 )
+
+      //お嬢様：スランプを　なおしてくれた▽
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_08 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //アイテム「メトロノーム」入手  【仮】入手アイテムは仮です
+      _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_METORONOOMU, 1 )
+
+      //========================================//
+      //イベント進行
+      $WK_SCENE_T02R0401_GIRL4_01 = 2
+      //========================================//
+
+    ELSE
+
+      //会話終了
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+_RET
+
+/************************************************************/
+/*  男性：話しかけ（ISS起動）                               */
+/************************************************************/
+EVENT_START   ev_t02r0401_man2_01
+
+  //ドラムが再生状態かチェック 数字はISSでスイッチするトラックのフラグ番号
+  _ISS_SWITCH_CHECK( SCWK_ANSWER, 2 )
+
+  //ドラムを演奏しているか
+  IF $SCWK_ANSWER == FALSE THEN
+
+    _TALK_OBJ_START()
+    //男性：ドラム　きいてみる？
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+      //男性：オレのッ！　しんぞうがッ！
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_02 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //アニメ：ドラムに向かう
+      _OBJ_ANIME( T02R0401_MAN2_01, anm_obj_dir_d )
+      _OBJ_ANIME_WAIT()
+
+      //ISSスイッチON：ドラム音源のトラックを再生
+      _ISS_SWITCH_ON( 2 )
+
+    ELSE    //いいえ
+      //男性：ですよね……
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //ドラム演奏中
+  ELSE
+
+    _TALK_START_TURN_NOT()
+    //システム：えんそうに　むちゅうだ！
+    _SYSWIN_MSG( msg_t02r0401_man2_04, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  チラーミィ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_t02r0401_poke19_01
+  _EASY_TALK_POKEVOICE( MONSNO_533, msg_t02r0401_poke_01 )
+EVENT_END
+
 
 //--------------------------------------------------------------
 //方向転換
 //--------------------------------------------------------------
 _ANIME_LABEL anm_obj_dir_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_obj_dir_d
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
+_ANIME_LABEL anm_obj_dir_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
-/************************************************************/
-/*		T02R0401 MAN2の会話用イベントスクリプト				*/
-/************************************************************/
-EVENT_START   ev_t02r0401_man2_01
-	//ドラムが再生状態かチェック 数字はISSでスイッチするトラックのフラグ番号
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,2 )
+_ANIME_LABEL anm_obj_dir_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
-	//ドラムを演奏しているかで分岐
-	IF $SCWK_ANSWER == FALSE THEN
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
 
-		//ドラム演奏していない
-		
-		//振り向きアリ
-		_TALK_OBJ_START()
-		
-		//ドラム聞く？
-		_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_01 )
-		_YES_NO_WIN( SCWK_ANSWER )
+//--------------------------------------------------------------------
+//☆共通処理：きょろきょろする
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_meet
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA ACMD_END,0
 
-		IF $SCWK_ANSWER == SCR_YES THEN
-			//では聞いてください
-			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_02 )
-			_MSGWIN_CLOSE()
-			
-			//ISSスイッチON：ピアノ音源のトラックを再生
-			_ISS_SWITCH_ON( 2 )
-			
-			//男性：ピアノに向かう
-			_OBJ_ANIME( T02R0401_MAN2_01 , anm_obj_dir_d )
-			_OBJ_ANIME_WAIT()
-			
-			
-		ELSE
-			//残念…
-			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_03 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-			
-		ENDIF
-	
-	
-	ELSE
-
-		//ピアノ弾いてる
-		
-		//振り向き無し
-		_TALK_START_TURN_NOT()
-		
-		//えんそうに むちゅうだ！
-		_SYSWIN_MSG( msg_t02r0401_man2_04 , POS_DOWN )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-	
-	
-	ENDIF
-
-EVENT_END
-
-/**************************************************************/
-/*  T02R0401 POKE19_01の会話用スクリプト						  */
-/**************************************************************/
-EVENT_START   ev_t02r0401_poke19_01
-	_EASY_TALK_POKEVOICE( MONSNO_533, msg_t02r0401_poke_01 )	//チラーミィ
-EVENT_END
 

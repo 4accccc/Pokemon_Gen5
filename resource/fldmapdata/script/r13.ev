@@ -25,6 +25,7 @@ _EVENT_DATA   ev_bg_r13_sign1_01
 _EVENT_DATA   ev_bg_r13_sign2_01
 _EVENT_DATA   ev_bg_r13_sign3_01
 _EVENT_DATA   ev_pos_r13_poke4_01
+_EVENT_DATA   ev_r13_poke4_01
 _EVENT_DATA   ev_r13_sunglasses_01
 _EVENT_DATA_END
 
@@ -32,6 +33,7 @@ _EVENT_DATA_END
 DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
 
 /**************************************************************/
 /*  看板01                                                    */
@@ -56,7 +58,7 @@ EVENT_START   ev_bg_r13_sign3_01
 EVENT_END
 
 /**************************************************************/
-/*POS：コバルオン登場                                         */
+/*  POS：コバルオン登場（後に削除を）                         */
 /**************************************************************/
 EVENT_START   ev_pos_r13_poke4_01
 
@@ -116,7 +118,7 @@ EVENT_START   ev_pos_r13_poke4_01
   SWITCH $SCWK_ANSWER
   CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
     //==================================//
-    //ビリジオンを捕獲した
+    //コバルオンを捕獲した
     _FLAG_SET( FE_R13_POKE4_GET_01 )
     //==================================//
 
@@ -124,7 +126,7 @@ EVENT_START   ev_pos_r13_poke4_01
 
   ENDSWITCH
 
-  //ビリジオンを捕獲できなかった場合の分岐
+  //コバルオンを捕獲できなかった場合の分岐
   IF FLAG_OFF( FE_R13_POKE4_GET_01 ) THEN
 
     //システム：ポケモンは　どうろの　さきへ
@@ -137,12 +139,92 @@ EVENT_START   ev_pos_r13_poke4_01
   //==================================//
   //POS無効
   $WK_SCENE_R13_POKE4 = 1
-  //ビリジオン発見
+  //コバルオン発見
   _FLAG_SET( FE_R13_POKE4_MEET_01 )
   //==================================//
 
 EVENT_END
 
+/**************************************************************/
+/*  コバルオン：話しかけ（戦闘／倒した場合は殿堂入り後復帰）  */
+/**************************************************************/
+EVENT_START   ev_r13_poke4_01
+
+  _TALK_OBJ_START()
+
+  //コバルオン：こふおおおおーっ！
+  _VOICE_PLAY( MONSNO_645, 0 ) 
+  _GIZAPLAINWIN_MSG_POS( msg_r13_poke4_01, POS_UP )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  //コバルオンを見たことがあるか
+  IF FLAG_OFF( FE_R13_POKE4_MEET_01 ) THEN
+
+    //==================================//
+    //コバルオン発見
+    _FLAG_SET( FE_R13_POKE4_MEET_01 )
+    //==================================//
+
+    //戦闘開始
+    {
+      DEFINE_LOCAL flag
+      $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+      _WILD_BTL_SET_EX( MONSNO_645, 40, flag ) // Lv.40 コバルオン
+    }
+
+  ELSE
+
+    //戦闘開始
+    {
+      DEFINE_LOCAL flag
+      $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+      _WILD_BTL_SET_EX( MONSNO_645, 60, flag ) // Lv.60 コバルオン
+    }
+
+  ENDIF
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //==================================//
+    //コバルオン非表示
+    _FLAG_SET( FV_R13_POKE4_01 )
+    //==================================//
+    _OBJ_DEL( R13_POKE4_01 )   //コバルオンを消す
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //コバルオンを捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+    //==================================//
+    //コバルオンを捕獲した
+    _FLAG_SET( FE_R13_POKE4_GET_01 )
+    //==================================//
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
+
+  ENDSWITCH
+
+  //コバルオンを捕獲できなかった場合の分岐
+  IF FLAG_OFF( FE_R13_POKE4_GET_01 ) THEN
+
+    //システム：ポケモンは　どうろの　さきへ
+    _SYSWIN_MSG( msg_r13_poke4_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
 
 /**************************************************************/
 /*  黒服：話しかけ（海辺のお宝イベント）                      */

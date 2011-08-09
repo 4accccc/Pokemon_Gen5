@@ -22,13 +22,14 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA   ev_pos_r22_poke5_01
+_EVENT_DATA   ev_r22_poke5_01
 _EVENT_DATA_END
-
 
 //主人公方向取得変数
 DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -46,7 +47,7 @@ EVENT_START   ev_pos_r22_poke5_01
   _OBJ_ANIME_WAIT()
 
   //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
 
   //アニメ：テラキオン主人公の前に
   IF $LCW_POSZ == 139 THEN
@@ -62,7 +63,7 @@ EVENT_START   ev_pos_r22_poke5_01
   ENDIF
 
   //テラキオン：ぐるるおおーっ！
-  _VOICE_PLAY( MONSNO_646, 0 ) 
+  _VOICE_PLAY( MONSNO_646, 0 )
   _GIZAPLAINWIN_MSG_POS( msg_r22_poke5_01, POS_UP )
   _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
@@ -73,7 +74,7 @@ EVENT_START   ev_pos_r22_poke5_01
     DEFINE_LOCAL flag
     $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
     $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
-    _WILD_BTL_SET_EX( MONSNO_646, 45, flag ) // Lv45 テラキオン
+    _WILD_BTL_SET_EX( MONSNO_646, 40, flag ) // Lv.40 テラキオン
   }
 
   _WILD_LOSE_CHECK( SCWK_ANSWER )
@@ -176,6 +177,87 @@ EVENT_START   ev_pos_r22_poke5_01
   //アクロマ非表示
   _FLAG_SET( FV_R22_SWBOSS_01 )
   //==================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  テラキオン：話しかけ（戦闘／倒した場合は殿堂入り後復帰）  */
+/**************************************************************/
+EVENT_START   ev_r22_poke5_01
+
+  _TALK_OBJ_START()
+
+  //テラキオン：ぐるるおおーっ！
+  _VOICE_PLAY( MONSNO_646, 0 ) 
+  _GIZAPLAINWIN_MSG_POS( msg_r22_poke5_01, POS_UP )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  //テラキオンを見たことがあるか
+  IF FLAG_OFF( FE_R22_POKE5_MEET_01 ) THEN
+
+    //==================================//
+    //テラキオン発見
+    _FLAG_SET( FE_R22_POKE5_MEET_01 )
+    //==================================//
+
+    //戦闘開始
+    {
+      DEFINE_LOCAL flag
+      $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+      _WILD_BTL_SET_EX( MONSNO_646, 40, flag ) // Lv.40 テラキオン
+    }
+
+  ELSE
+
+    //戦闘開始
+    {
+      DEFINE_LOCAL flag
+      $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+      _WILD_BTL_SET_EX( MONSNO_646, 60, flag ) // Lv.60 テラキオン
+    }
+
+  ENDIF
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //==================================//
+    //テラキオン非表示
+    _FLAG_SET( FV_R22_POKE5_01 )
+    //==================================//
+    _OBJ_DEL( R22_POKE5_01 )   //テラキオンを消す
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //テラキオンを捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+    //==================================//
+    //テラキオンを捕獲した
+    _FLAG_SET( FE_R22_POKE5_GET_01 )
+    //==================================//
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
+
+  ENDSWITCH
+
+  //テラキオンを捕獲できなかった場合の分岐
+  IF FLAG_OFF( FE_R22_POKE5_GET_01 ) THEN
+
+    //システム：ポケモンは　どうろの　さきへ
+    _SYSWIN_MSG( msg_r22_poke5_02, POS_DOWN )
+    _AB_KEYWAIT()
+    _SYSWIN_CLOSE()
+
+  ENDIF
 
 EVENT_END
 
