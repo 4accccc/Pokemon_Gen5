@@ -379,8 +379,8 @@
 #define FE_NAKIGOE_ITEMGET_01              363 /* 0x016b 4番道路民家（r04r0501 */
 #define FE_D10_PLAZMA_FRIGATE_01           364 /* 0x016c ジャイアントホール：プラズマフリゲート起動フラグ */
 #define FE_T05_MAIGO_CLEAR_01              365 /* 0x016d カナワタウン：迷子ポケモンクリアフラグ */
-		/* not used   366(0x016e) */
-		/* not used   367(0x016f) */
+#define FE_C09_GUIDE_TALK                  366 /* 0x016e ポケモンリーグ：ベテラン初回会話 */
+#define FE_C09P01_GATE_OPEN                367 /* 0x016f ポケモンリーグ：ゲートを閉じる */
 		/* not used   368(0x0170) */
 		/* not used   369(0x0171) */
 		/* not used   370(0x0172) */
