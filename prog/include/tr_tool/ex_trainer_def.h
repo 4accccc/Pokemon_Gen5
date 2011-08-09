@@ -15,7 +15,7 @@ enum
 {
   TRID_OFFSET_NORMAL           = 0,
   TRID_OFFSET_INFINITY_DUNGEON = ( 0x500 ),
-  TRID_OFFSET_WBT              = ( TRID_OFFSET_INFINITY_DUNGEON + 0x200 ),
+  TRID_OFFSET_WBT              = ( TRID_OFFSET_INFINITY_DUNGEON + 0x300 ),
 };
 
 /// 特殊トレーナータイプ
