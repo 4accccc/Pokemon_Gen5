@@ -13176,13 +13176,31 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_b_01_01_00">
+		Label="msg_event_b_01_01_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>ん？　キミは
+あたらしい　ちょうせんしゃかい？▼
+ふむふむ　……▼
+まずは　なにを　すればいいか
+わからないって　かおを　しているね▼
+よし！
+しょしんしゃの　キミに　アドバイスだ▼
+エリアを　クリアするには
+ボストレーナーを　たおすひつようが▽
+あることは　しってるね？▼
+ボストレーナーを　やみくもに
+さがすのも　いいけど▼
+まずは　ほかの　トレーナーと
+たたかってごらん▼
+かれらは　このばしょを　よくしっている▼
+ボストレーナーの　ばしょも
+しっているはずだよ▼
+それじゃ　がんばってね▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:38" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:17:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13190,10 +13208,27 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>ん？　キミは
+新しい　挑戦者かい？▼
+ふむふむ　……▼
+まずは　なにを　すればいいか
+わからないって　顔を　しているね▼
+よし！
+初心者の　キミに　アドバイスだ▼
+エリアを　クリアするには
+ボストレーナーを　倒す必要が▽
+あることは　知ってるね？▼
+ボストレーナーを　闇雲に
+探すのも　いいけど▼
+まずは　他の　トレーナーと
+戦ってごらん▼
+かれらは　この場所を　よく知っている▼
+ボストレーナーの　場所も
+知っているはずだよ▼
+それじゃ　がんばってね▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:45" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:17:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13201,63 +13236,33 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_b_01_02_00">
+		Label="msg_event_b_01_02_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>あら？　キミが
+うわさの　ちょうせんしゃね▼
+なかなか　みどころが　あるって
+きいているわよ▼
+わたしも　しょしんしゃの
+キミに　アドバイス　してあげる▼
+ここに　エレベーターが　あるわね？▼
+もし　キミが　これいじょうの
+ちょうせんは　きけんだと　おもったら▼
+エレベーターで　うけつけに
+もどりなさい▼
+ここでの　しょうぶは
+しんけんしょうぶ！▼
+まけたら　おかねを　とられるわ▼
+いちりゅうの　トレーナーは
+ひきぎわも　こころえて　いるものよ▼
+ただし！　このエリアの　ちょうせんは
+しっぱいに　なるから　きをつけてね▼
+キミが　どこまで　がんばれるか
+たのしみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:41" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:41" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
-			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:45" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="msg_event_b_01_03_00">
-		<LanguageCell
-			Language="JPN">
-			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
-			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:41" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:41" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
-			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:45" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="msg_event_b_01_04_00">
-		<LanguageCell
-			Language="JPN">
-			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
-			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:41" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13265,10 +13270,27 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>あら？　キミが
+噂の　挑戦者ね▼
+なかなか　見所が　あるって
+聞いているわよ▼
+わたしも　初心者の
+キミに　アドバイス　してあげる▼
+ここに　エレベーターが　あるわね？▼
+もし　キミが　これ以上の
+挑戦は　危険だと　思ったら▽
+エレベーターで　受付に　戻りなさい▼
+ここでの　勝負は　真剣勝負！▼
+負けたら　お金を　取られるわ▼
+一流の　トレーナーは
+引き際も　心得て　いるものよ▼
+ただし！　このエリアの　挑戦は
+失敗に　なるから　気をつけてね▼
+キミが　どこまで　がんばれるか
+楽しみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:45" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13276,13 +13298,78 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_b_01_05_00">
+		Label="msg_event_b_01_03_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>キミは　くろのまてんろうの
+ちょうせんしゃかい？▼
+え？　わたしは　すこし　ちがうな▼
+わたしは　この　しせつを
+しらべているんだ▼
+キミは　ぎもんに　おもわないかい？▼
+2ねんまえには　こんな　たてものは
+なかったし▼
+いったい　なんの　ものくてきで
+この　たてものを　つくったのか　……▼
+ほんとうに　ここは　なぞだらけだよ▼
+それじゃ　またあおう▼</Text>
 			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キミは　黒の摩天楼の
+挑戦者かい？▼
+え？　わたしは　少し　違うな▼
+わたしは　この　施設を
+調べているんだ▼
+キミは　疑問に　思わないかい？▼
+2年前には　こんな　建物は
+なかったし▼
+いったい　何の　目的で
+この　建物を　作ったのか　……▼
+本当に　ここは　謎だらけだよ▼
+それじゃ　また会おう▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_01_04_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おや？　またあったね▼
+あれから　いろいろ　しらべて
+すこし　ここの　ことが　わかったよ▼
+この　たてものは　ある　ざいだんが
+つくったものらしい▼
+その　もくてきなんだが
+まだ　はっきりは　わからないんだ▼
+うわさでは　トレーナーの　たたかいを
+どこかで　みて　たのしんで　いるとか▼
+チャンピオンを　こえる
+さいきょうの　トレーナーを▽
+さがしているとか▼
+いろいろな　うわさが　あるんだが
+どれも　かくしょうが　なくてね▼
+しらべれば　しらべるほど
+おもしろい　ばしょだよ　ここは▼
+それじゃ　またあおう▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13290,10 +13377,26 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラック　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>おや？　また会ったね▼
+あれから　いろいろ　調べて
+少し　ここの　ことが　わかったよ▼
+この　建物は　ある　財団が
+作ったものらしい▼
+その　目的なんだが
+まだ　はっきりは　わからないんだ▼
+噂では　トレーナーの　戦いを
+どこかで　見て　楽しんでいるとか▼
+チャンピオンを　越える
+最強の　トレーナーを▽
+探しているとか▼
+いろいろな　噂が　あるんだが
+どれも　確証が　なくてね▼
+調べれば　調べるほど
+面白い　場所だよ　ここは▼
+それじゃ　また会おう▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:45" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13301,13 +13404,81 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_w_01_01_00">
+		Label="msg_event_b_01_05_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>ん？▼
+おまえ　このまえ　エリア2で
+あったな▼
+ここまで　これるってことは
+やっぱり　おまえ　つよいようだな▼
+おれは　このエリアも　らくしょうで
+クリアしたところだぜ▼
+もっと　もっと　しゅぎょうして
+じいちゃんを　こえるんだ！▼
+おまえとも　つぎに　あったときは　
+しんけんしょうぶを　してもらうぜ！▼
+それじゃ　またあおうぜ▼</Text>
 			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:29" />
+				Time="2011-08-07T07:32:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん？▼
+おまえ　この前　エリア2で
+会ったな▼
+ここまで　来れるってことは
+やっぱり　おまえ　強いようだな▼
+おれは　このエリアも　楽勝で
+クリアしたところだぜ▼
+もっと　もっと　修行して
+じいちゃんを　越えるんだ！▼
+おまえとも　次に　会ったときは　
+真剣勝負を　してもらうぜ！▼
+それじゃ　また会おうぜ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_01_01_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら？　あなたは
+あたらしい　ちょうせんしゃね？▼
+あらら　……▼
+ここで　なにを　すればいいか
+わからないって　かおを　してるわね▼
+いいわ！▼
+しょしんしゃの　あなたに
+とくべつに　ヒントを　あげちゃう▼　
+エリアを　クリアするには
+ボストレーナーを　たおすひつようが▽
+あるのは　しってるわね？▼
+ボストレーナーを　がんばって
+さがしても　いいんだけど▼　
+まずは　ほかの　トレーナーと
+たたかってみて▼
+ここにいる　ひとなら　このばしょを
+よく　しっているわ▼
+ボストレーナーの　ばしょも
+しっているはずよ▼
+それじゃ　がんばてね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:25:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13315,10 +13486,29 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>あら？　あなたは
+新しい　挑戦者ね？▼
+あらら　……▼
+ここで　なにを　すればいいか
+わからないって　顔を　してるわね▼
+いいわ！▼
+初心者の　あなたに
+特別に　ヒントを　あげちゃう▼
+エリアを　クリアするには
+ボストレーナーを　倒す必要が▽
+あるのは　知ってるわね？▼
+ボストレーナーを　がんばって
+探しても　いいんだけど▼　
+まずは　ほかの　トレーナーと
+戦ってみて▼
+ここいる　人なら　この場所を
+よく　知っているわ▼
+ボストレーナーの　場所も
+知っているはずよ▼
+それじゃ　がんばてね▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:31" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:25:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13326,13 +13516,32 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_w_01_02_00">
+		Label="msg_event_w_01_02_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>ん？　キミが　
+うわさの　ちょうせんしゃかい？▼
+みかけに　よらず　すごうでって
+きいているよ▼
+まだまだ　しょしんしゃの　キミに
+いいことを　おしえて　あげよう▼
+ここに　エレベーターが　あるだろう？▼
+もし　キミが　これいじょうの
+ちょうせんは　きけんだと　おもったら▼
+エレベーターで　うけつけに
+もどると　いい▼
+ここでの　しょうぶは
+しんけんしょうぶだ▼
+エリアの　ちょうせんは
+しっぱいに　なるが▼
+まけて　おかねを　とられるよりは
+ましだろう？▼
+それじゃ　キミと　たたかえるのを
+たのしみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:29" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:26:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13340,10 +13549,28 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>ん？　キミが　
+噂の　挑戦者かい？▼
+見かけに　よらず　凄腕って
+聞いているよ▼
+まだまだ　初心者の　キミに
+いいことを　教えて　あげよう▼
+ここに　エレベーターが　あるだろう？▼
+もし　キミが　これ以上の
+挑戦は　危険だと　思ったら▼
+エレベーターで　受付に
+戻ると　いい▼
+ここでの　勝負は
+真剣勝負だ▼
+エリアの　挑戦は
+失敗に　なるが▼
+負けて　お金を　取られるよりは
+ましだろう？▼
+それじゃ　キミと　戦えるのを
+楽しみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:31" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:26:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13351,13 +13578,27 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_w_01_03_00">
+		Label="msg_event_w_01_03_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>キミは　しろのじゅどうの
+ちょうせんしゃか？▼
+え？　おれは　すこし　ちがうな▼
+おれは　より　つよくなるための
+しょうぎょうさ▼
+それにしても　なんのために
+このばしょを▽
+ていきょうして　いるんだろうな▼
+2ねんまえには　こんなばしょは
+なかっただろう？▼
+ふしぎだよな▼
+まあ　おれは　しゅぎょうが
+できるなら　それでいいけどな▼
+それじゃ　またな▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:29" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13365,10 +13606,23 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>キミは　白の樹洞の
+挑戦者か？▼
+え？　おれは　少し　違うな▼
+おれは　より　強くなるための
+修行さ▼
+それにしても　何のために
+この場所を▽
+提供して　いるんだろうな▼
+2年前には　こんな場所は
+なかっただろう？▼
+不思議だよな▼
+まあ　おれは　修行が
+できるなら　それでいいけどな▼
+それじゃ　またな▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:31" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13376,13 +13630,29 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_w_01_04_00">
+		Label="msg_event_w_01_04_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>おっと　またあえたな
+たんさくは　すすんでいるか？▼
+そうそう　おもしろいはなしを
+きいたから　おしえてやるよ▼
+うわさなんだが　このばしょは
+まだまだ　たんさくが　おわって▽
+いないらしい▼
+こうして　トレーナーに
+たんれんの　ばしょとして▽
+ていきょうしながら▼
+たんさくを　いまだに　すすめて
+いるんだとさ▼
+キミのような　ちょうせんしゃが
+いつか　このばしょの　さいしんぶに▽
+とうたつするのかも　しれないな▼
+それじゃ　またな▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:29" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13390,10 +13660,25 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>おっと　また会えたな
+探索は　進んでいるか？▼
+そうそう　面白い話を
+聞いたから　教えてやるよ▼
+噂なんだが　この場所は
+まだまだ　探索が　終って▽
+いないらしい▼
+こうして　トレーナーに　
+鍛錬の　場所として▽
+提供しながら▼
+探索を　今だに　進めて
+いるんだとさ▼
+キミのような　挑戦者が
+いつか　この場所の　最深部に▽
+到達するのかも　しれないな▼
+それじゃ　またな▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:31" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13401,13 +13686,25 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_w_01_05_00">
+		Label="msg_event_w_01_05_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>ん？▼
+おまえ　このまえ　エリア2で
+あったな▼
+ここまで　これるってことは
+やっぱり　おまえ　つよいようだな▼
+おれは　このエリアも　らくしょうで
+クリアしたところだぜ▼
+もっと　もっと　しゅぎょうして
+じいちゃんを　こえるんだ！▼
+おまえとも　つぎに　あったときは　
+しんけんしょうぶを　してもらうぜ！▼
+それじゃ　またあおうぜ▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:29" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13415,10 +13712,21 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほわいと　えれべーた　とうちゃくイベント　▼</Text>
+			<Text>ん？▼
+おまえ　この前　エリア2で
+会ったな▼
+ここまで　来れるってことは
+やっぱり　おまえ　強いようだな▼
+おれは　このエリアも　楽勝で
+クリアしたところだぜ▼
+もっと　もっと　修行して
+じいちゃんを　越えるんだ！▼
+おまえとも　次に　会ったときは　
+真剣勝負を　してもらうぜ！▼
+それじゃ　また会おうぜ▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:31" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13426,13 +13734,27 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_b_02_01_00">
+		Label="msg_event_b_02_01_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック　ちゅうかんべや　イベント　▼</Text>
+			<Text>おっと！　またあったね
+ちょうしは　どうだい？▼
+ここでは　どうぐが
+つかえないからね▼
+ポケモンも　キミも　
+そろそろ　つかれて▽
+きたんじゃないかな？▼
+そんなときは　ナースや
+ドクターを　さがしてごらん▼
+かれらに　はなしかければ
+かいふくして　くれるはずさ▼
+でも　いちどは　たたかう
+ひつようが　あるけど▼
+それじゃ　またね▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T08:34:32" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:22:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13440,10 +13762,23 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラック　ちゅうかんべや　イベント　▼</Text>
+			<Text>おっと！　また会ったね
+調子は　どうだい？▼
+ここでは　どうぐが
+使えないからね▼
+ポケモンも　キミも　
+そろそろ　疲れて▽
+来たんじゃないかな？▼
+そんなときは　ナースや
+ドクターを　探してごらん▼
+かれらに　話しかければ
+回復して　くれるはずさ▼
+でも　一度は　戦う
+必要が　あるけど▼
+それじゃ　またね▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T08:34:41" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:22:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13451,13 +13786,32 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_b_02_02_00">
+		Label="msg_event_b_02_02_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック　ちゅうかんべや　イベント　▼</Text>
+			<Text>ここまでは　これたようね
+やるわね▼
+がんばっている　あなたに
+もうひとつ　いいことを▽
+おしえてあげる▼
+みちに　まよった！▼
+げんきな　ポケモンも　いない！▼
+いま　すぐ　ここから　でたい！▼
+そんなときって　あるわよね？▼
+Cギアを　みてみて▼
+ふだんとは　ちがう　ボタンが
+あるでしょう？▼
+これを　おせば　すぐに　うけつけに
+もどることが　できるわ▼
+とうぜん　リタイアしたら　
+このエリアの　ちょうせんは▽
+しっぱいに　なるから　きをつけてね▼
+それじゃ　キミが　わたしの　ところに
+くるのを　たのしみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T08:34:36" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:24:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13465,10 +13819,28 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラック　ちゅうかんべや　イベント　▼</Text>
+			<Text>ここまでは　来れたようね
+やるわね▼
+がんばっている　あなたに
+もうひとつ　いいことを▽
+教えてあげる▼
+道に　迷った！▼
+元気な　ポケモンも　いない！▼
+今　すぐ　ここから　出たい！▼
+そんなときって　あるわよね？▼
+Cギアを　見てみて▼
+普段とは　違う　ボタンが
+あるでしょう？▼
+これを　押せば　すぐに　受付に
+戻ることが　できるわ▼
+当然　リタイアしたら
+このエリアの　挑戦は▽
+失敗に　なるから　気をつけてね▼
+それじゃ　キミが　わたしの　ところに
+来るのを　楽しみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T08:34:42" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:24:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13477,13 +13849,26 @@ Cギアを　見てごらん▼
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_02_01_00"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほわいと　ちゅうかんべや　イベント　▼</Text>
+			<Text>あら　またあったわね
+ちょうしは　どうかしら？▼
+そうそう　ここでは　どうぐが
+つかえないのは　しってる？▼
+ポケモンも　あなたも
+そろそろ　つかれて▽
+きたんじゃ　ないかしら？▼
+そんなときは　ナースや
+ドクターを　さがしてみて▼
+はなしかければ
+かいふくして　くれるはずよ▼
+でも　いちどは　たたかう
+ひつようが　あるけどね▼
+それじゃ　またね▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:33:45" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13491,10 +13876,23 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほわいと　ちゅうかんべや　イベント　▼</Text>
+			<Text>あら　また会ったわね
+調子は　どうかしら？▼
+そうそう　ここでは　どうぐが
+使えないのは　知ってる？▼
+ポケモンも　あなたも
+そろそろ　疲れて▽
+来たんじゃ　ないかしら？▼
+そんなときは　ナースや
+ドクターを　探してみて▼
+話しかければ
+回復して　くれるはずよ▼
+でも　一度は　戦う
+必要が　あるけどね▼
+それじゃ　またね▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:33:45" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13510,13 +13908,32 @@ Cギアを　見てごらん▼
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_02_02_00"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほわいと　ちゅうかんべや　イベント　▼</Text>
+			<Text>がんばっているようだね▼
+キミなら　ここまで　くると
+おもっていたよ▼
+それじゃ　もうひとつ　ヒントを
+あげよう▼
+みちに　まよった！▼
+げんきな　ポケモンも　いない！▼
+いま　すぐ　ここから　でたい！▼
+いままで　そんなことに
+ならなかったかい？▼
+Cギアを　みてごらん▼
+ふだんとは　ちがう　ボタンが
+あるだろう？▼
+これを　おせば　すぐに　うけつけに
+もどることが　できるんだ▼
+とうぜん　リタイアしたら　
+このエリアの　ちょうせんは▽
+しっぱいに　なるけどね▼
+それじゃ　ボクは　ちょうせんしゃを
+またせて　もらうことに　するよ▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:33:45" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13524,10 +13941,29 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほわいと　ちゅうかんべや　イベント　▼</Text>
+			<Text>がんばっているようだね▼
+キミなら　ここまで　来ると
+思っていたよ▼
+それじゃ　もうひとつ　ヒントを
+あげよう▼
+道に　迷った！▼
+元気な　ポケモンも　いない！▼
+今　すぐ　ここから　出たい！▼
+今まで　そんなことに
+ならなかったかい？▼
+Cギアを　見てごらん▼
+普段とは　違う　ボタンが
+あるだろう？▼
+これを　押せば　すぐに　受付に
+戻ることが　できるんだ▼
+当然　リタイアしたら　
+このエリアの　挑戦は▽
+失敗に　なるけどね▼
+それじゃ　ボクは　挑戦者を
+待たせて　もらうことに　するよ▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:33:45" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13542,13 +13978,23 @@ Cギアを　見てごらん▼
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_w_03_01_00">
+		Label="msg_event_w_03_01_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼすべや　イベント　ほわいと　▼</Text>
+			<Text>このエリアも　このていどか▼
+じいちゃんに　しゅぎょうだって
+いわれてきたけど▽
+ぜんぜん　たいしたことないな▼
+ん？　おまえも　ちょうせんしゃか？▼
+おれの　なまえは　バンジロウ！▼
+いずれ　チャンピオンを　こえるおとこだ▼
+おまえのほうが　ここの　トレーナーより
+つよそうだな▼
+そのうち　しょうぶ　しようぜ！▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:34:48" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:24:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13556,10 +14002,19 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼすべや　イベント　ほわいと　▼</Text>
+			<Text>このエリアも　この程度か▼
+じいちゃんに　修行だって
+言われて来たけど▽
+全然　たいしたないな▼
+ん？　おまえも　挑戦者か？▼
+おれの　名前は　バンジロウ！▼
+いずれ　チャンピオンを　越える男だ▼
+おまえの方が　ここの　トレーナーより
+強そうだな▼
+そのうち　勝負　しようぜ！▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:34:55" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:24:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13567,13 +14022,23 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_b_03_01_00">
+		Label="msg_event_b_03_01_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼすべや　イベント　ブラック　▼</Text>
+			<Text>このエリアも　このていどか▼
+じいちゃんに　しゅぎょうだって
+いわれてきたけど▽
+ぜんぜん　たいしたことないな▼
+ん？　おまえも　ちょうせんしゃか？▼
+おれの　なまえは　バンジロウ！▼
+いずれ　チャンピオンを　こえるおとこだ▼
+おまえのほうが　ここの　トレーナーより
+つよそうだな▼
+そのうち　しょうぶ　しようぜ！▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T08:34:50" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:25:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -13581,10 +14046,19 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼすべや　イベント　ブラック　▼</Text>
+			<Text>このエリアも　この程度か▼
+じいちゃんに　修行だって
+言われて来たけど▽
+全然　たいしたないな▼
+ん？　おまえも　挑戦者か？▼
+おれの　名前は　バンジロウ！▼
+いずれ　チャンピオンを　越える男だ▼
+おまえの方が　ここの　トレーナーより
+強そうだな▼
+そのうち　勝負　しようぜ！▼</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T08:34:55" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T01:25:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
