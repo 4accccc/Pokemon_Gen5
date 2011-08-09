@@ -741,10 +741,10 @@
 	<row id="MDL_HINT_FIELD_041">
 		<language name="JPN" width="216">カナワタウンの　てんしゃだい
 いったい　なんしゅるいの
-しゃりょうが　あるんだろう？</language>
+しゃりょうが　あるのだろう？</language>
 		<language name="JPN_KANJI" width="216">カナワタウンの　転車台
 一体　何種類の
-車両が　あるんだろう？</language>
+車両が　あるのだろう？</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_042">
@@ -831,10 +831,10 @@
 
 	<row id="MDL_HINT_FIELD_054">
 		<language name="JPN" width="216">おおむかしの　ポケモンが
-きみの　なかまに　なるかもしれない
+きみの　なかまに　なる
 カセキの　ふしぎを　たいけんしよう</language>
 		<language name="JPN_KANJI" width="216">大昔の　ポケモンが
-君の　仲間に　なるかもしれない
+君の　仲間に　なる
 カセキの　不思議を　体験しよう</language>
 	</row>
 
@@ -849,10 +849,10 @@
 
 	<row id="MDL_HINT_FIELD_056">
 		<language name="JPN" width="216">テレビを　たくさん　みて
-おとくな　じょうほうを
+いろいろな　じょうほうを
 てにいれよう！</language>
 		<language name="JPN_KANJI" width="216">テレビを　たくさん　みて
-お得な　情報を
+色々な　情報を
 手に入れよう！</language>
 	</row>
 
@@ -905,7 +905,7 @@
 		<language name="JPN" width="216">Ｃギアを　ひらいて
 いろいろな　ひとと
 すれちがって　みよう！</language>
-		<language name="JPN_KANJI" width="216">Ｃギアを　開いて
+		<language name="JPN_KANJI" width="216">ＣーＧＥＡＲを　開いて
 色々な　人と
 すれ違って　みよう！</language>
 	</row>
@@ -970,12 +970,12 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_074">
-		<language name="JPN" width="216">ポケモンを　たくさん
-みつけたり　つかまえたり　して
-せいそくちリストを　うめよう！</language>
-		<language name="JPN_KANJI" width="216">ポケモンを　たくさん
-みつけたり　捕まえたり　して
-生息地リストを　埋めよう！</language>
+		<language name="JPN" width="216">ポケモンを　たくさん　みつけたり
+つかまえたりして　せいそくちリストの
+スタンプを　あつめよう！</language>
+		<language name="JPN_KANJI" width="216">ポケモンを　たくさん　見つけたり
+捕まえたりして　生息地リストの
+スタンプを　集めよう！</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_075">
@@ -994,8 +994,10 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_078">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
+		<language name="JPN" width="216">すべての　かくしあなを
+みつけることが　できるか！？</language>
+		<language name="JPN_KANJI" width="216">すべての　隠し穴を
+見つけることが　できるか！？</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_079">
@@ -1024,8 +1026,12 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_084">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
+		<language name="JPN" width="216">パソコンの　ボックス　ひとつが
+いっぱいに　なる　くらい
+ポケモンを　あつめてみよう！</language>
+		<language name="JPN_KANJI" width="216">パソコンの　ボックス　ひとつが
+いっぱいに　なる　くらい
+ポケモンを　集めてみよう！</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_085">
@@ -1354,10 +1360,10 @@
 	</row>
 
 	<row id="MDL_HINT_BATTLE_041">
-		<language name="JPN" width="216">タイプエキスパートトーナメント
+		<language name="JPN" width="216">タイプエキスパートトーナメントの
 すべての　タイプの　トーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">タイプエキスパートトーナメント
+		<language name="JPN_KANJI" width="216">タイプエキスパートトーナメントの
 すべての　タイプの　トーナメントで
 優勝しよう！</language>
 	</row>
@@ -1620,10 +1626,10 @@
 
 	<row id="MDL_HINT_APPLICATION_022">
 		<language name="JPN" width="216">ジョインアベニューで
-たくさんの　かんこうきゃくを
+たくさんの　おきゃくさんを
 あんない　しよう！</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
-たくさんの　観光客を
+たくさんの　お客さんを
 案内しよう！</language>
 	</row>
 

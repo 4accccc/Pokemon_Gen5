@@ -53,7 +53,7 @@
 #define MDLID_VENDOR_COUNT_LV1	(39)	// ベンダーマスター
 #define MDLID_VENDOR_ATARI	(40)	// ワンモアドリンク
 #define MDLID_TRAIN_ALL	(41)	// てつどうマニア
-#define MDLID_BRIDGE_ALL	(42)	// ブリッジマスター
+#define MDLID_BRIDGE_ALL	(42)	// ブリッジマニア
 #define MDLID_EVOLUTION_LV1	(43)	// エボルブホープ
 #define MDLID_EVOLUTION_LV2	(44)	// エボルブテクニシャン
 #define MDLID_EVOLUTION_LV3	(45)	// エボルブエキスパート
@@ -64,7 +64,7 @@
 #define MDLID_DOWSING_LV1	(50)	// おとしものハンター
 #define MDLID_BILLBOARD_COUNT_LV1	(51)	// かんばんめいじん
 #define MDLID_BILLBOARD_BACK	(52)	// ラクガキせんりがん
-#define MDLID_NICKNAME_LV1	(53)	// ゴッドファーザー
+#define MDLID_NICKNAME_LV1	(53)	// ネーミングキング
 #define MDLID_FOSSILE_LV1	(54)	// たいこのロマンチスト
 #define MDLID_DAYMAX_CAPTURE_LV1	(55)	// ワンデーキャプチャー
 #define MDLID_WATCH_TV_LV1	(56)	// テレビっこ
@@ -89,7 +89,7 @@
 #define MDLID_GUIDANCE_CNT_LV2	(75)	// スタンプフリーク
 #define MDLID_GUIDANCE_CNT_LV3	(76)	// スタンプコレクター
 #define MDLID_GUIDANCE_CNT_LV4	(77)	// せいそくちマスター
-#define MDLID_KEMONOMICHI	(78)	// けものみちのたつじん
+#define MDLID_KEMONOMICHI	(78)	// かくしあなのたつじん
 #define MDLID_DIAMONDDUST	(79)	// ダイヤモンドダスト
 #define MDLID_ISEKI	(80)	// いせきマイスター
 #define MDLID_NPOKE	(81)	// ピュア＆イノセント
