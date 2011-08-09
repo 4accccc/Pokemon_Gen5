@@ -47,7 +47,7 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
 static void WBTTRAINER_SetRomTrainer( HEAPID heapID, WBTTRAINER * wbt_tr, u8 tr_id );
 static void WBTTRAINER_SetWBPlayer( HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
 static void WBTTRAINER_SetDLTrainer(
-    WBTSYS * wbtsys, WBTTRAINER * wbt_tr, GAMEDATA * gamedata, u32 dl_tr_id );
+    WBTSYS * wbtsys, WBTTRAINER * wbt_tr, GAMEDATA * gamedata, u32 dl_tr_id, u8 pri );
 
 //============================================================================================
 //============================================================================================
@@ -96,6 +96,8 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
 //------------------------------------------------------------------
 /**
  * @brief トレーナーID配列から実トレーナーデータをセットする
+ *
+ * @todo  DLトーナメントの優先度反映を実装する
  */
 //------------------------------------------------------------------
 void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_list )
@@ -118,7 +120,7 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_l
     case WBT_TRCODE_DL2:
     case WBT_TRCODE_DL3:
     case WBT_TRCODE_DL4:
-      WBTTRAINER_SetDLTrainer( wbtsys, wbt_tr, gamedata, tr_list[i] - WBT_TRCODE_DL1 );
+      WBTTRAINER_SetDLTrainer( wbtsys, wbt_tr, gamedata, tr_list[i] - WBT_TRCODE_DL1, 3 );
       break;
     default:
       WBTTRAINER_SetRomTrainer( wbtsys->heapID, wbt_tr, tr_list[i] );
@@ -379,11 +381,20 @@ static void WBTTRAINER_SetWBPlayer( HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void WBTTRAINER_SetDLTrainer(
-    WBTSYS * wbtsys, WBTTRAINER * wbt_tr, GAMEDATA * gamedata, u32 dl_tr_id )
+    WBTSYS * wbtsys, WBTTRAINER * wbt_tr, GAMEDATA * gamedata, u32 dl_tr_id, u8 pri )
 {
-  const WBTDL_CHARACTER * dl_char = WBTDL_DATA_GetCharacter( &(wbtsys->wbtdl_data), dl_tr_id );
-  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_DL, dl_tr_id, dl_char->sex,
-      dl_char->priority_bit, POKETYPE_NORMAL, SWHERO, TRTYPE_HERO );
+  u8 sex;
+  u32 trtype, mmdl_id;
+  const WBTDL_CHARACTER * dl_char;
+  
+  dl_char = WBTDL_DATA_GetCharacter( &(wbtsys->wbtdl_data), dl_tr_id );
+
+  trtype = WBTTOOL_GetDLTrtype( dl_char->trtype_id );
+  mmdl_id = FBI_TOOL_GetTrainerOBJCode( trtype );
+  sex = TT_TrainerTypeSexGet( trtype );
+  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_DL, dl_tr_id, sex,
+      pri, POKETYPE_NORMAL, mmdl_id, trtype );
+
   GFL_STR_SetStringCodeOrderLength( wbt_tr->name, dl_char->name, SAVELEN_TRAINER_NAME );
   GFL_STR_SetStringCodeOrderLength( wbt_tr->title, dl_char->title, WBTDL_TRAINER_TITLE_LEN );
 
@@ -1002,6 +1013,120 @@ POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 }
 
 //============================================================================================
+//
+//
+//  ダウンロード手持ちデータの設定処理
+//
+//
+//============================================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL checkDLPokemon( const WBTDL_POKEMON * dl_poke )
+{
+  if ( dl_poke->monsno == 0 || dl_poke->level == 0 ) return FALSE;
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @param[out]  pp
+ * @param[in]   dl_poke
+ * @param[in]   tempHeapID
+ */
+//--------------------------------------------------------------
+static void setDLPokemon( POKEMON_PARAM * pp, const WBTDL_POKEMON * dl_poke, HEAPID tempHeapID )
+{
+  int i;
+  u64 personal_rnd;
+
+  PP_Clear( pp );
+
+  personal_rnd = ( dl_poke->rare_flag == TRUE ? PTL_SETUP_RND_RARE : PTL_SETUP_RND_AUTO );
+  PP_SetupEx( pp, dl_poke->monsno, dl_poke->level, PTL_SETUP_ID_AUTO,
+      (dl_poke->pow_rnd & 0x3FFFFFFF), personal_rnd );
+
+  //form_no
+  PP_Put( pp, ID_PARA_form_no, dl_poke->form_no );
+
+  //装備アイテム設定
+  PP_Put( pp, ID_PARA_item, dl_poke->item_no );
+  //技設定
+  for ( i = 0; i < PTL_WAZA_MAX; i ++ )
+  {
+    u8 point;
+    u8 buf8;
+    PP_Put( pp, ID_PARA_waza1 + i, dl_poke->waza_id[i] );
+    buf8 = (dl_poke->pp_count >> (i*2))&0x03;
+    PP_Put( pp, ID_PARA_pp_count1 + i, buf8);
+    point = PP_Get( pp, ID_PARA_pp_max1 + i, NULL );
+    PP_Put( pp, ID_PARA_pp1 + i, point );
+  }
+  //経験値設定
+  PP_Put( pp, ID_PARA_hp_exp, dl_poke->hp_exp );
+  PP_Put( pp, ID_PARA_pow_exp, dl_poke->pow_exp );
+  PP_Put( pp, ID_PARA_def_exp, dl_poke->def_exp );
+  PP_Put( pp, ID_PARA_agi_exp, dl_poke->agi_exp );
+  PP_Put( pp, ID_PARA_spepow_exp, dl_poke->spepow_exp );
+  PP_Put( pp, ID_PARA_spedef_exp, dl_poke->spedef_exp );
+
+  //特性設定
+  PP_Put( pp, ID_PARA_speabino, dl_poke->tokusei );
+  //なつきど設定
+  PP_Put( pp, ID_PARA_friend, dl_poke->friend_rate );
+
+  //性格セット
+  PP_SetSeikaku( pp, dl_poke->seikaku );
+
+  { //ニックネームセット
+    STRBUF * nickname;
+    nickname = GFL_STR_CreateBuffer( MONS_NAME_SIZE + EOM_SIZE, tempHeapID );
+    GFL_STR_SetStringCodeOrderLength( nickname, dl_poke->nickname, MONS_NAME_SIZE + EOM_SIZE );
+    PP_Put( pp, ID_PARA_nickname, (u32)nickname );
+    GFL_STR_DeleteBuffer( nickname );
+  }
+  //捕まえたボール
+  PP_Put( pp, ID_PARA_get_ball, dl_poke->ball_id );
+
+  PP_Renew( pp );
+}
+
+//--------------------------------------------------------------
+/**
+ * @param[out]  party
+ * @param[in]   wbtdl_data
+ * @param[in]   dl_tr_id
+ * @param[in]   num
+ * @param[in]   tempHeapID
+ * 
+ * @todo  データ異常の場合のエラー処理
+ */
+//--------------------------------------------------------------
+static void setDLPokeParty( POKEPARTY * party,
+    const WBTDL_DATA * wbtdl_data, u32 dl_tr_id, u32 num, HEAPID tempHeapID )
+{
+  int i;
+  POKEMON_PARAM * entry_pp;
+
+  PokeParty_Init( party, TEMOTI_POKEMAX );
+
+  entry_pp = GFL_HEAP_AllocMemoryLo( tempHeapID, POKETOOL_GetWorkSize() );
+
+  for ( i = 0; i < num; i ++ )
+  {
+    const WBTDL_POKEMON * dl_poke = WBTDL_DATA_GetPokemon( wbtdl_data, dl_tr_id, i );
+    if ( checkDLPokemon( dl_poke ) )
+    {
+      setDLPokemon( entry_pp, &dl_poke[i], tempHeapID );
+    }
+    else
+    {
+      //万が一、データ異常の場合の救済処理：ロムから引っ張る？
+    }
+  }
+  GFL_HEAP_FreeMemory( entry_pp );
+}
+
+//============================================================================================
 //============================================================================================
 #include "field/eventwork.h"  //EVENTWORK_
 #include "../../../resource/fldmapdata/flagwork/work_define.h"  //WK_SYS_FIRST_POKETYPE
@@ -1349,7 +1474,9 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
     {
       BSUBWAY_TRAINER * bt_trd;
       BSUBWAY_POKEMON * btpwd;
+#ifdef PM_DEBUG
       u32 tempHeapSize = GFL_HEAP_GetHeapFreeSize( tempHeapID );
+#endif
 
       bt_trd = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(BSUBWAY_TRAINER) );
       btpwd = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(BSUBWAY_POKEMON) * 6 );
@@ -1366,14 +1493,21 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
       GFL_HEAP_FreeMemory( btpwd );
       GFL_HEAP_FreeMemory( bt_trd );
 
+#ifdef PM_DEBUG
       GF_ASSERT( tempHeapSize == GFL_HEAP_GetHeapFreeSize( tempHeapID ) );
+#endif
     }
     break;
-  default:
-  case WBT_TRTYPE_PLAYER:
+
   case WBT_TRTYPE_DL:
     {
+      setDLPokeParty( bp->party[BTL_CLIENT_ENEMY1], &wbtsys->wbtdl_data, 
+          wbt_tr->tr_id, WBTSYS_GetPartyMax(wbtsys), tempHeapID );
     }
+    break;
+
+  default:
+  case WBT_TRTYPE_PLAYER:
     GF_ASSERT( 0 );
     break;
   }

@@ -180,38 +180,18 @@ void WBTLIST_PARAM_Setup_Debug(
 static void setupWBTLISTtrainer( HEAPID temp_heapID, GAMEDATA * gamedata,
     WBTLIST_TRAINER * wbtlist_tr, const WBTTRAINER * wbt_tr )
 {
-  WBT_TRDATA tr_rom_data;
   ARCHANDLE * handle;
   u16 mmdl_id;
 
   GF_ASSERT( wbt_tr );
   GF_ASSERT( wbtlist_tr );
 
-  WBTTOOL_GetTrRomData( wbt_tr->tr_id, &tr_rom_data );
-
-  switch ( wbt_tr->wbt_tr_type )
-  {
-  case WBT_TRTYPE_DL:
-  case WBT_TRTYPE_SAVE:
-    GF_ASSERT( 0 );
-    /* FALL THROUGH */
-  case WBT_TRTYPE_ROM:
-    wbtlist_tr->is_player = FALSE;
-    wbtlist_tr->priority = tr_rom_data.priority;
-    wbtlist_tr->poketype = tr_rom_data.type;
-    wbtlist_tr->sex      = tr_rom_data.sex;
-    WBTTRAINER_CopyName( wbt_tr, wbtlist_tr->name );
-    mmdl_id = tr_rom_data.mmdl_id;
-    break;
-  case WBT_TRTYPE_PLAYER:
-    wbtlist_tr->is_player = TRUE;
-    wbtlist_tr->priority = wbt_tr->pri;
-    wbtlist_tr->poketype = wbt_tr->poketype;
-    wbtlist_tr->sex = wbt_tr->sex;
-    WBTTRAINER_CopyName( wbt_tr, wbtlist_tr->name );
-    mmdl_id = wbt_tr->mmdl_id;
-    break;
-  }
+  wbtlist_tr->is_player = ( wbt_tr->wbt_tr_type == WBT_TRTYPE_PLAYER );
+  wbtlist_tr->priority  = wbt_tr->pri;
+  wbtlist_tr->poketype  = wbt_tr->poketype;
+  wbtlist_tr->sex       = wbt_tr->sex;
+  WBTTRAINER_CopyName( wbt_tr, wbtlist_tr->name );
+  mmdl_id = wbt_tr->mmdl_id;
 
   handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, temp_heapID );
   getMMdlObjCodeParam( handle, mmdl_id, &wbtlist_tr->pattern_no, &wbtlist_tr->mmdl_id );

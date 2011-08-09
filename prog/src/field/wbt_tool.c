@@ -27,7 +27,7 @@
 
 #include "poke_tool/poketype_def.h"
 
-//#include "tr_tool/trtype_def.h"
+#include "tr_tool/trtype_def.h"
 //#include "sound/pm_sndsys.h"
 
 #include "arc_def.h"  //ARCID_～
@@ -683,7 +683,49 @@ u32 WBTTOOL_GetRewardCount( WBTCUP wbtcup, WBTRULE wbtrule )
 
 
 
-
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+u32 WBTTOOL_GetDLTrtype( u8 wbt_dl_tr_type )
+{
+  static const u8 id2trtype[] = {
+    TRTYPE_TANPAN,        //	01	BOY2	○	♂	たんぱんこぞう	
+    TRTYPE_ELITEM,        //	02	TRAINERM	○	♂	エリートトレーナ－	
+    TRTYPE_RANGERM,       //	03	RANGERM	○	♂	ポケモンレンジャー	
+    TRTYPE_BREEDERM,      //	04	BREEDERM	○	♂	ポケモンブリーダー	
+    TRTYPE_SCIENTISTM,    //	05	ASSISTANTM	○	♂	けんきゅういん	
+    TRTYPE_MOUNT,         //	06	MOUNTMAN	○	♂	やまおとこ	
+    TRTYPE_HEADS,         //	07	BADMAN	○	♂	スキンヘッズ	
+    TRTYPE_KINDERGARTENM, //	08	BABYBOY2	○	♀	えんじ	
+    TRTYPE_MINI,          //	09	GIRL2	○	♀	ミニスカート	
+    TRTYPE_ELITEW,        //	10	TRAINERW	○	♀	エリートトレーナ－	
+    TRTYPE_RANGERW,       //	11	RANGERW	○	♀	ポケモンレンジャー	
+    TRTYPE_BREEDERW,      //	12	BREEDERW	○	♀	ポケモンブリーダー	
+    TRTYPE_SCIENTISTW,    //	13	ASSISTANTW	○	♀	けんきゅういん	
+    TRTYPE_PARASOL,       //	14	AMBRELLA	○	♀	パラソルおねえさん	
+    TRTYPE_NURSE,         //	15	NURSE	○	♀	ナース	
+    TRTYPE_KINDERGARTENW, //	16	BABYGIRL2	○	♀	えんじ	
+    TRTYPE_BACKPACKERM,   //	17	BACKPACKERM	×	♂	バックパッカー	
+    TRTYPE_BACKPACKERW,   //	18	BACKPACKERW	×	♀	バックパッカー	
+    TRTYPE_VETERANM,      //	19	VETERANM	×	♂	ベテラントレーナー	
+    TRTYPE_VETERANW,      //	20	VETERANW	×	♀	ベテラントレーナー	
+    TRTYPE_SCHOOLB,       //	21	BOY3	×	♂	じゅくがえり	
+    TRTYPE_SCHOOLG,       //	22	GIRL3	×	♀	じゅくがえり	
+    TRTYPE_ESPM,          //	23	ESPM	×	♂	サイキッカー	
+    TRTYPE_ESPW,          //	24	ESPW	×	♀	サイキッカー	
+    TRTYPE_KARATE,        //	25	FIGHTERM	×	♂	からておう	
+    TRTYPE_BATTLEG,       //	26	FIGHTERW	×	♀	バトルガール	
+    TRTYPE_BUSINESS1,     //	27	BUSINESSMAN	×	♂	ビジネスマン	若い
+    TRTYPE_BUSINESS2,     //	28	BUSINESSMAN	×	♂	ビジネスマン	中年
+    TRTYPE_OL,            //	29	OL	×	♀	ＯＬ	
+    TRTYPE_MAID,          //	30	MAID	×	♀	メイド	
+  };
+  if( wbt_dl_tr_type >= NELEMS(id2trtype) )
+  {
+    GF_ASSERT( 0 );
+    wbt_dl_tr_type = 0;
+  }
+  return id2trtype[ wbt_dl_tr_type ];
+}
 
 
 

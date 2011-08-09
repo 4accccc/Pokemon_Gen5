@@ -86,19 +86,29 @@ typedef struct {
 	u8	spepow_exp;							//特攻努力値
 	u8	spedef_exp;							//特防努力値
   u16 waza_id[PTL_WAZA_MAX];
-  u8  pp_count1:2;
-  u8  pp_count2:2;
-  u8  pp_count3:2;
-  u8  pp_count4:2;
+  union {
+    struct {
+    u8  pp_count1:2;
+    u8  pp_count2:2;
+    u8  pp_count3:2;
+    u8  pp_count4:2;
+    };
+    u8 pp_count;
+  };
   u8 seikaku;
 
-	u32	hp_rnd			:5;					//		HP乱数
-	u32	pow_rnd			:5;					//		攻撃力乱数
-	u32	def_rnd			:5;					//		防御力乱数
-	u32	agi_rnd			:5;					//		素早さ乱数
-	u32	spepow_rnd		:5;					//		特攻乱数
-	u32	spedef_rnd		:5;					//		特防乱数
-  u32 sex         :2;
+  union {
+    struct {
+    u32	hp_rnd			:5;					//		HP乱数
+    u32	pow_rnd			:5;					//		攻撃力乱数
+    u32	def_rnd			:5;					//		防御力乱数
+    u32	agi_rnd			:5;					//		素早さ乱数
+    u32	spepow_rnd		:5;					//		特攻乱数
+    u32	spedef_rnd		:5;					//		特防乱数
+    u32 sex         :2;
+    };
+    u32 power_rnd;
+  };
 
   u8 form_no;
   u8 ball_id;
@@ -136,6 +146,8 @@ enum {
   WBTDL_TOURNAMENT_EXPLAIN_LEN = (36+1) * 3,
 
   WBTDL_CHAR_MAX = 4,
+
+  WBTDL_MATCH_MAX = WBT_TRAINER_NUM - 1,
 };
 
 //------------------------------------------------------------------
@@ -152,18 +164,16 @@ typedef struct {
   STRCODE msg_win[ WBTDL_MSG_LEN ];      ///<相手の負けMSG
   STRCODE msg_lose[ WBTDL_MSG_LEN ];     ///<相手の勝ちMSG
   STRCODE msg_announce[ WBTDL_MSG_LEN ]; ///<決勝戦　前口上
-  u8 title_id;            ///<肩書きID
+  u8 trtype_id;            ///<トレーナータイプ指定ID（1～、「WBT配信データフォーマット案::トレーナタイプ指定」参照）
   u8  msg_before_id;      ///<対戦前MSGのID
   u8  msg_after_win_id;   ///<対戦後勝ちメッセージのID
   u8  msg_after_lose_id;  ///<対戦後負けメッセージのID
   u8  msg_win_id;         ///<相手の負けMSGのID
   u8  msg_lose_id;        ///<相手の勝ちMSGのID
   u8  msg_announce_id;    ///<決勝戦前口上のメッセージID
-  u8 priority_bit;        ///<優先順位
-  u16 obj_id;             ///<OBJ指定
-  u8 sex;                 ///<性別
   u8 lang_id;             ///<国コード
   u16 ai_bit;             ///<AI指定
+  u16 pad1;               ///<パディング
 }WBTDL_CHARACTER;
 
 //------------------------------------------------------------------
@@ -201,7 +211,7 @@ typedef struct {
   WBTDL_CHARACTER character[ WBTDL_CHAR_MAX ];
 
   ///組み合わせデータ
-  WBTDL_MATCH match[ WBT_TRAINER_NUM - 1 ];
+  WBTDL_MATCH match[ WBTDL_MATCH_MAX ];
 
   u32 crc;
 }WBTDL_DATA;
@@ -345,6 +355,15 @@ static inline const WBTDL_CHARACTER * WBTDL_DATA_GetCharacter(
 {
   GF_ASSERT( dl_tr_id < WBTDL_CHAR_MAX );
   return &( wbtdl_data->character[ dl_tr_id ] );
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static inline const WBTDL_POKEMON * WBTDL_DATA_GetPokemon(
+    const WBTDL_DATA * wbtdl_data, u8 dl_tr_id, u8 mons_id )
+{
+  const WBTDL_CHARACTER * trainer = WBTDL_DATA_GetCharacter( wbtdl_data, dl_tr_id );
+  GF_ASSERT( mons_id < TEMOTI_POKEMAX );
+  return &( trainer->pokemon[ mons_id ] );
 }
 
 //------------------------------------------------------------------

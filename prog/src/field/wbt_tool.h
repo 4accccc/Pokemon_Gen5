@@ -95,5 +95,8 @@ extern BOOL WBTTOOL_CheckCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup );
 extern BOOL WBTTOOL_CheckCupUnlock( GAMEDATA * gamedata, WBTCUP now_cup, WBTCUP check_cup );
 extern BOOL WBTTOOL_CheckReceptionID( WBTCUP wbtcup, WBTRECEPT reception_id );
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern u32 WBTTOOL_GetDLTrtype( u8 wbt_dl_tr_type );
 
 
