@@ -363,4 +363,5 @@
   ARCID_HIDE_SHIP_DECK "fieldmap/hide_ship_deck.narc"  #アジト船（甲板）
   ARCID_FMISSION_DATA    "fmission_data.narc"   #フェスミッションデータアーカイブ
   ARCID_CHAMPION "fieldmap/champion.narc"  #チャンピオン部屋
+  ARCID_WBT_CUT_GRA   "wbt_cut_gra.narc"   #WBTビジョンでの顔グラフィック用データ
   

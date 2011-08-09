@@ -11,7 +11,7 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 include ../trdata/user.def
 
-USERS += tamada
+USERS += tamada ichiraku_katsuhiko
 
 XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb -c
 #------------------------------------------------------------------------------
@@ -42,6 +42,8 @@ SCRFILE_FRONT = trfgra_wb.scr
 SCRFILE_BACK = trbgra_wb.scr
 #トレーナーグラフィックリストファイル（trdata_exist.rbで使用する）
 LSTFILE = trfgra_wb.lst
+#トレーナータイプ別グラフィックncgファイル(wbt用)
+SCRFILE_CUT = trgra_cut_wb.scr
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -52,6 +54,7 @@ GMMDIR	= ../../resource/message/src/
 GRADIR	= ../../resource/trgra/
 HASHDIR	= ../../tools/hash/
 GRATBLDIR	= ../../prog/src/system/
+WBTDIR = ../../resource/wbt/wbt_cut_gra/
 
 TRTOOLSDIR = $(PROJECT_ROOT)tools/trdata_conv/
 
@@ -61,7 +64,8 @@ ALL_TARGETS =  $(TARGETDIR)$(TYPE_HEADER) \
 							 $(HASHDIR)$(TYPE_HASH) \
 							 $(GRADIR)$(SCRFILE_FRONT) \
 							 $(GRADIR)$(SCRFILE_BACK) \
-							 $(CDATDIR)$(TYPE_CDAT)
+							 $(CDATDIR)$(TYPE_CDAT) \
+							 $(WBTDIR)$(SCRFILE_CUT)
 							 #$(CDATDIR)$(GENDER_CDAT) \
 							 #$(GRATBLDIR)$(GRATBL_CDAT) \
 							 #$(CDATDIR)$(TYPE_BGM_CDAT)
@@ -131,6 +135,9 @@ $(HASHDIR)$(TYPE_HASH):	$(TYPE_HASH)
 
 $(CDATDIR)$(TYPE_CDAT): $(TYPE_CDAT)
 	$(COPY) $(TYPE_CDAT) $(CDATDIR)
+
+$(WBTDIR)$(SCRFILE_CUT): $(SCRFILE_CUT)
+	$(COPY) $(SCRFILE_CUT) $(WBTDIR)
 
 #$(CDATDIR)$(GENDER_CDAT):	$(GENDER_CDAT)
 #	$(COPY)	$(GENDER_CDAT) $(CDATDIR)

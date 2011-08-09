@@ -185,6 +185,23 @@ def make_trgra_check_list( filename, ttdata, trf_list, trb_list )
 	fp_trgra.close
 end
 
+
+#------------------------------------------------------------------------------
+# トレーナーグラフィックscrファイル生成
+#   trgra_cut_wb.scr
+#------------------------------------------------------------------------------
+def make_trgra_scr_cut( filename, ttdata )
+  str = ""
+  ttdata.each{|ttd|
+    str += sprintf("trwb_%s,%s\n", ttd.grf, ttd.trtype )
+  }
+
+  fp_trgra_cut = File.open(filename, "w")
+  fp_trgra_cut.puts str
+  fp_trgra_cut.close
+
+end
+
 #------------------------------------------------------------------------------
 # トレーナーグラフィックscrファイル生成
 #   trfgra_wb.scr
@@ -213,8 +230,6 @@ def make_trgra_scr( filename, prefix, trf_list )
   }
 end
 
-def make_trbgra( filename, trf_list )
-end
 
 #------------------------------------------------------------------------------
 #
@@ -324,6 +339,9 @@ make_trtype_header( "trtype_def.h", ttdata )
 #trfgra_wb.scr
 make_trgra_scr( "trfgra_wb.scr", "trwb_", trf_list )
 make_trgra_scr( "trbgra_wb.scr", "tbwb_", trb_list )
+
+#trgra_cut_wb.scr
+make_trgra_scr_cut( "trgra_cut_wb.scr", ttdata )
 
 #trfgra_wb.lst
 make_trgra_check_list( "trfgra_wb.lst", ttdata, trf_list, trb_list )

@@ -1,0 +1,738 @@
+cnv_tmp/trwb_hero.NCBR : ./../../../../swan_doc/trgra/trwb_hero.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_heroine.NCBR : ./../../../../swan_doc/trgra/trwb_heroine.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_tanpan.NCBR : ./../../../../swan_doc/trgra/trwb_tanpan.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_mini.NCBR : ./../../../../swan_doc/trgra/trwb_mini.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_schoolb.NCBR : ./../../../../swan_doc/trgra/trwb_schoolb.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_schoolg.NCBR : ./../../../../swan_doc/trgra/trwb_schoolg.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_tennis.NCBR : ./../../../../swan_doc/trgra/trwb_tennis.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_football.NCBR : ./../../../../swan_doc/trgra/trwb_football.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_waiter.NCBR : ./../../../../swan_doc/trgra/trwb_waiter.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_waitress.NCBR : ./../../../../swan_doc/trgra/trwb_waitress.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader1a.NCBR : ./../../../../swan_doc/trgra/trwb_leader1a.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader1c.NCBR : ./../../../../swan_doc/trgra/trwb_leader1c.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader1b.NCBR : ./../../../../swan_doc/trgra/trwb_leader1b.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_childcare.NCBR : ./../../../../swan_doc/trgra/trwb_childcare.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_kindergartenw.NCBR : ./../../../../swan_doc/trgra/trwb_kindergartenw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_kindergartenm.NCBR : ./../../../../swan_doc/trgra/trwb_kindergartenm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_futago.NCBR : ./../../../../swan_doc/trgra/trwb_futago.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_breederm.NCBR : ./../../../../swan_doc/trgra/trwb_breederm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_breederw.NCBR : ./../../../../swan_doc/trgra/trwb_breederw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader2.NCBR : ./../../../../swan_doc/trgra/trwb_leader2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader3.NCBR : ./../../../../swan_doc/trgra/trwb_leader3.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader4.NCBR : ./../../../../swan_doc/trgra/trwb_leader4.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader5.NCBR : ./../../../../swan_doc/trgra/trwb_leader5.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader6.NCBR : ./../../../../swan_doc/trgra/trwb_leader6.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rangerm.NCBR : ./../../../../swan_doc/trgra/trwb_rangerm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rangerw.NCBR : ./../../../../swan_doc/trgra/trwb_rangerw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_worker2.NCBR : ./../../../../swan_doc/trgra/trwb_worker2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_backpackerm.NCBR : ./../../../../swan_doc/trgra/trwb_backpackerm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_backpackerw.NCBR : ./../../../../swan_doc/trgra/trwb_backpackerw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_fishing.NCBR : ./../../../../swan_doc/trgra/trwb_fishing.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_musician.NCBR : ./../../../../swan_doc/trgra/trwb_musician.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_dancer.NCBR : ./../../../../swan_doc/trgra/trwb_dancer.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_juggling.NCBR : ./../../../../swan_doc/trgra/trwb_juggling.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_artist.NCBR : ./../../../../swan_doc/trgra/trwb_artist.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_baker.NCBR : ./../../../../swan_doc/trgra/trwb_baker.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_espm.NCBR : ./../../../../swan_doc/trgra/trwb_espm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_espw.NCBR : ./../../../../swan_doc/trgra/trwb_espw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rival.NCBR : ./../../../../swan_doc/trgra/trwb_rival.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_support.NCBR : ./../../../../swan_doc/trgra/trwb_support.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_hakaim1.NCBR : ./../../../../swan_doc/trgra/trwb_hakaim1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_boss.NCBR : ./../../../../swan_doc/trgra/trwb_boss.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_prince.NCBR : ./../../../../swan_doc/trgra/trwb_prince.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_princess.NCBR : ./../../../../swan_doc/trgra/trwb_princess.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pilot.NCBR : ./../../../../swan_doc/trgra/trwb_pilot.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_worker1.NCBR : ./../../../../swan_doc/trgra/trwb_worker1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_basket.NCBR : ./../../../../swan_doc/trgra/trwb_basket.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_scientistw.NCBR : ./../../../../swan_doc/trgra/trwb_scientistw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_boss_1.NCBR : ./../../../../swan_doc/trgra/trwb_boss.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_boss.NCBR cnv_tmp/trwb_boss_1.NCBR 
+
+cnv_tmp/trwb_ol.NCBR : ./../../../../swan_doc/trgra/trwb_ol.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_elitew.NCBR : ./../../../../swan_doc/trgra/trwb_elitew.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_elitem.NCBR : ./../../../../swan_doc/trgra/trwb_elitem.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_karate.NCBR : ./../../../../swan_doc/trgra/trwb_karate.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_scientistm.NCBR : ./../../../../swan_doc/trgra/trwb_scientistm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_soccer.NCBR : ./../../../../swan_doc/trgra/trwb_soccer.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader7.NCBR : ./../../../../swan_doc/trgra/trwb_leader7.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader8a.NCBR : ./../../../../swan_doc/trgra/trwb_leader8a.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader8b.NCBR : ./../../../../swan_doc/trgra/trwb_leader8b.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_heads.NCBR : ./../../../../swan_doc/trgra/trwb_heads.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_cleaning.NCBR : ./../../../../swan_doc/trgra/trwb_cleaning.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_daisukim.NCBR : ./../../../../swan_doc/trgra/trwb_daisukim.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_daisukiw.NCBR : ./../../../../swan_doc/trgra/trwb_daisukiw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_doctor.NCBR : ./../../../../swan_doc/trgra/trwb_doctor.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_nurse.NCBR : ./../../../../swan_doc/trgra/trwb_nurse.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_badteam.NCBR : ./../../../../swan_doc/trgra/trwb_badteam.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_battleg.NCBR : ./../../../../swan_doc/trgra/trwb_battleg.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_parasol.NCBR : ./../../../../swan_doc/trgra/trwb_parasol.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_business1.NCBR : ./../../../../swan_doc/trgra/trwb_business1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_business2.NCBR : ./../../../../swan_doc/trgra/trwb_business2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_fanm.NCBR : ./../../../../swan_doc/trgra/trwb_fanm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_fanw.NCBR : ./../../../../swan_doc/trgra/trwb_fanw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_veteranm.NCBR : ./../../../../swan_doc/trgra/trwb_veteranm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_veteranw.NCBR : ./../../../../swan_doc/trgra/trwb_veteranw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_badrider.NCBR : ./../../../../swan_doc/trgra/trwb_badrider.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_baseball.NCBR : ./../../../../swan_doc/trgra/trwb_baseball.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_mount.NCBR : ./../../../../swan_doc/trgra/trwb_mount.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_madam.NCBR : ./../../../../swan_doc/trgra/trwb_madam.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gentle.NCBR : ./../../../../swan_doc/trgra/trwb_gentle.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_hakaiw1.NCBR : ./../../../../swan_doc/trgra/trwb_hakaiw1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_bigfour1.NCBR : ./../../../../swan_doc/trgra/trwb_bigfour1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_bigfour3.NCBR : ./../../../../swan_doc/trgra/trwb_bigfour3.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_bigfour2.NCBR : ./../../../../swan_doc/trgra/trwb_bigfour2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_bigfour4.NCBR : ./../../../../swan_doc/trgra/trwb_bigfour4.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_sage1.NCBR : ./../../../../swan_doc/trgra/trwb_sage1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rail.NCBR : ./../../../../swan_doc/trgra/trwb_rail.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swimmerm.NCBR : ./../../../../swan_doc/trgra/trwb_swimmerm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swimmerw.NCBR : ./../../../../swan_doc/trgra/trwb_swimmerw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_police.NCBR : ./../../../../swan_doc/trgra/trwb_police.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_maid.NCBR : ./../../../../swan_doc/trgra/trwb_maid.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_bchamp.NCBR : ./../../../../swan_doc/trgra/trwb_bchamp.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_champion.NCBR : ./../../../../swan_doc/trgra/trwb_champion.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_cyclingm.NCBR : ./../../../../swan_doc/trgra/trwb_cyclingm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_cyclingw.NCBR : ./../../../../swan_doc/trgra/trwb_cyclingw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_badrider_01.NCBR : ./../../../../swan_doc/trgra/trwb_badrider.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_badrider.NCBR cnv_tmp/trwb_badrider_01.NCBR 
+
+cnv_tmp/trwb_schoolb_1.NCBR : ./../../../../swan_doc/trgra/trwb_schoolb.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_schoolb.NCBR cnv_tmp/trwb_schoolb_1.NCBR 
+
+cnv_tmp/trwb_veteranw_1.NCBR : ./../../../../swan_doc/trgra/trwb_veteranw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_veteranw.NCBR cnv_tmp/trwb_veteranw_1.NCBR 
+
+cnv_tmp/trwb_madam_1.NCBR : ./../../../../swan_doc/trgra/trwb_madam.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_madam.NCBR cnv_tmp/trwb_madam_1.NCBR 
+
+cnv_tmp/trwb_gentle_1.NCBR : ./../../../../swan_doc/trgra/trwb_gentle.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_gentle.NCBR cnv_tmp/trwb_gentle_1.NCBR 
+
+cnv_tmp/trwb_veteranm_1.NCBR : ./../../../../swan_doc/trgra/trwb_veteranm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_veteranm.NCBR cnv_tmp/trwb_veteranm_1.NCBR 
+
+cnv_tmp/trwb_princess_1.NCBR : ./../../../../swan_doc/trgra/trwb_princess.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_princess.NCBR cnv_tmp/trwb_princess_1.NCBR 
+
+cnv_tmp/trwb_prince_1.NCBR : ./../../../../swan_doc/trgra/trwb_prince.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_prince.NCBR cnv_tmp/trwb_prince_1.NCBR 
+
+cnv_tmp/trwb_dpchampion.NCBR : ./../../../../swan_doc/trgra/trwb_dpchampion.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_boss_2.NCBR : ./../../../../swan_doc/trgra/trwb_boss.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_boss.NCBR cnv_tmp/trwb_boss_2.NCBR 
+
+cnv_tmp/trwb_bchamp2.NCBR : ./../../../../swan_doc/trgra/trwb_bchamp2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_leader1.NCBR : ./../../../../swan_doc/trgra/trwb_leader1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_scientistm_1.NCBR : ./../../../../swan_doc/trgra/trwb_scientistm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_scientistm.NCBR cnv_tmp/trwb_scientistm_1.NCBR 
+
+cnv_tmp/trwb_mount_1.NCBR : ./../../../../swan_doc/trgra/trwb_mount.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_mount.NCBR cnv_tmp/trwb_mount_1.NCBR 
+
+cnv_tmp/trwb_espm_1.NCBR : ./../../../../swan_doc/trgra/trwb_espm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_espm.NCBR cnv_tmp/trwb_espm_1.NCBR 
+
+cnv_tmp/trwb_espw_1.NCBR : ./../../../../swan_doc/trgra/trwb_espw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_espw.NCBR cnv_tmp/trwb_espw_1.NCBR 
+
+cnv_tmp/trwb_veteranm_2.NCBR : ./../../../../swan_doc/trgra/trwb_veteranm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_veteranm.NCBR cnv_tmp/trwb_veteranm_2.NCBR 
+
+cnv_tmp/trwb_veteranw_2.NCBR : ./../../../../swan_doc/trgra/trwb_veteranw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_veteranw.NCBR cnv_tmp/trwb_veteranw_2.NCBR 
+
+cnv_tmp/trwb_elitem_1.NCBR : ./../../../../swan_doc/trgra/trwb_elitem.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_elitem.NCBR cnv_tmp/trwb_elitem_1.NCBR 
+
+cnv_tmp/trwb_elitew_1.NCBR : ./../../../../swan_doc/trgra/trwb_elitew.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_elitew.NCBR cnv_tmp/trwb_elitew_1.NCBR 
+
+cnv_tmp/trwb_swleader4.NCBR : ./../../../../swan_doc/trgra/trwb_swleader4.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swleader3.NCBR : ./../../../../swan_doc/trgra/trwb_swleader3.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swleader6.NCBR : ./../../../../swan_doc/trgra/trwb_swleader6.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swleader1.NCBR : ./../../../../swan_doc/trgra/trwb_swleader1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swleader2.NCBR : ./../../../../swan_doc/trgra/trwb_swleader2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swleader5.NCBR : ./../../../../swan_doc/trgra/trwb_swleader5.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swleader7.NCBR : ./../../../../swan_doc/trgra/trwb_swleader7.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swleader8.NCBR : ./../../../../swan_doc/trgra/trwb_swleader8.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rgleader1.NCBR : ./../../../../swan_doc/trgra/trwb_rgleader1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rgleader2.NCBR : ./../../../../swan_doc/trgra/trwb_rgleader2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rgleader3.NCBR : ./../../../../swan_doc/trgra/trwb_rgleader3.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rgleader4.NCBR : ./../../../../swan_doc/trgra/trwb_rgleader4.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rgleader5.NCBR : ./../../../../swan_doc/trgra/trwb_rgleader5.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rgleader6.NCBR : ./../../../../swan_doc/trgra/trwb_rgleader6.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rgleader7.NCBR : ./../../../../swan_doc/trgra/trwb_rgleader7.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gsleader1.NCBR : ./../../../../swan_doc/trgra/trwb_gsleader1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gsleader2.NCBR : ./../../../../swan_doc/trgra/trwb_gsleader2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gsleader3.NCBR : ./../../../../swan_doc/trgra/trwb_gsleader3.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gsleader4.NCBR : ./../../../../swan_doc/trgra/trwb_gsleader4.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gsleader5.NCBR : ./../../../../swan_doc/trgra/trwb_gsleader5.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gsleader6.NCBR : ./../../../../swan_doc/trgra/trwb_gsleader6.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gsleader7.NCBR : ./../../../../swan_doc/trgra/trwb_gsleader7.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gsleader8.NCBR : ./../../../../swan_doc/trgra/trwb_gsleader8.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gsleader9.NCBR : ./../../../../swan_doc/trgra/trwb_gsleader9.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rsleader1.NCBR : ./../../../../swan_doc/trgra/trwb_rsleader1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rsleader2.NCBR : ./../../../../swan_doc/trgra/trwb_rsleader2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rsleader3.NCBR : ./../../../../swan_doc/trgra/trwb_rsleader3.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rsleader4.NCBR : ./../../../../swan_doc/trgra/trwb_rsleader4.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rsleader5.NCBR : ./../../../../swan_doc/trgra/trwb_rsleader5.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rsleader6.NCBR : ./../../../../swan_doc/trgra/trwb_rsleader6.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rsleader7.NCBR : ./../../../../swan_doc/trgra/trwb_rsleader7.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rsleader8.NCBR : ./../../../../swan_doc/trgra/trwb_rsleader8.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_eleader1.NCBR : ./../../../../swan_doc/trgra/trwb_eleader1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swrival.NCBR : ./../../../../swan_doc/trgra/trwb_swrival.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_guitarw.NCBR : ./../../../../swan_doc/trgra/trwb_guitarw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_breederm_1.NCBR : ./../../../../swan_doc/trgra/trwb_breederm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_breederm.NCBR cnv_tmp/trwb_breederm_1.NCBR 
+
+cnv_tmp/trwb_breederm_2.NCBR : ./../../../../swan_doc/trgra/trwb_breederm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_breederm.NCBR cnv_tmp/trwb_breederm_2.NCBR 
+
+cnv_tmp/trwb_breederw_1.NCBR : ./../../../../swan_doc/trgra/trwb_breederw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_breederw.NCBR cnv_tmp/trwb_breederw_1.NCBR 
+
+cnv_tmp/trwb_breederw_2.NCBR : ./../../../../swan_doc/trgra/trwb_breederw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_breederw.NCBR cnv_tmp/trwb_breederw_2.NCBR 
+
+cnv_tmp/trwb_rangerm_1.NCBR : ./../../../../swan_doc/trgra/trwb_rangerm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_rangerm.NCBR cnv_tmp/trwb_rangerm_1.NCBR 
+
+cnv_tmp/trwb_rangerm_2.NCBR : ./../../../../swan_doc/trgra/trwb_rangerm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_rangerm.NCBR cnv_tmp/trwb_rangerm_2.NCBR 
+
+cnv_tmp/trwb_rangerw_1.NCBR : ./../../../../swan_doc/trgra/trwb_rangerw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_rangerw.NCBR cnv_tmp/trwb_rangerw_1.NCBR 
+
+cnv_tmp/trwb_rangerw_2.NCBR : ./../../../../swan_doc/trgra/trwb_rangerw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_rangerw.NCBR cnv_tmp/trwb_rangerw_2.NCBR 
+
+cnv_tmp/trwb_bchamp_1.NCBR : ./../../../../swan_doc/trgra/trwb_bchamp.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_bchamp.NCBR cnv_tmp/trwb_bchamp_1.NCBR 
+
+cnv_tmp/trwb_bchamp_2.NCBR : ./../../../../swan_doc/trgra/trwb_bchamp.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_bchamp.NCBR cnv_tmp/trwb_bchamp_2.NCBR 
+
+cnv_tmp/trwb_elitem_2.NCBR : ./../../../../swan_doc/trgra/trwb_elitem.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_elitem.NCBR cnv_tmp/trwb_elitem_2.NCBR 
+
+cnv_tmp/trwb_elitem_3.NCBR : ./../../../../swan_doc/trgra/trwb_elitem.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_elitem.NCBR cnv_tmp/trwb_elitem_3.NCBR 
+
+cnv_tmp/trwb_elitew_2.NCBR : ./../../../../swan_doc/trgra/trwb_elitew.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_elitew.NCBR cnv_tmp/trwb_elitew_2.NCBR 
+
+cnv_tmp/trwb_elitew_3.NCBR : ./../../../../swan_doc/trgra/trwb_elitew.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_elitew.NCBR cnv_tmp/trwb_elitew_3.NCBR 
+
+cnv_tmp/trwb_veteranm_3.NCBR : ./../../../../swan_doc/trgra/trwb_veteranm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_veteranm.NCBR cnv_tmp/trwb_veteranm_3.NCBR 
+
+cnv_tmp/trwb_veteranm_4.NCBR : ./../../../../swan_doc/trgra/trwb_veteranm.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_veteranm.NCBR cnv_tmp/trwb_veteranm_4.NCBR 
+
+cnv_tmp/trwb_veteranw_3.NCBR : ./../../../../swan_doc/trgra/trwb_veteranw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_veteranw.NCBR cnv_tmp/trwb_veteranw_3.NCBR 
+
+cnv_tmp/trwb_veteranw_4.NCBR : ./../../../../swan_doc/trgra/trwb_veteranw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_veteranw.NCBR cnv_tmp/trwb_veteranw_4.NCBR 
+
+cnv_tmp/trwb_bchamp2_1.NCBR : ./../../../../swan_doc/trgra/trwb_bchamp2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_bchamp2.NCBR cnv_tmp/trwb_bchamp2_1.NCBR 
+
+cnv_tmp/trwb_bchamp2_2.NCBR : ./../../../../swan_doc/trgra/trwb_bchamp2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_bchamp2.NCBR cnv_tmp/trwb_bchamp2_2.NCBR 
+
+cnv_tmp/trwb_dpleader1.NCBR : ./../../../../swan_doc/trgra/trwb_dpleader1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_dpleader2.NCBR : ./../../../../swan_doc/trgra/trwb_dpleader2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_dpleader3.NCBR : ./../../../../swan_doc/trgra/trwb_dpleader3.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_dpleader4.NCBR : ./../../../../swan_doc/trgra/trwb_dpleader4.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_dpleader5.NCBR : ./../../../../swan_doc/trgra/trwb_dpleader5.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_dpleader6.NCBR : ./../../../../swan_doc/trgra/trwb_dpleader6.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_dpleader7.NCBR : ./../../../../swan_doc/trgra/trwb_dpleader7.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_dpleader8.NCBR : ./../../../../swan_doc/trgra/trwb_dpleader8.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rgchampion.NCBR : ./../../../../swan_doc/trgra/trwb_rgchampion.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_gschampion.NCBR : ./../../../../swan_doc/trgra/trwb_gschampion.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_rschampion.NCBR : ./../../../../swan_doc/trgra/trwb_rschampion.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_echampion.NCBR : ./../../../../swan_doc/trgra/trwb_echampion.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_adultw.NCBR : ./../../../../swan_doc/trgra/trwb_adultw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_hero_s.NCBR : ./../../../../swan_doc/trgra/trwb_hero_s.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_heroine_s.NCBR : ./../../../../swan_doc/trgra/trwb_heroine_s.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_wbhero.NCBR : ./../../../../swan_doc/trgra/trwb_wbhero.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_wbheroine.NCBR : ./../../../../swan_doc/trgra/trwb_wbheroine.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_wbhero_s.NCBR : ./../../../../swan_doc/trgra/trwb_wbhero_s.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_wbheroine_s.NCBR : ./../../../../swan_doc/trgra/trwb_wbheroine_s.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swboss.NCBR : ./../../../../swan_doc/trgra/trwb_swboss.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swplazmam.NCBR : ./../../../../swan_doc/trgra/trwb_swplazmam.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swplazmaw.NCBR : ./../../../../swan_doc/trgra/trwb_swplazmaw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swsage1.NCBR : ./../../../../swan_doc/trgra/trwb_swsage1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swsage2.NCBR : ./../../../../swan_doc/trgra/trwb_swsage2.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swsage3.NCBR : ./../../../../swan_doc/trgra/trwb_swsage3.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_ninja.NCBR : ./../../../../swan_doc/trgra/trwb_ninja.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swchampion.NCBR : ./../../../../swan_doc/trgra/trwb_swchampion.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_villain.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_villain.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_swboss_1.NCBR : ./../../../../swan_doc/trgra/trwb_swboss.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_swboss.NCBR cnv_tmp/trwb_swboss_1.NCBR 
+
+cnv_tmp/trwb_mount_2.NCBR : ./../../../../swan_doc/trgra/trwb_mount.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_mount.NCBR cnv_tmp/trwb_mount_2.NCBR 
+
+cnv_tmp/trwb_swleader1_1.NCBR : ./../../../../swan_doc/trgra/trwb_swleader1.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_swleader1.NCBR cnv_tmp/trwb_swleader1_1.NCBR 
+
+cnv_tmp/trwb_swchampion_1.NCBR : ./../../../../swan_doc/trgra/trwb_swchampion.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_swchampion.NCBR cnv_tmp/trwb_swchampion_1.NCBR 
+
+cnv_tmp/trwb_pkwd_hero.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_hero.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_heroine.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_heroine.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_ninja_m.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_ninja_m.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_ninja_f.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_ninja_f.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_sf_m.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_sf_m.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_sf_f.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_sf_f.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_staff_m.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_staff_m.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_staff_f.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_staff_f.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_boy.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_boy.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_girl.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_girl.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_prince.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_prince.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_princess.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_princess.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_battleship.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_battleship.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_robopolice.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_robopolice.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_ufo.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_ufo.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_alien.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_alien.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_mist.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_mist.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_cleaning.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_cleaning.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_kindergartenw.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_kindergartenw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_statue.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_statue.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_gentle.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_gentle.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_shrine.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_shrine.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_witch.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_witch.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_doll.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_doll.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_mob_m.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_mob_m.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_mob_f.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_mob_f.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_playermob_m.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_playermob_m.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_playermob_f.NCBR : ./../../../../swan_doc/trgra/trwb_pkwd_playermob_f.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_mugenboss.NCBR : ./../../../../swan_doc/trgra/trwb_mugenboss.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+
+cnv_tmp/trwb_karate_1.NCBR : ./../../../../swan_doc/trgra/trwb_karate.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_karate.NCBR cnv_tmp/trwb_karate_1.NCBR 
+
+cnv_tmp/trwb_battleg_1.NCBR : ./../../../../swan_doc/trgra/trwb_battleg.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_battleg.NCBR cnv_tmp/trwb_battleg_1.NCBR 
+
+cnv_tmp/trwb_scientistw_1.NCBR : ./../../../../swan_doc/trgra/trwb_scientistw.ncg 
+	@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_scientistw.NCBR cnv_tmp/trwb_scientistw_1.NCBR 
+

@@ -1,0 +1,40 @@
+#------------------------------------------------------------------------------
+#
+#	WBT顔グラコンバート
+#
+#------------------------------------------------------------------------------
+
+# 共通定義を利用
+include mkdefine
+
+#共通ルールファイルのインクルード
+include $(PROJECT_RSCDIR)\macro_define
+
+.PHONY:	do-build clean
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+.SUFFIXES:	
+endif
+
+#------------------------------------------------------------------------------
+#	make do-build ルール
+#------------------------------------------------------------------------------
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+do-build: $(REPLACE_DEPEND)
+
+$(REPLACE_DEPEND):$(TRGRA_CUT_SCR) $(CUT_CNV)
+	ruby $(CUT_CNV) $(REPLACE_DEPEND) $(TRGRA_CUT_SCR) ./../../../../swan_doc/trgra/ $(ARC_LIST) $(REPLACE_MAKE_TARGET)
+endif
+
+#------------------------------------------------------------------------------
+#	make clean ルール
+#------------------------------------------------------------------------------
+clean:
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+	@rm -f cnv_tmp/*.N*R
+	@rm -f arc_result.txt
+	@rm -f $(ARC_LIST)
+	@rm -f $(REPLACE_DEPEND)
+	@rm -f $(REPLACE_MAKE_TARGET)
+endif
+
