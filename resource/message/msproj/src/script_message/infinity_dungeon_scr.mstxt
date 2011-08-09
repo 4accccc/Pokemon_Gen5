@@ -6,10 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとう　かいし　ほわいと</Text>
+			<Text>また　ちょうせんしてくれて
+うれしいわ▼
+さあ　あれから　どれだけ
+せいちょうしたか　みせてもらうわよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:44:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんとう　かいし　ほわいと</Text>
+			<Text>また　挑戦してくれて
+うれしいわ▼
+さあ　あれから　どれだけ
+成長したか　見せてもらうわよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:44:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46,10 +52,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとう　かいし　ほわいと</Text>
+			<Text>アドバイス　……
+は　もう　いらないね▼
+キミが　どれだけ　
+つよくなったか　ためしてあげよう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T09:53:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -57,10 +66,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんとう　かいし　ほわいと</Text>
+			<Text>アドバイス　……
+は　もう　いらないね▼
+キミが　どれだけ
+強くなったか　試してあげよう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T09:53:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,10 +98,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとう　かいし　ほわいと</Text>
+			<Text>ぜんかいは　やられたけど
+こんかいは　ひとあじ　ちがうわ！▼
+さあ　しょうぶ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T12:12:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -97,10 +111,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんとう　かいし　ほわいと</Text>
+			<Text>前回は　やられたけど
+今回は　一味　違うわ！▼
+さあ　勝負！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T12:13:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -441,11 +457,11 @@
 			Language="JPN">
 			<Text>また　ちょうせんしてくれて
 うれしいよ▼
-さあ　キミの　ポケモンの　ちからを
-みせてもらうよ！▼</Text>
+さあ　あれから　どれだけ
+せいちょうしたか　みせてもらうよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:43:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -455,11 +471,11 @@
 			Language="JPN_KANJI">
 			<Text>また　挑戦してくれて
 うれしいよ▼
-さあ　キミの　ポケモンの　力を
-見せてもらうよ！▼</Text>
+さあ　あれから　どれだけ
+成長したか　見せてもらうよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:43:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -485,10 +501,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとう　かいし　ブラック▼</Text>
+			<Text>アドバイス　……
+は　もう　いらないわね▼
+キミが　どれだけ　
+つよくなったか　ためしてあげるわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T09:53:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -496,10 +515,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんとう　かいし　ブラック▼</Text>
+			<Text>アドバイス　……
+は　もう　いらないわね▼
+キミが　どれだけ
+強くなったか　試してあげるわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T09:54:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -525,10 +547,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとう　かいし　ブラック▼</Text>
+			<Text>ぜんかいは　やられたけど
+こんかいは　ひとあじ　ちがうぞ！▼
+さあ　しょうぶ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T12:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -536,10 +560,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんとう　かいし　ブラック▼</Text>
+			<Text>前回は　やられたけど
+今回は　一味　違うぞ！▼
+さあ　勝負！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T12:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -881,10 +907,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　かいし（ホワイト）▼</Text>
+			<Text>しろのじゅどうに　ようこそ
+しょしんしゃさん▼
+わたしからの　さいごの　アドバイスよ▼
+この　エリアを　クリアするには
+わたしを　たおす　ひつようが　あるわ▼
+えりょは　むようよ！
+さあ　しょうぶ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:32:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -892,10 +924,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　かいし（ホワイト）▼</Text>
+			<Text>白の樹洞に　ようこそ
+初心者さん▼
+わたしからの　最後の　アドバイスよ▼
+この　エリアを　クリアするには
+わたしを　倒す　必要が　あるわ▼
+遠慮は　無用よ！
+さあ　勝負！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:31:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -921,10 +959,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　かいし（ホワイト）▼</Text>
+			<Text>リタイアせずに　ここまで
+たどりつけたようだね▼
+アドバイスは　やくに
+たったなかったかな？▼
+さあ　エリア2を　クリアして
+しょしんしゃ　そつぎょうを▽
+めざすんだ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T11:02:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -932,10 +976,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　かいし（ホワイト）▼</Text>
+			<Text>リタイアせずに　ここまで
+たどり着けたようだね▼
+アドバイスは　役に
+立たなかったかな？▼
+さあ　エリア2を　クリアして
+初心者　卒業を　目指すんだ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T11:03:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -961,10 +1010,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　かいし（ホワイト）▼</Text>
+			<Text>いたたた　……
+さいきんの　こどもは　ようしゃないわね▼
+それにしても　あれだけの　そしつを
+もっているこは　はじめて　みたわ▼
+あのこは　すえ　おそろしいわね　……▼
+さあ　つぎは　キミの　ばんよ
+ぜんりょくで　ぶつかって　きなさい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T10:52:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -972,10 +1027,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　かいし（ホワイト）▼</Text>
+			<Text>痛たたた　……
+最近の　子供は　容赦ないわね▼
+それにしても　あれだけの　素質を
+持っている子は　はじめて　見たわ▼
+あの子は　末恐ろしいわね　……▼
+さあ　次は　キミの　番よ
+全力で　ぶつかって　来なさい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T10:52:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1313,15 +1374,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようこそ　くろの　まてんろうへ！▼
-ここに　たどりつけたと　いうことは
-トレーナーとして　それなりの▽
-じつりょくが　あるようだね▼
-さあ　キミの　ポケモンの　ちからを
-みせてもらうよ！▼</Text>
+			<Text>くろのまてんろうに　ようこそ
+しょしんしゃさん▼
+キミへの　さいごの　アドバイスだ▼
+この　エリアを　クリアするには
+ボクを　たおす　ひつようがある▼
+えりょは　むようだ！
+さあ　しょうぶ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1329,15 +1391,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようこそ　黒の　摩天楼へ！▼
-ここに　たどり着けたと　いうことは
-トレーナーとして　それなりの▽
-実力が　あるようだね▼
-さあ　キミの　ポケモンの　力を
-見せてもらうよ！▼</Text>
+			<Text>黒の摩天楼に　ようこそ
+初心者さん▼
+キミへの　最後の　アドバイスだ▼
+この　エリアを　クリアするには
+ボクを　倒す　必要がある▼
+遠慮は　無用だ！
+さあ　勝負！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:35:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1363,10 +1426,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　かいし（ブラック）▼</Text>
+			<Text>リタイアせずに　ここまで
+たどりつけたようね▼
+アドバイスは　やくに
+たったなかったかしら？▼
+さあ　エリア2を　クリアして
+しょしんしゃ　そつぎょうを▽
+めざしなさい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T11:11:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1374,10 +1443,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　かいし（ブラック）▼</Text>
+			<Text>リタイアせずに　ここまで
+たどり着けたようね▼
+アドバイスは　役に
+立たなかったかしら？▼
+さあ　エリア2を　クリアして
+初心者　卒業を　目指しなさい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T11:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1403,10 +1477,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　かいし（ブラック）▼</Text>
+			<Text>いたたた　……
+さいきんの　こどもは　ようしゃないな▼
+それにしても　あれだけの　そしつを
+もっているこは　はじめて　みたよ▼
+あのこは　すえ　おそろしいな　……▼
+さあ　つぎは　キミの　ばんだ
+ぜんりょくで　ぶつかって　来い！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T10:52:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1414,10 +1494,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　かいし（ブラック）▼</Text>
+			<Text>痛たたた　……
+最近の　子供は　容赦ないな▼
+それにしても　あれだけの　素質を
+持っている子は　はじめて　見たよ▼
+あの子は　末恐ろしいな　……▼
+さあ　次は　キミの　番だ
+全力で　ぶつかって　来い！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T10:52:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1760,10 +1846,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとう　しゅうりょう　ホワイト▼</Text>
+			<Text>いぜんより　つよくなったわね
+もう　しょしんしゃとは　いえないわ▼
+キミが　どこまで
+つよくなるのか　たのしみよ▼
+また　ちょうせんしてね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:42:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1771,10 +1861,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんとう　しゅうりょう　ホワイト▼</Text>
+			<Text>以前より　強くなったわね
+もう　初心者とは　言えないわ▼
+キミが　どこまで
+強くなるのか　楽しみよ▼
+また　挑戦してね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:43:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1800,10 +1894,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとう　しゅうりょう　ホワイト▼</Text>
+			<Text>つよくなったね
+しょしんしゃの　ころが　なつかしいよ▼
+それとも　ボクが　よわくなったのかな▼
+ボクも　まけずに　ここで　しゅぎょうが
+ひつようかもね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T09:57:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1811,10 +1909,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんとう　しゅうりょう　ホワイト▼</Text>
+			<Text>強くなったね
+初心者の　ころが　懐かしいよ▼
+それとも　ボクが　弱くなったのかな▼
+ボクも　負けずに　ここで　修行が
+必要かもね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T09:59:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1840,10 +1942,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとう　しゅうりょう　ホワイト▼</Text>
+			<Text>こんかいも　かてなかったか
+つよいわね　ほんとうに▼
+わたしも　もっと　がんばらないと
+つぎは　まけないわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T12:15:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1851,10 +1956,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんとう　しゅうりょう　ホワイト▼</Text>
+			<Text>今回も　勝てなかったか
+強いわね　本当に▼
+わたしも　もっと　がんばらないと
+次は　負けないわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T12:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2199,13 +2307,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いぜんより　てごわくなったね▼
+			<Text>いぜんより　てごわくなったね
+もう　しょしんしゃとは　いえないな▼
 キミが　どこまで
 つよくなるのか　たのしみだよ▼
 また　ちょうせんして　くれよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:40:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2213,13 +2322,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>以前より　手強くなったね▼
+			<Text>以前より　手強くなったね
+もう　初心者とは　言えないな▼
 キミが　どこまで
 強くなるのか　楽しみだよ▼
 また　挑戦して　くれよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:41:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2245,10 +2355,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとう　しゅうりょう　ブラック▼</Text>
+			<Text>つよくなったわね
+しょしんしゃの　ころが　なつかしいわ▼
+それとも　わたしが　よわくなったのかな▼
+わたしも　まけずに　ここで　しゅぎょうが
+ひつようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T09:59:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2256,10 +2370,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんとう　しゅうりょう　ブラック▼</Text>
+			<Text>強くなったね
+初心者の　ころが　懐かしいわ▼
+それとも　わたしが　弱くなったのかな▼
+わたしも　負けずに　ここで　修行が
+必要ね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T10:02:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2285,10 +2403,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとう　しゅうりょう　ブラック▼</Text>
+			<Text>こんかいも　かてなかったか
+つよいね　ほんとうに▼
+ボクも　もっと　がんばらないと
+つぎは　まけないぞ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T12:17:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2296,10 +2417,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんとう　しゅうりょう　ブラック▼</Text>
+			<Text>今回も　勝てなかったか
+強いね　本当に▼
+ボクも　もっと　がんばらないと
+次は　負けないぞ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T12:17:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2694,10 +2818,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　おわり（ブラック）▼</Text>
+			<Text>おめでとう
+これで　しょしんしゃ　そつぎょうね▼
+さきは　ながいわよ
+つぎの　エリアも　がんばってね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T11:54:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2705,10 +2832,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　おわり（ブラック）▼</Text>
+			<Text>おめでとう
+これで　初心者　卒業ね▼
+先は　長いわよ
+次の　エリアも　がんばってね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T11:54:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2734,10 +2864,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　おわり（ブラック）▼</Text>
+			<Text>いたたた　……▼
+ほんとうに　さいきんの　こどもは
+ようしゃないんだな▼
+キミの　つよさも　よくわかったよ
+これで　エリア2も　クリアだ▼
+キミが　どこまで　いけるのか
+たのしみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T10:54:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2745,10 +2881,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　おわり（ブラック）▼</Text>
+			<Text>痛たたた　……▼
+本当に　最近の　子供は
+容赦ないんだな▼
+キミの　強さも　よくわかったよ
+これで　エリア2も　クリアだ▼
+キミが　どこまで　行けるのか
+楽しみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T10:54:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3096,10 +3238,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　おわり（ホワイト）▼</Text>
+			<Text>おどろいたわ　よそういじょうよ▼
+キミの　ポケモンの　ちから
+みせてもらったわ▼
+キミなら　つぎの　エリアも
+クリアできるわ▼
+キミの　かつやくを　たのしみに
+しているわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:38:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3107,10 +3255,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　おわり（ホワイト）▼</Text>
+			<Text>驚いたわ　予想以上よ▼
+キミの　ポケモンの　力
+見せてもらったわ▼
+キミなら　次の　エリアも
+クリアできるわ▼
+キミの　活躍を　楽しみに
+しているわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T05:39:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3136,10 +3290,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　おわり（ホワイト）▼</Text>
+			<Text>おめでとう
+これで　しょしんしゃ　そつぎょうだな▼
+さきは　ながいぞ
+つぎの　エリアも　がんばれよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T11:56:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3147,10 +3304,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　おわり（ホワイト）▼</Text>
+			<Text>おめでとう
+これで　初心者　卒業だな▼
+先は　長いぞ
+次の　エリアも　がんばれよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T11:57:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3176,10 +3336,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　おわり（ホワイト）▼</Text>
+			<Text>いたたた　……▼
+ほんとうに　さいきんの　こどもは
+ようしゃないわね▼
+キミの　つよさも　よくわかったわ
+これで　エリア2も　クリアよ▼
+キミが　どこまで　いけるのか
+たのしみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T10:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3187,10 +3353,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　おわり（ホワイト）▼</Text>
+			<Text>痛たたた　……▼
+本当に　最近の　子供は
+容赦ないわね▼
+キミの　強さも　よくわかったわ
+これで　エリア2も　クリアよ▼
+キミが　どこまで　行けるのか
+楽しみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-09T10:54:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
