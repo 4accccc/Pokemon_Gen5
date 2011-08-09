@@ -31,6 +31,7 @@ struct _RESORT_SYSTEM
   RESORT_BINARY_SHOP    *p_binary_shop;
   RESORT_BINARY_SPOT    *p_binary_spot;
   RESORT_BINARY_CITY    *p_binary_city;
+  RESORT_BINARY_INSTITUTION *p_binary_insti;
 
   RESORT_ABSTRUCT_MANAGER *p_abstruct;
 
@@ -73,6 +74,7 @@ RESORT_SYSTEM * RESORT_SYSTEM_Init( const RESORT_ALL_DATA_PARAM *cp_param, HEAPI
   p_wk->p_binary_shop = RESORT_BINARY_SHOP_Init( heapID );
   p_wk->p_binary_spot = RESORT_BINARY_SPOT_Init( heapID );
   p_wk->p_binary_city = RESORT_BINARY_CITY_Init( heapID );
+  p_wk->p_binary_insti = RESORT_BINARY_INSTITUTION_Init( heapID );
 
   //データ作成
   p_wk->p_abstruct = RESORT_ABSTRUCT_MANAGER_Init( cp_param, heapID );
@@ -98,6 +100,7 @@ void RESORT_SYSTEM_Exit( RESORT_SYSTEM *p_wk )
   RESORT_ABSTRUCT_MANAGER_Exit( p_wk->p_abstruct );
 
   //バイナリ破棄
+  RESORT_BINARY_INSTITUTION_Exit( p_wk->p_binary_insti );
   RESORT_BINARY_CITY_Exit( p_wk->p_binary_city );
   RESORT_BINARY_SPOT_Exit( p_wk->p_binary_spot );
   RESORT_BINARY_SHOP_Exit( p_wk->p_binary_shop );
@@ -143,6 +146,19 @@ RESORT_BINARY_SPOT * RESORT_SYSTEM_GetBinarySpot( RESORT_SYSTEM *p_wk )
 RESORT_BINARY_CITY * RESORT_SYSTEM_GetBinaryCity( RESORT_SYSTEM *p_wk )
 {
   return p_wk->p_binary_city;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  施設データ取得
+ *
+ *	@param	RESORT_SYSTEM *p_wk   ワーク
+ *
+ *	@return 施設データ
+ */
+//-----------------------------------------------------------------------------
+RESORT_BINARY_INSTITUTION * RESORT_SYSTEM_GetBinaryInstitution( RESORT_SYSTEM *p_wk )
+{
+  return p_wk->p_binary_insti;
 }
 //----------------------------------------------------------------------------
 /**

@@ -321,6 +321,7 @@ typedef enum
 #define RESORT_BINARY_INSTITUTION_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_institution_dat,RESORT_BINARY_INSTITUTION_PARAM_MAX,x)
 #define RESORT_BINARY_INSTITUTION_Exit(x) RESORT_BINARY_Exit(x)
 #define RESORT_BINARY_INSTITUTION_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)
+#define RESORT_BINARY_INSTITUTION_GetMax(x) RESORT_BINARY_GetMax(x)
 
 //=============================================================================
 /**
