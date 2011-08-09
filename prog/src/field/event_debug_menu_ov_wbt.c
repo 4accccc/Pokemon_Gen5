@@ -477,50 +477,201 @@ static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk )
 //=============================================================================
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
+static void setUTF16( STRCODE * strcode, const u16 * utf16code, u32 buflen )
+{
+  int i;
+  u16 eom_code = GFL_STR_GetEOMCode();
+
+  GFL_STD_MemFill16( strcode, eom_code, buflen );
+  for ( i = 0; i < buflen - 1; i ++ )
+  {
+    if ( utf16code[i] == '\0' ) break;
+    strcode[i] = utf16code[i];
+  }
+}
+
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static void setupWBTDLChar(
+    WBTDL_CHARACTER * dl_char, HEAPID tempHeapID, u8 num )
+{
+  static const u16 * names[] = {
+    L"ＤＬＴＲ１",
+    L"ＤＬＴＲ２",
+    L"ＤＬＴＲ３",
+    L"ＤＬＴＲ４",
+  };
+  static const u16 * titles[] = {
+    L"ＤＬトレーナー１",
+    L"ＤＬトレーナー２",
+    L"ＤＬトレーナー３",
+    L"ＤＬトレーナー４",
+  };
+  GFL_STD_MemClear32( dl_char, sizeof(WBTDL_CHARACTER) );
+  setUTF16( dl_char->name, names[num], SAVELEN_TRAINER_NAME );
+  setUTF16( dl_char->title, titles[num], WBTDL_TRAINER_TITLE_LEN );
+  dl_char->trtype_id = num + 1;
+  dl_char->msg_before_id = 1;
+  dl_char->msg_after_win_id = 1;
+  dl_char->msg_after_lose_id = 1;
+  dl_char->msg_win_id = 1;
+  dl_char->msg_lose_id = 1;
+  dl_char->msg_announce_id = 1;
+  dl_char->lang_id = PM_LANG;
+  dl_char->ai_bit = 0x00000087;
+}
+
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static void setupWBTDLPokemon(
+    WBTDL_POKEMON * dl_poke, HEAPID tempHeapID, u16 monsno, u8 level, u64 id, u8 num )
+{
+  POKEMON_PARAM * pp;
+  BOOL fast_flag;
+  int i;
+  static const u16 * names[] = {
+    L"ＤＬポケ１",
+    L"ＤＬポケ２",
+    L"ＤＬポケ３",
+    L"ＤＬポケ４",
+    L"ＤＬポケ５",
+    L"ＤＬポケ６",
+  };
+
+  pp = PP_Create( monsno, level, id, tempHeapID );
+  fast_flag = PP_FastModeOn( pp );
+
+  GFL_STD_MemClear32( dl_poke, sizeof(WBTDL_POKEMON) );
+  setUTF16( dl_poke->nickname, names[num], MONS_NAME_SIZE + EOM_SIZE );
+  dl_poke->monsno = monsno;
+  dl_poke->level = level;
+  dl_poke->item_no = 0; //PP_Get( pp, ID_PARA_item, NULL );
+  dl_poke->rare_flag = PP_CheckRare( pp );
+  //努力値はすべて０として入れない
+  for ( i = 0; i < PTL_WAZA_MAX; i ++ )
+  {
+    dl_poke->waza_id[i] = PP_Get( pp, ID_PARA_waza1 + i, NULL );
+  }
+  //パワー乱数を一気に入れたあと、性別を入れる
+  dl_poke->power_rnd = PP_Get( pp, ID_PARA_pow_rnd, NULL );
+  dl_poke->sex = PP_Get( pp, ID_PARA_sex, NULL );
+
+  dl_poke->seikaku = PP_Get( pp, ID_PARA_seikaku, NULL );
+  dl_poke->tokusei = PP_Get( pp, ID_PARA_speabino, NULL );
+  dl_poke->friend_rate = PP_Get( pp, ID_PARA_friend, NULL );
+
+  dl_poke->ball_id = PP_Get( pp, ID_PARA_get_ball, NULL );
+  
+  PP_FastModeOff( pp, fast_flag );
+  GFL_HEAP_FreeMemory( pp );
+}
+
+//----------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------
+static void setupWBTDLRegulation( WBTDL_RULE * wbtdl_rule, u32 reg_id, HEAPID tempHeapID )
+{
+  int i;
+  const REGULATION * sample = PokeRegulation_LoadDataAlloc( reg_id, tempHeapID );
+
+  GFL_STD_MemClear( wbtdl_rule, sizeof(WBTDL_RULE) );
+  wbtdl_rule->num_lo        = sample->NUM_LO;
+  wbtdl_rule->num_hi        = sample->NUM_HI;
+  wbtdl_rule->level         = sample->LEVEL;
+  wbtdl_rule->level_range   = sample->LEVEL_RANGE;
+  wbtdl_rule->level_total   = sample->LEVEL_TOTAL;
+  wbtdl_rule->both_poke     = sample->BOTH_POKE;
+  wbtdl_rule->both_item     = sample->BOTH_ITEM;
+  for ( i = 0; i < REG_POKENUM_MAX_BYTE; i ++ )
+  {
+    wbtdl_rule->veto_poke_bit[i] = sample->VETO_POKE_BIT[i];
+  }
+  for ( i = 0; i < REG_ITEMNUM_MAX_BYTE; i ++ )
+  {
+    wbtdl_rule->veto_item_bit[i] = sample->VETO_ITEM[i];
+  }
+  wbtdl_rule->btl_rule      = sample->BATTLE_TYPE;
+
+  //以下はswan拡張用
+  wbtdl_rule->bgm_flag      = 0;
+  wbtdl_rule->veto_waza_no  = WAZANO_HURIIFOORU;
+  wbtdl_rule->need_poketype = POKETYPE_NULL;
+
+  GFL_HEAP_FreeMemory( (void*)sample );
+}
+
+//----------------------------------------------------------------------------
+//ダミーデータ生成
+//----------------------------------------------------------------------------
+static void createWBTDLData( WBTDL_DATA * wbtdl_data, HEAPID tempHeapID )
+{
+  GFL_MSGDATA	*msgman;						// メッセージマネージャー
+  STRBUF * tempbuf;
+  msgman  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+              ARCID_DEBUG_MESSAGE, NARC_debug_message_debug_wbt_dat, tempHeapID);
+  tempbuf = GFL_STR_CreateBuffer( 128, tempHeapID );
+
+  wbtdl_data->cassette_version = 0xffff;  //仮：全バージョン遊べる？
+  wbtdl_data->lang_id = LANG_JAPAN;
+  GFL_MSG_GetString( msgman, DEBUG_STR_WBT_DL01, tempbuf );
+  GFL_STR_GetStringCode( tempbuf, wbtdl_data->tournament_name, WBTDL_TOURNAMENT_NAME_LEN );
+  GFL_MSG_GetString( msgman, DEBUG_STR_WBT_DL02, tempbuf );
+  GFL_STR_GetStringCode( tempbuf, wbtdl_data->regulation_explain, WBTDL_TOURNAMENT_REG_EXPLAIN_LEN );
+  GFL_MSG_GetString( msgman, DEBUG_STR_WBT_DL03, tempbuf );
+  GFL_STR_GetStringCode( tempbuf, wbtdl_data->contents_explain, WBTDL_TOURNAMENT_EXPLAIN_LEN );
+
+  GFL_HEAP_CheckHeapSafe( tempHeapID );
+
+  setupWBTDLRegulation( &(wbtdl_data->wbtdl_rule), REG_WBT_SINGLE, tempHeapID );
+
+  GFL_HEAP_CheckHeapSafe( tempHeapID );
+  //トレーナー手持ちに関するデータは生成していない
+  {
+    int i, j;
+    for ( i = 0; i < WBT_TRAINER_NUM - 1; i ++ )
+    {
+      wbtdl_data->match[i].type = WBTDL_MATCH_TRAINER_ROM;
+      wbtdl_data->match[i].pri  = 3;
+      wbtdl_data->match[i].id   = i;
+      if ( i < WBTDL_CHAR_MAX )
+      {
+        wbtdl_data->match[i].type = WBTDL_MATCH_TRAINER_DATA;
+        wbtdl_data->match[i].pri  = 3;
+        wbtdl_data->match[i].id   = i;
+        setupWBTDLChar( &(wbtdl_data->character[i]), tempHeapID, i );
+        for ( j = 0; j < TEMOTI_POKEMAX; j ++)
+        {
+          setupWBTDLPokemon( &(wbtdl_data->character[i].pokemon[j]),
+                tempHeapID, 6 * i + j + 1, 50, PTL_SETUP_ID_AUTO, j );
+        }
+        GFL_HEAP_CheckHeapSafe( tempHeapID );
+      }
+    }
+  }
+  WBTEXSAVE_SetCrc( (WBTEXSAVE*)wbtdl_data );
+
+  GFL_STR_DeleteBuffer( tempbuf );
+  GFL_MSG_Delete( msgman );
+}
+
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 static void debugCommand_CreateWBTDLData( DEBUG_WBT_WORK * p_wk )
 {
+  HEAPID tempHeapID = p_wk->heapID;
   WBTDL_DATA * wbtdl_data;
   
-  wbtdl_data = GFL_HEAP_AllocMemoryLo( p_wk->heapID, sizeof(WBTDL_DATA) );
+  wbtdl_data = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(WBTDL_DATA) );
 
   GFL_STD_MemClear32( wbtdl_data, sizeof(WBTDL_DATA) );
 
-  //ダミーデータ生成
-  {
-    GFL_MSGDATA	*msgman;						// メッセージマネージャー
-    STRBUF * tempbuf;
-    msgman  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-                ARCID_DEBUG_MESSAGE, NARC_debug_message_debug_wbt_dat, p_wk->heapID);
-    tempbuf = GFL_STR_CreateBuffer( 128, p_wk->heapID );
+  GFL_HEAP_CheckHeapSafe( tempHeapID );
 
-    wbtdl_data->cassette_version = 0xffff;  //仮：全バージョン遊べる？
-    wbtdl_data->lang_id = LANG_JAPAN;
-    GFL_MSG_GetString( msgman, DEBUG_STR_WBT_DL01, tempbuf );
-    GFL_STR_GetStringCode( tempbuf, wbtdl_data->tournament_name, WBTDL_TOURNAMENT_NAME_LEN );
-    GFL_MSG_GetString( msgman, DEBUG_STR_WBT_DL02, tempbuf );
-    GFL_STR_GetStringCode( tempbuf, wbtdl_data->regulation_explain, WBTDL_TOURNAMENT_REG_EXPLAIN_LEN );
-    GFL_MSG_GetString( msgman, DEBUG_STR_WBT_DL03, tempbuf );
-    GFL_STR_GetStringCode( tempbuf, wbtdl_data->contents_explain, WBTDL_TOURNAMENT_EXPLAIN_LEN );
+  createWBTDLData( wbtdl_data, tempHeapID );
 
-    PokeRegulation_LoadData( REG_WBT_SINGLE, (REGULATION *)&(wbtdl_data->regulation) );
+  //WBTSYS_DEBUG_PrintRegulation( (const REGULATION *)&(wbtdl_data->regulation) );
 
-    //トレーナー手持ちに関するデータは生成していない
-    {
-      int i;
-      for ( i = 0; i < WBT_TRAINER_NUM - 1; i ++ )
-      {
-        wbtdl_data->match[i].type = WBTDL_MATCH_TRAINER_ROM;
-        wbtdl_data->match[i].pri  = 3;
-        wbtdl_data->match[i].id   = i;
-      }
-    }
-    WBTEXSAVE_SetCrc( (WBTEXSAVE*)wbtdl_data );
-
-    GFL_STR_DeleteBuffer( tempbuf );
-    GFL_MSG_Delete( msgman );
-  }
-  WBTSYS_DEBUG_PrintRegulation( (const REGULATION *)&(wbtdl_data->regulation) );
-
+  GFL_HEAP_CheckHeapSafe( tempHeapID );
 
   //セーブ
   {

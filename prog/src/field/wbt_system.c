@@ -762,10 +762,29 @@ u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys )
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static inline void WBTDL_DATA_CopyRegulation( const WBTDL_DATA * wbtdl_data, REGULATION * reg )
+static inline void WBTDL_DATA_DecodeRegulation( const WBTDL_DATA * wbtdl_data, REGULATION * reg )
 {
-  GFL_STD_MemCopy( &wbtdl_data->regulation, reg, sizeof(REGULATION) );
+  const WBTDL_RULE * wbtdl_rule = &(wbtdl_data->wbtdl_rule);
+  int i;
+  GFL_STD_MemClear( reg, sizeof(REGULATION) );
+  reg->NUM_LO       = wbtdl_rule->num_lo;
+  reg->NUM_HI       = wbtdl_rule->num_hi;
+  reg->LEVEL        = wbtdl_rule->level;
+  reg->LEVEL_RANGE  = wbtdl_rule->level_range;
+  reg->LEVEL_TOTAL  = wbtdl_rule->level_total;
+  reg->BOTH_POKE    = wbtdl_rule->both_poke;
+  reg->BOTH_ITEM    = wbtdl_rule->both_item;
+  for ( i = 0; i < REG_POKENUM_MAX_BYTE; i ++ )
+  {
+    reg->VETO_POKE_BIT[i] = wbtdl_rule->veto_poke_bit[i];
+  }
+  for ( i = 0; i < REG_ITEMNUM_MAX_BYTE; i ++ )
+  {
+    reg->VETO_ITEM[i]     = wbtdl_rule->veto_item_bit[i];
+  }
+  reg->BATTLE_TYPE  = wbtdl_rule->btl_rule;
 }
+
 //------------------------------------------------------------------
 /**
  * @brief レギュレーションの取得
@@ -776,7 +795,7 @@ const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
   if (wbtsys->wbtcup == WBTCUP_DOWNLOAD )
   {
     GF_ASSERT( wbtsys->dldata_loaded );
-    WBTDL_DATA_CopyRegulation( &wbtsys->wbtdl_data, &wbtsys->wbtreg.base_reg );
+    WBTDL_DATA_DecodeRegulation( &wbtsys->wbtdl_data, &wbtsys->wbtreg.base_reg );
   }
   else
   {
@@ -804,6 +823,11 @@ const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys )
   if ( wbtsys->wbtcup == WBTCUP_POKETYPE )
   { //タイプトーナメントの場合はタイプ指定
     poketype = wbtsys->poketype;
+  }
+  else if ( wbtsys->wbtcup == WBTCUP_DOWNLOAD )
+  {
+    poketype = wbtsys->wbtdl_data.wbtdl_rule.need_poketype;
+    waza_no = wbtsys->wbtdl_data.wbtdl_rule.veto_waza_no;
   }
   REGULATIONEX_Init( &wbtsys->wbtreg.ex_reg, poketype, waza_no );
   return &wbtsys->wbtreg.ex_reg;
@@ -852,7 +876,7 @@ void WBTSYS_DEBUG_PrintRegulation( const REGULATION * cp_data )
  * @brief ポケモンリスト選択結果の反映処理
  */
 //------------------------------------------------------------------
-void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, PLIST_DATA * plist_data )
+void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_data )
 {
   GFL_STD_MemCopy( plist_data->in_num, wbtsys->pokelist_select_num, 6 );
   wbtsys->pokelist_result_select = plist_data->ret_sel;
@@ -1117,6 +1141,7 @@ static void setDLPokeParty( POKEPARTY * party,
     if ( checkDLPokemon( dl_poke ) )
     {
       setDLPokemon( entry_pp, &dl_poke[i], tempHeapID );
+      PokeParty_Add( party, entry_pp );
     }
     else
     {

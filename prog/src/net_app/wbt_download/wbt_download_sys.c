@@ -719,7 +719,7 @@ static void Debug_CreateWbtDlData( WBTDL_TOTAL_DATA *p_total_data )
     for( i = 0; i < WBTDL_TOTAL_NUM; i++ )
     {
       WBTDL_DATA *p_data  = &p_total_data->data[i];
-      WBTDL_RULE *p_rule  = &p_data->regulation;
+      WBTDL_RULE *p_rule  = &p_data->wbtdl_rule;
       p_data->cassette_version = PM_VERSION;
       p_data->year    = 11;
       p_data->month   = 8;
@@ -758,9 +758,8 @@ static void Debug_CreateWbtDlData( WBTDL_TOTAL_DATA *p_total_data )
       p_rule->level   = 50;
       p_rule->level_range   = 3;
       p_rule->level_total = 0;
-      p_rule->both_pokemon  = FALSE;
+      p_rule->both_poke     = FALSE;
       p_rule->both_item     = FALSE;
-      p_rule->nick_name     = FALSE;
       p_rule->btl_rule      = BTL_RULE_SINGLE;
       p_rule->veto_poke_bit[0] = 0xfe;
       p_rule->veto_poke_bit[1] = 0xff;

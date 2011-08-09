@@ -34,9 +34,6 @@ enum {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
-  u8  dummy_cupNo;
-  u8  dummy_ruleNo;
-
   u8 num_lo;    ///<参加数下限(1-6)
   u8 num_hi;    ///<参加数上限(1-6)
 
@@ -44,7 +41,7 @@ typedef struct {
   u8 level_range;   ///<REGULATION_LEVEL_RANGE_TYPE レベル範囲
   u16 level_total;  ///<レベル合計制限（0ならば制限無し）
 
-  u8 both_pokemon;  ///<同じポケモンを許可するか
+  u8 both_poke;     ///<同じポケモンを許可するか
   u8 both_item;     ///<同じアイテムを許可するか
 
   ///ポケモン制限フラグ（ずかんIDと1対1)
@@ -53,21 +50,12 @@ typedef struct {
   ///所持どうぐ制限（どうぐIDと1対1）
   u8 veto_item_bit[ WBTDL_POKEITEM_MAX ];
 
-  u16 dummy_must_poke;
-  u8  dummy_must_poke_form;
-
-  u8  dummy_veto_shooter_item[ DUMMY_SHOOTER_ITEM_BIT_TBL_MAX ];
-
-  u8  dummy_time_vs;
-  u8  dummy_time_command;
-  u8 nick_name;     ///<ニックネーム表示
-  u8  dummy_camera;
-  u8  dummy;
-  u8  dummy_show_poke;
-  u8  dummy_show_poke_time;
+  u8 pad;
   u8 btl_rule;      ///<BtlRule
-  u8  dummy_btl_count; 
 
+  u8 bgm_flag;      ///<O=通常BGM 1=WCS用BGM
+  u8 need_poketype; ///<必須ポケモンタイプ
+  u16 veto_waza_no;   ///<禁止わざ指定
 }WBTDL_RULE;
 
 //------------------------------------------------------------------
@@ -204,8 +192,7 @@ typedef struct {
   STRCODE regulation_explain[ WBTDL_TOURNAMENT_REG_EXPLAIN_LEN ];
 
   ///レギュレーション指定
-  WBTDL_RULE regulation;
-  //REGULATION regulation;
+  WBTDL_RULE wbtdl_rule;
 
   ///ダウンロードトレーナーデータ
   WBTDL_CHARACTER character[ WBTDL_CHAR_MAX ];
@@ -256,7 +243,7 @@ typedef struct {
 //------------------------------------------------------------------
 static inline const u8 * WBTDL_DATA_GetVetoPokemonBit( const WBTDL_DATA * wbtdl_data )
 {
-  return wbtdl_data->regulation.veto_poke_bit;
+  return wbtdl_data->wbtdl_rule.veto_poke_bit;
 }
 
 //------------------------------------------------------------------
@@ -266,7 +253,7 @@ static inline const u8 * WBTDL_DATA_GetVetoPokemonBit( const WBTDL_DATA * wbtdl_
 //------------------------------------------------------------------
 static inline const u8 * WBTDL_DATA_GetVetoItemBit( const WBTDL_DATA * wbtdl_data )
 {
-  return wbtdl_data->regulation.veto_item_bit;
+  return wbtdl_data->wbtdl_rule.veto_item_bit;
 }
 
 //------------------------------------------------------------------
@@ -276,7 +263,7 @@ static inline const u8 * WBTDL_DATA_GetVetoItemBit( const WBTDL_DATA * wbtdl_dat
 //------------------------------------------------------------------
 static inline BOOL WBTDL_DATA_IsVetoWazaNo( const WBTDL_DATA * wbtdl_data, u16 waza_no )
 {
-  return ( waza_no != WAZANO_HURIIFOORU );
+  return ( waza_no != wbtdl_data->wbtdl_rule.veto_waza_no );
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -330,7 +317,7 @@ static inline BOOL WBTDL_TOTAL_DATA_CheckLang( const WBTDL_TOTAL_DATA *cp_data )
 //------------------------------------------------------------------
 static inline BOOL WBTDL_DATA_GetBtlRule( const WBTDL_DATA * wbtdl_data )
 {
-  return wbtdl_data->regulation.btl_rule;
+  return wbtdl_data->wbtdl_rule.btl_rule;
 }
 
 //------------------------------------------------------------------
