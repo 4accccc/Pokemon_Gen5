@@ -60,6 +60,9 @@ static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DesignerSetup1( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DesignerSetup2( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DesignerSetup3( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_DesignerSetup4( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_DesignerSetup5( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_DesignerSetup6( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_PresenRecvAdd( DEBUG_MENU_EVENT_WORK *p_wk );
 
@@ -71,6 +74,9 @@ static const DEBUG_MENU_LIST DATA_SubMenuList[] =
   { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup1, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_41, debugMenuCallProc_DesignerSetup2, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_42, debugMenuCallProc_DesignerSetup3, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup4, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_RESORT_41, debugMenuCallProc_DesignerSetup5, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_RESORT_42, debugMenuCallProc_DesignerSetup6, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_16, debugMenuCallProc_Input, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_01, debugMenuCallProc_SetRecv, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_05, debugMenuCallProc_AllRecv, GFL_OVERLAY_BLANK_ID},
@@ -565,6 +571,72 @@ static BOOL debugMenuCallProc_DesignerSetup3( DEBUG_MENU_EVENT_WORK *p_wk )
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
       RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 14  );
+      RESORT_RESIDENT_DATA_JobChange( p_resident );
+    }
+  }
+
+  return FALSE;
+}
+static BOOL debugMenuCallProc_DesignerSetup4( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  //‚Ü‚¸Zl‚ð‘S•”‚¢‚ê‚é
+  debugMenuCallProc_AllResident( p_wk );
+
+  {
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+    RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+    int i;
+    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+    {
+      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
+      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
+      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 15  );
+      RESORT_RESIDENT_DATA_JobChange( p_resident );
+    }
+  }
+
+  return FALSE;
+}
+static BOOL debugMenuCallProc_DesignerSetup5( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  //‚Ü‚¸Zl‚ð‘S•”‚¢‚ê‚é
+  debugMenuCallProc_AllResident( p_wk );
+
+  {
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+    RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+    int i;
+    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+    {
+      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
+      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
+      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 16  );
+      RESORT_RESIDENT_DATA_JobChange( p_resident );
+    }
+  }
+
+  return FALSE;
+}
+static BOOL debugMenuCallProc_DesignerSetup6( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  //‚Ü‚¸Zl‚ð‘S•”‚¢‚ê‚é
+  debugMenuCallProc_AllResident( p_wk );
+
+  {
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+    RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+    int i;
+    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+    {
+      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
+      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
+      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 17  );
       RESORT_RESIDENT_DATA_JobChange( p_resident );
     }
   }
