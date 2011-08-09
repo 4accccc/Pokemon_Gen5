@@ -831,14 +831,13 @@ static void Debug_CreateWbtDlData( WBTDL_TOTAL_DATA *p_total_data )
         p_chara->msg_announce[6]  = L'‚¦';
         p_chara->msg_announce[WBTDL_MSG_LEN-1]  = GFL_STR_GetEOMCode();
 
-        p_chara->title_id           = 1;
+        p_chara->trtype_id          = 1+j;
         p_chara->msg_before_id      = 1;
         p_chara->msg_after_win_id   = 2;
         p_chara->msg_after_lose_id  = 3;
         p_chara->msg_win_id         = 4;
         p_chara->msg_lose_id        = 5;
         p_chara->msg_announce_id    = 6;
-        p_chara->obj_id             = 0xe + j;
         p_chara->lang_id            = PM_LANG;
       }
 
