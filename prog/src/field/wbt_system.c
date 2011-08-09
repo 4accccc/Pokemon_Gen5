@@ -110,11 +110,11 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_l
     {
     case WBT_TRCODE_PLAYER:
       WBTTRAINER_SetPlayer( wbt_tr, gamedata );
-      WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->btl_tr_type, wbt_tr->title );
+      WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->tr_id, wbt_tr->title );
       break;
     case WBT_TRCODE_WBHERO:
       WBTTRAINER_SetWBPlayer( wbtsys->heapID, wbt_tr, gamedata );
-      WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->btl_tr_type, wbt_tr->title );
+      WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->tr_id, wbt_tr->title );
       break;
     case WBT_TRCODE_DL1:
     case WBT_TRCODE_DL2:
@@ -1479,6 +1479,7 @@ static void makeRomTrainerData(
 BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys )
 {
   HEAPID tempHeapID = GFL_HEAP_LOWID( wbtsys->heapID );
+  u32 tempHeapSize;
   BATTLE_SETUP_PARAM * bp;
 
   const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
@@ -1492,6 +1493,9 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
     bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode );
     GFL_HEAP_FreeMemory( party );
   }
+#ifdef PM_DEBUG
+  tempHeapSize = GFL_HEAP_GetHeapFreeSize( tempHeapID );
+#endif
 
   switch ( wbt_tr->wbt_tr_type )
   {
@@ -1499,9 +1503,6 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
     {
       BSUBWAY_TRAINER * bt_trd;
       BSUBWAY_POKEMON * btpwd;
-#ifdef PM_DEBUG
-      u32 tempHeapSize = GFL_HEAP_GetHeapFreeSize( tempHeapID );
-#endif
 
       bt_trd = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(BSUBWAY_TRAINER) );
       btpwd = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(BSUBWAY_POKEMON) * 6 );
@@ -1518,9 +1519,6 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
       GFL_HEAP_FreeMemory( btpwd );
       GFL_HEAP_FreeMemory( bt_trd );
 
-#ifdef PM_DEBUG
-      GF_ASSERT( tempHeapSize == GFL_HEAP_GetHeapFreeSize( tempHeapID ) );
-#endif
     }
     break;
 
@@ -1536,6 +1534,10 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
     GF_ASSERT( 0 );
     break;
   }
+
+#ifdef PM_DEBUG
+  GF_ASSERT( tempHeapSize == GFL_HEAP_GetHeapFreeSize( tempHeapID ) );
+#endif
 
   //ƒŒƒMƒ…ƒŒ[ƒVƒ‡ƒ“‚É‚ ‚í‚¹‚ÄƒŒƒxƒ‹’²®
   PokeRegulation_ModifyLevelPokeParty( WBTSYS_GetRegulation(wbtsys), bp->party[BTL_CLIENT_ENEMY1] );
