@@ -2,15 +2,62 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d29r0101_workman2_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おう！　トレーナー！▼
+この　トロッコに　のれるように
+みんな　がんばって　ほってるよ！▼
+だもんで　ちょっと　まってくれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:46:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:39:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おう！　トレーナー！▼
+この　トロッコに　乗れるように
+みんな　がんばって　掘ってるよ！▼
+だもんで　ちょっと　待ってくれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:48:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:43:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:39:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:38:45" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d29r0101_workman2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おう！　トレーナー
-ここの　トロッコに　のるかい？</Text>
+この　トロッコに　のるかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:52:39" />
+				Time="2011-08-10T10:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +66,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おう！　トレーナー
-ここの　トロッコに　のるかい？</Text>
+この　トロッコに　乗るかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:53:57" />
+				Time="2011-08-10T10:39:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,11 +78,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・トロッコ仕様
-・はい/いいえの選択肢表示</Comment>
+・クリア後
+・はい/いいえの選択肢表示
+　はい　→workman2_02
+　いいえ→workman2_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:51:24" />
+				Time="2011-08-10T10:42:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -82,10 +131,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・はい選択時</Comment>
+・はい選択時
+　トロッコのデモへ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:54:02" />
+				Time="2011-08-10T10:42:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -101,10 +151,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おう！　のりたくなったら
-いつでも　はなしかけてよ！</Text>
+いつでも　こえを　かけてよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:53:36" />
+				Time="2011-08-10T10:39:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -112,11 +162,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おう！　のりたくなったら
-いつでも　はなしかけてよ！</Text>
+			<Text>おう！　乗りたくなったら
+いつでも　声を　かけてよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:53:57" />
+				Time="2011-08-10T10:40:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -137,5 +187,387 @@
 				User="matsumiya:W00224"
 				Time="2011-07-14T03:54:05" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d29r0101_stop1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほる！　とにかくほる！
+ヤーコンロードを　ほりまくる！▼
+というわけで　きながに
+かいつうを　まっててくれるかな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:05:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:43:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほる！　とにかく掘る！
+ヤーコンロードを　掘りまくる！▼
+というわけで　気長に
+開通を　待っててくれるかな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:21:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:43:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝5、GRIDZ＝14
+・クリア前
+※できれば岩も配置してください</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:04:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+・ストッパー１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:28:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d29r0101_stop1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はあ……！　とにかくほって
+ほりまくってるが……▼
+あんた！　いわくだき　を
+おぼえた　ポケモンは　いるかい？
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:11:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:43:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はあ……！　とにかく掘って
+掘りまくってるが……▼
+あんた！　いわくだき　を
+覚えた　ポケモンは　いるかい？
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:21:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:43:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア後
+・いわくだきを覚えたポケモンが
+　いる　→stop1_03
+　いない→stop1_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:23:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+・ストッパー１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:28:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d29r0101_stop1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よし！　みんなの　ちからを
+あわせりゃ　どんな　いわも！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:11:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:10:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よし！　みんなの　力を
+あわせりゃ　どんな　岩も！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:21:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:18:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、画面暗転
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:18:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+・ストッパー１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:28:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d29r0101_stop1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ばんざーい！
+ばんざーい！　ばんざーい！▼
+よし！　これで
+ネジやまと　つながったな！▼
+では　トロッコたんとうに　れんらくして
+われらは　かえると　するか！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:22:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:18:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ばんざーい！
+ばんざーい！　ばんざーい！▼
+よし！　これで
+ネジ山と　つながったな！▼
+では　トロッコ担当に　連絡して
+われらは　帰ると　するか！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:22:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:18:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、作業員退場
+・画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:23:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+・ストッパー１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:28:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d29r0101_stop1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうか……　あんたの　ポケモン
+いわくだきを　おぼえていないか……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:21:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:18:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうか……　あんたの　ポケモン
+いわくだきを　おぼえていないか……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:21:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:18:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:23:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+・ストッパー１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:28:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d29r0101_stop2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホレほれ！　ホレほれ！　ホレほれ！
+ホレほれ！　ホレほれ！　ホレほれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:01:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:43:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホレ掘れ！　ホレ掘れ！　ホレ掘れ！
+ホレ掘れ！　ホレ掘れ！　ホレ掘れ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:01:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:43:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝4、GRIDZ＝13</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:01:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+・ストッパー２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:28:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d29r0101_stop3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホレほれ！　ホレほれ！　ホレほれ！
+ホレほれ！　ホレほれ！　ホレほれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:01:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:43:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホレ掘れ！　ホレ掘れ！　ホレ掘れ！
+ホレ掘れ！　ホレ掘れ！　ホレ掘れ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:01:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T10:43:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝4、GRIDZ＝15</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:01:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+・ストッパー３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T11:28:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
