@@ -102,6 +102,7 @@ SUBDIRS	=	wmi \
 			unionroom \
 			winframe \
 			trgra \
+			trface \
 			irc_compatible \
 			worldtrade \
 			calender \

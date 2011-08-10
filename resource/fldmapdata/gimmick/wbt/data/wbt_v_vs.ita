@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-08-06T15:09:54" source="wbt_v_vs.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-08-10T20:09:49" source="wbt_v_vs.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -31,41 +31,42 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="120">
-	0.000000 -0.050781 -0.101807 -0.152588 -0.203369 -0.254150 -0.305176 -0.355957 -0.406738 -0.457520
-	-0.508545 -0.559326 -0.610107 -0.661133 -0.711914 -0.762695 -0.813477 -0.864502 -0.915283 -0.966064
-	-1.016846 -1.067871 -1.118652 -1.169434 -1.220459 -1.271240 -1.322021 -1.372803 -1.423828 -1.474609
-	-1.525391 -1.576172 -1.627197 -1.677979 -1.728760 -1.779541 -1.830566 -1.881348 -1.932129 -1.983154
-	-2.033936 -2.084717 -2.135498 -2.186523 -2.237305 -2.288086 -2.338867 -2.389893 -2.440674 -2.491455
-	-2.542480 -2.593262 -2.644043 -2.694824 -2.745850 -2.796631 -2.847412 -2.898193 -2.949219 -3.000000
-	0.000000 0.033936 0.067871 0.101807 0.135498 0.169434 0.203369 0.237305 0.271240 0.305176
-	0.338867 0.372803 0.406738 0.440674 0.474609 0.508545 0.542480 0.576172 0.610107 0.644043
-	0.677979 0.711914 0.745850 0.779541 0.813477 0.847412 0.881348 0.915283 0.949219 0.983154
-	1.016846 1.050781 1.084717 1.118652 1.152588 1.186523 1.220459 1.254150 1.288086 1.322021
-	1.355957 1.389893 1.423828 1.457520 1.491455 1.525391 1.559326 1.593262 1.627197 1.661133
-	1.694824 1.728760 1.762695 1.796631 1.830566 1.864502 1.898193 1.932129 1.966064 2.000000
+<tex_translate_data size="121">
+	0.000000 0.000000 0.033936 0.067871 0.101807 0.135498 0.169434 0.203369 0.237305 0.271240
+	0.305176 0.338867 0.372803 0.406738 0.440674 0.474609 0.508545 0.542480 0.576172 0.610107
+	0.644043 0.677979 0.711914 0.745850 0.779541 0.813477 0.847412 0.881348 0.915283 0.949219
+	0.983154 1.016846 1.050781 1.084717 1.118652 1.152588 1.186523 1.220459 1.254150 1.288086
+	1.322021 1.355957 1.389893 1.423828 1.457520 1.491455 1.525391 1.559326 1.593262 1.627197
+	1.661133 1.694824 1.728760 1.762695 1.796631 1.830566 1.864502 1.898193 1.932129 1.966064
+	2.000000 0.000000 -0.050781 -0.101807 -0.152588 -0.203369 -0.254150 -0.305176 -0.355957 -0.406738
+	-0.457520 -0.508545 -0.559326 -0.610107 -0.661133 -0.711914 -0.762695 -0.813477 -0.864502 -0.915283
+	-0.966064 -1.016846 -1.067871 -1.118652 -1.169434 -1.220459 -1.271240 -1.322021 -1.372803 -1.423828
+	-1.474609 -1.525391 -1.576172 -1.627197 -1.677979 -1.728760 -1.779541 -1.830566 -1.881348 -1.932129
+	-1.983154 -2.033936 -2.084717 -2.135498 -2.186523 -2.237305 -2.288086 -2.338867 -2.389893 -2.440674
+	-2.491455 -2.542480 -2.593262 -2.644043 -2.694824 -2.745850 -2.796631 -2.847412 -2.898193 -2.949219
+	-3.000000
 </tex_translate_data>
 
 <tex_srt_anm_array size="3">
-	<tex_srt_anm index="0" material_name="wbt_v_vs1">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="60" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="wbt_v_vs2">
+	<tex_srt_anm index="0" material_name="wbt_v_vs2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="60" data_head="60"/>
+		<tex_translate_t frame_step="1" data_size="60" data_head="1"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="2" material_name="wbt_v_vs1b">
+	<tex_srt_anm index="1" material_name="wbt_v_vs1b">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="60" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="60" data_head="61"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="2" material_name="wbt_v_vs1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="60" data_head="61"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>

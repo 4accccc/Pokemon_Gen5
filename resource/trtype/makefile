@@ -54,7 +54,7 @@ GMMDIR	= ../../resource/message/src/
 GRADIR	= ../../resource/trgra/
 HASHDIR	= ../../tools/hash/
 GRATBLDIR	= ../../prog/src/system/
-WBTDIR = ../../resource/wbt/wbt_cut_gra/
+TRFACEDIR = ../../resource/trface/
 
 TRTOOLSDIR = $(PROJECT_ROOT)tools/trdata_conv/
 
@@ -65,7 +65,7 @@ ALL_TARGETS =  $(TARGETDIR)$(TYPE_HEADER) \
 							 $(GRADIR)$(SCRFILE_FRONT) \
 							 $(GRADIR)$(SCRFILE_BACK) \
 							 $(CDATDIR)$(TYPE_CDAT) \
-							 $(WBTDIR)$(SCRFILE_CUT)
+							 $(TRFACEDIR)$(SCRFILE_CUT)
 							 #$(CDATDIR)$(GENDER_CDAT) \
 							 #$(GRATBLDIR)$(GRATBL_CDAT) \
 							 #$(CDATDIR)$(TYPE_BGM_CDAT)
@@ -136,8 +136,8 @@ $(HASHDIR)$(TYPE_HASH):	$(TYPE_HASH)
 $(CDATDIR)$(TYPE_CDAT): $(TYPE_CDAT)
 	$(COPY) $(TYPE_CDAT) $(CDATDIR)
 
-$(WBTDIR)$(SCRFILE_CUT): $(SCRFILE_CUT)
-	$(COPY) $(SCRFILE_CUT) $(WBTDIR)
+$(TRFACEDIR)$(SCRFILE_CUT): $(SCRFILE_CUT)
+	$(COPY) $(SCRFILE_CUT) $(TRFACEDIR)
 
 #$(CDATDIR)$(GENDER_CDAT):	$(GENDER_CDAT)
 #	$(COPY)	$(GENDER_CDAT) $(CDATDIR)

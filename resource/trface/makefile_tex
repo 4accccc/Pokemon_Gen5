@@ -11,7 +11,7 @@ include $(REPLACE_MAKE_TARGET) # ターゲット->TARGET_LIST
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname	= wbt_cut_gra
+targetname	= face_gra
 NARCNAME	= $(targetname).narc
 NAIXNAME	= $(targetname).naix
 

@@ -37,48 +37,47 @@ reader.each { |line|
   colum = line.split ","
 
   ncg_name = ARGV[2] + colum[0].chomp
-  ncbr_name = colum[1].swapcase.chomp                # swapcase = 大文字変換
+  ncgr_name = colum[1].swapcase.chomp                # swapcase = 大文字変換
 
-  ncbr_name.sub!(/type/, "wb")
+  ncgr_name.sub!(/type/, "wb")
 
   # typeをwbに置き換える
 
   # arc_list に書き込む
-  arc_list += sprintf("\"cnv_tmp/%s.NCBR\"\n",ncbr_name)
+  arc_list += sprintf("\"cnv_tmp/%s_LZ.bin\"\n",ncgr_name)
+  arc_list += sprintf("\"cnv_tmp/%s.NCLR\"\n",ncgr_name)
 
   # targetに書き込む
-  target_list += sprintf("\tcnv_tmp/%s.NCBR \\\n",ncbr_name)
+  target_list += sprintf("\tcnv_tmp/%s_LZ.bin \\\n",ncgr_name)
+  target_list += sprintf("\tcnv_tmp/%s.NCLR \\\n",ncgr_name)
 
   # make file に書き込む
-  make_str += sprintf("cnv_tmp/%s.NCBR : %s.ncg \n", ncbr_name, ncg_name )
-  make_str += sprintf("\t@g2dcvtr $< -bmp -bg -cr/28_28_4_4 -o/cnv_tmp\n")
-  unless colum[0].chomp == ncbr_name then
-    make_str += sprintf("\tcp cnv_tmp/%s.NCBR cnv_tmp/%s.NCBR \n\n", colum[0].chomp, ncbr_name)
+  # NCGR
+  make_str += sprintf("cnv_tmp/%s.NCGR : %s.ncg \n", ncgr_name, ncg_name )
+  make_str += sprintf("\t@g2dcvtr $< -bg -cr/0_28_32_4 -o/cnv_tmp\n")
+
+  unless colum[0].chomp == ncgr_name then
+    make_str += sprintf("\tcp cnv_tmp/%s.NCGR cnv_tmp/%s.NCGR \n\n", colum[0].chomp, ncgr_name)
   else
     make_str += sprintf("\n")
   end
 
-  #check_array << ncbr_name
+  # ntrcomp
+  make_str += sprintf("cnv_tmp/%s_LZ.bin : cnv_tmp/%s.NCGR \n", ncgr_name, ncgr_name )
+  make_str += sprintf("\tntrcomp -l 2 cnv_tmp/%s.NCGR\n\n", ncgr_name)
+
+  # NCLR
+  make_str += sprintf("cnv_tmp/%s.NCLR : %s.ncl \n", ncgr_name, ncg_name )
+  make_str += sprintf("\t@g2dcvtr $< -bg -o/cnv_tmp\n")
+  unless colum[0].chomp == ncgr_name then
+    make_str += sprintf("\tcp cnv_tmp/%s.NCLR cnv_tmp/%s.NCLR \n\n", colum[0].chomp, ncgr_name)
+  else
+    make_str += sprintf("\n")
+  end
+
 }
 reader.close
 
-=begin
-# 重複要素を取り除く
-check_array.uniq!
-
-# 配列の中身を書き込む
-check_array.each{ |name|
-
-  ncg_name = ARGV[2] + name
-
-  # targetに書き込む
-  target_list += sprintf("\tcnv_tmp/%s.NCBR \\\n",name)
-
-  # make file に書き込む
-  make_str += sprintf("cnv_tmp/%s.NCBR : %s.ncg \n", name, ncg_name)
-  make_str += sprintf("\t@g2dcvtr $< -bmp -bg -cr/16_16_4_4 -o/cnv_tmp\n\n")
-}
-=end
 
 #最後の\を消し改行を入れる
 target_list.chomp!("\\")

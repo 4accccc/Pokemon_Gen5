@@ -5,12 +5,11 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-include ../../trdata/user.def
 
-USERS += ichiraku_katsuhiko
+include user.def
 
 #ツールパス
-CUT_CNV  = wbt_cut_gra.rb
+CUT_CNV  = cut_gra.rb
 
 #コンバート用定数
 REPLACE_MAKE_TARGET = replace_make_target

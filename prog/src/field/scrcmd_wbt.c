@@ -978,6 +978,8 @@ VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
   WBTSYS * wbtsys = getWBTSys( wk );
   STRBUF * strbuf1;
   STRBUF * strbuf2;   // プレイヤー名専用
+  u16 trtype1;
+  u16 trtype2;
   u16 trtype_enemy, trtype_mine;
 
   u8 type = SCRCMD_GetVMWorkValue( core, wk );    // ビジョン種類
@@ -1002,6 +1004,10 @@ VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
       myStatus = GAMEDATA_GetMyStatus( gdata );
       strbuf2  = MyStatus_CreateNameString( myStatus, heap_id );
     }
+
+    // トレーナータイプ
+    trtype1 = trtype_enemy;
+    trtype2 = trtype_mine;
     break;
 
   // 優勝ビジョン   プレイヤー勝ち
@@ -1016,6 +1022,10 @@ VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
       MyStatus_CopyNameString( myStatus, strbuf1 );
     }
     strbuf2 = NULL;
+
+    // トレーナータイプ
+    trtype1 = trtype_mine;
+    trtype2 = 0;
     break;
   // 優勝ビジョン   敵が勝ち
   // strbuf1 = 優勝者の名前
@@ -1024,16 +1034,22 @@ VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
     strbuf1 = SCRIPT_GetMsgTempBuffer( sc );
     WBTSYS_GetOpponentName( wbtsys, strbuf1 );
     strbuf2 = NULL;
+
+    // トレーナータイプ
+    trtype1 = trtype_enemy;
+    trtype2 = 0;
     break;
 
   default:
     strbuf1 = NULL;
     strbuf2 = NULL;
+    trtype1 = 0;
+    trtype2 = 0;
     break;
   }
 
   // ギミック変更
-  WBT_GIMMICK_VisionChange( fieldWork, type, strbuf1, strbuf2 );
+  WBT_GIMMICK_VisionChange( fieldWork, type, strbuf1, strbuf2, trtype1, trtype2 );
 
   // strbuf2はプレイヤー名で作成しているかもしれないので破棄
   if( strbuf2 ){ GFL_STR_DeleteBuffer( strbuf2 ); }

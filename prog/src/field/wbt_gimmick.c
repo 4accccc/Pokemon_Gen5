@@ -28,6 +28,7 @@
 // arc
 #include "arc/arc_def.h"
 #include "arc/fieldmap/wbt_gmk.naix"
+#include "arc/wbt_cut_gra.naix"
 #include "font/font.naix"
 
 // sound
@@ -43,7 +44,6 @@
 */
 //=============================================================================
 #define EXPOBJ_UNIT_IDX         (0)
-#define EXPOBJ_UNIT_IDX_LOGO    (1)
 #define EXPOBJ_UNIT_IDX_EFFECT  (2)
 
 #define WBT_TMP_ASSIGN_ID   (1)
@@ -70,18 +70,28 @@
 ///	ギミック一時ワーク
 //=====================================
 typedef struct {
+  HEAPID              heapID;         // ヒープID
 
-  HEAPID    heapID;     // ヒープID
-
-  FLD_EXP_OBJ_CNT_PTR exp_obj;  // 拡張3Dモデルコントローラ
+  FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
+  FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
   PLAYER_WORK         *p_player_wk;
 
   // ユニット追加フラグ
-  BOOL      is_unit_logo;       // EXPOBJ_UNIT_IDX_LOGO
   BOOL      is_unit_effect;     // EXPOBJ_UNIT_IDX_EFFECT
 
   // 発動フラグ
   BOOL      move_e_win;         // 優勝エフェクト
+
+  // trtype
+  u16       trtype1;
+  u16       trtype2;
+
+  // 顔グラフィックテクスチャ転送用
+  GFL_BMP_DATA* img_bitmap;
+  NNSG2dCharacterData *chr;
+  NNSG2dPaletteData   *plt;
+  void *chr_buf;
+  void *pal_buf;
 
 } WBT_GMK_TMP;
 
@@ -95,10 +105,14 @@ typedef struct {
 enum {
   RESID_V_VS_MDL = 0,       // VS
   RESID_V_VS_ITA,           // VS
+  RESID_V_VS_ICA,           // VS
   RESID_V_VS_NAME_MDL,      // VS 名前のところ
   RESID_V_WIN_MDL,          // 優勝
   RESID_V_WIN_ITA,          // 優勝
+  RESID_V_WIN_ICA,          // 優勝
   RESID_V_WIN_NAME_MDL,     // 優勝 名前のところ
+  RESID_V_LOGO_MDL,         // ロゴ
+  RESID_V_LOGO_ITA,         // ロゴ
 
   // 優勝エフェクト
   RESID_E_WIN_A_MDL,        // 優勝 開始
@@ -107,11 +121,8 @@ enum {
   RESID_E_WIN_B_MDL,        // 優勝 ループ
   RESID_E_WIN_B_ICA,        // 優勝 ループ
   RESID_E_WIN_B_ITA,        // 優勝 ループ
-  // ※ここから上の順番は変えない
 
-  // トーナメントロゴ
-  RESID_V_ALL_MDL,          // オールトーナメント
-  RESID_V_ALL_ITA,          // オールトーナメント
+  // ※ここから上の順番は変えない
 
   // エフェクト
   RESID_E_NORMAL_L_MDL,     // ノーマル
@@ -125,14 +136,11 @@ enum {
 };
 
 // リソース指定の基準値
-#define RESID_V_START_MDL   ( RESID_V_ALL_MDL )
-#define RESID_V_START_ITA   ( RESID_V_ALL_ITA )
 #define RESID_E_START_MDL   ( RESID_E_NORMAL_L_MDL )
 #define RESID_E_START_IMA   ( RESID_E_NORMAL_L_IMA )
 #define RESID_E_START_ICA   ( RESID_E_NORMAL_L_ICA )
 #define RESID_E_START_ITA   ( RESID_E_NORMAL_L_ITA )
 
-#define RES_V_NUM           (2)   // ビジョンのリソース数
 #define RES_E_NUM           (4)   // エフェクトのリソース数
 #define RES_E_WIN_NUM       (3)   // 優勝エフェクトのリソース数
 
@@ -143,17 +151,11 @@ enum {
   OBJ_V_VS_NAME,      // VS 名前
   OBJ_V_WIN,          // 優勝ビジョン
   OBJ_V_WIN_NAME,     // 優勝ビジョン 名前
+  OBJ_V_LOGO,         // ロゴ
   OBJ_E_WIN_START,    // 優勝エフェクト開始
   OBJ_E_WIN_LOOP,     // 優勝エフェクトループ
 
   OBJ_V_MAX,
-};
-
-// トーナメントロゴ
-enum {
-  OBJ_LOGO = 0,       // ロゴ
-
-  OBJ_LOGO_MAX,
 };
 
 // 通路エフェクト
@@ -169,11 +171,18 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   // VS   ビジョン
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_v_vs_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_v_vs_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_v_vs_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_v_vs_name_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   // 優勝 ビジョン
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_v_win_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_v_win_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_v_win_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_v_win_name_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+
+  // ロゴ
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_v_all_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_v_all_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+
   // 優勝 エフェクト
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_a_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_a_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
@@ -184,14 +193,26 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
 };
 
 // ANIME
-static const GFL_G3D_UTIL_ANM anm_vs_table[] =
+static const GFL_G3D_UTIL_ANM anm_v_vs_table[] =
 {
   { RESID_V_VS_ITA, 0 }, // nsbta
+  { RESID_V_VS_ICA, 0 }, // nsbca
 };
+#define ANM_VS_NUM  ( NELEMS(anm_v_vs_table) )
+
 static const GFL_G3D_UTIL_ANM anm_v_win_table[] =
 {
   { RESID_V_WIN_ITA, 0 }, // nsbta
+  { RESID_V_WIN_ICA, 0 }, // nsbca
 };
+#define ANM_VS_WIN_NUM  ( NELEMS(anm_v_win_table) )
+
+static const GFL_G3D_UTIL_ANM anm_v_logo_table[] =
+{
+  { RESID_V_LOGO_ITA, 0 }, // nsbta
+};
+#define ANM_LOGO_NUM  ( NELEMS(anm_v_logo_table) )
+
 static const GFL_G3D_UTIL_ANM anm_e_win_a_table[] =
 {
   { RESID_E_WIN_A_ICA, 0 }, // nsbca
@@ -206,15 +227,15 @@ static const GFL_G3D_UTIL_ANM anm_e_win_b_table[] =
 // OBJ
 static const GFL_G3D_UTIL_OBJ obj_3d_table[] = 
 {
-  // VS
+  // OBJ_V_VS
   {
     RESID_V_VS_MDL,       // モデルリソースID
     0,                    // モデルデータID(リソース内部INDEX)
     RESID_V_VS_MDL,       // テクスチャリソースID
-    anm_vs_table,         // アニメテーブル(複数指定のため)
-    NELEMS(anm_vs_table), // アニメリソース数
+    anm_v_vs_table,         // アニメテーブル(複数指定のため)
+    ANM_VS_NUM,           // アニメリソース数
   },
-  // VS 名前
+  // OBJ_V_VS_NAME
   {
     RESID_V_VS_NAME_MDL,  // モデルリソースID
     0,                    // モデルデータID(リソース内部INDEX)
@@ -222,15 +243,15 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     NULL,                 // アニメテーブル(複数指定のため)
     0,                    // アニメリソース数
   },
-  // WIN
+  // OBJ_V_WIN
   {
     RESID_V_WIN_MDL,      // モデルリソースID
     0,                    // モデルデータID(リソース内部INDEX)
     RESID_V_WIN_MDL,      // テクスチャリソースID
-    anm_v_win_table,        // アニメテーブル(複数指定のため)
-    NELEMS(anm_v_win_table),// アニメリソース数
+    anm_v_win_table,      // アニメテーブル(複数指定のため)
+    ANM_VS_WIN_NUM,       // アニメリソース数
   },
-  // WIN 名前
+  // OBJ_V_WIN_NAME
   {
     RESID_V_WIN_NAME_MDL, // モデルリソースID
     0,                    // モデルデータID(リソース内部INDEX)
@@ -238,7 +259,15 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     NULL,                 // アニメテーブル(複数指定のため)
     0,                    // アニメリソース数
   },
-  // WIN エフェクト
+  // OBJ_V_LOGO
+  {
+    RESID_V_LOGO_MDL,     // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_V_LOGO_MDL,     // テクスチャリソースID
+    anm_v_logo_table,     // アニメテーブル(複数指定のため)
+    ANM_LOGO_NUM,         // アニメリソース数
+  },
+  // OBJ_E_WIN_START
   {
     RESID_E_WIN_A_MDL,    // モデルリソースID
     0,                    // モデルデータID(リソース内部INDEX)
@@ -246,7 +275,7 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     anm_e_win_a_table,    // アニメテーブル(複数指定のため)
     NELEMS(anm_e_win_a_table),// アニメリソース数
   },
-  // WIN エフェクト
+  // OBJ_E_WIN_LOOP
   {
     RESID_E_WIN_B_MDL,    // モデルリソースID
     0,                    // モデルデータID(リソース内部INDEX)
@@ -288,6 +317,22 @@ static char* plt_name[ TEX_INDEX_MAX ] =
   "wbt_name03_pl",
 };
 
+static char* kao_tex_name[ TEX_INDEX_MAX ] =
+{
+  "wbt_v_kao1",
+  "wbt_v_kao2",
+  "wbt_v_kao1",
+};
+
+static char* kao_plt_name[ TEX_INDEX_MAX ] =
+{
+  "wbt_v_kao1_pl",
+  "wbt_v_kao2_pl",
+  "wbt_v_kao1_pl",
+};
+#define TEX_W   (4)     // テクスチャ幅(キャラ)
+#define TEX_H   (4)     // テクスチャ幅(キャラ)
+
 //=============================================================================
 /**
  *          static関数宣言
@@ -299,10 +344,42 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk );
 static void EXPOBJ_ObjDell( WBT_GMK_TMP *p_wk );
 static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk );
 
+// アニメ管理
+// 共通
+static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, BOOL loop );
+static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx );
+
 // 背景ビジョン
-static void VISION_Setup( WBT_GMK_TMP *p_wk, u8 type );
-static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBUF *strbuf2 );
+static void VISION_Setup( WBT_GMK_TMP *p_wk );
+static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBUF *strbuf2, u16 trtype1, u16 trtype2 );
 static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, STRBUF *strbuf, HEAPID heapID );
+static void VISION_Tex2Trgra( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, u16 trtype );
+static void TexTransToGra( WBT_GMK_TMP *p_wk,
+                           GFL_G3D_RES* p_res, 
+                           const char* tex_name,
+                           const char* plt_name,
+                           u16 trtype,
+                           HEAPID heapID );
+
+static void* GetTexStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictTexData* pData);
+static void* GetPlttStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictPlttData* pData);
+static void SetResName(NNSG3dResName *outName,const char *inName);
+static void* GetTexStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name);
+static void* GetPlttStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name);
+
+
+// task
+// タスクワーク
+typedef struct {
+  u16           seq;
+  WBT_GMK_TMP   *p_gmk_wk;    // ギミックワーク
+} VISION_TASK_WORK;
+// VSビジョン演出タスク
+static void VISION_VS_TASK_Add( WBT_GMK_TMP *p_wk );
+static FIELD_TASK_RETVAL VisionVsTaskFunc( void* wk );
+// 優勝ビジョン演出タスク
+static void VISION_WIN_TASK_Add( WBT_GMK_TMP *p_wk );
+static FIELD_TASK_RETVAL VisionWinTaskFunc( void* wk );
 
 //=============================================================================
 /**
@@ -327,9 +404,9 @@ void WBT_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap )
 
   p_wk->heapID      = HEAPID_FIELDMAP;
   p_wk->exp_obj     = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  p_wk->p_fieldmap  = p_fieldmap;
   p_wk->p_player_wk = GAMEDATA_GetMyPlayerWork( p_gdata );
 
-  p_wk->is_unit_logo  = FALSE;
   p_wk->is_unit_effect= FALSE;
 
   // ギミックは発動させない
@@ -372,8 +449,50 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 {
   WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
 
+#ifdef PM_DEBUG
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      OS_Printf("デバッグ トーナメントロゴビジョン\n");
+      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_ALL, NULL, NULL, 0, 0 );
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
+      STRBUF * strbuf1;
+      STRBUF * strbuf2;   // プレイヤー名専用
+      MYSTATUS* myStatus;
+      myStatus = GAMEDATA_GetMyStatus( gdata );
+      strbuf1  = MyStatus_CreateNameString( myStatus, p_wk->heapID );
+      strbuf2  = MyStatus_CreateNameString( myStatus, p_wk->heapID );
+
+      OS_Printf("デバッグ VSビジョン\n");
+      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_VS, strbuf1, strbuf2, 0, 1 );
+
+      GFL_STR_DeleteBuffer( strbuf1 );
+      GFL_STR_DeleteBuffer( strbuf2 );
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
+      STRBUF * strbuf1;
+      MYSTATUS* myStatus;
+      myStatus = GAMEDATA_GetMyStatus( gdata );
+      strbuf1  = MyStatus_CreateNameString( myStatus, p_wk->heapID );
+
+      OS_Printf("デバッグ 優勝ビジョン\n");
+      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_WIN_PLAYER, strbuf1, NULL, 0, 0 );
+
+      GFL_STR_DeleteBuffer( strbuf1 );
+    }
+  }
+#endif
+
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
+
 }
 
 //----------------------------------------------------------------------------
@@ -384,9 +503,11 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
  *	@param	p_fieldmap  フィールドワークポインタ
  *	@param  strbuf1     対戦者名1
  *	@param  strbuf2     対戦者名2
+ *	@param  trtype1     対戦者トレーナータイプ1
+ *	@param  trtype2     対戦者トレーナータイプ2
  */
 //-----------------------------------------------------------------------------
-void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbuf1, STRBUF *strbuf2 )
+void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbuf1, STRBUF *strbuf2, u16 trtype1, u16 trtype2 )
 {
   WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
 
@@ -396,10 +517,7 @@ void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbu
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_VS_NAME, TRUE );
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_WIN, TRUE );
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_WIN_NAME, TRUE );
-    if( p_wk->is_unit_logo )
-    {
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX_LOGO, OBJ_LOGO, TRUE );
-    }
+    //FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_LOGO, TRUE );
   }
 
   // ビジョン別設定
@@ -413,13 +531,12 @@ void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbu
 
     // 名前張り付けのビジョンなら
     // リソースは読み込まない
-    VISION_SetupName( p_wk, type, strbuf1, strbuf2 );
+    VISION_SetupName( p_wk, type, strbuf1, strbuf2, trtype1, trtype2 );
     break;
 
   default:
-    // トーナメントロゴのビジョンなら
-    // リソースの設定から行う
-    VISION_Setup( p_wk, type );
+    // トーナメントロゴのビジョン
+    VISION_Setup( p_wk );
 
     break;
   }
@@ -580,6 +697,7 @@ void WBT_GIMMICK_WinEffectStart( FIELDMAP_WORK *p_fieldmap )
 //-----------------------------------------------------------------------------
 static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
 {
+  int i;
 
   //必要なリソースの用意
   FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup, EXPOBJ_UNIT_IDX);
@@ -600,9 +718,10 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
     // アニメ再生
+    for( i=0; i<ANM_VS_NUM; i++ )
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0 );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0, TRUE );
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
     }
@@ -640,9 +759,10 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
     // アニメ再生
+    for( i=0; i<ANM_VS_WIN_NUM; i++ )
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0 );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0, TRUE );
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
     }
@@ -664,10 +784,34 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
   }
 
   //=====================================
+  // LOGOの設定
+  {
+    u16     obj_idx = OBJ_V_LOGO;    // OBJインデックス
+
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
+
+    // 座標
+    status->trans.x = VISION_X;
+    status->trans.y = VISION_Y;
+    status->trans.z = VISION_Z;
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
+    // 表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
+    // アニメ再生
+    for( i=0; i<ANM_LOGO_NUM; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+    }
+  }
+
+  //=====================================
   // WIN エフェクトの設定
   {
     u16     obj_idx = OBJ_E_WIN_START;    // OBJインデックス
-    u8      i;
 
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
 
@@ -693,7 +837,6 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
   // WIN エフェクトの設定
   {
     u16     obj_idx = OBJ_E_WIN_LOOP;    // OBJインデックス
-    u8      i;
 
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
 
@@ -727,10 +870,7 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
 static void EXPOBJ_ObjDell( WBT_GMK_TMP *p_wk )
 {
   FLD_EXP_OBJ_DelUnit( p_wk->exp_obj, EXPOBJ_UNIT_IDX );
-  if( p_wk->is_unit_logo )
-  {
-    FLD_EXP_OBJ_DelUnit( p_wk->exp_obj, EXPOBJ_UNIT_IDX_LOGO );
-  }
+
   if( p_wk->is_unit_effect )
   {
     FLD_EXP_OBJ_DelUnit( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT );
@@ -780,6 +920,61 @@ static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk )
 
 //=============================================================================
 /**
+ *          アニメ管理
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメ再生
+ *
+ *	@param	FLD_EXP_OBJ_CNT_PTR exp_obj
+ *	@param	obj_idx   OBJインデックス
+ *	@param	anm_idx   アニメインデックス
+ *	@param	loop      ループ再生フラグ(TRUEでループ
+ */
+//-----------------------------------------------------------------------------
+static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, BOOL loop )
+{
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, anm_idx );
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
+
+  // 再生
+  FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );
+  FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, loop );
+
+  // 無効化解除
+  FLD_EXP_OBJ_ValidCntAnm( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, anm_idx, TRUE );
+  // 頭だし
+  FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, anm_idx, 0 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメ停止
+ *
+ *	@param	FLD_EXP_OBJ_CNT_PTR exp_obj
+ *	@param	obj_idx   OBJインデックス
+ *	@param	anm_idx   アニメインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx )
+{
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, anm_idx );
+  // 停止
+  FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );
+  // 無効化
+  FLD_EXP_OBJ_ValidCntAnm( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, anm_idx, FALSE );
+  // 頭だし
+  FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, anm_idx, 0 );
+}
+
+
+//=============================================================================
+/**
  *        背景ビジョン
  */
 //=============================================================================
@@ -789,83 +984,25 @@ static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk )
  *	@brief  ビジョンセットアップ
  *
  *	@param	WBT_GMK_TMP *p_wk   ギミックワーク
- *	@param	type                ビジョン種類
  */
 //-----------------------------------------------------------------------------
-static void VISION_Setup( WBT_GMK_TMP *p_wk, u8 type )
+static void VISION_Setup( WBT_GMK_TMP *p_wk )
 {
-  GFL_G3D_UTIL_RES    res_v_table[RES_V_NUM] = {0};
-  GFL_G3D_UTIL_ANM    anm_v_table = {0};
-  GFL_G3D_UTIL_OBJ    obj_v_table = {0};
-  GFL_G3D_UTIL_SETUP  setup = {0};
-  u8      res_cnt = 0;
-
-  // リソースのインデックスをトーナメントビジョンの先頭まで移動
-  type = type - TYPE_VISION_START;
-
-  // RES
-  res_v_table[ res_cnt ].arcive  = ARCID_WBT_GIMMICK_DATA;
-  res_v_table[ res_cnt ].datID   = RESID_V_START_MDL + type;
-  res_v_table[ res_cnt ].arcType = GFL_G3D_UTIL_RESARC;
-  res_cnt++;
-  res_v_table[ res_cnt ].arcive  = ARCID_WBT_GIMMICK_DATA;
-  res_v_table[ res_cnt ].datID   = RESID_V_START_ITA + type;
-  res_v_table[ res_cnt ].arcType = GFL_G3D_UTIL_RESARC;
-  res_cnt++;
-
-  // ANIME
-  anm_v_table.anmresID = 1;
-  anm_v_table.anmdatID = 0;
-
-  // OBJ
-  obj_v_table.mdlresID = 0;
-  obj_v_table.mdldatID = 0;
-  obj_v_table.texresID = 0;
-  obj_v_table.anmTbl   = &anm_v_table;
-  obj_v_table.anmCount = 1;
-
-  // セットアップデータ
-  setup.resTbl  = res_v_table;
-  setup.resCount= res_cnt;
-  setup.objTbl  = &obj_v_table;
-  setup.objCount= 1;
-
-  //必要なリソースの用意
-  {
-    // 仮にすでにリソース設定された後に呼ばれたら削除する
-    if( p_wk->is_unit_logo )
-    {
-      FLD_EXP_OBJ_DelUnit( p_wk->exp_obj, EXPOBJ_UNIT_IDX_LOGO );
-    }
-  }
-  FLD_EXP_OBJ_AddUnit( p_wk->exp_obj, &setup, EXPOBJ_UNIT_IDX_LOGO );
-  p_wk->is_unit_logo = TRUE;    // 作成した
-
-
   //=====================================
   // LOGOの設定
+  u16 obj_idx = OBJ_V_LOGO;    // OBJインデックス
+  int i;
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
+  // アニメ再生
+  for( i=0; i<ANM_LOGO_NUM; i++ )
   {
-    u16     obj_idx = OBJ_LOGO;    // OBJインデックス
-    VecFx32 pos = { VISION_X, VISION_Y, VISION_Z };
-
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX_LOGO, obj_idx );
-
-    // 座標
-    status->trans = pos;
-    // カリングする
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX_LOGO, obj_idx, TRUE );
-    // 表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX_LOGO, obj_idx, FALSE );
-    // アニメ再生
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX_LOGO, obj_idx, 0 );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX_LOGO, obj_idx, 0, TRUE );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
-    }
+    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
   }
-
-  ICHI_Printf("背景ビジョンリソース読み込み %d \n", type );
 }
 
 //----------------------------------------------------------------------------
@@ -878,7 +1015,7 @@ static void VISION_Setup( WBT_GMK_TMP *p_wk, u8 type )
  *	@param	strbuf              対戦相手名
  */
 //-----------------------------------------------------------------------------
-static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBUF *strbuf2 )
+static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBUF *strbuf2, u16 trtype1, u16 trtype2 )
 {
   u16   obj_idx;    // OBJインデックス
 
@@ -889,26 +1026,22 @@ static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBU
   case SCR_WBT_VISION_WIN_PLAYER:
   case SCR_WBT_VISION_WIN_ENEMY:
     obj_idx = OBJ_V_WIN;
+    // 演出タスク作成
+    VISION_WIN_TASK_Add( p_wk );
     break;
   case SCR_WBT_VISION_VS:
     obj_idx = OBJ_V_VS;
+    // 演出タスク作成
+    VISION_VS_TASK_Add( p_wk );
     break;
   }
 
-  // アニメ再生
-  {
-    // 表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
-    // アニメ再生
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0 );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0, TRUE );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
-    }
-  }
+  // 引数を保存
+  p_wk->trtype1 = trtype1;
+  p_wk->trtype2 = trtype2;
 
   // 名前の設定
+  // と顔グラの設定(テクスチャ置き換え)
   {
     BOOL ret;
     STRBUF  *str_player;
@@ -918,23 +1051,22 @@ static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBU
     switch( obj_idx ){
     case OBJ_V_VS:
       {
+        // 名前
         ret = VISION_Font2Tex( p_wk, TEX_INDEX_LEFT, strbuf1, p_wk->heapID );
         GF_ASSERT(ret);
         ret = VISION_Font2Tex( p_wk, TEX_INDEX_RIGHT, strbuf2, p_wk->heapID );
         GF_ASSERT(ret);
-
-        // 表示
-        FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_VS_NAME, FALSE );
+        // 顔グラはtask内で。
       }
       break;
 
     case OBJ_V_WIN:
       {
+        // 名前
         ret = VISION_Font2Tex( p_wk, TEX_INDEX_WIN, strbuf1, p_wk->heapID );
         GF_ASSERT(ret);
-
-        // 表示
-        FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_WIN_NAME, FALSE );
+        // 顔グラ
+        VISION_Tex2Trgra( p_wk, TEX_INDEX_WIN, trtype1 );
       }
       break;
     }
@@ -1008,5 +1140,397 @@ static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, STRBUF *str
 
 
   return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビジョンに顔グラを貼り付け
+ *
+ *	@param	WBT_GMK_TMP *p_wk
+ *	@param	tex_index 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void VISION_Tex2Trgra( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, u16 trtype )
+{
+  u8            obj_idx;
+
+  // どのオブジェのテクスチャに貼り付けるか
+  switch( tex_index ){
+  case TEX_INDEX_LEFT:
+  case TEX_INDEX_RIGHT:
+    obj_idx = OBJ_V_VS;
+    break;
+
+  case TEX_INDEX_WIN:
+    obj_idx = OBJ_V_WIN;
+    break;
+  }
+
+  p_wk->img_bitmap = GFL_BMP_Create(TEX_W, TEX_H, GFL_BMP_16_COLOR, p_wk->heapID );
+
+  // 転送
+  {
+    GFL_G3D_OBJ   *p_obj = FLD_EXP_OBJ_GetUnitObj( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
+    GFL_G3D_RND   *p_rnd = GFL_G3D_OBJECT_GetG3Drnd( p_obj );
+    GFL_G3D_RES   *p_res = GFL_G3D_RENDER_GetG3DresTex( p_rnd );
+
+    TexTransToGra( p_wk, p_res, kao_tex_name[tex_index], kao_plt_name[tex_index], trtype, p_wk->heapID );
+  }
+
+  GFL_BMP_Delete( p_wk->img_bitmap );
+  GFL_HEAP_FreeMemory( p_wk->chr_buf );
+  GFL_HEAP_FreeMemory( p_wk->pal_buf );
+}
+
+//=============================================================================
+/**
+ *          TASK
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  背景ビジョンVS画面タスク
+ */
+//-----------------------------------------------------------------------------
+static void VISION_VS_TASK_Add( WBT_GMK_TMP *p_wk )
+{
+  FIELD_TASK        *task;
+  FIELD_TASK_MAN    *taskMan;
+  VISION_TASK_WORK  *work;
+
+  taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( p_wk->heapID, sizeof(VISION_TASK_WORK), VisionVsTaskFunc );
+
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->seq = 0;
+  work->p_gmk_wk = p_wk;
+
+  FIELD_TASK_MAN_AddTask( taskMan, task, NULL );
+}
+// タスク関数
+static FIELD_TASK_RETVAL VisionVsTaskFunc( void* wk )
+{
+  VISION_TASK_WORK *p_wk = (VISION_TASK_WORK*)wk;
+  FLD_EXP_OBJ_CNT_PTR exp_obj = p_wk->p_gmk_wk->exp_obj;
+
+  // 処理シーケンス
+  enum{
+    SEQ_TRANS1,
+    SEQ_TRANS2,
+    SEQ_START,
+    SEQ_ANM_WAIT,
+    SEQ_END,
+  };
+
+  switch( p_wk->seq ){
+  case SEQ_TRANS1:
+    {
+      VISION_Tex2Trgra( p_wk->p_gmk_wk, TEX_INDEX_LEFT, p_wk->p_gmk_wk->trtype1 ); // 顔グラ
+      p_wk->seq = SEQ_TRANS2;
+    }
+    break;
+  case SEQ_TRANS2:
+    {
+      VISION_Tex2Trgra( p_wk->p_gmk_wk, TEX_INDEX_RIGHT, p_wk->p_gmk_wk->trtype2 ); // 顔グラ
+      p_wk->seq = SEQ_START;
+    }
+    break;
+  case SEQ_START:
+    {
+      // wbt_v_vs
+      // itaをループ再生
+      // icaを1回再生
+      ANM_Play( exp_obj, OBJ_V_VS, 0, TRUE );
+      ANM_Play( exp_obj, OBJ_V_VS, 1, FALSE );
+      
+      p_wk->seq = SEQ_ANM_WAIT;
+    }
+    break;
+  case SEQ_ANM_WAIT:
+    {
+      // icaの終了チェック
+      EXP_OBJ_ANM_CNT_PTR exp_anm;
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_VS, 1 );
+      if( FLD_EXP_OBJ_ChkAnmEnd( exp_anm ) == TRUE )
+      {
+        // wbt_v_allを非表示
+        FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_LOGO, TRUE );
+
+        // wbt_v_vs_nameを表示
+        FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_VS_NAME, FALSE );
+
+        p_wk->seq = SEQ_END;
+      }
+    }
+    break;
+  case SEQ_END:
+    return FIELD_TASK_RETVAL_FINISH;
+  default:
+    GF_ASSERT(0);
+  }
+
+  return FIELD_TASK_RETVAL_CONTINUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  背景ビジョン 優勝画面タスク
+ */
+//-----------------------------------------------------------------------------
+static void VISION_WIN_TASK_Add( WBT_GMK_TMP *p_wk )
+{
+  FIELD_TASK        *task;
+  FIELD_TASK_MAN    *taskMan;
+  VISION_TASK_WORK  *work;
+
+  taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( p_wk->heapID, sizeof(VISION_TASK_WORK), VisionWinTaskFunc );
+
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->seq = 0;
+  work->p_gmk_wk = p_wk;
+
+  FIELD_TASK_MAN_AddTask( taskMan, task, NULL );
+}
+
+// タスク関数
+static FIELD_TASK_RETVAL VisionWinTaskFunc( void* wk )
+{
+  VISION_TASK_WORK *p_wk = (VISION_TASK_WORK*)wk;
+  FLD_EXP_OBJ_CNT_PTR exp_obj = p_wk->p_gmk_wk->exp_obj;
+
+  // 処理シーケンス
+  enum{
+    SEQ_START,
+    SEQ_ANM_WAIT,
+    SEQ_END,
+  };
+
+  switch( p_wk->seq ){
+  case SEQ_START:
+    {
+      // wbt_v_win
+      // itaをループ再生
+      // icaを1回再生
+      ANM_Play( exp_obj, OBJ_V_WIN, 0, TRUE );
+      ANM_Play( exp_obj, OBJ_V_WIN, 1, FALSE );
+      
+      // wbt_v_allは非表示
+      FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_LOGO, TRUE );
+
+      p_wk->seq = SEQ_ANM_WAIT;
+    }
+    break;
+  case SEQ_ANM_WAIT:
+    {
+      // icaの終了チェック
+      EXP_OBJ_ANM_CNT_PTR exp_anm;
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_WIN, 1 );
+      if( FLD_EXP_OBJ_ChkAnmEnd( exp_anm ) == TRUE )
+      {
+        // wbt_v_win_nameを表示
+        FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_WIN_NAME, FALSE );
+
+        p_wk->seq = SEQ_END;
+      }
+    }
+    break;
+  case SEQ_END:
+    return FIELD_TASK_RETVAL_FINISH;
+  default:
+    GF_ASSERT(0);
+  }
+
+  return FIELD_TASK_RETVAL_CONTINUE;
+}
+
+static void* GetTexStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictTexData* pData)
+{
+	// オフセット値
+	u32 offset = (pData->texImageParam & NNS_G3D_TEXIMAGE_PARAM_TEX_ADDR_MASK)<<3;
+	offset += NNS_GfdGetTexKeyAddr( inResTex->texInfo.vramKey );
+	return (void*)(offset);
+
+}
+
+static void* GetPlttStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictPlttData* pData)
+{
+	// オフセット値
+	u32 offset = pData->offset<<3;
+	offset += NNS_GfdGetPlttKeyAddr( inResTex->plttInfo.vramKey );
+	return (void*)(offset);
+
+}
+
+static void SetResName(NNSG3dResName *outName,const char *inName)
+{
+	u8 i;
+  int len = STD_StrLen(inName);
+
+	//初期化
+	for (i=0;i<4;i++){
+		outName->val[i] = 0;
+	}
+	for (i=0;i<len;i++){
+		outName->name[i] = inName[i];
+	}
+}
+
+static void* GetTexStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name)
+{
+	NNSG3dResName tmpResName;
+	const NNSG3dResDictTexData* pData;
+
+	//テクスチャの実体をサーチ
+	SetResName(&tmpResName, name);	//文字列をNNSG3dResNameに変換
+	pData = NNS_G3dGetTexDataByName( inResTex, &tmpResName );
+
+	if (pData == NULL){
+		return NULL;
+	}
+
+	//アドレスを算出
+	return GetTexStartVRAMAdrSub(inResTex, pData);
+}
+
+static void* GetPlttStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name)
+{
+	NNSG3dResName tmpResName;
+	const NNSG3dResDictPlttData* pData;
+
+	//テクスチャの実体をサーチ
+	SetResName(&tmpResName, name);	//文字列をNNSG3dResNameに変換
+	pData = NNS_G3dGetPlttDataByName( inResTex, &tmpResName );
+
+	if (pData == NULL){
+		return NULL;
+	}
+
+	//アドレスを算出
+	return GetPlttStartVRAMAdrSub(inResTex, pData);
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テクスチャを転送する
+ *
+ *	@param	const GFL_G3D_RES* p_res
+ *	@param	char* tex_name    テクスチャ名
+ *
+ *	@return オフセット値
+ */
+//-----------------------------------------------------------------------------
+static void TexTransToGra( WBT_GMK_TMP *p_wk,
+                           GFL_G3D_RES* p_res, 
+                           const char* tex_name,
+                           const char* plt_name,
+                           u16 trtype,
+                           HEAPID heapID )
+{
+  u32 tex_adr;
+  u32 pal_adr;
+  u32 pal_size;
+
+  const u8 cw = TEX_W;     // 切り抜いた幅
+  const u8 ch = TEX_H;     // 切り抜いた幅
+  const u8 ncg_cw = 256/8;  // ncg画像の幅(キャラ単位)
+
+
+  //リソースのＶＲＡＭアドレス取得
+  {
+    NNSG3dTexKey  texkey = GFL_G3D_GetTextureDataVramKey( p_res );
+    NNSG3dPlttKey palkey = GFL_G3D_GetTexturePlttVramKey( p_res );
+    {
+      u8 * adr;
+      NNSG3dResTex *resTex;
+      NNSG3dResFileHeader* res_head = GFL_G3D_GetResourceFileHeader( p_res );
+      resTex = NNS_G3dGetTex( res_head );
+      adr = GetTexStartVRAMAdrByName(resTex, tex_name );
+      tex_adr = (u32)adr;
+      adr = GetPlttStartVRAMAdrByName(resTex, plt_name );
+      pal_adr = (u32)adr;
+      pal_size = (u32)resTex->plttInfo.sizePltt << 3;
+    }
+
+    ICHI_Printf("============================================\n");
+    ICHI_Printf("txname = %s\n",tex_name);
+    ICHI_Printf("plname = %s\n",plt_name);
+    ICHI_Printf("key = %d %d\n",texkey, palkey);
+    ICHI_Printf("adr = %x %x\n",tex_adr, pal_adr);
+    ICHI_Printf("trtype = %d \n", trtype);
+    ICHI_Printf("tex_size = %x \n", NNS_GfdGetTexKeySize(texkey));
+    ICHI_Printf("pal_size = %x \n", pal_size);
+    ICHI_Printf("============================================\n\n");
+  }
+
+  {
+    p_wk->chr = NULL;
+    p_wk->plt = NULL;
+    p_wk->chr_buf = GFL_ARC_UTIL_LoadBGCharacter( ARCID_WBT_CUT_GRA, (trtype*2), TRUE, &p_wk->chr, heapID );
+    p_wk->pal_buf = GFL_ARC_UTIL_LoadPalette( ARCID_WBT_CUT_GRA, (trtype*2+1), &p_wk->plt, heapID );
+
+    ICHI_Printf("chr w = %d h = %d szByte = %d ", p_wk->chr->W,p_wk->chr->H,p_wk->chr->szByte);
+    ICHI_Printf("pixelFmt=%d maping=%d charFmt=%d \n", p_wk->chr->pixelFmt,p_wk->chr->mapingType,p_wk->chr->characterFmt);
+    ICHI_Printf("plt szByte = %d \n", p_wk->plt->szByte);
+    ICHI_Printf("bmp w=%d h=%d size=%d \n", GFL_BMP_GetSizeX(p_wk->img_bitmap),GFL_BMP_GetSizeY(p_wk->img_bitmap), GFL_BMP_GetBmpDataSize(p_wk->img_bitmap));
+    
+    // メモ
+    // キャラデータの幅は画像の幅と同じになってしまう。
+    // g2dcvrt の-crオプションのXとWは無視される仕様だから。
+    {
+      u8	*src;
+      u8  *dst;
+      int x, y;
+
+      // ncg画像をXでどこから切り取るか
+      // 右端の4キャラを切り取りたい
+      const u8 ncg_cw_offset = 224/8;
+
+
+      src = p_wk->chr->pRawData;
+      dst = GFL_BMP_GetCharacterAdrs( p_wk->img_bitmap );
+      GFL_STD_MemClear32((void*)dst, cw*ch*0x20);
+
+      for (y=0; y<ch; y++){
+        for(x=0; x<cw; x++){
+          GFL_STD_MemCopy32((void*)(&src[(y*ncg_cw+x+ncg_cw_offset)*0x20]), (void*)(&dst[(y*cw+x)*0x20]), 0x20);
+          //GFL_STD_MemFill32((void*)(&dst[(y*cw+x)*0x20]), 0x11111111, 0x20);
+        }
+      }
+    }
+  }
+
+  //GFL_BMP_Clear( p_wk->img_bitmap, 2 );
+
+  // フォーマットデータをＢＭＰデータに変換
+  GFL_BMP_DataConv_to_BMPformat( p_wk->img_bitmap, FALSE, heapID);
+  //転送
+  {
+    BOOL rc;
+    u16*	src;
+		u32		dst;
+    src = (u16*)GFL_BMP_GetCharacterAdrs( p_wk->img_bitmap );
+		dst = tex_adr;
+    
+    ICHI_Printf("trans tex_addr %x\n", dst);
+    ICHI_Printf("trans src_addr %x\n", src);
+    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, cw*ch*0x20);
+    GF_ASSERT(rc);
+    src = p_wk->plt->pRawData;
+		dst = pal_adr;
+    ICHI_Printf("trans pal_addr %x\n", dst);
+    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, 32);
+    GF_ASSERT(rc);
+  }
 }
 

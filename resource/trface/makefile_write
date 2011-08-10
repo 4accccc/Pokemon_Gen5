@@ -23,7 +23,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 do-build: $(REPLACE_DEPEND)
 
 $(REPLACE_DEPEND):$(TRGRA_CUT_SCR) $(CUT_CNV)
-	ruby $(CUT_CNV) $(REPLACE_DEPEND) $(TRGRA_CUT_SCR) ./../../../../swan_doc/trgra/ $(ARC_LIST) $(REPLACE_MAKE_TARGET)
+	ruby $(CUT_CNV) $(REPLACE_DEPEND) $(TRGRA_CUT_SCR) ./../../../swan_doc/trgra/ $(ARC_LIST) $(REPLACE_MAKE_TARGET)
 endif
 
 #------------------------------------------------------------------------------
@@ -31,6 +31,7 @@ endif
 #------------------------------------------------------------------------------
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+	@rm -f cnv_tmp/*.bin
 	@rm -f cnv_tmp/*.N*R
 	@rm -f arc_result.txt
 	@rm -f $(ARC_LIST)

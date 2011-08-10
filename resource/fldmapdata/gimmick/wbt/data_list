@@ -1,9 +1,11 @@
 DATA_LIST = \
      wbt_v_vs.nsbmd \
      wbt_v_vs.nsbta \
+     wbt_v_vs.nsbca \
      wbt_v_vs_name.nsbmd \
      wbt_v_win.nsbmd \
      wbt_v_win.nsbta \
+     wbt_v_win.nsbca \
      wbt_v_win_name.nsbmd \
 		 wbt_e_win_a.nsbmd \
 		 wbt_e_win_a.nsbca \
