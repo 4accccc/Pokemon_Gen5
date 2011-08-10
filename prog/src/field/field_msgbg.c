@@ -89,9 +89,9 @@ enum
 {
   CHARNO_CLEAR = 0, ///<クリアキャラ 0
   CHARNO_WINFRAME = 1, ///<ウィンドウフレーム 1-10 (chara 9
-  CHARNO_BALLOONWIN = 11, ///<吹き出しウィンドウ 11-30 (chara 18
-  CHARNO_SYSWIN = 31, ///<システムウィンドウ 31-50 (chara 18
-  CHARNO_OTHERSWIN = 51, ///<その他ウィンドウ 46- (使用時に初期化
+  CHARNO_BALLOONWIN = 11, ///<吹き出しウィンドウ 11-35 (chara 24
+  CHARNO_SYSWIN = 36, ///<システムウィンドウ 36-54 (chara 18
+  CHARNO_OTHERSWIN = 55, ///<その他ウィンドウ 55- (使用時に初期化
 };
 
 //--------------------------------------------------------------
