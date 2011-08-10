@@ -20908,7 +20908,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_D_CHAMPROAD,
 		enc_dummy,
 		NARC_eventdata_d26r0101_bin,
-    ZONE_ID_R10,
+    ZONE_ID_D26,
 		MAPNAME_D26,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,

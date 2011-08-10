@@ -3310,6 +3310,10 @@ $(DIR_WBTMP)/m_dun2603_02_00.tbl: $(DIR_RES)/m_dun2603_02_00.bin
 	@echo create_bintbl m_dun2603_02_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2603_02_00.bin
 
+$(DIR_WBTMP)/m_dun2603_02_00_ex.tbl: $(DIR_RES)/m_dun2603_02_00_ex.bin
+	@echo create_bintbl m_dun2603_02_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2603_02_00_ex.bin
+
 $(DIR_WBTMP)/m_dun2604_00_00.tbl: $(DIR_RES)/m_dun2604_00_00.bin
 	@echo create_bintbl m_dun2604_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2604_00_00.bin
@@ -3341,6 +3345,38 @@ $(DIR_WBTMP)/m_dun2606_01_01.tbl: $(DIR_RES)/m_dun2606_01_01.bin
 $(DIR_WBTMP)/m_dun2607_00_00.tbl: $(DIR_RES)/m_dun2607_00_00.bin
 	@echo create_bintbl m_dun2607_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2607_00_00.bin
+
+$(DIR_WBTMP)/white2601_00_00.tbl: $(DIR_RES)/white2601_00_00.bin
+	@echo create_bintbl white2601_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2601_00_00.bin
+
+$(DIR_WBTMP)/white2601_01_00.tbl: $(DIR_RES)/white2601_01_00.bin
+	@echo create_bintbl white2601_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2601_01_00.bin
+
+$(DIR_WBTMP)/white2601_00_01.tbl: $(DIR_RES)/white2601_00_01.bin
+	@echo create_bintbl white2601_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2601_00_01.bin
+
+$(DIR_WBTMP)/white2601_00_01_ex.tbl: $(DIR_RES)/white2601_00_01_ex.bin
+	@echo create_bintbl white2601_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2601_00_01_ex.bin
+
+$(DIR_WBTMP)/white2601_01_01.tbl: $(DIR_RES)/white2601_01_01.bin
+	@echo create_bintbl white2601_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2601_01_01.bin
+
+$(DIR_WBTMP)/white2603_00_00.tbl: $(DIR_RES)/white2603_00_00.bin
+	@echo create_bintbl white2603_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2603_00_00.bin
+
+$(DIR_WBTMP)/white2603_01_00.tbl: $(DIR_RES)/white2603_01_00.bin
+	@echo create_bintbl white2603_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2603_01_00.bin
+
+$(DIR_WBTMP)/white2603_02_00.tbl: $(DIR_RES)/white2603_02_00.bin
+	@echo create_bintbl white2603_02_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2603_02_00.bin
 
 $(DIR_WBTMP)/m_ruin01_00_00.tbl: $(DIR_RES)/m_ruin01_00_00.bin
 	@echo create_bintbl m_ruin01_00_00
