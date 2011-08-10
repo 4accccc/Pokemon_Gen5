@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_d27r0501.h"
   .include  "d27r0501.h"
+  .include  "w21.h" //w21への遷移参照用
+  .include  "w21_def.h" //w21への遷移参照用
 
   //@author Mizuguchi_Mai
 
@@ -168,28 +170,26 @@ INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
-  //【仮】W21に遷移
-  
-  //暗転処理
-  _BLACK_OUT_SLOW()
-  _DISP_FADE_END_CHECK()
-  
-  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-  _OBJ_DEL( D27R0501_SWSAGE7_01 )
-  _OBJ_DEL( D27R0501_NINJA_01 )
-  _OBJ_DEL( D27R0501_NINJA_02 )
-  
-  //暗転復帰
-  _BLACK_IN_SLOW()
-  _DISP_FADE_END_CHECK()
-  
   //========================================//
   //ヴィオ・ダークトリニティ非表示
   _FLAG_SET( FV_D27R0501_SWSAGE7_01 )
   _FLAG_SET( FV_D27R0501_NINJA_01 )
   //D27R0701 SCENE_CHANGE無効
   $WK_SCENE_D27R0501_SWSAGE7_01 = 2
+  //W21ライバル表示
+  _FLAG_RESET( FV_W21_SWRIVAL_01 )
+  //W21チェレン表示
+  _FLAG_RESET( FV_W21_SWLEADER1_01 )
+  //W21イベント進行
+  $WK_SCENE_W21_01 = 3
   //========================================//
+  
+  //W21に遷移
+  
+  //予約スクリプト
+  _RESERVE_SCRIPT( SCRID_RESERVE_W21_SWPLAZMA_END_01 )
+  //W21マップチェンジ1
+  _MAP_CHANGE( ZONE_ID_W21, 794, 241, DIR_DOWN )
 
 INIT_EVENT_END
 

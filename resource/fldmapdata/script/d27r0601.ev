@@ -428,6 +428,8 @@ ev_d27r0601_ninjabtl_end:
   $WK_SCENE_D27R0601_STOPPER_01 = 2
   //ダークトリニティ非表示
   _FLAG_SET( FV_D27R0601_NINJA_01 )
+  //W21チェレン非表示
+  _FLAG_SET( FV_W21_SWLEADER1_01 )
   //========================================//
   
 _RET

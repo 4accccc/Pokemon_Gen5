@@ -18,6 +18,9 @@
 #define TR_KARATE_15                       6
 #define FLD_ITEM_169                       7
 #define FLD_ITEM_170                       8
+#define W21_SWRIVAL_01                     9
+#define W21_SWLEADER8_01                  10
+#define W21_SWLEADER1_01                  11
 
 #endif //ZONE_W21_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/w21.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

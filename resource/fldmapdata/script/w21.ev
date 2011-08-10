@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_w21.h"
-  //.include  "w21.h"
+  .include  "w21.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,411 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_w21
+_EVENT_DATA    ev_zone_w21
+_EVENT_DATA    ev_init_w21
+_EVENT_DATA    ev_recover_w21
+_EVENT_DATA    ev_pos_w21_swrival_01
+_EVENT_DATA    ev_reserve_w21_swplazma_end_01
+_EVENT_DATA    ev_w21_swleader1_01
 _EVENT_DATA_END
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/************************************************************/
+/*					ZONE_CHANGE_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_w21
+  //
+INIT_EVENT_END
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_w21:
-//  _END
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_w21
+  
+  //乗船2回目後イベント
+  IF $WK_SCENE_W21_01 == 3 && FLAG_OFF(FV_W21_SWRIVAL_01) THEN
+    _OBJ_POS_CHANGE(W21_SWRIVAL_01,794,-5,243,DIR_UP)
+  ENDIF
+  
+  //乗船2回目後（D10到着前）
+  IF $WK_SCENE_W21_01 == 4 && FLAG_OFF(FV_W21_SWLEADER1_01) THEN
+    _OBJ_POS_CHANGE(W21_SWLEADER1_01,794,-5,242,DIR_RIGHT)
+  ENDIF
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_w21:
-  //とりあえず最初のラベルだけ生成している
-  _END
+INIT_EVENT_END
 
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_w21
+  //
+INIT_EVENT_END
+
+/************************************************************/
+/*					POS：  						*/
+/************************************************************/
+EVENT_START	ev_pos_w21_swrival_01
+  //========================================//
+  //W21ライバル表示
+  _FLAG_RESET( FV_W21_SWRIVAL_01 )
+  //W21シズイ表示
+  _FLAG_RESET( FV_W21_SWLEADER8_01 )
+  //========================================//
+  
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  //ライバル動作モデル生成
+  _OBJ_ADD(W21_SWRIVAL_01)
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //アニメ：ライバル登場
+  _OBJ_ANIME_AUTO( W21_SWRIVAL_01 , 794, 242, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT(8)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：みつけたな！
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swrival_01 , W21_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル隣接
+  _OBJ_ANIME_AUTO( W21_SWRIVAL_01 , 796, 243, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT(24)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：しかし
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swrival_02 , W21_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //？？？：ちょっとまっとき！
+  _PLAINWIN_MSG_DOWN( msg_w21_swleader8_01 )
+  _MSGWIN_CLOSE()
+  
+  //シズイ動作モデル生成
+  _OBJ_ADD(W21_SWLEADER8_01)
+  
+  _OBJ_POS_CHANGE(W21_SWLEADER8_01,801,0,245,DIR_LEFT)
+  
+  //カメラ操作　シズイにフォーカス
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,52502528,-327759,159621126,48 )
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //暗転処理
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (1)
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //シズイ・ライバル・主人公位置変更
+  _OBJ_POS_CHANGE(MMDL_ID_PLAYER,795,-5,241,DIR_DOWN)
+  _OBJ_POS_CHANGE(W21_SWRIVAL_01,795,-5,243,DIR_UP)
+  _OBJ_POS_CHANGE(W21_SWLEADER8_01,796,-5,242,DIR_LEFT)
+  
+  //暗転復帰
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+  
+  //シズイ：これで
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swleader8_02 , W21_SWLEADER8_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：あんた
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swrival_03 , W21_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //シズイ：おうともよ
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swleader8_03 , W21_SWLEADER8_01 ,POS_DEFAULT )
+  
+  //シズイ：でも　おはんらが
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swleader8_04 , W21_SWLEADER8_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：……あんがとよ
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swrival_04 , W21_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //シズイ：ええか
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swleader8_05 , W21_SWLEADER8_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：シズイ船方向を見る
+  _OBJ_ANIME( W21_SWLEADER8_01 , anm_staystep_r)
+  _OBJ_ANIME_WAIT()
+  
+  //シズイ：さわいで
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swleader8_06 , W21_SWLEADER8_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：シズイ左方向を見る
+  _OBJ_ANIME( W21_SWLEADER8_01 , anm_staystep_l)
+  _OBJ_ANIME_WAIT()
+  
+  //シズイ：きをつけて
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swleader8_07 , W21_SWLEADER8_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：シズイ退場
+  _OBJ_ANIME( W21_SWLEADER8_01 , anm_swleader8_bye_01)
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l)
+  _OBJ_ANIME( W21_SWRIVAL_01 , anm_staystep_l)
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //シズイ動作モデル削除
+  _OBJ_DEL( W21_SWLEADER8_01 )
+  
+  //ライバル：なんだよー
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swrival_05 , W21_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公・ライバル向き合う
+  _OBJ_ANIME( W21_SWRIVAL_01 , anm_staystep_u)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：とはいえ
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swrival_06 , W21_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル退場
+  _OBJ_ANIME( W21_SWRIVAL_01 , anm_swrival_bye_01)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル動作モデル削除
+  _OBJ_DEL( W21_SWRIVAL_01 )
+  
+  //========================================//
+  //W21シズイイベント終了
+  $WK_SCENE_W21_01 = 2
+  //W21シズイ非表示
+  _FLAG_SET( FV_W21_SWRIVAL_01 )
+  //W21ライバル非表示
+  _FLAG_SET( FV_W21_SWLEADER8_01 )
+  //D27搭乗二回目
+  _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+  _FLAG_RESET(FV_D27R0101_SWPLAZMA_02)
+  _FLAG_SET(FV_D27R0101_SWPLAZMA_01)
+  _FLAG_SET(FV_D27R0101_SWLEADER1_01)
+  //========================================//
+  
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //乗船2回目イベント起動
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    //========================================//
+     $WK_SCENE_D27R0101_SECONDW_01 = 0
+     $WK_SCENE_D27R0101_SECONDB_01 = 1
+     //========================================//
+  ELSE
+    //========================================//
+     $WK_SCENE_D27R0101_SECONDW_01 = 1
+     $WK_SCENE_D27R0101_SECONDB_01 = 0
+     //========================================//
+  ENDIF
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	シズイ退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader8_bye_01
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル退場01
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_bye_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*					RESERVE：  						*/
+/************************************************************/
+EVENT_START	ev_reserve_w21_swplazma_end_01
+  
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+
+  //ライバル：とぶのかよ！？
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swrival_07 , W21_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン登場
+  _OBJ_ANIME_AUTO( W21_SWLEADER1_01 , 793, 242, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT(8)
+  _OBJ_ANIME( W21_SWRIVAL_01 , anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：ゴメン……
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swleader1_01 , W21_SWLEADER1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：じゃそちらは
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swrival_08 , W21_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル上を見る
+  _OBJ_ANIME( W21_SWRIVAL_01 , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：だってあのポケモン
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swrival_09 , W21_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル退場
+  _OBJ_ANIME( W21_SWRIVAL_01 , anm_swrival_bye_02 )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( W21_SWLEADER1_01 , anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  _OBJ_DEL( W21_SWRIVAL_01 )
+  
+  //アニメ：チェレン・主人公を見る
+  _OBJ_ANIME( W21_SWLEADER1_01 , anm_swleader1_look_player_01 )
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：キュレム！
+  _BALLOONWIN_OBJMSG_POS( msg_w21_swleader1_01 , W21_SWLEADER1_01 ,POS_DEFAULT )
+  
+  //どうやって
+  _BALLOONWIN_OBJMSG_WB( msg_w21_swleader1_03b , msg_w21_swleader1_03w , W21_SWLEADER1_01 , POS_DEFAULT)
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //W21ライバル非表示
+  _FLAG_SET( FV_W21_SWRIVAL_01 )
+  //========================================//
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ライバル退場02
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_bye_02
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル退場02
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader1_look_player_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*					話しかけ：  						*/
+/************************************************************/
+EVENT_START	ev_w21_swleader1_01
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG_WB( msg_w21_swleader1_03b , msg_w21_swleader1_03w , W21_SWLEADER1_01 , POS_DEFAULT)
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

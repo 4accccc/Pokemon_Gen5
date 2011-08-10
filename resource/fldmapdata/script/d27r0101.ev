@@ -123,7 +123,8 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _OBJ_ANIME_AUTO( D27R0101_SWLEADER1_01 , 14, 31, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
-  //ライバル名格納
+  //主人公・ライバル名格納
+  _PLAYER_NAME( 1 )
   _RIVAL_NAME( 1 )
   
   //ライバル：なんだ　この　ふね
@@ -914,7 +915,7 @@ EVENT_START	ev_pos_d27r0101_second_w_01
   
   //ライバル・主人公名代入
   _PLAYER_NAME( 0 )
-  _RIVAL_NAME( 0 )
+  _RIVAL_NAME( 1 )
 
   //========================================//
   //ライバルを表示
@@ -1026,7 +1027,7 @@ EVENT_START	ev_pos_d27r0101_second_b_01
 
   //ライバル・主人公名代入
   _PLAYER_NAME( 0 )
-  _RIVAL_NAME( 0 )
+  _RIVAL_NAME( 1 )
   
   //========================================//
   //ライバルを表示

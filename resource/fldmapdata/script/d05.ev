@@ -318,8 +318,6 @@ EVENT_START		ev_scene_d05_swplazma_01
   _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()		//カメラ操作終了
   
-  //【仮】以下アジト船～イベント終了までの流れは仮
-  
   //========================================//
   //D05プラズマ団イベント終了
   $WK_SCENE_D05 = 4
@@ -327,13 +325,13 @@ EVENT_START		ev_scene_d05_swplazma_01
   _FLAG_SET( FV_D05_SWBOSS_01 )
   //アクロマ動作OBJ削除
   _OBJ_DEL( D05_SWBOSS_01 )
-  //========================================//
   
-  //予約スクリプト
-	_RESERVE_SCRIPT( SCRID_RESERVE_D05_SWPLAZMA_AF_01 )
-	
-	//D05マップチェンジ
-	_MAP_CHANGE( ZONE_ID_D05, 197, 491, DIR_UP )
+  //D27R0101アジト船1回目イベント起動
+  _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+  _FLAG_RESET(FV_D27R0101_SWPLAZMA_01)
+  _FLAG_RESET(FV_D27R0101_SWLEADER1_01)
+  $WK_SCENE_D27R0101_FIRST_01 = 1
+  //========================================//
 EVENT_END
 
 //--------------------------------------------------------------------
