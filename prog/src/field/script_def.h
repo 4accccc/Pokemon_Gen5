@@ -758,4 +758,5 @@
 #define SCR_INFDUNGEON_PARAM_ROOM_ID            (2) ///<無限ダンジョン：現在のルームID
 #define SCR_INFDUNGEON_PARAM_TRAINER_COUNT      (3) ///<無限ダンジョン：ダンジョン内のトレーナー人数
 #define SCR_INFDUNGEON_PARAM_WIN_TRAINER_COUNT  (4) ///<無限ダンジョン：ダンジョン内のトレーナー人数
+#define SCR_INFDUNGEON_PARAM_CHECK_UP_ROOMTYPE_BOSS (5) ///<無限ダンジョン：上の部屋がボス部屋かどうか
 

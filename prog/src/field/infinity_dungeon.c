@@ -198,10 +198,10 @@ static const GRID_DATA sc_black_warp_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
   },
   // ボス部屋
   {
-    { 6 , 0 , 14},// 下
-    { 6 , 0 , 14},// 上
-    { 6 , 0 , 14},// 右
-    { 6 , 0 , 14},// 左
+    { 6 , 0 , 13},// 下
+    { 6 , 0 , 13},// 上
+    { 6 , 0 , 13},// 右
+    { 6 , 0 , 13},// 左
   },
   // 特殊部屋１
   {
@@ -239,10 +239,10 @@ static const GRID_DATA sc_white_warp_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
   },
   // ボス部屋
   {
-    { 6 , 0 , 14},// 下
-    { 6 , 0 , 14},// 上
-    { 6 , 0 , 14},// 右
-    { 6 , 0 , 14},// 左
+    { 6 , 0 , 13},// 下
+    { 6 , 0 , 13},// 上
+    { 6 , 0 , 13},// 右
+    { 6 , 0 , 13},// 左
   },
   // 特殊部屋１
   {
@@ -1041,6 +1041,7 @@ static ROOM_DATA* GetNowRoomData( MAP_CHAGE_EVENT_WORK *p_wk )
 {
   return &p_wk->p_dungeon_data->room_data[ p_wk->now_floor ][p_wk->now_room];
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ワープ後のゾーンIDを取得
@@ -3124,6 +3125,30 @@ static BOOL SetTutorialMap( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_du
   u8 dungeon_status;
   FIELD_WFBC_CORE_TYPE wfbc_type;
 
+  // 両バージョンどちらかで、チュートリアルエリアを抜けているかどうかを調べる
+  {
+    u8 dungeon_status_b = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save ,FIELD_WFBC_CORE_TYPE_BLACK_CITY );
+    u8 dungeon_status_w = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save ,FIELD_WFBC_CORE_TYPE_WHITE_FOREST );
+    u8 now_area = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
+    u8 max_status;
+
+    // 白と黒、進んでいる方を調べる
+    if( dungeon_status_b < dungeon_status_w )
+    {
+      max_status = dungeon_status_w;
+    }
+    else
+    {
+      max_status = dungeon_status_b;
+    }
+
+    // チュートリアルエリア2を超えているか、既にクリア済みのエリアの場合はチュートリアルデータに差換えない
+    if( (max_status >= INF_TUTORIAL_DATA_CNT) || (max_status > now_area)  )
+    {
+      return FALSE;
+    }
+  }
+
   // バージョンからWFBCの状態を取得
   if( p_dungeon_data->version == VERSION_B2 )
   {
@@ -3134,43 +3159,36 @@ static BOOL SetTutorialMap( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_du
     wfbc_type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
   }
 
-  // 自分と同じバージョンの時のみチュートリアルマップにさしかえる
-  if ( GET_VERSION() == p_dungeon_data->version )
+  // ダンジョンの状態を取得
+  dungeon_status = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save ,wfbc_type );
+
   {
-    // ダンジョンの状態を取得
-    dungeon_status = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save ,wfbc_type );
-
-    // チュートリアル用マップに差替え(エリア2クリアまでさしかえ)
-    if( (dungeon_status < INF_TUTORIAL_DATA_CNT) )
+    u8 tutorial_data_index = dungeon_status;
+    const ROOM_DATA *p_w_tutorialmap_table[] =
     {
-      u8 tutorial_data_index = dungeon_status;
-      const ROOM_DATA *p_w_tutorialmap_table[] =
-      {
-        sc_tutorial_rooo_data_w1,
-        sc_tutorial_rooo_data_w2,
-      };
-      const ROOM_DATA *p_b_tutorialmap_table[] =
-      {
-        sc_tutorial_rooo_data_b1,
-        sc_tutorial_rooo_data_b2,
-      };
+      sc_tutorial_rooo_data_w1,
+      sc_tutorial_rooo_data_w2,
+    };
+    const ROOM_DATA *p_b_tutorialmap_table[] =
+    {
+      sc_tutorial_rooo_data_b1,
+      sc_tutorial_rooo_data_b2,
+    };
 
-      // データをクリア
-      GFL_STD_MemFill(p_dungeon_data->room_data, 0, sizeof(p_dungeon_data->room_data));
+    // データをクリア
+    GFL_STD_MemFill(p_dungeon_data->room_data, 0, sizeof(p_dungeon_data->room_data));
 
-      // ダンジョンの状態を設定
-      if( p_dungeon_data->version == VERSION_B2 )
-      {
-        GFL_STD_MemCopy( p_b_tutorialmap_table[tutorial_data_index], p_dungeon_data->room_data, sizeof(sc_tutorial_rooo_data_b1));
-      }
-      else
-      {
-        GFL_STD_MemCopy( p_w_tutorialmap_table[tutorial_data_index], p_dungeon_data->room_data, sizeof(sc_tutorial_rooo_data_b1));
-      }
-      return TRUE;
+    // ダンジョンの状態を設定
+    if( p_dungeon_data->version == VERSION_B2 )
+    {
+      GFL_STD_MemCopy( p_b_tutorialmap_table[tutorial_data_index], p_dungeon_data->room_data, sizeof(sc_tutorial_rooo_data_b1));
+    }
+    else
+    {
+      GFL_STD_MemCopy( p_w_tutorialmap_table[tutorial_data_index], p_dungeon_data->room_data, sizeof(sc_tutorial_rooo_data_b1));
     }
   }
-  return FALSE;
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -3863,6 +3881,36 @@ u32 INFINITY_DUNGEON_TrainerCount( INF_DUNGEON_DATA *p_dungeon_data )
 
   ONOUE_Printf("無限ダンジョン内トレーナーの数を取得：%u\n",member_num);
   return member_num;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一つ上の部屋タイプを取得する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL INFINITY_DUNGEON_GetUpPosRoomType( INF_DUNGEON_DATA *p_dungeon_data ,s32 now_floor ,s32 now_room )
+{
+  ROOM_DATA *p_room;
+  // 一つ上の部屋番号を取得
+  s32 next_room = now_room - ROOM_MAX_X;
+
+  if( now_room < 0 )
+  {
+    return FALSE;
+  }
+
+  p_room = &p_dungeon_data->room_data[ now_floor ][ next_room ];
+
+  if( p_room->room_type == ROOM_TYPE_BOSS )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 #ifdef PM_DEBUG

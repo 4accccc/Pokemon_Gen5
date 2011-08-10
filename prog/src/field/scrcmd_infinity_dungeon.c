@@ -846,9 +846,16 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
       *p_ret_wk = INFINITY_DUNGEON_TrainerCount( p_dungeon_data );
     }
     break;
-case SCR_INFDUNGEON_PARAM_WIN_TRAINER_COUNT:
+  case SCR_INFDUNGEON_PARAM_WIN_TRAINER_COUNT:
     {
       *p_ret_wk = INFINITYDUNGEON_SAVE_GetWinTrainerCount( p_save );
+    }
+    break;
+  case SCR_INFDUNGEON_PARAM_CHECK_UP_ROOMTYPE_BOSS:
+    {
+      u8 room_id = INFINITYDUNGEON_SAVE_GetRoomID( p_save );
+      u8 foor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
+      *p_ret_wk = INFINITY_DUNGEON_GetUpPosRoomType( p_dungeon_data,foor_id,room_id );
     }
     break;
   default:
