@@ -1839,7 +1839,7 @@ void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num 
 	//
 	// ルール説明
 	strbuf = GFL_STR_CreateBuffer( 256, wk->heapID );
-	TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_EXPLAIN_00, strbuf );		// ルール説明取得
+	TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_EXPLAIN_01, strbuf );		// ルール説明取得
 	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_EXP_00, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
 	GFL_STR_DeleteBuffer( strbuf );
 	//
@@ -1850,7 +1850,7 @@ void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num 
 	//
 	// 内容説明
 	strbuf = GFL_STR_CreateBuffer( 256, wk->heapID );
-	TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_EXPLAIN_01, strbuf );		// 内容説明取得
+	TdSave_get_str( wk, wbtl, T_DOWNLOAD_SAVE_STR_EXPLAIN_00, strbuf );		// 内容説明取得
 	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_EXP_01, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
 	GFL_STR_DeleteBuffer( strbuf );
 	//

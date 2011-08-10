@@ -333,6 +333,7 @@ typedef struct
 	s32						CurrentPageNum[T_DOWNLOAD_INFO_MAX]; // カレントページ数
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
+    u16						*TestBuffer;					// テスト
 	//
 	WBTDL_DATA				*CurrentWbt;					// カレント(上画面の切り替えタイミング)
 	WBTDL_DATA				*WbtSaveData[3];				// セーブデータ用

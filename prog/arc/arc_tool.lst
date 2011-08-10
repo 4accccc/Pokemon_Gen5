@@ -328,6 +328,7 @@
   ARCID_WBT_PD3A      "wbt/wbt3a_pd.narc"     #WBT用BTDMakerデータ（ポケモン）
   ARCID_WBT_TD3N      "wbt/wbt3n_td.narc"     #WBT用BTDMakerデータ（トレーナー）
   ARCID_WBT_PD3N      "wbt/wbt3n_pd.narc"     #WBT用BTDMakerデータ（ポケモン）
+  ARCID_WBT_DLDATA    "wbt_dldata.narc"       #WBT用ダウンロード用データ
   ARCID_FMISSION_LOG   "fmission_log.narc"   #フェスミッションログ画面グラフィック
   ARCID_INFINITY_DUNGEON_GIMMICK_DATA   "fieldmap/infinity_dungeon_gmk.narc"   #無限ダンジョンギミックデータ
   ARCID_INFINITY_DUGENON_PD "infinity_dungeon_pd.narc" #無限ダンジョンポケモンデータ

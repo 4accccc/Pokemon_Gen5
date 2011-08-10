@@ -2,7 +2,7 @@
 include $(PROJECT_RSCDIR)\macro_define
 
 
-SUBDIRS	= wbt_list wbt_trainer wbt_btd wbt_subscreen wbt_cut_gra
+SUBDIRS	= wbt_list wbt_trainer wbt_btd wbt_subscreen wbt_cut_gra wbt_dldata
 
 					
 

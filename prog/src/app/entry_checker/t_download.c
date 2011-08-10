@@ -50,6 +50,7 @@
 // アーカイブ
 #include "arc_def.h"
 #include "t_download_gra.naix"
+#include "wbt_dldata.naix"
 
 #include "t_download_local.h"
 #include "app/t_download.h"
@@ -58,6 +59,10 @@
 #include "t_download_save.h"
 
 #include "message.naix"
+
+// ダウンロードチェック(後に消すこと)
+#define __DOWNLOAD_CHECK__
+//#undef  __DOWNLOAD_CHECK__
 
 //=============================================================================
 //=============================================================================
@@ -71,7 +76,11 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 enum
 {
+#ifndef __DOWNLOAD_CHECK__
 	UI_TEMPLATE_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
+#else
+	UI_TEMPLATE_HEAP_SIZE = 0x40000,  ///< ヒープサイズ
+#endif
 };
 
 // 段階
@@ -483,10 +492,22 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	// empty用バッファ取得(必ず破棄すること)
 	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_T_DOWNLOAD_GRA, NARC_t_download_gra_t_download_pos_tblbin, wk->heapID );
+	// testバッファ
+	wk->TestBuffer = 0;
 	
 	// セーブデータの読み込み(全モード必ず)
 	wk->SaveMaxNum = TdSave_init_data( wk );
 	
+#ifdef __DOWNLOAD_CHECK__	// debug用
+	wk->TestBuffer = GFL_ARC_LoadDataAlloc( ARCID_WBT_DLDATA, NARC_wbt_dldata_test_all_bin, wk->heapID );
+   	
+	// 12ブロック分上書き
+	{
+		WBTDL_DATA *adr = &wk->Param->data->data[0];
+		// wbtdl => save_p
+		GFL_STD_MemCopy32( wk->TestBuffer, adr, 12*sizeof(WBTDL_DATA) );
+	}
+#endif
 	// リストデータのチェック
 	// =>選択モードの場合のみ
 	wk->ListMaxNum = 0;
@@ -589,6 +610,10 @@ static void td_exit( T_DOWNLOAD_MAIN_WORK* wk )
 	// 上、下画面をまとめて処理
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
+	// debugのバッファクリア
+	if(wk->TestBuffer){
+		GFL_HEAP_FreeMemory( wk->TestBuffer );
+	}
 	//	
 	// データ(string+obj)破棄
 	// (yes/no)winも含む
