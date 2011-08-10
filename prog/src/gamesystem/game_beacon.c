@@ -995,6 +995,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
 //-----------------------------------------------------------------------------
 static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info )
 {
+  if( GAMEDATA_GetIsSave( bsys->gamedata ) == FALSE )
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( bsys->gamedata );
     RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
