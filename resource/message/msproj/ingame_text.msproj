@@ -2029,6 +2029,8 @@
 			<ContentItem
 				Name="ribbon.mstxt" />
 			<ContentItem
+				Name="seisoku.mstxt" />
+			<ContentItem
 				Name="select_moji_mode.mstxt" />
 			<ContentItem
 				Name="shinka_demo.mstxt" />
