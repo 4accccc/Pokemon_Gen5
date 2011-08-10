@@ -239,6 +239,8 @@ static u32 DebugGetRResortBeaconDiv( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 pa
 static void DebugSetRResortBeaconDiv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 static u32 DebugGetRResortLv( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetRResortLv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetRResortTex( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetRResortTex(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 
 //WBTÉZÅ[Éu
 static u32 DebugGetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param );
@@ -1845,6 +1847,25 @@ static void DebugSetRResortLv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, 
   {
     RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, value );
     RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, 0 );
+  }
+}
+static u32 DebugGetRResortTex( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_CITY_DATA *p_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+
+  return RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_TEX, NULL );
+}
+static void DebugSetRResortTex(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_CITY_DATA *p_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+
+  if( RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_TEX, NULL ) != value )
+  {
+    RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_TEX, value );
   }
 }
 //=============================================================================

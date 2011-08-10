@@ -421,10 +421,15 @@ static const DEBUG_NUMINPUT_PARAM DNI_RResortLv  =
 {
   0,  0xFFFF, DebugGetRResortLv, DebugSetRResortLv,
 };
+static const DEBUG_NUMINPUT_PARAM DNI_RResortTex  =
+{
+  0,  10, DebugGetRResortTex, DebugSetRResortTex,
+};
 
 static const DEBUG_NUMINPUT_LIST DNI_ResonanceResort[] = { 
   //gmm_id, param, dni_param
   { dni_resort_11, 0, &DNI_RResortLv },  //街レベル変更
+  { dni_resort_12, 0, &DNI_RResortTex },  //テクスチャ変更
   { dni_resort_01, 0, &DNI_RResortBeaconFlag }, //ビーコン配信On,OFF
   { dni_resort_02, 0, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
   { dni_resort_03, 1, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク

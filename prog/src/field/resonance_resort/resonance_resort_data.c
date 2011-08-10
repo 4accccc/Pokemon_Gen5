@@ -2392,6 +2392,10 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetSameOwnerData( RESORT_RECV_BUFF *p
 RESORT_RECV_BUFF * RESORT_RECV_BUFF_Init( HEAPID heapID, u32 num )
 {
   RESORT_RECV_BUFF *p_wk  = GFL_HEAP_AllocClearMemory( heapID, RESORT_RECV_BUFF_SIZE( num ) );
+  if( p_wk == NULL )
+  {
+    return NULL;
+  }
 
   RESORT_RECV_BUFF_InitInstance( p_wk, num );
 
@@ -3506,7 +3510,7 @@ struct _RESORT_CITY_DATA
   u32     build_cnt;
   u32     quest_clear_cnt;
   u32     exp;  //TODO
-  u32     todo2;  //TODO
+  u32     tex;  //TODO
   u32     todo3;  //TODO
   u8      secret_present_type;  
   u8      secret_present_num;
@@ -3608,6 +3612,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->exp;
   case RESORT_CITY_DATA_PARAM_RND_SEED:
     return cp_wk->rnd_seed;
+  case RESORT_CITY_DATA_PARAM_TEX:
+    return cp_wk->tex;
   default:
     GF_ASSERT(0);
     return 0;
@@ -3637,6 +3643,9 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
     break;
   case RESORT_CITY_DATA_PARAM_EXP:
     p_wk->exp = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_TEX:
+    p_wk->tex = data;
     break;
   default:
     GF_ASSERT(0);

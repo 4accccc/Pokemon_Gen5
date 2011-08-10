@@ -3012,6 +3012,14 @@ static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
     {
       *pp_buff = RESORT_RECV_BUFF_Init( HEAPID_PROC, RESONANCE_RESORT_BUFF_RECV_EX_NUM );
     }
+
+    //テクスチャ読み替え処理
+    {
+      RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(gamedata) );
+      RESORT_CITY_DATA *p_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+      u16 tex = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_TEX, NULL );
+      GAMEDATA_SetAreaOfs( gamedata, tex );
+    }
   }
   else
   {
