@@ -49,7 +49,7 @@
 #define MENUFRAME_PAL_INDEX ( 11 )
 
 #include "arc/guru2_2d.naix" //専用2Dリソースアーカイブ追加
-#include "c_gear.naix"
+#include "c_gear_sw.naix"
 
 //============================================================================================
 //  定数定義
@@ -804,6 +804,9 @@ static void BgExit( void )
 //--------------------------------------------------------------------------------------------
 static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
 {
+  MYSTATUS *my = GAMEDATA_GetMyStatus( wk->g2p->param->gamedata);
+  int gender   = MyStatus_GetMySex( my );
+  
   // ------上画面用BGリソース転送---------
   // 上下画面ＢＧパレット転送
   GFL_ARCHDL_UTIL_TransVramPalette( p_handle,  NARC_guru2_2d_record_s_NCLR, PALTYPE_MAIN_BG, 0, 16*16*2, HEAPID_GURU2 );
@@ -819,11 +822,11 @@ static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
   // ------下画面用BGリソース転送---------
   // サブ画面パレット転送
 
-  GFL_ARC_UTIL_TransVramPalette( ARCID_C_GEAR, NARC_c_gear_c_gear_m_NCLR,  PALTYPE_SUB_BG,  0, 32*11,   HEAPID_GURU2 );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_C_GEAR_SW, NARC_c_gear_sw_no_gear_m_nclr+(gender%2),  PALTYPE_SUB_BG,  0, 32*11,   HEAPID_GURU2 );
   // サブ画面キャラ転送
-  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_C_GEAR, NARC_c_gear_c_gear_m1_NCGR,   GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
+  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_C_GEAR_SW, NARC_c_gear_sw_no_gear_ncgr,   GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
   // サブ画面スクリーンキャラ転送
-  GFL_ARC_UTIL_TransVramScreen(      ARCID_C_GEAR, NARC_c_gear_c_gear01_n_NSCR, GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
+  GFL_ARC_UTIL_TransVramScreen( ARCID_C_GEAR_SW, NARC_c_gear_sw_no_gear_nscr, GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
 
   // メイン画面会話ウインドウグラフィック転送
   BmpWinFrame_GraphicSet(
