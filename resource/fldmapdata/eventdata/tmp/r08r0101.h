@@ -15,6 +15,15 @@
 #define R08R0101_POKE6_01                  3
 #define R08R0101_OLDMAN1_01                4
 #define R08R0101_ROCK_01                   5
+#define TR_FISHING_27                      6
+#define FLD_ITEM_224                       7
+#define TR_RANGERM_26                      8
+#define FLD_ITEM_225                       9
+#define FLD_ITEM_226                      10
+#define FLD_ITEM_227                      11
+#define FLD_ITEM_228                      12
+#define TR_RANGERW_26                     13
+#define TR_FISHING_28                     14
 
 #endif //ZONE_R08R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r08r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

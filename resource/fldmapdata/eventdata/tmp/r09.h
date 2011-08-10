@@ -12,6 +12,17 @@
 #ifndef ZONE_R09_EVC_H
 #define ZONE_R09_EVC_H
 
+#define TR_HEADS_09                        0
+#define TR_BADRIDER_08                     1
+#define TR_BADRIDER_09                     2
+#define TR_HEADS_10                        3
+#define TR_BADTEAM_03_2                    4
+#define TR_BADTEAM_03                      5
+#define FLD_ITEM_159                       6
+#define FLD_ITEM_157                       7
+#define FLD_ITEM_160                       8
+#define FLD_ITEM_161                       9
+#define FLD_ITEM_158                      10
 
 #endif //ZONE_R09_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -23,6 +34,5 @@
 #define BG_R09_SIGN3_01                   2
 #define BG_R09_SIGN4_01                   3
 #define R09_HIDE_ITEM_01                  4
-#define R09_HIDE_ITEM_02                  5
 
 #endif //ZONE_R09_EVB_H
