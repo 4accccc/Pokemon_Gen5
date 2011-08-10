@@ -1513,7 +1513,7 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
   }
   //新規にエフェクトを追加
   sel_select_wk->cellSelect = 
-    _gearObjAdd( pWork, x, y, ACTANM_E_IR+pWork->select_panel, CGEAR_CLACT_BG_PRI, ACT_SPRI_EFFECT, _CLACT_RES_PANEL );
+    _gearObjAdd( pWork, x, y, ACTANM_E_IR+pWork->select_panel, CGEAR_CLACT_BG_PRI, ACT_SPRI_EFFECT, _CLACT_RES_COMMON );
 
   GFL_CLACT_WK_SetDrawEnable( sel_select_wk->cellSelect, TRUE );
   GFL_CLACT_WK_SetSRTAnimeFlag( sel_select_wk->cellSelect, TRUE ); //SRTアニメ反映
@@ -2898,6 +2898,7 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
 static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL off_flag )
 {
   int evy;
+#if 0
   if(off_flag){
     evy = 8;
     GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_OFF );
@@ -2918,7 +2919,23 @@ static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL off_flag )
       GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT );
     }
   }
-  
+#else
+  if(off_flag){
+    evy = 8;
+    GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_OFF );
+    GFL_CLACT_WK_SetPlttOffs( pWork->cellCursor[ACT_CONNECT], 1, CLWK_PLTTOFFS_MODE_OAM_COLOR );  //暗色パレットに変更
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_CONNECT], FALSE );
+  }else{
+    evy = 0;
+    if( pWork->info_flag[INFO_FLAG_RADAR] ){
+      GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_INFO );
+    }else{
+      GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR );
+    }
+    GFL_CLACT_WK_SetPlttOffs( pWork->cellCursor[ACT_CONNECT], 0, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_CONNECT], TRUE );
+  }
+#endif
   // ビーコンアイコンをパレットフェードで黒く
   /*
   PaletteFadeReq(
