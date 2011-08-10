@@ -803,29 +803,8 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND6_DATA) == RESORT_EXTEND6_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND6_DATA_SetMyData( RESORT_EXTEND6_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
-  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
-  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
-
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND6_DATA) );
-
-  {
-    STRCODE code[RESORT_PHRASE_LEN+EOM_SIZE];
-    RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_PHRASE_CODE, code );
-
-    if( code[0] == GFL_STR_GetEOMCode() )
-    {
-      MYSTATUS *p_mystatus  = GAMEDATA_GetMyStatus((GAMEDATA*)cp_gamedata);
-      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_kutiguse_00+MyStatus_GetID(p_mystatus)%10 );
-      GFL_STR_GetStringCode( p_str, code, RESORT_PHRASE_LEN+EOM_SIZE );
-      GFL_STR_DeleteBuffer( p_str );
-      GFL_MSG_Delete( p_msg );
-    }
-
-    GFL_STD_MemCopy( code, p_wk->phrase, sizeof(STRCODE)*RESORT_PHRASE_LEN );
-  }
+  p_wk->phrase[0] = GFL_STR_GetEOMCode();
 }
 //----------------------------------------------------------------------------
 /**
@@ -870,31 +849,8 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND7_DATA) == RESORT_EXTEND7_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND7_DATA_SetMyData( RESORT_EXTEND7_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
-  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
-  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
-
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND7_DATA) );
-
-  {
-    STRCODE code[RESORT_THANKS_LEN+EOM_SIZE];
-    RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_THANKS_CODE, code );
-
-
-    if( code[0] == GFL_STR_GetEOMCode() )
-    {   
-      MYSTATUS *p_mystatus  = GAMEDATA_GetMyStatus((GAMEDATA*)cp_gamedata);
-      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_thanks_00+MyStatus_GetID(p_mystatus)%10 );
-      GFL_STR_GetStringCode( p_str, code, RESORT_PHRASE_LEN+EOM_SIZE );
-      GFL_STR_DeleteBuffer( p_str );
-      GFL_MSG_Delete( p_msg );
-    }
-
-    GFL_STD_MemCopy( code, p_wk->thanks, sizeof(STRCODE)*RESORT_THANKS_LEN );
-
-  }
+  p_wk->thanks[0] = GFL_STR_GetEOMCode();
 }
 //----------------------------------------------------------------------------
 /**
@@ -3481,6 +3437,7 @@ RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL_DATA *
 {
   return &p_wk->owner;
 }
+
 //=============================================================================
 /**
  *	リゾート街データ
@@ -3773,7 +3730,6 @@ void RESORT_DATA_Boot( const SAVE_CONTROL_WORK* ctrl )
   RESORT_CITY_DATA * p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
   sp_city_data = p_city;
 }
-
 
 //=============================================================================
 /**
