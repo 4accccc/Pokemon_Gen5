@@ -499,7 +499,7 @@ static void PowerOnOff_InitBg( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
     static const u32 _bgpal[]={NARC_c_gear_sw_no_gear_m_nclr,NARC_c_gear_sw_no_gear_f_nclr};
     
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, _bgpal[ sex % 2 ],
-                                      PALTYPE_SUB_BG, PLTID_BG_BACK_S, 1,  heapID);
+                                      PALTYPE_SUB_BG, PLTID_BG_BACK_S, 2*16,  heapID);
     
     // ƒTƒu‰æ–ÊBGƒLƒƒƒ‰“]‘—
     p_sys->back_area = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_c_gear_sw_no_gear_ncgr,

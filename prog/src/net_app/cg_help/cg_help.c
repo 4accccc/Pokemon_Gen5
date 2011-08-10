@@ -23,11 +23,12 @@
 
 #include "arc_def.h"
 #include "cg_comm.naix"
-#include "c_gear.naix"
+#include "c_gear_sw.naix"
 #include "message.naix"
 #include "font/font.naix"
 #include "msg/msg_cg_help.h"
-#include "field/c_gear/c_gear_obj_NANR_LBLDEFS.h"
+#include "field/c_gear/c_gear_sw_nanr_common.h"
+#include "field/c_gear/c_gear_sw_nanr_panel.h"
 
 #include "net_app/cg_help.h"
 
@@ -96,8 +97,7 @@ typedef enum
 
 typedef enum{
   CG_HELP_ICON_NORMAL,
-  CG_HELP_ICON_COMM1,
-  CG_HELP_ICON_COMM2,
+  CG_HELP_ICON_COMM,
   CG_HELP_ICON_MAX,
 }CG_HELP_ICON;
 
@@ -140,8 +140,10 @@ typedef struct
   APP_TASKMENU_WIN_WORK *nextButton;
   APP_TASKMENU_WIN_WORK *endButton;
   
+#if 0
   void *commIconPltRes;
   NNSG2dPaletteData *commIconPlt;
+#endif
 
   GFL_CLUNIT  *cellUnit;
   u32         cellResIdx[CHCR_MAX];
@@ -151,7 +153,6 @@ typedef struct
 
 typedef struct _CG_HELP_ICON_ANM{
   u16  anm_no:8;
-  u16  anm_idx:1;
   u16  visible:1;
 }CG_HELP_ICON_ANM;
 
@@ -450,33 +451,29 @@ static void CG_HELP_LoadResource( CG_HELP_WORK *work )
   
   //OBJ
   {
-    arcHandle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR , work->heapId );
+    u8 sex = MyStatus_GetMySex( work->initWork->myStatus ) % 2;
 
-    if( MyStatus_GetMySex( work->initWork->myStatus ) == PM_MALE )
-    {
-      work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
-            NARC_c_gear_c_gear_m_obj_NCLR, CLSYS_DRAW_SUB , 
-            0 , 0 , 15 , work->heapId  );
-    }
-    else
-    {
-      work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
-            NARC_c_gear_c_gear_f_obj_NCLR, CLSYS_DRAW_SUB , 
-            0 , 0 , 15 , work->heapId  );
-    }
-    work->cellResIdx[CHCR_CGEAR_NCG] = GFL_CLGRP_CGR_Register( arcHandle , 
-          NARC_c_gear_c_gear_obj_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
-    work->cellResIdx[CHCR_CGEAR_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
-          NARC_c_gear_c_gear_obj_NCER , NARC_c_gear_c_gear_obj_NANR, work->heapId  );
-    work->cellResIdx[CHCR_CGEAR_NCG2] = GFL_CLGRP_CGR_Register( arcHandle , 
-          NARC_c_gear_c_gear_obj_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
-    work->cellResIdx[CHCR_CGEAR_ANM2] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
-          NARC_c_gear_c_gear_obj_NCER , NARC_c_gear_c_gear_obj_NANR, work->heapId  );
+    arcHandle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR_SW , work->heapId );
+
+    work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
+          NARC_c_gear_sw_c_gear_m_obj_nclr+sex, CLSYS_DRAW_SUB , 
+          0 , 0 , 15 , work->heapId  );
     
+    work->cellResIdx[CHCR_CGEAR_NCG] = GFL_CLGRP_CGR_Register( arcHandle , 
+          NARC_c_gear_sw_c_gear_obj_ncgr , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+    work->cellResIdx[CHCR_CGEAR_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
+          NARC_c_gear_sw_c_gear_obj_ncer , NARC_c_gear_sw_c_gear_obj_nanr, work->heapId  );
+    work->cellResIdx[CHCR_CGEAR_NCG2] = GFL_CLGRP_CGR_Register( arcHandle , 
+          NARC_c_gear_sw_c_gear_btn_m1_ncgr , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+    work->cellResIdx[CHCR_CGEAR_ANM2] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
+          NARC_c_gear_sw_c_gear_btn_m1_ncer , NARC_c_gear_sw_c_gear_btn_m1_nanr, work->heapId  );
+
+#if 0
     //通信マーク用背景キャラ
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_c_gear_c_gear_NCGR ,
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_c_gear_sw_c_gear_ncgr ,
                       CG_HELP_FRAME_ICON , 0 , 0, FALSE , work->heapId );
-    work->commIconPltRes = GFL_ARCHDL_UTIL_LoadPalette( arcHandle , NARC_c_gear_c_gear_m_NCLR, &work->commIconPlt , work->heapId );
+    work->commIconPltRes = GFL_ARCHDL_UTIL_LoadPalette( arcHandle , NARC_c_gear_sw_c_gear_m_nclr, &work->commIconPlt , work->heapId );
+#endif
     GFL_ARC_CloseDataHandle( arcHandle );
   }
   //OBJ初期化
@@ -490,7 +487,7 @@ static void CG_HELP_LoadResource( CG_HELP_WORK *work )
  
     for(i = 0;i < CG_HELP_ICON_MAX;i++){
       cellInitData.softpri = i;
-      res_ofs = (i > 1);
+      res_ofs = i;
       work->clwkIcon[i] = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellResIdx[CHCR_CGEAR_NCG+res_ofs],
               work->cellResIdx[CHCR_CGEAR_PLT],
@@ -507,7 +504,7 @@ static void CG_HELP_ReleaseResource( CG_HELP_WORK *work )
 {
   int i;
 
-  GFL_HEAP_FreeMemory( work->commIconPltRes );
+//  GFL_HEAP_FreeMemory( work->commIconPltRes );
 
   for(i = 0;i < CG_HELP_ICON_MAX;i++){
     GFL_CLACT_WK_Remove( work->clwkIcon[i] );
@@ -697,39 +694,32 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
   static const CG_HELP_ICON_ANM anmArr[ICON_TYPE_MAX][CG_HELP_ICON_MAX] = 
   {
     {
-      { 0, 0, 0 },
-      { NANR_c_gear_obj_CellAnime_IR, 1, 1 },
-      { NANR_c_gear_obj_CellAnime_IR, 1, 1 },
+      { NANR_c_gear_obj_IR,  1 },
+      { NANR_c_gear_btn_m1_IR,  1 },
     },
     { 
-      { 0, 0, 0 },
-      { NANR_c_gear_obj_CellAnime_WIFI, 1, 1 },
-      { NANR_c_gear_obj_CellAnime_WIFI, 1, 1 },
+      { NANR_c_gear_obj_WiFi,  1 },
+      { NANR_c_gear_btn_m1_WiFi,  1 },
     },
     {
-      { 0, 0, 0 },
-      { NANR_c_gear_obj_CellAnime_WIRELESS, 1, 1 },
-      { NANR_c_gear_obj_CellAnime_WIRELESS, 1, 1 },
+      { NANR_c_gear_obj_Wireless, 1 },
+      { NANR_c_gear_btn_m1_Wireless, 1 },
     },
     {
-      { NANR_c_gear_obj_CellAnime_sure_sample, 0, 1 },
-      { 0, 0, 0 },
-      { 0, 0, 0 },
+      { NANR_c_gear_obj_beacon_sample, 1 },
+      { 0, 0 },
     },
     {
-      { NANR_c_gear_obj_CellAnime_radar, 0, 1 },
-      { 0, 0, 0 },
-      { 0, 0, 0 },
+      { NANR_c_gear_obj_search, 1 },
+      { 0, 0 },
     },
     {
-      { NANR_c_gear_obj_CellAnime_cus_on, 1, 1 },
-      { 0, 0, 0 },
-      { 0, 0, 0 },
+      { NANR_c_gear_obj_config, 1 },
+      { 0, 0 },
     },
     {
-      { NANR_c_gear_obj_CellAnime_on_off, 0, 1 },
-      { 0, 0, 0 },
-      { 0, 0, 0 },
+      { NANR_c_gear_obj_power, 1 },
+      { 0, 0 },
     }
   };
   static const iconType[CG_HELP_PAGE_MAX] = 
@@ -756,10 +746,10 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
     GFL_CLACT_WK_SetAnmSeq( work->clwkIcon[i] , p_anm->anm_no );
     GFL_CLACT_WK_SetDrawEnable( work->clwkIcon[i] , p_anm->visible );
 //    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon[i] , p_anm->auto_anm );
-    GFL_CLACT_WK_SetAnmIndex( work->clwkIcon[i] , p_anm->anm_idx );
+//    GFL_CLACT_WK_SetAnmIndex( work->clwkIcon[i] , p_anm->anm_idx );
   }
 
-#if 1
+#if 0
   //BMP設定
   if( page <= CG_HELP_COMM_PAGE_END )
   {

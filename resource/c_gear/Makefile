@@ -14,11 +14,33 @@ USERS	= iwasawa toyama
 #------------------------------------------------------------------------------
 targetname = c_gear_sw
 
+src_narc_h1 = c_gear_obj_NANR_LBLDEFS.h
+src_narc_h2 = c_gear_btn_m1_NANR_LBLDEFS.h
+narc_h1 = c_gear_sw_nanr_common.h
+narc_h2 = c_gear_sw_nanr_panel.h
+
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
+TARGET_PROG = $(PROJECT_PROGDIR)src/field/c_gear/
 
+target_narc_h1 = $(TARGET_PROG)$(narc_h1)
+target_narc_h2 = $(TARGET_PROG)$(narc_h2)
+
+#------------------------------------------------------------------------------
+#※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
+#------------------------------------------------------------------------------
+SUBDIRS	=
+
+#共通ルールファイルのインクルード
+include	$(PROJECT_RSCDIR)\macro_define
+
+# 自動でリソースを集める
+lsources:=$(wildcard *.ncl)
+gsources:=$(wildcard *.ncg)
+csources:=$(wildcard *.nsc)
+esources:=$(wildcard *.nce)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
@@ -51,7 +73,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(target_narc_h1) $(target_narc_h2)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -61,6 +83,10 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
+$(target_narc_h1):$(src_narc_h1)
+	$(COPY) $(src_narc_h1) $(target_narc_h1)
+$(target_narc_h2):$(src_narc_h2)
+	$(COPY) $(src_narc_h2) $(target_narc_h2)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
@@ -95,5 +121,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(target_narc_h1)
+	rm -f $(target_narc_h2)
 
 

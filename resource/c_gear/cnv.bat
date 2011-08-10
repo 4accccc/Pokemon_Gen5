@@ -8,9 +8,9 @@ g2dcvtr off_gear.nsc -bg
 g2dcvtr c_gear_m.ncl
 g2dcvtr c_gear_f.ncl
 
-g2dcvtr c_gear_obj.nce -br
+g2dcvtr c_gear_obj.nce -br -lbl
 
-g2dcvtr  c_gear_btn_m1.nce -br
+g2dcvtr  c_gear_btn_m1.nce -br -lbl
 g2dcvtr  c_gear_btn_m2.nce -br
 g2dcvtr  c_gear_btn_m3.nce -br
 g2dcvtr  c_gear_btn_m4.nce -br

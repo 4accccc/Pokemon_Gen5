@@ -956,7 +956,7 @@ static const PANEL_POS_DATA DATA_PanelPosTbl[] = {
 #endif
 #define STARTUP_ANM_MODE_BOOT     (0) //初回起動
 #define STARTUP_ANM_MODE_WAKEUP   (1) //スリープ復帰
-#define STARTUP_ANM_RING_ANM_INTERVAL (5)
+#define STARTUP_ANM_RING_ANM_INTERVAL (3)
 enum
 {
   STARTUP_BOOT_SEQ_ANIME_START,
