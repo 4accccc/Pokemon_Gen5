@@ -385,4 +385,902 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_pokebtl">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]と　たたかえ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:13:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:07:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]と　戦え！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:15:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:09:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>◆ポケモン戦闘ミッション
+（汎用）
+0：ポケモン種族名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:12:30" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_item">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]を　あつめろ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:14:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:10:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]を　集めろ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:16:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:15:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>◆道具探しミッション
+（汎用）
+0：どうぐ名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:15:21" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_npc">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerType ]を　さがせ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:13:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:13:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerType ]を　探せ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:16:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:15:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>◆ＮＰＣ探しミッション
+（汎用）
+0：トレーナー種類名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:15:03" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>１２３４５６７８９０１２３４５</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:02:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T11:59:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>１２３４５６７８９０１２３４５</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:02:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:00:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T11:59:31" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:03:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆれる　くさむらを　さがせ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:02:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:02:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>揺れる　草むらを　探せ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:02:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:02:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:02:59" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:03:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>しんじつの　カケラを　もとめて</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:53:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:02:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>真実の　カケラを　求めて</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:53:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:02:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:02:59" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:03:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイトル４</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイトル四</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイトル５</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイトル五</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:47:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイトル６</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイトル六</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:47:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイトル７</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイトル七</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:47:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイトル８</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイトル八</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:47:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイトル９</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイトル九</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:47:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_title_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイトル１０</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイトル十</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:47:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:46:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_expln_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいげんじかんないに
+ゆれる　くさむらにいる　ポケモンを
+[Digit:4digits ]ひきいじょう　たおそう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:03:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:56:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>制限時間内に
+揺れる　草むらにいる　ポケモンを
+[Digit:4digits ]ひき以上　倒そう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:00:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:55:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T12:55:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_expln_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいげんじかんないに　きのみを
+[Digit:4digits ]こいじょう　あつめよう！
+まちや　みちの　キラキラひかる
+ばしょを　さがしてみよう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:03:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>制限時間内に　きのみを
+[Digit:4digits ]こ以上　集めよう！
+街や　道の　キラキラ光る
+場所を　探してみよう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:04:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_expln_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:4digits Idx="1" ]にんいじょうと
+どうぐを　こうかんしよう！
+まちや　みちにいる
+バックパッカーに　はなしかけよう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:41:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:4digits Idx="1" ]にん以上と
+道具を　交換しよう！
+街や　道にいる
+バックパッカーに　話しかけよう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:43:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_expln_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつめいぶん４</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:44:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>説明文４</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_expln_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつめいぶん５</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:44:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>説明文５</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_expln_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつめいぶん６</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:44:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>説明文６</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_expln_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつめいぶん７</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>説明文７</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_expln_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつめいぶん８</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>説明文８</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_expln_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつめいぶん９</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>説明文９</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_expln_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつめいぶん１０</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>説明文１０</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:45:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-09T13:01:48" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
