@@ -885,16 +885,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オレさ　プラズマだんに
-チョロネコを　うばわれたんだよ……▼
-まだ　ガキのころ
-おまえが　ひっこしてくる　まえさ▽
-ちいさくて　なにも　できなくて……▼
+			<Text>[Name:TrainerName Idx="1" ]『５ねんまえ　さ▼
+オレの　いもうとさ
+プレゼントされた　チョロネコを▽
+プラズマだんに　うばわれたんだよ……▼
+オレも　トレーナーとして
+みじゅくでさ　なにも　できなくて……▼
 だから……　だから
 もっと　つよくならなきゃな……！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:59:01" />
+				Time="2011-08-10T07:51:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -902,16 +903,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オレさ　プラズマ団に
-チョロネコを　奪われたんだよ……▼
-まだ　ガキのころ
-おまえが　引越してくる　前さ▽
-ちいさくて　なにも　できなくて……▼
+			<Text>[Name:TrainerName Idx="1" ]『5年前　さ▼
+オレの　妹さ
+プレゼントされた　チョロネコを▽
+プラズマ団に　奪われたんだよ……▼
+オレも　トレーナーとして
+未熟でさ　なにも　できなくて……▼
 だから……　だから
 もっと　強くならなきゃな……！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:59:06" />
+				Time="2011-08-10T07:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1044,11 +1046,11 @@
 			Language="JPN">
 			<Comment>システム
 ・回復処理
-・0＝主人公名前
+・0＝主人公名
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T06:22:48" />
+				Time="2011-08-10T07:52:30" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1159,11 +1161,11 @@
 ・ギアステーション前
 　GRIDX=422、GRIDZ=461.上向き
 ・はい/いいえの選択肢表示
-・はい　→heroine_04
+　はい　→heroine_04
 　いいえ→heroine_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-10T07:52:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1280,11 +1282,11 @@
 			<Comment>♀：主人公♂
 ・いいえ選択後再度会話
 ・はい/いいえの選択肢表示
-・はい　→heroine_04
+　はい　→heroine_04
 　いいえ→heroine_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-10T07:52:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1469,10 +1471,10 @@
 　tbossbl_02表示後
 ・アイテム入手処理
 　No465「バトルレコーダー」
-・0＝主人公名前</Comment>
+・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-10T07:52:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1543,10 +1545,10 @@
 ・メッセージ表示後、ヒロインは
 　ギアステーションにはいっていく
 ・建物内に消えると主人公操作可能に
-・0＝主人公名前</Comment>
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:43:13" />
+				Time="2011-08-10T07:52:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1623,11 +1625,11 @@
 ・ギアステーション前
 　GRIDX=422、GRIDZ=461.上向き
 ・はい/いいえの選択肢表示
-・はい　→hero_04
+　はい　→hero_04
 　いいえ→hero_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-10T07:52:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1744,11 +1746,11 @@
 			<Comment>♂：主人公♀
 ・いいえ選択後再度会話
 ・はい/いいえの選択肢表示
-・はい　→hero_04
+　はい　→hero_04
 　いいえ→hero_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-10T07:52:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1933,10 +1935,10 @@
 　tbossbl_02表示後
 ・アイテム入手処理
 　No465「バトルレコーダー」
-・0＝主人公名前</Comment>
+・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-10T07:52:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2007,10 +2009,10 @@
 ・メッセージ表示後、ヒーローは
 　ギアステーションにはいっていく
 ・建物内に消えると主人公操作可能にに
-・0＝主人公名前</Comment>
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:43:33" />
+				Time="2011-08-10T07:53:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2866,12 +2868,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レゾナンスストリート（かり）に
+			<Text>ジョインアベニューに
 あたらしい　おみせが　できるのを▽
 こころまちにして　すれちがうのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:02:13" />
+				Time="2011-08-10T07:53:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2879,12 +2881,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レゾナンスストリート（かり）に
-あたらしい　おみせが　できるのを▽
-こころまちにして　すれちがうのだ！</Text>
+			<Text>ジョインアベニューに
+新しい　お店が　オープンするのを▽
+心待ちにして　すれ違うのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:02:17" />
+				Time="2011-08-10T07:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
