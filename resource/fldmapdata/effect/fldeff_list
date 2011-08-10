@@ -85,7 +85,8 @@ G3D_FE_ANMITA = shibuki01.ita \
   $(EFFENC_CAVE)soil_smoke.ita \
   iwakudaki.ita \
   iaigiri.ita \
-  awa.ita
+  awa.ita \
+  fes_kira.ita
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　ivaアニメ定義
@@ -146,7 +147,8 @@ G3D_FE_MDL = kage.imd \
   shibuki.imd \
   ochiba01.imd \
   ochiba02.imd \
-  mv_hide_ochiba.imd
+  mv_hide_ochiba.imd \
+  fes_kira.imd
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義

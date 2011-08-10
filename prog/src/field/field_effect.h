@@ -44,6 +44,7 @@ typedef enum
   FLDEFF_PROCID_BUBBLE, ///<水泡
   FLDEFF_PROCID_SHOAL, ///<浅瀬
   FLDEFF_PROCID_OCHIBA, ///<落ち葉
+  FLDEFF_PROCID_FES_KIRA, ///<フェスミッション キラキラエフェクト
   
   //ここからエフェクトエンカウント用
   FLDEFF_PROCID_ENC_SGRASS, ///<エフェクトエンカウント用　短い草
