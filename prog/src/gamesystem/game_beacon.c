@@ -2094,7 +2094,7 @@ static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys )
 {
   if( bsys->send.info.action.action_no == GAMEBEACON_ACTION_SEARCH )
   {
-    if( bsys->resort_enable )
+    if( bsys->resort_enable && GAMEDATA_GetIsSave( bsys->gamedata ) == FALSE )
     {
 
       RESORT_BEACON_DATA *p_data  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
