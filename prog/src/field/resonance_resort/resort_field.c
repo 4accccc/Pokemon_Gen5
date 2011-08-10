@@ -1390,7 +1390,7 @@ static BOOL Resort_Crowd_People_Wk_UpdateInterest( RESORT_CROWD_PEOPLE_WK *p_wk 
       break;
     }
   case SEQ_MARK_START:
-    MMDL_SetAcmd( p_mmdl, AC_MARK_ONPU );
+    MMDL_SetAcmd( p_mmdl, AC_MARK_ONPU_NO_SE );
     p_wk->interest_seq++;
     break;
   case SEQ_MARK_END:

@@ -2618,6 +2618,18 @@ static int AC_MarkGyoeNoSE_0( MMDL * mmdl )
   AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE, FALSE );
   return( FALSE );
 }
+//--------------------------------------------------------------
+/**
+ * AC_MARK_ONPU_NO_SE 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=çƒãA
+ */
+//--------------------------------------------------------------
+static int AC_MarkOnpuNoSE_0( MMDL * mmdl )
+{
+  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_ONPU, FALSE, FALSE );
+  return( FALSE );
+}
 
 //--------------------------------------------------------------
 /**
@@ -5704,6 +5716,16 @@ int (* const DATA_AC_MarkGyoe_Tbl[])( MMDL * ) =
 int (* const DATA_AC_MarkGyoeNoSe_Tbl[])( MMDL * ) =
 {
   AC_MarkGyoeNoSE_0,
+  AC_Mark_1,
+  AC_End,
+};
+
+//--------------------------------------------------------------
+/// AC_MARK_ONPU_NO_SE
+//--------------------------------------------------------------
+int (* const DATA_AC_MarkOnpuNoSe_Tbl[])( MMDL * ) =
+{
+  AC_MarkOnpuNoSE_0,
   AC_Mark_1,
   AC_End,
 };
