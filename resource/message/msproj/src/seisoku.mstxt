@@ -1,3 +1,387 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_seisoku_zone_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>［ゾーン名タグ］の　くさむらに
+せいそく　する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:25:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:25:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>［ゾーン名タグ］の　草むらに
+生息　する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:26:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:25:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>草むらエンカウント選択時に表示</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:26:31" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_zone_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>［ゾーン名タグ］の　すなちに
+せいそく　する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:27:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:27:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>［ゾーン名タグ］の　砂地に
+生息　する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:27:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>砂地エンカウント選択時に表示
+リゾートデザート・R04などに使用</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:27:58" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_zone_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>［ゾーン名タグ］の　ぬまちに
+せいそく　する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:28:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:28:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>［ゾーン名タグ］の　沼地に
+生息　する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:28:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:28:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>沼地エンカウント選択時に表示
+セッカシティ・R08などに使用</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:28:46" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_zone_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>［ゾーン名タグ］の　なかに
+せいそく　する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:29:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:28:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>［ゾーン名タグ］の　中に
+生息　する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:30:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:28:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>洞窟内エンカウント選択時に表示
+洞窟全般に使用</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:29:33" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_zone_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>［ゾーン名タグ］の　すいじょうに
+せいそく　する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:29:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:29:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>［ゾーン名タグ］の　水上に
+生息　する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:29:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>水上エンカウント選択時に表示
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:30:18" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_zone_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>［ゾーン名タグ］の
+つりで　つれる　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:31:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:31:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>［ゾーン名タグ］の
+釣りで　釣れる　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:31:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:31:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>釣りエンカウント選択時に表示
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:31:44" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_result_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>［ゾーン名タグ］の
+すべての　ポケモンを　みました</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:33:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:33:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>［ゾーン名タグ］の
+全ての　ポケモンを　みました</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:34:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:33:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>みる条件達成時
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:34:22" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_result_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>［ゾーン名タグ］の
+すべての　ポケモンを　つかまえました</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:34:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:34:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>［ゾーン名タグ］の
+全ての　ポケモンを　捕まえました</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:34:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:34:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>捕獲条件達成時
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:34:53" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_err_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいそく　していません</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:35:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:35:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>生息　していません</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:35:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:35:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>参照するポケモンデータがない場合の処理</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-10T08:35:59" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
