@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_bc10.h"
-  //.include  "bc10.h"
+  .include  "bc10.h"
   .include "../../../prog/src/field/scrcmd_wfbc_define.h"
 
 //--------------------------------------------------------------
@@ -20,23 +20,52 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_bc10
 _EVENT_DATA    ev_bg_bc10_board_01
+_EVENT_DATA    ev_pos_bc10_d31r0201_door
+_EVENT_DATA    ev_reserve_bc10_d31r0201_door
 _EVENT_DATA_END
 
+//------------------------！注意！------------------------------//
+//																//
+//		LOCALWORK12をD32への接続に使用			//
+//		ゾーン内での使用を禁止します							//
+//																//
+//--------------------------------------------------------------//
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*POS：無限ダンジョンに移動                                                 */
 /**************************************************************/
-//ev_zone_bc10:
-//  _END
+EVENT_START  ev_pos_bc10_d31r0201_door
+
+  //カメラ操作　無限ダンジョンにフォーカス
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  
+  //カメラ操作,最後の引数はカメラ操作にかけるフレーム数
+  _CAMERA_MOVE( 6126,0,1776311,1802240,0,1146880,64 )
+  
+  //アニメ：主人公入り口へ移動
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_u)
+  _OBJ_ANIME_WAIT()
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //マップチェンジ
+  _MAP_CHANGE( ZONE_ID_D31R0201, 7, 14, DIR_UP )
+  
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*RESERVE：無限ダンジョンから出る                                                 */
 /**************************************************************/
-ev_bc10:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START  ev_reserve_bc10_d31r0201_door
+  
+  //入り口から出る
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_d)
+  _OBJ_ANIME_WAIT()
+  
+EVENT_END
+
 
 /**************************************************************/
 /*看板01                                                 */
@@ -44,3 +73,75 @@ ev_bc10:
 EVENT_START  ev_bg_bc10_board_01
 	_EASY_BGWIN_MSG(bc10_sign1_01 , TYPE_TOWN)
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	
