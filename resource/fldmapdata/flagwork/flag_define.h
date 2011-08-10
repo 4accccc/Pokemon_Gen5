@@ -670,7 +670,7 @@
 #define FV_C03R0301_CLEANINGM_01           752 /* 0x02f0 バトルカンパニー：1F清掃員 */
 #define FV_D01R0101_RATI2_01               753 /* 0x02f1 夢の跡地：ラティアス・ラティオス */
 #define FV_D27R0601_SWRIVAL_01             754 /* 0x02f2 プラズマフリゲート隠し部屋：ライバル */
-#define FV_W21_RIVAL_01                    755 /* 0x02f3 21番水路：ライバル */
+#define FV_W21_SWRIVAL_01                  755 /* 0x02f3 21番水路：ライバル */
 #define FV_W21_SWLEADER8_01                756 /* 0x02f4 21番水路：シズイ */
 #define FV_W21_SWLEADER1_01                757 /* 0x02f5 21番水路：チェレン */
 #define FV_H01_BRIDGE_MANIA_01             758 /* 0x02f6 スカイアローブリッジ：橋マニア */
