@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-04-19T20:06:49"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-08-01T14:21:06"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -3963,13 +3963,13 @@
 		path="C:/home/swan_data3d/field/in79/chip/tex/in79tv01.tga"
 	>
 		<bitmap size="64">
-			4444 4444 4444 4444 4444 4444 4444 4444
+			6666 6666 6666 6666 6666 6666 6666 6666
+			5555 5555 5555 5555 4444 4444 4444 4444
 			3333 3333 3333 3333 2222 2222 2222 2222
-			2222 2222 2222 2222 2222 2222 2222 2222
-			2222 2222 2222 2222 2222 2222 2222 2222
-			2222 2222 2222 2222 2222 2222 2222 2222
-			2222 2222 2222 2222 1111 1111 1111 1111
-			0000 0000 0000 0000 0000 0000 0000 0000
+			1111 1111 1111 1111 1111 1111 1111 1111
+			0122 0000 0000 0000 2133 2222 2222 2222
+			3133 3333 3333 3333 2022 2222 2222 2222
+			0011 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
@@ -4136,7 +4136,7 @@
 		0000 4e73 4a52 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="15" name="in79tv01_pl" color_size="8">
-		5ad6 6739 6b5a 77bd 7bde 7fff 7fff 7fff
+		358c 3dce 4a30 5ab4 6738 77bd 7bde 7fff
 	</tex_palette>
 	<tex_palette index="16" name="in79tv_anim1_pl" color_size="16">
 		63df 63fa 67ff 6b9f 6f5f 735f 73fa 7b3e
