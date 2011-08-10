@@ -7692,7 +7692,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_gymsign_01">
+		Label="msg_c08_gymsign_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ソウリュウシティ　ポケモンジム
