@@ -507,7 +507,7 @@ static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_w
 
 static void Resort_Crowd_People_Wk_InitInterest( RESORT_CROWD_PEOPLE_WK *p_wk, const RESORT_BINARY_SHOP *cp_shop, const RESORT_BINARY_INSTITUTION *cp_institution, RESORT_PEOPLE_ALL_DATA *p_all_people );
 static BOOL Resort_Crowd_People_Wk_UpdateInterest( RESORT_CROWD_PEOPLE_WK *p_wk );
-static BOOL Resort_Crowd_People_Wk_CheckInterest( RESORT_CROWD_PEOPLE_WK *p_wk );
+static BOOL Resort_Crowd_People_Wk_CheckInterest( RESORT_CROWD_PEOPLE_WK *p_wk, const FIELD_PLAYER* cp_player );
 
 //-------------------------------------
 ///	隊列ワーク
@@ -1128,7 +1128,7 @@ static void Resort_Crowd_People_Wk_UpdateStreat( RESORT_CROWD_PEOPLE_WK *p_wk, M
             {
               /*  */
             }
-            else if( Resort_Crowd_People_Wk_CheckInterest(p_wk) )
+            else if( Resort_Crowd_People_Wk_CheckInterest(p_wk, cp_player) )
             {
               p_wk->state = STATE_INTEREST;
             }
@@ -1279,7 +1279,7 @@ static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_w
             {
               /*  */
             }
-            else if( Resort_Crowd_People_Wk_CheckInterest(p_wk) )
+            else if( Resort_Crowd_People_Wk_CheckInterest(p_wk, cp_player) )
             {
               p_wk->state = STATE_INTEREST;
             }
@@ -1411,11 +1411,28 @@ static BOOL Resort_Crowd_People_Wk_UpdateInterest( RESORT_CROWD_PEOPLE_WK *p_wk 
  *	@return TRUE興味の場所だった  FALSE通常
  */
 //-----------------------------------------------------------------------------
-static BOOL Resort_Crowd_People_Wk_CheckInterest( RESORT_CROWD_PEOPLE_WK *p_wk )
+static BOOL Resort_Crowd_People_Wk_CheckInterest( RESORT_CROWD_PEOPLE_WK *p_wk, const FIELD_PLAYER* cp_player )
 {
+  enum
+  {
+    CROUWD_INTEREST_RANGE_FRONT   = 20,
+    CROUWD_INTEREST_RANGE_BACK    = 7,
+  };
+
   int i;
+  s16 x, y, player_z;
+  s16 mmdl_z;
 
   MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
+  FIELD_PLAYER_GetGridPos( cp_player, &x, &y, &player_z );
+  mmdl_z = MMDL_GetGridPosZ(p_mmdl);
+
+  if( !(player_z - CROUWD_INTEREST_RANGE_FRONT < mmdl_z 
+    && mmdl_z < player_z + CROUWD_INTEREST_RANGE_BACK) )
+  {
+    return FALSE;
+  }
+
   for( i = 0; i < p_wk->interest_cnt; i++ )
   {
     if( p_wk->interest_grid_z[i] == MMDL_GetGridPosZ(p_mmdl) 
@@ -1693,18 +1710,38 @@ typedef struct
 static void RESORT_CROWD_NOISE_WK_Init( RESORT_CROWD_NOISE_WK *p_wk, u16 id, HEAPID heapID );
 static void RESORT_CROWD_NOISE_WK_Exit( RESORT_CROWD_NOISE_WK *p_wk );
 static void RESORT_CROWD_NOISE_WK_Main( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg );
-static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data );
+
+typedef enum
+{
+  RESORT_CROWD_NOISE_MSG_INTRODUCTION,
+  RESORT_CROWD_NOISE_MSG_PHRASE,
+  RESORT_CROWD_NOISE_MSG_THANKS,
+  RESORT_CROWD_NOISE_MSG_MAX
+}RESORT_CROWD_NOISE_MSG;
+static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data, RESORT_CROWD_NOISE_MSG msg );
 static void RESORT_CROWD_NOISE_WK_Off( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg );
 static void RESORT_CROWD_NOISE_WK_Clear( RESORT_CROWD_NOISE_WK *p_wk );
+static BOOL RESORT_CROWD_NOISE_WK_IsEnd( const RESORT_CROWD_NOISE_WK *cp_wk );
+static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst );
 
 //-------------------------------------
 ///	騒音管理
 //=====================================
+#define RESORT_CROWD_NOISE_WND_DRAW_MAX (3)
 struct _RESORT_CROWD_NOISE
 {
   s16 wait;
   s16 wait_max;
-  u32 add_idx;
+
+  s16 wnd_wait;
+  s16 wnd_wait_max;
+  RESORT_CROWD_NOISE_MSG msg;
+
+  u16 wnd_idx;
+  u16 wnd_num;
+  u16 add_idx[RESORT_CROWD_NOISE_WND_DRAW_MAX];
+  u16  seq;
+
   FLDMSGBG                  *p_msgbg;
   RESORT_ABSTRUCT_MANAGER   *p_abstruct;
   RESORT_ABSTRUCT_DATA      *p_src_data;
@@ -1775,35 +1812,92 @@ static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WO
 {
   if( FIELDMAP_CheckDoEvent( cp_fieldmap ) == FALSE )
   {
-    p_wk->wait++;
-
-    // ウエイトたったら、ランダムメッセージ表示
-    if( p_wk->wait >= p_wk->wait_max )
+    enum
     {
-      // 表示
-      u32 src = p_wk->add_idx;
+      SEQ_CHECK,
+      SEQ_START,
+      SEQ_END,
+    };
+    Resort_Crowd_Noise_CheckBufferNum( p_wk );
 
-      do
+    switch( p_wk->seq )
+    {
+    case SEQ_CHECK:
+      if( p_wk->wait++ >= p_wk->wait_max )
       {
-        p_wk->add_idx = GFL_STD_MtRand(RESORT_CROWD_NOISE_MAX);
-      }while( src == p_wk->add_idx );
-
-      p_wk->p_src_data = Resort_Crowd_Noise_GetDrawLotsData( p_wk );
-
-      if( p_wk->p_src_data != NULL )
-      {
-        RESORT_CROWD_NOISE_WK_Start( &p_wk->wk[ p_wk->add_idx ], p_wk->p_msgbg, p_wk->p_src_data );
-
-        // ウエイト初期化
-        p_wk->wait = 0;
+        p_wk->wnd_idx   = 0;
+        p_wk->wnd_num   = 1 + GFL_STD_MtRand( RESORT_CROWD_NOISE_WND_DRAW_MAX-1);
+        p_wk->wnd_wait  = 0;
+        p_wk->wnd_wait_max  = 30;
+        p_wk->msg       = GFL_STD_MtRand( RESORT_CROWD_NOISE_MSG_MAX );
+        p_wk->wait      = 0;
+        p_wk->seq++;
       }
-      Resort_Crowd_Noise_CheckBufferNum( p_wk );
+      break;
+
+    case SEQ_START:
+      if( p_wk->wnd_wait++ >=p_wk->wnd_wait_max )
+      {
+        RESORT_ABSTRUCT_DATA *p_data = Resort_Crowd_Noise_GetDrawLotsData( p_wk );
+        u16 index;
+
+        p_wk->wnd_wait = 0;
+        
+        switch( p_wk->wnd_idx )
+        {
+        default:
+          GF_ASSERT(0);
+        case 0:
+          index = GFL_STD_MtRand(RESORT_CROWD_NOISE_MAX);
+          break;
+        case 1:
+          do
+          {
+            index = GFL_STD_MtRand(RESORT_CROWD_NOISE_MAX);
+          }
+          while( Resort_Crowd_Noise_Wk_IsOverlap(index, p_wk->add_idx[0]) );
+          break;
+        case 2:
+          do
+          {
+            index = GFL_STD_MtRand(RESORT_CROWD_NOISE_MAX);
+          }
+          while( Resort_Crowd_Noise_Wk_IsOverlap(index, p_wk->add_idx[0])
+              || Resort_Crowd_Noise_Wk_IsOverlap(index, p_wk->add_idx[1]) );
+          break;
+        }
+
+        p_wk->add_idx[ p_wk->wnd_idx ]  = index;
+        RESORT_CROWD_NOISE_WK_Start( &p_wk->wk[ index ], p_wk->p_msgbg, p_data, p_wk->msg );
+        if( p_wk->wnd_idx++ >= p_wk->wnd_num )
+        {
+          p_wk->seq = SEQ_END;
+        }
+      }
+      break;
+
+    case SEQ_END:
+      {
+        int i;
+        BOOL is_end = TRUE;
+        for( i = 0; i < p_wk->wnd_num; i++ )
+        {
+          u16 index = p_wk->add_idx[ i ];
+          is_end &= RESORT_CROWD_NOISE_WK_IsEnd( &p_wk->wk[ index ] );
+        }
+        if( is_end )
+        {
+          p_wk->seq = 0;
+        }
+      }
+      break;
+    default:
+      GF_ASSERT(0);
     }
 
     // メッセージ表示
     {
       int i;
-
       for( i = 0; i < RESORT_CROWD_NOISE_MAX; i++ )
       {
         RESORT_CROWD_NOISE_WK_Main( &p_wk->wk[i], p_wk->p_msgbg );
@@ -1871,21 +1965,100 @@ static void Resort_Crowd_Noise_CheckBufferNum( RESORT_CROWD_NOISE *p_wk )
   }
   else if( cnt >= 10 )
   {
-    p_wk->wait_max  = 4*60;
+    p_wk->wait_max  = 3*60;
   }
   else if( cnt >= 4 )
   {
-    p_wk->wait_max  = 8*60;
+    p_wk->wait_max  = 4*60;
   }
   else if( cnt >=1 )
   {
-    p_wk->wait_max  = 16*60;
+    p_wk->wait_max  = 6*60;
   }
   else
   {
     p_wk->wait_max  = 0;
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データを抽選
+ *
+ *	@param	RESORT_CROWD_NOISE *p_wk  ワーク
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+static RESORT_ABSTRUCT_DATA * Resort_Crowd_Noise_GetDrawLotsData( RESORT_CROWD_NOISE *p_wk )
+{
+  enum
+  {
+    DRAWLOTS_BUFFER_MAX =  RESORT_RESIDENT_DATA_NUM +
+    RESONANCE_RESORT_SV_RECV_BUFF_NUM +
+    RESONANCE_RESORT_BUFF_RECV_EX_NUM +
+    RESONANCE_RESORT_SV_PROXY_BUFF_NUM,
+  };
+
+  static const RESORT_DATA_BUFFER_TYPE  sc_type[] =
+  {
+    RESORT_DATA_BUFFER_TYPE_RESIDENT,
+    RESORT_DATA_BUFFER_TYPE_RECV_SV_BUFF,
+    RESORT_DATA_BUFFER_TYPE_RECV_TMP_BUFF,
+    RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,
+  };
+
+  static RESORT_DATA_BUFFER_TYPE s_type[DRAWLOTS_BUFFER_MAX];
+  static u16 s_index[DRAWLOTS_BUFFER_MAX];
+  int cnt = 0;
+
+  RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
+
+  while(TRUE)
+  {
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
+    if( p_data == NULL )
+    {
+      break;
+    } 
+    if( !RESORT_ABSTRUCT_DATA_IsEmpty(p_data) )
+    {
+      s_type[cnt]   = RESORT_ABSTRUCT_DATA_GetBufferType(p_data);
+      s_index[cnt]  = RESORT_ABSTRUCT_DATA_GetBufferIndex(p_data);
+
+      cnt++;
+    }
+  }
+
+  if( cnt == 0 )
+  {
+    return NULL;
+  }
+  else if( cnt == 1 )
+  {
+    return RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_wk->p_abstruct, s_type[0], s_index[0] );
+  }
+  else
+  {
+    RESORT_ABSTRUCT_DATA *p_data  = NULL;
+    int all_num  = 0;
+    int all_max   = GFL_STD_MtRand( cnt );
+    int i;
+    for( i = 0; i < cnt; i++ )
+    {
+      if( all_num++ == all_max )
+      {
+        p_data = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_wk->p_abstruct, s_type[i], s_index[i] );
+        return p_data;
+      }
+    }
+  }
+  GF_ASSERT(0);
+  return NULL;
+}
+
+#if 0
+//以前のに戻してと言われたときのため残してある
 //----------------------------------------------------------------------------
 /**
  *	@brief  データを抽選
@@ -2117,6 +2290,7 @@ static RESORT_ABSTRUCT_DATA * Resort_Crowd_Noise_GetDrawLotsData( RESORT_CROWD_N
   GF_ASSERT(0);
   return NULL;
 }
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -2166,6 +2340,83 @@ static void RESORT_CROWD_NOISE_WK_Main( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p
     RESORT_CROWD_NOISE_WK_Off(p_wk, p_msgbg);
   }
 }
+
+static const u8 sc_NOISE_X[] = 
+{
+  1,
+  22,
+  2,
+  20,
+  4,
+  21,
+  3,
+  19,
+  1,
+  19,
+  2,
+  22,
+  3,
+  20,
+  4,
+  21,
+};
+static const u8 sc_NOISE_Y[] = 
+{
+  6,
+  2,
+  17,
+  14,
+  17,
+  10,
+  14,
+  2,
+  10,
+  17,
+  10,
+  6,
+  2,
+  6,
+  14,
+  6,
+};
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  範囲がかぶっているかチェック
+ *
+ *	@param	u16 src
+ *	@param	dst 
+ *
+ *	@return TRUEかぶってる  FALSEかぶってない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst )
+{
+  enum
+  {
+    NOISE_WND_WIDTH   = 10/2,
+    NOISE_WND_HEIGHT  = 4/2,
+  };
+
+	s16 left1, right1, top1, bottom1;
+	s16 left2, right2, top2, bottom2;
+
+	left1	  = sc_NOISE_X[src] - NOISE_WND_WIDTH;
+	right1	= sc_NOISE_X[src] + NOISE_WND_WIDTH;
+	top1	  = sc_NOISE_Y[src] - NOISE_WND_HEIGHT;
+	bottom1	= sc_NOISE_Y[src] + NOISE_WND_HEIGHT;
+
+	left2	  = sc_NOISE_X[dst] - NOISE_WND_WIDTH;
+	right2	= sc_NOISE_X[dst] + NOISE_WND_WIDTH;
+	top2	  = sc_NOISE_Y[dst] - NOISE_WND_HEIGHT;
+	bottom2	= sc_NOISE_Y[dst] + NOISE_WND_HEIGHT;
+	
+	return left1   <= right2
+		& right1  >= left2
+		& top1    <= bottom2
+		& bottom1 >= top2;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  騒音ワーク描画開始
@@ -2177,33 +2428,53 @@ static void RESORT_CROWD_NOISE_WK_Main( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p
  *	@param	noise_msg_num 
  */
 //-----------------------------------------------------------------------------
-static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data )
+static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data, RESORT_CROWD_NOISE_MSG msg )
 {
-  static const GFL_POINT sc_pos[] =
-  {
-    { 2, 2},
-    {18, 2},
-    { 2, 6},
-    {18, 6},
-    { 2,10},
-    {18,10},
-    { 2,14},
-    {18,14},
-  };
+  TALKMSGWIN_TYPE type;
 
-  GF_ASSERT( p_wk->id < NELEMS(sc_pos) );
+  GF_ASSERT( p_wk->id < NELEMS(sc_NOISE_X) );
+  GF_ASSERT( p_wk->id < NELEMS(sc_NOISE_Y) );
 
   p_wk->flag = TRUE;
   p_wk->wait = 0;
 
+  switch( msg )
   {
-    STRCODE code[RESORT_PHRASE_LEN+EOM_SIZE];
-    RESORT_ABSTRUCT_DATA_GetData( cp_data, RESORT_DATA_PARAM_EXT6_PHRASE, code );
-    GFL_STR_SetStringCode( p_wk->p_str, code );
+  case RESORT_CROWD_NOISE_MSG_INTRODUCTION:
+    {
+      STRCODE code[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE];
+      RESORT_ABSTRUCT_DATA_GetData( cp_data, RESORT_DATA_PARAM_INTRODUCTION, code );
+      GFL_STR_SetStringCode( p_wk->p_str, code );
+    }
+    type = TALKMSGWIN_TYPE_NORMAL;
+    break;
+  default:
+    GF_ASSERT(0);
+  case RESORT_CROWD_NOISE_MSG_PHRASE:
+    {
+      STRCODE code[RESORT_PHRASE_LEN+EOM_SIZE];
+      RESORT_ABSTRUCT_DATA_GetData( cp_data, RESORT_DATA_PARAM_EXT6_PHRASE, code );
+      GFL_STR_SetStringCode( p_wk->p_str, code );
+    }
+    type = TALKMSGWIN_TYPE_GIZA;
+    break;
+  case RESORT_CROWD_NOISE_MSG_THANKS:
+    {
+      STRCODE code[RESORT_THANKS_LEN+EOM_SIZE];
+      RESORT_ABSTRUCT_DATA_GetData( cp_data, RESORT_DATA_PARAM_EXT7_THANKS, code );
+      GFL_STR_SetStringCode( p_wk->p_str, code );
+    }
+    type = TALKMSGWIN_TYPE_MOYA;
+    break;
   }
   
-  FLDSUBMSGWIN_AddStrBufEx( p_msgbg,
-    p_wk->p_str, p_wk->id, sc_pos[p_wk->id].x, sc_pos[p_wk->id].y, 12, 2, GFL_STD_MtRand(TALKMSGWIN_TYPE_MAX) );
+  {
+    u8 cx;
+    u8 cy;
+    FLDSPWIN_GetNeedWindowCharaSize( p_msgbg, p_wk->p_str, &cx, &cy );
+    FLDSUBMSGWIN_AddStrBufEx( p_msgbg,
+        p_wk->p_str, p_wk->id, sc_NOISE_X[p_wk->id], sc_NOISE_Y[p_wk->id], cx, 2, type );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -2234,6 +2505,17 @@ static void RESORT_CROWD_NOISE_WK_Clear( RESORT_CROWD_NOISE_WK *p_wk )
 {
   p_wk->wait = 0;
   p_wk->flag = FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音ワークが終わっているか
+ *
+ *	@param	const RESORT_CROWD_NOISE_WK *cp_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_CROWD_NOISE_WK_IsEnd( const RESORT_CROWD_NOISE_WK *cp_wk )
+{
+  return cp_wk->flag == FALSE;
 }
 
 //=============================================================================
