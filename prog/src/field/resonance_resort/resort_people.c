@@ -566,6 +566,26 @@ RESORT_PEOPLE_SYS * RESORT_PEOPLE_SYS_Init( const RESORT_PEOPLE_SYS_PARAM *cp_pa
 //-----------------------------------------------------------------------------
 void RESORT_PEOPLE_SYS_Exit( RESORT_PEOPLE_SYS *p_wk )
 {
+  //音符マークのコマンドは、MMDLの内部でフィールドエフェクトタスクを
+  //使っている。フィールドエフェクトタスクはフィールドが破棄されると
+  //破棄→作成されるが、MMDLの内部でタスクを作り保持→再生しているため
+  //すべて消す必要がある
+  {
+    int i;
+    for( i = 0; i < p_wk->param.max; i++ )
+    {
+      RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_GetPeopleByIndex( p_wk, i );
+      if( p_people )
+      {
+        MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_people );
+        if( AC_MARK_ONPU_NO_SE == MMDL_GetAcmdCode( p_mmdl ) )
+        {
+          MMDL_FreeAcmd( p_mmdl );
+        }
+      }
+    }
+  }
+
   RESORT_PEOPLE_SYS_RemoveAll( p_wk );
 
   RESORT_BINARY_PEOPLE_Exit( p_wk->p_binary );
