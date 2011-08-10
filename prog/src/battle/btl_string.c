@@ -966,6 +966,17 @@ void BTL_STR_MakeStringSubway( STRBUF* dst, u16 subwayTRID, BtlResult playerResu
   //OS_Printf("BTL_STR_MakeStringSubway(%d)\n",subwayTRID);
   if( subwayTRID >= TRID_OFFSET_WBT )
   {
+    const BATTLE_SETUP_PARAM * bsp = BTL_MAIN_GetBSPConst( SysWork.mainModule );
+    if ( playerResult == BTL_RESULT_LOSE )
+    {
+      GFL_STR_CopyBuffer( dst, bsp->wbt_win_msg );
+    }
+    else
+    {
+      GFL_STR_CopyBuffer( dst, bsp->wbt_lose_msg );
+    }
+
+#if 0
     u16 strID;
     subwayTRID -= TRID_OFFSET_WBT;
     strID = subwayTRID * WBT_TRMSG_TYPE_NUM;
@@ -975,6 +986,7 @@ void BTL_STR_MakeStringSubway( STRBUF* dst, u16 subwayTRID, BtlResult playerResu
       strID += WBT_TRMSG_FIGHT_LOSE;
     }
     GFL_MSG_GetString( SysWork.msg[MSGSRC_WBT], strID, dst );
+#endif
   }
   else if( subwayTRID )
   {

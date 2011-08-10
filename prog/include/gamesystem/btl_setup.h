@@ -92,6 +92,19 @@ static inline void BATTLE_PARAM_SetTrainerTypeName(
   bp->tr_type_name[ clientID ] = strbuf;
 }
 
+/**
+ *  @brief  WBT用バトル内メッセージをセットする
+ *  @param[out] bp        確保済みのBATTLE_SETUP_PARAM構造体型ワークへのポインタ
+ *  @param[in]  win_msg   設定するプレイヤー勝利時メッセージ
+ *  @param[in]  lose_msg  設定するプレイヤー敗北時メッセージ
+ */
+static inline void BATTLE_PARAM_SetWBTMsg(
+    BATTLE_SETUP_PARAM* bp, const STRBUF * win_msg, const STRBUF * lose_msg )
+{
+  bp->wbt_win_msg = win_msg;
+  bp->wbt_lose_msg = lose_msg;
+}
+
 ////////////////////////////////////////////////////////////////////////
 //
 /*

@@ -107,15 +107,16 @@ extern void WBTTRAINER_CopyName( const WBTTRAINER * wbt_tr, STRBUF * buf );
 extern void WBTTRAINER_CopyTitle( const WBTTRAINER * wbt_tr, STRBUF * buf );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf );
-extern u8 WBTSYS_GetOpponentSex( WBTSYS * wbtsys );
-extern u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys );
-extern u16 WBTSYS_GetOpponentTrainerType( WBTSYS * wbtsys );
-extern void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm );
+extern void WBTSYS_GetOpponentName( const WBTSYS * wbtsys, STRBUF * strbuf );
+extern u8 WBTSYS_GetOpponentSex( const WBTSYS * wbtsys );
+extern u16 WBTSYS_GetOpponentMMdlObjCode( const WBTSYS * wbtsys );
+extern u16 WBTSYS_GetOpponentTrainerType( const WBTSYS * wbtsys );
+extern void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm );
 
-extern void WBTSYS_GetTournamentName( WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf );
+extern void WBTSYS_GetTournamentName( const WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf );
+extern void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf );
 
-extern BOOL WBTSYS_GetDownLoadCount( WBTSYS * wbtsys, GAMEDATA * gamedata );
+extern BOOL WBTSYS_GetDownLoadCount( const WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_LoadDLData( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_UnloadDLData( WBTSYS * wbtsys );
 
@@ -143,6 +144,7 @@ extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_
 
 extern POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys );
+extern void WBTSYS_DeleteBattleSetupParam( WBTSYS * wbtsys, BATTLE_SETUP_PARAM * bsp );
 
 extern void WBTSYS_ReflectBattleResult(
     WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp );

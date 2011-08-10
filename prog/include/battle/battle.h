@@ -307,6 +307,8 @@ typedef struct {
   // トレーナーデータ
   BSP_TRAINER_DATA*  tr_data[BTL_CLIENT_NUM];
   const STRBUF * tr_type_name[BTL_CLIENT_NUM];  ///<swan追加：トレーナー肩書
+  const STRBUF * wbt_win_msg;                   ///<swan追加：勝ちメッセージ
+  const STRBUF * wbt_lose_msg;                  ///<swan追加：負けメッセージ
 
   // セーブデータ系
   GAMEDATA*         gameData;     ///< GameData

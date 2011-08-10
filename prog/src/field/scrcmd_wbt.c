@@ -706,35 +706,18 @@ VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk )
   WBTSYS * wbtsys = getWBTSys( wk );
   u16 type = SCRCMD_GetVMWorkValue( core, wk );
   u16 obj_id = SCRCMD_GetVMWorkValue( core, wk );
-  BOOL result; 
 
-  const WBTTRAINER * opponent = WBTSYS_GetOpponentTrainer( wbtsys );
-  u16 msg_id = WBTTRAINER_GetID( opponent ) * WBT_TRMSG_TYPE_NUM;
   STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
 
-  switch ( type )
-  {
-  default:
-    GF_ASSERT( 0 );
-  case WBT_TRMSG_1ST_FIGHT_START:
-  case WBT_TRMSG_2ND_FIGHT_START:
-  case WBT_TRMSG_3RD_FIGHT_START:
-  case WBT_TRMSG_PLAYER_WIN:
-  case WBT_TRMSG_PLAYER_LOSE:
-    msg_id += type;
-  };
-  TAMADA_Printf("EvCmdWBTTrainerMsg(type = %d, obj_id =%d )\n", type, obj_id );
   {
     WORDSET *wordset = SCRIPT_GetWordSet( sc );
     STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
 
-    GFL_MSGDATA * msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-        NARC_message_wbt_trmsg_dat, SCRCMD_WORK_GetHeapID( work ) );
-    GFL_MSG_GetString( msgData, msg_id, tmpbuf );
-    GFL_MSG_Delete( msgData );
+    WBTSYS_GetTrainerMsg( wbtsys, type, tmpbuf );
 
     WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
   }
+  TAMADA_Printf("EvCmdWBTTrainerMsg(type = %d, obj_id =%d )\n", type, obj_id );
 
   //トレーナーに合わせたメッセージを表示する
   return EvCmdBalloonWin_Write( core, wk, msgbuf, obj_id,
@@ -779,23 +762,16 @@ VMCMD_RESULT EvCmdWBTAnnounce( VMHANDLE * core, void * wk )
   u16 up_down = SCRCMD_GetVMWorkValue( core, wk );
 
   WBTSYS * wbtsys = getWBTSys( wk );
-  const WBTTRAINER * opponent = WBTSYS_GetOpponentTrainer( wbtsys );
-  u16 msg_id = WBTTRAINER_GetID( opponent ) * WBT_TRMSG_TYPE_NUM;
-  msg_id += WBT_TRMSG_ANNOUNCE;
 
-  TAMADA_Printf("EvCmdWBTAnnounce\n");
   {
-
     WORDSET *wordset = SCRIPT_GetWordSet( sc );
     STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
 
-    GFL_MSGDATA * msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-        NARC_message_wbt_trmsg_dat, SCRCMD_WORK_GetHeapID( work ) );
-    GFL_MSG_GetString( msgData, msg_id, tmpbuf );
-    GFL_MSG_Delete( msgData );
+    WBTSYS_GetTrainerMsg( wbtsys, WBT_TRMSG_ANNOUNCE, tmpbuf );
 
     WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
   }
+  TAMADA_Printf("EvCmdWBTAnnounce(%d)\n", up_down );
   return EvCmdplainWin_Write( core, work, msgbuf, TALKMSGWIN_TYPE_NORMAL, up_down );
 }
 

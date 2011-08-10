@@ -41,6 +41,15 @@
 
 //============================================================================================
 //============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum {
+  //（一行１８文字＋改行コード）*２（海外は倍)*2(2行分）
+  WBT_TRAINER_MSG_LEN = ((18+1)*2*8),
+};
+
+//============================================================================================
+//============================================================================================
 static void WBTTRAINER_Init( WBTTRAINER * wbt_tr, HEAPID heapID );
 static void WBTTRAINER_Release( WBTTRAINER * wbt_tr );
 static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
@@ -48,9 +57,6 @@ static void WBTTRAINER_SetRomTrainer( HEAPID heapID, WBTTRAINER * wbt_tr, u8 tr_
 static void WBTTRAINER_SetWBPlayer( HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
 static void WBTTRAINER_SetDLTrainer(
     WBTSYS * wbtsys, WBTTRAINER * wbt_tr, GAMEDATA * gamedata, u32 dl_tr_id, u8 pri );
-
-//============================================================================================
-//============================================================================================
 
 //============================================================================================
 //============================================================================================
@@ -275,7 +281,7 @@ static u8 WBTSYS_GetRevisePokeLevel( const WBTSYS * wbtsys )
  * @brief トーナメント名を取得する
  */
 //------------------------------------------------------------------
-void WBTSYS_GetTournamentName( WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf )
+void WBTSYS_GetTournamentName( const WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf )
 {
   if ( wbtcup == WBTCUP_DOWNLOAD )
   {
@@ -555,7 +561,7 @@ const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys )
  * @brief 対戦相手の性別を取得する
  */
 //------------------------------------------------------------------
-u8 WBTSYS_GetOpponentSex( WBTSYS * wbtsys )
+u8 WBTSYS_GetOpponentSex( const WBTSYS * wbtsys )
 {
   const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
   return wbt_tr->sex;
@@ -566,7 +572,7 @@ u8 WBTSYS_GetOpponentSex( WBTSYS * wbtsys )
  * @brief 対戦相手の動作モデル表示コードを取得する
  */
 //------------------------------------------------------------------
-u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys )
+u16 WBTSYS_GetOpponentMMdlObjCode( const WBTSYS * wbtsys )
 {
   const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
   return wbt_tr->mmdl_id;
@@ -576,7 +582,7 @@ u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys )
  * @brief 対戦相手の名前を取得する
  */
 //------------------------------------------------------------------
-void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf )
+void WBTSYS_GetOpponentName( const WBTSYS * wbtsys, STRBUF * strbuf )
 {
   const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
   WBTTRAINER_CopyName( wbt_tr, strbuf );
@@ -589,7 +595,7 @@ void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf )
  * @return  u16 tr_type(include/tr_tool/trtype_def.h参照）
  */
 //------------------------------------------------------------------
-u16 WBTSYS_GetOpponentTrainerType( WBTSYS * wbtsys )
+u16 WBTSYS_GetOpponentTrainerType( const WBTSYS * wbtsys )
 {
   const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
   return wbt_tr->btl_tr_type;
@@ -605,15 +611,21 @@ u16 WBTSYS_GetOpponentTrainerType( WBTSYS * wbtsys )
  * @todo  ダウンロードデータへの対応
  */
 //------------------------------------------------------------------
-void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
+void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
 {
   switch ( wbtsys->wbtcup )
   {
   case WBTCUP_DOWNLOAD:
-    *btl_bgm = SEQ_BGM_VS_WBT;
-    *win_bgm = SEQ_BGM_WIN_WBT;
-    //*btl_bgm = SEQ_BGM_VS_WCS;
-    //*win_bgm = SEQ_BGM_WIN5;
+    if ( wbtsys->wbtdl_data.wbtdl_rule.bgm_flag )
+    {
+      *btl_bgm = SEQ_BGM_VS_WCS;
+      *win_bgm = SEQ_BGM_WIN5;
+    }
+    else
+    {
+      *btl_bgm = SEQ_BGM_VS_WBT;
+      *win_bgm = SEQ_BGM_WIN_WBT;
+    }
     break;
   default:
     {
@@ -625,6 +637,96 @@ void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
       *win_bgm = tr_rom_data.win_bgm_id;
     }
     break;
+  }
+}
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief
+ * @param[in]   wbtsys
+ * @param[in]   type
+ * @param[out]  strbuf
+ */
+//------------------------------------------------------------------
+void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf )
+{
+  HEAPID tempHeapID = wbtsys->heapID;
+  const WBTTRAINER * opponent = WBTSYS_GetOpponentTrainer( wbtsys );
+
+  if ( type >= WBT_TRMSG_TYPE_NUM )
+  {
+    GF_ASSERT( 0 );
+    return;
+  }
+
+  if ( WBTTRAINER_GetWBTTrainerType(opponent) == WBT_TRTYPE_DL )
+  {
+    u16 dl_tr_id = WBTTRAINER_GetID( opponent );
+    u16 preset_id = 1;
+    const STRCODE * freeword = NULL;
+    const WBTDL_CHARACTER * dl_char = WBTDL_DATA_GetCharacter( &wbtsys->wbtdl_data, dl_tr_id );
+    switch ( type )
+    {
+    case WBT_TRMSG_1ST_FIGHT_START:
+    case WBT_TRMSG_2ND_FIGHT_START:
+    case WBT_TRMSG_3RD_FIGHT_START:
+      preset_id = dl_char->msg_before_id;
+      freeword  = dl_char->msg_before;
+      break;
+    case WBT_TRMSG_FIGHT_LOSE:
+      preset_id = dl_char->msg_win_id;
+      freeword  = NULL;
+      break;
+    case WBT_TRMSG_FIGHT_WIN:
+      preset_id = dl_char->msg_lose_id;
+      freeword  = NULL;
+      break;
+    case WBT_TRMSG_PLAYER_WIN:
+      preset_id = dl_char->msg_after_win_id;
+      freeword  = dl_char->msg_win;
+      break;
+    case WBT_TRMSG_PLAYER_LOSE:
+      preset_id = dl_char->msg_after_lose_id;
+      freeword  = dl_char->msg_lose;
+      break;
+    case WBT_TRMSG_ANNOUNCE:
+      preset_id = dl_char->msg_announce_id;
+      freeword  = dl_char->msg_announce;
+      break;
+    }
+
+    if ( preset_id == 0 && freeword == NULL )
+    {
+      GF_ASSERT( 0 );
+      preset_id = 1;  //エラー対処
+    }
+    if ( preset_id != 0 )
+    {
+      GFL_MSGDATA * msgData;
+      u16 msg_id;
+      msg_id = ( preset_id - 1 ) * WBT_TRMSG_TYPE_NUM + type;
+      msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+          NARC_message_wbt_trmsg_dl_dat, tempHeapID );
+      GFL_MSG_GetString( msgData, msg_id, strbuf );
+      GFL_MSG_Delete( msgData );
+    }
+    else
+    {
+      GF_ASSERT( freeword != NULL );
+      GFL_STR_SetStringCodeOrderLength( strbuf, freeword, WBTDL_MSG_LEN );
+    }
+  }
+  else
+  {
+    GFL_MSGDATA * msgData;
+    u16 msg_id;
+    msg_id = WBTTRAINER_GetID( opponent ) * WBT_TRMSG_TYPE_NUM;
+    msg_id += type;
+    msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+        NARC_message_wbt_trmsg_dat, tempHeapID );
+    GFL_MSG_GetString( msgData, msg_id, strbuf );
+    GFL_MSG_Delete( msgData );
   }
 }
 
@@ -659,7 +761,7 @@ static BOOL checkWBTDownLoad( GAMEDATA * gamedata, u32 dl_id )
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-BOOL WBTSYS_GetDownLoadCount( WBTSYS * wbtsys, GAMEDATA * gamedata )
+BOOL WBTSYS_GetDownLoadCount( const WBTSYS * wbtsys, GAMEDATA * gamedata )
 {
   int count, dl_id;
   for ( count = 0, dl_id = 1; dl_id <= WBT_DOWNLOAD_NUM; dl_id ++ )
@@ -1034,6 +1136,23 @@ POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
   GFL_HEAP_FreeMemory( entry_pp );
 
   return entry_party;
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void setBSPTrainerData( BSP_TRAINER_DATA * tr_data, const WBTTRAINER * wbt_tr, u32 aibit )
+{
+  tr_data->tr_id    = wbt_tr->tr_id + TRID_OFFSET_WBT;
+  tr_data->tr_type  = wbt_tr->btl_tr_type;
+  tr_data->ai_bit   = aibit;
+
+  WBTTRAINER_CopyName( wbt_tr, tr_data->name );
+    
+  GFL_STD_MemClear16( tr_data->use_item, sizeof(u16)*4 );
+  PMSDAT_Clear( &tr_data->win_word );
+  PMSDAT_Clear( &tr_data->lose_word );
+
 }
 
 //============================================================================================
@@ -1524,6 +1643,7 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
 
   case WBT_TRTYPE_DL:
     {
+      setBSPTrainerData( bp->tr_data[BTL_CLIENT_ENEMY1], wbt_tr, 0x00000087 );
       setDLPokeParty( bp->party[BTL_CLIENT_ENEMY1], &wbtsys->wbtdl_data, 
           wbt_tr->tr_id, WBTSYS_GetPartyMax(wbtsys), tempHeapID );
     }
@@ -1546,8 +1666,32 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
   //肩書STRBUFにポインタをつなぐ
   BATTLE_PARAM_SetTrainerTypeName( bp, BTL_CLIENT_ENEMY1, wbt_tr->title );
 
+  //トレーナーがバトル内で話す台詞を事前生成、セットする
+  wbtsys->win_msg   = GFL_STR_CreateBuffer( WBT_TRAINER_MSG_LEN, wbtsys->heapID );
+  wbtsys->lose_msg  = GFL_STR_CreateBuffer( WBT_TRAINER_MSG_LEN, wbtsys->heapID );
+  WBTSYS_GetTrainerMsg( wbtsys, WBT_TRMSG_FIGHT_LOSE, wbtsys->win_msg );
+  WBTSYS_GetTrainerMsg( wbtsys, WBT_TRMSG_FIGHT_WIN, wbtsys->lose_msg );
+  BATTLE_PARAM_SetWBTMsg( bp, wbtsys->win_msg, wbtsys->lose_msg );
   WBTSYS_GetOpponentBGM( wbtsys, &bp->musicDefault, &bp->musicWin );
   return bp;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief WBT用BATTLE_SETUP_PARAMを削除
+ */
+//------------------------------------------------------------------
+void WBTSYS_DeleteBattleSetupParam( WBTSYS * wbtsys, BATTLE_SETUP_PARAM * bsp )
+{
+  if (wbtsys->win_msg)
+  {
+    GFL_STR_DeleteBuffer( wbtsys->win_msg );
+  }
+  if (wbtsys->lose_msg)
+  {
+    GFL_STR_DeleteBuffer( wbtsys->lose_msg );
+  }
+  BATTLE_PARAM_Delete( bsp );
 }
 
 //------------------------------------------------------------------
