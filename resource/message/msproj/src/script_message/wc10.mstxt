@@ -1367,11 +1367,11 @@
 ショップで　働いてるんだけど▼
 面倒臭がって　なかなか
 新製品を　並べないのさ▼
-どうくつ探検でも　しながら
+洞穴探検でも　しながら
 気長に　待っておくれよ▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T09:55:11" />
+				Time="2011-08-10T03:47:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1481,12 +1481,12 @@
 めちゃくちゃ　やるきなんだー！▼
 はたらいてる　ショップにも　ガンガン
 しんせいひん　ならべたりしてさー！▼
-あのどうくつを　クリアした
+しろのじゅどうを　クリアした
 [Name:TrainerName ]　ってひとに▽
 しげきされたんだって！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T08:15:58" />
+				Time="2011-08-10T03:48:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1498,12 +1498,12 @@
 めちゃくちゃ　やる気なんだー！▼
 働いてる　ショップにも　ガンガン
 新製品を　並べたりしてさー！▼
-あのどうくつを　クリアした
+白の樹洞を　クリアした
 [Name:TrainerName ]　って人に▽
 刺激されたんだって！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T08:16:11" />
+				Time="2011-08-10T03:48:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4311,14 +4311,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ガクト『神聖なる　白の大樹の下に
-突然　どうくつが現れた！▼
+突然　洞穴が現れた！▼
 調査員や　トレーナーが
 たくさん　来ているみたいだけど▼
 地元民の我々が
 一番に　最下層に行くぞ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-08T05:35:32" />
+				Time="2011-08-10T03:48:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4378,13 +4378,13 @@
 			Language="JPN_KANJI">
 			<Text>ガクト『おお！　[Name:TrainerName ]！▼
 話には　聞いてるよ
-どうくつ　だいぶ　深い所まで▽
+洞穴　だいぶ　深い所まで▽
 潜ったみたいだな！▼
 早くも　あきらめ気味の　わしに
 代わって　最下層まで　行ってくれ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-04T08:18:02" />
+				Time="2011-08-10T03:48:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
