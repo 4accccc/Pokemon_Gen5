@@ -3444,10 +3444,19 @@ static u32 gethint_is_up( TRHINT_WK *p_wk )
 
   ONOUE_Printf("現在のフロア：%u,ボスのフロア%u\n",now_floor ,boss_floor );
   ONOUE_Printf("ヒント：上にいるか->");
+
   if( now_floor < boss_floor )
   {
-    ONOUE_Printf("上にいる\n");
-    msg_id = msg_hint_up_01;
+    if( INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data ) == VERSION_B2 )
+    {
+      ONOUE_Printf("上にいる\n");
+      msg_id = msg_hint_up_01;
+    }
+    else
+    {
+      ONOUE_Printf("ホワイトなので下にいる\n");
+      msg_id = msg_hint_down_01;
+    }
   }
   else
   {
@@ -3480,8 +3489,16 @@ static u32 gethint_is_down( TRHINT_WK *p_wk )
   ONOUE_Printf("ヒント：下にいるか->");
   if( now_floor > boss_floor )
   {
-    msg_id = msg_hint_down_01;
-    ONOUE_Printf("下にいる\n");
+    if( INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data ) == VERSION_B2 )
+    {
+      ONOUE_Printf("下にいる\n");
+      msg_id = msg_hint_down_01;
+    }
+    else
+    {
+      ONOUE_Printf("ホワイトなので上にいる\n");
+      msg_id = msg_hint_up_01;
+    }
   }
   else
   {
@@ -3704,8 +3721,8 @@ static u32 gethint_medic_dir( TRHINT_WK *p_wk )
   // 同じ部屋にいる場合は、専用メッセージ
   if( now_room == medic_room )
   {
-    // @todo ナースが同じ部屋にいる場合のメッセージIDを入れる
-    return msg_hint_nurse_dir_u_01 + p_wk->talk_type;
+    // 同じ部屋にいるときはとぼける
+    return msg_hint_unknown_01 + p_wk->talk_type;
   }
  
   if( now_room != 0 )

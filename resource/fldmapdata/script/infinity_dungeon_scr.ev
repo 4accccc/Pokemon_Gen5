@@ -200,7 +200,7 @@ EVENT_START  ev_infinity_dungeon_elevator
       // 階数
 	    _NUMBER( 0 ,  LWK_DRAW_FLOOR_NO , 2 )
       IF $LWK_D_VERSION == VERSION_B2 THEN
-        _BMPMENU_MAKE_LIST( msg_elevator_02_00, LWK_FLOOR_NUM )
+        _BMPMENU_MAKE_LIST( msg_elevator_02_01, LWK_FLOOR_NUM )
       ELSE
         _BMPMENU_MAKE_LIST( msg_elevator_02_01, LWK_FLOOR_NUM )
       ENDIF
@@ -337,8 +337,8 @@ dungeon_information:
   ENDIF
 
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_LIST_RET )
-  _BMPMENU_MAKE_LIST( msg_info_menu_01_00, 0 )  //せつめい
   _BMPMENU_MAKE_LIST( msg_info_menu_02_00, 1 )  //ちょうせんする
+  _BMPMENU_MAKE_LIST( msg_info_menu_01_00, 0 )  //せつめい
   _BMPMENU_MAKE_LIST( msg_info_menu_03_00, 2 )  //やめる
   _BMPMENU_START()
 
@@ -1125,7 +1125,11 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   ENDIF
 
   // メッセージ開始
-  _BALLOONWIN_OBJMSG_POS( LWK_TR_START_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
+	IF $LWK_D_VERSION == VERSION_B2 THEN
+    _BALLOONWIN_OBJMSG_POS( LWK_TR_START_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( LWK_TR_START_MSG_ID , D31R0501_WKOBJCODE00, POS_DOWN )
+  ENDIF
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
@@ -1143,7 +1147,11 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
 	ENDIF
 
   // 戦闘終了後メッセージ
-  _BALLOONWIN_OBJMSG_POS( LWK_TR_END_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
+	IF $LWK_D_VERSION == VERSION_B2 THEN
+    _BALLOONWIN_OBJMSG_POS( LWK_TR_END_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( LWK_TR_END_MSG_ID , D31R0501_WKOBJCODE00, POS_DOWN )
+  ENDIF
 	_BALLOONWIN_CLOSE()
 
   // 勝利フラグをセット
@@ -1182,7 +1190,11 @@ EVENT_START  ev_infinity_dungeon_area_arrival_tutorial
  
   // エリアIDを取得する
   _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
-  
+ 
+  // 一歩下に移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_down_1 )
+  _OBJ_ANIME_WAIT()
+
   // 主人公がびっくり
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
   _OBJ_ANIME_WAIT()
@@ -1226,6 +1238,10 @@ EVENT_START  ev_infinity_dungeon_area_arrival
  
   // エリアIDを取得する
   _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
+ 
+  // 一歩下に移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_down_1 )
+  _OBJ_ANIME_WAIT()
   
   // 主人公がびっくり
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
@@ -1250,7 +1266,11 @@ EVENT_START  ev_infinity_dungeon_area_arrival
   _BALLOONWIN_CLOSE()
  
   // 主人公が左によける
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_arrival_02 )
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_arrival_02_b )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_arrival_02_w )
+  ENDIF
   _OBJ_ANIME_WAIT()
 
   // エレベータを開ける
@@ -1268,7 +1288,11 @@ EVENT_START  ev_infinity_dungeon_area_arrival
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
    
   // 主人公が元の位置に
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_arrival_04 )
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_arrival_04_b )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_arrival_04_w )
+  ENDIF
   _OBJ_ANIME_WAIT()
 
   //_TIME_WAIT( 60 )
@@ -1328,7 +1352,7 @@ EVENT_START  ev_infinity_dungeon_area2_tutorial
   // 無限ダンジョンのバージョン取得
   _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
 
-  // 一歩前に
+  // 一歩下に移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_down_1 )
   _OBJ_ANIME_WAIT()
 
@@ -1337,7 +1361,7 @@ EVENT_START  ev_infinity_dungeon_area2_tutorial
   _OBJ_ANIME_WAIT()
    
   // 主人公の前まで移動
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 4, FORCE_TYPE_ALL, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 4, FORCE_TYPE_NOT, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
  
   // メッセージ
@@ -1351,7 +1375,7 @@ EVENT_START  ev_infinity_dungeon_area2_tutorial
   _BALLOONWIN_CLOSE() 
   
   // 扉の外に移動
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 0, 7, FORCE_TYPE_ALL, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 0, 7, FORCE_TYPE_NOT, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
 
   // 画面外まで移動させる
@@ -1882,10 +1906,11 @@ tutorial_event_call:
     IF $SCWK_ANSWER == FALSE THEN
       IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1 THEN
         // エリア1用チュートリアル呼び出し
+        _INFINITY_DUNGEON_GET_BOSS_OBJ_CODE(SCWK_TEMP0)
 	      IF $LWK_D_VERSION == VERSION_B2 THEN
-          _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, BREEDERM, MV_DMY )
+          _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SCWK_TEMP0, MV_DMY )
         ELSE
-          _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, BREEDERW, MV_DMY )
+          _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SCWK_TEMP0, MV_DMY )
         ENDIF
         _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_AREA1_TUTORIAL )
         _FLAG_SET( FE_INFDUNGEON_TUTORIAL_01 )  // イベントフラグをセット
@@ -1897,10 +1922,11 @@ tutorial_event_call:
     IF $SCWK_ANSWER == FALSE THEN 
       IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_2 THEN
         // エリア2用チュートリアル呼び出し
+        _INFINITY_DUNGEON_GET_BOSS_OBJ_CODE(SCWK_TEMP0)
  	      IF $LWK_D_VERSION == VERSION_B2 THEN
-          _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, BREEDERM, MV_DMY )
+          _OBJ_ADD_EX( -1, 7, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SCWK_TEMP0, MV_DMY )
         ELSE
-          _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, BREEDERW, MV_DMY )
+          _OBJ_ADD_EX( -1, 7, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SCWK_TEMP0, MV_DMY )
         ENDIF
         _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_AREA2_TUTORIAL )
         _FLAG_SET( FE_INFDUNGEON_TUTORIAL_03 )  // イベントフラグをセット
@@ -2170,7 +2196,7 @@ _ANIME_LABEL	anm_move_elev_out
 // 到着イベントキャラが主人公の前まで移動
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_arrival_model_01
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -2181,9 +2207,21 @@ _ANIME_LABEL  anm_gyoe
   _ANIME_DATA ACMD_END, 0
 
 //--------------------------------------------------------------------
-// 左によける(主人公)
+// 左によける(主人公)-ホワイト
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_move_arrival_02
+_ANIME_LABEL	anm_move_arrival_02_b
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 左によける(主人公)-ホワイト
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_arrival_02_w
+	_ANIME_DATA	AC_WALK_D_8F,1
   _ANIME_DATA AC_STAY_WALK_L_8F,1
   _ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA	AC_WALK_L_8F,1
@@ -2195,15 +2233,24 @@ _ANIME_LABEL	anm_move_arrival_02
 // 到着イベントキャラがエレベータに乗り込む
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_arrival_model_03
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,5
   _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-// 元の位置に戻る(主人公)
+// 元の位置に戻る(主人公)-ブラック
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_move_arrival_04
+_ANIME_LABEL	anm_move_arrival_04_b
+	_ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 元の位置に戻る(主人公)-ホワイト
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_arrival_04_w
 	_ANIME_DATA	AC_WALK_R_8F,1
   _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA AC_DIR_D,1

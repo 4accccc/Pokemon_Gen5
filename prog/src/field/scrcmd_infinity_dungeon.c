@@ -52,17 +52,17 @@ typedef struct {
 //===================================== 
 // ホワイト
 static const INF_BOSS_DATA sc_boss_data_w[] = {
-  { TRID_BREEDERM_1_01 , BREEDERW},
-  { TRID_BREEDERW_1_01 , BREEDERM},
-  { TRID_RANGERM_1_01 , RANGERW},
-  { TRID_RANGERW_1_01 , RANGERM},
-  { TRID_VETERANW_3_01 , VETERANW}, // TODO 指定のトレーナーIDに書き換える
+  { TRID_BREEDERW_1_01 , BREEDERW},
+  { TRID_BREEDERM_1_01 , BREEDERM},
+  { TRID_RANGERW_1_01 , RANGERW},
+  { TRID_RANGERM_1_01 , RANGERM},
+  { TRID_VETERANW_3_03 , VETERANW}, // TODO 指定のトレーナーIDに書き換える
   { TRID_ELITEM_2_01 , TRAINERM},
   { TRID_ELITEW_2_01 , TRAINERW},
   { TRID_VETERANM_3_01 , VETERANM},
   { TRID_VETERANW_3_01 , VETERANW},
   { TRID_MUGENBOSS_01 , MUGENBOSS},
-  { TRID_VETERANW_3_01 , VETERANM}, // TODO 指定のトレーナーIDに書き換える
+  { TRID_VETERANM_3_02 , VETERANM}, // TODO 指定のトレーナーIDに書き換える
 };
 
 // ブラック
@@ -72,12 +72,12 @@ static const INF_BOSS_DATA sc_boss_data_b[] = {
   { TRID_RANGERM_2_01 , RANGERM},
   { TRID_RANGERW_2_01 , RANGERW},
   { TRID_VETERANM_4_03 , VETERANM},
-  { TRID_ELITEM_3_01 , TRAINERW},
+  { TRID_ELITEW_3_01 , TRAINERW},
   { TRID_ELITEW_3_01 , TRAINERM},
-  { TRID_VETERANM_4_01 , VETERANW},
-  { TRID_VETERANW_4_01 , VETERANM},
+  { TRID_ELITEM_3_01 , VETERANW},
+  { TRID_VETERANM_4_01 , VETERANM},
   { TRID_MUGENBOSS_02 , MUGENBOSS},
-  { TRID_VETERANM_4_02 , VETERANW},
+  { TRID_VETERANW_4_02 , VETERANW},
 };
 
 //=============================================================================
@@ -915,7 +915,7 @@ static const INF_BOSS_DATA* GetBossData( SCRCMD_WORK *p_wk )
   // 最上階の場合でかつ、バージョン違いの場合はインデックスをずらす
   if( area_id == INFINITY_DUNGEON_AREA_ID_10 )
   {
-    if( rom_version == dungeon_version )
+    if( rom_version != dungeon_version )
     {
       area_id ++;
     }
