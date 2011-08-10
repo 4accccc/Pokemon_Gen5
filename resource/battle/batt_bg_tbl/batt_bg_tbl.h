@@ -76,13 +76,10 @@ typedef enum{
 	BATT_BG_OBONID_27,				//ポケウッド上映
 	BATT_BG_OBONID_28,				//キュレム専用
 	BATT_BG_OBONID_29,				//無限ダンジョン白01
-	BATT_BG_OBONID_30,				//無限ダンジョン白02
-	BATT_BG_OBONID_31,				//無限ダンジョン白03
-	BATT_BG_OBONID_32,				//無限ダンジョン白04
-	BATT_BG_OBONID_33,				//無限ダンジョン黒01
-	BATT_BG_OBONID_34,				//無限ダンジョン黒02
-	BATT_BG_OBONID_35,				//無限ダンジョン黒03
-	BATT_BG_OBONID_36,				//無限ダンジョン黒04
-	BATT_BG_OBONID_37,				//WBT
+	BATT_BG_OBONID_30,				//無限ダンジョン黒01
+	BATT_BG_OBONID_31,				//無限ダンジョン黒02
+	BATT_BG_OBONID_32,				//無限ダンジョン黒03
+	BATT_BG_OBONID_33,				//無限ダンジョン黒04
+	BATT_BG_OBONID_34,				//WBT
 }BATT_BG_OBONID;
 
