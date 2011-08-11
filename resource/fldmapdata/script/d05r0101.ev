@@ -12,7 +12,8 @@
   .include  "../../message/dst/script/msg_d05r0101.h"
   .include  "d05r0101.h"
   .include  "d05r0201_def.h"
-
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体

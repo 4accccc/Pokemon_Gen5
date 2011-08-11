@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_t06r0101.h"
   .include  "t06r0101.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体

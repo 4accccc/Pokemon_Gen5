@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_c12gym0201.h"
   .include  "c12gym0201.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体

@@ -10,6 +10,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_c03p17.h"
   .include  "c03p17.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体

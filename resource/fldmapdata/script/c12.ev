@@ -14,6 +14,8 @@
   .include  "c12pc0101.h"
   .include  "c12pc0101_def.h"
   .include  "c12_def.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
