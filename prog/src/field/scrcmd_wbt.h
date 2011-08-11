@@ -54,4 +54,6 @@ extern VMCMD_RESULT EvCmdWBTECheckerDownLoad( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGMKEffectStart( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGMKWinEffectStart( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGMKLightSet( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGMKExplosion( VMHANDLE * core, void * wk );
 

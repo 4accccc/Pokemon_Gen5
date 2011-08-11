@@ -712,6 +712,12 @@
 #define SCR_WBT_VISION_WIN_ENEMY      (2) ///<優勝ビジョン 敵勝ち
 #define SCR_WBT_VISION_ALL            (3) ///<オールトーナメントビジョン
 
+// 爆破エフェクト定義
+#define SCR_WBT_VS1_L                 (0) ///対戦前爆破エフェクト(左)
+#define SCR_WBT_VS1_R                 (1) ///対戦前爆破エフェクト(右)
+#define SCR_WBT_VS2                   (2) ///対戦後爆破エフェクト
+#define SCR_WBT_VS3                   (3) ///決勝戦対戦前爆破エフェクト
+
 // 通路エフェクト定義 ※リソースの並びと同一なので変更不可
 #define SCR_WBT_EFFECT_NORMAL         (0) ///<ノーマルエフェクト
 

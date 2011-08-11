@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2011-08-04T14:56:46" source="wbt_e_vs123_l_r.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="40"
+	tool_start_frame="1"
+	tool_end_frame="40"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="on" material_size="6 6"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="121">
+	0.000000 0.000000 0.025635 0.051270 0.076904 0.102539 0.128174 0.153809 0.179443 0.205078
+	0.230713 0.256348 0.281982 0.307617 0.333252 0.358887 0.384521 0.410156 0.435791 0.461426
+	0.487061 0.512939 0.538574 0.564209 0.589844 0.615479 0.641113 0.666748 0.692383 0.718018
+	0.743652 0.769287 0.794922 0.820557 0.846191 0.871826 0.897461 0.923096 0.948730 0.974365
+	1.000000 0.000000 0.050537 0.100830 0.151367 0.201660 0.252197 0.302490 0.353027 0.403320
+	0.453857 0.504150 0.554688 0.604980 0.655518 0.705811 0.756348 0.806641 0.857178 0.907471
+	0.958008 1.008301 1.058838 1.109131 1.159668 1.210205 1.260498 1.311035 1.361328 1.411865
+	1.462158 1.512695 1.562988 1.613525 1.663818 1.714355 1.764648 1.815186 1.865479 1.916016
+	1.966309 0.000000 0.117676 0.235352 0.353027 0.470703 0.588135 0.705811 0.823486 0.941162
+	1.058838 1.176514 1.294189 1.411865 1.529297 1.646973 1.764648 1.882324 2.000000 2.117676
+	2.235352 2.353027 2.470703 2.588135 2.705811 2.823486 2.941162 3.058838 3.176514 3.294189
+	3.411865 3.529297 3.646973 3.764648 3.882324 4.000000 4.117676 4.235352 4.353027 4.470703
+	4.588135
+</tex_translate_data>
+
+<tex_srt_anm_array size="5">
+	<tex_srt_anm index="0" material_name="wbt_napa1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="40" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="wbt_e_nor01_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="40" data_head="41"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="2" material_name="wbt_e_nor01_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="40" data_head="41"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="3" material_name="wbt_e_nor01_3">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="40" data_head="81"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="4" material_name="wbt_e_nor01">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="40" data_head="81"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>

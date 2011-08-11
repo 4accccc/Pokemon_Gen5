@@ -13109,6 +13109,35 @@
     .short  EV_SEQ_WBT_GMK_WIN_EFFECT_START
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief   WBTギミック:照明を設定
+ * @param[in]  on_off 0:OFF 1:ON
+ * @param[in]  pos    ※script_def.hのSCR_WBT_EFFECT_POS_を参照
+ */
+//--------------------------------------------------------------
+#define _WBT_GMK_LIGHT_SET( on_off, pos )  \
+    _ASM_WBT_GMK_LIGHT_SET on_off, pos  
+
+    .macro _ASM_WBT_GMK_LIGHT_SET on_off, pos  
+    .short  EV_SEQ_WBT_GMK_LIGHT_SET
+    .short  \on_off
+    .short  \pos
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief   WBTギミック:爆破エフェクト
+ * @param[in]  type   ※script_def.hのSCR_WBT_VS???を参照
+ */
+//--------------------------------------------------------------
+#define _WBT_GMK_EXPLOSION( type )  \
+    _ASM_WBT_GMK_EXPLOSION type   
+
+    .macro _ASM_WBT_GMK_EXPLOSION type   
+    .short  EV_SEQ_WBT_GMK_EXPLOSION
+    .short  \type
+    .endm
 
 //======================================================================
 //

@@ -1094,5 +1094,43 @@ VMCMD_RESULT EvCmdWBTGMKWinEffectStart( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド:WBTギミック照明設定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGMKLightSet( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK   *work = wk;
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  u8 on_off = SCRCMD_GetVMWorkValue( core, wk );
+  u8 pos = SCRCMD_GetVMWorkValue( core, wk );
+
+  // ギミック開始
+  WBT_GIMMICK_LightSet( fieldWork, on_off, pos );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド:WBTギミック爆破エフェクト
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGMKExplosion( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK   *work = wk;
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  u8 type = SCRCMD_GetVMWorkValue( core, wk );
+
+  // ギミック開始
+  WBT_GIMMICK_Explosion( fieldWork, type );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //======================================================================
 //======================================================================

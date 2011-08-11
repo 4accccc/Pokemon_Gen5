@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2011-08-04T14:22:26" source="wbt_light_on_off_l_r.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<original_create user="fuchino_hiroki" host="W00252" date="2011-08-04T14:22:26" source="wbt_light_on_off_l_r.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+
+<model_info
+	pos_scale="5"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="5" xyz="-6.000000 1.499756 0.000000" whd="5.000000 2.000000 0.000000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="wbt_light1"
+		width="16" height="32" original_width="16" original_height="32"
+		format="a5i3"
+		palette_name="wbt_light1_pl"
+		path="C:/home/swan_data3d/gimmick/wbt/effect/tex/wbt_light1.tga"
+	>
+		<bitmap size="256">
+			0505 0605 0606 0606 561e c69e f6de fefe
+			0504 0505 0606 0606 6626 deae f6e6 fefe
+			0504 0505 0606 0e06 762e e6c6 f6ee fefe
+			0404 0505 0605 1606 8e3e eed6 fef6 fefe
+			0404 0505 0505 2606 ae66 eede fefe fefe
+			0404 0505 0505 2e0d be76 f6e6 fefe fefe
+			0400 0504 0505 3d0d ce86 f6ee fefe fefe
+			0400 0404 0505 4d1d de9d feee fefe fefe
+			0400 0404 0505 752d e5bd fef6 fefe fefe
+			0000 0404 0d04 7d35 e5c5 f5f5 fefe fefe
+			0000 0400 0c04 8d3d e5cd fdf5 fdf5 fdfd
+			0001 0400 1c04 9d4c edd5 f5f5 f5f5 fdfd
+			0001 0000 2c04 ac64 eddd f5ed f5ed f5fd
+			0001 0000 2c0c b474 edd4 eded f5e5 edf5
+			0101 0000 3408 bc7c e4d4 e5ec ede5 eded
+			0102 0001 3810 bc84 dcdc dcdc e5e4 e5e5
+			0102 0101 4818 c490 d4d4 d4d4 e4dc dcdc
+			0202 0101 5818 b898 cccc c4cc d4d4 d4d4
+			0203 0901 6821 b098 b0b0 bcb4 cccc d4c4
+			0203 0902 7129 a090 9898 b4a0 bcc4 ccbc
+			0303 0a02 7131 8981 8880 b098 acb0 c4ac
+			0303 0a02 613a 6979 7161 a088 90a0 c0a0
+			0303 0a03 523a 5162 6951 9179 7880 b890
+			0303 0b03 4232 3a42 5942 8171 6969 b189
+			0303 0b03 3323 222a 522a 6a62 4951 a179
+			0303 0b03 231b 131b 3a22 4a52 423a 9272
+			0303 0303 1313 0b0b 3313 3242 3222 8262
+			0303 0303 030b 0303 230b 1b33 2213 7252
+			0303 0303 0303 0303 1b0b 0b1b 130b 633b
+			0303 0303 0303 0303 0b03 030b 0b03 4b2b
+			0303 0303 0303 0303 0303 0303 0b03 3313
+			0303 0303 0303 0303 0303 0303 0303 230b
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="wbt_light1_pl" color_size="8">
+		63fa 67ff 6b9f 6f5f 7ffa 7ffd 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="wbt_light1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="flip clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-6.000000 1.500000 0.000000"
+		volume_max="-1.000000 3.500000 0.000000"
+		volume_r="6.946289"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="-128.000000 32.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="-1.000000 1.500000 0.000000"/>
+					<tex st="-128.000000 0.000000"/>
+					<pos_xy xy="-1.000000 3.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-6.000000 3.500000"/>
+					<tex st="0.000000 32.000000"/>
+					<pos_xy xy="-6.000000 1.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="polySurface922" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-6.000000 1.500000 0.000000"
+		volume_max="-1.000000 3.500000 0.000000"
+		volume_r="6.946289"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
+
+</body>
+
+</imd>

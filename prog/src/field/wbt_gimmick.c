@@ -122,6 +122,28 @@ enum {
   RESID_E_WIN_B_ICA,        // 優勝 ループ
   RESID_E_WIN_B_ITA,        // 優勝 ループ
 
+  // 照明
+  RESID_LIGHT_ON_L_MDL,     // 照明ON左
+  RESID_LIGHT_ON_R_MDL,     // 照明ON右
+  RESID_LIGHT_OFF_L_MDL,    // 照明OFF左
+  RESID_LIGHT_OFF_R_MDL,    // 照明OFF右
+
+  // 爆破エフェクト
+  RESID_E_VS1_L_MDL,        // 対戦前用爆破エフェクト 左
+  RESID_E_VS1_L_ICA,        // 対戦前用爆破エフェクト 左
+  RESID_E_VS1_L_IMA,        // 対戦前用爆破エフェクト 左
+  RESID_E_VS1_L_ITA,        // 対戦前用爆破エフェクト 左
+  RESID_E_VS1_R_MDL,        // 対戦前用爆破エフェクト 右
+  RESID_E_VS1_R_ICA,        // 対戦前用爆破エフェクト 右
+  RESID_E_VS1_R_IMA,        // 対戦前用爆破エフェクト 右
+  RESID_E_VS1_R_ITA,        // 対戦前用爆破エフェクト 右
+  RESID_E_VS2_MDL,          // 対戦後用爆破エフェクト
+  RESID_E_VS2_ITA,          // 対戦後用爆破エフェクト
+  RESID_E_VS3_MDL,          // 決勝戦対戦前用爆破エフェクト
+  RESID_E_VS3_ICA,          // 決勝戦対戦前用爆破エフェクト
+  RESID_E_VS3_IMA,          // 決勝戦対戦前用爆破エフェクト
+  RESID_E_VS3_ITA,          // 決勝戦対戦前用爆破エフェクト
+
   // ※ここから上の順番は変えない
 
   // エフェクト
@@ -142,7 +164,6 @@ enum {
 #define RESID_E_START_ITA   ( RESID_E_NORMAL_L_ITA )
 
 #define RES_E_NUM           (4)   // エフェクトのリソース数
-#define RES_E_WIN_NUM       (3)   // 優勝エフェクトのリソース数
 
 // OBJインデックス
 // ユニット別
@@ -154,6 +175,14 @@ enum {
   OBJ_V_LOGO,         // ロゴ
   OBJ_E_WIN_START,    // 優勝エフェクト開始
   OBJ_E_WIN_LOOP,     // 優勝エフェクトループ
+  OBJ_LIGHT_ON_L,     // 照明ON左
+  OBJ_LIGHT_ON_R,     // 照明ON右
+  OBJ_LIGHT_OFF_L,    // 照明OFF左
+  OBJ_LIGHT_OFF_R,    // 照明OFF右
+  OBJ_V_VS1_L,        // 対戦前用爆破エフェクト 左
+  OBJ_V_VS1_R,        // 対戦前用爆破エフェクト 右
+  OBJ_V_VS2,          // 対戦後用爆破エフェクト
+  OBJ_V_VS3,          // 決勝戦対戦前用爆破エフェクト
 
   OBJ_V_MAX,
 };
@@ -190,6 +219,29 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_b_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_b_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
   { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_b_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+
+  // 照明
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_light_on_l_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_light_on_r_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_light_off_l_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_light_off_r_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+
+  // 爆破エフェクト
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs1_l_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs1_l_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs1_l_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs1_l_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs1_r_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs1_r_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs1_r_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs1_r_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs2_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs2_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs3_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs3_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs3_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_vs3_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+
 };
 
 // ANIME
@@ -218,11 +270,45 @@ static const GFL_G3D_UTIL_ANM anm_e_win_a_table[] =
   { RESID_E_WIN_A_ICA, 0 }, // nsbca
   { RESID_E_WIN_A_ITA, 0 }, // nsbta
 };
+#define ANM_WIN_A_NUM  ( NELEMS(anm_e_win_a_table) )
+
 static const GFL_G3D_UTIL_ANM anm_e_win_b_table[] =
 {
   { RESID_E_WIN_B_ICA, 0 }, // nsbca
   { RESID_E_WIN_B_ITA, 0 }, // nsbta
 };
+#define ANM_WIN_B_NUM  ( NELEMS(anm_e_win_b_table) )
+
+static const GFL_G3D_UTIL_ANM anm_v_vs1_l[] =
+{
+  { RESID_E_VS1_L_ICA, 0 }, // nsbca
+  { RESID_E_VS1_L_IMA, 0 }, // nsbma
+  { RESID_E_VS1_L_ITA, 0 }, // nsbta
+};
+#define ANM_V_VS1_L_NUM  ( NELEMS(anm_v_vs1_l) )
+
+static const GFL_G3D_UTIL_ANM anm_v_vs1_r[] =
+{
+  { RESID_E_VS1_R_ICA, 0 }, // nsbca
+  { RESID_E_VS1_R_IMA, 0 }, // nsbma
+  { RESID_E_VS1_R_ITA, 0 }, // nsbta
+};
+#define ANM_V_VS1_R_NUM  ( NELEMS(anm_v_vs1_r) )
+
+static const GFL_G3D_UTIL_ANM anm_v_vs2[] =
+{
+  { RESID_E_VS2_ITA, 0 }, // nsbta
+};
+#define ANM_V_VS2_NUM  ( NELEMS(anm_v_vs2) )
+
+static const GFL_G3D_UTIL_ANM anm_v_vs3[] =
+{
+  { RESID_E_VS3_ICA, 0 }, // nsbca
+  { RESID_E_VS3_IMA, 0 }, // nsbma
+  { RESID_E_VS3_ITA, 0 }, // nsbta
+};
+#define ANM_V_VS3_NUM  ( NELEMS(anm_v_vs3) )
+
 
 // OBJ
 static const GFL_G3D_UTIL_OBJ obj_3d_table[] = 
@@ -273,7 +359,7 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     0,                    // モデルデータID(リソース内部INDEX)
     RESID_E_WIN_A_MDL,    // テクスチャリソースID
     anm_e_win_a_table,    // アニメテーブル(複数指定のため)
-    NELEMS(anm_e_win_a_table),// アニメリソース数
+    ANM_WIN_A_NUM,        // アニメリソース数
   },
   // OBJ_E_WIN_LOOP
   {
@@ -281,7 +367,71 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     0,                    // モデルデータID(リソース内部INDEX)
     RESID_E_WIN_B_MDL,    // テクスチャリソースID
     anm_e_win_b_table,    // アニメテーブル(複数指定のため)
-    NELEMS(anm_e_win_b_table),// アニメリソース数
+    ANM_WIN_B_NUM,        // アニメリソース数
+  },
+  // OBJ_LIGHT_ON_L
+  {
+    RESID_LIGHT_ON_L_MDL, // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_LIGHT_ON_L_MDL, // テクスチャリソースID
+    NULL,                 // アニメテーブル(複数指定のため)
+    0,                    // アニメリソース数
+  },
+  // OBJ_LIGHT_ON_R
+  {
+    RESID_LIGHT_ON_R_MDL, // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_LIGHT_ON_R_MDL, // テクスチャリソースID
+    NULL,                 // アニメテーブル(複数指定のため)
+    0,                    // アニメリソース数
+  },
+  // OBJ_LIGHT_OFF_L
+  {
+    RESID_LIGHT_OFF_L_MDL,// モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_LIGHT_OFF_L_MDL,// テクスチャリソースID
+    NULL,                 // アニメテーブル(複数指定のため)
+    0,                    // アニメリソース数
+  },
+  // OBJ_LIGHT_OFF_R
+  {
+    RESID_LIGHT_OFF_R_MDL,// モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_LIGHT_OFF_R_MDL,// テクスチャリソースID
+    NULL,                 // アニメテーブル(複数指定のため)
+    0,                    // アニメリソース数
+  },
+  // OBJ_V_VS1_L
+  {
+    RESID_E_VS1_L_MDL,    // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_E_VS1_L_MDL,    // テクスチャリソースID
+    anm_v_vs1_l,          // アニメテーブル(複数指定のため)
+    ANM_V_VS1_L_NUM,      // アニメリソース数
+  },
+  // OBJ_V_VS1_R
+  {
+    RESID_E_VS1_R_MDL,    // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_E_VS1_R_MDL,    // テクスチャリソースID
+    anm_v_vs1_r,          // アニメテーブル(複数指定のため)
+    ANM_V_VS1_R_NUM,      // アニメリソース数
+  },
+  // OBJ_V_VS2
+  {
+    RESID_E_VS2_MDL,      // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_E_VS2_MDL,      // テクスチャリソースID
+    anm_v_vs2,            // アニメテーブル(複数指定のため)
+    ANM_V_VS2_NUM,        // アニメリソース数
+  },
+  // OBJ_V_VS3
+  {
+    RESID_E_VS3_MDL,      // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_E_VS3_MDL,      // テクスチャリソースID
+    anm_v_vs3,            // アニメテーブル(複数指定のため)
+    ANM_V_VS3_NUM,        // アニメリソース数
   },
 };
 
@@ -343,11 +493,19 @@ static char* kao_plt_name[ TEX_INDEX_MAX ] =
 static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk );
 static void EXPOBJ_ObjDell( WBT_GMK_TMP *p_wk );
 static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk );
+static void EXPOBJ_ObjSetOne( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, int anm_num, VecFx32 pos );
 
 // アニメ管理
 // 共通
 static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, BOOL loop );
 static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx );
+
+// 爆破エフェクト
+static void ANM_VS1_L_Play( WBT_GMK_TMP *p_wk );
+static void ANM_VS1_R_Play( WBT_GMK_TMP *p_wk );
+static void ANM_VS2_Play( WBT_GMK_TMP *p_wk );
+static void ANM_VS3_Play( WBT_GMK_TMP *p_wk );
+
 
 // 背景ビジョン
 static void VISION_Setup( WBT_GMK_TMP *p_wk );
@@ -486,6 +644,28 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
       WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_WIN_PLAYER, strbuf1, NULL, 0, 0 );
 
       GFL_STR_DeleteBuffer( strbuf1 );
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      //WBT_GIMMICK_LightSet( p_fieldmap, 0, SCR_WBT_EFFECT_POS_L );
+      //WBT_GIMMICK_LightSet( p_fieldmap, 0, SCR_WBT_EFFECT_POS_R );
+      //OS_Printf("デバッグ 照明OFF\n");
+      WBT_GIMMICK_Explosion( p_fieldmap, SCR_WBT_VS3 );
+      OS_Printf("デバッグ 爆破エフェクト\n");
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      //WBT_GIMMICK_LightSet( p_fieldmap, 1, SCR_WBT_EFFECT_POS_L );
+      //WBT_GIMMICK_LightSet( p_fieldmap, 1, SCR_WBT_EFFECT_POS_R );
+      //OS_Printf("デバッグ 照明ON\n");
+      WBT_GIMMICK_Explosion( p_fieldmap, SCR_WBT_VS2 );
+      OS_Printf("デバッグ 爆破エフェクト\n");
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      WBT_GIMMICK_Explosion( p_fieldmap, SCR_WBT_VS1_L );
+      WBT_GIMMICK_Explosion( p_fieldmap, SCR_WBT_VS1_R );
+      OS_Printf("デバッグ 爆破エフェクト\n");
     }
   }
 #endif
@@ -661,7 +841,7 @@ void WBT_GIMMICK_WinEffectStart( FIELDMAP_WORK *p_fieldmap )
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
     // アニメ再生
-    for( i=0; i<RES_E_WIN_NUM-1; i++ )
+    for( i=0; i<ANM_WIN_A_NUM; i++ )
     {
       EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
@@ -677,6 +857,81 @@ void WBT_GIMMICK_WinEffectStart( FIELDMAP_WORK *p_fieldmap )
   ICHI_Printf("優勝エフェクト開始\n");
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  照明を設定
+ *
+ *	@param	*p_fieldmap フィールドワークポインタ
+ *	@param	on_off  ON/OFFフラグ  0:OFF 1:ON
+ *	@param	pos     SCR_WBT_EFFECT_POS_L:左 SCR_WBT_EFFECT_POS_R:右
+ */
+//-----------------------------------------------------------------------------
+void WBT_GIMMICK_LightSet( FIELDMAP_WORK *p_fieldmap, u8 on_off, u8 pos )
+{
+  WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
+  int i;
+
+#if 0
+  // 最初に全て非表示
+  for( i=OBJ_LIGHT_ON_L; i<=OBJ_LIGHT_OFF_R; i++ )
+  {
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, i, TRUE );
+  }
+#endif
+
+  // 指定したものを表示
+  {
+    u16 obj_idx_vanish_true;  // 非表示
+    u16 obj_idx_vanish_false; // 表示
+    if( pos == SCR_WBT_EFFECT_POS_L )
+    {
+      obj_idx_vanish_true = ( on_off == 0 ) ? OBJ_LIGHT_ON_L : OBJ_LIGHT_OFF_L;
+      obj_idx_vanish_false = ( on_off == 0 ) ? OBJ_LIGHT_OFF_L : OBJ_LIGHT_ON_L;
+    }
+    else
+    {
+      obj_idx_vanish_true = ( on_off == 0 ) ? OBJ_LIGHT_ON_R : OBJ_LIGHT_OFF_R;
+      obj_idx_vanish_false = ( on_off == 0 ) ? OBJ_LIGHT_OFF_R : OBJ_LIGHT_ON_R;
+    }
+
+    // 表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx_vanish_false, FALSE );
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx_vanish_true, TRUE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  爆破エフェクト再生
+ *
+ *	@param	*p_fieldmap フィールドマップワーク
+ *	@param	type  種類 ※script_def.hのSCR_WBT_VS???定義
+ */
+//-----------------------------------------------------------------------------
+void WBT_GIMMICK_Explosion( FIELDMAP_WORK *p_fieldmap, u8 type )
+{
+  WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
+
+  switch( type ){
+  case SCR_WBT_VS1_L:
+    ANM_VS1_L_Play( p_wk );
+    break;
+  case SCR_WBT_VS1_R:
+    ANM_VS1_R_Play( p_wk );
+    break;
+  case SCR_WBT_VS2:
+    ANM_VS1_L_Play( p_wk );
+    ANM_VS1_R_Play( p_wk );
+    ANM_VS2_Play( p_wk );
+    break;
+  case SCR_WBT_VS3:
+    ANM_VS3_Play( p_wk );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
 
 //=============================================================================
 /**
@@ -698,165 +953,54 @@ void WBT_GIMMICK_WinEffectStart( FIELDMAP_WORK *p_fieldmap )
 static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
 {
   int i;
+  VecFx32 vision_pos = { VISION_X, VISION_Y, VISION_Z };
+  VecFx32 effect_pos = { EFFECT_X, EFFECT_Y, EFFECT_Z };
+  VecFx32 effect_pos_r = { EFFECT_X+EFFECT_X_MARGIN, EFFECT_Y, EFFECT_Z };
 
   //必要なリソースの用意
   FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup, EXPOBJ_UNIT_IDX);
 
   //=====================================
   // VSの設定
-  {
-    u16     obj_idx = OBJ_V_VS;    // OBJインデックス
-
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
-
-    // 座標
-    status->trans.x = VISION_X;
-    status->trans.y = VISION_Y;
-    status->trans.z = VISION_Z;
-    // カリングする
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-    // 表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-    // アニメ再生
-    for( i=0; i<ANM_VS_NUM; i++ )
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
-    }
-  }
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_V_VS, ANM_VS_NUM, vision_pos );
 
   //=====================================
   // VS 名前の設定
-  {
-    u16     obj_idx = OBJ_V_VS_NAME;    // OBJインデックス
-
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
-    // 座標
-    status->trans.x = VISION_X;
-    status->trans.y = VISION_Y;
-    status->trans.z = VISION_Z;
-    // カリングする
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-    // 表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-  }
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_V_VS_NAME, 0, vision_pos );
+  
 
   //=====================================
   // WINの設定
-  {
-    u16     obj_idx = OBJ_V_WIN;    // OBJインデックス
-
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
-
-    // 座標
-    status->trans.x = VISION_X;
-    status->trans.y = VISION_Y;
-    status->trans.z = VISION_Z;
-    // カリングする
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-    // 表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-    // アニメ再生
-    for( i=0; i<ANM_VS_WIN_NUM; i++ )
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
-    }
-  }
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_V_WIN, ANM_VS_WIN_NUM, vision_pos );
+  
   //=====================================
   // WIN 名前の設定
-  {
-    u16     obj_idx = OBJ_V_WIN_NAME;    // OBJインデックス
-
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
-    // 座標
-    status->trans.x = VISION_X;
-    status->trans.y = VISION_Y;
-    status->trans.z = VISION_Z;
-    // カリングする
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-    // 表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-  }
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_V_WIN_NAME, 0, vision_pos );
+  
 
   //=====================================
   // LOGOの設定
-  {
-    u16     obj_idx = OBJ_V_LOGO;    // OBJインデックス
-
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
-
-    // 座標
-    status->trans.x = VISION_X;
-    status->trans.y = VISION_Y;
-    status->trans.z = VISION_Z;
-    // カリングする
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-    // 表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-    // アニメ再生
-    for( i=0; i<ANM_LOGO_NUM; i++ )
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
-    }
-  }
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_V_LOGO, ANM_LOGO_NUM, vision_pos );
+  
 
   //=====================================
   // WIN エフェクトの設定
-  {
-    u16     obj_idx = OBJ_E_WIN_START;    // OBJインデックス
-
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
-
-    // 座標
-    status->trans.x = EFFECT_X;
-    status->trans.y = EFFECT_Y;
-    status->trans.z = EFFECT_Z;
-    // カリングしない
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
-    // 表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-    // アニメ再生
-    for( i=0; i<RES_E_WIN_NUM-1; i++ )
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
-    }
-  }
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_E_WIN_START, ANM_WIN_A_NUM, effect_pos );
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_E_WIN_LOOP, ANM_WIN_B_NUM, effect_pos );
 
   //=====================================
-  // WIN エフェクトの設定
-  {
-    u16     obj_idx = OBJ_E_WIN_LOOP;    // OBJインデックス
+  // 照明の設定
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_LIGHT_ON_L, 0, effect_pos );
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_LIGHT_ON_R, 0, effect_pos_r );
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_LIGHT_OFF_L, 0, effect_pos );
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_LIGHT_OFF_R, 0, effect_pos_r );
 
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
-
-    // 座標
-    status->trans.x = EFFECT_X;
-    status->trans.y = EFFECT_Y;
-    status->trans.z = EFFECT_Z;
-    // カリングしない
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
-    // 表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
-    // アニメ再生
-    for( i=0; i<RES_E_WIN_NUM-1; i++ )
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
-    }
-  }
+  //=====================================
+  // 爆破エフェクトの設定
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_V_VS1_L, ANM_V_VS1_L_NUM, effect_pos );
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_V_VS1_R, ANM_V_VS1_R_NUM, effect_pos );
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_V_VS2, ANM_V_VS2_NUM, effect_pos );
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_V_VS3, ANM_V_VS3_NUM, effect_pos );
 
 }
 
@@ -904,7 +1048,7 @@ static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk )
       // ループエフェクトは表示
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, FALSE );
       // ループエフェクトアニメ設定
-      for( i=0; i<RES_E_WIN_NUM-1; i++ )
+      for( i=0; i<ANM_WIN_B_NUM; i++ )
       {
         EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, i );
         FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, i, TRUE );
@@ -915,6 +1059,44 @@ static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk )
       // フラグOFF
       p_wk->move_e_win = FALSE;
     }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ１つの初期設定
+ *
+ *	@param	FLD_EXP_OBJ_CNT_PTR exp_obj 3D拡張OBJポインタ
+ *	@param  u16 obj_idx OBJインデックス
+ *	@param	int anm_num アニメ数
+ *	@param  VecFx32 pos 座標
+ */
+//-----------------------------------------------------------------------------
+static void EXPOBJ_ObjSetOne( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, int anm_num, VecFx32 pos )
+{
+  int i;
+  GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
+
+  // 座標
+  VEC_Set( &status->trans, pos.x, pos.y, pos.z );
+
+  // カリングする
+  FLD_EXP_OBJ_SetCulling( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
+  // 非表示
+  FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
+
+  // アニメ再生
+  for( i=0; i<anm_num; i++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm;
+    exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
+
+    // 1回再生設定
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );   // アニメ再生設定
+
+    // 無効化
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, FALSE );
   }
 }
 
@@ -970,6 +1152,70 @@ static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx )
   FLD_EXP_OBJ_ValidCntAnm( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, anm_idx, FALSE );
   // 頭だし
   FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, EXPOBJ_UNIT_IDX, obj_idx, anm_idx, 0 );
+}
+
+//=============================================================================
+/**
+ *          爆破エフェクトのアニメ管理
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  対戦前用爆破エフェクト左 アニメ再生
+ *
+ *	@param	WBT_GMK_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void ANM_VS1_L_Play( WBT_GMK_TMP *p_wk )
+{
+  u16 obj_idx = OBJ_V_VS1_L;
+
+  ANM_Play( p_wk->exp_obj, obj_idx, 0, FALSE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 2, FALSE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  対戦前用爆破エフェクト右 アニメ再生
+ *
+ *	@param	WBT_GMK_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void ANM_VS1_R_Play( WBT_GMK_TMP *p_wk )
+{
+  u16 obj_idx = OBJ_V_VS1_R;
+
+  ANM_Play( p_wk->exp_obj, obj_idx, 0, FALSE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 2, FALSE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  対戦後用爆破エフェクト アニメ再生
+ *
+ *	@param	WBT_GMK_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void ANM_VS2_Play( WBT_GMK_TMP *p_wk )
+{
+  u16 obj_idx = OBJ_V_VS2;
+
+  ANM_Play( p_wk->exp_obj, obj_idx, 0, FALSE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  決勝戦対戦前用爆破エフェクト アニメ再生
+ *
+ *	@param	WBT_GMK_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void ANM_VS3_Play( WBT_GMK_TMP *p_wk )
+{
+  u16 obj_idx = OBJ_V_VS3;
+
+  ANM_Play( p_wk->exp_obj, obj_idx, 0, FALSE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 2, FALSE );
 }
 
 
