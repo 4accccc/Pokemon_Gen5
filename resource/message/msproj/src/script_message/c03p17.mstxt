@@ -6,12 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『ここにね
-げすいどうが　つながったんだよ！▽
+			<Text>アイリス『あちら　からね
+げすいどうに　はいれるんだよ！▽
 あやしい　かんじが　するでしょ？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:28:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『ここにね
-下水道が　つながったんだよ！▽
+			<Text>アイリス『あちら　からね
+下水道に　入れるんだよ！▽
 怪しい　感じが　するでしょ？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:28:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33,10 +33,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・c03p07→c03でのイベント後
 ・続けてswrival_01</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T09:47:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -67,10 +68,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="0" ]！
-プラズマだんは　みつかったか？</Text>
+プラズマだん　いたかよ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -79,10 +80,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="0" ]！
-プラズマだんは　みつかったか？</Text>
+プラズマ団は　いたかよ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:28:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -91,15 +92,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・
+・条件未定
 ・はい/いいえ選択肢表示
-・はい　→swrival_02
+　はい　→swrival_02
 　いいえ→swrival_03
-・0＝主人公名前
+・0＝主人公名
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:28:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -142,10 +143,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そんな　ウソじゃ
-よろこばないんだぜ？▼</Text>
+喜ばないんだぜ？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:23:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -245,13 +246,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きいたんだが　げすいどうが
-この　ヒウンに　あるらしいんだ！▼
-そこに　いるかもしれないからさ
-オレと　オマエで　のりこむぞ！▼</Text>
+			<Text>となると　あとは……▼
+よし！　[Name:TrainerName ]
+オマエも　てつだえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T05:51:00" />
+				Time="2011-08-11T09:57:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -259,13 +259,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きいたんだが　下水道が
-この　ヒウンに　あるらしいんだ！▼
-そこに　いるかも　しれないからさ
-オレと　オマエで　乗り込むぞ！▼</Text>
+			<Text>となると　あとは……▼
+よし！　[Name:TrainerName ]
+オマエも　手伝え！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T05:51:12" />
+				Time="2011-08-11T12:23:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -274,11 +273,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・表示後、水上飛行機前に移動
-・続けてswchampion_02</Comment>
+・表示後、下水道に入っていく
+・続けてswchampion_02
+・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T09:57:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -335,10 +335,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・下水道へ行くまで繰り返し</Comment>
+・d11r0101：下水道へ行くまで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T05:54:57" />
+				Time="2011-08-11T12:24:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -364,231 +364,42 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p17_swrival_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『フン
-プラズマだん　いなかったな▼
-たしかに　レゾナンスリゾートは
-おもしろかった　けど……▼
-しかたない
-また　てわけして　さがすか▼
-なにか　あれば　しらせるから
-オレの　れんらくさきを▽
-ライブキャスターに　とうろく　しろ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-24T12:22:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『フン
-プラズマだん　いなかったな▼
-確かに　レゾナンスリゾートは
-おもしろかった　けど……▼
-しかたない
-また　手分けして　探すか▼
-なにか　あれば　知らせるから
-オレの　連絡先を▽
-ライブキャスターに　登録しろ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-24T12:22:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T03:07:58" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p17_swrival_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ライブキャスター登録</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ライブキャスター登録</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>・ライブキャスターの連絡先に
-　ライバル追加処理</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T03:07:58" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p17_swrival_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>オレ……　ポケモンどろぼう　とか
-ぜったいに　ゆるさないからッ！！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>オレ……　ポケモンどろぼう　とか
-ぜったいに　許さないからッ！！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・メッセージ表示後、c03方面に移動
-・画面外に消えると続けてswchampion_03</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T03:07:58" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_c03p17_swchampion_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『きみの　ともだち
-（感想、ライバルのキャラ立て）▼
-げすいどうに　はいれるよう　たのんだの
-なかを　さがすなら　いっしょに　いこ！▼</Text>
+			<Text>アイリス『きみの　ともだち……▼
+なんだか　おこっていた　ようだけど
+げすいどう　だいじょうぶ　だった？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T12:22:48" />
+				Time="2011-08-11T12:25:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:24:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『きみの　ともだち
-（感想、ライバルのキャラ立て）▼
-下水道には入れるよう頼んだの
-中を　探すなら　一緒に行こ！▼</Text>
+			<Text>アイリス『きみの　ともだち……▼
+なんだか　怒っていた　ようだけど
+下水道　大丈夫　だった？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:27:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:24:06" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・表示後、d11r0101：下水道ダンジョンへ
-・アイリスが画面外に消えると操作可能に</Comment>
+・d11r0101でのイベント後
+　自動で表示？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:24:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -596,14 +407,7 @@
 アイリス</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T03:07:43" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				Time="2011-08-11T12:24:06" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -614,19 +418,78 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p17_swrival_08"
+		Label="msg_c03p17_swchampion_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライバル『きいたよ
-アーティって　ひとから▼
-げすいどうの　なかに
-プラズマだんが　いたんだってな▼
-だから　しばらく　ヒウンをぶらつくよ
-なかまが　いるかも　しれないし</Text>
+			<Text>で　これから　どうするの？▼
+げすいどうで　ジムリーダーの
+アーティと　あったんでしょ？▼
+ポケモンジムに　いって
+うでだめしを　するのも　いいかもね！▼
+しょうぶ　することで　ポケモンも
+トレーナーである　きみのこと▽
+もっと　わかってくれるだろうし！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T07:49:16" />
+				Time="2011-08-11T12:27:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:24:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>で　これから　どうするの？▼
+下水道で　ジムリーダーの
+アーティと　会ったんでしょ？▼
+ポケモンジムに　行って
+腕試しを　するのも　いいかもね！▼
+勝負することで　ポケモンも
+トレーナーである　きみのこと▽
+もっと　わかってくれるだろうし！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:27:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:24:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・以降、繰り返し
+・c03ジムバッジ取得で削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:24:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWCHAMPION
+アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:24:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p17_swrival_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:23:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -634,15 +497,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライバル『聞いたよ
-アーティって　人から▼
-下水道の　中に
-プラズマ団が　いたんだってな▼
-だから　しばらく　ヒウンをぶらつくよ
-残党が　いるかもしれないし</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:23:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -650,14 +508,175 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・下水道の外に出るとメッセージ
-・フラグ成立まで
-　下水道にいるとか（要検討）
-・1＝ライバル名</Comment>
+			<Comment>※削除</Comment>
 			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:00:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:07:58" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p17_swrival_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:23:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:23:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:00:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:07:58" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p17_swrival_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:23:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:23:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:00:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:07:58" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p17_swrival_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:23:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:23:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:00:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -676,7 +695,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -687,11 +706,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レゾナンスリゾートまで　ひとっとび！
-どうです　のってみませんか？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:10:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -699,11 +717,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レゾナンスリゾートまで　ひとっとび！
-どうです　乗ってみませんか？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:10:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -711,14 +728,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・msg_c03_swchampion_01で登場
-・はい/いいえ選択肢表示
-・はい　→pilot_02
-　いいえ→pilot_03</Comment>
+			<Comment>※削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:00:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -747,10 +760,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レッツ　フライ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:10:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -758,10 +771,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レッツ　フライ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:10:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -769,11 +782,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・はい選択時</Comment>
+			<Comment>※削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:00:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -802,11 +814,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オー　ノー！
-のりたくなったら　はなしかけてよ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:10:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -814,11 +825,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オー　ノー！
-乗りたくなったら　話しかけてよ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:10:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -826,11 +836,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・いいえ選択時</Comment>
+			<Comment>※削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T12:00:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -859,12 +868,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げすいどう　ですか？▼
-やせいポケモンが　でて　あぶないから
-はいらない　ほうが　いいですよ</Text>
+			<Text>なんか　げすいどう　から
+ひとのこえが　きこえるような……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:21:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -872,12 +880,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>下水道　ですか？▼
-野生ポケモンが　でて　あぶないから
-入らない　方が　いいですよ</Text>
+			<Text>なんか　下水道から
+人の声が　きこえるような……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:21:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -887,10 +894,12 @@
 			Language="JPN">
 			<Comment>♂
 ・下水道ストッパー
-・c03p07イベントまで</Comment>
+・c03p07イベントまで
+　画面右を向いたままで
+　？マークを表示してからメッセージ表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:17:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -912,13 +921,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリスさんから　ききましたよ
-もしかしたら　どろぼうが　いるって▼
-はいっても　いいですけど
-ポケモンとか　きをつけて　くださいよ</Text>
+			<Text>はい？
+げすいどうに　はいるんですか？▼
+はあ……　それなら　やせいポケモンに
+ちゅうい　してくださいよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T05:57:03" />
+				Time="2011-08-11T10:24:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -926,13 +935,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリスさんから　ききましたよ
-もしかしたら　どろぼうが　いるって▼
-入っても　いいですけど
-ポケモンとか　気をつけて　くださいよ</Text>
+			<Text>はい？
+下水道に　入るんですか？▼
+はあ……　それなら　野生ポケモンに
+注意して　くださいよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T05:57:07" />
+				Time="2011-08-11T10:24:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -967,12 +976,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　げすいどうは　ですね
+			<Text>ヒウンげすいどうは　ですね
 しおの　みちひきの　かんけいで▽
 いける　ばしょが　かわるんですよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:24:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -980,12 +989,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　下水道は　ですね
+			<Text>ヒウン下水道は　ですね
 干満の　関係で▽
 行ける　場所が　変わるんですよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:24:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -995,10 +1004,10 @@
 			Language="JPN">
 			<Comment>♂
 ・下水道ストッパー
-・c03p07イベント後から</Comment>
+・d11r0101でのイベント後から</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T10:25:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

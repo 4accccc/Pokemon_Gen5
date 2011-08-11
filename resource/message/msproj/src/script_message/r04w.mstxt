@@ -10,11 +10,10 @@
 いつのまにやら　あんなに
 いわが　ならんでいてな……▼
 しかも　ひでんの　かいりきを
-つかっても　おせないぞい……▽
-ほら　ためしてみるぞい！▼</Text>
+つかっても　おせないぞい……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-11T12:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26,11 +25,10 @@
 いつのまにやら　あんなに
 岩が　並んでいてな……▼
 しかも　秘伝の　かいりきを
-使っても　押せないぞい……▽
-ほら　試してみるぞい！▼</Text>
+使っても　押せないぞい……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-11T12:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -41,12 +39,10 @@
 			<Comment>♂
 ・4番道路入ってすぐに配置
 ・posで必須イベントに
-　！マーク表示
-・アイテム入手処理
-　No000「ひでんマシン」</Comment>
+　！マーク表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-11T12:44:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -97,10 +93,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アイテム入手後</Comment>
+・2回目以降</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-11T12:44:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
