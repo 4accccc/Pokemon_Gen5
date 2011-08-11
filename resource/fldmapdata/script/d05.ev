@@ -30,6 +30,7 @@ _EVENT_DATA    ev_reserve_d05_swplazma_af_01
 _EVENT_DATA    ev_d05_swboss_01
 _EVENT_DATA    ev_zone_d05
 _EVENT_DATA    ev_init_d05
+_EVENT_DATA    ev_pos_d05_d27_door
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -64,6 +65,20 @@ INIT_EVENT_START ev_init_d05
   ENDIF
 
 INIT_EVENT_END
+
+/**************************************************************/
+/* 			POS：【仮】プラズマ団船接続			  */
+/**************************************************************/
+EVENT_START		ev_pos_d05_d27_door
+
+  //アニメ：主人公入り口へ移動
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_r)
+  _OBJ_ANIME_WAIT()
+  
+  //マップチェンジ
+  _MAP_CHANGE( ZONE_ID_D27R0101, 10, 32, DIR_RIGHT )
+
+EVENT_END
 
 /**************************************************************/
 /* 			POS：WBT誘導イベント			  */
@@ -318,13 +333,18 @@ EVENT_START		ev_scene_d05_swplazma_01
   _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()		//カメラ操作終了
   
+  //チェレン・ライバル動作モデル削除
+  _OBJ_DEL( D05_SWRIVAL_01 )
+  _OBJ_DEL( D05_SWLEADER1_01 )
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
   //========================================//
   //D05プラズマ団イベント終了
   $WK_SCENE_D05 = 4
-  //D05アクロマ非表示
-  _FLAG_SET( FV_D05_SWBOSS_01 )
-  //アクロマ動作OBJ削除
-  _OBJ_DEL( D05_SWBOSS_01 )
+  //D05ライバル非表示
+  _FLAG_SET( FV_D05_SWRIVAL_01 )
+  //D05チェレン非表示
+  _FLAG_SET( FV_D05_SWLEADER1_01 )
   
   //D27R0101アジト船1回目イベント起動
   _FLAG_RESET(FV_D27R0101_SWRIVAL_01)

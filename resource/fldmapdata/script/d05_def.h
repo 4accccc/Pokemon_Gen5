@@ -13,5 +13,6 @@
 #define SCRID_D05_SWBOSS_01 (6)
 #define SCRID_ZONE_D05 (7)
 #define SCRID_INIT_D05 (8)
+#define SCRID_POS_D05_D27_DOOR (9)
 
 #endif //_D05_DEF_H_

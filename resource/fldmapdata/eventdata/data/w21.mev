@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/10 17:36:17
+#save date:2011/08/11 14:53:26
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\w21.wms
 #SECTION START:OBJ_EVENT
@@ -401,7 +401,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 POS_W21_SWRIVAL_01
@@ -413,6 +413,23 @@ POS_CHECK_TYPE_NORMAL
 WK_SCENE_W21_01
 #Event Trigger Work Value
 1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 -80 -552
+#size
+1 1
+#event number: 1
+#Pos Event Label
+POS_W21_D27_DOOR
+#Pos Script Name
+SCRID_POS_W21_D27_DOOR
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_W21_01
+#Event Trigger Work Value
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position

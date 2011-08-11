@@ -428,6 +428,13 @@ EVENT_START	ev_d27r0101_swrival_01
     _FLAG_SET(FV_D27R0101_SWLEADER1_01)
     _FLAG_SET(FV_D27R0101_SWSAGE7_01)
     _FLAG_SET(FV_D27R0101_NINJA_01)
+    
+    //D05ライバル表示
+    _FLAG_RESET( FV_D05_SWRIVAL_01 )
+    //D05チェレン表示
+    _FLAG_RESET( FV_D05_SWLEADER1_01 )
+    //D05アクロマ非表示
+    _FLAG_SET( FV_D05_SWBOSS_01 )
     //========================================//
     
     //予約スクリプト
