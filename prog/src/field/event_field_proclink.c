@@ -725,7 +725,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     else if( wk->result == RETURNFUNC_RESULT_USE_SKILL )
     { 
       //‹Z‚ª‘I‘ð‚³‚ê‚½ê‡
-      wk->param->result = EVENT_PROCLINK_RESULT_DOWSINGMACHINE;
+      wk->param->result = EVENT_PROCLINK_RESULT_SKILL;
     }
     else if( wk->result == RETURNFUNC_RESULT_RETIRE )
     { 
