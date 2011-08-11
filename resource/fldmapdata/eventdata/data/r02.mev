@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/03 17:42:02
+#save date:2011/08/11 20:26:58
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r02.wms
 #SECTION START:OBJ_EVENT
@@ -378,7 +378,296 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+17
+#event number: 0
+#Pos Event Label
+POS_R02_DUMMY_FES_01
+#Pos Script Name
 0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 -488
+#size
+1 1
+#event number: 1
+#Pos Event Label
+POS_R02_DUMMY_FES_02
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -280
+#size
+1 1
+#event number: 2
+#Pos Event Label
+POS_R02_DUMMY_FES_03
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -312
+#size
+1 1
+#event number: 3
+#Pos Event Label
+POS_R02_DUMMY_FES_04
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 -232
+#size
+1 1
+#event number: 4
+#Pos Event Label
+POS_R02_DUMMY_FES_05
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 -168
+#size
+1 1
+#event number: 5
+#Pos Event Label
+POS_R02_DUMMY_FES_06
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+424 0 -200
+#size
+1 1
+#event number: 6
+#Pos Event Label
+POS_R02_DUMMY_FES_07
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+216 0 -24
+#size
+1 1
+#event number: 7
+#Pos Event Label
+POS_R02_DUMMY_FES_08
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 0 72
+#size
+1 1
+#event number: 8
+#Pos Event Label
+POS_R02_DUMMY_FES_09
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 88
+#size
+1 1
+#event number: 9
+#Pos Event Label
+POS_R02_DUMMY_FES_10
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+376 0 -24
+#size
+1 1
+#event number: 10
+#Pos Event Label
+POS_R02_DUMMY_FES_11
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+424 0 -56
+#size
+1 1
+#event number: 11
+#Pos Event Label
+POS_R02_DUMMY_FES_12
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+696 32 -136
+#size
+1 1
+#event number: 12
+#Pos Event Label
+POS_R02_DUMMY_FES_13
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+488 0 -72
+#size
+1 1
+#event number: 13
+#Pos Event Label
+POS_R02_DUMMY_FES_01
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+488 0 184
+#size
+1 1
+#event number: 14
+#Pos Event Label
+POS_R02_DUMMY_FES_14
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+520 0 -8
+#size
+1 1
+#event number: 15
+#Pos Event Label
+POS_R02_DUMMY_FES_15
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+472 0 -136
+#size
+1 1
+#event number: 16
+#Pos Event Label
+POS_R02_DUMMY_FES_16
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 0 -184
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
