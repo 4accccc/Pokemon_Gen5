@@ -72,6 +72,8 @@ extern void FBI_TOOL_WBT_SetEnemyData( BATTLE_SETUP_PARAM * bsp,
     const BSUBWAY_TRAINER * bt_trd,
     const BSUBWAY_POKEMON * btpwd,
     int inMemNum, int level, HEAPID temp_heapID );
+extern void FBI_TOOL_WBT_SetPokemon( POKEPARTY *p_party,
+    const BSUBWAY_POKEMON *btpwd, u16 level, const int inMemNum, HEAPID temp_heapID );
 
 extern u16 FBI_TOOL_GetOBJCode(ARCID tr_arcID, u16 tr_no, HEAPID heapID );
 

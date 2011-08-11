@@ -373,6 +373,7 @@ static void entryDownloadTournament( const WBTDL_MATCH * wbtdl_match, u16 * tr_l
   for ( ; index < WBT_TRAINER_NUM; index ++ )
   {
     const WBTDL_MATCH * match = &wbtdl_match[ index - 1 ];
+    OS_Printf( "WBTDL MATCH type=%d,pri=%d,id=%d\n",match->type, match->pri, match->id );
     switch ( match->type )
     {
     default:

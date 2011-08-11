@@ -245,6 +245,8 @@ static void DebugSetRResortTex(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param,
 //WBTÉZÅ[Éu
 static u32 DebugGetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param, u32 value );
+static u32 DebugGetWBTSaveFlag( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetWBTSaveFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param, u32 value );
 
 
 #include "debug_numinput.cdat"
@@ -1880,5 +1882,20 @@ static void DebugSetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 pa
   WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gdata );
   WBTSAVE_SetWinCount( wbtsave, param, value );
 }
+static u32 DebugGetWBTSaveFlag( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param )
+{
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gdata );
+  return WBTSAVE_GetFlag( wbtsave, param );
+}
+static void DebugSetWBTSaveFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param, u32 value )
+{
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gdata );
+  if ( value ) {
+    WBTSAVE_SetFlag( wbtsave, param );
+  } else {
+    WBTSAVE_ResetFlag( wbtsave, param );
+  }
+}
+
 #endif  //PM_DEBUG
 

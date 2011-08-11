@@ -764,7 +764,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_WBT_CreateBattleParam(
   
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static void wbt_SetPokeParty( POKEPARTY *p_party,
+void FBI_TOOL_WBT_SetPokemon( POKEPARTY *p_party,
     const BSUBWAY_POKEMON *btpwd, u16 level, const int inMemNum, HEAPID temp_heapID )
 {
   int i;
@@ -801,7 +801,7 @@ void FBI_TOOL_WBT_SetEnemyData( BATTLE_SETUP_PARAM * bsp,
     EntryAITrainer( play_mode, bt_trd->player_id, bt_trd, tr_data, 0x00000087, TRUE,TRUE );
   }
   //敵ポケモンセット
-  wbt_SetPokeParty( bsp->party[client], btpwd, level, inMemNum, temp_heapID );
+  FBI_TOOL_WBT_SetPokemon( bsp->party[client], btpwd, level, inMemNum, temp_heapID );
 }
 
 
