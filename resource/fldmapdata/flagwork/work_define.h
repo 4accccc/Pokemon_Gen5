@@ -259,6 +259,8 @@
 #define WK_SCENE_T02R0401_GIRL4_01       16647 /* 0x4107 カラクサタウン民家：スランプピアノガールイベント進行制御ワーク */
 #define WK_SCENE_BRIDGE_MANIA_01         16648 /* 0x4108 h01&#xff5e;h06：橋マニア */
 #define WK_SCENE_C09                     16649 /* 0x4109 ポケモンリーグ：初回挑戦時の解説POSイベントの制御 */
+#define WK_SCENE_C15_TUTORIAL_01         16650 /* 0x410a ポケウッド：チュートリアルイベント制御ワーク */
+#define WK_SCENE_C16_TUTORIAL_01         16651 /* 0x410b ジョインアベニュー：チュートリアルイベント制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

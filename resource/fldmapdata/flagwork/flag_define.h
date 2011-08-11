@@ -381,7 +381,7 @@
 #define FE_T05_MAIGO_CLEAR_01              365 /* 0x016d カナワタウン：迷子ポケモンクリアフラグ */
 #define FE_C09_GUIDE_TALK                  366 /* 0x016e ポケモンリーグ：ベテラン初回会話 */
 #define FE_C09P01_GATE_OPEN                367 /* 0x016f ポケモンリーグ：ゲートを閉じる */
-		/* not used   368(0x0170) */
+#define FE_R22_SWBOSS_ITEM_01              368 /* 0x0170 R22：アクロマからアイテムを受け取った */
 		/* not used   369(0x0171) */
 		/* not used   370(0x0172) */
 		/* not used   371(0x0173) */
@@ -682,6 +682,10 @@
 #define FV_C04_RAILMAN_01                  764 /* 0x02fc ライモンシティ：鉄道員 */
 #define FV_C04_POKE33_01                   765 /* 0x02fd ライモンシティ：ヤナップ */
 #define FV_T05_POKE33_01                   766 /* 0x02fe カナワタウン：ヤナップ */
+#define FV_D32R0101_FIGHTERM_01            767 /* 0x02ff D32：がんじょうストッパー */
+#define FV_D32R0101_POKE50_01              768 /* 0x0300 D32：イワパレス */
+#define FV_C15_SWRIVAL_01                  769 /* 0x0301 ポケウッド：ライバル */
+#define FV_C16_SWRIVAL_01                  770 /* 0x0302 ジョインアベニュー：ライバル */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
