@@ -15350,7 +15350,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
-		3,
+		1,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -16190,7 +16190,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
-		4,
+		7,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -19340,7 +19340,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19375,7 +19375,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19410,7 +19410,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19445,7 +19445,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19480,7 +19480,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19515,7 +19515,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19550,7 +19550,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19585,7 +19585,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19620,7 +19620,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19655,7 +19655,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19690,7 +19690,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -19725,7 +19725,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -21422,7 +21422,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D26R0301 = 612
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_IN85,
+		AREA_ID_OUT27,
 		MATRIX_ID_DUN2602,
 		NARC_script_seq_d26r0301_bin,
 		NARC_script_seq_sp_d26r0301_bin,	//NARC_script_seq_sp_d26r0301_bin,
@@ -21457,7 +21457,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D26R0401 = 613
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_IN85,
+		AREA_ID_OUT59,
 		MATRIX_ID_DUN2603,
 		NARC_script_seq_d26r0401_bin,
 		NARC_script_seq_sp_d26r0401_bin,	//NARC_script_seq_sp_d26r0401_bin,
@@ -21492,7 +21492,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D26R0501 = 614
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_IN85,
+		AREA_ID_IN51,
 		MATRIX_ID_DUN2604,
 		NARC_script_seq_d26r0501_bin,
 		NARC_script_seq_sp_d26r0501_bin,	//NARC_script_seq_sp_d26r0501_bin,
@@ -21527,7 +21527,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D26R0601 = 615
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_IN85,
+		AREA_ID_IN51,
 		MATRIX_ID_DUN2605,
 		NARC_script_seq_d26r0601_bin,
 		NARC_script_seq_sp_d26r0601_bin,	//NARC_script_seq_sp_d26r0601_bin,
@@ -21562,7 +21562,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D26R0701 = 616
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_IN85,
+		AREA_ID_OUT59,
 		MATRIX_ID_DUN2606,
 		NARC_script_seq_d26r0701_bin,
 		NARC_script_seq_sp_d26r0701_bin,	//NARC_script_seq_sp_d26r0701_bin,
@@ -21597,7 +21597,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D26R0801 = 617
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_IN85,
+		AREA_ID_IN51,
 		MATRIX_ID_DUN2607,
 		NARC_script_seq_d26r0801_bin,
 		NARC_script_seq_sp_d26r0801_bin,	//NARC_script_seq_sp_d26r0801_bin,
@@ -21667,7 +21667,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D26R1001 = 619
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_IN85,
+		AREA_ID_OUT59,
 		MATRIX_ID_WHITE2603,
 		NARC_script_seq_d26r1001_bin,
 		NARC_script_seq_sp_d26r1001_bin,	//NARC_script_seq_sp_d26r1001_bin,
