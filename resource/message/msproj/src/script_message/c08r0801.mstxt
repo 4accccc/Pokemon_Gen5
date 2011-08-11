@@ -156,10 +156,10 @@
 			<Comment>♀
 ・アイテム入手処理
 　No228「けむりだま」
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T07:43:29" />
+				Time="2011-08-11T08:10:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -216,10 +216,10 @@
 			Language="JPN">
 			<Comment>♀
 ・アイテム入手後
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T07:43:30" />
+				Time="2011-08-11T08:10:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -2,16 +2,63 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c08r0802_boy1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンリーグに　いる
+してんのうって　みんなよりも▽
+ポケモンのことが　すきなのかな？▼
+だって　すきじゃないと
+しょうぶに　つよくなれないよね？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:14:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:10:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンリーグに　いる
+四天王って　みんなよりも▽
+ポケモンのことが　好きなのかな？▼
+だって　好きじゃないと
+勝負に　強くなれないよね？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:14:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:10:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:13:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:13:46" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c08r0802_babyboy1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼく　おもうんだけど
-ポケモンが　いっしょに　いるから▽
-かったり　まけたり　できるんだよね</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:10:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +66,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼく　おもうんだけど
-ポケモンが　いっしょに　いるから▽
-かったり　まけたり　できるんだよね</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:10:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33,10 +78,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:35:28" />
+				Time="2011-08-11T08:13:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -52,20 +97,26 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c08r0802_veteranm_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンリーグに　いどむには
-８つの　ジムバッジが　ひつよう！▼
-だが　それだけの　じつりょくでも
-ポケモンリーグで　まちかまえる▽
-してんのうに　かつのは　たいへん！</Text>
+			<Text>ポケモントレーナーが　めざす
+さいこうの　いただき　ポケモンリーグ▼
+いどむには　８この
+ジムバッジが　ひつよう　なんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:12:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73,14 +124,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンリーグに　挑むには
-８つの　ジムバッジが　必要！▼
-だが　それだけの　実力でも
-ポケモンリーグで　待ち構える▽
-四天王に　勝つのは　大変！</Text>
+			<Text>ポケモントレーナーが　めざす
+最高の　頂　ポケモンリーグ▼
+挑むには　８この
+ジムバッジが　必要なんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -89,10 +139,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:35:25" />
+				Time="2011-08-11T08:10:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -110,7 +160,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08r0802_poke_01"
+		Label="msg_c08r0802_poke20_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -144,11 +194,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-ワルビル</Text>
+			<Text>POKE20
+ポケモン・ワルビル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T08:11:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
