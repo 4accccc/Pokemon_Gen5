@@ -28,7 +28,7 @@
 // arc
 #include "arc/arc_def.h"
 #include "arc/fieldmap/wbt_gmk.naix"
-#include "arc/wbt_cut_gra.naix"
+#include "arc/face_gra.naix"
 #include "font/font.naix"
 
 // sound
