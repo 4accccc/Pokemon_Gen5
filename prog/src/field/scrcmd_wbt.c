@@ -1071,6 +1071,12 @@ VMCMD_RESULT EvCmdWBTGMKEffectStart( VMHANDLE * core, void * wk )
   u8 type = SCRCMD_GetVMWorkValue( core, wk );
   u8 pos = SCRCMD_GetVMWorkValue( core, wk );
 
+  if( type >= SCR_WBT_EFFECT_MAX )
+  {
+    GF_ASSERT_MSG( 0, "通路エフェクト定義エラー" );
+    return VMCMD_RESULT_CONTINUE;
+  }
+
   // ギミック開始
   WBT_GIMMICK_EffectStart( fieldWork, type, pos );
 

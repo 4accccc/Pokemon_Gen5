@@ -721,6 +721,27 @@
 
 // 通路エフェクト定義 ※リソースの並びと同一なので変更不可
 #define SCR_WBT_EFFECT_NORMAL         (0) ///<ノーマルエフェクト
+#define SCR_WBT_EFFECT_FIRE           (1) ///<炎
+#define SCR_WBT_EFFECT_WATER          (2) ///<水
+#define SCR_WBT_EFFECT_ELECT          (3) ///<電気
+#define SCR_WBT_EFFECT_GRASS          (4) ///<草
+#define SCR_WBT_EFFECT_PSYCHC         (5) ///<エスパー
+#define SCR_WBT_EFFECT_FIGHT          (6) ///<格闘
+#define SCR_WBT_EFFECT_POISON         (7) ///<毒
+#define SCR_WBT_EFFECT_GROUND         (8) ///<地面
+#define SCR_WBT_EFFECT_FLYING         (9) ///<飛行
+#define SCR_WBT_EFFECT_DRAGON         (10) ///<ドラゴン
+#define SCR_WBT_EFFECT_BUG            (11) ///<虫
+#define SCR_WBT_EFFECT_ROCK           (12) ///<岩
+#define SCR_WBT_EFFECT_GHOST          (13) ///<ゴースト
+#define SCR_WBT_EFFECT_ICE            (14) ///<氷
+#define SCR_WBT_EFFECT_STEEL          (15) ///<鋼
+#define SCR_WBT_EFFECT_DARK           (16) ///<悪
+#define SCR_WBT_EFFECT_HRS            (17) ///<ホドモエ/レンタル/シャッフル
+#define SCR_WBT_EFFECT_WCSL           (18) ///<WCS/地方リーダーズ
+#define SCR_WBT_EFFECT_WM             (19) ///<ワールド/マスター
+#define SCR_WBT_EFFECT_CHAMP          (20) ///<チャンピオンズ
+#define SCR_WBT_EFFECT_MAX            (21)
 
 //--------------------------------------------------------------
 //  scrcmd_animal_trail.c

@@ -56,10 +56,7 @@
 #define EFFECT_Y  (0)
 #define EFFECT_Z  (256 << FX32_SHIFT)
 
-
-// script_def.hの優勝ビジョンの+1の値を入れる
-// 要は、ギミックの初期化で読み込んでないリソースの始めの値。
-#define TYPE_VISION_START      (SCR_WBT_VISION_ALL)
+#define RES_E_NUM (4)   // 片方の通路エフェクトのリソース総数
 
 //=============================================================================
 /**
@@ -155,6 +152,39 @@ enum {
   RESID_E_NORMAL_R_IMA,     // ノーマル
   RESID_E_NORMAL_R_ICA,     // ノーマル
   RESID_E_NORMAL_R_ITA,     // ノーマル
+  // 本当は↑のように書くと分かりやすいが、長くなるので
+  // ↓の記述にする。意味は同じ。
+  RESID_E_FIRE,             // 炎
+  RESID_E_WATER = RESID_E_FIRE + (RES_E_NUM*2),   // 水
+  RESID_E_ELECT = RESID_E_WATER + (RES_E_NUM*2),  // 電気
+  RESID_E_GRASS = RESID_E_ELECT + (RES_E_NUM*2),  // 草
+  RESID_E_PSYCHC = RESID_E_GRASS + (RES_E_NUM*2), // エスパー
+  RESID_E_FIGHT = RESID_E_PSYCHC + (RES_E_NUM*2), // 格闘
+  RESID_E_POISON = RESID_E_FIGHT + (RES_E_NUM*2), // 毒
+  RESID_E_GROUND = RESID_E_POISON + (RES_E_NUM*2),// 地面
+  RESID_E_FLYING = RESID_E_GROUND + (RES_E_NUM*2),// 飛行
+  RESID_E_DRAGON = RESID_E_FLYING + (RES_E_NUM*2),// ドラゴン
+  RESID_E_BUG = RESID_E_DRAGON + (RES_E_NUM*2),   // 虫
+  RESID_E_ROCK = RESID_E_BUG + (RES_E_NUM*2),     // 岩
+  RESID_E_GHOST = RESID_E_ROCK + (RES_E_NUM*2),   // ゴースト
+  RESID_E_ICE = RESID_E_GHOST + (RES_E_NUM*2),    // 氷
+  RESID_E_STEEL = RESID_E_ICE + (RES_E_NUM*2),    // 鋼
+  RESID_E_DARK = RESID_E_STEEL + (RES_E_NUM*2),   // 悪
+  RESID_E_HRS = RESID_E_DARK + (RES_E_NUM*2),     // ホドモエ/レンタル/シャッフル
+  RESID_E_WCSL = RESID_E_HRS + (RES_E_NUM*2),     // WCS/地方リーダーズ
+  RESID_E_WM = RESID_E_WCSL + (RES_E_NUM*2),      // ワールド/マスター
+  RESID_E_CHAMP1_L_MDL = RESID_E_WM + (RES_E_NUM*2),// チャンピオンズ
+  RESID_E_CHAMP1_L_ICA,     // チャンピオンズ
+  RESID_E_CHAMP1_R_MDL,     // チャンピオンズ
+  RESID_E_CHAMP1_R_ICA,     // チャンピオンズ
+  RESID_E_CHAMP2_L_MDL,     // チャンピオンズ
+  RESID_E_CHAMP2_L_IMA,     // チャンピオンズ
+  RESID_E_CHAMP2_L_ICA,     // チャンピオンズ
+  RESID_E_CHAMP2_L_ITA,     // チャンピオンズ
+  RESID_E_CHAMP2_R_MDL,     // チャンピオンズ
+  RESID_E_CHAMP2_R_IMA,     // チャンピオンズ
+  RESID_E_CHAMP2_R_ICA,     // チャンピオンズ
+  RESID_E_CHAMP2_R_ITA,     // チャンピオンズ
 };
 
 // リソース指定の基準値
@@ -162,8 +192,6 @@ enum {
 #define RESID_E_START_IMA   ( RESID_E_NORMAL_L_IMA )
 #define RESID_E_START_ICA   ( RESID_E_NORMAL_L_ICA )
 #define RESID_E_START_ITA   ( RESID_E_NORMAL_L_ITA )
-
-#define RES_E_NUM           (4)   // エフェクトのリソース数
 
 // OBJインデックス
 // ユニット別
@@ -190,6 +218,7 @@ enum {
 // 通路エフェクト
 enum {
   OBJ_EFFECT = 0,     // エフェクト
+  OBJ_CHAMP,          // チャンピオンズ用(オブジェが2つある為)
 
   OBJ_EFFECT_MAX,
 };
@@ -525,6 +554,9 @@ static void SetResName(NNSG3dResName *outName,const char *inName);
 static void* GetTexStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name);
 static void* GetPlttStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name);
 
+// 通路エフェクト
+// チャンピオンズの設定
+static void EFFECT_ChampInit( WBT_GMK_TMP *p_wk, u8 pos );
 
 // task
 // タスクワーク
@@ -538,6 +570,10 @@ static FIELD_TASK_RETVAL VisionVsTaskFunc( void* wk );
 // 優勝ビジョン演出タスク
 static void VISION_WIN_TASK_Add( WBT_GMK_TMP *p_wk );
 static FIELD_TASK_RETVAL VisionWinTaskFunc( void* wk );
+
+// チャンピオンズエフェクト再生タスク
+static void CHAMP_TASK_Add( WBT_GMK_TMP *p_wk );
+static FIELD_TASK_RETVAL ChampTaskFunc( void* wk );
 
 //=============================================================================
 /**
@@ -647,25 +683,15 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
     {
-      //WBT_GIMMICK_LightSet( p_fieldmap, 0, SCR_WBT_EFFECT_POS_L );
-      //WBT_GIMMICK_LightSet( p_fieldmap, 0, SCR_WBT_EFFECT_POS_R );
-      //OS_Printf("デバッグ 照明OFF\n");
-      WBT_GIMMICK_Explosion( p_fieldmap, SCR_WBT_VS3 );
-      OS_Printf("デバッグ 爆破エフェクト\n");
+      WBT_GIMMICK_EffectStart( p_fieldmap, SCR_WBT_EFFECT_CHAMP, SCR_WBT_EFFECT_POS_R );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
     {
-      //WBT_GIMMICK_LightSet( p_fieldmap, 1, SCR_WBT_EFFECT_POS_L );
-      //WBT_GIMMICK_LightSet( p_fieldmap, 1, SCR_WBT_EFFECT_POS_R );
-      //OS_Printf("デバッグ 照明ON\n");
-      WBT_GIMMICK_Explosion( p_fieldmap, SCR_WBT_VS2 );
-      OS_Printf("デバッグ 爆破エフェクト\n");
+      WBT_GIMMICK_EffectStart( p_fieldmap, SCR_WBT_EFFECT_CHAMP, SCR_WBT_EFFECT_POS_L );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
     {
-      WBT_GIMMICK_Explosion( p_fieldmap, SCR_WBT_VS1_L );
-      WBT_GIMMICK_Explosion( p_fieldmap, SCR_WBT_VS1_R );
-      OS_Printf("デバッグ 爆破エフェクト\n");
+      WBT_GIMMICK_EffectStart( p_fieldmap, SCR_WBT_EFFECT_WM, SCR_WBT_EFFECT_POS_L );
     }
   }
 #endif
@@ -750,22 +776,31 @@ void WBT_GIMMICK_EffectStart( FIELDMAP_WORK *p_fieldmap, u8 type, u8 pos )
     RESID_E_START_ITA,    // ITA
   };
 
+  // チャンピオンズのみ設定が違う
+  if( type == SCR_WBT_EFFECT_CHAMP )
+  {
+    EFFECT_ChampInit( p_wk, pos );
+    ICHI_Printf("チャンピオンズ設定\n");
+    return;
+  }
+
   // RES
   for( res_cnt=0; res_cnt<RES_E_NUM; res_cnt++ )
   {
     res_e_table[ res_cnt ].arcive  = ARCID_WBT_GIMMICK_DATA;
-    res_e_table[ res_cnt ].datID   = res_start_tbl[ res_cnt ] + type + (pos*RES_E_NUM);
+    // 1種類のエフェクトで片方 RES_E_NUM個ある 両方でRES_E_NUM*2
+    res_e_table[ res_cnt ].datID   = res_start_tbl[ res_cnt ] + (type*RES_E_NUM*2) + (pos*RES_E_NUM);
     res_e_table[ res_cnt ].arcType = GFL_G3D_UTIL_RESARC;
   }
 
   // ANIME
-  anm_e_table[ anm_cnt ].anmresID = 1;
+  anm_e_table[ anm_cnt ].anmresID = 1;  // IMA
   anm_e_table[ anm_cnt ].anmdatID = 0;
   anm_cnt++;
-  anm_e_table[ anm_cnt ].anmresID = 2;
+  anm_e_table[ anm_cnt ].anmresID = 2;  // ICA
   anm_e_table[ anm_cnt ].anmdatID = 0;
   anm_cnt++;
-  anm_e_table[ anm_cnt ].anmresID = 3;
+  anm_e_table[ anm_cnt ].anmresID = 3;  // ITA
   anm_e_table[ anm_cnt ].anmdatID = 0;
   anm_cnt++;
 
@@ -791,7 +826,7 @@ void WBT_GIMMICK_EffectStart( FIELDMAP_WORK *p_fieldmap, u8 type, u8 pos )
   }
   FLD_EXP_OBJ_AddUnit( p_wk->exp_obj, &setup, EXPOBJ_UNIT_IDX_EFFECT );
   p_wk->is_unit_effect = TRUE;    // 作成した
-  
+
   //=====================================
   // Effectの設定
   {
@@ -1778,5 +1813,230 @@ static void TexTransToGra( WBT_GMK_TMP *p_wk,
     rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, 32);
     GF_ASSERT(rc);
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通路エフェクトのチャンピオンズのみリソースが違うので
+ *	        初期化を分けた
+ *
+ *	@param	WBT_GMK_TMP *p_wk
+ *	@param	pos 
+ */
+//-----------------------------------------------------------------------------
+static void EFFECT_ChampInit( WBT_GMK_TMP *p_wk, u8 pos )
+{
+  const int champ_res_num = 2 + RES_E_NUM;
+
+  GFL_G3D_UTIL_RES    res_e_table[champ_res_num] = {0};
+  GFL_G3D_UTIL_ANM    anm_e_table1 = {0};
+  GFL_G3D_UTIL_ANM    anm_e_table2[RES_E_NUM-1] = {0};
+  GFL_G3D_UTIL_OBJ    obj_e_table[2] = {0};
+  GFL_G3D_UTIL_SETUP  setup = {0};
+  u8      res_cnt = 0;
+  u8      anm_cnt = 0;
+  // リソースIDの開始位置テーブル
+  // ※並び替え不可
+  const   res_start_tbl[ champ_res_num ] = {
+    RESID_E_CHAMP1_L_MDL,    // モデル
+    RESID_E_CHAMP1_L_ICA,    // ICA
+    RESID_E_CHAMP2_L_MDL,    // モデル
+    RESID_E_CHAMP2_L_IMA,    // IMA
+    RESID_E_CHAMP2_L_ICA,    // ICA
+    RESID_E_CHAMP2_L_ITA,    // ITA
+  };
+
+  // RES
+  for( res_cnt=0; res_cnt<2; res_cnt++ )
+  {
+    res_e_table[ res_cnt ].arcive  = ARCID_WBT_GIMMICK_DATA;
+    res_e_table[ res_cnt ].datID   = res_start_tbl[ res_cnt ] + (pos*2);
+    res_e_table[ res_cnt ].arcType = GFL_G3D_UTIL_RESARC;
+  }
+  for( ; res_cnt<champ_res_num; res_cnt++ )
+  {
+    res_e_table[ res_cnt ].arcive  = ARCID_WBT_GIMMICK_DATA;
+    res_e_table[ res_cnt ].datID   = res_start_tbl[ res_cnt ] + (pos*RES_E_NUM);
+    res_e_table[ res_cnt ].arcType = GFL_G3D_UTIL_RESARC;
+  }
+
+  {
+    int i;
+    for( i=0; i<champ_res_num; i++ )
+    {
+      ICHI_Printf("rec_tbl[%d].datID %d \n", i, res_e_table[i].datID);
+    }
+    ICHI_Printf("res_cnt = %d \n", res_cnt);
+  }
+
+  // ANIME
+  anm_e_table1.anmresID = 1;  // ICA
+  anm_e_table1.anmdatID = 0;
+
+  anm_e_table2[ anm_cnt ].anmresID = 3;  // IMA
+  anm_e_table2[ anm_cnt ].anmdatID = 0;
+  anm_cnt++;
+  anm_e_table2[ anm_cnt ].anmresID = 4;  // ICA
+  anm_e_table2[ anm_cnt ].anmdatID = 0;
+  anm_cnt++;
+  anm_e_table2[ anm_cnt ].anmresID = 5;  // ITA
+  anm_e_table2[ anm_cnt ].anmdatID = 0;
+  anm_cnt++;
+
+  // OBJ_EFFECT
+  obj_e_table[0].mdlresID = 0;
+  obj_e_table[0].mdldatID = 0;
+  obj_e_table[0].texresID = 0;
+  obj_e_table[0].anmTbl   = &anm_e_table1;
+  obj_e_table[0].anmCount = 1;
+  // OBJ_CHAMP
+  obj_e_table[1].mdlresID = 2;
+  obj_e_table[1].mdldatID = 0;
+  obj_e_table[1].texresID = 2;
+  obj_e_table[1].anmTbl   = anm_e_table2;
+  obj_e_table[1].anmCount = anm_cnt;
+
+  // セットアップデータ
+  setup.resTbl  = res_e_table;
+  setup.resCount= res_cnt;
+  setup.objTbl  = obj_e_table;
+  setup.objCount= 2;
+
+  //必要なリソースの用意
+  // 仮にすでにリソース設定された後なら削除
+  if( p_wk->is_unit_effect )
+  {
+    FLD_EXP_OBJ_DelUnit( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT );
+  }
+  FLD_EXP_OBJ_AddUnit( p_wk->exp_obj, &setup, EXPOBJ_UNIT_IDX_EFFECT );
+  p_wk->is_unit_effect = TRUE;    // 作成した
+
+  //=====================================
+  // Effectの設定
+  {
+    u16     obj_idx = OBJ_EFFECT;    // OBJインデックス
+    u8      i;
+
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx );
+
+    // 座標
+    status->trans.x = EFFECT_X + (pos*EFFECT_X_MARGIN); // 右側は、ずれているので調整
+    status->trans.y = EFFECT_Y;
+    status->trans.z = EFFECT_Z;
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, TRUE );
+    // 表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, FALSE );
+
+    // アニメ再生
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, 0 );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, 0, TRUE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+      // 頭だし
+      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, 0, 0 );
+    }
+  }
+  {
+    u16     obj_idx = OBJ_CHAMP;    // OBJインデックス
+    u8      i;
+
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx );
+
+    // 座標
+    status->trans.x = EFFECT_X + (pos*EFFECT_X_MARGIN); // 右側は、ずれているので調整
+    status->trans.y = EFFECT_Y;
+    status->trans.z = EFFECT_Z;
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, TRUE );
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, TRUE );
+
+    // アニメ再生
+    for( i=0; i<RES_E_NUM-1; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, i, FALSE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+    }
+  }
+
+  // タスク追加
+  CHAMP_TASK_Add( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通路エフェクトのチャンピオンズ　タスク
+ *
+ *	@param	WBT_GMK_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void CHAMP_TASK_Add( WBT_GMK_TMP *p_wk )
+{
+  FIELD_TASK        *task;
+  FIELD_TASK_MAN    *taskMan;
+  VISION_TASK_WORK  *work;
+
+  taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( p_wk->heapID, sizeof(VISION_TASK_WORK), ChampTaskFunc );
+
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->seq = 0;
+  work->p_gmk_wk = p_wk;
+
+  FIELD_TASK_MAN_AddTask( taskMan, task, NULL );
+}
+// タスク関数
+static FIELD_TASK_RETVAL ChampTaskFunc( void* wk )
+{
+  VISION_TASK_WORK *p_wk = (VISION_TASK_WORK*)wk;
+  FLD_EXP_OBJ_CNT_PTR exp_obj = p_wk->p_gmk_wk->exp_obj;
+
+  u8      i;
+
+  // 処理シーケンス
+  enum{
+    SEQ_ANM_WAIT,
+    SEQ_END,
+  };
+
+  switch( p_wk->seq ){
+  case SEQ_ANM_WAIT:
+    {
+      // icaの終了チェック
+      EXP_OBJ_ANM_CNT_PTR exp_anm;
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, EXPOBJ_UNIT_IDX_EFFECT, OBJ_EFFECT, 0 );
+      if( FLD_EXP_OBJ_ChkAnmEnd( exp_anm ) == TRUE )
+      {
+        ICHI_Printf("champ1 アニメ終了\n");
+        // 元の非表示
+        FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX_EFFECT, OBJ_EFFECT, TRUE );
+        // 表示
+        FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX_EFFECT, OBJ_CHAMP, FALSE );
+        // アニメ再生
+        for( i=0; i<RES_E_NUM-1; i++ )
+        {
+          EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, EXPOBJ_UNIT_IDX_EFFECT, OBJ_CHAMP, i );
+          FLD_EXP_OBJ_ValidCntAnm( exp_obj, EXPOBJ_UNIT_IDX_EFFECT, OBJ_CHAMP, i, TRUE );
+          FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+          FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+        }
+
+        p_wk->seq = SEQ_END;
+      }
+    }
+    break;
+  case SEQ_END:
+    return FIELD_TASK_RETVAL_FINISH;
+  default:
+    GF_ASSERT(0);
+  }
+
+  return FIELD_TASK_RETVAL_CONTINUE;
 }
 

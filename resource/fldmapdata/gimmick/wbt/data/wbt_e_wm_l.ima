@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ima version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2011-08-04T17:03:36" source="wbt_e_wm_l_r.mb"/>
+	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<mat_color_info
+	frame_size="120"
+	tool_start_frame="1"
+	tool_end_frame="120"
+	interpolation="frame"
+	compress_material="on" material_size="8 8"
+	frame_step_mode="1"
+	tolerance_color="2"
+/>
+
+<mat_color_data size="483">
+	25 31 0 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 30 30 29 29 28
+	27 26 25 24 23 22 21 19 18 17
+	15 14 13 11 10 9 7 6 5 3
+	2 1 0 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 30
+	29 27 25 23 21 18 15 13 10 7
+	5 2 0 28 28 28 28 28 28 28
+	28 28 28 28 28 28 28 28 28 28
+	28 28 28 28 28 28 28 28 28 28
+	28 28 28 28 28 28 28 28 28 28
+	28 28 28 28 28 28 28 28 28 28
+	28 28 28 28 28 28 28 28 28 28
+	28 28 28 28 28 28 28 28 28 28
+	28 28 28 28 28 28 28 28 28 28
+	28 28 28 28 28 28 28 28 28 28
+	28 28 28 28 28 28 28 28 28 28
+	28 28 28 28 28 28 28 28 28 27
+	26 24 23 21 19 16 14 11 9 6
+	4 2 0 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 15 15
+	14 14 13 12 10 9 8 6 5 4
+	2 1 0
+</mat_color_data>
+
+<mat_color_anm_array size="7">
+	<mat_color_anm index="0" material_name="wbt_e_hana0">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="120" data_head="3"/>
+	</mat_color_anm>
+	<mat_color_anm index="1" material_name="wbt_e_hana0_1">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="2"/>
+		<ambient_g frame_step="1" data_size="1" data_head="2"/>
+		<ambient_b frame_step="1" data_size="1" data_head="2"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="120" data_head="3"/>
+	</mat_color_anm>
+	<mat_color_anm index="2" material_name="wbt_e_hana1">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="2"/>
+		<ambient_g frame_step="1" data_size="1" data_head="2"/>
+		<ambient_b frame_step="1" data_size="1" data_head="2"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="120" data_head="123"/>
+	</mat_color_anm>
+	<mat_color_anm index="3" material_name="wbt_e_nor01">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="2"/>
+		<ambient_g frame_step="1" data_size="1" data_head="2"/>
+		<ambient_b frame_step="1" data_size="1" data_head="2"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="120" data_head="243"/>
+	</mat_color_anm>
+	<mat_color_anm index="4" material_name="wbt_e_nor01_1">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="2"/>
+		<ambient_g frame_step="1" data_size="1" data_head="2"/>
+		<ambient_b frame_step="1" data_size="1" data_head="2"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="120" data_head="363"/>
+	</mat_color_anm>
+	<mat_color_anm index="5" material_name="wbt_e_nor01_2">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="2"/>
+		<ambient_g frame_step="1" data_size="1" data_head="2"/>
+		<ambient_b frame_step="1" data_size="1" data_head="2"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="120" data_head="363"/>
+	</mat_color_anm>
+	<mat_color_anm index="6" material_name="wbt_e_nor01_3">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="2"/>
+		<ambient_g frame_step="1" data_size="1" data_head="2"/>
+		<ambient_b frame_step="1" data_size="1" data_head="2"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="120" data_head="243"/>
+	</mat_color_anm>
+</mat_color_anm_array>
+
+</body>
+
+</ima>
