@@ -172,10 +172,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>トレーナー戦後
-イベントクリア前</Comment>
+・イベントクリア前</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:10:19" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:30:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -222,10 +222,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>クリア
-セントラルエリアで評価前</Comment>
+・セントラルエリアで評価前</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:10:19" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:30:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -272,10 +272,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>クリア
-イベント全終了</Comment>
+・イベント全終了</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:10:19" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:30:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -869,6 +869,88 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-21T02:37:51" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p12_badman2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いえーい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いえーい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p12_badman2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラザー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブラザー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:33:14" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow

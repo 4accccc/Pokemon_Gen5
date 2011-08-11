@@ -972,11 +972,11 @@
 			Language="JPN">
 			<Comment>♂
 ・はい/いいえの選択肢表示
-・はい　→customer_05_02
+　はい　→customer_05_02
 　いいえ→customer_05_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:43:33" />
+				Time="2011-08-11T05:30:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

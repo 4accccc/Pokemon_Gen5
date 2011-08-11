@@ -1189,10 +1189,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>トレーナー戦後
-イベントクリア前</Comment>
+・イベントクリア前</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:13:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:46:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1239,10 +1239,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>クリア
-セントラルエリアで評価前</Comment>
+・セントラルエリアで評価前</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:13:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:46:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1289,10 +1289,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>クリア
-イベント全終了</Comment>
+・イベント全終了</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:13:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:46:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

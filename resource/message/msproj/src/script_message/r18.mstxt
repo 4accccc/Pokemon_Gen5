@@ -48,12 +48,13 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX＝625、GRIDZ＝711.左向き
-・WBTで
+・WBTで、マキシと
 　勝負した→dpleader5_02
-　勝負していない→dpleader5_03</Comment>
+　勝負していない→dpleader5_03
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T03:19:43" />
+				Time="2011-08-11T03:56:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -116,10 +117,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WBTで勝負したことがある</Comment>
+・WBTで勝負したことがある
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T03:08:32" />
+				Time="2011-08-11T03:56:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -169,10 +171,11 @@
 ・WBTで勝負したことがない
 ・はい/いいえの選択肢表示
 　はい　→dpleader5_04
-　いいえ→dpleader5_05</Comment>
+　いいえ→dpleader5_05
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T03:19:54" />
+				Time="2011-08-11T03:56:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -218,10 +221,11 @@
 			Language="JPN">
 			<Comment>♂
 ・はい選択時
-・続けてdpleader5_06</Comment>
+・続けてdpleader5_06
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T03:20:00" />
+				Time="2011-08-11T03:56:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -267,10 +271,11 @@
 			Language="JPN">
 			<Comment>♂
 ・いいえ選択時
-・続けてdpleader5_06</Comment>
+・続けてdpleader5_06
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T03:20:00" />
+				Time="2011-08-11T03:56:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -294,10 +299,10 @@
 シンオウそだち　なのだぞぉ！！▼
 いわゆる　ギミック　だな！
 おっと　これは　シークレットな！▼
-さあて　ホドモエに　いくかぁ！！</Text>
+さあて　ホドモエに　いくかぁ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T03:19:23" />
+				Time="2011-08-11T05:05:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -313,10 +318,10 @@
 シンオウ育ち　なのだぞぉ！！▼
 いわゆる　ギミック　だな！
 おっと　これは　シークレットな！▼
-さあて　ホドモエに　行くかぁ！！</Text>
+さあて　ホドモエに　行くかぁ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T03:19:30" />
+				Time="2011-08-11T05:05:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -326,10 +331,11 @@
 			Language="JPN">
 			<Comment>♂
 ・画面外に退場したら
-　主人公操作可能に</Comment>
+　主人公操作可能に
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T02:53:24" />
+				Time="2011-08-11T03:56:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

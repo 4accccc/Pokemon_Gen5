@@ -245,13 +245,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きいたんだが　レゾナンスリゾートって
-ばしょが　あるらしいんだ！▼
+			<Text>きいたんだが　げすいどうが
+この　ヒウンに　あるらしいんだ！▼
 そこに　いるかもしれないからさ
 オレと　オマエで　のりこむぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:51:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -259,13 +259,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きいたんだが　レゾナンスリゾートって
-場所が　あるらしいんだ！▼
+			<Text>きいたんだが　下水道が
+この　ヒウンに　あるらしいんだ！▼
 そこに　いるかも　しれないからさ
 オレと　オマエで　乗り込むぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:51:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -309,12 +309,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アイリス『うん　いいんじゃない？▼
-レゾナンスリゾートは
-さいきん　できた　かんこうめいしょ▽
-せっかくだから　いってみれば？</Text>
+ヒウンげすいどう　なら
+かくれる　ばしょに　ぴったり　かも！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:54:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -323,12 +322,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アイリス『うん　いいんじゃない？▼
-レゾナンスリゾートは
-最近　できた　観光名所▽
-せっかくだから　行ってみれば？</Text>
+ヒウン下水道なら
+隠れる　場所に　ぴったり　かも！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -337,11 +335,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けて
-・レゾナンスリゾートへ行くまで繰り返し</Comment>
+・下水道へ行くまで繰り返し</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:54:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -739,7 +736,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -794,7 +791,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -851,7 +848,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -916,12 +913,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アイリスさんから　ききましたよ
-なんでも　どろぼうが　いるかもって▼
+もしかしたら　どろぼうが　いるって▼
 はいっても　いいですけど
 ポケモンとか　きをつけて　くださいよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:57:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -930,12 +927,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アイリスさんから　ききましたよ
-なんでも　どろぼうが　いるかもって▼
+もしかしたら　どろぼうが　いるって▼
 入っても　いいですけど
 ポケモンとか　気をつけて　くださいよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:57:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

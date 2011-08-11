@@ -596,10 +596,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>トレーナー戦後
-イベントクリア前</Comment>
+・イベントクリア前</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:11:59" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:42:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -646,10 +646,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>クリア
-セントラルエリアで評価前</Comment>
+・セントラルエリアで評価前</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:11:59" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:42:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -696,10 +696,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>クリア
-イベント全終了</Comment>
+・イベント全終了</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:11:59" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T05:42:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -804,11 +804,11 @@
 			Language="JPN">
 			<Comment>♂
 ・プラズマ団アジト船について
-・ホドモエ到着まで（仮）
+・ホドモエ到着まで
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:57:11" />
+				Time="2011-08-11T05:42:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -863,11 +863,11 @@
 			Language="JPN">
 			<Comment>♂
 ・プラズマ団アジト船について
-・ホドモエ到着後から（仮）
+・ホドモエ到着後から
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:57:12" />
+				Time="2011-08-11T05:42:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
