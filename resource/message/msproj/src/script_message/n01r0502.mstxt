@@ -1845,4 +1845,280 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_01_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:36:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:36:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:35:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:35:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_01_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+・メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:36:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_01_03b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>・ゼクロムが教えてくれた
+
+・人間と歩むことで
+　新たな可能性を探ろうとする本能
+　ソレを持つものもいる（＝共鳴、共鳴を求めている）
+
+・同時に
+　野生に生きるものとして
+　誰に頼ることなく
+　自身で能力を高めようとするものも存在する
+
+・その多様な生き方こそが
+　ポケモンの自由
+　ボクたちの自由</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:36:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:36:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・トレーナー戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_01_03w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>・レシラムが教えてくれた
+
+・人間と歩むことで
+　新たな可能性を探ろうとする本能
+　ソレを持つものもいる（＝共鳴、共鳴を求めている）
+
+・同時に
+　野生に生きるものとして
+　誰に頼ることなく
+　自身で能力を高めようとするものも存在する
+
+・その多様な生き方こそが
+　ポケモンの自由
+　ボクたちの自由</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:36:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:36:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・トレーナー戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_01_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:36:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T02:37:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
