@@ -499,13 +499,16 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	wk->SaveMaxNum = TdSave_init_data( wk );
 	
 #ifdef __DOWNLOAD_CHECK__	// debug用
-	wk->TestBuffer = GFL_ARC_LoadDataAlloc( ARCID_WBT_DLDATA, NARC_wbt_dldata_test_all_bin, wk->heapID );
-   	
-	// 12ブロック分上書き
-	{
-		WBTDL_DATA *adr = &wk->Param->data->data[0];
-		// wbtdl => save_p
-		GFL_STD_MemCopy32( wk->TestBuffer, adr, 12*sizeof(WBTDL_DATA) );
+    // 選択画面からの場合だけデバッグを発動(暫定処理)
+	if(wk->Param->status == T_DOWNLOAD_MODE_SELECT){
+		wk->TestBuffer = GFL_ARC_LoadDataAlloc( ARCID_WBT_DLDATA, NARC_wbt_dldata_test_all_bin, wk->heapID );
+   		
+		// 12ブロック分上書き
+		{
+			WBTDL_DATA *adr = &wk->Param->data->data[0];
+			// wbtdl => save_p
+			GFL_STD_MemCopy32( wk->TestBuffer, adr, 12*sizeof(WBTDL_DATA) );
+		}
 	}
 #endif
 	// リストデータのチェック
