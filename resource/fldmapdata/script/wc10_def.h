@@ -7,5 +7,6 @@
 //スクリプトデータID定義
 #define SCRID_ZONE_WC10 (1)
 #define SCRID_BG_WC10_BOARD_01 (2)
+#define SCRID_POS_WC10_D31R0101_DOOR (3)
 
 #endif //_WC10_DEF_H_

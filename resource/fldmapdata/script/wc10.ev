@@ -22,11 +22,15 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_wc10
 _EVENT_DATA    ev_bg_wc10_board_01
+_EVENT_DATA    ev_pos_wc10_d31r0101_door
 _EVENT_DATA_END
 
-
-
-
+//------------------------！注意！------------------------------//
+//																//
+//		LOCALWORK12をD32への接続に使用			//
+//		ゾーン内での使用を禁止します							//
+//																//
+//--------------------------------------------------------------//
 
 /**************************************************************/
 /*            フィールド初期化スクリプト                      */
@@ -36,6 +40,28 @@ INIT_EVENT_START ev_zone_wc10
 	
 INIT_EVENT_END
 
+/**************************************************************/
+/*POS：無限ダンジョンに移動                                                 */
+/**************************************************************/
+EVENT_START  ev_pos_wc10_d31r0101_door
+
+  //カメラ操作　無限ダンジョンにフォーカス
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  
+  //カメラ操作,最後の引数はカメラ操作にかけるフレーム数
+  _CAMERA_MOVE( 7782,0,2166784,1802240,847872,1212416,64 )
+  
+  //アニメ：主人公入り口へ移動
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_u)
+  _OBJ_ANIME_WAIT()
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //マップチェンジ
+  _MAP_CHANGE( ZONE_ID_D31R0101, 7, 14, DIR_UP )
+  
+EVENT_END
 
 /**************************************************************/
 /*看板01                                                 */
@@ -43,3 +69,75 @@ INIT_EVENT_END
 EVENT_START  ev_bg_wc10_board_01
 	_EASY_BGWIN_MSG(wc10_sign_01 , TYPE_TOWN)
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	
