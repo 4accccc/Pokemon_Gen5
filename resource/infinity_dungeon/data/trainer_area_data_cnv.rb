@@ -100,8 +100,10 @@ data_csv.each_with_index { |item,index|
     set_lv = "INF_TRAINER_SETLV_1"  # 100%
   elsif item[SETLV_COLUMN_INDEX] == "○" then
     set_lv = "INF_TRAINER_SETLV_2"
-  else
+  elsif item[SETLV_COLUMN_INDEX] == "×" then
     set_lv = "INF_TRAINER_SETLV_3"
+  else
+    raise "◎、○、×以外が指定されています。"
   end
 
   put_str( set_lv ,out_file)
