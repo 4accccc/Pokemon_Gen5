@@ -1299,6 +1299,7 @@ static void VISION_Setup( WBT_GMK_TMP *p_wk )
 static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBUF *strbuf2, u16 trtype1, u16 trtype2 )
 {
   u16   obj_idx;    // OBJインデックス
+  HEAPID heapID = GFL_HEAP_LOWID( p_wk->heapID );
 
   // 3DモデルオブジェID判定
   // 名前貼り付けビジョンは
@@ -1327,15 +1328,15 @@ static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBU
     BOOL ret;
     STRBUF  *str_player;
 
-    str_player = MyStatus_CreateNameString( &p_wk->p_player_wk->mystatus, p_wk->heapID );
+    str_player = MyStatus_CreateNameString( &p_wk->p_player_wk->mystatus, heapID );
 
     switch( obj_idx ){
     case OBJ_V_VS:
       {
         // 名前
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_LEFT, strbuf1, p_wk->heapID );
+        ret = VISION_Font2Tex( p_wk, TEX_INDEX_LEFT, strbuf1, heapID );
         GF_ASSERT(ret);
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_RIGHT, strbuf2, p_wk->heapID );
+        ret = VISION_Font2Tex( p_wk, TEX_INDEX_RIGHT, strbuf2, heapID );
         GF_ASSERT(ret);
         // 顔グラはtask内で。
       }
@@ -1344,7 +1345,7 @@ static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBU
     case OBJ_V_WIN:
       {
         // 名前
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_WIN, strbuf1, p_wk->heapID );
+        ret = VISION_Font2Tex( p_wk, TEX_INDEX_WIN, strbuf1, heapID );
         GF_ASSERT(ret);
         // 顔グラ
         VISION_Tex2Trgra( p_wk, TEX_INDEX_WIN, trtype1 );
@@ -1436,6 +1437,7 @@ static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, STRBUF *str
 static void VISION_Tex2Trgra( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, u16 trtype )
 {
   u8            obj_idx;
+  HEAPID heapID = GFL_HEAP_LOWID( p_wk->heapID );
 
   // どのオブジェのテクスチャに貼り付けるか
   switch( tex_index ){
@@ -1449,7 +1451,7 @@ static void VISION_Tex2Trgra( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, u16 trtype
     break;
   }
 
-  p_wk->img_bitmap = GFL_BMP_Create(TEX_W, TEX_H, GFL_BMP_16_COLOR, p_wk->heapID );
+  p_wk->img_bitmap = GFL_BMP_Create(TEX_W, TEX_H, GFL_BMP_16_COLOR, heapID );
 
   // 転送
   {
@@ -1457,7 +1459,7 @@ static void VISION_Tex2Trgra( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, u16 trtype
     GFL_G3D_RND   *p_rnd = GFL_G3D_OBJECT_GetG3Drnd( p_obj );
     GFL_G3D_RES   *p_res = GFL_G3D_RENDER_GetG3DresTex( p_rnd );
 
-    TexTransToGra( p_wk, p_res, kao_tex_name[tex_index], kao_plt_name[tex_index], trtype, p_wk->heapID );
+    TexTransToGra( p_wk, p_res, kao_tex_name[tex_index], kao_plt_name[tex_index], trtype, heapID );
   }
 
   GFL_BMP_Delete( p_wk->img_bitmap );
@@ -1480,11 +1482,12 @@ static void VISION_VS_TASK_Add( WBT_GMK_TMP *p_wk )
   FIELD_TASK        *task;
   FIELD_TASK_MAN    *taskMan;
   VISION_TASK_WORK  *work;
+  HEAPID heapID = GFL_HEAP_LOWID( p_wk->heapID );
 
   taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
 
   // 生成
-  task = FIELD_TASK_Create( p_wk->heapID, sizeof(VISION_TASK_WORK), VisionVsTaskFunc );
+  task = FIELD_TASK_Create( heapID, sizeof(VISION_TASK_WORK), VisionVsTaskFunc );
 
   // 初期化
   work = FIELD_TASK_GetWork( task );
@@ -1569,11 +1572,12 @@ static void VISION_WIN_TASK_Add( WBT_GMK_TMP *p_wk )
   FIELD_TASK        *task;
   FIELD_TASK_MAN    *taskMan;
   VISION_TASK_WORK  *work;
+  HEAPID heapID = GFL_HEAP_LOWID( p_wk->heapID );
 
   taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
 
   // 生成
-  task = FIELD_TASK_Create( p_wk->heapID, sizeof(VISION_TASK_WORK), VisionWinTaskFunc );
+  task = FIELD_TASK_Create( heapID, sizeof(VISION_TASK_WORK), VisionWinTaskFunc );
 
   // 初期化
   work = FIELD_TASK_GetWork( task );
@@ -1978,11 +1982,12 @@ static void CHAMP_TASK_Add( WBT_GMK_TMP *p_wk )
   FIELD_TASK        *task;
   FIELD_TASK_MAN    *taskMan;
   VISION_TASK_WORK  *work;
+  HEAPID heapID = GFL_HEAP_LOWID( p_wk->heapID );
 
   taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
 
   // 生成
-  task = FIELD_TASK_Create( p_wk->heapID, sizeof(VISION_TASK_WORK), ChampTaskFunc );
+  task = FIELD_TASK_Create( heapID, sizeof(VISION_TASK_WORK), ChampTaskFunc );
 
   // 初期化
   work = FIELD_TASK_GetWork( task );
