@@ -969,11 +969,11 @@ void BTL_STR_MakeStringSubway( STRBUF* dst, u16 subwayTRID, BtlResult playerResu
     const BATTLE_SETUP_PARAM * bsp = BTL_MAIN_GetBSPConst( SysWork.mainModule );
     if ( playerResult == BTL_RESULT_LOSE )
     {
-      GFL_STR_CopyBuffer( dst, bsp->wbt_win_msg );
+      GFL_STR_CopyBuffer( dst, bsp->wbt_lose_msg );
     }
     else
     {
-      GFL_STR_CopyBuffer( dst, bsp->wbt_lose_msg );
+      GFL_STR_CopyBuffer( dst, bsp->wbt_win_msg );
     }
 
 #if 0
