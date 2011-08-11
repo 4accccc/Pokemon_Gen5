@@ -88,8 +88,7 @@ static u16 ZONEDATA_CHANGE_ID_TBL[ ZONEDATA_CHANGE_MAX ][ ZONEDATA_CHANGE_ID_TBL
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
-  ZONEDATA_CHANGE_AREA_VER = 0,
-  ZONEDATA_CHANGE_AREA_BEFORE,
+  ZONEDATA_CHANGE_AREA_BEFORE = 0,
   ZONEDATA_CHANGE_AREA_AFTER,
 
   ZONEDATA_CHANGE_AREA_TBL_NUM,
@@ -101,10 +100,12 @@ enum {
 //------------------------------------------------------------------
 static u16 AREADATA_CHANGE_ID_TBL[ ZONEDATA_CHANGE_AREA_ID_MAX ] [ ZONEDATA_CHANGE_AREA_TBL_NUM ] =
 {
-  { VERSION_B2, AREA_ID_OUT13,  AREA_ID_OUT67 }, //ZONEDATA_CHANGE_AREA_C08B_ID
+  { AREA_ID_OUT13,  AREA_ID_OUT67 }, //ZONEDATA_CHANGE_AREA_C08B_ID
                                      //ソウリュウ→ソウリュウ凍結（ブラック）
-  { VERSION_W2, AREA_ID_OUT13,  AREA_ID_OUT68 }, //ZONEDATA_CHANGE_AREA_C08W_ID
+  { AREA_ID_OUT13,  AREA_ID_OUT68 }, //ZONEDATA_CHANGE_AREA_C08W_ID
                                      //ソウリュウ→ソウリュウ凍結（ホワイト）
+  { AREA_ID_OUT14,  AREA_ID_OUT67 }, //ZONEDATA_CHANGE_AREA_OUT14
+                                     //R09&R11通常→半凍結
 };
 
 //------------------------------------------------------------------
@@ -398,7 +399,6 @@ u16 ZONEDATA_GetAreaID(u16 zone_id)
     for ( i = 0; i < ZONEDATA_CHANGE_AREA_ID_MAX; i ++ )
     {
       if ( data_handle->area_change_flag[ i ]
-          && AREADATA_CHANGE_ID_TBL[ i ][ZONEDATA_CHANGE_AREA_VER] == GET_VERSION()
           && AREADATA_CHANGE_ID_TBL[ i ][ZONEDATA_CHANGE_AREA_BEFORE] == area_id )
       {
         area_id = AREADATA_CHANGE_ID_TBL[ i ][ZONEDATA_CHANGE_AREA_AFTER];

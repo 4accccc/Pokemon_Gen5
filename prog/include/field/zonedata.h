@@ -50,6 +50,7 @@ typedef enum
 {
   ZONEDATA_CHANGE_AREA_C08B_ID,   //ソウリュウ通常→凍結（ブラック）
   ZONEDATA_CHANGE_AREA_C08W_ID,   //ソウリュウ通常→凍結（ホワイト）
+  ZONEDATA_CHANGE_AREA_OUT14,     //R09&R11通常→半凍結
 
   ZONEDATA_CHANGE_AREA_ID_MAX,
 } ZONEDATA_CHANGE_AREA_ID;

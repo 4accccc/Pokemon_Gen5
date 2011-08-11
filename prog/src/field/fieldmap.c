@@ -135,6 +135,8 @@
 
 #include "savedata/infinity_dungeon_save.h"
 
+#include "map_replace.h"  //MAPREPLACE_GetFlag
+
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -480,6 +482,8 @@ static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork );
 static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapID );
 static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void setupResonanceResort( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id );
+
+static u32 fldmap_getFog(u16 zone_id, GAMEDATA * gamedata );
 
 static fx32 fldmap_getProjMatZOffsValue( u16 zone_id );
 
@@ -909,7 +913,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     
     // ゾーンフォグシステム生成
     fieldWork->zonefog = FIELD_ZONEFOGLIGHT_Create( fieldWork->heapID );
-    FIELD_ZONEFOGLIGHT_LoadReq( fieldWork->zonefog, ZONEDATA_GetFog(fieldWork->map_id), ZONEDATA_GetLight(fieldWork->map_id), 1 );
+    FIELD_ZONEFOGLIGHT_LoadReq( fieldWork->zonefog,
+        fldmap_getFog(fieldWork->map_id, fieldWork->gamedata), ZONEDATA_GetLight(fieldWork->map_id), 1 );
 
     SET_CHECK("setup: light");  //デバッグ：処理負荷計測
     // ライトシステム生成
@@ -3206,7 +3211,8 @@ static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id )
 
 	FIELD_ZONEFOGLIGHT_Clear( p_zonefog );
 	
-	FIELD_ZONEFOGLIGHT_LoadReq( fieldWork->zonefog, ZONEDATA_GetFog(zone_id), ZONEDATA_GetLight(zone_id), 1 );  // 実際の読み込みはメインフレーム
+	FIELD_ZONEFOGLIGHT_LoadReq( fieldWork->zonefog,
+      fldmap_getFog(zone_id, fieldWork->gamedata), ZONEDATA_GetLight(zone_id), 1 );  // 実際の読み込みはメインフレーム
 }
 
 //--------------------------------------------------------------
@@ -4134,6 +4140,28 @@ static void DbgVramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
 
 #endif
 
+
+//==================================================================
+/**
+ * @brief ゾーンごとのフォグ設定取得（イベント影響付加版）
+ * @date  2011.08.11
+ * @author  tamada
+ *
+ * @todo  できたら外部化したい
+ *
+ * 地形変化にあわせてフォグ設定を変更するためにZONEDATA_GetFogの
+ * ラッパーとして作成。
+ *
+ */
+//==================================================================
+static u32 fldmap_getFog(u16 zone_id, GAMEDATA * gamedata )
+{
+  if ( zone_id == ZONE_ID_C08 && MAPREPLACE_GetFlag( gamedata, MAPREPLACE_ID_01 ) == FALSE )
+  {
+    return FIELD_ZONEFOGLIGHT_DATA_NONE;
+  }
+  return ZONEDATA_GetFog( zone_id );
+}
 
 //==================================================================
 /**

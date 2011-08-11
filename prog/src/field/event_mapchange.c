@@ -3145,15 +3145,20 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
   MAPCHG_SetUpResort( gamedata, zone_id );
 
   //仮：イベントによるエリアデータ切り替え
+  ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08B_ID, FALSE );
+  ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08W_ID, FALSE );
+  ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_OUT14, FALSE );
   if ( MAPREPLACE_GetFlag( gamedata, MAPREPLACE_ID_01 ) )
   {
-    ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08B_ID, TRUE );
-    ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08W_ID, TRUE );
-  }
-  else
-  {
-    ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08B_ID, FALSE );
-    ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08W_ID, FALSE );
+    ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_OUT14, TRUE );
+    if ( GET_VERSION() == VERSION_B2 )
+    {
+      ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08B_ID, TRUE );
+    }
+    else
+    {
+      ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08W_ID, TRUE );
+    }
   }
 }
 

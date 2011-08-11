@@ -137,7 +137,8 @@ void FIELD_ZONEFOGLIGHT_LoadReq( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 light
 	GF_ASSERT( p_sys );
 	GF_ASSERT( p_sys->p_data == NULL );
 
-	if( fogno != FIELD_ZONEFOGLIGHT_DATA_NONE )
+  //swan拡張：同じフォグ指定の場合は読み込まない
+	if( fogno != FIELD_ZONEFOGLIGHT_DATA_NONE && fogno != p_sys->load_dataid )
 	{
     p_sys->status = FIELD_ZONEFOGLIGHT_STATUS_LOADING;
     p_sys->load_dataid  = fogno;
