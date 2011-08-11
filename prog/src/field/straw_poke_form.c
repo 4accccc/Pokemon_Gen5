@@ -13,7 +13,7 @@
 
 #include "../../resource/battle/batt_bg_tbl/batt_bg_tbl.h"
 
-#define BATT_BG_OBONID_MAX  (26)
+#define BATT_BG_OBONID_MAX  (35)
 
 const u16 StrawFromTbl[BATT_BG_OBONID_MAX][2] = {
   { BATT_BG_OBONID_00,FORMNO_412_SUNA},		    //地面（四季なし）            砂
@@ -42,6 +42,15 @@ const u16 StrawFromTbl[BATT_BG_OBONID_MAX][2] = {
 	{ BATT_BG_OBONID_23,FORMNO_412_KUSA},				//エンカウント草（四季なし）  草
 	{ BATT_BG_OBONID_24,FORMNO_412_GOMI},				//アスファルト                ゴミ
 	{ BATT_BG_OBONID_25,FORMNO_412_SUNA},				//落ち葉                      砂
+	{ BATT_BG_OBONID_26,FORMNO_412_GOMI},				//ポケウッド撮影              ゴミ
+	{ BATT_BG_OBONID_27,FORMNO_412_GOMI},				//ポケウッド上映              ゴミ
+	{ BATT_BG_OBONID_28,FORMNO_412_GOMI},				//キュレム専用                ゴミ
+	{ BATT_BG_OBONID_29,FORMNO_412_GOMI},				//無限ダンジョン白01          ゴミ
+	{ BATT_BG_OBONID_30,FORMNO_412_GOMI},				//無限ダンジョン黒01          ゴミ
+	{ BATT_BG_OBONID_31,FORMNO_412_GOMI},				//無限ダンジョン黒02          ゴミ
+	{ BATT_BG_OBONID_32,FORMNO_412_GOMI},				//無限ダンジョン黒03          ゴミ
+	{ BATT_BG_OBONID_33,FORMNO_412_GOMI},				//無限ダンジョン黒04          ゴミ
+	{ BATT_BG_OBONID_34,FORMNO_412_GOMI},				//無限ダンジョン黒04          ゴミ
 };
 
 //--------------------------------------------------------------

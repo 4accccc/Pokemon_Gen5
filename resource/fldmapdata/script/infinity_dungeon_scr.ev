@@ -200,7 +200,7 @@ EVENT_START  ev_infinity_dungeon_elevator
       // 階数
 	    _NUMBER( 0 ,  LWK_DRAW_FLOOR_NO , 2 )
       IF $LWK_D_VERSION == VERSION_B2 THEN
-        _BMPMENU_MAKE_LIST( msg_elevator_02_01, LWK_FLOOR_NUM )
+        _BMPMENU_MAKE_LIST( msg_elevator_02_00, LWK_FLOOR_NUM )
       ELSE
         _BMPMENU_MAKE_LIST( msg_elevator_02_01, LWK_FLOOR_NUM )
       ENDIF
@@ -1133,7 +1133,7 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( LWK_BOSS_TRNO, 0 )
+  _TRAINER_BTL_SP_SET( LWK_BOSS_TRNO , 0 , SCR_BATTLE_MODE_MUGEN)
 
   //敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )

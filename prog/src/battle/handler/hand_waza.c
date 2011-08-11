@@ -1257,11 +1257,13 @@ static void handler_Hogosyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       break;
 
     case BATTLE_BG_ATTR_E_INDOOR:   //エンカウント室内
+    case BATTLE_BG_ATTR_MUGEN_B:	  //無限ダンジョン(B)
     default:
       type = POKETYPE_NORMAL;
       break;
 
     case BATTLE_BG_ATTR_CAVE:           //洞窟
+    case BATTLE_BG_ATTR_MUGEN_W:	      //無限ダンジョン(W)
       type = POKETYPE_IWA;
       break;
 
@@ -2271,6 +2273,7 @@ static u8 common_HimituNoTikara_getParams( BTL_SVFLOW_WORK* flowWk, u8* dstMetho
     break;
 
   case BATTLE_BG_ATTR_E_INDOOR:         //室内
+  case BATTLE_BG_ATTR_MUGEN_B:	        //無限ダンジョン(B)
   default:
     method = HIMITSU_METHOD_SICK;
     method_arg = WAZASICK_MAHI;
@@ -2278,6 +2281,7 @@ static u8 common_HimituNoTikara_getParams( BTL_SVFLOW_WORK* flowWk, u8* dstMetho
     break;
 
   case BATTLE_BG_ATTR_CAVE:           //洞窟
+  case BATTLE_BG_ATTR_MUGEN_W:	      //無限ダンジョン(W)
     method = HIMITSU_METHOD_SHRINK;
     method_arg = 0;
     wazaEff = HIMITSU_WAZAEFF_IWAOTOSI;
@@ -9196,11 +9200,13 @@ static void handler_SizenNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       break;
 
     case BATTLE_BG_ATTR_E_INDOOR:       //室内エンカウント
+    case BATTLE_BG_ATTR_MUGEN_B:	      //無限ダンジョン(B)
     default:
       waza = WAZANO_TORAIATAKKU;
       break;
 
     case BATTLE_BG_ATTR_CAVE:           //洞窟
+    case BATTLE_BG_ATTR_MUGEN_W:	      //無限ダンジョン(W)
       waza = WAZANO_IWANADARE;
       break;
 

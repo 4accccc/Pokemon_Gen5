@@ -132,6 +132,7 @@
 
 #define SCR_BATTLE_MODE_NONE    (0) //特にモード指定なし
 #define SCR_BATTLE_MODE_NOLOSE  (1) //負けないモード
+#define SCR_BATTLE_MODE_MUGEN   (2) //無限ダンジョン用戦闘背景、お盆設定モード
 
 ///野生ポケモン戦闘呼び出し時に指定できるフラグ
 #define SCR_WILD_BTL_FLAG_NONE      (0x0000)  //フラグ無し

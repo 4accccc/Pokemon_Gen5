@@ -62,6 +62,11 @@
 #include "savedata/encount_sv.h"
 #include "field/encount_data_ex_def.h"
 
+#include "field/zonedata.h" // for ZONEDATA_GetAreaID
+
+#include "savedata/infinity_dungeon_save.h"
+#include "infinity_dungeon_gimmick.h"
+
 FS_EXTERN_OVERLAY(amprotect);
 
 #ifdef AMPROTECT_FUNC
@@ -375,6 +380,36 @@ GMEVENT * EVENT_TrainerBattle(
     BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_NO_LOSE );
     bew->is_no_lose = TRUE;
   }
+
+  if ( (flags & SCR_BATTLE_MODE_MUGEN) != 0 )
+  {
+    u16 area_id = ZONEDATA_GetAreaID( FIELDMAP_GetZoneID(fieldmap));
+    if (AREADATA_HasDungeonArea(area_id))
+    {
+      GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+      SAVE_CONTROL_WORK *p_scw = GAMEDATA_GetSaveControlWork( gdata );
+      INFINITYDUNGEON_SAVE *p_save = SaveData_GetINFINITYDUNGEON( p_scw );
+      u8 dungeon_area = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
+      INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(fieldmap);
+      u8 dungeon_version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+      if( dungeon_version == VERSION_B2 )
+      {
+        bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_MUGEN_B;
+      }
+      else
+      {
+        bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_MUGEN_W;
+      }
+      bp->fieldSituation.bgType = dungeon_area;
+    
+      ONOUE_Printf("無限ダンジョン用背景差替え");
+    }
+    else
+    {
+      GF_ASSERT_MSG(0,"無限ダンジョン外では呼べません\n");
+    }
+  }
+
   //エンカウントエフェクトとＢＧＭをセット
   ENCEFFNO_GetTrEncEffNoBgmNo(tr_id0, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault);
   //エフェクトエンカウト　エフェクト復帰キャンセル

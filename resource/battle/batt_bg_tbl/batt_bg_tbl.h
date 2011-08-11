@@ -10,7 +10,7 @@
 
 #pragma once
 
-#define  ZONE_SPEC_ATTR_MAX  ( 18 )
+#define  ZONE_SPEC_ATTR_MAX  ( 20 )
 #define  BATT_BG_TBL_NO_FILE     ( 0xffff )
 #define  BATT_BG_TBL_FILE_MAX  ( 8 ) //春敵・春自・夏敵・夏自・秋敵・秋自・冬敵・冬自の順
 #define  BATT_FIELD_TBL_MAX    ( 4 ) // IMD・ICA・ITA・IMAの順

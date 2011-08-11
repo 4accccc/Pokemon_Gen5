@@ -66,6 +66,8 @@ typedef enum {
   BATTLE_BG_ATTR_PALACE,	  ///<	パレス
   BATTLE_BG_ATTR_SAGE,	    ///<	ゲーチス
   BATTLE_BG_ATTR_OCHIBA,	  ///<	落ち葉
+  BATTLE_BG_ATTR_MUGEN_B,	  ///<	無限ダンジョン(B)
+  BATTLE_BG_ATTR_MUGEN_W,	  ///<  無限ダンジョン(W)
 
   BATTLE_BG_ATTR_MAX,
 }BtlBgAttr;

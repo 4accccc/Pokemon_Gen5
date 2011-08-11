@@ -626,62 +626,6 @@ BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
   HEAPID heapID = HEAPID_PROC;
   u16 play_mode = BSWAY_MODE_SINGLE;  // 初期化しておく
 
-  // バージョンごとの戦闘背景テーブル
-  const BtlBgType btl_bg_table_w[] =
-  {
-    BATTLE_BG_TYPE_FOREST,        ///< 森
-    BATTLE_BG_TYPE_FOREST,        ///< 森
-    BATTLE_BG_TYPE_FOREST,        ///< 森
-    BATTLE_BG_TYPE_FOREST,        ///< 森
-    BATTLE_BG_TYPE_FOREST,        ///< 森
-    BATTLE_BG_TYPE_MOUNTAIN,      ///< 山
-    BATTLE_BG_TYPE_MOUNTAIN,      ///< 山
-    BATTLE_BG_TYPE_MOUNTAIN,      ///< 山
-    BATTLE_BG_TYPE_MOUNTAIN,      ///< 山
-    BATTLE_BG_TYPE_MOUNTAIN,      ///< 山
-  };
-  const BtlBgType btl_bg_table_b[] =
-  {
-    BATTLE_BG_TYPE_ROOM,          ///< 室内
-    BATTLE_BG_TYPE_ROOM,          ///< 室内
-    BATTLE_BG_TYPE_ROOM,          ///< 室内
-    BATTLE_BG_TYPE_ROOM,          ///< 室内
-    BATTLE_BG_TYPE_ROOM,          ///< 室内
-    BATTLE_BG_TYPE_CITY,          ///< 街
-    BATTLE_BG_TYPE_CITY,          ///< 街
-    BATTLE_BG_TYPE_CITY,          ///< 街
-    BATTLE_BG_TYPE_CITY,          ///< 街
-    BATTLE_BG_TYPE_CITY,          ///< 街
-  };
-
-  // バージョンごとの戦闘背景アトリビュート
-  const BtlBgType btl_attr_table_w[] =
-  {
-    BATTLE_BG_ATTR_LAWN,	    ///<	芝生
-    BATTLE_BG_ATTR_LAWN,	    ///<	芝生
-    BATTLE_BG_ATTR_LAWN,	    ///<	芝生
-    BATTLE_BG_ATTR_LAWN,	    ///<	芝生
-    BATTLE_BG_ATTR_LAWN,	    ///<	芝生
-    BATTLE_BG_ATTR_CAVE,	    ///<	洞窟
-    BATTLE_BG_ATTR_CAVE,	    ///<	洞窟
-    BATTLE_BG_ATTR_CAVE,	    ///<	洞窟
-    BATTLE_BG_ATTR_CAVE,	    ///<	洞窟
-    BATTLE_BG_ATTR_CAVE,	    ///<	洞窟
-  };
-  const BtlBgType btl_attr_table_b[] =
-  {
-    BATTLE_BG_ATTR_E_INDOOR,	///<	室内エンカウント
-    BATTLE_BG_ATTR_E_INDOOR,	///<	室内エンカウント
-    BATTLE_BG_ATTR_E_INDOOR,	///<	室内エンカウント
-    BATTLE_BG_ATTR_E_INDOOR,	///<	室内エンカウント
-    BATTLE_BG_ATTR_E_INDOOR,	///<	室内エンカウント
-    BATTLE_BG_ATTR_GROUND,  	///<	通常地面
-    BATTLE_BG_ATTR_GROUND,  	///<	通常地面
-    BATTLE_BG_ATTR_GROUND,  	///<	通常地面
-    BATTLE_BG_ATTR_GROUND,  	///<	通常地面
-    BATTLE_BG_ATTR_GROUND,  	///<	通常地面
-  };
-
   // バトルパラメータの初期化
   {
     // シングル初期化
@@ -734,13 +678,13 @@ BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
   // 戦闘背景書き換え
   if( version == VERSION_B2 )
   {
-    dst->fieldSituation.bgType = btl_bg_table_b[area_no];
-    dst->fieldSituation.bgAttr = btl_attr_table_b[area_no];
+    dst->fieldSituation.bgType = area_no;
+    dst->fieldSituation.bgAttr = BATTLE_BG_ATTR_MUGEN_B;
   }
   else
   {
-    dst->fieldSituation.bgType = btl_bg_table_w[area_no];
-    dst->fieldSituation.bgAttr = btl_attr_table_w[area_no];
+    dst->fieldSituation.bgType = area_no;
+    dst->fieldSituation.bgAttr = BATTLE_BG_ATTR_MUGEN_W;
   }
 
   return dst;
