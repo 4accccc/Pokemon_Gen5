@@ -389,3 +389,4 @@
 "DUN2607.bin"
 "white2601.bin"
 "white2603.bin"
+"DUN2608.bin"
