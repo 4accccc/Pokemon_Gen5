@@ -14,8 +14,9 @@ USERS	= mori nakatsui nagihashi_toru
 #------------------------------------------------------------------------------
 targetname  = pokewood
 
-EXCEL_CONV   = ..\..\tools\exceltool\excelcommaconv.exe
-SENARIO_CONV = ruby senario_conv.rb
+EXCEL_CONV    = ..\..\tools\exceltool\excelcommaconv.exe
+SENARIO_CONV  = ruby senario_conv.rb
+BGM_HASH_CONV = ruby make_bgmhash.rb
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -44,13 +45,14 @@ lbins = $(subst .txt,.bin,$(ltexts))
 gmmfiles = $(subst .xls,_f.gmm,$(lsources))
 gmmfiles += $(subst .xls,_m.gmm,$(lsources))
 targetgmm = $(subst poke,$(MESSAGEDIR)/poke,$(gmmfiles))
+bgm_hashfile = bgm_hash.rb
 
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc $(targetgmm)
+do-build:	subdir $(bgm_hashfile) $(TARGETDIR)/$(targetname).narc $(targetgmm) 
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -59,6 +61,9 @@ subdir:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
 .SUFFIXES:  .bin .xls 
+
+$(bgm_hashfile): ../sound/swan_sound_data.sadl
+	$(BGM_HASH_CONV) $(bgm_hashfile)
 
 %_f.gmm %_m.gmm %.bin :%.xls
 	$(EXCEL_CONV) $<
@@ -90,6 +95,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	rm *.bin
 	rm *_f.gmm
 	rm *_m.gmm
+	rm bgm.rb
 endif
 	-rm -f $(TARGETDIR)/$(targetname).narc
 	-rm -f $(TARGETDIR)/$(targetname).naix

@@ -12,12 +12,12 @@
 
 #include "battle/pokewood.h"
 
-#define EVENT_TALK_TURN_MAX     (  7 )  ///< イベント中の会話の最大数
+#define EVENT_TALK_TURN_MAX     ( 10 )  ///< イベント中の会話の最大数
 #define EVENT_REACTION_MAX      (  4 )  ///< 選択肢リアクションの最大数
 #define ENEMY_POKE_MAX          (  6 )  ///< 敵トレーナーの最大数
 #define SELECT_MSG_NUM          (  9 )  ///< 選択時状況メッセージの最大種類
 #define SITUATION_MSG_NUM       (  6 )  ///< シチュエーションメッセージの最大種類
-#define EVENT_DATA_MAX          (  7 )  ///< イベントデータの最大数
+#define EVENT_DATA_MAX          ( 12 )  ///< イベントデータの最大数
 #define POKEWOOD_TALK_MSG_MAX   ( 20 )  ///< ターン毎会話の最大数
 #define POKEWOOD_NORMAL_VFX_MAX (  3 )  ///< ターン開始時に背景チェンジを行う最大回数
 #define POKEWOOD_CHOICE_STR_MAX ( 20*2 )///< 選択肢文字列の最大長
@@ -61,7 +61,6 @@ enum{
   PW_PROV_SURVIVE1,         ///< 生き残る１
   PW_PROV_SURVIVE2,         ///< 生き残る２
   PW_PROV_SUCIDE,           ///< 自滅する
-
 };
 
 // ポケウッド敵トレーナー所持ポケモン情報
@@ -77,14 +76,16 @@ typedef struct{
   s16 enemy_message;      ///< GMMメッセージID
   s16 select_enemy_waza;  ///< 選択した内容によって敵が使用する技がこの番号に固定される
   s16 visual_effect;      ///< 背景チェンジが発生する場合はNOが。無い場合は-1
+  s16 reaction_point;     ///< 選択肢の点数（質問に対して良いか悪いかで+5,-5なを指定）
+  s16 padding;            ///< あまり
 }POKEWOOD_EVENT_REACTION_DATA;
 
 // ポケウッドイベントデータ
 typedef struct {
-  s16 type;               ///< イベントタイプ（現在は未使用）
   s16 start_turn;         ///< イベント開始ターン
   s16 flag_provision;     ///< 分岐条件値（ポケウッド内で保持するワークとの比較に使用する値）
-  s16 padding;            ///< パディング
+  s16 bias;               ///< イベント傾向
+  s16 point;              ///< エンディング時のポイント
   s16 talk_msg[2][EVENT_TALK_TURN_MAX];                      ///< メッセージIDが自分７つ、相手７つまで格納。
   s16 stage_cast[EVENT_TALK_TURN_MAX];                       ///< お盆の上にいるのは役者か？ポケモンか？
   POKEWOOD_EVENT_REACTION_DATA reaction[EVENT_REACTION_MAX]; ///< 選択肢対応データが格納される
@@ -93,19 +94,25 @@ typedef struct {
 // ポケウッドシナリオデータ
 typedef struct{
   s16 senario_no;     ///< シナリオNO
-  s16 battle_mode;    ///< シングル・ダブルバトルどちらか
-  s16 reguration;     ///< レギュレーション（制限なし・フラット
+  s16 category;       ///< 映画カテゴリー
+  s16 difficult;      ///< 作品係数
   s16 pokenum_limit;  ///< 出せるポケモン最大数
-  s16 item_ok;        ///< 道具使用OKかどうか
+
+  s16 director;       ///< 監督（0-5)
   s16 turn_max;       ///< ターン最大数
+  s16 best_turn;      ///< 最良終了ターン
   s16 success_event;  ///< 撮影条件イベント
-  s16 etc1;           ///< パディング
-  
+
   s16 win_provision;  ///< 勝利条件パターン
   s16 poke_provision[2];   ///< 勝利条件にポケモン指定がある時に参照する（0:撮影 1:上映）
   s16 waza_provision; ///< 勝利条件に技指定がある時に参照する
   s16 trtype[4];      ///< 敵トレーナータイプ（0:男で撮影 1:男で上映 2:女で撮影 3:女で上映）
   s16 mytype[2];      ///< 自分トレーナータイプ（ 0:撮影 1:上映）
+  s16 battle_field;   ///< 戦闘背景指定
+  s16 battle_bgm;     ///< 上映時BGM
+  s16 win_bgm;        ///< 勝利時BGM
+  s16 padding;
+
   s16 bg_change[POKEWOOD_NORMAL_VFX_MAX][2];  ///< 背景チェンジターン
   
   POKEWOOD_ENEMY_POKE enemy_poke[ENEMY_POKE_MAX]; ///< 敵トレーナーのポケモンの最大数

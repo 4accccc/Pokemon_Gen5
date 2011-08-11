@@ -345,23 +345,13 @@
 	</lock>
 
 
-	<row id="pw_scene_title">
-		<language name="JPN" width="256">ヒウンシティじょうくうに　あらわれた
-ＵＦＯを　げきたい　せよっ！</language>
-		<language name="JPN_KANJI" width="256">ヒウンシティじょうくうに　あらわれた
-ＵＦＯを　げきたい　せよっ！</language>
+	<row id="pw_trname_rec">
+		<language name="JPN" width="256">やくしゃ</language>
+		<language name="JPN_KANJI" width="256">やくしゃ</language>
 	</row>
-	<row id="pw_scene_mission">
-		<language name="JPN" width="256">８ターンの　あいだに
-あいての　ＵＦＯを　たおせ！</language>
-		<language name="JPN_KANJI" width="256">８ターンの　あいだに
-あいての　ＵＦＯを　たおせ！</language>
-	</row>
-	<row id="pw_scene_hint">
-		<language name="JPN" width="256">あいての　どうぐを　りようして
-ＵＦＯの　じゃくてんを　つけ！</language>
-		<language name="JPN_KANJI" width="256">あいての　どうぐを　りようして
-ＵＦＯの　じゃくてんを　つけ！</language>
+	<row id="pw_trname_show">
+		<language name="JPN" width="256">しんりゃくしゃ</language>
+		<language name="JPN_KANJI" width="256">しんりゃくしゃ</language>
 	</row>
 	<row id="pw_wazasel_hero_0">
 		<language name="JPN" width="256">まちを　はかいするのを　やめろ！
@@ -782,36 +772,6 @@
 		<language name="JPN_KANJI" width="256">クッ……　ヒウンの　まちが……</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-	</row>
-	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">クッ……　ヒウンの　まちが……</language>
-		<language name="JPN_KANJI" width="256">クッ……　ヒウンの　まちが……</language>
-	</row>
-	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-	</row>
-	<row id="pw_event5_hero_0">
-		<language name="JPN" width="256">クッ……　ヒウンの　まちが……</language>
-		<language name="JPN_KANJI" width="256">クッ……　ヒウンの　まちが……</language>
-	</row>
-	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-	</row>
-	<row id="pw_event6_hero_0">
-		<language name="JPN" width="256">クッ……　ヒウンの　まちが……</language>
-		<language name="JPN_KANJI" width="256">クッ……　ヒウンの　まちが……</language>
-	</row>
-	<row id="pw_event6_enemy_0">
 		<language name="JPN" width="256">じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまいね……</language>
 		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　

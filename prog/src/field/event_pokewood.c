@@ -54,6 +54,7 @@
 #include "item/itemsym.h"
 #include "savedata/pokewood_rec.h"
 #include "msg/msg_pokewood_name.h"
+#include "../battle/pokewood/pokewood_senario.h"
 
 #include "pokewood_party.naix"
 
@@ -161,6 +162,7 @@ typedef struct {
   u16 EncEffNo;
   PKWD_COUNT_PARAM    pkwd_count_param;
   PKWD_BRIEFING_PARAM pkwd_briefing_param;
+  STRBUF              *TrainerTypeName;
 //  int musicDefault;
 }POKEWOOD_REPLAY_EVENT_WORK, PREW;
 
@@ -397,6 +399,27 @@ static BATTLE_SETUP_PARAM * createPokewoodShowBattleParam(
   }
 }
 
+
+#include "msg/msg_pokewood_senario01_m.h"
+
+static void setTrainerTypeName( PREW *prew, BATTLE_SETUP_PARAM *bsp, int no, int pw_type, HEAPID heapID )
+{
+  int sex    = MyStatus_GetMySex( bsp->playerStatus[BTL_CLIENT_PLAYER] );
+  u8 sex_ofs = (sex == PM_MALE? 1: 0);
+  int msgid  = NARC_message_pokewood_senario01_f_dat+no*2+sex_ofs;
+  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msgid, heapID );
+
+
+  if(pw_type==BTL_POKEWOOD_REC){
+    prew->TrainerTypeName = GFL_MSG_CreateString( msg, pw_trname_rec );
+  }else if(pw_type==BTL_POKEWOOD_SHOW){
+    prew->TrainerTypeName = GFL_MSG_CreateString( msg, pw_trname_show );
+  }
+  BATTLE_PARAM_SetTrainerTypeName( bsp, BTL_CLIENT_ENEMY1, prew->TrainerTypeName );
+
+  GFL_MSG_Delete(msg);
+
+}
 // BGMのテーブル（TODO:外部化）
 static const showBgmTable[][2]={
   { SEQ_BGM_EYE_09,     SEQ_BGM_E_LAST, },
@@ -404,11 +427,10 @@ static const showBgmTable[][2]={
 };
 
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BATTLE_SETUP_PARAM * createPokewoodBSP(
-    const PREW * prew, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID )
+    PREW * prew, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID )
 {
   BATTLE_SETUP_PARAM * bsp;
   switch ( prew->PokewoodMode )
@@ -420,11 +442,13 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
     bsp = createPokewoodRecBattleParam( gsys, fieldmap, heapID, prew->SenarioNo );
     bsp->musicDefault = SEQ_BGM_VS_NORAPOKE;
     bsp->musicWin     = SEQ_BGM_WIN1;
+    setTrainerTypeName( prew, bsp, prew->SenarioNo, BTL_POKEWOOD_REC, heapID );
     break;
   case BTL_POKEWOOD_SHOW:
     bsp = createPokewoodShowBattleParam( gsys, fieldmap, heapID, prew->rec_id, prew->SenarioNo );
     bsp->musicDefault = showBgmTable[bsp->pokewoodSenario][0];
     bsp->musicWin     = showBgmTable[bsp->pokewoodSenario][1];
+    setTrainerTypeName( prew, bsp, prew->SenarioNo, BTL_POKEWOOD_SHOW, heapID );
     break;
   }
   bsp->badgeCount   = 8; //無理やりいうことをきかせる
@@ -691,6 +715,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
 
   // 呼び出しパラメーター解放
   case PW_SHOW_SEQ_FREE_BSP:
+    GFL_STR_DeleteBuffer( prew->TrainerTypeName );
     deletePokewoodBSP( pbew->bp );
     (*seq) ++;
     break;
@@ -796,6 +821,7 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
 
   // バトル呼び出しパラメータを解放
   case PW_REC_SEQ_FREE_BSP:
+    GFL_STR_DeleteBuffer( prew->TrainerTypeName );
     deletePokewoodBSP( pbew->bp );
     //侵入システムにフィールド中であることを伝える
     (*seq) ++;

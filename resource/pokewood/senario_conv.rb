@@ -12,6 +12,7 @@ require "jcode"
 require "../../tools/hash/monsno_hash.rb"
 require "../../tools/hash/wazano_hash.rb"
 require "../trtype/trtype_hash.rb"
+require "bgm_hash.rb"
 
 $KECODE = 'SJIS'
 
@@ -19,16 +20,20 @@ ENEMY_POKE_NUM = 6       # 敵トレーナーのポケモン保持数(仮）
 SELECT_MSG     = 9       # 技選択時のメッセージの種類数（自分・敵）
 SITUATION_MSG  = 6       # シチュエーション別メッセージの種類数（自分・敵）
 TURN_MSG       = 20      # ターンごとメッセージ数（自分・敵）
-EVENT_MAX      = 7       # イベント最大数
-EVENT_TALK_MAX = 7       # イベント中のメッセージの最大数(自分・敵）
+EVENT_MAX      = 12      # イベント最大数
+EVENT_TALK_MAX = 10      # イベント中のメッセージの最大数(自分・敵）
 EVENT_REACTION_MAX   = 4 # イベント中の選択肢データ最大数
-EVENT_REACTION_ARRAY = 4 # 選択肢データ内の項目数（自分会話・相手会話・技指定・背景チェンジ）
+EVENT_REACTION_ARRAY = 6 # 選択肢データ内の項目数（自分会話・相手会話・技指定・背景チェンジ）
+BG_CHANGE_DATA_NUM   = 6 # ターン指定のBGチェンジのデータ個数（ターン・チェンジ指定の順に入る。実個数は÷２の値）
+
 EVENT_CLEARTURN_KEYWORD = "クリア"
 EVENT_LOSETURN_KEYWORD  = "失敗"
 EVENT_NO_PROVISION      = "なし"
 
-EVENT_LINE_HEIGHT = 14   # イベントデータの行数
+EVENT_LINE_HEIGHT = 18   # イベントデータの行数
 EVENT1_START_LINE = 69	 # イベントデータスタート位置
+
+EVENT_REACTION_START_OFFSET = 13
 
 PWS_A_POKE    = 0  # AAお盆の上にポケモン
 PWS_A_TRAINER = 1  # AAお盆の上にトレーナー
@@ -49,8 +54,6 @@ PWS_A_NONE_B_NONE       =(PWS_B_NONE|PWS_A_NONE)       # 0x22 両方いない
 
 $bg_hash       = {"チェンジ０"=>0, "チェンジ１"=>1, "チェンジ２"=>2, "チェンジ３"=>3,}
 $waza_ret_hash = { "技１"=>0, "技２"=>1, "技３"=>2, "技４"=>3 }
-$batt_hash     = {"シングル"=>0, "ダブル"=>1}
-$regu_hash     = {"制限なし"=>0, "フラットルール"=>1}
 $itemok_hash   = {"使用可"=>0, "使用不可"=>1}
 $sex_hash      = {"♂"=>0, "♀"=>1, "なし"=>2 }
 $stage_hash    = {"両方役者"=>PWS_A_TRAINER_B_TRAINER, 
@@ -69,6 +72,14 @@ $winprov_hash  = {"毎ターン倒す"=>0, "ターン内に相手を全滅"=>1,"特定の技を使用し
                   "特定の相手を倒す１"=>3,"特定の相手を倒す２"=>4, "特定の相手以外を倒す"=>5,
                   "生き残る１"=>6, "生き残る２"=>7, "自滅する"=>8 }
 
+$category_hash = { "アクション"=>0, "SF"=>1, "ヒューマン"=>2, "ホラー＆サスペンス"=>3 }
+
+$director_hash = { "OLDMAN1"=>0, "SUNGLASSES"=>1, "MIDDLEMAN2"=>3 ,"GENTLEMAN,ADULTW"=>4 }
+
+$bias_hash     = { "傾向：感動"=>0, "傾向：恐怖"=>1, "傾向：楽しい"=>2, "傾向：痛快"=>3, "傾向：シリアス"=>4 }
+
+$field_hash    = { "ビル屋上Ａ"=>0, "ビル屋上Ｂ"=>1, "研究施設"=>2, "都会・雑踏"=>3, "一般家屋室内"=>4,
+                   "遊園地"=>6, "波止場"=>7, "砂浜"=>8, "魔法の世界"=>9, "湖畔"=>10,  "墓地"=>11, "未来都市"=>12,}
 #----------------------------------------------------
 # ポケモンデータクラス
 #----------------------------------------------------
@@ -99,10 +110,10 @@ end
 #----------------------------------------------------
 class EVENT_DATA
   def initialize( type )
-    @type           = type
     @start_turn     = -1
     @flag_provision = -1
-    @padding        = -1
+    @bias           = -1
+    @event_point    = -1
     @talk_msg       = Array.new( EVENT_TALK_MAX*2 ).fill(-1)
     @reaction_data  = Array.new( EVENT_REACTION_MAX ).fill(-1)
     @stage_cast     = Array.new(EVENT_TALK_MAX).fill(-1)
@@ -110,19 +121,23 @@ class EVENT_DATA
       @reaction_data[i] = Array.new( EVENT_REACTION_ARRAY ).fill(-1)
     }
   end
-  attr_accessor :type, :start_turn, :talk_msg, :reaction_data, :stage_cast, :flag_provision
+  attr_accessor :start_turn, :talk_msg, :reaction_data, :stage_cast, :flag_provision, :bias, :event_point
 
+  #イベント時メッセージ取得
   def set_event_msg( index, msg )
     @talk_msg[index] = msg2id( msg )
   end
   
-  def set_reaction_data( index, mymsg, e_msg, reaction, vfx )
+  #選択肢データとその反応データの格納
+  def set_reaction_data( index, mymsg, e_msg, reaction, vfx, point )
     @reaction_data[index][0] = msg2id( mymsg )
     @reaction_data[index][1] = msg2id( e_msg )
     @reaction_data[index][2] = hash2no( $waza_ret_hash, reaction)
-    @reaction_data[index][3] = hash2no( $bg_hash, vfx )
+    @reaction_data[index][3] = point.to_i
+    @reaction_data[index][4] = -1 #余り
   end
 
+  #イベント時メッセージ舞台設定データ
   def set_stage_cast_data( index, dat )
     @stage_cast[index] = dat;
   end
@@ -131,10 +146,10 @@ class EVENT_DATA
   # s16(6+14+7+16) = 78
   def pack
     array = Array.new
-    array << @type
     array << @start_turn
     array << @flag_provision
-    array << @padding
+    array << @bias
+    array << event_point
     array = array+@talk_msg+@stage_cast
     EVENT_REACTION_MAX.times{|i|
       array = array+@reaction_data[i]
@@ -149,13 +164,19 @@ end
 class POKEWOOD_SENARIO
   
   # 初期化:シナリオ番号、レギュレーション、ポケモン制限数、道具使用か？
-  def initialize( senario, batt_mode, reguration, poke_limit, item_ok, turn_max )
+  def initialize( senario, category, difficult, poke_limit, item_ok, turn_max, best_turn, director, field )
     @senario    = senario.to_i
-    @batt_mode  = $batt_hash[batt_mode]
-    @reguration = $regu_hash[reguration]
+    @category   = $category_hash[category]
+    @difficult  = difficult.to_i
     @poke_limit = poke_limit.to_i
     @item_ok    = $itemok_hash[item_ok]
     @turn_max   = turn_max.to_i
+    @best_turn  = best_turn.to_i
+    @director   = hash2no( $director_hash, director )
+    @field      = hash2no( $field_hash, field )
+    @bgm        = $bgm_hash["SEQ_BGM_VS_NORAPOKE"]
+    @win_bgm    = $bgm_hash["SEQ_BGM_WIN1"]
+
     @enemy_poke = Array.new(ENEMY_POKE_NUM)
     ENEMY_POKE_NUM.times{|i|
       @enemy_poke[i] = POKEWOOD_ENEMY_POKE.new( -1, 0, 50 )
@@ -168,18 +189,20 @@ class POKEWOOD_SENARIO
       @event[i] = EVENT_DATA.new( 0 )
     }
   end
-  attr_accessor :senario, :returation, :poke_limit, :item_ok, :select_msg, :situation_msg, :turn_msg, :event, :turn_max, :enemy_poke
+  attr_accessor :senario, :poke_limit, :item_ok, :select_msg, :situation_msg, :turn_msg, :event, :turn_max, :enemy_poke, :bgm, :win_bgm
 
   # 初期情報セット
-  def top_info( title, trainer_id, explain, hint, batt_bg, success_flag )
-    @title        = msg2id(title)
+  def top_info( trainer_id, success_flag )
     @trainer_id   = trainer_id.to_i
-    @explain      = msg2id(explain)
-    @hint         = msg2id(hint)
     @success_flag = hash2no( $success_event, success_flag )
     @bg_change    = [-1,-1, -1,-1, -1,-1]
   end
-  attr_accessor :title, :trainer_id, :explain, :hint, :batt_bg, :bg_change, :success_flag
+  attr_accessor :trainer_id, :bg_change, :success_flag
+
+  def set_bgm( bgm, win )
+    @bgm     = $bgm_hash[bgm]
+    @win_bgm = $bgm_hash[win]
+  end
 
   # 勝利条件情報セット
   def set_win_provision( win_prov, rec_poke, show_poke, waza )
@@ -264,6 +287,7 @@ class POKEWOOD_SENARIO
   #イベントデータセット
   def set_event_data( data, index, start, gmm )
 
+    #発動ターンの取得か「クリア」「失敗」キーワードの取得
     if data[start][3]==EVENT_CLEARTURN_KEYWORD then
       @event[index].start_turn = 100
     elsif data[start][3]==EVENT_LOSETURN_KEYWORD then
@@ -272,9 +296,16 @@ class POKEWOOD_SENARIO
       @event[index].start_turn = data[start][3].to_i
     end
     
+    #イベント傾向・エンディングポイントの取得
+    @event[index].bias        = hash2no( $bias_hash, data[start][1])
+    @event[index].event_point = data[start][9].to_i
+    
+    #イベント発動条件取得
     if data[start][5]!=EVENT_NO_PROVISION then
       @event[index].flag_provision = data[start][5].to_i
     end
+    
+    #イベント会話
     EVENT_TALK_MAX.times{|i|
       msg1 = gmm.write_each( "pw_event#{index}_hero_#{i}", data[start+i+2][1], data[start+i+2][2], data[start+i+2][3], data[start+i+2][4] )
       msg2 = gmm.write_each( "pw_event#{index}_enemy_#{i}", data[start+i+2][5], data[start+i+2][6], data[start+i+2][7], data[start+i+2][8] )
@@ -283,11 +314,16 @@ class POKEWOOD_SENARIO
       @event[index].set_stage_cast_data(i, hash2no($stage_hash, data[start+i+2][11]))
 
     }
+    
+    #選択肢データのスタート位置
+    r_start = start + EVENT_REACTION_START_OFFSET
+
+    #選択肢データ取り込み
     EVENT_REACTION_MAX.times{|i|
-      msg1 = gmm.write_each( "pw_event#{index}_react_hero_#{i}", data[start+9+i][1], data[start+9+i][2], data[start+9+i][3], data[start+9+i][4] )
-      msg2 = gmm.write_each( "pw_event#{index}_react_enemy_#{i}", data[start+9+i][5], data[start+9+i][6], data[start+9+i][7], data[start+9+i][8] )
-      @event[index].set_reaction_data(i, msg1,msg2,
-                                      data[start+9+i][9],data[start+9+i][10])
+      msg1 = gmm.write_each( "pw_event#{index}_react_hero_#{i}",  data[r_start+i][1], data[r_start+i][2], data[r_start+i][3], data[r_start+i][4] )
+      msg2 = gmm.write_each( "pw_event#{index}_react_enemy_#{i}", data[r_start+i][5], data[r_start+i][6], data[r_start+i][7], data[r_start+i][8] )
+      @event[index].set_reaction_data( i, msg1, msg2,
+                                       data[r_start+i][9], data[r_start+i][10], data[r_start+i][11] )
     }
 #    printf("%s\n", @start_turn)
   end
@@ -297,13 +333,13 @@ class POKEWOOD_SENARIO
   def pack
     array = Array.new
     array << @senario
-    array << @batt_mode
-    array << @reguration
+    array << @category
+    array << @difficult
     array << @poke_limit
-    array << @item_ok
+    array << @director
     array << @turn_max
+    array << @best_turn
     array << @success_flag
-    array << 0
     array << @win_prov
     array << @rec_poke_prov
     array << @show_poke_prov
@@ -314,8 +350,12 @@ class POKEWOOD_SENARIO
     array << @show_trtype_f
     array << @rec_mytype
     array << @show_mytype
+    array << @field
+    array << @bgm
+    array << @win_bgm
+    array << 0
     
-    6.times{|i|
+    BG_CHANGE_DATA_NUM.times{|i|
       array << @bg_change[i]
     }
     
@@ -496,21 +536,27 @@ gmm = MAKE_GMM_MF.new
 
 # シナリオクラス初期化
 pokewood = POKEWOOD_SENARIO.new( datas[1][1], datas[2][1], datas[3][1], 
-                                 datas[4][1], datas[5][1], datas[7][1] )
+                                 datas[4][1], datas[5][1], datas[7][1],
+                                 datas[8][1], datas[9][1], datas[13][1] )
 
-#タイトル文字列入力
-title   = gmm.write_both( "pw_scene_title", datas[9][1], datas[9][2] )
-mission = gmm.write_both( "pw_scene_mission", datas[11][1], datas[11][2] )
-hint    = gmm.write_both( "pw_scene_hint", datas[12][1], datas[12][2] )
+#敵トレーナータイプ名入力
+trainer_name_rec  = gmm.write_each( "pw_trname_rec",  datas[5][3], datas[5][3], datas[5][5], datas[5][5] )
+trainer_name_show = gmm.write_each( "pw_trname_show", datas[5][4], datas[5][4], datas[5][6], datas[5][6] )
+
 
 #タイトル情報入力
-pokewood.top_info( title, datas[10][1], mission, hint, datas[13][1], datas[6][1] )
+pokewood.top_info( datas[10][1], datas[6][1] )
+
+#BGM指定入力
+pokewood.set_bgm( datas[7][3], datas[8][3] )
 
 #勝利条件情報入力
 pokewood.set_win_provision( datas[1][3], datas[2][3], datas[2][4], datas[3][3] )
 
+
 #敵トレーナー情報セット
 pokewood.set_trainer_info( datas[4][3], datas[4][4], datas[4][5], datas[4][6] )
+
 
 #自分トレーナー情報セット
 pokewood.set_mytype_info( datas[6][3], datas[6][4] )
@@ -521,10 +567,12 @@ pokewood.set_bg_change( 0, datas[14][1], datas[14][2] )
 pokewood.set_bg_change( 1, datas[15][1], datas[15][2] )
 pokewood.set_bg_change( 2, datas[16][1], datas[16][2] )
 
+
 #手持ちポケモン情報入力
 ENEMY_POKE_NUM.times{|i|
   pokewood.set_enemy_poke( i, datas[19+i][1], datas[19+i][2], datas[19+i][3] )
 }
+
 
 #選択時メッセージ格納
 SELECT_MSG.times{|i|
@@ -534,6 +582,7 @@ SELECT_MSG.times{|i|
   pokewood.set_select_msg( SELECT_MSG+i, msg2 )
 }
 
+
 #シチュエーション別メッセージ格納
 SITUATION_MSG.times{|i|
   msg1 = gmm.write_each( "pw_situ_hero_#{i}", datas[i+39][1], datas[i+39][2], datas[i+39][3], datas[i+39][4] )
@@ -541,6 +590,7 @@ SITUATION_MSG.times{|i|
   pokewood.set_situation_msg(                i, msg1 )
   pokewood.set_situation_msg( SITUATION_MSG+i, msg2 )
 }
+
 
 #ターン毎メッセージ格納
 TURN_MSG.times{|i|
@@ -551,12 +601,14 @@ TURN_MSG.times{|i|
 }
 
 
+
 #イベント取り込み
 EVENT_MAX.times{|i|
   if datas.length>EVENT1_START_LINE+EVENT_LINE_HEIGHT*i then
-    pokewood.set_event_data(datas,i,EVENT1_START_LINE+EVENT_LINE_HEIGHT*i,gmm )
+    pokewood.set_event_data( datas,i,EVENT1_START_LINE+EVENT_LINE_HEIGHT*i,gmm )
   end
 }
+
 
 #バイナリ出力
 filename = ARGV[0].sub(/\.txt/,".bin")

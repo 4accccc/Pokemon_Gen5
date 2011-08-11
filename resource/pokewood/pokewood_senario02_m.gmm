@@ -345,23 +345,13 @@
 	</lock>
 
 
-	<row id="pw_scene_title">
-		<language name="JPN" width="256">なぞの　かいじん　あらわる！
-ねらわれた　ゆうえんち！</language>
-		<language name="JPN_KANJI" width="256">なぞの　怪人　現る！
-狙われた　遊園地！</language>
+	<row id="pw_trname_rec">
+		<language name="JPN" width="256">やくしゃ</language>
+		<language name="JPN_KANJI" width="256">やくしゃ</language>
 	</row>
-	<row id="pw_scene_mission">
-		<language name="JPN" width="256">まいターン　あいての
-ポケモンを　たおせ！</language>
-		<language name="JPN_KANJI" width="256">毎ターン　相手の
-ポケモンを　倒せ！</language>
-	</row>
-	<row id="pw_scene_hint">
-		<language name="JPN" width="256">あいての　タイプの
-じゃくてんを　つけ！</language>
-		<language name="JPN_KANJI" width="256">相手の　タイプの
-弱点を　つけ！</language>
+	<row id="pw_trname_show">
+		<language name="JPN" width="256">かいじん</language>
+		<language name="JPN_KANJI" width="256">かいじん</language>
 	</row>
 	<row id="pw_situ_hero_2">
 		<language name="JPN" width="256">かんとく『はい！　カーット！

@@ -6358,7 +6358,7 @@ static void _print_pokewood_event_data(POKEWOOD_SENARIO *senario, int event)
 {
   int i;
   
-  OS_Printf("EventData:type=%d, start_turn=%d, provision=%d\n", senario->event[event].type, 
+  OS_Printf("EventData:start_turn=%d, provision=%d\n", 
             senario->event[event].start_turn, senario->event[event].flag_provision);
   OS_Printf("event_msg=");
   for(i=0;i<EVENT_TALK_TURN_MAX*2;i++){
@@ -6387,25 +6387,31 @@ static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
   int i;
   OS_Printf("=================================================\n");
   OS_Printf("senario_no=%d\n", senario->senario_no );
-  OS_Printf("battle_mode=%d\n", senario->battle_mode );
-  OS_Printf("reguration=%d\n", senario->reguration);  
+  OS_Printf("category=%d\n",   senario->category );
+  OS_Printf("difficult=%d\n",   senario->difficult );
   OS_Printf("pokenum_limit=%d", senario->pokenum_limit);
-  OS_Printf("item_ok=%d\n", senario->item_ok);
+
+  OS_Printf("director=%d\n",   senario->director );
   OS_Printf("turn_max=%d\n", senario->turn_max);
+  OS_Printf("best_turn=%d\n", senario->best_turn);
   OS_Printf("success_event=%d\n", senario->success_event);
 
   OS_Printf("win_provision=%d\n", senario->win_provision);
   OS_Printf("rec_poke=%d\n",  senario->poke_provision[0]);
   OS_Printf("show_poke=%d\n", senario->poke_provision[1]);
   OS_Printf("target_waza=%d\n", senario->waza_provision);
-  
+  OS_Printf("battle_field=%d\n", senario->battle_field);
+
+  OS_Printf("trainer_type=0:%d,  1:%d,  2:%d,  3:%d\n", senario->trtype[0],senario->trtype[1],senario->trtype[2],senario->trtype[3]);
+
   OS_Printf("bg_change0: turn=%d, change_no=%d\n", senario->bg_change[0][0], senario->bg_change[0][1]  );
   OS_Printf("bg_change1: turn=%d, change_no=%d\n", senario->bg_change[1][0], senario->bg_change[1][1]  );
   OS_Printf("bg_change2: turn=%d, change_no=%d\n", senario->bg_change[2][0], senario->bg_change[2][1]  );
-  
+
   OS_Printf("enemy_poke:monsno=%d, sex=%d, level=%d\n", senario->enemy_poke[0].monsno,
                                                         senario->enemy_poke[0].sex,
                                                         senario->enemy_poke[0].level );
+
   OS_Printf("select_msg=");
   for(i=0;i<SELECT_MSG_NUM*2;i++){
     OS_Printf("%d,", senario->select_msg[0][i]);
