@@ -54,7 +54,14 @@ class WBT_DATA
   #--------
   # 初期化
   #--------
-  def initialize( conv )
+  def initialize()
+    # 生成のみ
+  end
+  
+  #-------------------------------
+  # データセット(内部の初期化あり)
+  #-------------------------------
+  def set_data( conv )
     @conv = conv;
     #
     @version       = 0;

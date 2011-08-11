@@ -6,7 +6,15 @@
 
 require "wbt_dldata_util.rb"
 
+MATCH_START_COL  = 3
+MATCH_START_ROW  = 3
+#
 WBT_MATCH_MAX	 = 7;	# 組み合わせデータ(WBT_TRAINER_NUM-1)
+
+$match_str = ["設定方法",
+              "優先度",
+              "トレーナーID指定"
+]
 
 #------------------------------------------------
 #------------------------------------------------
@@ -17,18 +25,104 @@ class WBT_MATCH_SINGLE
   #--------
   # 初期化
   #--------
-  def initialize( conv, num )
-    @conv = conv;
+  def initialize( num )
     @match_id = num;
+    
+  end
+  
+  #--------------------------------
+  # データセット(内部で初期化あり)
+  #--------------------------------
+  def set_data( conv )
+    @conv = conv;
+#    @match_id = num;
     #
-    @type        = 255;
+    @type        = 0;
     @pri         = 0;
     @id          = 0;
     #
     @local_debug = 0;
     # debug
     if($debug_code == 1)
-      @local_debug = 1;
+#      @local_debug = 1;
+    end
+    #
+    set_parameter();
+  end
+  
+  #----------------
+  # パラメータセット
+  #----------------
+  def set_parameter()
+    # 設定方法
+    chk_match()
+    # 優先度
+    chk_prio();
+    # ID
+    chk_id();
+  end
+  
+  #----------------
+  # 設定方法
+  #----------------
+  def chk_match()
+    #
+    ret = chkblank( @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id ), 
+                                      MATCH_START_COL, $match_str[0])
+    if(ret == -1)
+      wbt_exit();
+    end
+    # セット
+    num = hash2no( $match_hash, @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id) );
+    if(num == -1)
+      print_error( @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id), 0 );
+    else
+      @type = num;
+    end
+    
+    if(@local_debug == 1)
+      p sprintf("%d :%s",@type, $match_str[0] )
+    end
+  end
+  
+  #----------------
+  # 優先度
+  #----------------
+  def chk_prio()
+    #
+    ret = chkblank( @conv.get_cell(3, MATCH_START_COL+1, MATCH_START_ROW+@match_id ),
+                                      MATCH_START_COL+1, $match_str[1] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    @pri = @conv.get_cell(3, MATCH_START_COL+1, MATCH_START_ROW+@match_id).to_i
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :%d", $match_str[1], @pri )
+    end
+  end
+  
+  #----------------
+  # トレーナーID指定
+  #----------------
+  def chk_id()
+    #
+    ret = chkblank( @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id ),
+                                      MATCH_START_COL+2, $match_str[2] )
+    if(ret == -1)
+      poke_exit();
+    end
+    #
+    num = hash2no( $skip_hash, @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id) );
+    if(num == -1)
+      @id = @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id).to_i
+    else
+      @id = 0
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :%d", $match_str[2], @id )
     end
   end
   
@@ -61,6 +155,14 @@ class WBT_MATCH_SINGLE
     
     return array
   end
+  
+  #----------------------------------
+  # 戻る処理
+  #----------------------------------
+  def match_exit()
+    @conv.close_file();
+    exit(1)
+  end
 end
 
 #------------------------------------------------
@@ -72,12 +174,22 @@ class WBT_MATCH
   #--------
   # 初期化
   #--------
-  def initialize( conv )
-    @conv = conv;
-    #
+  def initialize()
     @match = [];
     WBT_MATCH_MAX.times{|i|
-      @match[i] = WBT_MATCH_SINGLE.new( conv, i )
+      @match[i] = WBT_MATCH_SINGLE.new( i )
+    }
+    #
+  end
+  
+  #--------------------------------
+  # データセット(内部で初期化あり)
+  #--------------------------------
+  def set_data( conv )
+    @conv = conv;
+    #
+    WBT_MATCH_MAX.times{|i|
+      @match[i].set_data(conv)
     }
     @crc = 0;
     #

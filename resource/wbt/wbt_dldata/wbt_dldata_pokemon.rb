@@ -6,9 +6,29 @@
 #--------------
 # 定義いろいろ
 #--------------
+POKE_START_COL		= 5
+POKE_START_ROW		= 2
+#
 TEMOTI_POKEMAX		= 6     	# 手持ちポケモン
 NICKNAME_LEN		= 10+1		# ニックネーム
 PTL_WAZA_MAX		= 4		# 技
+
+$poke_str = ["ポケモン名",
+             "フォルムNo",
+             "レベル",
+             "性別",
+             "性格",
+             "特性",
+             "所持アイテム",
+             "ボールID",
+             "パワー乱数",
+             "努力値",
+             "技",
+             "なつきど",
+             "レア",
+             "ニックネーム",
+             "PPUP",
+]
 
 #------------------------------------------------
 #------------------------------------------------
@@ -16,70 +36,488 @@ class WBT_POKEMON_SINGLE
   #--------
   # 初期化
   #--------
-  def initialize( conv, num )
-    @conv        = conv;
+  def initialize( num, trnum )
     @poke_id     = num;
+    # 対応するトレーナーの番号
+    @trainer_id	 = trnum;
+  end
+  
+  #--------------------------------
+  # データセット(内部で初期化あり)
+  #--------------------------------
+  def set_data( conv )
+    @conv        = conv;
+#    @poke_id     = num;
     #
-    @monsno      = 254;
+    @monsno      = 0;	# ポケモン番号
     #
     @nick_name = [];
     NICKNAME_LEN.times{|i|
       @nick_name[i] = 0;
     }
-    @item_no     = 0;
-    @rate_flag   = 0;    # pad注意
-    @tokusei     = 0;
-    @hp_exp      = 0;
-    @pow_exp     = 0;
-    @def_exp     = 0;
-    @agi_exp     = 0;
-    @spepow_exp  = 0;
-    @spedef_exp  = 0;
+    @expbuf    = [];	# 努力値
+    6.times{|i|
+      @expbuf[i] = 0;
+    }
+    #
+    @item_no     = 0;	# アイテム番号
+    @rate_flag   = 0;   # (レアフラグ)pad注意
+    @tokusei     = 0;	# 特性
     
-    @waza_id = [];
+    @waza_id = [];	# 技
     PTL_WAZA_MAX.times{|i|
       @waza_id[i] = 0;
     }
     @pp_count    = 0;	# bit注意
-    @seikaku     = 0;
-    @power_rnd   = 0;   # bit注意
-    @form_no     = 0;
-    @ball_id     = 0;
-    @level       = 0;
-    @friend_rate = 0;
+    @seikaku     = 0;	# 性格
+    @power_rnd   = 0;   # (性別、パワー乱数)bit注意
+    @form_no     = 0;	# フォルム番号
+    @ball_id     = 0;	# ボールid
+    @level       = 0;	# レベル
+    @friend_rate = 0;	# なつき度
     #
     @local_debug = 0;
     # debug
     if($debug_code == 1)
       @local_debug = 1;
     end
+    #
+    set_parameter();
+  end
+  
+  #----------------
+  # パラメータセット
+  #----------------
+  def set_parameter()
+    # ポケモン名
+    chk_pokename();
+    # フォルムNo
+    chk_form();
+    # レベル
+    chk_level();
+    # 性別
+    chk_sex();
+    # 性別
+    chk_seikaku();
+    # ニックネーム
+    chk_nickname();
+    # 特性
+    chk_tokusei();
+    # アイテム
+    chk_item();
+    # ボール
+    chk_ball();
+    # パワー乱数
+    chk_power_rnd();
+    # 努力値
+    chk_exp();
+    # 技
+    chk_skill();
+    # PPUP
+    chk_ppup();
+    # なつき度
+    chk_friend();
+    # レア
+    chk_rare();
+    
+  end
+  
+  #----------------
+  # ポケモン名
+  #----------------
+  def chk_pokename()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW ),
+                                      POKE_START_COL+offset, $poke_str[0] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW)
+    id = hash2no( $monsno_hash, str );
+    if(id == -1)
+      # 該当するポケモンがない=>エラー
+      print_error( str, 0 );
+    else
+      @monsno = id;
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :%d: %s", $poke_str[0], @monsno, str)
+    end
+  end
+  
+  #----------------
+  # フォルムNO
+  #----------------
+  def chk_form()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+1 ),
+                                      POKE_START_COL+offset, $poke_str[1] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    @form_no = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+1).to_i
+    if(@local_debug == 1)
+      p sprintf("%s :%d", $poke_str[1], @form_no )
+    end
+  end
+  
+  #----------------
+  # レベル
+  #----------------
+  def chk_level()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+2 ),
+                                      POKE_START_COL+offset, $poke_str[2] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    @level = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+2).to_i
+    if(@local_debug == 1)
+      p sprintf("%s :%d", $poke_str[2], @level )
+    end
+  end
+  
+  #----------------
+  # 性別
+  #----------------
+  def chk_sex()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+3 ),
+                                      POKE_START_COL+offset, $poke_str[3] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+3)
+    id = hash2no( $sex_hash, str );
+    if(id == -1)
+      # 該当する性別がない=>エラー
+      print_error( str, 0 );
+    else
+      @power_rnd |= id<<30;
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :0x%x: %s", $poke_str[3], (@power_rnd>>30)&0x03, str)
+    end
+  end
+
+  #----------------
+  # ニックネーム
+  #----------------
+  def chk_nickname()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank_no_print( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+4 ) )
+    if(ret == -1)
+      # 空白の場合はポケモン名をセットする
+      @nick_name = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW)
+    else
+      # セット
+      @nick_name = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+4)
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :%s", $poke_str[13], @nick_name )
+    end
+  end
+  
+  #----------------
+  # 性格
+  #----------------
+  def chk_seikaku()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+5 ),
+                                      POKE_START_COL+offset, $poke_str[4] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+5)
+    id = hash2no( $seikaku_hash, str );
+    if(id == -1)
+      # 該当する性別がない=>エラー
+      print_error( str, 0 );
+    else
+      @seikaku = id;
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :%d: %s", $poke_str[4], @seikaku, str)
+    end
+  end
+  
+  #----------------
+  # 特性
+  #----------------
+  def chk_tokusei()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+6 ),
+                                      POKE_START_COL+offset, $poke_str[5] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+6)
+    id = hash2no( $tokusei_hash, str );
+    if(id == -1)
+      # 該当する性別がない=>エラー
+      print_error( str, 0 );
+    else
+      @tokusei = id;
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :%d: %s", $poke_str[5], @tokusei, str)
+    end
+  end
+  
+  #----------------
+  # アイテム
+  #----------------
+  def chk_item()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+7 ),
+                                      POKE_START_COL+offset, $poke_str[6] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+7)
+    id = hash2no( $item_hash, str );
+    if(id == -1)
+      # 該当する性別がない=>エラー
+      print_error( str, 0 );
+    else
+      @item_no = id;
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :%d: %s", $poke_str[6], @item_no, str)
+    end
+  end
+  
+  #----------------
+  # ボール
+  #----------------
+  def chk_ball()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+8 ),
+                                      POKE_START_COL+offset, $poke_str[7] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+8)
+    id = hash2no( $item_hash, str );
+    if(id == -1)
+      # 該当する性別がない=>エラー
+      print_error( str, 0 );
+    else
+      @ball_id = id;
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :%d: %s", $poke_str[7], @ball_id, str)
+    end
+  end
+  
+  #----------------
+  # パワー乱数
+  #----------------
+  def chk_power_rnd()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    6.times{|i|
+      ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+10+i ),
+                                        POKE_START_COL+offset, $poke_str[8] )
+      if(ret == -1)
+        poke_exit();
+      end
+      #
+      # セット
+      id = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+10+i).to_i
+      #
+#      @power_rnd |= (id<<((5-i)*5))
+      @power_rnd |= (id<<(i*5))
+    }
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :(%d,%d,%d,%d,%d,%d) : 0x%x",
+                 $poke_str[8], 
+                 (@power_rnd&0x1f),((@power_rnd>>5)&0x1f),((@power_rnd>>10)&0x1f),
+                 ((@power_rnd>>15)&0x1f),((@power_rnd>>20)&0x1f),((@power_rnd>>25)&0x1f),
+                 @power_rnd )
+    end
+  end
+  
+  #----------------
+  # 努力値
+  #----------------
+  def chk_exp()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    6.times{|i|
+      ret = chkblank( @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+10+i ),
+                                        POKE_START_COL+1+offset, $poke_str[9] )
+      if(ret == -1)
+        poke_exit();
+      end
+      #
+      # セット
+      @expbuf[i] = @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+10+i).to_i
+    }
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :(%d,%d,%d,%d,%d,%d)",
+                 $poke_str[9],
+                 @expbuf[0],@expbuf[1],@expbuf[2],
+                 @expbuf[3],@expbuf[4],@expbuf[5] );
+    end
+  end
+  
+  #----------------
+  # 技
+  #----------------
+  def chk_skill()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    #
+    PTL_WAZA_MAX.times{|i|
+      ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+16+i ),
+                                        POKE_START_COL+offset, $poke_str[10] )
+      # 空白の場合は「なし」で処理
+      if(ret == -1)
+        break;
+#        poke_exit();
+      end
+      # セット
+      str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+16+i)
+      id = hash2no( $wazano_hash, str );
+      if(id == -1)
+        # 該当する性別がない=>エラー
+        print_error( str, 0 );
+      else
+        @waza_id[i] = id;
+      end
+      #
+    }
+    if(@local_debug == 1)
+      p sprintf("%s :(%d,%d,%d,%d)", $poke_str[10], @waza_id[0],@waza_id[1],@waza_id[2],@waza_id[3] )
+    end
+  end
+  
+  #----------------
+  # PPUP
+  #----------------
+  def chk_ppup()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    #
+    PTL_WAZA_MAX.times{|i|
+      ret = chkblank( @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+16+i ),
+                                        POKE_START_COL+1+offset, $poke_str[14] )
+      # 念のため
+      if(ret == -1)
+        poke_exit();
+      end
+      # セット
+      str = @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+16+i)
+      id = hash2no( $ppup_hash, str );
+      if(id == -1)
+        # 該当する性別がない=>エラー
+        print_error( str, 0 );
+      else
+#        @pp_count |= (id<<(3-i)*2);
+        @pp_count |= (id<<(i*2));
+      end
+      #
+    }
+    if(@local_debug == 1)
+      p sprintf("%s : 0x%x", $poke_str[14], @pp_count );
+    end
+  end
+  
+  #----------------
+  # なつき度
+  #----------------
+  def chk_friend()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+20 ),
+                                      POKE_START_COL+offset, $poke_str[11] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    @friend_rate = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+20).to_i
+    if(@local_debug == 1)
+      p sprintf("%s :%d", $poke_str[11], @friend_rate )
+    end
+  end
+  
+  #----------------
+  # レア
+  #----------------
+  def chk_rare()
+    #
+    offset = 2*@poke_id+17*@trainer_id
+    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+21 ),
+                                      POKE_START_COL+offset, $poke_str[12] )
+    if(ret == -1)
+      poke_exit();
+    end
+    # セット
+    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+21)
+    id = hash2no( $onoff_hash, str );
+    if(id >= 2)
+      @rate_flag = 1;
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :%d", $poke_str[12], @rate_flag )
+    end
   end
   
   #----------------
   # データのパック
   #----------------
-  def pack()
+  def pack2()
     array = Array.new
     
     array << @monsno;
+    return array.pack("S");
+  end
+  
+  #----------------
+  # データのパック
+  #----------------
+  def pack3()
+    array = Array.new
     #
-    NICKNAME_LEN.times{|i|
-      array << @nick_name[i];
-    }
     array << @item_no;
     array << @rate_flag; # bit注意
     array << @tokusei;
-    array << @hp_exp;
-    array << @pow_exp;
-    array << @def_exp;
-    array << @agi_exp;
-    array << @spepow_exp;
-    array << @spedef_exp;
+    6.times{|i|
+      array << @expbuf[i];
+    }
     
     PTL_WAZA_MAX.times{|i|
       array << @waza_id[i];
     }
-    array << @pp_count;	# bit注意
+    array << @pp_count;	   # bit注意
     array << @seikaku;
     array << @power_rnd;   # bit注意
     array << @form_no;
@@ -93,9 +531,30 @@ class WBT_POKEMON_SINGLE
     end
     
     # 出力形式をヘッダとあわせること
-    return array.pack("S1S11S1C8S4C2IC4")
+#    return array.pack("S1S11S1C8S4C2IC4")
+    return array.pack("S1C8S4C2IC4")
   end
   
+  #----------------
+  # データのパック
+  #----------------
+  def pack()
+    array = Array.new
+    
+    array << pack2();
+    array << str2pack( @nick_name, NICKNAME_LEN );
+    array << pack3();
+    
+    return array
+  end
+  
+  #----------------------------------
+  # 戻る処理
+  #----------------------------------
+  def poke_exit()
+    @conv.close_file();
+    exit(1)
+  end
 end
 
 #------------------------------------------------
@@ -104,12 +563,24 @@ class WBT_POKEMON
   #--------
   # 初期化
   #--------
-  def initialize( conv )
-    @conv = conv;
+  def initialize( num )
+    # 対応するトレーナーの番号
+    @trainer_id = num;
     #
     @pokemon = [];
     TEMOTI_POKEMAX.times{|i|
-      @pokemon[i] = WBT_POKEMON_SINGLE.new( conv, i )
+      @pokemon[i] = WBT_POKEMON_SINGLE.new( i, num )
+    }
+  end
+  
+  #--------------------------------
+  # データセット(内部で初期化あり)
+  #--------------------------------
+  def set_data( conv )
+    @conv = conv;
+    #
+    TEMOTI_POKEMAX.times{|i|
+      @pokemon[i].set_data( conv )
     }
     #
     @local_debug = 0;

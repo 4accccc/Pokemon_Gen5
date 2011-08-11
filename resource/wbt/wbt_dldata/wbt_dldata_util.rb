@@ -12,13 +12,63 @@ HASHPATH = "../../../../swan/tools/hash/"
 require HASHPATH + "monsno_hash.rb"	# ポケモン番号
 require HASHPATH + "item_hash.rb"	# アイテム番号
 require HASHPATH + "wazano_hash.rb"	# 技番号
+require HASHPATH + "seikaku_hash.rb"	# 性格
+require HASHPATH + "tokusei_hash.rb"	# 特性
+require HASHPATH + "trtype_hash.rb"	# トレーナーID
 
 # OK/NGのハッシュ
 $ng_hash      = { "NG"=>0, "ＮＧ"=>1, "OK"=>2, "ＯＫ"=>3 }
 
-# バトルルールのハッシュ
-$battle_rule_hash = { "SINGLE"=>0, "DOUBLE"=>1, "TRIPLE"=>2, "ROTATION"=>3 }
+# ON/OFFのハッシュ
+$onoff_hash   = { "OFF"=>0, "ＯＦＦ"=>1, "ON"=>2, "ＯＮ"=>3 }
 
+# バトルルールのハッシュ
+$battle_rule_hash = { "シングル"=>0, "ダブル"=>1, "トリプル"=>2, "ローテーション"=>3 }
+#
+# レベル範囲のハッシュ
+$level_range_hash = { "なし"=>0, "以上"=>1, "以下"=>2, "以上補正"=>3,"以下補正"=>5,"全補正"=>4,  }
+#
+# 性別のハッシュ
+$sex_hash   = { "♂"=>1, "♀"=>2 }
+#
+# ○×のハッシュ
+$ox_hash   = { "×"=>0, "○"=>1 }
+#
+# スキップのハッシュ
+$skip_hash   = { "-"=>0, "ー"=>1, "━"=>2, "─"=>3 }
+#
+# 必須タイプのハッシュ
+$type_hash   = { "指定なし"=>0,
+                 "ノーマル"=>1,
+                 "ほのお"  =>2,
+                 "みず"    =>3,
+                 "でんき"  =>4,
+                 "くさ"    =>5,
+                 "こおり"  =>6,
+                 "かくとう"=>7,
+                 "どく"    =>8,
+                 "じめん"  =>9,
+                 "ひこう"  =>10,
+                 "エスパー"=>11,
+                 "むし"    =>12,
+                 "いわ"    =>13,
+                 "ゴースト"=>14,
+                 "ドラゴン"=>15,
+                 "あく"    =>16,
+                 "はがね"  =>17,
+}
+#
+# 設定方法のハッシュ
+$match_hash   = { "ランダム(戦える)"=>0, 
+                  "ランダム(戦えない)"=>1,
+                  "データ設定"=>2,
+                  "ID指定"=>3,
+}
+# ppupのハッシュ
+$ppup_hash   = { "PPUP×0"=>0, "PPUP×1"=>1, "PPUP×2"=>2, "PPUP×3"=>3 }
+#
+# 国のハッシュ
+$lang_hash   = { "日"=>1, "英"=>2, "仏"=>3, "伊"=>4, "独"=>5, "西"=>7, "韓"=>8 }
 #
 # エラー文字列(全まとめ)
 $error_str = [ "の指定が正しくありません",
@@ -78,6 +128,18 @@ end
 def chkblank( str, num, mstr )
   if(str == nil)
     p sprintf("[%s](%d) %s", mstr,num,$error_str[1])
+    return(-1);
+  end
+  return(0);
+end
+
+#-------------------------
+# ブランクチェック
+#
+# check文字列、エクセルのcol、エラー表示文字列
+#-------------------------
+def chkblank_no_print( str )
+  if(str == nil)
     return(-1);
   end
   return(0);

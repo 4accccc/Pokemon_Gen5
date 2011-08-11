@@ -31,6 +31,8 @@ conv.open_file( filename );
 wbt_config = WBT_CONFIG.new(conv)
 @data = [];
 @data = wbt_config.get_param( 0 );
+@output = [];
+@output = wbt_config.get_output();
 #
 conv.close_file();
 #
@@ -43,10 +45,18 @@ if($debug_code == 1)
 end
 
 #-----------------------
+# クラスの初期化
+#-----------------------
+wbt_data      = WBT_DATA.new()
+wbt_rule      = WBT_RULE.new()
+wbt_character = WBT_CHARACTER.new()
+wbt_match     = WBT_MATCH.new()
+
+#-----------------------
 # 出力ファイルのセット
 #-----------------------
 outfilename = ARGV[0].sub(/\.xls/,".bin")
-File.open( outfilename,"w"){|file|	# debug
+File.open( outfilename,"w"){|file|
   file.binmode
   
   #---------------------------
@@ -58,10 +68,10 @@ File.open( outfilename,"w"){|file|	# debug
     conv.open_file( filename );
     
     # 情報の参照
-    wbt_data      = WBT_DATA.new( conv )
-    wbt_rule      = WBT_RULE.new( conv )
-    wbt_character = WBT_CHARACTER.new( conv )
-    wbt_match     = WBT_MATCH.new( conv )
+    wbt_data.set_data( conv )
+    wbt_rule.set_data( conv )
+    wbt_character.set_data( conv )
+    wbt_match.set_data( conv )
     #
     # 各情報出力
     file.write( wbt_data.pack )
@@ -76,7 +86,9 @@ File.open( outfilename,"w"){|file|	# debug
 }
 
 ensure
-#  p sprintf("ensure !")
+  if($debug_code == 1)
+    p sprintf("ensure !")
+  end
   #
   conv.close_file()
   conv.exit()

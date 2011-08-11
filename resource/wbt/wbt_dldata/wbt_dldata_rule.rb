@@ -23,6 +23,7 @@ REG_UP_START_COL	= 4
 RULE_UP_START_ROW	= 3
 RULE_UP_START_COL	= 3
 
+# 要整理
 $rule_error_str = ["ポケモン名",
                    "アイテム名",
                    "参加条件",
@@ -32,6 +33,9 @@ $rule_error_str = ["ポケモン名",
                    "レベル",
                    "同じポケモン",
                    "同じどうぐ",
+                   "レベル範囲",
+                   "ニックネーム",
+                   "タイプ",
 ];
 #--------------------------------------------------------------
 #--------------------------------------------------------------
@@ -39,29 +43,35 @@ class WBT_RULE
   #--------
   # 初期化
   #--------
-  def initialize( conv )
+  def initialize()
+    #
+  end
+  
+  #---------------------------------
+  # データのセット(内部で初期化あり)
+  #---------------------------------
+  def set_data( conv )
     @conv = conv;
+    #
     @join_info = [3,3,0];	# 参加下限、参加上限、参加レベル
-    @level_range  = 0;
-    #
-    @level_total  = 0;
-    #
+    @level_range  = 0;		# レベル範囲
+    @level_total  = 0;		# レベル合計
     @both_info = [0,0];		# 同じポケモン、同じどうぐ
     #
-    @veto_poke_bit = [];
+    @veto_poke_bit = [];	# 禁止ポケモン
     WBTDL_POKENUMBER_MAX.times{|i|
       @veto_poke_bit[i] = 0;
     }
-    @veto_item_bit = [];
+    @veto_item_bit = [];	# 禁止アイテム
     WBTDL_POKEITEM_MAX.times{|i|
       @veto_item_bit[i] = 0;
     }
     #
     @pad = 0;
-    @btl_rule           = 0;
-    @bgm_flag           = 0;
-    @need_poketype      = 0;
-    @veto_waza_no       = 0;
+    @btl_rule           = 0;	# バトルルール
+    @bgm_flag           = 0;	# BGMフラグ
+    @need_poketype      = 0;	# 必要なポケモンタイプ
+    @veto_waza_no       = 0;	# 禁止技番号
     
     @local_debug = 0;
     # debug
@@ -76,24 +86,26 @@ class WBT_RULE
   # パラメータセット
   #----------------
   def set_parameter()
-    # 参加条件など
+    # 参加条件(下限、上限、レベル)
     chk_join_info();
+    # レベル範囲
+    chk_level_range();
     # レベル合計
     chk_level_total();
     # 同じポケモン、どうぐ
     chk_same();
-    # バトルルール
-    chk_battle_rule();
-    # 禁止技
-    chk_skill();
-    # BGM
-    chk_bgm();
-    
     # 参加禁止ポケモン
     chk_pokemon();
     # 禁止アイテム
     chk_item();
-    
+    # バトルルール
+    chk_battle_rule();
+    # 禁止技
+    chk_skill();
+    # タイプ
+    chk_type();
+    # BGM
+    chk_bgm();
   end
   
   #----------------
@@ -114,6 +126,29 @@ class WBT_RULE
         p sprintf("%s :%d",$rule_error_str[2], @join_info[i])
       end
     }
+  end
+  
+  #----------------
+  # レベル範囲
+  #----------------
+  def chk_level_range()
+    #
+    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW), 
+                    REG_UP_START_COL+3, $rule_error_str[9])
+    if(ret == -1)
+      wbt_exit();
+    end
+    # セット
+    num = hash2no( $level_range_hash, @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW) );
+    if(num == -1)
+      print_error( @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW), 0 );
+    else
+      @level_range = num;
+    end
+    
+    if(@local_debug == 1)
+      p sprintf("%d :%s",@level_range, $rule_error_str[9] )
+    end
   end
   
   #----------------
@@ -163,6 +198,7 @@ class WBT_RULE
   
   #----------------
   # 参加禁止ポケモン
+  # (参照するシートが違うので注意)
   #----------------
   def chk_pokemon()
     #
@@ -189,7 +225,7 @@ class WBT_RULE
         else
           off_bit  = id%8;
           off_char = id/8;
-          @veto_poke_bit[off_char] = (1<<(off_bit))
+          @veto_poke_bit[off_char] |= (1<<(off_bit))
         end
       end
       
@@ -203,6 +239,7 @@ class WBT_RULE
   
   #----------------
   # 禁止アイテム
+  # (参照するシートが違うので注意)
   #----------------
   def chk_item()
     #
@@ -229,7 +266,7 @@ class WBT_RULE
         else
           off_bit  = id%8;
           off_char = id/8;
-          @veto_item_bit[off_char] = (1<<(off_bit))
+          @veto_item_bit[off_char] |= (1<<(off_bit))
         end
       end
       
@@ -239,6 +276,31 @@ class WBT_RULE
         end
       end
     }
+  end
+  
+  #----------------------------
+  # ニックネーム表示(準備だけ)
+  #----------------------------
+  def chk_nickname()
+    #
+    # ブランクチェック
+    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+15, REG_UP_START_ROW), 
+                                      REG_UP_START_COL+15, $rule_error_str[10]);
+    if(ret == -1)
+      wbt_exit();
+    end
+    #
+    # セット
+    num = hash2no( $onoff_hash, @conv.get_cell(1, REG_UP_START_COL+15, REG_UP_START_ROW) );
+#    if(num >= 2)
+#      @both_info[i] = 1;
+#    else
+#      @both_info[i] = 0;
+#    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%d :%s",num, $rule_error_str[10])
+    end
   end
   
   #----------------
@@ -286,6 +348,29 @@ class WBT_RULE
     
     if(@local_debug == 1)
       p sprintf("%d :%s",@btl_rule, $rule_error_str[3] )
+    end
+  end
+  
+  #----------------
+  # 必要タイプ
+  #----------------
+  def chk_type()
+    #
+    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW), 
+                                      REG_UP_START_COL+23, $rule_error_str[11])
+    if(ret == -1)
+      wbt_exit();
+    end
+    # セット
+    num = hash2no( $type_hash, @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW) );
+    if(num == -1)
+      print_error( @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW), 0 );
+    else
+      @need_poketype = num;
+    end
+    
+    if(@local_debug == 1)
+      p sprintf("%d :%s",@need_poketype, $rule_error_str[11] )
     end
   end
   
