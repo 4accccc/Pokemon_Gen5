@@ -16,9 +16,9 @@
 #define    NANR_c_gear_obj_config    10 // 設定ボタン
 #define    NANR_c_gear_obj_config_anm    11 // 設定ボタン 起動中
 #define    NANR_c_gear_obj_search    12 // サーチボタン
-#define    NANR_c_gear_obj_search_anm    13 // サーチボタン
-#define    NANR_c_gear_obj_search_off    14 // サーチボタン
-#define    NANR_c_gear_obj_search_info    15 // サーチボタン
+#define    NANR_c_gear_obj_search_anm    13 // サーチボタンアニメ
+#define    NANR_c_gear_obj_search_off    14 // サーチボタンｵﾌ
+#define    NANR_c_gear_obj_search_info    15 // サーチボタン通知
 #define    NANR_c_gear_obj_connected    16 // connected
 #define    NANR_c_gear_obj_connected_off    17 // connected
 #define    NANR_c_gear_obj_fesmission    18 // fesmission
@@ -45,3 +45,7 @@
 #define    NANR_c_gear_obj_helpicon_anm    39 // ヘルプアイコンアニメ
 #define    NANR_c_gear_obj_conficon    40 // 設定アイコン
 #define    NANR_c_gear_obj_conficon_anm    41 // 設定アイコンアニメ
+#define    NANR_c_gear_obj_searchfont    42 // サーチフォント
+#define    NANR_c_gear_obj_searchfont_anm    43 // サーチフォントアニメ
+#define    NANR_c_gear_obj_searchfont_off    44 // サーチフォントｵﾌ
+#define    NANR_c_gear_obj_searchfont_info    45 // サーチフォント通知
