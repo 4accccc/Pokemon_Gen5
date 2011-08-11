@@ -710,15 +710,15 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
       { 0, 0 },
     },
     {
-      { NANR_c_gear_obj_search, 1 },
+      { NANR_c_gear_obj_search_sample, 1 },
       { 0, 0 },
     },
     {
-      { NANR_c_gear_obj_config, 1 },
+      { NANR_c_gear_obj_config_sample, 1 },
       { 0, 0 },
     },
     {
-      { NANR_c_gear_obj_power, 1 },
+      { NANR_c_gear_obj_power_sample, 1 },
       { 0, 0 },
     }
   };

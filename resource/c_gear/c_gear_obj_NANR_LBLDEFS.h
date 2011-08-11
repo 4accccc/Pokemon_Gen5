@@ -10,42 +10,45 @@
 #define    NANR_c_gear_obj_battery3    4 // 電池３段階
 #define    NANR_c_gear_obj_battery2    5 // 電池２段階
 #define    NANR_c_gear_obj_power    6 // 電源ボタン
-#define    NANR_c_gear_obj_power_anm    7 // 電源ボタンアニメ
-#define    NANR_c_gear_obj_help    8 // ヘルプボタン
-#define    NANR_c_gear_obj_help_anm    9 // ヘルプボタンアニメ
-#define    NANR_c_gear_obj_config    10 // 設定ボタン
-#define    NANR_c_gear_obj_config_anm    11 // 設定ボタン 起動中
-#define    NANR_c_gear_obj_search    12 // サーチボタン
-#define    NANR_c_gear_obj_search_anm    13 // サーチボタンアニメ
-#define    NANR_c_gear_obj_search_off    14 // サーチボタンｵﾌ
-#define    NANR_c_gear_obj_search_info    15 // サーチボタン通知
-#define    NANR_c_gear_obj_connected    16 // connected
-#define    NANR_c_gear_obj_connected_off    17 // connected
-#define    NANR_c_gear_obj_fesmission    18 // fesmission
-#define    NANR_c_gear_obj_fesmission_off    19 // fesmission
-#define    NANR_c_gear_obj_connect_efect    20 // connectエフェクト
-#define    NANR_c_gear_obj_window    21 // 時間とバッテリーのウィンドウ
-#define    NANR_c_gear_obj_cgearmark    22 // Cギアロゴボタン
-#define    NANR_c_gear_obj_IR    23 // IRボタンフォント
-#define    NANR_c_gear_obj_Wireless    24 // Wirelessボタンフォント
-#define    NANR_c_gear_obj_WiFi    25 // WiFiボタンフォント
-#define    NANR_c_gear_obj_Ring_IR    26 // IRリング
-#define    NANR_c_gear_obj_Ring_Wireless    27 // Wirelessリング
-#define    NANR_c_gear_obj_Ring_Wifi    28 // WiFiリング
-#define    NANR_c_gear_obj_Ripple_IR    29 // IRリング ループアニメ
-#define    NANR_c_gear_obj_Ripple_Wireless    30 // Wirelessリング ループアニメ
-#define    NANR_c_gear_obj_Ripple_Wifi    31 // WiFiリング ループアニメ
-#define    NANR_c_gear_obj_Select_IR    32 // IRリング 選択時アニメ
-#define    NANR_c_gear_obj_Select_Wireless    33 // Wirelessリング 選択時アニメ
-#define    NANR_c_gear_obj_Select_Wifi    34 // WiFiリング 選択時アニメ
-#define    NANR_c_gear_obj_beacon_sample    35 // すれ違いログアイコンサンプル　ヘルプ画面用でＣギア本体では未使用
-#define    NANR_c_gear_obj_powicon    36 // 電源アイコン
-#define    NANR_c_gear_obj_powicon_anm    37 // 電源アイコンアニメ
-#define    NANR_c_gear_obj_helpicon    38 // ヘルプアイコン
-#define    NANR_c_gear_obj_helpicon_anm    39 // ヘルプアイコンアニメ
-#define    NANR_c_gear_obj_conficon    40 // 設定アイコン
-#define    NANR_c_gear_obj_conficon_anm    41 // 設定アイコンアニメ
-#define    NANR_c_gear_obj_searchfont    42 // サーチフォント
-#define    NANR_c_gear_obj_searchfont_anm    43 // サーチフォントアニメ
-#define    NANR_c_gear_obj_searchfont_off    44 // サーチフォントｵﾌ
-#define    NANR_c_gear_obj_searchfont_info    45 // サーチフォント通知
+#define    NANR_c_gear_obj_powicon    7 // 電源アイコン
+#define    NANR_c_gear_obj_power_anm    8 // 電源ボタンアニメ
+#define    NANR_c_gear_obj_powicon_anm    9 // 電源アイコンアニメ
+#define    NANR_c_gear_obj_help    10 // ヘルプボタン
+#define    NANR_c_gear_obj_helpicon    11 // ヘルプアイコン
+#define    NANR_c_gear_obj_help_anm    12 // ヘルプボタンアニメ
+#define    NANR_c_gear_obj_helpicon_anm    13 // ヘルプアイコンアニメ
+#define    NANR_c_gear_obj_config    14 // 設定ボタン
+#define    NANR_c_gear_obj_conficon    15 // 設定アイコン
+#define    NANR_c_gear_obj_config_anm    16 // 設定ボタン 起動中
+#define    NANR_c_gear_obj_conficon_anm    17 // 設定アイコン 起動中
+#define    NANR_c_gear_obj_search    18 // サーチボタン
+#define    NANR_c_gear_obj_searchfont    19 // サーチフォント
+#define    NANR_c_gear_obj_search_anm    20 // サーチボタンアニメ
+#define    NANR_c_gear_obj_searchfont_anm    21 // サーチフォントアニメ
+#define    NANR_c_gear_obj_search_off    22 // サーチボタンｵﾌ
+#define    NANR_c_gear_obj_searchfont_off    23 // サーチフォントｵﾌ
+#define    NANR_c_gear_obj_search_info    24 // サーチボタン通知
+#define    NANR_c_gear_obj_searchfont_info    25 // サーチフォント通知
+#define    NANR_c_gear_obj_connected    26 // connected
+#define    NANR_c_gear_obj_connected_off    27 // connected
+#define    NANR_c_gear_obj_fesmission    28 // fesmission
+#define    NANR_c_gear_obj_fesmission_off    29 // fesmission
+#define    NANR_c_gear_obj_connect_efect    30 // connectエフェクト
+#define    NANR_c_gear_obj_window    31 // 時間とバッテリーのウィンドウ
+#define    NANR_c_gear_obj_cgearmark    32 // Cギアロゴボタン
+#define    NANR_c_gear_obj_IR    33 // IRボタンフォント
+#define    NANR_c_gear_obj_Wireless    34 // Wirelessボタンフォント
+#define    NANR_c_gear_obj_WiFi    35 // WiFiボタンフォント
+#define    NANR_c_gear_obj_Ring_IR    36 // IRリング
+#define    NANR_c_gear_obj_Ring_Wireless    37 // Wirelessリング
+#define    NANR_c_gear_obj_Ring_Wifi    38 // WiFiリング
+#define    NANR_c_gear_obj_Ripple_IR    39 // IRリング ループアニメ
+#define    NANR_c_gear_obj_Ripple_Wireless    40 // Wirelessリング ループアニメ
+#define    NANR_c_gear_obj_Ripple_Wifi    41 // WiFiリング ループアニメ
+#define    NANR_c_gear_obj_Select_IR    42 // IRリング 選択時アニメ
+#define    NANR_c_gear_obj_Select_Wireless    43 // Wirelessリング 選択時アニメ
+#define    NANR_c_gear_obj_Select_Wifi    44 // WiFiリング 選択時アニメ
+#define    NANR_c_gear_obj_beacon_sample    45 // すれ違いログアイコンサンプル　ヘルプ画面用でＣギア本体では未使用
+#define    NANR_c_gear_obj_search_sample    46 // サーチボタンサンプル
+#define    NANR_c_gear_obj_power_sample    47 // 電源ボタンサンプル
+#define    NANR_c_gear_obj_config_sample    48 // 設定ボタンサンプル

@@ -347,7 +347,7 @@ typedef enum{
 } _SELECTANIM_ENUM;
 #define _SELECT_ANIME_WAIT (16)
 
-#define _SELECT_ANIME_OBJ_MAX ( 20 )
+#define _SELECT_ANIME_OBJ_MAX ( 4 )
 
 //-------------------------------------
 ///	パネルパレット情報
@@ -494,10 +494,14 @@ enum{
   ACT_BATTERY,
   ACT_LOGO,
   ACT_POWER,
+  ACT_POWER_I,
   //↑電源Off時でも表示
   ACT_HELP,
+  ACT_HELP_I,
   ACT_CUSTOM,
+  ACT_CUSTOM_I,
   ACT_S_RADAR,
+  ACT_S_RADAR_I,
   //↑Ring4に属してる(ACT_LOGO以外)
   ACT_CROSS,
   ACT_CONNECT,
@@ -520,10 +524,10 @@ enum{
 
 #define ACT_TIME_MAX    (ACT_T_MIN2-ACT_T_HOUR1+1)
 #define ACT_NORMAL_MAX  (ACT_MAX-ACT_AMPM_BASE) //初期化時だけ使用してる
-#define ACT_COMMON_MAX  ( ACT_POWER ) //電源Offでも表示するOBJIDのmax
+#define ACT_COMMON_MAX  ( ACT_POWER_I ) //電源Offでも表示するOBJIDのmax
 #define ACT_PANEL_SET_NUM (3)
 #define ACT_R4_OBJ_START  (ACT_T_HOUR1) //Ring4に属してる
-#define ACT_R4_OBJ_END    (ACT_S_RADAR)
+#define ACT_R4_OBJ_END    (ACT_S_RADAR_I)
 
 enum{
  ACTANM_N10,
@@ -533,15 +537,25 @@ enum{
  ACTANM_BATT3,
  ACTANM_BATT2,
  ACTANM_POWER,
+ ACTANM_POWER_I,
  ACTANM_POWER_ANM,
+ ACTANM_POWER_I_ANM,
  ACTANM_HELP,
+ ACTANM_HELP_I,
  ACTANM_HELP_ANM,
+ ACTANM_HELP_I_ANM,
  ACTANM_CUSTOM,
+ ACTANM_CUSTOM_I,
  ACTANM_CUSTOM_ANM,
+ ACTANM_CUSTOM_I_ANM,
  ACTANM_S_RADAR,
+ ACTANM_S_RADAR_I,
  ACTANM_S_RADAR_ANM,
+ ACTANM_S_RADAR_I_ANM,
  ACTANM_S_RADAR_OFF,
+ ACTANM_S_RADAR_I_OFF,
  ACTANM_S_RADAR_INFO,
+ ACTANM_S_RADAR_I_INFO,
  ACTANM_CONNECT,
  ACTANM_CONNECT_OFF,
  ACTANM_FMISSION,
@@ -715,7 +729,7 @@ enum{
   SELECT_CURSOR_ANM_PAL,    //パレットアニメ再生
   SELECT_CURSOR_ANM_ACT,    //OBJアニメ再生
 };
-
+#define SELECT_CURSOR_ANM_ACT_OBJ_NUM (2) //OBJアニメは2パーツから構成されている
 
 #if 0
 typedef struct {
@@ -986,12 +1000,23 @@ enum
 
 #define GEAR_MAIN_FRAME   (GFL_BG_FRAME2_S)
 #define GEAR_DECAL_FRAME   (GFL_BG_FRAME1_S)
-#define GEAR_BUTTON_FRAME   (GFL_BG_FRAME0_S)
-#define GEAR_FB_MESSAGE   (GFL_BG_FRAME3_S)
+#define GEAR_RING_FRAME   (GFL_BG_FRAME0_S)
 
-#define CGEAR_CLACT_BG_PRI  ( 1 )
+#define GEAR_MAIN_FRAME_MSK (GX_BLEND_PLANEMASK_BG2)
+#define GEAR_DECAL_FRAME_MSK (GX_BLEND_PLANEMASK_BG1)
+#define GEAR_RING_FRAME_MSK (GX_BLEND_PLANEMASK_BG0)
 
+#define GEAR_MAIN_FRAME_PRI (0)
+#define GEAR_DECAL_FRAME_PRI (1)
+#define GEAR_RING_FRAME_PRI (2)
 
+#define CGEAR_CLACT_BG_PRI_NA  ( GEAR_DECAL_FRAME_PRI )  //アルファ無し
+#define CGEAR_CLACT_BG_PRI     ( GEAR_RING_FRAME_PRI )
+
+#define ALPHA_TARGET_1ST  (GEAR_DECAL_FRAME_MSK)
+#define ALPHA_TARGET_2ND  (GEAR_RING_FRAME_MSK|GEAR_DECAL_FRAME_MSK|GX_BLEND_PLANEMASK_OBJ)
+#define ALPHA_1ST (10)
+#define ALPHA_2ND (31-ALPHA_1ST)
 
 
 typedef void (StateFunc)(C_GEAR_WORK* pState);
@@ -1166,6 +1191,11 @@ struct _C_GEAR_WORK {
   u8 ir_wifi_off;
   u8 ex_radar_cross_bttn_col_change;  // wireless強制カラー変更
   u8 ex_radar_cross_bttn_col_change_wait;
+
+#ifdef PM_DEBUG
+  u8  deb_alpha1;
+  u8  deb_alpha2;
+#endif
 };
 
 
@@ -2556,10 +2586,10 @@ static void _PanelMarkAnimeWriteScreen( const PANEL_MARK_ANIME* cp_mark, u32 ani
     scrn_size_x = 32 - scrn_x;
   }
   
-  GFL_BG_ChangeScreenPalette( GEAR_BUTTON_FRAME, 
+  GFL_BG_ChangeScreenPalette( GEAR_RING_FRAME, 
       scrn_x, scrn_y, scrn_size_x, PANEL_SIZEXY, pal_index );
 
-  GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+  GFL_BG_LoadScreenReq( GEAR_RING_FRAME );
 }
 
 
@@ -2922,15 +2952,18 @@ static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL off_flag )
 #else
   if(off_flag){
     evy = 8;
-    GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_OFF );
+    _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_OFF );
+    _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_OFF );
     GFL_CLACT_WK_SetPlttOffs( pWork->cellCursor[ACT_CONNECT], 1, CLWK_PLTTOFFS_MODE_OAM_COLOR );  //暗色パレットに変更
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_CONNECT], FALSE );
   }else{
     evy = 0;
     if( pWork->info_flag[INFO_FLAG_RADAR] ){
-      GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_INFO );
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_INFO );
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_INFO );
     }else{
-      GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR );
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR );
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I );
     }
     GFL_CLACT_WK_SetPlttOffs( pWork->cellCursor[ACT_CONNECT], 0, CLWK_PLTTOFFS_MODE_OAM_COLOR );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_CONNECT], TRUE );
@@ -2990,7 +3023,7 @@ static void _gearBootInitScreen(C_GEAR_WORK* pWork)
       _gearPanelBgScreenMake(pWork, x, y, CGEAR_PANELTYPE_NONE);
     }
   }
-  GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+  GFL_BG_LoadScreenReq( GEAR_RING_FRAME );
 }
 
 //----------------------------------------------------------------------------
@@ -3065,7 +3098,7 @@ static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANEL
   int ypos[2] = {PANEL_Y1,PANEL_Y2};
   int x,y,i,j;
   int typepos[] = {0x18, 0x0c,0x10,0x14,0x18,0x1c};
-  u16* pScrAddr = GFL_BG_GetScreenBufferAdrs(GEAR_BUTTON_FRAME );
+  u16* pScrAddr = GFL_BG_GetScreenBufferAdrs(GEAR_RING_FRAME );
   int xscr;
   int yscr;
   int col_index;
@@ -3143,7 +3176,7 @@ static BOOL _gearGetTypeBestPosition(C_GEAR_WORK* pWork,CGEAR_PANELTYPE_ENUM typ
     _gearXY2PanelScreen(first_x,first_y,px,py);
     CGEAR_SV_SetPanelType( pWork->pCGSV, first_x, first_y, type, TRUE, FALSE );
 //    _gearPanelBgScreenMake(pWork, first_x, first_y, type );
-    GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+    GFL_BG_LoadScreenReq( GEAR_RING_FRAME );
     return TRUE;
   }
 
@@ -3169,7 +3202,7 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
 //      _gearPanelBgScreenMake(pWork, x, y, _cgearSave_GetPanelType(pWork,x,y));
     }
   }
-  GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+  GFL_BG_LoadScreenReq( GEAR_RING_FRAME );
 }
 #endif
 
@@ -3232,7 +3265,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 design_no, BOOL pal_
     pWork->handle, NARC_c_gear_sw_c_gear01_nscr, GEAR_MAIN_FRAME, 0, 
     0x800, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
   GFL_ARCHDL_UTIL_TransVramScreen(
-    pWork->handle, NARC_c_gear_sw_off_gear_nscr+pWork->power_flag, GEAR_BUTTON_FRAME, 0, 
+    pWork->handle, NARC_c_gear_sw_off_gear_nscr+pWork->power_flag, GEAR_RING_FRAME, 0, 
     0x800, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
 
 #if 0
@@ -3315,26 +3348,6 @@ static void _gearObjResChange(C_GEAR_WORK* pWork)
   GFL_HEAP_FreeMemory( buf );
 }
 
-
-#if 0
-
-
-static void _gearDecalScreenArcCreate(C_GEAR_WORK* pWork,BOOL bDecal)
-{
-  u32 scrno=0;
-
-  if(bDecal == FALSE){
-    scrno = NARC_c_gear_c_gear00_nodecal_NSCR;
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(pWork->handle,
-                                           scrno,
-                                           GEAR_DECAL_FRAME, 0,
-                                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-                                           HEAPID_FIELD_SUBSCREEN);
-  }
-
-}
-#endif
-
 //------------------------------------------------------------------------------
 /**
  * @brief   サブ画面の設定
@@ -3348,56 +3361,8 @@ static void _createSubBg(C_GEAR_WORK* pWork)
   {
     GFL_BG_SetVisible( i, VISIBLE_OFF );
   }
-#if 0
   {
-    int frame = GEAR_BUTTON_FRAME;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x6800,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
-      };
-    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_SetPriority( frame, 1 );
-
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-  {
-    int frame = GEAR_MAIN_FRAME;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x6800,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
-      };
-    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_SetPriority( frame, 0 );
-    //  GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-  {
-    int frame = GEAR_DECAL_FRAME;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x6800,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
-      };
-    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_SetPriority( frame, 2 );
-
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-#else
-  {
-    int frame = GEAR_BUTTON_FRAME;
+    int frame = GEAR_RING_FRAME;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x04000, 0x2800,GX_BG_EXTPLTT_01,
@@ -3406,7 +3371,7 @@ static void _createSubBg(C_GEAR_WORK* pWork)
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_SetPriority( frame, 1 );
+    GFL_BG_SetPriority( frame, GEAR_RING_FRAME_PRI );
 
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
@@ -3421,8 +3386,7 @@ static void _createSubBg(C_GEAR_WORK* pWork)
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_SetPriority( frame, 0 );
-    //  GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_SetPriority( frame, GEAR_MAIN_FRAME_PRI );
 
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
@@ -3437,12 +3401,11 @@ static void _createSubBg(C_GEAR_WORK* pWork)
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_SetPriority( frame, 2 );
+    GFL_BG_SetPriority( frame, GEAR_DECAL_FRAME_PRI );
 
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
-#endif
   // アルファ値設定
   _setUpSubAlpha( pWork );
 
@@ -3459,9 +3422,33 @@ static void _createSubBg(C_GEAR_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _setUpSubAlpha( C_GEAR_WORK* pWork )
 {
-//  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_OBJ, 9, 16 );
-  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_BG1, 9, 16 );
+  G2S_SetBlendAlpha( ALPHA_TARGET_1ST, ALPHA_TARGET_2ND, ALPHA_1ST, ALPHA_2ND );
 }
+
+#ifdef PM_DEBUG
+static void _debSetAlpha( C_GEAR_WORK* pWork )
+{
+  int cont = GFL_UI_KEY_GetCont();
+  int trg  = GFL_UI_KEY_GetTrg();
+  int flag = FALSE;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+    if( trg & PAD_BUTTON_A ){
+      pWork->deb_alpha1 = (pWork->deb_alpha1+1)%32;
+      flag = TRUE;
+    }
+  }else{
+    if( trg & PAD_BUTTON_A ){
+      pWork->deb_alpha1 = (pWork->deb_alpha1+31)%32;
+      flag = TRUE;
+    }
+  }
+  if( flag == 0 ){
+    return;
+  }
+  OS_Printf("SetAlpha %d \n", pWork->deb_alpha1 );
+  G2S_SetBlendAlpha( ALPHA_TARGET_1ST, ALPHA_TARGET_2ND, pWork->deb_alpha1, (31-pWork->deb_alpha1) );
+}
+#endif
 
 #if 0
 //----------------------------------------------------------------------------
@@ -3516,7 +3503,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
       {
         type = (type+1) % CGEAR_PANELTYPE_MAX;
         _modeSetSavePanelType(pWork, pWork->pCGSV,xp,yp,type);
-        GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+        GFL_BG_LoadScreenReq( GEAR_RING_FRAME );
         PMSND_PlaySE( SEQ_SE_MSCL_07 );
       }
 
@@ -3818,11 +3805,12 @@ static void _editMarkONOFF(C_GEAR_WORK* pWork,BOOL bOn)
 
   if(bOn){
     _gearObjSetAnmSeq( pWork->cellCursor[ ACT_CUSTOM ], ACTANM_CUSTOM_ANM );
-    GFL_CLACT_WK_ResetAnm( pWork->cellCursor[ ACT_CUSTOM ] );
+    _gearObjSetAnmSeq( pWork->cellCursor[ ACT_CUSTOM_I ], ACTANM_CUSTOM_I_ANM );
     view = PANEL_VIEW_CUSTOM;
   }
   else{
     _gearObjSetAnmSeq( pWork->cellCursor[ ACT_CUSTOM ], ACTANM_CUSTOM );
+    _gearObjSetAnmSeq( pWork->cellCursor[ ACT_CUSTOM_I ], ACTANM_CUSTOM_I );
     view = PANEL_VIEW_NORMAL;
   }
   for( i = 0;i < CGEAR_PANEL_MAX;i++){
@@ -3989,7 +3977,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
   {
     pos += num_ofs[i];
     pWork->cellCursor[ACT_T_HOUR1+i] = 
-      _gearObjAdd( pWork, pos, POS_T_NUM_Y, ACTANM_N10, CGEAR_CLACT_BG_PRI, ACT_SPRI_PARTS, _CLACT_RES_COMMON );
+      _gearObjAdd( pWork, pos, POS_T_NUM_Y, ACTANM_N10, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_T_HOUR1+i], FALSE );
 
   }
@@ -4000,38 +3988,43 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     static const struct {
       u8  anm;
       u8  x,y;
+      u8  bg_pri;
       u8  s_pri:4;
       u8  res_idx:4;
     }prm[]=
     {
-      { ACTANM_WIN,       POS_AMPM_BASE_X, POS_AMPM_BASE_Y, ACT_SPRI_BASE, _CLACT_RES_COMMON },
-      { ACTANM_AMPM,      POS_AMPM_X, POS_AMPM_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_WIN,       POS_BATTERY_BASE_X, POS_BATTERY_BASE_Y, ACT_SPRI_BASE, _CLACT_RES_COMMON },
-      { ACTANM_BATT2,     POS_BATTERY_X, POS_BATTERY_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_LOGO_ALL,  POS_LOGO_X, POS_LOGO_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_POWER,     POS_POWER_X, POS_POWER_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_WIN,       POS_AMPM_BASE_X, POS_AMPM_BASE_Y, CGEAR_CLACT_BG_PRI, ACT_SPRI_BASE, _CLACT_RES_COMMON },
+      { ACTANM_AMPM,      POS_AMPM_X, POS_AMPM_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_WIN,       POS_BATTERY_BASE_X, POS_BATTERY_BASE_Y, CGEAR_CLACT_BG_PRI, ACT_SPRI_BASE, _CLACT_RES_COMMON },
+      { ACTANM_BATT2,     POS_BATTERY_X, POS_BATTERY_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_LOGO_ALL,  POS_LOGO_X, POS_LOGO_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_POWER,     POS_POWER_X, POS_POWER_Y, CGEAR_CLACT_BG_PRI,    ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_POWER_I,   POS_POWER_X, POS_POWER_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       
-      { ACTANM_HELP,      POS_HELP_X, POS_HELP_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_CUSTOM,    POS_CUSTOM_X, POS_CUSTOM_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_S_RADAR,   POS_S_RADAR_X, POS_S_RADAR_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_CROSS,     POS_CROSS_X, POS_CROSS_Y, ACT_SPRI_CROSS, _CLACT_RES_COMMON },
-      { ACTANM_CONNECT,   POS_CONNECT_X, POS_CONNECT_Y, ACT_SPRI_CROSS, _CLACT_RES_COMMON },
+      { ACTANM_HELP,      POS_HELP_X, POS_HELP_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_HELP_I,    POS_HELP_X, POS_HELP_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_CUSTOM,    POS_CUSTOM_X, POS_CUSTOM_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_CUSTOM_I,  POS_CUSTOM_X, POS_CUSTOM_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_S_RADAR,   POS_S_RADAR_X, POS_S_RADAR_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_S_RADAR_I, POS_S_RADAR_X, POS_S_RADAR_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_CROSS,     POS_CROSS_X, POS_CROSS_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_CROSS, _CLACT_RES_COMMON },
+      { ACTANM_CONNECT,   POS_CONNECT_X, POS_CONNECT_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_CROSS, _CLACT_RES_COMMON },
       
-      { ACTANM_IR,            POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
-      { ACTANM_RING_IR,       POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
-      { ACTANM_S_IR,          POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
-      { ACTANM_WIRELESS,      POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
-      { ACTANM_RING_WIRELESS, POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
-      { ACTANM_S_WIRELESS,    POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
-      { ACTANM_WIFI,          POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
-      { ACTANM_RING_WIFI,     POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
-      { ACTANM_S_WIFI,        POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
+      { ACTANM_IR,            POS_IR_DEF_X, POS_IR_DEF_Y, CGEAR_CLACT_BG_PRI,  ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
+      { ACTANM_RING_IR,       POS_IR_DEF_X, POS_IR_DEF_Y, CGEAR_CLACT_BG_PRI,  ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
+      { ACTANM_S_IR,          POS_IR_DEF_X, POS_IR_DEF_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PANEL, _CLACT_RES_COMMON },
+      { ACTANM_WIRELESS,      POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
+      { ACTANM_RING_WIRELESS, POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
+      { ACTANM_S_WIRELESS,    POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
+      { ACTANM_WIFI,          POS_WIFI_DEF_X, POS_WIFI_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
+      { ACTANM_RING_WIFI,     POS_WIFI_DEF_X, POS_WIFI_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
+      { ACTANM_S_WIFI,        POS_WIFI_DEF_X, POS_WIFI_DEF_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
       
-      { ACTANM_E_IR,      POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_EFFECT, _CLACT_RES_COMMON },
+      { ACTANM_E_IR,      POS_IR_DEF_X, POS_IR_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_EFFECT, _CLACT_RES_COMMON },
     };
 
     //セルの生成
-    pWork->cellCursor[ACT_AMPM_BASE+i] = _gearObjAdd( pWork, prm[i].x, prm[i].y, prm[i].anm, CGEAR_CLACT_BG_PRI, prm[i].s_pri, prm[i].res_idx );
+    pWork->cellCursor[ACT_AMPM_BASE+i] = _gearObjAdd( pWork, prm[i].x, prm[i].y, prm[i].anm, prm[i].bg_pri, prm[i].s_pri, prm[i].res_idx );
   }
   if( OS_IsRunOnTwl() ){  //DSIならバッテリー表示パターンを変更
     GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_BATTERY], ACTANM_BATT3 );
@@ -5090,12 +5083,12 @@ static void _workEnd(C_GEAR_WORK* pWork)
   GFL_CLACT_UNIT_Delete( pWork->cellUnit );
 
 
-  GFL_BG_FreeBGControl(GEAR_BUTTON_FRAME);
+  GFL_BG_FreeBGControl(GEAR_RING_FRAME);
   GFL_BG_FreeBGControl(GEAR_DECAL_FRAME);
   GFL_BG_FreeBGControl(GEAR_MAIN_FRAME);
 
 
-  GFL_BG_SetVisible( GEAR_BUTTON_FRAME, VISIBLE_OFF );
+  GFL_BG_SetVisible( GEAR_RING_FRAME, VISIBLE_OFF );
   GFL_BG_SetVisible( GEAR_DECAL_FRAME, VISIBLE_OFF );
   GFL_BG_SetVisible( GEAR_MAIN_FRAME, VISIBLE_OFF );
 
@@ -5533,6 +5526,11 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
 {
   BOOL ret=FALSE;
 
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_START ){
+    return FALSE;
+  }
+#endif
   {
     int i;
     u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELD_SUBSCREEN,SAVESIZE_EXTRA_CGEAR_PICTURE);
@@ -5547,33 +5545,13 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
       {
         u16 crc = GFL_STD_CrcCalc( pPic, CGEAR_PICTURTE_CHAR_SIZE+CGEAR_PICTURTE_PAL_SIZE+CGEAR_PICTURTE_SCR_SIZE );
         u16 crc2 = CGEAR_SV_GetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave));
-//        u32 char_ofs = GEAR_BASE_CGX_SIZE;//GFL_ARCUTIL_TRANSINFO_GetPos( pWork->subchar );
         if(crc == crc2){
           if(CGEAR_PICTURE_SAVE_IsPalette(pPic)){
             ret = TRUE;
-#if 0
-            for(i=0;i<CGEAR_SW_DECAL_SIZEY;i++){
-              GFL_BG_LoadCharacter(GEAR_DECAL_FRAME,&pCGearWork[CGEAR_SW_DECAL_SIZEX * 32 * i],CGEAR_SW_DECAL_SIZEX * 32, char_ofs + (5 + i)*32);
-            }
-#elsif 0
-            //5ライン分はコモンキャラクター領域
-            for(i=0;i<CGEAR_SW_DECAL_SIZEY;i++){
-              GFL_BG_LoadCharacter(GEAR_DECAL_FRAME,&pCGearWork[CGEAR_SW_DECAL_SIZEX * 32 * i],CGEAR_SW_DECAL_SIZEX * 32, (5 + i)*32);
-            }
-#else
             GFL_BG_LoadCharacter(GEAR_DECAL_FRAME,pCGearWork,CGEAR_SW_DECAL_SIZE_MAX, 0 );
-#endif
             GFL_BG_LoadPalette(GEAR_DECAL_FRAME,pPic->palette,CGEAR_PICTURTE_PAL_SIZE, 32*DECAL_COLOR_TRANS_POS_PALNO );
 
             GFL_BG_LoadScreenBuffer(GEAR_DECAL_FRAME,pPic->scr,CGEAR_PICTURTE_SCR_SIZE );
-#if 0
-            screen = GFL_BG_GetScreenBufferAdrs( GEAR_DECAL_FRAME );
-            for( i=0; i<CGEAR_PICTURTE_SCR_SIZE/2; i++ ){
-              screen[i] += char_ofs;
-              screen[i] |= 0xa000;
-            }
-            IWASAWA_Printf( "DecalSave = %d\n", CGEAR_PICTURE_SAVE_GetWorkSize());
-#endif
             //スクリーンのパレットナンバーを書き換え
             GFL_BG_ChangeScreenPalette( GEAR_DECAL_FRAME, 0, 0, 32, 24, DECAL_COLOR_TRANS_POS_PALNO );
             GFL_BG_LoadScreenReq(GEAR_DECAL_FRAME);
@@ -5884,6 +5862,10 @@ void CGEAR_SW_Main( C_GEAR_WORK* pWork,BOOL bAction )
 
     //ビーコンからの通知チェック
     _cgear_CheckBeaconInfo( pWork );
+
+#ifdef PM_DEBUG
+//    _debSetAlpha( pWork );
+#endif
   }
 
   
@@ -6114,7 +6096,7 @@ static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x
 //  _gearPanelBgScreenMake(pWork, x, y, type);  // つよい色に
 
 
-  GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+  GFL_BG_LoadScreenReq( GEAR_RING_FRAME );
 
   // タイプの表示をリセット
 //  _typeAnimation(pWork);
@@ -6216,14 +6198,15 @@ static BOOL _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
 {
   switch( pWork->eff_seq ){
   case 0:
-    // アニメーション開始
-    _gearObjSetAnmSeq( pWork->cellCursor[ pWork->select_cursor ], pWork->select_cursor_anm+1 );
+    // アニメーション開始(ベースとフォントのパーツが対)
+    _gearObjSetAnmSeq( pWork->cellCursor[ pWork->select_cursor ], pWork->select_cursor_anm );
+    _gearObjSetAnmSeq( pWork->cellCursor[ pWork->select_cursor+1 ], pWork->select_cursor_anm+1 );
     pWork->eff_seq ++;
     break;
 
   case 1:
+    //対のパーツは同じアニメ設定なので、アニメ終了は最初の一個を待てばいいことにする
     if( GFL_CLACT_WK_CheckAnmActive( pWork->cellCursor[ pWork->select_cursor ] ) == FALSE ){
-      _gearObjSetAnmSeq( pWork->cellCursor[ pWork->select_cursor ], pWork->select_cursor_anm ); //元のアニメに戻してる
       pWork->eff_seq = 0;
       return TRUE;
     }
@@ -6602,18 +6585,18 @@ static GMEVENT* EVENT_ButtonEffectWaitCall( C_GEAR_WORK* pWork, u32 createEvent 
   case FIELD_SUBSCREEN_ACTION_SCANRADAR:
     pWork->select_cursor_anm_type = SELECT_CURSOR_ANM_ACT; //OBJアニメ 
     pWork->select_cursor = ACT_S_RADAR;
-    pWork->select_cursor_anm = ACTANM_S_RADAR; 
+    pWork->select_cursor_anm = ACTANM_S_RADAR_ANM; 
     break;
 
   case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
     pWork->select_cursor_anm_type = SELECT_CURSOR_ANM_ACT; //OBJアニメ 
     pWork->select_cursor = ACT_HELP;  //OBJアニメ
-    pWork->select_cursor_anm = ACTANM_HELP; 
+    pWork->select_cursor_anm = ACTANM_HELP_ANM; 
     break;
   case FIELD_SUBSCREEN_ACTION_CGEAR_POWER:
     pWork->select_cursor_anm_type = SELECT_CURSOR_ANM_ACT; //OBJアニメ 
     pWork->select_cursor = ACT_POWER; //OBJアニメ
-    pWork->select_cursor_anm = ACTANM_POWER; 
+    pWork->select_cursor_anm = ACTANM_POWER_ANM; 
     break;
   }
   
@@ -6913,11 +6896,13 @@ static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork )
   if( GAMEBEACON_GetCGearInfoFlag( INFO_FLAG_RADAR ) ){
     if( !pWork->info_flag[INFO_FLAG_RADAR] ){
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_INFO );
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_INFO );
       pWork->info_flag[INFO_FLAG_RADAR] = TRUE;
     }
   }else{
     if( pWork->info_flag[INFO_FLAG_RADAR] ){
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR );
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I );
       pWork->info_flag[INFO_FLAG_RADAR] = FALSE;
     }
   }
