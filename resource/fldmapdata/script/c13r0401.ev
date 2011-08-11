@@ -134,12 +134,15 @@ _TALK_OBJ_START()
 		_OBJ_DEL( C13R0401_SWRIVAL_01 )
 
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_C03P15, 15, 21, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_C03P15, 12, 10, DIR_LEFT )
 
 		//========================================/
 		
 		//スワンライバルのバニシュフラグをセットする
 		_FLAG_SET(FV_C13R0401_SWRIVAL)
+		
+		//C03P15到着時イベント起動
+		$WK_SCENE_C03P15 = 1
 
 		//========================================/
 

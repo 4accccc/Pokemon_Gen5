@@ -11,6 +11,9 @@
   .include  "scr_seq_def.h"
   .include  "msg_c13gym0102.h"
   .include  "c13gym0102.h"
+  
+  //@author Suginaka_katsunori
+  //@author Mizuguchi_Mai（ポケウッド誘導）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -299,7 +302,13 @@ ev_leader2_btl:
 	
 	//ポケウッドイベント開始
 	$WK_SCENE_C13GYM0102 = 1
-
+	
+	//ポケウッド誘導イベント開始
+	$WK_SCENE_C15_TUTORIAL_01 = 1
+	//【仮】ポケウッド入り口ストッパー無効
+	$WK_SCENE_C13 = 2
+  _FLAG_SET( FV_C13_SUNGLASSES )
+  
 	//================================================//
 	//電光掲示板フラグセット
 	_FLAG_SET( SYS_FLAG_ELBOARD_C13GYMWIN )

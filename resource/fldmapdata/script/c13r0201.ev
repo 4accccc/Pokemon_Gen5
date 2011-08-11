@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_c13r0201.h"
   .include  "c13r0201.h"
+  
+  //@author Suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体

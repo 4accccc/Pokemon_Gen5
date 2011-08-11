@@ -11,6 +11,9 @@
   .include  "scr_seq_def.h"
   .include  "msg_c13.h"
   .include  "c13.h"
+  
+  //@author Suginaka_katsunori
+  //@author Mizuguchi_Mai（ポケウッド誘導）
 
 //--------------------------------------------------------------
 //               スクリプト本体

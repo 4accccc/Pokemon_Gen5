@@ -8,6 +8,7 @@
 #ifndef ZONE_C15_EVC_H
 #define ZONE_C15_EVC_H
 
+#define C15_SWRIVAL_01                     0
 
 #endif //ZONE_C15_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c15.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

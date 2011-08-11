@@ -1,5 +1,5 @@
 #../data/c15.mev
-../tmp/c15.bin:../data/c15.mev ../../script/sp_c15.bin $(UNIQ_SCRIPTHEADER) ../tmp/c15.h 
+../tmp/c15.bin:../data/c15.mev ../../script/sp_c15.bin $(UNIQ_SCRIPTHEADER) ../tmp/c15.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C15_def.h 
 	@echo ../data/c15.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c15.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c15.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C15_def.h 
 
