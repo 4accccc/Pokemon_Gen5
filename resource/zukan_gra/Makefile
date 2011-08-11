@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= kawada_koji toyama hiro_nakamura
+USERS	= kawada_koji toyama hiro_nakamura onoue_masayuki
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -31,8 +31,10 @@ SUBDIRS_INFO = info
 SUBDIRS_LIST = list
 SUBDIRS_SEARCH = search
 SUBDIRS_TOP = top
+HABITAT_LIST = habitat_list
+HABITAT_ZONE = habitat_zone
 
-SUBDIRS_ARC = $(SUBDIRS_INFO) $(SUBDIRS_LIST) $(SUBDIRS_SEARCH) $(SUBDIRS_TOP)
+SUBDIRS_ARC = $(SUBDIRS_INFO) $(SUBDIRS_LIST) $(SUBDIRS_SEARCH) $(SUBDIRS_TOP) $(HABITAT_LIST) $(HABITAT_ZONE)
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -121,6 +123,8 @@ endif
 	rm -f $(SUBDIRS_LIST)/*.N*R
 	rm -f $(SUBDIRS_SEARCH)/*.N*R
 	rm -f $(SUBDIRS_TOP)/*.N*R
+	rm -f $(HABITAT_LIST)/*.N*R
+	rm -f $(HABITAT_ZONE)/*.N*R
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
