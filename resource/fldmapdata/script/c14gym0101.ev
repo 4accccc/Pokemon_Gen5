@@ -12,6 +12,8 @@
   .include  "msg_c14gym0101.h"
   .include  "c14gym0101.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,26 +21,162 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c14gym0101_swleader8_01
+_EVENT_DATA   ev_c14gym0101_swleader8_01
+_EVENT_DATA   ev_c14gym0101_guide_01
+_EVENT_DATA   ev_bg_c14gym0101_statue_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*    ジムリーダー会話                                  */
+/*  ジムリーダー会話                                          */
 /**************************************************************/
-EVENT_START		ev_c14gym0101_swleader8_01
+EVENT_START   ev_c14gym0101_swleader8_01
 
-  // ジムリーダーが海へ帰っていく
-  _CALL sub_leader_return
-  
-  //========================================//
-  //W21シズイイベント開始
-  $WK_SCENE_W21_01 = 1
-  //========================================//
+  _TALK_OBJ_START()
+  //バッジフラグ取得
+  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_08 )
+
+  //ジムバッジフラグで分岐
+  IF $SCWK_TEMP0 == 0 THEN
+    //バッジ入手前なら、ジムリーダー戦イベント
+    _CALL   ev_leader8_btl
+
+  ELSE
+
+    //ゲームクリア前なら
+    IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+
+      //シズイ：
+      _BALLOONWIN_OBJMSG( msg_c14gym0101_swleader8_07, C14GYM0101_SWLEADER8_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+    //ゲームクリア後なら
+    ELSE
+
+      //シズイ：
+      _BALLOONWIN_OBJMSG( msg_c14gym0101_swleader8_07, C14GYM0101_SWLEADER8_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
 
 EVENT_END
 
-// ジムリーダーが海へ帰っていく
+
+//ジムリーダー戦
+ev_leader8_btl:
+
+  //シズイ：お！　さっそく　きたか！▼
+  _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_swleader8_01 )
+  _BALLOONWIN_CLOSE()
+
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWLEADER8_01, 0 )
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()    //勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()   //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+
+  //戦闘後メッセージ
+
+  //シズイ：おはん　つよそーじゃなく
+  _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_swleader8_02 )
+  _BALLOONWIN_CLOSE()
+
+  //リーダー戦勝利時の情報登録
+  _SET_GYM_VICTORY_INFO( BADGE_ID_08 )
+  //バッジ入手処理
+  _SET_BADGE_FLAG( BADGE_ID_08 )    //バッジフラグon
+  _PLAYER_NAME( 0 )
+
+{
+  //バッジ入手演出再生
+  _ME_PLAY( SEQ_ME_BADGE )
+
+  //性別が格納されるローカル変数を定義
+  DEFINE_LOCAL SCWK_SEX
+  _GET_MY_SEX( SCWK_SEX )
+
+  //男性だった場合
+  IF $SCWK_SEX == PM_MALE THEN
+    _CALL_FLD3D_CUTIN( FLDCIID_GYM08 )
+  //女性だった場合
+  ELSE
+    _CALL_FLD3D_CUTIN( FLDCIID_GYM08F )
+  ENDIF
+
+  //ME待ち
+  _ME_WAIT()
+}
+
+  //システム：ウェーブバッジをもらった！▼
+  _SYSWIN_MSG( msg_c14gym0101_swleader8_03, POS_DEFAULT )
+  _SYSWIN_CLOSE()
+
+  //シズイ：それは　ウェーブバッジ
+  _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_swleader8_04 )
+  _BALLOONWIN_CLOSE()
+
+  //わざマシン「ねっとう」入手
+  _ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN55, 1 )
+
+  //シズイ：ねっとうはな　つかうと　ときどき
+  _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_swleader8_05 )
+
+  //シズイ：ほな　いっとこかい！
+  _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_swleader8_06 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
+  //================================================//
+  //ジムトレーナーの視線無効
+/*
+  _TRAINER_FLAG_SET( TRID_ELITEM_26 )
+  _TRAINER_FLAG_SET( TRID_ELITEM_27 )
+  _TRAINER_FLAG_SET( TRID_ELITEM_28 )
+  _TRAINER_FLAG_SET( TRID_ELITEW_26 )
+  _TRAINER_FLAG_SET( TRID_ELITEW_27 )
+  _TRAINER_FLAG_SET( TRID_ELITEW_28 )
+*/
+  //================================================//
+  //電光掲示板フラグセット
+  _FLAG_SET( SYS_FLAG_ELBOARD_C06GYMWIN )
+  //================================================//
+  //POSイベント進行
+  $WK_SCENE_W21_01 = 1    //21番水道イベント用
+  $WK_SCENE_C14_SWLEADER8_01 = 1    //ジムの外に出た時のライバルイベント用
+  //================================================//
+
+  //上に2歩
+  _OBJ_ANIME( C14GYM0101_SWLEADER8_01, anm_tr_up )
+  _OBJ_ANIME_WAIT()
+
+  //海にジャンプ
+  _OBJ_HIGH_JUMP( C14GYM0101_SWLEADER8_01, 16, -4, 1 )
+
+  //水しぶき
+  _GYM_WATER_SPLASH_ANIME()
+
+  // 非表示
+  _OBJ_ANIME( C14GYM0101_SWLEADER8_01, anm_vanish )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 35 )    // 調整用
+
+  //シズイ帰りアニメ
+  _GYM_WATER_RETURN_ANIME()
+
+  _TIME_WAIT( 80 )    // 調整用
+
+_RET
+
+//ジムリーダーが海へ帰っていく
 sub_leader_return:
   //上に2歩
   _OBJ_ANIME( C14GYM0101_SWLEADER8_01, anm_tr_up )
@@ -54,25 +192,115 @@ sub_leader_return:
   _OBJ_ANIME( C14GYM0101_SWLEADER8_01, anm_vanish )
   _OBJ_ANIME_WAIT()
 
-  _TIME_WAIT(35)    // 調整用
+  _TIME_WAIT( 35 )    // 調整用
 
-  //シ･ズイ帰りアニメ
+  //シズイ帰りアニメ
   _GYM_WATER_RETURN_ANIME()
 
-  _TIME_WAIT(80)    // 調整用
+  _TIME_WAIT( 80 )    // 調整用
+
 _RET
 
-//--------------------------------------------------------------
-//	上に2歩進む
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_tr_up
-	_ANIME_DATA	AC_WALK_U_8F,3
-	_ANIME_DATA	ACMD_END,0
+/************************************************************/
+/*  ダンペイ：話しかけ（ジムガイド）                        */
+/************************************************************/
+EVENT_START   ev_c14gym0101_guide_01
+
+  //【仮】後にストッパー処理の追加？
+
+  _TALK_OBJ_START()
+
+  //バッジフラグ取得
+  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_08 )
+
+  //バッジフラグで分岐
+  IF $SCWK_TEMP0 == 0 THEN
+    //バッジ入手前の処理
+
+    //アイテム入手フラグで分岐
+    IF FLAG_OFF( FE_C08GYM_ITEM ) THEN
+
+      //アイテム未入手なら、おいしいみず入手イベント
+      //ダンペイ：リゾートきぶんな　ジムですけれど
+      _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_02 )
+      _BALLOONWIN_CLOSE()
+
+      //アイテム「おいしいみず」入手
+      _ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+
+      //ダンペイ：この　ポケモンジムは
+      _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_03 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+      //=====================================
+      //アイテム入手フラグをセット
+      _FLAG_SET( FE_C08GYM_ITEM )
+      //=====================================
+
+    ELSE
+      //入手済みならメッセージのみ
+      //ダンペイ：この　ポケモンジムは
+      _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_03 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+    ENDIF
+
+  ELSE
+    //バッジ入手後の処理
+
+    //ダンペイ：シズイさん　およいじゃってますね
+    _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_04 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/************************************************************/
+/*  石像                                                    */
+/************************************************************/
+EVENT_START   ev_bg_c14gym0101_statue_01
+
+  _TALK_START_SE_PLAY()
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
+
+  //バッジフラグ取得
+  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_08 )
+  //ジムバッジフラグによって分岐
+  IF $SCWK_TEMP0 == 0 THEN
+    //バッジ入手前なら
+    _PLAINWIN_MSG_DOWN( msg_c03gym0101_statue_01 )
+
+  ELSE
+    //バッジ入手後【仮】何か分岐がつく？
+    _PLAINWIN_MSG_DOWN( msg_c03gym0101_statue_02 )
+
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
 
 //--------------------------------------------------------------
-//	非表示
+//上に2歩進む
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_tr_up
+  _ANIME_DATA AC_WALK_U_8F,3
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------
+//非表示
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_vanish
   _ANIME_DATA AC_VANISH_ON,1
-	_ANIME_DATA	ACMD_END,0
+  _ANIME_DATA ACMD_END,0
+
 

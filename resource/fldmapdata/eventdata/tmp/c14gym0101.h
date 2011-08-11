@@ -16,11 +16,14 @@
 #define C14GYM0101_ELITEM_03               4
 #define C14GYM0101_ELITEW_03               5
 #define C14GYM0101_ELITEW_02               6
+#define C14GYM0101_GUIDE_01                7
 
 #endif //ZONE_C14GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c14gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_C14GYM0101_EVB_H
 #define ZONE_C14GYM0101_EVB_H
 
+#define BGID_C14GYM0101_STATUE_01         0
+#define BGID_C14GYM0101_STATUE_02         1
 
 #endif //ZONE_C14GYM0101_EVB_H

@@ -13,6 +13,7 @@
   .include  "c09r0501.h"
   .include  "c09r0601_def.h"
 
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,26 +23,111 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_c09r0501_lighting_01
+_EVENT_DATA_END
+
+//主人公座標取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+DEFINE_LOCAL  LCW_INDEX
+DEFINE_LOCAL  LCW_FRONT
+DEFINE_LOCAL  LCW_SIDE
 
 //------------------------------注意--------------------------------//
-//																	//
-//	LOCALWORK0 をギミックの制御に使用しています。					//
-//		0 = POSイベント有効 	//
-//																	//
-//------------------------------------------------------------------/
+//                                                                  //
+//  LOCALWORK0 をギミックの制御に使用しています。                   //
+//    0 = POSイベント有効                                           //
+//                                                                  //
+//------------------------------------------------------------------//
 
+
+/************************************************************/
+/*  チャンピオン                                            */
+/************************************************************/
 EVENT_START ev_pos_c09r0501_lighting_01
 
-  // 照明が点灯
+  //照明が点灯
   _CHAMPION_LIGHTING()
 
-  // アイリスとバトル
-  // 
-  //_TIME_WAIT( 10 )
+  _TIME_WAIT( 16 )
 
-  // 殿堂入り部屋出現
-  // 確認のためにコメントアウトしている
-  //_CHAMPION_HALL_ROOM()
+  //主人公座標取得（レールロケーション取得）
+  _GET_PLAYER_RAIL_LOC( LCW_INDEX, LCW_FRONT, LCW_SIDE )
+
+  //アニメ：主人公移動（チャンピオンの前へ）
+  SWITCH $LCW_SIDE
+  CASE 0 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_x15 )
+  CASE 1 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_x16 )
+  CASE 2 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_x17 )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+
+  //アイリス：まってたよー！
+  _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_01, C09R0501_SWCHAMPION_01, POS_UP )
+  _MSGWIN_CLOSE()
+
+  //チャンピオン移動
+  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_champion_walk_down_01 )
+  _OBJ_ANIME_WAIT()
+
+  //ゲームクリア前後で分岐
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //アイリス：あたしね　つよい　トレーナーとの
+    _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_02, C09R0501_SWCHAMPION_01, POS_UP )
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し  【仮】トレーナーIDは仮
+    _TRAINER_BTL_SET( TRID_SWCHAMPION_01, 0 )
+    //敗戦チェック
+    _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+      _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+    ELSE
+      _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+    ENDIF
+
+  //クリア後（２回目以降）
+  ELSE
+
+    //アイリス：ここにくるのは　こころの　そこから
+    _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_03, C09R0501_SWCHAMPION_01, POS_UP )
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し  【仮】トレーナーIDは仮
+    _TRAINER_BTL_SET( TRID_SWCHAMPION_02, 0 )
+    //敗戦チェック
+    _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+      _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+    ELSE
+      _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+    ENDIF
+
+  ENDIF
+
+  _TIME_WAIT( 8 )
+
+  //アイリス：かてなくて　くやしいよ！▼
+  _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_04, C09R0501_SWCHAMPION_01, POS_UP )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //殿堂入り部屋出現
+  _CHAMPION_HALL_ROOM()
+
+  _TIME_WAIT( 160 )  //殿堂入り部屋出現演出待ち
+
+  //【仮】チャンピオン、主人公の移動などカット
+
+  //マップチェンジ後以下のスクリプトを起動する
+  _RESERVE_SCRIPT( SCRID_RESERVE_C09R0601_SWCHAMPION_01 )
+
+  //殿堂入り部屋へシーン切り替え
+  _MAP_CHANGE_WARP( ZONE_ID_C09R0601, 8, 16, DIR_UP )
 
   //=====================================
   //このPOSの起動をさせなくする
@@ -49,4 +135,38 @@ EVENT_START ev_pos_c09r0501_lighting_01
   //=====================================
 
 EVENT_END
+
+
+//--------------------------------------------------------------------
+//主人公：チャンピオンの前へ01
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_vs_champion_stairs_up_x15
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：チャンピオンの前へ02
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_vs_champion_stairs_up_x16
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：チャンピオンの前へ03
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_vs_champion_stairs_up_x17
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//チャンピオン：椅子から降りる
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_champion_walk_down_01
+  _ANIME_DATA AC_WALK_D_8F,4
+  _ANIME_DATA ACMD_END,0
+
 

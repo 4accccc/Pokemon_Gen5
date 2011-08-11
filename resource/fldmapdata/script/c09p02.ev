@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c09p02.h"
-  //.include  "c09p02.h"
+  .include  "c09p02.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -24,13 +26,16 @@ _EVENT_DATA_END
 
 
 /************************************************************/
-/*						エレベータ							*/
+/*  エレベータ                                              */
 /************************************************************/
 EVENT_START	ev_bg_c09p02_elevator_01
-	_TALK_START_SE_PLAY()
-	
-	_PLAINWIN_MSG_DOWN( msg_c09p02_elevator_01 )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	
+
+  _TALK_START_SE_PLAY()
+  //ＢＧメッセージ：かつまで　もどれないようだ
+  _PLAINWIN_MSG_DOWN( msg_c09p02_elevator_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
 EVENT_END
+
+
