@@ -6,11 +6,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-・１０番道路に行けない</Text>
+			<Text>あっ　トレーナーさん
+このさき　すすめないんですよ▼
+２ねんまえ　ですけど
+ポケモンリーグの　まわりの▽
+じばんが　ゆるんじゃって……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-・１０番道路に行けない</Text>
+			<Text>あっ　トレーナーさん
+この先　進めないんですよ▼
+２年前　ですけど
+ポケモンリーグの　周りの▽
+地盤が　ゆるんじゃって……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:52:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -30,10 +36,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanでマップ削除</Comment>
+			<Comment>♀
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T02:24:46" />
+				Time="2011-08-11T06:52:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -52,7 +59,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -63,11 +70,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ！　トレーナーさん！
-ちょっと　いいですか？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:53:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -75,11 +81,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ！　トレーナーさん！
-ちょっと　いいですか？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:53:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -87,10 +92,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanでマップ削除</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T02:24:48" />
+				Time="2011-08-11T06:53:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -120,14 +125,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さきほど　ライブキャスターで
-きいた　はなし　なんですけど▽
-７ばんどうろで　あらし　ですって！▼
-しかも　しぜんげんしょう　とは
-ちがうみたいなんです！　ふしぎ！！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:53:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -135,14 +136,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さきほど　ライブキャスターで
-きいた　話なんですけど▽
-７番道路で　暴風雨　ですって！▼
-しかも　どうやら　自然現象とは
-違うみたいなんです！　不思議！！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:53:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -150,10 +147,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanでマップ削除</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T02:24:48" />
+				Time="2011-08-11T06:53:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -183,11 +180,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>７ばんどうろの　あらし　って
-ポケモンが　おこしたそうですね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:53:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -195,11 +191,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>７番道路の　暴風雨って
-ポケモンが　起こしたそうですね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:53:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -207,10 +202,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanでマップ削除</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T02:24:48" />
+				Time="2011-08-11T06:53:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -240,10 +235,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ポケモンリーグへ　むかうには
+とおく　セイガイハシティから▽
+ぐるりと　まわりこまないとな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:48:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -251,10 +248,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ポケモンリーグへ　向かうには
+遠く　セイガイハシティから▽
+ぐるりと　回りこまないとな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:48:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -262,10 +261,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanでマップ削除</Comment>
+			<Comment>♂
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T02:24:48" />
+				Time="2011-08-11T06:48:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -283,7 +283,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -294,11 +294,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-・新しいチャンピオンロード</Text>
+			<Text>ポケモンリーグへ　むかうには
+とおく　セイガイハシティから▽
+ぐるりと　まわりこまないとな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:48:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -306,11 +307,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-・新しいチャンピオンロード</Text>
+			<Text>ポケモンリーグへ　向かうには
+遠く　セイガイハシティから▽
+ぐるりと　回りこまないとな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-11T06:48:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -318,10 +320,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanでマップ削除</Comment>
+			<Comment>♀
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T02:24:48" />
+				Time="2011-08-11T06:48:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -339,7 +342,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
