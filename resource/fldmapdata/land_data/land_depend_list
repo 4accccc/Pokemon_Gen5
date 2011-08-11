@@ -309,20 +309,20 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/map19_02.3dppack \
 	$(DIR_OUTPUT)/map18_02.3dppack \
 	$(DIR_OUTPUT)/map17_02.3dppack \
-	$(DIR_OUTPUT)/h06_a00_00.3dppack \
-	$(DIR_OUTPUT)/h06_a00_01.3dppack \
-	$(DIR_OUTPUT)/h06_a00_02.3dppack \
-	$(DIR_OUTPUT)/h06_a00_03.3dppack \
-	$(DIR_OUTPUT)/h06_a00_04.3dppack \
-	$(DIR_OUTPUT)/h06_a00_05.3dppack \
-	$(DIR_OUTPUT)/h06_a00_06.3dppack \
-	$(DIR_OUTPUT)/h06_a01_00.3dppack \
-	$(DIR_OUTPUT)/h06_a01_01.3dppack \
-	$(DIR_OUTPUT)/h06_a01_02.3dppack \
-	$(DIR_OUTPUT)/h06_a01_03.3dppack \
-	$(DIR_OUTPUT)/h06_a01_04.3dppack \
-	$(DIR_OUTPUT)/h06_a01_05.3dppack \
-	$(DIR_OUTPUT)/h06_a01_06.3dppack \
+	$(DIR_OUTPUT)/h06_a00_00.ngpack \
+	$(DIR_OUTPUT)/h06_a00_01.ngpack \
+	$(DIR_OUTPUT)/h06_a00_02.ngpack \
+	$(DIR_OUTPUT)/h06_a00_03.ngpack \
+	$(DIR_OUTPUT)/h06_a00_04.ngpack \
+	$(DIR_OUTPUT)/h06_a00_05.ngpack \
+	$(DIR_OUTPUT)/h06_a00_06.ngpack \
+	$(DIR_OUTPUT)/h06_a01_00.ngpack \
+	$(DIR_OUTPUT)/h06_a01_01.ngpack \
+	$(DIR_OUTPUT)/h06_a01_02.ngpack \
+	$(DIR_OUTPUT)/h06_a01_03.ngpack \
+	$(DIR_OUTPUT)/h06_a01_04.ngpack \
+	$(DIR_OUTPUT)/h06_a01_05.ngpack \
+	$(DIR_OUTPUT)/h06_a01_06.ngpack \
 	$(DIR_OUTPUT)/resort01_00_00.3dppack \
 	$(DIR_OUTPUT)/white12_16.3dppack \
 	$(DIR_OUTPUT)/white13_16.3dppack \

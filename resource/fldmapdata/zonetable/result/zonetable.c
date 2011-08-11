@@ -16310,7 +16310,7 @@ static const ZONEDATA ZoneData[] = {
 		4,
 	},
 	{//ZONE_ID_H06 = 466
-		RSC_GRID_H06,
+		RSC_NOGRID_H06,
 		MMLID_NOENTRY,
 		AREA_ID_OUT62,
 		MATRIX_ID_H06A,
@@ -16340,9 +16340,9 @@ static const ZONEDATA ZoneData[] = {
 		MATRIX_ID_H06A, // camera_area
 		23,   // padding > placeicon
     0,
-		15,
 		0,
-		188,
+		0,
+		0,
 	},
 	{//ZONE_ID_C14 = 467
 		RSC_GRID_DEFAULT,

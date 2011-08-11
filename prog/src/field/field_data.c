@@ -580,7 +580,7 @@ const SCENE_DATA resistMapTbl[] = {
 		TRUE,
     HEAPSIZE_FIELDMAP_NORMAL,
 	},
-  //RSC_GRID_BRIDGE_H06 = 21,
+  //RSC_NOGRID_H06 = 21,
 	{	//H06 縦長　常駐マップ
 		{
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
@@ -597,7 +597,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 
       1,  // topフレームのブロック描画数
 		},
-		&FieldMapCtrl_GridFunctions,
+		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
     HEAPSIZE_FIELDMAP_NORMAL,
 	},

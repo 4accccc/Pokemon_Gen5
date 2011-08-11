@@ -675,6 +675,7 @@ BOOL ZONEDATA_IsRailOnlyMap( u16 zone_id )
    ZONE_ID_D20R0301,
    ZONE_ID_D20R0401,
    ZONE_ID_C03P13,
+   ZONE_ID_H06,
   };
   return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
 }
@@ -739,6 +740,7 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
     { ZONE_ID_C09R0301,   NARC_field_rail_setup_C09R0301_bin },
     { ZONE_ID_C09R0401,   NARC_field_rail_setup_C09R0401_bin },
     { ZONE_ID_C09R0501,   NARC_field_rail_setup_C09R0501_bin },
+    { ZONE_ID_H06,        NARC_field_rail_setup_H06_bin },
   };
   zone_id = ControlZoneID(zone_id);
 

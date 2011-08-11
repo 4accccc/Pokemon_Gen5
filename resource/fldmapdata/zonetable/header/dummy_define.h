@@ -47,7 +47,7 @@ enum {
   RSC_GRID_H04 = 18,     // グリッド　H04 スクロールなし動作
   RSC_GRID_DEF_TAILDRAW = 19,
   RSC_GRID_LEAGIN02 = 20, //グリッド　リーグフロント２専用
-  RSC_GRID_H06 = 21,      //グリッド　H06専用
+  RSC_NOGRID_H06 = 21,      //レール　H06専用
   RSC_GRID_GYM_GROUND = 22,//グリッド　C05地面ジム専用
   RSC_HYBRID_GYM_DRAGON = 23,//ハイブリッド C08ドラゴンジム専用
   RSC_GRID_WIDE_NOCROSS = 24,//グリッド3x2 立体交差無し(バッジチェックゲート)
