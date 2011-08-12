@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/26 15:38:15
+#save date:2011/08/12 15:32:25
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r07r0101.wms
 #SECTION START:OBJ_EVENT
@@ -91,7 +91,109 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+6
+#event number: 0
+#Pos Event Label
+POS_R07R0101_DUMMY_FES_01
+#Pos Script Name
 0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+0 12 1
+#size
+1 1
+#event number: 1
+#Pos Event Label
+POS_R07R0101_DUMMY_FES_02
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+0 11 0
+#size
+1 1
+#event number: 2
+#Pos Event Label
+POS_R07R0101_DUMMY_FES_03
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+0 10 -1
+#size
+1 1
+#event number: 3
+#Pos Event Label
+POS_R07R0101_DUMMY_FES_04
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+0 8 1
+#size
+1 1
+#event number: 4
+#Pos Event Label
+POS_R07R0101_DUMMY_FES_05
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+0 7 0
+#size
+1 1
+#event number: 5
+#Pos Event Label
+POS_R07R0101_DUMMY_FES_06
+#Pos Script Name
+0
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY_FES
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+0 6 -1
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
