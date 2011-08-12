@@ -1662,6 +1662,22 @@ $(DIR_WBTMP)/freezemap15_05_ex.tbl: $(DIR_RES)/freezemap15_05_ex.bin
 	@echo create_bintbl freezemap15_05
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezemap15_05_ex.bin
 
+$(DIR_WBTMP)/ship_j00_00.tbl: $(DIR_RES)/ship_j00_00.bin
+	@echo create_bintbl ship_j00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/ship_j00_00.bin
+
+$(DIR_WBTMP)/tship06_15.tbl: $(DIR_RES)/tship06_15.bin
+	@echo create_bintbl tship06_15
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/tship06_15.bin
+
+$(DIR_WBTMP)/tship25_07.tbl: $(DIR_RES)/tship25_07.bin
+	@echo create_bintbl tship25_07
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/tship25_07.bin
+
+$(DIR_WBTMP)/ship25_07.tbl: $(DIR_RES)/ship25_07.bin
+	@echo create_bintbl ship25_07
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/ship25_07.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin

@@ -834,6 +834,7 @@ DEP_TEXSET_IMD_OUTDOOR018 = \
 	$(SRCDIR)/door_normal03.imd \
 	$(SRCDIR)/o_parasol_02.imd \
 	$(SRCDIR)/h6_gate_01.imd \
+	$(SRCDIR)/c03_ship_03_02.imd \
 	$(SRCDIR)/c03_ship_03_04.imd
 
 texset/outdoor018.imd: $(DEP_TEXSET_IMD_OUTDOOR018) texset/tmp/outdoor018.list

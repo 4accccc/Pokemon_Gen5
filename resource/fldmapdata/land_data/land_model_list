@@ -405,6 +405,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/freezemap11_05.nsbmd \
 	$(DIR_TEMP)/freezemap14_05.nsbmd \
 	$(DIR_TEMP)/freezemap15_05.nsbmd \
+	$(DIR_TEMP)/ship_j00_00.nsbmd \
+	$(DIR_TEMP)/tship06_15.nsbmd \
+	$(DIR_TEMP)/tship25_07.nsbmd \
+	$(DIR_TEMP)/ship25_07.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
