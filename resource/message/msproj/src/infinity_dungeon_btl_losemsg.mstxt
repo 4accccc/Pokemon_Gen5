@@ -6454,10 +6454,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたに　かてないんだもん
-さいかそうなんて　いけっこないよ▼</Text>
+うえのエリアなんて　いけっこないよ▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T08:23:47" />
+				Time="2011-08-12T06:09:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -6466,10 +6466,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたに　勝てないんだもん
-最下層なんて　行けっこないよ▼</Text>
+上のエリアなんて　行けっこないよ▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T08:23:53" />
+				Time="2011-08-12T06:09:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -12292,10 +12292,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>ちぇっ！　もっと　つよい　ポケモンを
+こうかんして　もらわないとな！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T02:57:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12303,10 +12304,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>ちぇっ！　もっと　強い　ポケモンを
+交換して　もらわないとな！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T02:57:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12332,10 +12334,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>ほら！　すいりした　とおり
+わたしは　あなたに　まけたね！</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T02:42:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12343,10 +12346,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>ほら！　推理したとおり
+わたしは　あなたに　負けたね！</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T02:42:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12372,10 +12376,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>うえには　これくらい　あぶない
+ポケモンが　たくさん　いるのかな？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T03:11:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12383,10 +12388,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>上には　これくらい　あぶない
+ポケモンが　たくさん　いるのかな？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T03:12:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12412,10 +12418,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>もうー！　おかねが　ないのに
+ほしいものは　ふえつづけるのよー！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T03:36:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12423,10 +12430,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>もうー！　お金が　ないのに
+欲しいものは　増え続けるのよー！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T03:36:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12494,10 +12502,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>まけたって　たちあがれば　いいだけ！
+あきらめるもんか！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T03:51:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12505,10 +12514,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>負けたって　立ち上がれば　いいだけ！
+あきらめるもんか！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T03:51:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12618,10 +12628,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>ひぇ～！　どうなってるんだ！
+いままでとは　べつじげんじゃないか！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T04:00:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12629,10 +12640,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>ひぇ～！　どうなってるんだ！
+いままでとは　別次元じゃないか！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T04:00:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12658,10 +12670,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>くっ……だめか……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T05:23:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12669,10 +12681,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>くっ……だめか……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T05:23:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12698,10 +12710,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>これが　おれの　げんかい……
+いつか　こえてみせる！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T05:33:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12709,10 +12722,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>これが　おれの　限界……
+いつか　越えてみせる！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T05:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12738,11 +12752,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ここからさきは　わたしには
+			<Text>……ここから　さきは　わたしには
 ちょっと　ムリかもしれないわね▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-10T09:01:24" />
+				Time="2011-08-12T05:39:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12780,10 +12794,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>そんな……みんなの　ポケモンが……
+あなた　いったい　なにものなの？▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T05:40:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12791,10 +12806,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>そんな……みんなの　ポケモンが……
+あなた　いったい　何者なの？▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T05:41:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12820,10 +12836,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>あんたは　わたしいじょうに
+じょうしきはずれな　トレーナーね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T05:50:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12831,10 +12848,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>あんたは　わたし以上に
+常識外れな　トレーナーね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T05:50:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12860,10 +12878,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>うーん　しょうきんが　あがれば
+それだけ　あいても　つよくなるねぇ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T06:17:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12871,10 +12890,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>うーん　賞金が　あがれば
+それだけ　相手も　強くなるねぇ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T06:17:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12900,10 +12920,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>うーん　こうばしい　かおりただよう
+すてきな　ポケモンを　だしてくるね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T07:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12911,10 +12932,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>うーん　こうばしい　かおりただよう
+すてきな　ポケモンを　出してくるね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T07:10:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12940,10 +12962,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>いいわ！　くろこげに　なるまで
+ぶつかりあいましょう！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T06:36:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12951,10 +12974,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>いいわ！　くろこげに　なるまで
+ぶつかりあいましょう！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T06:36:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12980,10 +13004,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>たしかに　こんかいは　まけたけど
+つぎは　かくじつに　しとめるわ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T06:32:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12991,10 +13016,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>たしかに　今回は　負けたけど
+次は　確実に　しとめるわ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T06:32:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13104,10 +13130,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>うむ！　つわものは　だいかんげいだ！
+ようこそ　エリア６へ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T05:17:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13115,10 +13142,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>うむ！　つわものは　大歓迎だ！
+ようこそ　エリア６へ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T05:17:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13144,10 +13172,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>てきの　ちからを　みあやまるなんて
+へなちょこは　わたしの　ほうだね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T06:59:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13155,10 +13184,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>敵の　実力を　見誤るなんて
+へなちょこは　わたしの　ほうだね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T07:01:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13184,10 +13214,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>うん！　あなたなら　ボスと　たたかう
+しかくが　ありそうね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T06:49:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13195,10 +13226,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>うん！　あなたなら　ボスと戦う
+資格が　ありそうね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T06:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13224,10 +13256,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>まけないように　ならなきゃ
+だれにも　まけないように……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T07:15:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13235,10 +13268,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>まけないように　ならなきゃ
+だれにも　まけないように……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T07:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13306,10 +13340,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>けっ！　わかってるよ！
+むれなきゃ　おれなんて　こんなもんさ▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-11T02:45:36" />
+				Time="2011-08-12T07:39:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13317,10 +13352,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>けっ！　分かってるよ！
+群れなきゃ　おれなんて　こんなもんさ▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-11T02:45:37" />
+				Time="2011-08-12T07:39:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13346,10 +13382,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>そうだな　おまえみたいな　やつが
+ここの　ルールを　つくっていくんだ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T07:48:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13357,10 +13394,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>そうだな　おまえみたいな　やつが
+ここの　ルールを　作っていくんだ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T07:48:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13386,10 +13424,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>こんな　れんちゅうと　やりあうのか……
+かんたんな　しごとじゃないな▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T08:08:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13397,10 +13436,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>こんな　連中と　やりあうのか……
+簡単な　仕事じゃないな▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T08:08:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13426,10 +13466,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>きの　せいれいの　こえが　とぎれた！
+もしや　これは……きの　せい？▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T08:25:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13437,10 +13478,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>木の精霊の　声が　とぎれた！
+もしや　これは……気のせい？▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T08:25:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13466,10 +13508,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>ときには　ふみはずすこともある
+だが　また　あしを　うごかせばいい！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T08:31:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13477,10 +13520,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>時には　踏み外すこともある
+だが　また　足を　動かせばいい！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T08:31:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13506,10 +13550,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>よいっしょっと！　まけちゃったしね
+ちょっと　やすませて　もらうよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T08:36:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13517,10 +13562,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>よいっしょっと！　負けちゃったしね
+ちょっと　休ませてもらうよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T08:36:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13788,10 +13834,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>まだまだ　のびそうだな　おまえも
+ハッ！　おもしろくなってきたな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T08:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13799,10 +13846,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>まだまだ　伸びそうだな　おまえも
+ハッ！　面白くなってきたな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-12T08:44:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
