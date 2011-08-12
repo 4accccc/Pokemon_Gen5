@@ -244,7 +244,7 @@ static void itemball_MMdlSet( LINK_FESTIVAL* fest_sys, GFL_STD_RandContext* rnd_
     }
     mmdl = MMDLSYS_AddMMdlParam( mmdlsys, dat->pos[tbl[i]].x, dat->pos[tbl[i]].z,
             DIR_DOWN, MMDL_ID_FMISSION_OBJ_01+i, FESITEM, MV_DMY, zone_id );
-    MMDL_SetEventID( mmdl, SCRID_FMISSION_ITEM_BALL_GET );
+    MMDL_SetEventID( mmdl, SCRID_FMISSION_ITEM_GET );
     MMDL_SetParam( mmdl, rnd, MMDL_PARAM_0 );
     MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_NOT_SAVE );  //ÉZÅ[ÉuëŒè€Ç…ÇµÇ»Ç¢
   }
