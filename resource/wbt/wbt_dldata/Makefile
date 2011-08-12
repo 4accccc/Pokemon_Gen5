@@ -45,6 +45,8 @@ xlsobjs = $(subst .xls,.bin,$(xlsources))
 # testファイル
 input_file  = test_all.xls
 output_file = test_all.bin
+output_file_tmp = test_all_tmp.bin
+output_file_crc = test_all_crc.bin
 
 XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb -c
 
@@ -66,6 +68,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .xls.bin:
 	ruby wbt_dldata_conv.rb $(input_file)
+	ruby my_crc_ccitt.rb $(output_file) $(output_file_crc)
+#	ruby my_crc_ccitt.rb $(output_file) $(output_file_tmp)
+#	ruby my_crc_ccitt.rb $(output_file_tmp) $(output_file_crc) -t
+#	rm $(output_file_tmp)
 
 #test_all.bin: test_all.xls
 #	ruby wbt_dldata_conv.rb $<
@@ -91,7 +97,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 #$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(xlsobjs) $(output_file)
-$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(output_file)
+$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(output_file) $(output_file_crc)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif

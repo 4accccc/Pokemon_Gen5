@@ -187,19 +187,24 @@ class WBT_DATA
   end
   
   #------------------------
-  # 対応カセットバージョン(未定)
+  # 対応カセットバージョン
   #------------------------
   def chk_version()
     #
-    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_VERSION, DATA_UP_START_ROW),
-                          1+DATA_UP_START_COL+DATA_VERSION, $title_str[4] )
+    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW),
+                                      DATA_UP_START_COL+4, $title_str[4] )
     if(ret == -1)
       wbt_exit();
     end
     # セット
-    @version = @conv.get_cell(0, DATA_UP_START_COL+DATA_VERSION, DATA_UP_START_ROW).to_i;
+    num = hash2no( $version_hash, @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW) );
+    if(num == -1)
+      print_error( $title_str[4], 0 );
+    else
+      @version = num;
+    end
     if(@local_debug == 1)
-      p sprintf("%s :%d", $title_str[4],@version)
+      p sprintf("%s :%d", $title_str[4], @version)
     end
   end
   

@@ -501,7 +501,7 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 #ifdef __DOWNLOAD_CHECK__	// debug用
     // 選択画面からの場合だけデバッグを発動(暫定処理)
 	if(wk->Param->status == T_DOWNLOAD_MODE_SELECT){
-		wk->TestBuffer = GFL_ARC_LoadDataAlloc( ARCID_WBT_DLDATA, NARC_wbt_dldata_test_all_bin, wk->heapID );
+		wk->TestBuffer = GFL_ARC_LoadDataAlloc( ARCID_WBT_DLDATA, NARC_wbt_dldata_test_all_crc_bin, wk->heapID );
    		
 		// 12ブロック分上書き
 		{
@@ -1238,7 +1238,16 @@ static void td_init_info( T_DOWNLOAD_MAIN_WORK* wk )
 		TdCmn_init_info_mode( wk, T_DOWNLOAD_DATA_LIST, wk->AllCurPos[T_DOWNLOAD_LIST_SELECT] );
 		// 情報表示
 		TdCmn_disp_info_mode( wk, T_DOWNLOAD_DATA_LIST, wk->AllCurPos[T_DOWNLOAD_LIST_SELECT], wk->InfoCurPos );
-	}else{
+	}
+	// 参加から来た
+	else if(wk->RetMode == T_DOWNLOAD_MODE_JOIN){
+		// パラメータ初期化
+		TdCmn_init_info_mode( wk, T_DOWNLOAD_DATA_SAVE, wk->JoinCurPos );
+		// 情報表示
+		TdCmn_disp_info_mode( wk, T_DOWNLOAD_DATA_SAVE, wk->JoinCurPos, wk->InfoCurPos );
+	}
+	// セーブから来た
+	else{
 		// パラメータ初期化
 		TdCmn_init_info_mode( wk, T_DOWNLOAD_DATA_SAVE, wk->SaveCurPos );
 		// 情報表示
@@ -1280,7 +1289,12 @@ static void td_chk_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		if(wk->RetMode ==  T_DOWNLOAD_MODE_SELECT){
 			// 情報表示
 			TdCmn_disp_info_mode( wk, T_DOWNLOAD_DATA_LIST, wk->AllCurPos[T_DOWNLOAD_LIST_SELECT], wk->InfoCurPos );
-		}else{
+		}
+		else if(wk->RetMode == T_DOWNLOAD_MODE_JOIN){
+			// 情報表示
+			TdCmn_disp_info_mode( wk, T_DOWNLOAD_DATA_SAVE, wk->JoinCurPos, wk->InfoCurPos );
+		}
+		else{
 			// 情報表示
 			TdCmn_disp_info_mode( wk, T_DOWNLOAD_DATA_SAVE, wk->SaveCurPos, wk->InfoCurPos );
 		}

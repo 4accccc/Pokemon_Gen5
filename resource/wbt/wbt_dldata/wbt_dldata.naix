@@ -11,7 +11,8 @@
 #define NARC_WBT_DLDATA_NAIX_
 
 enum {
-	NARC_wbt_dldata_test_all_bin = 0
+	NARC_wbt_dldata_test_all_bin = 0,
+	NARC_wbt_dldata_test_all_crc_bin = 1
 };
 
 /* NARC_WBT_DLDATA_NAIX_ */
