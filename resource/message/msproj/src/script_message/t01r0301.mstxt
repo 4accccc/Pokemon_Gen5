@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレンのパパ『おお！　[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
+			<Text>チェレンのパパ『おお！　[Name:TrainerName Idx="0" ]▼
 きいたよ　はかせから
-ポケモンを　もらうんだって[Ctrl2:PageClear ]
+ポケモンを　もらうんだって▼
 って　もう　もらったのか！
-おお！　かわいい　ポケモンだなあ[Ctrl2:PageClear ]
+おお！　かわいい　ポケモンだなあ▼
 ついに　きみたちも
 トレーナーとして　たびだつんだなあ▼
 では　わたしが
@@ -19,8 +19,8 @@
 「トレーナーに　とって　だいじなのは
 　Ｘボタン！」　……わすれるなよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T11:52:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,11 +28,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレンのパパ『おお！　[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
+			<Text>チェレンのパパ『おお！　[Name:TrainerName Idx="0" ]▼
 聞いたよ！　博士から
-ポケモンを　もらうんだって[Ctrl2:PageClear ]
+ポケモンを　もらうんだって▼
 って　もう　もらったのか！
-おおう！　かわいい　ポケモンだなあ[Ctrl2:PageClear ]
+おおう！　かわいい　ポケモンだなあ▼
 ついに　君たちも
 トレーナーとして　旅立つんだなあ▼
 では　私が　「探検の心得」なる
@@ -40,8 +40,8 @@
 「トレーナーに　とって　大事なのは
 　Ｘボタン！」　……忘れるなよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T11:53:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -84,12 +84,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレンのママ『チェレンったら
-けんきゅうじょに　いるのね　きっと[Ctrl2:PageClear ]
+けんきゅうじょに　いるのね　きっと▼
 なんていうか　りちぎ　というか
 きまじめ　なのよね　あのこ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T11:52:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -98,12 +98,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレンのママ『これからも
-チェレンと　仲良くしてね[Ctrl2:PageClear ]
+チェレンと　仲良くしてね▼
 あまり　感情とか　表にださないし
 一緒にいて　大変かも　知れないけれど</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T11:53:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -145,14 +145,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレンのパパ『たびは　いいよ！[Ctrl2:PageClear ]
+			<Text>チェレンのパパ『たびは　いいよ！▼
 じぶんの　しらない　もの
-りかい　できない　ものに▽
-たくさん　ふれて[Ctrl2:LineFeed ]
+りかい　できない　ものに▼
+たくさん　ふれて
 じぶんが　どんどん　かわっていくんだ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T11:52:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -160,13 +160,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレンのパパ『旅は　いいよ！[Ctrl2:PageClear ]
+			<Text>チェレンのパパ『旅は　いいよ！▼
 自分の　知らないもの
-理解できないものに　たくさんふれて[Ctrl2:LineFeed ]
+理解できないものに　たくさんふれて▽
 自分が　どんどん　変わっていくんだ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T11:53:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -200,15 +200,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレンのママ『あら　[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
+			<Text>チェレンのママ『あら　[Name:TrainerName Idx="0" ]▼
 はかせに　たのまれて
-ずかんを　かんせい　させるんですって！[Ctrl2:PageClear ]
+ずかんを　かんせい　させるんですって！▼
 だいじょうぶ！　なにがあっても
-あなたたちの　そばには[Ctrl2:LineFeed ]
+あなたたちの　そばには▽
 ポケモンが　いるんですからね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T11:52:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -216,15 +216,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレンのママ『あら　[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
+			<Text>チェレンのママ『あら　[Name:TrainerName Idx="0" ]▼
 博士に　頼まれて
-図鑑を　完成させるんですって！[Ctrl2:PageClear ]
+図鑑を　完成させるんですって！▼
 大丈夫！　なにがあっても
-あなたたちの　そばには[Ctrl2:LineFeed ]
+あなたたちの　そばには▽
 ポケモンが　いるんですからね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T11:52:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
