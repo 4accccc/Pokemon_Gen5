@@ -1,0 +1,5 @@
+#../data/oldc02gym0202.mev
+../tmp/oldc02gym0202.bin:../data/oldc02gym0202.mev ../../script/sp_oldc02gym0202.bin $(UNIQ_SCRIPTHEADER) ../tmp/oldc02gym0202.h 
+	@echo ../data/oldc02gym0202.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/oldc02gym0202.h 
+
