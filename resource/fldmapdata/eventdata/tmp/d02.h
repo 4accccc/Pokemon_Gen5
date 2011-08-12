@@ -24,5 +24,7 @@
 #define BG_D02_ROCK_02                    1
 #define BG_D02_ROCK_03                    2
 #define BG_D02_ROCK_04                    3
+#define BGID_D02_ANIMAL_TRAIL_01_1        4
+#define BGID_D02_ANIMAL_TRAIL_01_2        5
 
 #endif //ZONE_D02_EVB_H

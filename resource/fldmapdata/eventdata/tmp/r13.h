@@ -52,5 +52,8 @@
 #define R13_HIDE_ITEM_06                  8
 #define R13_HIDE_ITEM_08                  9
 #define R13_HIDE_ITEM_01_COPY            10
+#define BGID_R13_ANIMAL_TRAIL_01_1       11
+#define BGID_R13_ANIMAL_TRAIL_01_2       12
+#define BGID_R13_ANIMAL_TRAIL_02_1       13
 
 #endif //ZONE_R13_EVB_H

@@ -22,5 +22,6 @@
 #define R18_HIDE_ITEM_02                  1
 #define R18_HIDE_ITEM_03                  2
 #define R18_HIDE_ITEM_03_COPY             3
+#define BGID_R18_ANIMAL_TRAIL_01_1        4
 
 #endif //ZONE_R18_EVB_H

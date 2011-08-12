@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/14 16:06:01
+#save date:2011/08/12 12:00:49
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d02r0101.wms
 #SECTION START:OBJ_EVENT
@@ -267,7 +267,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-11
+12
 #event number: 0
 #Bg Event Label
 BGID_D02R0101_STONE_01
@@ -411,6 +411,19 @@ SCRID_HIDE_ITEM_175
 EVENTDATA_POSTYPE_GRID
 #position
 312 0 -1032
+#event number: 11
+#Bg Event Label
+BGID_D02R0101_ANIMAL_TRAIL_01_1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ANIMAL_TRAIL_15
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+680 -32 -568
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

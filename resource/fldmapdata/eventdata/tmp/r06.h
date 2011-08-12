@@ -41,5 +41,9 @@
 #define R06_HIDE_ITEM_01                  3
 #define R06_HIDE_ITEM_02                  4
 #define R06_HIDE_ITEM_03                  5
+#define BGID_R06_ANIMAL_TRAIL_01_1        6
+#define BGID_R06_ANIMAL_TRAIL_01_2        7
+#define BGID_R06_ANIMAL_TRAIL_02_1        8
+#define BGID_R06_ANIMAL_TRAIL_02_2        9
 
 #endif //ZONE_R06_EVB_H

@@ -36,5 +36,6 @@
 #define BGID_D02R0101_STONE_07            8
 #define D02R0101_HIDE_ITEM_02             9
 #define D02R0101_HIDE_ITEM_03            10
+#define BGID_D02R0101_ANIMAL_TRAIL_01_1  11
 
 #endif //ZONE_D02R0101_EVB_H

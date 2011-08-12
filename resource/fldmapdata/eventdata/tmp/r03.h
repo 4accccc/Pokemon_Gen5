@@ -47,5 +47,8 @@
 #define R03_BOARD_01                      0
 #define R03_BOARD_03                      1
 #define R03_BOARD_02                      2
+#define BGID_R03_ANIMAL_TRAIL_01_1        3
+#define BGID_R03_ANIMAL_TRAIL_01_2        4
+#define BGID_R03_ANIMAL_TRAIL_02_1        5
 
 #endif //ZONE_R03_EVB_H

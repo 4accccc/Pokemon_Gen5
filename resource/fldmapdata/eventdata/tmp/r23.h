@@ -22,5 +22,7 @@
 #ifndef ZONE_R23_EVB_H
 #define ZONE_R23_EVB_H
 
+#define BGID_R23_ANIMAL_TRAIL_01_1        0
+#define BGID_R23_ANIMAL_TRAIL_01_2        1
 
 #endif //ZONE_R23_EVB_H

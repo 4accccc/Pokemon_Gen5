@@ -34,5 +34,7 @@
 #define BG_R09_SIGN3_01                   2
 #define BG_R09_SIGN4_01                   3
 #define R09_HIDE_ITEM_01                  4
+#define BGID_R09_ANIMAL_TRAIL_01_1        5
+#define BGID_R09_ANIMAL_TRAIL_01_2        6
 
 #endif //ZONE_R09_EVB_H
