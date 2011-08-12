@@ -1232,4 +1232,55 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c14_sign3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セイガイハシティ　ポケモンジム
+リーダー　シズイ▽
+？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:22:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:22:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セイガイハシティ　ポケモンジム
+リーダー　シズイ▽
+？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:22:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:22:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>看板分類：</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:22:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板：ポケモンジム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:22:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
