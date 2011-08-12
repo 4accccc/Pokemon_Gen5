@@ -57,6 +57,9 @@ class WBT_CHARACTER_SINGLE
   #--------------------------------
   def set_data( conv )
     @conv = conv;
+    # 言語の設定
+    @local_language = 0;
+    chk_local_language();
 #    @char_id = num;
     #
     @pokemon.set_data( conv )
@@ -110,12 +113,18 @@ class WBT_CHARACTER_SINGLE
   # パラメータセット
   #----------------
   def set_parameter()
+     #
      # トレーナー名
      chk_trainer_name();
      # 肩書き
      chk_trainer_title();
      # トレーナータイプ
      chk_trtype();
+     # AI処理
+     chk_ai();
+     # 国コード
+     chk_lang();
+     
      # 戦闘前メッセージ
      chk_msg_before();
      # 戦闘勝ちメッセージ
@@ -124,10 +133,6 @@ class WBT_CHARACTER_SINGLE
      chk_msg_lose();
      # 決勝前メッセージ
      chk_msg_announce();
-     #
-     chk_ai();
-     # 国コード
-     chk_lang();
      # 戦闘前メッセージID
      chk_before_mes_id();
      # 戦闘後、勝ちメッセージID
@@ -189,19 +194,20 @@ class WBT_CHARACTER_SINGLE
   #----------------------------------
   def chk_msg_before()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+12, TRAINER_START_ROW+@char_id),
-                          TRAINER_START_COL+12, $trainer_str[1])
+    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+12+@local_language, TRAINER_START_ROW+@char_id),
+                                      TRAINER_START_COL+12+@local_language, $trainer_str[1])
     if(ret == -1)
       trainer_exit();
     end
     
     # 変換
-    str = @conv.get_cell(4, TRAINER_START_COL+12, TRAINER_START_ROW+@char_id )
+    str = @conv.get_cell(4, TRAINER_START_COL+12+@local_language, TRAINER_START_ROW+@char_id )
     @msg_before = NKF.nkf("-w16L0", str)
     
     # セット(コードの変換注意)
     if(@local_debug == 1)
-      p sprintf("%s(%d) :%s", $trainer_str[1],@char_id, @conv.get_cell(4, TRAINER_START_COL+12, TRAINER_START_ROW+@char_id))
+      p sprintf("%s(%d) :%s", $trainer_str[1],@char_id, 
+                              @conv.get_cell(4, TRAINER_START_COL+12+@local_language, TRAINER_START_ROW+@char_id))
     end
   end
   
@@ -210,19 +216,20 @@ class WBT_CHARACTER_SINGLE
   #----------------------------------
   def chk_msg_win()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+24, TRAINER_START_ROW+@char_id),
-                          TRAINER_START_COL+24, $trainer_str[3])
+    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+24+@local_language, TRAINER_START_ROW+@char_id),
+                                      TRAINER_START_COL+24+@local_language, $trainer_str[3])
     if(ret == -1)
       trainer_exit();
     end
     
     # 変換
-    str = @conv.get_cell(4, TRAINER_START_COL+24, TRAINER_START_ROW+@char_id )
+    str = @conv.get_cell(4, TRAINER_START_COL+24+@local_language, TRAINER_START_ROW+@char_id )
     @msg_win = NKF.nkf("-w16L0", str)
     
     # セット(コードの変換注意)
     if(@local_debug == 1)
-      p sprintf("%s(%d) :%s", $trainer_str[3],@char_id, @conv.get_cell(4, TRAINER_START_COL+24, TRAINER_START_ROW+@char_id))
+      p sprintf("%s(%d) :%s", $trainer_str[3],@char_id,
+                              @conv.get_cell(4, TRAINER_START_COL+24+@local_language, TRAINER_START_ROW+@char_id))
     end
   end
   
@@ -231,19 +238,20 @@ class WBT_CHARACTER_SINGLE
   #----------------------------------
   def chk_msg_lose()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+34, TRAINER_START_ROW+@char_id),
-                          TRAINER_START_COL+34, $trainer_str[4])
+    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+34+@local_language, TRAINER_START_ROW+@char_id),
+                                      TRAINER_START_COL+34+@local_language, $trainer_str[4])
     if(ret == -1)
       trainer_exit();
     end
     
     # 変換
-    str = @conv.get_cell(4, TRAINER_START_COL+34, TRAINER_START_ROW+@char_id )
+    str = @conv.get_cell(4, TRAINER_START_COL+34+@local_language, TRAINER_START_ROW+@char_id )
     @msg_win = NKF.nkf("-w16L0", str)
     
     # セット(コードの変換注意)
     if(@local_debug == 1)
-      p sprintf("%s(%d) :%s", $trainer_str[4],@char_id, @conv.get_cell(4, TRAINER_START_COL+34, TRAINER_START_ROW+@char_id))
+      p sprintf("%s(%d) :%s", $trainer_str[4],@char_id,
+                              @conv.get_cell(4, TRAINER_START_COL+34+@local_language, TRAINER_START_ROW+@char_id))
     end
   end
   
@@ -252,19 +260,20 @@ class WBT_CHARACTER_SINGLE
   #----------------------------------
   def chk_msg_announce()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+43, TRAINER_START_ROW+@char_id),
-                          TRAINER_START_COL+43, $trainer_str[5])
+    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+43+@local_language, TRAINER_START_ROW+@char_id),
+                                      TRAINER_START_COL+43+@local_language, $trainer_str[5])
     if(ret == -1)
       trainer_exit();
     end
     
     # 変換
-    str = @conv.get_cell(4, TRAINER_START_COL+43, TRAINER_START_ROW+@char_id )
+    str = @conv.get_cell(4, TRAINER_START_COL+43+@local_language, TRAINER_START_ROW+@char_id )
     @msg_announce = NKF.nkf("-w16L0", str)
     
     # セット(コードの変換注意)
     if(@local_debug == 1)
-      p sprintf("%s(%d) :%s", $trainer_str[5],@char_id, @conv.get_cell(4, TRAINER_START_COL+43, TRAINER_START_ROW+@char_id))
+      p sprintf("%s(%d) :%s", $trainer_str[5],@char_id, 
+                              @conv.get_cell(4, TRAINER_START_COL+43+@local_language, TRAINER_START_ROW+@char_id))
     end
   end
   
@@ -521,6 +530,32 @@ class WBT_CHARACTER_SINGLE
     @conv.close_file();
     exit(1)
   end
+  
+  #--------------------
+  # 国の判定
+  #--------------------
+  def chk_local_language()
+    #
+    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id ),
+                                      TRAINER_START_COL+9, $trainer_str[12] )
+    if(ret == -1)
+      trainer_exit();
+    end
+    # セット
+    str = @conv.get_cell(4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id)
+    id = hash2no( $lang_tbl_hash, str );
+    if(id == -1)
+      # 該当する性別がない=>エラー
+      print_error( str, 0 );
+    else
+      @local_language = id;
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%s :%d", $trainer_str[12],@local_language_id)
+    end
+  end
+  
 end
 
 #--------------------------------------------------------------

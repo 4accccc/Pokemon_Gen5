@@ -34,20 +34,19 @@ class WBT_CONFIG
   
   #----------------
   # ƒpƒ‰ƒ[ƒ^‚Ìæ“¾
+  # (nil‚Å‚à“ü‚ê‚Ä‚¨‚­)
   #----------------
-  def get_param( langid )
+  def get_param()
     @data = []
-    12.times{|i|
-      str = @conv.get_cell(0, CONFIG_START_COL+langid, CONFIG_START_ROW+1+i)
-      if(str == nil)
-        break;
-#        return( @data )
-      end
-      @data[i] = str;
-      #
-      if(@local_debug == 1)
-        p sprintf("data :%d,%s",i,@data[i])
-      end
+    7.times{|j|
+      12.times{|i|
+        str = @conv.get_cell(0, CONFIG_START_COL+j, CONFIG_START_ROW+1+i)
+        @data[12*j+i] = str;
+        #
+        if(@local_debug == 1)
+          p sprintf("data :%d,%s",i,@data[12*j+i])
+        end
+      }
     }
     return( @data )
   end

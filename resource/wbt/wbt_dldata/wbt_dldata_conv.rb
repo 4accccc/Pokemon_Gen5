@@ -6,6 +6,13 @@
 # debug(0:off、1:on)
 $debug_code = 0
 
+# カレントの言語
+# ($lang_tbl_hash参照のこと)
+$current_lang_id = 0
+
+# debug(0:別,1:同じ)
+$debug_filename = 1;
+
 require "my_tab_out_direct_sheet.rb"
 
 require "wbt_dldata_data.rb"	  # トーナメントリスト(WBTDL_DATA)のシート用
@@ -13,6 +20,19 @@ require "wbt_dldata_rule.rb"	  # レギュレーション(WBTDL_RULE)用
 require "wbt_dldata_character.rb" # キャラクタ(WBTDL_CHARACTER)用
 require "wbt_dldata_match.rb"     # 組み合わせ(WBTDL_MATCH)用
 require "wbt_dldata_config.rb"    # config(WBTDL_CONFIG)用
+
+# 出力ファイル名
+$output_str = [ "_J",	# 日本語
+                "_E",   # 英語
+                "_F",   # フランス語
+                "_I",   # イタリア語
+                "_G",   # ドイツ語
+                "_S",   # スペイン語
+                "_K",   # 韓国語
+]
+
+# 言語最大数
+LANG_MAX_NUM = 7
 
 #-------------------------------------------------------
 #-------------------------------------------------------
@@ -29,21 +49,15 @@ filename = getAbsolutePath( ARGV[0] );
 conv.open_file( filename );
 #
 wbt_config = WBT_CONFIG.new(conv)
+# ファイル名を取得
 @data = [];
-@data = wbt_config.get_param( 0 );
+@data = wbt_config.get_param();
+# 出力オプションを取得
 @output = [];
 @output = wbt_config.get_output();
 #
 conv.close_file();
 #
-# 設定ファイル出力(debug)
-if($debug_code == 1)
-  len = @data.size
-  len.times{|i|
-    p sprintf("config : %d,%s",i,@data[i])
-  }
-end
-
 #-----------------------
 # クラスの初期化
 #-----------------------
@@ -55,36 +69,52 @@ wbt_match     = WBT_MATCH.new()
 #-----------------------
 # 出力ファイルのセット
 #-----------------------
-outfilename = ARGV[0].sub(/\.xls/,".bin")
-File.open( outfilename,"w"){|file|
-  file.binmode
-  
-  #---------------------------
-  # 各ファイルのセット(max12)
-  #---------------------------
-  size = @data.size;
-  size.times{|i|
-    filename = getAbsolutePath( @data[i] );
-    conv.open_file( filename );
-    
-    # 情報の参照
-    wbt_data.set_data( conv )
-    wbt_rule.set_data( conv )
-    wbt_character.set_data( conv )
-    wbt_match.set_data( conv )
-    #
-    # 各情報出力
-    file.write( wbt_data.pack )
-    file.write( wbt_rule.pack )
-    file.write( wbt_character.pack )
-    file.write( wbt_match.pack )
-    #
-    conv.close_file();
-    #
-    p sprintf("list(%d): %s",i,@data[i])
-  }
+# 出力
+LANG_MAX_NUM.times{|m|
+  #
+  # 出力指定があるときだけセット
+  if(@output[m] == 1)
+    $current_lang_id = m;
+    # 出力ファイル名セット
+    if($debug_filename == 0)
+      str = $output_str[$current_lang_id] + ".bin"
+    else
+      str = ".bin"
+    end
+    outfilename = ARGV[0].sub(/\.xls/, str )
+    File.open( outfilename,"w"){|file|
+      file.binmode
+      
+      #---------------------------
+      # 各ファイルのセット(max12)
+      #---------------------------
+      # ファイルを取得
+      num = get_array_num( @data, 12*m, 12 )
+      size = num
+      size.times{|i|
+        filename = getAbsolutePath( @data[12*m+i] );
+        conv.open_file( filename );
+        
+        # 情報の参照
+        wbt_data.set_data( conv )
+        wbt_rule.set_data( conv )
+        wbt_character.set_data( conv )
+        wbt_match.set_data( conv )
+        #
+        # 各情報出力
+        file.write( wbt_data.pack )
+        file.write( wbt_rule.pack )
+        file.write( wbt_character.pack )
+        file.write( wbt_match.pack )
+        #
+        conv.close_file();
+        #
+        p sprintf("list(%d): %s",i,@data[12*m+i])
+      }
+      p sprintf("end :%s",outfilename)
+    }
+  end
 }
-
 ensure
   if($debug_code == 1)
     p sprintf("ensure !")
@@ -97,7 +127,7 @@ end
 #---------------
 # 終了
 #---------------
-p sprintf("%s -> %s",ARGV[0],outfilename)
+p sprintf("end")
 
 #-------------------------------------------------------
 #-------------------------------------------------------

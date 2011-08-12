@@ -63,6 +63,9 @@ class WBT_DATA
   #-------------------------------
   def set_data( conv )
     @conv = conv;
+    # 言語をセット
+    @local_language = 0;
+    chk_local_language();
     #
     @version       = 0;
     @day           = [0,1,1];
@@ -238,18 +241,18 @@ class WBT_DATA
   #----------------------------------
   def chk_tournament_name()
     #
-    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_STR_JPN+@lang_id-1, DATA_UP_START_ROW),
-                          1+DATA_UP_START_COL+DATA_STR_JPN+@lang_id-1, $title_str[12])
+    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW),
+                                      DATA_UP_START_COL+14+@local_language, $title_str[12])
     if(ret == -1)
       wbt_exit();
     end
     # 変換
-    str = @conv.get_cell(0,DATA_UP_START_COL+DATA_STR_JPN+@lang_id-1, DATA_UP_START_ROW)
+    str = @conv.get_cell(0,DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW)
     @tournament_name = NKF.nkf("-w16L0", str)
 
     # セット(コードの変換注意)
     if(@local_debug == 1)
-      p sprintf("%s :%s", $title_str[12],@conv.get_cell(0, DATA_UP_START_COL+DATA_STR_JPN+@lang_id-1, DATA_UP_START_ROW))
+      p sprintf("%s :%s", $title_str[12],@conv.get_cell(0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW))
     end
   end
   
@@ -258,19 +261,19 @@ class WBT_DATA
   #----------------------------------
   def chk_regulation_explain()
     #
-    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_EXP00_JPN+@lang_id-1, DATA_UP_START_ROW),
-                          1+DATA_UP_START_COL+DATA_EXP00_JPN+@lang_id-1, $title_str[13])
+    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW),
+                                      DATA_UP_START_COL+23+@local_language, $title_str[13])
     if(ret == -1)
       wbt_exit();
     end
     
     # 変換
-    str = @conv.get_cell(0, DATA_UP_START_COL+DATA_EXP00_JPN+@lang_id-1, DATA_UP_START_ROW)
+    str = @conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW)
     @regulation_explain = NKF.nkf("-w16L0", str)
     
     # セット(コードの変換注意)
     if(@local_debug == 1)
-      p sprintf("%s :%s", $title_str[13],@conv.get_cell(0, DATA_UP_START_COL+DATA_EXP00_JPN+@lang_id-1, DATA_UP_START_ROW))
+      p sprintf("%s :%s", $title_str[13],@conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW))
     end
   end
   
@@ -279,19 +282,19 @@ class WBT_DATA
   #----------------------------------
   def chk_contents_explain()
     #
-    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_EXP01_JPN+@lang_id-1, DATA_UP_START_ROW), 
-                          1+DATA_UP_START_COL+DATA_EXP01_JPN+@lang_id-1, $title_str[14])
+    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW), 
+                                      DATA_UP_START_COL+32+@local_language, $title_str[14])
     if(ret == -1)
       wbt_exit();
     end
     
     # 変換
-    str = @conv.get_cell(0, DATA_UP_START_COL+DATA_EXP01_JPN+@lang_id-1, DATA_UP_START_ROW)
+    str = @conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW)
     @contents_explain = NKF.nkf("-w16L0", str)
     
     # セット(コードの変換注意)
     if(@local_debug == 1)
-      p sprintf("%s :%s", $title_str[14],@conv.get_cell(0, DATA_UP_START_COL+DATA_EXP01_JPN+@lang_id-1, DATA_UP_START_ROW))
+      p sprintf("%s :%s", $title_str[14],@conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW))
     end
   end
   
@@ -301,6 +304,14 @@ class WBT_DATA
   def wbt_exit()
     @conv.close_file();
     exit(1)
+  end
+  
+  #----------------------------------
+  # 言語チェック
+  #----------------------------------
+  def chk_local_language()
+    # 本当はチェックがあるはず
+    @local_language = $current_lang_id;
   end
 end
 
