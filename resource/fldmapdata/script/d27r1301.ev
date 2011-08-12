@@ -40,6 +40,7 @@ _EVENT_DATA    ev_scene_d27r1301_plazmam_01
 _EVENT_DATA    ev_d27r1301_swplazmam_01
 _EVENT_DATA    ev_pos_d27r1301_swsage7_01
 _EVENT_DATA    ev_bg_d27r1301_panel_01
+_EVENT_DATA    ev_bg_d27r1301_panel_02
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -69,9 +70,10 @@ DEFINE_LOCAL  LCW_POSZ
 /*					ZONE_CHANGE_LABEL 						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r1301
-  
-  //
-  
+  IF $WK_SCENE_D27R0601_SWSAGE1_01 == 4 THEN
+    //D27R0601（隠し部屋）イベントを終えていたら元プラズマ団員を非表示に
+   _FLAG_SET( FV_D27R1301_SWPLAZMAM_01 )
+  ENDIF
 INIT_EVENT_END
 /************************************************************/
 /*					FIELD_INIT_LABEL  						*/
@@ -130,10 +132,40 @@ _RET
 /************************************************************/
 EVENT_START	ev_scene_d27r1301_plazmam_01
 
+  //アニメ：「！」
+  _OBJ_ANIME( D27R1301_SWPLAZMAM_01, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
   
+  //アニメ：元プラズマ団員接近
+  _OBJ_ANIME( D27R1301_SWPLAZMAM_01 ,anm_walk_l )
+  _OBJ_ANIME_WAIT()
+  
+  //元プラズマ団員：おっと！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r1301_swplazmam1_02_01 , D27R1301_SWPLAZMAM_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：元プラズマ団員下を見る
+  _OBJ_ANIME( D27R1301_SWPLAZMAM_01 ,anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //元プラズマ団員：ロット様に
+  _BALLOONWIN_OBJMSG_POS( msg_d27r1301_swplazmam1_02_02 , D27R1301_SWPLAZMAM_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：元プラズマ団員主人公を見る
+  _OBJ_ANIME( D27R1301_SWPLAZMAM_01 ,anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //元プラズマ団員：ああ！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r1301_swplazmam1_02_03 , D27R1301_SWPLAZMAM_01 ,POS_DEFAULT )
+  
+  //元プラズマ団員：それにしても……
+  _BALLOONWIN_OBJMSG_POS( msg_d27r1301_swplazmam1_02_04 , D27R1301_SWPLAZMAM_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
   
   //=====================================
-  //D27R1001 SCENE_CHANGE無効
+  //D27R1301 SCENE_CHANGE無効
   $WK_SCENE_D27R1301_PLAZMAM_01 = 1
   //=====================================
 EVENT_END
@@ -142,7 +174,7 @@ EVENT_END
 /*					話しかけ：元プラズマ団				*/
 /************************************************************/
 EVENT_START	ev_d27r1301_swplazmam_01
-  //_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1301_swplazmam1_02_04 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1301_swplazmam1_02_04 )
 EVENT_END
 
 /************************************************************/
@@ -155,14 +187,47 @@ EVENT_START	ev_pos_d27r1301_swsage7_01
   _FLAG_RESET( FV_D27R1301_SWSAGE7_01 )
   //=====================================
   
+  //ヴィオ動作モデル生成
+  _OBJ_ADD( D27R1301_SWSAGE7_01 )
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  $LCW_POSZ += 2
+  
+  //アニメ：ヴィオ登場
+  _OBJ_ANIME_AUTO( D27R1301_SWSAGE7_01 , LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 16, DIR_LR)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ヴィオ：その　そうちは
+  _BALLOONWIN_OBJMSG_POS( msg_d27r1301_sage7_03_01 , D27R1301_SWSAGE7_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦
+  _TRAINER_BTL_SET( TRID_SWSAGE3_02, 0 )
+  _CALL ev_battle_check
+  
+  //ヴィオ：その　そうちは
+  _BALLOONWIN_OBJMSG_POS( msg_d27r1301_sage7_03_02 , D27R1301_SWSAGE7_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ヴィオ退場
+  _OBJ_ANIME_AUTO( D27R1301_SWSAGE7_01 , LCW_POSX, 21, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //ヴィオ動作モデル削除
+  _OBJ_DEL( D27R1301_SWSAGE7_01 )
+  
   //=====================================
-  //D27R1001 POS無効
+  //D27R1301 POS無効
   $WK_SCENE_D27R1301_SWSAGE7_01 = 1
   //D27R0401 SCENE_CHANGE有効
   $WK_SCENE_D27R0401_SWBOSS_01 = 1
   //ヴィオ非表示
   _FLAG_SET( FV_D27R1301_SWSAGE7_01 )
   //=====================================
+  
 EVENT_END
 
 /************************************************************/
@@ -170,17 +235,56 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_bg_d27r1301_panel_01
   
-  //【仮】メッセージを条件分岐させる
   _TALK_START_SE_PLAY()
   
-  /*
-  _VOICE_PLAY(MONSNO_653,0)
-  _PLAINWIN_MSG_DOWN( msg_d27r1301_poke10_02_01 )
-  _AB_KEYWAIT_MARK()
-  _MSGWIN_CLOSE()
-  */
+  _SYSWIN_MSG( msg_d27r1301_machine1_02_01 , POS_DOWN )
+  
+  //クリア前の場合キー待ち記号を表示
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+  ELSE
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+  
+  //クリア前の場合キュレムの鳴き声を再生
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+    _VOICE_PLAY(MONSNO_653,0)
+    _PLAINWIN_MSG_DOWN( msg_d27r1301_poke10_02_01 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+  ENDIF
+  
 EVENT_END
 
+/************************************************************/
+/*					BG：キュレム前装置				*/
+/************************************************************/
+EVENT_START	ev_bg_d27r1301_panel_02
+  
+  _TALK_START_SE_PLAY()
+  
+  _SYSWIN_MSG( msg_d27r1301_machine2_02_01 , POS_DOWN )
+  
+  //クリア前の場合キー待ち記号を表示
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+  ELSE
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+  
+  //クリア前の場合キュレムの鳴き声を再生
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+    _VOICE_PLAY(MONSNO_653,0)
+    _PLAINWIN_MSG_DOWN( msg_d27r1301_poke10_02_01 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+  ENDIF
+  
+EVENT_END
 
 /************************************************************/
 /*					特殊接続（船首楼）				*/
@@ -370,6 +474,17 @@ EVENT_START ev_pos_d27r1301_button_04
   _HIDE_SHIP_BUTTON( 3 )
 
 EVENT_END
+
+ev_battle_check:	
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
 
 /************************************************************/
 /*					バリア演出				*/

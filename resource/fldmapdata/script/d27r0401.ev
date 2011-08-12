@@ -127,8 +127,8 @@ INIT_EVENT_START	ev_scene_d27r0401_swboss_01
   _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_04 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //【仮】トレーナー戦
-  _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+  //トレーナー戦
+  _TRAINER_BTL_SET( TRID_SWBOSS_01, 0 )
   _CALL ev_battle_check
   
   //アクロマ：……つよい！

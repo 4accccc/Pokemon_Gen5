@@ -31,11 +31,17 @@
 #define SWPLAZMAW_10                       6
 #define SWPLAZMAM_30                       7
 #define D27_POKE10_03                      8
+#define D27R1301_SWPLAZMAM_01              9
+#define D27R1301_SWSAGE7_01               10
+#define D27R1301_STOPPER_01               11
+#define D27R1301_STOPPER_02               12
 
 #endif //ZONE_D27R1301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D27R1301_EVB_H
 #define ZONE_D27R1301_EVB_H
 
+#define BG_D27R1301_PANEL_01              0
+#define BG_D27R1301_PANEL_02              1
 
 #endif //ZONE_D27R1301_EVB_H
