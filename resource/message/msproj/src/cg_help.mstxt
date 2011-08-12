@@ -1056,10 +1056,10 @@
 「すれちがいログ」について
 ２ページ目
 
-ＳＷＡＮで追加</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-12T01:20:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:09:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1132,14 +1132,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>また　すれちがいちょうさたいで
+			<Text>すれちがいちょうさたい　で
 うけた　ちょうさが　かんりょうすると
 ボタンが　てんめつ　します。
-ちょうさたい　たいちょうに
+ヒウンの　ちょうさたい　たいちょうに
 ほうこく　しましょう。</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-12T01:34:52" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:08:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1147,14 +1147,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また　すれ違い調査隊で
-受けた調査が　完了すると
+			<Text>すれ違い調査隊で
+受けた　調査が　完了すると
 ボタンが　点滅します。
-調査隊　隊長に
+ヒウンの　調査隊　隊長に
 報告しましょう。</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-12T01:34:55" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:11:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1166,10 +1166,10 @@
 「ちょうさたんちき」について
 ２ページ目
 
-ＳＷＡＮで追加</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-12T01:13:43" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:09:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1187,7 +1187,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="CG_HELP_MSG_13">
+		Label="CG_HELP_MSG_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>カスタムマークを　タッチすると
@@ -1226,10 +1227,10 @@
 「カスタム」について
 ・何の色が変わる？
 
-ＳＷＡＮで変更</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-12T01:07:19" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:09:16" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1240,7 +1241,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="CG_HELP_MSG_14">
+		Label="CG_HELP_MSG_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>でんげんマークを　タッチすると
@@ -1290,17 +1292,18 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="CG_HELP_MSG_15">
+		Label="CG_HELP_MSG_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>また　のこされた　でんりょくが
+			<Text>のこされた　でんりょくが
 すくない　じょうたいで
 ＤＳの　ふたが　とじられていると
 Ｃギアの　でんげんが
 じどうてきに　オフになります。</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-12T01:34:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:11:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1308,14 +1311,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また　残された電力が
-少ない状態で
+			<Text>残された　電力が
+少ない　状態で
 ＤＳの　ふたが　閉じられていると
 Ｃ－ＧＥＡＲの　電源が
 自動的に　ＯＦＦになります。</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-12T01:34:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:11:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1327,10 +1330,10 @@
 「Ｃ－ＧＥＡＲ　ＯＮ／ＯＦＦ」について
 ２ページ目
 
-ＳＷＡＮで追加</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-08-12T01:07:22" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T02:09:21" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
