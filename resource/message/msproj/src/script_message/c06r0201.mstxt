@@ -757,6 +757,293 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c06r0201_infomationw_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すばやく　たくさん　おとどけ！
+フキヨセ　カーゴ　サービス　です▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:40:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:40:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すばやく　たくさん　おとどけ！
+フキヨセ　カーゴ　サービス　です▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:43:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:43:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・飛行機に乗れる状態で
+　No630「きょかしょう」所有時
+・続けてinfomationw_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:43:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFOMATIONW
+汎用受付♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:40:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06r0201_infomationw_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あ……！　それは　きょかしょう！
+では　ほごくに　いかれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:41:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:41:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あ……！　それは　きょかしょう！
+では　保護区に　行かれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:43:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:43:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・！マーク表示後にこのメッセージ
+・はい/いいえの選択肢表示
+・はい　→infomationw_03
+　いいえ→infomationw_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:43:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFOMATIONW
+汎用受付♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:40:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06r0201_infomationw_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すばやく　たくさん　おとどけ！
+フキヨセ　カーゴ　サービス　です▼
+こんかいは　どちらに　いかれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:44:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:41:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すばやく　たくさん　おとどけ！
+フキヨセ　カーゴ　サービス　です▼
+今回は　どちらに　行かれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:44:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:43:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・一度でも保護区に行って以降
+・以下の選択肢表示
+　ヤマジタウン
+　ほごく（仮称）
+　やめる</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:44:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFOMATIONW
+汎用受付♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:40:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06r0201_select_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤマジタウン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤマジタウン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヤマジタウン選択
+・続けてinfomationw_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:41:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06r0201_select_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほごく</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほごく</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ほごく（仮称）選択
+・続けてinfomationw_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:41:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06r0201_select_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>やめる選択
+・続けてinfomationw_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:42:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:41:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c06r0201_workman1_01"
 		Style="Large">
 		<LanguageCell
