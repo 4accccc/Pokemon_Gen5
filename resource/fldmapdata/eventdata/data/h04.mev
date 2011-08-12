@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/13 18:03:16
+#save date:2011/08/08 16:16:29
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\h04.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\h04.wms
 #hold event type:
 1
 #hold event number:
-21
+22
 #event number: 0
 #type
 1
@@ -661,6 +661,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 200 0 72
+#event number: 21
+#type
+1
+#ID name
+H04_MAN3_01
+#OBJ CODE Number
+MAN3
+#MOVE CODE Number
+MV_RAIL_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_H04_BRIDGE_MANIA_01
+#Event Script Name
+SCRID_H04_MAN3_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+5 4 1
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

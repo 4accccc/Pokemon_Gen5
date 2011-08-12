@@ -64,69 +64,80 @@ EVENT_START   ev_c06_monsterball_01
   _TALK_START_SE_PLAY()
 
   //===============フラグ操作===============//
-  //つばめがえしを隠している、少年と少女を出現させる
+  //男の子、女の子、コアルヒー表示
   _FLAG_RESET( FV_C06_GIRLBOY_01 )
-  _OBJ_ADD(C06_BOY2_01)
-  _OBJ_ADD(C06_BABYGIRL1_01)
   //===============フラグ操作===============//
+  _OBJ_ADD( C06_BOY2_01 )
+  _OBJ_ADD( C06_BABYGIRL1_01 )
+  _OBJ_ADD( C06_POKE40_01 )
 
   //アイテム入手処理
-  _OBJ_DEL(C06_MONSTERBALL_01)
-  _ITEM_EVENT_FIELD_KEYWAIT(ITEM_WAZAMASIN40,1)
-  _FLAG_SET(FV_C06_MONSTERBALL)
-  _FLAG_SET(FE_C06_ITEMGET_1)
+  _OBJ_DEL( C06_MONSTERBALL_01 )
+  _ITEM_EVENT_FIELD_KEYWAIT( ITEM_WAZAMASIN40, 1 )
+  _FLAG_SET( FV_C06_MONSTERBALL )
+  _FLAG_SET( FE_C06_ITEMGET_1 )
 
   //主人公が初年と少女に気づく
-  _OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
   _OBJ_ANIME_WAIT()
 
-  //少年と幼女がやってくる
-  _OBJ_ANIME(C06_BABYGIRL1_01,anm_c06_babygirl1_01_come_01)
-  _OBJ_ANIME(C06_BOY2_01,anm_c06_boy2_01_come_01)
+  //男の子と女の子とコアルヒーがやってくる
+  _OBJ_ANIME( C06_BOY2_01, anm_c06_boy2_01_come_01 )
+  _OBJ_ANIME( C06_BABYGIRL1_01, anm_c06_babygirl1_01_come_01 )
+  _OBJ_ANIME( C06_POKE40_01, anm_c06_poke40_01_come_01 )
 
-  //あー！　ぼくらの
-  _BALLOONWIN_OBJMSG_POS(msg_c06_boy2_01,C06_BOY2_01,POS_UR)
+  //男の子：あー！　ぼくらの
+  _BALLOONWIN_OBJMSG_POS( msg_c06_boy2_01, C06_BOY2_01, POS_UR )
   _MSGWIN_CLOSE()
   _OBJ_ANIME_WAIT()
 
-  //とったあ！！
-  _BALLOONWIN_OBJMSG_POS(msg_c06_babygirl_01,C06_BABYGIRL1_01,POS_DR)
-  _MSGWIN_CLOSE()
-
-  //間をつくる
-  _TIME_WAIT(32)
-
-  //なんてね
-  _BALLOONWIN_OBJMSG_MF(msg_c06_boy2_02,msg_c06_boy2_03,C06_BOY2_01,POS_UP)
-  _MSGWIN_CLOSE() 
-
-  //つかって　いーよー！！
-  _BALLOONWIN_OBJMSG_POS(msg_c06_babygirl_02,C06_BABYGIRL1_01,POS_DR)
+  //女の子：みつけたわね！！▼
+  _BALLOONWIN_OBJMSG_POS( msg_c06_babygirl_01, C06_BABYGIRL1_01, POS_DR )
   _MSGWIN_CLOSE()
 
   //間をつくる
-  _TIME_WAIT(16)
+  _TIME_WAIT( 32 )
 
-  //じゃあね！　バイバイ！！
-  _BALLOONWIN_OBJMSG_POS(msg_c06_boy2_04,C06_BOY2_01,POS_UR)
+  //男の子：なんてね▼
+  _BALLOONWIN_OBJMSG_MF( msg_c06_boy2_02, msg_c06_boy2_03, C06_BOY2_01, POS_UP )
   _MSGWIN_CLOSE()
 
-  //少年と幼女が帰っていく
-  _OBJ_ANIME(C06_BABYGIRL1_01,anm_c06_babygirl1_01_back_01)
-  _OBJ_ANIME(C06_BOY2_01,anm_c06_boy2_01_back_01)
+  //女の子：つばめがえしは　かならず
+  _BALLOONWIN_OBJMSG_POS( msg_c06_babygirl_02, C06_BABYGIRL1_01, POS_DR )
+  _MSGWIN_CLOSE()
+
+  //コアルヒー：ぐわ！
+  _VOICE_PLAY( MONSNO_609, 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_c06_poke40_01, C06_POKE40_01, POS_UP )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //間をつくる
+  _TIME_WAIT( 8 )
+
+  //男の子：じゃあね！　バイバイ！！▼
+  _BALLOONWIN_OBJMSG_POS( msg_c06_boy2_04, C06_BOY2_01, POS_UR )
+  _MSGWIN_CLOSE()
+
+  //男の子と女の子とコアルヒーが帰っていく
+  _OBJ_ANIME( C06_BOY2_01, anm_c06_boy2_01_back_01 )
+  _OBJ_ANIME( C06_BABYGIRL1_01, anm_c06_babygirl1_01_back_01 )
+  _OBJ_ANIME( C06_POKE40_01, anm_c06_poke40_01_back_01 )
   _OBJ_ANIME_WAIT()
+
+  _OBJ_DEL( C06_BOY2_01 )
+  _OBJ_DEL( C06_BABYGIRL1_01 )
+  _OBJ_DEL( C06_POKE40_01 )
 
   //===============フラグ操作===============//
-  //つばめがえしを隠している、少年と少女を消す
-  _OBJ_DEL(C06_BABYGIRL1_01)
-  _OBJ_DEL(C06_BOY2_01)
+  //男の子、女の子、コアルヒー非表示
   _FLAG_SET( FV_C06_GIRLBOY_01 )
   //===============フラグ操作===============//
 
 EVENT_END
-
 
 /**************************************************************/
 /*  POS：博士イベント01                                       */
@@ -428,31 +439,45 @@ _ANIME_LABEL  anm_swleader6_back_01
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//c06_babygirl1_01 : やってくる                       
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_c06_babygirl1_01_come_01
-	_ANIME_DATA	AC_WALK_L_8F,7
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//c06_boy2_01 : やってくる                    
+//男の子：やってくる                    
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_c06_boy2_01_come_01
   _ANIME_DATA AC_WALK_L_4F,7
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//c06_babygirl1_01 : 帰っていく                      
+//女の子：やってくる                       
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_c06_babygirl1_01_come_01
+  _ANIME_DATA AC_WALK_L_8F,7
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//コアルヒー：やってくる                       
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_c06_poke40_01_come_01
+  _ANIME_DATA AC_WALK_L_8F,7
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//男の子：帰っていく                     
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_c06_boy2_01_back_01
+  _ANIME_DATA AC_WALK_R_8F,7
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//女の子：帰っていく                      
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_c06_babygirl1_01_back_01
   _ANIME_DATA AC_WALK_R_8F,7
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//c06_boy2_01 : 帰っていく                     
+//コアルヒー：帰っていく                      
 //--------------------------------------------------------------------
-_ANIME_LABEL  anm_c06_boy2_01_back_01
-  _ANIME_DATA AC_WALK_R_8F,7
+_ANIME_LABEL  anm_c06_poke40_01_back_01
+  _ANIME_DATA AC_WALK_R_6F,7
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------

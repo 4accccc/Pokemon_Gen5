@@ -8,5 +8,6 @@
 #define SCRID_H02_MIDDLEMAN1_01 (1)
 #define SCRID_H02_WOMAN2_01 (2)
 #define SCRID_H02_BOY2_01 (3)
+#define SCRID_H02_MAN3_01 (4)
 
 #endif //_H02_DEF_H_

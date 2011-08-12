@@ -16,6 +16,7 @@
 #define C06R0201_HAKASE2_01                2
 #define C06R0201_SWBELL_01                 3
 #define C06R0201_SWLEADER6_01              4
+#define C06R0201_PILOT_01                  5
 
 #endif //ZONE_C06R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

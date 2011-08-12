@@ -11,6 +11,7 @@
 #define ZONE_H05_EVC_H
 
 #define H05_MIDDLEMAN1_01                  0
+#define H05_MAN3_01                        1
 
 #endif //ZONE_H05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

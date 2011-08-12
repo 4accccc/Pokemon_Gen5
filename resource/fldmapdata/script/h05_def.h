@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_H05_MIDDLEMAN1_01 (1)
+#define SCRID_H05_MAN3_01 (2)
 
 #endif //_H05_DEF_H_

@@ -11,8 +11,10 @@
 #ifndef ZONE_C06R0101_EVC_H
 #define ZONE_C06R0101_EVC_H
 
-#define C06R0101_BOY2_01                   0
-#define C06R0101_BABYGIRL1_01              1
+#define C06R0101_BABYGIRL1_01              0
+#define C06R0101_POKE40_01                 1
+#define C06R0101_MIDDLEMAN2_01             2
+#define C06R0101_BOY2_01                   3
 
 #endif //ZONE_C06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

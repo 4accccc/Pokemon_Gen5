@@ -25,8 +25,13 @@ _EVENT_DATA   ev_h01_middleman1_01
 _EVENT_DATA   ev_h01_girl2_01
 _EVENT_DATA   ev_h01_trainerm_01
 _EVENT_DATA   ev_h01_backpackerw_01
+_EVENT_DATA   ev_h01_man3_01
 _EVENT_DATA_END
 
+//買い物用ワーク
+DEFINE_LOCAL  LWK_ITEM_BUY
+DEFINE_LOCAL  LWK_GOLD_CHK
+DEFINE_LOCAL  LWK_BAG_CHK
 
 //------------------------------注意--------------------------------//
 //                                                                  //
@@ -35,15 +40,11 @@ _EVENT_DATA_END
 //                                                                  //
 //------------------------------------------------------------------//
 
+
 /**************************************************************/
 /*  おじさん：話しかけ（おいしい水を高値で売ってくる）        */
 /**************************************************************/
 EVENT_START   ev_h01_middleman1_01
-
-  //買い物用ワーク
-  DEFINE_LOCAL  LWK_ITEM_BUY
-  DEFINE_LOCAL  LWK_GOLD_CHK
-  DEFINE_LOCAL  LWK_BAG_CHK
 
   _TALK_OBJ_START()
 
@@ -68,7 +69,6 @@ EVENT_START   ev_h01_middleman1_01
 
     //おじさん：ええ　わかってます
     _BALLOONWIN_OBJMSG_POS( msg_h01_middleman1_03, H01_MIDDLEMAN1_01, POS_DOWN )
-    _AB_KEYWAIT_MARK()
 
     //乱数で0～4幅で次の台詞を決める
     _GET_RND( LOCALWORK0, 4 )
@@ -77,31 +77,26 @@ EVENT_START   ev_h01_middleman1_01
 
       //おじさん：つまが　おたかい　ブランドものの
       _BALLOONWIN_OBJMSG_POS( msg_h01_middleman1_04, H01_MIDDLEMAN1_01, POS_DOWN )
-      _AB_KEYWAIT_MARK()
 
     ELSIF $LOCALWORK0 == 1 THEN
 
       //おじさん：むすめが　トレーナー　なんですけどね▼
       _BALLOONWIN_OBJMSG_POS( msg_h01_middleman1_05, H01_MIDDLEMAN1_01, POS_DOWN )
-      _AB_KEYWAIT_MARK()
 
     ELSIF $LOCALWORK0 == 2 THEN
 
       //おじさん：むすこ　ふうふ　からの
       _BALLOONWIN_OBJMSG_POS( msg_h01_middleman1_06, H01_MIDDLEMAN1_01, POS_DOWN )
-      _AB_KEYWAIT_MARK()
 
     ELSIF $LOCALWORK0 == 3 THEN
 
       //おじさん：かわいい　まごに　おもちゃを
       _BALLOONWIN_OBJMSG_POS( msg_h01_middleman1_07, H01_MIDDLEMAN1_01, POS_DOWN )
-      _AB_KEYWAIT_MARK()
 
     ELSIF $LOCALWORK0 == 4 THEN
 
       //おじさん：とくに　なにが　あるって
       _BALLOONWIN_OBJMSG_POS( msg_h01_middleman1_08, H01_MIDDLEMAN1_01, POS_DOWN )
-      _AB_KEYWAIT_MARK()
 
     ENDIF
 
@@ -173,7 +168,7 @@ ev_item_buy:
 
     //おじさん：ありがとう　ございます！▼
     _BALLOONWIN_OBJMSG_POS( msg_h01_middleman1_02, H01_MIDDLEMAN1_01, POS_DOWN )
-    _AB_KEYWAIT_MARK()
+    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
     //金額ウィンドウを消す
@@ -207,5 +202,120 @@ EVENT_END
 EVENT_START   ev_h01_backpackerw_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01_backpackerw_01 )
 EVENT_END
+
+/**************************************************************/
+/*  太った兄さん：話しかけ（橋マニアイベント）                */
+/**************************************************************/
+EVENT_START   ev_h01_man3_01
+
+  _TALK_OBJ_START()
+
+  //イベント起動前
+  IF $WK_SCENE_BRIDGE_MANIA_01 == 0 THEN
+
+    //太った兄さん：のどが　かわいた……▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01_bridge_01 )
+
+    //アイテム「おいしいみず」をあげる？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //かばんの中の「おいしいみず」を減らす
+      _SUB_ITEM( ITEM_OISIIMIZU, 1, SCWK_ANSWER )
+
+      //おいしいみずがある
+      IF $SCWK_ANSWER == TRUE THEN
+
+        _MSGWIN_CLOSE()
+
+        //SE再生
+        _SE_PLAY( SEQ_SE_ARDEMO_01 )
+        _SE_WAIT()
+
+        //太った兄さん：げんき　でてきたー！　ありがとう▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_h01_bridge_02 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //========================================//
+        //イベント進行
+        $WK_SCENE_BRIDGE_MANIA_01 = 1
+        //スカイアローの橋マニア非表示
+        _FLAG_SET( FV_H01_BRIDGE_MANIA_01 )
+        //ホドモエの跳ね橋の橋マニア表示
+        _FLAG_RESET( FV_H02_BRIDGE_MANIA_01 )
+        //========================================//
+
+      //おいしいみずが無い
+      ELSE
+
+        //太った兄さん：でも　おいしいみず　ないよね……
+        _BALLOONWIN_TALKOBJ_MSG( msg_h01_bridge_03 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE    //いいえ
+
+      //太った兄さん：おいしいみずが　ないと……
+      _BALLOONWIN_TALKOBJ_MSG( msg_h01_bridge_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //イベント起動後（おいしいみずを渡した後）
+  ELSIF $WK_SCENE_BRIDGE_MANIA_01 == 1 THEN
+
+    //太った兄さん：げんき　でてきたー！　ありがとう▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01_bridge_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //イベント起動後（全ての橋を走って来た）
+  ELSIF $WK_SCENE_BRIDGE_MANIA_01 == 6 THEN
+
+    //太った兄さん：いやー！　イッシュちほうの
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01_bridge_05 )
+
+    //バッグ空きチェック
+    _ADD_ITEM_CHK( ITEM_MOOMOOMIRUKU, 12, LWK_BAG_CHK )
+
+    //バッグに空きがある
+    IF $LWK_BAG_CHK == TRUE THEN
+
+      _MSGWIN_CLOSE()
+      //アイテム「モーモーミルク×１２」入手
+      _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_MOOMOOMIRUKU, 12 )
+
+      //========================================//
+      //イベント進行
+      $WK_SCENE_BRIDGE_MANIA_01 = 7
+      //========================================//
+
+    ELSE
+
+      //太った兄さん：って　バッグが　いっぱいだね
+      _BALLOONWIN_TALKOBJ_MSG( msg_h01_bridge_06 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //イベント終了後
+  ELSIF $WK_SCENE_BRIDGE_MANIA_01 == 7 THEN
+
+    //太った兄さん：いちばん　はしりやすい　はし　は
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01_bridge_07 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
 
 

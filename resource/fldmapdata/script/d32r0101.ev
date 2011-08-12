@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d32r0101.h"
-  //.include  "d32r0101.h"
+  .include  "d32r0101.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +21,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d32r0101
+_EVENT_DATA   ev_d32r0101_fighterm_01
+_EVENT_DATA   ev_d32r0101_poke49_01
+_EVENT_DATA   ev_d32r0101_poke49_02
+_EVENT_DATA   ev_d32r0101_poke50_01
 _EVENT_DATA_END
 
 
@@ -30,9 +35,194 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  カラテおう：話しかけ（ストッパー／トレーナー戦）          */
 /**************************************************************/
-ev_d32r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_d32r0101_fighterm_01
+
+  _TALK_OBJ_START()
+
+  //バッジフラグ取得
+  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_07 )
+
+  //バッジが７つ以下の場合
+  IF $SCWK_TEMP0 == 0 THEN
+
+    //カラテおう：つわものとしか　たたかわない！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //バッジが７つ以上
+  ELSE
+
+    //カラテおう：ここを　とおりたければ
+    _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_02 )
+
+    //カラテおうと戦う？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //カラテおう：いっておくが　オレの　ダンゴロは
+      _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_03 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //トレーナー戦呼び出し【仮】トレーナーIDは仮のもの
+      _TRAINER_BTL_SET( TRID_KARATE_22, 0 ) 
+
+      //結果チェック
+      _CALL ev_battle_check
+
+      //勝利時
+      //カラテおう：きみの　つよさは　ほんものだ！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      _TIME_WAIT( 15 )  //暗転前の間
+
+      //暗転
+      _BLACK_OUT_SLOW()
+      _DISP_FADE_END_CHECK()
+
+      //カラテおう、ダンゴロ削除
+      _OBJ_DEL( D32R0101_FIGHTERM_01 )
+      _OBJ_DEL( D32R0101_POKE49_01 )
+      _OBJ_DEL( D32R0101_POKE49_02 )
+
+      //========================================//
+      //カラテおう、ダンゴロ非表示
+      _FLAG_SET( FV_D32R0101_FIGHTERM_01 )
+      //========================================//
+
+      //暗転復帰
+      _BLACK_IN_SLOW()
+      _DISP_FADE_END_CHECK()
+
+      _TIME_WAIT( 30 )  //暗転後の間
+
+    ELSE    //いいえ
+
+      //カラテおう：ふがいない　へんじ　だな！
+      _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+
+ev_battle_check:
+//敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)なら勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)なら敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+/**************************************************************/
+/*  ダンゴロ01：話しかけ（ストッパー）                        */
+/**************************************************************/
+EVENT_START   ev_d32r0101_poke49_01
+  _EASY_TALK_POKEVOICE( MONSNO_600, msg_d32r0101_poke49a_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ダンゴロ02：話しかけ（ストッパー）                        */
+/**************************************************************/
+EVENT_START   ev_d32r0101_poke49_02
+  _EASY_TALK_POKEVOICE( MONSNO_600, msg_d32r0101_poke49b_01 )
+EVENT_END
+
+/**************************************************************/
+/*  イワパレス：話しかけ（ストッパー）                        */
+/**************************************************************/
+EVENT_START   ev_d32r0101_poke50_01
+
+  _TALK_START_SE_PLAY()
+
+  //アクロマからアイテム「？？？」を受け取っている
+  IF FLAG_ON( FE_R22_SWBOSS_ITEM_01 ) THEN
+
+    //イワパレス戦へ
+    _CALL ev_vs_d32r0101_poke50_01
+
+  //それ以外
+  ELSE
+
+    //メッセージ：どうしてだか　かいりきで　おせない！
+    _SYSWIN_MSG( msg_d32r0101_poke50_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+//イワパレス戦
+ev_vs_d32r0101_poke50_01:
+
+  //メッセージ：道具使用の確認
+  _SYSWIN_MSG( msg_d32r0101_poke50_02, POS_DOWN )
+
+  //「？？？」を使う？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    _MSGWIN_CLOSE()
+
+    _TIME_WAIT( 8 )
+
+    //イワパレス：ぱれっしゅ！
+    _VOICE_PLAY( MONSNO_569, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d32r0101_poke50_03 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //【仮】イワパレス戦をセット（レベルが仮）
+    _WILD_BTL_SET_TALK( MONSNO_569, 38 )
+    _WILD_LOSE_CHECK( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+      //==================================//
+      //イワパレス非表示
+      _FLAG_SET( FV_D32R0101_POKE50_01 )
+      //==================================//
+      _OBJ_DEL( D32R0101_POKE50_01 )   //イワパレスを消す
+
+      _WILD_WIN()
+    ELSE
+      _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+    ENDIF
+
+    //かばんの中からアイテム「？？？」を削除
+    //
+
+    //メッセージ：こわれてしまった……
+    _SYSWIN_MSG( msg_d32r0101_poke50_04, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE  //いいえ
+
+    //メッセージ閉じて終了
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+_RET
+
+
+
 

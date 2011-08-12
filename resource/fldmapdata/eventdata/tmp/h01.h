@@ -14,6 +14,7 @@
 #define H01_GIRL2_01                       1
 #define H01_BACKPACKERW_01                 2
 #define H01_TRAINERM_01                    3
+#define H01_MAN3_01                        4
 
 #endif //ZONE_H01_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

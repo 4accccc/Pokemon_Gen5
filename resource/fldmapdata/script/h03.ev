@@ -34,6 +34,7 @@ _EVENT_DATA   ev_h03_middlewoman1_01
 _EVENT_DATA   ev_h03_middlewoman2_01
 _EVENT_DATA   ev_h03_fighterw_01
 _EVENT_DATA   ev_h03_badrider2_01
+_EVENT_DATA   ev_h03_man3_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -1041,7 +1042,6 @@ EVENT_START    ev_h03_badrider1_05
 	
 EVENT_END
 
-
 /**************************************************************/
 /*  おばさん：話しかけ（特性「ぼうおん」見せイベント）        */
 /**************************************************************/
@@ -1179,6 +1179,81 @@ EVENT_START   ev_h03_badrider2_01
 
     //暴走族：アイツと　タイマンしてたころ▼
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h03_badrider2_02 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  太った兄さん：話しかけ（橋マニアイベント）                */
+/**************************************************************/
+EVENT_START   ev_h03_man3_01
+
+  _TALK_OBJ_START()
+
+  //おいしい水を渡す前
+  IF $WK_SCENE_BRIDGE_MANIA_01 == 2 THEN
+
+    //太った兄さん：のどが　かわいた……▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_h03_bridge_01 )
+
+    //アイテム「おいしいみず」をあげる？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //かばんの中の「おいしいみず」を減らす
+      _SUB_ITEM( ITEM_OISIIMIZU, 1, SCWK_ANSWER )
+
+      //おいしいみずがある
+      IF $SCWK_ANSWER == TRUE THEN
+
+        _MSGWIN_CLOSE()
+
+        //SE再生
+        _SE_PLAY( SEQ_SE_ARDEMO_01 )
+        _SE_WAIT()
+
+        //太った兄さん：げんき　でてきたー！　ありがとう▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_h03_bridge_02 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //========================================//
+        //イベント進行
+        $WK_SCENE_BRIDGE_MANIA_01 = 3
+        //シリンダーブリッジの橋マニア非表示
+        _FLAG_SET( FV_H03_BRIDGE_MANIA_01 )
+        //ビレッジブリッジの橋マニア表示
+        _FLAG_RESET( FV_H04_BRIDGE_MANIA_01 )
+        //========================================//
+
+      //おいしいみずが無い
+      ELSE
+
+        //太った兄さん：でも　おいしいみず　ないよね……
+        _BALLOONWIN_TALKOBJ_MSG( msg_h03_bridge_03 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE    //いいえ
+
+      //太った兄さん：おいしいみずが　ないと……
+      _BALLOONWIN_TALKOBJ_MSG( msg_h03_bridge_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //おいしい水を渡した後
+  ELSIF $WK_SCENE_BRIDGE_MANIA_01 == 3 THEN
+
+    //太った兄さん：げんき　でてきたー！　ありがとう▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_h03_bridge_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
   ENDIF
 

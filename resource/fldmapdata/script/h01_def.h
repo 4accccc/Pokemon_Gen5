@@ -9,5 +9,6 @@
 #define SCRID_H01_GIRL2_01 (2)
 #define SCRID_H01_TRAINERM_01 (3)
 #define SCRID_H01_BACKPACKERW_01 (4)
+#define SCRID_H01_MAN3_01 (5)
 
 #endif //_H01_DEF_H_

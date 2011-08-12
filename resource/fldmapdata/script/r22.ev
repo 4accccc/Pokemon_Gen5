@@ -140,9 +140,17 @@ EVENT_START   ev_pos_r22_poke5_01
   _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_01, R22_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
+  //アニメ：アクロマ下を向く
+  _OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
+
   //アクロマ：きっと　プラズマだんに　たいして
   _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_02, R22_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
+
+  //アニメ：アクロマ右を向く（主人公側）
+  _OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
 
   //アクロマ：あなたの　まえに　あらわれたのは
   _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_03, R22_SWBOSS_01, POS_DEFAULT )
@@ -164,8 +172,18 @@ EVENT_START   ev_pos_r22_poke5_01
 
   ENDIF
 
+  //アイテム「イワパレスをどかせる何か」入手  【仮】アイテムは仮（マスターボール）
+  _ITEM_EVENT_NOWAIT( ITEM_MASUTAABOORU, 1 )
+
+  //アクロマ：なにかの　やくに　たつでしょう！▼
+  _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_06, R22_SWBOSS_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
   //アニメ：アクロマ退場
   _OBJ_ANIME_AUTO( R22_SWBOSS_01, 724, 147, FORCE_TYPE_NPC, 8, DIR_UD )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( R22_SWBOSS_01 )
 
@@ -176,6 +194,8 @@ EVENT_START   ev_pos_r22_poke5_01
   _FLAG_SET( FE_R22_POKE5_MEET_01 )
   //アクロマ非表示
   _FLAG_SET( FV_R22_SWBOSS_01 )
+  //フラグON（D32のイワパレスイベント用）
+  _FLAG_SET( FE_R22_SWBOSS_ITEM_01 )
   //==================================//
 
 EVENT_END

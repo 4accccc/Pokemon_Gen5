@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/04 14:00:03
+#save date:2011/08/12 16:47:24
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d01r0101.wms
 #SECTION START:OBJ_EVENT
@@ -365,7 +365,109 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+6
+#event number: 0
+#Pos Event Label
+POS_D01R0101_RATI2_01
+#Pos Script Name
+SCRID_POS_D01R0101_RATI2_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 -168
+#size
+1 4
+#event number: 1
+#Pos Event Label
+POS_D01R0101_RATI2_02
+#Pos Script Name
+SCRID_POS_D01R0101_RATI2_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+312 0 -136
+#size
+1 1
+#event number: 2
+#Pos Event Label
+POS_D01R0101_RATI2_03
+#Pos Script Name
+SCRID_POS_D01R0101_RATI2_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 0 40
+#size
+3 1
+#event number: 3
+#Pos Event Label
+POS_D01R0101_RATI2_04
+#Pos Script Name
+SCRID_POS_D01R0101_RATI2_04
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+312 64 136
+#size
+2 1
+#event number: 4
+#Pos Event Label
+POS_D01R0101_RATI2_05
+#Pos Script Name
+SCRID_POS_D01R0101_RATI2_05
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 64 8
+#size
+2 1
+#event number: 5
+#Pos Event Label
+POS_D01R0101_RATI2_06
+#Pos Script Name
+SCRID_POS_D01R0101_RATI2_06
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+5
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+504 64 56
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

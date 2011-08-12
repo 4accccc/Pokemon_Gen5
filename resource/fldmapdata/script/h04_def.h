@@ -17,5 +17,6 @@
 #define SCRID_H04_BOY1_01 (10)
 #define SCRID_H04_OLDMAN1_01 (11)
 #define SCRID_H04_BACKPACKERW_01 (12)
+#define SCRID_H04_MAN3_01 (13)
 
 #endif //_H04_DEF_H_

@@ -12,7 +12,7 @@
   .include  "../../message/dst/script/msg_c06r0201.h"
   .include  "c06r0201.h"
 
-  //@author fujimura_souichirou（ヤマジタウンへ行くまで）
+  //@author fujimura_souichirou（ヤマジタウンへ行くまで、エースメダル見せイベント）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,11 +21,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c06r0201_waitress_01
-_EVENT_DATA    ev_c06r0201_veteranw_01
-_EVENT_DATA    ev_c06r0201_swleader6_01
-_EVENT_DATA    ev_c06r0201_hakase2_01
-
+_EVENT_DATA   ev_c06r0201_waitress_01
+_EVENT_DATA   ev_c06r0201_veteranw_01
+_EVENT_DATA   ev_c06r0201_swleader6_01
+_EVENT_DATA   ev_c06r0201_hakase2_01
+_EVENT_DATA   ev_c06r0201_pilot_01
 _EVENT_DATA_END
 
 
@@ -86,7 +86,6 @@ ev_item_get:
 	ENDIF
 _RET
 
-
 /**************************************************************/
 /*  c06r0201_veteranw_01　アイテム入手イベント*/
 /**************************************************************/
@@ -95,7 +94,6 @@ EVENT_START   ev_c06r0201_veteranw_01
 	_EASY_TALK_ITEM_EVENT( ITEM_SURUDOIKUTIBASI, 1, FE_C06R0101_ITEMGET_01, msg_c06r0201_veteranw_01, msg_c06r0201_veteranw_02, msg_c06r0201_veteranw_02)
 
 EVENT_END
-
 
 /************************************************************/
 /*  フウロ話しかけ（ヤマジタウンへ ）                       */
@@ -225,7 +223,6 @@ EVENT_START   ev_c06r0201_swleader6_01
 }
 EVENT_END
 
-
 /************************************************************/
 /*  フウロ話しかけ（ヤマジタウンへ）                        */
 /************************************************************/
@@ -236,6 +233,117 @@ EVENT_START   ev_c06r0201_hakase2_01
   _BALLOONWIN_OBJMSG( msg_c06r0201_hakase2_03, C06R0201_HAKASE2_01 )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*  パイロット：話しかけ（メダル見せイベント）              */
+/************************************************************/
+EVENT_START   ev_c06r0201_pilot_01
+
+  _TALK_OBJ_START()
+
+  //メダル取得変数
+  DEFINE_LOCAL  MEDAL_CHC
+  //『エースパイロット』のメダルを持っているか
+  _CHECK_MEDAL_GET( MEDAL_CHC, MDLID_SORAWOTOBU )
+
+  //『エースパイロット』のメダルを持っていない＋初回会話【仮】フラグ仮で
+  IF $MEDAL_CHC == FALSE THEN
+
+    //初回会話か
+    IF $LOCALWORK0 == 0 THEN
+
+      //パイロット：メダルを　もっていないのかい！？▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_01 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //========================================//
+      //フラグON
+      $LOCALWORK0 = 1
+      //========================================//
+
+    ELSE
+
+      //パイロット：ぜひ　ぼくに　みせに　きてね
+      _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_02 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ELSIF $MEDAL_CHC == TRUE THEN
+
+    //『エースパイロット』のメダルを持っている＋ほめられていない
+    IF $LOCALWORK1 == 0 THEN
+
+      //パイロット：メダルを　もっているんだね！？▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //========================================//
+      //フラグON
+      $LOCALWORK1 = 1
+      //========================================//
+
+    ELSE
+
+      //パイロット：キミの　ポケモンに　カンパイ！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+/*
+  //『エースパイロット』のメダルを持っていない＋初回会話【仮】フラグ仮で
+  IF $MEDAL_CHC == FALSE && $LOCALWORK0 == 0 THEN
+
+    //パイロット：メダルを　もっていないのかい！？▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //フラグON
+    $LOCALWORK0 = 1
+    //========================================//
+
+  //『エースパイロット』のメダルを持っていない＋初回会話ではない
+  ELSIF $MEDAL_CHC == FALSE && $LOCALWORK0 == 1 THEN
+
+    //パイロット：ぜひ　ぼくに　みせに　きてね
+    _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //『エースパイロット』のメダルを持っている＋ほめられていない
+  ELSIF $MEDAL_CHC == TRUE && $LOCALWORK1 == 0 THEN
+
+    //パイロット：メダルを　もっているんだね！？▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //フラグON
+    $LOCALWORK1 = 1
+    //========================================//
+
+  //『エースパイロット』のメダルを持っている＋ほめられた
+  ELSIF $MEDAL_CHC == TRUE && $LOCALWORK1 == 1 THEN
+
+    //パイロット：キミの　ポケモンに　カンパイ！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_04 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+*/
 
 EVENT_END
 

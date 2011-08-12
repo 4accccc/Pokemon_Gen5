@@ -38,6 +38,7 @@
 #define FLD_ITEM_151                      18
 #define FLD_ITEM_152                      19
 #define FLD_ITEM_153                      20
+#define H04_MAN3_01                       21
 
 #endif //ZONE_H04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_d01r0101.h"
   .include  "d01r0101.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,43 +21,618 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_init_d01r0101
-_EVENT_DATA    ev_recover_d01r0101
-_EVENT_DATA    ev_zone_d01r0101
+_EVENT_DATA   ev_init_d01r0101
+_EVENT_DATA   ev_recover_d01r0101
+_EVENT_DATA   ev_zone_d01r0101
+_EVENT_DATA   ev_pos_d01r0101_rati2_01
+_EVENT_DATA   ev_pos_d01r0101_rati2_02
+_EVENT_DATA   ev_pos_d01r0101_rati2_03
+_EVENT_DATA   ev_pos_d01r0101_rati2_04
+_EVENT_DATA   ev_pos_d01r0101_rati2_05
+_EVENT_DATA   ev_pos_d01r0101_rati2_06
 _EVENT_DATA_END
 
 //バージョン取得
 DEFINE_LOCAL LCWK_VERSION
-/************************************************************/
-/*					ZONE_CHANGE_LABEL  						*/
-/************************************************************/
-INIT_EVENT_START	ev_zone_d01r0101
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 
-  // ROMバージョン取得
+
+/************************************************************/
+/*  ZONE_CHANGE_LABEL                                       */
+/************************************************************/
+INIT_EVENT_START  ev_zone_d01r0101
+
+  //ROMバージョン取得
   _GET_ROM_VERSION( LCWK_VERSION )
-  
-  // B2
+
+  //B2
   IF $LCWK_VERSION == VERSION_B2 THEN
-    $OBJCHRWORK0 = TPOKE_0407
+    $OBJCHRWORK0 = TPOKE_0408   //Ｂ版ならラティオス
   ELSE
-    $OBJCHRWORK0 = TPOKE_0408
+    $OBJCHRWORK0 = TPOKE_0407   //Ｗ版ならラティアス
   ENDIF
-  
+
 INIT_EVENT_END
 
 /************************************************************/
-/*					FIELD_INIT_LABEL  						*/
+/*  FIELD_INIT_LABEL                                        */
 /************************************************************/
-INIT_EVENT_START	ev_init_d01r0101
+INIT_EVENT_START  ev_init_d01r0101
 
 //
 
 INIT_EVENT_END
+
 /************************************************************/
-/*					FIELD_RECOVER_LABEL  						*/
+/*  FIELD_RECOVER_LABEL                                     */
 /************************************************************/
 INIT_EVENT_START	ev_recover_d01r0101
 
 //
 
 INIT_EVENT_END
+
+/**************************************************************/
+/*  POS：ラティオス（ラティアス）イベント01                   */
+/**************************************************************/
+EVENT_START   ev_pos_d01r0101_rati2_01
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //Ｂ２ならラティオス
+  IF $LCWK_VERSION == VERSION_B2 THEN
+
+    //ラティオス：しゅわん！
+    _VOICE_PLAY( MONSNO_381, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke1_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  //Ｗ２ならラティアス
+  ELSE
+
+    //ラティアス：ひゅああん！
+    _VOICE_PLAY( MONSNO_380, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke2_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //==================================//
+  //ラティオス（ラティアス）表示
+  _FLAG_RESET( FV_D01R0101_RATI2_01 )
+  //==================================//
+  _OBJ_ADD( D01R0101_RATI2_01 )
+
+  //ラティオス（ラティアス）登場座標にジャンプ
+  _OBJ_POS_CHANGE( D01R0101_RATI2_01, 19, 0, LCW_POSZ, DIR_LEFT )
+
+  //ラティオス（ラティアス）停止座標まで移動
+  _OBJ_TRANS( D01R0101_RATI2_01, 13, 0, LCW_POSZ, 6*4 )
+
+  _TIME_WAIT( 16 )    //間
+
+  //ラティオス（ラティアス）主人公に接近
+  _OBJ_TRANS( D01R0101_RATI2_01, 12, 0, LCW_POSZ, 8 )
+
+  _TIME_WAIT( 48 )    //間
+
+  //ラティオス（ラティアス）交代
+  _OBJ_TRANS( D01R0101_RATI2_01, 13, 0, LCW_POSZ, 8*2 )
+
+  _TIME_WAIT( 16 )    //間
+
+  //Ｂ２ならラティオス
+  IF $LCWK_VERSION == VERSION_B2 THEN
+
+    //ラティオス：しゅわん！
+    _VOICE_PLAY( MONSNO_381, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke1_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  //Ｗ２ならラティアス
+  ELSE
+
+    //ラティアス：ひゅああん！
+    _VOICE_PLAY( MONSNO_380, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke2_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //アニメ：ラティオス（ラティアス）振り向き
+  _OBJ_ANIME( D01R0101_RATI2_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //ラティオス（ラティアス）登場座標まで移動・退場
+  _OBJ_TRANS( D01R0101_RATI2_01, 19, 0, LCW_POSZ, 6*3 )
+  _OBJ_DEL( D01R0101_RATI2_01 )
+
+  //========================================//
+  //ラティオス（ラティアス）非表示
+  _FLAG_SET( FV_D01R0101_RATI2_01 )
+  //イベント進行
+  $LOCALWORK0 = 1
+  //========================================//
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  POS：ラティオス（ラティアス）イベント02                   */
+/**************************************************************/
+EVENT_START   ev_pos_d01r0101_rati2_02
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //Ｂ２ならラティオス
+  IF $LCWK_VERSION == VERSION_B2 THEN
+
+    //ラティオス：しゅわん！
+    _VOICE_PLAY( MONSNO_381, 0 )
+    _PLAINWIN_MSG_UP( msg_d01r0101_poke1_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  //Ｗ２ならラティアス
+  ELSE
+
+    //ラティアス：ひゅああん！
+    _VOICE_PLAY( MONSNO_380, 0 )
+    _PLAINWIN_MSG_UP( msg_d01r0101_poke2_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //==================================//
+  //ラティオス（ラティアス）表示
+  _FLAG_RESET( FV_D01R0101_RATI2_01 )
+  //==================================//
+  _OBJ_ADD( D01R0101_RATI2_01 )
+
+  //ラティオス（ラティアス）登場座標にジャンプ
+  _OBJ_POS_CHANGE( D01R0101_RATI2_01, 44, 2, 22, DIR_LEFT )
+
+  //ラティオス（ラティアス）停止座標まで移動
+  _OBJ_TRANS( D01R0101_RATI2_01, 26, 2, 22, 6*8 )
+
+  //ラティオス（ラティアス）退場
+  _OBJ_DEL( D01R0101_RATI2_01 )
+
+  //========================================//
+  //ラティオス（ラティアス）非表示
+  _FLAG_SET( FV_D01R0101_RATI2_01 )
+  //イベント進行
+  $LOCALWORK0 = 2
+  //========================================//
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  POS：ラティオス（ラティアス）イベント03                   */
+/**************************************************************/
+EVENT_START   ev_pos_d01r0101_rati2_03
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //Ｂ２ならラティオス
+  IF $LCWK_VERSION == VERSION_B2 THEN
+
+    //ラティオス：しゅわん！
+    _VOICE_PLAY( MONSNO_381, 0 )
+    _PLAINWIN_MSG_UP( msg_d01r0101_poke1_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  //Ｗ２ならラティアス
+  ELSE
+
+    //ラティアス：ひゅああん！
+    _VOICE_PLAY( MONSNO_380, 0 )
+    _PLAINWIN_MSG_UP( msg_d01r0101_poke2_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //==================================//
+  //ラティオス（ラティアス）表示
+  _FLAG_RESET( FV_D01R0101_RATI2_01 )
+  //==================================//
+  _OBJ_ADD( D01R0101_RATI2_01 )
+
+  //主人公の立ち位置によって演出が分岐
+  IF $LCW_POSX == 26 THEN
+    //ラティオス（ラティアス）登場座標にジャンプ
+    _OBJ_POS_CHANGE( D01R0101_RATI2_01, 17, 4, 12, DIR_RIGHT )
+
+    //ラティオス（ラティアス）停止座標まで移動
+    _OBJ_TRANS( D01R0101_RATI2_01, 35, 4, 11, 6*8 )
+
+  ELSIF $LCW_POSX == 27 THEN
+    //ラティオス（ラティアス）登場座標にジャンプ
+    _OBJ_POS_CHANGE( D01R0101_RATI2_01, 18, 4, 12, DIR_RIGHT )
+
+    //ラティオス（ラティアス）停止座標まで移動
+    _OBJ_TRANS( D01R0101_RATI2_01, 36, 4, 11, 6*8 )
+
+  ELSIF $LCW_POSX == 28 THEN
+    //ラティオス（ラティアス）登場座標にジャンプ
+    _OBJ_POS_CHANGE( D01R0101_RATI2_01, 19, 4, 12, DIR_RIGHT )
+
+    //ラティオス（ラティアス）停止座標まで移動
+    _OBJ_TRANS( D01R0101_RATI2_01, 37, 4, 11, 6*8 )
+
+  ENDIF
+
+  //ラティオス（ラティアス）退場
+  _OBJ_DEL( D01R0101_RATI2_01 )
+
+  //========================================//
+  //ラティオス（ラティアス）非表示
+  _FLAG_SET( FV_D01R0101_RATI2_01 )
+  //イベント進行
+  $LOCALWORK0 = 3
+  //========================================//
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  POS：ラティオス（ラティアス）イベント04                   */
+/**************************************************************/
+EVENT_START   ev_pos_d01r0101_rati2_04
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //Ｂ２ならラティオス
+  IF $LCWK_VERSION == VERSION_B2 THEN
+
+    //ラティオス：しゅわん！
+    _VOICE_PLAY( MONSNO_381, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke1_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  //Ｗ２ならラティアス
+  ELSE
+
+    //ラティアス：ひゅああん！
+    _VOICE_PLAY( MONSNO_380, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke2_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //==================================//
+  //ラティオス（ラティアス）表示
+  _FLAG_RESET( FV_D01R0101_RATI2_01 )
+  //==================================//
+  _OBJ_ADD( D01R0101_RATI2_01 )
+
+  //主人公の立ち位置によって演出が分岐
+  IF $LCW_POSX == 35 THEN
+    //ラティオス（ラティアス）登場座標にジャンプ
+    _OBJ_POS_CHANGE( D01R0101_RATI2_01, 44, 4, 11, DIR_LEFT )
+
+    //ラティオス（ラティアス）停止座標まで移動
+    _OBJ_TRANS( D01R0101_RATI2_01, 26, 4, 11, 6*8 )
+
+  ELSIF $LCW_POSX == 36 THEN
+    //ラティオス（ラティアス）登場座標にジャンプ
+    _OBJ_POS_CHANGE( D01R0101_RATI2_01, 45, 4, 11, DIR_LEFT )
+
+    //ラティオス（ラティアス）停止座標まで移動
+    _OBJ_TRANS( D01R0101_RATI2_01, 27, 4, 11, 6*8 )
+
+  ENDIF
+
+  //ラティオス（ラティアス）退場
+  _OBJ_DEL( D01R0101_RATI2_01 )
+
+  //========================================//
+  //ラティオス（ラティアス）非表示
+  _FLAG_SET( FV_D01R0101_RATI2_01 )
+  //イベント進行
+  $LOCALWORK0 = 4
+  //========================================//
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  POS：ラティオス（ラティアス）イベント05                   */
+/**************************************************************/
+EVENT_START   ev_pos_d01r0101_rati2_05
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //Ｂ２ならラティオス
+  IF $LCWK_VERSION == VERSION_B2 THEN
+
+    //ラティオス：しゅわん！
+    _VOICE_PLAY( MONSNO_381, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke1_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  //Ｗ２ならラティアス
+  ELSE
+
+    //ラティアス：ひゅああん！
+    _VOICE_PLAY( MONSNO_380, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke2_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //==================================//
+  //ラティオス（ラティアス）表示
+  _FLAG_RESET( FV_D01R0101_RATI2_01 )
+  //==================================//
+  _OBJ_ADD( D01R0101_RATI2_01 )
+
+  //主人公の立ち位置によって演出が分岐
+  IF $LCW_POSX == 22 THEN
+    //ラティオス（ラティアス）登場座標にジャンプ
+    _OBJ_POS_CHANGE( D01R0101_RATI2_01, 13, 4, 20, DIR_RIGHT )
+
+    //ラティオス（ラティアス）停止座標まで移動
+    _OBJ_TRANS( D01R0101_RATI2_01, 26, 4, 15, 6*6 )
+
+  ELSIF $LCW_POSX == 23 THEN
+    //ラティオス（ラティアス）登場座標にジャンプ
+    _OBJ_POS_CHANGE( D01R0101_RATI2_01, 14, 4, 20, DIR_RIGHT )
+
+    //ラティオス（ラティアス）停止座標まで移動
+    _OBJ_TRANS( D01R0101_RATI2_01, 27, 4, 15, 6*6 )
+
+  ENDIF
+
+  //アニメ：ラティオス（ラティアス）振り向き
+  _OBJ_ANIME( D01R0101_RATI2_01, anm_common_turn_l )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 8 )
+
+  //アニメ：主人公振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 16 )
+
+  //Ｂ２ならラティオス
+  IF $LCWK_VERSION == VERSION_B2 THEN
+
+    //ラティオス：しゅわん！
+    _VOICE_PLAY( MONSNO_381, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke1_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  //Ｗ２ならラティアス
+  ELSE
+
+    //ラティアス：ひゅああん！
+    _VOICE_PLAY( MONSNO_380, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke2_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //アニメ：ラティオス（ラティアス）振り向き
+  _OBJ_ANIME( D01R0101_RATI2_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //主人公の立ち位置によって演出が分岐
+  IF $LCW_POSX == 22 THEN
+
+    //ラティオス（ラティアス）停止座標まで移動
+    _OBJ_TRANS( D01R0101_RATI2_01, 31, 4, 15, 6*2 )
+
+  ELSIF $LCW_POSX == 23 THEN
+
+    //ラティオス（ラティアス）停止座標まで移動
+    _OBJ_TRANS( D01R0101_RATI2_01, 32, 4, 15, 6*2 )
+
+  ENDIF
+
+  //ラティオス（ラティアス）退場
+  _OBJ_DEL( D01R0101_RATI2_01 )
+
+  //========================================//
+  //ラティオス（ラティアス）非表示
+  _FLAG_SET( FV_D01R0101_RATI2_01 )
+  //イベント進行
+  $LOCALWORK0 = 5
+  //========================================//
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  POS：ラティオス（ラティアス）イベント06                   */
+/**************************************************************/
+EVENT_START   ev_pos_d01r0101_rati2_06
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //Ｂ２ならラティオス
+  IF $LCWK_VERSION == VERSION_B2 THEN
+
+    //ラティオス：しゅわん！
+    _VOICE_PLAY( MONSNO_381, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke1_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  //Ｗ２ならラティアス
+  ELSE
+
+    //ラティアス：ひゅああん！
+    _VOICE_PLAY( MONSNO_380, 0 )
+    _PLAINWIN_MSG_DOWN( msg_d01r0101_poke2_01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //==================================//
+  //ラティオス（ラティアス）表示
+  _FLAG_RESET( FV_D01R0101_RATI2_01 )
+  //==================================//
+  _OBJ_ADD( D01R0101_RATI2_01 )
+
+  //ラティオス（ラティアス）登場座標にジャンプ
+  _OBJ_POS_CHANGE( D01R0101_RATI2_01, 56, 4, 12, DIR_LEFT )
+
+  //ラティオス（ラティアス）停止座標まで移動
+  _OBJ_TRANS( D01R0101_RATI2_01, 50, 4, 12, 6*3 )
+
+  _TIME_WAIT( 32 )
+
+  //ラティオス（ラティアス）主人公に接近
+  _OBJ_TRANS( D01R0101_RATI2_01, 48, 4, 12, 6 )
+
+  //Ｂ２ならラティオス
+  IF $LCWK_VERSION == VERSION_B2 THEN
+
+    //ラティオス：しゅわーん！
+    _VOICE_PLAY( MONSNO_381, 0 )
+    _GIZAPLAINWIN_MSG_POS( msg_d01r0101_poke1_02, POS_DOWN )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    _WILD_BTL_SET_LEGEND( MONSNO_381, 70 ) // Lv.70 ラティオス
+
+  //Ｗ２ならラティアス
+  ELSE
+
+    //ラティアス：ひゅああーん！
+    _VOICE_PLAY( MONSNO_380, 0 )
+    _GIZAPLAINWIN_MSG_POS( msg_d01r0101_poke2_02, POS_DOWN )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    _WILD_BTL_SET_LEGEND( MONSNO_380, 70 ) // Lv.70 ラティアス
+
+  ENDIF
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //========================================//
+    //ラティオス（ラティアス）非表示
+    _FLAG_SET( FV_D01R0101_RATI2_01 )
+    //イベント進行
+    $LOCALWORK0 = 6
+    //========================================//
+
+    //ラティオス（ラティアス）退場
+    _OBJ_DEL( D01R0101_RATI2_01 )
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //ラティアス（ラティオス）を捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+    //==================================//
+    //ラティアス（ラティオス）を捕獲した
+    //_FLAG_SET( FE_R22_POKE5_GET_01 )
+    //==================================//
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
+
+  ENDSWITCH
+
+INIT_EVENT_END
+
+
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+

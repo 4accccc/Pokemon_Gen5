@@ -22,6 +22,7 @@
 #define FLD_ITEM_99                        5
 #define FLD_ITEM_100                       6
 #define C06_BREEDERM_01                    7
+#define C06_POKE40_01                      8
 
 #endif //ZONE_C06_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
