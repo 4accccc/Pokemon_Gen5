@@ -475,12 +475,11 @@
 			<Text>シズイ『しらん！▼
 うみで　くらしているとな
 そういうこと　あまり　きにならん▼
-なにしろ　うみは　でかすぎる！
-めぐみを　わけあたえて　くれるが▽
-やさしいだけでは　ないからなあ▼　</Text>
+なにしろ　うみは
+どんな　かわをも　うけいれるからなあ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-13T08:00:44" />
+				Time="2011-08-12T05:53:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -491,12 +490,11 @@
 			<Text>シズイ『知らん！▼
 海で　くらしているとな
 そういうこと　あまり　気にならん▼
-なにしろ　海は　でかすぎる！
-恵みを　わけあたえて　くれるが▽
-優しいだけでは　ないからなあ▼　</Text>
+なにしろ　海は
+どんな　川をも　受け入れるからなあ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:08:36" />
+				Time="2011-08-12T05:53:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1239,10 +1237,10 @@
 			Language="JPN">
 			<Text>セイガイハシティ　ポケモンジム
 リーダー　シズイ▽
-？？？</Text>
+うみよりも　うみな　おとこ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:22:53" />
+				Time="2011-08-12T06:09:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1252,10 +1250,10 @@
 			Language="JPN_KANJI">
 			<Text>セイガイハシティ　ポケモンジム
 リーダー　シズイ▽
-？？？</Text>
+海よりも　海な　男！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:22:56" />
+				Time="2011-08-12T06:09:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

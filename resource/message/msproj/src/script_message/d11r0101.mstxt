@@ -7,11 +7,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……[Name:TrainerName ]
-オマエ　ひとりだと　ふあん　だろ▽
-ついていって　やるぜ！</Text>
+オマエには　つよくなってもらうぜ！▼
+さすがに　オレ　ひとりでは
+プラズマだんと　やりあうのはな……▼
+だいじょうぶ！
+オマエだけだと　ふあん　だろ▽
+ついていって　やるから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T11:35:29" />
+				Time="2011-08-12T05:27:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -20,11 +24,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……[Name:TrainerName ]
-オマエ　一人だと　不安だろ▽
-ついていって　やるぜ！</Text>
+オマエには　強くなってもらうぜ！▼
+さすがに　オレ　一人で
+プラズマ団と　やりあうのはな……▼
+大丈夫！
+オマエだけだと　不安だろ▽
+ついていって　やるから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:40:28" />
+				Time="2011-08-12T05:27:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -396,11 +404,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……つよくないと
-まもれない　ものが　あるからな</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……強くないと
+守れない　ものが　あるからな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:51:01" />
+				Time="2011-08-12T05:29:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

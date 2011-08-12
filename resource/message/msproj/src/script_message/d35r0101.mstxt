@@ -1,3 +1,249 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d35r0101_poke_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>グァオォーウッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:28:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:28:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グァオォーウッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:28:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:28:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・続けて野生ポケモン戦闘へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:23:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・黒いオノノクス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:27:10" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d35r0101_poke_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろいオノノクスは　ほごくの　おくへ
+すがたを　けしさってしまった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:28:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:28:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くろいオノノクスは　保護区の　奥へ
+姿を　消し去ってしまった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:28:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:28:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・戦闘後
+・倒した場合のメッセージ
+・殿堂入り後に再配置</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:30:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・黒いオノノクス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:27:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d35r0101_swleader6_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アタシの　ひこうきで　ひとっとび！
+どうです　フキヨセに　もどりますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:25:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:21:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アタシの　ひこうきで　ひとっとび！
+どうです　フキヨセに　もどりますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:26:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:21:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい/いいえ選択肢表示
+・はい　→swleader6_02
+　いいえ→swleader6_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:26:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER6
+ジムリーダー・フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:24:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d35r0101_swleader6_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは
+レッツ　フライトだよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:25:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:21:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは
+レッツ　フライトだよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:25:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:21:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+・発着デモへ（詳細未定）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:26:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER6
+ジムリーダー・フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:24:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d35r0101_swleader6_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>りょうかい！
+じゅんびが　できたら　はなしてね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:25:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:21:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>了解！
+準備が　できたら　声をかけてね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:25:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:21:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:21:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER6
+ジムリーダー・フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T06:24:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
