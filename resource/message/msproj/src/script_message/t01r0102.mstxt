@@ -3708,6 +3708,39 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t01r0102_bed_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T12:23:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T12:23:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T12:23:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T12:23:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T12:23:51" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t01r0102_pc_01"
 		Style="Large">
 		<LanguageCell
