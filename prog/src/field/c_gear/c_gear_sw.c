@@ -2892,6 +2892,7 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
     ACT_WIFI_RING,
     ACT_CONNECT,
     ACT_S_RADAR,
+    ACT_S_RADAR_I,
   };
 
   if(on_flag){
@@ -2903,16 +2904,6 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
   for( i = 0;i < NELEMS(anm_stop_tbl);i++){
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[anm_stop_tbl[i]], !on_flag );
   }
-
-  /*
-  PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
-    );
-
-  PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_BG, BG_PFADE_NORMAL_MSK,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
-    );
-  */
   ColorConceChangePfd( pWork->pfade_ptr, FADE_SUB_OBJ, OAM_PFADE_MSK_ALL, evy, _BLACK_COLOR[pWork->sex] );
   ColorConceChangePfd( pWork->pfade_ptr, FADE_SUB_BG, BG_PFADE_NORMAL_MSK, evy, _BLACK_COLOR[pWork->sex] );
 }
@@ -3981,7 +3972,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_T_HOUR1+i], FALSE );
 
   }
-  GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ ACT_T_COLON ], ACTANM_N_COLON );
+  _gearObjSetAnmSeq( pWork->cellCursor[ ACT_T_COLON ], ACTANM_N_COLON );
 
   for(i=0;i < ACT_NORMAL_MAX ;i++)
   {
@@ -4027,7 +4018,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     pWork->cellCursor[ACT_AMPM_BASE+i] = _gearObjAdd( pWork, prm[i].x, prm[i].y, prm[i].anm, prm[i].bg_pri, prm[i].s_pri, prm[i].res_idx );
   }
   if( OS_IsRunOnTwl() ){  //DSIならバッテリー表示パターンを変更
-    GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ACT_BATTERY], ACTANM_BATT3 );
+    _gearObjSetAnmSeq( pWork->cellCursor[ACT_BATTERY], ACTANM_BATT3 );
   }
   GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[ACT_PANEL_EFF], TRUE ); //SRTアニメ反映
   for(i=0;i < CGEAR_PANEL_MAX ;i++)
@@ -6201,6 +6192,9 @@ static BOOL _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
     // アニメーション開始(ベースとフォントのパーツが対)
     _gearObjSetAnmSeq( pWork->cellCursor[ pWork->select_cursor ], pWork->select_cursor_anm );
     _gearObjSetAnmSeq( pWork->cellCursor[ pWork->select_cursor+1 ], pWork->select_cursor_anm+1 );
+    //Xメニューから復帰時のスリープブラック_PFadeSetSleepBlack()時対策でオートアニメをセットしなおす
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ pWork->select_cursor ], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ pWork->select_cursor + 1 ], TRUE );
     pWork->eff_seq ++;
     break;
 
