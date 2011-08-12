@@ -24,6 +24,9 @@
 #define PANEL_INIT_POS_WIRELESS (21)
 #define PANEL_INIT_POS_WIFI     (9)
 
+//初期リングカラー
+#define INITIAL_RING_COLOR  (0) //0がデフォルトカラー(男:青、女:ピンク)
+
 //----------------------------------------------------------
 /**
  * @brief  構造体定義
@@ -120,7 +123,7 @@ void CGEAR_SV_Init(CGEAR_SAVEDATA* pSV)
 	GFL_STD_MemCopy(_inittable,pSV->type,sizeof(_inittable));
 
   for( i = 0;i < C_GEAR_RING_NUM;i++ ){
-    pSV->ring_col[i] = i;
+    pSV->ring_col[i] = INITIAL_RING_COLOR;
   }
 
   pSV->panel_pos[CGEAR_PANEL_IR] = PANEL_INIT_POS_IR;
