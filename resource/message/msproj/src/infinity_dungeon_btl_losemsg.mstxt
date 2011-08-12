@@ -8439,11 +8439,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>草食　ばんざい！
+			<Text>草食　ばんざーい！
 ああ　くさポケモンになりたい…！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-10T03:26:40" />
+				Time="2011-08-12T02:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -12124,11 +12124,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おんなのこに　ほんき……
+			<Text>おんなのこ　あいてに　ほんき……
 もう……みんな　やばんです……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-11T10:58:09" />
+				Time="2011-08-11T11:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12136,11 +12136,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>女の子に　本気……
+			<Text>女の子相手に　本気……
 もう……みんな　やばんです……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-11T10:58:28" />
+				Time="2011-08-11T11:03:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12250,10 +12250,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>ごめんよ！　だれかを　はんにん
+あつかいしたい　としごろなんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T02:29:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12261,10 +12262,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>ごめんよ！　だれかを　犯人扱いしたい
+としごろなんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:55" />
+				Time="2011-08-12T02:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -8956,15 +8956,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うまそうな　くさを……パクリ！
+			<Text>うまそうな　はっぱを……パクリ！
 これも　パクリ　あれも　パクリ！！▼
-……こんな　うまそうな　はっぱに
-かこまれたら　がまんできないよ！▼
-きみには　やらないからね！
-てやぁあッ！▼</Text>
+……はっぱが　うますぎる！
+きみは　やらないからね！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-10T03:27:45" />
+				Time="2011-08-12T02:07:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -8972,15 +8970,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うまそうな　草を……パクリ！
+			<Text>うまそうな　葉っぱを……パクリ！
 これも　パクリ　あれも　パクリ！！▼
-……こんな　うまそうな　葉っぱに
-囲まれたら　我慢できないよ！▼
-きみには　やらないからね！
-てやぁあッ！▼</Text>
+……葉っぱが　うますぎる！
+きみは　やらないからね！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-10T03:36:33" />
+				Time="2011-08-12T02:07:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -9539,12 +9535,12 @@
 			Language="JPN_KANJI">
 			<Text>ブラックシティに　生まれ　育った
 おれの　心には　いつだって▽
-黒い　衝動が　うずまいている▼
-そいつを　満たせるのは……
+黒い　衝動が　うずまいている！▼
+そいつを　発散できるのは……
 ここでの　戦いだけさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-10T05:50:25" />
+				Time="2011-08-12T02:01:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -13204,10 +13200,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>おれたち　しょうねん　たんていだんが
+このあやしげな　ビルの　なぞを▽
+ときあかすぞ！▼
+わかった！
+はんにんは……おまえだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:28:20" />
+				Time="2011-08-12T02:24:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13215,10 +13215,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>おれたち　少年探偵団が
+このあやしげな　ビルの　なぞを▽
+解き明かすぞ！▼
+分かった！
+犯人は……おまえだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:28:20" />
+				Time="2011-08-12T02:25:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
