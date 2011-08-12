@@ -2,6 +2,197 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_r04r0601_fighterm_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん？　きみは　めざとい
+トレーナーだな！　ほら！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん？　きみは　めざとい
+トレーナーだな！　ほら！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手処理
+　No158「オボンのみ」×３</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0601_fighterm_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いろんな　ところに　いって
+いろんな　ひとと　はなす▽
+そうすりゃ　いいこと　ある</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:57:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いろんな　ところに　行って
+いろんな　人と　話す▽
+そうすりゃ　いいこと　ある</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:26:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:57:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0601_girl1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きんようびに　なるたびにね
+どこからか　ポケモンが　くるの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:57:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>金曜日に　なるたびにね
+どこからか　ポケモンが　来るの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:25:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:57:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ワシボンのヒント</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:02:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:26:04" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0601_assistantm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンが　かいほう　されて
+しんの　ちからを　はっきしたら……▼
+いつか　われわれは　ポケモンに
+つかわれて　たたかうのでは　ないか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:28:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:57:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンが　解放されて
+真の　力を　発揮したら……▼
+いつか　われわれは　ポケモンに
+使われて　戦うのでは　ないか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:28:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:57:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:28:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T09:26:56" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r04r0601_trainerw_01"
 		Style="Large">
 		<LanguageCell
@@ -52,7 +243,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -102,7 +293,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -160,7 +351,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -217,7 +408,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -277,7 +468,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -333,7 +524,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -391,7 +582,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

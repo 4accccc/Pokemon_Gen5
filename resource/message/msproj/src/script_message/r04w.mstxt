@@ -1435,10 +1435,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>看板分類：タウンマップ</Comment>
+			<Comment>看板分類：タウンマップ
+・GRIDX=435、GRIDZ=591</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-12T07:38:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1518,11 +1519,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おつかれの　さぎょういんは
-ヒウンシティちかくの　プレハブへ！</Text>
+			<Text>このさき　リゾートデザート
+みぎ　ライモンシティ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-12T07:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1530,11 +1531,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おつかれの　さぎょういんは
-ヒウンシティ近くの　プレハブへ！</Text>
+			<Text>この先　リゾートデザート
+右　ライモンシティ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-12T07:35:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1543,12 +1544,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX=398、GRIDZ=557
-※swanでメッセージ内容変更
-　もしくは削除ラベル</Comment>
+・GRIDX=405、GRIDZ=531</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-12T07:35:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1556,6 +1555,56 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-11T09:18:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04w_sign4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このさき　ライモンシティ
+ひだり　リゾートデザート</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:35:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:34:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この先　ライモンシティ
+左　リゾートデザート</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:35:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:34:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX=422、GRIDZ=557</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:35:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:34:24" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

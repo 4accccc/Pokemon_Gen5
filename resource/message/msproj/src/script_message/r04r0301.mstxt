@@ -62,4 +62,46 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_r04r0301_poke49_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぐぐう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:15:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:15:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぐぐう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:15:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:15:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:16:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE49
+ポケモン・ダンゴロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:15:37" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>

@@ -2,14 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_r04r0102_middlewoman2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>もっと　かいはつされると　きいて
+ひっこして　きたんだけどねえ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>もっと　開発されると　きいて
+引越して　来たんだけどねえ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:42:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +30,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♀</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:42:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>MIDDLEWOMAN2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:40:20" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -46,6 +48,99 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0102_middleman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうじを　きちんと　おわらせないから
+ああいう　れんちゅうが　たむろする！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:37:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:13:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>工事を　きちんと　終わらせないから
+ああいう　連中が　たむろする！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:42:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T07:13:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:39:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:38:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0102_girl3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしは　ここが　だいすき！▼
+だって　ヒウンにも　ライモンにも
+ちかくて　べんり　なんだもん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:43:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしは　ここが　大好き！▼
+だって　ヒウンにも　ライモンにも
+近くて　便利なんだもん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:43:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:42:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:42:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-12T08:41:50" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
