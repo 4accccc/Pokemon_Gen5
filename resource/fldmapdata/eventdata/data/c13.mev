@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/15 18:46:01
+#save date:2011/08/12 13:50:09
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c13.wms
 #SECTION START:OBJ_EVENT
@@ -708,7 +708,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 -200
+-104 0 -200
 #size
 1 1
 #event number: 4

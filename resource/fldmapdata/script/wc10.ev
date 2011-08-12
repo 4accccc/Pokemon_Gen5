@@ -50,7 +50,7 @@ EVENT_START  ev_pos_wc10_d31r0101_door
   _CAMERA_PURGE()		//カメラのバインドを解く
   
   //カメラ操作,最後の引数はカメラ操作にかけるフレーム数
-  _CAMERA_MOVE( 7782,0,2166784,1802240,847872,1212416,64 )
+  _CAMERA_MOVE( 358,0,1085440,1867776,544799,1409024,1)
   
   //アニメ：主人公入り口へ移動
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_u)

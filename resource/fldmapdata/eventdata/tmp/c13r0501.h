@@ -3,6 +3,7 @@
 #define ZONE_C13R0501_EVD_H
 
 #define DOOR_ID_C13R0501_C13_EXIT01       0
+#define DOOR_ID_C13R0501_C15_EXIT01       1
 
 #endif //ZONE_C13R0501_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c13r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
