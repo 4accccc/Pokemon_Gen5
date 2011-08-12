@@ -1020,15 +1020,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すれちがった　ひとが
-どんなことを　しているのかが
-リアルタイムで　ひょうじされます。
-タッチすることで　あいてについて
-くわしく　みたり
-じゆうに　はつげん　できます。</Text>
+			<Text>また　フェスミッションが
+かいさい　されているときは
+ＦＥＳ　ＭＩＳＳＩＯＮ！　の　もじが
+みぎから　ひだりへ　ながれます。
+フェスミッションは
+すれちがいログから　さんかできます。</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:44" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:19:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1036,15 +1036,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すれ違った　人が
-どんなことを　しているのかが
-リアルタイムで　表示されます。
-タッチすることで
-相手についての　詳細を　みたり
-自由に　発言することが　できます。</Text>
+			<Text>また　フェスミッションが
+開催されているときは
+ＦＥＳ　ＭＩＳＳＩＯＮ！　の文字が
+右から左へ　流れます。
+フェスミッションは
+すれ違いログから　参加できます。</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:44" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:19:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1053,10 +1053,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>説明文
-「すれちがいログ」について</Comment>
+「すれちがいログ」について
+２ページ目
+
+ＳＷＡＮで追加</Comment>
 			<CommentModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:44" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:20:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1065,6 +1068,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CG_HELP_MSG_11"
@@ -1122,15 +1132,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すれちがった　ひとの
-このみや　しゅみを　ちょうさできます。
-ちょうさしたい　ないようを　きめれば
-きょう　すれちがった　ひとの　データ
-いままでに　すれちがった　ひとの
-データを　みることが　できます。</Text>
+			<Text>また　すれちがいちょうさたいで
+うけた　ちょうさが　かんりょうすると
+ボタンが　てんめつ　します。
+ちょうさたい　たいちょうに
+ほうこく　しましょう。</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:54" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:34:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1138,15 +1147,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すれ違った　人の
-好みや　趣味を　調査できます。
-調査したい　内容を　決定すれば
-今日　すれ違った　人の　データと
-今までに　すれ違った　人の
-データを　みることが　できます。</Text>
+			<Text>また　すれ違い調査隊で
+受けた調査が　完了すると
+ボタンが　点滅します。
+調査隊　隊長に
+報告しましょう。</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:54" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1155,10 +1163,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>説明文
-「ちょうさたんちき」について</Comment>
+「ちょうさたんちき」について
+２ページ目
+
+ＳＷＡＮで追加</Comment>
 			<CommentModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:54" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:13:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1167,6 +1178,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CG_HELP_MSG_13">
@@ -1174,13 +1192,13 @@
 			Language="JPN">
 			<Text>カスタムマークを　タッチすると
 マークが　てんめつ　します。
-その　じょうたいで　ボタンを
-タッチすると　いろが　へんか　します。
-いろの　ボタンを　ならべて
-すきな　もようを　つくれます。</Text>
+ボタンを　タッチしながら　うごかすと
+ばしょを　かえることが　できます。
+また　リングを　タッチすると
+リングの　いろが　へんかします。</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:54" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:06:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1190,13 +1208,13 @@
 			Language="JPN_KANJI">
 			<Text>カスタムマークを　タッチすると
 マークが　点滅します。
-その　状態で　ボタンを
-タッチすると　色が　変化します。
-色の　ボタンを　並べて
-好きな　模様を　つくれます。</Text>
+ボタンを　タッチしながら　動かすと
+場所を　変えることが　できます。
+また　リングを　タッチすると
+リングの　色が　変化します。</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:54" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:06:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1206,11 +1224,20 @@
 			Language="JPN">
 			<Comment>説明文
 「カスタム」について
-・何の色が変わる？</Comment>
+・何の色が変わる？
+
+ＳＷＡＮで変更</Comment>
 			<CommentModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:54" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:07:19" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CG_HELP_MSG_14">
@@ -1254,20 +1281,26 @@
 				User="iwasawa:W00270"
 				Time="2011-07-20T05:20:54" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CG_HELP_MSG_15">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんげんマークを　タッチすると
-オンと　オフを　きりかえるかの
-かくにんがめんに　かわります。
-オフにすると　タッチぶぶんが
-くらくなり　どうじに
-むせんの　つうしんが　オフになります。</Text>
+			<Text>また　のこされた　でんりょくが
+すくない　じょうたいで
+ＤＳの　ふたが　とじられていると
+Ｃギアの　でんげんが
+じどうてきに　オフになります。</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:36" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:34:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1275,15 +1308,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｃ－ＧＥＡＲの　右下にある
-電源マークを　タッチすると
-ＯＮと　ＯＦＦを　切り替えるかの
-確認画面に　移行します。
-ＯＦＦにすると　タッチ部分が　暗くなり
-同時に　無線通信が　ＯＦＦになります。</Text>
+			<Text>また　残された電力が
+少ない状態で
+ＤＳの　ふたが　閉じられていると
+Ｃ－ＧＥＡＲの　電源が
+自動的に　ＯＦＦになります。</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:36" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:34:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1292,11 +1324,21 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>説明文
-「Ｃ－ＧＥＡＲ　ＯＮ／ＯＦＦ」について</Comment>
+「Ｃ－ＧＥＡＲ　ＯＮ／ＯＦＦ」について
+２ページ目
+
+ＳＷＡＮで追加</Comment>
 			<CommentModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-07-20T05:20:36" />
+				User="ito_hiroto:W00178"
+				Time="2011-08-12T01:07:22" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CG_HELP_SYS_01"
