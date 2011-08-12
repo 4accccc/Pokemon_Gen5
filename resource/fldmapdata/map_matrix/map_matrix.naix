@@ -402,7 +402,11 @@ enum {
 	NARC_map_matrix_dun2607_mat_bin = 388,
 	NARC_map_matrix_white2601_mat_bin = 389,
 	NARC_map_matrix_white2603_mat_bin = 390,
-	NARC_map_matrix_dun2608_mat_bin = 391
+	NARC_map_matrix_dun2608_mat_bin = 391,
+	NARC_map_matrix_dun2721_mat_bin = 392,
+	NARC_map_matrix_dun2722_mat_bin = 393,
+	NARC_map_matrix_dun2723_mat_bin = 394,
+	NARC_map_matrix_dun2724_mat_bin = 395
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

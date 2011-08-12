@@ -445,3 +445,4 @@
 "nsbmdfiles/door_c14_gym.nsbmd"
 "nsbmdfiles/c15_obj_01.nsbmd"
 "nsbmdfiles/cr_obj_01.nsbmd"
+"nsbmdfiles/c03_ship_03_04.nsbmd"

@@ -390,3 +390,7 @@
 "white2601.bin"
 "white2603.bin"
 "DUN2608.bin"
+"DUN2721.bin"
+"DUN2722.bin"
+"DUN2723.bin"
+"DUN2724.bin"
