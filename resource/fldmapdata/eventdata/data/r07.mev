@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/12 11:34:43
+#save date:2011/08/12 16:06:51
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r07.wms
 #SECTION START:OBJ_EVENT
@@ -505,7 +505,7 @@ SCRID_ANIMAL_TRAIL_06
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 -280
+-104 0 -280
 #event number: 4
 #Bg Event Label
 BGID_R07_ANIMAL_TRAIL_01_2
@@ -518,7 +518,7 @@ SCRID_ANIMAL_TRAIL_06
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -280
+-88 0 -280
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
