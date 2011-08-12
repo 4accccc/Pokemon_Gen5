@@ -431,7 +431,7 @@
 ;	DIV_RATE = 2040704	; mainが入る
 
 ;	DIV_RATE  = 3040704	; プログラムの最後まではいる
-	DIV_NUM   = 300		; 棒グラフを画面内で何分割して描画するか
+	DIV_NUM   = 350		; 棒グラフを画面内で何分割して描画するか
 	BAR_WIDTH = (gWidth/DIV_NUM)
 
 	sizemax=0
