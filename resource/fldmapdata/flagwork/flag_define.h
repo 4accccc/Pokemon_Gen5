@@ -382,11 +382,11 @@
 #define FE_C09_GUIDE_TALK                  366 /* 0x016e ポケモンリーグ：ベテラン初回会話 */
 #define FE_C09P01_GATE_OPEN                367 /* 0x016f ポケモンリーグ：ゲートを閉じる */
 #define FE_R22_SWBOSS_ITEM_01              368 /* 0x0170 R22：アクロマからアイテムを受け取った */
-		/* not used   369(0x0171) */
-		/* not used   370(0x0172) */
-		/* not used   371(0x0173) */
-		/* not used   372(0x0174) */
-		/* not used   373(0x0175) */
+#define FE_AMUSEMENT_NPC01_TALK            369 /* 0x0171 ライモン遊園地：観覧車NPC1と会話したフラグ */
+#define FE_AMUSEMENT_NPC02_TALK            370 /* 0x0172 ライモン遊園地：観覧車NPC2と会話したフラグ */
+#define FE_AMUSEMENT_NPC03_TALK            371 /* 0x0173 ライモン遊園地：観覧車NPC3と会話したフラグ */
+#define FE_AMUSEMENT_NPC04_TALK            372 /* 0x0174 ライモン遊園地：観覧車NPC4と会話したフラグ */
+#define FE_AMUSEMENT_LCC_TALK              373 /* 0x0175 ライモン遊園地：観覧車LCC隠しキャラと会話したフラグ */
 		/* not used   374(0x0176) */
 		/* not used   375(0x0177) */
 		/* not used   376(0x0178) */
@@ -2321,6 +2321,7 @@
 #define TMFLG_D07R0401_QUIZ_FALSE         2770 /* 0x0ad2 ネジ山：１日１回重機マニアクイズ不正解 */
 #define TMFLG_R04_PARA_CHECK_01           2771 /* 0x0ad3 4番道路民家：パラメータチェックイベント起動 */
 #define TMFLG_R04_PARA_CLEAR_01           2772 /* 0x0ad4 4番道路民家：パラメータチェックイベントクリア */
+#define TMFLG_AMUSEMENT_NPC               2773 /* 0x0ad5 ライモン遊園地：観覧車NPCキャラ会話フラグ */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 

@@ -309,6 +309,7 @@
 #define WK_OTHER_H03_BOUON_MONSNUM       16693 /* 0x4135 シリンダーブリッジ：特性「ぼうおん」のポケモンを見せた後、そのポケモン名を固定する */
 #define WK_OTHER_R02_HAADOROKKU          16694 /* 0x4136 2番道路：特性「ハードロック」のポケモンを見せた後、そのポケモン名を固定する */
 #define WK_OTHER_R04_PARA_CHECK_01       16695 /* 0x4137 パラメータチェッカーで指定されたパラメータ格納用ワーク。 ブラック版は「すばやさ」、ホワイト版は「ＨＰ」をチェックする */
+#define WK_OTHER_AMUSEMENT_PARTNER       16696 /* 0x4138 ライモン遊園地：観覧車でのパートナーを保存しておく用ワーク */
 
 #define WK_AREA_END                      16702 /* 0x413e  */
 
