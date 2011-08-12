@@ -1252,7 +1252,7 @@
 かっとうの　たそがれクルーズ！</language>
 		<language name="JPN_KANJI" width="216">ロイヤルイッシュ号　それは
 景色を見るか　勝負をするか
-葛藤の　たそがれクルーズ！</language>
+かっとうの　たそがれクルーズ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_029">
@@ -1397,10 +1397,10 @@
 	</row>
 
 	<row id="MDL_HINT_BATTLE_046">
-		<language name="JPN" width="216">はてなく　つづく　ダンジョンで
+		<language name="JPN" width="216">●●●●●●●●●●で
 たたかいに　かって！
 かって！　かちまくれ！</language>
-		<language name="JPN_KANJI" width="216">果てなく　続く　ダンジョンで
+		<language name="JPN_KANJI" width="216">●●●●●●●●●●で
 戦いに　勝って！
 勝って！　勝ちまくれ！</language>
 	</row>
@@ -1421,56 +1421,56 @@
 	</row>
 
 	<row id="MDL_HINT_BATTLE_050">
-		<language name="JPN" width="216">はてなく　つづく　ダンジョンの
-エリア２〜５の　いずれかで
+		<language name="JPN" width="216">●●●●●●●●●●の
+エリア２から５の　いずれかで
 すべての　トレーナーを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">果てなく　続く　ダンジョンの
-エリア２〜５の　いずれかで
+		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+エリア２から５の　いずれかで
 すべての　トレーナーを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_051">
-		<language name="JPN" width="216">はてなく　つづく　ダンジョンの
-エリア６〜１０の　いずれかで
+		<language name="JPN" width="216">●●●●●●●●●●の
+エリア６から１０の　いずれかで
 すべての　トレーナーを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">果てなく　続く　ダンジョンの
-エリア６〜１０の　いずれかで
+		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+エリア６から１０の　いずれかで
 すべての　トレーナーを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_052">
-		<language name="JPN" width="216">はてなく　つづく　ダンジョンの
-エリア２〜５の　いずれかで
+		<language name="JPN" width="216">●●●●●●●●●●の
+エリア２から５の　いずれかで
 ボストレーナーだけを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">果てなく　続く　ダンジョンの
-エリア２〜５の　いずれかで
+		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+エリア２から５の　いずれかで
 ボストレーナーだけを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_053">
-		<language name="JPN" width="216">はてなく　つづく　ダンジョンの
-エリア６〜１０の　いずれかで
+		<language name="JPN" width="216">●●●●●●●●●●の
+エリア６から１０の　いずれかで
 ボストレーナーだけを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">果てなく　続く　ダンジョンの
-エリア６〜１０の　いずれかで
+		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+エリア６から１０の　いずれかで
 ボストレーナーだけを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_054">
-		<language name="JPN" width="216">はてなく　つづく　ダンジョンの
-エリア２〜５の　いずれかを
+		<language name="JPN" width="216">●●●●●●●●●●の
+エリア２から５の　いずれかを
 １００ほ　いないに　クリアしろ！</language>
-		<language name="JPN_KANJI" width="216">果てなく　続く　ダンジョンの
-エリア２〜５の　いずれかを
+		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+エリア２から５の　いずれかを
 １００歩以内に　クリアしろ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_055">
-		<language name="JPN" width="216">はてなく　つづく　ダンジョンの
-エリア６〜１０の　いずれかを
+		<language name="JPN" width="216">●●●●●●●●●●の
+エリア６から１０の　いずれかを
 １０００ほ　いないに　クリアしろ！</language>
-		<language name="JPN_KANJI" width="216">果てなく　続く　ダンジョンの
-エリア６〜１０の　いずれかを
+		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+エリア６から１０の　いずれかを
 １０００歩以内に　クリアしろ！</language>
 	</row>
 
@@ -1926,7 +1926,7 @@
 ゆめと　げんじつを　つなげる
 すてきな　テクノロジー</language>
 		<language name="JPN_KANJI" width="216">ゲームシンク　それは
-夢と　現実を　繋げる
+夢と　現実を　つなげる
 素敵な　テクノロジー</language>
 	</row>
 
@@ -1935,7 +1935,7 @@
 かこと　みらいを　つなげる
 ふしぎな　テクノロジー</language>
 		<language name="JPN_KANJI" width="216">データコンバート　それは
-過去と　未来を　繋げる
+過去と　未来を　つなげる
 不思議な　テクノロジー</language>
 	</row>
 
