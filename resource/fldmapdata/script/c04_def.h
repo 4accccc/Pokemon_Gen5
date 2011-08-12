@@ -24,5 +24,7 @@
 #define SCRID_C04_SWHEROINE_01 (17)
 #define SCRID_C04_TBOSSBL_01 (18)
 #define SCRID_C04_TBOSS_01 (19)
+#define SCRID_C04_RAILMAN_01 (20)
+#define SCRID_C04_POKE33_01 (21)
 
 #endif //_C04_DEF_H_
