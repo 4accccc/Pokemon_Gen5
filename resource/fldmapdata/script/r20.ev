@@ -27,11 +27,39 @@ _EVENT_DATA    ev_pos_r20_swbell_01
 _EVENT_DATA    ev_r20_mountman_01
 _EVENT_DATA    ev_bg_r20_board_01
 _EVENT_DATA    ev_pos_ochiba_fall
+_EVENT_DATA    ev_zone_r20
+_EVENT_DATA    ev_init_r20
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_r20
+ 
+  //季節チェック
+  DEFINE_LOCAL SCWK_SEASON
+  _GET_SEASON_ID( SCWK_SEASON )
+  
+  //秋以外
+  IF $SCWK_SEASON != PMSEASON_AUTUMN THEN
+    //落ち葉POSを無効に
+    $LOCALWORK0 = 1
+  ENDIF
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_r20
+
+//
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*POS：山男ストッパー                                */

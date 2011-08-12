@@ -11,5 +11,7 @@
 #define SCRID_R20_MOUNTMAN_01 (4)
 #define SCRID_BG_R20_BOARD_01 (5)
 #define SCRID_POS_OCHIBA_FALL (6)
+#define SCRID_ZONE_R20 (7)
+#define SCRID_INIT_R20 (8)
 
 #endif //_R20_DEF_H_
