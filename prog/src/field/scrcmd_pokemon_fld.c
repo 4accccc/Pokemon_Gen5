@@ -1006,6 +1006,27 @@ VMCMD_RESULT EvCmdFieldPokeTradeCheck( VMHANDLE *core, void *wk )
   // 全チェックをパスすれば交換可能
   *ret_wk = FLD_TRADE_ENABLE;
 
+  // SWAN観覧車での交換不可チェック
+  //  交換させたくない判定をここに追加する
+  if( *ret_wk == FLD_TRADE_ENABLE )
+  {
+    u32 monsno = PP_Get( poke, ID_PARA_monsno, NULL );
+    u32 form = PP_Get( poke, ID_PARA_form_no, NULL );
+    u32 tamago_flag = PP_Get( poke, ID_PARA_tamago_flag, NULL );
+
+    // ダメタマゴ判定
+    if( tamago_flag == TRUE )
+    {
+      *ret_wk = FLD_TRADE_DISABLE_AMUSEMENT;
+    }
+
+    // 合体キュレム判定
+    if( POKETOOL_CheckKyuremuUnionForm( monsno, form )  == TRUE )
+    {
+      *ret_wk = FLD_TRADE_DISABLE_AMUSEMENT;
+    }
+  }
+
   // タマゴチェック
   if( *ret_wk == FLD_TRADE_ENABLE )
   {

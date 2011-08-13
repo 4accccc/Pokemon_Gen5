@@ -314,6 +314,7 @@
 #define FLD_TRADE_DISABLE_EGG    (1)  // 交換不可(タマゴのため)
 #define FLD_TRADE_DISABLE_MONSNO (2)  // 交換不可(違うモンスターのため)
 #define FLD_TRADE_DISABLE_SEX    (3)  // 交換不可(違う性別のため)
+#define FLD_TRADE_DISABLE_AMUSEMENT (4)  // 観覧車での交換不可(合体キュレムとか判別する)
 
 //--------------------------------------------------------------
 /// ワイヤレスセーブモード
