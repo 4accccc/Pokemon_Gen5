@@ -2,6 +2,7 @@
 #ifndef ZONE_R22_EVD_H
 #define ZONE_R22_EVD_H
 
+#define DOOR_ID_R22_D10R0101_EXIT01       0
 
 #endif //ZONE_R22_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r22.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

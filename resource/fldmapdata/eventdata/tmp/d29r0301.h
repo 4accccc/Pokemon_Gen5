@@ -6,6 +6,7 @@
 #define DOOR_ID_D29R0301_D29R0301_EXIT01  1
 #define DOOR_ID_D29R0301_D29R0301_EXIT02  2
 #define DOOR_ID_D29R0301_D29R0401_EXIT01  3
+#define DOOR_ID_D29R0301_D07R0601_EXIT01  4
 
 #endif //ZONE_D29R0301_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d29r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
