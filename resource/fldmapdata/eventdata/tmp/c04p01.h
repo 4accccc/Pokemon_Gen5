@@ -13,6 +13,7 @@
 
 #define C04P01_CLOWN_01                    0
 #define FLD_ITEM_62                        1
+#define C04P01_WHEEL_OBJ                   2
 
 #endif //ZONE_C04P01_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04p01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -700,4 +700,6 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { TRUE, FALSE, FALSE }, // _TV_CM_GET_MSG (697)
   { TRUE, FALSE, FALSE }, // _OBJ_TRANS (698)
   { FALSE, FALSE, FALSE }, // NO_CMD (699)
+  { TRUE, FALSE, FALSE }, // _FIELD_POKE_GET_TRADE_MONSNO (700)
+  { FALSE, FALSE, FALSE }, // NO_CMD (701)
 };

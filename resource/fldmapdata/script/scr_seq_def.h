@@ -9006,6 +9006,16 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _WHEEL_NPC_MSG
+ * @brief 簡易イベントコマンド：
+ *        観覧車SWAN NPCのメッセージ表示
+ */
+//--------------------------------------------------------------
+#define _WHEEL_NPC_MSG( msg_id, id, f_2nd )  \
+    _ASM_WHEEL_NPC_MSG msg_id, id, f_2nd
+
+//--------------------------------------------------------------
+/**
  * @def _GET_WHEEL_TRAINER_OBJ_ID
  * @brief 観覧車トレーナーのOBJ_IDを取得
  */
@@ -10178,7 +10188,27 @@
     .short  \trade_no
     .short  \party_pos
     .endm
-  
+
+//--------------------------------------------------------------
+/**
+ * @def _FIELD_POKE_GET_TRADE_MONSNO
+ * @brief ゲーム内交換で交換でもらうポケモンナンバーを取得
+ * @param ret_wk    結果を受け取るワーク
+ * @param trade_no  もらうポケモンを指定 (FLD_TRADE_POKE_xxxx)
+ *
+ * @retval モンスターナンバー
+ */
+//--------------------------------------------------------------
+#define _FIELD_POKE_GET_TRADE_MONSNO( ret_wk, trade_no ) \
+    _ASM_FIELD_POKE_GET_TRADE_MONSNO ret_wk, trade_no
+
+    .macro  _ASM_FIELD_POKE_GET_TRADE_MONSNO ret_wk, trade_no
+    .short  EV_SEQ_FIELD_POKE_GET_TRADE_MONSNO
+    .short  \ret_wk
+    .short  \trade_no
+    .endm
+
+
 //======================================================================
 // 技思い出し関連
 //======================================================================

@@ -544,6 +544,12 @@
 #define SCR_GYM01_CURTAIN_OPEN_TWO    (3)     ///<カーテン2つ開いている 
 #define SCR_GYM01_CURTAIN_OPEN_THREE  (7)     ///<カーテン3つ開いている
 
+//--------------------------------------------------------------
+//    観覧車パートナー種類
+//--------------------------------------------------------------
+#define SCR_AMUSEMENT_PARTNER_DEFAULT (0)     ///<WBの四季トレーナー
+#define SCR_AMUSEMENT_PARTNER_NPC     (1)     ///<NPCキャラ
+#define SCR_AMUSEMENT_PARTNER_LCC     (2)     ///<LCC隠しキャラ
 
 //--------------------------------------------------------------
 //    ポケモン作成 性別指定

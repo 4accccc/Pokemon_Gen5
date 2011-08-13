@@ -1141,6 +1141,7 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_7,   7 ) // アジト船パスワード入力(ゾーン限定)
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_8,   8 ) // TV番組
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_9,   9 ) // ラティオス・ラティアスイベント用(ゾーン限定)
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_10,  10 ) // 観覧車トレーナー
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1195,6 +1196,11 @@ EVENT_START   ev_debug_ichiraku
     _OBJ_TRANS( D01R0101_RATI2_01, 12, 0, 26, 90 )
     //_OBJ_POS_CHANGE( D01R0101_RATI2_01, 13, 5, 20 , DIR_RIGHT )
     //_OBJ_TRANS( D01R0101_RATI2_01, 26, 5, 15, 80 )
+  CASE 10 THEN
+    // 観覧車トレーナー
+		_FLAG_RESET( TMFLG_AMUSEMENT_TR_BTL )
+		_FLAG_RESET( TMFLG_AMUSEMENT_NPC )
+    _SET_ZENKOKU_ZUKAN_FLAG()
     
   ENDSWITCH
 

@@ -41,6 +41,72 @@ INIT_EVENT_START  ev_zone_c04p01
 
   ENDIF
 
+  // 観覧車
+  {
+    DEFINE_LOCAL lwk_date
+    DEFINE_LOCAL i_npc_obj
+
+    // LCC隠しキャラとのデートがあるかチェック
+    _PERSON_STATE_CHECK_SECRET_DATE( lwk_date )
+
+    //曜日を取得
+    _GET_WEEK( SCWK_ANSWER )
+    SWITCH $SCWK_ANSWER
+    CASE RTC_WEEK_TUESDAY THEN
+      $i_npc_obj = SWRIVAL // 火曜はライバル
+    CASE RTC_WEEK_WEDNESDAY THEN
+      $i_npc_obj = SWBELL // 水曜日はベル
+    CASE RTC_WEEK_FRIDAY THEN
+      $i_npc_obj = BOSS // 金曜日はN
+    CASE RTC_WEEK_SATURDAY THEN
+      $i_npc_obj = SWLEADER1 // 土曜日はチェレン
+    ENDSWITCH
+
+    // LCC隠しキャラとデート有りなら
+    IF $lwk_date != 0 THEN
+      _GET_MY_SEX( SCWK_ANSWER )
+      IF $SCWK_ANSWER == PM_MALE THEN
+        $OBJCHRWORK0 = SWIDOLW
+      ELSE
+        $OBJCHRWORK0 = SWIDOLM
+      ENDIF
+      // 見た目を保存しておく
+      $WK_OTHER_AMUSEMENT_PARTNER = SCR_AMUSEMENT_PARTNER_LCC
+
+    // NPCキャラOBJコードが設定されている かつ 
+    // タイムフラグがOFFだったら（イベントをやっていないなら）
+    // かつ　シナリオクリア後
+    ELSIF $i_npc_obj > 0 && FLAG_OFF( TMFLG_AMUSEMENT_NPC ) && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+      $OBJCHRWORK0 = $i_npc_obj
+      // 見た目を保存しておく
+      $WK_OTHER_AMUSEMENT_PARTNER = SCR_AMUSEMENT_PARTNER_NPC
+    ELSE
+    // それ以外
+    // WBの時と同じ処理
+    {
+      //観覧車トレーナーの見た目を決定
+      DEFINE_LOCAL  i_wheel_trainer
+      DEFINE_LOCAL  i_season
+
+      _GET_SEASON_ID( i_season )
+      IF $WK_OTHER_WHEEL_SEASON != $i_season THEN
+      //もし季節が異なっていたら、タイムフラグをリセット
+      _FLAG_RESET( TMFLG_AMUSEMENT_TR_BTL )
+      ENDIF
+
+      _GET_WHEEL_TRAINER_ENTRY_ID( i_wheel_trainer )
+      _GET_WHEEL_TRAINER_OBJ_ID( i_wheel_trainer, SCWK_ANSWER )
+      $OBJCHRWORK0 = $SCWK_ANSWER
+
+      //今の季節を憶えておく
+      $WK_OTHER_WHEEL_SEASON = $i_season
+
+      // 見た目を保存しておく
+      $WK_OTHER_AMUSEMENT_PARTNER = SCR_AMUSEMENT_PARTNER_DEFAULT
+    }
+    ENDIF
+  }
+
 INIT_EVENT_END
 
 

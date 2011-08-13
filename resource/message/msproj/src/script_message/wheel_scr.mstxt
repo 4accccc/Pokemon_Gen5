@@ -5573,4 +5573,1702 @@ OL</Text>
 				Time="2011-05-20T09:30:19" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_wheel_rival_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_rival_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:42:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_rival_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:42:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ライバル：初回挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:42:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:00:33" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_rival_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_rival_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:43:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_rival_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:43:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ライバル：初回お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:43:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:00:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_rival_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_rival_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:44:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_rival_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:44:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ライバル：汎用挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:44:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:00:36" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_rival_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_rival_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:44:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_rival_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:44:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ライバル：汎用お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:44:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:00:36" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_bell_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_bell_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:45:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_bell_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:45:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ベル：初回挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:46:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:00:50" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_bell_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_bell_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:46:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_bell_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:46:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ベル：初回お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:46:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:00:52" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_bell_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_bell_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:46:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_bell_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:46:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ベル：汎用挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:46:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:00:52" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_bell_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_bell_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:46:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_bell_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:46:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ベル：汎用お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:46:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:00:53" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_n_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_n_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:47:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_n_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:47:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>N：初回挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:48:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:08" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_n_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_n_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:48:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_n_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>N：初回お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:48:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:10" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_n_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_n_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:48:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_n_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:48:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>N：汎用挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:48:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:10" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_n_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_n_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:48:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_n_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>N：汎用お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:48:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:10" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_chelen_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_chelen_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_chelen_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>チェレン：初回挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+チェレン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:25" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_chelen_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_chelen_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_chelen_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>チェレン：初回お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+チェレン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:27" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_chelen_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_chelen_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_chelen_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>チェレン：汎用挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+チェレン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:27" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_chelen_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_chelen_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_chelen_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>チェレン：汎用お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:53:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+チェレン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:28" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_w_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_w_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:56:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_w_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:56:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♀：初回挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:57:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:05" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_w_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_w_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:57:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_w_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:57:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♀：初回お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:57:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:06" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_w_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_w_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:57:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_w_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:57:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♀：汎用挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:57:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:07" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_w_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_w_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:57:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_w_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:57:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♀：汎用お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:58:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:07" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_m_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_m_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_m_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:55:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♂：初回挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:56:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:48" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_m_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_m_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:55:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_m_02</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:55:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♂：初回お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:56:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:50" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_m_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_m_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:55:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_m_03</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:55:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♂：汎用挨拶メッセージ
+
+メッセージ表示後、観覧車に乗りデモへ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:56:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:50" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_m_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_m_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:55:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_m_04</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:55:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♂：汎用お別れメッセージ
+
+メッセージ表示後、画面外へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:55:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:51" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_w_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]　msg_wheel_swidol_w_05</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T13:07:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]　msg_wheel_swidol_w_05</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T13:07:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♀：交換要求メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_w_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_w_06</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_w_06</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♀：交換成立メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_w_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_w_07</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_w_07</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♀：交換不成立メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:02:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_m_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]　msg_wheel_swidol_m_05</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-13T01:33:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]　msg_wheel_swidol_m_05</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-13T01:33:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♂：交換要求メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:58:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:53" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_m_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_wheel_swidol_m_06</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:59:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_m_06</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:59:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♂：交換成立メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:59:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:53" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_swidol_m_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>　msg_wheel_swidol_m_07</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T13:07:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_wheel_swidol_m_07</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:59:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>LLC隠しキャラ♂：交換不成立メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T06:59:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-12T07:01:54" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

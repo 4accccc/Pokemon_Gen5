@@ -592,6 +592,36 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief 観覧車トレーナーメッセージ SWAN版
+ *
+ * @param ret_wk
+ */
+//--------------------------------------------------------------
+  .macro _ASM_WHEEL_NPC_MSG msg_id, id, f_2nd
+  
+  _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+  _PUSH_WORK  SCWK_PARAM2
+
+  _ASM_LDWKVAL  SCWK_PARAM0, \msg_id
+  _ASM_LDWKVAL  SCWK_PARAM1, \id
+  _ASM_LDWKVAL  SCWK_PARAM2, \f_2nd
+  
+  _ASM_MUL_WK SCWK_PARAM1,4
+  _ASM_MUL_WK SCWK_PARAM2,2
+  _ASM_ADD_WK SCWK_PARAM0,SCWK_PARAM1
+  _ASM_ADD_WK SCWK_PARAM0,SCWK_PARAM2
+ 
+  _ASM_PLAYER_NAME  0
+  _ASM_BALLOONWIN_TALKOBJ_MSG SCWK_PARAM0
+ 
+  _POP_WORK  SCWK_PARAM2
+  _POP_WORK  SCWK_PARAM1
+  _POP_WORK  SCWK_PARAM0
+  .endm
+
+//--------------------------------------------------------------
+/**
  * トレーナー連れ歩き開始処理呼び出し
  *
  * @param obj_id_wk 連れ歩き対象にするOBJIDを格納したワーク

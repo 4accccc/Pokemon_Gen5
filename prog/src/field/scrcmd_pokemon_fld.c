@@ -1066,6 +1066,35 @@ VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief ゲーム内交換でのもらうポケモンナンバー取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdFieldPokeGetTradeMonsno( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第一引数
+  u16            trade_no = SCRCMD_GetVMWorkValue( core, work );  // コマンド第二引数
+  FLD_TRADE_WORK*   trade = FLD_TRADE_WORK_Create( heap_id, trade_no );
+ 
+  u16 monsno = FLD_TRADE_WORK_GetTradeMonsno( trade );		
+
+  // 交換でもらうポケモンナンバーをセット
+  *ret_wk = monsno;
+
+  FLD_TRADE_WORK_Delete( trade );
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //======================================================================
 //======================================================================

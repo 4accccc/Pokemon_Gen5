@@ -1076,6 +1076,10 @@
   DEF_CMD( EvCmdObjTrans, EV_SEQ_OBJ_TRANS )
   NO_CMD()
 
+  // 交換関連
+  DEF_CMD( EvCmdFieldPokeGetTradeMonsno, EV_SEQ_FIELD_POKE_GET_TRADE_MONSNO )
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
