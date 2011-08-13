@@ -66,7 +66,7 @@ static const DEMO3D_CMD_DATA demo3d_cmd_f_wheel_end_data[] = {
 /// hero Unit File Resource
 
 static const u16 res_f_wheel_file_hero[] = {
- NARC_data_demo3d_fmdl_hero_nsbmd,
+ NARC_data_demo3d_fmdl_swhero_nsbmd,
  NARC_data_demo3d_fmdl_t4x4hero_u_nsbtp,
  NARC_data_demo3d_hero_ine_nsbca,
 };
@@ -79,7 +79,7 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_hero[] = {
 /// heroine Unit File Resource
 
 static const u16 res_f_wheel_file_heroine[] = {
- NARC_data_demo3d_fmdl_heroine_nsbmd,
+ NARC_data_demo3d_fmdl_swheroine_nsbmd,
  NARC_data_demo3d_fmdl_t4x4hero_u_nsbtp,
  NARC_data_demo3d_hero_ine_nsbca,
 };
@@ -206,6 +206,71 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_boy4[] = {
 };
 
 ///==================================
+/// swrival Unit File Resource
+
+static const u16 res_f_wheel_file_swrival[] = {
+ NARC_data_demo3d_fmdl_swrival_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_swrival[] = {
+ { res_f_wheel_file_swrival, 3 },
+};
+
+///==================================
+/// swbell Unit File Resource
+
+static const u16 res_f_wheel_file_swbell[] = {
+ NARC_data_demo3d_fmdl_swbell_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_swbell[] = {
+ { res_f_wheel_file_swbell, 3 },
+};
+
+///==================================
+/// swleader1 Unit File Resource
+
+static const u16 res_f_wheel_file_swleader1[] = {
+ NARC_data_demo3d_fmdl_swleader1_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_swleader1[] = {
+ { res_f_wheel_file_swleader1, 3 },
+};
+
+///==================================
+/// swidolm Unit File Resource
+
+static const u16 res_f_wheel_file_swidolm[] = {
+ NARC_data_demo3d_fmdl_swidolm_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_swidolm[] = {
+ { res_f_wheel_file_swidolm, 3 },
+};
+
+///==================================
+/// swidolw Unit File Resource
+
+static const u16 res_f_wheel_file_swidolw[] = {
+ NARC_data_demo3d_fmdl_swidolw_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_swidolw[] = {
+ { res_f_wheel_file_swidolw, 3 },
+};
+
+///==================================
 /// field_sp Unit File Resource
 
 static const u16 res_f_wheel_file_field_sp[] = {
@@ -328,6 +393,12 @@ static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_boss_tbl[] = {
  { res_f_wheel_file_unit_waitress, 1 },
  { res_f_wheel_file_unit_babygirl2, 1 },
  { res_f_wheel_file_unit_boy4, 1 },
+ { res_f_wheel_file_unit_swrival, 1 },
+ { res_f_wheel_file_unit_swbell, 1 },
+ { res_f_wheel_file_unit_boss, 1 },
+ { res_f_wheel_file_unit_swleader1, 1 },
+ { res_f_wheel_file_unit_swidolw, 1 },
+ { res_f_wheel_file_unit_swidolm, 1 },
 };
 
 static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_field_sp_tbl[] = {
@@ -351,7 +422,7 @@ static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_sky_tbl[] = {
 
 static const DEMO3D_SCENE_UNIT res_f_wheel_scene_unit[] = {
  { res_f_wheel_file_unit_hero_tbl, 2, DEMO3D_UNITCHG_PLAYER_SEX },
- { res_f_wheel_file_unit_boss_tbl, 9, DEMO3D_UNITCHG_SCENE_ID },
+ { res_f_wheel_file_unit_boss_tbl, 15, DEMO3D_UNITCHG_SCENE_ID },
  { res_f_wheel_file_unit_field_sp_tbl, 4, DEMO3D_UNITCHG_SEASON },
  { res_f_wheel_file_unit_f_wheel_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_f_wheel_file_unit_f_wheel2_tbl, 1, DEMO3D_UNITCHG_NONE },

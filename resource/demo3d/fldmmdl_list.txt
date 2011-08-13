@@ -1,7 +1,7 @@
 #コンバート対象にするfldmmdlリソースのリスト
 
-FLDMMDL_LIST =	hero.imd \
-				heroine.imd \
+FLDMMDL_LIST =	swhero.imd \
+				swheroine.imd \
 				boss.imd \
 				dancer.imd \
 				trainerm.imd \
@@ -10,6 +10,10 @@ FLDMMDL_LIST =	hero.imd \
 				girl2.imd \
 				mountman.imd \
 				ol.imd \
-				babygirl2.imd
-
+				babygirl2.imd \
+        swrival.imd \
+        swbell.imd \
+        swleader1.imd \
+        swidolm.imd \
+        swidolw.imd
 
