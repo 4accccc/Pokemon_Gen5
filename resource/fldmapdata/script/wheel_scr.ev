@@ -30,7 +30,7 @@ DEFINE_LOCAL  lwk_tr_id
 DEFINE_LOCAL  lwk_flag_id
 DEFINE_LOCAL  lwk_1st_f
 DEFINE_LOCAL  lwk_2nd_f
-DEFINE_LOCAL  lwk_npc_id
+DEFINE_LOCAL  lwk_npc_id    // SWANパートナーID(0～5) NPC4人と隠しキャラ2人
 
 //==============================================================
 /// 
@@ -117,15 +117,20 @@ sub_wheel_talk_swan:
   _WHEEL_NPC_MSG( msg_wheel_rival_01, lwk_npc_id, lwk_2nd_f )  
   _BALLOONWIN_CLOSE()
 
-/*
   // 入り口まで移動
   _START_EVENT_BGM( SEQ_BGM_E_KANRANSYA )			//イベント曲再生	
   _OBJ_ANIME( SCWK_TARGET_OBJID, anm_move_to_entrance )
   _OBJ_ANIME_WAIT()
 
   //デモ再生
-  $i_scene_id = 0//$lwk_entry_id
-  $i_scene_id += 1
+  // sceene_id:9  ライバル
+  // sceene_id:10 ベル
+  // sceene_id:11 N
+  // sceene_id:12 チェレン
+  // sceene_id:13 LCC隠しキャラ 男
+  // sceene_id:14 LCC隠しキャラ 女
+  $i_scene_id = 9
+  $i_scene_id += $lwk_npc_id    // 0～5が入っている
 
   _DEMO_FADEOUT_BLACK_CALL()
   _CALL_3D_DEMO_EX( DEMO3D_ID_F_WHEEL, i_scene_id )
@@ -136,7 +141,6 @@ sub_wheel_talk_swan:
 
   _DEMO_FADEIN_BLACK_CALL()
 	_END_EVENT_BGM()  //BGM戻す
-*/
 
   // LCC隠しキャラなら
   IF $WK_OTHER_AMUSEMENT_PARTNER == SCR_AMUSEMENT_PARTNER_LCC THEN
@@ -217,8 +221,9 @@ sub_wheel_trade:
       // 選択したポケモンが交換可能かチェック
       _FIELD_POKE_TRADE_CHECK( lwk_trade_check, fld_trade_poke_no, lwk_select )
 
-      // 交換可能である
-      IF $lwk_trade_check == FLD_TRADE_ENABLE THEN
+      // 観覧車専用の交換不可でないなら交換OKにする
+      //  ダメタマゴと合体キュレムを交換不可にしている
+      IF $lwk_trade_check != FLD_TRADE_DISABLE_AMUSEMENT THEN
 
         // 交換成立メッセージ
         $msg_id += 1

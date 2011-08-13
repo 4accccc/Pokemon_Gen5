@@ -10175,6 +10175,7 @@
  *         FLD_TRADE_DISABLE_EGG    交換不可能(タマゴ)
  *         FLD_TRADE_DISABLE_MONSNO 交換不可能(モンスター違い)
  *         FLD_TRADE_DISABLE_SEX    交換不可能(性別違い)
+ *         FLD_TRADE_DISABLE_AMUSEMENT 観覧車での交換可(合体キュレムとか判別する)
  *
  *  戻り値は prog/src/field/script_def.h で定義.
  */
