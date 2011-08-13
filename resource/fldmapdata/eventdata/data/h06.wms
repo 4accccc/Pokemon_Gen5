@@ -1,15 +1,28 @@
 #WorldMap SaveData 
-#save date:2009/10/13 21:30:01
+#save date:2011/08/12 19:50:25
 #Width
-1
+2
 #Height
-1
+7
 #block x offset
 0
 #block z offset
 0
 #3dp file names
-C:\home\swan_data3d\field\in01\m_buill01_00_00.3dp
+C:\home\swan_data3d\field\out62\h06_a00_00.3dp
+C:\home\swan_data3d\field\out62\h06_a00_01.3dp
+C:\home\swan_data3d\field\out62\h06_a00_02.3dp
+C:\home\swan_data3d\field\out62\h06_a00_03.3dp
+C:\home\swan_data3d\field\out62\h06_a00_04.3dp
+C:\home\swan_data3d\field\out62\h06_a00_05.3dp
+C:\home\swan_data3d\field\out62\h06_a00_06.3dp
+C:\home\swan_data3d\field\out62\h06_a01_00.3dp
+C:\home\swan_data3d\field\out62\h06_a01_01.3dp
+C:\home\swan_data3d\field\out62\h06_a01_02.3dp
+C:\home\swan_data3d\field\out62\h06_a01_03.3dp
+C:\home\swan_data3d\field\out62\h06_a01_04.3dp
+C:\home\swan_data3d\field\out62\h06_a01_05.3dp
+C:\home\swan_data3d\field\out62\h06_a01_06.3dp
 #block size
 32 32
 #End of WorldMap SaveData
