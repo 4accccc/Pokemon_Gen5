@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file    event_festmission.c
+ * @file    event_fmission.c
  * @brief	  イベント：フェスタミッション関連イベント
  * @author  iwasawa	
  * @date	  2010.12.15
@@ -27,9 +27,9 @@
 #include "field/script_local.h"
 #include "field/field_msgbg.h"
 #include "field/field_fade.h"
-#include "field/fmission_gimmick.h"
+#include "field/fes_gimmick.h"
 #include "./event_fieldmap_control.h"
-#include "./event_festmission.h"
+#include "./event_fmission.h"
 #include "./event_subscreen.h"
 
 #include "sound/pm_sndsys.h"
@@ -37,7 +37,7 @@
 
 #include "script_message.naix"
 #include "message.naix"
-#include "msg/script/msg_festmission_event.h"
+#include "msg/script/msg_fmission_event.h"
 
 #include "../../../resource/fldmapdata/script/item_get_scr_def.h" //SCRID_～
 #include "../../../resource/fldmapdata/script/usescript.h"  //DISP_FADE_SPEED
@@ -109,10 +109,10 @@ typedef struct _FMISSION_EVWORK{
   STRBUF* s_tmp;
 }FMISSION_EVWORK;
 
-static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, void * work);
-static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void * work);
-static GMEVENT_RESULT event_FestMissionCheckMain(GMEVENT * event, int *  seq, void * work);
-static GMEVENT_RESULT event_FestMissionRetireMain(GMEVENT * event, int *  seq, void * work);
+static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void * work);
+static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * work);
+static GMEVENT_RESULT event_FMissionCheckMain(GMEVENT * event, int *  seq, void * work);
+static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void * work);
 static void sub_InitFMissionWork( FMISSION_EVWORK* wk, GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap );
 static void sub_ReleaseFMissionWork( FMISSION_EVWORK* wk );
 static void sub_FMissionParamDraw( FMISSION_EVWORK* wk, STRBUF* str, u8 px, u8 line );
@@ -127,14 +127,14 @@ static void sub_FMissionCheckParamDraw( FMISSION_EVWORK* wk );
  *  @param  work  FEST_MISSION*
  */
 //----------------------------------------------------------------------
-GMEVENT* EVENT_FestMissionStart( GAMESYS_WORK * gsys, void* work )
+GMEVENT* EVENT_FMissionStart( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
   FMISSION_EVWORK* wk;
   FMISSION_START_PARAM* param = (FMISSION_START_PARAM*)work;
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  event = GMEVENT_Create(gsys, NULL, event_FestMissionStartMain, sizeof(FMISSION_EVWORK));
+  event = GMEVENT_Create(gsys, NULL, event_FMissionStartMain, sizeof(FMISSION_EVWORK));
   wk = GMEVENT_GetEventWork(event);
 
   sub_InitFMissionWork( wk, gsys, fieldmap );
@@ -153,13 +153,13 @@ GMEVENT* EVENT_FestMissionStart( GAMESYS_WORK * gsys, void* work )
  *  @param  work  FIELDMAP_WORK*
  */
 //----------------------------------------------------------------------
-GMEVENT* EVENT_FestMissionEnd( GAMESYS_WORK * gsys, void* work )
+GMEVENT* EVENT_FMissionEnd( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
   FMISSION_EVWORK* wk;
   FIELDMAP_WORK* fieldmap = (FIELDMAP_WORK*)work;
 
-  event = GMEVENT_Create(gsys, NULL, event_FestMissionEndMain, sizeof(FMISSION_EVWORK));
+  event = GMEVENT_Create(gsys, NULL, event_FMissionEndMain, sizeof(FMISSION_EVWORK));
   wk = GMEVENT_GetEventWork(event);
 
   sub_InitFMissionWork( wk, gsys, fieldmap );
@@ -181,14 +181,14 @@ GMEVENT* EVENT_FestMissionEnd( GAMESYS_WORK * gsys, void* work )
  *  @param  work  FEST_MISSION*
  */
 //----------------------------------------------------------------------
-GMEVENT* EVENT_FestMissionCheck( GAMESYS_WORK * gsys, void* work )
+GMEVENT* EVENT_FMissionCheck( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
   FMISSION_EVWORK* wk;
   const FEST_MISSION* fmwk = (FEST_MISSION*)work;
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  event = GMEVENT_Create(gsys, NULL, event_FestMissionCheckMain, sizeof(FMISSION_EVWORK));
+  event = GMEVENT_Create(gsys, NULL, event_FMissionCheckMain, sizeof(FMISSION_EVWORK));
   wk = GMEVENT_GetEventWork(event);
 
   sub_InitFMissionWork( wk, gsys, fieldmap );
@@ -207,14 +207,14 @@ GMEVENT* EVENT_FestMissionCheck( GAMESYS_WORK * gsys, void* work )
  *  @param  work  FEST_MISSION*
  */
 //----------------------------------------------------------------------
-GMEVENT* EVENT_FestMissionRetire( GAMESYS_WORK * gsys, void* work )
+GMEVENT* EVENT_FMissionRetire( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
   FMISSION_EVWORK* wk;
   const FEST_MISSION* fmwk = (FEST_MISSION*)work;
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  event = GMEVENT_Create(gsys, NULL, event_FestMissionRetireMain, sizeof(FMISSION_EVWORK));
+  event = GMEVENT_Create(gsys, NULL, event_FMissionRetireMain, sizeof(FMISSION_EVWORK));
   wk = GMEVENT_GetEventWork(event);
 
   sub_InitFMissionWork( wk, gsys, fieldmap );
@@ -229,14 +229,14 @@ GMEVENT* EVENT_FestMissionRetire( GAMESYS_WORK * gsys, void* work )
  *  @param  work  FEST_MISSION*
  */
 //----------------------------------------------------------------------
-GMEVENT* EVENT_FestMissionRetireForce( GAMESYS_WORK * gsys, void* work )
+GMEVENT* EVENT_FMissionRetireForce( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
   FMISSION_EVWORK* wk;
   const FEST_MISSION* fmwk = (FEST_MISSION*)work;
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  event = GMEVENT_Create(gsys, NULL, event_FestMissionRetireMain, sizeof(FMISSION_EVWORK));
+  event = GMEVENT_Create(gsys, NULL, event_FMissionRetireMain, sizeof(FMISSION_EVWORK));
   wk = GMEVENT_GetEventWork(event);
 
   sub_InitFMissionWork( wk, gsys, fieldmap );
@@ -266,7 +266,7 @@ static void sub_InitFMissionWork( FMISSION_EVWORK* wk, GAMESYS_WORK * gsys, FIEL
   wk->p_data = GPOWER_PowerData_LoadAlloc( wk->heapID );
 
   wk->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
-          NARC_script_message_festmission_event_dat, wk->heapID );
+          NARC_script_message_fmission_event_dat, wk->heapID );
    
   wk->wset = WORDSET_Create( wk->heapID );
  
@@ -342,7 +342,7 @@ static GMEVENT_RESULT event_MsgPrint(GMEVENT * event, int *  seq, void * work)
  *  @brief  フェスタミッション発動メイン
  */
 //-----------------------------------------------------------------
-static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, void * work)
+static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void * work)
 {
   FMISSION_EVWORK* wk = work;
 
@@ -390,7 +390,7 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
     break;
   case 3:
     if( GFL_FADE_CheckFade() == FALSE ){
-      FMISSION_GIMMICK_MapChangeSetup( wk->fest_sys, wk->gsys, FIELDMAP_GetZoneID( wk->fieldmap) );
+      FES_GIMMICK_MapChangeSetup( wk->fest_sys, wk->gsys, FIELDMAP_GetZoneID( wk->fieldmap) );
       FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( wk->fieldmap ), FIELD_SUBSCREEN_FMISSION_VIEW );
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, DISP_FADE_SPEED );
       (*seq)++;
@@ -414,7 +414,7 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
  *  @brief  フェスタミッション終了メイン
  */
 //-----------------------------------------------------------------
-static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void * work)
+static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * work)
 {
   FMISSION_EVWORK* wk = work;
 
@@ -453,10 +453,10 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
     if( GFL_FADE_CheckFade() == TRUE ){
       break;
     }
-//  FMISSION_GIMMICK_MapChangeSetup( wk->fest_sys, wk->gsys, FIELDMAP_GetZoneID( wk->fieldmap) );
+//  FES_GIMMICK_MapChangeSetup( wk->fest_sys, wk->gsys, FIELDMAP_GetZoneID( wk->fieldmap) );
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );
-    FMISSION_GIMMICK_Delete( wk->fest_sys, wk->gsys );
+    FES_GIMMICK_Delete( wk->fest_sys, wk->gsys );
     FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( wk->fieldmap ), FIELD_SUBSCREEN_NORMAL );
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, DISP_FADE_SPEED );
     (*seq)++;
@@ -508,7 +508,7 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
  *  @brief  フェスタミッション　パラメータチェックメイン
  */
 //-----------------------------------------------------------------
-static GMEVENT_RESULT event_FestMissionCheckMain(GMEVENT * event, int *  seq, void * work)
+static GMEVENT_RESULT event_FMissionCheckMain(GMEVENT * event, int *  seq, void * work)
 {
   FMISSION_EVWORK* wk = work;
 
@@ -542,7 +542,7 @@ static GMEVENT_RESULT event_FestMissionCheckMain(GMEVENT * event, int *  seq, vo
  *  @brief  フェスタミッションリタイアメイン
  */
 //-----------------------------------------------------------------
-static GMEVENT_RESULT event_FestMissionRetireMain(GMEVENT * event, int *  seq, void * work)
+static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void * work)
 {
   FMISSION_EVWORK* evwk = work;
 

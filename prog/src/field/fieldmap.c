@@ -69,7 +69,7 @@
 #include "fieldmap_func.h"
 #include "field/fieldmap_call.h"
 
-#include "field/fmission_gimmick.h"
+#include "field/fes_gimmick.h"
 
 #include "arc/fieldmap/zone_id.h"
 #include "field/weather_no.h"
@@ -327,6 +327,7 @@ struct _FIELDMAP_WORK
 
 	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
 	FIELD_FMISSION_INFO* fmissionInfoSys;	// フェスミッション情報表示ウィンドウ
+  FES_GIMMICK* fesGimmickSys; // フェスミッションギミックシステム
   FLD_EXP_OBJ_CNT_PTR ExpObjCntPtr;
 	
 	MMDLSYS *fldMMdlSys;
@@ -990,6 +991,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->Fld3dCiPtr = FLD3D_CI_Init(HEAPID_FLD3DCUTIN, fieldWork->FldPrtclSys);
     //エンカウントエフェクト
     fieldWork->EncEffCntPtr = ENCEFF_CreateCntPtr(fieldWork->heapID, fieldWork);
+    //フェスミッションギミック
+    fieldWork->fesGimmickSys = FES_GIMMICK_SYS_Create( GAMESYSTEM_GetLinkFestivalWork( gsys ), fieldWork, fieldWork->heapID );
 
     // 育て屋
     {
@@ -1389,6 +1392,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
+  //フェスミッションギミックワーク破棄
+  FES_GIMMICK_SYS_Delete(fieldWork->fesGimmickSys);
   //エンカウントエフェクトコントローラ破棄
   ENCEFF_DeleteCntPtr(fieldWork->EncEffCntPtr);
   //フィールド3Ｄカットインコントローラ破棄
@@ -3145,7 +3150,7 @@ static void zoneChange_SetMMdl( GAMESYS_WORK* gsys, GAMEDATA *gdata,
     LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
 
     if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
-      FMISSION_GIMMICK_MapChangeSetup( fest_sys, gsys, zone_id );
+      FES_GIMMICK_MapChangeSetup( fest_sys, gsys, zone_id );
     }
   }
 }

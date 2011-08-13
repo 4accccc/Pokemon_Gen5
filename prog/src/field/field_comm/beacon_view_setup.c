@@ -26,7 +26,7 @@
 #include "field/event_subscreen.h"
 #include "field/event_gpower.h"
 #include "field/event_freeword_input.h"
-#include "field/event_festmission.h"
+#include "field/event_fmission.h"
 #include "field/event_gpower_app.h"
 
 #include "beacon_status.naix"
@@ -240,7 +240,7 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
       param.succeed_f = TRUE;
 
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
-          FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
+          FS_OVERLAY_ID( event_fmission ), EVENT_FMissionStart, &param );
     }
     event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_CYN_YES )) );
     FEST_MISSION_Clear( &wk->ctrl.mission );
@@ -248,7 +248,7 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   
   case EV_FMISSION_CHECK:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
-        FS_OVERLAY_ID( event_fmission), EVENT_FestMissionCheck, &wk->ctrl.mission );
+        FS_OVERLAY_ID( event_fmission), EVENT_FMissionCheck, &wk->ctrl.mission );
     event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_CYN_CHECK )) );
     break;
 

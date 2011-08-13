@@ -303,7 +303,7 @@ BOOL LINK_FESTIVAL_TMapRootUpdate( LINK_FESTIVAL* wk, u16 new_root )
 //---------------------------------------------------------
 void LINK_FESTIVAL_MissionFlagSet( LINK_FESTIVAL* wk, u16 zone_idx, u8 flag_idx )
 {
-  int no = zone_idx*FMISSION_GIMMICK_MAX+flag_idx;
+  int no = zone_idx*FES_GIMMICK_MAX+flag_idx;
 
   wk->m_flag[(no/8)] |= (0x01)<<(no%8);
 }
@@ -315,7 +315,7 @@ void LINK_FESTIVAL_MissionFlagSet( LINK_FESTIVAL* wk, u16 zone_idx, u8 flag_idx 
 //---------------------------------------------------------
 BOOL LINK_FESTIVAL_MissionFlagCheck( LINK_FESTIVAL* wk, u16 zone_idx, u8 flag_idx )
 {
-  int no = zone_idx*FMISSION_GIMMICK_MAX+flag_idx;
+  int no = zone_idx*FES_GIMMICK_MAX+flag_idx;
 
   return ( wk->m_flag[(no/8)] & ((0x01)<<(no%8)));
 }

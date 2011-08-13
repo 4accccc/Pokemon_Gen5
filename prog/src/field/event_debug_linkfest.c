@@ -56,7 +56,7 @@
 #include "field/field_comm/beacon_view_local.h"
 #include "event_debug_livecomm.h"
 #include "event_debug_linkfest.h"
-#include "event_festmission.h"
+#include "event_fmission.h"
 
 //======================================================================
 //
@@ -716,7 +716,7 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
           param.succeed_f = FALSE;
 
           mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
-            FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
+            FS_OVERLAY_ID( event_fmission ), EVENT_FMissionStart, &param );
           
           GMEVENT_ChangeEvent(event, mission_ev);
         }
@@ -1579,7 +1579,7 @@ static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 d
   param.succeed_f = FALSE;
 
   mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
-    FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
+    FS_OVERLAY_ID( event_fmission ), EVENT_FMissionStart, &param );
           
   GMEVENT_ChangeEvent(parent, mission_ev);
 }

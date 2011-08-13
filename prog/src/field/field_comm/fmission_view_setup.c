@@ -26,7 +26,7 @@
 #include "field/event_subscreen.h"
 #include "field/event_gpower.h"
 #include "field/event_freeword_input.h"
-#include "field/event_festmission.h"
+#include "field/event_fmission.h"
 
 #include "beacon_status.naix"
 #include "fmission_log.naix"
@@ -190,7 +190,7 @@ GMEVENT* FVSEvent_CheckCommon( FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
     break;
   case EV_MISSION_RETIRE:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
-      FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionRetire, wk->fieldWork );
+      FS_OVERLAY_ID( event_fmission ), EVENT_FMissionRetire, wk->fieldWork );
     
     event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_YESNO_YES )) );
     break;

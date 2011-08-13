@@ -27,7 +27,9 @@
 extern void * FLDEFF_FES_KIRA_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_FES_KIRA_Delete( FLDEFF_CTRL *fectrl, void *work );
 
-extern FLDEFF_TASK* FLDEFF_FES_KIRA_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32 height );
-extern void FLDEFF_FES_KIRA_HideSet( FLDEFF_TASK* task, BOOL hide_f );
+extern FLDEFF_TASK* FLDEFF_FES_KIRA_SetEffect( FLDEFF_CTRL *fectrl );
+extern void FLDEFF_FES_KIRA_ObjAdd( FLDEFF_TASK* task, u8 id, VecFx32* pos );
+extern void FLDEFF_FES_KIRA_ObjDel( FLDEFF_TASK* task, u8 id );
+extern void FLDEFF_FES_KIRA_ObjDelAll( FLDEFF_TASK* task );
 
 

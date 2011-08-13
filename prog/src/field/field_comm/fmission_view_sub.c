@@ -33,7 +33,7 @@
 #include "gamesystem/fmission_log_accessor_fv.h"
 #include "arc/wifi_unionobj_plt.cdat"
 #include "fieldmap/fldmmdl_mdlres.naix" //フィールド人物OBJ
-#include "msg/script/msg_festmission_event.h"
+#include "msg/script/msg_fmission_event.h"
 
 #define SCORE_NUM_SX    (40)
 #define SCORE_NUM_SY    (16)

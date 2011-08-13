@@ -13,7 +13,7 @@
 
 #include "field/fldmmdl_code.h"
 
-#define FMISSION_GIMMICK_MAX (MMDL_ID_FMISSION_OBJ_NUM)
-#define FMISSION_GIMMICK_DATA_MAX (3)
+#define FES_GIMMICK_MAX (MMDL_ID_FMISSION_OBJ_NUM)
+#define FES_GIMMICK_DATA_MAX (3)
 
 

@@ -33,7 +33,7 @@
 #include "field/field_status_local.h" // FIELD_STATUS
 #include "field/field_flagcontrol.h" // FIELD_FLAGCONT_INIT`
 #include "field/fieldmap_proc.h"  // FLDMAP_BASESSYS_GRID
-#include "field/fmission_gimmick.h"
+#include "field/fes_gimmick.h"
 
 #include "event_season_display.h"
 #include "event_fieldmap_control.h"
@@ -1031,7 +1031,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
         LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gameSystem );
 
         if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
-          FMISSION_GIMMICK_MapChangeSetup( fest_sys, gameSystem, work->loc_req.zone_id );
+          FES_GIMMICK_MapChangeSetup( fest_sys, gameSystem, work->loc_req.zone_id );
         }
       }
    

@@ -32,7 +32,7 @@
 #include "field/event_mission_secretitem_ex.h"
 
 #include "gamesystem/link_festival.h"
-#include "field/event_festmission.h"
+#include "field/event_fmission.h"
 
 #include "message.naix"
 #include "msg/msg_invasion.h"
@@ -1046,7 +1046,7 @@ static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, vo
       param.succeed_f = FALSE;
 
       mission_ev = GMEVENT_CreateOverlayEventCall( gsys,
-        FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
+        FS_OVERLAY_ID( event_fmission ), EVENT_FMissionStart, &param );
           
       GMEVENT_CallEvent(event, mission_ev);
     }

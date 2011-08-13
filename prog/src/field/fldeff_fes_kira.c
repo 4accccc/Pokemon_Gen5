@@ -24,7 +24,8 @@
 //======================================================================
 //  define
 //======================================================================
-#define FES_KIRA_ANMRES_MAX  (4)
+#define FES_KIRA_OBJ_MAX      (8)
+#define FES_KIRA_ANMRES_MAX   (4)
 
 //======================================================================
 //  struct
@@ -71,18 +72,24 @@ typedef struct
   MMDLSYS* mmdl_sys;
   MMDL *fmmdl;
 
-  u16 gx,gz;
-  VecFx32 pos;
 }TASKHEADER_FES_KIRA;
+
+//--------------------------------------------------------------
+/// FES_KIRA_OBJ
+//--------------------------------------------------------------
+typedef struct{
+  VecFx32 pos;
+  int     visible_f;
+}FES_KIRA_OBJ;
 
 //--------------------------------------------------------------
 /// TASKWK_FES_KIRA
 //--------------------------------------------------------------
 typedef struct
 {
-  u8 hide_f;
   TASKHEADER_FES_KIRA head;
 
+  FES_KIRA_OBJ  obj[FES_KIRA_OBJ_MAX];
 #if 0
   GFL_G3D_OBJ *obj;
   GFL_G3D_ANM *obj_anm[FES_KIRA_ANMRES_MAX];
@@ -260,16 +267,17 @@ static void eff_DeleteResource( FES_KIRA* eff_wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * フェスミッションエフェクト　エフェクト追加
+ * フェスミッションエフェクト　エフェクトタスク追加
  * @param FLDEFF_CTRL*
  * @retval nothing
+ *
+ * これを呼んだだけだと、何も描画されないので注意
  */
 //--------------------------------------------------------------
-FLDEFF_TASK* FLDEFF_FES_KIRA_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32 height )
+FLDEFF_TASK* FLDEFF_FES_KIRA_SetEffect( FLDEFF_CTRL *fectrl )
 {
   FES_KIRA* eff_wk;
   TASKHEADER_FES_KIRA head;
-  VecFx32 pos;
   FIELDMAP_WORK* fieldMapWork = FLDEFF_CTRL_GetFieldMapWork( fectrl );
 
   eff_wk = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_FES_KIRA );
@@ -282,32 +290,62 @@ FLDEFF_TASK* FLDEFF_FES_KIRA_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx3
   head.eff_wk = eff_wk;
   head.mmdl_sys = FIELDMAP_GetMMdlSys( fieldMapWork );
 
-  head.gx = gx;
-  head.gz = gz;
-
-  head.pos.x = GRID_SIZE_FX32(gx)+GRID_HALF_FX32;
-  head.pos.z = GRID_SIZE_FX32(gz)+GRID_HALF_FX32;
-  head.pos.y = height;
-
   return FLDEFF_CTRL_AddTask(
       fectrl, &DATA_fldeffFesKiraTaskHeader, NULL, 0, &head, 0 );
 }
 
 //--------------------------------------------------------------
 /**
- * フェスミッションエフェクト エフェクト隠す　
+ * フェスミッションエフェクト 指定のオブジェクト表示追加　
  * @param fmmdl MMDL
  * @param FLDEFF_CTRL*
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDEFF_FES_KIRA_HideSet( FLDEFF_TASK* task, BOOL hide_f )
+void FLDEFF_FES_KIRA_ObjAdd( FLDEFF_TASK* task, u8 id, VecFx32* pos )
 {
-  if( task != NULL ){
-    TASKWK_FES_KIRA *work = (TASKWK_FES_KIRA*)FLDEFF_TASK_GetWork( task );
-    work->hide_f = hide_f;
-  }else{
-    GF_ASSERT( 0 );
+  TASKWK_FES_KIRA *work = (TASKWK_FES_KIRA*)FLDEFF_TASK_GetWork( task );
+  
+  if( id >= FES_KIRA_OBJ_MAX ){
+    return; 
+  }
+  work->obj[id].visible_f = TRUE; //描画リストに入れる
+  work->obj[id].pos = *pos;
+}
+
+//--------------------------------------------------------------
+/**
+ * フェスミッションエフェクト 指定のオブジェクト表示削除　
+ * @param fmmdl MMDL
+ * @param FLDEFF_CTRL*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDEFF_FES_KIRA_ObjDel( FLDEFF_TASK* task, u8 id )
+{
+  TASKWK_FES_KIRA *work = (TASKWK_FES_KIRA*)FLDEFF_TASK_GetWork( task );
+  
+  if( id >= FES_KIRA_OBJ_MAX ){
+    return; 
+  }
+  work->obj[id].visible_f = FALSE; //描画からはずす
+}
+
+//--------------------------------------------------------------
+/**
+ * フェスミッションエフェクト 全オブジェクト表示削除　
+ * @param fmmdl MMDL
+ * @param FLDEFF_CTRL*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDEFF_FES_KIRA_ObjDelAll( FLDEFF_TASK* task )
+{
+  int i;
+  TASKWK_FES_KIRA *work = (TASKWK_FES_KIRA*)FLDEFF_TASK_GetWork( task );
+  
+  for( i = 0;i < FES_KIRA_OBJ_MAX;i++){
+    work->obj[i].visible_f = FALSE; //描画からはずす
   }
 }
 
@@ -328,7 +366,7 @@ static void fldeffFesKiraTask_Init( FLDEFF_TASK *task, void *wk )
 //  work->eff_wk = head->eff_wk;
   work->head = *head;
 
-  FLDEFF_TASK_SetPos( task, &head->pos );
+//  FLDEFF_TASK_SetPos( task, &head->pos );
  
   FLDEFF_TASK_CallUpdate( task ); //即動作
 }
@@ -343,17 +381,6 @@ static void fldeffFesKiraTask_Init( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void fldeffFesKiraTask_Delete( FLDEFF_TASK *task, void *wk )
 {
-  int i;
-  TASKWK_FES_KIRA *work = wk;
-  FES_KIRA* eff_wk = work->head.eff_wk;
-
-#if 0 
-  for( i = 0;i < eff_wk->data.anm_num; i++){
-    GFL_G3D_ANIME_Delete( work->obj_anm[i] );
-  }
-  GFL_G3D_OBJECT_Delete( work->obj );
-	GFL_G3D_RENDER_Delete( work->obj_rnd );
-#endif
 }
 
 //--------------------------------------------------------------
@@ -370,10 +397,6 @@ static void fldeffFesKiraTask_Update( FLDEFF_TASK *task, void *wk )
   TASKWK_FES_KIRA *work = wk;
   FES_KIRA* eff_wk = work->head.eff_wk;
   
-  if(!FIELDMAP_IsReady( FLDEFF_CTRL_GetFieldMapWork( eff_wk->fectrl ) )){
-    return;
-  }
-  
   for( i = 0;i < eff_wk->data.anm_num; i++){
     GFL_G3D_OBJECT_LoopAnimeFrame( eff_wk->g3d_obj.obj, i, FX32_ONE );
   }
@@ -389,18 +412,21 @@ static void fldeffFesKiraTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void fldeffFesKiraTask_Draw( FLDEFF_TASK *task, void *wk )
 {
+  int i;
   VecFx32 pos;
   TASKWK_FES_KIRA *work = wk;
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
   FES_KIRA* eff_wk = work->head.eff_wk;
   
-  if( work->hide_f ){
-    return;
-  }
-  
   MTX_Identity33( &status.rotate );
-  FLDEFF_TASK_GetPos( task, &status.trans );
-  GFL_G3D_DRAW_DrawObjectCullingON( eff_wk->g3d_obj.obj, &status );
+  
+  for( i = 0; i < FES_KIRA_OBJ_MAX;i++ ){
+    if( !work->obj[i].visible_f ){
+      continue;
+    }
+    status.trans = work->obj[i].pos;
+    GFL_G3D_DRAW_DrawObjectCullingON( eff_wk->g3d_obj.obj, &status );
+  }
 }
 
 //--------------------------------------------------------------

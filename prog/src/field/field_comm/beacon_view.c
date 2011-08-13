@@ -25,7 +25,7 @@
 #include "field/event_subscreen.h"
 #include "field/event_gpower.h"
 #include "field/event_freeword_input.h"
-#include "field/event_festmission.h"
+#include "field/event_fmission.h"
 
 #include "beacon_status.naix"
 #include "wifi_unionobj.naix"
