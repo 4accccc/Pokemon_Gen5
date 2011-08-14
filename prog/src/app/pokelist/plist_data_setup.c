@@ -62,6 +62,8 @@ void PLIST_DATA_Init( PLIST_DATA* plist, GAMEDATA* gdata, PL_MODE_TYPE mode, POK
 
   plist->type      = PL_TYPE_SINGLE;
   plist->ret_mode  = PL_RET_NORMAL;
+
+  plist->short_cut_check = 0;
 }
 
 //--------------------------------------------------------------

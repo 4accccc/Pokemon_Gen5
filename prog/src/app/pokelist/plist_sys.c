@@ -58,7 +58,8 @@
 #pragma mark [> define
 
 #define PLIST_BARICON_Y (168)
-#define PLIST_BARICON_EXIT_X   (200)  //抜ける(×マーク
+#define PLIST_BARICON_CHANGE_X (184)  //Yボタンショートカット(チェックボックス
+#define PLIST_BARICON_EXIT_X   (208)  //抜ける(×マーク
 #define PLIST_BARICON_RETURN_X_MENU (224)  //戻る(矢印
 #define PLIST_BARICON_RETURN_X_BAR (224)  //戻る(矢印
 
@@ -1107,6 +1108,17 @@ static void PLIST_InitCell( PLIST_WORK *work )
               work->cellRes[PCR_ANM_BAR_ICON],
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
     GFL_CLACT_WK_SetAutoAnmFlag( work->clwkBarIcon[PBT_EXIT] , TRUE );
+
+    // チェックボックスのみ位置が4左上にずれているので修正
+    cellInitData.pos_y = PLIST_BARICON_Y+4;
+    cellInitData.pos_x = PLIST_BARICON_CHANGE_X-4+4;
+    cellInitData.anmseq = APP_COMMON_BARICON_CHECK_OFF;
+    work->clwkBarIcon[PBT_CHECK] = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellRes[PCR_NCG_BAR_ICON],
+              work->cellRes[PCR_PLT_BAR_ICON],
+              work->cellRes[PCR_ANM_BAR_ICON],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkBarIcon[PBT_CHECK] , TRUE );
   }
 }
 
@@ -1117,6 +1129,7 @@ static void PLIST_TermCell( PLIST_WORK *work )
 {
   GFL_CLACT_WK_Remove( work->clwkBarIcon[PBT_RETURN] );
   GFL_CLACT_WK_Remove( work->clwkBarIcon[PBT_EXIT] );
+  GFL_CLACT_WK_Remove( work->clwkBarIcon[PBT_CHECK] );
   GFL_CLACT_WK_Remove( work->clwkCursor[0] );
   GFL_CLACT_WK_Remove( work->clwkCursor[1] );
 
@@ -2247,6 +2260,10 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
   }
   
   GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_EXIT] , work->canExit );
+  // ×ボタンと同じ
+  GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_CHECK] , work->canExit );
+  GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_CHECK] , ( APP_COMMON_BARICON_CHECK_OFF + work->plData->short_cut_check ) );
+  ICHI_Printf("ショートカット %d \n", work->plData->short_cut_check);
   
   //バトル処理
   if( PLIST_UTIL_IsBattleMenu(work) == TRUE ||
@@ -2971,7 +2988,7 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       PMSND_PlaySystemSE( PLIST_SND_CURSOR );
     }
   }
-  //BとXはktsts関係なく動く
+  //BとXとYはktsts関係なく動く
   if( trg & PAD_BUTTON_B )
   {
     if( (PLIST_UTIL_IsBattleMenu( work ) == FALSE || 
@@ -2991,6 +3008,19 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       work->selectState = PSSEL_EXIT;
       work->clwkExitButton = work->clwkBarIcon[PBT_EXIT];
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
+      work->ktst = GFL_APP_KTST_KEY;
+    }
+  }
+  else if( trg & PAD_BUTTON_Y )
+  {
+    if( work->canExit == TRUE )
+    {
+      // チェックを反対にする
+      // 登録してあった → 解除する
+      // 登録してない → 登録する
+      work->plData->short_cut_check ^= 0x1;
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_CHECK] , ( APP_COMMON_BARICON_CHECK_OFF + work->plData->short_cut_check ) );
+
       work->ktst = GFL_APP_KTST_KEY;
     }
   }
@@ -3138,6 +3168,32 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
     }
   }
   
+  //ショートカット
+  if( ret == GFL_UI_TP_HIT_NONE && work->canExit == TRUE )
+  {
+    GFL_UI_TP_HITTBL hitTbl[] = {
+      { 0,0,0,0 },
+      { GFL_UI_TP_HIT_END,0,0,0 },
+    };
+
+    hitTbl[ 0 ].rect.top    = PLIST_BARICON_Y;
+    hitTbl[ 0 ].rect.bottom = PLIST_BARICON_Y + 24;
+    hitTbl[ 0 ].rect.left   = PLIST_BARICON_CHANGE_X;
+    hitTbl[ 0 ].rect.right  = PLIST_BARICON_CHANGE_X + 24;
+
+    ret = GFL_UI_TP_HitTrg( hitTbl );
+
+    if( ret != GFL_UI_TP_HIT_NONE )
+    {
+      // チェックを反対にする
+      // 登録してあった → 解除する
+      // 登録してない → 登録する
+      work->plData->short_cut_check ^= 0x1;
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_CHECK] , ( APP_COMMON_BARICON_CHECK_OFF + work->plData->short_cut_check ) );
+
+      work->ktst = GFL_APP_KTST_TOUCH;
+    }
+  }
 }
 
 //--------------------------------------------------------------------------
@@ -3300,6 +3356,7 @@ static void PLIST_SelectMenuInit( PLIST_WORK *work )
   {
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_EXIT] , FALSE );
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_CHECK] , FALSE );
   }
   GFL_BG_LoadScreenV_Req(PLIST_BG_MENU);
   
@@ -3742,6 +3799,7 @@ void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , const BOOL isWaitKey 
   PLIST_MSG_DrawMessageStream( work , work->msgWork , msgId , isWaitKey );
   GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
   GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_EXIT] , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_CHECK] , FALSE );
   
 }
 

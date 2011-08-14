@@ -214,7 +214,7 @@ typedef struct
   BOOL    is_disp_party;  //パーティーの表示設定
   BOOL    use_tile_limit;  //制限時間を使うか？
   u8 comm_selected_num;   // 通信時：既に選択が終わった人数(外側から操作)
-  u8 padding;
+  u8 short_cut_check;     // Yボタンショートカット
 }PLIST_DATA;
 
 //--------------------------------------------------------------

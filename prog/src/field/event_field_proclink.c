@@ -865,6 +865,18 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
   plistData->wazaLearnBit = 0xFF;
   plistData->zone_id    = GAMEDATA_GetMyPlayerWork(gmData)->zoneID; 
 
+  // Yボタンショートカット取得
+  {
+    if( GAMEDATA_GetShortCut( gmData, SHORTCUT_ID_POKELIST ) == TRUE )
+    {
+      plistData->short_cut_check = 1;
+    }
+    else
+    {
+      plistData->short_cut_check = 0;
+    }
+  }
+
   if( param != EVENT_PROCLINK_DATA_NONE )
   { 
     //paramに有効なアイテムナンバーが入っていたら、大切な道具使用ショートカット
@@ -1063,6 +1075,19 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
     }
   }
 
+  // Yボタンショートカット設定
+  {
+    GAMEDATA *gmData = GAMESYSTEM_GetGameData( wk->param->gsys );
+    // 登録されていたら
+    if( plData->short_cut_check == 1 )
+    {
+      GAMEDATA_SetShortCut( gmData, SHORTCUT_ID_POKELIST, TRUE );
+    }
+    else
+    {
+      GAMEDATA_SetShortCut( gmData, SHORTCUT_ID_POKELIST, FALSE );
+    }
+  }
 
   switch( plData->ret_mode )
   {

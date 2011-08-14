@@ -153,6 +153,7 @@ enum PLIST_BARICON_TYPE
 {
   PBT_RETURN, //戻る(矢印
   PBT_EXIT,   //抜ける(×マーク
+  PBT_CHECK,  //ショートカット(チェックボックス
   
   PBT_MAX,
 };
