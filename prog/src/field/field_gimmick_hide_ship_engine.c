@@ -260,19 +260,19 @@ static const EX_HEIGHT_DATA ex_height_tbl_up[ EX_HEIGHT_NUM ] =
 // 地面の上にいるときの拡張たかさ
 static const EX_HEIGHT_DATA ex_height_tbl_down[ EX_HEIGHT_NUM ] =
 {
-  { 7, 41, 3, 1 },    // 1
+  { 7, 42, 3, 1 },    // 1
   { 5, 43, 2, 3 },    // 2
   {10, 43, 2, 3 },    // 3
   { 7, 47, 3, 1 },    // 4
-  { 7, 48, 3, 1 },    // 5
+  { 7, 49, 3, 1 },    // 5
   { 5, 50, 2, 3 },    // 6
   {10, 50, 2, 3 },    // 7
   { 7, 54, 3, 1 },    // 8
-  {21, 41, 3, 1 },    // 9
+  {21, 42, 3, 1 },    // 9
   {19, 43, 2, 3 },    // 10
   {24, 43, 2, 3 },    // 11
   {21, 47, 3, 1 },    // 12
-  {21, 48, 3, 1 },    // 13
+  {21, 49, 3, 1 },    // 13
   {19, 50, 2, 3 },    // 14
   {24, 50, 2, 3 },    // 15
   {21, 54, 3, 1 },    // 16
@@ -2729,11 +2729,30 @@ static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk, int idx, int height_idx )
   FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( p_wk->p_fieldmap );
   EHL_PTR	ex_height_list = FLDMAPPER_GetExHegihtPtr( mapper );
   const EX_HEIGHT_DATA *ex_height_data;
+  int   ofs_z = 0;  // 接続パイプ用
 
   if( height_idx == 0 )
   {
     OS_Printf("拡張高さ %d　下\n", idx);
     ex_height_data = &ex_height_tbl_down[idx];
+
+
+    // 追加仕様
+    // 接続パイプで、両方引っ込んでいるなら、真ん中も通れるようにする
+    {
+      // 接続パイプの上のパイプだけ判定
+      if( idx == 3 || idx == 11 )
+      {
+        u16 obj_idx = OBJ_PIPE_1 + idx;
+        u16 connect_idx = 0;
+        if( PIPE_CONNECT_GetFlag( p_wk, obj_idx, &connect_idx ) == FALSE )
+        {
+          // 反対側もひっこんでいた
+          ofs_z = 1;
+          ICHI_Printf("真ん中通れる!\n");
+        }
+      }
+    }
   }
   else
   {
@@ -2748,7 +2767,7 @@ static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk, int idx, int height_idx )
       ex_height_data->start_x,
       ex_height_data->start_z,
       ex_height_data->size_x,
-      ex_height_data->size_z,
+      ex_height_data->size_z + ofs_z,
       ex_height_y[ height_idx ],
       (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
       ex_height_list);
