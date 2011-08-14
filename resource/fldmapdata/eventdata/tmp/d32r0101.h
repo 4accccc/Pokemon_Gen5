@@ -6,6 +6,7 @@
 #define DOOR_ID_D32R0101_W21_EXIT01       1
 #define DOOR_ID_D32R0101_D32R0201_EXIT01  2
 #define DOOR_ID_D32R0101_D32R0201_EXIT02  3
+#define DOOR_ID_D32R0101_W21_EXIT02       4
 
 #endif //ZONE_D32R0101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d32r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
