@@ -54,7 +54,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_b1[ROOM_MAX] =
     ROOM_TYPE_DEFAULT,
     TRUE,
     TRUE,
-    FALSE,
+    TRUE,
     FALSE,
     4,
   },
@@ -64,7 +64,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_b1[ROOM_MAX] =
     TRUE,
     TRUE,
     FALSE,
-    FALSE,
+    TRUE,
     5,
   },
   {
@@ -312,7 +312,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_b2[ROOM_MAX] =
 static const ROOM_DATA sc_tutorial_rooo_data_w1[ROOM_MAX] =
 {
   {
-    INF_ROOM_POS_TYPE_E_1,
+    INF_TR_ROOM_POS_TYPE_NONE,
     ROOM_TYPE_ELEVATOR,
     FALSE,
     TRUE,
@@ -330,7 +330,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w1[ROOM_MAX] =
     1,
   },
   {
-    INF_ROOM_POS_TYPE_F_1,
+    INF_TR_ROOM_POS_TYPE_NONE,
     ROOM_TYPE_BOSS,
     FALSE,
     TRUE,
@@ -352,7 +352,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w1[ROOM_MAX] =
     ROOM_TYPE_DEFAULT,
     TRUE,
     TRUE,
-    FALSE,
+    TRUE,
     FALSE,
     4,
   },
@@ -362,7 +362,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w1[ROOM_MAX] =
     TRUE,
     TRUE,
     FALSE,
-    FALSE,
+    TRUE,
     5,
   },
   {
@@ -461,7 +461,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w1[ROOM_MAX] =
 static const ROOM_DATA sc_tutorial_rooo_data_w2[ROOM_MAX] =
 {
   {
-    INF_TR_ROOM_POS_TYPE_NONE,
+    INF_ROOM_POS_TYPE_D_1,
     ROOM_TYPE_DEFAULT,
     FALSE,
     FALSE,
@@ -479,7 +479,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w2[ROOM_MAX] =
     1,
   },
   {
-    INF_TR_ROOM_POS_TYPE_NONE,
+    INF_ROOM_POS_TYPE_E_1,
     ROOM_TYPE_DEFAULT,
     FALSE,
     TRUE,
@@ -497,7 +497,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w2[ROOM_MAX] =
     3,
   },
   {
-    INF_ROOM_POS_TYPE_D_1,
+    INF_TR_ROOM_POS_TYPE_NONE,
     ROOM_TYPE_BOSS,
     FALSE,
     TRUE,
@@ -506,7 +506,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w2[ROOM_MAX] =
     4,
   },
   {
-    INF_ROOM_POS_TYPE_E_1,
+    INF_ROOM_POS_TYPE_F_1,
     ROOM_TYPE_DEFAULT,
     TRUE,
     FALSE,
@@ -515,7 +515,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w2[ROOM_MAX] =
     5,
   },
   {
-    INF_ROOM_POS_TYPE_F_1,
+    INF_ROOM_POS_TYPE_D_1,
     ROOM_TYPE_DEFAULT,
     TRUE,
     TRUE,
