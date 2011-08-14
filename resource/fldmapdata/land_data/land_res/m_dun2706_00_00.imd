@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-07-27T17:31:09" source="m_dun2706_00_00_s.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-08-13T13:40:49" source="m_dun2706_00_00_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-07-27T17:31:09" source="m_dun2706_00_00_s.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-08-13T13:40:49" source="m_dun2706_00_00_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -305,12 +305,12 @@
 			8888 2288 2222 3222 8888 2288 2222 3222
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="in77k_yuka1"
+	<tex_image index="10" name="in77k_yuka3"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="in77k_yuka1_pl"
-		path="C:/home/swan_data3d/field/in77/chip/tex/in77k_yuka1.tga"
+		palette_name="in77k_yuka3_pl"
+		path="C:/home/swan_data3d/field/in77/chip/tex/in77k_yuka3.tga"
 	>
 		<bitmap size="128">
 			4442 4444 3341 4303 3142 4103 3341 4303
@@ -504,7 +504,7 @@
 		294a 39ce 4631 5294 5ef7 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="in77g_moni0_pl" color_size="4">
-		4e0d 66d0 7b12 7fb7
+		20e6 2d48 3569 35ab
 	</tex_palette>
 	<tex_palette index="4" name="in77g_moni1_pl" color_size="16">
 		5294 56b5 5ad6 5ef7 6318 6739 6b5a 6f7b
@@ -527,7 +527,7 @@
 		1db0 21f3 2a36 2e9a 3def 4631 4a52 56b5
 		6739 739c 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="10" name="in77k_yuka1_pl" color_size="8">
+	<tex_palette index="10" name="in77k_yuka3_pl" color_size="8">
 		2615 29f3 2a15 2a36 2a58 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="11" name="in77m_isyu1_pl" color_size="16">
@@ -787,7 +787,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="in77k_yuka1"
+	<material index="10" name="in77k_yuka3"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
