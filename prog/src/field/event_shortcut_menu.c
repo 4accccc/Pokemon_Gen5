@@ -262,6 +262,8 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
     
     SEQ_RIBBON_ERROR,
     SEQ_RIBBON_RETURN,
+
+    SEQ_USE_SKILL,
 	};
 
 	EVENT_SHORTCUTMENU_WORK	*p_wk	= p_wk_adrs;
@@ -435,6 +437,10 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 		{	
 			*p_seq	= SEQ_ITEM_CALL;
 		}
+    else if( p_wk->p_link->result == EVENT_PROCLINK_RESULT_SKILL )
+    {
+      *p_seq = SEQ_USE_SKILL;
+    }
 		break;
 
 		//-------------------------------------
@@ -510,6 +516,33 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
       MMDLSYS_ClearPauseMoveProc( p_fldmdl );
 		}
 		return GMEVENT_RES_FINISH;
+   
+  // フィールド技使用
+  case SEQ_USE_SKILL:
+    {
+      FLDSKILL_CHECK_WORK skillCheckWork;
+      FLDSKILL_USE_HEADER skillUseWork;
+      GMEVENT *p_skill_event;
+
+      //フィールド復帰
+      {
+        MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
+        MMDLSYS_ClearPauseMoveProc( fldMdlSys );
+      }
+
+      //技使用
+      FLDSKILL_InitCheckWork( p_wk->p_fieldmap, &skillCheckWork ); //再初期化
+      FLDSKILL_InitUseHeader( &skillUseWork , p_wk->p_link->select_poke, p_wk->p_link->select_param, p_wk->p_link->zoneID);
+
+      p_skill_event = FLDSKILL_UseSkill( p_wk->p_link->select_param, &skillUseWork , &skillCheckWork );
+
+      if( p_skill_event != NULL ){  //起動エラーチェック
+        GMEVENT_CallEvent( p_event, p_skill_event );
+      }
+
+      *p_seq = SEQ_EXIT;
+    }
+    break;
 	}
 
   return GMEVENT_RES_CONTINUE;
@@ -541,6 +574,8 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 
     SEQ_RIBBON_ERROR,
     SEQ_RIBBON_RETURN,
+
+    SEQ_USE_SKILL,
 	};
 
 	EVENT_SHORTCUTMENU_WORK	*p_wk	= p_wk_adrs;
@@ -644,6 +679,10 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 		{	
 			*p_seq	= SEQ_ITEM_CALL;
 		}
+    else if( p_wk->p_link->result == EVENT_PROCLINK_RESULT_SKILL )
+    {
+      *p_seq = SEQ_USE_SKILL;
+    }
 		break;
 
 		//-------------------------------------
@@ -703,6 +742,32 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
       MMDLSYS_ClearPauseMoveProc( p_fldmdl );
 		}
 		return GMEVENT_RES_FINISH;
+  // フィールド技使用
+  case SEQ_USE_SKILL:
+    {
+      FLDSKILL_CHECK_WORK skillCheckWork;
+      FLDSKILL_USE_HEADER skillUseWork;
+      GMEVENT *p_skill_event;
+
+      //フィールド復帰
+      {
+        MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
+        MMDLSYS_ClearPauseMoveProc( fldMdlSys );
+      }
+
+      //技使用
+      FLDSKILL_InitCheckWork( p_wk->p_fieldmap, &skillCheckWork ); //再初期化
+      FLDSKILL_InitUseHeader( &skillUseWork , p_wk->p_link->select_poke, p_wk->p_link->select_param, p_wk->p_link->zoneID);
+
+      p_skill_event = FLDSKILL_UseSkill( p_wk->p_link->select_param, &skillUseWork , &skillCheckWork );
+
+      if( p_skill_event != NULL ){  //起動エラーチェック
+        GMEVENT_CallEvent( p_event, p_skill_event );
+      }
+
+      *p_seq = SEQ_EXIT;
+    }
+    break;
 	}
 
   return GMEVENT_RES_CONTINUE;
@@ -837,6 +902,10 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
     return CALLTYPE_PROC;
   case SHORTCUT_ID_MEDALBOX:        //メダルボックス
     p_param->call = EVENT_PROCLINK_CALL_MEDALBOX;
+    return CALLTYPE_PROC;
+  case SHORTCUT_ID_POKELIST:        // ポケモンリスト
+    p_param->call = EVENT_PROCLINK_CALL_POKELIST;
+    p_param->data = EVENT_PROCLINK_DATA_NONE;   // 値を指定してしまうと大切などうぐ使用になる
     return CALLTYPE_PROC;
   default:
 		GF_ASSERT(0);
