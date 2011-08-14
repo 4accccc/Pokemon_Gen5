@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>［ゾーン名タグ］の　くさむらに
+			<Text>[Name:Place ]の　くさむらに
 せいそく　する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:25:55" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>［ゾーン名タグ］の　草むらに
+			<Text>[Name:Place ]の　草むらに
 生息　する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:26:07" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -48,11 +48,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>［ゾーン名タグ］の　すなちに
+			<Text>[Name:Place ]の　すなちに
 せいそく　する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:27:24" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -60,11 +60,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>［ゾーン名タグ］の　砂地に
+			<Text>[Name:Place ]の　砂地に
 生息　する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:27:31" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -91,11 +91,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>［ゾーン名タグ］の　ぬまちに
+			<Text>[Name:Place ]の　ぬまちに
 せいそく　する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:28:17" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -103,11 +103,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>［ゾーン名タグ］の　沼地に
+			<Text>[Name:Place ]の　沼地に
 生息　する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:28:24" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -134,11 +134,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>［ゾーン名タグ］の　なかに
+			<Text>[Name:Place ]の　なかに
 せいそく　する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:29:03" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -146,11 +146,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>［ゾーン名タグ］の　中に
+			<Text>[Name:Place ]の　中に
 生息　する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:30:34" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -177,11 +177,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>［ゾーン名タグ］の　すいじょうに
+			<Text>[Name:Place ]の　すいじょうに
 せいそく　する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:29:56" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -189,11 +189,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>［ゾーン名タグ］の　水上に
+			<Text>[Name:Place ]の　水上に
 生息　する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:30:10" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -220,11 +220,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>［ゾーン名タグ］の
+			<Text>[Name:Place ]の
 つりで　つれる　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:31:24" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -232,11 +232,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>［ゾーン名タグ］の
+			<Text>[Name:Place ]の
 釣りで　釣れる　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:31:36" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -263,11 +263,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>［ゾーン名タグ］の
+			<Text>[Name:Place ]の
 すべての　ポケモンを　みました</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:33:53" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -275,11 +275,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>［ゾーン名タグ］の
+			<Text>[Name:Place ]の
 全ての　ポケモンを　みました</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:34:08" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:45:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -306,11 +306,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>［ゾーン名タグ］の
+			<Text>[Name:Place ]の
 すべての　ポケモンを　つかまえました</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:34:40" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:44:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -318,11 +318,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>［ゾーン名タグ］の
+			<Text>[Name:Place ]の
 全ての　ポケモンを　捕まえました</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:34:45" />
+				User="onoue_masayuki:W00272"
+				Time="2011-08-14T03:45:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -383,5 +383,109 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_season_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はる</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:36:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:36:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>春</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:34" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_season_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なつ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:36:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>夏</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_season_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あき</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>秋</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:43" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_season_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふゆ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>冬</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-13T05:37:51" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

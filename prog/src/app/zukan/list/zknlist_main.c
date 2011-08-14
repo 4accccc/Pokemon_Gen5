@@ -111,7 +111,7 @@ static const FRAMELIST_HEADER	ListHeader = {
 	ZKNLISTMAIN_LIST_SX,					// 項目フレーム表示Ｘサイズ
 	ZKNLISTMAIN_LIST_SY,					// 項目フレーム表示Ｙサイズ
 
-	7,							// フレーム内に表示するBMPWINの表示Ｘ座標
+	11,							// フレーム内に表示するBMPWINの表示Ｘ座標
 	0,							// フレーム内に表示するBMPWINの表示Ｙ座標
 	11,							// フレーム内に表示するBMPWINの表示Ｘサイズ
 	3,							// フレーム内に表示するBMPWINの表示Ｙサイズ

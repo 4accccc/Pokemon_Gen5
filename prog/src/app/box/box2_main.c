@@ -237,8 +237,8 @@ static const GFL_DISP_VRAM VramTbl = {
   GX_VRAM_OBJ_128_B,            // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,      // メイン2DエンジンのOBJ拡張パレット
 
-  GX_VRAM_SUB_OBJ_128_D,          // サブ2DエンジンのOBJ
-  GX_VRAM_SUB_OBJEXTPLTT_NONE,    // サブ2DエンジンのOBJ拡張パレット
+  GX_VRAM_SUB_OBJ_128_D,        // サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
 
   GX_VRAM_TEX_NONE,             // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_NONE,         // テクスチャパレットスロット

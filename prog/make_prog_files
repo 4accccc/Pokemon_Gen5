@@ -2591,6 +2591,13 @@ SRCS_OVERLAY_ZUKAN = app/zukan/zukan.c \
                      app/zukan/zukan_common.c \
                      app/zukan/search/zukan_search_engine.c
 
+# 図鑑リスト
+#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_ZUKAN_INFO
+SRCS_OVERLAY_ZUKAN_HABITAT_ZONE = app/zukan/habitat_zone/habitat_zone.c \
+                                  app/zukan/habitat_zone/habitat_zone_main.c \
+                                  app/zukan/habitat_zone/habitat_zone_gra.c
+
 # バトル接続デモ
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_COMM_BTL_DEMO = demo/comm_btl_demo/comm_btl_demo.c \

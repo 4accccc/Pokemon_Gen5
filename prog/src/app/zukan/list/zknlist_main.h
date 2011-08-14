@@ -46,9 +46,9 @@
 // リスト表示項目数
 #define	ZKNLISTMAIN_LIST_POS_MAX		( 7 )
 // リスト項目サイズ
-#define	ZKNLISTMAIN_LIST_PX					( 12 )
+#define	ZKNLISTMAIN_LIST_PX					( 8 )
 #define	ZKNLISTMAIN_LIST_PY					( 0 )
-#define	ZKNLISTMAIN_LIST_SX					( 20 )
+#define	ZKNLISTMAIN_LIST_SX					( 24 )
 #define	ZKNLISTMAIN_LIST_SY					( 3 )
 
 // リストパラメータ関連
