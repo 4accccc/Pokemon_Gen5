@@ -630,6 +630,7 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
   ZUKANHABITAT_ZONE_DATA * zone_info;
 
 	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANHABITAT_ZONE_DATA) );
+	GFL_STD_MemClear( wk->work, sizeof(ZUKANHABITAT_ZONE_DATA) );
 	zone_info = wk->work;
 	zone_info->p_gdata = wk->prm->gamedata;
 
@@ -652,7 +653,7 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
       {
         HABITAT_ZONE_POKE_DATA *p_poke_data;
         p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
-        p_poke_data->monsno = n + 1;
+        p_poke_data->monsno = n + 1 + i*20;
         p_poke_data->is_appear[0][0] = TRUE;
         p_poke_data->status = HABITAT_ZONE_STATUS_LOOK;
       }

@@ -488,4 +488,30 @@
 				Time="2011-08-13T05:37:51" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="msg_explanation_button_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつめいをみる</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-15T09:33:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-15T09:33:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>説明をみる</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-15T09:33:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-15T09:33:36" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

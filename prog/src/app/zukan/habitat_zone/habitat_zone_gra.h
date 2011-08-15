@@ -42,6 +42,24 @@ enum
   OBJ_POS_STAMP_WATERSIDE_Y = 48,
   OBJ_POS_STAMP_FISHING_X   = 224,
   OBJ_POS_STAMP_FISHING_Y   = 48,
+  OBJ_POS_BUTTON_LAND_X         = 80,
+  OBJ_POS_BUTTON_LAND_Y         = 184,
+  OBJ_POS_BUTTON_WATERSIDE_X    = 120,
+  OBJ_POS_BUTTON_WATERSIDE_Y    = 184,
+  OBJ_POS_BUTTON_FISHING_X      = 160,
+  OBJ_POS_BUTTON_FISHING_Y      = 184,
+  OBJ_POS_BUTTON_EXPLANATION_X  = 160,
+  OBJ_POS_BUTTON_EXPLANATION_Y  = 180,
+  OBJ_POS_BUTTON_UP_ARROW_X     = 0,
+  OBJ_POS_BUTTON_UP_ARROW_Y     = 168,
+  OBJ_POS_BUTTON_DOWN_ARROW_X   = 24,
+  OBJ_POS_BUTTON_DOWN_ARROW_Y   = 168,
+  OBJ_POS_BUTTON_CHECK_X        = 184,
+  OBJ_POS_BUTTON_CHECK_Y        = 172,
+  OBJ_POS_BUTTON_CANCEL_X       = 208,
+  OBJ_POS_BUTTON_CANCEL_Y       = 168,
+  OBJ_POS_BUTTON_RETURN_X       = 232,
+  OBJ_POS_BUTTON_RETURN_Y       = 168,
 };
 
 // アニメーションシーケンス定義
@@ -51,10 +69,14 @@ enum
   OBJ_ANM_SEQ_R_ANM = 23,
   OBJ_ANM_SEQ_L     = 24,
   OBJ_ANM_SEQ_L_ANM = 25,
-  OBJ_ANM_SEQ_STAMP_BIG_LOOK    = 27,
-  OBJ_ANM_SEQ_STAMP_BIG_GET     = 26,
-  OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK = 9,
-  OBJ_ANM_SEQ_STAMP_MIDDLE_GET  = 7,
+  OBJ_ANM_SEQ_STAMP_BIG_LOOK      = 27,
+  OBJ_ANM_SEQ_STAMP_BIG_GET       = 26,
+  OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK   = 9,
+  OBJ_ANM_SEQ_STAMP_MIDDLE_GET    = 7,
+  OBJ_ANM_SEQ_BUTTON_LAND         = 16,
+  OBJ_ANM_SEQ_BUTTON_WATERSIDE    = 17,
+  OBJ_ANM_SEQ_BUTTON_FISHING      = 18,
+  OBJ_ANM_SEQ_BUTTON_EXPLANATION  = 28,
 };
 
 // OBJWKID
@@ -66,6 +88,15 @@ enum
   OBJ_WK_STAMP_LAND,
   OBJ_WK_STAMP_WATERSIDE,
   OBJ_WK_STAMP_FISHING,
+  OBJ_WK_BUTTON_LAND,
+  OBJ_WK_BUTTON_WATERSIDE,
+  OBJ_WK_BUTTON_FISHING,
+  OBJ_WK_BUTTON_EXPLANATION,
+  OBJ_WK_UP_ARROW,
+  OBJ_WK_DOWN_ARROW,
+  OBJ_WK_CHECK_BOX,
+  OBJ_WK_CANCEL,
+  OBJ_WK_RETURN,
   OBJ_WK_STAMP_SMALL_01,
   OBJ_WK_STAMP_SMALL_02,
   OBJ_WK_STAMP_SMALL_03,
@@ -85,6 +116,12 @@ enum
 
   // ポケモンごとのスタンプアイコン開始位置
   OBJ_WK_STAMP_SMALL_START = OBJ_WK_STAMP_SMALL_01,
+};
+
+// 共通素材用OBJWKID
+enum
+{
+  APP_MENU_OBJ_WK_MAX,
 };
 
 // 定数定義
@@ -197,6 +234,9 @@ typedef struct {
   UI_EASY_CLWK_RES  clres_common_obj;
   GFL_CLWK          *p_clwk_common_obj[COMMON_OBJ_WK_MAX];
   
+  // 共通素材
+  UI_EASY_CLWK_RES  clres_app_menu_obj;
+  
   // 文字ウィンドウ---------------------
   BOOL              is_print_util_wati;         // 転送待ち
 	GFL_FONT			    *p_font;
@@ -234,4 +274,5 @@ extern void HABITAT_ZONE_GRA_SetCursorStatus( HABITAT_ZONE_GRA_WK *p_wk ,
                                     u8 index ,GRA_POKEICON_CURSOR_STATUS status );
 extern void HABITAT_ZONE_GRA_SetPokeAnmFlag( HABITAT_ZONE_GRA_WK *p_wk ,
                                                           u8 index ,BOOL is_anm );
+extern void HABITAT_ZONE_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_ZONE_GRA_WK *p_wk ,s16 x, s16 y ,s16 w, s16 h );
 

@@ -597,6 +597,25 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     UI_EASY_CLWK_LoadResource( &p_wk->clres_common_obj, &prm, p_wk->p_clunit, HEAPID_ZUKAN_HABITAT_ZONE );
   }
 
+  // アプリ共通素材読読み込み
+  {
+    UI_EASY_CLWK_RES_PARAM prm;
+
+    prm.draw_type = CLSYS_DRAW_MAIN;
+    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
+    prm.arc_id    = APP_COMMON_GetArcId();
+    prm.pltt_id   = APP_COMMON_GetBarIconPltArcIdx();
+    prm.ncg_id    = APP_COMMON_GetBarIconCharArcIdx();
+    prm.cell_id   = APP_COMMON_GetBarIconCellArcIdx( APP_COMMON_MAPPING_128K ); 
+    prm.anm_id    = APP_COMMON_GetBarIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
+    prm.pltt_line = 10;
+    prm.pltt_src_ofs  = 0;
+    prm.pltt_src_num  = APP_COMMON_BARICON_PLT_NUM;
+
+    UI_EASY_CLWK_LoadResource( &p_wk->clres_app_menu_obj, &prm, p_wk->p_clunit, HEAPID_ZUKAN_HABITAT_ZONE );
+  }
+
+
   // セルアクターワークを作成
   {
     // 季節Lボタン
@@ -634,6 +653,65 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
       &p_wk->clres_common_obj, p_wk->p_clunit, 
       OBJ_POS_STAMP_FISHING_X, OBJ_POS_STAMP_FISHING_Y,
       OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK, HEAPID_ZUKAN_HABITAT_ZONE );
+
+    // 陸地ボタン
+    p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_LAND] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_common_obj, p_wk->p_clunit, 
+      OBJ_POS_BUTTON_LAND_X, OBJ_POS_BUTTON_LAND_Y,
+      OBJ_ANM_SEQ_BUTTON_LAND, HEAPID_ZUKAN_HABITAT_ZONE );
+
+    // 水辺ボタン
+    p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_WATERSIDE] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_common_obj, p_wk->p_clunit, 
+      OBJ_POS_BUTTON_WATERSIDE_X, OBJ_POS_BUTTON_WATERSIDE_Y,
+      OBJ_ANM_SEQ_BUTTON_WATERSIDE, HEAPID_ZUKAN_HABITAT_ZONE );
+
+    // 釣りボタン
+    p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_FISHING] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_common_obj, p_wk->p_clunit, 
+      OBJ_POS_BUTTON_FISHING_X, OBJ_POS_BUTTON_FISHING_Y,
+      OBJ_ANM_SEQ_BUTTON_FISHING, HEAPID_ZUKAN_HABITAT_ZONE );
+
+    // 説明を見るボタン(フォント面より下においておく)
+    p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_EXPLANATION] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_common_obj, p_wk->p_clunit, 
+      OBJ_POS_BUTTON_EXPLANATION_X, OBJ_POS_BUTTON_EXPLANATION_Y,
+      OBJ_ANM_SEQ_BUTTON_EXPLANATION, HEAPID_ZUKAN_HABITAT_ZONE );
+    GFL_CLACT_WK_SetDrawEnable( 
+        p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_EXPLANATION],FALSE);
+    GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_EXPLANATION] ,1 );
+
+    // 共通素材系読み込み ------------------------------------------------
+    
+    // 上矢印
+    p_wk->p_clwk_common_obj[OBJ_WK_UP_ARROW] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_app_menu_obj, p_wk->p_clunit, 
+      OBJ_POS_BUTTON_UP_ARROW_X, OBJ_POS_BUTTON_UP_ARROW_Y,
+      APP_COMMON_BARICON_CURSOR_UP, HEAPID_ZUKAN_HABITAT_ZONE );
+    
+    // 下矢印
+    p_wk->p_clwk_common_obj[OBJ_WK_DOWN_ARROW] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_app_menu_obj, p_wk->p_clunit, 
+      OBJ_POS_BUTTON_DOWN_ARROW_X, OBJ_POS_BUTTON_DOWN_ARROW_Y,
+      APP_COMMON_BARICON_CURSOR_DOWN, HEAPID_ZUKAN_HABITAT_ZONE );
+ 
+    // チェックボックス
+    p_wk->p_clwk_common_obj[OBJ_WK_CHECK_BOX] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_app_menu_obj, p_wk->p_clunit, 
+      OBJ_POS_BUTTON_CHECK_X, OBJ_POS_BUTTON_CHECK_Y,
+      APP_COMMON_BARICON_CHECK_OFF, HEAPID_ZUKAN_HABITAT_ZONE );
+ 
+    // キャンセル
+    p_wk->p_clwk_common_obj[OBJ_WK_CANCEL] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_app_menu_obj, p_wk->p_clunit, 
+      OBJ_POS_BUTTON_CANCEL_X, OBJ_POS_BUTTON_CANCEL_Y,
+      APP_COMMON_BARICON_EXIT, HEAPID_ZUKAN_HABITAT_ZONE );
+ 
+    // 戻る
+    p_wk->p_clwk_common_obj[OBJ_WK_RETURN] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_app_menu_obj, p_wk->p_clunit, 
+      OBJ_POS_BUTTON_RETURN_X, OBJ_POS_BUTTON_RETURN_Y,
+      APP_COMMON_BARICON_RETURN, HEAPID_ZUKAN_HABITAT_ZONE );
 
   }
 
@@ -990,6 +1068,41 @@ void HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_WIN win_id, const STRBUF* str,
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ウィンドの指定領域をクリアする
+ *
+ *	@param	win_id 
+ *	@param	*p_wk 
+ *	@param	x
+ *	@param	y 
+ *	@param	w
+ *	@param	h 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_ZONE_GRA_WK *p_wk ,s16 x, s16 y ,s16 w, s16 h )
+{
+  GFL_BMPWIN *p_win;
+
+  switch( win_id )
+  {
+  case PRINT_UTIL_INFO_WIN:
+      p_win = p_wk->p_font_win;
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+	
+  // 塗りつぶし
+  GFL_BMP_Fill( GFL_BMPWIN_GetBmp(p_win) ,x ,y ,w ,h ,0 );
+
+  
+  // 転送
+  GFL_BMPWIN_TransVramCharacter( p_win );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  点滅アニメーションメイン
  *
  *	@param	*p_wk 
@@ -1094,7 +1207,7 @@ void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
     break;
   }
   // スクリーン転送
-	GFL_BG_LoadScreenReq( BGM_FRAME_BACK );
+	GFL_BG_LoadScreenV_Req( BGM_FRAME_BACK );
 }
 
 //----------------------------------------------------------------------------
@@ -1131,7 +1244,10 @@ void HABITAT_ZONE_GRA_SetPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u16 monsno ,u8 ind
 void HABITAT_ZONE_GRA_SetPokeAnmFlag( HABITAT_ZONE_GRA_WK *p_wk ,u8 index ,
                                                                     BOOL is_anm )
 {
-  GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_poke_icon[index],is_anm );
+  if( p_wk->p_clwk_poke_icon[index] != NULL )
+  {
+    GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_poke_icon[index],is_anm );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1151,6 +1267,7 @@ void HABITAT_ZONE_GRA_DeletePokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u8 index )
   {
     UI_EASY_CLWK_UnLoadResource( &p_wk->clres_poke_icon[index] );
     GFL_CLACT_WK_Remove( p_wk->p_clwk_poke_icon[index] );
+    p_wk->p_clwk_poke_icon[index] = NULL;
   }
 }
 
@@ -1191,7 +1308,7 @@ void HABITAT_ZONE_GRA_SetCursorStatus( HABITAT_ZONE_GRA_WK *p_wk ,u8 index ,
     GF_ASSERT(0);
   }
   // スクリーン転送
-  GFL_BG_LoadScreenReq( BGM_FRAME_BACK );
+  GFL_BG_LoadScreenV_Req( BGM_FRAME_BACK );
 
 }
 
