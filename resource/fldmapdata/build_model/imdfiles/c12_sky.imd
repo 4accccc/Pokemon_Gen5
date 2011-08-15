@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-08T19:56:17" source="c12_sky.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-15T19:59:51" source="c12_sky.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-08T19:56:17" source="c12_sky.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-15T19:59:51" source="c12_sky.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-5.483398 0.351563 -2.687500" whd="7.811279 2.515625 3.127930"/>
+<box_test pos_scale="7" xyz="-5.483398 0.226563 -2.687500" whd="7.811279 2.640625 3.127930"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="c12_sky"
@@ -106,7 +106,7 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="10" polygon_size="3"
 		triangle_size="0" quad_size="3"
-		volume_min="-5.483398 0.351563 -2.687500"
+		volume_min="-5.483398 0.226563 -2.687500"
 		volume_max="2.328125 2.867188 0.440430"
 		volume_r="6.746094"
 		mtx_prim_size="1"
@@ -133,13 +133,13 @@
 				</primitive>
 				<primitive index="1" type="quads" vertex_size="4">
 					<tex st="4.375000 15.750000"/>
-					<pos_xyz xyz="-1.067383 0.351563 -1.926514"/>
+					<pos_xyz xyz="-1.067383 0.226563 -1.926514"/>
 					<tex st="6.125000 15.750000"/>
 					<pos_xz xz="-2.914795 -1.922363"/>
 					<tex st="6.125000 0.125000"/>
 					<pos_xz xz="-2.914795 0.440430"/>
 					<tex st="4.375000 0.062500"/>
-					<pos_xy xy="-1.067383 0.351563"/>
+					<pos_xy xy="-1.067383 0.226563"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -161,7 +161,7 @@
 		display_size="1"
 		vertex_size="10" polygon_size="3"
 		triangle_size="0" quad_size="3"
-		volume_min="-5.483398 0.351563 -2.687500"
+		volume_min="-5.483398 0.226563 -2.687500"
 		volume_max="2.328125 2.867188 0.440430"
 		volume_r="6.746094"
 	>
