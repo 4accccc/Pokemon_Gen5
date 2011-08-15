@@ -250,7 +250,7 @@ IF $LWK_FIRST == 0 THEN
 	_OBJ_ADD_EX( 3,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
 	_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 42, 0, 15, DIR_LEFT )
 
-	//対戦者非表示
+	//プレイヤー・対戦者非表示
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_on )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vanish_on )
 	_OBJ_ANIME_WAIT()
@@ -265,7 +265,7 @@ IF $LWK_FIRST == 0 THEN
 	_CAMERA_WAIT_MOVE()
 
 	//バックの歓声ＳＥ再生
-	_SE_PLAY(SEQ_SE_SW_WBT_01)
+	_SE_PLAY(SEQ_SE_SW_WBT_07)
 
 	//暗転復帰
 	_MAP_FADE_BLACK_IN()
@@ -312,13 +312,13 @@ IF $LWK_FIRST == 0 THEN
 	_OBJ_ANIME_WAIT()
 
 	//歓声ＳＥ再生
-	_SE_PLAY(SEQ_SE_SW_WBT_01)
+	//_SE_PLAY(SEQ_SE_SW_WBT_03)
 
 	//対戦者中央のステージまで歩き出す
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
 
 	//カメラ対戦者追従
-	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,146 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,120 )	//一番最後の引数は移動にかかるフレーム数
 
 	_TIME_WAIT( 30 )
 
@@ -338,9 +338,13 @@ IF $LWK_FIRST == 0 THEN
 //それ以外の場合
 ELSE
 
-	//対戦者出現
+	//対戦者指定座標へ
 	_WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
-	_OBJ_ADD_EX( 14,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
+	_OBJ_ADD_EX( 3,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
+
+	//対戦者非表示
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_on )
+	_OBJ_ANIME_WAIT()
 
 	//カメラ移動・中央固定　
 	_CAMERA_START()		//カメラ操作開始
@@ -356,15 +360,59 @@ ELSE
 	//ブラックイン開始
 	_MAP_FADE_BLACK_IN_SLOW()
 	
-	//対戦者・プレイヤーをステージ中央まで移動させる
+	//プレイヤーをステージ中央まで移動させる
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_1st_in )
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_in )
 
 	_MAP_FADE_END_CHECK()
 
 	_OBJ_ANIME_WAIT()
 
 	_TIME_WAIT( 30 )
+
+	//カメラを対戦者側に移動
+	_CAMERA_MOVE( 3544,0,970752,208896,131103,1081344,60 )	//一番最後の引数は移動にかかるフレーム数
+
+	//暗転処理
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	_TIME_WAIT( 60 )
+	
+	//暗転復帰
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	//対戦者の前口上メッセージ表示　ＭＳＧ表示専用コマンド
+	_WBT_ANNOUNCE( POS_UP )
+	_MSGWIN_CLOSE()
+
+	//対戦者非表示解除後
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_off )
+	_OBJ_ANIME_WAIT()
+
+	//歓声ＳＥ再生
+	//_SE_PLAY(SEQ_SE_SW_WBT_03)
+
+	//対戦者中央のステージまで歩き出す
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
+
+	//カメラ対戦者追従
+	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,120 )	//一番最後の引数は移動にかかるフレーム数
+
+	_TIME_WAIT( 30 )
+
+	//暗転処理
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+
+	_TIME_WAIT( 70 )
+
+	//暗転復帰
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()
 
 ENDIF
 
@@ -381,7 +429,7 @@ _PLAINWIN_CLOSE()
 //背景ビジョンにVS表示
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_VS)
 
-_TIME_WAIT( 60 )
+_TIME_WAIT( 90 )
 
 //１回戦対戦前メッセージの表示　ＭＳＧ表示専用コマンド
 _WBT_TRAINER_MSG( SCR_WBT_TRMSG_1ST, MMDL_ID_EVENTOBJ_00 )
@@ -422,7 +470,7 @@ IF $SCWK_ANSWER == SCR_WBT_BATTLE_RESULT_WIN THEN
 	_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_06, POS_UP )
 	_GIZAPLAINWIN_CLOSE()
 
-	//対戦者・主人公勝ちメッセージ表示　　　　　　
+	//対戦者・主人公勝ちメッセージ表示
 	_WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
 	_BALLOONWIN_CLOSE()
 
@@ -481,10 +529,15 @@ _WBT_LIST_CALL( SCR_WBT_LIST_1ST_RESULT )
 
 //WBTシステムに状態を通知：2回戦へ
 _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_2ND )
+
 //対戦者・プレイヤー指定座標に表示
 _WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
-_OBJ_ADD_EX( 14,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
+_OBJ_ADD_EX( 3,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
 _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 31, 0, 15, DIR_LEFT )
+
+//対戦者非表示
+_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_on )
+_OBJ_ANIME_WAIT()
 
 //カメラ移動・中央固定　
 _CAMERA_START()		//カメラ操作開始
@@ -508,7 +561,6 @@ _SE_PLAY(SEQ_SE_SW_WBT_02)
 
 //対戦者・プレイヤーステージ中央に移動
 _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_2nd_in )
-_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_2nd_in )
 
 //========================================/
 
@@ -530,6 +582,64 @@ ENDIF
 
 _OBJ_ANIME_WAIT()
 
+_TIME_WAIT( 30 )
+
+//カメラを対戦者側に移動
+_CAMERA_MOVE( 3544,0,970752,208896,131103,1081344,60 )	//一番最後の引数は移動にかかるフレーム数
+
+//暗転処理
+_BLACK_OUT()
+_DISP_FADE_END_CHECK()
+	
+_TIME_WAIT( 60 )
+	
+//暗転復帰
+_BLACK_IN()
+_DISP_FADE_END_CHECK()
+
+//対戦者の前口上メッセージ表示　ＭＳＧ表示専用コマンド
+_WBT_ANNOUNCE( POS_UP )
+_MSGWIN_CLOSE()
+
+//対戦者非表示解除後
+_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_off )
+_OBJ_ANIME_WAIT()
+
+//歓声ＳＥ再生
+_SE_PLAY(SEQ_SE_SW_WBT_07)
+
+//対戦者中央のステージまで歩き出す
+_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
+
+//カメラ対戦者追従
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,120 )	//一番最後の引数は移動にかかるフレーム数
+
+_TIME_WAIT( 30 )
+
+//暗転処理
+_BLACK_OUT()
+_DISP_FADE_END_CHECK()
+
+_TIME_WAIT( 70 )
+
+//暗転復帰
+_BLACK_IN()
+_DISP_FADE_END_CHECK()
+
+//声援表示
+_CALL ev_yell_scr
+
+IF $LOCALWORK14 == 1 THEN
+	_SUBWIN_CLOSE( 1 )
+ENDIF
+
+IF $LOCALWORK15 == 1 THEN
+	_SUBWIN_CLOSE( 2 )
+ENDIF
+
+_OBJ_ANIME_WAIT()
+_CAMERA_WAIT_MOVE()
+
 //２回戦の対戦者名を格納する
 _WBT_SET_ENEMY_NAME( 0 )
 
@@ -545,7 +655,7 @@ _PLAINWIN_CLOSE()
 //背景ビジョンにVS表示
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_VS)
 
-_TIME_WAIT( 60 )
+_TIME_WAIT( 90 )
 
 //２回戦対戦前メッセージの表示　ＭＳＧ表示専用コマンド
 _WBT_TRAINER_MSG( SCR_WBT_TRMSG_2ND, MMDL_ID_EVENTOBJ_00 )
@@ -557,7 +667,7 @@ _SE_STOP()
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
 
 //バックの歓声ＳＥ再生
-_SE_PLAY(SEQ_SE_SW_WBT_07)
+_SE_PLAY(SEQ_SE_SW_WBT_03)
 
 //背景ビジョンにロゴ表示
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
@@ -589,6 +699,10 @@ IF $SCWK_ANSWER == SCR_WBT_BATTLE_RESULT_WIN THEN
 	//第２回戦を制したのは！
 	_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_07, POS_UP )
 	_GIZAPLAINWIN_CLOSE()
+	
+	_WBT_GMK_EXPLOSION( SCR_WBT_VS2 )
+	
+	_TIME_WAIT( 60 )
 
 	//対戦者・主人公勝ちメッセージ表示　　　　　　
 	_WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
@@ -616,6 +730,10 @@ ELSE
 	//第２回戦を制したのは！
 	_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_07, POS_UP )
 	_GIZAPLAINWIN_CLOSE()
+
+	_WBT_GMK_EXPLOSION( SCR_WBT_VS2 )
+	
+	_TIME_WAIT( 60 )
 
 	//対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
 	_WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_LOSE, MMDL_ID_EVENTOBJ_00 )
@@ -694,9 +812,13 @@ _SE_STOP()
 //無音再生
 _START_EVENT_BGM_SILENT( 30 )
 
+_WBT_GMK_LIGHT_SET( 0, SCR_WBT_EFFECT_POS_R ) 
+
 //暗転復帰
 _MAP_FADE_BLACK_IN()
 _MAP_FADE_END_CHECK()
+
+_TIME_WAIT( 30 )
 
 //プレイヤーの前口上メッセージ表示
 _CALL ev_introductory_remarks
@@ -707,6 +829,8 @@ _SE_PLAY(SEQ_SE_SW_WBT_07)
 //プレイヤー非表示解除後
 _OBJ_ANIME( MMDL_ID_PLAYER, anm_vanish_off )
 _OBJ_ANIME_WAIT()
+
+_WBT_GMK_LIGHT_SET( 1, SCR_WBT_EFFECT_POS_R ) 
 
 //BGM復帰
 _BGM_NOW_MAP_RECOVER()
@@ -722,7 +846,7 @@ _SE_PLAY(SEQ_SE_SW_WBT_04)
 _WBT_GMK_EFFECT_START(SCR_WBT_EFFECT_NORMAL,SCR_WBT_EFFECT_POS_R)
 
 //カメラプレイヤー追従
-_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,152 )		//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,146 )		//一番最後の引数は移動にかかるフレーム数
 
 //========================================/
 
@@ -750,6 +874,10 @@ ENDIF
 _OBJ_ANIME_WAIT()
 _CAMERA_WAIT_MOVE()
 
+_WBT_GMK_EXPLOSION( SCR_WBT_VS1_R )
+
+_TIME_WAIT( 60 )
+
 //トーナメント名をセット
 _WBT_GET_WBT_CUP( SCWK_ANSWER )
 _WBT_SET_TOURNAMENT_NAME( 0, SCWK_ANSWER )
@@ -759,8 +887,19 @@ _PLAINWIN_MSG_UP( msg_wbt_announce_04 )
 _PLAINWIN_CLOSE()
 
 //カメラを対戦者側に移動
-_CAMERA_MOVE( 3544,0,970752,208896,131103,1081344,30 )	//一番最後の引数は移動にかかるフレーム数
-_CAMERA_WAIT_MOVE()
+_CAMERA_MOVE( 3544,0,970752,208896,131103,1081344,60 )	//一番最後の引数は移動にかかるフレーム数
+
+//暗転処理
+_BLACK_OUT()
+_DISP_FADE_END_CHECK()
+	
+_TIME_WAIT( 60 )
+
+_WBT_GMK_LIGHT_SET( 0, SCR_WBT_EFFECT_POS_L ) 
+
+//暗転復帰
+_BLACK_IN()
+_DISP_FADE_END_CHECK()
 
 //対戦者の前口上メッセージ表示　ＭＳＧ表示専用コマンド
 _WBT_ANNOUNCE( POS_UP )
@@ -769,6 +908,8 @@ _MSGWIN_CLOSE()
 //対戦者非表示解除後
 _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_off )
 _OBJ_ANIME_WAIT()
+
+_WBT_GMK_LIGHT_SET( 1, SCR_WBT_EFFECT_POS_L ) 
 
 //歓声ＳＥ再生
 _SE_PLAY(SEQ_SE_SW_WBT_01)
@@ -782,7 +923,7 @@ _SE_PLAY(SEQ_SE_SW_WBT_04)
 _WBT_GMK_EFFECT_START(SCR_WBT_EFFECT_NORMAL,SCR_WBT_EFFECT_POS_L)
 
 //カメラ対戦者追従
-_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,152 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,146 )	//一番最後の引数は移動にかかるフレーム数
 
 //========================================/
 
@@ -810,7 +951,9 @@ ENDIF
 _OBJ_ANIME_WAIT()
 _CAMERA_WAIT_MOVE()
 
-_TIME_WAIT( 30 )
+_WBT_GMK_EXPLOSION( SCR_WBT_VS1_L )
+
+_TIME_WAIT( 60 )
 
 //決勝戦の対戦者名を格納する
 _WBT_SET_ENEMY_NAME( 0 )
@@ -819,16 +962,20 @@ _WBT_SET_ENEMY_NAME( 0 )
 _PLAYER_NAME( 1 )
 
 //決勝戦！　プレイヤーｖｓ対戦者！
-_PLAINWIN_MSG_DOWN( msg_wbt_announce_03 )
+_PLAINWIN_MSG_UP( msg_wbt_announce_03 )
 _PLAINWIN_CLOSE()
 
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_VS)
+
+_TIME_WAIT( 90 )
 
 //決勝戦対戦前メッセージの表示　ＭＳＧ表示専用コマンド
 _WBT_TRAINER_MSG( SCR_WBT_TRMSG_3RD, MMDL_ID_EVENTOBJ_00 )
 _BALLOONWIN_CLOSE()
 
 _SE_STOP()
+
+_WBT_GMK_EXPLOSION( SCR_WBT_VS3 )
 
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
@@ -888,67 +1035,75 @@ _ANIME_LABEL	anm_enemy_3rd_in
 /**************************************************************/
 /**************************************************************/
 ev_final_result:
-				//優勝は……
-				_PLAINWIN_MSG_UP( msg_wbt_announce_05 )
-				_PLAINWIN_CLOSE()
+
+//優勝は……
+_PLAINWIN_MSG_UP( msg_wbt_announce_05 )
+_PLAINWIN_CLOSE()
 				
-				_TIME_WAIT( 60 )
+_TIME_WAIT( 60 )
 
-        IF $LWK_WIN_OR_LOSE == SCR_WBT_BATTLE_RESULT_WIN THEN
-          //プレイヤー名を格納する
-          _PLAYER_NAME(0)
-        ELSE
-          //決勝戦の対戦者名を格納する
-          _WBT_SET_ENEMY_NAME( 0 )
-        ENDIF
+IF $LWK_WIN_OR_LOSE == SCR_WBT_BATTLE_RESULT_WIN THEN
+	//プレイヤー名を格納する
+	_PLAYER_NAME(0)
 
-				//バックの歓声ＳＥ再生
-				_SE_PLAY(SEQ_SE_SW_WBT_07)
+ELSE
+	//決勝戦の対戦者名を格納する
+	_WBT_SET_ENEMY_NAME( 0 )
+ENDIF
 
-				//歓声SE再生
-				_SE_PLAY(SEQ_SE_SW_WBT_03)
+//バックの歓声ＳＥ再生
+_SE_PLAY(SEQ_SE_SW_WBT_07)
 
-				//～だー！
-				_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_09, POS_UP )
+//歓声SE再生
+_SE_PLAY(SEQ_SE_SW_WBT_03)
 
-        //花吹雪演出
-				_WBT_GMK_WIN_EFFECT_START()
+//～だー！
+_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_09, POS_UP )
 
-				//優勝BGM再生
-				_BGM_PLAY(SEQ_BGM_WBT_FANFARE)
+//花吹雪演出
+_WBT_GMK_WIN_EFFECT_START()
 
-        IF $LWK_WIN_OR_LOSE == SCR_WBT_BATTLE_RESULT_WIN THEN
-          //プレイヤー側が勝利の背景ヴィジョン表示
-          _WBT_GMK_VISION_CHANGE( SCR_WBT_VISION_WIN_PLAYER )
-        ELSE
-          //対戦相手側が勝利の背景ヴィジョン表示
-          _WBT_GMK_VISION_CHANGE( SCR_WBT_VISION_WIN_ENEMY )
-        ENDIF
+//優勝BGM再生
+_BGM_PLAY(SEQ_BGM_WBT_FANFARE)
 
-				_TIME_WAIT( 120 )
+IF $LWK_WIN_OR_LOSE == SCR_WBT_BATTLE_RESULT_WIN THEN
+
+	//プレイヤー側が勝利の背景ヴィジョン表示
+	_WBT_GMK_VISION_CHANGE( SCR_WBT_VISION_WIN_PLAYER )
+ELSE
+
+	//対戦相手側が勝利の背景ヴィジョン表示
+	_WBT_GMK_VISION_CHANGE( SCR_WBT_VISION_WIN_ENEMY )
+
+ENDIF
+
+_TIME_WAIT( 120 )
 				
-        _AB_KEYWAIT_MARK()
-				_GIZAPLAINWIN_CLOSE()
+_AB_KEYWAIT_MARK()
+_GIZAPLAINWIN_CLOSE()
 
-        IF $LWK_WIN_OR_LOSE == SCR_WBT_BATTLE_RESULT_WIN THEN
-				  //対戦者・主人公勝ちメッセージ表示　　　　　　
-				  _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
-        ELSE
-          //対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
-          _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_LOSE, MMDL_ID_EVENTOBJ_00 )
-        ENDIF
-				_BALLOONWIN_CLOSE()
+IF $LWK_WIN_OR_LOSE == SCR_WBT_BATTLE_RESULT_WIN THEN
 
-				//トーナメント名をセット
-        _WBT_GET_WBT_CUP( SCWK_ANSWER )
-				_WBT_SET_TOURNAMENT_NAME( 0, SCWK_ANSWER )
+	//対戦者・主人公勝ちメッセージ表示　　　　　　
+	_WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
+ELSE
+	//対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
+	_WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_LOSE, MMDL_ID_EVENTOBJ_00 )
+ENDIF
+
+_BALLOONWIN_CLOSE()
+
+//トーナメント名をセット
+_WBT_GET_WBT_CUP( SCWK_ANSWER )
+_WBT_SET_TOURNAMENT_NAME( 0, SCWK_ANSWER )
 				
-				//終了の挨拶
-				_PLAINWIN_MSG_UP( msg_wbt_announce_10 )
-				_PLAINWIN_CLOSE()
-				
-				_TIME_WAIT( 60 )
-        _RET
+//終了の挨拶
+_PLAINWIN_MSG_UP( msg_wbt_announce_10 )
+_PLAINWIN_CLOSE()
+
+_TIME_WAIT( 60 )
+
+_RET
 
 /**************************************************************/
 /*		WBT・声援スクリプト									  */
