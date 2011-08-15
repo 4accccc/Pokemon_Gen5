@@ -98,6 +98,17 @@ typedef enum{
   FMISSION_LEVEL_MAX,  ///<
 }FMISSION_LEVEL;
 
+//=========================================
+///アイテムミッション　セット名定義
+//=========================================
+typedef enum{
+  FMISSION_ITEM_SET_KAKERA,  ///<イロのカケラセット
+  FMISSION_ITEM_SET_MBALL,  ///<モンスターボールセット
+  FMISSION_ITEM_SET_KINOMI1,  ///<きのみセット１
+  FMISSION_ITEM_SET_KINOMI2,  ///<きのみセット２
+  FMISSION_ITEM_SET_MAX,  ///<
+}FMISSION_ITEM_SET;
+
 #endif //__ASM_NO_DEF_
 
 //=========================================
