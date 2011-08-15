@@ -43,6 +43,10 @@ static void MAINSEQ_AppInit( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_FadeIn( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk );
+static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk );
+static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk );
+static void MAINSEQ_PokeSelectKeyInput( HABITAT_ZONE_WK *p_wk );
+static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk );
 
 //--------------------------------------------------
 // ID定義
@@ -51,17 +55,25 @@ typedef enum _MAIN_SEQ{
   MAIN_SEQ_FADEIN,
   MAIN_SEQ_TOP_KEY_INPUT,
   MAIN_SEQ_CHANGE_SEASON,
+  MAIN_SEQ_CHANGE_ZONE,
+  MAIN_SEQ_CHANGE_LAND_TYPE,
+  MAIN_SEQ_POKESELECT_KEY_INPUT,
+  MAIN_SEQ_MOVE_POKE_CURSOR,
   MAIN_SEQ_NULL,
 }MAIN_SEQ;
 
 //--------------------------------------------------
 // 関数定義（ID定義と一致している必要がある）
 static const MainFunc MainSeq[] = {
-  MAINSEQ_AppInit,      // アプリケーションの初期化
-  MAINSEQ_FadeIn,       // フェードイン
-  MAINSEQ_TopKeyInput,  // トップキー
-  MAINSEQ_ChangeSeason, // 季節切替
-  NULL,                 // 何も処理をしない
+  MAINSEQ_AppInit,            // アプリケーションの初期化
+  MAINSEQ_FadeIn,             // フェードイン
+  MAINSEQ_TopKeyInput,        // トップキー
+  MAINSEQ_ChangeSeason,       // 季節切替
+  MAINSEQ_ChangeZone,         // ゾーン切替
+  MAINSEQ_ChangeLandType,     // 地形タイプ切替
+  MAINSEQ_PokeSelectKeyInput, // ポケモン選択キー入力
+  MAINSEQ_MovePokeCursor,     // ポケモン選択カーソルを移動させる
+  NULL,                       // 何も処理をしない
 };
 
 // メッセージ---------------------------------------
@@ -71,14 +83,17 @@ static void DrawSeasonMsg( HABITAT_ZONE_WK *p_wk );
 
 // データ処理系---------------------------------------
 static HABITAT_ZONE_DATA* GetNowListData( HABITAT_ZONE_WK *p_wk );
+static void SetCursorstatus( HABITAT_ZONE_WK *p_wk ,s32 index ,BOOL is_active );
 
 // ポケモンアイコン系---------------------------------------
 static void MakePokeIconList( HABITAT_ZONE_WK *p_wk );
-static void GetPokeIconPos( u8 index ,GFL_CLACTPOS *p_pos );
 
 // シーケンス制御 ----------------------------------------------
 static void SetNextSeq( HABITAT_ZONE_WK *p_wk ,MAIN_SEQ seq_id ,SEQ_CHANGE_PARAM param );
 
+// 画面更新系
+static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk );
+static void RefreshLandPokeIcon( HABITAT_ZONE_WK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -185,21 +200,26 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
   else if( key_trg & PAD_KEY_LEFT )
   {
     ONOUE_Printf("場所タイプ切替L\n");
+    SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_L );
   }
   else if( key_trg & PAD_KEY_RIGHT )
   {
     ONOUE_Printf("場所タイプ切替R\n");
+    SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_R );
   }
   else if( key_trg & PAD_KEY_UP )
   {
     ONOUE_Printf("ゾーン切替UP\n");
+    SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_UP );
   }
   else if( key_trg & PAD_KEY_DOWN )
   {
     ONOUE_Printf("ゾーン切替DOWN\n");
+    SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_DOWN );
   }
   else if( key_trg & PAD_BUTTON_A )
   {
+    SetNextSeq( p_wk ,MAIN_SEQ_POKESELECT_KEY_INPUT ,SEQ_CHANGE_PARAM_A );
     ONOUE_Printf("ポケモン選択画面へ\n");
   }
   else if( key_trg & PAD_BUTTON_B )
@@ -216,6 +236,83 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
     ONOUE_Printf("ショートカット登録ON/OFF\n");
   }
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン選択キー入力
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MAINSEQ_PokeSelectKeyInput( HABITAT_ZONE_WK *p_wk )
+{
+  switch(p_wk->sub_seq)
+  {
+  // 初回選択状態反映、メニューの切替
+  case 0:
+    {
+      if( p_wk->seq_param == SEQ_CHANGE_PARAM_A )
+      {
+        // カーソルはアクティブ状態で開始
+        SetCursorstatus( p_wk ,p_wk->select_index ,TRUE );
+      }
+      else if( p_wk->seq_param == SEQ_CHANGE_PARAM_A )
+      {
+        // カーソルは非アクティブ状態で開始
+        SetCursorstatus( p_wk ,p_wk->select_index ,FALSE );
+      }
+      else if( p_wk->seq_param == SEQ_CHANGE_PARAM_NONE )
+      {
+        // カーソル移動から戻ってきたときは何もしない
+      }
+      else
+      {
+        GF_ASSERT(0);
+      }
+      p_wk->sub_seq++;
+    }
+    break;
+
+  // キー入力処理
+  case 1:
+    {
+      s32 key_trg = GFL_UI_KEY_GetTrg();
+
+      // 四季切替
+      if( key_trg & PAD_KEY_LEFT )
+      {
+        ONOUE_Printf("ポケモン選択：リスト左移動\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_L );
+      }
+      else if( key_trg & PAD_KEY_RIGHT )
+      {
+        ONOUE_Printf("ポケモン選択：リスト右移動\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_R );
+      }
+      else if( key_trg & PAD_KEY_UP )
+      {
+        ONOUE_Printf("ポケモン選択：リスト上移動\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_UP );
+      }
+      else if( key_trg & PAD_KEY_DOWN )
+      {
+        ONOUE_Printf("ポケモン選択：リスト下移動\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_DOWN );
+      }
+      else if( key_trg & PAD_BUTTON_B )
+      {
+        ONOUE_Printf("ポケモン選択：ゾーン詳細画面に戻る\n");
+        // 現在のカーソル位置をOFFに
+        SetCursorstatus( p_wk ,p_wk->select_index ,FALSE );
+        // トップキー入力処理に移動
+        SetNextSeq( p_wk ,MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_R );
+      }
+    }
+    break;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -242,13 +339,16 @@ static void MAINSEQ_AppInit( HABITAT_ZONE_WK *p_wk )
   p_wk->zone_data_index = p_wk->p_init_param->start_zone_index;
 
   // ポケモンアイコンリストを作成する
-  MakePokeIconList( p_wk );
+  RefreshLandPokeIcon( p_wk );
 
   // 地形メッセージ書き込み
   DrawLandMsg( p_wk );
 
   // 四季メッセージ書き込み
   DrawSeasonMsg( p_wk );
+ 
+  // 地形アイコン更新
+  RefreshLandTypeIcon( p_wk );
 
   // フェードシーケンスに移行
   SetNextSeq( p_wk ,MAIN_SEQ_FADEIN ,SEQ_CHANGE_PARAM_NONE );
@@ -300,18 +400,31 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
   // 左右ボタンアニメーション再生
   case 0:
     {
-      // アニメーションシーケンスを決定
+      // アニメーションシーケンスを決定、季節の切替
       if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
       {
         GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_L_ANM);
+        p_wk->season--;
+        if( p_wk->season < 0 )
+        {
+          p_wk->season = PMSEASON_WINTER;
+        }
       }
       else if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
       {
         GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_R_ANM);
+        p_wk->season++;
+        if( p_wk->season >= PMSEASON_TOTAL )
+        {
+          p_wk->season = PMSEASON_SPRING;
+        }
       }
       // アニメーションを初期化して、再生
       GFL_CLACT_WK_SetAnmIndex( p_clwk , 0);
       GFL_CLACT_WK_SetAutoAnmFlag( p_clwk ,TRUE );
+
+      // 四季メッセージ書き込み
+      DrawSeasonMsg( p_wk );
 
       // シーケンスを進める
       p_wk->sub_seq++;
@@ -343,47 +456,292 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーンを切り替える
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
+{
+  switch(p_wk->sub_seq)
+  {
+  // メッセージ書き換え
+  case 0:
+    {
+      // アニメーションシーケンスを決定、季節の切替
+      if( p_wk->seq_param == SEQ_CHANGE_PARAM_UP )
+      {
+        p_wk->zone_data_index--;
+        if( p_wk->zone_data_index < 0 )
+        {
+          p_wk->zone_data_index = p_wk->zone_data_cnt - 1;
+        }
+      }
+      else if( p_wk->seq_param == SEQ_CHANGE_PARAM_DOWN )
+      {
+        p_wk->zone_data_index++;
+        if( p_wk->zone_data_index >= p_wk->zone_data_cnt )
+        {
+          p_wk->zone_data_index = 0;
+        }
+      }
+
+      // 地名メッセージ書き込み
+      DrawLandMsg( p_wk );
+
+      // シーケンスを進める
+      p_wk->sub_seq++;
+    }
+    break;
+  case 1:
+    {
+      // 文字描画終了を待ってキー入力状態に以降
+      if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
+      {
+        // キー入力状態に切替
+        SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+      }
+    }
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地形タイプ切替
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk )
+{
+  switch(p_wk->sub_seq)
+  {
+  case 0:
+    {
+      // @todo 存在しない地形タイプを飛ばす処理を作成
+      // アニメーションシーケンスを決定、季節の切替
+      if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
+      {
+        p_wk->land_type--;
+        if( p_wk->land_type < 0 )
+        {
+          p_wk->land_type = HABITAT_ZONE_APPEAR_FISHING;
+        }
+      }
+      else if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
+      {
+        p_wk->land_type++;
+        if( p_wk->land_type >= HABITAT_ZONE_APPEAR_MAX )
+        {
+          p_wk->land_type = HABITAT_ZONE_APPEAR_LAND;
+        }
+      }
+ 
+      // 地形アイコン更新
+      RefreshLandTypeIcon( p_wk );
+
+      // 地名メッセージ書き込み
+      DrawLandMsg( p_wk );
+
+      p_wk->sub_seq++;
+    }
+    break;
+  case 1:
+    {
+      // 文字描画終了を待ってキー入力状態に以降
+      if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
+      {
+        // キー入力状態に切替
+        SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+      }
+      else
+      {
+        ONOUE_Printf("描画待ち\n");
+      }
+    }
+    break;
+  }
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン選択カーソルを移動させる
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
+{
+  // @todo 見た目を確認して、カーソルが動かないときは何もしないか決める
+  switch( p_wk->sub_seq )
+  {
+  case 0:
+    {
+      if( p_wk->is_cursor_active == FALSE )
+      {
+        // カーソル位置を変更せずにカーソルをONにする
+        p_wk->select_index = 0;
+        SetCursorstatus( p_wk ,p_wk->select_index ,TRUE );
+      }
+      else
+      {
+        s32 x = 0;
+        s32 y = 0;
+        s32 list_h = 0; 
+
+        // 現在のカーソル位置をOFFに
+        SetCursorstatus( p_wk ,p_wk->select_index ,FALSE );
+
+        // 現在のリスト位置を計算
+        if( p_wk->select_index != 0 )
+        {
+          x = p_wk->select_index%POKEICON_LINE;
+          y = p_wk->select_index/POKEICON_LINE;
+        }
+        ONOUE_Printf("1:x = %d,y=%d\n",x,y);
+
+        // リストの高さを計算
+        list_h = p_wk->list_size/POKEICON_LINE;
+
+        // カーソル位置を変更して終了
+        if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
+        {
+          x --;
+          // 右端に移動チェック
+          if( x < 0 )
+          {
+            x = POKEICON_LINE - 1;
+          }
+        }
+        else if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
+        {
+          x++;
+          // 右端に移動チェック
+          if( x > POKEICON_LINE - 1 )
+          {
+            x = 0;
+          }
+        }
+        else if( p_wk->seq_param == SEQ_CHANGE_PARAM_UP )
+        {
+          y--;
+          // 下の行に回りこみ
+          if( y < 0 )
+          {
+            y = list_h;
+          }
+        }
+        else if( p_wk->seq_param == SEQ_CHANGE_PARAM_DOWN )
+        {
+          y++;
+          // 上の行に回りこみ
+          if( y > list_h )
+          {
+            y = 0;
+          }
+        }
+        else
+        {
+          GF_ASSERT_MSG(0,"上下左右以外の切替パラメータを受け付けません。\n");
+        }
+
+        // x,y位置をリスト位置に変換
+        ONOUE_Printf("2:x = %d,y=%d\n",x,y);
+        p_wk->select_index = x + y*POKEICON_LINE;
+
+        // リスト範囲外チェック
+        if( p_wk->select_index >= p_wk->list_size )
+        {
+          if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
+          {
+            // 右移動で範囲外に出た時だけ、リストの左端へカーソルを移動させる
+            x = 0;
+            p_wk->select_index = x + y*POKEICON_LINE;
+          }
+          else
+          {
+            // リストの範囲外の場合は一番最後を選択
+            p_wk->select_index = p_wk->list_size -1;
+          }
+        }
+
+        // 新しいカーソル位置をONに
+        SetCursorstatus( p_wk ,p_wk->select_index ,TRUE );
+      }
+
+      // サブシーケンスを進める
+      p_wk->sub_seq++;
+    }
+    break;
+  case 1:
+    {
+      // @todo SE待ちを行う
+      SetNextSeq( p_wk, MAIN_SEQ_POKESELECT_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+    }
+    break;
+  }
+}
+
 //=============================================================================
 // メッセージ書き込み系
 //=============================================================================
 static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
 {
-  // @todo ゾーンごとのインデックスに変換する必要がある
-//  u32   index = p_wk->land_type;
-  u32     index = 0;
+  u32     msg_id = msg_seisoku_zone_01;
   STRBUF  *str;
   STRBUF  *dest_str;
   PRINTSYS_LSB  font_colro = GetMedalFontColor();
-
-  // 地形
-  u32 land_msg_id[] =
-  {
-    msg_seisoku_zone_01,
-    msg_seisoku_zone_02,
-    msg_seisoku_zone_03,
-    msg_seisoku_zone_04,
-    msg_seisoku_zone_05,
-    msg_seisoku_zone_06,
-  };
 
   // ゾーンIDに対応した地名メッセージIDを取得
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
   u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_id);
   
+  // 場所ごとにメッセージを切り替える
+  if( p_wk->land_type == HABITAT_ZONE_APPEAR_LAND )
+  {
+    // @todo 場所ごとに、草むら、砂地、沼、洞窟を切り替える処理を作る
+    msg_id = msg_seisoku_zone_01;
+//    msg_id = msg_seisoku_zone_02;
+//    msg_id = msg_seisoku_zone_03;
+//    msg_id = msg_seisoku_zone_04;
+  }
+  else if( p_wk->land_type == HABITAT_ZONE_APPEAR_WATERSIDE )
+  {
+    msg_id = msg_seisoku_zone_05;
+  }
+  else if( p_wk->land_type == HABITAT_ZONE_APPEAR_FISHING )
+  {
+    msg_id = msg_seisoku_zone_06;
+  }
+  else
+  {
+    GF_ASSERT( 0 );
+  }
+
   // ワードセットに登録
   WORDSET_RegisterPlaceName( p_wk->p_word_set, 0, place_id );
   
   // ワードセット生成展開先バッファー作成
-  dest_str = GFL_STR_CreateBuffer( 200, HEAPID_ZUKAN_HABITAT_ZONE );
+  dest_str = GFL_STR_CreateBuffer( 256, HEAPID_ZUKAN_HABITAT_ZONE );
 
   // メッセージの書き込み
-  str = GFL_MSG_CreateString( p_wk->p_app_msg , land_msg_id[ index ] );
+  str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_id );
             
   WORDSET_ExpandStr( p_wk->p_word_set, dest_str , str  );
-
+ 
   // メッセージの書き込み
   HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,dest_str ,&p_wk->gra_sys ,
-                                  LAND_MSG_POS_X , LAND_MSG_POS_Y ,font_colro );
+    LAND_MSG_POS_X , LAND_MSG_POS_Y ,LAND_MSG_POS_W ,LAND_MSG_POS_H ,font_colro );
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -401,7 +759,7 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void DrawSeasonMsg( HABITAT_ZONE_WK *p_wk )
 {
-  u32           index = p_wk->season;
+  s32           index = p_wk->season;
   STRBUF        *str;
   PRINTSYS_LSB  font_colro = GetMedalFontColor();
 
@@ -419,7 +777,8 @@ static void DrawSeasonMsg( HABITAT_ZONE_WK *p_wk )
 
   // メッセージの書き込み
   HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
-                                  SEASON_MSG_POS_X , SEASON_MSG_POS_Y ,font_colro );
+      SEASON_MSG_POS_X , SEASON_MSG_POS_Y,SEASON_MSG_POS_W,SEASON_MSG_POS_H ,
+      font_colro );
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -463,19 +822,11 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
   for( i = 0; i < HABITAT_ZONE_POKE_LIST_MAX; i ++ )
   {
     // 表示判断
-    if( (p_pk[i].is_appear_season[p_wk->season]) &&     // 季節
-        (p_pk[i].is_appear_land[p_wk->land_type]) &&    // 場所
-        (p_pk[i].status >= HABITAT_ZONE_STATUS_LOOK) )  // 見たか、捕獲のみ
+    if( (p_pk[i].is_appear[p_wk->season][p_wk->land_type]) && // 出現条件
+        (p_pk[i].status >= HABITAT_ZONE_STATUS_LOOK) )        // 見たか、捕獲のみ
     {
-      // リソース読み込み
-      GFL_CLWK *p_clwk = HABITAT_ZONE_GRA_LoadPokeIcon( 
-          &p_wk->gra_sys ,p_pk[i].monsno, index );
-      // 場所設定
-      {
-        GFL_CLACTPOS pos;
-        GetPokeIconPos( index ,&pos );
-        GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DEFREND_MAIN );
-      }
+      // ポケモンアイコンをセット
+      HABITAT_ZONE_GRA_SetPokeIcon( &p_wk->gra_sys ,p_pk[i].monsno, index );
       index++;
       ONOUE_Printf("ポケモンアイコン読み込み%d\n",index);
     }
@@ -487,18 +838,100 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ポケモンアイコンの座標を取得する
+ *	@brief  現在の状態に合わせて、地形アイコンを更新する
  *
- *	@param	index 
- *	@param	*p_pos 
+ *	@param	*p_wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void GetPokeIconPos( u8 index ,GFL_CLACTPOS *p_pos )
+static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
 {
-  p_pos->x = POKEICON_START_X + (index%POKEICON_LINE)*POKEICON_MARGIN_W;
-  p_pos->y = POKEICON_START_Y + (index/POKEICON_LINE)*POKEICON_MARGIN_Y;
+
+  // 草地
+  if( p_wk->land_type == HABITAT_ZONE_APPEAR_LAND )
+  {
+    HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
+                    GRA_LANDICON_TYPE_LAND,GRA_LANDICON_ON );
+  }
+  else
+  {
+    HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
+                    GRA_LANDICON_TYPE_LAND,GRA_LANDICON_OFF );
+  }
+
+  // 波乗り
+  if( p_wk->land_type == HABITAT_ZONE_APPEAR_WATERSIDE )
+  {
+    HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
+                    GRA_LANDICON_TYPE_WATERSIDE,GRA_LANDICON_ON );
+  }
+  else
+  {
+    HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
+                    GRA_LANDICON_TYPE_WATERSIDE,GRA_LANDICON_OFF );
+  }
+
+  // 釣り
+  if( p_wk->land_type == HABITAT_ZONE_APPEAR_FISHING )
+  {
+    HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
+                    GRA_LANDICON_TYPE_FISHING,GRA_LANDICON_ON );
+  }
+  else
+  {
+    HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
+                    GRA_LANDICON_TYPE_FISHING,GRA_LANDICON_OFF );
+  }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンアイコンリストを再描画する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void RefreshLandPokeIcon( HABITAT_ZONE_WK *p_wk )
+{
+  s32 i;
+
+  // 全てのポケモンアイコンを削除する
+  for( i = 0; i < HABITAT_ZONE_POKE_LIST_MAX; i ++ )
+  {
+    HABITAT_ZONE_GRA_DeletePokeIcon( &p_wk->gra_sys ,i );
+  }
+
+  // ポケモンアイコン作成
+  MakePokeIconList( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソルのアクティブ状態を設定する
+ *
+ *	@param	*p_wk 
+ *	@param	index 
+ *	@param	is_active 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetCursorstatus( HABITAT_ZONE_WK *p_wk ,s32 index ,BOOL is_active )
+{
+  if( is_active == TRUE )
+  {
+    HABITAT_ZONE_GRA_SetCursorStatus( &p_wk->gra_sys ,
+                p_wk->select_index ,GRA_POKEICON_CURSOR_ON);
+  }
+  else
+  {
+    HABITAT_ZONE_GRA_SetCursorStatus( &p_wk->gra_sys ,
+                p_wk->select_index ,GRA_POKEICON_CURSOR_OFF);
+  }
+  HABITAT_ZONE_GRA_SetPokeAnmFlag( &p_wk->gra_sys ,index , is_active );
+  p_wk->is_cursor_active = is_active;
+}
 

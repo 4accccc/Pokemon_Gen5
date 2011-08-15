@@ -647,14 +647,13 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
     for( i = 0; i < zone_info->zone_cnt ; i ++ )
     {
       s32 n;
-      zone_info->p_zone_list_data[ i ].zone_id = 0;
-      for( n = 0; n < HABITAT_ZONE_POKE_LIST_MAX ; n ++ )
+      zone_info->p_zone_list_data[ i ].zone_id = i*40;
+      for( n = 0; n < HABITAT_ZONE_POKE_LIST_MAX -2 ; n ++ )
       {
         HABITAT_ZONE_POKE_DATA *p_poke_data;
         p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
         p_poke_data->monsno = n + 1;
-        p_poke_data->is_appear_land[0] = TRUE;
-        p_poke_data->is_appear_season[0] = TRUE;
+        p_poke_data->is_appear[0][0] = TRUE;
         p_poke_data->status = HABITAT_ZONE_STATUS_LOOK;
       }
     }

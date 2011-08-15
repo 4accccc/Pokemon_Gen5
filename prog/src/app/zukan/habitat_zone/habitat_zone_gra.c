@@ -31,6 +31,7 @@
 //ポケアイコン
 #include "pokeicon/pokeicon.h"
 
+
 FS_EXTERN_OVERLAY(ui_common);
 
 //=============================================================================
@@ -74,6 +75,7 @@ static void GRA_InitClact( void );
 static void GRA_LoadBgGraphic(void);
 static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_InitPaletteFade( HABITAT_ZONE_GRA_WK *p_wk );
+static void GRA_InitBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_InitFrameScroll( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_InitBmpWin( HABITAT_ZONE_GRA_WK *p_wk );
 
@@ -83,10 +85,14 @@ static void GRA_ExitPaletteFade( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_ExitBg( void );
 static void GRA_ExitObj( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_ExitBmpWin( HABITAT_ZONE_GRA_WK *p_wk );
+static void GRA_ExitBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk );
 
 // 処理系
 static void GRA_SetPalFadeSeq( HABITAT_ZONE_GRA_WK *p_wk, u8 start, u8 end );
 static void GRA_PrintMain( HABITAT_ZONE_GRA_WK *p_wk );
+static void GRA_BlinkAnmMain( HABITAT_ZONE_GRA_WK *p_wk );
+static void GRA_GetPokeIconPos( u8 index ,GFL_CLACTPOS *p_pos );
+static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 index );
 
 //===============================================================================
 // 初期化・終了関数呼び出し
@@ -126,11 +132,12 @@ void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk )
   GRA_InitVram();           // VRAM
   GRA_InitBg();             // BG
   GRA_InitObj( p_wk );      // OBJ
-  GRA_InitBmpWin( p_wk );
-  GRA_LoadObjGraphic( p_wk ); // OBJ初期化
-  GRA_LoadBgGraphic();      // BGリソース読み込み
+  GRA_InitBmpWin( p_wk );   // BMPWIN
+  GRA_LoadObjGraphic( p_wk );     // OBJ初期化
+  GRA_LoadBgGraphic();            // BGリソース読み込み
   GRA_InitPaletteFade( p_wk );    // パレットフェード
-  GRA_InitFrameScroll( p_wk );          // スクロール
+  GRA_InitBlinkAnm( p_wk );       // 点滅アニメ
+  GRA_InitFrameScroll( p_wk );    // スクロール
 }
 
 //----------------------------------------------------------------------------
@@ -156,6 +163,9 @@ void HABITAT_ZONE_GRA_Exit( HABITAT_ZONE_GRA_WK *p_wk )
   // BGの終了処理
 	GRA_ExitBg();
 
+  // 点滅アニメ終了
+  GRA_ExitBlinkAnm( p_wk );
+  
   // パレットフェードの終了
   GRA_ExitPaletteFade( p_wk );
 
@@ -202,6 +212,9 @@ void HABITAT_ZONE_GRA_Main( HABITAT_ZONE_GRA_WK *p_wk )
 {
   // 文字描画更新
   GRA_PrintMain( p_wk );
+ 
+  // カーソル点滅アニメ
+  GRA_BlinkAnmMain( p_wk );
 
   // 背景スクロール
   p_wk->back_bg_scroll_wait_count++;
@@ -635,12 +648,13 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
  *	@retval 生成したセルアクターワーク
  */
 //-----------------------------------------------------------------------------
-GFL_CLWK* HABITAT_ZONE_GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 index )
+static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 index )
 {
   // ポケアイコン本体
   {
     UI_EASY_CLWK_RES_PARAM prm;
 
+    // @todo パレット番号を定数化する
     prm.draw_type = CLSYS_DRAW_MAIN;
     prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCLR;
     prm.arc_id    = ARCID_POKEICON;
@@ -748,7 +762,10 @@ static void GRA_ExitObj( HABITAT_ZONE_GRA_WK *p_wk )
   // リソースの開放
   for( i = 0; i < HABITAT_ZONE_POKE_LIST_MAX; i++ )
   {
-    UI_EASY_CLWK_UnLoadResource( &p_wk->clres_poke_icon[i] );
+    if( p_wk->p_clwk_poke_icon[i] != NULL )
+    {
+      UI_EASY_CLWK_UnLoadResource( &p_wk->clres_poke_icon[i] );
+    }
   }
   UI_EASY_CLWK_UnLoadResource( &p_wk->clres_common_obj );
   // ユニットの開放
@@ -774,6 +791,21 @@ static void GRA_ExitPaletteFade( HABITAT_ZONE_GRA_WK *p_wk )
 	PaletteFadeWorkAllocFree( p_wk->p_pfd, FADE_SUB_OBJ );
 
 	PaletteFadeFree( p_wk->p_pfd );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  点滅アニメーションの終了
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GRA_ExitBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk )
+{
+  // 終了
+  BLINKPALANM_Exit( p_wk->p_blinkanm_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -825,6 +857,37 @@ static void GRA_InitFrameScroll( HABITAT_ZONE_GRA_WK *p_wk )
 {
   p_wk->back_bg_scroll_wait_count = 0;
   GFL_BG_SetScrollReq( BGS_FRAME_MAP, GFL_BG_SCROLL_Y_SET, MAP_Y_SCROLL_COUNT );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  点滅アニメーション初期化
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GRA_InitBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk )
+{
+  ARCHANDLE * ah;
+
+  // 図鑑グラフィックアーカイブ
+  ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_HABITAT_ZONE );
+	
+  // 点滅させるパレットの指定
+  p_wk->p_blinkanm_wk = BLINKPALANM_Create( BLINK_PALID_POKE_CURSOR_CHANGE*16  ,
+        BLINK_PAL_SIZE_POKE_CURSOR , BGM_FRAME_BACK, HEAPID_ZUKAN_HABITAT_ZONE );
+
+  // パレットアニメデータの作成
+  BLINKPALANM_SetPalBufferArcHDL( p_wk->p_blinkanm_wk, ah,
+                    NARC_zukan_gra_list_list_bgd_NCLR, 
+                    BLINK_PALID_POKE_CURSOR_START*16, 
+                    BLINK_PALID_POKE_CURSOR_END*16 );
+    
+  // アーカイブクローズ
+  GFL_ARC_CloseDataHandle( ah );
+	
 }
 
 
@@ -891,59 +954,54 @@ BOOL HABITAT_ZONE_GRA_CheckPrintUtilStatus( HABITAT_ZONE_GRA_WK *p_wk )
  *	@brief  文字列描画
  *
  *	@param	win_id
- *	@param	str
+ *	@param	STRBUF* str
  *	@param	*p_wk 
  *	@param	x
  *	@param	y 
+ *	@param	w
+ *	@param	h 
  *	@param	font_colro 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
 void HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_WIN win_id, const STRBUF* str,
-    HABITAT_ZONE_GRA_WK *p_wk ,s16 x, s16 y ,PRINTSYS_LSB font_colro )
+    HABITAT_ZONE_GRA_WK *p_wk ,s16 x, s16 y ,s16 w, s16 h ,PRINTSYS_LSB font_colro )
 {
+  GFL_BMPWIN *p_win;
+
+  switch( win_id )
+  {
+  case PRINT_UTIL_INFO_WIN:
+      p_win = p_wk->p_font_win;
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+	
+  // 塗りつぶし
+  GFL_BMP_Fill( GFL_BMPWIN_GetBmp(p_win) ,x ,y ,w ,h ,0 );
+
+  // 文字描画
   PRINT_UTIL_PrintColor( &p_wk->print_util[win_id],
       p_wk->p_print_que , x , y ,
       str ,p_wk->p_font , font_colro);
 }
 
-////----------------------------------------------------------------------------
-///**
-// *	@brief  指定ウィンドウの塗りつぶし
-// *
-// *	@param	win_id 
-// *	@param	x 
-// *	@param	y
-// *	@param	w 
-// *	@param	h 
-// *	@param	col_code 
-// *	@param	*p_wk 
-// *
-// *	@retval
-// */
-////-----------------------------------------------------------------------------
-//void HABITAT_ZONE_GRA_FillBmpWin( PRINT_UTIL_WIN win_id ,u8 x ,u8 y, u8 w ,u8 h ,u8 col_code ,HABITAT_ZONE_GRA_WK *p_wk )
-//{
-//  
-//  GFL_BMPWIN *p_win;
-//  u8 frame;
-//  switch( win_id )
-//  {
-//  case PRINT_UTIL_INFO_WIN:
-//      p_win = p_wk->p_font_win;
-//    break;
-//
-//  default:
-//    GF_ASSERT(0);
-//  }
-//
-//  // 塗りつぶして転送
-//  frame = GFL_BMPWIN_GetFrame( p_win );
-//  GFL_BMP_Fill( GFL_BMPWIN_GetBmp(p_win) ,x ,y ,w ,h ,col_code );
-//  GFL_BMPWIN_TransVramCharacter( p_win );
-//  GFL_BG_LoadScreenV_Req(frame);
-//}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  点滅アニメーションメイン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GRA_BlinkAnmMain( HABITAT_ZONE_GRA_WK *p_wk )
+{
+  // カーソル点滅アニメーション
+  BLINKPALANM_Main( p_wk->p_blinkanm_wk );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -988,5 +1046,168 @@ void HABITAT_ZONE_GRA_BmpFil( PRINT_UTIL_WIN win_id ,u8 col_code ,HABITAT_ZONE_G
 GFL_CLWK* HABITAT_ZONE_GRA_GetComClWk( HABITAT_ZONE_GRA_WK *p_wk ,s32 obj_id )
 {
   return p_wk->p_clwk_common_obj[ obj_id ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地形アイコンのパレットを書き換える
+ *
+ *	@param	*p_wk 
+ *	@param	icon_type
+ *	@param	status 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
+                      GRA_LANDICON_TYPE icon_type, GRA_LANDICON_STATUS status )
+{
+
+  // 状態ごとのパレット番号
+  u8 palid[] =
+  {
+    LAND_TYPE_ICON_PAL_ON,
+    LAND_TYPE_ICON_PAL_OFF,
+    LAND_TYPE_ICON_PAL_NONE,
+  };
+
+  // アイコンタイプごとに書き換え位置を変える
+  switch( icon_type )
+  {
+  case GRA_LANDICON_TYPE_LAND:
+    GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,
+        LAND_TYPE_ICON_LAND_POS_X,LAND_TYPE_ICON_LAND_POS_Y,
+        LAND_TYPE_ICON_W,LAND_TYPE_ICON_H,palid[ status ]);
+    break;
+  case GRA_LANDICON_TYPE_WATERSIDE:
+    GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,
+        LAND_TYPE_ICON_WATERSIDE_POS_X,LAND_TYPE_ICON_WATERSIDE_POS_Y,
+        LAND_TYPE_ICON_W,LAND_TYPE_ICON_H,palid[ status ]);
+    break;
+  case GRA_LANDICON_TYPE_FISHING:
+    GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,
+        LAND_TYPE_ICON_FISHING_POS_X,LAND_TYPE_ICON_FISHING_POS_Y,
+        LAND_TYPE_ICON_W,LAND_TYPE_ICON_H,palid[ status ]);
+    break;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+  // スクリーン転送
+	GFL_BG_LoadScreenReq( BGM_FRAME_BACK );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンアイコンをセットする
+ *
+ *	@param	*p_wk 
+ *	@param	monsno 
+ *	@param	index 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u16 monsno ,u8 index )
+{
+  // リソース読み込み
+  GFL_CLACTPOS pos;
+  GFL_CLWK *p_clwk = GRA_LoadPokeIcon( p_wk , monsno, index );
+  GRA_GetPokeIconPos( index ,&pos );
+  GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DEFREND_MAIN );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンアイコンのアニメ状態をセットする
+ *
+ *	@param	*p_wk 
+ *	@param	index 
+ *	@param	is_anm 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetPokeAnmFlag( HABITAT_ZONE_GRA_WK *p_wk ,u8 index ,
+                                                                    BOOL is_anm )
+{
+  GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_poke_icon[index],is_anm );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンアイコンを削除する
+ *
+ *	@param	*p_wk 
+ *	@param	index 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_DeletePokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u8 index )
+{
+  // 存在する場合のみ削除
+  if( p_wk->p_clwk_poke_icon[index] != NULL )
+  {
+    UI_EASY_CLWK_UnLoadResource( &p_wk->clres_poke_icon[index] );
+    GFL_CLACT_WK_Remove( p_wk->p_clwk_poke_icon[index] );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソルの見た目状態を変更する
+ *
+ *	@param	*p_wk 
+ *	@param	index 
+ *	@param	status 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetCursorStatus( HABITAT_ZONE_GRA_WK *p_wk ,u8 index ,
+                                              GRA_POKEICON_CURSOR_STATUS status )
+{
+  u8 sx = POKEICON_CURSOR_POS_X + (index%POKEICON_LINE)*POKEICON_CURSOR_POS_W;
+  u8 sy = POKEICON_CURSOR_POS_Y + (index/POKEICON_LINE)*POKEICON_CURSOR_POS_H;
+
+  if( status == GRA_POKEICON_CURSOR_ON )
+  {
+    GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,sx, sy,
+        POKEICON_CURSOR_POS_W,POKEICON_CURSOR_POS_H,POKEICON_CURSOR_ON_PALID);
+  }
+  else if( status == GRA_POKEICON_CURSOR_OFF )
+  {
+    GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,sx, sy,
+        POKEICON_CURSOR_POS_W,POKEICON_CURSOR_POS_H,POKEICON_CURSOR_OFF_PALID);
+  }
+  else if( status == GRA_POKEICON_CURSOR_NONE )
+  {
+    GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,sx, sy,
+        POKEICON_CURSOR_POS_W,POKEICON_CURSOR_POS_H,POKEICON_CURSOR_NONE_PALID);
+  }
+  else
+  {
+    GF_ASSERT(0);
+  }
+  // スクリーン転送
+  GFL_BG_LoadScreenReq( BGM_FRAME_BACK );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンアイコンの座標を取得する
+ *
+ *	@param	index 
+ *	@param	*p_pos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GRA_GetPokeIconPos( u8 index ,GFL_CLACTPOS *p_pos )
+{
+  p_pos->x = POKEICON_START_X + (index%POKEICON_LINE)*POKEICON_MARGIN_W;
+  p_pos->y = POKEICON_START_Y + (index/POKEICON_LINE)*POKEICON_MARGIN_Y;
 }
 

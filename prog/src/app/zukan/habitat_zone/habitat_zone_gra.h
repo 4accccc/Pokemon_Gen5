@@ -24,6 +24,9 @@
 // プリントシステム
 #include "app/app_printsys_common.h"
 
+// 点滅アニメーション
+#include "system/blink_palanm.h"
+
 // OBJ初期位置
 enum
 {
@@ -86,8 +89,37 @@ enum
 
 // 定数定義
 enum{
-  HABITAT_ZONE_POKE_LIST_MAX = 15,  // ゾーン詳細画面のポケモンデータ最大数
-  HABITAT_ZONE_UNIT_CLWK_MAX = HABITAT_ZONE_POKE_LIST_MAX + COMMON_OBJ_WK_MAX,
+  HABITAT_ZONE_POKE_LIST_MAX  = 15,  // ゾーン詳細画面のポケモンデータ最大数
+  HABITAT_ZONE_UNIT_CLWK_MAX  = HABITAT_ZONE_POKE_LIST_MAX + COMMON_OBJ_WK_MAX,
+  LAND_TYPE_ICON_PAL_ON       = 0xA,  // 地形タイプがONの時のパレット
+  LAND_TYPE_ICON_PAL_OFF      = 0x9,  // 地形タイプがOFFの時のパレット
+  LAND_TYPE_ICON_PAL_NONE     = 0xB,  // 地形タイプがないの時のパレット
+  LAND_TYPE_ICON_W            = 4,   // 地形タイプアイコンの幅
+  LAND_TYPE_ICON_H            = 3,   // 地形タイプアイコンの高さ
+  LAND_TYPE_ICON_LAND_POS_X   = 13,   // 草地アイコンの開始座標
+  LAND_TYPE_ICON_LAND_POS_Y   = 6,   // 草地アイコンの開始座標
+  LAND_TYPE_ICON_WATERSIDE_POS_X  = 19,   // 草地アイコンの開始座標
+  LAND_TYPE_ICON_WATERSIDE_POS_Y  = 6,    // 草地アイコンの開始座標
+  LAND_TYPE_ICON_FISHING_POS_X    = 25,   // 草地アイコンの開始座標
+  LAND_TYPE_ICON_FISHING_POS_Y    = 6,    // 草地アイコンの開始座標
+  BLINK_PALID_POKE_CURSOR_CHANGE  = 0xA,  // 滅用パレット番号(書き換え対象)
+  BLINK_PALID_POKE_CURSOR_START   = 0x9,  // ポケモン選択点滅用パレット番号(基準)
+  BLINK_PALID_POKE_CURSOR_END     = 0xA,  // ポケモン選択点滅用パレット番号(終了)
+  BLINK_PAL_SIZE_POKE_CURSOR      = 5,    // 点滅させるパレットの数
+  POKEICON_ROW      = 3,  // リストの行数
+  POKEICON_LINE     = 5,  // リストの列数
+  POKEICON_START_X  = 48, // リストの開始X座標
+  POKEICON_START_Y  = 88, // リストの開始Y座標
+  POKEICON_MARGIN_W = 40, // 横のアイコンまでの距離
+  POKEICON_MARGIN_Y = 32, // 下のアイコンまでの距離
+  POKEICON_CURSOR_POS_X   = 4,    // ポケモンアイコンカーソルの開始位置
+  POKEICON_CURSOR_POS_Y   = 10,   // ポケモンアイコンカーソルの開始位置
+  POKEICON_CURSOR_POS_W   = POKEICON_MARGIN_W/8,   // カーソルの開始位置
+  POKEICON_CURSOR_POS_H   = POKEICON_MARGIN_Y/8,   // カーソルの開始位置
+  POKEICON_CURSOR_ON_PALID    = BLINK_PALID_POKE_CURSOR_CHANGE,
+  POKEICON_CURSOR_OFF_PALID   = BLINK_PALID_POKE_CURSOR_START,
+  POKEICON_CURSOR_NONE_PALID  = 0xB,
+
 };
 
 // OBJ表示優先度
@@ -121,6 +153,27 @@ typedef enum
   PRINT_UTIL_MAX,
 }PRINT_UTIL_WIN;
 
+// 地形アイコンID
+typedef enum{
+  GRA_LANDICON_TYPE_LAND,
+  GRA_LANDICON_TYPE_WATERSIDE,
+  GRA_LANDICON_TYPE_FISHING,
+}GRA_LANDICON_TYPE;
+
+// 地形アイコンステータス
+typedef enum{
+  GRA_LANDICON_ON,
+  GRA_LANDICON_OFF,
+  GRA_LANDICON_NONE,
+}GRA_LANDICON_STATUS;
+
+// カーソルの選択状態
+typedef enum{
+  GRA_POKEICON_CURSOR_ON,
+  GRA_POKEICON_CURSOR_OFF,
+  GRA_POKEICON_CURSOR_NONE,
+}GRA_POKEICON_CURSOR_STATUS;
+
 //=============================================================================
 //
 //					構造体宣言
@@ -131,6 +184,7 @@ typedef enum
 typedef struct {
   // パレットフェード　-------------------------------
   PALETTE_FADE_PTR  p_pfd;
+  BLINKPALANM_WORK  *p_blinkanm_wk; // 点滅用
 	
   // セルアクターユニット
   GFL_CLUNIT			*p_clunit;
@@ -165,11 +219,19 @@ extern void HABITAT_ZONE_GRA_CallOpeningFade( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_Exit( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_VblankMain( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_Main( HABITAT_ZONE_GRA_WK *p_wk );
-extern GFL_CLWK* HABITAT_ZONE_GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 index );
 extern BOOL HABITAT_ZONE_GRA_CheckPrintUtilStatus( HABITAT_ZONE_GRA_WK *p_wk );
-extern void HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_WIN win_id, const STRBUF* buf,
-    HABITAT_ZONE_GRA_WK *p_wk ,s16 x, s16 y ,PRINTSYS_LSB font_colro );
-//extern void HABITAT_ZONE_GRA_FillBmpWin( PRINT_UTIL_WIN win_id ,u8 x ,u8 y, u8 w ,u8 h ,u8 col_code ,HABITAT_ZONE_GRA_WK *p_wk );
+extern void HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_WIN win_id, const STRBUF* str,
+    HABITAT_ZONE_GRA_WK *p_wk,s16 x,s16 y,s16 w, s16 h ,PRINTSYS_LSB font_colro );
 extern void HABITAT_ZONE_GRA_BmpFil( PRINT_UTIL_WIN win_id ,u8 col_code ,HABITAT_ZONE_GRA_WK *p_wk );
-extern GFL_CLWK* HABITAT_ZONE_GRA_GetComClWk( HABITAT_ZONE_GRA_WK *p_wk ,s32 obj_id );
+extern GFL_CLWK* HABITAT_ZONE_GRA_GetComClWk(
+                                        HABITAT_ZONE_GRA_WK *p_wk ,s32 obj_id );
+extern void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
+                      GRA_LANDICON_TYPE icon_type, GRA_LANDICON_STATUS status );
+extern void HABITAT_ZONE_GRA_SetPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
+                                                          u16 monsno ,u8 index );
+extern void HABITAT_ZONE_GRA_DeletePokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u8 index );
+extern void HABITAT_ZONE_GRA_SetCursorStatus( HABITAT_ZONE_GRA_WK *p_wk ,
+                                    u8 index ,GRA_POKEICON_CURSOR_STATUS status );
+extern void HABITAT_ZONE_GRA_SetPokeAnmFlag( HABITAT_ZONE_GRA_WK *p_wk ,
+                                                          u8 index ,BOOL is_anm );
 

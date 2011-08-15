@@ -42,8 +42,10 @@ typedef enum{
 typedef enum {
   SEQ_CHANGE_PARAM_L,
   SEQ_CHANGE_PARAM_R,
-  SEQ_CHANGE_PARAM_U,
-  SEQ_CHANGE_PARAM_D,
+  SEQ_CHANGE_PARAM_UP,
+  SEQ_CHANGE_PARAM_DOWN,
+  SEQ_CHANGE_PARAM_A,
+  SEQ_CHANGE_PARAM_TOUCH,
   SEQ_CHANGE_PARAM_NONE,
 }SEQ_CHANGE_PARAM;
 
@@ -56,8 +58,7 @@ typedef enum {
 // リストデータ
 typedef struct {
   s32   monsno; // モンスターナンバー
-  BOOL  is_appear_land[ HABITAT_ZONE_APPEAR_MAX ]; // 場所出現するかどうか
-  BOOL  is_appear_season[ PMSEASON_TOTAL ]; // 四季出現するかどうか
+  BOOL  is_appear[ PMSEASON_TOTAL ][ HABITAT_ZONE_APPEAR_MAX ]; // 出現条件 
   HABITAT_ZONE_STATUS status; // 見た、捕獲、知らない
 }HABITAT_ZONE_POKE_DATA;
 
@@ -71,9 +72,9 @@ typedef struct {
 typedef struct {
 	// [in]
   GAMEDATA *p_gdata;				// ゲームデータ
-  u16 zone_cnt;             // データ数
-  u16 start_zone_index;     // 開始データインデックス
-  u16 start_season;         // 開始季節
+  u32 zone_cnt;             // データ数
+  u32 start_zone_index;     // 開始データインデックス
+  u32 start_season;         // 開始季節
   HABITAT_ZONE_APPEAR start_land_type;      // 開始場所タイプ
   HABITAT_ZONE_DATA *p_zone_list_data;      // ゾーンごとのデータ格納先
 
@@ -90,11 +91,13 @@ typedef struct {
   GFL_MSGDATA         *p_app_msg;
   GFL_TCB             *p_vtask;
 
-  u16 zone_data_cnt;             // データ数
-  u8  list_size;            // ポケモンリストに表示されている数
-  u8  zone_data_index;           // リストのインデックス
-  u8  season;
-  HABITAT_ZONE_APPEAR land_type;
+  BOOL  is_cursor_active;           // カーソルが選択状態かどうか
+  s32   select_index;               // 選択中のポケモン
+  s32   zone_data_cnt;              // データ数
+  s32   list_size;                  // ポケモンリストに表示されている数
+  s32   zone_data_index;            // リストのインデックス
+  s32   season;                     // 表示中のの季節
+  HABITAT_ZONE_APPEAR land_type;  // 表示中のの場所タイプ
   WORDSET *p_word_set;
 
   SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ
@@ -108,17 +111,17 @@ typedef struct {
 //=============================================================================
 
 
-//============================================================================================
+//===================================================================================
 //	グローバル
-//============================================================================================
+//===================================================================================
 
 // 図鑑PROCデータ
 extern const GFL_PROC_DATA ZUKANHABITAT_ZONE_ProcData;
 
 
-//============================================================================================
+//===================================================================================
 //	プロトタイプ宣言
-//============================================================================================
+//===================================================================================
 
 FS_EXTERN_OVERLAY( zukan_habitat_zone );
 
