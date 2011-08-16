@@ -1050,6 +1050,8 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
 
       // スプレー処理
       EncDataSave_SetSprayCnt( encsv, count );
+      // 使用したスプレーのアイテム番号も保存
+      EncDataSave_SetSprayItemNo( encsv, pWork->ret_item );
 
       // アイテムを減らす
       ITEM_Sub( pWork, 1 );

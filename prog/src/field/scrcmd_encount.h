@@ -18,3 +18,6 @@ extern VMCMD_RESULT EvCmdAddMovePokemon( VMHANDLE* core, void* wk );
 
 extern VMCMD_RESULT EvCmdGetFishingEncountMonsNo( VMHANDLE* core, void* wk );
 
+extern VMCMD_RESULT EvCmdUseSprayContinue( VMHANDLE* core, void* wk );
+
+

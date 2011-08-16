@@ -50,6 +50,9 @@ extern void EncDataSave_SetSprayCnt(ENC_SV_PTR inEncData,u8 count);
 extern BOOL EncDataSave_DecSprayCnt(ENC_SV_PTR inEncData);
 extern BOOL EncDataSave_CanUseSpray(ENC_SV_PTR inEncData);
 
+extern void EncDataSave_SetSprayItemNo(ENC_SV_PTR inEncData, const u16 item );
+extern u16 EncDataSave_GetSprayItemNo( const ENC_SV_PTR inEncData );
+
 extern int EncDataSave_GetNPokeCaptureNum(ENC_SV_PTR inEncData);
 extern BOOL EncDataSave_CheckNPokeCaptureFlag(ENC_SV_PTR inEncData, const u8 inIdx);
 extern void EncDataSave_SetNPokeCaptureFlag(ENC_SV_PTR inEncData, const u8 inIdx);

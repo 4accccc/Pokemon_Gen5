@@ -38,13 +38,14 @@ typedef struct MV_POKE_DATA_tag{
 
 typedef struct ENC_SV_DATA_tag
 {
-	u32 dummy;  //PLAYER_ZONE_HIST	PlayerZoneHist;	旧ゾーン履歴(WBで未使用なのでスワンで使える空き領域として確保)
 	MV_POKE_DATA	MovePokeData[MOVE_POKE_MAX];	//移動ポケモンデータ
 	u8 MovePokeZoneIdx[MOVE_POKE_MAX];	//移動ポケモン現在ゾーンインデックス
 	u8 MovePokeStatus[MOVE_POKE_MAX];	//移動ポケモン捕獲状況
 	u8 GenerateZoneIdx;					//大量発生発動フラグ
 	u8 SprayCount;						//スプレー有効歩数(最大250歩)
+  u16 SprayItemNo;          //使用したスプレーのアイテム番号
   u16 NPokeGetFlags;        //Ｎポケモン捕獲済みビットフィールド	
+	u16 dummy;  //PLAYER_ZONE_HIST	PlayerZoneHist;	旧ゾーン履歴(WBで未使用なのでスワンで使える空き領域として確保)
 }ENC_SV_DATA;
 
 SDK_COMPILER_ASSERT( sizeof(ENC_SV_DATA)==52);
@@ -97,6 +98,7 @@ void EncDataSave_Init(ENC_SV_PTR outEncData)
 	outEncData->GenerateZoneIdx = 0;
 	//スプレー
 	outEncData->SprayCount = 0;
+	outEncData->SprayItemNo = 0;
 
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_ENCOUNT)
 	SVLD_SetCrc(GMDATA_ID_ENCOUNT);
@@ -419,6 +421,32 @@ BOOL EncDataSave_CanUseSpray(ENC_SV_PTR inEncData)
 	}else{
 		return FALSE;
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  使用したスプレーのアイテム番号をセット
+ *
+ *	@param	inEncData エンカウント関連セーブポインタ
+ *	@param	u16 item  アイテム番号
+ */
+//-----------------------------------------------------------------------------
+void EncDataSave_SetSprayItemNo(ENC_SV_PTR inEncData, const u16 item )
+{
+  inEncData->SprayItemNo = item;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  使用したスプレーのアイテム番号を取得
+ *
+ *	@param	inEncData エンカウント関連セーブポインタ
+ *
+ *	@return スプレーのアイテム番号
+ */
+//-----------------------------------------------------------------------------
+u16 EncDataSave_GetSprayItemNo( const ENC_SV_PTR inEncData )
+{
+  return inEncData->SprayItemNo;
 }
 
 //==============================================================================

@@ -4036,7 +4036,6 @@
 #define _GET_EFFECT_ENCOUNT_ITEM( ret_wk )   \
     _ASM_GET_EFFECT_ENCOUNT_ITEM ret_wk
 
-
     .macro  _ASM_GET_EFFECT_ENCOUNT_ITEM ret_wk
     .short  EV_SEQ_GET_EFFECT_ENCOUNT_ITEM
     .short  \ret_wk
@@ -4054,6 +4053,22 @@
   _ASM_LDVAL SCWK_REG1,\num
   _CALL ev_fld_item2
 .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _USE_SPRAY_CONTINUE
+ * @brief スプレーの継続使用
+ * @param ret_wk    使用したスプレーのアイテム番号を返す
+ */
+//--------------------------------------------------------------
+#define _USE_SPRAY_CONTINUE( ret_wk ) \
+    _ASM_USE_SPRAY_CONTINUE ret_wk
+
+    .macro  _ASM_USE_SPRAY_CONTINUE ret_wk
+    .short  EV_SEQ_USE_SPRAY_CONTINUE
+    .short  \ret_wk
+    .endm
+
 
 //======================================================================
 //  会話イベント関連

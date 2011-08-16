@@ -1080,6 +1080,9 @@
   DEF_CMD( EvCmdFieldPokeGetTradeMonsno, EV_SEQ_FIELD_POKE_GET_TRADE_MONSNO )
   NO_CMD()
 
+  // アイテム関連
+  DEF_CMD( EvCmdUseSprayContinue, EV_SEQ_USE_SPRAY_CONTINUE )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

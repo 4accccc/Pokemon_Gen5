@@ -12,6 +12,8 @@
 #include "system/vm_cmd.h"
 #include "system/main.h"  //HEAPID_PROC
 
+#include "item/item.h"
+
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
@@ -296,5 +298,59 @@ VMCMD_RESULT EvCmdGetFishingEncountMonsNo( VMHANDLE* core, void* wk )
   GFL_ARC_CloseDataHandle( handle );
 
 	return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スプレーの継続使用
+ *
+ *	@param	VMHANDLE* core
+ *	@param	wk 
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdUseSprayContinue( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK *work = wk;
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+  ENC_SV_PTR encsv = EncDataSave_GetSaveDataPtr( save );
+  MYITEM_PTR myitem = GAMEDATA_GetMyItem(gdata);
+  u16 item_no = EncDataSave_GetSprayItemNo( encsv );
+
+  u16 *ret_wk = SCRCMD_GetVMWork( core, work );
+
+  // スプレーか確認
+  if( !(item_no == ITEM_GOORUDOSUPUREE ||
+        item_no == ITEM_SIRUBAASUPUREE ||
+        item_no == ITEM_MUSIYOKESUPUREE )
+    )
+  {
+    GF_ASSERT_MSG(0,"セーブされているアイテム番号がスプレーではない");
+    return VMCMD_RESULT_CONTINUE;
+  }
+  
+  // 使用チェック
+  if( EncDataSave_CanUseSpray( encsv ) )
+  {
+    u8 count = ITEM_GetParam( item_no, ITEM_PRM_ATTACK, heapID );
+
+    // スプレー処理
+    EncDataSave_SetSprayCnt( encsv, count );
+
+    // アイテムを減らす
+    MYITEM_SubItem( myitem, item_no, 1, heapID );
+
+    // スプレー使用音
+    PMSND_PlaySE( SEQ_SE_SYS_92 );
+
+    *ret_wk = item_no;
+  }
+  else
+  {
+    GF_ASSERT(0);
+  }
+
+  return VMCMD_RESULT_CONTINUE;
 }
 

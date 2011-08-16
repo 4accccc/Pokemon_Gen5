@@ -2138,14 +2138,28 @@ static GMEVENT* CheckSeaTemple( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, u16
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
 {
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork(gdata);
+  ENC_SV_PTR enc_save = EncDataSave_GetSaveDataPtr(save);
   u8 end_f;
 
   //セーブデータ取得
-  end_f = EncDataSave_DecSprayCnt(EncDataSave_GetSaveDataPtr(save));
+  end_f = EncDataSave_DecSprayCnt(enc_save);
   //減算した結果0になったら効果切れメッセージ
   if( end_f ){
     OS_Printf("スプレー効果切れ\n");
-     return SCRIPT_SetEventScript( gsys, SCRID_FLD_EV_SPRAY_EFFECT_END, NULL, FIELDMAP_GetHeapID( fieldWork ));
+
+    // 継続して使用するチェック
+    {
+      u16 item_no = EncDataSave_GetSprayItemNo(enc_save);
+      MYITEM_PTR myitem = GAMEDATA_GetMyItem(gdata);
+
+      if( MYITEM_GetItemNum( myitem, item_no, FIELDMAP_GetHeapID(fieldWork) ) > 0 )
+      {
+        // まだスプレーが残っている
+        return SCRIPT_SetEventScript( gsys, SCRID_FLD_EV_SPRAY_USE_CONTINUE, NULL, FIELDMAP_GetHeapID( fieldWork ));
+      }
+    }
+
+    return SCRIPT_SetEventScript( gsys, SCRID_FLD_EV_SPRAY_EFFECT_END, NULL, FIELDMAP_GetHeapID( fieldWork ));
   }
   return NULL;
 }

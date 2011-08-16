@@ -31,6 +31,7 @@ _EVENT_DATA     ev_fld_ev_warp_failed
 _EVENT_DATA     ev_fld_ev_warp_failed_mission_target
 _EVENT_DATA     ev_fld_ev_warp_failed_connecting
 _EVENT_DATA     ev_fld_ev_warp_failed_shutdown
+_EVENT_DATA     ev_fld_ev_spray_use_continue
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
@@ -46,6 +47,39 @@ EVENT_START ev_fld_ev_spray_effect_end
 {
   _SYSWIN_MSG( msg_fld_ev_spray_01 , POS_DOWN )
   _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+}
+EVENT_END
+
+//==============================================================
+/// 
+///
+///       スプレー効果継続確認                   
+///
+///
+//==============================================================
+EVENT_START ev_fld_ev_spray_use_continue
+{
+  DEFINE_LOCAL item_no
+
+  // スプレーの効果がきれた
+  // 継続して使用しますか?
+  _SYSWIN_MSG( msg_fld_ev_spray_02 , POS_DOWN )
+  // YES NO
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  // はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    // スプレーの使用処理 戻り値はアイテム番号
+    _USE_SPRAY_CONTINUE( item_no )
+
+    // ～は ～を使った
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, item_no )
+    _SYSWIN_MSG( msg_fld_ev_spray_03 , POS_DOWN )
+    _LAST_KEYWAIT()
+  ENDIF
+
   _SYSWIN_CLOSE()
 }
 EVENT_END
