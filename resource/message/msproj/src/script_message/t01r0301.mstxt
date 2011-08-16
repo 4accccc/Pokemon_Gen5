@@ -54,10 +54,11 @@
 			Language="JPN">
 			<Comment>♂
 ・アイテム入手処理
-　No000「」</Comment>
+　No000「」
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T08:52:36" />
+				Time="2011-08-16T09:40:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -120,10 +121,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アイテム入手後</Comment>
+・アイテム入手後
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T08:52:40" />
+				Time="2011-08-16T09:40:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -181,10 +183,11 @@
 			<Comment>♀
 ・データ引継ぎあり
 ・0＝主人公名
-・1＝前作主人公</Comment>
+・1＝前作主人公
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:14:18" />
+				Time="2011-08-16T09:40:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -246,10 +249,11 @@
 			Language="JPN">
 			<Comment>♀
 ・データ引継ぎなし
-・0＝主人公名</Comment>
+・0＝主人公名
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:17:28" />
+				Time="2011-08-16T09:40:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
