@@ -7,12 +7,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かがくの　ちからって　すげー！▼
-いまなら　せきがいせんで
-あんなことや　こんなことが▽
-あっ！　というまに　できるってよ！</Text>
+いまなら　せきがいせんつうしん　で
+ポケモンの　こうかんや　たいせんが▽
+あっ！　というま　だってよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:23:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,12 +21,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>科学の　力って　すげー！▼
-今なら　赤外線で
-あんなことや　こんなことが▽
-あっ！　というまに　できるってよ！</Text>
+今なら　赤外線通信で
+ポケモンの　交換や　対戦が▽
+あっ！　というま　だってよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:23:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -34,10 +34,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:23:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -60,11 +61,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　ひらがな　よりも
-かんじの　ほうが　すきなのかしら？</Text>
+			<Text>ポケモンと　たびを　することで
+ひとって　かわるものかしら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:15:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -72,11 +73,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　漢字よりも
-ひらがなのほうが　好きなのかしら？</Text>
+			<Text>ポケモンと　旅を　することで
+人って　変わるものかしら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -89,10 +90,12 @@
 　はいだと文字モード切替
 ・以下、海外版
 ポケモンと　たびを　することで
-ひとって　かわるものかしら？</Comment>
+ひとって　かわるものかしら？
+※swanでBW海外版の内容に
+　メッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:24:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -122,11 +125,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>では
-話し方を　変えてみるわね</Text>
+			<Text>そうよね！　たびをして　いろいろ
+かんがえて　ひとは　かわるわね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:15:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -134,11 +137,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>では
-はなしかたを　かえてみるわね</Text>
+			<Text>そうよね！　旅をして　いろいろ
+考えて　人は　変わるわね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:16:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -150,10 +153,12 @@
 ・はい選択時
 ・以下、海外版
 そうよね！　たびをして　いろいろ
-かんがえて　ひとは　かわるわね！</Comment>
+かんがえて　ひとは　かわるわね！
+※swanでBW海外版の内容に
+　メッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:23:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -183,11 +188,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうよね！　ひらがなには
-ひらがなの　あじわいが　あるわね</Text>
+			<Text>そうよね！　ふかいことは　かんがえず
+たびそのものを　たのしめば　いいの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:15:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -195,11 +200,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なるほど……
-あなたは　漢字が　好きなのね</Text>
+			<Text>そうよね！　深いことは　考えず
+旅そのものを　楽しめば　いいの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:16:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -211,10 +216,12 @@
 ・いいえ選択時
 ・以下、海外版
 そうよね！　ふかいことは　かんがえず
-たびそのものを　たのしめば　いいの！</Comment>
+たびそのものを　たのしめば　いいの！
+※swanでBW海外版の内容に
+　メッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:24:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -244,13 +251,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よのなかには　たっくさんの　ポケモンと
-いろんな　ひとが　いるんだって！！▼
-そんな　おはなし　きいたら
-あたし　ワクワクしちゃうよー！！</Text>
+			<Text>あたしね　こんどの　たんじょうびに
+アララギはかせ　からね▼
+ポケモンを　プレゼントしてもらうの！
+もちろん　ポケモンずかんも　セットよ▼
+つまり　みらいの　ポケモンはかせ？
+それとも　チャンピオン？▼
+まだ　きめてないけれど　じぶんの
+ゆめは　じぶんで　きめるの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T12:25:07" />
+				Time="2011-08-16T10:22:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -258,13 +269,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よのなかには　たっくさんの　ポケモンと
-いろんな　ひとが　いるんだって！！▼
-そんな　おはなし　きいたら
-あたし　ワクワクしちゃうよー！！</Text>
+			<Text>あたしね　今度の　誕生日に
+アララギ博士からね▼
+ポケモンを　プレゼントしてもらうの！
+もちろん　ポケモン図鑑も　セットよ▼
+つまり　未来の　ポケモン博士？
+それとも　チャンピオン？▼
+まだ　決めてないけれど
+自分の夢は　自分で　決めるの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T12:25:12" />
+				Time="2011-08-16T10:21:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -272,17 +287,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+※swanでメッセージ修正
+※動作モデルも変更</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:17:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>babygirl1</Text>
+			<Text>babygirl1
+→GIRL1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T10:17:29" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
