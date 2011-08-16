@@ -6,21 +6,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレンのパパ『おお！　[Name:TrainerName Idx="0" ]▼
-きいたよ　はかせから
-ポケモンを　もらうんだって▼
-って　もう　もらったのか！
-おお！　かわいい　ポケモンだなあ▼
-ついに　きみたちも
-トレーナーとして　たびだつんだなあ▼
-では　わたしが
-「たんけんの　こころえ」なる▽
-ほんを　よんであげよう！▼
-「トレーナーに　とって　だいじなのは
-　Ｘボタン！」　……わすれるなよ</Text>
+			<Text>チェレンのパパ『ん？　きみがもつ
+それは　ヒオウギの　ジムバッジ！▼
+……　……　……
+……　……　……▼
+なんと　きみが！　わたしの
+むすこが　ジムリーダーに　なって▽
+はじめての　チャレンジャー！！▼
+ありがとう！　いやいや　だって
+ちょうせんしゃが　いなければ▽
+ジムリーダーは　ジムリーダじゃない！▼
+つまり　きみのおかげで　チェレンは
+ジムリーダーに　なれたんだよ！▽
+ということで　これは　わたしから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:52:24" />
+				Time="2011-08-16T08:55:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,20 +29,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレンのパパ『おお！　[Name:TrainerName Idx="0" ]▼
-聞いたよ！　博士から
-ポケモンを　もらうんだって▼
-って　もう　もらったのか！
-おおう！　かわいい　ポケモンだなあ▼
-ついに　君たちも
-トレーナーとして　旅立つんだなあ▼
-では　私が　「探検の心得」なる
-本を　読んであげよう！▼
-「トレーナーに　とって　大事なのは
-　Ｘボタン！」　……忘れるなよ</Text>
+			<Text>チェレンのパパ『ん？　きみが持つ
+それは　ヒオウギの　ジムバッジ！▼
+……　……　……
+……　……　……▼
+なんと　きみが！　わたしの
+息子が　ジムリーダーに　なって▽
+初めての　チャレンジャー！！▼
+ありがとう！　いやいや　だって
+挑戦者が　いなければ▽
+ジムリーダーは　ジムリーダじゃない！▼
+つまり　きみのおかげで　チェレンは
+ジムリーダーに　なれたんだよ！▽
+ということで　これは　わたしから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:53:23" />
+				Time="2011-08-16T09:01:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -50,80 +53,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ポケモン図鑑入手まで</Comment>
+・アイテム入手処理
+　No000「」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:52:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>男性
-・友達♂の父</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0301_middlewoman2_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>チェレンのママ『チェレンったら
-けんきゅうじょに　いるのね　きっと▼
-なんていうか　りちぎ　というか
-きまじめ　なのよね　あのこ</Text>
+			<Text>MIDDLEMAN2
+・チェレンの父</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:52:29" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>チェレンのママ『これからも
-チェレンと　仲良くしてね▼
-あまり　感情とか　表にださないし
-一緒にいて　大変かも　知れないけれど</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:53:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ポケモン図鑑入手まで</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>女性
-・友達♂の母</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				Time="2011-08-16T08:45:12" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -146,69 +88,73 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレンのパパ『たびは　いいよ！▼
-じぶんの　しらない　もの
-りかい　できない　ものに▼
-たくさん　ふれて
-じぶんが　どんどん　かわっていくんだ</Text>
+きみは　これまで　たびをして
+じぶんの　しらなかった　ものに▽
+どれだけ　ふれたか　かぞえたかい？▼
+その　かずの　ぶんだけ
+きみは　かわったんだろうね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:52:41" />
+				Time="2011-08-16T09:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:39:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレンのパパ『旅は　いいよ！▼
-自分の　知らないもの
-理解できないものに　たくさんふれて▽
-自分が　どんどん　変わっていくんだ</Text>
+きみは　これまで　旅をして
+自分の　知らなかった　ものに▽
+どれだけ　ふれたか　数えたかい？▼
+その数の　分だけ
+きみは　変わったんだろうね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:53:09" />
+				Time="2011-08-16T09:01:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:39:36" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ポケモン図鑑入手後から</Comment>
+・アイテム入手後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:52:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>男性</Text>
+			<Text>MIDDLEMAN2
+・チェレンの父</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:45:13" />
 		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t01r0301_middlewoman2_02"
+		Label="msg_t01r0301_middlewoman2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレンのママ『あら　[Name:TrainerName Idx="0" ]▼
-はかせに　たのまれて
-ずかんを　かんせい　させるんですって！▼
-だいじょうぶ！　なにがあっても
-あなたたちの　そばには▽
-ポケモンが　いるんですからね</Text>
+			<Text>チェレンのママ『あら……
+あなた　[Name:TrainerName Idx="1" ]に　にてる……かも▼
+[Name:TrainerName ]　っていうんだ
+へえ！　あなたも　ポケモンずかんを！▼
+みんな　そうやって
+おおきく　なっていくのよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:52:50" />
+				Time="2011-08-16T09:17:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -216,15 +162,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレンのママ『あら　[Name:TrainerName Idx="0" ]▼
-博士に　頼まれて
-図鑑を　完成させるんですって！▼
-大丈夫！　なにがあっても
-あなたたちの　そばには▽
-ポケモンが　いるんですからね</Text>
+			<Text>チェレンのママ『あら……
+あなた　[Name:TrainerName Idx="1" ]に　似てる……かも▼
+[Name:TrainerName ]　っていうんだ
+へえ！　あなたも　ポケモン図鑑を！▼
+みんな　そうやって
+大きく　なっていくのよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:52:59" />
+				Time="2011-08-16T09:17:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -233,17 +179,85 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ポケモン図鑑入手後から</Comment>
+・データ引継ぎあり
+・0＝主人公名
+・1＝前作主人公</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T09:14:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>女性</Text>
+			<Text>MIDDLEWOMAN2
+・チェレンの母</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:45:33" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01r0301_middlewoman2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレンのママ『あら……　あなた
+[Name:TrainerName ]　っていうんだ▼
+へえ！　あなたも　ポケモンずかんを！▼
+みんな　そうやって
+おおきく　なっていくのよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T09:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレンのママ『あら……　あなた
+[Name:TrainerName ]　っていうんだ▼
+へえ！　あなたも　ポケモン図鑑を！▼
+みんな　そうやって
+大きく　なっていくのよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T09:17:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・データ引継ぎなし
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T09:17:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEWOMAN2
+・チェレンの母</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:45:34" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
