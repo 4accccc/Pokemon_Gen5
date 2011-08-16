@@ -590,11 +590,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ときどき　ながれてくる　プルンゲル
+			<Text>サザナミわん　にね
+ときどき　ながれてくる　プルンゲル▽
 ひとあじ　ちがうって　ひょうばん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T12:13:49" />
+				Time="2011-08-16T10:28:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -602,11 +603,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ときどき　流れてくる　プルンゲル
+			<Text>サザナミ湾にね
+ときどき　流れてくる　プルンゲル▽
 一味　違うって　評判！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T12:13:52" />
+				Time="2011-08-16T10:28:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -850,11 +852,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このさき
-すいちゅうトンネル（かり）</Text>
+			<Text>このさき　マリンチューブ
+あるく　すいぞくかん</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:09:40" />
+				Time="2011-08-16T10:29:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -862,11 +864,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この先
-水中トンネル（仮称）</Text>
+			<Text>この先　マリンチューブ
+歩く　水族館</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:09:52" />
+				Time="2011-08-16T10:29:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
