@@ -933,6 +933,742 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c12r0101_swmama_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ママ『おかえり　[Name:TrainerName Idx="0" ]！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:13:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:05:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ママ『おかえり　[Name:TrainerName Idx="0" ]！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・殿堂入り→エンディング後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:03:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:02:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_end_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふうん
+なんだか　みちがえちゃうわね！▼
+いろいろ　みて　かんがえた……
+そんな　かんじ！▼
+っと　そろそろ
+おきゃくさまが　いらっしゃるのよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:31:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:13:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふうん
+なんだか　みちがえちゃうわね！▼
+いろいろ　みて　かんがえた……
+そんな　かんじ！▼
+っと　そろそろ
+おきゃくさまが　いらっしゃるのよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:06:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:06:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08_hakase1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『おお！　おまえさんが
+[Name:TrainerName ]　かい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:24:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:24:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『おお！　おまえさんが
+[Name:TrainerName ]　かい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・
+・0＝主人公名
+</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:27:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:24:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_end_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ママ『そうですけれど▼
+おひさしぶりですね
+アララギはかせ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:32:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:32:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ママ『そうですけれど▼
+おひさしぶりですね
+アララギはかせ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:06:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:06:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08_hakase1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『そんなに　たつかい？
+……おもいだせないねえ▼
+っと　そいつは　わたしが　きた
+もくてきとは　かんけい　ないからね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:43:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:36:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『そんなに　たつかい？
+……おもいだせないねえ▼
+っと　そいつは　わたしが　きた
+もくてきとは　かんけい　ないからね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:56:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:36:53" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08_hakase1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]！▼
+でんどういりを　きねんして
+おまえさんの　ポケモンずかんを▽
+パワーアップ！　だね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:43:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:37:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]！▼
+でんどういりを　きねんして
+おまえさんの　ポケモンずかんを▽
+パワーアップ！　だね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:56:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:38:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08_hakase1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]の　ポケモンずかんが
+パワーアップ　した！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:38:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:38:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]の　ポケモン図鑑が
+パワーアップ　した！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:38:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:38:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+・ME再生
+・続けてhakase1_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:38:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:40:38" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08_hakase1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『どこが　パワーアップしたか
+おしえるから　きいてくれるかい？▼
+といっても　すごく　シンプル！▼
+あらゆる　ポケモンを
+きろく　できるように　したんだよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:44:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:38:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『どこが　パワーアップしたか
+おしえるから　きいてくれるかい？▼
+といっても　すごく　シンプル！▼
+あらゆる　ポケモンを
+きろく　できるように　したんだよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:56:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:38:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_end_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ママ『へえ！　すごいですね
+さすが　おやこで　ポケモンはかせ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:41:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:32:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ママ『へえ！　すごいですね
+さすが　おやこで　ポケモンはかせ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:06:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:06:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08_hakase1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『ははは
+ほめても　なにも　でないよ▼
+さてと　それでは
+わたしは　おいとま　するかね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:57:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:50:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『ははは
+ほめても　なにも　でないよ▼
+さてと　それでは
+わたしは　おいとま　するかね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:56:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:50:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08_hakase1_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おまえさん！　せかいには　まだまだ
+おおくの　ポケモンが　いる▼
+それらの　ポケモンは
+ときとして　たべるために　おそったり▼
+かとおもえば　たすけあったり　して
+おたがいの　ばしょを　まもっている▼
+ずかんを　みながら　そんなことを
+かんがえてもらえると　うれしいね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:58:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:56:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おまえさん！　せかいには　まだまだ
+おおくの　ポケモンが　いる▼
+それらの　ポケモンは
+ときとして　たべるために　おそったり▼
+かとおもえば　たすけあったり　して
+おたがいの　ばしょを　まもっている▼
+ずかんを　みながら　そんなことを
+かんがえてもらえると　うれしいね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:56:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:56:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_end_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ママ『いっちゃった……▼
+そうだ！　[Name:TrainerName ]！
+ママからも　プレゼントよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:16:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:59:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ママ『いっちゃった……▼
+そうだ！　[Name:TrainerName ]！
+ママからも　プレゼントよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・アイテム入手処理
+　No000「すごいつりざお」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:10:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:06:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_end_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　すごいつりざおを　つかえば
+みずのなかの　ポケモンも▽
+つりあげることが　できるのよ！▼
+すごいつりざおの
+せつめいしょを　よむわね▼
+まず　すいめんに　むかって
+すごいつりざおを　つかいます！▼
+つぎに　きもちを　しゅうちゅう！▼
+ポケモンが　くいついたら
+「！」と　でるので　そのときに▽
+すばやく　つりざおを　ひきましょう！▼
+ですって</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:10:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　すごいつりざおを　つかえば
+みずのなかの　ポケモンも▽
+つりあげることが　できるのよ！▼
+すごいつりざおの
+せつめいしょを　よむわね▼
+まず　すいめんに　むかって
+すごいつりざおを　つかいます！▼
+つぎに　きもちを　しゅうちゅう！▼
+ポケモンが　くいついたら
+「！」と　でるので　そのときに▽
+すばやく　つりざおを　ひきましょう！▼
+ですって</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:58:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:58:56" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_end_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なにをしても　それは　すべて
+あなたと　ポケモンの　じかん▼
+だから　じぶんで　きめて
+じぶんが　したいことを　しなさいな▼
+ママも　ひとりの　じかんを
+ママの　すきなように　たのしむから！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:17:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なにをしても　それは　すべて
+あなたと　ポケモンの　じかん▼
+だから　じぶんで　きめて
+じぶんが　したいことを　しなさいな▼
+ママも　ひとりの　じかんを
+ママの　すきなように　たのしむから！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:20:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:58:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T07:58:56" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c12r0101_game_01"
 		Style="Large">
 		<LanguageCell

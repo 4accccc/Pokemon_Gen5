@@ -6,17 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『おまえさん　は……？▼
-……　……　……
-……　……　……▼
-おお　おまえさんが　[Name:TrainerName ]！
-わたしは　アララギ▼
-おまえさんに　ポケモンと　ずかんを
-たくした　にんげんの　ちちおやさ▽
-であえて　うれしいよ！▼</Text>
+			<Text>わかったことは　なにもない……▼
+それが　リュウラセンのとうの
+しんじつであり　りそうというのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T05:25:38" />
+				Time="2011-08-17T07:23:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24,17 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『おまえさん　は……？▼
-……　……　……
-……　……　……▼
-おお　おまえさんが　[Name:TrainerName ]！
-わたしは　アララギ▼
-おまえさんに　ポケモンと　図鑑を
-託した　人間の　父親さ▽
-であえて　うれしいよ！▼</Text>
+			<Text>わかったことは　なにもない……▼
+それが　リュウラセンのとうの
+しんじつであり　りそうというのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T05:25:43" />
+				Time="2011-08-17T07:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -43,18 +33,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・t01r0401で会話していない
+・n01r0502でのイベント後に出現
 ・GRIDX＝181、GRIDZ＝145、上向き
 　posイベント
 　GRIDX＝177~172、GRIDZ＝146
-・！マーク表示後、振り向き（隣接）
-・続けて
-　Balck2→hakase1_03b
-　White2→hakase1_03w
-・0＝主人公名</Comment>
+・！マーク表示後、振り向き（隣接）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T05:36:50" />
+				Time="2011-08-17T07:23:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -95,13 +81,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・t01r0401で会話済み
 ・続けて
 　Balck2→hakase1_03b
 　White2→hakase1_03w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T05:03:19" />
+				Time="2011-08-17T07:16:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
