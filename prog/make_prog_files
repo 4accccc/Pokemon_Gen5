@@ -2591,8 +2591,9 @@ SRCS_OVERLAY_ZUKAN = app/zukan/zukan.c \
                      app/zukan/zukan_common.c \
                      app/zukan/search/zukan_search_engine.c
 
-# 図鑑リスト
+# 図鑑生息地リスト
 #===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_TOWNMAP
 #===> SRCS_OVERLAY_ZUKAN_INFO
 SRCS_OVERLAY_ZUKAN_HABITAT_ZONE = app/zukan/habitat_zone/habitat_zone.c \
                                   app/zukan/habitat_zone/habitat_zone_main.c \

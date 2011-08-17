@@ -83,7 +83,7 @@ static GFL_PROC_RESULT ZukanHabitatZone_Init( GFL_PROC * proc, int * seq, void *
   p_wk = CreateWkData( proc ,p_zone_info );
 
   // グラフィック初期化
-  HABITAT_ZONE_GRA_Init( &p_wk->gra_sys );
+  HABITAT_ZONE_GRA_Init( &p_wk->gra_sys ,p_wk->p_init_param->p_gdata );
 
   // Vブランクタスク初期化
   ZukanHabitatZone_VBlankInit( p_wk );

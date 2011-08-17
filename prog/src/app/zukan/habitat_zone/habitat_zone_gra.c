@@ -11,6 +11,7 @@
 
 #include <gflib.h>
 #include "habitat_zone_gra.h"
+#include "gamesystem/game_data.h"
 
 #include "system/main.h"  // for HEAP_ID
 
@@ -30,8 +31,11 @@
 //ポケアイコン
 #include "pokeicon/pokeicon.h"
 
+#include "app/townmap_util.h" // for TOWNMAP_UTIL_*
+
 
 FS_EXTERN_OVERLAY(ui_common);
+FS_EXTERN_OVERLAY(townmap);
 
 //=============================================================================
 /**
@@ -44,6 +48,9 @@ FS_EXTERN_OVERLAY(ui_common);
 #define	HABITAT_ZONE_MBG_PAL_FONT			( 15 )		// メイン画面フォントパレット
 #define	HABITAT_ZONE_SBG_PAL_FONT			( 15 )		// サブ画面フォントパレット
 
+// サブオブジェクトパレットフェードリクエストビット
+#define PF_SUB_OBJ_REQ_BIT              (0x00FF)  // 0000 0000 1111 1111  // 0<= <8
+
 // タッチバー定義
 #define	HABITAT_ZONE_TOUCH_BAR_PX		( 0 )
 #define	HABITAT_ZONE_TOUCH_BAR_PY		( 21 )
@@ -53,6 +60,13 @@ FS_EXTERN_OVERLAY(ui_common);
 #define	FRAME_SCROLL_X_WAIN	  ( 4 )		// 4フレームに1階動く
 #define	FRAME_SCROLL_X_VALUE	( 1 )		// 背景スクロールカウント
 #define	MAP_Y_SCROLL_COUNT	( -24 )		// マップのY軸ずれ
+
+// @todo zukan_detail_map.cと同じ定義なので、共通読み込みできるようにする
+// obj_existのアルファアニメーションsin使うので0～0xFFFFのループ
+#define OBJ_EXIST_ALPHA_ANIME_COUNT_ADD (0x400)    // cos使うので0～0xFFFFのループ
+#define OBJ_EXIST_ALPHA_ANIME_COUNT_MAX (0x10000)  // 含まない
+#define OBJ_EXIST_ALPHA_MIN  ( 1)  // 0<= <=16
+#define OBJ_EXIST_ALPHA_MAX  (15)  // OBJ_EXIST_ALPHA_MIN <= <= OBJ_EXIST_ALPHA_MAX
 
 //=============================================================================
 /**
@@ -91,7 +105,9 @@ static void GRA_SetPalFadeSeq( HABITAT_ZONE_GRA_WK *p_wk, u8 start, u8 end );
 static void GRA_PrintMain( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_BlinkAnmMain( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_GetPokeIconPos( u8 index ,GFL_CLACTPOS *p_pos );
+static void GRA_AlpaMain( HABITAT_ZONE_GRA_WK* p_wk );
 static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 index );
+static void GRA_ObjExistAlphaReset( HABITAT_ZONE_GRA_WK* p_wk );
 
 //===============================================================================
 // 初期化・終了関数呼び出し
@@ -106,12 +122,13 @@ static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 in
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk )
+void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk ,GAMEDATA *p_gdata )
 {
   
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-  
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(townmap) );
+ 
   // 表示初期化
   GFL_DISP_GX_SetVisibleControlDirect( 0 );
   GFL_DISP_GXS_SetVisibleControlDirect( 0 );
@@ -126,6 +143,9 @@ void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk )
 
   // サブ画面をメインに
   GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+ 
+  // タウンマップデータ
+  p_wk->p_townmap_data = TOWNMAP_DATA_Alloc( HEAPID_ZUKAN_HABITAT_ZONE );
 
   // 初期化
   GRA_InitVram();           // VRAM
@@ -137,6 +157,7 @@ void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk )
   GRA_InitPaletteFade( p_wk );    // パレットフェード
   GRA_InitBlinkAnm( p_wk );       // 点滅アニメ
   GRA_InitFrameScroll( p_wk );    // スクロール
+ 
 }
 
 //----------------------------------------------------------------------------
@@ -152,6 +173,9 @@ void HABITAT_ZONE_GRA_Exit( HABITAT_ZONE_GRA_WK *p_wk )
 {
   // ウィンドウのリセット
   GRA_ResetWindow();
+
+  // タウンマップデータ
+  TOWNMAP_DATA_Free( p_wk->p_townmap_data );
 
   // BMPWINの開放
   GRA_ExitBmpWin( p_wk );
@@ -181,6 +205,7 @@ void HABITAT_ZONE_GRA_Exit( HABITAT_ZONE_GRA_WK *p_wk )
 	GFL_DISP_GXS_SetVisibleControlDirect( 0 );
   
   //オーバーレイ破棄
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(townmap) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 }
 
@@ -214,6 +239,9 @@ void HABITAT_ZONE_GRA_Main( HABITAT_ZONE_GRA_WK *p_wk )
  
   // カーソル点滅アニメ
   GRA_BlinkAnmMain( p_wk );
+
+  // アルファアニメーション
+  GRA_AlpaMain( p_wk );
 
   // 背景スクロール
   p_wk->back_bg_scroll_wait_count++;
@@ -309,7 +337,7 @@ static void GRA_InitBg(void)
     GFL_BG_SetVisible( BGM_FRAME_SCROLL_WIN ,VISIBLE_ON );
 	}
 
-  // 上画面 ------------------------------------------------------------------------------
+  // 上画面 --------------------------------------------------------------
 	{	// フォント面（上）
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -326,7 +354,7 @@ static void GRA_InitBg(void)
 	{	// サブ画面：タイトルバー
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, 0x8000,
+			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, 0x8000,
 			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( BGS_FRAME_BAR, &cnth, GFL_BG_MODE_TEXT );
@@ -337,7 +365,7 @@ static void GRA_InitBg(void)
 	{	// サブ画面：マップ
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, 0x8000,
+			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x10000, 0x8000,
 			GX_BG_EXTPLTT_23, 3, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( BGS_FRAME_MAP, &cnth, GFL_BG_MODE_TEXT );
@@ -349,7 +377,7 @@ static void GRA_InitBg(void)
 	{	// ルート面
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x18000, 0x8000,
+			GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x1c000, 0x8000,
 			GX_BG_EXTPLTT_23, 2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( BGS_FRAME_ROOT, &cnth, GFL_BG_MODE_TEXT );
@@ -407,29 +435,55 @@ static void GRA_InitBmpWin( HABITAT_ZONE_GRA_WK *p_wk )
   // BMPWINの初期化
   GFL_BMPWIN_Init( HEAPID_ZUKAN_HABITAT_ZONE );
 
-  // メニュー用BMPWIN作成
-  p_wk->p_font_win = GFL_BMPWIN_Create( BGM_FRAME_FONT,
-      0   , 0   ,
-      32  , 24  ,
-      HABITAT_ZONE_MBG_PAL_FONT , GFL_BMP_CHRAREA_GET_F );
-
-  // スクリーンの作成
-  GFL_BMPWIN_MakeScreen( p_wk->p_font_win );
- 
-  // ウィンドウのクリアー
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_font_win), 0 );
-
-  // 転送
-  GFL_BMPWIN_TransVramCharacter( p_wk->p_font_win );
-
-  // 転送リクエスト
-  GFL_BG_LoadScreenV_Req( BGM_FRAME_FONT );
-
   // プリントキューの作成
   p_wk->p_print_que = PRINTSYS_QUE_Create( HEAPID_ZUKAN_HABITAT_ZONE );
- 
-  // プリントユーティリティーの準備
-  PRINT_UTIL_Setup( &p_wk->print_util[ PRINT_UTIL_INFO_WIN ] , p_wk->p_font_win  );
+
+  // メニュー用BMPWIN作成
+  {
+    p_wk->p_font_win = GFL_BMPWIN_Create( BGM_FRAME_FONT,
+        0   , 0   ,
+        32  , 24  ,
+        HABITAT_ZONE_MBG_PAL_FONT , GFL_BMP_CHRAREA_GET_F );
+
+    // スクリーンの作成
+    GFL_BMPWIN_MakeScreen( p_wk->p_font_win );
+
+    // ウィンドウのクリアー
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_font_win), 0 );
+
+    // 転送
+    GFL_BMPWIN_TransVramCharacter( p_wk->p_font_win );
+
+    // 転送リクエスト
+    GFL_BG_LoadScreenV_Req( BGM_FRAME_FONT );
+
+    // プリントユーティリティーの準備
+    PRINT_UTIL_Setup( &p_wk->print_util[ PRINT_UTIL_INFO_WIN ] ,p_wk->p_font_win  );
+  }
+
+  // メニュー用BMPWIN作成
+  {
+    p_wk->p_font_win_sub = GFL_BMPWIN_Create( BGS_FRAME_FONT,
+        0   , 0   ,
+        32  , 24  ,
+        HABITAT_ZONE_MBG_PAL_FONT , GFL_BMP_CHRAREA_GET_F );
+
+    // スクリーンの作成
+    GFL_BMPWIN_MakeScreen( p_wk->p_font_win_sub );
+
+    // ウィンドウのクリアー
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_font_win_sub), 0 );
+
+    // 転送
+    GFL_BMPWIN_TransVramCharacter( p_wk->p_font_win_sub );
+
+    // 転送リクエスト
+    GFL_BG_LoadScreenV_Req( BGS_FRAME_FONT );
+    
+    // プリントユーティリティーの準備
+    PRINT_UTIL_Setup( &p_wk->print_util[ PRINT_UTIL_MAP_NAME ] ,
+                                                  p_wk->p_font_win_sub  );
+  }
  
 	// フォント
   p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
@@ -944,6 +998,7 @@ static void GRA_ExitBmpWin( HABITAT_ZONE_GRA_WK *p_wk )
   // ビットマップウィンドウの削除
 	GFL_BMPWIN_Exit();
   GFL_BMPWIN_Delete( p_wk->p_font_win );
+  GFL_BMPWIN_Delete( p_wk->p_font_win_sub );
 }
 
 //=============================================================================
@@ -953,10 +1008,14 @@ static void GRA_ExitBmpWin( HABITAT_ZONE_GRA_WK *p_wk )
 //=============================================================================
 static void GRA_SetPalFadeSeq( HABITAT_ZONE_GRA_WK *p_wk, u8 start, u8 end )
 {
-	PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_BG,  0xbfff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_BG,   0xffef, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-	PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_OBJ, 0xf878, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_OBJ,  0xbfff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_BG,  0xbfff, ZKNCOMM_FADE_WAIT,
+                                        start, end, 0, GFUser_VIntr_GetTCBSYS() );
+//	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_BG,   0xffef, 
+//      ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+//	PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_OBJ, 0xf878, 
+//      ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+//	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_OBJ,  PF_SUB_OBJ_REQ_BIT, 
+//	ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
 }
 
 //----------------------------------------------------------------------------
@@ -1091,6 +1150,9 @@ void HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_WIN win_id, const STRBUF* str,
   case PRINT_UTIL_INFO_WIN:
       p_win = p_wk->p_font_win;
     break;
+  case PRINT_UTIL_MAP_NAME:
+      p_win = p_wk->p_font_win_sub;
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -1126,6 +1188,9 @@ void HABITAT_ZONE_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_ZONE_GRA_WK *p_wk
   {
   case PRINT_UTIL_INFO_WIN:
       p_win = p_wk->p_font_win;
+    break;
+  case PRINT_UTIL_MAP_NAME:
+      p_win = p_wk->p_font_win_sub;
     break;
   default:
     GF_ASSERT(0);
@@ -1174,6 +1239,9 @@ void HABITAT_ZONE_GRA_BmpFil( PRINT_UTIL_WIN win_id ,u8 col_code ,HABITAT_ZONE_G
   {
   case PRINT_UTIL_INFO_WIN:
       p_win = p_wk->p_font_win;
+    break;
+  case PRINT_UTIL_MAP_NAME:
+      p_win = p_wk->p_font_win_sub;
     break;
 
   default:
@@ -1410,5 +1478,114 @@ static void GRA_GetPokeIconPos( u8 index ,GFL_CLACTPOS *p_pos )
 {
   p_pos->x = POKEICON_START_X + (index%POKEICON_LINE)*POKEICON_MARGIN_W;
   p_pos->y = POKEICON_START_Y + (index/POKEICON_LINE)*POKEICON_MARGIN_Y;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マップ点滅処理
+ *
+ *	@param	*p_wk 
+ *	@param	zone_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetMapBlink( HABITAT_ZONE_GRA_WK *p_wk ,u16 zone_id )
+{
+  GFL_CLACTPOS pos;
+
+  u16 zone_group = TOWNMAP_UTIL_GetRootZoneID( p_wk->p_gdata, zone_id );
+  u16 dataIndex = TOWNMAP_DATA_SearchRootZoneID( p_wk->p_townmap_data ,zone_group );
+
+  // アニメーションシーケンスの設定
+  u16 anm_seq = TOWNMAP_DATA_GetParam( p_wk->p_townmap_data
+                                  ,dataIndex ,TOWNMAP_DATA_PARAM_ZKN_ANM );
+  GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk_common_obj[OBJ_WK_MAP_BLINK],  anm_seq );
+  
+  // 場所を設定する
+  GFL_STD_MemClear( &pos, sizeof(GFL_CLACTPOS) );
+  pos.x = (s16)TOWNMAP_DATA_GetParam( p_wk->p_townmap_data, 
+                                  dataIndex, TOWNMAP_DATA_PARAM_ZKN_POS_X );
+  pos.y = (s16)TOWNMAP_DATA_GetParam( p_wk->p_townmap_data, 
+                                  dataIndex, TOWNMAP_DATA_PARAM_ZKN_POS_Y );
+  pos.y -= MAP_Y_SCROLL_COUNT;
+  GFL_CLACT_WK_SetPos( p_wk->p_clwk_common_obj[OBJ_WK_MAP_BLINK]
+                                                , &pos, CLSYS_DEFREND_SUB );
+
+  // アルファアニメーションをリセット
+  GRA_ObjExistAlphaReset( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファアニメーションメイン
+ *
+ *	@param	p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GRA_AlpaMain( HABITAT_ZONE_GRA_WK* p_wk )
+{
+  // @todo zukan_detail_map.cとほぼ同じ処理なので、対処を考える
+  // 更新
+  {
+    G2S_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_NONE,/*GX_BLEND_PLANEMASK_OBJ,*/
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        p_wk->obj_exist_ev1,
+        16 - p_wk->obj_exist_ev1 );
+  }
+
+  // カウントを進める
+  if( (u32)p_wk->obj_exist_alpha_anime_count + OBJ_EXIST_ALPHA_ANIME_COUNT_ADD >= OBJ_EXIST_ALPHA_ANIME_COUNT_MAX )
+  {
+    p_wk->obj_exist_alpha_anime_count = (u16)( (u32)p_wk->obj_exist_alpha_anime_count + OBJ_EXIST_ALPHA_ANIME_COUNT_ADD - OBJ_EXIST_ALPHA_ANIME_COUNT_MAX );
+  }
+  else
+  {
+    p_wk->obj_exist_alpha_anime_count += OBJ_EXIST_ALPHA_ANIME_COUNT_ADD;
+  }
+
+  // ev1を求める 
+  {
+    // 1～0に変換
+    fx16 cos = ( FX_CosIdx(p_wk->obj_exist_alpha_anime_count) + FX16_ONE ) /2;
+    p_wk->obj_exist_ev1 = OBJ_EXIST_ALPHA_MIN + ( ( (OBJ_EXIST_ALPHA_MAX - OBJ_EXIST_ALPHA_MIN) * cos ) >>FX16_SHIFT );
+  }
+
+// TWLプログラミングマニュアル
+// 第 1 対象面でOBJ=1 の場合は、OBJ の種類に関わらずすべてのOBJに対して処理が実行されます。
+// OBJ=0 の場合は、半透明OBJ、ビットマップOBJ、3D 面を描画したBG0 面の場合のみ処理が実行されます。
+//
+// つまり、GX_BLEND_PLANEMASK_OBJにしてしまうと、GX_OAM_MODE_NORMALも半透明になってしまう。
+// GX_BLEND_PLANEMASK_NONEにしておけば、GX_OAM_MODE_XLUだけが半透明になる。
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファアニメーションのリセット
+ *
+ *	@param	p_wk 
+ *
+ *	@retval
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRA_ObjExistAlphaReset( HABITAT_ZONE_GRA_WK* p_wk )
+{
+  // @todo zukan_detail_map.cとほぼ同じ処理なので、対処を考える
+  p_wk->obj_exist_ev1                  = OBJ_EXIST_ALPHA_MIN;
+  p_wk->obj_exist_alpha_anime_count    = OBJ_EXIST_ALPHA_ANIME_COUNT_MAX / 2;  // cosで1～0にしているので
+
+  // 更新
+  {
+    G2S_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_NONE,/*GX_BLEND_PLANEMASK_OBJ,*/
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        p_wk->obj_exist_ev1,
+        16 - p_wk->obj_exist_ev1 );
+  }
 }
 

@@ -82,6 +82,7 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk );
 static void DrawSeasonMsg( HABITAT_ZONE_WK *p_wk );
 static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk );
 static void ClearExplanationMsg( HABITAT_ZONE_WK *p_wk );
+static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk );
 
 // データ処理系---------------------------------------
 static HABITAT_ZONE_DATA* GetNowListData( HABITAT_ZONE_WK *p_wk );
@@ -100,6 +101,7 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk );
 static void RefreshLandPokeIcon( HABITAT_ZONE_WK *p_wk );
 static void SetPokeSelectButton( HABITAT_ZONE_WK *p_wk );
 static void SetZoneSelectButton( HABITAT_ZONE_WK *p_wk );
+static void RefreshMapWin( HABITAT_ZONE_WK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -363,6 +365,9 @@ static void MAINSEQ_AppInit( HABITAT_ZONE_WK *p_wk )
   // ポケモンアイコンリストを作成する
   RefreshLandPokeIcon( p_wk );
 
+  // マップウィンドウ（上画面の更新）
+  RefreshMapWin( p_wk );
+
   // フェードシーケンスに移行
   SetNextSeq( p_wk ,MAIN_SEQ_FADEIN ,SEQ_CHANGE_PARAM_NONE );
 }
@@ -556,6 +561,9 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
 
         // ポケモンアイコンリストを作成する
         RefreshLandPokeIcon( p_wk );
+
+        // マップウィンドウ（上画面の更新）
+        RefreshMapWin( p_wk );
         
         // シーケンスを進める
         p_wk->sub_seq++;
@@ -820,8 +828,17 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
         }
         else
         {
-          // リストの範囲外の場合は一番最後を選択
-          p_wk->select_index = p_wk->list_size -1;
+          if( y  <= 0 )
+          {
+            // リストの範囲外の場合は一番最後を選択
+            p_wk->select_index = p_wk->list_size -1;
+          }
+          else
+          {
+            // 上に移動できる場合は、一つ上の枠をせんたくする
+            y--;
+            p_wk->select_index = x + y*POKEICON_LINE;
+          }
         }
       }
 
@@ -985,6 +1002,47 @@ static void ClearExplanationMsg( HABITAT_ZONE_WK *p_wk )
   HABITAT_ZONE_GRA_ClearWin( PRINT_UTIL_INFO_WIN ,&p_wk->gra_sys ,
       EXPLANATION_MSG_POS_X , EXPLANATION_MSG_POS_Y,
       EXPLANATION_MSG_W,EXPLANATION_MSG_H );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  上画面マップ名を表示
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk )
+{
+  STRBUF  *str;
+  STRBUF  *dest_str;
+  PRINTSYS_LSB  font_colro = GetMedalFontColor();
+
+  // ゾーンIDに対応した地名メッセージIDを取得
+  HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
+  u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_id);
+  
+  // ワードセットに登録
+  WORDSET_RegisterPlaceName( p_wk->p_word_set, 0, place_id );
+  
+  // ワードセット生成展開先バッファー作成
+  dest_str = GFL_STR_CreateBuffer( 256, HEAPID_ZUKAN_HABITAT_ZONE );
+
+  // メッセージの書き込み
+  str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_map_name );
+            
+  WORDSET_ExpandStr( p_wk->p_word_set, dest_str , str  );
+ 
+  // メッセージの書き込み
+  HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_MAP_NAME ,dest_str ,&p_wk->gra_sys ,
+      MAPNAME_MSG_POS_X , MAPNAME_MSG_POS_Y,
+      MAPNAME_MSG_W,MAPNAME_MSG_H ,
+      font_colro );
+
+  // バッファーの消去 
+  GFL_STR_DeleteBuffer( str );
+  GFL_STR_DeleteBuffer( dest_str );
 }
 
 //----------------------------------------------------------------------------
@@ -1339,5 +1397,26 @@ static void SetZoneSelectButton( HABITAT_ZONE_WK *p_wk )
 
   // 説明を見るの文章を削除する
   ClearExplanationMsg( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マップ情報を更新する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void RefreshMapWin( HABITAT_ZONE_WK *p_wk )
+{
+  HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
+
+  // マップ上の点滅アニメーションを表示
+  ONOUE_Printf("zone_id = %x\n",p_list_data->zone_id);
+  HABITAT_ZONE_GRA_SetMapBlink( &p_wk->gra_sys ,p_list_data->zone_id);
+
+  // マップ名を上画面に書き込む
+  DrawMapNameMsg( p_wk );
 }
 

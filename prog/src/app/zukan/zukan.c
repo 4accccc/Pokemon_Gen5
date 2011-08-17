@@ -677,6 +677,9 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
         p_poke_data->is_appear[0][0] = TRUE;
         p_poke_data->status = HABITAT_ZONE_STATUS_UNKNOWN;
       }
+      
+      // タウンマップオブジェクトが正しく反映されているか確認するためR01(ZONE_ID_R01)を1つ表示
+      zone_info->p_zone_list_data[ 0 ].zone_id = 317;
  
     }
   }

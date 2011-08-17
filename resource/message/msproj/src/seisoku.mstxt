@@ -514,4 +514,37 @@
 				Time="2011-08-15T09:33:36" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="msg_map_name"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Place ]</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-17T10:14:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-17T10:14:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Place ]</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-17T10:14:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-17T10:14:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上画面用マップ名</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-17T10:14:42" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

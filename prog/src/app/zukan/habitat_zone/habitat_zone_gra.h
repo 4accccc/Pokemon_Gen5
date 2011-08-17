@@ -30,6 +30,12 @@
 // アプリ共通リソース
 #include "app/app_menu_common.h"
 
+// タウンマップデータ
+#include "app/townmap_data_sys.h"
+
+// ゲームデータ
+#include "gamesystem/game_data.h"
+
 // OBJ初期位置
 enum
 {
@@ -194,6 +200,7 @@ typedef enum _BG_FRAME{
 typedef enum
 {
   PRINT_UTIL_INFO_WIN,
+  PRINT_UTIL_MAP_NAME,
   PRINT_UTIL_MAX,
 }PRINT_UTIL_WIN;
 
@@ -227,6 +234,9 @@ typedef enum{
 
 // ゾーン詳細画面ワーク:グラフィック
 typedef struct {
+  // ゲームデータ
+  GAMEDATA *p_gdata;
+
   // パレットフェード　-------------------------------
   PALETTE_FADE_PTR  p_pfd;
   BLINKPALANM_WORK  *p_blinkanm_wk; // 点滅用
@@ -254,9 +264,17 @@ typedef struct {
   PRINT_UTIL        print_util[PRINT_UTIL_MAX]; // プリントユーティリティー
   PRINT_QUE         *p_print_que;
   GFL_BMPWIN        *p_font_win;
+  GFL_BMPWIN        *p_font_win_sub;
   
   // 背景スクロール---------------------
   u32 back_bg_scroll_wait_count;
+
+  // タウンマップデータ ----------------
+  TOWNMAP_DATA*     p_townmap_data;
+  
+  // アルファアニメーション -----------
+  s32               obj_exist_ev1;
+  u16               obj_exist_alpha_anime_count;
 
 }HABITAT_ZONE_GRA_WK;
 
@@ -265,7 +283,7 @@ typedef struct {
 //					プロトタイプ宣言
 //
 //=============================================================================
-extern void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk );
+extern void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk ,GAMEDATA *p_gdata );
 extern void HABITAT_ZONE_GRA_CallOpeningFade( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_Exit( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_VblankMain( HABITAT_ZONE_GRA_WK *p_wk );
@@ -286,4 +304,5 @@ extern void HABITAT_ZONE_GRA_SetCursorStatus( HABITAT_ZONE_GRA_WK *p_wk ,
 extern void HABITAT_ZONE_GRA_SetPokeAnmFlag( HABITAT_ZONE_GRA_WK *p_wk ,
                                                           u8 index ,BOOL is_anm );
 extern void HABITAT_ZONE_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_ZONE_GRA_WK *p_wk ,s16 x, s16 y ,s16 w, s16 h );
+extern void HABITAT_ZONE_GRA_SetMapBlink( HABITAT_ZONE_GRA_WK *p_wk ,u16 zone_id );
 
