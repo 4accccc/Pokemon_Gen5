@@ -101,6 +101,10 @@ typedef struct {
   HABITAT_ZONE_APPEAR land_type;  // 表示中のの場所タイプ
   WORDSET *p_word_set;
 
+  // ゾーンごとに更新されるデータ -----------------
+  BOOL  land_appear[ PMSEASON_TOTAL ][ HABITAT_ZONE_APPEAR_MAX ]; // 地形を表示するか
+  u32   monsno_list[HABITAT_ZONE_POKE_LIST_MAX];  // 表示中のモンスター番号リスト
+
   SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ
 
 }HABITAT_ZONE_WK;

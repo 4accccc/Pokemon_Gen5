@@ -17,7 +17,6 @@
 #include "system/wipe.h"
 #include "system/gfl_use.h"
 #include "sound/pm_sndsys.h"
-#include "app/app_menu_common.h"
 
 #include "habitat_zone_gra.cdat"
 
@@ -339,7 +338,7 @@ static void GRA_InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
 			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, 0x8000,
-			GX_BG_EXTPLTT_23, 2, 0, 0, FALSE
+			GX_BG_EXTPLTT_23, 3, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( BGS_FRAME_MAP, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( BGS_FRAME_MAP );
@@ -347,14 +346,16 @@ static void GRA_InitBg(void)
     GFL_BG_SetVisible( BGS_FRAME_MAP ,VISIBLE_ON );
 	}
 
-	{	// 未使用面
+	{	// ルート面
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x10000, 0x8000,
-			GX_BG_EXTPLTT_23, 3, 0, 0, FALSE
+			GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x18000, 0x8000,
+			GX_BG_EXTPLTT_23, 2, 0, 0, FALSE
 		};
-		GFL_BG_SetBGControl( BGS_FRAME_NO_USE, &cnth, GFL_BG_MODE_256X16 );
-    GFL_BG_SetVisible( BGS_FRAME_NO_USE ,VISIBLE_OFF );
+		GFL_BG_SetBGControl( BGS_FRAME_ROOT, &cnth, GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen( BGS_FRAME_ROOT );
+		GFL_BG_LoadScreenV_Req( BGS_FRAME_ROOT );
+    GFL_BG_SetVisible( BGS_FRAME_ROOT ,VISIBLE_ON );
 	}
 
   // 表示状態変更
@@ -362,7 +363,7 @@ static void GRA_InitBg(void)
 		BGM_FRAME_FONT | BGM_FRAME_MENUBAR | BGM_FRAME_BACK | BGM_FRAME_SCROLL_WIN
       ,VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl(
-		BGS_FRAME_FONT | BGS_FRAME_BAR | BGS_FRAME_MAP , VISIBLE_ON );
+		BGS_FRAME_FONT | BGS_FRAME_BAR | BGS_FRAME_MAP | BGS_FRAME_ROOT , VISIBLE_ON );
 
 }
 
@@ -527,6 +528,11 @@ static void GRA_LoadBgGraphic(void)
     // 拡張パレットに転送(スロット２にMAPパレット)
     GFL_ARCHDL_UTIL_TransVramPalette(
         ah, NARC_townmap_gra_tmap_bg_d_NCLR, PALTYPE_SUB_BG_EX,0x4000, 0,HEAPID_ZUKAN_HABITAT_ZONE );
+    // 拡張パレットに転送(スロット３にMAPパレット)
+    GFL_ARCHDL_UTIL_TransVramPalette(
+        ah, NARC_townmap_gra_tmap_bg_d_NCLR, PALTYPE_SUB_BG_EX,0x6000, 0,HEAPID_ZUKAN_HABITAT_ZONE );
+
+    // 地図グラフィック
     // キャラクタ
     GFL_ARCHDL_UTIL_TransVramBgCharacter(
         ah, NARC_townmap_gra_tmap_map_d_NCGR, BGS_FRAME_MAP, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
@@ -534,6 +540,15 @@ static void GRA_LoadBgGraphic(void)
     GFL_ARCHDL_UTIL_TransVramScreen(
         ah, NARC_townmap_gra_tmap_map_d_NSCR,
         BGS_FRAME_MAP, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
+
+    // ルート
+    // キャラクタ
+    GFL_ARCHDL_UTIL_TransVramBgCharacter(
+        ah, NARC_townmap_gra_tmap_bg_d_NCGR, BGS_FRAME_ROOT, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
+    // スクリーン
+    GFL_ARCHDL_UTIL_TransVramScreen(
+        ah, NARC_townmap_gra_tmap_root_d_NSCR,
+        BGS_FRAME_ROOT, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
 
     GFL_ARC_CloseDataHandle( ah );
   }
@@ -615,6 +630,23 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     UI_EASY_CLWK_LoadResource( &p_wk->clres_app_menu_obj, &prm, p_wk->p_clunit, HEAPID_ZUKAN_HABITAT_ZONE );
   }
 
+  // 上画面リソース読み込み
+  {
+    UI_EASY_CLWK_RES_PARAM prm;
+
+    prm.draw_type = CLSYS_DRAW_SUB;
+    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
+    prm.arc_id    = ARCID_ZUKAN_GRA;
+    prm.pltt_id   = NARC_zukan_gra_info_map_obj_NCLR;
+    prm.ncg_id    = NARC_zukan_gra_info_map_obj_NCGR;
+    prm.cell_id   = NARC_zukan_gra_info_map_obj_NCER; 
+    prm.anm_id    = NARC_zukan_gra_info_map_obj_NANR;
+    prm.pltt_line = 0;
+    prm.pltt_src_ofs  = 0;
+    prm.pltt_src_num  = 1;
+
+    UI_EASY_CLWK_LoadResource( &p_wk->clres_root_obj, &prm, p_wk->p_clunit, HEAPID_ZUKAN_HABITAT_ZONE );
+  }
 
   // セルアクターワークを作成
   {
@@ -680,6 +712,11 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     GFL_CLACT_WK_SetDrawEnable( 
         p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_EXPLANATION],FALSE);
     GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_EXPLANATION] ,1 );
+ 
+    // マップ上点滅アイコン(ゾーン情報にあわせて、マップ情報を切り替える)
+    p_wk->p_clwk_common_obj[OBJ_WK_MAP_BLINK] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_root_obj, p_wk->p_clunit, 
+      0, 0, 0, HEAPID_ZUKAN_HABITAT_ZONE );
 
     // 共通素材系読み込み ------------------------------------------------
     
@@ -935,6 +972,7 @@ static void GRA_InitFrameScroll( HABITAT_ZONE_GRA_WK *p_wk )
 {
   p_wk->back_bg_scroll_wait_count = 0;
   GFL_BG_SetScrollReq( BGS_FRAME_MAP, GFL_BG_SCROLL_Y_SET, MAP_Y_SCROLL_COUNT );
+  GFL_BG_SetScrollReq( BGS_FRAME_ROOT, GFL_BG_SCROLL_Y_SET, MAP_Y_SCROLL_COUNT );
 }
 
 //----------------------------------------------------------------------------
@@ -981,7 +1019,7 @@ void HABITAT_ZONE_GRA_CallOpeningFade( HABITAT_ZONE_GRA_WK *p_wk )
   ONOUE_Printf("colmode = %x\n",GFL_BG_GetScreenColorMode(BGS_FRAME_FONT));
   ONOUE_Printf("colmode = %x\n",GFL_BG_GetScreenColorMode(BGS_FRAME_BAR));
   ONOUE_Printf("colmode = %x\n",GFL_BG_GetScreenColorMode(BGS_FRAME_MAP));
-  ONOUE_Printf("colmode = %x\n",GFL_BG_GetScreenColorMode(BGS_FRAME_NO_USE));
+  ONOUE_Printf("colmode = %x\n",GFL_BG_GetScreenColorMode(BGS_FRAME_ROOT));
 }
 
 //----------------------------------------------------------------------------
@@ -1175,6 +1213,8 @@ GFL_CLWK* HABITAT_ZONE_GRA_GetComClWk( HABITAT_ZONE_GRA_WK *p_wk ,s32 obj_id )
 void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
                       GRA_LANDICON_TYPE icon_type, GRA_LANDICON_STATUS status )
 {
+  // セルアクターワーク
+  GFL_CLWK *p_clwk;
 
   // 状態ごとのパレット番号
   u8 palid[] =
@@ -1184,6 +1224,35 @@ void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
     LAND_TYPE_ICON_PAL_NONE,
   };
 
+  // 状態ごとのボタンON/OFF状態
+  BOOL is_button[] =
+  {
+    TRUE,
+    TRUE,
+    FALSE,
+  };
+  // 状態ごとのボタンアニメーションシーケンス
+  s32 anm_seq[GRA_LANDICON_TYPE_MAX][3] =
+  {
+    // 陸上
+    {
+      OBJ_ANM_SEQ_BUTTON_LAND_ANM,
+      OBJ_ANM_SEQ_BUTTON_LAND,
+      OBJ_ANM_SEQ_BUTTON_LAND,
+    },
+    // 水辺
+    {
+      OBJ_ANM_SEQ_BUTTON_WATERSIDE_ANM,
+      OBJ_ANM_SEQ_BUTTON_WATERSIDE,
+      OBJ_ANM_SEQ_BUTTON_WATERSIDE,
+    },
+    // 釣り
+    {
+      OBJ_ANM_SEQ_BUTTON_FISHING_ANM,
+      OBJ_ANM_SEQ_BUTTON_FISHING,
+      OBJ_ANM_SEQ_BUTTON_FISHING,
+    },
+  };
   // アイコンタイプごとに書き換え位置を変える
   switch( icon_type )
   {
@@ -1191,17 +1260,32 @@ void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
     GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,
         LAND_TYPE_ICON_LAND_POS_X,LAND_TYPE_ICON_LAND_POS_Y,
         LAND_TYPE_ICON_W,LAND_TYPE_ICON_H,palid[ status ]);
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_BUTTON_LAND );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,is_button[ status ]);
+    GFL_CLACT_WK_SetAnmSeq( p_clwk , anm_seq[GRA_LANDICON_TYPE_LAND][status]);
+    GFL_CLACT_WK_SetAnmFrame( p_clwk ,0);
     break;
+
   case GRA_LANDICON_TYPE_WATERSIDE:
     GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,
         LAND_TYPE_ICON_WATERSIDE_POS_X,LAND_TYPE_ICON_WATERSIDE_POS_Y,
         LAND_TYPE_ICON_W,LAND_TYPE_ICON_H,palid[ status ]);
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_BUTTON_WATERSIDE );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,is_button[ status ]);
+    GFL_CLACT_WK_SetAnmSeq( p_clwk , anm_seq[GRA_LANDICON_TYPE_WATERSIDE][status]);
+    GFL_CLACT_WK_SetAnmFrame( p_clwk ,0);
     break;
+
   case GRA_LANDICON_TYPE_FISHING:
     GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,
         LAND_TYPE_ICON_FISHING_POS_X,LAND_TYPE_ICON_FISHING_POS_Y,
         LAND_TYPE_ICON_W,LAND_TYPE_ICON_H,palid[ status ]);
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_BUTTON_FISHING );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,is_button[ status ]);
+    GFL_CLACT_WK_SetAnmSeq( p_clwk , anm_seq[GRA_LANDICON_TYPE_FISHING][status]);
+    GFL_CLACT_WK_SetAnmFrame( p_clwk ,0);
     break;
+
   default:
     GF_ASSERT(0);
     break;

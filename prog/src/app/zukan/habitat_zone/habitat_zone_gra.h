@@ -27,13 +27,16 @@
 // 点滅アニメーション
 #include "system/blink_palanm.h"
 
+// アプリ共通リソース
+#include "app/app_menu_common.h"
+
 // OBJ初期位置
 enum
 {
   OBJ_POS_L_X = 24,
-  OBJ_POS_L_Y = 56,
+  OBJ_POS_L_Y = 60,
   OBJ_POS_R_X = 80,
-  OBJ_POS_R_Y = 56,
+  OBJ_POS_R_Y = 60,
   OBJ_POS_STAMP_BIG_X = 224,
   OBJ_POS_STAMP_BIG_Y = 20,
   OBJ_POS_STAMP_LAND_X = 128,
@@ -76,6 +79,9 @@ enum
   OBJ_ANM_SEQ_BUTTON_LAND         = 16,
   OBJ_ANM_SEQ_BUTTON_WATERSIDE    = 17,
   OBJ_ANM_SEQ_BUTTON_FISHING      = 18,
+  OBJ_ANM_SEQ_BUTTON_LAND_ANM     = 19,
+  OBJ_ANM_SEQ_BUTTON_WATERSIDE_ANM= 20,
+  OBJ_ANM_SEQ_BUTTON_FISHING_ANM  = 21,
   OBJ_ANM_SEQ_BUTTON_EXPLANATION  = 28,
 };
 
@@ -97,6 +103,7 @@ enum
   OBJ_WK_CHECK_BOX,
   OBJ_WK_CANCEL,
   OBJ_WK_RETURN,
+  OBJ_WK_MAP_BLINK,
   OBJ_WK_STAMP_SMALL_01,
   OBJ_WK_STAMP_SMALL_02,
   OBJ_WK_STAMP_SMALL_03,
@@ -178,7 +185,7 @@ typedef enum _BG_FRAME{
   BGS_FRAME_FONT        = GFL_BG_FRAME0_S,
   BGS_FRAME_BAR         = GFL_BG_FRAME1_S,
   BGS_FRAME_MAP         = GFL_BG_FRAME2_S,
-  BGS_FRAME_NO_USE      = GFL_BG_FRAME3_S,
+  BGS_FRAME_ROOT        = GFL_BG_FRAME3_S,
 }BG_FRAME;
 
 // ==================================
@@ -195,6 +202,7 @@ typedef enum{
   GRA_LANDICON_TYPE_LAND,
   GRA_LANDICON_TYPE_WATERSIDE,
   GRA_LANDICON_TYPE_FISHING,
+  GRA_LANDICON_TYPE_MAX,
 }GRA_LANDICON_TYPE;
 
 // 地形アイコンステータス
@@ -236,6 +244,9 @@ typedef struct {
   
   // 共通素材
   UI_EASY_CLWK_RES  clres_app_menu_obj;
+  
+  // 上画面ルートオブジェクト
+  UI_EASY_CLWK_RES  clres_root_obj;
   
   // 文字ウィンドウ---------------------
   BOOL              is_print_util_wati;         // 転送待ち
