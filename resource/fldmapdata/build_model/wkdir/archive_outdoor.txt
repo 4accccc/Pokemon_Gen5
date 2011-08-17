@@ -446,3 +446,4 @@
 "nsbmdfiles/c15_obj_01.nsbmd"
 "nsbmdfiles/cr_obj_01.nsbmd"
 "nsbmdfiles/c03_ship_03_04.nsbmd"
+"nsbmdfiles/bigicicle_03.nsbmd"

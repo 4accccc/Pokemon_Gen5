@@ -2799,7 +2799,8 @@ DEP_TEXSET_IMD_OUTDOOR067 = \
 	$(SRCDIR)/c8_gym_03.imd \
 	$(SRCDIR)/bigicicle_01.imd \
 	$(SRCDIR)/icepc_01.imd \
-	$(SRCDIR)/bigicicle_02.imd
+	$(SRCDIR)/bigicicle_02.imd \
+	$(SRCDIR)/bigicicle_03.imd
 
 texset/outdoor067.imd: $(DEP_TEXSET_IMD_OUTDOOR067) texset/tmp/outdoor067.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor067.list
