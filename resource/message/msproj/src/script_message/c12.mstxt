@@ -55,7 +55,7 @@ GIRL2</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#008000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -66,7 +66,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『どこ　いくの？▼
+			<Text>[Name:TrainerName Idx="1" ]『どこ　いくんだ？▼
 ……　……　……
 ……　……　……▼
 ポケモンずかん！？▼
@@ -74,8 +74,8 @@ GIRL2</Text>
 わかった！
 ベルって　ひとを　さがすの　てつだうよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:27:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83,7 +83,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『どこ　行くの？▼
+			<Text>[Name:TrainerName Idx="1" ]『どこ　行くんだ？▼
 ……　……　……
 ……　……　……▼
 ポケモン図鑑！？▼
@@ -91,8 +91,8 @@ GIRL2</Text>
 わかった！
 ベルって　人を　探すの　手伝うよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -240,7 +240,7 @@ GIRL2</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#008000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4851,6 +4851,298 @@ GIRL2</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c12_swrival_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『おい！
+コイツが　はなしたいんだってさ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:57:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:33:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『おい！
+コイツが　話したいんだってさ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:57:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:56:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・自宅でのイベントをおえて
+　フィールドに出ると発動
+・続けて
+・0＝主人公名
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:41:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:24:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_rivalsister_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『……あのね
+[Name:TrainerName ]さん▼
+あたしの　チョロネコ……▼
+しんか　しちゃってたけど
+とりもどしてくれて　ありがとう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:38:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:33:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『……あのね
+[Name:TrainerName ]さん▼
+あたしの　チョロネコ……▼
+しんか　しちゃってたけど
+とりもどしてくれて　ありがとう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:56:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:56:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:41:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル妹
+GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:24:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_swrival_end_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『まだ　あるんだろ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:59:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:40:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『まだ　あるんだろ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:59:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:56:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・続けて
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:41:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:38:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_rivalsister_end_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『……あのね
+[Name:TrainerName ]さん▼
+ここんとこね
+ポケモンの　ゆめを　みるの▽
+３びきの　ポケモンが　うかんでて……▼
+えーっと　それでね　[Name:TrainerName ]さんの
+なまえも　きこえてきて……▼
+
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:52:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:51:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『……あのね
+[Name:TrainerName ]さん▼
+ここんとこね
+ポケモンの　ゆめを　みるの▽
+３びきの　ポケモンが　うかんでて……▼
+えーっと　それでね　[Name:TrainerName ]さんの
+なまえも　きこえてきて……▼
+
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:56:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:56:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・続けて
+・0＝主人公名
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:57:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル妹
+GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:40:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_swrival_end_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なんか　よくわかんないけど
+ほかには　２０ばんどうろ　みたいな▽
+ふうけいも　みるんだってよ▼
+オマエの　なまえが　きこえるってのも
+きになるけど　ゆめ　だしな……▼
+はなしは　それだけ
+じゃーな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:59:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:52:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『なんか　よくわかんないけど
+他には　２０番道路　みたいな▽
+風景も　みるんだってよ▼
+オマエの　名前が　きこえるってのも
+気になるけど　夢だしな……▼
+話は　それだけ
+じゃーな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:59:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:56:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・メッセージ後、ライバル＆妹
+　ライバルの家に移動
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:57:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:52:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c12_girl2_01"
 		Style="Large">
 		<LanguageCell
@@ -5005,11 +5297,10 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・チェレン到着前
-・pos（local　4.7）</Comment>
+・チェレン到着前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:35:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5123,11 +5414,10 @@ GIRL2</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・pos（local　21.11）辺り</Comment>
+			<Comment>♂</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:35:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5151,11 +5441,11 @@ GIRL2</Text>
 			Language="JPN">
 			<Text>かがくの　ちからって　すげー！▼
 いまなら　せきがいせんで
-あんなことや　こんなことが▽
-あっ！　というまに　できるってよ！</Text>
+１００にん　いっしょに　あそぶことが▽
+できるんだってよー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:35:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5165,11 +5455,11 @@ GIRL2</Text>
 			Language="JPN_KANJI">
 			<Text>科学の　力って　すげー！▼
 今なら　赤外線で
-あんなことや　こんなことが▽
-あっ！　というまに　できるってよ！</Text>
+１００人一緒に　遊ぶことが▽
+できるんだってよー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5178,12 +5468,10 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・仮メッセージ
-　新仕様に絡んだ内容で
-・（local　14.20）</Comment>
+・仮メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T06:35:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
