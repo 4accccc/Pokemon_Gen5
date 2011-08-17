@@ -112,13 +112,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……なるほど
-それなりに　きたえているよな▼
+それなりに　きたえているな▼
 それなら　もし　プラズマだんと
-なにか　あったとしても▽
-ポケモンを　まもれるよな！▼</Text>
+なにか　あったとしても▼
+ポケモンを　まもれる！
+オレの　あしでまといにも　ならない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:36:33" />
+				Time="2011-08-17T01:50:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -127,13 +128,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……なるほど
-それなりに　鍛えているよな▼
+それなりに　鍛えているな▼
 それなら　もし　プラズマ団と
-なにか　あったとしても▽
-ポケモンを　守れるよな！▼</Text>
+なにか　あったとしても▼
+ポケモンを　守れる！
+オレの　足手まといにも　ならない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:39:44" />
+				Time="2011-08-17T01:50:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

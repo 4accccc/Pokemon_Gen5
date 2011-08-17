@@ -6,14 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ　トレーナーさん
-このさき　すすめないんですよ▼
-２ねんまえ　ですけど
-ポケモンリーグの　まわりの▽
-じばんが　ゆるんじゃって……</Text>
+			<Text>あっ　トレーナーさん▼
+ポケモンリーグには　あたらしい
+ルートを　りよう　してくださいね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:52:27" />
+				Time="2011-08-17T02:46:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,14 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ　トレーナーさん
-この先　進めないんですよ▼
-２年前　ですけど
-ポケモンリーグの　周りの▽
-地盤が　ゆるんじゃって……</Text>
+			<Text>あっ　トレーナーさん▼
+ポケモンリーグには　新しい
+ルートを　利用してくださいね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:52:46" />
+				Time="2011-08-17T02:46:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -294,12 +290,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンリーグへ　むかうには
-とおく　セイガイハシティから▽
-ぐるりと　まわりこまないとな</Text>
+			<Text>あたらしい　チャンピオンロード
+あらたな　ちょうせん　ね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:48:11" />
+				Time="2011-08-17T02:50:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -307,12 +302,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンリーグへ　向かうには
-遠く　セイガイハシティから▽
-ぐるりと　回りこまないとな</Text>
+			<Text>新しい　チャンピオンロード
+新たな　挑戦ね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:48:36" />
+				Time="2011-08-17T02:49:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
