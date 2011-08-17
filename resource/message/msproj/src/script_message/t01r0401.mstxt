@@ -6,10 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『</Text>
+			<Text>アララギ『おや！
+わざわざ　きてくれたのね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:44" />
+				Time="2011-08-17T08:57:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -62,10 +63,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『</Text>
+			<Text>アララギ『ハーイ！　
+さいきんの　ちょうしは　どう？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:39:46" />
+				Time="2011-08-17T08:49:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -421,11 +423,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・イッシュ図鑑みたコンプ
 ・アイテム入手処理
 　No000「きょかしょう」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:35:18" />
+				Time="2011-08-17T08:45:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -478,11 +481,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・イッシュ図鑑つかまえたコンプ
 ・アイテム入手処理
 　No000「まるいおまもり」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:35:18" />
+				Time="2011-08-17T08:45:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -535,11 +539,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・全国図鑑つかまえたコンプ
 ・アイテム入手処理
 　No000「ひかるおまもり」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:35:18" />
+				Time="2011-08-17T08:45:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

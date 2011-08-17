@@ -108,10 +108,10 @@
 こおりの　ミサイルは▼
 キュレムの　ちからと
 プラズマだんの　かがくりょくで▽
-つくりだした　もの　なのです</Text>
+つくりだした　もの　なのです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:39:17" />
+				Time="2011-08-17T09:02:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -123,10 +123,10 @@
 氷の　ミサイルは▼
 キュレムの　能力と
 プラズマ団の　科学力で▽
-造りだした　もの　なのです</Text>
+造りだした　もの　なのです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:42:16" />
+				Time="2011-08-17T09:02:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -136,10 +136,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船：２回目
-・続けてsage7_02_03</Comment>
+・続けてsage7_02_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:52:12" />
+				Time="2011-08-17T09:02:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -215,10 +215,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『むう！</Text>
+			<Text>ヴィオ『むう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:46:02" />
+				Time="2011-08-17T09:02:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -226,10 +226,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヴィオ『むう！</Text>
+			<Text>ヴィオ『むう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:52:17" />
+				Time="2011-08-17T09:02:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -267,10 +267,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName ]！
-ここ　は……！？</Text>
+ここ　は……！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:46:17" />
+				Time="2011-08-17T09:02:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -279,10 +279,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName ]！
-ここ　は……！？</Text>
+ここ　は……！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:46:20" />
+				Time="2011-08-17T09:02:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -323,10 +323,10 @@
 			Language="JPN">
 			<Text>あの　ポケモンは……▼
 こおりついて　いる……▼
-まさか……　ソウリュウの……！？</Text>
+まさか……　ソウリュウの……！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:29:37" />
+				Time="2011-08-17T09:02:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -336,10 +336,10 @@
 			Language="JPN_KANJI">
 			<Text>あの　ポケモンは……▼
 凍りついて　いる……▼
-まさか……　ソウリュウの……！？</Text>
+まさか……　ソウリュウの……！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:29:27" />
+				Time="2011-08-17T09:03:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -376,13 +376,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『そうとも
+			<Text>ヴィオ『そうとも▼
 それほど　ふんべつが　あるのに
 なぜ　われらの　アジトに　のりこむ▽
-そんな　きけんを　おかすのか？</Text>
+そんな　きけんを　おかすのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:46:39" />
+				Time="2011-08-17T09:03:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -393,10 +393,10 @@
 			<Text>存外　さとい　トレーナーだ▼
 それほど　分別が　あるのに
 なぜ　われらの　アジトに　乗りこむ▽
-そんな　危険を　冒すのか？</Text>
+そんな　危険を　冒すのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:47:24" />
+				Time="2011-08-17T09:03:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -425,13 +425,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『きまってるだろ！　オレの
-ポケモンを　とりもどすためだ！▼
+			<Text>[Name:TrainerName Idx="1" ]『きまってるだろ！▼
+いもうとの　ポケモンを
+とりもどすためなら　なんでもする！▼
 ５ねんまえ　ヒオウギで
-チョロネコを　うばったのは　おまえか！</Text>
+チョロネコを　うばったのは　オマエか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T11:26:33" />
+				Time="2011-08-17T09:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -439,13 +440,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『決まってるだろ！　オレの
-ポケモンを　取り戻すためだ！▼
+			<Text>[Name:TrainerName Idx="1" ]『決まってるだろ！▼
+妹の　ポケモンを
+取り戻すためなら　なんでもする！▼
 ５年前　ヒオウギで
-チョロネコを　奪ったのは　おまえか！</Text>
+チョロネコを　奪ったのは　オマエか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T11:26:41" />
+				Time="2011-08-17T09:06:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -486,10 +488,10 @@
 だれかが　うばい　つかっているだろう▼
 だが　げせぬな……？▼
 チョロネコなら　ほかにも　いるのに
-なぜ　そこまで　こだわるのだ？</Text>
+なぜ　そこまで　こだわるのだ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:41:48" />
+				Time="2011-08-17T09:06:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -501,10 +503,10 @@
 だれかが　奪い　使っているだろう▼
 だが　解せぬな……？▼
 チョロネコなら　他にも　いるのに
-なぜ　そこまで　こだわるのだ？</Text>
+なぜ　そこまで　こだわるのだ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:48:02" />
+				Time="2011-08-17T09:06:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -543,12 +545,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……しんだ　じいちゃんが
-いもうとと　オレの　ために▼
+いもうとの　ために▼
 つかまえてくれた　チョロネコは
-せかいに　そいつだけ　だからだよ！！</Text>
+せかいに　そいつだけ　だからだよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:49:25" />
+				Time="2011-08-17T09:06:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -557,12 +559,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……死んだ　じいちゃんが
-妹と　オレの　ために▼
+妹の　ために▼
 捕まえてくれた　チョロネコは
-世界に　そいつだけ　だからだよ！！</Text>
+世界に　そいつだけ　だからだよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:50:39" />
+				Time="2011-08-17T09:06:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -611,10 +613,10 @@
 ポケモン　キュレムの　ちからを▽
 りようする　ための　そうち！▼
 これで　こんどこそ！
-イッシュを　せいあつ　するのです</Text>
+イッシュを　せいあつ　するのです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:52:06" />
+				Time="2011-08-17T09:07:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -633,10 +635,10 @@
 ポケモン　キュレムの　力を▽
 利用する　ための　装置！▼
 これで　今度こそ！
-イッシュを　制圧するのです</Text>
+イッシュを　制圧するのです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:51:53" />
+				Time="2011-08-17T09:07:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -670,10 +672,10 @@
 じゃまを　されないうちに
 さくせんを　すすめねば　なりませんね▼
 では　あとは　まかせましたよ
-ダークトリニティの　みなさん</Text>
+ダークトリニティの　みなさん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:51:11" />
+				Time="2011-08-17T09:07:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -686,10 +688,10 @@
 邪魔を　されないうちに
 作戦を　遂行せねば　なりませんね▼
 あとは　任せましたよ
-ダークトリニティの　みなさん</Text>
+ダークトリニティの　みなさん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:51:32" />
+				Time="2011-08-17T09:07:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -719,10 +721,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ふざけるな！
-せいせいどうどうと　しょうぶ　しろ！</Text>
+せいせいどうどうと　しょうぶ　しろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:14:22" />
+				Time="2011-08-17T09:07:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -731,10 +733,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ふざけるな！
-正々堂々と　勝負しろ！</Text>
+正々堂々と　勝負しろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:14:25" />
+				Time="2011-08-17T09:07:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
