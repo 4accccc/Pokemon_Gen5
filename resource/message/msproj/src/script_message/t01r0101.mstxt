@@ -144,11 +144,11 @@
 			Language="JPN">
 			<Comment>♀
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→</Comment>
+　はい　→mama_05
+　いいえ→mama_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T03:45:10" />
+				Time="2011-08-17T04:17:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -196,11 +196,11 @@
 			Language="JPN">
 			<Comment>♀
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→</Comment>
+　はい　→mama_05
+　いいえ→mama_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T03:45:09" />
+				Time="2011-08-17T04:17:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -366,10 +366,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・</Comment>
+・イベント終了
+・再度会話はmama_08から</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T03:50:28" />
+				Time="2011-08-17T04:18:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -384,14 +385,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『[Name:TrainerName Idx="0" ]
-ポケモンは　げんき　なの？▼
-ちょっと　やすんでいきなさいな▼
-いい　トレーナーは
-ポケモンに　むりさせないのよ▼</Text>
+			<Text>あら　ポケモンは　げんき？
+ちょっと　やすんでいきなさいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:40:08" />
+				Time="2011-08-17T04:18:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -399,14 +397,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『[Name:TrainerName Idx="0" ]
-ポケモンは　元気なの？▼
-ちょっと　休んでいきなさいな▼
-いい　トレーナーは
-ポケモンに　無理させないのよ▼</Text>
+			<Text>あら　ポケモンは　元気なの？
+ちょっと　休んでいきなさいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:40:15" />
+				Time="2011-08-17T04:18:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -417,11 +412,10 @@
 			<Comment>♀
 ・メッセージ表示後、
 　画面暗転して回復処理
-・回復処理後ランダム（20％）で09a~09e表示
-・0＝主人公名前</Comment>
+・回復処理後ランダム（20％）で09a~09e表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T03:50:59" />
+				Time="2011-08-17T04:18:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -472,11 +466,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・回復処理後ランダム（20％）で09a~09e表示
-・0＝主人公名前</Comment>
+・回復処理後ランダム（20％）で09a~09e表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:18:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -498,15 +491,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『[Name:TrainerName Idx="0" ]
-ポケモンには　やさしくしてる？▼
+			<Text>ポケモンには　やさしくしてる？▼
 あなたの　ために　ポケモンは
 がんばって　くれるんだもん！▼
 あなたも　ポケモンに
 やさしくするのが　ふつうでしょ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:19:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -514,15 +506,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『[Name:TrainerName Idx="0" ]
-ポケモンには　優しくしてる？▼
+			<Text>ポケモンには　優しくしてる？▼
 あなたの　ために　ポケモンは
 がんばって　くれるんだもん！▼
 あなたも　ポケモンを
 気遣ってあげるのが　普通でしょ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:19:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -531,11 +522,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・回復処理後ランダム（20％）で09a~09e表示
-・0＝主人公名前</Comment>
+・回復処理後ランダム（20％）で09a~09e表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:18:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -557,13 +547,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『そういえば……▼
-パパも　あなたと　おなじように
-ポケモンと　たびを　していたのよね▼
-たびさきで　ママと　であって……</Text>
+			<Text>かりメッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:19:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -571,13 +558,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『そういえば……▼
-パパも　あなたと　おなじように
-ポケモンと　旅を　していたのよね▼
-旅先で　ママと　出会って……</Text>
+			<Text>仮メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:19:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -611,12 +595,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『どう？　ポケモンは
-たくさん　つかまえているの？▽
-はかせの　おねがい　なんでしょ</Text>
+			<Text>かりメッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:19:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -624,12 +606,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『どう？　ポケモンは
-たくさん　捕まえているの？▽
-博士の　お願い　なんでしょ</Text>
+			<Text>仮メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:19:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -663,14 +643,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『チェレンくんも　ベルちゃんも
-たびをして　なにを　みつけるのかな▼
-じぶんの　したいこと……
-それが　じぶんで　わかるようになれば▽
-ステキな　たびに　なると　おもうな</Text>
+			<Text>かりメッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:19:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -678,14 +654,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『チェレンくんも　ベルちゃんも
-旅をして　なにを　みつけるのかな▼
-自分の　したいこと……
-それが　自分で　わかるようになれば▽
-ステキな　旅に　なると　思うな</Text>
+			<Text>仮メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:19:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
