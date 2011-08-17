@@ -279,11 +279,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data
-・ダイビング関連</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……なんだ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:31:08" />
+				Time="2011-08-17T11:02:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -291,16 +290,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data
-・ダイビング関連</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……なんだ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:31:10" />
+				Time="2011-08-17T11:02:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-17T10:31:10" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・ポケセン入り口のそばに配置
+・話かけでイベントスタート
+※ダイビング関連</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T11:03:04" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>SWRIVAL
@@ -311,7 +319,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ffff00</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
