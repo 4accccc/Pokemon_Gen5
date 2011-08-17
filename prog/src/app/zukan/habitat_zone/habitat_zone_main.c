@@ -826,19 +826,26 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
           x = 0;
           p_wk->select_index = x + y*POKEICON_LINE;
         }
+        else if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
+        {
+          // リストの範囲外の場合は一番最後を選択
+          p_wk->select_index = p_wk->list_size -1;
+        }
+        else if( p_wk->seq_param == SEQ_CHANGE_PARAM_UP )
+        {
+          // 上に移動できる場合は、一つ上の枠をせんたくする
+          y--;
+          p_wk->select_index = x + y*POKEICON_LINE;
+        }
+        else if( p_wk->seq_param == SEQ_CHANGE_PARAM_DOWN )
+        {
+          y = 0;
+          p_wk->select_index = x + y*POKEICON_LINE;
+        }
         else
         {
-          if( y  <= 0 )
-          {
-            // リストの範囲外の場合は一番最後を選択
-            p_wk->select_index = p_wk->list_size -1;
-          }
-          else
-          {
-            // 上に移動できる場合は、一つ上の枠をせんたくする
-            y--;
-            p_wk->select_index = x + y*POKEICON_LINE;
-          }
+          // リストの範囲外の場合は一番最後を選択
+          p_wk->select_index = p_wk->list_size -1;
         }
       }
 
