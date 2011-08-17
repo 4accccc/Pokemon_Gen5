@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……バリアだ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……バリアだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T11:49:59" />
+				Time="2011-08-17T09:18:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……バリアだ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……バリアだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T11:50:49" />
+				Time="2011-08-17T09:19:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -62,10 +62,10 @@
 ふねの　なかの　スイッチを　さがして
 バリアを　けすしかないか▼
 [Name:TrainerName ]！　てわけして
-スイッチを　さがすぞ！</Text>
+スイッチを　さがすぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T11:59:01" />
+				Time="2011-08-17T09:18:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -77,10 +77,10 @@
 船内の　どこかに　あるだろう
 スイッチで　バリアを　解除しないとな▼
 [Name:TrainerName ]！　手分けして
-スイッチを　探すぞ！</Text>
+スイッチを　探すぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T11:59:09" />
+				Time="2011-08-17T09:19:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -121,10 +121,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バリアが　かいじょ　された！</Text>
+			<Text>バリアが　かいじょ　された！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T11:02:37" />
+				Time="2011-08-17T09:19:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -132,10 +132,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バリアが　解除された！</Text>
+			<Text>バリアが　解除された！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T11:02:37" />
+				Time="2011-08-17T09:19:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -555,4 +555,321 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d27r0401_swboss_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクロマ『……ここまで　くるとは
+あなたも　ものずきと　いいますか▼
+プラズマだんは
+わたくしが　かいさん　させました▼
+ここに　のこっているのは
+これから　どうするか▽
+きめかねている　もの　たち▼
+わたくし　としては
+じぶんの　いきかたは▽
+じぶんで　きめてもらいたい！▼
+よのなかには　こたえ　などない
+もんだいの　ほうが　おおいのですっ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:35:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:24:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクロマ『……ここまで　来るとは
+あなたも　物好きと　いいますか▼
+プラズマ団は
+わたくしが　解散させました▼
+ここに　残っているのは
+これから　どうするか▽
+決めかねている　もの　たち▼
+わたくし　としては
+自分の　生き方は▽
+自分で　決めてもらいたい！▼
+世の中には　答えなど　ない
+問題の　ほうが　多いのですっ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:51:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:35:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・アジト船４回目
+・初回会話
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:42:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:19:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0401_swboss_end_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さてと……▼
+あなたと　ポケモンの　つよさ
+あらためて　みせてください！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:44:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:29:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さてと……▼
+あなたと　ポケモンの　強さ
+あらためて　みせてください！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:51:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:35:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・アジト船４回目
+・隣接してメッセージ表示
+・メッセージ表示後、
+　アニメ再生してからトレーナー戦闘へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:43:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:19:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0401_swboss_end_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ミスの　ゆるされない
+ポケモンしょうぶ　では　トレーナーの▽
+ひととしての　ほんしょうが　みえる▼
+なるほど！▼
+あなたのような　トレーナーなら
+ポケモンも　ぜんりょくを　つくす▼
+それが　わたくしの
+しりたかった　こたえ　というわけか▼
+それにしても
+あなたが　かって　よかった▼
+もっとも　わたくしは　ゲーチスが
+きらい！　というのも　ありますがね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:48:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:35:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ミスの　許されない
+ポケモン勝負では　トレーナーの▽
+人としての　本性が　みえる▼
+なるほど！▼
+あなたのような　トレーナーなら
+ポケモンも　全力を　尽くす▼
+それが　わたくしの
+知りたかった　答え　というわけか▼
+それにしても
+あなたが　勝って　よかった▼
+もっとも　わたくしは　ゲーチスが
+きらい！　というのも　ありますがね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:51:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:35:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・アジト船４回目
+・トレーナー戦闘後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:41:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:19:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0401_swboss_end_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>これを　もっていきなさい！▼
+どのような　ポケモンでも　かならず
+つかまえる　マスターボールです▼
+ゲーチスが　よういしていた　ものですが
+あなたが　つかうほうが　いいでしょう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:49:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:48:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>これを　持っていきなさい！▼
+どのような　ポケモンでも　かならず
+つかまえる　マスターボールです▼
+ゲーチスが　用意していた　ものですが
+あなたが　使うほうが　いいでしょう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:49:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・アジト船４回目
+・アイテム入手処理</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:47:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:46:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0401_swboss_end_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よければ　また
+ポケモンしょうぶを　してください▼
+かくいう　わたくしも　これから
+なにをすべきか　きめかねているのです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:50:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:47:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よければ　また
+ポケモン勝負を　してください▼
+かくいう　わたくしも　これから
+なにをすべきか　決めかねているのです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:52:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:49:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・アジト船４回目
+・アイテム入手後、自動で表示
+・仮ですが、次からは別の場所に移動
+　ソレまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:50:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T09:47:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
