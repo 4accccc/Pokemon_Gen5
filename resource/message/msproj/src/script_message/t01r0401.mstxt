@@ -29,19 +29,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アニメ後
-　続けてblack_01表示</Comment>
+・初回イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:39:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -52,7 +51,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -63,10 +62,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -74,10 +73,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,20 +85,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ表示後
-　3人の前を移動するアニメ
-・続けてhakase2_03</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:35:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -110,7 +107,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -121,10 +118,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -132,10 +129,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -144,22 +141,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・はい/いいえの選択肢表示
-　はい→名前入力画面へ
-　いいえ→hakase2_04
-・今回はhakase2_04
-　はい/いいえともに同じ流れ</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:35:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -170,7 +163,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -181,10 +174,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -192,10 +185,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -204,21 +197,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・いいえ選択時の再確認
-・はい/いいえの選択肢表示
-　はい→hakase2_07
-　いいえ→名前入力画面</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:35:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -229,7 +219,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -240,10 +230,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -251,10 +241,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -263,20 +253,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・名前入力画面から復帰して
-　ニックネーム変わった
-・続けてhakase2_07表示</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:35:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -287,7 +275,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -298,10 +286,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -309,10 +297,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -321,20 +309,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・名前入力画面から復帰して
-　ニックネーム変わっていない
-・続けてhakase2_07表示</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:35:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -345,7 +331,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -356,10 +342,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -367,10 +353,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アララギ『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:49:39" />
+				Time="2011-08-17T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -379,18 +365,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けてblack_02表示</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:29:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -401,7 +387,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -435,19 +421,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ表示後、演出
-・続けてhakase2_09表示</Comment>
+・アイテム入手処理
+　No000「きょかしょう」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:35:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -492,19 +478,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アニメなどの演出予定
-・続けてhakase2_10表示</Comment>
+・アイテム入手処理
+　No000「まるいおまもり」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:35:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -549,21 +535,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・はい/いいえの選択肢表示
-　はい→hakase2_12
-　いいえ→hakase2_11
-・0＝プレイヤーの名前</Comment>
+・アイテム入手処理
+　No000「ひかるおまもり」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:35:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -608,21 +592,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・いいえ選択時
-・再度はい/いいえの選択肢表示
-　はい→white_04
-　いいえ→hakase2_11</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:29:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -667,22 +648,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・はい選択時
-・メッセージ表示後、退場
-・1番道路に博士を配置
-　あわせて友達♂、♀も
-・続けてwhite_02</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:29:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -727,18 +704,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ後、研究所の外へ</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:29:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -783,22 +760,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・t02pc0101のイベント後以降
-・シナリオイベントがあるときはそちらに
-　（以降追加予定）
-　ないときは続けて図鑑評価
-　hyouka_scr.gmmに</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:29:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
-アララギ博士娘</Text>
+アララギ博士・娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -851,20 +824,21 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・c06イベント後に登場
-　GRIDX=12、GRIDZ=7、左向き
-・全国図鑑解放前</Comment>
+・ここでの初回会話
+・続けて図鑑評価
+　hyouka_scr.gmmに
+・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:35:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE
-博士（父）</Text>
+アララギ博士・父</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:36" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -909,21 +883,20 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・c06イベント後に登場
-・全国図鑑解放後
+・２回目以降の会話
 ・続けて図鑑評価
 　hyouka_scr.gmmに</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:33:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE
-博士（父）</Text>
+アララギ博士・父</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T08:27:37" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
