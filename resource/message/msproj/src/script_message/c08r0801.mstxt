@@ -201,12 +201,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　けむりだまを　もっている
-ポケモンは　やせいの　ポケモンから▽
-かならず　にげられるの！</Text>
+			<Text>その　けむりだまを　持っている
+ポケモンは　野生の　ポケモンから▽
+必ず　逃げられるの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T07:43:16" />
+				Time="2011-08-17T02:51:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

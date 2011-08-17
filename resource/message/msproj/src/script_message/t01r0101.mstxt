@@ -2,81 +2,16 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_t01r0101_mama_01a"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ママ『かたづけ？▼
-いいの　いいの！
-あとで　あたしが　やっておくから▼
-それより　アララギはかせに
-あわなくて　いいの？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ママ『かたづけ？▼
-いいの　いいの！
-あとで　あたしが　やっておくから▼
-それより　アララギ博士に
-会わなくて　いいの？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・続けてblack_02</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>主人公ママ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_t01r0101_mama_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『[Name:TrainerName Idx="0" ]▼
-ポケモンしょうぶ　って
-ものすごーく　にぎやか　なのね！▼
-したまで　ポケモンの
-なきごえとか　きこえてきたわよ！▼</Text>
+			<Text>あら　おかえり▼
+さがしていた　おともだちに　あえたの？
+たしか　Nって　なまえの……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:39:46" />
+				Time="2011-08-17T03:41:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -84,14 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『[Name:TrainerName Idx="0" ]▼
-ポケモン勝負って
-ものすごーく　にぎやか　なのね！▼
-下まで　ポケモンの
-鳴き声とか　聞こえてきたわよ！▼</Text>
+			<Text>あら　おかえり▼
+探していた　お友達に　会えたの？
+たしか　Nって　名前の……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:40:44" />
+				Time="2011-08-17T04:10:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100,17 +33,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けてmama_02</Comment>
+・上を向いたままメッセージ表示
+・続けて
+※swanで変更</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:41:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:12" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -125,11 +60,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おもいだしちゃうなー
-はじめての　ポケモンしょうぶ！▼</Text>
+			<Text>あれ……？▼
+ごめんなさい▼
+いやね　おきゃくさんを
+じぶんの　こどもと　まちがうなんて▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:41:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -137,11 +74,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>思い出しちゃうなー
-初めての　ポケモン勝負！▼</Text>
+			<Text>あれ……？▼
+ごめんなさい▼
+いやね　お客さんを
+自分の　子供と　間違うなんて▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:10:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -150,18 +89,21 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・別方向を向いてメッセージ表示
-・続けてmama_03</Comment>
+・
+・続けて主人公が
+　♂→mama_03
+　♀→mama_04
+※swanで変更</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:43:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:40:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -176,11 +118,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうだ！　しょうぶをした　ポケモンを
-やすませて　あげないと！▼</Text>
+			<Text>って　あなた
+[Name:TrainerName ]くん　でしょ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:39:52" />
+				Time="2011-08-17T03:42:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -188,11 +130,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうだ！　勝負をした　ポケモンを
-休ませて　あげないと！▼</Text>
+			<Text>って　あなた
+[Name:TrainerName ]くん　でしょ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:40:40" />
+				Time="2011-08-17T03:45:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -201,20 +143,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ表示後、
-　画面暗転して回復処理
-・画面復帰後
-　msg_t01r0101_mama_04表示</Comment>
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:45:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -229,13 +170,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモン
-げんきに　なったわね！▼
-あと　でかけるなら
-ライブキャスターを　わすれないでね▼</Text>
+			<Text>って　あなた
+[Name:TrainerName ]さん　でしょ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:42:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -243,13 +182,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン
-元気に　なったわね！▼
-あと　でかけるなら
-ライブキャスターを　わすれないでね▼</Text>
+			<Text>って　あなた
+[Name:TrainerName ]さん　でしょ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:45:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -258,17 +195,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ライブキャスター入手処理</Comment>
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:45:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -279,59 +218,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_mama_04_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>あなたも　はかせに
-おれいを　いうんでしょ！？▽
-じゃ　いってらっしゃい！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>あなたも　博士に
-お礼を　いうんでしょ！？▽
-じゃ　いってらっしゃい！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ポケモン図鑑入手まで繰り返し</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -342,15 +229,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『ふう！　おかたづけは
-ちょっと　きゅうけい▼
-あなたも　あなたの　ポケモンも
-ちょっと　きゅうけい　しなさいな▼
-いい　トレーナーは
-ポケモンに　むりさせないのよ▼</Text>
+			<Text>だと　おもった！
+だって　そっくり　だもの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:39:56" />
+				Time="2011-08-17T03:46:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -358,15 +241,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『ふう！　おかたづけは
-ちょっと　休憩▼
-あなたも　あなたの　ポケモンも
-ちょっと　休憩しなさいな▼
-いい　トレーナーは
-ポケモンに　無理させないのよ▼</Text>
+			<Text>だと　思った！
+だって　そっくり　だもの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:40:26" />
+				Time="2011-08-17T04:10:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -375,20 +254,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ポケモン図鑑入手後から
-　ランニングシューズ入手するまで
-・メッセージ表示後、
-　画面暗転して回復処理</Comment>
+・はい選択時
+・続けてmama_00</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:47:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -399,7 +276,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -410,52 +287,43 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『これで　あなたも
-ポケモンも　げんきいっぱい！▽
-どこへだって　いけるわね！</Text>
+			<Text>えー！　そんなこといって！
+あたしの　めは　ふしあなじゃないわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:40:31" />
+				Time="2011-08-17T03:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:46:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『これで　あなたも
-ポケモンも　元気一杯！▽
-どこへだって　行けるわね！</Text>
+			<Text>えー！　そんなこといって！
+あたしの　めは　節穴じゃないわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:40:36" />
+				Time="2011-08-17T04:10:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:49:50" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・msg_t01r0101_mama_05での
-　回復処理後</Comment>
+・いいえ選択時
+・続けてmama_00</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:47:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:49:52" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -463,50 +331,52 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『つぎは　どこに　いって
-どんな　ポケモンと　であうのかしら？</Text>
+			<Text>あなたの　ママとは　
+ちょっとした　しりあい▼
+あたしが　トレーナーで
+あなたの　ママが　ポケモンセンターの▽
+うけつけの　ときに　であったのよ▼
+そうだ！　ポケモンは　げんき？
+これからは　ここで　やすめばいいわ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:12:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:47:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『次は　どこに　行って
-どんな　ポケモンと　出会うのかしら？</Text>
+			<Text>あなたの　ママとは　
+ちょっとした　知り合い　なの▼
+あたしが　トレーナーで
+あなたの　ママが　ポケモンセンターの▽
+受付の　ときに　であったのよ▼
+そうだ！　ポケモンは　元気？
+これからは　ここで　休めばいいわ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T04:11:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:49:50" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・msg_t01r0101_mama_06表示後
-　家を出るまではこのメッセージを繰り返し</Comment>
+・</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:50:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:49:52" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -545,21 +415,20 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ランニングシューズ入手後
 ・メッセージ表示後、
 　画面暗転して回復処理
 ・回復処理後ランダム（20％）で09a~09e表示
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:50:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -611,10 +480,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -670,10 +539,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -724,10 +593,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -776,10 +645,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -832,10 +701,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -895,10 +764,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -909,7 +778,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -979,10 +848,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -993,7 +862,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1044,1129 +913,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ママ？『そうだね▼
-でんせつの　ポケモン　２ひきと
-であうなんて　すごいこと　だよ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ママ？『そうだね▼
-伝説の　ポケモン　２匹と
-出会うなんて　すごいこと　だよ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・最初はママの動作モデルで配置
-・続けてmama_end_02
-・0＝主人公名前</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_mama_end_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ママ？『ああ　こちらは……▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ママ？『ああ　こちらは……▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・続けてicpo_end_02</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>主人公ママ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ママ？『おっと
-へんそう　したまま　だったね▼
-しっけい！　というか
-じこしょうかいを　させていただこう▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ママ？『おっと
-変装したまま　だったね▼
-失敬！　というか
-自己紹介を　させていただこう▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・メッセージ表示後
-　その場で一回転後、動作モデルをICPOに差し替え
-・続けてicpo_end_03</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>わたしは　せかいを　またに　かける
-こくさいけいさつの　メンバーである▼
-なまえは……　いや　きみには
-コードネームを　おしえよう▼
-そう　コードネームは　ハンサム！
-みんな　そう　よんでいるよ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>わたしは　世界を　またに　かける
-国際警察の　メンバーである▼
-名前は……　いや　きみには
-コードネームを　教えよう▼
-そう　コードネームは　ハンサム！
-みんな　そう　呼んでいるよ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてicpo_end_04</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハンサム『イッシュちほうで
-プラズマだん　なる　そしきが▽
-あんやく　している……▼
-その　じょうほうを　えて
-はるばる　やってきたのだが……▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハンサム『イッシュ地方で
-プラズマ団なる　組織が▽
-暗躍している……▼
-その情報を　えて
-はるばる　やってきたのだが……▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・下を向いてメッセージ表示
-・続けてicpo_end_05</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ジムリーダーたちや
-きみの　かつやく　で！▼
-プラズマだんの　しろは　くずれさり
-メンバーは　ちりぢりに　にげさった！▽
-わたしは　そう　きいているよ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ジムリーダーたちや
-きみの　活躍で！▼
-プラズマ団の　城は　崩壊し
-メンバーは　散り散りに　逃げ去った！▽
-わたしは　そう　聞いているよ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・主人公を向いてメッセージ表示
-・続けてicpo_end_06</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>だがしかし！
-いやしかし！▼
-しちけんじん　とよばれる　メンバーは
-まだ　イッシュちほうに　ひそんでいる▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>だがしかし！
-いやしかし！▼
-七賢人とよばれる　メンバーは
-まだ　イッシュ地方に　潜伏している▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・数歩うろうろしてからメッセージ表示歩いてから
-・続けてicpo_end_07</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>そこでだ！　すごい　トレーナーの
-きみに　たのみたいことが　ある！▼
-きみは　イッシュちほうの
-あらゆる　ばしょを　めぐり▽
-しちけんじんを　さがしてほしい！▼
-これは　チャンピオンである
-アデクさんの　すいせん　でもあるんだ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>そこでだ！　すごい　トレーナーの
-きみに　たのみたいことが　ある！▼
-きみは　イッシュ地方の
-あらゆる　場所を　巡り▽
-七賢人を　探してほしい！▼
-これは　チャンピオンである
-アデクさんの　推薦でも　あるんだ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・再度主人公と向き合ってからメッセージ表示
-・はい/いいえの選択肢表示
-　はい→icpo_end_09
-　いいえ→icpo_end_08</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゴホン！▼
-もういちど　おねがいしよう！！▼
-きみは　イッシュちほうの
-あらゆる　ばしょを　めぐり▽
-しちけんじんを　さがしてほしい！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゴホン！▼
-もういちど　お願いしよう！！▼
-きみは　イッシュ地方の
-あらゆる　場所を　巡り▽
-七賢人を　探してほしい！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・いいえ選択時
-・再度はい/いいえの選択肢表示
-　はい→icpo_end_09
-　いいえ→icpo_end_08</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_09"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハンサム『おお！　ありがたい！▼
-まさに　１００まんの
-みかたを　えた　おもいだよ▼
-では　これを　わたそう▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハンサム『おお！　ありがたい！▼
-まさに　１００万の
-味方を　えた　思いだよ▼
-では　これを　渡そう▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・はい選択時
-・アイテム入手処理
-　No447「すごいつりざお」
-・続けてmama_end_03</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_mama_end_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ママ『……それは
-すごいつりざお　ですよね▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ママ『……それは
-すごいつりざお　ですよね▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・続けてicpo_end_10</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>主人公ママ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_10"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハンサム『ええ！
-すごいつりざお　です！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハンサム『ええ！
-すごいつりざお　です！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてmama_end_04</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_mama_end_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ママ『……プラズマだんの
-しちけんじん　でしたっけ？▼
-その　ひとたちを　さがすのに
-なにか　かんけいが　あるのでしょうか▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ママ『……プラズマ団の
-七賢人でしたっけ？▼
-その　人たちを　探すのに
-なにか　関係が　あるのでしょうか▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・続けてicpo_end_11</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>主人公ママ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_11"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハンサム『なるほど▼
-さすが　[Name:TrainerName Idx="0" ]の　おかあさん
-いい　しつもん　ですな▼
-おこたえ　しましょう！▼
-まったく　かんけい　ありません▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハンサム『なるほど▼
-さすが　[Name:TrainerName Idx="0" ]の　おかあさん
-いい　質問ですな▼
-お答え　しましょう！▼
-まったく　関係ありません▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてmama_end_05</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_mama_end_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・サブウインドウで表示
-・続けてmama_end_06</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>主人公ママ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_mama_end_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・サブウインドウで表示
-・続けてmama_end_07</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>主人公ママ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_mama_end_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ママ『はあ……▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ママ『はあ……▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・続けてicpo_end_12</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>主人公ママ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01r0101_icpo_end_12"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハンサム『では
-すごいつりざおの　せつめいだ▼
-まず　すいめんに　むかって
-すごいつりざおを　つかう！▼
-つぎに　きもちを　しゅうちゅう！▼
-ポケモンが　くいついたら
-「！」と　でるから　そのときに▽
-すばやく　つりざおを　ひくのだ！▼
-では　[Name:TrainerName Idx="0" ]！
-よろしく　たのんだよ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハンサム『では
-すごいつりざおの　説明だ▼
-まず　水面に　向かって
-すごいつりざおを　使う！▼
-次に　気持ちを　集中！▼
-ポケモンが　くいついたら
-「！」と　でるから　そのときに▽
-すばやく　つりざおを　引くのだ！▼
-では　[Name:TrainerName Idx="0" ]！
-よろしく　頼んだよ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・メッセージ表示後、家の外に退場
-　画面外に消えると、主人公操作可能に
-・0＝主人公名前</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2188,57 +938,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『とっても　ユニークなのね
-こくさいけいさつの　ひとって▼
-まあ　きにしないで
-あなたの　したいように　すれば▽
-いいと　おもうな！　ママは▼
-だって　もう　おとな　でしょ！？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『とっても　ユニークなのね
-国際警察の　人って▼
-まあ　気にしないで
-あなたの　したいように　すれば▽
-いいと　思うな！　ママは▼
-だって　もう　おとな　でしょ！？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:27" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・icpo_end_12表示後、家を出るまで繰り返し</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>前作主人公ママ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

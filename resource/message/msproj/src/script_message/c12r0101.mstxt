@@ -798,6 +798,141 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c12r0101_dead_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ママ『おかえり　[Name:TrainerName Idx="0" ]！
+なんか　たいへん　だったようね▽
+すこし　やすんで　いきなさい▼
+……　……　……
+……　……　……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:56:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:36:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ママ『おかえり　[Name:TrainerName Idx="0" ]！
+なんか　大変だったようね▽
+すこし　休んで　いきなさい▼
+……　……　……
+……　……　……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:56:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:36:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ゲームオーバー処理
+・0＝主人公名
+・画面暗転
+・回復ＳＥ後
+・復帰してdead_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:58:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:55:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_dead_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ママ『うん！　あなたも　ポケモンも
+げんき　いっぱい！▼
+それでは
+ママからの　アドバイス！▼
+ポケモンの　たいりょく
+えっと　ＨＰが　なくなってきたら▼
+こまめに　ポケモンセンターで
+かいふく　させること！▼
+とおくまで　ぼうけん　するときは
+フレンドリィショップで▽
+キズぐすりを　かっておきなさい▼
+ママ　おうえん　してるから！
+たのしんでね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:58:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:36:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ママ『うん！　あなたも　ポケモンも
+元気　一杯！▼
+それでは
+ママからの　アドバイス！▼
+ポケモンの　体力く
+つまり　ＨＰが　なくなってきたら▼
+こまめに　ポケモンセンターで
+回復させること！▼
+遠くまで　冒険するときは
+フレンドリィショップで▽
+キズぐすりを　買っておきなさい▼
+ママ　応援してるから！
+たのしんでね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:58:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:36:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ゲームオーバー処理
+・メッセージ表示後、主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:36:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-17T03:55:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c12r0101_game_01"
 		Style="Large">
 		<LanguageCell
