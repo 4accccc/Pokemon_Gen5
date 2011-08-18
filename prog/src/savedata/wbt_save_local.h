@@ -22,6 +22,8 @@ enum {
   LOCAL_WBTWIN_COUNT_MAX = 30,
 
   LOCAL_WBTSAVE_FLAG_MAX = 64,
+
+  LOCAL_WBT_BATTLE_NUM = 3,
 };
 //------------------------------------------------------------------
 /**
@@ -32,10 +34,13 @@ struct _WBTSAVE{
   ///チャンピオントーナメントを1日1回しか出来ないように制御するためのフラグ
   u32 ChampionTournamentFlag;
 
+  ///優勝回数カウント（WBTWIN_COUNT定義で指定）
+  u16 WinCount[ LOCAL_WBTWIN_COUNT_MAX ];
+
   ///各種フラグ用領域（WBTSAVE_FLAG定義を参照）
   u8 flag[ LOCAL_WBTSAVE_FLAG_MAX / 8 ];
 
-  ///優勝回数カウント（WBTWIN_COUNT定義で指定）
-  u16 WinCount[ LOCAL_WBTWIN_COUNT_MAX ];
+  ///対戦したトレーナーのID
+  u16 trainer_id[ LOCAL_WBT_BATTLE_NUM ];
 };
 

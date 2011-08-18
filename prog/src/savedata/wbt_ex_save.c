@@ -39,7 +39,7 @@ struct _WBTEXSAVE
 enum {
   WBTDL_DATA_SIZE = sizeof(WBTEXSAVE),
 };
-SDK_COMPILER_ASSERT( WBTDL_DATA_SIZE <= SAVESIZE_EXTRA_WBT );
+SDK_COMPILER_ASSERT( WBTDL_DATA_SIZE + 28 <= SAVESIZE_EXTRA_WBT );
 
 //=============================================================================
 /**

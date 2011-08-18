@@ -92,3 +92,6 @@ extern BOOL WBTSAVE_GetFlag( const WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id );
 extern void WBTSAVE_SetFlag( WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id );
 extern void WBTSAVE_ResetFlag( WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id );
 
+extern void WBTSAVE_SetTrainerID( WBTSAVE * wbtsave, u8 pos, u16 trainer_id );
+extern u16 WBTSAVE_GetTrainerID( WBTSAVE * wbtsave, u8 pos );
+

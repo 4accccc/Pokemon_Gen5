@@ -17,6 +17,7 @@
 
 #include "poke_tool/poketype_def.h"
 
+#include "field/wbt.h"
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -44,11 +45,12 @@ SDK_COMPILER_ASSERT( WBTWIN_COUNT_POKETYPE_KOORI == POKETYPE_KOORI );
 SDK_COMPILER_ASSERT( WBTWIN_COUNT_POKETYPE_DRAGON == POKETYPE_DRAGON );
 SDK_COMPILER_ASSERT( WBTWIN_COUNT_POKETYPE_AKU == POKETYPE_AKU );
 
-//SDK_COMPILER_ASSERT( WBTWIN_COUNT_ALLTOURNAMENT == POKETYPE_MAX );
 
 //include/savedata/wbt_save.hとsrc/savedata/wbt_save_local.hとでの定義に食い違いがないように
 SDK_COMPILER_ASSERT( WBTWIN_COUNT_MAX == LOCAL_WBTWIN_COUNT_MAX );
 SDK_COMPILER_ASSERT( WBTSAVE_FLAG_MAX == LOCAL_WBTSAVE_FLAG_MAX );
+//include/field/wbt.hとsrc/savedata/wbt_save_local.hとでの定義に食い違いがないように
+SDK_COMPILER_ASSERT( WBT_BATTLE_NUM == LOCAL_WBT_BATTLE_NUM );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -143,4 +145,21 @@ void WBTSAVE_ResetFlag( WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id )
   GF_ASSERT( flag_id < WBTSAVE_FLAG_MAX );
   wbtsave->flag[ flag_id / 8 ] &= ~((u8)( 1 << (flag_id % 8) ));
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSAVE_SetTrainerID( WBTSAVE * wbtsave, u8 pos, u16 trainer_id )
+{
+  GF_ASSERT( pos < WBT_BATTLE_NUM );
+  wbtsave->trainer_id[ pos ] = trainer_id;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u16 WBTSAVE_GetTrainerID( WBTSAVE * wbtsave, u8 pos )
+{
+  GF_ASSERT( pos < WBT_BATTLE_NUM );
+  return wbtsave->trainer_id[ pos ];
+}
+
 
