@@ -1293,9 +1293,9 @@
 				<ContentItem
 					Name="ev_win.mstxt" />
 				<ContentItem
-					Name="festmission_event.mstxt" />
-				<ContentItem
 					Name="field_ev_scr.mstxt" />
+				<ContentItem
+					Name="fmission_event.mstxt" />
 				<ContentItem
 					Name="fmission_scr.mstxt" />
 				<ContentItem

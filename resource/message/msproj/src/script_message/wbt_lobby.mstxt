@@ -4848,6 +4848,55 @@ msg_wbt_info_11へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_wbt_info_27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]は　バトルポイントを
+[Digit:2digits Idx="1" ]ＢＰ　てにいれた！</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-18T05:53:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:54:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]は　バトルポイントを
+[Digit:2digits Idx="1" ]ＢＰ　手に入れた！</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-18T05:53:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:54:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※msg_c04r0111_00と同一内容</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-18T05:53:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-18T05:53:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_wbt_notice_01"
 		Style="Large">
 		<LanguageCell
