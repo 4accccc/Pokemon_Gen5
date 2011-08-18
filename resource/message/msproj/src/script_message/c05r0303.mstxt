@@ -20,11 +20,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ほら！　マッギョ！　ヒヤップ！
-あたしの　だいじな　ポケモンたち！▽
-きょうは　ゆっくり　くつろぎな！</Text>
+あたしの　大事な　ポケモンたち！▽
+今日は　ゆっくり　くつろぎな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:05:47" />
+				Time="2011-08-18T05:54:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33,10 +33,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:09:15" />
+				Time="2011-08-18T05:54:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -82,10 +82,11 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・あわせて鳴き声再生
-・風呂場辺りで動き回る</Comment>
+・風呂場辺りで動き回る
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:02:52" />
+				Time="2011-08-18T05:54:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -125,10 +126,11 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・あわせて鳴き声再生
-・ベッドのそば</Comment>
+・ベッドのそば
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:03:27" />
+				Time="2011-08-18T05:54:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

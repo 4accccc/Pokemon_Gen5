@@ -22,13 +22,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……トレーナーか▼
-あいつが　けんざいなら　まよわず
-しょうぶを　いどんで　いたのにな▼
-かわりと　いっては　なんだが
-これでも　うけとってくれたまえ▼</Text>
+あいつが　健在なら　迷わず
+勝負を　挑んで　いたのにな▼
+代わりと　いっては　なんだが
+これでも　受け取ってくれたまえ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:51:28" />
+				Time="2011-08-18T05:51:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38,10 +38,11 @@
 			Language="JPN">
 			<Comment>♂
 ・アイテム入手処理
-　No296「おおきなねっこ」</Comment>
+　No296「おおきなねっこ」
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:51:54" />
+				Time="2011-08-18T05:52:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -79,13 +80,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それは……　おおきなねっこ！▼
-ポケモンに　もたせておくと　いつもより
-おおく　あいての　HPを　すいとる！▼
-あいつの　とくいな　わざに
-ぴったりの　どうぐ　だったぜ……</Text>
+ポケモンに　持たせておくと　いつもより
+多く　相手の　HPを　すいとる！▼
+あいつの　得意な　技に
+ぴったりの　道具だったぜ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:51:28" />
+				Time="2011-08-18T05:52:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -94,10 +95,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アイテム入手後</Comment>
+・アイテム入手後
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:52:02" />
+				Time="2011-08-18T05:52:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

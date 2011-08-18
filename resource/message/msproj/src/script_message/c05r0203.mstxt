@@ -35,10 +35,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・GRIDX＝3、GRIDZ＝8</Comment>
+・GRIDX＝3、GRIDZ＝8
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T10:53:48" />
+				Time="2011-08-18T05:55:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -87,10 +88,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・GRIDX＝1、GRIDZ＝9</Comment>
+・GRIDX＝1、GRIDZ＝9
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T10:48:47" />
+				Time="2011-08-18T05:55:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -132,10 +134,11 @@
 			<Comment>ポケモン
 ・ベッドの上？　はムリだけどね
 ・アイテム入手処理
-　No000「」</Comment>
+　No197「ハバンのみ」
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:38:00" />
+				Time="2011-08-18T05:58:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -182,10 +185,11 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・アイテム入手処理後、続けて
-・あわせて鳴き声再生</Comment>
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:37:27" />
+				Time="2011-08-18T05:55:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
