@@ -37,14 +37,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・
 ・はい/いいえの選択肢表示
 　はい　→lady_02
 　いいえ→lady_03
 ・0＝ポケモンの種族名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:03:06" />
+				Time="2011-08-18T09:39:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -164,14 +163,14 @@
 散歩くらい　自分で　やれという
 方も　いますけれども▼
 わたくし　モンスターボールより
-重いものを　もったことが　ないから▽
+重いものを　持ったことが　ないから▽
 ムリですのに！▼
 ……でも　また　気が向いたら
 コジョフーちゃんの　お散歩▽
 頼んであげても　よろしくてよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:14:33" />
+				Time="2011-08-18T09:40:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -477,14 +476,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>当然　ですわ！▼
+			<Text>当然ですわ！▼
 わたくしの　キュートな
 コジョフーちゃんが▼
 満足するまで
 お散歩を　たのみますわ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:15:55" />
+				Time="2011-08-18T09:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
