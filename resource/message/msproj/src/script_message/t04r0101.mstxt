@@ -52,4 +52,57 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_cleaningm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マリンチューブ▼
+いわば　かいていトンネルだが
+どう　つくるか　わかるかい？▼
+かんたん　シンプル！
+つくってから　しずめるだけだよ！▼
+ま　ポケモンが　いないと
+ここの　こうじは　むりだったけどね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T07:51:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T07:49:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マリンチューブ▼
+いわば　海底トンネルだが
+どう　造るか　わかるかい？▼
+簡単　シンプル！
+造ってから　沈めるだけだよ！▼
+ま　ポケモンが　いないと
+ここの　工事は　無理だったけどね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T07:51:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T07:51:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T07:49:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLEANINGM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T07:49:02" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>
