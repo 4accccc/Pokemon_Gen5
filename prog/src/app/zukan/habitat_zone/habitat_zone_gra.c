@@ -648,6 +648,7 @@ static void GRA_LoadBgGraphic(void)
 //-----------------------------------------------------------------------------
 static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
 {
+  s32 i;
   // アプリ常駐OBJリソース読み込み
   {
     UI_EASY_CLWK_RES_PARAM prm;
@@ -757,6 +758,17 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
       &p_wk->clres_common_obj, p_wk->p_clunit, 
       OBJ_POS_BUTTON_FISHING_X, OBJ_POS_BUTTON_FISHING_Y,
       OBJ_ANM_SEQ_BUTTON_FISHING, HEAPID_ZUKAN_HABITAT_ZONE );
+
+    // ポケアイコン用見た、捕獲マーク
+    for( i = 0; i < HABITAT_ZONE_POKE_LIST_MAX ; i++ )
+    {
+      GFL_CLACTPOS pos;
+      GRA_GetPokeIconPos( i ,&pos );
+      p_wk->p_clwk_common_obj[OBJ_WK_STAMP_SMALL_START+i]=UI_EASY_CLWK_CreateCLWK( 
+          &p_wk->clres_common_obj, p_wk->p_clunit, 
+          pos.x + SMALL_ICON_OFFSET_X, pos.y + SMALL_ICON_OFFSET_Y,
+          OBJ_ANM_SEQ_STAMP_SMALL_GET, HEAPID_ZUKAN_HABITAT_ZONE );
+    }
 
     // 説明を見るボタン(フォント面より下においておく)
     p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_EXPLANATION] = UI_EASY_CLWK_CreateCLWK( 
@@ -1586,6 +1598,98 @@ static void GRA_ObjExistAlphaReset( HABITAT_ZONE_GRA_WK* p_wk )
         GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
         p_wk->obj_exist_ev1,
         16 - p_wk->obj_exist_ev1 );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  小さいアイコンのステータスを設定する
+ *
+ *	@param	p_wk 
+ *	@param	index 
+ *	@param	status
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetSmallIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
+                                          u16 index ,GRA_SMALLICON_STATUS status)
+{
+  s32 i;
+  GFL_CLWK* p_clwk = p_wk->p_clwk_common_obj[OBJ_WK_STAMP_SMALL_START+index];
+  
+  switch( status )
+  {
+  case GRA_SMALLICON_GET:
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE );
+    GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_STAMP_SMALL_GET);
+    break;
+  case GRA_SMALLICON_LOOK:
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE );
+    GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_STAMP_SMALL_LOOK);
+    break;
+  case GRA_SMALLICON_NONE:
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE );
+    break;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  中サイズアイコンのステータスを設定する
+ *
+ *	@param	p_wk 
+ *	@param	index 
+ *	@param	status
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetMiddleIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
+                          GRA_LANDICON_TYPE icon_type ,GRA_MIDDLEICON_STATUS status)
+{
+  s32 i;
+  GFL_CLWK* p_clwk;
+  
+    // 状態ごとのボタンアニメーションシーケンス
+  s32 anm_seq[] =
+  {
+    OBJ_ANM_SEQ_STAMP_MIDDLE_GET,
+    OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK,
+    OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK,  // <=非表示用ダミー
+  };
+
+  switch( icon_type )
+  {
+  case GRA_LANDICON_TYPE_LAND:
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_STAMP_LAND );
+    break;
+
+  case GRA_LANDICON_TYPE_WATERSIDE:
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_STAMP_WATERSIDE );
+    break;
+
+  case GRA_LANDICON_TYPE_FISHING:
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_STAMP_FISHING );
+    break;
+
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+
+  // ステータスによってアニメーション状態を設定する
+  if( status != GRA_SMALLICON_NONE )
+  {
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE );
+    GFL_CLACT_WK_SetAnmSeq( p_clwk , anm_seq[status]);
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE );
   }
 }
 

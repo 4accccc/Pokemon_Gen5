@@ -651,33 +651,32 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
       zone_info->p_zone_list_data[ i ].zone_id = i*40;
       for( n = 0; n < HABITAT_ZONE_POKE_LIST_MAX -2 ; n ++ )
       {
-        if( n != 4 )  // テスト用に穴を作っておく
-        {
+          // 捕獲コンプリート
           HABITAT_ZONE_POKE_DATA *p_poke_data;
           p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
           p_poke_data->monsno = n + 1 + i*20;
           p_poke_data->is_appear[0][0] = TRUE;
           p_poke_data->status = HABITAT_ZONE_STATUS_GET;
-        }
-        else
-        {
-          HABITAT_ZONE_POKE_DATA *p_poke_data;
-          p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
-          p_poke_data->monsno = n + 1 + i*20;
-          p_poke_data->is_appear[0][1] = TRUE;
-          p_poke_data->status = HABITAT_ZONE_STATUS_LOOK;
-        }
       }
 
-      // まだ見たことのないポケモンも追加
+      // 見たコンプリート(水辺)
       {
         HABITAT_ZONE_POKE_DATA *p_poke_data;
         p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
         p_poke_data->monsno = n + 1 + i*20;
-        p_poke_data->is_appear[0][0] = TRUE;
+        p_poke_data->is_appear[0][HABITAT_ZONE_APPEAR_WATERSIDE] = TRUE;
+        p_poke_data->status = HABITAT_ZONE_STATUS_LOOK;
+        n++;
+      }
+      // 見たことない（釣り）
+      {
+        HABITAT_ZONE_POKE_DATA *p_poke_data;
+        p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
+        p_poke_data->monsno = n + 1 + i*20;
+        p_poke_data->is_appear[PMSEASON_AUTUMN][HABITAT_ZONE_APPEAR_FISHING]=TRUE;
         p_poke_data->status = HABITAT_ZONE_STATUS_UNKNOWN;
       }
-      
+
       // タウンマップオブジェクトが正しく反映されているか確認するためR01(ZONE_ID_R01)を1つ表示
       zone_info->p_zone_list_data[ 0 ].zone_id = 317;
  

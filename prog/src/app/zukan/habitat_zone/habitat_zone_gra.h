@@ -80,8 +80,10 @@ enum
   OBJ_ANM_SEQ_L_ANM = 25,
   OBJ_ANM_SEQ_STAMP_BIG_LOOK      = 27,
   OBJ_ANM_SEQ_STAMP_BIG_GET       = 26,
-  OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK   = 9,
   OBJ_ANM_SEQ_STAMP_MIDDLE_GET    = 7,
+  OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK   = 8,
+  OBJ_ANM_SEQ_STAMP_SMALL_GET     = 9,
+  OBJ_ANM_SEQ_STAMP_SMALL_LOOK    = 10,
   OBJ_ANM_SEQ_BUTTON_LAND         = 16,
   OBJ_ANM_SEQ_BUTTON_WATERSIDE    = 17,
   OBJ_ANM_SEQ_BUTTON_FISHING      = 18,
@@ -169,6 +171,8 @@ enum{
   POKEICON_CURSOR_ON_PALID    = BLINK_PALID_POKE_CURSOR_CHANGE,
   POKEICON_CURSOR_OFF_PALID   = BLINK_PALID_POKE_CURSOR_START,
   POKEICON_CURSOR_NONE_PALID  = 0xB,
+  SMALL_ICON_OFFSET_X   = 16,    // ポケモンアイコン用見た、捕獲アイコンオフセット
+  SMALL_ICON_OFFSET_Y   = 0,   // ポケモンアイコン用見た、捕獲アイコンオフセット
 
 };
 
@@ -204,7 +208,7 @@ typedef enum
   PRINT_UTIL_MAX,
 }PRINT_UTIL_WIN;
 
-// 地形アイコンID
+// 地形アイコンID(HABITAT_ZONE_APPEARの並びと同一)
 typedef enum{
   GRA_LANDICON_TYPE_LAND,
   GRA_LANDICON_TYPE_WATERSIDE,
@@ -218,6 +222,20 @@ typedef enum{
   GRA_LANDICON_OFF,
   GRA_LANDICON_NONE,
 }GRA_LANDICON_STATUS;
+
+// 見た捕獲アイコン小の状態
+typedef enum{
+  GRA_SMALLICON_GET,
+  GRA_SMALLICON_LOOK,
+  GRA_SMALLICON_NONE,
+}GRA_SMALLICON_STATUS;
+
+// 見た捕獲アイコン小の状態
+typedef enum{
+  GRA_MIDDLEICON_GET,
+  GRA_MIDDLEICON_LOOK,
+  GRA_MIDDLEICON_NONE,
+}GRA_MIDDLEICON_STATUS;
 
 // カーソルの選択状態
 typedef enum{
@@ -305,4 +323,8 @@ extern void HABITAT_ZONE_GRA_SetPokeAnmFlag( HABITAT_ZONE_GRA_WK *p_wk ,
                                                           u8 index ,BOOL is_anm );
 extern void HABITAT_ZONE_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_ZONE_GRA_WK *p_wk ,s16 x, s16 y ,s16 w, s16 h );
 extern void HABITAT_ZONE_GRA_SetMapBlink( HABITAT_ZONE_GRA_WK *p_wk ,u16 zone_id );
+extern void HABITAT_ZONE_GRA_SetSmallIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
+                                          u16 index ,GRA_SMALLICON_STATUS status);
+extern void HABITAT_ZONE_GRA_SetMiddleIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
+                      GRA_LANDICON_TYPE icon_type ,GRA_MIDDLEICON_STATUS status);
 

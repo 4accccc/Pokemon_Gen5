@@ -21,6 +21,13 @@
 //
 //=============================================================================
 
+// コンプリートタイプ
+typedef enum{
+  ZONE_COMTYPE_NONE,  // 未コンプリート
+  ZONE_COMTYPE_LOOK,  // 見たコンプリート
+  ZONE_COMTYPE_GET,   // 捕まえたコンプリート
+}ZONE_COMTYPE;
+
 // 出現場所定義
 typedef enum{
   HABITAT_ZONE_APPEAR_LAND,
@@ -29,7 +36,7 @@ typedef enum{
   HABITAT_ZONE_APPEAR_MAX,
 }HABITAT_ZONE_APPEAR;
 
-// 出現場所定義
+// ポケモンの見た、捕獲状態
 typedef enum{
   HABITAT_ZONE_STATUS_NONEXISTENT,
   HABITAT_ZONE_STATUS_UNKNOWN,
@@ -46,9 +53,17 @@ typedef enum {
   SEQ_CHANGE_PARAM_UP,
   SEQ_CHANGE_PARAM_DOWN,
   SEQ_CHANGE_PARAM_A,
+  SEQ_CHANGE_PARAM_B,
+  SEQ_CHANGE_PARAM_X,
   SEQ_CHANGE_PARAM_TOUCH,
   SEQ_CHANGE_PARAM_NONE,
 }SEQ_CHANGE_PARAM;
+
+// メインシーケンス状態定義
+typedef enum{
+  HABITAT_ZONE_MAIN_CONTINUE,
+  HABITAT_ZONE_MAIN_EXIT,
+}HABITAT_ZONE_MAIN_STATUS;
 
 //=============================================================================
 //
@@ -85,6 +100,7 @@ typedef struct {
 
 // ゾーン詳細画面ワーク
 typedef struct {
+  HABITAT_ZONE_MAIN_STATUS main_status;
   u32 main_seq;
   u32 sub_seq;
   ZUKANHABITAT_ZONE_DATA *p_init_param;
@@ -102,7 +118,8 @@ typedef struct {
   WORDSET *p_word_set;
 
   // ゾーンごとに更新されるデータ -----------------
-  BOOL  land_appear[ PMSEASON_TOTAL ][ HABITAT_ZONE_APPEAR_MAX ]; // 地形を表示するか
+  BOOL  land_appear[ HABITAT_ZONE_APPEAR_MAX ];           // 地形を表示するか
+  BOOL  land_complete_status[ HABITAT_ZONE_APPEAR_MAX ];  // 地形ごとのコンプリート
   u32   monsno_list[HABITAT_ZONE_POKE_LIST_MAX];  // 表示中のモンスター番号リスト
 
   SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ
