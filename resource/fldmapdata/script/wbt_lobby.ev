@@ -904,8 +904,22 @@ _ANIME_LABEL  anm_infowoman_r_return
 
 
 ev_wbt_get_reward:
-  //‰¼F—DŸ‚Ì–J”ü
-  _BALLOONWIN_OBJMSG_POS( msg_wbt_info_26, SCWK_TARGET_OBJID, POS_DL )
+  //‚²–J”üŽæ“¾ˆ—
+  _WBT_GET_REWARD( SCWK_ANSWER )
+  IF $SCWK_ANSWER != 0 THEN
+    //—DŸ‚Ì–J”ü
+    _PLAYER_NAME( 0 )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_26, SCWK_TARGET_OBJID, POS_DL )
+    _MSGWIN_CLOSE()
+
+    _PLAYER_NAME( 0 )
+    _NUMBER( 1, SCWK_ANSWER, 2 )
+    _SYSWIN_MSG( msg_wbt_info_27, POS_DOWN )
+    _ME_PLAY( SEQ_ME_BPGET )
+    _ME_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+  ENDIF
   _RET
 
 

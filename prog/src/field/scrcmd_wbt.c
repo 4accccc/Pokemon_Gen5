@@ -51,7 +51,9 @@
 #include "scrcmd_fld_battle.h"  //BtlPartySelectCheck
 
 #include "event_wbt_wifi.h"
+#include "savedata/bsubway_savedata.h"
 
+#include "savedata/save_tbl.h"  //GMDATA_ID_BSUBWAY_SCOREDATA
 //============================================================================================
 //============================================================================================
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_NULL == WBTCUP_NULL );
@@ -111,6 +113,16 @@ static WBTSYS * getWBTSys( SCRCMD_WORK * work )
     GF_ASSERT(0);
   }
   return *wbtsys_work;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BSUBWAY_SCOREDATA * getBSubwayScoreData( SCRCMD_WORK * work )
+{
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK * save_ctrl = GAMEDATA_GetSaveControlWork( gamedata );
+  BSUBWAY_SCOREDATA * bsw_score = SaveControl_DataPtrGet( save_ctrl, GMDATA_ID_BSUBWAY_SCOREDATA );
+  return bsw_score;
 }
 
 //--------------------------------------------------------------
@@ -568,6 +580,7 @@ VMCMD_RESULT EvCmdWBTIncVictoryCount( VMHANDLE * core, void * wk )
 
   TAMADA_Printf("EvCmdWBTIncVictoryCount\n");
   GF_ASSERT( stage == WBTSTAGE_WIN );
+
   incVictoryCount( wbtsys, work );
 
   return VMCMD_RESULT_CONTINUE;
@@ -591,6 +604,63 @@ VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
   TAMADA_Printf("EvCmdWBTGetVictoryCount(%d) == %d\n", wbtcup, *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：勝利時の残り手持ちポケモン数を取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetSurvivalCount( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  u16   stage  = WBTSYS_GetStage( wbtsys );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = WBTSYS_GetSurvivalCount( wbtsys, stage );
+
+  TAMADA_Printf("EvCmdWBTGetSurvivalCount == %d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：優勝時のごほうびBP数を取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetReward( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK * work = wk;
+  WBTSYS * wbtsys = getWBTSys( wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u8 count;
+  count = WBTSYS_GetRewardCount( wbtsys );
+
+  if ( count > 0 )
+  { //ごほうびのBPを足す
+    BSUBWAY_SCOREDATA * bsw_score = getBSubwayScoreData( work );
+    BSUBWAY_SCOREDATA_AddBattlePoint( bsw_score, count );
+  }
+  *ret_wk = count;
+  TAMADA_Printf("EvCmdWBTGetReward == %d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：対戦済みフラグを取得する
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetTrainerFlag( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK * work = wk;
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+  u16 flag_id  = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = WBTSAVE_GetFlag( wbtsave, flag_id );
+  TAMADA_Printf("EvCmdWBTGetTrainerFlag(%d) = %d\n", flag_id, *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//VMCMD_RESULT EvCmdWBT
 
 //============================================================================================
 //============================================================================================

@@ -38,17 +38,6 @@ typedef struct _WBT_MATCH_CONDITION WBT_MATCH_CONDITION;
 //------------------------------------------------------------------
 #define BUFLEN_TOURNAMENT_NAME  ( (16 * GLOBAL_MSGLEN) + BUFLEN_EOM_SIZE )
 
-//------------------------------------------------------------------
-/**
- * @brief オールトーナメント参戦トレーナーのレベル
- */
-//------------------------------------------------------------------
-typedef enum {
-  WBT_ALLTOUR_LEVEL0 = 0,
-  WBT_ALLTOUR_LEVEL1,
-  WBT_ALLTOUR_LEVEL2,
-  WBT_ALLTOUR_LEVEL3,
-}WBT_ALLTOUR_LEVEL;
 
 //============================================================================================
 //============================================================================================
@@ -112,6 +101,7 @@ extern u8 WBTSYS_GetOpponentSex( const WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentMMdlObjCode( const WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentTrainerType( const WBTSYS * wbtsys );
 extern void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm );
+extern u8 WBTSYS_GetRewardCount( const WBTSYS * wbtsys );
 
 extern void WBTSYS_GetTournamentName( const WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf );
 extern void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf );
@@ -141,6 +131,7 @@ extern void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIS
 extern void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PSTATUS_DATA * pstatus );
 
 extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_data );
+extern u8 WBTSYS_GetSurvivalCount( const WBTSYS * wbtsys, WBTSTAGE stage );
 
 extern POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys );

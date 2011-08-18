@@ -143,6 +143,8 @@ struct _WBT_SYSTEM {
   STRBUF * win_msg;     ///<バトル内での勝利時メッセージ
   STRBUF * lose_msg;    ///<バトル内での敗北時メッセージ
 
+  u8 survival_count[ WBT_BATTLE_NUM ];   ///<対戦後の手持ちの残り数
+
   ///スクリプトとプログラムのやりとりのためのアドレスを保持するポインタ
   u16 * scr_answer_work;
 };

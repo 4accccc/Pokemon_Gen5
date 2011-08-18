@@ -665,6 +665,31 @@ void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
     break;
   }
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief Ç≤ÇŸÇ§Ç—ÇÃBPêîéÊìæ
+ */
+//------------------------------------------------------------------
+u8 WBTSYS_GetRewardCount( const WBTSYS * wbtsys )
+{
+  u8 count;
+  int i;
+  switch ( wbtsys->wbtcup )
+  {
+  case WBTCUP_CHAMPION:
+  case WBTCUP_WORLD:
+    for ( i = 0, count = 0; i < WBT_BATTLE_NUM; i ++ )
+    {
+      count += wbtsys->survival_count[ i ];
+    }
+    break;
+  default:
+    count = WBTTOOL_GetRewardCount( wbtsys->wbtcup, wbtsys->rule );
+  }
+  return count;
+}
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -1737,6 +1762,45 @@ static u32 countDeadStatus( const BtlPokeStatCode * party_state )
   return count;
 }
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static u8 getSurvivalCountPos( WBTSTAGE stage )
+{
+  int pos = 0;
+  switch (stage)
+  {
+  default:
+    GF_ASSERT( 0 );
+    break;
+  case WBTSTAGE_1ST:    pos = 0; break;
+  case WBTSTAGE_2ND:    pos = 1; break;
+  case WBTSTAGE_FINAL:  pos = 2; break;
+  }
+  return  pos;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief
+ * @param[in] wbtsys
+ * @param[in] stage
+ * @retval    u8  ÇªÇÃëŒêÌÇ≈ÇÃéËéùÇøÇÃécÇËÇÃêî
+ */
+//------------------------------------------------------------------
+u8 WBTSYS_GetSurvivalCount( const WBTSYS * wbtsys, WBTSTAGE stage )
+{
+  u8 pos = getSurvivalCountPos( stage );
+  return wbtsys->survival_count[ pos ];
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void WBTSYS_SetSurvivalCount( WBTSYS * wbtsys, WBTSTAGE stage, u8 count )
+{
+  u8 pos = getSurvivalCountPos( stage );
+  wbtsys->survival_count[ pos ] = count;
+}
+
+//------------------------------------------------------------------
 /**
  * @brief WBTêÌì¨åãâ ÇÃîΩâf
  * @param wbtsys
@@ -1751,6 +1815,7 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
   u32 enemy_count = countDeadStatus( bsp->party_state[ BTL_CLIENT_ENEMY1 ] );
 
   TAMADA_Printf("my_count = %d, enemy_count = %d\n", my_count, enemy_count );
+
   switch ( result )
   {
   default:
@@ -1763,7 +1828,12 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
   case BTL_RESULT_DRAW:
     break;
   }
-  if ( result == BTL_RESULT_WIN )
+
+  {
+    WBTSTAGE stage = WBTSYS_GetStage( wbtsys );
+    WBTSYS_SetSurvivalCount( wbtsys, stage, my_count );
+  }
+
   {
     //êÌÇ¡ÇΩÇ©Ç«Ç§Ç©ÇÃÉtÉâÉOÇîΩâf
     const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );

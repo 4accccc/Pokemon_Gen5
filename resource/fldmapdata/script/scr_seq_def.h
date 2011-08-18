@@ -12855,6 +12855,50 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief WBT:  対戦時の残り手持ちポケモン数取得
+ * @param[out] ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_SURVIVAL_COUNT( ret_wk ) \
+    _ASM_WBT_GET_SURVIVAL_COUNT ret_wk
+
+    .macro  _ASM_WBT_GET_SURVIVAL_COUNT ret_wk
+    .short  EV_SEQ_WBT_GET_SURVIVAL_COUNT
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：ごほうびの取得
+ * @param[out]  ret_wk  取得したBPの数
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_REWARD( ret_wk ) \
+    _ASM_WBT_GET_REWARD ret_wk
+
+    .macro  _ASM_WBT_GET_REWARD ret_wk
+    .short  EV_SEQ_WBT_GET_REWARD
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:  対戦済みフラグの取得
+ * @param[in]   trainer_id
+ * @param[out]  ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_TRAINER_FLAG( trainer_id, ret_wk ) \
+    _ASM_WBT_GET_TRAINER_FLAG trainer_id, ret_wk
+
+    .macro _ASM_WBT_GET_TRAINER_FLAG trainer_id, ret_wk
+    .short  EV_SEQ_WBT_GET_TRAINER_FLAG
+    .short  \trainer_id
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief WBT:ダウンロードデータをセット
  * @param[in] num ダウンロードデータの番号指定
  */

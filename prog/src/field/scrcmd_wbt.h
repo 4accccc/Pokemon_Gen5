@@ -32,6 +32,10 @@ extern VMCMD_RESULT EvCmdWBTSetReceptionID( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetReceptionID( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTIncVictoryCount( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGetSurvivalCount( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGetReward( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGetTrainerFlag( VMHANDLE * core, void * wk );
+
 extern VMCMD_RESULT EvCmdWBTGetDownLoadCount( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetDownLoadName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetDLData( VMHANDLE * core, void * wk );
