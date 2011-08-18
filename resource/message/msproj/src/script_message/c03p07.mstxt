@@ -1047,6 +1047,615 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c03_inventor_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤッホー！
+アタシは　マコモ▼
+アナタ　イッシュちほうの
+すべての　ポケモンと　であうんでしょ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤッホー！
+アタシは　マコモ▼
+アナタ　イッシュ地方の
+すべての　ポケモンと　であうんでしょ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ジムクリア後にイベント発動
+・主人公に隣接してメッセージ表示
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTW
+発明家</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03_inventor_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あっ　いきなり　ゴメンね
+アタシ　アララギはかせの　ともだちよ▼
+でね　かのじょから
+アナタの　てだすけを　たのまれていて▽
+Ｃギアを　つかえるように　するね！▼
+Ｃギアとは　せきがいせんや
+むせん　Ｗｉ－Ｆｉなど▽
+つうしんに　かんけいする　デバイスよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あっ　いきなり　ゴメンね
+アタシ　アララギ博士の　友達よ▼
+でね　彼女から
+アナタの　てだすけを　頼まれていて▽
+Ｃ－ＧＥＡＲを　使えるように　するね！▼
+Ｃ－ＧＥＡＲとは　赤外線や
+無線　Ｗｉ－Ｆｉなど▽
+通信に　関係する　デバイスよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・！マーク表示してから
+・続けてcgear_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTW
+発明家</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03_cgear_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]Ｃギア[/System:Color]を　てにいれた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]Ｃ－ＧＥＡＲ[/System:Color]を　手に入れた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+ＭＥ再生
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03_cgear_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　でんげんを　いれて
+つうしんを　はじめますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　電源を入れて
+通信を　始めますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+・はい/いいえの選択肢表示
+・はい　→Ｃギアをアクティブで起動
+　いいえ→Ｃギアをパッシブで起動</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03_cgear_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+・選択肢用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03_cgear_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+・選択肢用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03_cgear_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　きのうが
+せいげんされますが　よろしいですか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　機能が
+制限されますが　よろしいですか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+・いいえを選択したときの再確認</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03_cgear_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんたいの　せっていにより
+むせんつうしんが　つかえません▼
+むせんつうしんを　つかうには
+ほんたいせっていの　むせんつうしんを▽
+オンにしてください　（５０６９９）▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本体の　設定により
+無線通信が　使えません▼
+無線通信を　使うには
+本体設定の　無線通信を▽
+ＯＮにしてください　（５０６９９）▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+・はい選択だが
+　本体設定で無線通信をOFFにしているとき
+　（TWL限定）
+・続けてinventor_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03_inventor_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほら！　Ｃギアが　きどうして
+がめんが　あらわれたでしょ！▼
+その　がめんの　みぎしたに　ある
+？マークに　タッチすれば▽
+Ｃギアの　せつめいが　よめるの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほら！　Ｃ－ＧＥＡＲが　起動して
+画面が　あらわれたでしょ！▼
+その　画面の　右下に　ある
+？マークに　タッチすれば▽
+Ｃ－ＧＥＡＲの　説明が　読めるの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+・続けてinventor_09</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTW
+発明家</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03_inventor_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　でんげんを　いれるなら
+がめん　みぎしたの▽
+でんげんマークを　タッチするの▼
+そして　でんげんを　いれたあとは
+がめんの　みぎしたに　ある▽
+？マークに　タッチすれば▽
+Ｃギアの　せつめいが　よめます▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　電源を　入れるなら
+画面　右下の▽
+電源マークを　タッチするの▼
+そして　電源を　入れたあとは
+画面　右下に　表示される▽
+？マークに　タッチすれば▽
+Ｃ－ＧＥＡＲの　説明が　読めます▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時
+・続けてinventor_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTW
+発明家</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03_inventor_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアについて　くわしい　ことは
+あたしの　けんきゅうじょ　でね▼
+けんきゅうじょは　ポケモンジムの
+ちかくに　ある　ビルよ！▼
+じゃ　ポケモンずかんを　よろしくね！
+たびの　トレーナーさん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃギアについて　くわしい　ことは
+あたしの　研究所でね▼
+研究所は　ポケモンジムの
+近くに　ある　ビルよ！▼
+じゃ　ポケモン図鑑を　よろしくね！
+旅の　トレーナーさん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、c03p07方面に移動
+　画面外に消えると操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTW
+発明家</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T11:18:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c03p07_gymsign_01"
 		Style="Large">
 		<LanguageCell
