@@ -57,11 +57,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんだい　おつかれかい？
-よし！　ちょっと　やすんでいきなよ</Text>
+			<Text>よし！
+ちょっと　やすんでいきなよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:03:35" />
+				Time="2011-08-18T07:28:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -69,11 +69,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんだい　おつかれかい？
-よし！　ちょっと　休んでいきなよ</Text>
+			<Text>よし！
+ちょっと　休んでいきなよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:03:35" />
+				Time="2011-08-18T07:28:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -1253,11 +1253,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フリーウェイを　みていると
-なんというか　みたされるんだ……</Text>
+			<Text>フリーウェイを　はしる　くるま
+それを　みつづけているだけの　ぼく</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-18T07:16:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1265,11 +1265,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フリーウェイを　みていると
-なんというか　満たされるんだ……</Text>
+			<Text>フリーウェイを　走る　車
+それを　みつづけているだけの　ぼく</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-18T07:16:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1279,10 +1279,10 @@
 			Language="JPN">
 			<Comment>♂
 ・高速道路のそばに配置
-※swanでメッセージ内容変更</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-18T07:16:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1304,11 +1304,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さばくに　うもれた　いせき……
-そこはかとなく　ロマンティックね</Text>
+			<Text>いせきが　はっけんされ
+ちゅうだん　された　こうじ……▼
+れきしの　おもみには
+かなわないって　ことかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-18T07:19:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1316,11 +1318,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>砂漠に　埋もれた　遺跡……
-そこはかとなく　ロマンティックね</Text>
+			<Text>遺跡が　発見され
+中断された　開発工事……▼
+歴史の　重みには
+適わないって　ことかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-18T07:19:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1330,10 +1334,10 @@
 			Language="JPN">
 			<Comment>♀
 ・砂漠に行く手前に配置
-※swanでメッセージ内容変更</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-08-18T07:16:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

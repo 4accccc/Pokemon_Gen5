@@ -33,10 +33,10 @@
 			<Comment>♀
 ・Black2ver
 ・１回目
-・続けて</Comment>
+・続けてtrainerw_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:02" />
+				Time="2011-08-18T07:23:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -118,10 +118,10 @@
 			Language="JPN">
 			<Text>あなたの　[Name:PokemonName ]！
 あたし　ごのみの　すばやさね！▼
-うれしくなったから　これを　あげる！</Text>
+うれしくなったから　これを　あげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:02" />
+				Time="2011-08-18T07:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -131,10 +131,10 @@
 			Language="JPN_KANJI">
 			<Text>あなたの　[Name:PokemonName ]！
 あたし好みの　すばやさね！▼
-うれしくなったから　これを　あげる！</Text>
+うれしくなったから　これを　あげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:02" />
+				Time="2011-08-18T07:23:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -176,10 +176,10 @@
 			<Text>あなたの　[Name:PokemonName ]！　まさに
 あたし　ごのみの　すばやさね！▼
 すごく　うれしくなったから
-これを　たくさん　あげる！</Text>
+これを　たくさん　あげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:02" />
+				Time="2011-08-18T07:23:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -190,10 +190,10 @@
 			<Text>あなたの　[Name:PokemonName ]！　まさに
 あたし好みの　すばやさね！▼
 すごく　うれしくなったから
-これを　たくさん　あげる！</Text>
+これを　たくさん　あげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:02" />
+				Time="2011-08-18T07:23:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -308,10 +308,10 @@
 すばやさ　だけじゃないもん▼
 でも　今日は　なんだか
 すばやさが　[Digit:3digits Idx="1" ]より▽
-たかい　ポケモンが　みたいな</Text>
+高い　ポケモンが　みたいな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:10:54" />
+				Time="2011-08-18T07:22:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -360,10 +360,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぼくはね　ポケモンの
-こうげきに　こだわってるね！</Text>
+攻撃に　こだわってるね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T03:50:41" />
+				Time="2011-08-18T07:22:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

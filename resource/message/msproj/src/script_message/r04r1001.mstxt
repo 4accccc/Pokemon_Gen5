@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ね！　ポケモンなきごえモノマネ
+			<Text>ね！　ポケモン鳴き声モノマネ
 ぜひ　きいていってください！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:52:06" />
+				Time="2011-08-18T07:35:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -80,11 +80,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>では　あなたが　つれている
-ポケモンの　なきごえを……</Text>
+			<Text>では　あなたが　連れている
+ポケモンの　鳴き声を……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:52:06" />
+				Time="2011-08-18T07:35:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -185,12 +185,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　なきごえモノマネは
-あなたが　つれている▽
+			<Text>さっきの　鳴き声モノマネは
+あなたが　連れている▽
 どの　ポケモン　だったでしょう？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:52:06" />
+				Time="2011-08-18T07:35:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
