@@ -11,11 +11,11 @@
 １０ばんどうろで
 きになることが　あったんだよね▼
 いっしゅん　とはいえ
-－５０ど　にもなる　すうちが▽
+マイナス５０ど　にもなる　すうちが▽
 けいそく　されたんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:53:29" />
+				Time="2011-08-18T04:00:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -195,11 +195,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>で　きみに　これを　わたすからさ
-いろんなところを　しらべて　みてよ▼</Text>
+			<Text>で　きみに　これを　渡すからさ
+いろんな所を　調べてみてよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:11:16" />
+				Time="2011-08-18T04:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -209,11 +209,11 @@
 			Language="JPN">
 			<Comment>♂
 ・アイテム入手処理
-　No000「ひでんマシン０３」
+　No422「ひでんマシン０３」
 ・続けてswleader1_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:09:02" />
+				Time="2011-08-18T04:04:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -253,10 +253,10 @@
 			<Text>足止めして　悪かったね▼
 ただ　なにか
 おかしなことが　あるかも　しれない▼
-気をつけて　旅を　つづけてね！</Text>
+気をつけて　旅を　続けてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:08:06" />
+				Time="2011-08-18T04:04:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2007,12 +2007,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あらあら　あなたの　[Name:PokemonName ]
-「[Name:Move Idx="1" ]」を　おぼえていますね！▼
+「[Name:Move Idx="1" ]」を　覚えていますね！▼
 そんな　あなたに
-ポケモン　てんきよほう！</Text>
+ポケモン　天気予報！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				Time="2011-08-18T04:06:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2064,15 +2064,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらあら　めずらしい！
+			<Text>あらあら　珍しい！
 あなたの　[Name:PokemonName ]▼
-「[Name:Ability Idx="2" ]」の　とくせいを
-おもち　なのですね！▼
+「[Name:Ability Idx="2" ]」の　特性を
+お持ち　なのですね！▼
 そんな　あなたに
-ポケモン　てんきよほう！</Text>
+ポケモン　天気予報！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				Time="2011-08-18T04:05:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2124,13 +2124,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゴホン……！▼
-「あまごい」の　わざを　つかったり
-「あめふらし」の　とくせいを　もつ▼
-ポケモンを　くりだすことで
-あめが　ふりはじめるでしょう</Text>
+「あまごい」の　技を　使ったり
+「あめふらし」の　特性を　持つ▼
+ポケモンを　繰りだすことで
+雨が　降りはじめるでしょう</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				Time="2011-08-18T04:05:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2234,10 +2234,10 @@
 あめが　ふりつづいていると▽
 すがたが　かわり▽
 みずタイプに　なることでも▽
-しられております</Text>
+しられて　おります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T09:15:19" />
+				Time="2011-08-18T04:06:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2249,10 +2249,10 @@
 あめが　ふりつづいていると▽
 すがたが　かわり▽
 みずタイプに　なることでも▽
-しられております</Text>
+しられて　おります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				Time="2011-08-18T04:06:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
