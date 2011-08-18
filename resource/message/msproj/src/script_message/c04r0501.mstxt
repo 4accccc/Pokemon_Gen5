@@ -36,10 +36,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ミラクルシューター説明
-※swanでメッセージ変更</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T07:47:17" />
+				Time="2011-08-18T06:32:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -220,11 +220,11 @@
 			Language="JPN">
 			<Text>ポケモンを　うばわれた　ひとですけど
 もとプラズマだんが　かえしにきたって▼
-ですけど　それで　いいのですかね？
+ですけど　それで　いいの？
 あたしは　なっとく　できないわ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T08:03:17" />
+				Time="2011-08-18T06:32:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -234,11 +234,11 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンを　奪われた　人ですけど
 元プラズマ団が　返しにきたって▼
-ですけど　それで　いいのですかね？
+ですけど　それで　いいの？
 あたしは　納得できないわ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T08:03:25" />
+				Time="2011-08-18T06:32:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

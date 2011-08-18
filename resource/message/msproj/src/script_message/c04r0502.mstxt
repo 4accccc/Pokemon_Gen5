@@ -6,12 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まいにち　きまった　じかんに
-ベースボールや　アメフトが　はじまる▽
-それが　ビッグスタジアム　なのさ！</Text>
+			<Text>いいかい？　ビッグスタジアムでは
+いつも　きまった　じかんに▼
+ベースボールや　アメフトの
+ゲームが　おこなわれるのさッ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-18T06:35:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33,10 +34,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T07:19:03" />
+				Time="2011-08-18T06:36:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -59,12 +60,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リトルコートでは
-バスケットボールや　テニスの▽
-しあいが　ありますのよ　</Text>
+			<Text>バスケットボールや　テニスの
+しあいを　みるなら　リトルコートよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-18T06:36:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -72,12 +72,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リトルコートでは
-バスケットボールや　テニスの▽
-試合が　ありますのよ　</Text>
+			<Text>バスケットボールや　テニスの
+試合観戦なら　リトルコートよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-18T06:36:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,10 +85,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T07:19:03" />
+				Time="2011-08-18T06:36:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -144,15 +143,16 @@
 			Language="JPN">
 			<Comment>♀
 ・先頭のポケモンのなつき度が
-　７０以上ならこのメッセージ
-　６９以下→lady_03
-・メッセージ表示後にアイテム入手処理
+　70以上ならこのメッセージ
+　60以下→lady_03
+・メッセージ表示後に
+　アイテム入手処理
 　No218「やすらぎのすず」
 ・アイテム取得後はlady_02
 ・0＝先頭のポケモン名（ひんし/タマゴを除く）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-18T06:36:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -276,10 +276,10 @@
 			Language="JPN">
 			<Comment>♀
 ・先頭のポケモンのなつき度が
-　６９以下</Comment>
+　69以下</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-18T06:36:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

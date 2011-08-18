@@ -72,13 +72,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たしか　ホドモエシティに
+			<Text>たしか　ホドモエシティとかに
 かけらと　こうかんで▼
 ポケモンに　わざを　おしえてくれる
 しょくにんが　いるはずだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:12:19" />
+				Time="2011-08-18T06:20:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -86,13 +86,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たしか　ホドモエシティに
-かけらと　こうかんで▼
-ポケモンに　わざを　おしえてくれる
-しょくにんが　いるはずだよ！</Text>
+			<Text>たしか　ホドモエシティとかに
+かけらと　交換で▼
+ポケモンに　技を　教えてくれる
+職人が　いるはずだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:12:21" />
+				Time="2011-08-18T06:20:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

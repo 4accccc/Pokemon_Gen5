@@ -2508,11 +2508,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>えっ！　カナワタウンで
-ポケモンを　さがしている▽
+ポケモンを　探している▽
 トレーナーさんが　いるって！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T10:11:21" />
+				Time="2011-08-18T06:12:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2561,10 +2561,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おまえさん
-ずいぶん　とおくから　きたんだなあ▼</Text>
+ずいぶん　遠くから　来たんだなあ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T10:11:21" />
+				Time="2011-08-18T06:12:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2614,11 +2614,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わかった！　ぼくが　カナワタウンに
-このコを　おくっていくよ▼
-おしえてくれて　かんしゃ　です！</Text>
+このコを　送っていくよ▼
+教えてくれて　感謝です！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T10:11:21" />
+				Time="2011-08-18T06:12:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
