@@ -32,10 +32,10 @@
 			Language="JPN">
 			<Comment>♀
 ・カウンター内に配置
-・swanでメッセージ修正</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T13:08:33" />
+				Time="2011-08-18T09:16:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -82,10 +82,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・swanでメッセージ修正</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T12:52:26" />
+				Time="2011-08-18T09:16:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -134,11 +134,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・oldman1とほぼ隣接
-</Comment>
+・oldman1とほぼ隣接</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-31T06:22:16" />
+				Time="2011-08-18T09:16:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

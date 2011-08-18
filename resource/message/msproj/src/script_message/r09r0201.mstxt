@@ -39,10 +39,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:22:51" />
+				Time="2011-08-18T09:19:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -139,10 +139,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ショッピングモールの　なかなのに
-ポケモンしょうぶを　　いどまれたわ！</Text>
+ポケモンしょうぶを　　いどまれたわ！▼
+いいわ！　つよい　ものが
+いきのこる　ばしょって　ことよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:22:17" />
+				Time="2011-08-18T09:22:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -151,10 +153,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ショッピングモールの　中なのに
-ポケモン勝負を　挑まれたわ！</Text>
+ポケモン勝負を　挑まれたわ！▼
+いいわ！　強い　ものが
+生き残る　場所って　ことよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:22:27" />
+				Time="2011-08-18T09:22:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -164,10 +168,10 @@
 			Language="JPN">
 			<Comment>♀
 ・入り口近くに配置
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:22:37" />
+				Time="2011-08-18T09:19:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -279,10 +283,10 @@
 			Language="JPN">
 			<Comment>♀
 ・夕方以外
-※swanでメッセージ修正</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:03:39" />
+				Time="2011-08-18T09:23:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -346,10 +350,10 @@
 ・はい/いいえの選択肢表示
 　はい　→waitress_05
 　いいえ→waitress_04
-※swanでメッセージ修正</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:42:18" />
+				Time="2011-08-18T09:23:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -413,10 +417,10 @@
 ・はい/いいえの選択肢表示
 　はい　→waitress_06
 　いいえ→waitress_04
-※swanでメッセージ修正</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:42:19" />
+				Time="2011-08-18T09:23:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -473,10 +477,10 @@
 			Language="JPN">
 			<Comment>♀
 ・いいえ選択時
-※swanで削除</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:14:08" />
+				Time="2011-08-18T09:23:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -532,10 +536,10 @@
 			<Comment>♀
 ・月水金
 ・はい選択時
-※swanで削除</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:15:16" />
+				Time="2011-08-18T09:23:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -591,10 +595,10 @@
 			<Comment>♀
 ・火木金日
 ・はい選択時
-※swanで削除</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:15:46" />
+				Time="2011-08-18T09:24:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -649,10 +653,10 @@
 			Language="JPN">
 			<Comment>♀
 ・はい選択時＋お金が足りない
-※swanで削除</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:19:23" />
+				Time="2011-08-18T09:24:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -706,10 +710,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・はい選択時＋アイテム一杯</Comment>
+・はい選択時＋アイテム一杯
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T07:21:23" />
+				Time="2011-08-18T09:24:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -758,10 +763,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T04:42:28" />
+				Time="2011-08-18T09:24:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -819,10 +824,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:39:55" />
+				Time="2011-08-18T09:24:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -936,10 +941,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージで修正</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-31T06:37:29" />
+				Time="2011-08-18T09:24:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -978,10 +983,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>わたし……　お嬢さま　よ▼
+お買い物に　来てみたのだけれど
+どこに　なにが　売っているか▽
+わからなくて　困っているのよね▼
+あなた　お金を　渡すから
+「すごいキズぐすり」を▽
+買ってきて　くれないかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:28" />
+				Time="2011-08-18T09:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -991,12 +1002,12 @@
 			Language="JPN">
 			<Comment>♀
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→
+　はい　→girl4_02
+　いいえ→girl4_03
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:15:46" />
+				Time="2011-08-18T09:24:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1032,10 +1043,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ありがとう！
+それじゃ　お金を　渡すわね▼
+「すごいキズぐすり」よ
+お願い　ね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:32" />
+				Time="2011-08-18T09:26:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1081,10 +1095,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Name:TrainerName ]は
+1200円　を　受け取った！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:32" />
+				Time="2011-08-18T09:26:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1132,10 +1147,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>わたしの　頼みを　断れる
+なんて……　新鮮よ▼
+いったい　どこに
+「すごいキズぐすり」　売っているのかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:32" />
+				Time="2011-08-18T09:26:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1182,10 +1200,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>わたしが　ほしいのは
+「すごいキズぐすり」よ！▽
+それとも　もう　買ってきてくれた？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:32" />
+				Time="2011-08-18T09:27:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1224,13 +1244,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたし……　あなたに
-すごいキズぐすりを　かってくるよう
-おねがい　したきが　するんだけど……
-おねがい　ね！　まっているから
+すごいキズぐすりを　かってくるよう▽
+おねがい　したきが　するんだけど……▼
+ね！　まっているから
 それとも　もう　かってきてくれた？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:15:06" />
+				Time="2011-08-18T09:27:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1238,10 +1258,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>わたし……　あなたに
+すごいキズぐすりを　買ってくるよう▽
+お願い　した気が　するんだけど……▼
+ね！　待っているから
+それとも　もう　買ってきてくれた？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:32" />
+				Time="2011-08-18T09:27:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1292,10 +1316,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>すごいキズぐすり　ね！
+すぐに　買ってきてくれて　ありがと！▼
+これは　少ないけれど　お礼よ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:32" />
+				Time="2011-08-18T09:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1346,10 +1372,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>すごいキズぐすり　ね！
+ずいぶん　待った　気がするけれど▼
+無事に　手に入って　満足
+これは　少ないけれど　お礼よ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:32" />
+				Time="2011-08-18T09:28:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1388,10 +1417,11 @@
 			Language="JPN">
 			<Text>あれ？　すごいキズぐすり
 バッグに　ないみたいね▼
-かってきて　ね！</Text>
+おねがいよ！
+すごいキズぐすりを　かってきてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:14:38" />
+				Time="2011-08-18T09:29:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1399,10 +1429,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>あれ？　すごいキズぐすり
+バッグに　ないみたいね▼
+お願いよ！
+すごいキズぐすり　を　買ってきてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:32" />
+				Time="2011-08-18T09:28:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1450,10 +1483,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>わたしが　ほしいのは
+「すごいキズぐすり」よ！▽
+おねがいね！　まってるから……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:32" />
+				Time="2011-08-18T09:24:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1488,11 +1523,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おかいもの　って
-とっても　たのしいのね！▼
+とっても　たのしいのね！▽
 まんきつ　しちゃった</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:14:38" />
+				Time="2011-08-18T09:29:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1500,10 +1535,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>お買い物　って
+とっても　楽しいのね！▽
+満喫しちゃった</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:11:32" />
+				Time="2011-08-18T09:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

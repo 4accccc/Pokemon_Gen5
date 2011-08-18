@@ -34,11 +34,11 @@
 			Language="JPN">
 			<Comment>♀
 ・アイテム入手処理
-　No000「」
-・swanでメッセージ修正予定</Comment>
+　No138「だいすきメール」
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T05:13:03" />
+				Time="2011-08-18T09:08:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -60,10 +60,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>なにもないことが　すきなの
+それを　つたえるのは　むずかしいけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:04:55" />
+				Time="2011-08-18T09:08:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -71,10 +72,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>なにもないことが　好きなの
+それを　共有するのは　難しいけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:04:58" />
+				Time="2011-08-18T09:08:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
