@@ -13,7 +13,7 @@
 #include "poke_tool/poke_tool.h"
 #include "gamesystem/btl_setup.h"
 #include "savedata/wbt_download.h"
-
+#include "wbt_trlist_struct.h"    //WBT_TRDATA
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -59,7 +59,8 @@ typedef struct _WBT_REGLATION {
 struct _WBTTRAINER{
   u8 wbt_tr_type:3; ///<WBT_TRTYPE
   u8 sex:1;         ///<性別
-  u8 pri:4;         ///<優先順位（対戦結果やコメント判定に使用）
+  u8 pri:3;         ///<優先順位（対戦結果やコメント判定に使用）
+  u8 has_ace:1;     ///<切り札ポケモンを持っているか？
   u8 poketype;      ///<手持ちパーティのポケモンタイプ
   u8 tr_id;         ///<トレーナーID（wbt_tr_typeにより意味が変わる）
   u16 mmdl_id;      ///<動作モデルコード
@@ -86,6 +87,9 @@ struct _WBT_MATCH_CONDITION{
   
   PokeType poketype;              ///<タイプトーナメント用：タイプ指定
 
+  u16 rom_trainer_num;
+  const WBT_TRDATA * rom_trainer_data;
+
   u64 seed64;
 
   const WBTDL_MATCH * wbtdl_match;
@@ -98,6 +102,11 @@ struct _WBT_MATCH_CONDITION{
 //------------------------------------------------------------------
 struct _WBT_SYSTEM {
   HEAPID heapID;
+
+  ///ROM上のトレーナーデータ
+  u16 rom_trainer_num;
+  const WBT_TRDATA * rom_trainer_data;
+
   ///トーナメントの種類
   WBTCUP wbtcup;
   ///バトルルール（シングル、ダブル、トリプル、ローテーション）

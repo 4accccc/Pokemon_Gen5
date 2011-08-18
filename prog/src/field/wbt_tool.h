@@ -67,9 +67,6 @@ typedef enum {
 //------------------------------------------------------------------
 extern void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf );
 extern void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf );
-extern void WBTTOOL_GetTrRomData( u8 tr_id, WBT_TRDATA * tr_data );
-extern u16 WBTTOOL_GetBWRomTrainerID( u8 sex );
-extern u16 WBTTOOL_GetRivalTrainerID( void );
 
 extern u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed );
 

@@ -28,17 +28,6 @@
 
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-#include "../../../resource/wbt/wbt_trainer/wbt_trainer.cdat"
-
-enum {
-  ///<リスト上のトレーナー数（戦えないものも含む）
-  WBT_ROM_TRAINER_NUM = NELEMS(WBTTrainerData),
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 
 //------------------------------------------------------------------
 /// エントリー状態
@@ -59,69 +48,12 @@ typedef enum {
 //------------------------------------------------------------------
 typedef struct {
   const WBT_MATCH_CONDITION * cond;
-  GAMEDATA * gamedata;
+
   GFL_STD_RandContext rand_context;
-  u8 entry_table[ WBT_ROM_TRAINER_NUM ];
-  u8 battle_flag[ WBT_ROM_TRAINER_NUM ];
+  u8 * entry_table; ///<候補者の選別状態（ENTRY_CODE）
+  u8 * battle_flag; ///<対戦済みかどうか（BTLCOND)
 }MAKE_ENTRY_WORK;
 
-
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief ROMトレーナーデータの取得
- * @param heapID
- * @param tr_id
- * @param tr_data
- *
- * @todo  メモリ圧迫に備えて、バイナリから読み込むように修正
- */
-//------------------------------------------------------------------
-void WBTTOOL_GetTrRomData( u8 tr_id, WBT_TRDATA * tr_data )
-{
-  GF_ASSERT( tr_id < WBT_ROM_TRAINER_NUM );
-  *tr_data = WBTTrainerData[ tr_id ];
-}
-
-//------------------------------------------------------------------
-/**
- * @brief 前作主人公のWBTロムデータのIDを取得する
- * @param   sex
- * @return  u16
- */
-//------------------------------------------------------------------
-u16 WBTTOOL_GetBWRomTrainerID( u8 sex )
-{
-  int i;
-  u16 search_id = HERO;
-  if (sex == PM_FEMALE)
-  {
-    search_id = HEROINE;
-  }
-  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
-  {
-    if ( WBTTrainerData[i].mmdl_id == search_id ) return i;
-  }
-  GF_ASSERT( 0 );
-  return 0; //仮
-}
-
-//------------------------------------------------------------------
-/**
- * @brief
- */
-//------------------------------------------------------------------
-u16 WBTTOOL_GetRivalTrainerID( void )
-{
-  int i;
-  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
-  {
-    if ( WBTTrainerData[i].mmdl_id == SWRIVAL ) return i;
-  }
-  GF_ASSERT( 0 );
-  return 0;
-}
 
 //============================================================================================
 //
@@ -130,16 +62,18 @@ u16 WBTTOOL_GetRivalTrainerID( void )
 //
 //
 //============================================================================================
-static void makeEntryTable( MAKE_ENTRY_WORK * mew );
+static void makeEntryTable( MAKE_ENTRY_WORK * mew, const WBTSAVE * wbtsave );
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static MAKE_ENTRY_WORK * mew_Create(
-    HEAPID heapID, GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond )
+    HEAPID heapID, const WBTSAVE * wbtsave, const WBT_MATCH_CONDITION * cond )
 {
   MAKE_ENTRY_WORK * mew = GFL_HEAP_AllocMemoryLo( heapID, sizeof(MAKE_ENTRY_WORK) );
   mew->cond = cond;
-  mew->gamedata = gamedata;
-  makeEntryTable( mew );
+
+  mew->entry_table = GFL_HEAP_AllocMemoryLo( heapID, sizeof(u8) * cond->rom_trainer_num );
+  mew->battle_flag = GFL_HEAP_AllocMemoryLo( heapID, sizeof(u8) * cond->rom_trainer_num );
+  makeEntryTable( mew, wbtsave );
   GFL_STD_RandInit( &mew->rand_context, cond->seed64 );
 
   return mew;
@@ -149,6 +83,8 @@ static MAKE_ENTRY_WORK * mew_Create(
 //-----------------------------------------------------------------------------
 static void mew_Delete( MAKE_ENTRY_WORK * mew )
 {
+  GFL_HEAP_FreeMemory( mew->entry_table );
+  GFL_HEAP_FreeMemory( mew->battle_flag );
   GFL_HEAP_FreeMemory( mew );
 }
 
@@ -160,7 +96,7 @@ static void mew_SetEntryResult( const MAKE_ENTRY_WORK * mew, u16 * tr_list )
   u32 tr_pos = 0;
   u32 i;
   tr_list[tr_pos ++ ] = WBT_TRCODE_PLAYER;  //プレイヤーは登録する
-  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
+  for ( i = 0; i < mew->cond->rom_trainer_num; i ++ )
   {
     if ( mew->entry_table[i] == ENTRY_DECIDE )
     {
@@ -184,10 +120,10 @@ static u32 mew_CountEntry( const MAKE_ENTRY_WORK * mew, ENTRY_CODE entryCode, u8
 {
   u32 candidate_count = 0;
   int i;
-  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
+  for ( i = 0; i < mew->cond->rom_trainer_num; i ++ )
   {
     if (mew->entry_table[i] != entryCode) continue;
-    if ( pri != WBT_TRPRI_NULL && WBTTrainerData[i].priority != pri) continue;
+    if ( pri != WBT_TRPRI_NULL && mew->cond->rom_trainer_data[i].priority != pri) continue;
     if ( bcond != BTLCOND_NON && bcond != mew->battle_flag[i] ) continue;
     candidate_count ++;
   }
@@ -206,10 +142,10 @@ static u32 selectCandidate( const MAKE_ENTRY_WORK * mew, u8 pri, BTLCOND bcond, 
   u32 pos_count = step;
   u32 i = 0;
   GF_ASSERT( step > 0 )
-  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
+  for ( i = 0; i < mew->cond->rom_trainer_num; i ++ )
   {
     if (mew->entry_table[i] != ENTRY_CANDIDATE) continue;
-    if ( pri != WBT_TRPRI_NULL && WBTTrainerData[i].priority != pri) continue;
+    if ( pri != WBT_TRPRI_NULL && mew->cond->rom_trainer_data[i].priority != pri) continue;
     if ( bcond != BTLCOND_NON && bcond != mew->battle_flag[i] ) continue;
 
     pos_count --;
@@ -218,7 +154,7 @@ static u32 selectCandidate( const MAKE_ENTRY_WORK * mew, u8 pri, BTLCOND bcond, 
       return i;
     }
   }
-  GF_ASSERT( i < WBT_ROM_TRAINER_NUM );
+  GF_ASSERT( i < mew->cond->rom_trainer_num );
   return i;
 }
 
@@ -282,11 +218,11 @@ static u32 mew_SelectPerson( MAKE_ENTRY_WORK * mew, u8 pri, u8 num )
 
 
   //選から漏れた候補者を消す
-  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
+  for ( i = 0; i < mew->cond->rom_trainer_num; i ++ )
   {
     if ( entry_table[i] == ENTRY_CANDIDATE )
     {
-      if ( pri == WBT_TRPRI_NULL || WBTTrainerData[i].priority == pri )
+      if ( pri == WBT_TRPRI_NULL || mew->cond->rom_trainer_data[i].priority == pri )
       {
         entry_table[i] = ENTRY_NON;
       }
@@ -341,15 +277,14 @@ static BOOL checkEnableEntryRomTrainer( const WBT_MATCH_CONDITION * cond, const 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static void makeEntryTable( MAKE_ENTRY_WORK * mew )
+static void makeEntryTable( MAKE_ENTRY_WORK * mew, const WBTSAVE * wbtsave )
 {
   int i;
-  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( mew->gamedata );
-  GFL_STD_MemFill( mew->entry_table, ENTRY_NON, WBT_ROM_TRAINER_NUM );
-  GFL_STD_MemFill( mew->battle_flag, BTLCOND_AFTER, WBT_ROM_TRAINER_NUM );
-  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
+  GFL_STD_MemFill( mew->entry_table, ENTRY_NON, mew->cond->rom_trainer_num );
+  GFL_STD_MemFill( mew->battle_flag, BTLCOND_AFTER, mew->cond->rom_trainer_num );
+  for ( i = 0; i < mew->cond->rom_trainer_num; i ++ )
   {
-    const WBT_TRDATA * rom_data = &WBTTrainerData[ i ];
+    const WBT_TRDATA * rom_data = &mew->cond->rom_trainer_data[ i ];
     if ( checkEnableEntryRomTrainer( mew->cond, rom_data ) == TRUE )
     {
       mew->entry_table[ i ] = ENTRY_CANDIDATE;
@@ -406,9 +341,9 @@ static void entryChampTournament(MAKE_ENTRY_WORK * mew, u16 * tr_list )
   tr_list[0] = WBT_TRCODE_PLAYER;
   tr_list[1] = WBT_TRCODE_WBHERO;
 
-  for ( j = 0, tr_idx = 2; j < WBT_ROM_TRAINER_NUM; j ++ )
+  for ( j = 0, tr_idx = 2; j < mew->cond->rom_trainer_num; j ++ )
   {
-    const WBT_TRDATA * rom_data = &WBTTrainerData[ j ];
+    const WBT_TRDATA * rom_data = &mew->cond->rom_trainer_data[ j ];
     if ( rom_data->region_tournament_id != WBTCUP_CHAMPION ) continue;
     tr_list[tr_idx] = j;
     tr_idx ++;
@@ -417,7 +352,7 @@ static void entryChampTournament(MAKE_ENTRY_WORK * mew, u16 * tr_list )
       break;
     }
   }
-  GF_ASSERT( j < WBT_ROM_TRAINER_NUM );
+  GF_ASSERT( j < mew->cond->rom_trainer_num );
 }
 
 //-----------------------------------------------------------------------------
@@ -530,7 +465,8 @@ static void entryTypeTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
 //-----------------------------------------------------------------------------
 void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
-  MAKE_ENTRY_WORK * mew = mew_Create( cond->heapID, gamedata, cond );
+  const WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+  MAKE_ENTRY_WORK * mew = mew_Create( cond->heapID, wbtsave, cond );
 
   switch (cond->wbtcup)
   {

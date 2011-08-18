@@ -10,7 +10,6 @@
 #include <gflib.h>
 
 #include "wbt_system.h"
-//#include "app/wbt_list.h"
 
 #include "system/main.h"
 
@@ -34,6 +33,8 @@
 #include "savedata/wbt_download.h"
 
 #include "sound/swan_sound_data.sadl"
+#include "arc/wbt/wbt_trlist.naix"
+
 #ifdef  PM_DEBUG
 //#define DEBUG_WEAK_PARTY  //定義すると手持ちが激しく弱くなる
 //#define DEBUG_STRONG_PARTY  //定義すると手持ちが激しく強くなる
@@ -53,8 +54,10 @@ enum {
 static void WBTTRAINER_Init( WBTTRAINER * wbt_tr, HEAPID heapID );
 static void WBTTRAINER_Release( WBTTRAINER * wbt_tr );
 static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
-static void WBTTRAINER_SetRomTrainer( HEAPID heapID, WBTTRAINER * wbt_tr, u8 tr_id );
-static void WBTTRAINER_SetWBPlayer( HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
+static void WBTTRAINER_SetRomTrainer(
+    const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, u8 tr_id );
+static void WBTTRAINER_SetWBPlayer(
+    const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
 static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
     const WBTDL_CHARACTER * dl_char, u32 dl_tr_id, u8 pri );
 
@@ -82,6 +85,19 @@ WBTSYS * WBTSYS_Create( HEAPID heapID )
   {
     WBTTRAINER_Init( &wbtsys->wbt_trainer[ i ], heapID );
   }
+
+  { //ROMトレーナーデータを読み込む
+    ARCHANDLE * handle;
+    u32 size;
+    handle = GFL_ARC_OpenDataHandle( ARCID_WBT_TRLIST, GFL_HEAP_LOWID(wbtsys->heapID) );
+    wbtsys->rom_trainer_data = GFL_ARC_LoadDataAllocByHandle( handle,
+        NARC_wbt_trlist_wbt_trainer_bin, wbtsys->heapID );
+    size = GFL_ARC_GetDataSizeByHandle( handle, NARC_wbt_trlist_wbt_trainer_bin );
+    GF_ASSERT( size % sizeof(WBT_TRDATA) == 0 );
+    wbtsys->rom_trainer_num = size / sizeof(WBT_TRDATA);
+    GFL_ARC_CloseDataHandle( handle );
+  }
+
   return wbtsys;
 }
 
@@ -90,11 +106,72 @@ WBTSYS * WBTSYS_Create( HEAPID heapID )
 void WBTSYS_Delete( WBTSYS * wbtsys )
 {
   int i;
+
+  GFL_HEAP_FreeMemory( (void*)wbtsys->rom_trainer_data );
+
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
     WBTTRAINER_Release( &wbtsys->wbt_trainer[ i ] );
   }
   GFL_HEAP_FreeMemory( wbtsys );
+}
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief ROMトレーナーデータの取得
+ * @param heapID
+ * @param tr_id
+ * @param tr_data
+ *
+ * @todo  メモリ圧迫に備えて、バイナリから読み込むように修正
+ */
+//------------------------------------------------------------------
+static void WBTSYS_GetTrRomData( const WBTSYS * wbtsys, u8 tr_id, WBT_TRDATA * tr_data )
+{
+  const WBT_TRDATA * rom_trdata = wbtsys->rom_trainer_data;
+  GF_ASSERT( tr_id < wbtsys->rom_trainer_num );
+  *tr_data = rom_trdata[ tr_id ];
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 前作主人公のWBTロムデータのIDを取得する
+ * @param   sex
+ * @return  u16
+ */
+//------------------------------------------------------------------
+static u16 WBTSYS_GetBWRomTrainerID( const WBTSYS * wbtsys, u8 sex )
+{
+  int i;
+  u16 search_id = HERO;
+  if (sex == PM_FEMALE)
+  {
+    search_id = HEROINE;
+  }
+  for ( i = 0; i < wbtsys->rom_trainer_num; i ++ )
+  {
+    if ( wbtsys->rom_trainer_data[i].mmdl_id == search_id ) return i;
+  }
+  GF_ASSERT( 0 );
+  return 0; //仮
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief
+ */
+//------------------------------------------------------------------
+static u16 WBTSYS_GetRivalTrainerID( const WBTSYS * wbtsys )
+{
+  int i;
+  for ( i = 0; i < wbtsys->rom_trainer_num; i ++ )
+  {
+    if ( wbtsys->rom_trainer_data[i].mmdl_id == SWRIVAL ) return i;
+  }
+  GF_ASSERT( 0 );
+  return 0;
 }
 
 //============================================================================================
@@ -119,7 +196,7 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_l
       WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->tr_id, wbt_tr->title );
       break;
     case WBT_TRCODE_WBHERO:
-      WBTTRAINER_SetWBPlayer( wbtsys->heapID, wbt_tr, gamedata );
+      WBTTRAINER_SetWBPlayer( wbtsys, wbtsys->heapID, wbt_tr, gamedata );
       WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->tr_id, wbt_tr->title );
       break;
     case WBT_TRCODE_DL1:
@@ -134,8 +211,8 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_l
       }
       break;
     default:
-      WBTTRAINER_SetRomTrainer( wbtsys->heapID, wbt_tr, tr_list[i] );
-      if ( tr_list[i] == WBTTOOL_GetRivalTrainerID() )
+      WBTTRAINER_SetRomTrainer( wbtsys, wbtsys->heapID, wbt_tr, tr_list[i] );
+      if ( tr_list[i] == WBTSYS_GetRivalTrainerID(wbtsys) )
       { //ライバルの場合はセーブデータから名前を引っ張る
         SAVE_CONTROL_WORK * sv_ctrl_work = GAMEDATA_GetSaveControlWork( gamedata );
         ETC_SAVE_WORK * etcsave = SaveData_GetEtc( sv_ctrl_work );
@@ -343,12 +420,13 @@ static void WBTTRAINER_Release( WBTTRAINER * wbt_tr )
  */
 //------------------------------------------------------------------
 static void WBTTRAINER_Set( WBTTRAINER * wbt_tr,
-    WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri, u8 poketype, u16 mmdl_id, u16 btl_tr_type )
+    WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri, BOOL has_ace, u8 poketype, u16 mmdl_id, u16 btl_tr_type )
 {
   wbt_tr->wbt_tr_type = type;
   wbt_tr->tr_id = tr_id;
   wbt_tr->sex = sex;
   wbt_tr->pri = pri;
+  wbt_tr->has_ace = has_ace;
   wbt_tr->poketype = poketype;
   wbt_tr->mmdl_id = mmdl_id;
   wbt_tr->btl_tr_type = btl_tr_type;
@@ -359,12 +437,16 @@ static void WBTTRAINER_Set( WBTTRAINER * wbt_tr,
  * @brief WBTTRAINER設定：ROM上のトレーナー
  */
 //------------------------------------------------------------------
-static void WBTTRAINER_SetRomTrainer( HEAPID heapID, WBTTRAINER * wbt_tr, u8 tr_id )
+static void WBTTRAINER_SetRomTrainer(
+    const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, u8 tr_id )
 {
   WBT_TRDATA tr_rom_data;
-  WBTTOOL_GetTrRomData( tr_id, &tr_rom_data );
+  BOOL has_ace;
+
+  WBTSYS_GetTrRomData( wbtsys, tr_id, &tr_rom_data );
+  has_ace = tr_rom_data.ace_poke_id != 0 ? TRUE: FALSE;
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_ROM,
-      tr_id, tr_rom_data.sex, tr_rom_data.priority, tr_rom_data.type,
+      tr_id, tr_rom_data.sex, tr_rom_data.priority, has_ace, tr_rom_data.type,
       tr_rom_data.mmdl_id, tr_rom_data.tr_type );
   WBTTOOL_GetRomTrainerName( heapID, tr_id, wbt_tr->name );
 }
@@ -393,7 +475,7 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
     btl_tr_type = TRTYPE_HEROINE;
   }
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_PLAYER,
-      0, sex, pri, POKETYPE_NORMAL, mmdl_id, btl_tr_type );
+      0, sex, pri, FALSE, POKETYPE_NORMAL, mmdl_id, btl_tr_type );
   MyStatus_CopyNameString( mystat, wbt_tr->name );
 }
 
@@ -403,13 +485,14 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
  * @todo  データ引継ぎ仕様に対応していない
  */
 //------------------------------------------------------------------
-static void WBTTRAINER_SetWBPlayer( HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
+static void WBTTRAINER_SetWBPlayer(
+    const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
 {
   u8 tr_id;
   const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
 
-  tr_id = WBTTOOL_GetBWRomTrainerID( MyStatus_GetMySex( mystat ) );
-  WBTTRAINER_SetRomTrainer( heapID, wbt_tr, tr_id );
+  tr_id = WBTSYS_GetBWRomTrainerID( wbtsys, MyStatus_GetMySex( mystat ) );
+  WBTTRAINER_SetRomTrainer( wbtsys, heapID, wbt_tr, tr_id );
 }
 
 //------------------------------------------------------------------
@@ -428,7 +511,7 @@ static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
   mmdl_id = FBI_TOOL_GetTrainerOBJCode( trtype );
   sex = TT_TrainerTypeSexGet( trtype );
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_DL, dl_tr_id, sex,
-      pri, POKETYPE_NORMAL, mmdl_id, trtype );
+      pri, FALSE, POKETYPE_NORMAL, mmdl_id, trtype );
 
   GFL_STR_SetStringCodeOrderLength( wbt_tr->name, dl_char->name, SAVELEN_TRAINER_NAME );
   GFL_STR_SetStringCodeOrderLength( wbt_tr->title, dl_char->title, WBTDL_TRAINER_TITLE_LEN );
@@ -477,10 +560,7 @@ void WBTTRAINER_CopyTitle( const WBTTRAINER * wbt_tr, STRBUF * buf )
 //------------------------------------------------------------------
 static BOOL WBTTRAINER_HasAce( const WBTTRAINER * wbt_tr )
 {
-  WBT_TRDATA tr_rom_data;
-  if (wbt_tr->wbt_tr_type != WBT_TRTYPE_ROM ) return FALSE;
-  WBTTOOL_GetTrRomData( wbt_tr->tr_id, &tr_rom_data );
-  return ( tr_rom_data.ace_poke_id != 0 );
+  return wbt_tr->has_ace;
 }
 
 //============================================================================================
@@ -528,6 +608,8 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
   cond.heapID = wbtsys->heapID;
   cond.wbtcup = wbtsys->wbtcup;
   cond.poketype = wbtsys->poketype;
+  cond.rom_trainer_num = wbtsys->rom_trainer_num;
+  cond.rom_trainer_data = wbtsys->rom_trainer_data;
   cond.seed64 = wbtsys->seed64;
   cond.wbtdl_match = NULL;
   if ( wbtsys->dldata_loaded )
@@ -658,7 +740,7 @@ void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
       const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
       WBT_TRDATA tr_rom_data;
       GF_ASSERT( wbt_tr->wbt_tr_type == WBT_TRTYPE_ROM );
-      WBTTOOL_GetTrRomData( wbt_tr->tr_id, &tr_rom_data );
+      WBTSYS_GetTrRomData( wbtsys, wbt_tr->tr_id, &tr_rom_data );
       *btl_bgm = tr_rom_data.btl_bgm_id;
       *win_bgm = tr_rom_data.win_bgm_id;
     }
@@ -1754,6 +1836,7 @@ static u32 countDeadStatus( const BtlPokeStatCode * party_state )
   u32 count = 0;
   for ( i = 0; i < TEMOTI_POKEMAX; i ++ )
   {
+    OS_Printf("%d:%d\n", i, party_state[i] );
     if ( party_state[i] == BTL_POKESTATE_DEAD )
     {
       count ++;
