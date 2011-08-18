@@ -1113,10 +1113,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ修正</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T09:33:13" />
+				Time="2011-08-18T02:36:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1138,13 +1138,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　フキヨセの　くうこうから
-とびたつのは　かもつき　ばかりさ▼
-トレーナーが　とびたいときは
-そらをとぶ　って　わざがあるもんね</Text>
+			<Text>そらをとぶ　って　わざ　すごいね！▼
+だって　ちいさい　ポケモンでも
+かるがると　ひとを　はこぶんだもん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:03:58" />
+				Time="2011-08-18T02:44:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1152,13 +1151,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　フキヨセの　空港から
-飛び立つのは　貨物機　ばかりさ▼
-トレーナーが　飛びたいときは
-そらをとぶ　って　技があるもんね</Text>
+			<Text>そらをとぶ　って　技　すごいね！▼
+だって　小さい　ポケモンでも
+軽々と　人を　運ぶんだもん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:03:54" />
+				Time="2011-08-18T02:45:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1167,10 +1165,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ修正</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T04:04:15" />
+				Time="2011-08-18T02:45:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1219,10 +1217,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ修正</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T09:32:00" />
+				Time="2011-08-18T02:36:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1273,10 +1271,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ修正</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:03:09" />
+				Time="2011-08-18T02:36:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1327,10 +1325,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ修正</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T09:38:56" />
+				Time="2011-08-18T02:36:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
