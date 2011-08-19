@@ -2,6 +2,283 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c03p08_fesguide_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Cギアが　あれば
+ひとりでも！　みんなとでも！▼
+ゆかいな　フェスミッションが
+たのしめまーす！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:19:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T03:53:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Cギアが　あれば
+一人でも！　みんなとでも！▼
+愉快な　フェスミッションが
+楽しめまーす！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:19:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T03:53:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・フェスミッション用
+・GRIDX＝12、GRIDZ＝24に配置
+・Ｃギア入手前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:22:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T03:53:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p08_fesguide_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そこの　あなた
+ハイリンクは　ごぞんじ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:10:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T04:04:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そこの　あなた
+ハイリンクは　ご存知？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:19:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T04:04:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・フェスミッション用
+・Ｃギア入手後＋チュートリアル終了前
+　pos起動
+　GRIDX＝13~19、GRIDZ＝24
+・Ｃギアの電源オフ→fesguide_03
+・ハイリンク初回訪問イベントを未消化
+　→fesguide_04
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:23:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T04:04:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p08_fesguide_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら？　Ｃギアの　でんげんを
+オンに　してもらえるかしら？▼
+Ｃギアの　がめん　みぎしたに
+あるのが　でんげんボタン　なのよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:16:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T05:56:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら？　Ｃ－ＧＥＡＲの　電源を
+ＯＮに　してもらえるかしら？▼
+Ｃ－ＧＥＡＲの　画面　右下に
+あるのが　電源ボタン　なのよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:34:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:15:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・Cギアの電源オフ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:10:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T05:53:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p08_fesguide_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアに　[System:Color name="1" ]ワイヤレスボタン[/System:Color]　が
+あるから　おしてごらんなさい▼
+それから　[System:Color name="1" ]ハイリンク[/System:Color]　という
+ボタンを　おすと　いいわよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:13:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:01:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲに　[System:Color name="1" ]ワイヤレスボタン[/System:Color]　が
+あるから　押してごらんなさい▼
+それから　[System:Color name="1" ]ハイリンク[/System:Color]　という
+ボタンを　押すと　いいわよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:20:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:15:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ハイリンク初回訪問イベントを未消化
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:01:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T05:53:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p08_fesguide_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとが　たくさん　いる　ばしょなら
+フェスミッションを　するとき　ちかくの▽
+だれかが　てつだって　くれるかもね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:20:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:04:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>人が　たくさん　いる　場所なら
+フェスミッションを　するとき　近くの▽
+だれかが　手伝って　くれるかもね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:21:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:15:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・チュートリアル終了済み
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T06:03:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T05:53:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c03p08_bussinesman_01"
 		Style="Large">
 		<LanguageCell

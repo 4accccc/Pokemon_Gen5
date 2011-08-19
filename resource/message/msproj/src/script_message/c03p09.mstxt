@@ -501,14 +501,14 @@
 			<Text>はわわわわ！▼
 あたらしい　チャンピオンが
 うちの　ヒウンアイスを▼
-あいよう　してるって　ウワサで
+ひいきに　してるって　ウワサで
 とつぜん　おきゃくさんが　さっとう！▼
 うれしい　ひめいで　キャー！
 にんきばくはつ！　ヒウンアイス▽
 なんこ　おかいあげ　ですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:53:03" />
+				Time="2011-08-19T03:42:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -519,14 +519,14 @@
 			<Text>はわわわわ！▼
 新しい　チャンピオンが
 うちの　ヒウンアイスを▼
-愛用してるって　ウワサで
+ひいきに　してるって　ウワサで
 突然　お客さんが　殺到！▼
 うれしい　悲鳴で　キャー！
 人気爆発！　ヒウンアイス▽
-なんこ　お買い上げ　ですか？</Text>
+何個　お買い上げ　ですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:52:56" />
+				Time="2011-08-19T03:42:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -717,11 +717,11 @@
 			Language="JPN_KANJI">
 			<Text>ん……？　そんなところに
 アイスクリーム屋が　あったのか▼
-それって　おいしいの？
+それって　美味しいの？
 気に　なるな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:39:07" />
+				Time="2011-08-19T03:41:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -998,11 +998,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かなり　ならぶけれど
+			<Text>かーなーり　ならぶけれど
 それだけの　かちは　あるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:41:54" />
+				Time="2011-08-19T03:41:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1010,11 +1010,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かなり　ならぶけれど
-それだけの　かちは　あるよ！▼</Text>
+			<Text>かーなーり　並ぶけれど
+それだけの　価値は　あるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:41:51" />
+				Time="2011-08-19T03:41:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"

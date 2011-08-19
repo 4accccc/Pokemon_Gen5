@@ -138,11 +138,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ガイドー『お！　アイリスさん▼
-じつは　かくかくしかじか　でね
+実は　かくかくしかじか　でね
 アーティさん　いないんっすよね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-19T02:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1047,17 +1047,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_inventor_01"
+		Label="msg_c03p07_inventor_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヤッホー！
 アタシは　マコモ▼
-アナタ　イッシュちほうの
+アナタ　イッシュちほうに　いる
 すべての　ポケモンと　であうんでしょ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T11:18:09" />
+				Time="2011-08-19T04:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1067,11 +1067,11 @@
 			Language="JPN_KANJI">
 			<Text>ヤッホー！
 アタシは　マコモ▼
-アナタ　イッシュ地方の
+アナタ　イッシュ地方に　いる
 すべての　ポケモンと　であうんでしょ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T11:18:09" />
+				Time="2011-08-19T04:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1082,10 +1082,10 @@
 			<Comment>♀
 ・ジムクリア後にイベント発動
 ・主人公に隣接してメッセージ表示
-・続けて</Comment>
+・続けてinventor_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T11:18:32" />
+				Time="2011-08-19T04:24:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1104,21 +1104,22 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_inventor_02"
+		Label="msg_c03p07_inventor_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ　いきなり　ゴメンね
 アタシ　アララギはかせの　ともだちよ▼
 でね　かのじょから
-アナタの　てだすけを　たのまれていて▽
+アナタの　てだすけを　たのまれたの▼
+ぐたいてきに　いうと
 Ｃギアを　つかえるように　するね！▼
 Ｃギアとは　せきがいせんや
 むせん　Ｗｉ－Ｆｉなど▽
 つうしんに　かんけいする　デバイスよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T11:18:09" />
+				Time="2011-08-19T04:26:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1129,14 +1130,15 @@
 			<Text>あっ　いきなり　ゴメンね
 アタシ　アララギ博士の　友達よ▼
 でね　彼女から
-アナタの　てだすけを　頼まれていて▽
+アナタの　てだすけを　頼まれたの▼
+具体的に　いうと
 Ｃ－ＧＥＡＲを　使えるように　するね！▼
 Ｃ－ＧＥＡＲとは　赤外線や
 無線　Ｗｉ－Ｆｉなど▽
 通信に　関係する　デバイスよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T11:18:09" />
+				Time="2011-08-19T04:26:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1168,7 +1170,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_cgear_01"
+		Label="msg_c03p07_cgear_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1219,7 +1221,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_cgear_02"
+		Label="msg_c03p07_cgear_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1271,7 +1273,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_cgear_03"
+		Label="msg_c03p07_cgear_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1319,7 +1321,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_cgear_04"
+		Label="msg_c03p07_cgear_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1367,7 +1369,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_cgear_05"
+		Label="msg_c03p07_cgear_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1417,7 +1419,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_cgear_06"
+		Label="msg_c03p07_cgear_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1476,7 +1478,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_inventor_03"
+		Label="msg_c03p07_inventor_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1534,7 +1536,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_inventor_04"
+		Label="msg_c03p07_inventor_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1596,19 +1598,19 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03_inventor_05"
+		Label="msg_c03p07_inventor_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｃギアについて　くわしい　ことは
 あたしの　けんきゅうじょ　でね▼
-けんきゅうじょは　ポケモンジムの
-ちかくに　ある　ビルよ！▼
+けんきゅうじょは　ここから
+ななめむかいに　ある　ビル３かいよ！▼
 じゃ　ポケモンずかんを　よろしくね！
 たびの　トレーナーさん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T11:18:09" />
+				Time="2011-08-19T04:13:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1618,13 +1620,13 @@
 			Language="JPN_KANJI">
 			<Text>Ｃギアについて　くわしい　ことは
 あたしの　研究所でね▼
-研究所は　ポケモンジムの
-近くに　ある　ビルよ！▼
+研究所は　ここから
+斜め向かいに　ある　ビル３Fよ！▼
 じゃ　ポケモン図鑑を　よろしくね！
 旅の　トレーナーさん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T11:18:09" />
+				Time="2011-08-19T04:13:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1633,11 +1635,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ表示後、c03p07方面に移動
+・メッセージ表示後、c03r1101方面に移動
 　画面外に消えると操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T11:18:09" />
+				Time="2011-08-19T06:42:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

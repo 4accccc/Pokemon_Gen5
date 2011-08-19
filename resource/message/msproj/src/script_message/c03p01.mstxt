@@ -621,11 +621,11 @@
 ただいま　ヒウンめいしょ　めぐり
 イベントを　かいさい　しております▼
 よろしければ　あなたも
-ヒウンめいしょめぐりに　イベントに▼
+ヒウンめいしょめぐりに　イベントに▽
 さんか　してみませんか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:58:47" />
+				Time="2011-08-19T03:44:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -633,16 +633,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こちらヒウンシティ
-かんこうあんないじょです▼
-ただいま　ヒウンめいしょめぐり
-イベントを　かいさいしております▼
+			<Text>こちら　ヒウンシティ
+観光案内所　です▼
+ただいま　ヒウン名所巡り
+イベントを　開催しております▼
 よろしければ　あなたも
-ヒウンめいしょめぐりに　イベントに▼
-さんか　してみませんか？</Text>
+ヒウン名所巡りに　イベントに▽
+参加して　みませんか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:17:47" />
+				User="matsumiya:W00224"
+				Time="2011-08-19T03:44:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -681,11 +681,11 @@
 			Language="JPN">
 			<Text>ヒウンシティ
 かんこう　あんないじょ　は▼
-いつでも　ヒウンめいしょめぐりへの
-ちょうせんを　おまちしております！</Text>
+いつでも　ヒウンめいしょめぐり　への
+さんかを　おまちして　おります！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:59:24" />
+				Time="2011-08-19T03:45:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -694,12 +694,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヒウンシティ
-かんこう　あんないじょ　は▼
-いつでも　ヒウンめいしょめぐりへの
-ちょうせんを　おまちしております！</Text>
+観光案内所　は▼
+いつでも　ヒウン名所巡りへの
+参加を　お待ちしております！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:59:27" />
+				Time="2011-08-19T03:45:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -738,11 +738,11 @@
 ヒントの　さししめす　ばしょには
 ヒウンかんこうあんない　の▽
 スタッフが　まちかまえて　おります▼
-そこで　ポケモンしょうぶに　かったら
+そこで　ポケモンしょうぶに　かてば
 きねんひんを　さしあげます！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:59:34" />
+				Time="2011-08-19T03:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -750,16 +750,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたくしから　ヒウンの　めいしょの
+			<Text>わたくしから　ヒウンの　名所の
 ヒントを　さしあげます▼
-ヒントの　さししめす　ばしょには
-ヒウンかんこうあんない　の▽
-スタッフが　まちかまえて　おります▼
-そこで　ポケモンしょうぶに　かったら
-きねんひんを　さしあげます！</Text>
+ヒントの　さししめす　場所には
+ヒウン観光案内　の▽
+スタッフが　待ちかまえて　おります▼
+そこで　ポケモン勝負に　勝てば
+記念品を　さしあげます！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:59:37" />
+				Time="2011-08-19T03:45:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -808,14 +808,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウンめいしょ　の
+			<Text>ヒウン名所の
 ヒントを　さしあげます▼
-げんざい　[Name:TrainerName ]さんの
-ヒウンめいしょめぐり　は▽
-のこり　[Digit:1digit Idx="1" ]こ　ですね</Text>
+現在　[Name:TrainerName ]さんの
+ヒウン名所巡り　は▽
+残り　[Digit:1digit Idx="1" ]こ　ですね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T03:00:22" />
+				Time="2011-08-19T03:46:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
