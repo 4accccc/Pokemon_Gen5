@@ -367,7 +367,7 @@ u16 PERSON_STATE_GetTradeMonsno( const PERSON_STATE *cp_wk )
 //-----------------------------------------------------------------------------
 void PERSON_STATE_SetDateEndFlag( PERSON_STATE *p_wk, BOOL enable )
 {
-  p_wk->is_date_end;
+  p_wk->is_date_end = enable;
 }
 //----------------------------------------------------------------------------
 /**
