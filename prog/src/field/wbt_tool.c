@@ -31,6 +31,7 @@
 //#include "sound/pm_sndsys.h"
 
 #include "arc_def.h"  //ARCID_～
+#include "arc/wbt/wbt_trlist.naix"
 
 //============================================================================================
 //============================================================================================
@@ -272,6 +273,32 @@ void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf
     GFL_MSG_GetString( man, msg_id, strbuf );
     GFL_MSG_Delete( man );
   }
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief WBTロムトレーナーデータを読み込む
+ * @param[in]   heapID          使用するヒープID指定
+ * @param[out]  rom_trainer_num 読み込んだトレーナーデータ数
+ * @return  WBT_TRDATA          読み込んだトレーナーデータへのポインタ
+ *
+ * 内部でAllocするので、呼び出し元で最終的に解放する必要がある
+ */
+//------------------------------------------------------------------
+void * WBTTOOL_LoadRomTrainerData( HEAPID heapID, u16 * rom_trainer_num )
+{
+  WBT_TRDATA * rom_trainer_data;
+  ARCHANDLE * handle;
+  u32 size;
+  handle = GFL_ARC_OpenDataHandle( ARCID_WBT_TRLIST, GFL_HEAP_LOWID(heapID) );
+  rom_trainer_data = GFL_ARC_LoadDataAllocByHandle( handle,
+      NARC_wbt_trlist_wbt_trainer_bin, heapID );
+  size = GFL_ARC_GetDataSizeByHandle( handle, NARC_wbt_trlist_wbt_trainer_bin );
+  GF_ASSERT( size % sizeof(WBT_TRDATA) == 0 );
+  *rom_trainer_num = size / sizeof(WBT_TRDATA);
+  GFL_ARC_CloseDataHandle( handle );
+
+  return rom_trainer_data;
 }
 
 

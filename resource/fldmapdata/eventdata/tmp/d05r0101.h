@@ -20,6 +20,9 @@
 #define D05R0101_POLICEMAN_01              7
 #define D05R0101_POLICEMAN_02              8
 #define D05R0101_INFOMATIONW_02            9
+#define D05R0101_WKOBJCODE00              10
+#define D05R0101_WKOBJCODE01              11
+#define D05R0101_WKOBJCODE02              12
 
 #endif //ZONE_D05R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

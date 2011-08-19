@@ -35,6 +35,8 @@ extern VMCMD_RESULT EvCmdWBTIncVictoryCount( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetSurvivalCount( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetReward( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetTrainerFlag( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGetLobbyTrainerID( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGetLobbyMMdlCode( VMHANDLE * core, void * wk );
 
 extern VMCMD_RESULT EvCmdWBTGetDownLoadCount( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetDownLoadName( VMHANDLE * core, void * wk );

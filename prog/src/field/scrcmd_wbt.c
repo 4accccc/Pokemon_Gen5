@@ -659,9 +659,46 @@ VMCMD_RESULT EvCmdWBTGetTrainerFlag( VMHANDLE * core, void * wk )
   TAMADA_Printf("EvCmdWBTGetTrainerFlag(%d) = %d\n", flag_id, *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
+
 //--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：WBT対戦者（ロビー出現）の動作モデルコードを取得する
+ */
 //--------------------------------------------------------------
-//VMCMD_RESULT EvCmdWBT
+VMCMD_RESULT EvCmdWBTGetLobbyMMdlCode( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  SCRCMD_WORK * work = wk;
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+  u16 * ret_wk1 = SCRCMD_GetVMWork( core, wk );
+  u16 * ret_wk2 = SCRCMD_GetVMWork( core, wk );
+  u16 * ret_wk3 = SCRCMD_GetVMWork( core, wk );
+
+  *ret_wk1 = WBTSYS_GetRomTrainerMMdlID( wbtsys, WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_1 ) );
+  *ret_wk2 = WBTSYS_GetRomTrainerMMdlID( wbtsys, WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_2 ) );
+  *ret_wk3 = WBTSYS_GetRomTrainerMMdlID( wbtsys, WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_3 ) );
+  TAMADA_Printf("EvCmdWBTGetLobbyMMdlCode() = %d,%d,%d\n", *ret_wk1, *ret_wk2, *ret_wk3 );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：WBT対戦者（ロビー出現）のIDを取得する
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetLobbyTrainerID( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK * work = wk;
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+  u16 pos_id   = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  *ret_wk = WBTSAVE_GetTrainerID( wbtsave, pos_id );
+  TAMADA_Printf("EvCmdWBTGetLobbyTrainerID(%d) = %d\n", pos_id, *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //============================================================================================
 //============================================================================================

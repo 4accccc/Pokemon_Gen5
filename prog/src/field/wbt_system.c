@@ -33,7 +33,6 @@
 #include "savedata/wbt_download.h"
 
 #include "sound/swan_sound_data.sadl"
-#include "arc/wbt/wbt_trlist.naix"
 
 #ifdef  PM_DEBUG
 //#define DEBUG_WEAK_PARTY  //定義すると手持ちが激しく弱くなる
@@ -86,17 +85,8 @@ WBTSYS * WBTSYS_Create( HEAPID heapID )
     WBTTRAINER_Init( &wbtsys->wbt_trainer[ i ], heapID );
   }
 
-  { //ROMトレーナーデータを読み込む
-    ARCHANDLE * handle;
-    u32 size;
-    handle = GFL_ARC_OpenDataHandle( ARCID_WBT_TRLIST, GFL_HEAP_LOWID(wbtsys->heapID) );
-    wbtsys->rom_trainer_data = GFL_ARC_LoadDataAllocByHandle( handle,
-        NARC_wbt_trlist_wbt_trainer_bin, wbtsys->heapID );
-    size = GFL_ARC_GetDataSizeByHandle( handle, NARC_wbt_trlist_wbt_trainer_bin );
-    GF_ASSERT( size % sizeof(WBT_TRDATA) == 0 );
-    wbtsys->rom_trainer_num = size / sizeof(WBT_TRDATA);
-    GFL_ARC_CloseDataHandle( handle );
-  }
+  //ROMトレーナーデータを読み込む
+  wbtsys->rom_trainer_data = WBTTOOL_LoadRomTrainerData( wbtsys->heapID, &wbtsys->rom_trainer_num );
 
   return wbtsys;
 }
@@ -128,11 +118,25 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
  * @todo  メモリ圧迫に備えて、バイナリから読み込むように修正
  */
 //------------------------------------------------------------------
-static void WBTSYS_GetTrRomData( const WBTSYS * wbtsys, u8 tr_id, WBT_TRDATA * tr_data )
+static void WBTSYS_GetRomTrainerData( const WBTSYS * wbtsys, u16 tr_id, WBT_TRDATA * tr_data )
 {
   const WBT_TRDATA * rom_trdata = wbtsys->rom_trainer_data;
   GF_ASSERT( tr_id < wbtsys->rom_trainer_num );
   *tr_data = rom_trdata[ tr_id ];
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief ROMトレーナーデータの動作モデルID取得
+ * @param[in]   wbtsys
+ * @param[in]   tr_id
+ * @return      u16
+ */
+//------------------------------------------------------------------
+u16 WBTSYS_GetRomTrainerMMdlID( const WBTSYS * wbtsys, u16 tr_id )
+{
+  GF_ASSERT( tr_id < wbtsys->rom_trainer_num );
+  return wbtsys->rom_trainer_data[ tr_id ].mmdl_id;
 }
 
 //------------------------------------------------------------------
@@ -443,7 +447,7 @@ static void WBTTRAINER_SetRomTrainer(
   WBT_TRDATA tr_rom_data;
   BOOL has_ace;
 
-  WBTSYS_GetTrRomData( wbtsys, tr_id, &tr_rom_data );
+  WBTSYS_GetRomTrainerData( wbtsys, tr_id, &tr_rom_data );
   has_ace = tr_rom_data.ace_poke_id != 0 ? TRUE: FALSE;
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_ROM,
       tr_id, tr_rom_data.sex, tr_rom_data.priority, has_ace, tr_rom_data.type,
@@ -740,7 +744,7 @@ void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
       const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
       WBT_TRDATA tr_rom_data;
       GF_ASSERT( wbt_tr->wbt_tr_type == WBT_TRTYPE_ROM );
-      WBTSYS_GetTrRomData( wbtsys, wbt_tr->tr_id, &tr_rom_data );
+      WBTSYS_GetRomTrainerData( wbtsys, wbt_tr->tr_id, &tr_rom_data );
       *btl_bgm = tr_rom_data.btl_bgm_id;
       *win_bgm = tr_rom_data.win_bgm_id;
     }
@@ -1877,7 +1881,7 @@ static u32 countAliveStatus( const POKEPARTY * party, const BtlPokeStatCode * pa
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static u8 getSurvivalCountPos( WBTSTAGE stage )
+static u8 getBattleRecordIndex( WBTSTAGE stage )
 {
   int pos = 0;
   switch (stage)
@@ -1885,9 +1889,9 @@ static u8 getSurvivalCountPos( WBTSTAGE stage )
   default:
     GF_ASSERT( 0 );
     break;
-  case WBTSTAGE_1ST:    pos = 0; break;
+  case WBTSTAGE_1ST:    pos = 2; break;
   case WBTSTAGE_2ND:    pos = 1; break;
-  case WBTSTAGE_FINAL:  pos = 2; break;
+  case WBTSTAGE_FINAL:  pos = 0; break;
   }
   return  pos;
 }
@@ -1902,7 +1906,7 @@ static u8 getSurvivalCountPos( WBTSTAGE stage )
 //------------------------------------------------------------------
 u8 WBTSYS_GetSurvivalCount( const WBTSYS * wbtsys, WBTSTAGE stage )
 {
-  u8 pos = getSurvivalCountPos( stage );
+  u8 pos = getBattleRecordIndex( stage );
   return wbtsys->survival_count[ pos ];
 }
 
@@ -1910,7 +1914,7 @@ u8 WBTSYS_GetSurvivalCount( const WBTSYS * wbtsys, WBTSTAGE stage )
 //------------------------------------------------------------------
 static void WBTSYS_SetSurvivalCount( WBTSYS * wbtsys, WBTSTAGE stage, u8 count )
 {
-  u8 pos = getSurvivalCountPos( stage );
+  u8 pos = getBattleRecordIndex( stage );
   wbtsys->survival_count[ pos ] = count;
 }
 
@@ -1949,12 +1953,16 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
   }
 
   {
-    //戦ったかどうかのフラグを反映
     const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
+    WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
     if ( wbt_tr->tr_id < WBTSAVE_FLAG_MAX )
-    {
-      WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+    { //戦ったかどうかのフラグを反映
       WBTSAVE_SetFlag( wbtsave, wbt_tr->tr_id );
+    }
+    if ( wbtsys->wbtcup != WBTCUP_DOWNLOAD )
+    { //対戦相手のトレーナーIDを保存する
+      u8 pos = getBattleRecordIndex( wbtsys->stage );
+      WBTSAVE_SetTrainerID( wbtsave, pos, wbt_tr->tr_id );
     }
   }
   *ret_wk = result;

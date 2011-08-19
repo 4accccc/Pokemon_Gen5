@@ -12883,7 +12883,7 @@
 
 //--------------------------------------------------------------
 /**
- * @brief WBT:  対戦済みフラグの取得
+ * @brief WBT:対戦済みフラグの取得
  * @param[in]   trainer_id
  * @param[out]  ret_wk
  */
@@ -12895,6 +12895,39 @@
     .short  EV_SEQ_WBT_GET_TRAINER_FLAG
     .short  \trainer_id
     .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:ロビーの対戦者のWBTトレーナーID取得
+ * @param[in]   pos_id  SCR_WBT_LOBBY_OBJ_～（script_def.h定義）
+ * @param[out]  ret_wk  対応するWBTトレーナーID
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_LOBBY_TRAINER_ID( pos_id, ret_wk ) \
+    _ASM_WBT_GET_LOBBY_TRAINER_ID pos_id, ret_wk
+    .macro  _ASM_WBT_GET_LOBBY_TRAINER_ID pos_id, ret_wk
+    .short  EV_SEQ_WBT_GET_LOBBY_TRAINER_ID
+    .short  \pos_id
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:ロビーの対戦者の動作モデルコード取得
+ * @param[out]  ret_wk1 SCR_WBT_LOBBY_OBJ_1に対応する動作も出るコード
+ * @param[out]  ret_wk2 SCR_WBT_LOBBY_OBJ_2に対応する動作も出るコード
+ * @param[out]  ret_wk3 SCR_WBT_LOBBY_OBJ_3に対応する動作も出るコード
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_LOBBY_TRAINER_MMDL( ret_wk1, ret_wk2, ret_wk3 ) \
+    _ASM_WBT_GET_LOBBY_TRAINER_MMDL ret_wk1, ret_wk2, ret_wk3
+
+    .macro  _ASM_WBT_GET_LOBBY_TRAINER_MMDL ret_wk1, ret_wk2, ret_wk3
+    .short  EV_SEQ_WBT_GET_LOBBY_TRAINER_MMDL
+    .short  \ret_wk1
+    .short  \ret_wk2
+    .short  \ret_wk3
     .endm
 
 //--------------------------------------------------------------

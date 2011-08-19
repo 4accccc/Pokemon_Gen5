@@ -38,17 +38,36 @@ _EVENT_DATA_END
 INIT_EVENT_START  ev_init_wbt_lobby
   _WBT_SYSTEM_CHECK_ENABLE( SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
-    _WBT_GET_RECEPTION_ID( SCWK_ANSWER )
-    IF $SCWK_ANSWER == SCR_WBT_RECEPTION1 THEN
-      $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_01
-      _OBJ_POS_CHANGE( SCWK_TARGET_OBJID, 15, 0, 5, DIR_LEFT )
-    ELSIF $SCWK_ANSWER == SCR_WBT_RECEPTION2 THEN
-      $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_02
-      _OBJ_POS_CHANGE( SCWK_TARGET_OBJID, 15, 0, 5, DIR_RIGHT )
-    ENDIF
+    _CALL ev_init_wbt_lobby_reception
+    _CALL ev_init_wbt_lobby_obj
   ENDIF
 INIT_EVENT_END
 
+//WBT会場から退出するときの受付嬢の位置修正
+ev_init_wbt_lobby_reception:
+  _WBT_GET_RECEPTION_ID( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_WBT_RECEPTION1 THEN
+    $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_01
+    _OBJ_POS_CHANGE( SCWK_TARGET_OBJID, 15, 0, 5, DIR_LEFT )
+  ELSIF $SCWK_ANSWER == SCR_WBT_RECEPTION2 THEN
+    $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_02
+    _OBJ_POS_CHANGE( SCWK_TARGET_OBJID, 15, 0, 5, DIR_RIGHT )
+  ENDIF
+  _RET
+
+//WBT会場から退出するときに対戦者を表示するかどうかの処理
+ev_init_wbt_lobby_obj:
+  _WBT_SYSTEM_GET_STAGE( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_WBT_STAGE_WIN THEN
+    //優勝した場合は出現させる
+    _FLAG_RESET( FV_WBT_LOBBY_LEADERS )
+    _WBT_GET_LOBBY_TRAINER_MMDL( OBJCHRWORK0, OBJCHRWORK1, OBJCHRWORK2 )
+  ELSE
+    //消しておく
+    _FLAG_SET( FV_WBT_LOBBY_LEADERS )
+  ENDIF
+  _RET
+  
 /********************************************************************/
 /*						FIELD_RECOVER_LABEL                         */
 /********************************************************************/

@@ -750,6 +750,11 @@
 #define SCR_WBT_EFFECT_CHAMP          (20) ///<チャンピオンズ
 #define SCR_WBT_EFFECT_MAX            (21)
 
+//対戦後、ロビーにいる出場者の指定
+#define SCR_WBT_LOBBY_OBJ_1           (0)   ///<ロビーの対戦相手その１
+#define SCR_WBT_LOBBY_OBJ_2           (1)   ///<ロビーの対戦相手その２
+#define SCR_WBT_LOBBY_OBJ_3           (2)   ///<ロビーの対戦相手その３
+
 //--------------------------------------------------------------
 //  scrcmd_animal_trail.c
 //  けものみち関連定義

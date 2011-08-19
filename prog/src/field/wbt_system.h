@@ -111,6 +111,10 @@ extern void WBTSYS_LoadDLData( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_UnloadDLData( WBTSYS * wbtsys );
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+extern u16 WBTSYS_GetRomTrainerMMdlID( const WBTSYS * wbtsys, u16 tr_id );
+
+//------------------------------------------------------------------
 //  in wbt_calc_result.c
 //------------------------------------------------------------------
 extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
