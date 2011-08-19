@@ -40,7 +40,8 @@ typedef struct
 struct _RESORT_PEOPLE
 {
   RESORT_PEOPLE_TYPE people_type;
-  u16 peopleID;
+  u16   peopleID;
+  BOOL  is_talk;
   MMDLSYS * p_mmdlsys;
   RESORT_ABSTRUCT_DATA *p_abstruct_data;
   const RESORT_BINARY_PEOPLE_DATA *cp_binary;
@@ -258,7 +259,7 @@ void RESORT_PEOPLE_ChangeOBJCode( RESORT_PEOPLE *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  話しかけ許可フラグ操作
+ *	@brief  話しかけ中フラグ操作
  *
  *	@param	RESORT_PEOPLE *p_wk ワーク
  *	@param	is_talk TRUEで話せる  FALSEで話せない
@@ -266,8 +267,20 @@ void RESORT_PEOPLE_ChangeOBJCode( RESORT_PEOPLE *p_wk )
 //-----------------------------------------------------------------------------
 void RESORT_PEOPLE_SetTalkFlag( RESORT_PEOPLE *p_wk, BOOL is_talk )
 {
-  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
-  MMDL_SetStatusBitTalkOFF( p_mmdl, !is_talk );
+  p_wk->is_talk = is_talk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  話しかけられているかチェック
+ *
+ *	@param	const RESORT_PEOPLE *cp_wk  ワーク
+ *
+ *	@return TRUE話しかけられている  FALSE話しかけられていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_PEOPLE_GetTalkFlag( const RESORT_PEOPLE *cp_wk )
+{
+  return cp_wk->is_talk;
 }
 //----------------------------------------------------------------------------
 /**
@@ -299,6 +312,20 @@ RESORT_INSTITUTION_DATA * RESORT_PEOPLE_GetInstitution( RESORT_PEOPLE *p_wk )
 static BOOL RESORT_PEOPLE_IsCompData( const RESORT_PEOPLE *cp_wk, const void *cp_data_adrs )
 {
   return RESORT_ABSTRUCT_DATA_GetDataAdrs( cp_wk->p_abstruct_data ) == cp_data_adrs;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データを比較
+ *
+ *	@param	const RESORT_PEOPLE *cp_wk  ワーク
+ *	@param	RESORT_ABSTRUCT_DATA *cp_abstruct 比較するデータ
+ *
+ *	@return TRUEならば同じデータ　FALSEならば違うデータ
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_PEOPLE_IsCompAbstructData( const RESORT_PEOPLE *cp_wk, const RESORT_ABSTRUCT_DATA *cp_abstruct )
+{
+  return cp_wk->p_abstruct_data == cp_abstruct;
 }
 //----------------------------------------------------------------------------
 /**
@@ -881,4 +908,30 @@ RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByIndex( RESORT_PEOPLE_SYS *p_wk, u32
 {
   GF_ASSERT( idx < p_wk->param.max );
   return p_wk->p_people[idx];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物を取得  抽象データ版
+ *
+ *	@param	RESORT_PEOPLE_SYS *p_wk ワーク
+ *	@param	RESORT_ABSTRUCT_DATA *cp_abstruct 抽象データ
+ *
+ *	@return 人物
+ */
+//-----------------------------------------------------------------------------
+RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByAbstruct( RESORT_PEOPLE_SYS *p_wk, const RESORT_ABSTRUCT_DATA *cp_abstruct )
+{
+  int i;
+  for( i = 0; i < p_wk->param.max; i++ )
+  {
+    RESORT_PEOPLE *p_people = p_wk->p_people[i];
+    if( p_people )
+    {
+      if( RESORT_PEOPLE_IsCompAbstructData( p_people, cp_abstruct ) )
+      {
+        return p_people;
+      }
+    }
+  }
+  return NULL;
 }

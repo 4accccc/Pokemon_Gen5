@@ -50,6 +50,7 @@ extern void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk );
 extern RESORT_ABSTRUCT_DATA * RESORT_PEOPLE_GetAbstructData( RESORT_PEOPLE *p_wk );
 extern void RESORT_PEOPLE_ChangeOBJCode( RESORT_PEOPLE *p_wk );
 extern void RESORT_PEOPLE_SetTalkFlag( RESORT_PEOPLE *p_wk, BOOL is_talk );
+extern BOOL RESORT_PEOPLE_GetTalkFlag( const RESORT_PEOPLE *cp_wk );
 
 //èZêlÇµÇ©égÇ¶Ç»Ç¢
 extern RESORT_INSTITUTION_DATA * RESORT_PEOPLE_GetInstitution( RESORT_PEOPLE *p_wk );
@@ -120,3 +121,4 @@ extern void RESORT_PEOPLE_Delete( RESORT_PEOPLE_SYS *p_wk, RESORT_PEOPLE *p_peop
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByMmdl( RESORT_PEOPLE_SYS *p_wk, const MMDL* cp_mmdl );
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByData( RESORT_PEOPLE_SYS *p_wk, const void *cp_data_adrs );
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByIndex( RESORT_PEOPLE_SYS *p_wk, u32 idx );
+extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByAbstruct( RESORT_PEOPLE_SYS *p_wk, const RESORT_ABSTRUCT_DATA *cp_abstruct );

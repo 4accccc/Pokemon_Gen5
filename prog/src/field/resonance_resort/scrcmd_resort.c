@@ -42,7 +42,7 @@ static GMEVENT* EVENT_StartBlendBrightness( GMEVENT* parent, GAMESYS_WORK* gsys,
 
 
 extern RESORT_SYSTEM * Resort_Scrcmd_GetSystem( FIELDMAP_WORK *p_field );
-extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_field, RESORT_PEOPLE_SYS *p_people_sys );
+extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_SYS *p_people_sys );
 
 //=============================================================================
 /**
@@ -65,10 +65,19 @@ VMCMD_RESULT EvCmdResortTalkStart( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   //話し中のOBJはマージをロック
   RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_LOCK, TRUE );
+
+  //話し中フラグON
+  RESORT_PEOPLE_SetTalkFlag( p_people, TRUE );
+
+  //フィールドで群集なら停止させる
+  if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    RESORT_FIELD_StopCrowdPeople( p_field, p_people );
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -88,12 +97,14 @@ VMCMD_RESULT EvCmdResortTalkEnd( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   if( p_people )
   {
     //話し中のOBJのマージロック解除
     RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_LOCK, FALSE );
+
+    RESORT_PEOPLE_SetTalkFlag( p_people, FALSE );
   }
   else
   {
@@ -122,7 +133,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   switch( param )
   {
@@ -193,7 +204,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   u16 param     = VMGetU16( p_core );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
   void *p_people_data = RESORT_PEOPLE_GetDataAdrs( p_people );
   const u16 heapID = FIELDMAP_GetHeapID( p_field );
 
@@ -339,7 +350,7 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
 
   RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   switch( param )
   {
@@ -396,7 +407,7 @@ VMCMD_RESULT EvCmdResortKeepPeople( VMHANDLE *p_core, void *p_wk_adrs )
 
   if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
   {
-    RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+    RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
     RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_KEEP, TRUE );
   }
   else
@@ -450,7 +461,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
   RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
   void *p_people_data = RESORT_PEOPLE_GetDataAdrs( p_people );
 
   RESORT_RESIDENT_DATA *p_data;
@@ -672,14 +683,12 @@ VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs )
 
   u16 type    = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 idx     = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  RESORT_PEOPLE* p_people = NULL;
 
   switch( type )
   {
   case RESORT_DELTE_PEOPLE_MINE:
-    {
-      RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
-      RESORT_PEOPLE_Delete( p_people_sys, p_people );
-    }
+    p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
     break;
   case RESORT_PEOPLE_TYPE_TOURIST:
     GF_ASSERT(0);
@@ -704,6 +713,17 @@ VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   default:
     GF_ASSERT(0);
+  }
+
+
+  if( p_people )
+  {
+    //フィールドであるなら、群集に入っている場合があるので外す
+    if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+    {
+      RESORT_FIELD_DeleteCrowdPeople( p_field, p_people );
+    }
+    RESORT_PEOPLE_Delete( p_people_sys, p_people );
   }
 
   RESORT_DATA_MANAGER_Update( p_data_manager );
@@ -762,7 +782,7 @@ VMCMD_RESULT EvCmdResortJobChangeEx( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
 
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   switch( param )
   {
@@ -820,7 +840,7 @@ VMCMD_RESULT EvCmdResortMergeOff( VMHANDLE *p_core, void *p_wk_adrs )
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
 
   //マージフラグをOFF
@@ -849,7 +869,7 @@ VMCMD_RESULT EvCmdResortNewInstatitutionEntrance( VMHANDLE *p_core, void *p_wk_a
   u16 *p_ret_y	= SCRCMD_GetVMWork( p_core, p_wk );
 
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   //TODO
   *p_ret_x = 0;
@@ -894,7 +914,7 @@ VMCMD_RESULT EvCmdResortLot( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
 
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
   void *p_data_adrs = RESORT_PEOPLE_GetDataAdrs( p_people );
 
   *p_ret_wk = RESORT_DATA_GetRndRecv( p_data_adrs, 11 );
@@ -1080,7 +1100,7 @@ VMCMD_RESULT EvCmdResortSetDayFlag( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_DAY_FLAG, TRUE );
 
@@ -1111,7 +1131,7 @@ VMCMD_RESULT EvCmdResortGetInstitutionData( VMHANDLE *p_core, void *p_wk_adrs )
 
   RESORT_PEOPLE_SYS *p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
   RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -1132,7 +1152,7 @@ VMCMD_RESULT EvCmdResortSetInstitutionData( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -1155,7 +1175,7 @@ VMCMD_RESULT EvCmdResortEndService( VMHANDLE *p_core, void *p_wk_adrs )
   GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   u16 place = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 flag  = SCRCMD_GetVMWorkValue( p_core, p_wk );
@@ -1201,7 +1221,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
 
@@ -1458,7 +1478,7 @@ VMCMD_RESULT EvCmdResortEndItem( VMHANDLE *p_core, void *p_wk_adrs )
   GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_PRESENT_ID, 0 );
   RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_PRESENT_NUM, 0 );
@@ -1875,7 +1895,7 @@ VMCMD_RESULT EvCmdResortGetServiceData( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
 
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
   void *p_data_adrs = RESORT_PEOPLE_GetDataAdrs( p_people );
   const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_data_adrs );
   u16 service_idx = SCRCMD_GetVMWorkValue( p_core, p_wk );
@@ -2053,49 +2073,13 @@ static RESORT_PEOPLE_SYS * Resort_Scrcmd_GetPeopleSys( FIELDMAP_WORK *p_field )
  *	@note   field_event_check.cのgetFrontTalkOBJ関数とほぼ同じことをしています
  */
 //-----------------------------------------------------------------------------
-RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_field, RESORT_PEOPLE_SYS *p_people_sys )
+RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_SYS *p_people_sys )
 {
-  enum
-  {
-    FRONT_TALKOBJ_HEIGHT_DIFF =  (FX32_CONST(16)), //話しかけ可能なOBJのY値差分
-  };
+  SCRIPT_WORK *p_sc = SCRCMD_WORK_GetScriptWork( p_wk );
+  MMDL *p_mmdl = SCRIPT_GetTargetObj( p_sc );
+  RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_mmdl );
 
-  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_field );
-  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( p_field );
-  FLDMAPPER *p_mapper = FIELDMAP_GetFieldG3Dmapper( p_field );
-
-  s16 gx, gy, gz;
-  RESORT_PEOPLE *p_people;
-  MMDL* p_playermmdl;
-  MMDL* p_frontmmdl;
-  MAPATTR attr;
-  MAPATTR_VALUE attr_val;
-  VecFx32 pos;
-
-  // 自機動作モデルを取得
-  p_playermmdl = FIELD_PLAYER_GetMMdl( p_player );
-  FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
-
-  //カウンターかどうかチェック
-  MMDL_TOOL_GridPosToVectorPos( gx, gy, gz, &pos );
-  attr = MAPATTR_GetAttribute( p_mapper, &pos );
-  attr_val = MAPATTR_GetAttrValue( attr );
-  if( MAPATTR_VALUE_CheckCounter(attr_val) == TRUE )
-  {
-    u16 dir = MMDL_GetDirDisp( p_playermmdl );
-    MMDL_TOOL_AddDirGrid( dir, &gx, &gz, 1 );
-  }
-
-  // 目の前にいる動作モデルを検索
-  p_frontmmdl = MMDLSYS_SearchGridPosEx(
-      cp_mmdlsys, gx, gz, MMDL_GetVectorPosY(p_playermmdl),
-      FRONT_TALKOBJ_HEIGHT_DIFF, FALSE );
-
-
-  // 動作モデルから人物を取得
-  p_people = RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_frontmmdl );
-
-  //GF_ASSERT( p_people != NULL ); //いなくても許可する箇所があるため
+  GF_ASSERT( p_people != NULL );
   return p_people;
 }
 

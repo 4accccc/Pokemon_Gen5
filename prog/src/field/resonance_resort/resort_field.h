@@ -41,3 +41,5 @@ extern void RESORT_FIELD_Move( FIELDMAP_WORK *p_fieldmap );
 extern RESORT_PEOPLE_SYS * RESORT_FIELD_GetPeopleSys( FIELDMAP_WORK *p_fieldmap );
 extern RESORT_NPC_SYS * RESORT_FIELD_GetNpcSys( FIELDMAP_WORK *p_fieldmap );
 extern RESORT_SYSTEM * RESORT_FIELD_GetResortSys( FIELDMAP_WORK *p_fieldmap );
+extern void RESORT_FIELD_DeleteCrowdPeople( FIELDMAP_WORK *p_fieldmap, void* p_people );
+extern void RESORT_FIELD_StopCrowdPeople( FIELDMAP_WORK *p_fieldmap, void* p_people );

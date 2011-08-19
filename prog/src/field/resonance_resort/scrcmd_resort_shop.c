@@ -269,7 +269,7 @@ static void sort_shop_main( SHOP_BUY_APP_WORK *wk );
 static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
 static void string_alloc( SHOP_BUY_APP_WORK *wk );  
 
-static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( FIELDMAP_WORK *p_fieldmap );
+static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( SCRCMD_WORK*   work, FIELDMAP_WORK *p_fieldmap );
 
 static void ItemList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
 static void SelectPeople_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
@@ -297,7 +297,7 @@ static void InstitutionList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
 
 //scrcmd_resort.cのソースを使う
 extern RESORT_SYSTEM * Resort_Scrcmd_GetSystem( FIELDMAP_WORK *p_field );
-extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys );
+extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_SYS *p_people_sys );
 
 //--------------------------------------------------------------------
 /**
@@ -360,7 +360,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
 
     //自分のお店データを取得
     {
-      RESORT_PEOPLE *p_people = Resort_ScrcmdShop_GetFrontPeople( fieldmap );
+      RESORT_PEOPLE *p_people = Resort_ScrcmdShop_GetFrontPeople( work, fieldmap );
 
       GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
 
@@ -2792,7 +2792,7 @@ static void submenu_screen_clear( int type )
  *	@return 目の前の人物を取得
  */
 //-----------------------------------------------------------------------------
-static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( FIELDMAP_WORK *p_fieldmap )
+static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( SCRCMD_WORK*   work, FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_PEOPLE_SYS *p_people_sys = NULL;
   {
@@ -2808,7 +2808,7 @@ static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( FIELDMAP_WORK *p_fieldm
     GF_ASSERT( p_people_sys != NULL );
   }
 
-  return Resort_Scrcmd_GetFrontPeople( p_fieldmap, p_people_sys );
+  return Resort_Scrcmd_GetFrontPeople( work, p_people_sys );
 }
 
 //アイテム・サービスリストの場合

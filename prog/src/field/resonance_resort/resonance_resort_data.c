@@ -37,7 +37,6 @@
 //外部公開
 #include "field/resonance_resort_data.h"
 
-
 #ifdef PM_DEBUG
 #define DEBUG_RESORT_PRINT_ON
 //#define DEBUG_EXTEND_SET_GET_CHECK
@@ -595,21 +594,24 @@ static void RESORT_EXTEND1_DATA_SetMyData( RESORT_EXTEND1_DATA *p_wk, const GAME
 //-----------------------------------------------------------------------------
 static BOOL RESORT_EXTEND1_DATA_IsValid( const RESORT_EXTEND1_DATA *cp_wk )
 {
-  u8 year   = RESORT_DATE_GET_YEAR( cp_wk->recommend_date );
-  u8 month  = RESORT_DATE_GET_MONTH( cp_wk->recommend_date );
-  u8 day    = RESORT_DATE_GET_DAY( cp_wk->recommend_date );
+  if( cp_wk->recommend_medalID < MDLID_MAX )
+  {
+    u8 year   = RESORT_DATE_GET_YEAR( cp_wk->recommend_date );
+    u8 month  = RESORT_DATE_GET_MONTH( cp_wk->recommend_date );
+    u8 day    = RESORT_DATE_GET_DAY( cp_wk->recommend_date );
 
-  if( !( 0 <= year && year <= 99) )
-  {
-    return FALSE;
-  }
-  if( !( 1 <= month && month <= 12 ) )
-  {
-    return FALSE;
-  }
-  if( !( 1<= day && day <= 31 ) )
-  {
-    return FALSE;
+    if( !( 0 <= year && year <= 99) )
+    {
+      return FALSE;
+    }
+    if( !( 1 <= month && month <= 12 ) )
+    {
+      return FALSE;
+    }
+    if( !( 1<= day && day <= 31 ) )
+    {
+      return FALSE;
+    }
   }
 
   return TRUE;
@@ -1136,7 +1138,8 @@ BOOL RESORT_RECV_DATA_IsSameOwnerRecv( const RESORT_RECV_DATA *cp_wk, const RESO
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  初回生成時の設定
+ *	@brief  初回生成時の設定  ここはフィールドのどこからも呼ばれるので
+ *	                          ファイルアクセス禁止
  *
  *	@param	RESORT_RECV_DATA *p_wk  ワーク
  *	@param	type                    通信タイプ
@@ -1162,6 +1165,7 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_MEET_MIN, time.minute );
   }
 
+#if 0 //TODO
   {
     u32 lv  = RESORT_CITY_DATA_GetData( sp_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
     RESORT_BINARY_CITY *p_city = RESORT_BINARY_CITY_Init( GFL_HEAP_LOWID(HEAPID_PROC) );
@@ -1195,24 +1199,9 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
     RESORT_BINARY_PRESENT_Exit(p_present);
     RESORT_BINARY_CITY_Exit(p_city);
   }
+#endif
 
-  {
-    //タイプによってなりたいものがきまる
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, RESORT_DATA_GetRndRecv(p_wk, RESORT_RESIDENT_TYPE_MAX ) );
-
-    //TODO α用にジムにならない
-    if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_WANT_JOB,NULL ) == RESORT_RESIDENT_TYPE_GYM )
-    {
-      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, RESORT_RESIDENT_TYPE_MARKET );
-    }
-    //TODO α用に家にならない
-    if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_WANT_JOB,NULL ) == RESORT_RESIDENT_TYPE_HOUSE )
-    {
-      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, RESORT_RESIDENT_TYPE_MARKET );
-    }
-
-    Resort_Recv_Data_SetWantJob( p_wk );
-  }
+  Resort_Recv_Data_SetWantJob( p_wk );
 }
 
 //----------------------------------------------------------------------------
