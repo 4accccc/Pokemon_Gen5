@@ -1,0 +1,645 @@
+//======================================================================
+//                wbt_subevent.ev
+//
+//    スクリプトファイル：wbt_subevent用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "msg_wbt_subevent.h"
+
+//--------------------------------------------------------------
+//               スクリプト本体
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA   ev_wbt_subevent_leader1
+_EVENT_DATA   ev_wbt_subevent_leader2
+_EVENT_DATA   ev_wbt_subevent_leader3
+_EVENT_DATA   ev_wbt_subevent_sunglasses
+_EVENT_DATA_END
+
+
+/**************************************************************/
+/*            ZONE_CHANGE_LABEL                               */
+/**************************************************************/
+//ev_zone_wbt_subevent:
+//  _END
+
+/**************************************************************/
+//  決勝での対戦相手
+/**************************************************************/
+EVENT_START ev_wbt_subevent_leader1
+  _TALK_OBJ_START()
+  _WBT_GET_LOBBY_TRAINER_ID( SCR_WBT_LOBBY_OBJ_1, SCWK_ANSWER )
+  _CALL   ev_wbt_leader_main
+EVENT_END
+
+/**************************************************************/
+//  二回戦での対戦相手
+/**************************************************************/
+EVENT_START ev_wbt_subevent_leader2
+  _TALK_OBJ_START()
+  _WBT_GET_LOBBY_TRAINER_ID( SCR_WBT_LOBBY_OBJ_2, SCWK_ANSWER )
+  _CALL   ev_wbt_leader_main
+EVENT_END
+
+/**************************************************************/
+//  一回戦での対戦相手
+/**************************************************************/
+EVENT_START ev_wbt_subevent_leader3
+  _TALK_OBJ_START()
+  _WBT_GET_LOBBY_TRAINER_ID( SCR_WBT_LOBBY_OBJ_3, SCWK_ANSWER )
+  _CALL   ev_wbt_leader_main
+EVENT_END
+
+
+ev_wbt_leader_main:
+  _BALLOONWIN_TALKOBJ_MSG( SCWK_ANSWER )
+  _LAST_KEYWAIT()
+  _RET
+
+/**************************************************************/
+/**************************************************************/
+DEFINE_LOCAL  LWK_LOOP
+DEFINE_LOCAL  LWK_TOTAL
+DEFINE_LOCAL  LWK_SELECT_POS
+
+EVENT_START ev_wbt_subevent_sunglasses
+  _TALK_OBJ_START()
+
+  _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_01 )
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
+  _CALL sub_count_issyu
+  IF $LWK_TOTAL != 0 THEN
+    _BMPMENU_MAKE_LIST( msg_wbt_subev_area_01, msg_wbt_subev_area_01 )
+  ENDIF
+  _CALL sub_count_kanto
+  IF $LWK_TOTAL != 0 THEN
+    _BMPMENU_MAKE_LIST( msg_wbt_subev_area_02, msg_wbt_subev_area_02 )
+  ENDIF
+  _CALL sub_count_jouto
+  IF $LWK_TOTAL != 0 THEN
+    _BMPMENU_MAKE_LIST( msg_wbt_subev_area_03, msg_wbt_subev_area_03 )
+  ENDIF
+  _CALL sub_count_houen
+  IF $LWK_TOTAL != 0 THEN
+    _BMPMENU_MAKE_LIST( msg_wbt_subev_area_04, msg_wbt_subev_area_04 )
+  ENDIF
+  _CALL sub_count_sinou
+  IF $LWK_TOTAL != 0 THEN
+    _BMPMENU_MAKE_LIST( msg_wbt_subev_area_05, msg_wbt_subev_area_05 )
+  ENDIF
+  _BMPMENU_MAKE_LIST( msg_wbt_subev_cancel, msg_wbt_subev_cancel )
+  _BMPMENU_START()
+
+  SWITCH $LWK_SELECT_POS
+  CASE msg_wbt_subev_area_01 THEN
+    _CALL sub_menu_issyu
+  CASE msg_wbt_subev_area_02 THEN
+    _CALL sub_menu_kanto
+  CASE msg_wbt_subev_area_03 THEN
+    _CALL sub_menu_jouto
+  CASE msg_wbt_subev_area_04 THEN
+    _CALL sub_menu_houen
+  CASE msg_wbt_subev_area_05 THEN
+    _CALL sub_menu_sinou
+  ENDSWITCH
+
+  _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_03 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+
+sub_menu_issyu:
+  $LWK_LOOP = TRUE
+
+  WHILE $LWK_LOOP == TRUE
+    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_02 )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
+    _WBT_GET_TRAINER_FLAG(  0, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_01, msg_wbt_subev_issyu_01 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG(  1, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_02, msg_wbt_subev_issyu_02 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG(  2, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_03, msg_wbt_subev_issyu_03 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG(  3, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_04, msg_wbt_subev_issyu_04 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG(  4, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_05, msg_wbt_subev_issyu_05 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG(  5, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_06, msg_wbt_subev_issyu_06 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG(  6, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_07, msg_wbt_subev_issyu_07 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG(  7, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_08, msg_wbt_subev_issyu_08 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG(  8, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_09, msg_wbt_subev_issyu_09 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG(  9, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_10, msg_wbt_subev_issyu_10 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 10, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_11, msg_wbt_subev_issyu_11 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 11, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_12, msg_wbt_subev_issyu_12 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 12, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_13, msg_wbt_subev_issyu_13 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 13, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_14, msg_wbt_subev_issyu_14 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 19, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_issyu_00, msg_wbt_subev_issyu_00 )
+    ENDIF
+    _BMPMENU_MAKE_LIST( msg_wbt_subev_cancel, msg_wbt_subev_cancel )
+    _BMPMENU_START()
+    SWITCH $LWK_SELECT_POS
+    CASE msg_wbt_subev_issyu_01 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_01 )
+    CASE msg_wbt_subev_issyu_02 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_02 )
+    CASE msg_wbt_subev_issyu_03 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_03 )
+    CASE msg_wbt_subev_issyu_04 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_04 )
+    CASE msg_wbt_subev_issyu_05 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_05 )
+    CASE msg_wbt_subev_issyu_06 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_06 )
+    CASE msg_wbt_subev_issyu_07 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_07 )
+    CASE msg_wbt_subev_issyu_08 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_08 )
+    CASE msg_wbt_subev_issyu_09 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_09 )
+    CASE msg_wbt_subev_issyu_10 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_10 )
+    CASE msg_wbt_subev_issyu_11 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_11 )
+    CASE msg_wbt_subev_issyu_12 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_12 )
+    CASE msg_wbt_subev_issyu_13 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_13 )
+    CASE msg_wbt_subev_issyu_14 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_14 )
+    CASE msg_wbt_subev_issyu_00 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_20 )
+    DEFAULT
+      $LWK_LOOP = FALSE
+    ENDSWITCH
+  ENDWHILE
+  _RET
+
+sub_menu_kanto:
+  $LWK_LOOP = TRUE
+  WHILE $LWK_LOOP == TRUE
+    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_02 )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
+    _WBT_GET_TRAINER_FLAG( 20, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_01, msg_wbt_subev_kanto_01 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 21, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_02, msg_wbt_subev_kanto_02 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 22, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_03, msg_wbt_subev_kanto_03 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 23, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_04, msg_wbt_subev_kanto_04 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 24, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_05, msg_wbt_subev_kanto_05 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 25, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_06, msg_wbt_subev_kanto_06 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 26, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_07, msg_wbt_subev_kanto_07 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 14, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_00, msg_wbt_subev_kanto_00 )
+    ENDIF
+    _BMPMENU_MAKE_LIST( msg_wbt_subev_cancel, msg_wbt_subev_cancel )
+    _BMPMENU_START()
+    SWITCH $LWK_SELECT_POS
+    CASE msg_wbt_subev_kanto_01 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_21 )
+    CASE msg_wbt_subev_kanto_02 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_22 )
+    CASE msg_wbt_subev_kanto_03 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_23 )
+    CASE msg_wbt_subev_kanto_04 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_24 )
+    CASE msg_wbt_subev_kanto_05 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_25 )
+    CASE msg_wbt_subev_kanto_06 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_26 )
+    CASE msg_wbt_subev_kanto_07 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_27 )
+    CASE msg_wbt_subev_kanto_00 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_15 )
+    DEFAULT
+      $LWK_LOOP = FALSE
+    ENDSWITCH
+  ENDWHILE
+  _RET
+
+sub_menu_jouto:
+  $LWK_LOOP = TRUE
+  WHILE $LWK_LOOP == TRUE
+    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_02 )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
+    _WBT_GET_TRAINER_FLAG( 27, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_01, msg_wbt_subev_jouto_01 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 28, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_02, msg_wbt_subev_jouto_02 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 29, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_03, msg_wbt_subev_jouto_03 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 30, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_04, msg_wbt_subev_jouto_04 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 31, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_05, msg_wbt_subev_jouto_05 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 32, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_06, msg_wbt_subev_jouto_06 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 33, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_07, msg_wbt_subev_jouto_07 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 34, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_08, msg_wbt_subev_jouto_08 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 35, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_09, msg_wbt_subev_jouto_09 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 15, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_00, msg_wbt_subev_jouto_00 )
+    ENDIF
+    _BMPMENU_MAKE_LIST( msg_wbt_subev_cancel, msg_wbt_subev_cancel )
+    _BMPMENU_START()
+    SWITCH $LWK_SELECT_POS
+    CASE msg_wbt_subev_jouto_01 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_28 )
+    CASE msg_wbt_subev_jouto_02 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_29 )
+    CASE msg_wbt_subev_jouto_03 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_30 )
+    CASE msg_wbt_subev_jouto_04 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_31 )
+    CASE msg_wbt_subev_jouto_05 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_32 )
+    CASE msg_wbt_subev_jouto_06 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_33 )
+    CASE msg_wbt_subev_jouto_07 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_34 )
+    CASE msg_wbt_subev_jouto_08 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_35 )
+    CASE msg_wbt_subev_jouto_09 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_36 )
+    CASE msg_wbt_subev_jouto_00 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_16 )
+    DEFAULT
+      $LWK_LOOP = FALSE
+    ENDSWITCH
+  ENDWHILE
+  _RET
+
+
+
+sub_menu_houen:
+  $LWK_LOOP = TRUE
+  WHILE $LWK_LOOP == TRUE
+    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_02 )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
+    _WBT_GET_TRAINER_FLAG( 36, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_01, msg_wbt_subev_houen_01 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 37, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_02, msg_wbt_subev_houen_02 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 38, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_03, msg_wbt_subev_houen_03 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 39, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_04, msg_wbt_subev_houen_04 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 40, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_05, msg_wbt_subev_houen_05 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 41, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_06, msg_wbt_subev_houen_06 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 42, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_07, msg_wbt_subev_houen_07 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 43, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_08, msg_wbt_subev_houen_08 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 44, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_09, msg_wbt_subev_houen_09 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 16, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_00, msg_wbt_subev_houen_00 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 17, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_houen_00a, msg_wbt_subev_houen_00a )
+    ENDIF
+    _BMPMENU_MAKE_LIST( msg_wbt_subev_cancel, msg_wbt_subev_cancel )
+    _BMPMENU_START()
+    SWITCH $LWK_SELECT_POS
+    CASE msg_wbt_subev_houen_01 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_37 )
+    CASE msg_wbt_subev_houen_02 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_38 )
+    CASE msg_wbt_subev_houen_03 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_39 )
+    CASE msg_wbt_subev_houen_04 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_40 )
+    CASE msg_wbt_subev_houen_05 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_41 )
+    CASE msg_wbt_subev_houen_06 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_42 )
+    CASE msg_wbt_subev_houen_07 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_43 )
+    CASE msg_wbt_subev_houen_08 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_44 )
+    CASE msg_wbt_subev_houen_09 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_45 )
+    CASE msg_wbt_subev_houen_00 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_17 )
+    CASE msg_wbt_subev_houen_00a THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_18 )
+    DEFAULT
+      $LWK_LOOP = FALSE
+    ENDSWITCH
+  ENDWHILE
+  _RET
+
+sub_menu_sinou:
+  $LWK_LOOP = TRUE
+  WHILE $LWK_LOOP == TRUE
+    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_02 )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
+    _WBT_GET_TRAINER_FLAG( 45, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_01, msg_wbt_subev_sinou_01 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 46, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_02, msg_wbt_subev_sinou_02 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 47, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_03, msg_wbt_subev_sinou_03 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 48, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_04, msg_wbt_subev_sinou_04 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 49, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_05, msg_wbt_subev_sinou_05 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 50, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_06, msg_wbt_subev_sinou_06 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 51, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_07, msg_wbt_subev_sinou_07 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 52, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_08, msg_wbt_subev_sinou_08 )
+    ENDIF
+    _WBT_GET_TRAINER_FLAG( 14, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_00, msg_wbt_subev_sinou_00 )
+    ENDIF
+    _BMPMENU_MAKE_LIST( msg_wbt_subev_cancel, msg_wbt_subev_cancel )
+    _BMPMENU_START()
+    SWITCH $LWK_SELECT_POS
+    CASE msg_wbt_subev_sinou_01 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_46 )
+    CASE msg_wbt_subev_sinou_02 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_47 )
+    CASE msg_wbt_subev_sinou_03 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_48 )
+    CASE msg_wbt_subev_sinou_04 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_49 )
+    CASE msg_wbt_subev_sinou_05 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_50 )
+    CASE msg_wbt_subev_sinou_06 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_51 )
+    CASE msg_wbt_subev_sinou_07 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_52 )
+    CASE msg_wbt_subev_sinou_08 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_53 )
+    CASE msg_wbt_subev_sinou_00 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_19 )
+    DEFAULT
+      $LWK_LOOP = FALSE
+    ENDSWITCH
+  ENDWHILE
+  _RET
+
+
+sub_count_issyu:
+  $LWK_TOTAL = 0
+  _WBT_GET_TRAINER_FLAG(  0, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG(  1, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG(  2, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG(  3, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG(  4, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG(  5, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG(  6, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG(  7, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG(  8, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG(  9, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 10, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 11, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 12, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 13, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  //アデク：WBチャンピオン
+  _WBT_GET_TRAINER_FLAG( 19, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _RET
+
+sub_count_kanto:
+  $LWK_TOTAL = 0
+  _WBT_GET_TRAINER_FLAG( 20, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 21, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 22, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 23, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 24, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 25, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 26, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  //グリーン：赤緑チャンピオン
+  _WBT_GET_TRAINER_FLAG( 14, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _RET
+
+sub_count_jouto:
+  $LWK_TOTAL = 0
+  _WBT_GET_TRAINER_FLAG( 27, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 28, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 29, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 30, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 31, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 32, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 33, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 34, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 35, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  //ワタル：金銀チャンピオン
+  _WBT_GET_TRAINER_FLAG( 15, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _RET
+
+sub_count_houen:
+  $LWK_TOTAL = 0
+  _WBT_GET_TRAINER_FLAG( 36, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 37, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 38, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 39, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 40, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 41, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 42, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 43, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 44, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  //ダイゴ：RSチャンピオン
+  _WBT_GET_TRAINER_FLAG( 16, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  //ミクリ：エメラルドチャンピオン
+  _WBT_GET_TRAINER_FLAG( 17, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _RET
+
+sub_count_sinou:
+  $LWK_TOTAL = 0
+  _WBT_GET_TRAINER_FLAG( 45, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 46, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 47, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 48, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 49, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 50, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 51, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 52, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  //シロナ：DPチャンピオン
+  _WBT_GET_TRAINER_FLAG( 18, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  _RET
+
+
+

@@ -23,6 +23,7 @@
 #define D05R0101_WKOBJCODE00              10
 #define D05R0101_WKOBJCODE01              11
 #define D05R0101_WKOBJCODE02              12
+#define D05R0101_SUNGLASSES_01            13
 
 #endif //ZONE_D05R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

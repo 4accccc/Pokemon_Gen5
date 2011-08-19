@@ -674,10 +674,25 @@ VMCMD_RESULT EvCmdWBTGetLobbyMMdlCode( VMHANDLE * core, void * wk )
   u16 * ret_wk1 = SCRCMD_GetVMWork( core, wk );
   u16 * ret_wk2 = SCRCMD_GetVMWork( core, wk );
   u16 * ret_wk3 = SCRCMD_GetVMWork( core, wk );
+  u16 tr_id1 = WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_1 );
+  u16 tr_id2 = WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_2 );
+  u16 tr_id3 = WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_3 );
 
-  *ret_wk1 = WBTSYS_GetRomTrainerMMdlID( wbtsys, WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_1 ) );
-  *ret_wk2 = WBTSYS_GetRomTrainerMMdlID( wbtsys, WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_2 ) );
-  *ret_wk3 = WBTSYS_GetRomTrainerMMdlID( wbtsys, WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_3 ) );
+  *ret_wk1 = 0;
+  *ret_wk2 = 0;
+  *ret_wk3 = 0;
+  if ( WBTSYS_GetRomTrainerPriority( wbtsys, tr_id1 ) >= WBT_TRPRI_LEADER )
+  {
+    *ret_wk1 = WBTSYS_GetRomTrainerMMdlID( wbtsys, tr_id1 );
+  }
+  if ( WBTSYS_GetRomTrainerPriority( wbtsys, tr_id2 ) >= WBT_TRPRI_LEADER )
+  {
+    *ret_wk2 = WBTSYS_GetRomTrainerMMdlID( wbtsys, tr_id2 );
+  }
+  if ( WBTSYS_GetRomTrainerPriority( wbtsys, tr_id3 ) >= WBT_TRPRI_LEADER )
+  {
+    *ret_wk3 = WBTSYS_GetRomTrainerMMdlID( wbtsys, tr_id3 );
+  }
   TAMADA_Printf("EvCmdWBTGetLobbyMMdlCode() = %d,%d,%d\n", *ret_wk1, *ret_wk2, *ret_wk3 );
   return VMCMD_RESULT_CONTINUE;
 }

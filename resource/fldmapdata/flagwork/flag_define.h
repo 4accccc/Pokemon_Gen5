@@ -686,7 +686,9 @@
 #define FV_D32R0101_POKE50_01              768 /* 0x0300 D32：イワパレス */
 #define FV_C15_SWRIVAL_01                  769 /* 0x0301 ポケウッド：ライバル */
 #define FV_C16_SWRIVAL_01                  770 /* 0x0302 ジョインアベニュー：ライバル */
-#define FV_WBT_LOBBY_LEADERS               771 /* 0x0303 WBTロビー：優勝後ロビーにいる対戦者 */
+#define FV_WBT_LOBBY_LEADER1               771 /* 0x0303 WBTロビー：優勝後ロビーにいる対戦者 */
+#define FV_WBT_LOBBY_LEADER2               772 /* 0x0304 WBTロビー：優勝後ロビーにいる対戦者 */
+#define FV_WBT_LOBBY_LEADER3               773 /* 0x0305 WBTロビー：優勝後ロビーにいる対戦者 */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

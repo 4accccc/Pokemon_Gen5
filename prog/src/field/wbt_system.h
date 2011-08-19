@@ -113,6 +113,7 @@ extern void WBTSYS_UnloadDLData( WBTSYS * wbtsys );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern u16 WBTSYS_GetRomTrainerMMdlID( const WBTSYS * wbtsys, u16 tr_id );
+extern WBT_TRPRI WBTSYS_GetRomTrainerPriority( const WBTSYS * wbtsys, u16 tr_id );
 
 //------------------------------------------------------------------
 //  in wbt_calc_result.c

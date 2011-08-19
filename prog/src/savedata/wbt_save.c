@@ -126,8 +126,10 @@ void WBTSAVE_IncWinCount( WBTSAVE * wbtsave, WBTWIN_COUNT id )
 //------------------------------------------------------------------
 BOOL WBTSAVE_GetFlag( const WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id )
 {
+  u8 value;
   GF_ASSERT( flag_id < WBTSAVE_FLAG_MAX );
-  return ( wbtsave->flag[ flag_id / 8 ] & ( 1 << (flag_id % 8) ) != 0 );
+  value = wbtsave->flag[ flag_id / 8 ] & ( 1 << (flag_id % 8) );
+  return value != 0;
 }
 
 //------------------------------------------------------------------

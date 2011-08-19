@@ -138,6 +138,16 @@ u16 WBTSYS_GetRomTrainerMMdlID( const WBTSYS * wbtsys, u16 tr_id )
   GF_ASSERT( tr_id < wbtsys->rom_trainer_num );
   return wbtsys->rom_trainer_data[ tr_id ].mmdl_id;
 }
+//------------------------------------------------------------------
+/**
+ * @brief ROMトレーナーデータの優先度取得
+ */
+//------------------------------------------------------------------
+WBT_TRPRI WBTSYS_GetRomTrainerPriority( const WBTSYS * wbtsys, u16 tr_id )
+{
+  GF_ASSERT( tr_id < wbtsys->rom_trainer_num );
+  return wbtsys->rom_trainer_data[ tr_id ].priority;
+}
 
 //------------------------------------------------------------------
 /**

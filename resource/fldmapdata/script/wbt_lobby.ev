@@ -57,14 +57,24 @@ ev_init_wbt_lobby_reception:
 
 //WBTâÔèÍÇ©ÇÁëﬁèoÇ∑ÇÈÇ∆Ç´Ç…ëŒêÌé“Çï\é¶Ç∑ÇÈÇ©Ç«Ç§Ç©ÇÃèàóù
 ev_init_wbt_lobby_obj:
+  //è¡ÇµÇƒÇ®Ç≠
+  _FLAG_SET( FV_WBT_LOBBY_LEADER1 )
+  _FLAG_SET( FV_WBT_LOBBY_LEADER2 )
+  _FLAG_SET( FV_WBT_LOBBY_LEADER3 )
+
   _WBT_SYSTEM_GET_STAGE( SCWK_ANSWER )
   IF $SCWK_ANSWER == SCR_WBT_STAGE_WIN THEN
     //óDèüÇµÇΩèÍçáÇÕèoåªÇ≥ÇπÇÈ
-    _FLAG_RESET( FV_WBT_LOBBY_LEADERS )
     _WBT_GET_LOBBY_TRAINER_MMDL( OBJCHRWORK0, OBJCHRWORK1, OBJCHRWORK2 )
-  ELSE
-    //è¡ÇµÇƒÇ®Ç≠
-    _FLAG_SET( FV_WBT_LOBBY_LEADERS )
+    IF $OBJCHRWORK0 != 0 THEN
+      _FLAG_RESET( FV_WBT_LOBBY_LEADER1 )
+    ENDIF
+    IF $OBJCHRWORK1 != 0 THEN
+      _FLAG_RESET( FV_WBT_LOBBY_LEADER2 )
+    ENDIF
+    IF $OBJCHRWORK2 != 0 THEN
+      _FLAG_RESET( FV_WBT_LOBBY_LEADER3 )
+    ENDIF
   ENDIF
   _RET
   
