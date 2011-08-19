@@ -2,6 +2,118 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d24r0401_swbell_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここって……　なんだろお
+なんだか　ふしぎな　かんじ▼
+もしかして　ここが
+リバースマウンテンの　みなもと……▽
+ポケモン　ヒードランの　すみか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:29:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:24:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここって……　なんだろお
+なんだか　ふしぎな　かんじ▼
+もしかして　ここが
+リバースマウンテンの　みなもと……▽
+ポケモン　ヒードランの　すみか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:29:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:29:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・posまで誘導しメッセージ表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:30:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:24:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0401_swbell_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒードランってのは　ぜんしんを
+マグマの　ような　けつえきが▽
+ながれている　ポケモンなんだよお！
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:32:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:30:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒードランってのは　ぜんしんを
+マグマの　ような　けつえきが▽
+ながれている　ポケモンなんだよお！
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:32:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:32:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・振り向き</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:30:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-19T10:24:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d24r0401_poke485_01"
 		Style="Large">
 		<LanguageCell
