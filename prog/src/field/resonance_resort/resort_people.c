@@ -682,7 +682,7 @@ void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk )
   //->拡張バッファ対策(セーブ復帰時は拡張ばっふぁが消えている)
   {
     MMDL *p_mmdl;
-    u32 no;
+    u32 no  = 0;
     while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&p_mmdl,&no) == TRUE ){
       if( MMDL_GetOBJID(p_mmdl) >= RESORT_PEOPLE_MMDLID_OFS
           && MMDL_GetZoneID(p_mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID)

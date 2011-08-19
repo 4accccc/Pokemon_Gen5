@@ -1336,11 +1336,17 @@ static void Resort_Crowd_People_Wk_InitKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk 
     }
   }
 
+  bit_num = p_wk->move_grid * bit_num / (RESORT_CROWD_MOVE_LIMIT_FRONT-RESORT_CROWD_MOVE_LIMIT_BACK);
+
   p_wk->kyoro.cnt   = 0;
   p_wk->kyoro.seq   = 0;
   p_wk->kyoro.sync  = 15;
   p_wk->kyoro.max   = bit_num;
   p_wk->kyoro.grid  = (p_wk->move_grid / p_wk->kyoro.max) + 5/2 - GFL_STD_MtRand(5);
+  if( p_wk->kyoro.grid < 0 )
+  {
+    p_wk->kyoro.grid = 1;
+  }
   p_wk->kyoro.start_grid  = p_wk->move_grid - p_wk->kyoro.grid;
 }
 //----------------------------------------------------------------------------
