@@ -2923,6 +2923,54 @@ msg_wbt_subev_sinou_～</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_wbt_subev_cancel"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-19T10:45:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T09:27:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-19T10:45:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T09:27:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・選択肢表示
+キャンセル</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-19T10:45:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢用</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T09:27:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_wbt_subev_area_01"
 		Style="Large">
 		<LanguageCell
