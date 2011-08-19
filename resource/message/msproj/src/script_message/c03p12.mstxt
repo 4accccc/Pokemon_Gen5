@@ -636,12 +636,12 @@
 ・GRIDX=18、GRIDZ=30、下向き固定
 ・話しかけても主人公を向かない
 ・どちらに話しかけても
-　badman1_01からbadman2_05のメッセージを
+　badman1_01からbadman2_07のメッセージを
 　サブウインドウで続けて表示する
 ※swanで処理変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T02:39:23" />
+				Time="2011-08-19T06:51:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
