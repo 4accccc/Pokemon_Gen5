@@ -425,6 +425,7 @@ VMCMD_RESULT EvCmdWBTGetNGMessageID( VMHANDLE * core, void * wk )
     REG_WBT_SUBWAY_DOUBLE,      msg_wbt_info_ng_subway_double,
     REG_WBT_SUBWAY_TRIPLE,      msg_wbt_info_ng_subway_triple,
     REG_WBT_SUBWAY_ROTATION,    msg_wbt_info_ng_subway_rotation,
+    REG_WBT_EVENT_SINGLE,       msg_wbt_info_ng_all_single,
   };
 
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );

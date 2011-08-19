@@ -593,7 +593,7 @@ GMEVENT * EVENT_WBTBattle(
   bew->is_sub_event = TRUE; //サブイベント呼び出し
   
   bew->is_no_lose = TRUE; //敗戦処理無し
-  bew->not_free_bsp = FALSE; //開放する
+  bew->not_free_bsp = TRUE; //開放しない。呼び出し元で開放する
   
   //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
   bew->EncEffNo = ENCEFFID_SUBWAY;
@@ -633,7 +633,7 @@ GMEVENT * EVENT_PokewoodBattle(
   bew->is_sub_event = TRUE; //サブイベント呼び出し
   
   bew->is_no_lose = TRUE; //敗戦処理無し
-  bew->not_free_bsp = FALSE; //開放する
+  bew->not_free_bsp = TRUE; //開放しない。呼び出し元で開放する
   
   //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
   bew->EncEffNo = ENCEFFID_SUBWAY;
@@ -1081,6 +1081,9 @@ static void ReflectRecord( BATTLE_EVENT_WORK* bew )
       RECORD_Inc( record, RECID_NIGERARETA );
       break;
     }
+  }
+  {
+    RECORD_Add( record, RECID_WEAK_ATTACK, bp->WeakAtcNum );
   }
 }
 

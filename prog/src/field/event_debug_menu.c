@@ -59,6 +59,7 @@ FS_EXTERN_OVERLAY( debugmenu_system );
 FS_EXTERN_OVERLAY( debugmenu_data );
 FS_EXTERN_OVERLAY( debugmenu_net );
 FS_EXTERN_OVERLAY( debugmenu_app );
+FS_EXTERN_OVERLAY( debugmenu_wbt );
 FS_EXTERN_OVERLAY( debugmenu_staff );
 FS_EXTERN_OVERLAY( debugmenu_bsubway );
 FS_EXTERN_OVERLAY( debugmenu_infinity );
@@ -186,7 +187,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate, FS_OVERLAY_ID(debugmenu_app) },        //UIテンプレート
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d, FS_OVERLAY_ID(debugmenu_app) },             //３Dデモ
-  { DEBUG_FIELD_WBT,      debugMenuCallProc_WBT, FS_OVERLAY_ID(debugmenu_app) },      //WBT
+  { DEBUG_FIELD_WBT,      debugMenuCallProc_WBT, FS_OVERLAY_ID(debugmenu_wbt) },      //WBT
   { DEBUG_FIELD_MOBICLIP, debugMenuCallProc_Mobiclip, FS_OVERLAY_ID(debugmenu_app) }, //Mobiclip
   { DEBUG_FIELD_POKEWOOD, debugMenuCallProc_Pokewood, FS_OVERLAY_ID(debugmenu_app) }, //ポケウッド
 

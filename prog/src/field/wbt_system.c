@@ -591,8 +591,8 @@ void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys )
     WBTTRAINER_DEBUG_dump( wbt_tr );
   }
 }
-
 #endif
+
 //------------------------------------------------------------------
 /**
  * @brief 対戦組み合わせの確定
@@ -751,6 +751,8 @@ void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
 //------------------------------------------------------------------
 /**
  * @brief ごほうびのBP数取得
+ * @param[in]   wbtsys
+ * @return      u8
  */
 //------------------------------------------------------------------
 u8 WBTSYS_GetRewardCount( const WBTSYS * wbtsys )
@@ -793,7 +795,19 @@ void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf )
     return;
   }
 
-  if ( WBTTRAINER_GetWBTTrainerType(opponent) == WBT_TRTYPE_DL )
+  if ( WBTTRAINER_GetWBTTrainerType(opponent) != WBT_TRTYPE_DL )
+  {
+    GFL_MSGDATA * msgData;
+    u16 msg_id;
+    msg_id = WBTTRAINER_GetID( opponent ) * WBT_TRMSG_TYPE_NUM;
+    msg_id += type;
+    msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+        NARC_message_wbt_trmsg_dat, tempHeapID );
+    GFL_MSG_GetString( msgData, msg_id, strbuf );
+    GFL_MSG_Delete( msgData );
+    return;
+  }
+  else
   {
     u16 dl_tr_id = WBTTRAINER_GetID( opponent );
     u16 preset_id = 1;
@@ -849,17 +863,6 @@ void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf )
       GF_ASSERT( freeword != NULL );
       GFL_STR_SetStringCodeOrderLength( strbuf, freeword, WBTDL_MSG_LEN );
     }
-  }
-  else
-  {
-    GFL_MSGDATA * msgData;
-    u16 msg_id;
-    msg_id = WBTTRAINER_GetID( opponent ) * WBT_TRMSG_TYPE_NUM;
-    msg_id += type;
-    msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-        NARC_message_wbt_trmsg_dat, tempHeapID );
-    GFL_MSG_GetString( msgData, msg_id, strbuf );
-    GFL_MSG_Delete( msgData );
   }
 }
 
@@ -976,6 +979,11 @@ u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys )
 
   const u8 * tbl;
 
+  if ( wbtsys->wbtcup == WBTCUP_HODOMOE_EVENT )
+  {
+    return REG_WBT_EVENT_SINGLE;
+  }
+
   switch ( WBTTOOL_GetRegulationID( wbtsys->wbtcup ) )
   {
   default:
@@ -1041,7 +1049,7 @@ const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
   }
 
 #ifdef PM_DEBUG
-  WBTSYS_DEBUG_PrintRegulation( &wbtsys->wbtreg.base_reg );
+  //WBTSYS_DEBUG_PrintRegulation( &wbtsys->wbtreg.base_reg );
 #endif
   return &wbtsys->wbtreg.base_reg;
 }
@@ -1113,7 +1121,7 @@ void WBTSYS_DEBUG_PrintRegulation( const REGULATION * cp_data )
 //------------------------------------------------------------------
 void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_data )
 {
-  GFL_STD_MemCopy( plist_data->in_num, wbtsys->pokelist_select_num, 6 );
+  GFL_STD_MemCopy( plist_data->in_num, wbtsys->pokelist_select_num, TEMOTI_POKEMAX );
   wbtsys->pokelist_result_select = plist_data->ret_sel;
   wbtsys->pokelist_return_mode = plist_data->ret_mode;
 
@@ -1131,7 +1139,7 @@ void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_data )
   {
     int i;
     TAMADA_Printf("Select Mons:");
-    for (i = 0; i < 6; i ++ )
+    for (i = 0; i < TEMOTI_POKEMAX; i ++ )
     {
       TAMADA_Printf("%02d ", wbtsys->pokelist_select_num[i] );
     }
@@ -1533,6 +1541,19 @@ static BOOL checkNGData( const WBT_MONS_CONDITION * cond, const SELECT_DATA * se
 }
 
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+static void dump_SELECT_DATA( const SELECT_DATA * select_data, int num )
+{
+  int i;
+  TAMADA_Printf("dump_SELECT_DATA\n");
+  for ( i = 0; i < num; i ++ )
+  {
+    const SELECT_DATA * rd = &select_data[i];
+    TAMADA_Printf("Index(%3d) monsno(%3d) itemno(%3d) =:%d\n",
+        rd->index_no, rd->prd.mons_no, rd->prd.item_no, rd->available );
+  }
+}
+//--------------------------------------------------------------
 /**
  * @brief WBTのロムトレーナーのポケモンを決める
  *
@@ -1545,6 +1566,8 @@ static BOOL checkNGData( const WBT_MONS_CONDITION * cond, const SELECT_DATA * se
  * @param[in]     rand_context  乱数値ポインタ(NULL GFUser_GetPublicRandを使用
  * @param[in]     pow_rnd       ポケモンにセットするpow_rnd値
  * @param[in]     heapID        ヒープID
+ *
+ * @todo  異常なデータに対するリカバリ処理が必要
  *
  * (1)BSUBWAY_TRAINER_ROM_DATAを解析、必要なBSUBWAY_POKEMON_ROM_DATAを事前にselect_dataとして読み込む
  * (2)select_data中のNGのアイテム、ポケモンを含むデータを使用できないようにする
@@ -1561,15 +1584,14 @@ static void setBSubwayPokemonParam(
   int  i,j;
   u8  poke_index;
   int  set_count;
-  u8 selected[6];
+  u8 selected[TEMOTI_POKEMAX];
 
-  BSUBWAY_POKEMON_ROM_DATA * prd_d;
   SELECT_DATA * select_data;
 
   select_data = GFL_HEAP_AllocMemoryLo( heapID, sizeof(SELECT_DATA) * ROM_POKE_MAX );
   GF_ASSERT( trd->use_poke_cnt < ROM_POKE_MAX );
 
-  GFL_STD_MemClear( selected, 6 );
+  GFL_STD_MemClear( selected, sizeof(u8) * TEMOTI_POKEMAX );
 
   for ( i = 0; i < ROM_POKE_MAX; i ++ )
   { 
@@ -1585,10 +1607,9 @@ static void setBSubwayPokemonParam(
       {
         rd->available = FALSE;
       }
-      TAMADA_Printf("Index(%3d) monsno(%3d) itemno(%3d) =:%d\n",
-          rd->index_no, rd->prd.mons_no, rd->prd.item_no, rd->available );
     }
   }
+  dump_SELECT_DATA( select_data, trd->use_poke_cnt );
 #ifdef  PM_DEBUG
   for ( j = 0, i = 0; i < ROM_POKE_MAX; i ++ )
   {
@@ -1599,17 +1620,21 @@ static void setBSubwayPokemonParam(
   GF_ASSERT( j >= cnt );
 #endif
 
-  set_count=0;
+  set_count = 0;
 
-  while(set_count!=cnt)
+  while( set_count != cnt )
   {
-    j = GetRand( rand_context ) % ( trd->use_poke_cnt - set_count );
+    const BSUBWAY_POKEMON_ROM_DATA * prd_d;
+    u32 choice;
+    u32 range = trd->use_poke_cnt - set_count;
+    choice = GetRand( rand_context ) % range;
+    TAMADA_Printf("choice = %d, choose range(0-%d)\n", choice, ( range - 1 ) );
     for ( poke_index = 0; poke_index < ROM_POKE_MAX; poke_index ++ )
     {
       if ( select_data[poke_index].available )
       {
-        if ( j == 0 ) break;
-        j --;
+        if ( choice == 0 ) break;
+        choice --;
       }
     }
     GF_ASSERT( poke_index < ROM_POKE_MAX );
@@ -1621,21 +1646,25 @@ static void setBSubwayPokemonParam(
       if ( i == poke_index ) continue;
       if ( select_data[ i ].prd.mons_no == prd_d->mons_no )
       { //同一のポケモンを含むデータは使えなくなる
+        TAMADA_Printf("NG:%d: same pokemon(%d)\n", i, prd_d->mons_no );
         select_data[ i ].available = FALSE;
       }
       if ( select_data[ i ].prd.item_no == prd_d->item_no )
       { //同一のアイテムを持つデータは使えなくなる
+        TAMADA_Printf("NG:%d: same item(%d)\n", i, prd_d->item_no );
         select_data[ i ].available = FALSE;
       }
     }
     //選ばれたデータは次の抽選で使えない
     select_data[ poke_index ].available = FALSE;
 
+    dump_SELECT_DATA( select_data, trd->use_poke_cnt );
+
     selected[ set_count ] = poke_index;
-    set_count++;
+    set_count ++;
   }
 
-  for(i=0;i<set_count;i++)
+  for(i = 0; i < set_count; i++)
   {
     u32 index_no = select_data[ selected[i] ].index_no;
     FBI_TOOL_MakePokemonParam(&(pwd[i]),
@@ -1727,7 +1756,6 @@ static void setRomPokeParty( POKEPARTY * party,
   btpwd = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(BSUBWAY_POKEMON) * TEMOTI_POKEMAX );
   makeRomTrainerData( btpwd, wbtcup, wbt_tr, num, tempHeapID );
   FBI_TOOL_WBT_SetPokemon( party, btpwd, DUMMY_LEVEL_VALUE, num, tempHeapID );
-  //FBI_TOOL_WBT_SetEnemyData( bp, bt_trd, btpwd, num, 50, tempHeapID );
  
   GFL_HEAP_FreeMemory( btpwd );
 }
@@ -1751,8 +1779,6 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
     BtlRule rule = WBTTOOL_WBTRuleToBtlRule( wbt_rule );
     POKEPARTY *party;
     party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
-    //レギュレーションにあわせてレベル調整
-    PokeRegulation_ModifyLevelPokeParty( WBTSYS_GetRegulation(wbtsys), party );
     bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, rule );
     GFL_HEAP_FreeMemory( party );
   }
@@ -1792,6 +1818,11 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
   GF_ASSERT( tempHeapSize == GFL_HEAP_GetHeapFreeSize( tempHeapID ) );
 #endif
 
+  //ホドモエイベント以外は、レギュレーションにあわせてレベル調整
+  if ( WBTSYS_GetWBTCup(wbtsys) != WBTCUP_HODOMOE_EVENT )
+  {
+    PokeRegulation_ModifyLevelPokeParty( WBTSYS_GetRegulation(wbtsys), bp->party[BTL_CLIENT_PLAYER] );
+  }
   //レギュレーションにあわせてレベル調整
   PokeRegulation_ModifyLevelPokeParty( WBTSYS_GetRegulation(wbtsys), bp->party[BTL_CLIENT_ENEMY1] );
   //名前を書き換える
@@ -1830,19 +1861,19 @@ void WBTSYS_DeleteBattleSetupParam( WBTSYS * wbtsys, BATTLE_SETUP_PARAM * bsp )
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static u32 countDeadStatus( const BtlPokeStatCode * party_state )
+static u32 countAliveStatus( const POKEPARTY * party, const BtlPokeStatCode * party_state )
 {
   int i;
   u32 count = 0;
   for ( i = 0; i < TEMOTI_POKEMAX; i ++ )
   {
-    OS_Printf("%d:%d\n", i, party_state[i] );
+    //OS_Printf("%d:%d\n", i, party_state[i] );
     if ( party_state[i] == BTL_POKESTATE_DEAD )
     {
       count ++;
     }
   }
-  return count;
+  return PokeParty_GetPokeCount(party) - count;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -1894,10 +1925,15 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
 {
   u16 * ret_wk = WBTSYS_GetScriptAnswerWork( wbtsys );
   u32 result = GAMEDATA_GetLastBattleResult( gamedata ); 
-  u32 my_count    = countDeadStatus( bsp->party_state[ BTL_CLIENT_PLAYER ] );
-  u32 enemy_count = countDeadStatus( bsp->party_state[ BTL_CLIENT_ENEMY1 ] );
+  u32 my_count, enemy_count;
+
+  enemy_count = countAliveStatus( bsp->party[BTL_CLIENT_ENEMY1], bsp->party_state[BTL_CLIENT_ENEMY1] );
+  my_count = countAliveStatus( bsp->party[BTL_CLIENT_PLAYER], bsp->party_state[BTL_CLIENT_PLAYER] );
 
   TAMADA_Printf("my_count = %d, enemy_count = %d\n", my_count, enemy_count );
+
+  //生き残った手持ちの数をセットする
+  WBTSYS_SetSurvivalCount( wbtsys, wbtsys->stage, my_count );
 
   switch ( result )
   {
@@ -1910,11 +1946,6 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
   case BTL_RESULT_WIN:
   case BTL_RESULT_DRAW:
     break;
-  }
-
-  {
-    WBTSTAGE stage = WBTSYS_GetStage( wbtsys );
-    WBTSYS_SetSurvivalCount( wbtsys, stage, my_count );
   }
 
   {
