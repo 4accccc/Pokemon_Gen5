@@ -122,12 +122,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『[Name:TrainerName ]　しってる？▼
+			<Text>ベル『しってる？▼
 ういている　いしは
-おせば　うごくんだよ▼</Text>
+おせば　うごくんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:47:29" />
+				Time="2011-08-20T08:02:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -135,12 +135,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『[Name:TrainerName ]　知ってる？▼
+			<Text>ベル『知ってる？▼
 浮いている　石は
-押せば　動くんだよ▼</Text>
+押せば　動くんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:47:39" />
+				Time="2011-08-20T08:02:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -256,10 +256,10 @@
 			Language="JPN">
 			<Text>そうだった！
 あたし　しらべることが　あるんだ▼
-じゃあね　[Name:TrainerName ]！▼</Text>
+それじゃあねえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T03:14:03" />
+				Time="2011-08-20T07:55:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -269,10 +269,10 @@
 			Language="JPN_KANJI">
 			<Text>そうだった！
 あたし　調べることが　あるんだ▼
-じゃあね　[Name:TrainerName ]！▼</Text>
+それじゃあねえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T03:14:11" />
+				Time="2011-08-20T07:56:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -307,6 +307,159 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_swbell_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『はしが　くずれてて
+いま　なおしてるんだって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T08:04:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T08:02:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『はしが　くずれてて
+いま　なおしてるんだって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T08:08:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T08:08:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・d27r0101イベント前
+・GRIDX＝37、GRIDZ＝37、右向き
+・c05→d05→d27の一連の
+　イベントをクリアしていると
+　このストッパーイベントは発生しない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T08:00:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:51:48" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_workeman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんだろな？　やせいの
+ポケモンどうし　ぶつかったのかも▼
+まあ　なんだ
+もうちょっと　じかんが　かかるからよ▽
+ホドモエあたりで　まってなよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T08:08:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T08:07:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんだろな？　やせいの
+ポケモンどうし　ぶつかったのかも▼
+まあ　なんだ
+もうちょっと　じかんが　かかるからよ▽
+ホドモエあたりで　まってなよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T08:08:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T08:08:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・d27r0101イベント前
+・GRIDX＝38、GRIDZ＝37、左向き</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:53:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:46:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_workeman2a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セリフなし</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:53:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:53:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セリフなし</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:53:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:53:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝38、GRIDZ＝41～47を往復</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:53:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:53:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
