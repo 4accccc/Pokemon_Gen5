@@ -266,7 +266,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_05">
+		Label="msg_wbtsys_title_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ホドモエトーナメント</Text>
@@ -291,7 +292,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_06">
+		Label="msg_wbtsys_title_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>イッシュリーダーズトーナメント</Text>
@@ -316,7 +318,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_07">
+		Label="msg_wbtsys_title_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>カントーリーダーズトーナメント</Text>
@@ -341,7 +344,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_08">
+		Label="msg_wbtsys_title_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジョウトリーダーズトーナメント</Text>
@@ -366,7 +370,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_09">
+		Label="msg_wbtsys_title_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ホウエンリーダーズトーナメント</Text>
@@ -391,7 +396,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_10">
+		Label="msg_wbtsys_title_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>シンオウリーダーズトーナメント</Text>
@@ -416,7 +422,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_11">
+		Label="msg_wbtsys_title_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ワールドリーダーズトーナメント</Text>
@@ -441,7 +448,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_12">
+		Label="msg_wbtsys_title_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>レンタルトーナメント</Text>
@@ -466,7 +474,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_13">
+		Label="msg_wbtsys_title_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>レンタルマスタートーナメント</Text>
@@ -491,7 +500,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_14">
+		Label="msg_wbtsys_title_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>シャッフルトーナメント</Text>
@@ -516,7 +526,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_15">
+		Label="msg_wbtsys_title_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>シャッフルマスタートーナメント</Text>
@@ -541,7 +552,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_16">
+		Label="msg_wbtsys_title_16"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>タイプエキスパートトーナメント</Text>
@@ -566,7 +578,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_title_17">
+		Label="msg_wbtsys_title_17"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ＷＣＳ２０１１トーナメント</Text>

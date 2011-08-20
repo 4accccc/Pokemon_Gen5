@@ -426,11 +426,11 @@ msg_wbt_menu_wcs</Comment>
 タイプエキスパートトーナメントを▽
 えらんだばあい　ほのおタイプの▽
 ポケモンしか　つかえません▼
-おなじタイプの　なかでも
+おなじタイプでも
 すべて　ちがう　ポケモンで▽
 さんか　してください▼
 もたせる　どうぐも　すべて
-ちがうものでなければ　なりません▼
+ちがうもので　なければ　なりません▼
 くわえて　どうぐでは　こころのしずく
 わざでは　フリーフォールの▽
 しようが　きんしされています▼
@@ -443,8 +443,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T08:48:55" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:37:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -460,11 +460,11 @@ msg_wbt_menu_wcs</Comment>
 タイプエキスパートトーナメントを▽
 選択した場合　ほのおタイプの▽
 ポケモンしか　使えません▼
-同じタイプの　中でも
-すべて　ちがう　ポケモンで▽
+同じタイプでも
+すべて　異なる　ポケモンで▽
 参加してください▼
-もたせる　道具も　すべて
-ちがうものでなければ　なりません▼
+持たせる　道具も　すべて
+違うもので　なければ　なりません▼
 加えて　道具では　こころのしずく
 技では　フリーフォールの　使用が▽
 禁止されています▼
@@ -477,8 +477,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T08:54:51" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:38:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -526,7 +526,7 @@ msg_wbt_menu_wcs</Comment>
 すべて　ちがう　ポケモンで▽
 さんかして　ください▼
 もたせる　どうぐも　すべて
-ちがうものでなければ　なりません▼
+ちがうもので　なければ　なりません▼
 くわえて　どうぐでは　こころのしずく
 わざでは　フリーフォールの▽
 しようが　きんしされています▼
@@ -536,14 +536,14 @@ msg_wbt_menu_wcs</Comment>
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
 チャンピオンズトーナメントでは
-ゆうしょうじに　てもとに　のこった▽
-ポケモンの　かずに　おうじて▽
+ゆうしょうじに　てもとに　のこった▼
+ポケモンの　かずに　おうじて
 バトルポイントが　もらえます▼
 かんぜんしょうり　めざして
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T09:41:43" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -555,10 +555,10 @@ msg_wbt_menu_wcs</Comment>
 選び抜かれた　チャンピオンたちが▽
 出場する　トーナメントです▼
 このトーナメントは
-すべて　ちがう　ポケモンで▽
+すべて　異なる　ポケモンで▽
 参加して　ください▼
-もたせる　道具も　すべて
-ちがうものでなければ　なりません▼
+持たせる　道具も　すべて
+違うもので　なければ　なりません▼
 加えて　道具では　こころのしずく
 技では　フリーフォールの　使用が▽
 禁止されています▼
@@ -568,14 +568,14 @@ msg_wbt_menu_wcs</Comment>
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
 チャンピオンズトーナメントでは
-優勝時に　手元に　残った▽
-ポケモンの　数に　応じて▽
+優勝時に　手元に　残った▼
+ポケモンの　数に　応じて
 バトルポイントが　もらえます▼
 完全勝利　目指して
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T10:36:00" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:38:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -620,15 +620,15 @@ msg_wbt_menu_wcs</Comment>
 わたしの　よこにあります▽
 くろいパソコンから　ダウンロードした▼
 いろいろな　トーナメントに
-さんかすることができます▼
+さんかすることが　できます▼
 トーナメントによって
 ルールは　さまざまです▼
 さんかするさいに　ルールを
 くわしくみることが　できますので▽
 ごかくにんください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T07:26:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:36:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -640,15 +640,15 @@ msg_wbt_menu_wcs</Comment>
 わたしの　横にあります▽
 黒いパソコンから　ダウンロードした▼
 いろいろな　トーナメントに
-参加することができます▼
+参加することが　できます▼
 トーナメントによって
 ルールは　さまざまです▼
-参加するさいに　ルールを
+参加する際に　ルールを
 詳しくみることが　できますので▽
 ご確認ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T07:26:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:36:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -693,7 +693,7 @@ msg_wbt_menu_wcs</Comment>
 なんでもアリな　トーナメントです▼
 すべての　ポケモンと
 ポケモンに　もたせる　どうぐを▽
-りようすることができます▼
+りようすることが　できます▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ２５と　させていただきます▼
@@ -701,8 +701,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T09:17:22" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:36:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -713,8 +713,8 @@ msg_wbt_menu_wcs</Comment>
 			<Text>ホドモエトーナメントは
 なんでもアリな　トーナメントです▼
 すべての　ポケモンと
-ポケモンに　もたせる　道具を▽
-利用することができます▼
+ポケモンに　持たせる　道具を▽
+利用することが　できます▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ２５と　させていただきます▼
@@ -722,8 +722,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T09:17:32" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:38:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -764,7 +764,7 @@ msg_wbt_menu_wcs</Comment>
 すべて　ちがう　ポケモンで▽
 さんかして　ください▼
 もたせる　どうぐも　すべて
-ちがうものでなければ　なりません▼
+ちがうもので　なければ　なりません▼
 くわえて　どうぐでは　こころのしずく
 わざでは　フリーフォールの▽
 しようが　きんしされています▼
@@ -777,8 +777,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T09:32:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:36:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -790,10 +790,10 @@ msg_wbt_menu_wcs</Comment>
 イッシュ地方の　ジムリーダーが▽
 出場する　トーナメントです▼
 このトーナメントは
-すべて　ちがう　ポケモンで▽
+すべて　異なる　ポケモンで▽
 参加して　ください▼
-もたせる　道具も　すべて
-ちがうものでなければ　なりません▼
+持たせる　道具も　すべて
+違うもので　なければ　なりません▼
 加えて　道具では　こころのしずく
 技では　フリーフォールの　使用が▽
 禁止されています▼
@@ -806,8 +806,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T09:12:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:38:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -848,7 +848,7 @@ msg_wbt_menu_wcs</Comment>
 すべて　ちがう　ポケモンで▽
 さんかして　ください▼
 もたせる　どうぐも　すべて
-ちがうものでなければ　なりません▼
+ちがうもので　なければ　なりません▼
 くわえて　どうぐでは　こころのしずく
 わざでは　フリーフォールの▽
 しようが　きんしされています▼
@@ -861,8 +861,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T10:10:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:37:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -874,10 +874,10 @@ msg_wbt_menu_wcs</Comment>
 カントー地方の　ジムリーダーが▽
 出場する　トーナメントです▼
 このトーナメントは
-すべて　ちがう　ポケモンで▽
+すべて　異なる　ポケモンで▽
 参加して　ください▼
-もたせる　道具も　すべて
-ちがうものでなければ　なりません▼
+持たせる　道具も　すべて
+違うもので　なければ　なりません▼
 加えて　道具では　こころのしずく
 技では　フリーフォールの　使用が▽
 禁止されています▼
@@ -890,8 +890,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T10:11:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:38:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -965,10 +965,10 @@ msg_wbt_menu_wcs</Comment>
 ジョウト地方の　ジムリーダーが▽
 出場する　トーナメントです▼
 このトーナメントは
-すべて　ちがう　ポケモンで▽
+すべて　異なる　ポケモンで▽
 参加して　ください▼
-もたせる　道具も　すべて
-ちがうものでなければ　なりません▼
+持たせる　道具も　すべて
+違うもので　なければ　なりません▼
 加えて　道具では　こころのしずく
 技では　フリーフォールの　使用が▽
 禁止されています▼
@@ -981,8 +981,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T10:11:55" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:37:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1037,7 +1037,7 @@ msg_wbt_menu_wcs</Comment>
 すべて　ちがう　ポケモンで▽
 さんかして　ください▼
 もたせる　どうぐも　すべて
-ちがうものでなければ　なりません▼
+ちがうもので　なければ　なりません▼
 くわえて　どうぐでは　こころのしずく
 わざでは　フリーフォールの▽
 しようが　きんしされています▼
@@ -1050,8 +1050,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T10:11:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:39:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1063,10 +1063,10 @@ msg_wbt_menu_wcs</Comment>
 ホウエン地方の　ジムリーダーが▽
 出場する　トーナメントです▼
 このトーナメントは
-すべて　ちがう　ポケモンで▽
+すべて　異なる　ポケモンで▽
 参加して　ください▼
-もたせる　道具も　すべて
-ちがうものでなければ　なりません▼
+持たせる　道具も　すべて
+違うもので　なければ　なりません▼
 加えて　道具では　こころのしずく
 技では　フリーフォールの　使用が▽
 禁止されています▼
@@ -1079,8 +1079,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T10:11:59" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:38:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1135,7 +1135,7 @@ msg_wbt_menu_wcs</Comment>
 すべて　ちがう　ポケモンで▽
 さんかして　ください▼
 もたせる　どうぐも　すべて
-ちがうものでなければ　なりません▼
+ちがうもので　なければ　なりません▼
 くわえて　どうぐでは　こころのしずく
 わざでは　フリーフォールの▽
 しようが　きんしされています▼
@@ -1148,8 +1148,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T10:11:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:39:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1161,10 +1161,10 @@ msg_wbt_menu_wcs</Comment>
 シンオウ地方の　ジムリーダーが▽
 出場する　トーナメントです▼
 このトーナメントは
-すべて　ちがう　ポケモンで▽
+すべて　異なる　ポケモンで▽
 参加して　ください▼
-もたせる　道具も　すべて
-ちがうものでなければ　なりません▼
+持たせる　道具も　すべて
+違うもので　なければ　なりません▼
 加えて　道具では　こころのしずく
 技では　フリーフォールの　使用が▽
 禁止されています▼
@@ -1177,8 +1177,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T10:12:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:39:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1233,7 +1233,7 @@ msg_wbt_menu_wcs</Comment>
 すべて　ちがう　ポケモンで▽
 さんかして　ください▼
 もたせる　どうぐも　すべて
-ちがうものでなければ　なりません▼
+ちがうもので　なければ　なりません▼
 くわえて　どうぐでは　こころのしずく
 わざでは　フリーフォールの▽
 しようが　きんしされています▼
@@ -1249,8 +1249,8 @@ msg_wbt_menu_wcs</Comment>
 かんぜんしょうり　めざして
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T05:51:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:39:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1262,10 +1262,10 @@ msg_wbt_menu_wcs</Comment>
 世界中の　ジムリーダーが▽
 出場する　トーナメントです▼
 このトーナメントは
-すべて　ちがう　ポケモンで▽
+すべて　異なる　ポケモンで▽
 参加して　ください▼
-もたせる　道具も　すべて
-ちがうものでなければ　なりません▼
+持たせる　道具も　すべて
+違うもので　なければ　なりません▼
 加えて　道具では　こころのしずく
 技では　フリーフォールの　使用が▽
 禁止されています▼
@@ -1281,8 +1281,8 @@ msg_wbt_menu_wcs</Comment>
 完全勝利　目指して
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T09:28:42" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:39:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1331,15 +1331,15 @@ msg_wbt_menu_wcs</Comment>
 すべて　ちがう　ポケモンを
 せんたくして　ください▼
 もたせる　どうぐも　すべて
-ちがうものでなければ　なりません▼
+ちがうもので　なければ　なりません▼
 バトルルールは
 ダブルバトルとなります▼
 ＷＣＳ２０１１トーナメントでは
 バトルポイントは　もらえません▽
 めいよの　ために　たたかいましょう！▼　</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T07:46:52" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:39:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1352,18 +1352,18 @@ msg_wbt_menu_wcs</Comment>
 対戦できる　トーナメントです▼
 イッシュ地方の
 ポケモンのみが　参加できます▼
-すべて　ちがう　ポケモンを
+すべて　異なる　ポケモンを
 選択して　ください▼
-もたせる　道具も　すべて
-ちがうものでなければ　なりません▼
+持たせる　道具も　すべて
+違うもので　なければ　なりません▼
 バトルルールは
 ダブルバトルとなります▼
 ＷＣＳ２０１１トーナメントでは
 バトルポイントは　もらえません▽
 名誉の　ために　戦いましょう！▼　</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T07:06:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:39:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1458,9 +1458,9 @@ msg_wbt_menu_wcs</Comment>
 トリプルバトルに　かんしては▽
 ２ひき　こうかん　していただきます▼
 こうかんした　ポケモンは
-しあいしゅうりょうごに　もちぬしの▽
-もとに　もどされますので▽
-ごあんしんください▼
+しあい　しゅうりょうご　に▼
+もちぬしの　もとに　もどされますので
+ごあんしん　ください▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
@@ -1468,8 +1468,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T02:22:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1482,11 +1482,11 @@ msg_wbt_menu_wcs</Comment>
 交換して　戦う▽
 特殊な　トーナメントです▼
 基本は　１匹づつの　交換ですが
-トリプルバトルに　かんしては▽
-２匹　交換　していただきます▼
+トリプルバトルに　関しては▽
+２匹　交換していただきます▼
 交換した　ポケモンは
-試合終了後に　持ち主の　もとに▽
-もどされますので　ご安心ください▼
+試合終了後に　持ち主の　元に▽
+戻されますので　ご安心ください▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
@@ -1494,8 +1494,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T09:43:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:40:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1597,9 +1597,9 @@ msg_wbt_menu_wcs</Comment>
 トリプルバトルに　かんしては▽
 ２ひき　こうかん　していただきます▼
 こうかんした　ポケモンは
-しあいしゅうりょうごに　もちぬしの▽
-もとに　もどされますので▽
-ごあんしんください▼
+しあい　しゅうりょうご　に▼
+もちぬしの　もとに　もどされますので
+ごあんしん　ください▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
@@ -1612,8 +1612,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえます▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T09:46:35" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:41:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1626,11 +1626,11 @@ msg_wbt_menu_wcs</Comment>
 交換して　戦う▽
 特殊な　トーナメントです▼
 基本は　１匹の　交換ですが
-トリプルバトルに　かんしては▽
-２匹　交換　していただきます▼
+トリプルバトルに　関しては▽
+２匹　交換していただきます▼
 交換した　ポケモンは
-試合終了後に　持ち主の　もとに▽
-もどされますので　ご安心ください▼
+試合終了後に　持ち主の　元に▽
+戻されますので　ご安心ください▼
 また　フラットルールにより
 すべてのポケモンの　レベルは▽
 ５０と　させていただきます▼
@@ -1643,8 +1643,8 @@ msg_wbt_menu_wcs</Comment>
 バトルポイントが　もらえます▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T09:46:41" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:41:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1683,15 +1683,15 @@ msg_wbt_menu_wcs</Comment>
 ローテーションバトルの
 さんかポケモンは　４ひき▽
 と　なっております▼
-また　バトルポイントをもらえる
+また　バトルポイントを　もらえる
 トーナメントで　トリプルバトルや▽
 ローテーションバトルを　えらんで▼
-ゆうしょうすると　ふだんよりおおく
+ゆうしょうすると　ふだんより　おおく
 バトルポイントを　もらえますので▽
 うまく　ごかつようください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T05:16:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1711,15 +1711,15 @@ msg_wbt_menu_wcs</Comment>
 ローテーションバトルの
 参加ポケモンは　４匹▽
 と　なっております▼
-また　バトルポイントをもらえる
+また　バトルポイントを　もらえる
 トーナメントで　トリプルバトルや▽
 ローテーションバトルを　選んで▼
 優勝すると　普段より多くの
 バトルポイントを　もらえますので▽
 うまく　ご活用ください！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T05:16:35" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:41:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3484,10 +3484,10 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　３匹以上　用意し▼
 持たせる　道具も　すべて
-ちがう　道具に　してください▼</Text>
+違う　道具に　してください▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T06:59:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:45:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3549,10 +3549,10 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　４匹以上　用意し▼
 持たせる　道具も　すべて
-ちがう　道具に　してください▼</Text>
+違う　道具に　してください▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T06:59:29" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:45:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3614,10 +3614,10 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　６匹　用意し▼
 持たせる　道具も　すべて
-ちがう　道具に　してください▼</Text>
+違う　道具に　してください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-05T06:20:28" />
+				Time="2011-08-20T09:45:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3679,10 +3679,10 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　４匹以上　用意し▼
 持たせる　道具も　すべて
-ちがう　道具に　してください▼</Text>
+違う　道具に　してください▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T06:59:47" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:45:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3744,10 +3744,10 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　３匹以上　用意し▼
 持たせる　道具も　すべて
-ちがう　道具に　してください▼</Text>
+違う　道具に　してください▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T07:00:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:45:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3809,10 +3809,10 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　４匹以上　用意し▼
 持たせる　道具も　すべて
-ちがう　道具に　してください▼</Text>
+違う　道具に　してください▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T07:00:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:45:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3874,10 +3874,10 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　６匹　用意し▼
 持たせる　道具も　すべて
-ちがう　道具に　してください▼</Text>
+違う　道具に　してください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-05T06:20:28" />
+				Time="2011-08-20T09:45:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3939,10 +3939,10 @@ msg_wbt_info_11へ</Comment>
 参加するには　種類の　違う
 ポケモンを　４匹以上　用意し▼
 持たせる　道具も　すべて
-ちがう　道具に　してください▼</Text>
+違う　道具に　してください▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T07:00:42" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:45:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -4161,10 +4161,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トーナメントの　参加には
-[Digit:1digit Idx="0" ]ひき　必要ですよ</Text>
+[Digit:1digit Idx="0" ]匹　必要ですよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:45:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4326,16 +4326,16 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　ドキドキの
-ポケモンちゅうせん　タイムです！▽
-んんんん～……▼
+ポケモンちゅうせん　タイムです！▼
+んんんん……▼
 ……　……　……
 ……　……　……▼
 じゃん！　でました！▼
-こんかい　レンタルさせていただく
+こんかい　レンタルさせて　いただく
 ポケモンは　こちらと　なります！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T05:31:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:46:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4344,16 +4344,16 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　ドキドキの
-ポケモン抽選　タイムです！▽
-んんんん～……▼
+ポケモン抽選タイムです！▼
+んんんん……▼
 ……　……　……
 ……　……　……▼
-じゃん！　出ました！▼
-今回　レンタルさせていただく
+じゃん！　でました！▼
+今回　レンタルさせて　いただく
 ポケモンは　こちらと　なります！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T05:31:36" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:46:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4397,12 +4397,11 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN">
 			<Text>ただいま　スペシャルな
 トーナメントを　じゅんびちゅうです▼
-すこし　じかんが　かかりそうなので
-たびを　つづけながら▽
-おまちくださいませ！▼</Text>
+じかんが　かかりそうなので
+きながに　おまちくださいませ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T08:05:53" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:46:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4412,12 +4411,11 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN_KANJI">
 			<Text>ただいま　スペシャルな
 トーナメントを　準備中です▼
-少し　時間が　かかりそうなので
-旅を　続けながら▽
-お待ちくださいませ！▼</Text>
+時間が　かかりそうなので
+気長に　お待ちくださいませ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T08:06:00" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:46:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4506,11 +4504,11 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>けっしょうまで　あとひとつ……▼
-だいじょうぶ　つぎは　もっとうえまで
-いけるはずですよ！▼</Text>
+だいじょうぶ！　つぎは
+もっと　うえまで　いけるはずですよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T09:42:53" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:47:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4519,11 +4517,11 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>決勝まで　あとひとつ……▼
-大丈夫　次は　もっと上まで
-行けるはずですよ！▼</Text>
+大丈夫　次は
+もっと上まで　行けるはずですよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T07:54:23" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:47:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4566,11 +4564,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>……あとすこし　でしたね
-つぎこそ　ゆうしょう　できるはずです▽
-きを　おとさずに！▼</Text>
+つぎこそ　ゆうしょう　できるはずです！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T07:54:55" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:46:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4579,11 +4576,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……あと少し　でしたね
-次こそ　優勝　できるはずです▽
-気を　落とさずに！▼</Text>
+次こそ　優勝できるはずです！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-04T07:55:02" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:47:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4802,10 +4798,10 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN">
 			<Text>みごと　トーナメントを　せいした
 [Name:TrainerName ]さまに　バトルポイントを▽
-おくらせていただきます！▼</Text>
+おくらせて　いただきます！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T09:49:43" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:47:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4815,10 +4811,10 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN_KANJI">
 			<Text>みごと　トーナメントを　制した
 [Name:TrainerName ]様に　バトルポイントを▽
-おくらせていただきます！▼</Text>
+贈らせて　いただきます！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T09:49:55" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:47:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4904,11 +4900,11 @@ msg_wbt_info_11へ</Comment>
 			<Text>イッシュリーダーズトーナメントに
 ゆうしょうすると▼
 かくちの　ちほうトーナメントに
-さんか　できるようになりますよ▽
+さんか　できるように　なりますよ▽
 がんばって　くださいね！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T08:18:49" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:48:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4919,11 +4915,11 @@ msg_wbt_info_11へ</Comment>
 			<Text>イッシュリーダーズトーナメントに
 優勝すると▼
 各地の　地方トーナメントに
-参加できるようになりますよ▽
+参加できるように　なりますよ▽
 がんばって　くださいね！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T08:18:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:47:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -5040,14 +5036,14 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちほう　すべての
-リーダーズトーナメントと▽
-レンタルトーナメントに▽
+リーダーズトーナメントと▼
+レンタルトーナメントに
 ゆうしょう　すると▼
 レンタルマスタートーナメントに
-さんか　できるようになります！▼</Text>
+さんか　できるように　なります！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T03:25:44" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:49:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -5056,14 +5052,14 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>各地方　すべての
-リーダーズトーナメントと▽
-レンタルトーナメントに▽
+リーダーズトーナメントと▼
+レンタルトーナメントに
 優勝　すると▼
 レンタルマスタートーナメントに
-参加　できるようになります！▼</Text>
+参加　できるように　なります！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T03:25:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:49:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -5086,14 +5082,14 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちほう　すべての
-リーダーズトーナメントと▽
-ミックストーナメントに▽
+リーダーズトーナメントと▼
+ミックストーナメントに
 ゆうしょう　すると▼
 ミックスマスタートーナメントに
-さんか　できるようになります！▼</Text>
+さんか　できるように　なります！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T03:17:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:50:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -5102,14 +5098,14 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>各地方　すべての
-リーダーズトーナメントと▽
-ミックストーナメントに▽
+リーダーズトーナメントと▼
+ミックストーナメントに
 優勝　すると▼
 ミックスマスタートーナメントに
-参加　できるようになります！▼</Text>
+参加　できるように　なります！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T03:17:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:50:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -6248,11 +6244,11 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いままでの　ゆうしょうかいすうを
-みることができます</Text>
+			<Text>これまでの　ゆうしょうかいすうを
+みることが　できます</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T06:20:55" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6260,11 +6256,11 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いままでの　優勝回数を
-みることができます</Text>
+			<Text>これまでの　優勝回数を
+みることが　できます</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T06:30:50" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:50:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -2,7 +2,8 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="wbt_dl_cap_001">
+		Label="wbt_dl_cap_001"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントダウンロード</Text>
@@ -42,7 +43,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_002">
+		Label="wbt_dl_cap_002"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:WBTTournament ]トーナメント</Text>
@@ -76,7 +78,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_003">
+		Label="wbt_dl_cap_003"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>バトルルール：</Text>
@@ -110,7 +113,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_004">
+		Label="wbt_dl_cap_004"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>シングル</Text>
@@ -144,7 +148,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_005">
+		Label="wbt_dl_cap_005"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ダブル</Text>
@@ -178,7 +183,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_006">
+		Label="wbt_dl_cap_006"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トリプル</Text>
@@ -212,7 +218,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_007">
+		Label="wbt_dl_cap_007"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ローテーション</Text>
@@ -246,7 +253,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_008">
+		Label="wbt_dl_cap_008"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントないよう：</Text>
@@ -280,7 +288,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_009">
+		Label="wbt_dl_cap_009"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ほぞんした　トーナメント</Text>
@@ -313,7 +322,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_010">
+		Label="wbt_dl_cap_010"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>でられないポケモン</Text>
@@ -327,10 +337,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>出られないポケモン</Text>
+			<Text>でられないポケモン</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:10:54" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:56:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -346,7 +356,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_011">
+		Label="wbt_dl_cap_011"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もたせられない　どうぐ</Text>
@@ -360,10 +371,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>持たせられない　どうぐ</Text>
+			<Text>持たせられない道具</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:11:21" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:56:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -379,7 +390,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_012">
+		Label="wbt_dl_cap_012"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もたせられない　わざ</Text>
@@ -393,10 +405,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>持たせられない　わざ</Text>
+			<Text>持たせられない技</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:11:45" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:56:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -412,7 +424,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_cap_013">
+		Label="wbt_dl_cap_013"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なし</Text>
@@ -452,7 +465,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_01">
+		Label="wbt_dl_ev_msg_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントデータを　さがしています
@@ -486,7 +500,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_02">
+		Label="wbt_dl_ev_msg_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ほぞんしたい　トーナメントを
@@ -502,10 +517,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>保存したい　トーナメントを
-えらんで　ください▼</Text>
+選択して　ください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:56:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -520,7 +535,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_03">
+		Label="wbt_dl_ev_msg_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｗｉ－Ｆｉコネクションを
@@ -536,10 +552,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｗｉ－Ｆｉコネクションを
-おわりに　しますか？</Text>
+終了しますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -555,7 +571,7 @@
 	</TextRow>
 	<TextRow
 		Label="wbt_dl_ev_msg_03_yes"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はい</Text>
@@ -596,7 +612,7 @@
 	</TextRow>
 	<TextRow
 		Label="wbt_dl_ev_msg_03_no"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いいえ</Text>
@@ -636,7 +652,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_04">
+		Label="wbt_dl_ev_msg_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:WBTTournament ]トーナメントを
@@ -652,10 +669,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:WBTTournament ]トーナメントを
-保存　しますか？</Text>
+保存しますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-08-16T02:46:28" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -670,7 +687,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_04_yes">
+		Label="wbt_dl_ev_msg_04_yes"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はい</Text>
@@ -703,7 +721,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_04_no">
+		Label="wbt_dl_ev_msg_04_no"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いいえ</Text>
@@ -736,7 +755,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_05">
+		Label="wbt_dl_ev_msg_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>この　トーナメントは
@@ -752,10 +772,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この　トーナメントは
-すでに　保存　しています▼</Text>
+すでに　保存しています▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:56:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -770,7 +790,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_06">
+		Label="wbt_dl_ev_msg_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントデータを
@@ -804,7 +825,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_07">
+		Label="wbt_dl_ev_msg_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントを　ほぞん　しています
@@ -819,11 +841,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トーナメントを　保存　しています
-でんげんを　きらないでください……</Text>
+			<Text>トーナメントを　保存しています
+電源を　きらないでください……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -838,7 +860,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_08">
+		Label="wbt_dl_ev_msg_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントデータを
@@ -854,10 +877,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トーナメントデータを
-保存　しました▼</Text>
+保存しました▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:56:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -872,7 +895,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_09">
+		Label="wbt_dl_ev_msg_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントデータが　いっぱいです
@@ -887,11 +911,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トーナメントデータが　いっぱいです
-データを　けしてください▼</Text>
+			<Text>トーナメントデータが　一杯です
+データを　消去してください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-28T12:39:32" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:56:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -906,7 +930,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_10">
+		Label="wbt_dl_ev_msg_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントデータを
@@ -922,10 +947,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トーナメントデータを
-消すのを　やめますか？</Text>
+消去するのを　やめますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:31:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -940,7 +965,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_10_yes">
+		Label="wbt_dl_ev_msg_10_yes"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はい</Text>
@@ -973,7 +999,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_10_no">
+		Label="wbt_dl_ev_msg_10_no"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いいえ</Text>
@@ -1006,7 +1033,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_11">
+		Label="wbt_dl_ev_msg_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:WBTTournament ]トーナメントを
@@ -1022,10 +1050,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:WBTTournament ]トーナメントを
-消しても　いいですか？</Text>
+消去しても　いいですか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-28T12:40:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1040,7 +1068,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_11_yes">
+		Label="wbt_dl_ev_msg_11_yes"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はい</Text>
@@ -1073,7 +1102,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_11_no">
+		Label="wbt_dl_ev_msg_11_no"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いいえ</Text>
@@ -1106,7 +1136,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_12">
+		Label="wbt_dl_ev_msg_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:WBTTournament ]トーナメントを
@@ -1122,10 +1153,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:WBTTournament ]トーナメントを
-本当に　消しても　いいですか？</Text>
+本当に　消去しても　いいですか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-28T12:41:00" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:55:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1140,7 +1171,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_12_yes">
+		Label="wbt_dl_ev_msg_12_yes"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はい</Text>
@@ -1173,7 +1205,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_12_no">
+		Label="wbt_dl_ev_msg_12_no"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いいえ</Text>
@@ -1206,7 +1239,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_13">
+		Label="wbt_dl_ev_msg_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントデータを
@@ -1222,10 +1256,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トーナメントデータを
-けしました▼</Text>
+消去しました▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-28T12:41:22" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:55:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1240,7 +1274,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_error_01">
+		Label="wbt_dl_error_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>データが　みつかりませんでした▼</Text>
@@ -1273,7 +1308,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_error_02">
+		Label="wbt_dl_error_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>データが　みつかりませんでした▼</Text>
@@ -1306,7 +1342,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_error_03">
+		Label="wbt_dl_error_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>データが　みつかりませんでした▼</Text>
@@ -1339,7 +1376,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_error_04">
+		Label="wbt_dl_error_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>データが　みつかりませんでした▼</Text>
@@ -1372,7 +1410,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_error_05">
+		Label="wbt_dl_error_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>データが　みつかりませんでした▼</Text>
@@ -1405,7 +1444,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_error_06">
+		Label="wbt_dl_error_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>データが　みつかりませんでした▼</Text>
@@ -1438,7 +1478,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_error_07">
+		Label="wbt_dl_error_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>データが　みつかりませんでした▼</Text>
@@ -1471,7 +1512,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_error_08">
+		Label="wbt_dl_error_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>データが　みつかりませんでした▼</Text>
@@ -1504,7 +1546,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_error_09">
+		Label="wbt_dl_error_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>データが　みつかりませんでした▼</Text>
@@ -1537,7 +1580,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_error_10">
+		Label="wbt_dl_error_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>データが　みつかりませんでした▼</Text>
@@ -1570,7 +1614,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_01">
+		Label="wbt_dl_list_msg_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:WBTTournament ]トーナメントを
@@ -1604,7 +1649,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_01_01">
+		Label="wbt_dl_list_msg_01_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>くわしく　みる</Text>
@@ -1637,7 +1683,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_01_02">
+		Label="wbt_dl_list_msg_01_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
@@ -1670,7 +1717,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_02">
+		Label="wbt_dl_list_msg_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さんかする　トーナメントを
@@ -1704,7 +1752,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_03">
+		Label="wbt_dl_list_msg_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:WBTTournament ]トーナメントに
@@ -1738,7 +1787,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_03_01">
+		Label="wbt_dl_list_msg_03_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さんか　する</Text>
@@ -1771,7 +1821,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_03_02">
+		Label="wbt_dl_list_msg_03_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>くわしく　みる</Text>
@@ -1804,7 +1855,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_03_03">
+		Label="wbt_dl_list_msg_03_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
@@ -1837,7 +1889,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_000">
+		Label="wbt_dl_list_msg_000"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]</Text>
@@ -1869,7 +1922,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_001">
+		Label="wbt_dl_list_msg_001"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:Item Idx="0" ]</Text>
@@ -1901,7 +1955,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_002">
+		Label="wbt_dl_list_msg_002"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:Move Idx="0" ]</Text>
@@ -1933,7 +1988,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_list_msg_01_03">
+		Label="wbt_dl_list_msg_01_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ほぞんする</Text>
@@ -1947,10 +2003,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほぞんする</Text>
+			<Text>保存する</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-26T11:13:53" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -1966,7 +2022,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="wbt_dl_ev_msg_000">
+		Label="wbt_dl_ev_msg_000"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントダウンロードを
@@ -1982,10 +2039,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トーナメントダウンロードを
-しゅうりょう　しますか？</Text>
+終了しますか？</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-28T07:04:41" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:55:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
