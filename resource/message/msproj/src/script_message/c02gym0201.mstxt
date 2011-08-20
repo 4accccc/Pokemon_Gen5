@@ -179,114 +179,6 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c02gym0101_statue_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-28T08:34:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-28T08:34:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-28T08:34:54" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ポケモン像</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c02gym0101_statue_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-28T08:34:42" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-28T08:34:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-28T08:34:55" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ポケモン像</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_c02gym0101_girl3_01"
 		Style="Large">
 		<LanguageCell
@@ -295,10 +187,10 @@
 ほんを　さがしてるの？▼
 ……えーと　たしか
 「はじめまして　ポケモンちゃん」は▽
-いりぐちに　ちかい　ほんだなよ▼</Text>
+いりぐちに　ちかい　ほんだなよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:25:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -310,10 +202,10 @@
 本を　探してるの？▼
 ……えーと　確か
 「はじめまして　ポケモンちゃん」は▽
-入り口に　近い　本棚よ▼</Text>
+入り口に　近い　本棚よ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:25:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -360,10 +252,10 @@
 おっと！　いま　よんでいるのは
 「きかんしゃの　こうぞう」よ▼
 このほんを　よみたくなったら
-わたしに　いってね▼</Text>
+わたしに　いってね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:25:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -376,10 +268,10 @@
 おっと！　今　読んでいるのは
 「機関車の　構造」よ▼
 この本を　読みたくなったら
-私に　いってね▼</Text>
+私に　いってね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T09:25:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -392,85 +284,6 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>本棚ストッパー２</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c02gym0101_assitantw_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……ふむふむ
-なるほど▼
-おっと！　メモをみつけて
-このほんを　さがしにきたの？▽
-メモには　なんて　かいてあった？▼
-「たいないで　ほのおが　もえあがり
-あたまから　けむりをだして　はしる」▼
-わたしが　よんでるのは
-「きかんしゃの　こうぞう」よ▽
-このほんが　せいかい　かしらね？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……ふむふむ
-なるほど▼
-おっと！　メモをみつけて
-この本を　探しに来たの？▽
-メモには　なんて　書いてあった？▼
-「体内で　炎が　燃え上がり
-頭から　煙を出して　走る」▼
-私が　読んでるのは
-「機関車の　構造」よ▽
-この本が　正解かしらね？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀：トレーナー
-・フラグ成立後＝戦闘前（画面下を向いている）
-・はい/いいえの選択肢表示
-・はい→assitantw_02_1
-　いいえ→assitantw_02_2
-
-「Ｑ，たいないで　ほのおが　もえあがり
-あたまから　けむりをだして　はしる」</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-28T08:42:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
