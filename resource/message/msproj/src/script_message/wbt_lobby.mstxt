@@ -1446,7 +1446,7 @@ msg_wbt_menu_wcs</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_info_explain_shuffle"
+		Label="msg_wbt_info_explain_mix"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1585,7 +1585,7 @@ msg_wbt_menu_wcs</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_info_explain_shuffle_m"
+		Label="msg_wbt_info_explain_mix_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -2413,7 +2413,7 @@ msg_wbt_info_11へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_menu_shuffle"
+		Label="msg_wbt_menu_mix"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -2493,7 +2493,7 @@ msg_wbt_info_11へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_menu_shuffle_m"
+		Label="msg_wbt_menu_mix_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
