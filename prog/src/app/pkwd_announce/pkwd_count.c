@@ -1629,6 +1629,13 @@ static s32 pwc_main_timer( PKWD_COUNT_MAIN_WORK* wk, const s32 tmode )
 	if(wk->Timer[tmode] <= 0){
 		wk->Timer[tmode] = 0;
 	}
+#ifdef PM_DEBUG
+  // Aƒ{ƒ^ƒ“‚Å‘‘—‚è‰Â”\‚É‚·‚é
+  if( GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE ){
+    wk->Timer[tmode] = 0;
+  }
+#endif  
+
 	return( wk->Timer[tmode] );
 }
 
