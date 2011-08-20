@@ -671,11 +671,11 @@
 #define SCR_WBT_CUP_SHUFFLEMASTER    (16) ///<シャッフルマスタートーナメント
 
 
-#define SCR_WBT_RULE_NULL             (0) ///<ルールなし
-#define SCR_WBT_RULE_SINGLE           (1) ///<シングルバトル
-#define SCR_WBT_RULE_DOUBLE           (2) ///<ダブルバトル
-#define SCR_WBT_RULE_TRIPLE           (3) ///<トリプルバトル
-#define SCR_WBT_RULE_ROTATION         (4) ///<ローテーション
+#define SCR_WBT_RULE_SINGLE           (0) ///<シングルバトル
+#define SCR_WBT_RULE_DOUBLE           (1) ///<ダブルバトル
+#define SCR_WBT_RULE_TRIPLE           (2) ///<トリプルバトル
+#define SCR_WBT_RULE_ROTATION         (3) ///<ローテーション
+#define SCR_WBT_RULE_NULL             (4) ///<ルールなし
 
 #define SCR_WBT_LIST_1ST_START        (0) ///<受付での組み合わせ
 #define SCR_WBT_LIST_1ST_RESULT       (1) ///<1回戦結果

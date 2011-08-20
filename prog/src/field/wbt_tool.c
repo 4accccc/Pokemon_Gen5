@@ -33,6 +33,11 @@
 #include "arc_def.h"  //ARCID_～
 #include "arc/wbt/wbt_trlist.naix"
 
+SDK_COMPILER_ASSERT( BTL_RULE_SINGLE == WBTRULE_SINGLE );
+SDK_COMPILER_ASSERT( BTL_RULE_DOUBLE == WBTRULE_DOUBLE );
+SDK_COMPILER_ASSERT( BTL_RULE_TRIPLE == WBTRULE_TRIPLE );
+SDK_COMPILER_ASSERT( BTL_RULE_ROTATION == WBTRULE_ROTATION );
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -179,10 +184,6 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
 //------------------------------------------------------------------
 static const WBT_RULE_DATA WBTRuleData[] =
 {
-  {// WBTRULE_NULL（ダミーデータ）
-    msg_wbtsys_rule_single,
-    3, BTL_RULE_SINGLE,
-  },
   {// WBTRULE_SINGLE
     msg_wbtsys_rule_single,
     3, BTL_RULE_SINGLE,
@@ -411,6 +412,8 @@ WBT_TRPRI WBTTOOL_GetRomTrainerPriority( const WBTROM_TRDATA * rom_trdata, WBTRO
 //------------------------------------------------------------------
 static WBTRULE checkWBTRuleRange( WBTRULE wbt_rule )
 {
+  SDK_COMPILER_ASSERT( NELEMS(WBTRuleData) == WBTRULE_MAX );
+
   if ( WBTRULE_SINGLE > wbt_rule && wbt_rule > WBTRULE_ROTATION )
   {
     GF_ASSERT( 0 );
@@ -457,22 +460,18 @@ u8 WBTTOOL_GetPartyMaxByRule( WBTRULE rule )
 //------------------------------------------------------------------
 BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule )
 {
+  BtlRule btl_rule;
   wbt_rule = checkWBTRuleRange( wbt_rule );
-  return WBTRuleData[ wbt_rule ].btl_rule;
+  btl_rule = WBTRuleData[ wbt_rule ].btl_rule;
+  GF_ASSERT( btl_rule == wbt_rule );
+  return btl_rule;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 WBTRULE WBTTOOL_BtlRuleToWBTRule( BtlRule btl_rule )
 {
-SDK_COMPILER_ASSERT( BTL_RULE_SINGLE == WBTRULE_SINGLE - 1);
-SDK_COMPILER_ASSERT( BTL_RULE_DOUBLE == WBTRULE_DOUBLE - 1);
-SDK_COMPILER_ASSERT( BTL_RULE_TRIPLE == WBTRULE_TRIPLE - 1);
-SDK_COMPILER_ASSERT( BTL_RULE_ROTATION == WBTRULE_ROTATION - 1);
-
   WBTRULE wbt_rule;
-
-  wbt_rule = btl_rule + 1;
-  wbt_rule = checkWBTRuleRange( wbt_rule );
+  wbt_rule = checkWBTRuleRange( btl_rule );
   return wbt_rule;
 }
 
@@ -799,12 +798,8 @@ u32 WBTTOOL_GetRewardCount( WBTCUP wbtcup, WBTRULE wbtrule )
     GF_ASSERT_MSG( 0, "error wbtcup == %d\n", wbtcup );
     wbtcup = WBTCUP_HODOMOE;
   }
-  if ( wbtrule <= WBTRULE_NULL || wbtrule >= WBTRULE_MAX )
-  {
-    GF_ASSERT_MSG( 0, "error wbtrule == %d\n", wbtrule );
-    wbtrule = WBTRULE_SINGLE;
-  }
-  return WBTTournamentData[ wbtcup - 1].reward[ wbtrule - 1];
+  wbtrule = checkWBTRuleRange( wbtrule );
+  return WBTTournamentData[ wbtcup - 1].reward[ wbtrule ];
 }
 
 

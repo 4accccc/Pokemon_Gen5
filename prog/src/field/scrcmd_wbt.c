@@ -70,11 +70,11 @@ SDK_COMPILER_ASSERT( SCR_WBT_CUP_WORLD == WBTCUP_WORLD );
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_WCS == WBTCUP_WCS );
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_HODOMOE_EVENT == WBTCUP_HODOMOE_EVENT );
 
-SDK_COMPILER_ASSERT( SCR_WBT_RULE_NULL == WBTRULE_NULL );
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_SINGLE == WBTRULE_SINGLE );
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_DOUBLE == WBTRULE_DOUBLE );
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_TRIPLE == WBTRULE_TRIPLE );
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_ROTATION == WBTRULE_ROTATION );
+SDK_COMPILER_ASSERT( SCR_WBT_RULE_NULL == WBTRULE_NULL );
 
 SDK_COMPILER_ASSERT( SCR_WBT_RECEPTION1 == WBTRECEPT_1 );
 SDK_COMPILER_ASSERT( SCR_WBT_RECEPTION2 == WBTRECEPT_2 );
@@ -283,6 +283,7 @@ VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk )
 
   GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( wk );
 
+  WBTSYS_SetupMyParty( wbtsys, gamedata );
   WBTSYS_MakeMatch( wbtsys, gamedata );
   TAMADA_Printf("EvCmdWBTSystemEntry\n");
 
@@ -351,8 +352,7 @@ VMCMD_RESULT EvCmdWBTCheckBattleRule( VMHANDLE * core, void * wk )
   GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( wk );
   POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
   POKE_REG_RETURN_ENUM result;
-  //仮
-  TAMADA_Printf("EvCmdWBTCheckBattleRule\n");
+
   result = PokeRegulationMatchPartialPokeParty( reg, party );
   if ( result == POKE_REG_OK )
   {
@@ -360,6 +360,10 @@ VMCMD_RESULT EvCmdWBTCheckBattleRule( VMHANDLE * core, void * wk )
   } else {
     *ret_wk = FALSE;
   }
+#ifdef  PM_DEBUG
+  WBTSYS_DEBUG_PrintRegulation( reg );
+  TAMADA_Printf("EvCmdWBTCheckBattleRule() = %d\n", result);
+#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -396,6 +400,9 @@ VMCMD_RESULT EvCmdWBTBtlUtilPartySelect( VMHANDLE * core, void *wk )
     GMEVENT* event;
     HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
     const REGULATION* regu = WBTSYS_GetRegulation( wbtsys );
+#ifdef  PM_DEBUG
+    WBTSYS_DEBUG_PrintRegulation( regu );
+#endif
 
     same = Regulation_GetParam( regu, REGULATION_BOTH_POKE );
 
@@ -808,6 +815,24 @@ VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk )
 //
 //
 //============================================================================================
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：対戦相手の手持ちデータ生成
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSetupEnemyParty( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK * work = wk;
+  //SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  //GAMEDATA*          gamedata = SCRCMD_WORK_GetGameData( work );
+  WBTSYS * wbtsys = getWBTSys( wk );
+  const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
+
+  WBTSYS_SetupEnemyParty( wbtsys, gsys, wbt_tr );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：WBT対戦トレーナーの動作モデルコード取得

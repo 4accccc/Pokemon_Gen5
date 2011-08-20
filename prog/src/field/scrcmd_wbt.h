@@ -43,6 +43,7 @@ extern VMCMD_RESULT EvCmdWBTGetDownLoadName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetDLData( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk );
 
+extern VMCMD_RESULT EvCmdWBTSetupEnemyParty( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetEnemyMMdlCode( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTTrainerBattle( VMHANDLE * core, void * wk );

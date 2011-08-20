@@ -158,6 +158,8 @@ struct _WBT_SYSTEM {
     u16 pokelist_result_select; ///<ポケモンリスト戻り値
     u16 pokelist_return_mode; ///<ポケモンリスト選択結果
   
+    POKEPARTY * my_party;
+    POKEPARTY * npc_party;
   //戦闘呼び出し関連
   BATTLE_SETUP_PARAM *btl_setup_param;
   STRBUF * win_msg;     ///<バトル内での勝利時メッセージ

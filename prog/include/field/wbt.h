@@ -65,13 +65,13 @@ typedef enum {
 ///WBT対戦ルール
 //------------------------------------------------------------------
 typedef enum {
-  WBTRULE_NULL,     ///<ルール未指定
   WBTRULE_SINGLE,   ///<シングルバトル
   WBTRULE_DOUBLE,   ///<ダブルバトル
   WBTRULE_TRIPLE,   ///<トリプルバトル
   WBTRULE_ROTATION, ///<ローテーションバトル
 
   WBTRULE_MAX,
+  WBTRULE_NULL = WBTRULE_MAX,     ///<ルール未指定
 }WBTRULE;
 
 //------------------------------------------------------------------

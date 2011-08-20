@@ -434,6 +434,8 @@ _BALLOONWIN_CLOSE()
 
 _SE_STOP()
 
+//対戦相手の手持ち生成処理
+_WBT_SETUP_ENEMY_PARTY()
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
 
@@ -660,6 +662,8 @@ _BALLOONWIN_CLOSE()
 
 _SE_STOP()
 
+//対戦相手の手持ち生成処理
+_WBT_SETUP_ENEMY_PARTY()
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
 
@@ -982,6 +986,8 @@ _SE_STOP()
 
 _WBT_GMK_EXPLOSION( SCR_WBT_VS3 )
 
+//対戦相手の手持ち生成処理
+_WBT_SETUP_ENEMY_PARTY()
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
 
