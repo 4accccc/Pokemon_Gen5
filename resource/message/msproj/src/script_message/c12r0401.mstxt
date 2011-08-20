@@ -7,13 +7,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヒオウギは　イッシュちほうの
-はずれだから　ポケモントレーナーも▽
-すくないのよね……▼
+はずれで　ポケモンしょうぶも▽
+そんなに　さかん　じゃないのよね▼
 イッシュの　ちゅうしんなら
-しょうぶする　ひとも　おおいけれど</Text>
+ポケモンしょうぶする　ひと▽
+ポケモントレーナーも　おおいけれど</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:35:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,14 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒオウギは　イッシュちほうの
-はずれだから　ポケモントレーナーも▽
-すくないのよね……▼
-イッシュの　ちゅうしんなら
-しょうぶする　ひとも　おおいけれど</Text>
+			<Text>ヒオウギは　イッシュ地方の
+外れで　ポケモン勝負も▽
+そんなに　盛んじゃないのよね▼
+イッシュの　中心なら
+ポケモン勝負する　人……▽
+ポケモントレーナーも　多いけれど</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:35:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37,10 +39,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・</Comment>
+・ポケモン入手前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:49:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -58,15 +60,64 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c12r0401_woman1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンジムが　できることで
+みんな　かわるのかしら？▼
+だって　ともだちが　つよくなれば
+じぶんも　つよくなりたいもの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:36:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:49:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンジムが　できることで
+みんな　変わるのかしら？▼
+だって　友達が　強くなれば
+自分も　強くなりたいもの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:36:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:49:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:49:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:56:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c12r0401_girl2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あたしの　ポケモン
-たたかわせないから　よわいまま……</Text>
+たたかわせないから　よわいまま……▼
+だって　しょうぶとか　すると
+ポケモン　きずついちゃうもん！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:36:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -75,10 +126,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしの　ポケモン
-たたかわせないから　よわいまま……</Text>
+たたかわせないから　よわいまま……▼
+だって　しょうぶとか　すると
+ポケモン　きずついちゃうもん！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:36:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -87,10 +140,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・</Comment>
+・c12ジムバッジ入手前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:37:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -106,16 +159,77 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0401_girl2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしの　ポケモン
+たたかわせて　みるの……▼
+きずつくのが　こわいからって
+なにもしないと　よわいままだから</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:37:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:49:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしの　ポケモン
+たたかわせて　みるの……▼
+きずつくのが　こわいからって
+なにもしないと　よわいままだから</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:37:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:49:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・c12ジムバッジ入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T07:37:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:56:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c12r0401_poke_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みゃーお</Text>
+			<Text>きゃう！　きゃうきゃう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:56:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -123,10 +237,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みゃーお</Text>
+			<Text>きゃう！　きゃうきゃう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:56:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -142,11 +256,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-・チョロネコ</Text>
+			<Text>POKE30
+ポケモン・ヨーテリー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T06:55:57" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
