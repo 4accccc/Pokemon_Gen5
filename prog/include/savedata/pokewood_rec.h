@@ -44,9 +44,10 @@ typedef enum
 //=====================================
 typedef enum 
 {
-  POKEWOOD_REC_PARAM_SENARIO, // シナリオナンバー
-  POKEWOOD_REC_PARAM_SUCCESS, // 成功フラグ
-  POKEWOOD_REC_PARAM_POKE0,   // 自分の手持ち１匹目のPOKEMON_PARAM
+  POKEWOOD_REC_PARAM_SENARIO,         // シナリオナンバー
+  POKEWOOD_REC_PARAM_SUCCESS,         // 成功フラグ
+  POKEWOOD_REC_PARAM_POKE0,           // 自分の手持ち１匹目のPOKEMON_PARAM
+  POKEWOOD_REC_PARAM_AUDIENCE_NUM,    // 初期観客数
 } POKEWOOD_REC_PARAM;
 
 

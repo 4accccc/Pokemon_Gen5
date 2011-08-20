@@ -12,14 +12,17 @@
 #include "gamesystem/game_data.h"
 #include "battle/pokewood.h"
 
-#define POKEWOOD_BOXOFFICE_DATA_MAX   ( 10 )    // 記録として残す興行成績ランキングの数
+#define POKEWOOD_BOXOFFICE_DATA_MAX   ( 40 )    // 記録として残す興行成績ランキングの数
+#define POKEWOOD_MYPOKE_NUM           (  6 )    // ポケモンアイコンで保存する自分の手持ちポケモンアイコンの数
 
 /// ポケウッド興行成績データ構造体定義
 typedef struct {
-  int     scenario_no;    // シナリオNO   4
-  int     profits;        // 収益         8
-  STRCODE nickname[BUFLEN_POKEMON_NAME];  // ポケモン名 8+12*2=32
+  int     profits;                          // 収益             4
+  u16     pokeicon[POKEWOOD_MYPOKE_NUM];    // ポケモンアイコン 2x6
+                                            // 計 12+4 = 16
+//  STRCODE nickname[BUFLEN_POKEMON_NAME];  // ポケモン名 8+12*2=32
 }POKEWOOD_BOXOFFICE_RECORD;
+
 
 
 ///<外部参照型定義

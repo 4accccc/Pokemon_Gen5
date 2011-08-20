@@ -103,6 +103,9 @@ static void pokewood_PokeParty_to_RecPokeParty( const POKEPARTY *party, POKEWOOD
 static void pokewood_RecPokeParty_to_PokeParty( POKEWOOD_REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID );
 static void pokewood_store_Senario( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_SENARIO *senario );
 static void pokewood_restore_Senario( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_SENARIO *senario );
+static void pokewood_store_Subset( const BATTLE_SETUP_PARAM *setup, POKEWOOD_REC_WORK *rec );
+static void pokewood_restore_Subset( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_WORK *rec );
+
 
 //=============================================================================================
 /**
@@ -141,6 +144,7 @@ void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
       pokewood_store_OperationBuffer( setup, rec );
       store_SetupSubset( setup, &rec->setupSubset );
       pokewood_store_Senario( setup, &rec->senario );
+      pokewood_store_Subset( setup, rec );
     }
     break;
   }
@@ -197,6 +201,7 @@ void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, BTLREC_RESOTRE_MODE
 	    pokewood_restore_OperationBuffer( setup, rec );
 	    restore_SetupSubset( setup, &rec->setupSubset );
       pokewood_restore_Senario( setup, &rec->senario );
+      pokewood_restore_Subset( setup, rec );
 
       //ポケウッド再生は強制上映モード
       setup->PokewoodMode = BTL_POKEWOOD_SHOW;
@@ -758,6 +763,7 @@ static void pokewood_store_Senario( const BATTLE_SETUP_PARAM* setup, POKEWOOD_RE
   senario->success    = setup->pokewoodSuccessFlag;
   GFL_STD_MemCopy( setup->pokewoodChoiceTbl, senario->choiceTbl, BTL_POKEWOOD_CHOICE_MAX );
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief　ポケウッド用シナリオデータ
@@ -773,6 +779,32 @@ static void pokewood_restore_Senario( BATTLE_SETUP_PARAM* setup, const POKEWOOD_
   GFL_STD_MemCopy( senario->choiceTbl, setup->pokewoodChoiceTbl, BTL_POKEWOOD_CHOICE_MAX );
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ポケウッド用：初期観客数などをセーブに保存
+ *
+ * @param   setup		
+ * @param   rec		
+ */
+//----------------------------------------------------------------------------------
+static void pokewood_store_Subset( const BATTLE_SETUP_PARAM *setup, POKEWOOD_REC_WORK *rec )
+{
+  rec->audience_num = setup->audience_num;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ポケウッド用：初期観客数などをbspに復帰
+ *
+ * @param   setup		
+ * @param   senario		
+ */
+//----------------------------------------------------------------------------------
+static void pokewood_restore_Subset( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_WORK *rec )
+{
+  setup->audience_num = rec->audience_num;
+}
 
 //----------------------------------------------------------------------------
 /**

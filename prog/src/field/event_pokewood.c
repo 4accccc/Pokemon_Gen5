@@ -49,6 +49,7 @@
 //#include "event_debug_menu_ov_pokewood.h"
 
 #include "system/net_err.h"
+#include "scrcmd_pokewood.h"
 
 #include "waza_tool/wazano_def.h"
 #include "item/itemsym.h"
@@ -301,6 +302,8 @@ static void dataMakeEncountTrainer( int senario_no, int PokewoodType, BSP_TRAINE
 
 }
 
+static const audience_tbl[][2]={ {5,5}, {7,6}, {10,9}, {16,7}, {22,1} };
+
 //-----------------------------------------------------------------------------
 /**
  * @brief ポケウッド録画用セットアップ
@@ -308,13 +311,11 @@ static void dataMakeEncountTrainer( int senario_no, int PokewoodType, BSP_TRAINE
  * @todo  シナリオへの対応
  */
 //-----------------------------------------------------------------------------
-static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID, int senario_no )
+static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID, int senario_no )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
-//  u16 tr_type = trainerData[senario_no]; //TRID_NULL;
   BATTLE_SETUP_PARAM * bsp = BATTLE_PARAM_Create( heapID );
-
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
   POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
   const MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
   PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
@@ -353,7 +354,10 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
   bsp->PokewoodMode = BTL_POKEWOOD_REC;
   bsp->pokewoodSenario = senario_no; //仮
 //  bsp->DebugFlagBit = 1<<BTL_DEBUGFLAG_SKIP_BTLIN;
-
+  {
+    int star_rank = PokewoodStarPoint2StarRank(POKEWOOD_SAVEDATA_GetStarPoint(ps));
+    bsp->audience_num = audience_tbl[star_rank][0] + GFUser_GetPublicRand(audience_tbl[star_rank][1]);
+  }
   OS_Printf("create BSP pokewood senario = %d\n", bsp->pokewoodSenario);
 
   TAMADA_Printf(" POKEWOOD BSP %08x\n", bsp );
@@ -715,7 +719,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
 
   // 呼び出しパラメーター解放
   case PW_SHOW_SEQ_FREE_BSP:
-    GFL_STR_DeleteBuffer( prew->TrainerTypeName );
+    GFL_STR_DeleteBuffer( prew->TrainerTypeName );  // バトルで使用したトレーナータイプ名バッファを作成
     deletePokewoodBSP( pbew->bp );
     (*seq) ++;
     break;
@@ -821,7 +825,7 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
 
   // バトル呼び出しパラメータを解放
   case PW_REC_SEQ_FREE_BSP:
-    GFL_STR_DeleteBuffer( prew->TrainerTypeName );
+    GFL_STR_DeleteBuffer( prew->TrainerTypeName );  // バトルで使用したトレーナータイプ名バッファを作成
     deletePokewoodBSP( pbew->bp );
     //侵入システムにフィールド中であることを伝える
     (*seq) ++;

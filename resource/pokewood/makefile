@@ -95,7 +95,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	rm *.bin
 	rm *_f.gmm
 	rm *_m.gmm
-	rm bgm.rb
+	rm bgm_hash.rb
 endif
 	-rm -f $(TARGETDIR)/$(targetname).narc
 	-rm -f $(TARGETDIR)/$(targetname).naix

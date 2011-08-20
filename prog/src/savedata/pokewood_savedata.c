@@ -25,12 +25,13 @@ struct _POKEWOOD_SAVEDATA{
   u32 open_flag[POKEWOOD_ARRAY_NUM];          ///< ポケウッド解放フラグ      8
   u32 played_flag[POKEWOOD_ARRAY_NUM];        ///< ポケウッド撮影済みフラグ  16
   u32 success_flag[POKEWOOD_ARRAY_NUM];       ///< 成功フラグ取得済みフラグ  24
-  u8  showed_flag[POKEWOOD_RECSAVEDATA_MAX];  ///< 上映済みフラグ
+  u8  showed_flag[POKEWOOD_RECSAVEDATA_MAX];  ///< 上映済みフラグ            32
 
-  POKEWOOD_BOXOFFICE_RECORD boxoffice_record[POKEWOOD_BOXOFFICE_DATA_MAX];  // 興行成績ランキング 32*10+24
-  s16 star_point;                             ///< プレイヤーのスターポイント
-
-  u8 array[154];
+  POKEWOOD_BOXOFFICE_RECORD boxoffice_record[POKEWOOD_BOXOFFICE_DATA_MAX];  // 興行成績ランキング 16*40
+  s16 star_point;                             ///< プレイヤーのスターポイント 2
+  s16 padding;                                ///< 2
+  
+  u8 array[320];                              ///<
 };
 
 //---------------------------------------------------------------------------

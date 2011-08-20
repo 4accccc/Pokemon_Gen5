@@ -23,6 +23,9 @@
 #define POKEWOOD_CHOICE_STR_MAX ( 20*2 )///< 選択肢文字列の最大長
 #define POKEWOOD_SENARIO_HEADER_SIZE  ( 18 ) ///< 台本画面が参照するシナリオデータの最小バイト数
 
+#define POKEWOOD_EVENTNO_SUCCESS  ( 100 ) ///< 成功イベントの際にターン指定欄に格納されている値
+#define POKEWOOD_EVENTNO_FAILED   ( 101 ) ///< 失敗イベントの際にターン指定欄に格納されている値
+
 // 立ち位置AAとBBの状態(PWS_はPOKEWOOD_STAGEの頭文字)
 #define PWS_A_POKE    ( 0 ) ///< AAお盆の上にポケモン
 #define PWS_A_TRAINER ( 1 ) ///< AAお盆の上にトレーナー
@@ -76,7 +79,7 @@ typedef struct{
   s16 enemy_message;      ///< GMMメッセージID
   s16 select_enemy_waza;  ///< 選択した内容によって敵が使用する技がこの番号に固定される
   s16 visual_effect;      ///< 背景チェンジが発生する場合はNOが。無い場合は-1
-  s16 reaction_point;     ///< 選択肢の点数（質問に対して良いか悪いかで+5,-5なを指定）
+  s16 reaction_point;     ///< 選択肢の点数（質問に対して良いか悪いかで+5,-5などを指定）
   s16 padding;            ///< あまり
 }POKEWOOD_EVENT_REACTION_DATA;
 

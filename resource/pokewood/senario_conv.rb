@@ -133,8 +133,9 @@ class EVENT_DATA
     @reaction_data[index][0] = msg2id( mymsg )
     @reaction_data[index][1] = msg2id( e_msg )
     @reaction_data[index][2] = hash2no( $waza_ret_hash, reaction)
-    @reaction_data[index][3] = point.to_i
-    @reaction_data[index][4] = -1 #余り
+    @reaction_data[index][3] = hash2no( $bg_hash, vfx )
+    @reaction_data[index][4] = point.to_i
+    @reaction_data[index][5] = -1
   end
 
   #イベント時メッセージ舞台設定データ

@@ -39,6 +39,8 @@ extern VMCMD_RESULT EvCmdPokewoodGetFirstTimeSeeingFlag( VMHANDLE * core, void *
 extern VMCMD_RESULT EvCmdPokewoodCheckMovieEnable( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodGetMovieValue( VMHANDLE * core, void * wk );
 
+extern int PokewoodStarPoint2StarRank( int point);
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

@@ -6371,12 +6371,13 @@ static void _print_pokewood_event_data(POKEWOOD_SENARIO *senario, int event)
   }
   OS_Printf("\n");
   for(i=0;i<4;i++){
-    OS_Printf(" reaction=%d:msg=%d, e_msg=%d, waza=%d, vfx=%d\n",
+    OS_Printf(" reaction=%d:msg=%d, e_msg=%d, waza=%d, vfx=%d point=%d\n",
                   i,
                   senario->event[event].reaction[i].my_message,
                   senario->event[event].reaction[i].enemy_message,
                   senario->event[event].reaction[i].select_enemy_waza,
-                  senario->event[event].reaction[i].visual_effect);
+                  senario->event[event].reaction[i].visual_effect,
+                  senario->event[event].reaction[i].reaction_point);
   }
   
 }

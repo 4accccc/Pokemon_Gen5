@@ -138,6 +138,8 @@ LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_
 
   SaveControl_Extra_Unload( p_sv, extraID );
 
+  OS_Printf("extraID=%d\n",extraID);
+  
   //ロード結果チェック
   if( result == LOAD_RESULT_NULL )
   {
@@ -258,16 +260,22 @@ u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst )
   GF_ASSERT( sp_pokewood_rec_sv != NULL );
   switch( param )
   {
+  // シナリオNO
   case POKEWOOD_REC_PARAM_SENARIO:
     return sp_pokewood_rec_sv->rec.senario.senario_no;
+  // 成功フラグ
   case POKEWOOD_REC_PARAM_SUCCESS:
     return sp_pokewood_rec_sv->rec.senario.success;
+  // 手持ち１匹目のポケモンPOKEMON_PARAM
   case POKEWOOD_REC_PARAM_POKE0:
     {
       POKEMON_PARAM *pp = (POKEMON_PARAM*)dst;
       POKETOOL_RecPokePara_to_PokePara( &sp_pokewood_rec_sv->rec.rec_party[0].member[0], pp);
     }
     return 1;
+  // 初期観客数
+  case POKEWOOD_REC_PARAM_AUDIENCE_NUM:
+    return sp_pokewood_rec_sv->rec.audience_num;
   default:
     GF_ASSERT(0);
     return 0;

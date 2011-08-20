@@ -131,7 +131,20 @@ typedef struct {
   u16  skipTurnCount;
 }RECPLAYER_CONTROL;
 
-
+typedef struct{
+  s16 endturn_point;    // 終了ターンによる得点
+  s16 star_point;       // スターポケモンによる得点
+  s16 ending_point;     // エンディングによる得点
+  s16 serif_point;      // セリフ選択による得点
+  s16 scenario_difficult;// シナリオ難易度による得点
+  s16 audience_point;   // 観客数
+  
+  u8  endturn;          // 実際の終了ターン
+  u8  pokemon_count;    // ポケモン繰り出し回数
+  u8  ending_no;        // エンディングNO
+  u8  serif_count;      // 選択肢回数
+  int estimate;         // 最終評価数値
+}POKEWOOD_ESTIMATE_WORK;
 
 typedef struct{
   u8   seq, next_seq; ///<  ポケウッドシーケンス管理用
@@ -146,6 +159,8 @@ typedef struct{
 
   int  stage_cond;    ///< お盆の上の状態（ポケモン・トレーナー・無人など,pokewood_senario.hに記述）
   STRBUF *choice_str[EVENT_REACTION_MAX]; ///< 選択肢文字列
+
+  POKEWOOD_ESTIMATE_WORK Estimate;  ///< ポケウッド評価計算用ワーク
 }POKEWOOD_SEQ_WORK;
 
 /*--------------------------------------------------------------------------*/
@@ -500,6 +515,12 @@ static void AICtrl_Init( void );
 static void AICtrl_Delegate( BTL_CLIENT* wk );
 static void aictrl_RestoreViewClient( BTL_CLIENT* wk );
 static BOOL AICtrl_IsMyFase( BTL_CLIENT* wk );
+static void AddStarPokePoint( POKEWOOD_SEQ_WORK *psw, const BTL_PARTY *party);
+static void SetEndturnPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew );
+static void AddSerifPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew, int event_no, int select );
+static void SetEndingPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew, int ending_no );
+static int CalcPokewoodEstimate( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew );
+
 
 static int ChangeEventStageCondition( POKEWOOD_SENARIO *senario, BTL_CLIENT *wk );
 static int _check_event_choice( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *seqWork, int turn );
@@ -1274,6 +1295,9 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
       {
         BTLV_RecPlayer_StartSkip( wk->viewCore, RecPlayer_GetNextTurn(&wk->recPlayer) );
       }
+      // スターポケモン登場得点を計上
+      AddStarPokePoint( &wk->pokewoodSeqWork, wk->myParty);
+      
       return TRUE;
     }
     break;
@@ -1618,7 +1642,7 @@ static BOOL UI_SelectActionNormal( BTL_CLIENT *wk, int *seq )
  * @param   wk		
  * @param   seq		
  *
- * @retval  BOOL		
+ * @retval  BOOL		TRUE:選択肢呼び出し処理の終了 FALSE:実行中
  */
 //----------------------------------------------------------------------------------
 static BOOL UI_SelectActionPokewoodRec( BTL_CLIENT *wk, int *seq )
@@ -1948,6 +1972,24 @@ static void _check_pokewood_success( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, 
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	エンディングチェック
+ *
+ * @param   wk		
+ * @param   senario		
+ * @param   event_no		
+ */
+//----------------------------------------------------------------------------------
+static void _check_ending( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, int event_no )
+{
+  int event_type = senario->event[event_no].start_turn;
+  
+  if(event_type==POKEWOOD_EVENTNO_SUCCESS || event_type==POKEWOOD_EVENTNO_FAILED ){
+    SetEndingPoint( wk, &wk->pokewoodSeqWork.Estimate, event_no );
+  }
+}
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -2059,6 +2101,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   case POKEWOOD_EVENT_SEQ_START:
     // このターンにイベントが存在しているかチェック
     wk->pokewoodSeqWork.event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount);
+    _check_ending( wk, senario, wk->pokewoodSeqWork.event_no );
     _check_pokewood_success( wk, senario, wk->pokewoodSeqWork.event_no );
     BTL_STR_Register_PokewoodWord();  //WORDSET登録
 
@@ -2172,7 +2215,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
       _set_pokewood_choice_bsp( wk, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );  // BSPに選択肢結果を保存
       wk->pokewoodSeqWork.flagwork[0] = wk->pokewoodSeqWork.choice+1;                   // フラグワークに選択を反映
       p_work->enemy_waza[0] = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].select_enemy_waza;
-
+      AddSerifPoint( wk, &wk->pokewoodSeqWork.Estimate, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
       // 確定させた選択肢にVFX指定がある場合はVFX予約を代入
       _check_choice2vfx( senario, &wk->pokewoodSeqWork );
       wk->pokewoodSeqWork.seq    = POKEWOOD_EVENT_SEQ_MY_REACTION;
@@ -2183,6 +2226,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
     wk->pokewoodSeqWork.choice = _get_pokewood_choice( wk, &wk->pokewoodSeqWork );
     wk->pokewoodSeqWork.flagwork[0] = wk->pokewoodSeqWork.choice+1;
     p_work->enemy_waza[0] = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].select_enemy_waza;
+    AddSerifPoint( wk, &wk->pokewoodSeqWork.Estimate, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
     // 確定させた選択肢にVFX指定がある場合はVFX予約を代入
     _check_choice2vfx( senario, &wk->pokewoodSeqWork );
     wk->pokewoodSeqWork.seq    = POKEWOOD_EVENT_SEQ_MY_REACTION;
@@ -2249,6 +2293,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
       // 選択肢内容の反映と背景VFX起動チェック
       wk->pokewoodSeqWork.choice = _get_pokewood_choice( wk, &wk->pokewoodSeqWork ); 
       wk->pokewoodSeqWork.flagwork[0] = wk->pokewoodSeqWork.choice+1;
+      AddSerifPoint( wk, &wk->pokewoodSeqWork.Estimate, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
       _check_choice2vfx( senario, &wk->pokewoodSeqWork );
       wk->pokewoodSeqWork.seq++;
     }
@@ -6572,6 +6617,9 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
       }
     }else if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW){  // ポケウッド上映END
       BtlResult resultCode = expandServerResult( wk );
+  
+      // clientTurnCountを書き換える前に終了ターン処理を実行
+      SetEndturnPoint( wk, &wk->pokewoodSeqWork.Estimate );
       if(resultCode==BTL_RESULT_WIN){ // 勝利ENDか？
         wk->pokewoodSeqWork.seq = 0;
         wk->clientTurnCount=100;
@@ -6582,6 +6630,8 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
         (*seq) = SEQ_POKEWOOD_END_EVENT;
       }
     }else if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_REC){   // ポケウッド撮影END
+      // 終了ターン処理を実行
+      SetEndturnPoint( wk, &wk->pokewoodSeqWork.Estimate );
       wk->pokewoodSeqWork.seq = 0;
       (*seq) = SEQ_POKEWOOD_REC_END_MSG;
     }
@@ -6702,6 +6752,8 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
   // ポケウッド上映時に終了イベントを実行する
   case SEQ_POKEWOOD_END_EVENT:  
     if(SubSeq_POKEWOOD_Event_Sequence(wk)){
+      // 最終評価値を決定する
+      CalcPokewoodEstimate( wk, &wk->pokewoodSeqWork.Estimate );
       return TRUE;
     }
     break;
@@ -6711,7 +6763,10 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     if(SubSeq_POKEWOOD_RecEnd_Sequence(wk)){
       POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
       int event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount);
+      _check_ending( wk, senario, event_no );
       _check_pokewood_success( wk, senario, event_no );
+      // 最終評価値を決定する
+      CalcPokewoodEstimate( wk, &wk->pokewoodSeqWork.Estimate );
       return TRUE;
     }
     break;
@@ -7384,6 +7439,10 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTLV_WaitMemberChangeAct(wk->viewCore) )
     {
       EnemyPokeHPBase_Update( wk );
+      if(clientID==BTL_MAIN_GetPlayerClientID(wk->mainModule)){
+        // スターポケモン登場得点を計上
+        AddStarPokePoint( &wk->pokewoodSeqWork, wk->myParty );
+      }
       return TRUE;
     }
     break;
@@ -10334,6 +10393,136 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	スターポケモン登場点数を計上
+ *
+ * @param   POKEWOOD_SEQ_WORK
+ * @param   BTL_PARTY
+ */
+//----------------------------------------------------------------------------------
+static const u8 starrank2point[]={ 0,1,5,10,15 };
+static void AddStarPokePoint( POKEWOOD_SEQ_WORK *psw, const BTL_PARTY *party)
+{
+  const BTL_POKEPARAM *bpp = BTL_PARTY_GetMemberDataConst( party, 0 );
+  const POKEMON_PARAM *pp  = BPP_GetSrcData( bpp );
+  int monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+  int star   = PP_Get( pp, ID_PARA_star_point, NULL );
+  int rank   = POKETOOL_StarPoint2Rank( star );
+  
+  GF_ASSERT_MSG( rank<5, "スターランクが５未満じゃない\n");
+  
+  psw->Estimate.estimate += starrank2point[rank];
+  
+  psw->Estimate.pokemon_count++;
+  OS_TFPrintf(1,"monsno=%d, star=%d, 合計star=%d\n", monsno, star,psw->Estimate.estimate );
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	エンディング点を取得する
+ *
+ * @param   wk		    
+ * @param   pew		    
+ * @param   end_event	
+ */
+//----------------------------------------------------------------------------------
+static void SetEndingPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew, int ending_no )
+{
+  POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
+  
+  pew->ending_no = ending_no;
+  pew->ending_point += senario->event[ending_no].point;
+  
+  OS_TFPrintf(1,"ending_no=%d, ending_point=%d\n", pew->ending_no, pew->ending_point );
+}
+
+#define ENDTURN_MAX_POINT ( 5 )
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ポケウッド終了ターンからのポイント算出
+ *
+ * @param   wk		
+ * @param   pew		
+ */
+//----------------------------------------------------------------------------------
+static void SetEndturnPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew )
+{
+  POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
+  int turn_diff = 0;
+  int point;
+  turn_diff = senario->best_turn - wk->clientTurnCount;
+  turn_diff = MATH_IAbs( turn_diff );
+  
+  point = ENDTURN_MAX_POINT - turn_diff;
+  
+  if(point<0){
+    point = 0;
+  }
+  pew->endturn_point = point;
+  pew->endturn       = wk->clientTurnCount;
+  
+  OS_TFPrintf(1,"endturn=%d, endturn_point=%d\n", pew->endturn, pew->endturn_point );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	セリフ選択時のポイント追加
+ *
+ * @param   wk		
+ * @param   pew		
+ * @param   event_no		
+ * @param   select		
+ */
+//----------------------------------------------------------------------------------
+static void AddSerifPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew, int event_no, int select )
+{
+  POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
+
+  pew->serif_point += senario->event[event_no].reaction[select].reaction_point;
+  pew->serif_count++;
+
+  OS_TFPrintf(1,"serif:select=%d, serif_point=%d\n", select, pew->serif_point );
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ポケウッド評価数値を算出
+ *
+ * @param   wk		BTL_CLINET
+ * @param   pew		POKEWOOD_ESTIMATE_WORK(評価計算用ワーク）
+ *
+ * @retval  int		評価数値
+ */
+//----------------------------------------------------------------------------------
+static int CalcPokewoodEstimate( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew )
+{
+  POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
+  const BATTLE_SETUP_PARAM *bsp   = BTL_MAIN_GetBSPConst( wk->mainModule );
+  int temp   = 0;
+
+  temp  = pew->endturn_point + pew->star_point + pew->ending_point + pew->serif_point;
+  // マイナスは無いとおもうが補正・０でも１に補正
+  if(temp<0){
+    temp=1;
+  }
+  pew->scenario_difficult = senario->difficult;
+  pew->audience_point     = bsp->audience_num;
+
+  temp *= pew->scenario_difficult;
+  temp *= pew->audience_point;
+
+  pew->estimate = temp;
+
+  OS_TFPrintf(1,"star_point=%d, poke_count=%d\n", pew->star_point, pew->pokemon_count );
+  OS_TFPrintf(1,"serif_point=%d\n", pew->serif_point );
+  OS_TFPrintf(1,"scenario_difficult=%d, audience_point=%d\n", pew->scenario_difficult, pew->audience_point );
+  OS_TFPrintf(1,"total pokewood estimate=%d\n", pew->estimate );
+
+  return pew->estimate;
+}
 
 
 
