@@ -4381,14 +4381,6 @@ static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk )
 	// 補間後のパレットはFRAMELIST_HEADERのselPalの指定で可能
 	FRAMELIST_LoadBlinkPalette(   wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, 0, 1 );
 
-/*  
-  // BGWINFRMの内部パレットを変更する
-  FRAMELIST_SetFrameCol( wk->frame_list_work, 0, 0 );
-  FRAMELIST_SetFrameCol( wk->frame_list_work, 1, 1 );
-  FRAMELIST_SetFrameCol( wk->frame_list_work, 2, 2 );
-  FRAMELIST_SetFrameCol( wk->frame_list_work, 3, 3 );
-*/
-
 	//
 	GFL_ARC_CloseDataHandle( arc_handle );
 	//
