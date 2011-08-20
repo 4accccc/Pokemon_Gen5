@@ -92,6 +92,7 @@ extern void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_list );
 
 extern const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos );
+extern const WBTTRAINER * WBTSYS_GetPlayerTrainer( const WBTSYS * wbtsys );
 
 
 //------------------------------------------------------------------
@@ -145,7 +146,6 @@ extern void WBTSYS_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID he
 //  in wbt_battle.c
 //------------------------------------------------------------------
 extern void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf );
-extern const WBTTRAINER * WBTSYS_GetPlayerTrainer( const WBTSYS * wbtsys );
 extern void WBTSYS_GetOpponentName( const WBTSYS * wbtsys, STRBUF * strbuf );
 extern u8 WBTSYS_GetOpponentSex( const WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentMMdlObjCode( const WBTSYS * wbtsys );

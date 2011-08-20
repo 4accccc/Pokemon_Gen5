@@ -243,12 +243,16 @@ static BOOL checkEnableEntryRomTrainer( const WBT_MATCH_CONDITION * cond, const 
   {
   default:
   case WBTCUP_NULL:
-  case WBTCUP_SHUFFLE:
-  case WBTCUP_SHUFFLEMASTER:
-  case WBTCUP_RENTAL:
-  case WBTCUP_RENTALMASTER:
     GF_ASSERT( 0 );
     break;
+  case WBTCUP_MIX:
+    return rom_data->entry_mix;
+  case WBTCUP_MIXMASTER:
+    return rom_data->entry_mixmaster;
+  case WBTCUP_RENTAL:
+    return rom_data->entry_rental;
+  case WBTCUP_RENTALMASTER:
+    return rom_data->entry_rentalmaster;
 
   case WBTCUP_WCS:
   case WBTCUP_ISSYU:
@@ -424,6 +428,58 @@ static void entryHodomoeEventTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
 
 //-----------------------------------------------------------------------------
 /**
+ * @brief 参戦トレーナー選別：レンタルトーナメント
+ */
+//-----------------------------------------------------------------------------
+static void entryRentalTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+{
+  mew_SelectPerson( mew, WBT_TRPRI_LEADER, 2 );
+  mew_SelectPerson( mew, WBT_TRPRI_MOB, 2 );
+  mew_SelectPerson( mew, WBT_TRPRI_WEAK_MOB, 3 );
+
+  mew_SetEntryResult( mew, tr_list );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 参戦トレーナー選別：レンタルトーナメント
+ */
+//-----------------------------------------------------------------------------
+static void entryMixTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+{
+  mew_SelectPerson( mew, WBT_TRPRI_LEADER, 2 );
+  mew_SelectPerson( mew, WBT_TRPRI_MOB, 2 );
+  mew_SelectPerson( mew, WBT_TRPRI_WEAK_MOB, 3 );
+
+  mew_SetEntryResult( mew, tr_list );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 参戦トレーナー選別：レンタルトーナメント
+ */
+//-----------------------------------------------------------------------------
+static void entryRentalMasterTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+{
+  mew_SelectPerson( mew, WBT_TRPRI_LEADER, 7 );
+
+  mew_SetEntryResult( mew, tr_list );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 参戦トレーナー選別：レンタルトーナメント
+ */
+//-----------------------------------------------------------------------------
+static void entryMixMasterTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+{
+  mew_SelectPerson( mew, WBT_TRPRI_LEADER, 7 );
+
+  mew_SetEntryResult( mew, tr_list );
+}
+
+//-----------------------------------------------------------------------------
+/**
  * @brief タイプトーナメント出場者選出
  */
 //-----------------------------------------------------------------------------
@@ -472,10 +528,6 @@ void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond
   {
   default:
   case WBTCUP_NULL:
-  case WBTCUP_SHUFFLE:
-  case WBTCUP_SHUFFLEMASTER:
-  case WBTCUP_RENTAL:
-  case WBTCUP_RENTALMASTER:
     GF_ASSERT_MSG( 0, "仮：まだできていません！\n");
     /* FALL THROUGH */
 
@@ -503,6 +555,18 @@ void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond
     break;
   case WBTCUP_HODOMOE_EVENT:
     entryHodomoeEventTournament( mew, tr_list );
+    break;
+  case WBTCUP_MIX:
+    entryMixTournament( mew, tr_list );
+    break;
+  case WBTCUP_MIXMASTER:
+    entryMixMasterTournament( mew, tr_list );
+    break;
+  case WBTCUP_RENTAL:
+    entryRentalTournament( mew, tr_list );
+    break;
+  case WBTCUP_RENTALMASTER:
+    entryRentalMasterTournament( mew, tr_list );
     break;
   case WBTCUP_DOWNLOAD:
     entryDownloadTournament( cond->wbtdl_match, tr_list );

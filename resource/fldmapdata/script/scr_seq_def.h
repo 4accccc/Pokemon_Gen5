@@ -13004,6 +13004,56 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief WBT：レンタル用の手持ち生成
+ */
+//--------------------------------------------------------------
+#define _WBT_SETUP_RENTAL_PARTY() \
+    _ASM_WBT_SETUP_RENTAL_PARTY
+    .macro  _ASM_WBT_SETUP_RENTAL_PARTY
+    .short  EV_SEQ_WBT_SETUP_RENTAL_PARTY
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：ミックストーナメント：相手の選択処理
+ * @param[out]  ret_wk  相手が選んだ自分側のポケモン種族No.
+ */
+//--------------------------------------------------------------
+#define _WBT_DECIDE_ENEMY_MIX_CHOICE( ret_wk ) \
+    _ASM_WBT_DECIDE_ENEMY_MIX_CHOICE ret_wk
+    .macro  _ASM_WBT_DECIDE_ENEMY_MIX_CHOICE ret_wk
+    .short  EV_SEQ_WBT_DECIDE_ENEMY_MIX_CHOICE
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：ミックストーナメント：自分の選択
+ * @param[out]  ret_wk  選んだポケモンの種族No.、０の場合は確認
+ */
+//--------------------------------------------------------------
+#define _WBT_SELECT_MIX_POKEMON( ret_wk ) \
+    _ASM_WBT_SELECT_MIX_POKEMON ret_wk
+    .macro  _ASM_WBT_SELECT_MIX_POKEMON
+    .short  EV_SEQ_WBT_SELECT_MIX_POKEMON
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：ミックス用の手持ち生成
+ * 
+ * _WBT_SELECT_MIX_POKEMONの結果を反映する
+ */
+//--------------------------------------------------------------
+#define _WBT_SETUP_MIX_PARTY() \
+    _ASM_WBT_SETUP_MIX_PARTY
+    .macro  _ASM_WBT_SETUP_MIX_PARTY
+    .short  EV_SEQ_WBT_SETUP_MIX_PARTY
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief WBT:対戦相手の手持ちポケモンを生成する
  *
  * @note  _WBT_SYSTEM_SET_STAGEで対戦相手を判定するため、呼び出し順序前後に注意

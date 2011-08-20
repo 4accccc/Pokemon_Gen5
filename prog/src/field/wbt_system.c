@@ -107,7 +107,9 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
 /**
  * @brief トレーナーID配列から実トレーナーデータをセットする
  *
- * @todo  DLトーナメントの優先度反映を実装する
+ * @param[in,out] wbtsys
+ * @param[in]     gamedata
+ * @param[in]     tr_list
  */
 //------------------------------------------------------------------
 void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_list )
@@ -276,6 +278,27 @@ const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos )
 {
   GF_ASSERT( pos < WBT_TRAINER_NUM );
   return &wbtsys->wbt_trainer[ pos ];
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 自分のトレーナーデータを取得する
+ * @param wbtsys
+ * @return  WBTTRAINER  自機データをセットしたWBTTRAINERへのポインタ
+ */
+//------------------------------------------------------------------
+const WBTTRAINER * WBTSYS_GetPlayerTrainer( const WBTSYS * wbtsys )
+{
+  int i;
+  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
+  {
+    if (wbtsys->wbt_trainer[i].wbt_tr_type == WBT_TRTYPE_PLAYER )
+    {
+      return &wbtsys->wbt_trainer[i];
+    }
+  }
+  GF_ASSERT( 0 );
+  return &wbtsys->wbt_trainer[0];
 }
 
 //------------------------------------------------------------------

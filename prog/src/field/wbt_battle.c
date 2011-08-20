@@ -625,6 +625,19 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
 
   //対戦BGMのセット
   WBTSYS_GetOpponentBGM( wbtsys, &bp->musicDefault, &bp->musicWin );
+  // 戦闘背景書き換え
+  if( WBTSYS_GetWBTCup(wbtsys) == WBTCUP_DOWNLOAD
+      &&  wbtsys->wbtdl_data.wbtdl_rule.bgm_flag == TRUE )
+  {
+    bp->fieldSituation.bgType = BATTLE_BG_TYPE_WCS;
+    bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_E_INDOOR;
+  }
+  else
+  {
+    //仮：定義の追加が必要
+    //bp->fieldSituation.bgType = ;
+    //bp->fieldSituation.bgAttr = ;
+  }
   return bp;
 }
 
@@ -769,27 +782,6 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
 
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief 自分のトレーナーデータを取得する
- * @param wbtsys
- * @return  WBTTRAINER  自機データをセットしたWBTTRAINERへのポインタ
- */
-//------------------------------------------------------------------
-const WBTTRAINER * WBTSYS_GetPlayerTrainer( const WBTSYS * wbtsys )
-{
-  int i;
-  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
-  {
-    if (wbtsys->wbt_trainer[i].wbt_tr_type == WBT_TRTYPE_PLAYER )
-    {
-      return &wbtsys->wbt_trainer[i];
-    }
-  }
-  GF_ASSERT( 0 );
-  return &wbtsys->wbt_trainer[0];
-}
-
 //------------------------------------------------------------------
 /**
  * @brief 対戦相手のトレーナーデータを取得

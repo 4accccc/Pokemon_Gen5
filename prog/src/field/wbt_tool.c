@@ -163,14 +163,14 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
     WBTBTDATA_3,
     { 2, 2, 3, 3 },
   },
-  {//WBTCUP_SHUFFLE,         //シャッフルトーナメント
+  {//WBTCUP_MIX,         //シャッフルトーナメント
     msg_wbtsys_title_14,
     WBTWIN_COUNT_SHUFFLE,
     WBTRECEPT_1, WBTREG_SUBWAY,
     WBTBTDATA_1,
     { 1, 1, 2, 2 },
   },
-  {//WBTCUP_SHUFFLEMASTER,         //シャッフルマスタートーナメント
+  {//WBTCUP_MIXMASTER,         //シャッフルマスタートーナメント
     msg_wbtsys_title_15,
     WBTWIN_COUNT_SHUFFLEMASTER,
     WBTRECEPT_2, WBTREG_SUBWAY,
@@ -592,7 +592,7 @@ static BOOL checkCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup, const u16 * win_
     return ( win_count[ WBTWIN_COUNT_HODOMOE ] == 0 );
 
   case WBTCUP_RENTAL:
-  case WBTCUP_SHUFFLE:
+  case WBTCUP_MIX:
   case WBTCUP_HODOMOE:     //ホドモエトーナメント           
     return ( win_count[ WBTWIN_COUNT_HODOMOE ] != 0 );
   case WBTCUP_ISSYU:       //イッシュリーダーズトーナメント 
@@ -607,7 +607,7 @@ static BOOL checkCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup, const u16 * win_
   case WBTCUP_RENTALMASTER:
     return ( win_count[ WBTWIN_COUNT_RENTAL ] != 0 && all_region_clear );
 
-  case WBTCUP_SHUFFLEMASTER:
+  case WBTCUP_MIXMASTER:
     return ( win_count[ WBTWIN_COUNT_SHUFFLE ] != 0 && all_region_clear );
 
   case WBTCUP_WORLD:        //ワールドリーダーズトーナメント     

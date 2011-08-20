@@ -667,8 +667,8 @@
 #define SCR_WBT_CUP_HODOMOE_EVENT    (12) ///<ホドモエトーナメント（イベント）
 #define SCR_WBT_CUP_RENTAL           (13) ///<レンタルトーナメント
 #define SCR_WBT_CUP_RENTALMASTER     (14) ///<レンタルマスタートーナメント
-#define SCR_WBT_CUP_SHUFFLE          (15) ///<シャッフルトーナメント
-#define SCR_WBT_CUP_SHUFFLEMASTER    (16) ///<シャッフルマスタートーナメント
+#define SCR_WBT_CUP_MIX              (15) ///<ミックストーナメント
+#define SCR_WBT_CUP_MIXMASTER        (16) ///<ミックスマスタートーナメント
 
 
 #define SCR_WBT_RULE_SINGLE           (0) ///<シングルバトル

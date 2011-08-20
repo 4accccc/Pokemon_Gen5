@@ -817,6 +817,57 @@ VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk )
 //============================================================================================
 //--------------------------------------------------------------
 /**
+ * @brief スクリプトコマンド：レンタルトーナメント用の手持ち生成
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSetupRentalParty( VMHANDLE * core, void * wk )
+{
+  /* 仮：コマンドを用意しただけ */
+  TAMADA_Printf("EvCmdWBTSetupRentalParty\n");
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：レンタルトーナメント用の手持ち生成
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTDecideEnemyMixChoice( VMHANDLE * core, void * wk )
+{
+  /* 仮：コマンドを用意しただけ */
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = 0;
+  TAMADA_Printf("EvCmdWBTDecideEnemyMixChoice = %d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：レンタルトーナメント用の手持ち生成
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSelectMixPokemon( VMHANDLE * core, void * wk )
+{
+  /* 仮：コマンドを用意しただけ */
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = 0;
+  TAMADA_Printf("EvCmdWBTSelectMixPokemon = %d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：レンタルトーナメント用の手持ち生成
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSetupMixParty( VMHANDLE * core, void * wk )
+{
+  /* 仮：コマンドを用意しただけ */
+  TAMADA_Printf("EvCmdWBTSetupMixParty\n");
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
  * @brief スクリプトコマンド：対戦相手の手持ちデータ生成
  */
 //--------------------------------------------------------------

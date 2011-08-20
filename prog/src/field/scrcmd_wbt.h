@@ -43,6 +43,10 @@ extern VMCMD_RESULT EvCmdWBTGetDownLoadName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetDLData( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk );
 
+extern VMCMD_RESULT EvCmdWBTSetupRentalParty( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTDecideEnemyMixChoice( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTSelectMixPokemon( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTSetupMixParty( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetupEnemyParty( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetEnemyMMdlCode( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk );

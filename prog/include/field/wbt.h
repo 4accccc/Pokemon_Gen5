@@ -55,8 +55,8 @@ typedef enum {
   WBTCUP_HODOMOE_EVENT, ///<ホドモエトーナメント（イベント）           
   WBTCUP_RENTAL,        ///<レンタルトーナメント
   WBTCUP_RENTALMASTER,  ///<レンタルマスタートーナメント
-  WBTCUP_SHUFFLE,       ///<シャッフルトーナメント
-  WBTCUP_SHUFFLEMASTER, ///<シャッフルマスタートーナメント
+  WBTCUP_MIX,         ///<ミックストーナメント
+  WBTCUP_MIXMASTER,   ///<ミックスマスタートーナメント
 
   WBTCUP_MAX,
 }WBTCUP;
