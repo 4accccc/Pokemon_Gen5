@@ -325,6 +325,9 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
                                  season, heapID, besp->pokewood);
     if( bew->besp.mainModule )
     {
+      MORI_Printf("bgtype = %d, bgAttr=%d, searson=%d, bg field = %d\n", 
+                                                besp->bfs.bgType,besp->bfs.bgAttr, season,
+                                                bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ]);
       bew->bfw  = BTLV_FIELD_Init( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ),
                                    bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ], season, heapID,
                                    besp->pokewood, besp->pokewoodsenario );
