@@ -1319,7 +1319,8 @@ SRCS_OVERLAY_FIELD_GIMMICK_T01 = field/field_gimmick_t01.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_WBT_GIMMICK = field/wbt_gimmick.c
+SRCS_OVERLAY_WBT_GIMMICK = field/wbt_gimmick.c \
+                            field/wbt_battle.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK

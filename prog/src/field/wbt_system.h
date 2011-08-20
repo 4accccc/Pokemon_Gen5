@@ -71,6 +71,8 @@ extern u64 WBTSYS_GetRandomSeed( const WBTSYS * wbtsys );
 //------------------------------------------------------------------
 extern u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys );
 extern const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys );
+extern const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys );
+extern u8 WBTSYS_GetPartyMax( WBTSYS * wbtsys );
 
 extern void WBTSYS_SetSelectDLData( WBTSYS * wbtsys, u8 no );
 extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
@@ -91,31 +93,41 @@ extern void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16
 
 extern const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos );
 
-extern const WBTTRAINER * WBTSYS_GetPlayerTrainer( const WBTSYS * wbtsys );
 
+//------------------------------------------------------------------
+//  WBTTRAINER関連
+//------------------------------------------------------------------
 extern u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr );
 extern u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr );
 extern u16 WBTTRAINER_GetBattleTrainerType( const WBTTRAINER * wbt_tr );
 extern WBT_TRTYPE WBTTRAINER_GetWBTTrainerType( const WBTTRAINER * wbt_tr );
 extern void WBTTRAINER_CopyName( const WBTTRAINER * wbt_tr, STRBUF * buf );
 extern void WBTTRAINER_CopyTitle( const WBTTRAINER * wbt_tr, STRBUF * buf );
+extern BOOL WBTTRAINER_HasAce( const WBTTRAINER * wbt_tr );
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void WBTSYS_GetOpponentName( const WBTSYS * wbtsys, STRBUF * strbuf );
-extern u8 WBTSYS_GetOpponentSex( const WBTSYS * wbtsys );
-extern u16 WBTSYS_GetOpponentMMdlObjCode( const WBTSYS * wbtsys );
-extern u16 WBTSYS_GetOpponentTrainerType( const WBTSYS * wbtsys );
-extern void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm );
 extern u8 WBTSYS_GetRewardCount( const WBTSYS * wbtsys );
 
 extern void WBTSYS_GetTournamentName( const WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf );
-extern void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf );
 
 extern BOOL WBTSYS_GetDownLoadCount( const WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_LoadDLData( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_UnloadDLData( WBTSYS * wbtsys );
 
 
+//------------------------------------------------------------------
+//  ポケモン選択関連
+//------------------------------------------------------------------
+extern void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA * plist_data );
+extern void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PSTATUS_DATA * pstatus );
+
+extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_data );
+
+extern void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
+
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 //  in wbt_calc_result.c
 //------------------------------------------------------------------
@@ -129,21 +141,23 @@ extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
 extern void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond, u16 * tr_list );
 extern void WBTSYS_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID );
 
-//============================================================================================
-//============================================================================================
 //------------------------------------------------------------------
+//  in wbt_battle.c
 //------------------------------------------------------------------
-extern void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA * plist_data );
-extern void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PSTATUS_DATA * pstatus );
+extern void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf );
+extern const WBTTRAINER * WBTSYS_GetPlayerTrainer( const WBTSYS * wbtsys );
+extern void WBTSYS_GetOpponentName( const WBTSYS * wbtsys, STRBUF * strbuf );
+extern u8 WBTSYS_GetOpponentSex( const WBTSYS * wbtsys );
+extern u16 WBTSYS_GetOpponentMMdlObjCode( const WBTSYS * wbtsys );
+extern u16 WBTSYS_GetOpponentTrainerType( const WBTSYS * wbtsys );
+extern void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm );
 
-extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_data );
-extern u8 WBTSYS_GetSurvivalCount( const WBTSYS * wbtsys, WBTSTAGE stage );
-
-extern void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_SetupEnemyParty( WBTSYS * wbtsys, GAMESYS_WORK * gsys, const WBTTRAINER * wbt_tr );
 extern BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys );
 extern void WBTSYS_DeleteBattleSetupParam( WBTSYS * wbtsys, BATTLE_SETUP_PARAM * bsp );
 
 extern void WBTSYS_ReflectBattleResult(
     WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp );
+
+extern u8 WBTSYS_GetSurvivalCount( const WBTSYS * wbtsys, WBTSTAGE stage );
 
