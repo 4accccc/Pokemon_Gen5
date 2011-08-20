@@ -57,11 +57,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にてる……▼
-こんな　ところで
-あの　ポケモントレーナーと　おなじ▽
-ひとみの　トレーナーと　であうなんて▼
-きみの　なまえは……？▼
+			<Text>きみの　なまえは……？▼
 ……　……　……
 ……　……　……▼
 そう　[Name:TrainerName Idx="0" ]　って　いうの
@@ -71,7 +67,7 @@
 ものずきな　ポケモントレーナーよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:42" />
+				Time="2011-08-20T08:15:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -79,11 +75,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>似てる……▼
-遠い　異国で
-あの　ポケモントレーナーと　同じ▽
-ひとみの　トレーナーと　出会うなんて▼
-きみの　名前は……？▼
+			<Text>きみの　名前は……？▼
 ……　……　……
 ……　……　……▼
 そう　[Name:TrainerName Idx="0" ]　って　いうの
@@ -93,7 +85,7 @@
 物好きな　ポケモントレーナーよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:42" />
+				Time="2011-08-20T08:15:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -422,12 +414,7 @@
 			Language="JPN">
 			<Text>シロナ『おみごと　です
 すばらしい　たたかい　だったわ▼
-……やっぱり　にてる▼
-ギラティナと　むかいあった
-あの　トレーナーに……▼
-ううん
-こっちの　はなし▼
-こちらにはね
+あたしね　こちらには
 はると　なつに　くるの▼
 シンオウでも　しらべること　とか
 いろいろ　あるから　ね▼
@@ -435,7 +422,7 @@
 ステキな　ポケモントレーナーさん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:42" />
+				Time="2011-08-20T08:18:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -445,12 +432,7 @@
 			Language="JPN_KANJI">
 			<Text>シロナ『おみごと　です
 すばらしい　戦い　だったわ▼
-……やっぱり　似てる▼
-ギラティナと　向かいあった
-あの　トレーナーに……▼
-ううん
-こっちの　話▼
-こちらにはね
+あたしね　こちらには
 春と　夏に　来るの▼
 シンオウでも　調べること　とか
 いろいろ　あるから　ね▼
@@ -458,7 +440,7 @@
 ステキな　ポケモントレーナーさん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:42" />
+				Time="2011-08-20T08:18:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1212,7 +1194,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1274,7 +1256,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1330,7 +1312,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1390,7 +1372,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1444,7 +1426,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1786,7 +1768,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1844,7 +1826,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1902,7 +1884,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1958,7 +1940,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2016,7 +1998,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
