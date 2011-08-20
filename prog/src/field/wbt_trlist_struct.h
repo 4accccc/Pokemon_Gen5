@@ -24,9 +24,16 @@ typedef struct {
   u8  sex;                ///< 性別指定
   u16 mmdl_id;            ///< 動作モデル指定
   u8 tr_type;             ///<トレーナータイプ指定
-  u8 entry_hodomoe_event;   ///<ホドモエトーナメント参加
-  u8 entry_hodomoe;         ///<ホドモエトーナメント参加
-  u8 entry_world;        ///<エントリタイミング
+
+  u8 entry_hodomoe_event:1;   ///<ホドモエトーナメント参加
+  u8 entry_hodomoe:1;         ///<ホドモエトーナメント参加
+  u8 entry_world:1;        ///<ワールドリーダーズ参加
+  u8 entry_rental:1;      ///<レンタルトーナメント参加
+  u8 entry_mix:1;     ///<ミックストーナメント参加
+  u8 entry_rentalmaster:1;      ///<レンタルマスタートーナメント参加
+  u8 entry_mixmaster:1;     ///<ミックスマスタートーナメント参加
+  u8 pad:1;
+
   u8 region_tournament_id;       ///<限定トーナメント種別
   u8  type_tournament_id; ///<タイプトーナメント種別
   u8  priority; ///<優先度

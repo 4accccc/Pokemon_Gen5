@@ -48,15 +48,6 @@ require "#{ENV["PROJECT_ROOT"]}tools/headerdata.rb"
   }
 
 
-  $entry_timing_table = {
-    "初期参加" => 0,
-    "バッジ６個目" => 1,
-    "バッジ８個目" => 2,
-    "保留" => 3,
-    "クリア後" => 4,
-    "チャンピオントーナメント時" => 5,
-  }
-
   $maru_batu_table = {
     "○" => "TRUE",
     "×" => "FALSE",
@@ -96,6 +87,10 @@ class COL
     HODOMOE_EVENT
     HODOMOE_ENTRY
     WORLD_ENTRY
+    RENTAL_ENTRY
+    MIX_ENTRY
+    RENTALM_ENTRY
+    MIXM_ENTRY
     REGION_ENTRY
     TYPE_ENTRY
     PRIORITY
@@ -132,6 +127,10 @@ class WBT_TRDATA
     @hodomoe_event = column[COL::HODOMOE_EVENT]
     @hodomoe_entry = column[COL::HODOMOE_ENTRY]
     @world_entry = column[COL::WORLD_ENTRY]
+    @rental_entry = column[COL::RENTAL_ENTRY]
+    @mix_entry = column[COL::MIX_ENTRY]
+    @rentalm_entry = column[COL::RENTALM_ENTRY]
+    @mixm_entry = column[COL::MIXM_ENTRY]
     @region_entry = column[COL::REGION_ENTRY]
     @type_entry = column[COL::TYPE_ENTRY]
     @priority = column[COL::PRIORITY].to_i
@@ -197,6 +196,11 @@ class WBT_TRDATA
     str += sprintf("\t\t%-5s, //ホドモエイベント参加\n", maru_batu_value(@hodomoe_event) )
     str += sprintf("\t\t%-5s, //ホドモエトーナメント参加\n", maru_batu_value(@hodomoe_entry) )
     str += sprintf("\t\t%-5s, //ワールドトーナメント参加\n", maru_batu_value(@world_entry) )
+    str += sprintf("\t\t%-5s, //レンタルトーナメント参加\n", maru_batu_value(@rental_entry) )
+    str += sprintf("\t\t%-5s, //ミックストーナメント参加\n", maru_batu_value(@mix_entry) )
+    str += sprintf("\t\t%-5s, //レンタルマスタートーナメント参加\n", maru_batu_value(@rentalm_entry) )
+    str += sprintf("\t\t%-5s, //ミックスマスタートーナメント参加\n", maru_batu_value(@mixm_entry) )
+    str += sprintf("\t\t0,    //あまり領域1ビット\n");
     str += sprintf("\t\t%-5s, //限定トーナメント種別\n", $cup_table[@region_entry] )
     str += sprintf("\t\t%2s, //タイプトーナメント種別\n", type_def(@type_entry) )
     str += sprintf("\t\t%2d, //優先度\n", @priority )
