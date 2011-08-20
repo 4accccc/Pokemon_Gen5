@@ -431,13 +431,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おっ！？　かいしゃけんがく？
-それとも　ポケモン　しゅぎょう？▼
-なんにせよ　きてくれて　うれしいよ
-うれしいから　プレゼントだよ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T04:24:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -445,13 +442,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おっ！？　会社見学？
-それとも　ポケモン　修行？▼
-なんにせよ　来てくれて　うれしいよ
-うれしいから　プレゼントだよ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T04:24:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -459,13 +453,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・アイテム入手処理
-　No015「クイックボール」×３
-・入手後続けてbusinessman_02</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T04:24:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -494,11 +485,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ものすごく　うれしいから
-さらに　プレゼントだよ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T04:24:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -506,11 +496,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ものすごく　うれしいから
-さらに　プレゼントだよ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T04:24:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -518,12 +507,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・アイテム入手処理
-　No010「タイマーボール」×３</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T04:24:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -552,15 +539,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クイックボールは　ポケモンと
-であって　すぐに　なげたほうが▽
-つかまえやすさが　アップ！▼
-タイマーボールは　ポケモンと
-ながく　たたかった　ほうが▽
-つかまえやすさが　アップするんだ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T04:24:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -568,15 +550,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クイックボールは　ポケモンと
-であって　すぐに　投げたほうが▽
-捕まえやすさが　アップ！▼
-タイマーボールは　ポケモンと
-長く　戦った　ほうが▽
-捕まえやすさが　アップするんだ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T04:24:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -584,11 +561,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・アイテム入手後</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-20T04:24:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
