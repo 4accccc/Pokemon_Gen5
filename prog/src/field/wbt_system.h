@@ -26,6 +26,11 @@
 //------------------------------------------------------------------
 typedef struct _WBTTRAINER WBTTRAINER;
 
+typedef struct _WBTROM_TRDATA WBTROM_TRDATA;
+typedef u8 WBTROM_TRID;
+
+enum { WBTROM_TRID_INVALID = 0xff };
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct _WBTRESULT WBTRESULT;
@@ -110,10 +115,6 @@ extern BOOL WBTSYS_GetDownLoadCount( const WBTSYS * wbtsys, GAMEDATA * gamedata 
 extern void WBTSYS_LoadDLData( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_UnloadDLData( WBTSYS * wbtsys );
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern u16 WBTSYS_GetRomTrainerMMdlID( const WBTSYS * wbtsys, u16 tr_id );
-extern WBT_TRPRI WBTSYS_GetRomTrainerPriority( const WBTSYS * wbtsys, u16 tr_id );
 
 //------------------------------------------------------------------
 //  in wbt_calc_result.c

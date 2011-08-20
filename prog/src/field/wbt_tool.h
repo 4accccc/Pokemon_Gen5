@@ -65,9 +65,20 @@ typedef enum {
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf );
-extern void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf );
-extern void * WBTTOOL_LoadRomTrainerData( HEAPID heapID, u16 * rom_trainer_num );
+extern void WBTTOOL_GetRomTrainerName( HEAPID heapID, WBTROM_TRID wbt_tr_id, STRBUF * strbuf );
+extern void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, WBTROM_TRID wbt_tr_id, STRBUF * strbuf );
+
+extern const WBTROM_TRDATA * WBTTOOL_CreateRomTrainerData( HEAPID heapID );
+extern void WBTTOOL_DeleteRomTrainerData( WBTROM_TRDATA * rom_trdata );
+extern u16 WBTTOOL_GetRomTrainerMMdlID(
+    const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id );
+extern WBT_TRPRI WBTTOOL_GetRomTrainerPriority(
+    const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id );
+extern void WBTTOOL_GetRomTrainerData(
+    const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id, WBT_TRDATA * tr_data );
+extern BOOL WBTTOOL_IsVaridRomTrainerID( const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id );
+extern WBTROM_TRID WBTTOOL_GetBWRomTrainerID( const WBTROM_TRDATA * rom_trdata, u8 sex );
+extern WBTROM_TRID WBTTOOL_GetRivalTrainerID( const WBTROM_TRDATA * rom_trdata );
 
 extern u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed );
 

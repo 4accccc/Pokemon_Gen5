@@ -92,7 +92,7 @@ EVENT_START ev_wbt_hall_01
 
 				//WBTシステムに状態を通知：勝利！
 				_WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_WIN )
-				
+
 			ENDIF
 
 			//WBT会場　終了処理
@@ -138,12 +138,7 @@ ev_wbt_hall_exit:
 	//マップチェンジ
 	_MAP_CHANGE( ZONE_ID_D05R0101, 15, 0, DIR_DOWN )
 
-	//マップ切り替え完了後なので、LOCALWORKの値はクリアされず
-	//受付スクリプトに引き渡すことができる
-	$LOCALWORK1 = 0   //仮：結果を渡すための戻り値
-
 _RET
-
 
 /**************************************************************/
 /*		ＷＢＴ２回戦から		デバッグ用					  */

@@ -667,7 +667,6 @@ VMCMD_RESULT EvCmdWBTGetTrainerFlag( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTGetLobbyMMdlCode( VMHANDLE * core, void * wk )
 {
-  WBTSYS * wbtsys = getWBTSys( wk );
   SCRCMD_WORK * work = wk;
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
   WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
@@ -677,22 +676,28 @@ VMCMD_RESULT EvCmdWBTGetLobbyMMdlCode( VMHANDLE * core, void * wk )
   u16 tr_id1 = WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_1 );
   u16 tr_id2 = WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_2 );
   u16 tr_id3 = WBTSAVE_GetTrainerID( wbtsave, SCR_WBT_LOBBY_OBJ_3 );
+  const WBTROM_TRDATA * rom_trdata;
 
+  rom_trdata = WBTTOOL_CreateRomTrainerData( SCRCMD_WORK_GetHeapID( work ) );
   *ret_wk1 = 0;
   *ret_wk2 = 0;
   *ret_wk3 = 0;
-  if ( WBTSYS_GetRomTrainerPriority( wbtsys, tr_id1 ) >= WBT_TRPRI_LEADER )
+  if ( WBTTOOL_IsVaridRomTrainerID(rom_trdata, tr_id1) 
+      && WBTTOOL_GetRomTrainerPriority( rom_trdata, tr_id1 ) >= WBT_TRPRI_LEADER )
   {
-    *ret_wk1 = WBTSYS_GetRomTrainerMMdlID( wbtsys, tr_id1 );
+    *ret_wk1 = WBTTOOL_GetRomTrainerMMdlID( rom_trdata, tr_id1 );
   }
-  if ( WBTSYS_GetRomTrainerPriority( wbtsys, tr_id2 ) >= WBT_TRPRI_LEADER )
+  if ( WBTTOOL_IsVaridRomTrainerID(rom_trdata, tr_id2)
+      && WBTTOOL_GetRomTrainerPriority( rom_trdata, tr_id2 ) >= WBT_TRPRI_LEADER )
   {
-    *ret_wk2 = WBTSYS_GetRomTrainerMMdlID( wbtsys, tr_id2 );
+    *ret_wk2 = WBTTOOL_GetRomTrainerMMdlID( rom_trdata, tr_id2 );
   }
-  if ( WBTSYS_GetRomTrainerPriority( wbtsys, tr_id3 ) >= WBT_TRPRI_LEADER )
+  if ( WBTTOOL_IsVaridRomTrainerID(rom_trdata, tr_id3)
+      && WBTTOOL_GetRomTrainerPriority( rom_trdata, tr_id3 ) >= WBT_TRPRI_LEADER )
   {
-    *ret_wk3 = WBTSYS_GetRomTrainerMMdlID( wbtsys, tr_id3 );
+    *ret_wk3 = WBTTOOL_GetRomTrainerMMdlID( rom_trdata, tr_id3 );
   }
+  WBTTOOL_DeleteRomTrainerData( (void*)rom_trdata );
   TAMADA_Printf("EvCmdWBTGetLobbyMMdlCode() = %d,%d,%d\n", *ret_wk1, *ret_wk2, *ret_wk3 );
   return VMCMD_RESULT_CONTINUE;
 }

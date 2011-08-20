@@ -28,6 +28,7 @@ _EVENT_DATA   ev_wbt_entry_checker
 _EVENT_DATA   ev_wbt_reception_r
 _EVENT_DATA   ev_reserve_wbt_exit
 _EVENT_DATA   ev_init_wbt_lobby
+_EVENT_DATA   ev_zone_wbt_lobby
 _EVENT_DATA_END
 
 
@@ -39,8 +40,8 @@ INIT_EVENT_START  ev_init_wbt_lobby
   _WBT_SYSTEM_CHECK_ENABLE( SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
     _CALL ev_init_wbt_lobby_reception
-    _CALL ev_init_wbt_lobby_obj
   ENDIF
+  _CALL ev_init_wbt_lobby_obj
 INIT_EVENT_END
 
 //WBT会場から退出するときの受付嬢の位置修正
@@ -55,26 +56,31 @@ ev_init_wbt_lobby_reception:
   ENDIF
   _RET
 
-//WBT会場から退出するときに対戦者を表示するかどうかの処理
-ev_init_wbt_lobby_obj:
-  //消しておく
+/********************************************************************/
+/*						ZONE_INIT_LABEL                            */
+/********************************************************************/
+INIT_EVENT_START  ev_zone_wbt_lobby
+  //一旦消す
   _FLAG_SET( FV_WBT_LOBBY_LEADER1 )
   _FLAG_SET( FV_WBT_LOBBY_LEADER2 )
   _FLAG_SET( FV_WBT_LOBBY_LEADER3 )
 
-  _WBT_SYSTEM_GET_STAGE( SCWK_ANSWER )
-  IF $SCWK_ANSWER == SCR_WBT_STAGE_WIN THEN
-    //優勝した場合は出現させる
-    _WBT_GET_LOBBY_TRAINER_MMDL( OBJCHRWORK0, OBJCHRWORK1, OBJCHRWORK2 )
-    IF $OBJCHRWORK0 != 0 THEN
-      _FLAG_RESET( FV_WBT_LOBBY_LEADER1 )
-    ENDIF
-    IF $OBJCHRWORK1 != 0 THEN
-      _FLAG_RESET( FV_WBT_LOBBY_LEADER2 )
-    ENDIF
-    IF $OBJCHRWORK2 != 0 THEN
-      _FLAG_RESET( FV_WBT_LOBBY_LEADER3 )
-    ENDIF
+INIT_EVENT_END
+
+//WBT会場から退出するときに対戦者を表示するかどうかの処理
+ev_init_wbt_lobby_obj:
+  _WBT_GET_LOBBY_TRAINER_MMDL( OBJCHRWORK0, OBJCHRWORK1, OBJCHRWORK2 )
+  IF $OBJCHRWORK0 != 0 THEN
+    _FLAG_RESET( FV_WBT_LOBBY_LEADER1 )
+    _OBJ_ADD( D05R0101_WKOBJCODE00 )
+  ENDIF
+  IF $OBJCHRWORK1 != 0 THEN
+    _FLAG_RESET( FV_WBT_LOBBY_LEADER2 )
+    _OBJ_ADD( D05R0101_WKOBJCODE01 )
+  ENDIF
+  IF $OBJCHRWORK2 != 0 THEN
+    _FLAG_RESET( FV_WBT_LOBBY_LEADER3 )
+    _OBJ_ADD( D05R0101_WKOBJCODE02 )
   ENDIF
   _RET
   

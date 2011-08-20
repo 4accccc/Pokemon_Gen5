@@ -244,7 +244,7 @@ void WBTTOOL_GetTournamentName( WBTCUP wbtcup, STRBUF * strbuf )
  * @brief WBTロムトレーナー名を取得
  */
 //------------------------------------------------------------------
-void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf )
+void WBTTOOL_GetRomTrainerName( HEAPID heapID, WBTROM_TRID wbt_tr_id, STRBUF * strbuf )
 {
   GFL_MSGDATA     *man;
   u16 msg_id = wbt_tr_id;
@@ -263,7 +263,7 @@ void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf )
  * @param[out] strbuf
  */
 //------------------------------------------------------------------
-void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf )
+void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, WBTROM_TRID wbt_tr_id, STRBUF * strbuf )
 {
   GFL_MSGDATA     *man;
   u16 msg_id = wbt_tr_id;
@@ -278,29 +278,129 @@ void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, u8 wbt_tr_id, STRBUF * strbuf
 //------------------------------------------------------------------
 /**
  * @brief WBTロムトレーナーデータを読み込む
- * @param[in]   heapID          使用するヒープID指定
- * @param[out]  rom_trainer_num 読み込んだトレーナーデータ数
- * @return  WBT_TRDATA          読み込んだトレーナーデータへのポインタ
+ * @param[in] heapID          使用するヒープID指定
+ * @return    WBTROM_TRDATA   読み込んだトレーナーデータへのポインタ
  *
  * 内部でAllocするので、呼び出し元で最終的に解放する必要がある
  */
 //------------------------------------------------------------------
-void * WBTTOOL_LoadRomTrainerData( HEAPID heapID, u16 * rom_trainer_num )
+const WBTROM_TRDATA * WBTTOOL_CreateRomTrainerData( HEAPID heapID )
 {
-  WBT_TRDATA * rom_trainer_data;
+  WBTROM_TRDATA * output;
   ARCHANDLE * handle;
   u32 size;
   handle = GFL_ARC_OpenDataHandle( ARCID_WBT_TRLIST, GFL_HEAP_LOWID(heapID) );
-  rom_trainer_data = GFL_ARC_LoadDataAllocByHandle( handle,
-      NARC_wbt_trlist_wbt_trainer_bin, heapID );
   size = GFL_ARC_GetDataSizeByHandle( handle, NARC_wbt_trlist_wbt_trainer_bin );
   GF_ASSERT( size % sizeof(WBT_TRDATA) == 0 );
-  *rom_trainer_num = size / sizeof(WBT_TRDATA);
+  output = GFL_HEAP_AllocClearMemory( heapID, sizeof(u32) + size );
+  output->num = size / sizeof(WBT_TRDATA);
+  GFL_ARC_LoadDataByHandle( handle, NARC_wbt_trlist_wbt_trainer_bin, &output->data );
   GFL_ARC_CloseDataHandle( handle );
 
-  return rom_trainer_data;
+  GF_ASSERT( WBTROM_TRID_INVALID > output->num );
+  return (const WBTROM_TRDATA *)output;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTTOOL_DeleteRomTrainerData( WBTROM_TRDATA * rom_trdata )
+{
+  GFL_HEAP_FreeMemory( rom_trdata );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief ROMトレーナーデータの取得
+ * @param heapID
+ * @param tr_id
+ * @param tr_data
+ *
+ * @todo  メモリ圧迫に備えて、バイナリから読み込むように修正
+ */
+//------------------------------------------------------------------
+void WBTTOOL_GetRomTrainerData(
+    const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id, WBT_TRDATA * tr_data )
+{
+  GF_ASSERT( tr_id < rom_trdata->num );
+  *tr_data = rom_trdata->data[ tr_id ];
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief WBTロムトレーナーのIDとして有効かどうかをチェック
+ * @param[in] rom_trdata
+ * @param[in] tr_id
+ * @return  BOOL  TRUEのとき、有効なID
+ */
+//------------------------------------------------------------------
+BOOL WBTTOOL_IsVaridRomTrainerID( const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id )
+{
+  return ( tr_id < rom_trdata->num );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 前作主人公のWBTロムデータのIDを取得する
+ * @param   sex
+ * @return  u16
+ */
+//------------------------------------------------------------------
+WBTROM_TRID WBTTOOL_GetBWRomTrainerID( const WBTROM_TRDATA * rom_trdata, u8 sex )
+{
+  WBTROM_TRID tr_id;
+  u16 search_mmdl = HERO;
+  if (sex == PM_FEMALE)
+  {
+    search_mmdl = HEROINE;
+  }
+  for ( tr_id = 0; tr_id < rom_trdata->num; tr_id ++ )
+  {
+    if ( rom_trdata->data[tr_id].mmdl_id == search_mmdl ) return tr_id;
+  }
+  GF_ASSERT( 0 );
+  return 0; //仮
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief
+ */
+//------------------------------------------------------------------
+WBTROM_TRID WBTTOOL_GetRivalTrainerID( const WBTROM_TRDATA * rom_trdata )
+{
+  WBTROM_TRID tr_id;
+  for ( tr_id = 0; tr_id < rom_trdata->num; tr_id ++ )
+  {
+    if ( rom_trdata->data[tr_id].mmdl_id == SWRIVAL ) return tr_id;
+  }
+  GF_ASSERT( 0 );
+  return 0;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief ROMトレーナーデータの動作モデルID取得
+ * @param[in]   rom_trdata
+ * @param[in]   tr_id
+ * @return      u16
+ */
+//------------------------------------------------------------------
+u16 WBTTOOL_GetRomTrainerMMdlID( const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id )
+{
+  GF_ASSERT( tr_id < rom_trdata->num );
+  return rom_trdata->data[ tr_id ].mmdl_id;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief ROMトレーナーデータの優先度取得
+ */
+//------------------------------------------------------------------
+WBT_TRPRI WBTTOOL_GetRomTrainerPriority( const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id )
+{
+  GF_ASSERT( tr_id < rom_trdata->num );
+  return rom_trdata->data[ tr_id ].priority;
+}
 
 //============================================================================================
 //
