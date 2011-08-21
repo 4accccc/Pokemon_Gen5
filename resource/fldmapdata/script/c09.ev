@@ -27,6 +27,7 @@ _EVENT_DATA   ev_recover_c09
 _EVENT_DATA   ev_c09_veteranm_01
 _EVENT_DATA   ev_c09_veteranm_02
 _EVENT_DATA   ev_pos_c09_firstvisit_01
+_EVENT_DATA    ev_reserve_c09_entry		//D09(チャンピオンロード)からきた際のカメラ演出
 _EVENT_DATA_END
 
 
@@ -249,4 +250,51 @@ _ANIME_LABEL  anm_visit_player_move_01
   _ANIME_DATA AC_WALK_D_8F,1
   _ANIME_DATA ACMD_END,0
 
+/************************************************************/
+/*						予約スクリプト						*/
+/************************************************************/
+EVENT_START	ev_reserve_c09_entry
+	
+	//チャンピオンロードから移動してきたならカメラ演出
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE(1055,0,1376256,2129920,304800,3768320, 1 )
+
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_MAP_FADE_BLACK_IN_SLOW()	//暗転復帰開始
+	
+	_CAMERA_MOVE(1055,0,1376256,2129920,0,3768320, 110 )
+	_PLACE_NAME_DISPLAY()	//地名表示演出
+	_TIME_WAIT( 96 )
+	_DISP_FADE_END_CHECK()	//暗転復帰待ち
+	
+	_BLACK_OUT_SLOW()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_DISP_FADE_END_CHECK()
+
+	_CAMERA_MOVE(6563,0,1441792,2129920,100000,3768320, 1 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+	_BLACK_IN_SLOW()
+	_CAMERA_DEF_MOVE( 60 )		//カメラ主人公位置に復帰
+	_TIME_WAIT( 40 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
+
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_OBJ_ANIME_WAIT()
+	_DISP_FADE_END_CHECK()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：奥へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
 
