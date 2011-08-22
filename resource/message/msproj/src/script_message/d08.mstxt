@@ -2,6 +2,126 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d08_hakase1_01b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『……２ねんまえ
+この　とうの　さいじょうかいで▼
+ひとりの　おとこが
+でんせつの　ポケモンと　むきあった▼
+おとこの　なまえは　Ｎ▼
+りそうを　しるため
+ゼクロムと　もとめていたのだよ▼
+かれは　かれなりの
+りそうを　みつけたのかねえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:03:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T07:58:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『……２年前
+この塔の　最上階で▼
+一人の　男が
+伝説の　ポケモンと　向き合った▼
+男の　名前は　Ｎ▼
+理想を　知るため
+ゼクロムと　求めていたのだよ▼
+彼は　彼なりの
+理想を　みつけたのかねえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T07:58:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・n01r0502でのイベント前
+・GRIDX＝181、GRIDZ＝145、上向き</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T07:58:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T07:58:25" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08_hakase1_01w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『……２ねんまえ
+この　とうの　さいじょうかいで▼
+ひとりの　おとこが
+でんせつの　ポケモンと　むきあった▼
+おとこの　なまえは　Ｎ▼
+しんじつを　しるため
+レシラムと　もとめていたのだよ▼
+かれは　かれなりの
+しんじつを　みつけたのかねえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:03:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T07:58:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『……２年前
+この塔の　最上階で▼
+一人の　男が
+伝説の　ポケモンと　向き合った▼
+男の　名前は　Ｎ▼
+真実を　知るため
+レシラムと　求めていたのだよ▼
+彼は　彼なりの
+真実を　みつけたのかねえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:03:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T07:58:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・n01r0502でのイベント前
+・GRIDX＝181、GRIDZ＝145、上向き</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T07:58:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T07:58:25" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d08_hakase1_01"
 		Style="Large">
 		<LanguageCell
@@ -20,11 +140,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わかったことは　なにもない……▼
-それが　リュウラセンのとうの
-しんじつであり　りそうというのか？▼</Text>
+それが　リュウラセンの塔の
+真実であり　理想というのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T07:23:34" />
+				Time="2011-08-22T08:14:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -33,14 +153,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・n01r0502でのイベント後に出現
+・n01r0502でのイベント後
 ・GRIDX＝181、GRIDZ＝145、上向き
 　posイベント
 　GRIDX＝177~172、GRIDZ＝146
 ・！マーク表示後、振り向き（隣接）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T07:23:57" />
+				Time="2011-08-22T07:57:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -104,12 +224,12 @@
 			Language="JPN">
 			<Text>……２ねんまえ▼
 この　とうで　ひとりの　おとこと
-１ぴきの　ポケモンが　であった▼
+１ぴきの　ポケモンが　むきあった▼
 その　おとこは　せかいを　かえようと
 りそうを　おいもとめていた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T05:04:39" />
+				Time="2011-08-22T08:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -119,12 +239,12 @@
 			Language="JPN_KANJI">
 			<Text>２年前▼
 この塔で　一人の　男と
-１匹の　ポケモンが　であった▼
+１匹の　ポケモンが　向き合った▼
 その男は　世界を　変えようと
 理想を　追い求めていた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T05:06:33" />
+				Time="2011-08-22T08:05:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -156,12 +276,12 @@
 			Language="JPN">
 			<Text>……２ねんまえ▼
 この　とうで　ひとりの　おとこと
-１ぴきの　ポケモンが　であった▼
+１ぴきの　ポケモンが　むきあった▼
 その　おとこは　せかいを　かえようと
 しんじつを　おいもとめていた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T05:04:32" />
+				Time="2011-08-22T08:04:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -171,12 +291,12 @@
 			Language="JPN_KANJI">
 			<Text>２年前▼
 この塔で　一人の　男と
-１匹の　ポケモンが　であった▼
+１匹の　ポケモンが　向き合った▼
 その男は　世界を　変えようと
 真実を　追い求めていた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T05:06:26" />
+				Time="2011-08-22T08:04:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
