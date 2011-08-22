@@ -256,24 +256,50 @@ EVENT_START  ev_infinity_dungeon_elevator
       _CAMERA_END()
 
     ELSE
-      // かえるしょり
-      IF $LWK_D_VERSION == VERSION_B2 THEN
+    
+      // リタイア確認メッセージ
+      _SYSWIN_MSG( msg_elevator_05_00, POS_DOWN )
+      _YES_NO_WIN( SCWK_ANSWER )
+      _SYSWIN_CLOSE()
+
+      IF $SCWK_ANSWER == FALSE THEN
+        // かえるしょり
+        IF $LWK_D_VERSION == VERSION_B2 THEN
         // 下
-        _CAMERA_MOVE(3672,0,970752,425984,131072-500000,-131072, 40 ) 
-      ELSE
+          _CAMERA_MOVE(3672,0,970752,425984,131072-500000,-131072, 40 ) 
+        ELSE
         // 上
-        _CAMERA_MOVE(4056,0,970752,425984,65536+500000,-77824, 40 ) 
+          _CAMERA_MOVE(4056,0,970752,425984,65536+500000,-77824, 40 ) 
+        ENDIF
+
+        // エレベータ移動音
+        _CALL play_elevator_move_se
+
+        _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
+        _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
+        _SE_STOP()
+
+        _CAMERA_BIND()        // カメラバインド
+        _CAMERA_END()
+      ELSE
+        // 帰る処理をキャンセル
+        // エレベータを開ける
+        _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
+
+        // エレベータから降りる
+        _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
+        _OBJ_ANIME_WAIT()
+
+        // カメラを戻す
+        _CAMERA_DEF_MOVE( 20 )
+
+        // エレベータを閉める
+        _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
+
+        _CAMERA_WAIT_MOVE()
+        _CAMERA_BIND()        // カメラバインド
+        _CAMERA_END()
       ENDIF
-
-      // エレベータ移動音
-      _CALL play_elevator_move_se
-
-      _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
-      _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
-      _SE_STOP()
-
-      _CAMERA_BIND()        // カメラバインド
-      _CAMERA_END()
     ENDIF
   ELSE
 
@@ -1068,7 +1094,9 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   DEFINE_LOCAL	LWK_TR_START_MSG_ID
   DEFINE_LOCAL	LWK_TR_END_MSG_ID
   DEFINE_LOCAL	LWK_BOSS_TRNO
-
+ 
+  _TALK_OBJ_START()
+ 
   // ダンジョンの状態を取得
   _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
 
@@ -1080,18 +1108,6 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
 
   // ボスナンバー取得
   _INFINITY_DUNGEON_GET_BOSS_NO( LWK_BOSS_TRNO )
-
-  // 出口まで歩く
-	IF $LWK_D_VERSION == VERSION_B2 THEN
-    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 7, FORCE_TYPE_NOT, 8, DIR_UD)
-  ELSE 
-    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 7, FORCE_TYPE_NOT, 8, DIR_UD)
-  ENDIF
-  _OBJ_ANIME_WAIT()
-
-  // 上に向く
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_up_dir )
-  _OBJ_ANIME_WAIT()
 
   // 戦闘前メッセージID取得
 	IF $LWK_D_VERSION == VERSION_B2 THEN
