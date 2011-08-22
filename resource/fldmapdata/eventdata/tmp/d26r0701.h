@@ -8,6 +8,7 @@
 #define DOOR_ID_D26R0701_D26R0801_EXIT01  3
 #define DOOR_ID_D26R0701_D26R0801_EXIT02  4
 #define DOOR_ID_D26R0701_D09R1401_EXIT01  5
+#define DOOR_ID_D26R0701_D26R1101_EXIT01  6
 
 #endif //ZONE_D26R0701_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r0701.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

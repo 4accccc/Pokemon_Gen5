@@ -7,6 +7,7 @@
 #define DOOR_ID_N01R0401_N01R0403_EXIT01  2
 #define DOOR_ID_N01R0401_N01R0404_EXIT01  3
 #define DOOR_ID_N01R0401_N01R0501_EXIT01  4
+#define DOOR_ID_N01R0401_D26R1101_EXIT01  5
 
 #endif //ZONE_N01R0401_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

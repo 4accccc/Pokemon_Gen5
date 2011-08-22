@@ -5,6 +5,6 @@
 #define _D26R0501_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_D26R0501 (1)
+#define SCRID_ZONE_D26R0501 (1)
 
 #endif //_D26R0501_DEF_H_

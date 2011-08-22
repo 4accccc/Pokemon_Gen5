@@ -12,6 +12,8 @@
 #ifndef ZONE_D26R0201_EVC_H
 #define ZONE_D26R0201_EVC_H
 
+#define D26R0201_ROCK_01                   0
+#define D26R0201_ROCK_02                   1
 
 #endif //ZONE_D26R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

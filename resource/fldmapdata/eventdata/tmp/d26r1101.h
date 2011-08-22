@@ -2,6 +2,8 @@
 #ifndef ZONE_D26R1101_EVD_H
 #define ZONE_D26R1101_EVD_H
 
+#define DOOR_ID_D26R1101_D26R0701_EXIT01  0
+#define DOOR_ID_D26R1101_N01R0401_EXIT01  1
 
 #endif //ZONE_D26R1101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r1101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
