@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこの　しんかの　ほうほうは
+			<Text>このコが　しんかする　ほうほうは
 まだ　はっけんされて　いないわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このこの　進化の　方法は
-まだ　発見されて　いないわね▼</Text>
+			<Text>このコが　しんかする　ほうほうは
+まだ　はっけんされて　いないわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:50:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36,6 +36,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:08" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -48,12 +55,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　よく　なついていると
-レベルアップの　ときに▽
-しんか　するわよ▼</Text>
+			<Text>このコは　よく　なついているときに
+レベルアップすると　しんか　するわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:43:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61,10 +67,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なつきが高い</Text>
+			<Text>このコは　よく　なついているときに
+レベルアップすると　しんか　するわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:50:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -78,6 +85,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -90,13 +104,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　よく　なついていると
-レベルアップした　ときに▽
-じかんたいに　よって▽
+			<Text>このコが　よく　なついているときに
+レベルアップするでしょ▼
+そのときの　じかんたいに　よって
 しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:59:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -104,10 +118,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なつきが高く朝</Text>
+			<Text>このコが　よく　なついているときに
+レベルアップするでしょ▼
+そのときの　じかんたいに　よって
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -121,6 +138,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -133,13 +157,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　よく　なついていると
-レベルアップした　ときに▽
-じかんたいに　よって▽
+			<Text>このコが　よく　なついているときに
+レベルアップするでしょ▼
+そのときの　じかんたいに　よって
 しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -147,10 +171,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なつきが高く夜</Text>
+			<Text>このコが　よく　なついているときに
+レベルアップするでしょ▼
+そのときの　じかんたいに　よって
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -164,6 +191,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -176,11 +210,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:49:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -188,11 +222,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このこは　レベルアップの　時に
-進化する事が　あるわね▼</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:50:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -206,6 +240,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -218,12 +259,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　つうしんこうかんで
-やってきた　ときに▽
-しんか　するわよ▼</Text>
+			<Text>このコは　つうしんこうかんで
+やってきたときに　しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:49:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -231,10 +271,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信</Text>
+			<Text>このコは　つうしんこうかんで
+やってきたときに　しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:50:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -247,6 +288,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -288,6 +336,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -300,12 +355,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　つうしんこうかんで
+			<Text>このコは　つうしんこうかんで
 ある　ポケモンと　こうかんすると▽
 しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -313,10 +368,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信融合</Text>
+			<Text>このコは　つうしんこうかんで
+ある　ポケモンと　こうかんすると▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -329,6 +386,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -370,6 +434,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -382,16 +453,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
 ３しゅるいの　ポケモンに
-しんか　するんだけど▼
-どれに　しんかするかは
+しんかする　かのうせいが　あるけれど▼
+どれに　しんか　するかは
 こうげきと　ぼうぎょの▽
 バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:53:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -399,10 +470,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特殊　力</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+３しゅるいの　ポケモンに
+しんかする　かのうせいが　あるけれど▼
+どれに　しんか　するかは
+こうげきと　ぼうぎょの▽
+バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:53:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -416,6 +493,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -428,16 +512,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
 ３しゅるいの　ポケモンに
-しんか　するんだけど▼
-どれに　しんかするかは
+しんかする　かのうせいが　あるけれど▼
+どれに　しんか　するかは
 こうげきと　ぼうぎょの▽
 バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:53:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -445,10 +529,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特殊　力＝防</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+３しゅるいの　ポケモンに
+しんかする　かのうせいが　あるけれど▼
+どれに　しんか　するかは
+こうげきと　ぼうぎょの▽
+バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:53:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -462,6 +552,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -474,16 +571,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
 ３しゅるいの　ポケモンに
-しんか　するんだけど▼
-どれに　しんかするかは
+しんかする　かのうせいが　あるけれど▼
+どれに　しんか　するかは
 こうげきと　ぼうぎょの▽
 バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:54:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -491,10 +588,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特殊　防</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+３しゅるいの　ポケモンに
+しんかする　かのうせいが　あるけれど▼
+どれに　しんか　するかは
+こうげきと　ぼうぎょの▽
+バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:53:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -508,6 +611,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -520,16 +630,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
 ２しゅるいの　ポケモンに
-しんか　するんだけど▼
+しんかする　かのうせいが　あるけれど▼
 どちらに　しんかするかは
-しんか　してみないと▽
-わからないのよね……▼</Text>
+しんか　するまで　わからないのよね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -537,10 +646,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特殊　個体乱数偶</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+２しゅるいの　ポケモンに
+しんかする　かのうせいが　あるけれど▼
+どちらに　しんかするかは
+しんか　するまで　わからないのよね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:54:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -554,6 +668,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -566,16 +687,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
 ２しゅるいの　ポケモンに
-しんか　するんだけど▼
+しんかする　かのうせいが　あるけれど▼
 どちらに　しんかするかは
-しんか　してみないと▽
-わからないのよね……▼</Text>
+しんか　するまで　わからないのよね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:54:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -583,10 +703,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特殊　個体乱数奇</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+２しゅるいの　ポケモンに
+しんかする　かのうせいが　あるけれど▼
+どちらに　しんかするかは
+しんか　するまで　わからないのよね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:54:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -600,6 +725,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -612,11 +744,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:57:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -624,10 +756,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特殊　レベルアップ</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:56:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -641,6 +774,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -653,15 +793,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
-このとき　てもちに
-よゆうが　あると▽
-ちがった　ポケモンが▽
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+そのとき　てもちに
+よゆうが　あれば▼
+べつの　ポケモンが
 みつかることが　あるようね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:57:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -669,10 +809,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特殊　ヌケニン</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+そのとき　てもちに
+よゆうが　あれば▼
+べつの　ポケモンが
+みつかることが　あるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:57:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -686,6 +831,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -698,12 +850,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　うつくしさが　たかいと
-レベルアップの　ときに▽
+			<Text>このコは　レベルアップするときに
+うつくしさが　たかいと▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:58:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -711,10 +863,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特殊　うつくしさ</Text>
+			<Text>このコは　レベルアップするときに
+うつくしさが　たかいと▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:58:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -728,6 +882,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -740,12 +901,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこが　♂なら
-めざめいしを　つかうと▽
+			<Text>このコが　♂なら
+めざめいしを　つかってあげると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:58:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -753,10 +914,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>道具　オスめざめいし</Text>
+			<Text>このコが　♂なら
+めざめいしを　つかってあげると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:59:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -770,6 +933,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -782,12 +952,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこが　♀なら
-めざめいしを　つかうと▽
+			<Text>このコが　♀なら
+めざめいしを　つかってあげると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:59:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -795,10 +965,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>道具　メスめざめいし</Text>
+			<Text>このコが　♀なら
+めざめいしを　つかってあげると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:59:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -812,6 +984,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -824,14 +1003,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　まんまるいしを
-もたせていると▽
-レベルアップした　ときに▽
-じかんたいに　よって▽
+			<Text>このコに　まんまるいしを　もたせて
+レベルアップ　させるでしょ▼
+そのときの　じかんたいに　よって
 しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:01:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -839,10 +1017,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>装備　朝まんまるいし</Text>
+			<Text>このコに　まんまるいしを　もたせて
+レベルアップ　させるでしょ▼
+そのときの　じかんたいに　よって
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -850,11 +1031,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>装備　朝まんまるいし</Comment>
+			<Comment>装備　朝昼まんまるいし</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:01:34" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -896,6 +1084,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -936,6 +1131,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -948,12 +1150,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
+			<Text>このコは　レベルアップの　ときに
 てもちに　テッポウオが　いると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:02:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -961,10 +1163,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン　テッポウオ</Text>
+			<Text>このコは　レベルアップの　ときに
+てもちに　テッポウオが　いると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:05:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -978,6 +1182,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -990,12 +1201,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこが　♂なら
+			<Text>このコが　♂なら
 レベルアップした　ときに▽
 しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:02:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1003,10 +1214,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オス</Text>
+			<Text>このコが　♂なら
+レベルアップした　ときに▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:05:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1020,6 +1233,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1032,12 +1252,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこが　♀なら
+			<Text>このコが　♀なら
 レベルアップした　ときに▽
 しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:02:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1045,10 +1265,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メス</Text>
+			<Text>このコが　♀なら
+レベルアップした　ときに▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:05:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1061,6 +1283,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1075,12 +1304,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このこは　とくしゅな
-じりょくの　ある　ばしょで▽
-レベルアップした　ときに▽
-しんかすることが　あるわね▼</Text>
+じりょくの　ある　ばしょで▼
+レベルアップすると
+しんか　するわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:05:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1088,10 +1317,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>場所　テンガン山</Text>
+			<Text>このこは　とくしゅな
+じりょくの　ある　ばしょで▼
+レベルアップすると
+しんか　するわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:05:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1105,6 +1337,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1117,13 +1356,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　コケに　おおわれた
-みどりの　おおい　ばしょで▽
-レベルアップした　ときに▽
-しんかすることが　あるわね▼</Text>
+			<Text>このコは　コケに　おおわれた
+みどりの　おおい　ばしょで▼
+レベルアップすると
+しんか　するわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1131,10 +1370,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>場所　苔</Text>
+			<Text>このコは　コケに　おおわれた
+みどりの　おおい　ばしょで▼
+レベルアップすると
+しんか　するわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:05:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1148,6 +1390,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1160,13 +1409,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　こおりで　おおわれた
-つめたい　ばしょで▽
-レベルアップした　ときに▽
-しんかすることが　あるわね▼</Text>
+			<Text>このコは　こおりで　おおわれた
+つめたい　ばしょで▼
+レベルアップすると
+しんか　するわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:09:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1174,10 +1423,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>場所　氷</Text>
+			<Text>このコは　こおりで　おおわれた
+つめたい　ばしょで▼
+レベルアップすると
+しんか　するわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:09:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1191,6 +1443,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1203,13 +1462,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　とくしゅな
-じりょくの　ある　ばしょで▽
-レベルアップした　ときに▽
-しんかすることが　あるわね▼</Text>
+			<Text>このコは　とくしゅな
+じりょくの　ある　ばしょで▼
+レベルアップすると
+しんか　するわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:09:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1217,10 +1476,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>場所　電気</Text>
+			<Text>このコは　とくしゅな
+じりょくの　ある　ばしょで▼
+レベルアップすると
+しんか　するわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:09:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1234,6 +1496,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1246,12 +1515,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　アップグレードを
+			<Text>このコに　アップグレードを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1259,10 +1528,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　通信　アップグレード</Text>
+			<Text>このコに　アップグレードを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1276,6 +1547,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1288,12 +1566,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　おうじゃのしるしを
+			<Text>このコに　おうじゃのしるしを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1301,10 +1579,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　通信　王者のしるし</Text>
+			<Text>このコに　おうじゃのしるしを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1318,6 +1598,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1330,12 +1617,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　しんかいのウロコを
+			<Text>このコに　しんかいのウロコを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1343,10 +1630,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　道具　しんかいのウロコ</Text>
+			<Text>このコに　しんかいのウロコを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1360,6 +1649,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1372,12 +1668,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　しんかいのキバを
+			<Text>このコに　しんかいのキバを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1385,10 +1681,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　通信　しんかいのキバ</Text>
+			<Text>このコに　しんかいのキバを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1402,6 +1700,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1414,12 +1719,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　メタルコートを
+			<Text>このコに　メタルコートを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1427,10 +1732,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　通信　メタルコート</Text>
+			<Text>このコに　メタルコートを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1444,6 +1751,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1456,12 +1770,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　りゅうのウロコを
+			<Text>このコに　りゅうのウロコを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1469,10 +1783,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　通信　りゅうのうろこ</Text>
+			<Text>このコに　りゅうのウロコを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1486,6 +1802,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1498,12 +1821,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　プロテクターを
+			<Text>このコに　プロテクターを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1511,10 +1834,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　通信　プロテクター</Text>
+			<Text>このコに　プロテクターを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1527,18 +1852,25 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="SHINKA_STR_037"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　エレキブースターを
+			<Text>このコに　エレキブースターを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1546,10 +1878,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　通信　テレきブースター</Text>
+			<Text>このコに　エレキブースターを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1562,18 +1896,25 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="SHINKA_STR_038"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　マグマブースターを
+			<Text>このコに　マグマブースターを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1581,10 +1922,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　通信　マグマブースター</Text>
+			<Text>このコに　マグマブースターを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1597,18 +1940,25 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="SHINKA_STR_039"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　あやしいパッチを
+			<Text>このコに　あやしいパッチを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1616,10 +1966,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　通信　あやしいパッチ</Text>
+			<Text>このコに　あやしいパッチを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1632,18 +1984,25 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="SHINKA_STR_040"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　れいかいのぬのを
+			<Text>このコに　れいかいのぬのを
 もたせて　つうしんこうかん　すると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1651,10 +2010,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　通信　れいかいのぬの</Text>
+			<Text>このコに　れいかいのぬのを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1667,20 +2028,26 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="SHINKA_STR_041"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　するどいキバを
-もたせていると▽
-レベルアップした　ときに▽
-じかんたいに　よって▽
+			<Text>このコに　するどいキバを　もたせて
+レベルアップ　させるでしょ▼
+そのときの　じかんたいに　よって
 しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:26:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1688,10 +2055,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　装備夜　鋭い牙</Text>
+			<Text>このコに　するどいキバを　もたせて
+レベルアップ　させるでしょ▼
+そのときの　じかんたいに　よって
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:26:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1704,20 +2074,26 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="SHINKA_STR_042"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　するどいツメを
-もたせていると▽
-レベルアップした　ときに▽
-じかんたいに　よって▽
+			<Text>このコに　するどいツメを　もたせて
+レベルアップ　させるでしょ▼
+そのときの　じかんたいに　よって
 しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:26:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1725,10 +2101,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　装備夜　鋭い爪</Text>
+			<Text>このコに　するどいツメを　もたせて
+レベルアップ　させるでしょ▼
+そのときの　じかんたいに　よって
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:26:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1741,17 +2120,25 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="SHINKA_STR_043"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　かみなりのいしを　つかうと
+			<Text>このコに
+かみなりのいしを　つかってあげると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:12:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1759,10 +2146,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　道具　かみなりのいし</Text>
+			<Text>このコに
+かみなりのいしを　つかってあげると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1775,17 +2164,25 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="SHINKA_STR_044"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　たいようのいしを　つかうと
+			<Text>このコに
+たいようのいしを　つかってあげると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:12:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1793,10 +2190,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　道具　たいようのいし</Text>
+			<Text>このコに
+たいようのいしを　つかってあげると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1810,6 +2209,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1822,11 +2228,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　つきのいしを　つかうと
+			<Text>このコに
+つきのいしを　つかってあげると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1834,10 +2241,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　道具　つきのいし</Text>
+			<Text>このコに
+つきのいしを　つかってあげると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1851,6 +2260,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1863,11 +2279,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　ほのおのいしを　つかうと
+			<Text>このコに
+ほのおのいしを　つかってあげると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1875,10 +2292,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　道具　ほのおのいし</Text>
+			<Text>このコに
+ほのおのいしを　つかってあげると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1892,6 +2311,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1904,11 +2330,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　みずのいしを　つかうと
+			<Text>このコに
+みずのいしを　つかってあげると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1916,10 +2343,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　道具　みずのいし</Text>
+			<Text>このコに
+みずのいしを　つかってあげると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1933,6 +2362,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1945,11 +2381,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　リーフのいしを　つかうと
+			<Text>このコに
+リーフのいしを　つかってあげると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1957,10 +2394,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　道具　リーフのいし</Text>
+			<Text>このコに
+リーフのいしを　つかってあげると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1974,6 +2413,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1986,11 +2432,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　ひかりのいしを　つかうと
+			<Text>このコに
+ひかりのいしを　つかってあげると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1998,10 +2445,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　道具　ひかりのいし</Text>
+			<Text>このコに
+ひかりのいしを　つかってあげると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2015,6 +2464,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2027,11 +2483,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　やみのいしを　つかうと
+			<Text>このコに
+やみのいしを　つかってあげると▽
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:28" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2039,10 +2496,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　道具　やみのいし</Text>
+			<Text>このコに
+やみのいしを　つかってあげると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-22T08:24:15" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2056,6 +2515,13 @@
 				Time="2011-07-22T08:24:20" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2068,13 +2534,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　ものまねを
-おぼえていると▽
-レベルアップの　ときに▽
+			<Text>このコは
+ものまねを　おぼえていると▼
+レベルアップの　ときに
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:16:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2082,10 +2548,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　技　ものまね</Text>
+			<Text>このコは
+ものまねを　おぼえていると▼
+レベルアップの　ときに
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2099,6 +2568,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2111,14 +2587,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　ダブルアタックを
-おぼえていると▽
-レベルアップの　ときに▽
-しんか　するわよ▼
-</Text>
+			<Text>このコは
+ダブルアタックを　おぼえていると▼
+レベルアップの　ときに
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:15:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2126,10 +2601,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　技　ダブルアタック</Text>
+			<Text>このコは
+ダブルアタックを　おぼえていると▼
+レベルアップの　ときに
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2143,6 +2621,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2155,14 +2640,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　ころがるを
-おぼえていると▽
-レベルアップの　ときに▽
+			<Text>このコは
+ころがるを　おぼえていると▼
+レベルアップの　ときに
 しんか　するわよ▼
 </Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2170,10 +2655,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　技　ころがる</Text>
+			<Text>このコは
+ころがるを　おぼえていると▼
+レベルアップの　ときに
+しんか　するわよ▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2187,6 +2676,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2199,14 +2695,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　げんしのちからを
-おぼえていると▽
-レベルアップの　ときに▽
+			<Text>このコは　げんしのちからを
+おぼえていると▼
+レベルアップの　ときに
 しんか　するわよ▼
 </Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:16:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2214,10 +2710,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　技　げんしのちから</Text>
+			<Text>このコは　げんしのちからを
+おぼえていると▼
+レベルアップの　ときに
+しんか　するわよ▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2231,6 +2731,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2243,13 +2750,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　リーフのいしか
-たいようのいしを　つかうと▽
-それぞれ　ちがう　ポケモンに▽
+			<Text>このコに　リーフのいしか
+たいようのいしを　つかってあげると▼
+それぞれ　ちがう　ポケモンに
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:16:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2257,10 +2764,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　クサイハナ</Text>
+			<Text>このコに　リーフのいしか
+たいようのいしを　つかってあげると▼
+それぞれ　ちがう　ポケモンに
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2274,6 +2784,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2286,15 +2803,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこに　みずのいしを　つかうと
+			<Text>このコに
+みずのいしを　つかってあげると▽
 しんか　するわ▼
 あと　おうじゃのしるしを
-もたせて　つうしんこうかん　すると▽
-ちがう　ポケモンに▽
+もたせて　つうしんこうかん　すると▼
+そのときは　ちがう　ポケモンに
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:17:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2302,10 +2820,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　ニョロゾ</Text>
+			<Text>このコに
+みずのいしを　つかってあげると▽
+しんか　するわ▼
+あと　おうじゃのしるしを
+もたせて　つうしんこうかん　すると▼
+そのときは　ちがう　ポケモンに
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:17:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2319,6 +2843,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2331,15 +2862,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわ▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
 あと　おうじゃのしるしを
-もたせて　つうしんこうかん　すると▽
-ちがう　ポケモンに▽
+もたせて　つうしんこうかん　すると▼
+そのときは　ちがう　ポケモンに
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:17:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2347,10 +2878,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　ヤドン</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+あと　おうじゃのしるしを
+もたせて　つうしんこうかん　すると▼
+そのときは　ちがう　ポケモンに
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:17:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2363,6 +2899,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2379,20 +2922,20 @@
 			<Text>このこには　いろいろな
 しんかの　ほうほうが　あるわね▼
 みずのいし　かみなりのいし
-ほのおのいし　を　つかうと▼
+ほのおのいし　を　つかってあげると▼
 それぞれ　ちがうポケモンに
 しんか　するし▼
 よく　なついている　ときに
-レベルアップすると▽
-じかんたいに　よって▽
-ちがうポケモンに　しんか　するの▼
+レベルアップすると▼
+じかんたいに　よって
+ちがう　ポケモンに　しんか　するの▼
 あと　コケに　おおわれた　ばしょや
-こおりで　おおわれた　ばしょで▽
-レベルアップした　ときも▽
-ちがうポケモンに　しんか　するわ▼</Text>
+こおりで　おおわれた　ばしょで▼
+レベルアップした　ときも
+べつの　ポケモンに　しんか　するわ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:25:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2400,10 +2943,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　イーブイ</Text>
+			<Text>このこには　いろいろな
+しんかの　ほうほうが　あるわね▼
+みずのいし　かみなりのいし
+ほのおのいし　を　つかってあげると▼
+それぞれ　ちがうポケモンに
+しんか　するし▼
+よく　なついている　ときに
+レベルアップすると▼
+じかんたいに　よって
+ちがう　ポケモンに　しんか　するの▼
+あと　コケに　おおわれた　ばしょや
+こおりで　おおわれた　ばしょで▼
+レベルアップした　ときも
+べつの　ポケモンに　しんか　するわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:25:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2417,6 +2973,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2429,16 +2992,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
 ３しゅるいの　ポケモンに
-しんか　するんだけど▼
-どれに　しんかするかは
+しんかする　かのうせいが　あるけれど▼
+どれに　しんか　するかは
 こうげきと　ぼうぎょの▽
 バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2446,10 +3009,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　バルキー</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+３しゅるいの　ポケモンに
+しんかする　かのうせいが　あるけれど▼
+どれに　しんか　するかは
+こうげきと　ぼうぎょの▽
+バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2457,11 +3026,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>分岐　バルキー</Comment>
+			<Comment>分岐　バルキー
+※010～012ではなくて？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:18:38" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2475,16 +3052,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
 ２しゅるいの　ポケモンに
-しんか　するんだけど▼
+しんかする　かのうせいが　あるけれど▼
 どちらに　しんかするかは
-しんか　してみないと▽
-わからないのよね……▼</Text>
+しんか　するまで　わからないのよね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:24:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2492,10 +3068,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　ケムッソ</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+２しゅるいの　ポケモンに
+しんかする　かのうせいが　あるけれど▼
+どちらに　しんかするかは
+しんか　するまで　わからないのよね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:24:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2503,11 +3084,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>分岐　ケムッソ</Comment>
+			<Comment>分岐　ケムッソ
+※013～014ではなくて？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:24:35" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2521,15 +3110,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
 でも　♂なら
-めざめいしを　つかうと▽
-ちがう　ポケモンに▽
+めざめいしを　つかってあげると▼
+ちがう　ポケモンに
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:24:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2537,10 +3126,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　キルリア</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+でも　♂なら
+めざめいしを　つかってあげると▼
+ちがう　ポケモンに
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2554,6 +3148,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2566,15 +3167,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
-このとき　てもちに
-よゆうが　あると▽
-ちがった　ポケモンが▽
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+そのとき　てもちに
+よゆうが　あれば▼
+べつの　ポケモンが
 みつかることが　あるようね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2582,10 +3183,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　ツチニン</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+そのとき　てもちに
+よゆうが　あれば▼
+べつの　ポケモンが
+みつかることが　あるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:23:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2593,11 +3199,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>分岐　ツチニン</Comment>
+			<Comment>分岐　ツチニン
+※016ではなくて？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:24:36" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2611,15 +3225,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
 でも　♀なら
-めざめいしを　つかうと▽
-ちがう　ポケモンに▽
+めざめいしを　つかってあげると▼
+ちがう　ポケモンに
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:23:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2627,10 +3241,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　ユキワラシ</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+でも　♀なら
+めざめいしを　つかってあげると▼
+ちがう　ポケモンに
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:23:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2644,6 +3263,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2656,17 +3282,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　どうぐを　もたせて
+			<Text>このコは　どうぐを　もたせて
 つうしんこうかん　すると▽
 しんかすることが　あるわね▼
-もたせる　どうぐが
+もたせてあげる　どうぐが
 しんかいのキバか▽
-しんかいのウロコかで▽
-ちがった　ポケモンに▽
+しんかいのウロコかで▼
+ちがった　ポケモンに
 しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:22:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2674,10 +3300,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　パールル</Text>
+			<Text>このコは　どうぐを　もたせて
+つうしんこうかん　すると▽
+しんかすることが　あるわね▼
+もたせてあげる　どうぐが
+しんかいのキバか▽
+しんかいのウロコかで▼
+ちがった　ポケモンに
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:22:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2691,6 +3324,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2703,17 +3343,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　レベルアップの　ときに
-しんかすることが　あるわね▼
-♂と♀で　ちがう　ポケモンに
-しんか　するわよ▼
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+しかも　♂と♀で　ちがう
+ポケモンに　しんか　するわよ▼
 ♀なら　しんかする　まえの
-すがたによって▽
-しんかした　あとの▽
-すがたも　ちがうのよ▼</Text>
+すがたに　よって▼
+しんかした　あとの
+すがたも　かわるのよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:22:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2721,10 +3361,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分岐　ミノムッチ</Text>
+			<Text>このコは　レベルアップすると
+しんか　することが　あるわね▼
+しかも　♂と♀で　ちがう
+ポケモンに　しんか　するわよ▼
+♀なら　しんかする　まえの
+すがたに　よって▼
+しんかした　あとの
+すがたも　かわるのよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:22:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2737,6 +3384,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2751,12 +3405,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うーん……
-タマゴは　とりあえず▽
-ふか　させてから▽
-みせてくれるかな？▼</Text>
+２つ　いわせてくれる？▼
+１つめ
+タマゴは　しんか　しないわ▼
+２つめ
+だから　ふかしたら　みせてね！▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-22T09:39:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:21:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2764,10 +3420,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タマゴ</Text>
+			<Text>うーん……
+２つ　いわせてくれる？▼
+１つめ
+タマゴは　進化しないわ▼
+２つめ
+だから　ふかしたら　みせてね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T12:21:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2780,6 +3441,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:42:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>

@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ともだちを　えらんでください</Text>
+			<Text>あいてを　えらんでください</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:31:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>友達を　選んでください</Text>
+			<Text>相手を　選んでください</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:31:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39,10 +39,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ともだちを　よびだす</Text>
+			<Text>あいてを　よびだす</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:31:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -50,10 +50,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>友達を　呼び出す</Text>
+			<Text>相手を　呼び出す</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:31:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -72,10 +72,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ともだちを　よびだしちゅう！</Text>
+			<Text>あいてを　よびだしちゅう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:31:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83,10 +83,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>友達を　呼び出し中！</Text>
+			<Text>相手を　呼び出し中！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:31:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -338,6 +338,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:32" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -370,6 +377,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:32" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -404,6 +418,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:32" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -437,6 +458,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:32" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -449,10 +477,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どのこの　しんかを　しりたいの？</Text>
+			<Text>しんかについて　しりたいのは
+どの　ポケモンかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -460,15 +489,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どのこの　進化を　知りたいの？</Text>
+			<Text>進化について　知りたいのは
+どの　ポケモンかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:27" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -503,6 +540,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:29" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -535,6 +579,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -569,6 +620,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:42" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -601,6 +659,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:42" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -635,6 +700,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:42" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -658,15 +730,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はなす</Text>
+			<Text>話す</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:29:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -701,6 +780,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:49" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -733,6 +819,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:49" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -767,6 +860,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:49" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -779,10 +879,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どの　タイプが　しりたいんだい？</Text>
+			<Text>どの　タイプに　ついて
+せつめい　すれば　いいのかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:33:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -790,15 +891,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どの　タイプが　知りたいんだい？</Text>
+			<Text>どの　タイプに　ついて
+説明すれば　いいのかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:33:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:49" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -812,10 +921,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どの　とくせいが　しりたいんだい？</Text>
+			<Text>どの　とくせいに　ついて
+せつめい　すれば　いいのかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:33:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -823,15 +933,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どの　とくせいが　知りたいんだい？</Text>
+			<Text>どの　特性に　ついて
+説明すれば　いいのかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:33:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:49" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -866,6 +984,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:32:49" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -898,6 +1023,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:29:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -932,6 +1064,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:29:39" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -964,6 +1103,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:29:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -998,6 +1144,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:29:39" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1010,10 +1163,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どのことの　なかを　しりたいの？</Text>
+			<Text>どのコとの　なかを　しりたいの？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1021,10 +1174,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どのことの　仲を　知りたいの？</Text>
+			<Text>どのコとの　仲を　知りたいの？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:16:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1037,6 +1190,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:48" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1051,11 +1211,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-すごく　なかが　わるいんだね[Ctrl2:PageClear ]
-いっしょにいるのが　つらそうだよ[Ctrl2:PageClear ]</Text>
+そんなに　なかが　よくないんだね▼
+いっしょに　いても
+あんまり　たのしく　なさそうだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:09:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1064,16 +1225,33 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-すごく　仲が　悪いんだね[Ctrl2:PageClear ]
-一緒にいるのが　辛そうだよ[Ctrl2:PageClear ]</Text>
+そんなに　仲が　よくないんだね▼
+一緒に　いても
+あんまり　楽しく　なさそうだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:17:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・なつき度＝0
+・0＝主人公名
+・1＝ポケモンニックネーム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:26:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1088,11 +1266,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-なかが　わるいんだね[Ctrl2:PageClear ]
-なんか　いやそうな　かおしてるよ[Ctrl2:PageClear ]</Text>
+そんなに　なかが　よくないんだね▼
+[Name:TrainerName ]のこと
+ちょっと　こわい　めで　みてるよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:17:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1101,16 +1280,33 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-仲が　悪いんだね[Ctrl2:PageClear ]
-なんか　嫌そうな　顔してるよ[Ctrl2:PageClear ]</Text>
+そんなに　仲が　よくないんだね▼
+[Name:TrainerName ]のこと
+ちょっと　怖い目で　みてるよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:17:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・なつき度＝1～49
+・0＝主人公名
+・1＝ポケモンニックネーム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:26:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1125,10 +1321,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-まだまだ　これからって　かんじだね[Ctrl2:PageClear ]</Text>
+まだまだ　これからって　かんじだね▼
+いいなあ！　だって　これから
+もっと　なかよしに　なれるんだよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1137,15 +1335,33 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-まだまだ　これからって　感じだね[Ctrl2:PageClear ]</Text>
+まだまだ　これからって　感じだね▼
+いいなあ！　だって　これから
+もっと　仲良しに　なれるんだよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:17:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・なつき度＝50～99
+・0＝主人公名
+・1＝ポケモンニックネーム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:26:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1160,10 +1376,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-すこし　なかよく　なってきたね[Ctrl2:PageClear ]</Text>
+すこし　なかよく　なってきたね▼
+たぶんだけど　おなじ　みちを
+あるくことで　わかりあえてるのかな？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:18:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1172,15 +1390,33 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-少し　仲良く　なってきたね[Ctrl2:PageClear ]</Text>
+少し　仲良く　なってきたね▼
+たぶんだけど　同じ　道を
+歩くことで　わかりあえてるのかな？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:18:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・なつき度＝100～149
+・0＝主人公名
+・1＝ポケモンニックネーム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:27:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1195,11 +1431,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-なかよし　なんだね[Ctrl2:PageClear ]
-なんだか　うれしそうだよ[Ctrl2:PageClear ]</Text>
+なかよし　なんだね！▼
+なんだか　うれしそうだよお
+こっちまで　うれしくなっちゃう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1208,16 +1445,33 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-仲良し　なんだね[Ctrl2:PageClear ]
-なんだか　嬉しそうだよ[Ctrl2:PageClear ]</Text>
+仲良し　なんだね！▼
+なんだか　うれしそうだよお
+こっちまで　うれしくなっちゃう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:18:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・なつき度＝150～199
+・0＝主人公名
+・1＝ポケモンニックネーム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:27:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1232,11 +1486,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-けっこう　なかよし　なんだね[Ctrl2:PageClear ]
-いっしょに　いるのが　たのしいみたい[Ctrl2:PageClear ]</Text>
+かなり　なかよし　なんだね！▼
+いっしょに　いるのが　たのしいみたい
+なんだか　キラキラしてるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:13:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1245,16 +1500,33 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-結構　仲良し　なんだね[Ctrl2:PageClear ]
-一緒に　いるのが　楽しいみたい[Ctrl2:PageClear ]</Text>
+かなり　仲良し　なんだね！▼
+一緒に　いるのが　楽しいみたい
+なんだか　キラキラしてるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:18:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・なつき度＝200～254
+・0＝主人公名
+・1＝ポケモンニックネーム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:27:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1269,11 +1541,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-とっても　なかよし　なんだね[Ctrl2:PageClear ]
-みてると　なんだか　やけちゃうなぁ[Ctrl2:PageClear ]</Text>
+とっても　なかよし　なんだね！！▼
+おたがい　しんじあっていて……
+みてると　なんだか　やけちゃうよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:15:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1282,16 +1555,33 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
-とっても　仲良し　なんだね[Ctrl2:PageClear ]
-見てると　なんだか　やけちゃうなぁ[Ctrl2:PageClear ]</Text>
+とっても　仲良し　なんだね！！▼
+お互い　信じあっていて……
+みてると　なんだか　やけちゃうよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:18:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・なつき度＝255
+・0＝主人公名
+・1＝ポケモンニックネーム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:27:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1305,10 +1595,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どのこの　がんばりが　しりたいの？</Text>
+			<Text>どのコの　がんばりが　しりたいの？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:18:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1316,10 +1606,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どのこの　頑張りが　知りたいの？</Text>
+			<Text>どのコの　がんばりが　知りたいの？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:19:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1333,6 +1623,13 @@
 				Time="2011-05-20T09:30:07" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:51" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1345,11 +1642,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]の[Name:PokemonNickname Idx="1" ]……
-まだまだ　がんばれるって　かんじだね[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]の　[Name:PokemonNickname Idx="1" ]……
+まだまだ　がんばれるって　かんじだね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:19:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1357,16 +1654,32 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]の[Name:PokemonNickname Idx="1" ]……
-まだまだ　頑張れるって　感じだね[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]の　[Name:PokemonNickname Idx="1" ]……
+まだまだ　がんばれるって　感じだね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:19:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・努力値＝0～509
+・0＝主人公名
+・1＝ポケモンニックネーム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:27:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:53" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1380,11 +1693,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]の[Name:PokemonNickname Idx="1" ]……
-ものすごく　がんばったね！[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]の　[Name:PokemonNickname Idx="1" ]……
+ものすごく　がんばったね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:19:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1392,16 +1705,32 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]の[Name:PokemonNickname Idx="1" ]……
-ものすごく　頑張ったね！[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]の　[Name:PokemonNickname Idx="1" ]……
+ものすごく　がんばったね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:19:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・努力値＝510
+・0＝主人公名
+・1＝ポケモンニックネーム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:53" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1416,10 +1745,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>とくに　[Name:Status Idx="0" ]は
-ほんとうに　がんばったと　おもうよ！[Ctrl2:PageClear ]</Text>
+ほんとう　がんばったと　おもうよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:20:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1428,15 +1757,30 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>とくに　[Name:Status Idx="0" ]は
-本当に　頑張ったと　思うよ！[Ctrl2:PageClear ]</Text>
+本当　がんばったと　思うよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:20:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・252が１つ
+・0＝ステータス</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:53" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1451,10 +1795,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>とくに　[Name:Status Idx="0" ]と　[Name:Status Idx="1" ]は
-ほんとうに　がんばったと　おもうよ！[Ctrl2:PageClear ]</Text>
+ほんとう　がんばったと　おもうよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:21:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1462,16 +1806,32 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくに　[Name:Status Idx="0" ]と　[Name:Status Idx="1" ]は
-本当に　頑張ったと　思うよ！[Ctrl2:PageClear ]</Text>
+			<Text>特に　[Name:Status Idx="0" ]と　[Name:Status Idx="1" ]は
+本当　がんばったと　思うよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・252が２つ
+・0＝ステータス
+・1＝ステータス</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T10:58:53" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1505,6 +1865,20 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※未使用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:20:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1538,6 +1912,20 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※未使用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:20:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1571,6 +1959,20 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※未使用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:20:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1604,6 +2006,20 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※未使用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:20:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1637,6 +2053,20 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※未使用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:20:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1670,6 +2100,20 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※未使用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:20:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1684,10 +2128,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>でも　[Name:Status Idx="0" ]は
-がんばったと　おもうよ！[Ctrl2:PageClear ]</Text>
+がんばったと　おもうよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1696,15 +2140,30 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>でも　[Name:Status Idx="0" ]は
-がんばったと　思うよ！[Ctrl2:PageClear ]</Text>
+がんばったと　思うよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T10:04:32" />
+				Time="2011-08-22T11:23:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・252が１つ
+・0＝ステータス</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:20:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1719,10 +2178,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>でも　[Name:Status Idx="0" ]と　[Name:Status Idx="1" ]は
-がんばったと　おもうよ！[Ctrl2:PageClear ]</Text>
+がんばったと　おもうよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:22:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1731,15 +2190,31 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>でも　[Name:Status Idx="0" ]と　[Name:Status Idx="1" ]は
-がんばったと　思うよ！[Ctrl2:PageClear ]</Text>
+がんばったと　思うよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T10:04:37" />
+				Time="2011-08-22T11:23:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・252が２つ
+・0＝ステータス
+・1＝ステータス</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:20:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1774,6 +2249,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:28:53" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1806,6 +2288,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:34:07" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1840,6 +2329,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:34:12" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1872,6 +2368,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:34:12" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1906,6 +2409,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:34:12" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1939,6 +2449,13 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:34:12" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1971,6 +2488,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T11:34:12" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
