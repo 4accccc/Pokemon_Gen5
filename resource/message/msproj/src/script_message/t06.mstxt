@@ -723,13 +723,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？ぼくじょう　だがな
+			<Text>サンギぼくじょう　だがな
 やせいポケモンも　とびだすんじゃぞ！▼
 そりゃもう　じぶんの　ポケモンだけが
 たより　っちゅー　ぐらいにな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T03:24:37" />
+				Time="2011-08-22T02:40:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -737,13 +737,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？牧場　だがな
+			<Text>サンギ牧場　だがな
 野生のポケモンも　飛びだすんじゃぞ！▼
 そりゃもう　自分の　ポケモンだけが
 頼り　っちゅー　ぐらいにな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T03:24:33" />
+				Time="2011-08-22T02:40:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -751,11 +751,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・仮メッセージ</Comment>
+			<Comment>♂</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T03:18:13" />
+				Time="2011-08-22T02:41:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
