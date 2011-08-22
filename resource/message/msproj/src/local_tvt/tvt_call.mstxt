@@ -2508,10 +2508,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……</Text>
+			<Text>ふふっ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T08:20:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6368,10 +6368,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>…なんでしょう？[Ctrl2:PageClear ]</Text>
+			<Text>…もしもし？[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T08:59:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6415,10 +6415,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もしもし！　いま　ひま？　２[Ctrl2:PageClear ]</Text>
+			<Text>あっ！▼
+いまは　だいじょうぶ　だよ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:19:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6462,10 +6463,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もしもし！　いま　ひま？　３[Ctrl2:PageClear ]</Text>
+			<Text>あっ！▼
+いまは　だいじょうぶ　だよ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:15:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6509,10 +6511,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もしもし！　いま　ひま？　４[Ctrl2:PageClear ]</Text>
+			<Text>あっ！▼
+かおが　みれて　うれしい…　かな[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:15:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6556,10 +6559,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>…ちょっと　いいですか？[Ctrl2:PageClear ]</Text>
+			<Text>もっ　もしもし？▼
+すこし　よろしいでしょうか？[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:27:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6603,10 +6607,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！　どうしたの？　２[Ctrl2:PageClear ]</Text>
+			<Text>もっ　もしもし？▼
+すこし　よろしいでしょうか？[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:28:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6650,10 +6655,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！　どうしたの？　３[Ctrl2:PageClear ]</Text>
+			<Text>もっ　もしもし？▼
+すこし　よろしいでしょうか？[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:28:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6697,10 +6703,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！　どうしたの？　４[Ctrl2:PageClear ]</Text>
+			<Text>もっ　もしもし？▼
+すこし　よろしいでしょうか？[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:28:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6744,11 +6751,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はぁ…
-[Name:Answer Idx="0" ]が　しゅみ　なんですか…[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+おとこのこ　だったんですか？▼
+かおが　みえないのって
+けっこう　ふべんですね▼
+ちなみに…▼
+わたしは　おんなのこ　なんですよ▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:18:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6767,10 +6783,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１回目　　　　趣味について聞かれます。</Comment>
+			<Comment>１回目　　　　性別について聞かれます。</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:41:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6792,10 +6808,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+おとこのこ　だったんですか？▼
+かおが　みえないのって
+けっこう　ふべんですね▼
+ちなみに…▼
+わたしは　おんなのこ　なんですよ▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:18:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6814,10 +6840,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１回目　　　　趣味：アンケなし</Comment>
+			<Comment>１回目　　　　性別：アンケなし（未使用）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:41:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6839,11 +6865,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はぁ…
-[Name:Answer Idx="0" ]が　とくぎ　なんですか…[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+[Name:Hobby ]が　しゅみ　なんですか？▼
+なんだか　おもしろ　そうですね
+こんど　わたしも　やってみようかな？▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:18:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6862,10 +6895,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２回目　　　　特技について聞かれます。　</Comment>
+			<Comment>２回目　　　　趣味について聞かれます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:41:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6887,10 +6920,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+そんな　しゅみを　もってるんですか？▼
+なんだか　おもしろ　そうですね
+こんど　わたしも　やってみようかな？▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T09:19:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6909,10 +6950,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２回目　　　　特技：アンケなし</Comment>
+			<Comment>２回目　　　　趣味：アンケなし</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:40:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6934,11 +6975,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0" ]が
-すきないろ　なんですね！３[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+[Name:Hobby ]タイプの　ポケモンが▽
+すき　なんですか？▼
+かわいい　ポケモンが　おおくて
+いいですよね　[Name:Hobby ]タイプ▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T10:02:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6958,10 +7007,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>３回目　　　　すきな色について聞かれます。　</Comment>
+			<Comment>３回目　　　　好きなポケモンのタイプについて聞かれます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:40:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6983,10 +7032,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+そういう　タイプの　ポケモンが▽
+すき　なんですか？▼
+かわいい　ポケモンが　おおくて
+いいですよね　そのタイプ▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T10:02:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7005,10 +7063,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>３回目　　　　すきな色：アンケなし</Comment>
+			<Comment>３回目　　　　好きなポケモンのタイプ：アンケなし</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:40:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7030,11 +7088,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0" ]が
-すきなスポーツ　なんですね！４[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+[Name:Hobby ]を　よく　きくんですか？▼
+おんがくって　いいですよね
+きいていると　たのしく　なります▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T10:11:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7054,10 +7119,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>４回目　　　　好きなスポーツについて聞かれます。　</Comment>
+			<Comment>４回目　　　　好きな音楽について聞かれます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:40:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7079,10 +7144,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+そういう　おんがくを▽
+よく　きくんですか？▼
+おんがくって　いいですよね
+きいていると　たのしく　なります▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T10:12:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7101,10 +7175,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>４回目　　　　好きなスポーツアンケなし</Comment>
+			<Comment>４回目　　　　好きな音楽：アンケなし</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:40:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7126,11 +7200,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0" ]が
-すきなたべもの　なんですね！５[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+[Name:Hobby ]　ポケモンが▽
+すき　なんですか？▼
+わたしの　まわりでも
+[Name:Hobby ]　ポケモンが▽
+すきってひと　けっこう　おおいですね▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T12:14:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7150,10 +7233,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>５回目　　　　好きな食べ物について聞かれます。　</Comment>
+			<Comment>５回目　　　　好きなポケモンについて聞かれます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:39:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7175,10 +7258,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　５[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+そういう　ポケモンが▽
+すき　なんですか？▼
+わたしの　まわりでも
+そういう　ポケモンが▽
+すきってひと　けっこう　おおいですね▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T10:13:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7197,10 +7290,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>５回目　　　　好きな食べ物：アンケなし</Comment>
+			<Comment>５回目　　　　好きなポケモン：アンケなし</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:39:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7222,10 +7315,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0" ]が　にがて　なんですね！６[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんの
+おやすみの　すごしかたが▽
+[Name:Hobby ]　だなんて▽
+おどろき　ました▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T12:02:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7244,10 +7345,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>６回目　　　　苦手な事について聞かれます。　</Comment>
+			<Comment>６回目　　　　休日の過ごし方について聞かれます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:39:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7269,10 +7370,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　６[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんの
+おやすみの　すごしかたが▽
+そんな　だなんて▽
+おどろき　ました▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T12:05:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7291,10 +7400,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>６回目　　　　苦手な事：アンケなし</Comment>
+			<Comment>６回目　　　　休日の過ごし方：アンケなし</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:39:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7316,11 +7425,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0" ]が
-すきなばしょ　なんですね！７[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+ポケモンの　[Name:Hobby ]を▽
+よく　するんですか？▼
+きかいが　あったら　わたしとも
+[Name:Hobby ]して　くださいね▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T10:40:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7340,10 +7457,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>７回目　　　　好きな場所について聞かれます。　</Comment>
+			<Comment>７回目　　　　対戦と交換のどちらが好きかについて聞かれます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:38:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7365,10 +7482,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　７[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんは
+そんなふうに　おともだちと▽
+ポケモンで　コミュニケーションを▽
+とって　いるんですか？▼
+きかいが　あったら　わたしとも
+おねがい　しますね▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T11:02:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7387,10 +7514,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>７回目　　　　好きな場所：アンケなし</Comment>
+			<Comment>７回目　　　　対戦と交換のどちらが好きか：アンケなし</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:38:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7412,11 +7539,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0" ]が　
-すきなポケモン　なんですね！８[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+[Name:Hobby ]に　なりたいんですか？▼
+もくひょうが　あるって　ステキですね
+わたしも　がんばらないと…▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:37:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7436,10 +7570,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>８回目　　　　好きなポケモンについて聞かれます。</Comment>
+			<Comment>８回目　　　　どんなひとになりたいのかについて聞かれます。</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:36:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7461,10 +7595,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　８[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+そんな　ひとに　なりたいんですか？▼
+もくひょうが　あるって　ステキですね
+わたしも　がんばらないと…▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:37:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7483,10 +7625,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>８回目　　　　好きなポケモン：アンケなし</Comment>
+			<Comment>８回目　　　　どんなひとになりたいのか：アンケなし</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:36:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7508,10 +7650,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　９[Ctrl2:PageClear ]</Text>
+			<Text>すごい！▼
+[Name:TrainerName ]さんて
+ジムバッジを　[Name:Hobby ]つも▽
+もっているんですか？▼
+すっごく　つよいんですね▼
+……　……　……　……▼
+あっ！▼
+せんぱいに　よばれちゃいました▼
+そろそろ　しごとに　もどりますね
+また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-12T10:13:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7530,10 +7681,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>９回目　　　　家族構成について聞かれます。　</Comment>
+			<Comment>９回目　　　　ジムバッジの数について聞かれます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:35:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7555,10 +7706,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１０[Ctrl2:PageClear ]</Text>
+			<Text>あの…▼
+きょうは　しごとが　おやすみなので
+おあずかり　してもらっている▽
+ライブキャスターを▽
+うけとりに　いきたいん　ですけど…▼
+[Name:TrainerName ]さんの　よていは
+あいて　いますか？▼
+……　……　……　……▼
+えっ　あいて　いるんですか？▼
+よかった…▼
+それでは　ライモンシティの
+かんらんしゃの　まえで▽
+まちあわせ　しましょう▼
+[Name:TrainerName ]さんと　おあい　できるのを
+たのしみに　していますね[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-11T10:10:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7602,10 +7767,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１１[Ctrl2:PageClear ]</Text>
+			<Text>このまえは　ありがとう▼
+じっさいに　あってみたら
+としが　おなじ　くらい　だったから▽
+びっくり　しちゃった▼
+こえの　かんじ　だけだと
+わたしよりも　としうえ　なのかなって▽
+おもって　いたから…▼
+ライブキャスターで　はなす　ときも
+すこし　きんちょう　していたんだよ▼
+これからは　きんちょう　しないで
+はなせるのが　うれしい…　かな▼
+……　……　……　……
+……　……　……　……▼
+そろそろ　しごとに　もどりらなきゃ▼
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-08T14:01:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7624,10 +7803,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１１回目　　　趣味について話してきます。　</Comment>
+			<Comment>１１回目　　　受け渡しイベントについて話してきます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:34:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7649,10 +7828,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１２[Ctrl2:PageClear ]</Text>
+			<Text>わたし　りょうりが　しゅみで▼
+おいしいものの　はなしを　きくと
+けんきゅうの　ために　わざわざ▽
+たべに　いったりも　するんだよ▼
+さいきんだと　ヒウンシティで
+ひょうばんの　ヒウンアイスを▽
+たべたいと　おもって　いるんだけど…▼
+いつも　ぎょうれつが　できていて
+ぜんぜん　かえないの▼
+……　……　……　……
+……　……　……　……▼
+そろそろ　しごとに　もどりらなきゃ▼
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-12T10:54:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7671,10 +7862,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１２回目　　　特技について話してきます。　</Comment>
+			<Comment>１２回目　　　趣味について話してきます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:34:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7696,10 +7887,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１３[Ctrl2:PageClear ]</Text>
+			<Text>わたし　ノーマルタイプの
+ポケモンが　だいすき　なんだ▼
+そのこの　がんばり　しだいでは
+どんな　ポケモンにでも　なれる▽
+そんな　みりょくを　かんじるの▼
+それに…▼
+かわいい　ポケモンも
+たくさん　たくさん　いるんだから▼
+……　……　……　……
+……　……　……　……▼
+そろそろ　しごとに　もどりらなきゃ▼
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-12T10:53:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7718,10 +7920,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１３回目　　　すきな色について話してきます。　</Comment>
+			<Comment>１３回目　　　好きなポケモンのタイプについて話してきます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:34:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7743,10 +7945,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１４[Ctrl2:PageClear ]</Text>
+			<Text>わたし　おんがくって　だいすき▼
+よく　きくのは　ポップスかな？
+きいて　いると　たのしく　なるよね▼
+こうみえても　うたとか
+けっこう　じょうず　なんだよ▼
+きかいが　あったら
+ぜひ　きいて　ほしい…　かな▼
+……　……　……　……
+……　……　……　……▼
+そろそろ　しごとに　もどりらなきゃ▼
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-09T06:04:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7765,10 +7977,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１４回目　　　好きなスポーツについて話してきます。　</Comment>
+			<Comment>１４回目　　　好きな音楽について話してきます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:33:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7790,10 +8002,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１５[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName ]くんは
+ポケモンミュージカルに▽
+さんかしたこと　ある？▼
+わたしも　いちどで　いいから
+かわいい　ポケモンを▽
+キュートに　ドレスアップさせて▽
+ポケモンミュージカルに▽
+さんか　させて　みたいの▼
+おわったら　そのこも
+ファンレターとか　もらっちゃって▽
+きっと　つぎの　ぶたいへの▽
+はげみに　なったり　するんだよ▼　
+……　……　……　……
+……　……　……　……▼
+そろそろ　しごとに　もどりらなきゃ▼
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-09T10:06:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7812,10 +8039,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１５回目　　　好きな食べ物について話してきます。　</Comment>
+			<Comment>１５回目　　　好きなポケモンについて話してきます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:33:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7837,10 +8064,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１６[Ctrl2:PageClear ]</Text>
+			<Text>わたし　おやすみの　ひは
+よく　さんぽに　でかけるの▼
+まわりの　けしきを
+のんびり　みてまわる　だけでも▽
+いい　きぶんてんかんに　なるんだよ▼
+ライブキャスターを　おとしたのも
+ライモンシティを▽
+さんぽしている　とき　だったから▽
+[Name:TrainerName ]くんに　であえたのは▽
+さんぽの　おかげ　かもね▼
+……　……　……　……
+……　……　……　……▼
+そろそろ　しごとに　もどりらなきゃ▼
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T08:06:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7859,10 +8099,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１６回目　　　苦手な事について話してきます。　</Comment>
+			<Comment>１６回目　　　休日の過ごし方について話してきます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:32:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7884,10 +8124,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１７[Ctrl2:PageClear ]</Text>
+			<Text>わたし　よく　ひとと
+ポケモンの　こうかんを　するの▼
+しごとで　いろんな　ちほうに
+いく　ことが　おおいから▽
+そのばしょで　であった　ひとたちと▽
+きねんに　こうかんしたり　するんだよ▼
+いつか　[Name:TrainerName ]くんとも
+ポケモンを　こうかん　したい…　かな▼
+……　……　……　……
+……　……　……　……▼
+そろそろ　しごとに　もどりらなきゃ▼
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-09T10:09:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7906,10 +8157,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１７回目　　　好きな場所について話してきます。　</Comment>
+			<Comment>１７回目　　　交換と対戦のどちらが好きかについて話してきます。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:32:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7931,10 +8182,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１８[Ctrl2:PageClear ]</Text>
+			<Text>わたし　かっこいいひとに　なるのが
+もくひょう　なの▼
+みかけ　とかじゃ　なくて
+なかみが　かっこいいひと　だよ▼
+まだまだ　かっこわるいけど…▼
+いまの　しごとを　がんばっていれば
+いつか　なれると　おもっているんだ▼
+だから　おうえん　してくれると
+うれしい…　かな▼
+……　……　……　……
+……　……　……　……▼
+そろそろ　しごとに　もどりらなきゃ▼
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T08:08:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7953,10 +8216,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１８回目　　　好きなポケモンについて話してきます。</Comment>
+			<Comment>１８回目　　　どんなひとになりたいのかについて話してきます。</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:31:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7978,10 +8241,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　１９[Ctrl2:PageClear ]</Text>
+			<Text>このあいだ
+おとうとが　おとうさんと▽
+ポケモンバトルを　していたの▼
+すごく　たのしそうに
+バトルを　していたんだよ▼
+いっしょに　みていた　いもうとも
+うらやましく　なったのか▽
+じぶんも　ポケモンが　ほしいって▽
+なきだして　たいへん　だったんだから▼
+……　……　……　……
+……　……　……　……▼
+そろそろ　しごとに　もどりらなきゃ▼
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-09T10:11:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8025,10 +8300,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２０[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName ]くんと
+おはなしを　していると▽
+あっ　と　いうまに▽
+じかんが　たって　いるだよね▼
+よっぽど　たのしいと
+かんじて　いるのかな？▼
+あはは…▼
+だからね　こらからも
+たくさん　れんらくを　くれると▽
+うれしい…　かな▼
+……　……　……　……
+……　……　……　……▼
+そろそろ　しごとに　もどりらなきゃ▼
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T08:13:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8072,10 +8360,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２１[Ctrl2:PageClear ]</Text>
+			<Text>あの…▼
+そうだんが　あるんだけど…
+きいて　もらえるかな？▼
+こい　いろの　くさむらって
+みたこと　ある？▼
+……　……　……　……
+……　……　……　……▼
+そっか…▼
+レベルの　たかい　ポケモンが
+とびだして　くるなんて▽
+やっぱり　あぶないんだね▼
+おとうと　たちに
+ちゅういして　おかなきゃ▼
+ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T03:10:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8094,10 +8395,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２１回目　　　悩み相談１。　</Comment>
+			<Comment>２１回目　　　悩み相談１（強草って危険なの？）。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T06:46:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8119,10 +8420,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２２[Ctrl2:PageClear ]</Text>
+			<Text>あの…▼
+そうだんが　あるんだけど…
+きいて　もらえるかな？▼
+こんど　いもうとに
+ポケモンを　プレゼント　しようと▽
+おもって　いるんだけど…▼
+……　……　……　……
+……　……　……　……▼
+そうだね…▼
+やっぱり　はじめての　ポケモンは
+ノーマルタイプが　いいのかな？▽
+こんど　いもうとと　いっしょに▽
+つかまえに　いって　みるね▼
+ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-12T10:16:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8141,10 +8455,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２２回目　　　悩み相談２。　</Comment>
+			<Comment>２２回目　　　悩み相談２（はじめてのポケモンは何がいい？）。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T06:46:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8166,10 +8480,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２３[Ctrl2:PageClear ]</Text>
+			<Text>あの…▼
+そうだんが　あるんだけど…
+きいて　もらえるかな？▼
+さっき　しごとで　ミス　しちゃって…▼
+……　……　……　……
+……　……　……　……▼
+うん…▼
+[Name:TrainerName ]くんに
+はなしを　きいて　もらったら▽
+なんだか　すっきり　しちゃった▼
+おなじ　しっぱいを
+くりかえさない　ことが▽
+だいじ　なんだね▼
+ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T07:10:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8188,10 +8515,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２３回目　　　悩み相談３。　</Comment>
+			<Comment>２３回目　　　悩み相談３（仕事で失敗…）。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T06:46:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8213,10 +8540,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２４[Ctrl2:PageClear ]</Text>
+			<Text>あの…▼
+そうだんが　あるんだけど…
+きいて　もらえるかな？▼
+メダルラリーって　しってる？▼
+……　……　……　……
+……　……　……　……▼
+へぇー▼
+そんな　おんもしろ　そうな
+イベント　だったんだね▼
+へんな　おじさんに
+いきなり　メダルを　わたされたから▽
+びっくり　しちゃったんだけど…▼
+[Name:TrainerName ]くんが　あつめて　いるなら
+わたしも　あつめて　みようかな▼
+ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-17T10:18:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8235,10 +8576,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２４回目　　　悩み相談４。　</Comment>
+			<Comment>２４回目　　　悩み相談４（メダルラリーって？）。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T06:46:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8260,10 +8601,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２５[Ctrl2:PageClear ]</Text>
+			<Text>あの…▼
+そうだんが　あるんだけど…
+きいて　もらえるかな？▼
+おとうとの　ハハコモリに
+かてないんだけど…▼
+……　……　……　……
+……　……　……　……▼
+なるほど！▼
+[Name:TrainerName ]くんに
+きいてみて　せいかい　だったね▼
+ほのおタイプの　ポケモンで
+ハハコモリと　たたかって　みるよ▼
+ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-12T10:17:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8282,10 +8635,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２５回目　　　悩み相談５。　</Comment>
+			<Comment>２５回目　　　悩み相談５（弟を倒せ！）。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T06:47:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8307,10 +8660,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２６[Ctrl2:PageClear ]</Text>
+			<Text>あの…▼
+そうだんが　あるんだけど…
+きいて　もらえるかな？▼
+きのう　しごとの　ことで
+おとうさんと　ケンカ　しちゃって…▼
+……　……　……　……
+……　……　……　……▼
+うん…▼
+[Name:TrainerName ]くんに
+はなしを　きいて　もらったら▽
+なんだか　すっきり　しちゃった▼
+すなおな　きもちで
+おとうさんに　あやまって　みるね▼
+ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T05:25:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8329,10 +8695,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２６回目　　　悩み相談６。　</Comment>
+			<Comment>２６回目　　　悩み相談６（仕事と家族）。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T06:47:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8354,10 +8720,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２７[Ctrl2:PageClear ]</Text>
+			<Text>あの…▼
+そうだんが　あるんだけど…
+きいて　もらえるかな？▼
+このあいだ　ダウジングマシンを
+もらったんだけど…▼
+……　……　……　……
+……　……　……　……▼
+そうなんだ…▼
+そんなに　いろいろな　ところで
+ダウジングマシンって▽
+はんのう　するんだね▼
+これからは　わたしも
+こまめに　チェック　してみるね▼
+ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-12T10:52:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8376,10 +8755,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２７回目　　　悩み相談７。　</Comment>
+			<Comment>２７回目　　　悩み相談７（ダウジングマシンって便利なの？）。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T07:41:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8401,10 +8780,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２８[Ctrl2:PageClear ]</Text>
+			<Text>あの…▼
+そうだんが　あるんだけど…
+きいて　もらえるかな？▼
+……　……　……　……▼
+こっ▼
+この　ぼうしって
+わたしに　にあって　いるかな？▼
+……　……　……　……
+……　……　……　……▼
+あはは…▼
+[Name:TrainerName ]くんに
+きいてみて　よかったよ▼
+でも　そんなふうに　いわれると
+てれちゃう…　かな▼
+ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T08:43:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8423,10 +8816,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２８回目　　　悩み相談８。</Comment>
+			<Comment>２８回目　　　悩み相談８（似合ってる？）。</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T06:48:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8448,10 +8841,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　２９[Ctrl2:PageClear ]</Text>
+			<Text>あの…▼
+そうだんが　あるんだけど…
+きいて　もらえるかな？▼
+しごとばに　すごい　ひとが　いて
+そのひとには　まけたくない　なって…▼
+……　……　……　……
+……　……　……　……▼
+うん…▼
+[Name:TrainerName ]くんに
+はなしを　きいて　もらったら▽
+きもちが　らくに　なったよ▼
+まけちゃ　いけないのは
+カレに　では　なくって▽
+じぶんじしんに　なんだよね▼
+ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-17T10:19:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8470,10 +8877,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２９回目　　　悩み相談９。　</Comment>
+			<Comment>２９回目　　　悩み相談９（ライバル）。　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T06:48:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8495,10 +8902,26 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３０[Ctrl2:PageClear ]</Text>
+			<Text>あっ▼
+あの…▼
+きょうは　しごとが　おやすみだから
+よかったら　じかに　あえないかな？▼
+さいきんは
+よく　そうだんに　のってもらっていて▽
+すごく　たすかって　いるから▽
+[Name:TrainerName ]くんに　じかに　あって▽
+おれいを　いいたいんだ▼
+……　……　……　……▼
+えっ　ほんと？　あいてるの？▼
+…よかった▼
+じゃあ　ライモンシティの
+かんらんしゃの　まえで▽
+まちあわせで　いいかな？▼
+[Name:TrainerName ]くんと　あえるの
+すごく　たのしみ…　かな[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T08:45:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8965,10 +9388,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４０[Ctrl2:PageClear ]</Text>
+			<Text>ごめんね▼
+しごとの　あいま　だったんだけど
+おはなし　したかったから▽
+こえ　のみで　おうとうしちゃった▼
+あはは…▼
+……　……　……　……
+……　……　……　……▼
+しごとが　いそがしくて
+ヘトヘトだったん　だけど…▼
+[Name:TrainerName ]くんの　こえを　きいたら
+げんきが　でてきた…　かな▼
+あっ！▼
+もう　じかん　みたい▼
+そろそろ　しごとに　もどらなきゃ
+またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9435,10 +9872,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　５０[Ctrl2:PageClear ]</Text>
+			<Text>あっ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-08-10T09:23:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

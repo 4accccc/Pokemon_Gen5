@@ -6490,10 +6490,34 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_swidol_w_01</Text>
+			<Text>あっ　[Name:TrainerName ]くん▼
+…よかった▼
+きて　くれたんだね▼
+……　……　……　……▼
+えっ？▼
+べっ▼
+べつに　まって　ないよ…
+わたしも　いま　きた　ところだから…▼
+あはは…▼
+よっ▼
+よかったら
+かんらんしゃに　のらない？▼
+ライモンシティの　かんらんしゃは
+ながめが　きれいな　ことで▽
+すごく　ゆうめい　なんだけど…▼
+……　……　……　……▼
+えっ　いいの？▼
+…よかった▼
+わたし　この　かんらんしゃに
+まえから　のって　みたかったんだ▼
+でも　この　かんらんしゃって
+ふたりのり　せんよう　らしいから▽
+ずっと　がまん　していたんだよ▼
+うれしくって　ドキドキしてきちゃった
+さっそく　のろうよ　[Name:TrainerName ]くん</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:56:52" />
+				User="nishino:W00221"
+				Time="2011-08-22T09:54:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6547,10 +6571,22 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_swidol_w_02</Text>
+			<Text>……　……　……　……▼
+あはは…▼
+[Name:TrainerName ]くんには
+ほんとうに　かんしゃ　しているの▼
+いまの　しごとを　がんばれるのも
+[Name:TrainerName ]くんの　おかげだとおもう▼
+できれば　これからも
+はなしあいてに　なってくれると▽
+うれしい…　かな▼
+……　……　……　……▼
+じゃあ　そろそろ　かえるね…▼
+きょうは　すごく　たのしかったよ
+またね　[Name:TrainerName ]くん！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:57:36" />
+				User="nishino:W00221"
+				Time="2011-08-22T09:01:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6604,10 +6640,23 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_swidol_w_03</Text>
+			<Text>あっ　[Name:TrainerName ]くん▼
+あはは…▼
+まちどうしくって　いそいできちゃった▼
+あえて　うれしい…　かな▼
+ねぇ▼
+よかったら
+また　かんらんしゃに　のらない？▼
+わたし　この　かんらんしゃの　こと
+きにいっちゃった　みたい▼
+……　……　……　……▼
+えっ　いいの？▼
+…よかった▼
+なんでだろ　ドキドキしてきちゃった
+さっそく　のろうよ　[Name:TrainerName ]くん</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:57:38" />
+				User="nishino:W00221"
+				Time="2011-08-22T11:25:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6661,10 +6710,20 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_swidol_w_04</Text>
+			<Text>……　……　……　……▼
+きょうは　ありがとう▼
+さそって　くれて　うれしかったよ▼
+また　[Name:TrainerName ]くん　から
+たくさん　げんきを　もらっちゃったね▼
+あはは…▼
+これで　しごとも　がんばれるよ▼
+よかったら　また
+さそって　ほしい…　かな▼
+じゃあ　そろそろ　かえるね…▼
+またね　[Name:TrainerName ]くん！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:57:40" />
+				User="nishino:W00221"
+				Time="2011-08-22T09:44:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6946,10 +7005,17 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]　msg_wheel_swidol_w_05</Text>
+			<Text>ねぇ　[Name:TrainerName ]くん▼
+この　あいだ　しごとで
+べつの　ちほうに　いった　ときに▽
+[Name:PokemonName ]を　つかまえたんだけど…▽
+[Name:TrainerName ]くんの　ポケモンと▽
+こうかんして　くれないかな？▼
+こうかん　してくれるのは
+どんな　ポケモンでも　いいよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T13:07:19" />
+				User="nishino:W00221"
+				Time="2011-08-22T12:41:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7001,10 +7067,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_swidol_w_06</Text>
+			<Text>ありがとう▼
+このこ　だいじに　そだてるね</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T07:02:50" />
+				User="nishino:W00221"
+				Time="2011-08-22T09:22:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7056,10 +7123,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_swidol_w_07</Text>
+			<Text>ざんねん…▼
+また　きかいが　あったら
+こうかん　してね…</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T07:02:52" />
+				User="nishino:W00221"
+				Time="2011-08-22T11:26:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
