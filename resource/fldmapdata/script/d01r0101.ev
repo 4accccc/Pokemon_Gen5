@@ -35,9 +35,9 @@ _EVENT_DATA_END
 //バージョン取得
 DEFINE_LOCAL LCWK_VERSION
 //主人公方向取得変数
-DEFINE_LOCAL  LWK_DIR
-DEFINE_LOCAL  LCW_POSX
-DEFINE_LOCAL  LCW_POSZ
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL LCW_POSX
+DEFINE_LOCAL LCW_POSZ
 
 
 /************************************************************/
@@ -45,14 +45,19 @@ DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 INIT_EVENT_START  ev_zone_d01r0101
 
-  //ROMバージョン取得
-  _GET_ROM_VERSION( LCWK_VERSION )
+  //ラティオス（ラティアス）と戦闘していない？
+  IF FLAG_OFF( FE_D01R0101_RATI2_GET_01 ) && $WK_SCENE_D01R0101_RATI2 != 6 THEN
 
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    $OBJCHRWORK0 = TPOKE_0408   //Ｂ版ならラティオス
-  ELSE
-    $OBJCHRWORK0 = TPOKE_0407   //Ｗ版ならラティアス
+    //ROMバージョン取得
+    _GET_ROM_VERSION( LCWK_VERSION )
+
+    //B2
+    IF $LCWK_VERSION == VERSION_B2 THEN
+      $OBJCHRWORK0 = TPOKE_0408   //Ｂ版ならラティオス
+    ELSE
+      $OBJCHRWORK0 = TPOKE_0407   //Ｗ版ならラティアス
+    ENDIF
+
   ENDIF
 
 INIT_EVENT_END
@@ -166,7 +171,7 @@ EVENT_START   ev_pos_d01r0101_rati2_01
   //ラティオス（ラティアス）非表示
   _FLAG_SET( FV_D01R0101_RATI2_01 )
   //イベント進行
-  $LOCALWORK0 = 1
+  $WK_SCENE_D01R0101_RATI2 = 1
   //========================================//
 
 INIT_EVENT_END
@@ -223,7 +228,7 @@ EVENT_START   ev_pos_d01r0101_rati2_02
   //ラティオス（ラティアス）非表示
   _FLAG_SET( FV_D01R0101_RATI2_01 )
   //イベント進行
-  $LOCALWORK0 = 2
+  $WK_SCENE_D01R0101_RATI2 = 2
   //========================================//
 
 INIT_EVENT_END
@@ -298,7 +303,7 @@ EVENT_START   ev_pos_d01r0101_rati2_03
   //ラティオス（ラティアス）非表示
   _FLAG_SET( FV_D01R0101_RATI2_01 )
   //イベント進行
-  $LOCALWORK0 = 3
+  $WK_SCENE_D01R0101_RATI2 = 3
   //========================================//
 
 INIT_EVENT_END
@@ -366,7 +371,7 @@ EVENT_START   ev_pos_d01r0101_rati2_04
   //ラティオス（ラティアス）非表示
   _FLAG_SET( FV_D01R0101_RATI2_01 )
   //イベント進行
-  $LOCALWORK0 = 4
+  $WK_SCENE_D01R0101_RATI2 = 4
   //========================================//
 
 INIT_EVENT_END
@@ -485,7 +490,7 @@ EVENT_START   ev_pos_d01r0101_rati2_05
   //ラティオス（ラティアス）非表示
   _FLAG_SET( FV_D01R0101_RATI2_01 )
   //イベント進行
-  $LOCALWORK0 = 5
+  $WK_SCENE_D01R0101_RATI2 = 5
   //========================================//
 
 INIT_EVENT_END
@@ -573,7 +578,7 @@ EVENT_START   ev_pos_d01r0101_rati2_06
     //ラティオス（ラティアス）非表示
     _FLAG_SET( FV_D01R0101_RATI2_01 )
     //イベント進行
-    $LOCALWORK0 = 6
+    $WK_SCENE_D01R0101_RATI2 = 6
     //========================================//
 
     //ラティオス（ラティアス）退場
@@ -590,7 +595,7 @@ EVENT_START   ev_pos_d01r0101_rati2_06
   CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
     //==================================//
     //ラティアス（ラティオス）を捕獲した
-    //_FLAG_SET( FE_R22_POKE5_GET_01 )
+    _FLAG_SET( FE_D01R0101_RATI2_GET_01 )
     //==================================//
 
   CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合

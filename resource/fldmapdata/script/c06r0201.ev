@@ -248,11 +248,11 @@ EVENT_START   ev_c06r0201_pilot_01
   //『エースパイロット』のメダルを持っているか
   _CHECK_MEDAL_GET( MEDAL_CHC, MDLID_SORAWOTOBU )
 
-  //『エースパイロット』のメダルを持っていない＋初回会話【仮】フラグ仮で
+  //『エースパイロット』のメダルを持っていない＋初回会話
   IF $MEDAL_CHC == FALSE THEN
 
     //初回会話か
-    IF $LOCALWORK0 == 0 THEN
+    IF FLAG_OFF( FE_C06R0201_PILOT_TALK ) THEN
 
       //パイロット：メダルを　もっていないのかい！？▼
       _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_01 )
@@ -261,7 +261,7 @@ EVENT_START   ev_c06r0201_pilot_01
 
       //========================================//
       //フラグON
-      $LOCALWORK0 = 1
+      _FLAG_SET( FE_C06R0201_PILOT_TALK )
       //========================================//
 
     ELSE
@@ -276,7 +276,7 @@ EVENT_START   ev_c06r0201_pilot_01
   ELSIF $MEDAL_CHC == TRUE THEN
 
     //『エースパイロット』のメダルを持っている＋ほめられていない
-    IF $LOCALWORK1 == 0 THEN
+    IF FLAG_OFF( FE_C06R0201_PILOT_CLEAR ) THEN
 
       //パイロット：メダルを　もっているんだね！？▼
       _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_03 )
@@ -285,7 +285,7 @@ EVENT_START   ev_c06r0201_pilot_01
 
       //========================================//
       //フラグON
-      $LOCALWORK1 = 1
+      _FLAG_SET( FE_C06R0201_PILOT_CLEAR )
       //========================================//
 
     ELSE
@@ -298,52 +298,6 @@ EVENT_START   ev_c06r0201_pilot_01
     ENDIF
 
   ENDIF
-
-/*
-  //『エースパイロット』のメダルを持っていない＋初回会話【仮】フラグ仮で
-  IF $MEDAL_CHC == FALSE && $LOCALWORK0 == 0 THEN
-
-    //パイロット：メダルを　もっていないのかい！？▼
-    _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_01 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-    //========================================//
-    //フラグON
-    $LOCALWORK0 = 1
-    //========================================//
-
-  //『エースパイロット』のメダルを持っていない＋初回会話ではない
-  ELSIF $MEDAL_CHC == FALSE && $LOCALWORK0 == 1 THEN
-
-    //パイロット：ぜひ　ぼくに　みせに　きてね
-    _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_02 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-  //『エースパイロット』のメダルを持っている＋ほめられていない
-  ELSIF $MEDAL_CHC == TRUE && $LOCALWORK1 == 0 THEN
-
-    //パイロット：メダルを　もっているんだね！？▼
-    _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_03 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-    //========================================//
-    //フラグON
-    $LOCALWORK1 = 1
-    //========================================//
-
-  //『エースパイロット』のメダルを持っている＋ほめられた
-  ELSIF $MEDAL_CHC == TRUE && $LOCALWORK1 == 1 THEN
-
-    //パイロット：キミの　ポケモンに　カンパイ！▼
-    _BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_pilot_04 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-  ENDIF
-*/
 
 EVENT_END
 

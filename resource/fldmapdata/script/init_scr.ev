@@ -344,6 +344,12 @@ INIT_EVENT_START  ev_init_gameclear_script
     _FLAG_RESET( FV_R22_POKE5_01 )
   ENDIF
 
+  //ラティオス（ラティアス）未捕獲時の復活処理
+  IF FLAG_OFF( FE_D01R0101_RATI2_GET_01 ) THEN
+    //POSイベントリセット
+    $WK_SCENE_D01R0101_RATI2 = 0
+  ENDIF
+
 
 }
 INIT_EVENT_END

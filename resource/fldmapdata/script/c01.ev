@@ -71,6 +71,16 @@ INIT_EVENT_START  ev_zone_c01
 
   ENDIF
 
+  //ラティオス（ラティアス）と戦闘していない？　→「夢の跡地」のイベント準備
+  IF FLAG_OFF( FE_D01R0101_RATI2_GET_01 ) && $WK_SCENE_D01R0101_RATI2 != 6 THEN
+
+    //========================================//
+    //イベント進行
+    $WK_SCENE_D01R0101_RATI2 = 0
+    //========================================//
+
+  ENDIF
+
 INIT_EVENT_END
 
 
