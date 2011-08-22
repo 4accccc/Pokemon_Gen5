@@ -110,6 +110,7 @@
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
 #include "system/net_err.h"
+#include "field/resort_work.h"
 
 #include "field_task.h"  
 #include "field_task_manager.h"
@@ -584,6 +585,12 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
     // エリア情報を取得
     fieldWork->areadata = AREADATA_Create( heapID,
         area_id, area_ofs_id );
+  }
+
+  //フィールド作成時、リゾートデータを更新する
+  {
+    RESORT_WORK *p_resort_wk  = GAMEDATA_GetReosrtWork( fieldWork->gamedata );
+    RESORT_WORK_ReLoadData( p_resort_wk, GAMEDATA_GetSaveControlWork(fieldWork->gamedata) );
   }
 	
 	//マップコントロール

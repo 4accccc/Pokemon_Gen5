@@ -2079,7 +2079,7 @@ RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_S
   MMDL *p_mmdl = SCRIPT_GetTargetObj( p_sc );
   RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_mmdl );
 
-  GF_ASSERT( p_people != NULL );
+  //GF_ASSERT( p_people != NULL );  TaklEndÇ≈êlÇ™è¡Ç¶ÇÈÇ±Ç∆Ç™Ç†ÇÈÇΩÇﬂ
   return p_people;
 }
 

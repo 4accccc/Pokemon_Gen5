@@ -155,6 +155,7 @@ struct _GAMEDATA{
   u8    area_ofs; ///<エリアオフセット(今はリゾートでしか使っていない)
   u8    dummy;
   void *p_resort_buff;  ///<レゾナンスリゾート用バッファ
+  RESORT_WORK *p_resort_wk; //レゾナンスリゾート用常駐ワーク
 };
 
 //==============================================================================
@@ -305,6 +306,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //スクリプトオーバーレイ初期化
   gd->scriptCommandOverlayID  = 0;
 
+  //レゾナンスリゾート用常駐ワーク作成
+  gd->p_resort_wk = RESORT_WORK_Init( heapID, gd->sv_control_ptr );
+
   // 最初に表示されるメダルをなしに設定
   gd->top_medal_id = MDLID_MAX;
   return gd;
@@ -314,6 +318,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+  RESORT_WORK_Exit( gamedata->p_resort_wk );
   PAIRSYS_FreeWork( gamedata->pairSystem );
   GFL_HEAP_FreeMemory( gamedata->playtime );
   CALENDER_Delete( gamedata->calender );
@@ -2320,4 +2325,17 @@ u8 GAMEDATA_GetAreaOfs( const GAMEDATA *gamedata )
 void ** GAMEDATA_GetResortBuffer( GAMEDATA *gamedata )
 {
   return &gamedata->p_resort_buff;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾート常駐ワーク取得
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return リゾート常駐ワーク
+ */
+//-----------------------------------------------------------------------------
+RESORT_WORK* GAMEDATA_GetReosrtWork( GAMEDATA *gamedata )
+{
+  return gamedata->p_resort_wk;
 }

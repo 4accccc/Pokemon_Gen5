@@ -182,7 +182,6 @@ void GAMEBEACON_Update(void)
   if(bsys->gamedata != NULL){
     GAMEBEACON_Set_ResortData( bsys );
   }
-
   SendBeacon_Update(&bsys->send);
   
   for(i = 0; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
@@ -333,10 +332,6 @@ static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
       send->life = 0;
       send->info.action.action_no = GAMEBEACON_ACTION_SEARCH;
       send->info.version_bit = GAMEBEACON_RECV_VERSION_FULL; //全バージョン指定に戻す
-
-      if(GameBeaconSys->gamedata != NULL){
-        GAMEBEACON_Set_ResortData( GameBeaconSys );
-      }
     }
   }
 }
@@ -1011,6 +1006,7 @@ static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_
     //マージチェック
     if( !RESORT_PEOPLE_ALL_DATA_MergeBeacon( p_all_people, p_beacon ) )
     {
+      NAGI_Printf( "マージされなかったので受信バッファへ！\n" );
       //ビーコン追加
       if( RESORT_RECV_BUFF_AddBeacon( p_buff, p_beacon ) == FALSE )
       {
@@ -1025,7 +1021,6 @@ static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_
 
     RESORT_BEACON_DATA_Exit( p_beacon );
 
-    NAGI_Printf( "リゾート受け取り！\n" );
   }
 }
 

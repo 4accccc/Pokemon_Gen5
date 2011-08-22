@@ -17,6 +17,7 @@
 #include "print/str_tool.h"
 #include "savedata/misc.h"
 #include "system/main.h"
+#include "field/resort_work.h"
 
 //arc
 #include "arc/arc_def.h"
@@ -36,6 +37,8 @@
 
 //外部公開
 #include "field/resonance_resort_data.h"
+
+#include "debug/debug_nagihashi.h"
 
 #ifdef PM_DEBUG
 #define DEBUG_RESORT_PRINT_ON
@@ -636,16 +639,14 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND2_DATA) == RESORT_EXTEND2_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND2_DATA_SetMyData( RESORT_EXTEND2_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
-  RECORD *p_record = SaveData_GetRecord(p_sv);
+  RESORT_WORK *p_resort_wk  = GAMEDATA_GetReosrtWork( (GAMEDATA *)cp_gamedata );
+
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND2_DATA) );
-
-  p_wk->rank_data[0]  = RECORD_Get(p_record, RECID_CAPTURE_POKE );
-  p_wk->rank_data[1]  = RECORD_Get(p_record, RECID_FISHING_SUCCESS );
-  p_wk->rank_data[2]  = RECORD_Get(p_record, RECID_TAMAGO_HATCHING );
-  p_wk->rank_data[3]  = RECORD_Get(p_record, RECID_BATTLE_COUNT );
+  p_wk->rank_data[0]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_CAPTURE_POKE );
+  p_wk->rank_data[1]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_FINISHING_SUCCESS );
+  p_wk->rank_data[2]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_TAMAGO_HATCHING );
+  p_wk->rank_data[3]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_BATTLE_COUNT );
 }
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張データ2の正当性チェック
@@ -673,17 +674,13 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND3_DATA) == RESORT_EXTEND3_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND3_DATA_SetMyData( RESORT_EXTEND3_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
-  RECORD *p_record = SaveData_GetRecord(p_sv);
+  RESORT_WORK *p_resort_wk  = GAMEDATA_GetReosrtWork( (GAMEDATA *)cp_gamedata );
 
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND3_DATA) );
-
-  p_wk->rank_data[0]  = RECORD_Get(p_record, REC_FIRST );
-  p_wk->rank_data[1]  = RECORD_Get(p_record, RECID_WIFI_TRADE )
-                      + RECORD_Get(p_record, RECID_COMM_TRADE )
-                      + RECORD_Get(p_record, RECID_IRC_TRADE );
-  p_wk->rank_data[2]  = RECORD_Get(p_record, RECID_SHOPPING_CNT );
-  p_wk->rank_data[3]  = RECORD_Get(p_record, RECID_DENDOU_CNT );
+  p_wk->rank_data[0]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_WALK_COUNT );
+  p_wk->rank_data[1]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_TRADE_COUNT );
+  p_wk->rank_data[2]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_SHOPPING_CNT );
+  p_wk->rank_data[3]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_DENDOU_CNT );
 }
 //----------------------------------------------------------------------------
 /**

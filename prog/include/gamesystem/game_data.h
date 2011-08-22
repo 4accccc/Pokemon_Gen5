@@ -55,6 +55,7 @@
 #include "field/wbt.h"      //WBTSYS
 #include "field/pokewood.h" //PKWDSYS
 #include "savedata/wbt_save.h"  //WBTSAVE
+#include "field/resort_work.h"
 
 //============================================================================================
 //============================================================================================
@@ -1029,3 +1030,14 @@ extern u8 GAMEDATA_GetAreaOfs( const GAMEDATA *gamedata );
  */
 //-----------------------------------------------------------------------------
 extern void ** GAMEDATA_GetResortBuffer( GAMEDATA *gamedata );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾート常駐ワーク取得
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return リゾート常駐ワーク
+ */
+//-----------------------------------------------------------------------------
+extern RESORT_WORK* GAMEDATA_GetReosrtWork( GAMEDATA *gamedata );
