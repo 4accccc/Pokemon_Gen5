@@ -182,12 +182,10 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 		wk->mainSeq = SEQ_SEARCH_CALL;
 	}
 	
-#ifdef DEBUG_ONLY_FOR_onoue_masayuki
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
   {
     wk->mainSeq = SEQ_HABITAT_ZONE_CALL;
   }
-#endif
 
 	return GFL_PROC_RES_FINISH;
 }
