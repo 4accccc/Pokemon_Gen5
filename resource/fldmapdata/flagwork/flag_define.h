@@ -387,9 +387,9 @@
 #define FE_AMUSEMENT_NPC03_TALK            371 /* 0x0173 ライモン遊園地：観覧車NPC3と会話したフラグ */
 #define FE_AMUSEMENT_NPC04_TALK            372 /* 0x0174 ライモン遊園地：観覧車NPC4と会話したフラグ */
 #define FE_AMUSEMENT_LCC_TALK              373 /* 0x0175 ライモン遊園地：観覧車LCC隠しキャラと会話したフラグ */
-		/* not used   374(0x0176) */
-		/* not used   375(0x0177) */
-		/* not used   376(0x0178) */
+#define FE_D01R0101_RATI2_GET_01           374 /* 0x0176 夢の跡地：ラティオス（ラティアス）捕獲フラグ */
+#define FE_C06R0201_PILOT_TALK             375 /* 0x0177 フキヨセシティ：パイロット初回会話フラグ */
+#define FE_C06R0201_PILOT_CLEAR            376 /* 0x0178 フキヨセシティ：パイロットイベント終了（メダル見せ）フラグ */
 		/* not used   377(0x0179) */
 		/* not used   378(0x017a) */
 		/* not used   379(0x017b) */
