@@ -222,9 +222,26 @@ static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID,
 	STRBUF* strbuf;
 	u32 placeid; 
   u32 personal_rnd;
+  PtlSexSpec sex_spec;
 
-  // 指定の性別になるような個性乱数を生成
-  personal_rnd = POKETOOL_CalcPersonalRandEx( data->mons_id, data->monsno, data->formno, data->sex, 0, FALSE );
+  // 性別指定かチェック
+  if( data->sex != PARA_SET_RND )
+  {
+    sex_spec = data->sex; //性別指定
+  }
+  else
+  {
+    sex_spec = PTL_SEX_SPEC_UNKNOWN;  // 性別どちらでも可
+  }
+
+  // 個性乱数を生成
+  personal_rnd = POKETOOL_CalcPersonalRandSpec( 
+                    data->mons_id,
+                    data->monsno,
+                    data->formno,
+                    sex_spec,
+                    data->tokusei_idx,    // 仮に第3特性ならPTL_TOKUSEI_SPEC_BOTHになるので問題ない
+                    PTL_RARE_SPEC_FALSE );
 	
 	// モンスターナンバー　レベル　固体乱数　ID設定
 	PP_SetupEx( pp, 
@@ -246,51 +263,31 @@ static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID,
 	GFL_STR_DeleteBuffer( strbuf );
 
 	// 各種乱数設定
+  // 数値が指定されているときのみ
   // HP
-  if( data->hp_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_hp_rnd, GFL_STD_MtRand(32) ); }
-  else                              { PP_Put( pp, ID_PARA_hp_rnd, data->hp_rnd );       }
+  if( data->hp_rnd != PARA_SET_RND ){ PP_Put( pp, ID_PARA_hp_rnd, data->hp_rnd ); }
   // POW
-  if( data->at_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_pow_rnd, GFL_STD_MtRand(32) ); }
-  else                              { PP_Put( pp, ID_PARA_pow_rnd, data->at_rnd );       }
+  if( data->at_rnd != PARA_SET_RND ){ PP_Put( pp, ID_PARA_pow_rnd, data->at_rnd ); }
   // DEF
-  if( data->df_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_def_rnd, GFL_STD_MtRand(32) ); }
-  else                              { PP_Put( pp, ID_PARA_def_rnd, data->df_rnd );       }
+  if( data->df_rnd != PARA_SET_RND ){ PP_Put( pp, ID_PARA_def_rnd, data->df_rnd ); }
   // AGI
-  if( data->sp_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_agi_rnd, GFL_STD_MtRand(32) ); }
-  else                              { PP_Put( pp, ID_PARA_agi_rnd, data->sp_rnd );       }
+  if( data->sp_rnd != PARA_SET_RND ){ PP_Put( pp, ID_PARA_agi_rnd, data->sp_rnd ); }
   // SPEPOW
-  if( data->sa_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_spepow_rnd, GFL_STD_MtRand(32) ); }
-  else                              { PP_Put( pp, ID_PARA_spepow_rnd, data->sa_rnd );       }
+  if( data->sa_rnd != PARA_SET_RND ){ PP_Put( pp, ID_PARA_spepow_rnd, data->sa_rnd ); }
   // SPEDEF
-  if( data->sd_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_spedef_rnd, GFL_STD_MtRand(32) ); }
-  else                              { PP_Put( pp, ID_PARA_spedef_rnd, data->sd_rnd );       }
+  if( data->sd_rnd != PARA_SET_RND ){ PP_Put( pp, ID_PARA_spedef_rnd, data->sd_rnd ); }
 
-	// 特性
+	// 第3特性チェック
+  if( data->tokusei_idx == 2 )
   {
-    POKEMON_PERSONAL_DATA* ppd;
-    u32 sp1, sp2, sp3;
-    u32 tokusei;
-
-    ppd = POKE_PERSONAL_OpenHandle( data->monsno, data->formno, heapID );
-    sp1 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi1 );
-    sp2 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi2 );
-    sp3 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi3 );
-    POKE_PERSONAL_CloseHandle( ppd );
-
-    switch( data->tokusei_idx ) {
-    case 0: tokusei = sp1; break;
-    case 1: tokusei = sp2; break;
-    case 2: tokusei = sp3; break;
-    default: 
-      GF_ASSERT(0);
-      tokusei = sp1;
-      break;
-    } 
-    PP_Put( pp, ID_PARA_speabino, tokusei );
+    PP_SetTokusei3( pp, data->monsno, data->formno );
   }
 
-  // 性格
-  PP_Put( pp, ID_PARA_seikaku, data->seikaku );
+  // 性格が指定されているかチェック
+  if( data->seikaku != PARA_SET_RND )
+  {
+    PP_Put( pp, ID_PARA_seikaku, data->seikaku );
+  }
 
 	// かっこよさなど
 	PP_Put( pp, ID_PARA_style,     data->style );

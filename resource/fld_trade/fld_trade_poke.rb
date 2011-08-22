@@ -472,8 +472,19 @@ column_idx.each do |idx|
   end
 
   data.tokusei_idx   = GetTokuseiIndex(data.label_tokusei)
-  data.seikaku       = GetSeikakuVal(data.label_seikaku)
-  data.sex           = GetSexVal(data.label_sex)
+
+  if /RND/ =~ data.label_seikaku
+    data.seikaku       = 0xFF
+  else
+    data.seikaku       = GetSeikakuVal(data.label_seikaku)
+  end
+
+  if /RND/ =~ data.label_sex
+    data.sex           = 0xFF
+  else
+    data.sex           = GetSexVal(data.label_sex)
+  end
+
   data.id            = data.id.to_i
   data.style         = data.style.to_i
   data.beautiful     = data.beautiful.to_i
