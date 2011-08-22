@@ -532,12 +532,12 @@ class CDemo3DRes
       cp.main_name = work[1]
       print(" Get scene unit -> #{work[1]}\n")
       cp.chg_tbl = Array.new
-      for i in 0..14 do
+      for i in 0..16 do
         if work[1+i] == nil || work[1+i] == "" then break end
         cp.chg_tbl << work[1+i]
       end
-      if work[1+15] != nil && work[1+15] != "" then
-        print("Error! 指定できるパターンは15以下です\n15以上のパターンを指定した場合、プログラマにご相談ください\n")
+      if work[1+17] != nil && work[1+17] != "" then
+        print("Error! 指定できるパターンは17以下です\n17以上のパターンを指定した場合、プログラマにご相談ください\n")
         exit 1
       end
 

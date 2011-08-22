@@ -132,6 +132,14 @@ sub_wheel_talk_swan:
   $i_scene_id = 9
   $i_scene_id += $lwk_npc_id    // 0～5が入っている
 
+  // ※LCC隠しキャラのみ初回と2回目以降のデモがある
+  IF $WK_OTHER_AMUSEMENT_PARTNER == SCR_AMUSEMENT_PARTNER_LCC THEN
+    IF $lwk_2nd_f == TRUE THEN
+      // 2回目以降ならデモを2回目以降にする
+      $i_scene_id += 2
+    ENDIF
+  ENDIF
+
   _DEMO_FADEOUT_BLACK_CALL()
   _CALL_3D_DEMO_EX( DEMO3D_ID_F_WHEEL, i_scene_id )
 
@@ -188,8 +196,9 @@ sub_wheel_trade:
 
   // 交換ポケモンNO
   // TODO
+  // 交換ポケモンの先頭IDをロトムから変更する
   $fld_trade_poke_no = FLD_TRADE_POKE_7_ROTOMU
-  //$fld_trade_poke_no += $WK_OTHER_LCC_TRADE_CNT
+  $fld_trade_poke_no += $WK_OTHER_LCC_TRADE_CNT
 
   // 交換でもらうポケモン名をタグにセット
   // TODO
@@ -235,12 +244,11 @@ sub_wheel_trade:
 
 			  //==================================//
         // TODO
-        // この数字を交換するポケモンに足せばいいんじゃないかな
         // 交換完了 カウントアップ
-        // $WK_OTHER_LCC_TRADE_CNT += 1
-        // IF $WK_OTHER_LCC_TRADE_CNT >= 12 THEN
-        //   $WK_OTHER_LCC_TRADE_CNT = 0
-        // ENDIF
+        $WK_OTHER_LCC_TRADE_CNT += 1
+        IF $WK_OTHER_LCC_TRADE_CNT >= 12 THEN
+           $WK_OTHER_LCC_TRADE_CNT = 0
+        ENDIF
 			  //==================================//
 
         // ここで終了
