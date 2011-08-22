@@ -2729,27 +2729,56 @@ static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk, int idx, int height_idx )
   FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( p_wk->p_fieldmap );
   EHL_PTR	ex_height_list = FLDMAPPER_GetExHegihtPtr( mapper );
   const EX_HEIGHT_DATA *ex_height_data;
-  int   ofs_z = 0;  // 接続パイプ用
 
   if( height_idx == 0 )
   {
     OS_Printf("拡張高さ %d　下\n", idx);
     ex_height_data = &ex_height_tbl_down[idx];
 
-
     // 追加仕様
     // 接続パイプで、両方引っ込んでいるなら、真ん中も通れるようにする
     {
-      // 接続パイプの上のパイプだけ判定
-      if( idx == 3 || idx == 11 )
+      u16 obj_idx = OBJ_PIPE_1 + idx;
+      u16 connect_idx = 0;
+      int size_ofs_z = 0;  // 接続パイプ用
+      int tmp_idx;
+      if( idx == 3 || idx == 11 || idx == 4 || idx == 12 )
       {
-        u16 obj_idx = OBJ_PIPE_1 + idx;
-        u16 connect_idx = 0;
         if( PIPE_CONNECT_GetFlag( p_wk, obj_idx, &connect_idx ) == FALSE )
         {
-          // 反対側もひっこんでいた
-          ofs_z = 1;
-          ICHI_Printf("真ん中通れる!\n");
+          // 反対側もひっこんでいる
+          size_ofs_z = 1;
+          OS_Printf("真ん中通れる!\n");
+        }
+        else if( idx == 4 || idx == 12 )
+        {
+          // 設定したいパイプが突き出ているので戻す
+          return;
+        }
+
+        tmp_idx = idx;
+        if( idx == 4 || idx == 12 )
+        {
+          tmp_idx--;
+        }
+
+        // 一旦データ無効
+        EXH_SetHeightValid( tmp_idx, FALSE, ex_height_list );
+
+        EXH_SetUpHeightData( tmp_idx,
+            ex_height_tbl_down[ tmp_idx ].start_x,
+            ex_height_tbl_down[ tmp_idx ].start_z,
+            ex_height_tbl_down[ tmp_idx ].size_x,
+            ex_height_tbl_down[ tmp_idx ].size_z + size_ofs_z,
+            ex_height_y[ 0 ],
+            (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
+            ex_height_list);
+        OS_Printf("接続パイプ拡張高さ設定 %d\n", tmp_idx);
+
+        if( tmp_idx == idx )
+        {
+          OS_Printf("通常設定はSKIP\n");
+          return;
         }
       }
     }
@@ -2758,6 +2787,37 @@ static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk, int idx, int height_idx )
   {
     OS_Printf("拡張高さ %d　上\n", idx);
     ex_height_data = &ex_height_tbl_up[idx];
+
+    // 追加仕様
+    // 接続パイプで、片方が突き出ていたら、真ん中を通れなくする
+    {
+      u16 obj_idx = OBJ_PIPE_1 + idx;
+      u16 connect_idx = 0;
+      int tmp_idx;
+      if( idx == 4 || idx == 12 )
+      {
+        if( PIPE_CONNECT_GetFlag( p_wk, obj_idx, &connect_idx ) == FALSE )
+        {
+          tmp_idx = idx -1;
+          // 反対側もひっこんでいる
+          OS_Printf("真ん中通れる!\n");
+
+          // 一旦データ無効
+          EXH_SetHeightValid( tmp_idx, FALSE, ex_height_list );
+
+          EXH_SetUpHeightData( tmp_idx,
+              ex_height_tbl_down[ tmp_idx ].start_x,
+              ex_height_tbl_down[ tmp_idx ].start_z,
+              ex_height_tbl_down[ tmp_idx ].size_x,
+              ex_height_tbl_down[ tmp_idx ].size_z,
+              ex_height_y[ 0 ],
+              (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
+              ex_height_list);
+          OS_Printf("接続パイプ拡張高さ設定 %d\n", tmp_idx);
+
+        }
+      }
+    }
   }
 
   // 一旦データ無効
@@ -2767,7 +2827,7 @@ static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk, int idx, int height_idx )
       ex_height_data->start_x,
       ex_height_data->start_z,
       ex_height_data->size_x,
-      ex_height_data->size_z + ofs_z,
+      ex_height_data->size_z,
       ex_height_y[ height_idx ],
       (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
       ex_height_list);
