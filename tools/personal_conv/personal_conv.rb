@@ -724,6 +724,7 @@ end
           exit
         end
         if form[ monsno[ split_data[ PARA::POKENAME ] ] ].get_form_index == 0 && split_data[ PARA::OTHERFORM ] == "Åú"
+          printf("%sÇÃï ÉtÉHÉãÉÄÇÕ%dÇ©ÇÁ\n", split_data[ PARA::POKENAME ], cnt)
           form[ monsno[ split_data[ PARA::POKENAME ] ] ].set_form_index( cnt )
         end
       end
@@ -981,8 +982,8 @@ end
 #  fp_monsno.printf( "#define\t\tMONSNO_TAMAGO\t\t\t\t( %d )\n", monsno_max )
 #  fp_monsno.printf( "#define\t\tMONSNO_DAMETAMAGO\t\t( %d )\n", monsno_max + 1 )
 #  fp_monsno.printf( "#define\t\tMONSNO_END\t\t\t\t\t( %d )\n",  monsno_max - 1 )
-  fp_monsno.printf( "#define\t\tMONSNO_TAMAGO\t\t\t\t( %d )\n", 650 )
-  fp_monsno.printf( "#define\t\tMONSNO_DAMETAMAGO\t\t( %d )\n", 651 )
+#  fp_monsno.printf( "#define\t\tMONSNO_TAMAGO\t\t\t\t( %d )\n", 650 )
+#  fp_monsno.printf( "#define\t\tMONSNO_DAMETAMAGO\t\t( %d )\n", 651 )
   fp_monsno.printf( "#define\t\tMONSNO_END\t\t\t\t\t( %d )\n",  649 )
   fp_monsno.printf( "#define\t\tMONSNO_MAX\t\t\t\t\t( %d )\n",   monsno_max + 1 )
   fp_monsno.print( "\n" )

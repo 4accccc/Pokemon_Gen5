@@ -67,9 +67,9 @@ u32 POKEICON_GetCgxArcIndex( const POKEMON_PASO_PARAM* ppp )
 
 
 //#define MONSNO_WB_MAX ( 651 )
-#define MONSNO_SWANICON_MAX ( 661 )
-#define MONS_GRANO_TAMAGO ( 660 )
-#define MONS_PALNO_TAMAGO ( 662 )
+#define MONSNO_SWANICON_MAX ( 675 )   // 
+#define MONS_GRANO_TAMAGO ( 674 )     // poke_icon.naixÇ©ÇÁéZèo
+#define MONS_PALNO_TAMAGO ( 676 )     // pokeicon.datÇ©ÇÁéZèo
 
 //--------------------------------------------------------------------------------------------
 /**

@@ -668,6 +668,20 @@
 #define		MONSNO_667		( 659 )		//せいぶつＸ
 #define		MONSNO_668		( 660 )		//ははおや
 #define		MONSNO_669		( 661 )		//あくりょう
+#define		MONSNO_670		( 662 )		//しろいかべ
+#define		MONSNO_671		( 663 )		//くろいかべ
+#define		MONSNO_672		( 664 )		//セットＡ
+#define		MONSNO_673		( 665 )		//セットＢ
+#define		MONSNO_674		( 666 )		//セットＣ
+#define		MONSNO_675		( 667 )		//セットＤ
+#define		MONSNO_676		( 668 )		//セットＥ
+#define		MONSNO_677		( 669 )		//セットＦ
+#define		MONSNO_678		( 670 )		//セットＧ
+#define		MONSNO_679		( 671 )		//セットＨ
+#define		MONSNO_680		( 672 )		//セットＩ
+#define		MONSNO_681		( 673 )		//セットＪ
+#define		MONSNO_682		( 674 )		//セットＫ
+#define		MONSNO_683		( 675 )		//セットＬ
 //別フォルム定義
 //アンノーン
 #define		FORMNO_201_UNA				( 0 )

@@ -412,7 +412,8 @@ void POKEGRA_MakePattiiruBuchi( NNSG2dCharacterData *p_chara, u32 personal_rnd )
  */
 //=============================================================================
 
-#define MONS_GRANO_TAMAGO ( 660 )
+#define MONS_GRANO_TAMAGO ( 674 )   // pokegra_wb.naixから算出(NARC_pokegra_wb_pfwb_egg_normal_m_NCGR/20)
+                                    // 20は１匹分のpokegraリソース数
 //----------------------------------------------------------------------------
 /**
  *	@brief
@@ -485,6 +486,10 @@ static void PokeGra_GetFileOffset( ARCID arc_id , int mons_no, int form_no, int 
         file_start = POKEGRA_FILE_MAX * ( MONSNO_MAX -2 + 1 ) + POKEGRA_FILE_MAX * ( gra_index + form_no - 1 );
       }
     }
+
+  // ボスポケモン用
+  }else if( mons_no > MONSNO_DAMETAMAGO){
+    file_start	= POKEGRA_FILE_MAX * (mons_no-2);   // タマゴ・ダメタマゴ分を引く
   }
 
   //性別のチェック
