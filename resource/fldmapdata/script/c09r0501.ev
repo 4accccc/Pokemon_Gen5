@@ -119,7 +119,7 @@ EVENT_START ev_pos_c09r0501_lighting_01
   //殿堂入り部屋出現
   _CHAMPION_HALL_ROOM()
 
-  _TIME_WAIT( 160 )  //殿堂入り部屋出現演出待ち
+  _TIME_WAIT( 60*10 )  //殿堂入り部屋出現演出待ち
 
   //【仮】チャンピオン、主人公の移動などカット
 
