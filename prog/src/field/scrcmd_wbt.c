@@ -144,7 +144,7 @@ static void incVictoryCount( WBTSYS * wbtsys, SCRCMD_WORK * work )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static u16 calcTotalVictory( SCRCMD_WORK * work, WBTCUP wbtcup )
+static u16 calcTotalVictory( SCRCMD_WORK * work, WBTCUP wbtcup, PokeType poketype )
 {
   u32 count = 0;
 
@@ -160,8 +160,16 @@ static u16 calcTotalVictory( SCRCMD_WORK * work, WBTCUP wbtcup )
   }
   else if ( wbtcup == WBTCUP_POKETYPE )
   {
-    id_start = 0;
-    id_end = WBTWIN_COUNT_POKETYPE_AKU + 1;
+    if ( poketype == POKETYPE_NULL )
+    {
+      id_start = 0;
+      id_end = WBTWIN_COUNT_POKETYPE_AKU + 1;
+    }
+    else
+    {
+      id_start = poketype;
+      id_end = id_start;
+    }
   }
   else
   {
@@ -603,10 +611,11 @@ VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK * work = wk;
   u16   wbtcup = SCRCMD_GetVMWorkValue( core, wk );
+  u16 poketype = SCRCMD_GetVMWorkValue( core, wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   u32 count = 0;
 
-  count = calcTotalVictory( work, wbtcup );
+  count = calcTotalVictory( work, wbtcup, poketype );
   *ret_wk = count;
 
   TAMADA_Printf("EvCmdWBTGetVictoryCount(%d) == %d\n", wbtcup, *ret_wk );

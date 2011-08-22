@@ -12841,15 +12841,17 @@
 /**
  * @brief WBT:優勝回数の取得
  * @param[in]   wbtcup  トーナメントの指定
+ * @param[in]   poketype  タイプトーナメントのタイプ指定
  * @param[out]  ret_wk
  */
 //--------------------------------------------------------------
-#define _WBT_GET_VICTORY_COUNT( wbtcup, ret_wk ) \
-    _ASM_WBT_GET_VICTORY_COUNT wbtcup, ret_wk
+#define _WBT_GET_VICTORY_COUNT( wbtcup, poketype, ret_wk ) \
+    _ASM_WBT_GET_VICTORY_COUNT wbtcup, poketype, ret_wk
 
-    .macro  _ASM_WBT_GET_VICTORY_COUNT wbtcup, ret_wk
+    .macro  _ASM_WBT_GET_VICTORY_COUNT wbtcup, poketype, ret_wk
     .short  EV_SEQ_WBT_GET_VICTORY_COUNT
     .short  \wbtcup
+    .short  \poketype
     .short  \ret_wk
     .endm
 
