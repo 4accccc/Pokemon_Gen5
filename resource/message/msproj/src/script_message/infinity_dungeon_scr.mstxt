@@ -5626,6 +5626,38 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_elevator_05_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うけつけに　もどると
+このエリアの　ちょうせんを▽
+リタイアすることに　なります▼
+うけつけに　もどりますか？▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-22T03:08:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-22T03:08:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>受付に　戻ると
+このエリアの　挑戦を▽
+リタイアすることに　なります▼
+受付に　戻りますか？▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-22T03:09:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-22T03:08:06" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="msg_info_area_00"
 		Style="Large">
 		<LanguageCell
