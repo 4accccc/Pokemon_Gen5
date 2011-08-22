@@ -2,6 +2,7 @@ DATA_LIST = \
     m_champ00.nsbmd \
     m_champ01.nsbmd \
     m_champ01.nsbca \
+    m_champ01.nsbma \
     c_relief00.nsbmd \
     c_relief01.nsbmd \
     c_relief_01.nsbca \

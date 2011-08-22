@@ -14,14 +14,15 @@ enum {
 	NARC_champion_m_champ00_nsbmd = 0,
 	NARC_champion_m_champ01_nsbmd = 1,
 	NARC_champion_m_champ01_nsbca = 2,
-	NARC_champion_c_relief00_nsbmd = 3,
-	NARC_champion_c_relief01_nsbmd = 4,
-	NARC_champion_c_relief_01_nsbca = 5,
-	NARC_champion_c_relief_02_nsbca = 6,
-	NARC_champion_c_relief_02_nsbma = 7,
-	NARC_champion_c_light_nsbmd = 8,
-	NARC_champion_c_light_nsbca = 9,
-	NARC_champion_c_light_nsbma = 10
+	NARC_champion_m_champ01_nsbma = 3,
+	NARC_champion_c_relief00_nsbmd = 4,
+	NARC_champion_c_relief01_nsbmd = 5,
+	NARC_champion_c_relief_01_nsbca = 6,
+	NARC_champion_c_relief_02_nsbca = 7,
+	NARC_champion_c_relief_02_nsbma = 8,
+	NARC_champion_c_light_nsbmd = 9,
+	NARC_champion_c_light_nsbca = 10,
+	NARC_champion_c_light_nsbma = 11
 };
 
 /* NARC_CHAMPION_NAIX_ */
