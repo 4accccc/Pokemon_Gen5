@@ -432,12 +432,45 @@ column_idx.each do |idx|
   data.monsno        = GetMonsnoVal(data.label_monsno)
   data.formno        = GetFormnoVal(data.label_formno)
   data.level         = data.level.to_i
-  data.hp_rnd        = data.hp_rnd.to_i
-  data.at_rnd        = data.at_rnd.to_i
-  data.df_rnd        = data.df_rnd.to_i
-  data.ag_rnd        = data.ag_rnd.to_i
-  data.sa_rnd        = data.sa_rnd.to_i
-  data.sd_rnd        = data.sd_rnd.to_i
+
+  # ステータスは乱数かチェック
+  #
+  if /RND/ =~ data.hp_rnd
+    data.hp_rnd        = 0xFF
+  else
+    data.hp_rnd        = data.hp_rnd.to_i
+  end
+
+  if /RND/ =~ data.at_rnd
+    data.at_rnd        = 0xFF
+  else
+    data.at_rnd        = data.at_rnd.to_i
+  end
+
+  if /RND/ =~ data.df_rnd
+    data.df_rnd        = 0xFF
+  else
+    data.df_rnd        = data.df_rnd.to_i
+  end
+
+  if /RND/ =~ data.ag_rnd
+    data.ag_rnd        = 0xFF
+  else
+    data.ag_rnd        = data.ag_rnd.to_i
+  end
+
+  if /RND/ =~ data.sa_rnd
+    data.sa_rnd        = 0xFF
+  else
+    data.sa_rnd        = data.sa_rnd.to_i
+  end
+
+  if /RND/ =~ data.sd_rnd
+    data.sd_rnd        = 0xFF
+  else
+    data.sd_rnd        = data.sd_rnd.to_i
+  end
+
   data.tokusei_idx   = GetTokuseiIndex(data.label_tokusei)
   data.seikaku       = GetSeikakuVal(data.label_seikaku)
   data.sex           = GetSexVal(data.label_sex)

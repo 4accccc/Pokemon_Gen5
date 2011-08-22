@@ -42,6 +42,8 @@
 
 #define DEBUG_MODE
 
+#define PARA_SET_RND    (0xFF)      // 乱数設定をランダムで設定  コンバータで値はセットされる
+
 FS_EXTERN_OVERLAY(pokemon_trade);
 
 
@@ -244,12 +246,24 @@ static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID,
 	GFL_STR_DeleteBuffer( strbuf );
 
 	// 各種乱数設定
-	PP_Put( pp, ID_PARA_hp_rnd,     data->hp_rnd );
-	PP_Put( pp, ID_PARA_pow_rnd,    data->at_rnd );
-	PP_Put( pp, ID_PARA_def_rnd,    data->df_rnd );
-	PP_Put( pp, ID_PARA_agi_rnd,    data->sp_rnd );
-	PP_Put( pp, ID_PARA_spepow_rnd, data->sa_rnd );
-	PP_Put( pp, ID_PARA_spedef_rnd, data->sd_rnd );
+  // HP
+  if( data->hp_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_hp_rnd, GFL_STD_MtRand(32) ); }
+  else                              { PP_Put( pp, ID_PARA_hp_rnd, data->hp_rnd );       }
+  // POW
+  if( data->at_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_pow_rnd, GFL_STD_MtRand(32) ); }
+  else                              { PP_Put( pp, ID_PARA_pow_rnd, data->at_rnd );       }
+  // DEF
+  if( data->df_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_def_rnd, GFL_STD_MtRand(32) ); }
+  else                              { PP_Put( pp, ID_PARA_def_rnd, data->df_rnd );       }
+  // AGI
+  if( data->sp_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_agi_rnd, GFL_STD_MtRand(32) ); }
+  else                              { PP_Put( pp, ID_PARA_agi_rnd, data->sp_rnd );       }
+  // SPEPOW
+  if( data->sa_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_spepow_rnd, GFL_STD_MtRand(32) ); }
+  else                              { PP_Put( pp, ID_PARA_spepow_rnd, data->sa_rnd );       }
+  // SPEDEF
+  if( data->sd_rnd == PARA_SET_RND ){ PP_Put( pp, ID_PARA_spedef_rnd, GFL_STD_MtRand(32) ); }
+  else                              { PP_Put( pp, ID_PARA_spedef_rnd, data->sd_rnd );       }
 
 	// 特性
   {
