@@ -79,7 +79,8 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct{
   VecFx32 pos;
-  int     visible_f;
+  u16     visible_f;
+  u16     item;
 }FES_KIRA_OBJ;
 
 //--------------------------------------------------------------
@@ -90,12 +91,6 @@ typedef struct
   TASKHEADER_FES_KIRA head;
 
   FES_KIRA_OBJ  obj[FES_KIRA_OBJ_MAX];
-#if 0
-  GFL_G3D_OBJ *obj;
-  GFL_G3D_ANM *obj_anm[FES_KIRA_ANMRES_MAX];
-  GFL_G3D_RND *obj_rnd;
-#endif
-
 }TASKWK_FES_KIRA;
 
 /*
@@ -271,7 +266,7 @@ static void eff_DeleteResource( FES_KIRA* eff_wk )
  * @param FLDEFF_CTRL*
  * @retval nothing
  *
- * これを呼んだだけだと、何も描画されないので注意
+ * これを呼んだだけだと、コントローラタスクの追加のみで何も描画されないので注意
  */
 //--------------------------------------------------------------
 FLDEFF_TASK* FLDEFF_FES_KIRA_SetEffect( FLDEFF_CTRL *fectrl )
@@ -302,7 +297,7 @@ FLDEFF_TASK* FLDEFF_FES_KIRA_SetEffect( FLDEFF_CTRL *fectrl )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDEFF_FES_KIRA_ObjAdd( FLDEFF_TASK* task, u8 id, VecFx32* pos )
+void FLDEFF_FES_KIRA_ObjAdd( FLDEFF_TASK* task, u8 id, u16 item, VecFx32* pos )
 {
   TASKWK_FES_KIRA *work = (TASKWK_FES_KIRA*)FLDEFF_TASK_GetWork( task );
   
@@ -311,6 +306,7 @@ void FLDEFF_FES_KIRA_ObjAdd( FLDEFF_TASK* task, u8 id, VecFx32* pos )
   }
   work->obj[id].visible_f = TRUE; //描画リストに入れる
   work->obj[id].pos = *pos;
+  work->obj[id].item = item;
 }
 
 //--------------------------------------------------------------
@@ -334,7 +330,6 @@ void FLDEFF_FES_KIRA_ObjDel( FLDEFF_TASK* task, u8 id )
 //--------------------------------------------------------------
 /**
  * フェスミッションエフェクト 全オブジェクト表示削除　
- * @param fmmdl MMDL
  * @param FLDEFF_CTRL*
  * @retval nothing
  */
@@ -347,6 +342,44 @@ void FLDEFF_FES_KIRA_ObjDelAll( FLDEFF_TASK* task )
   for( i = 0;i < FES_KIRA_OBJ_MAX;i++){
     work->obj[i].visible_f = FALSE; //描画からはずす
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * フェスミッションエフェクト 指定オブジェクトが表示状態かチェック
+ * @param FLDEFF_CTRL*
+ * @param id  指定ID
+ * @retval TRUE  描画されている 
+ * @retval FALSE 描画されていない
+ */
+//--------------------------------------------------------------
+BOOL FLDEFF_FES_KIRA_ObjIsVisible( FLDEFF_TASK* task, u8 id )
+{
+  TASKWK_FES_KIRA *work = (TASKWK_FES_KIRA*)FLDEFF_TASK_GetWork( task );
+  if( id >= FES_KIRA_OBJ_MAX ){
+    GF_ASSERT(0);
+    return FALSE;
+  } 
+  return work->obj[id].visible_f;
+}
+
+//--------------------------------------------------------------
+/**
+ * フェスミッションエフェクト 指定オブジェクトにセットされたアイテムNoを取得
+ * @param FLDEFF_CTRL*
+ * @param id  指定ID
+ * @retval アイテムNo
+ * @retval FALSE 描画されていない
+ */
+//--------------------------------------------------------------
+u16 FLDEFF_FES_KIRA_ObjItemGet( FLDEFF_TASK* task, u8 id )
+{
+  TASKWK_FES_KIRA *work = (TASKWK_FES_KIRA*)FLDEFF_TASK_GetWork( task );
+  if( id >= FES_KIRA_OBJ_MAX ){
+    GF_ASSERT(0);
+    return 0;
+  } 
+  return work->obj[id].item;
 }
 
 //--------------------------------------------------------------

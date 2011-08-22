@@ -18,7 +18,7 @@ typedef struct _FES_GIMMICK  FES_GIMMICK;
  *  フィールドマップ初期化時にCreateし、フィールド開放時にDeleteする
  */
 //----------------------------------------------------------------------
-extern FES_GIMMICK* FES_GIMMICK_SYS_Create( LINK_FESTIVAL* fest_sys, FIELDMAP_WORK* fieldWork, HEAPID heapID );
+extern FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWork, HEAPID heapID );
 
 //----------------------------------------------------------------------
 /*
@@ -30,10 +30,17 @@ extern void FES_GIMMICK_SYS_Delete( FES_GIMMICK* wk );
 
 //----------------------------------------------------------------------
 /*
- *  @brief  フェスミッションギミック　マップ遷移後処理
+ *  @brief  フェスミッションギミック　ゾーン遷移時処理
  */
 //----------------------------------------------------------------------
-extern void FES_GIMMICK_MapChangeSetup( LINK_FESTIVAL* fest_sys, GAMESYS_WORK* gsys, u16 zone_id );
+extern void FES_GIMMICK_ZoneChangeSetup( FES_GIMMICK* wk, u16 zone_id );
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック　フィールド復帰処理
+ */
+//----------------------------------------------------------------------
+extern void FES_GIMMICK_FieldRecoverSetup( FES_GIMMICK* wk );
 
 //----------------------------------------------------------------------
 /*
@@ -41,6 +48,27 @@ extern void FES_GIMMICK_MapChangeSetup( LINK_FESTIVAL* fest_sys, GAMESYS_WORK* g
  */
 //----------------------------------------------------------------------
 extern void FES_GIMMICK_Delete( LINK_FESTIVAL* fest_sys, GAMESYS_WORK* gsys );
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック イベントチェック
+ *
+ *  @param  wk
+ *  @param  cp_pos  プレイヤー座標
+ */
+//----------------------------------------------------------------------
+extern GMEVENT* FES_GIMMICK_CheckPosEventGrid( FES_GIMMICK* wk, const VecFx32* cp_pos );
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック イベントチェック
+ *
+ *  @param  wk
+ *  @param  cp_location  プレイヤー座標
+ */
+//----------------------------------------------------------------------
+extern GMEVENT* FES_GIMMICK_CheckPosEventRail( FES_GIMMICK* wk, const RAIL_LOCATION* cp_location );
+
 
 //----------------------------------------------------------------------
 /*

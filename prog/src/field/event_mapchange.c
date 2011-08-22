@@ -1026,15 +1026,6 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     {
       FIELDMAP_WORK* p_fld = GAMESYSTEM_GetFieldMapWork(gameSystem);
 
-      //フェスミッション用処理
-      if( work->mapchange_type != EV_MAPCHG_UNION ){
-        LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gameSystem );
-
-        if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
-          FES_GIMMICK_MapChangeSetup( fest_sys, gameSystem, work->loc_req.zone_id );
-        }
-      }
-   
       //外出表現表示
       FIELD_GOOUT_EFFECT_Setup( FIELDMAP_GetGooutEffect( p_fld ) );
 

@@ -298,28 +298,13 @@ BOOL LINK_FESTIVAL_TMapRootUpdate( LINK_FESTIVAL* wk, u16 new_root )
 
 //---------------------------------------------------------
 /*
- *  @brief  リンクフェスティバル ミッションフラグセット
+ *  @brief  リンクフェスティバル ミッションフラグ領域バッファへのポインタを返す
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_MissionFlagSet( LINK_FESTIVAL* wk, u16 zone_idx, u8 flag_idx )
+void* LINK_FESTIVAL_MissionFlagBufPointerGet( LINK_FESTIVAL* wk )
 {
-  int no = zone_idx*FES_GIMMICK_MAX+flag_idx;
-
-  wk->m_flag[(no/8)] |= (0x01)<<(no%8);
+  return wk->m_flag;
 }
-
-//---------------------------------------------------------
-/*
- *  @brief  リンクフェスティバル ミッションフラグチェック
- */
-//---------------------------------------------------------
-BOOL LINK_FESTIVAL_MissionFlagCheck( LINK_FESTIVAL* wk, u16 zone_idx, u8 flag_idx )
-{
-  int no = zone_idx*FES_GIMMICK_MAX+flag_idx;
-
-  return ( wk->m_flag[(no/8)] & ((0x01)<<(no%8)));
-}
-
 
 //---------------------------------------------------------
 /*

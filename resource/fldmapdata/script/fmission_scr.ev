@@ -21,7 +21,9 @@ _EVENT_DATA_END //終了
 //====================================================================
 EVENT_START ev_fmission_item_get
 {
-  _ITEM_EVENT_FMISSION_ITEM_GET()
+  DEFINE_LOCAL  i_item
+  $i_item = $SCWK_PARAM0  //プログラムから引き渡されたアイテムNO
+  _ITEM_EVENT_FMISSION_ITEM_GET( i_item )
 }
 EVENT_END
 

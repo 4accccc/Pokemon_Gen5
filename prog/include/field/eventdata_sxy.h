@@ -165,6 +165,17 @@ extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
 
 //------------------------------------------------------------------
 /**
+ * @brief	座標イベント データテーブル取得
+ * @param	evdata  イベントデータへのポインタ
+ * @param o_num   int*   イベントデータ数を格納して返すワークポインタ
+ * @retval POS_EVENT_DATA* (NULL = イベントなし)
+ */
+//------------------------------------------------------------------
+extern const POS_EVENT_DATA * EVENTDATA_GetPosEventDataTbl(
+    const EVENTDATA_SYSTEM *evdata, int* o_num );
+
+//------------------------------------------------------------------
+/**
  * @brief	座標イベントを取得(高さを無視するver.)
  * @param	evdata イベントデータへのポインタ
  * @param evwork イベントワークへのポインタ 
@@ -235,4 +246,31 @@ extern void EVENTDATA_GetBGTalkCenterRailLocation( const BG_TALK_DATA * data, RA
 //-----------------------------------------------------------------------------
 extern void EVENTDATA_GetPosEventCenterPos( const POS_EVENT_DATA * data, VecFx32* pos );
 extern void EVENTDATA_GetPosEventCenterRailLocation( const POS_EVENT_DATA * data, RAIL_LOCATION* location );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PosEvent グリッドマップ　座標あたり判定
+ *
+ *	@param	cp_data   データ
+ *	@param	cp_pos    ３D座標
+ *
+ *	@retval TRUE  範囲内
+ *	@retval FALSE 範囲外
+ */
+//-----------------------------------------------------------------------------
+extern BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PosEvent レール座標の判定
+ *
+ *	@param	cp_data       データ
+ *	@param	cp_location   レールロケーション
+ *
+ *	@retval TRUE  範囲内
+ *	@retval FALSE 範囲外
+ */
+//-----------------------------------------------------------------------------
+extern BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_LOCATION* cp_location );
+
 

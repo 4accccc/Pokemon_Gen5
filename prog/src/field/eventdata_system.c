@@ -138,11 +138,10 @@ static BOOL BGTalkData_RPOS_IsHit( const BG_TALK_DATA* cp_data, const RAIL_LOCAT
 // POS_EVENT_DATA ポジション
 //============================================================================================
 static void PosEventData_GPOS_GetPos( const POS_EVENT_DATA* cp_data, VecFx32* p_pos );
-static BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos );
+//static BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos ); ///<110814 move global
 static BOOL PosEventData_GPOS_IsHit_XZ( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos );
 static void PosEventData_RPOS_GetLocation( const POS_EVENT_DATA* cp_data, RAIL_LOCATION* p_location );
-static BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_LOCATION* cp_location );
-
+//static BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_LOCATION* cp_location ); ///<110814 move global
 
 //============================================================================================
 //============================================================================================
@@ -948,6 +947,21 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
     }
   }
   return NULL;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	座標イベント データテーブル取得
+ * @param	evdata  イベントデータへのポインタ
+ * @param o_num   int*   イベントデータ数を格納して返すワークポインタ
+ * @retval POS_EVENT_DATA* (NULL = イベントなし)
+ */
+//------------------------------------------------------------------
+const POS_EVENT_DATA * EVENTDATA_GetPosEventDataTbl(
+    const EVENTDATA_SYSTEM *evdata, int* o_num )
+{
+  *o_num = evdata->pos_count;
+  return (const POS_EVENT_DATA*)evdata->pos_data;
 }
 
 //------------------------------------------------------------------
@@ -2163,7 +2177,7 @@ static void PosEventData_GPOS_GetPos( const POS_EVENT_DATA* cp_data, VecFx32* p_
  *	@retval FALSE 範囲外
  */
 //-----------------------------------------------------------------------------
-static BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos )
+BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos )
 {
   const POS_EVENT_DATA_GPOS* cp_gpos;
   int gx, gz, y;
@@ -2272,7 +2286,7 @@ static void PosEventData_RPOS_GetLocation( const POS_EVENT_DATA* cp_data, RAIL_L
  *	@retval FALSE 範囲外
  */
 //-----------------------------------------------------------------------------
-static BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_LOCATION* cp_location )
+BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_LOCATION* cp_location )
 {
   const POS_EVENT_DATA_RPOS * cp_pos;
   

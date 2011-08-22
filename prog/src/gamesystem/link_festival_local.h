@@ -10,13 +10,6 @@
 #pragma once
 
 #include "fmission_log_local.h"
-#include "field/fes_gimmick_def.h"
-
-#if (FES_GIMMICK_DATA_MAX%8)
-  #define FMISSION_FLAG_AREA_LEN  ((FES_GIMMICK_DATA_MAX/8)+1)
-#else
-  #define FMISSION_FLAG_AREA_LEN  (FES_GIMMICK_DATA_MAX/8)
-#endif
 
 //==============================================================================
 //  ç\ë¢ëÃíËã`

@@ -698,6 +698,7 @@ EVENT_END
 
 //====================================================================
 //    フェスミッション：ミッションアイテムゲット処理
+//    @param  SCWK_PARAM0 ゲットするアイテムNo
 //====================================================================
 ev_item_event_fmission_item_get:
 {
@@ -707,7 +708,8 @@ ev_item_event_fmission_item_get:
   DEFINE_LOCAL  i_dif
   DEFINE_LOCAL  i_not_illegal_code
 
-  _FMISSION_ITEM_GET( i_item )
+//  _FMISSION_ITEM_GET( i_item )
+  $i_item = $SCWK_PARAM0
   _ADD_ITEM_CHK( i_item, 1, i_get )
  
   $SCWK_TEMP0 = $i_item

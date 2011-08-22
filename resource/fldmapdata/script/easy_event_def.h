@@ -228,8 +228,11 @@
  * @brief フェスミッションアイテム入手イベント
  */
 //--------------------------------------------------------------
-  .macro  _ASM_ITEM_EVENT_FMISSION_ITEM_GET
+  .macro  _ASM_ITEM_EVENT_FMISSION_ITEM_GET itemno
+  _PUSH_WORK  SCWK_PARAM0
+  _ASM_LDWKVAL  SCWK_PARAM0, \itemno
   _CHG_COMMON_SCR SCRID_ITEM_EVENT_FMISSION_ITEM_GET
+  _POP_WORK   SCWK_PARAM0
   .endm
 
 //======================================================================

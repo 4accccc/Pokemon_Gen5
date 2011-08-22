@@ -81,6 +81,7 @@
 #include "gym_ground.h"     //for GYM_GROUND_CheckBeltEvent
 #include "gym_water.h"      //for GYM_WATER_CheckHasuEvent
 #include "field_gimmick_d06.h"
+#include "fes_gimmick.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
@@ -220,7 +221,7 @@ static void incScWalkCount( GAMEDATA * gamedata );
 //--------------------------------------------------------------
 //  個別イベントチェック
 //--------------------------------------------------------------
-static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork);
+static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, const RAIL_LOCATION* r_loc);
 static GMEVENT* CheckSodateya(
     const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
@@ -435,7 +436,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     }
   }
   //汎用一歩移動イベントチェック群
-  event = checkMoveEvent(&req, fieldWork);
+  event = checkMoveEvent(&req, fieldWork,NULL);
   if ( event != NULL) {
     return event;
   }
@@ -1115,7 +1116,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
     }
 
     //汎用一歩移動イベントチェック群
-    event = checkMoveEvent(&req, fieldWork);
+    event = checkMoveEvent(&req, fieldWork, &pos );
     if ( event != NULL) {
       return event;
     }
@@ -1840,7 +1841,7 @@ static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req )
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork)
+static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, const RAIL_LOCATION* r_loc )
 {
   HEAPID     heap_id = FIELDMAP_GetHeapID( fieldWork );
   GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldWork ); 
@@ -1860,6 +1861,17 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
     //エンカウントエフェクト起動監視
     event = CheckEffectEncount( fieldWork, gsys, gdata );
     if( event != NULL) return event;
+
+    //フェスギミックイベント起動監視
+    {
+      FES_GIMMICK* f_gmk = FIELDMAP_GetFesGimmickSys( fieldWork );
+      if( r_loc != NULL ){
+        event = FES_GIMMICK_CheckPosEventRail( f_gmk, r_loc );
+      }else{
+        event = FES_GIMMICK_CheckPosEventGrid( f_gmk, req->now_pos );
+      }
+      if( event != NULL) return event;
+    }
   }
 
   //以下は通常一歩移動のみ検出

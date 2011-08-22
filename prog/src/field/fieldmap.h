@@ -38,6 +38,7 @@
 #include "field_g3dobj.h"
 #include "fieldskill_mapeff.h"
 #include "fld_vreq.h"
+#include "fes_gimmick.h"
 
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
@@ -136,6 +137,7 @@ extern UNION_EFF_SYSTEM * FIELDMAP_GetUnionEffSystem( FIELDMAP_WORK *fieldWork )
 extern FLDMAP_BASESYS_TYPE FIELDMAP_GetBaseSystemType( const FIELDMAP_WORK *fieldWork );
 extern FIELD_PLACE_NAME * FIELDMAP_GetPlaceNameSys( FIELDMAP_WORK * fieldWork );
 extern FIELD_FMISSION_INFO * FIELDMAP_GetFMissionInfoSys( FIELDMAP_WORK * fieldWork );
+extern FES_GIMMICK * FIELDMAP_GetFesGimmickSys( FIELDMAP_WORK * fieldWork );
 extern FLDMAPFUNC_SYS * FIELDMAP_GetFldmapFuncSys( FIELDMAP_WORK * fieldWork );
 extern FLD_EXP_OBJ_CNT_PTR FIELDMAP_GetExpObjCntPtr( FIELDMAP_WORK *fieldWork );
 extern GFL_TCBSYS* FIELDMAP_GetFieldmapTCBSys( FIELDMAP_WORK * fieldWork );

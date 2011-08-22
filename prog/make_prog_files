@@ -786,6 +786,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_fmission_info.c \
         field/scrcmd_fmission.c \
         field/fes_gimmick.c \
+        field/fes_gimmick_item.c \
         field/place_name_letter.c \
         field/event_entrance_in.c \
         field/event_entrance_out.c \

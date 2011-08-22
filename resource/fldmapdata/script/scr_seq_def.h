@@ -8892,8 +8892,8 @@
  * @brief フェスミッションアイテム入手イベント
  */
 //--------------------------------------------------------------
-#define _ITEM_EVENT_FMISSION_ITEM_GET() \
-  _ASM_ITEM_EVENT_FMISSION_ITEM_GET
+#define _ITEM_EVENT_FMISSION_ITEM_GET( itemno ) \
+  _ASM_ITEM_EVENT_FMISSION_ITEM_GET itemno
 
 //--------------------------------------------------------------
 /**

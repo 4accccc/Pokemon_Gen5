@@ -47,6 +47,8 @@
 #include "field/fes_gimmick_def.h"
 #include "field/fes_gimmick_local.h"
 
+SDK_COMPILER_ASSERT(sizeof(FES_GIMMICK_FLAG_WORK) <= FMISSION_FLAG_AREA_LEN );
+
 //======================================================================
 //======================================================================
 #define FES_GIMMICK_ITEM_MAX (5)
@@ -107,9 +109,7 @@ static void itemball_Setup( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk, G
 static const FES_GIMMICK_DATA* itemball_AllocZoneData( u16 zone_id, HEAPID heapID );
 static void itemball_MMdlSet( LINK_FESTIVAL* fest_sys, GFL_STD_RandContext* rnd_c, const FES_GIMMICK_DATA* dat, u16 zone_id, MMDLSYS* mmdlsys );
 
-static void FES_GIMMICK_SUB_RndInit( const u32 key, const u16 zone_id, GFL_STD_RandContext* rnd_c );
-static u8 FES_GIMMICK_SUB_RndGet( GFL_STD_RandContext* rnd_c, u32 range, u8* p_tbl, int tbl_max );
-static BOOL rnd_CheckConflict( u8 value, u8* p_tbl, int tbl_max );
+static BOOL rnd_CheckConflict( u32 value, u32* p_tbl, int tbl_max );
 
 //======================================================================
 //======================================================================
@@ -121,16 +121,26 @@ static BOOL rnd_CheckConflict( u8 value, u8* p_tbl, int tbl_max );
  *  フィールドマップ初期化時にCreateし、フィールド開放時にDeleteする
  */
 //----------------------------------------------------------------------
-FES_GIMMICK* FES_GIMMICK_SYS_Create( LINK_FESTIVAL* fest_sys, FIELDMAP_WORK* fieldWork, HEAPID heapID )
+FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWork, HEAPID heapID )
 {
   FES_GIMMICK* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FES_GIMMICK));
-  
-  wk->fest_sys = fest_sys;
-  wk->fmwk = (const FEST_MISSION*)LINK_FESTIVAL_GetMissionWork( fest_sys );
+ 
+  wk->gsys = gsys;
+  wk->gdata = GAMESYSTEM_GetGameData(gsys);
+  wk->fest_sys =  GAMESYSTEM_GetLinkFestivalWork( gsys );
+  wk->fmwk = (const FEST_MISSION*)LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
  
   wk->fieldWork = fieldWork;
   //フィールドエフェクトコントローラ取得
   wk->fectrl = FIELDMAP_GetFldEffCtrl( fieldWork );
+
+  {
+    const FLDNOGRID_MAPPER* cp_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
+    if( cp_mapper != NULL ){
+      wk->railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+    }
+  }
+
 
   //道具ミッション用エフェクトタスクを常駐で持つ
   wk->eff_task = FLDEFF_FES_KIRA_SetEffect( wk->fectrl );
@@ -155,17 +165,42 @@ void FES_GIMMICK_SYS_Delete( FES_GIMMICK* wk )
 
 //----------------------------------------------------------------------
 /*
- *  @brief  フェスミッションギミック　マップ遷移後処理
+ *  @brief  フェスミッションギミック　ゾーン遷移時処理
  */
 //----------------------------------------------------------------------
-void FES_GIMMICK_MapChangeSetup( LINK_FESTIVAL* fest_sys, GAMESYS_WORK* gsys, u16 zone_id )
+void FES_GIMMICK_ZoneChangeSetup( FES_GIMMICK* wk, u16 zone_id )
 {
-  const FEST_MISSION* fmwk = (const FEST_MISSION*)LINK_FESTIVAL_GetMissionWork( fest_sys );
+  OSTick s_tick = OS_GetTick();
 
-  if( fmwk->m_type == FMISSION_TYPE_ITEM ){
-    itemball_Setup( fest_sys, fmwk, gsys, zone_id );
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return;
+  }
+  if( wk->fmwk->m_type == FMISSION_TYPE_ITEM ){
+    FES_GIMMICK_ITEM_ZoneChangeSetup( wk, zone_id );
+  IWASAWA_Printf("FesGimmick %d\n",OS_GetTick()-s_tick);
+    FES_GIMMICK_ITEM_FieldRecoverSetup( wk );
+
+//    itemball_Setup( fest_sys, fmwk, gsys, zone_id );
   }
 }
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック　フィールド復帰処理
+ */
+//----------------------------------------------------------------------
+void FES_GIMMICK_FieldRecoverSetup( FES_GIMMICK* wk )
+{
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return;
+  }
+  if( wk->fmwk->m_type == FMISSION_TYPE_ITEM ){
+    FES_GIMMICK_ITEM_FieldRecoverSetup( wk );
+
+//    itemball_Setup( fest_sys, fmwk, gsys, zone_id );
+  }
+}
+
 
 //----------------------------------------------------------------------
 /*
@@ -188,16 +223,56 @@ void FES_GIMMICK_Delete( LINK_FESTIVAL* fest_sys, GAMESYS_WORK* gsys )
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  フェスミッションギミック イベントチェック
+ *
+ *  @param  wk
+ *  @param  cp_pos  プレイヤー座標
+ */
+//----------------------------------------------------------------------
+GMEVENT* FES_GIMMICK_CheckPosEventGrid( FES_GIMMICK* wk, const VecFx32* cp_pos )
+{
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return NULL;
+  }
+  if( wk->fmwk->m_type == FMISSION_TYPE_ITEM ){
+    return FES_GIMMICK_ITEM_CheckEventForGrid( wk, cp_pos );
+  }
+  return NULL;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック イベントチェック
+ *
+ *  @param  wk
+ *  @param  cp_location  プレイヤー座標
+ */
+//----------------------------------------------------------------------
+GMEVENT* FES_GIMMICK_CheckPosEventRail( FES_GIMMICK* wk, const RAIL_LOCATION* cp_location )
+{
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return NULL;
+  }
+  if( wk->fmwk->m_type == FMISSION_TYPE_ITEM ){
+    return FES_GIMMICK_ITEM_CheckEventForRail( wk, cp_location );
+  }
+  return NULL;
+}
+
+//----------------------------------------------------------------------
+/*
  *  @brief  フェスミッションギミック　フラグセット
  */
 //----------------------------------------------------------------------
 void FES_GIMMICK_FlagSet( LINK_FESTIVAL* fest_sys, u16 zone_id, u16 idx )
 {
+#if 0
   u16 zone_idx = sub_GetZoneIdx( zone_id );
 
   if( zone_idx != ZONE_ERROR ){
     LINK_FESTIVAL_MissionFlagSet( fest_sys, zone_idx, idx );
   }
+#endif
 }
 
 //----------------------------------------------------------------------
@@ -225,9 +300,9 @@ void FES_GIMMICK_SUB_RndInit( const u32 key, const u16 zone_id, GFL_STD_RandCont
  *  @brief  乱数取得
  */
 //----------------------------------------------------------------------
-u8 FES_GIMMICK_SUB_RndGet( GFL_STD_RandContext* rnd_c, u32 range, u8* p_tbl, int tbl_max )
+u32 FES_GIMMICK_SUB_RndGet( GFL_STD_RandContext* rnd_c, u32 range, u32* p_tbl, int tbl_max )
 {
-  u8 value;
+  u32 value;
 
   do{
     value = GFL_STD_Rand0( rnd_c, range );
@@ -304,7 +379,7 @@ static const FES_GIMMICK_DATA* itemball_AllocZoneData( u16 zone_id, HEAPID heapI
 static void itemball_MMdlSet( LINK_FESTIVAL* fest_sys, GFL_STD_RandContext* rnd_c, const FES_GIMMICK_DATA* dat, u16 zone_id, MMDLSYS* mmdlsys )
 {
   int i, max, rnd;
-  u8 tbl[FES_GIMMICK_ITEM_MAX]; 
+  u32 tbl[FES_GIMMICK_ITEM_MAX]; 
   MMDL* mmdl;
   u16 zone_idx = sub_GetZoneIdx( zone_id );
  
@@ -317,9 +392,11 @@ static void itemball_MMdlSet( LINK_FESTIVAL* fest_sys, GFL_STD_RandContext* rnd_
     tbl[i] = FES_GIMMICK_SUB_RndGet( rnd_c, dat->num, tbl, i );
     rnd = GFL_STD_Rand0( rnd_c, 4);
 
+#if 0
     if(LINK_FESTIVAL_MissionFlagCheck( fest_sys, zone_idx, i )){
       continue;
     }
+#endif
     mmdl = MMDLSYS_AddMMdlParam( mmdlsys, dat->pos[tbl[i]].x, dat->pos[tbl[i]].z,
             DIR_DOWN, MMDL_ID_FMISSION_OBJ_01+i, FESITEM, MV_DMY, zone_id );
     MMDL_SetEventID( mmdl, SCRID_FMISSION_ITEM_GET );
@@ -334,7 +411,7 @@ static void itemball_MMdlSet( LINK_FESTIVAL* fest_sys, GFL_STD_RandContext* rnd_
  *  @brief  乱数衝突検査
  */
 //----------------------------------------------------------------------
-static BOOL rnd_CheckConflict( u8 value, u8* p_tbl, int tbl_max )
+static BOOL rnd_CheckConflict( u32 value, u32* p_tbl, int tbl_max )
 {
   int i;
 
