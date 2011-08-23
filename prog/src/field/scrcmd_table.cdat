@@ -954,7 +954,7 @@
   DEF_CMD( EvCmdUpdateMedalInfo, EV_SEQ_UPDATE_MEDAL_INFO )
   DEF_CMD( EvCmdGetMedal, EV_SEQ_GET_MEDAL )
   DEF_CMD( EvCmdGetMedalOyajiObjID, EV_SEQ_GET_MEDALOYAJI_OBJID )
-  DEF_CMD( EvCmdSetMedalAchive, EV_SEQ_SET_MEDAL_ACHIVE )
+  DEF_CMD( EvCmdSetMedalTitleAchieve, EV_SEQ_SET_MEDAL_TITLE_ACHIEVE )
 
   //ハイリンクフェス関連
   DEF_CMD( EvCmdIntrudeMapChangeFMissionStart, EV_SEQ_INTRUDE_MAPCHG_FMISSION_START )
@@ -1019,10 +1019,11 @@
 
   NO_CMD()
   NO_CMD()
-  NO_CMD()
-  NO_CMD()
- 
+
   //メダルイベント関連２
+  NO_CMD()
+  DEF_CMD( EvCmdSetMedalHintAchieve, EV_SEQ_SET_MEDAL_HINT_ACHIEVE )
+ 
   DEF_CMD( EvCmdCheckIsMedalGet, EV_SEQ_MEDAL_IS_GET )
   DEF_CMD( EvCmdGetMostGetCategory, EV_SEQ_MEDAL_MOSTGET_CATEGORY )
 

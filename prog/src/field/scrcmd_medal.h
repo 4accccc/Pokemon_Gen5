@@ -18,6 +18,6 @@ extern VMCMD_RESULT EvCmdGetMedal( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdGetMedalOyajiObjID( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdCheckIsMedalGet( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdGetMostGetCategory( VMHANDLE * core, void * wk );
-extern VMCMD_RESULT EvCmdSetMedalAchieve( VMHANDLE * core, void * wk );
-extern VMCMD_RESULT EvCmdSetMedalAchive( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdSetMedalTitleAchieve( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdSetMedalHintAchieve( VMHANDLE * core, void * wk );
 

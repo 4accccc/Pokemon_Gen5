@@ -12494,13 +12494,28 @@
 //--------------------------------------------------------------
 /**
  * @brief メダルの達成処理
+ * @param[in] medal_id  設定するメダルのID（prog/include/app/mdlid_def.h参照）
  */
 //--------------------------------------------------------------
 #define _SET_MEDAL_ACHIVE( medal_id ) \
     _ASM_SET_MEDAL_ACHIVE medal_id
 
     .macro  _ASM_SET_MEDAL_ACHIVE medal_id
-    .short  EV_SEQ_SET_MEDAL_ACHIVE
+    .short  EV_SEQ_SET_MEDAL_TITLE_ACHIEVE
+    .short  \medal_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ヒントメダル達成処理
+ * @param[in] medal_id  設定するメダルのID（prog/include/app/mdlid_def.h参照）
+ */
+//--------------------------------------------------------------
+#define _SET_MEDAL_HINT_ACHIEVE( medal_id ) \
+    _ASM_SET_MEDAL_HINT_ACHIEVE medal_id
+
+    .macro  _ASM_SET_MEDAL_HINT_ACHIEVE medal_id
+    .short  EV_SEQ_SET_MEDAL_HINT_ACHIEVE
     .short  \medal_id
     .endm
 
