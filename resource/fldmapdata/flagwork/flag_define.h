@@ -689,6 +689,8 @@
 #define FV_WBT_LOBBY_LEADER1               771 /* 0x0303 WBTロビー：優勝後ロビーにいる対戦者 */
 #define FV_WBT_LOBBY_LEADER2               772 /* 0x0304 WBTロビー：優勝後ロビーにいる対戦者 */
 #define FV_WBT_LOBBY_LEADER3               773 /* 0x0305 WBTロビー：優勝後ロビーにいる対戦者 */
+#define FV_D26R0501_ROCK_B                 774 /* 0x0306 チャンピオンロード：ブラックのかいりき岩 */
+#define FV_D26R0501_ROCK_W                 775 /* 0x0307 チャンピオンロード：ホワイトのかいりき岩 */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
