@@ -33,10 +33,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T08:52:12" />
+				Time="2011-08-23T03:22:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -210,14 +210,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みんなは
-じどうはんばいきで　なにを　かうのか▽
+			<Text>みんなは　じどうはんばいきで
+なにを　かうのか▽
 それを　チェックしつづける……▼
-それで　わかったことが　あります
-あたる　かくりつは　３パーセント！！</Text>
+それで　わかったことが　あります▼
+あたる　かくりつは
+３パーセント！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T08:47:27" />
+				Time="2011-08-23T03:24:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -225,13 +226,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんなは　自販機で　なにを買うのか
+			<Text>みんなは　自販機で
+なにを　買うのか▽
 それを　チェックしつづける……▼
-それで　わかったことが　あります
-当たる　確率は　３パーセント！！</Text>
+それで　わかったことが　あります▼
+当たる　確率は
+３パーセント！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T08:47:48" />
+				Time="2011-08-23T03:24:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -241,10 +244,10 @@
 			Language="JPN">
 			<Comment>♂
 ・自販機の近く
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T08:47:57" />
+				Time="2011-08-23T03:22:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
