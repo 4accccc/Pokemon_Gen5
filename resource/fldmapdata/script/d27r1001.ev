@@ -142,7 +142,7 @@ EVENT_START	ev_scene_d27r1001_plazmam_01
   
   //=====================================
   //D27R1001 SCENE_CHANGE–³Œø
-  $WK_SCENE_D27R1001_PLAZMAM_01 = 1
+  $WK_SCENE_D27R1001_PLAZMAM_01 = 2
   //=====================================
 EVENT_END
 
