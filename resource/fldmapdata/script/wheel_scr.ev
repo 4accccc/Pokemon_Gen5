@@ -195,13 +195,18 @@ sub_wheel_trade:
   ENDIF
 
   // 交換ポケモンNO
-  // TODO
-  // 交換ポケモンの先頭IDをロトムから変更する
-  $fld_trade_poke_no = FLD_TRADE_POKE_7_ROTOMU
+  // 性別でもらうポケモン変更
+  _GET_MY_SEX( SCWK_ANSWER )
+  IF $SCWK_ANSWER == PM_MALE THEN
+    $fld_trade_poke_no = FLD_TRADE_POKE_26_NYAASU
+  ELSE
+    $fld_trade_poke_no = FLD_TRADE_POKE_14_MANKII
+  ENDIF
+
+  // 交換回数を足す
   $fld_trade_poke_no += $WK_OTHER_LCC_TRADE_CNT
 
   // 交換でもらうポケモン名をタグにセット
-  // TODO
   {
     DEFINE_LOCAL trade_monsno   // 交換でもらうポケモンナンバー
     _FIELD_POKE_GET_TRADE_MONSNO( trade_monsno, fld_trade_poke_no  )
@@ -243,7 +248,6 @@ sub_wheel_trade:
         _FIELD_POKE_TRADE( fld_trade_poke_no, lwk_select )
 
 			  //==================================//
-        // TODO
         // 交換完了 カウントアップ
         $WK_OTHER_LCC_TRADE_CNT += 1
         IF $WK_OTHER_LCC_TRADE_CNT >= 12 THEN
