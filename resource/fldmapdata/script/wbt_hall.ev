@@ -48,6 +48,7 @@ EVENT_START ev_wbt_hall_01
 	DEFINE_LOCAL	LWK_FIRST		//初回イベントかどうかを取得
 	DEFINE_LOCAL	LWK_CUP			//トーナメントの種類取得
 	DEFINE_LOCAL	LWK_EFFECT		//アニメ再生するエフェクトを格納
+	DEFINE_LOCAL	LWK_POKETYPE	//タイプエキスパート判別用
 
 	_CALL ev_first_game
 	
@@ -105,24 +106,6 @@ EVENT_START ev_wbt_hall_01
 _CAMERA_END()
 
 EVENT_END
-
-//--------------------------------------------------------------------
-//	１回戦用　ステージ入場アニメ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_1st_in
-	_ANIME_DATA	AC_WALK_L_8F,6
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_enemy_1st_in
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//	プレイヤー負のアニメ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_lose
-	_ANIME_DATA	AC_WALK_R_8F,7
-	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 //    WBT会場　終了処理
@@ -237,10 +220,7 @@ _WBT_LIST_CALL( SCR_WBT_LIST_1ST_START )
 _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_1ST )
 
 //初回イベントトーナメントかどうかをチェック
-_WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_HODOMOE_EVENT, POKETYPE_NULL, LWK_FIRST )
-
-//初回イベントの場合
-IF $LWK_FIRST == 0 THEN
+IF $LWK_CUP == SCR_WBT_CUP_HODOMOE_EVENT THEN
 
 	//対戦者・プレイヤー指定座標に表示
 	_WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
@@ -267,6 +247,8 @@ IF $LWK_FIRST == 0 THEN
 	//暗転復帰
 	_MAP_FADE_BLACK_IN()
 	_MAP_FADE_END_CHECK()
+
+	_PLAYER_NAME(1)
 
 	//初挑戦！
 	_PLAINWIN_MSG_UP( msg_wbt_announce_13 )
@@ -312,7 +294,7 @@ IF $LWK_FIRST == 0 THEN
 	//_SE_PLAY(SEQ_SE_SW_WBT_03)
 
 	//対戦者中央のステージまで歩き出す
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_in )
 
 	//カメラ対戦者追従
 	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,120 )	//一番最後の引数は移動にかかるフレーム数
@@ -348,7 +330,7 @@ ELSE
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
 	//カメラ操作　ステージ中央にカメラを合わせる
-	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 3545,64990,970863,1515520,438303,1015808,1 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()
 
 	//背景ビジョンにロゴ表示
@@ -356,9 +338,14 @@ ELSE
 
 	//ブラックイン開始
 	_MAP_FADE_BLACK_IN_SLOW()
-	
+
+	//カメラ操作　ステージ中央にカメラを合わせる
+	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,48 )	//一番最後の引数は移動にかかるフレーム数
+
 	//プレイヤーをステージ中央まで移動させる
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_1st_in )
+
+	_CAMERA_WAIT_MOVE()
 
 	_MAP_FADE_END_CHECK()
 
@@ -387,14 +374,11 @@ ELSE
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_off )
 	_OBJ_ANIME_WAIT()
 
-	//歓声ＳＥ再生
-	//_SE_PLAY(SEQ_SE_SW_WBT_03)
-
 	//対戦者中央のステージまで歩き出す
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
 
 	//カメラ対戦者追従
-	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,120 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,90 )	//一番最後の引数は移動にかかるフレーム数
 
 	_TIME_WAIT( 30 )
 
@@ -402,7 +386,7 @@ ELSE
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 
-	_TIME_WAIT( 70 )
+	_TIME_WAIT( 50 )
 
 	//暗転復帰
 	_BLACK_IN()
@@ -520,8 +504,13 @@ ev_second_game:
 _PLAINWIN_MSG_UP( msg_wbt_announce_08 )
 _PLAINWIN_CLOSE()
 
-_MAP_FADE_BLACK_OUT()
+_MAP_FADE_BLACK_OUT_SLOW()
+
+//カメラ操作　ステージ中央にカメラを合わせる
+_CAMERA_MOVE( 3554,0,970572,1507328,172063,352256,24 )	//一番最後の引数は移動にかかるフレーム数
+
 _MAP_FADE_END_CHECK()
+_CAMERA_WAIT_MOVE()
 
 //トーナメントリスト表示
 _WBT_LIST_CALL( SCR_WBT_LIST_1ST_RESULT )
@@ -543,23 +532,27 @@ _CAMERA_START()		//カメラ操作開始
 _CAMERA_PURGE()		//カメラのバインドを解く
 
 //カメラ操作　ステージ中央にカメラを合わせる
-_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 3545,64990,970863,1515520,438303,1015808,1 )	//一番最後の引数は移動にかかるフレーム数
 _CAMERA_WAIT_MOVE()
 
 //背景ビジョンにロゴ表示
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
 
-//暗転復帰
-_MAP_FADE_BLACK_IN()
-_MAP_FADE_END_CHECK()
-
-_TIME_WAIT( 30 )
-
+//ブラックイン開始
+_MAP_FADE_BLACK_IN_SLOW()
+	
 //歓声ＳＥ再生
 _SE_PLAY(SEQ_SE_SW_WBT_02)
 
-//対戦者・プレイヤーステージ中央に移動
+//カメラ操作　ステージ中央にカメラを合わせる
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,48 )	//一番最後の引数は移動にかかるフレーム数
+
+//プレイヤーをステージ中央まで移動させる
 _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_2nd_in )
+
+_CAMERA_WAIT_MOVE()
+
+_MAP_FADE_END_CHECK()
 
 //========================================/
 
@@ -608,10 +601,10 @@ _OBJ_ANIME_WAIT()
 _SE_PLAY(SEQ_SE_SW_WBT_07)
 
 //対戦者中央のステージまで歩き出す
-_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
+_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_2nd_in )
 
 //カメラ対戦者追従
-_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,120 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,90 )	//一番最後の引数は移動にかかるフレーム数
 
 _TIME_WAIT( 30 )
 
@@ -619,7 +612,7 @@ _TIME_WAIT( 30 )
 _BLACK_OUT()
 _DISP_FADE_END_CHECK()
 
-_TIME_WAIT( 70 )
+_TIME_WAIT( 50 )
 
 //暗転復帰
 _BLACK_IN()
@@ -705,7 +698,7 @@ IF $SCWK_ANSWER == SCR_WBT_BATTLE_RESULT_WIN THEN
 	
 	_TIME_WAIT( 60 )
 
-	//対戦者・主人公勝ちメッセージ表示　　　　　　
+	//対戦者・主人公勝ちメッセージ表示
 	_WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
 	_BALLOONWIN_CLOSE()
 
@@ -717,8 +710,8 @@ IF $SCWK_ANSWER == SCR_WBT_BATTLE_RESULT_WIN THEN
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_2nd_out )
 	_OBJ_ANIME_WAIT()
 
-  //対戦者OBJの削除
-  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	//対戦者OBJの削除
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
 ELSE
 	//負けた場合
@@ -748,28 +741,6 @@ ENDIF
 
 _RET
 
-//--------------------------------------------------------------------
-//	１回戦用　ステージ退場アニメ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_enemy_1st_out
-	_ANIME_DATA	AC_WALK_L_8F,7
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_player_1st_out
-	_ANIME_DATA	AC_WALK_R_8F,7
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//	２回戦用　ステージ入場アニメ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_2nd_in
-	_ANIME_DATA	AC_WALK_L_8F,6
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_enemy_2nd_in
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	ACMD_END,0
-
 /**************************************************************/
 /*		ＷＢＴ決勝戦										  */
 /**************************************************************/
@@ -779,8 +750,13 @@ ev_final_game:
 _PLAINWIN_MSG_UP( msg_wbt_announce_08a )
 _PLAINWIN_CLOSE()
 
-_MAP_FADE_BLACK_OUT()
+_MAP_FADE_BLACK_OUT_SLOW()
+
+//カメラ操作　ステージ中央にカメラを合わせる
+_CAMERA_MOVE( 3554,0,970572,1507328,172063,352256,24 )	//一番最後の引数は移動にかかるフレーム数
+
 _MAP_FADE_END_CHECK()
+_CAMERA_WAIT_MOVE()
 
 //決勝戦前のトーナメントリスト表示
 _WBT_LIST_CALL( SCR_WBT_LIST_2ND_RESULT )
@@ -836,13 +812,6 @@ _WBT_GMK_LIGHT_SET( 1, SCR_WBT_EFFECT_POS_R )
 //BGM復帰
 _BGM_NOW_MAP_RECOVER()
 
-//歓声ＳＥ再生
-_SE_PLAY(SEQ_SE_SW_WBT_01)
-
-//プレイヤー中央のステージまで歩き出す
-_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_3rd_in )
-
-
 //トーナメントの種類を格納
 _CALL ev_wbt_get_cup
 
@@ -850,6 +819,19 @@ _CALL ev_wbt_get_cup
 _SE_PLAY(SEQ_SE_SW_WBT_04)
 
 _WBT_GMK_EFFECT_START( LWK_EFFECT ,SCR_WBT_EFFECT_POS_R)
+
+//チャンピオンズトーナメントの場合のみタイムウェイト
+IF $LWK_CUP == SCR_WBT_CUP_CHAMPION THEN
+
+_TIME_WAIT( 40 )
+
+ENDIF
+
+//歓声ＳＥ再生
+_SE_PLAY(SEQ_SE_SW_WBT_01)
+
+//プレイヤー中央のステージまで歩き出す
+_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_3rd_in )
 
 //カメラプレイヤー追従
 _CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,146 )		//一番最後の引数は移動にかかるフレーム数
@@ -903,6 +885,8 @@ _TIME_WAIT( 60 )
 
 _WBT_GMK_LIGHT_SET( 0, SCR_WBT_EFFECT_POS_L ) 
 
+_SE_STOP()
+
 //暗転復帰
 _BLACK_IN()
 _DISP_FADE_END_CHECK()
@@ -917,12 +901,6 @@ _OBJ_ANIME_WAIT()
 
 _WBT_GMK_LIGHT_SET( 1, SCR_WBT_EFFECT_POS_L ) 
 
-//歓声ＳＥ再生
-_SE_PLAY(SEQ_SE_SW_WBT_01)
-
-//対戦者中央のステージまで歩き出す
-_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
-
 //トーナメントの種類を格納
 _CALL ev_wbt_get_cup
 
@@ -930,6 +908,19 @@ _CALL ev_wbt_get_cup
 _SE_PLAY(SEQ_SE_SW_WBT_04)
 
 _WBT_GMK_EFFECT_START( LWK_EFFECT ,SCR_WBT_EFFECT_POS_L)
+
+//チャンピオンズトーナメントの場合のみタイムウェイト
+IF $LWK_CUP == SCR_WBT_CUP_CHAMPION THEN
+
+_TIME_WAIT( 40 )
+
+ENDIF
+
+//歓声ＳＥ再生
+_SE_PLAY(SEQ_SE_SW_WBT_01)
+
+//対戦者中央のステージまで歩き出す
+_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
 
 //カメラ対戦者追従
 _CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,146 )	//一番最後の引数は移動にかかるフレーム数
@@ -1011,6 +1002,43 @@ _MAP_FADE_END_CHECK()
 _RET
 
 //--------------------------------------------------------------------
+//	１回戦用　ステージ入場アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_1st_in
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_enemy_1st_in
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_R_2F,6
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	１回戦用　ステージ退場アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_enemy_1st_out
+	_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_1st_out
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	２回戦用　ステージ入場アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_2nd_in
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_enemy_2nd_in
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_R_2F,6
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //	２回戦用　ステージ退場アニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_enemy_2nd_out
@@ -1043,6 +1071,13 @@ _ANIME_LABEL	anm_enemy_3rd_in
 	_ANIME_DATA	AC_WALK_R_8F,17
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//	プレイヤー負のアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_lose
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /**************************************************************/
 ev_final_result:
@@ -1062,21 +1097,6 @@ ELSE
 	_WBT_SET_ENEMY_NAME( 0 )
 ENDIF
 
-//バックの歓声ＳＥ再生
-_SE_PLAY(SEQ_SE_SW_WBT_07)
-
-//歓声SE再生
-_SE_PLAY(SEQ_SE_SW_WBT_03)
-
-//～だー！
-_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_09, POS_UP )
-
-//花吹雪演出
-_WBT_GMK_WIN_EFFECT_START()
-
-//優勝BGM再生
-_BGM_PLAY(SEQ_BGM_WBT_FANFARE)
-
 IF $LWK_WIN_OR_LOSE == SCR_WBT_BATTLE_RESULT_WIN THEN
 
 	//プレイヤー側が勝利の背景ヴィジョン表示
@@ -1087,6 +1107,23 @@ ELSE
 	_WBT_GMK_VISION_CHANGE( SCR_WBT_VISION_WIN_ENEMY )
 
 ENDIF
+
+//花吹雪演出
+_WBT_GMK_WIN_EFFECT_START()
+
+_TIME_WAIT( 80 )
+
+//バックの歓声ＳＥ再生
+_SE_PLAY(SEQ_SE_SW_WBT_07)
+
+//歓声SE再生
+_SE_PLAY(SEQ_SE_SW_WBT_03)
+
+//～だー！
+_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_09, POS_UP )
+
+//優勝BGM再生
+_BGM_PLAY(SEQ_BGM_WBT_FANFARE)
 
 _TIME_WAIT( 120 )
 				
@@ -1123,34 +1160,38 @@ ev_yell_scr:
 
 _WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_NULL, POKETYPE_NULL, LWK_WIN_COUNT )
 
+_DEBUG_PRINT_WK(LWK_WIN_COUNT)
+
 //優勝回数が３０以上の場合
 IF $LWK_WIN_COUNT >= 30 THEN
 	
-	//８０％
-	$LWK_PROBABILITY = 79
+	//１００％
+	$LWK_PROBABILITY = 99
 
 //優勝回数が１０以上の場合
 ELSIF $LWK_WIN_COUNT >= 10 THEN
 
-	//６０％
-	$LWK_PROBABILITY = 59
+	//８０％
+	$LWK_PROBABILITY = 79
 
 //優勝回数が５以上の場合
 ELSIF $LWK_WIN_COUNT >= 5 THEN
 
-	//４０％
-	$LWK_PROBABILITY = 39
+	//６０％
+	$LWK_PROBABILITY = 59
 
 //優勝回数が０以上の場合
 ELSIF $LWK_WIN_COUNT >= 0 THEN
 
-	//２０％
-	$LWK_PROBABILITY = 19
+	//４０％
+	$LWK_PROBABILITY = 39
 
 //異常処理
 ELSE
 
 ENDIF
+
+_DEBUG_PRINT_WK(LWK_PROBABILITY)
 
 _CALL ev_rnd_yell_msg
 
@@ -1164,11 +1205,13 @@ ev_rnd_yell_msg:
 //声援決め乱数
 _GET_RND( LWK_RND,100 )
 
+_DEBUG_PRINT_WK(LWK_RND)
+
 SWITCH $LWK_NOWBTL
 CASE 0 THEN//2回戦目の場合
 	
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 	
 		//メッセージ決め乱数
 		_GET_RND( LWK_MSG,10 )
@@ -1215,8 +1258,10 @@ CASE 0 THEN//2回戦目の場合
 	//声援決め乱数　２回目
 	_GET_RND( LWK_RND,100 )
 
+	_DEBUG_PRINT_WK(LWK_RND)
+
 	//優勝回数に応じた確率で２つ目のメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 	
 		//メッセージ決め乱数
 		_GET_RND( LWK_MSG,10 )
@@ -1269,7 +1314,7 @@ CASE 1 THEN//決勝戦自分入場時
 	_PLAYER_NAME( 0 )
 	
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
 		//１個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 1
@@ -1316,45 +1361,47 @@ CASE 1 THEN//決勝戦自分入場時
 	//声援決め乱数
 	_GET_RND( LWK_RND,100 )
 
+	_DEBUG_PRINT_WK(LWK_RND)
+
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
-	//２個目のメッセージの座標位置・サブウィンナンバー定義
-	$LWK_YELL_POSX = 18
-	$LWK_YELL_POSY = 18
+		//２個目のメッセージの座標位置・サブウィンナンバー定義
+		$LWK_YELL_POSX = 18
+		$LWK_YELL_POSY = 18
 
-	//メッセージ決め乱数
-	_GET_RND( LWK_MSG,10 )
+		//メッセージ決め乱数
+		_GET_RND( LWK_MSG,10 )
 
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 1 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 2 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 3 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 4 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 5 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 6 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 7 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 8 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	CASE 9 THEN
-		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
-	ENDSWITCH
+		SWITCH $LWK_MSG
+		CASE 0 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 1 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 2 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 3 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 4 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 5 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 6 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 7 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 8 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		CASE 9 THEN
+			_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		ENDSWITCH
 
-	//========================================/
-	
-	//サブウィンドウチェック
-	$LOCALWORK2 = 1
-	
-	//========================================/
+		//========================================/
+		
+		//サブウィンドウチェック
+		$LOCALWORK2 = 1
+		
+		//========================================/
 
 	ENDIF
 
@@ -1368,9 +1415,11 @@ CASE 1 THEN//決勝戦自分入場時
 
 	//声援決め乱数
 	_GET_RND( LWK_RND,100 )
-	
+
+	_DEBUG_PRINT_WK(LWK_RND)
+
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
 		//３個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 1
@@ -1421,9 +1470,11 @@ CASE 1 THEN//決勝戦自分入場時
 
 	//声援決め乱数
 	_GET_RND( LWK_RND,100 )
+
+	_DEBUG_PRINT_WK(LWK_RND)
 	
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
 		//４個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 18
@@ -1474,10 +1525,12 @@ CASE 1 THEN//決勝戦自分入場時
 
 	//声援決め乱数
 	_GET_RND( LWK_RND,100 )
+
+	_DEBUG_PRINT_WK(LWK_RND)
 	
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
-
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
+	
 		//５個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 1
 		$LWK_YELL_POSY = 18
@@ -1527,9 +1580,11 @@ CASE 1 THEN//決勝戦自分入場時
 
 	//声援決め乱数
 	_GET_RND( LWK_RND,100 )
+
+	_DEBUG_PRINT_WK(LWK_RND)
 	
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
 		//６個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 19
@@ -1576,7 +1631,7 @@ CASE 2 THEN//決勝戦相手入場時
 	_WBT_SET_ENEMY_NAME( 0 )
 
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
 		//１個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 1
@@ -1622,9 +1677,11 @@ CASE 2 THEN//決勝戦相手入場時
 
 	//声援決め乱数
 	_GET_RND( LWK_RND,100 )
-	
+
+	_DEBUG_PRINT_WK(LWK_RND)
+
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
 		//２個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 18
@@ -1675,9 +1732,11 @@ CASE 2 THEN//決勝戦相手入場時
 
 	//声援決め乱数
 	_GET_RND( LWK_RND,100 )
-	
+
+	_DEBUG_PRINT_WK(LWK_RND)
+		
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
 		//３個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 18
@@ -1728,9 +1787,11 @@ CASE 2 THEN//決勝戦相手入場時
 
 	//声援決め乱数
 	_GET_RND( LWK_RND,100 )
-	
+
+	_DEBUG_PRINT_WK(LWK_RND)
+
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
 		//４個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 1
@@ -1781,9 +1842,11 @@ CASE 2 THEN//決勝戦相手入場時
 
 	//声援決め乱数
 	_GET_RND( LWK_RND,100 )
-	
+
+	_DEBUG_PRINT_WK(LWK_RND)
+
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
 		//５個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 19
@@ -1834,9 +1897,11 @@ CASE 2 THEN//決勝戦相手入場時
 
 	//声援決め乱数
 	_GET_RND( LWK_RND,100 )
-	
+
+	_DEBUG_PRINT_WK(LWK_RND)
+
 	//優勝回数に応じた確率でメッセージ表示
-	IF $LWK_RND <= LWK_PROBABILITY THEN
+	IF $LWK_PROBABILITY >= $LWK_RND THEN
 
 		//６個目のメッセージの座標位置・サブウィンナンバー定義
 		$LWK_YELL_POSX = 1
@@ -2053,8 +2118,47 @@ _WBT_GET_WBT_CUP( LWK_CUP )
 SWITCH $LWK_CUP
 CASE SCR_WBT_CUP_CHAMPION THEN	//チャンピオンズ
 	$LWK_EFFECT = SCR_WBT_EFFECT_CHAMP
-CASE SCR_WBT_CUP_POKETYPE THEN	//タイプ【仮】
-	$LWK_EFFECT = SCR_WBT_EFFECT_FIRE
+CASE SCR_WBT_CUP_POKETYPE THEN	//タイプエキスパート
+
+	_WBT_GET_TOURNAMENT_POKETYPE( LWK_POKETYPE )
+	
+	SWITCH $LWK_POKETYPE
+	CASE POKETYPE_NORMAL THEN	//ノーマル
+		$LWK_EFFECT = SCR_WBT_EFFECT_NORMAL
+	CASE POKETYPE_HONOO THEN	//ほのお
+		$LWK_EFFECT = SCR_WBT_EFFECT_FIRE
+	CASE POKETYPE_MIZU THEN	//みず
+		$LWK_EFFECT = SCR_WBT_EFFECT_WATER
+	CASE POKETYPE_KUSA THEN	//くさ
+		$LWK_EFFECT = SCR_WBT_EFFECT_GRASS
+	CASE POKETYPE_DENKI THEN	//でんき
+		$LWK_EFFECT = SCR_WBT_EFFECT_ELECT
+	CASE POKETYPE_KOORI THEN	//こおり
+		$LWK_EFFECT = SCR_WBT_EFFECT_ICE
+	CASE POKETYPE_KAKUTOU THEN	//かくとう
+		$LWK_EFFECT = SCR_WBT_EFFECT_FIGHT
+	CASE POKETYPE_DOKU THEN	//どく
+		$LWK_EFFECT = SCR_WBT_EFFECT_POISON
+	CASE POKETYPE_JIMEN THEN	//じめん
+		$LWK_EFFECT = SCR_WBT_EFFECT_GROUND
+	CASE POKETYPE_HIKOU THEN	//ひこう
+		$LWK_EFFECT = SCR_WBT_EFFECT_FLYING
+	CASE POKETYPE_ESPER THEN	//エスパー
+		$LWK_EFFECT = SCR_WBT_EFFECT_PSYCHC
+	CASE POKETYPE_MUSHI THEN	//むし
+		$LWK_EFFECT = SCR_WBT_EFFECT_BUG
+	CASE POKETYPE_IWA THEN	//いわ
+		$LWK_EFFECT = SCR_WBT_EFFECT_ROCK
+	CASE POKETYPE_GHOST THEN	//ゴースト
+		$LWK_EFFECT = SCR_WBT_EFFECT_GHOST
+	CASE POKETYPE_DRAGON THEN	//ドラゴン
+		$LWK_EFFECT = SCR_WBT_EFFECT_DRAGON
+	CASE POKETYPE_AKU THEN	//あく
+		$LWK_EFFECT = SCR_WBT_EFFECT_DARK
+	CASE POKETYPE_HAGANE THEN	//でんき
+		$LWK_EFFECT = SCR_WBT_EFFECT_STEEL
+	ENDSWITCH
+
 CASE SCR_WBT_CUP_DOWNLOAD THEN	//ダウンロード
 	$LWK_EFFECT = SCR_WBT_EFFECT_WCSL
 CASE SCR_WBT_CUP_HODOMOE THEN	//ホドモエ
