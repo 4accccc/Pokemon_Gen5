@@ -52,8 +52,8 @@ SDK_COMPILER_ASSERT(sizeof(OBJCODE_PARAM) == 28);
 //--------------------------------------------------------------
 /// かいりき岩が参照、保存する座標データ数
 //--------------------------------------------------------------
-#define MMDL_ROCKPOS_MAX (30)
-#define ROCKPOS_INIT (0xffffffff) ///<MMDL_ROCKPOS 座標初期化値
+#define MMDL_ROCKPOS_MAX (80)
+#define ROCKPOS_INIT (0x7fff) ///<MMDL_ROCKPOS 座標初期化値
 
 //--------------------------------------------------------------
 ///  エイリアスシンボル
@@ -87,7 +87,9 @@ typedef struct{
 //--------------------------------------------------------------
 struct _TAG_MMDL_ROCKPOS
 {
-  VecFx32 pos;
+  s16     gx[ MMDL_ROCKPOS_MAX ];
+  s16     gy[ MMDL_ROCKPOS_MAX ];
+  s16     gz[ MMDL_ROCKPOS_MAX ];
 };
 
 //======================================================================
@@ -170,7 +172,7 @@ static int MMdlHeader_GetAliesZoneID( const MMDL_HEADER *head );
 static BOOL mmdlsys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no );
 
 //MMDL_ROCKPOS
-static BOOL mmdl_rockpos_CheckSetPos( const MMDL_ROCKPOS *rockpos );
+static BOOL mmdl_rockpos_CheckSetPos( const MMDL_ROCKPOS *rockpos, const int no );
 static int rockpos_GetPosNumber( const u16 zone_id, const u16 obj_id );
 static int mmdl_rockpos_GetPosNumber( const MMDL *mmdl );
 static BOOL mmdl_rockpos_CheckPos( const MMDL *mmdl );
@@ -5199,6 +5201,8 @@ void MMDL_DrawPopProcDummy( MMDL * mmdl )
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 #include "../../../resource/fldmapdata/pushrock/rockpos.cdat"
 
+SDK_COMPILER_ASSERT( NELEMS(DATA_MMDL_PushRockPosNum) <= MMDL_ROCKPOS_MAX );
+
 //--------------------------------------------------------------
 /**
  * MMDL_ROCKPOS ワークサイズを取得
@@ -5208,7 +5212,7 @@ void MMDL_DrawPopProcDummy( MMDL * mmdl )
 //--------------------------------------------------------------
 u32 MMDL_ROCKPOS_GetWorkSize( void )
 {
-  return( sizeof(MMDL_ROCKPOS)*MMDL_ROCKPOS_MAX );
+  return( sizeof(MMDL_ROCKPOS));
 }
 
 //--------------------------------------------------------------
@@ -5220,21 +5224,22 @@ u32 MMDL_ROCKPOS_GetWorkSize( void )
 //--------------------------------------------------------------
 void MMDL_ROCKPOS_Init( void *p )
 {
-  MI_CpuFill32( p, ROCKPOS_INIT, sizeof(MMDL_ROCKPOS)*MMDL_ROCKPOS_MAX );
+  MI_CpuFill16( p, ROCKPOS_INIT, sizeof(MMDL_ROCKPOS));
 }
 
 //--------------------------------------------------------------
 /**
  * MMDL_ROCKPOS 座標がセットされているかどうか
  * @param rockpos MMDL_ROCKPOS
+ * @param no 位置
  * @retval  BOOL TRUE=セット済み
  */
 //--------------------------------------------------------------
-static BOOL mmdl_rockpos_CheckSetPos( const MMDL_ROCKPOS *rockpos )
+static BOOL mmdl_rockpos_CheckSetPos( const MMDL_ROCKPOS *rockpos, const int no )
 {
-  if( (u32)rockpos->pos.x != ROCKPOS_INIT ||
-      (u32)rockpos->pos.y != ROCKPOS_INIT ||
-      (u32)rockpos->pos.z != ROCKPOS_INIT ){
+  if( (s16)rockpos->gx[no] != ROCKPOS_INIT ||
+      (s16)rockpos->gy[no] != ROCKPOS_INIT ||
+      (s16)rockpos->gz[no] != ROCKPOS_INIT ){
     return( TRUE );
   }
   return( FALSE );
@@ -5302,8 +5307,7 @@ static BOOL mmdl_rockpos_CheckPos( const MMDL *mmdl )
   
   if( no != MMDL_ROCKPOS_MAX ){
     const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
-    const MMDL_ROCKPOS *rockpos = &mmdlsys->rockpos[no];
-    return( mmdl_rockpos_CheckSetPos(rockpos) );
+    return( mmdl_rockpos_CheckSetPos(mmdlsys->rockpos, no) );
   }
   
   return( FALSE );
@@ -5324,10 +5328,36 @@ static BOOL mmdl_rockpos_GetPos( const MMDL *mmdl, VecFx32 *pos )
   
   if( no != MMDL_ROCKPOS_MAX ){
     const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
-    const MMDL_ROCKPOS *rockpos = &mmdlsys->rockpos[no];
+    const MMDL_ROCKPOS *rockpos = mmdlsys->rockpos;
     
-    if( mmdl_rockpos_CheckSetPos(rockpos) ){
-      *pos = rockpos->pos;
+    if( mmdl_rockpos_CheckSetPos(rockpos, no) ){
+
+      // 座標が設定されてる = 落ちている
+      pos->x = GRID_SIZE_FX32( rockpos->gx[no] );
+      pos->y = GRID_SIZE_FX32( rockpos->gy[no] );
+      pos->z = GRID_SIZE_FX32( rockpos->gz[no] );
+      {
+        // かいりき岩イベントの
+        // 落ちた後と同じ処理
+        //
+        fx32    height = pos->y;
+
+        switch( MMDL_GetOBJCode(mmdl) ){
+        case ROCK:
+          height += NUM_FX32(-14);
+          break;
+        default:
+          height += NUM_FX32(-26);
+        }
+
+        pos->y = height;
+
+        // 1グリッドずれ
+        pos->y += GRID_FX32;
+      }
+
+      ICHI_Printf("kairiri get \n");
+      ICHI_Printf("y = %x gx = %d \n", pos->y, rockpos->gy[no]);
       return( TRUE );
     }
   }
@@ -5351,9 +5381,15 @@ void MMDL_ROCKPOS_SavePos( const MMDL *mmdl )
   if( no != MMDL_ROCKPOS_MAX ){
     VecFx32 pos;
     const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
-    MMDL_ROCKPOS *rockpos = &mmdlsys->rockpos[no];
+    MMDL_ROCKPOS *rockpos = mmdlsys->rockpos;
     MMDL_GetVectorPos( mmdl, &pos );
-    rockpos->pos = pos;
+
+    rockpos->gx[no] = SIZE_GRID_FX32( pos.x );
+    rockpos->gy[no] = SIZE_GRID_FX32( pos.y );
+    rockpos->gz[no] = SIZE_GRID_FX32( pos.z );
+
+    ICHI_Printf("kairiri save \n");
+    ICHI_Printf("y = %x gx = %d \n", pos.y, rockpos->gy[no]);
     return;
   }
   
@@ -5400,10 +5436,10 @@ void MMDLSYS_ROCKPOS_ResetFallParam( const MMDLSYS *mmdlsys, const u16 zone_id, 
 {
   s32 no = rockpos_GetPosNumber( zone_id, obj_id );
   if( no != MMDL_ROCKPOS_MAX ){
-    MMDL_ROCKPOS *rockpos = &mmdlsys->rockpos[no];
-    rockpos->pos.x = ROCKPOS_INIT;
-    rockpos->pos.y = ROCKPOS_INIT;
-    rockpos->pos.z = ROCKPOS_INIT;
+    MMDL_ROCKPOS *rockpos = mmdlsys->rockpos;
+    rockpos->gx[no] = ROCKPOS_INIT;
+    rockpos->gy[no] = ROCKPOS_INIT;
+    rockpos->gz[no] = ROCKPOS_INIT;
   }
 }
 
@@ -5437,8 +5473,7 @@ u32 MMDL_GetFallRockCnt( const MMDLSYS *mmdlsys )
   u32 set_cnt = 0; 
   for( i = 0; i < MMDL_ROCKPOS_MAX; i++ )
   {
-    const MMDL_ROCKPOS *rockpos = &mmdlsys->rockpos[i];
-    if( mmdl_rockpos_CheckSetPos(rockpos) )
+    if( mmdl_rockpos_CheckSetPos(mmdlsys->rockpos, i) )
     {
       set_cnt++;
     }
