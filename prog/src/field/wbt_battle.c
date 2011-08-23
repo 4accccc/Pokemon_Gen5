@@ -213,7 +213,6 @@ static u16 GetRand( GFL_STD_RandContext *rand_context )
 static void GetPokemonRomData(
     ARCID poke_arc_id,BSUBWAY_POKEMON_ROM_DATA *prd,int index)
 {
-//  index += BSW_PM_ARCDATANO_ORG;
   GFL_ARC_LoadData( (void*)prd, poke_arc_id, index );
 }
 
@@ -239,7 +238,7 @@ typedef struct {
   u8 available;
   u16 index_no;
   BSUBWAY_POKEMON_ROM_DATA prd;
-}SELECT_DATA;
+}CANDIDATE_DATA;
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -299,26 +298,30 @@ static BOOL NGINFO_Check( const WBT_NG_INFO * ng_info, u16 mons_no, u16 item_no 
   return FALSE;
 }
 
+#ifdef  PM_DEBUG
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static void dump_SELECT_DATA( const SELECT_DATA * select_data, int num )
+static void DEBUG_dumpCandidates( const CANDIDATE_DATA * candidates_array, int num )
 {
   int i;
-  TAMADA_Printf("dump_SELECT_DATA\n");
+  TAMADA_Printf("DEBUG_dumpCandidates\n");
   for ( i = 0; i < num; i ++ )
   {
-    const SELECT_DATA * rd = &select_data[i];
+    const CANDIDATE_DATA * candidate = &candidates_array[i];
     TAMADA_Printf("Index(%3d) monsno(%3d) itemno(%3d) =:%d\n",
-        rd->index_no, rd->prd.mons_no, rd->prd.item_no, rd->available );
+        candidate->index_no, candidate->prd.mons_no, candidate->prd.item_no, candidate->available );
   }
 }
+#endif
+
 //--------------------------------------------------------------
 /**
  * @brief WBTのロムトレーナーのポケモンを決める
  *
  * @param[out]    index_array   BSubwayデータ内のインデックスを保持する配列
- * @param[in]     trd           BS形式トレーナーデータ
  * @param[in]     poke_arc_id   ポケモンデータが格納されているアーカイブID
+ * @param[in]     use_poke_cnt
+ * @param[in]     use_poke_table
  * @param[in]     cnt           トレーナーに持たせるポケモンの数
  * @param[in,out] ng_info       NGにするポケモンの情報
  * @param[in]     rand_context  乱数値ポインタ(NULL GFUser_GetPublicRandを使用
@@ -326,39 +329,41 @@ static void dump_SELECT_DATA( const SELECT_DATA * select_data, int num )
  *
  * @todo  異常なデータに対するリカバリ処理が必要
  *
- * (1)BSUBWAY_TRAINER_ROM_DATAを解析、必要なBSUBWAY_POKEMON_ROM_DATAを事前にselect_dataとして読み込む
- * (2)select_data中のNG登録のアイテム、ポケモンを含むデータを使用できないようにする
- * (3)select_dataの利用可能なものをランダムに選択、同じポケモン・アイテムをNGINFOに登録
+ * (1)BSUBWAY_TRAINER_ROM_DATAを解析、BSUBWAY_POKEMON_ROM_DATAをcandidates_arrayとして読み込む
+ * (2)candidates_array中のNG登録のアイテム、ポケモンを含むデータを使用できないようにする
+ * (3)candidates_arrayの利用可能なものをランダムに選択、同じポケモン・アイテムをNGINFOに登録
  * (4)　(2)～(3)を必要なだけ繰り返し、完了
  */
 //--------------------------------------------------------------
 static void choiceBSubwayData(
     u16 index_array[TEMOTI_POKEMAX],
-    const BSUBWAY_TRAINER_ROM_DATA *trd, ARCID poke_arc_id,
+    ARCID poke_arc_id, u16 use_poke_cnt, const u16 * use_poke_table,
     u8 cnt, WBT_NG_INFO * ng_info, GFL_STD_RandContext *rand_context, HEAPID tempHeapID )
 {
   int i;
   int data_max;
   int  set_count;
   u8 selected[TEMOTI_POKEMAX];
-  SELECT_DATA * select_data;
+  CANDIDATE_DATA * candidates_array;
 
-  data_max = trd->use_poke_cnt;
+  data_max = use_poke_cnt;
   GF_ASSERT( data_max < ROM_POKE_MAX );
 
-  select_data = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(SELECT_DATA) * ROM_POKE_MAX );
-  GFL_STD_MemClear( select_data, sizeof(SELECT_DATA) * ROM_POKE_MAX );
+  candidates_array = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(CANDIDATE_DATA) * ROM_POKE_MAX );
+  GFL_STD_MemClear( candidates_array, sizeof(CANDIDATE_DATA) * ROM_POKE_MAX );
   GFL_STD_MemClear( selected, sizeof(u8) * TEMOTI_POKEMAX );
   GFL_STD_MemClear( index_array, sizeof(u16) * TEMOTI_POKEMAX );
 
   for ( i = 0; i < data_max; i ++ )
   { 
-    SELECT_DATA * rd = &select_data[i];
-    rd->available = TRUE;
-    rd->index_no = trd->use_poke_table[ i ];
-    GetPokemonRomData( poke_arc_id, &rd->prd, rd->index_no );
+    CANDIDATE_DATA * candidate = &candidates_array[i];
+    candidate->available = TRUE;
+    candidate->index_no = use_poke_table[ i ];
+    GetPokemonRomData( poke_arc_id, &candidate->prd, candidate->index_no );
   }
-  dump_SELECT_DATA( select_data, data_max );
+#ifdef  PM_DEBUG
+  DEBUG_dumpCandidates( candidates_array, data_max );
+#endif
 
   for( set_count = 0; set_count != cnt; set_count ++ )
   {
@@ -371,14 +376,16 @@ static void choiceBSubwayData(
     available_count = 0;
     for ( i = 0; i < data_max; i ++ )
     {
-      SELECT_DATA * rd = &select_data[i];
-      if ( NGINFO_Check( ng_info, rd->prd.mons_no, rd->prd.item_no ) == TRUE )
+      CANDIDATE_DATA * candidate = &candidates_array[i];
+      if ( NGINFO_Check( ng_info, candidate->prd.mons_no, candidate->prd.item_no ) == TRUE )
       { //NGのものは使用できないようにする
-        rd->available = FALSE;
+        candidate->available = FALSE;
       }
-      if (rd->available) available_count ++;
+      if (candidate->available) available_count ++;
     }
-    dump_SELECT_DATA( select_data, data_max );
+#ifdef  PM_DEBUG
+    DEBUG_dumpCandidates( candidates_array, data_max );
+#endif
 
     //抽選対象が必要な数に満たない場合Assert
     GF_ASSERT( available_count >= cnt - set_count );
@@ -388,7 +395,7 @@ static void choiceBSubwayData(
     TAMADA_Printf(" choose range(0-%d), choice = %d\n", ( available_count - 1 ), choice );
     for ( poke_index = 0; poke_index < data_max; poke_index ++ )
     {
-      if ( select_data[poke_index].available )
+      if ( candidates_array[poke_index].available )
       {
         if ( choice == 0 ) break;
         choice --;
@@ -397,8 +404,9 @@ static void choiceBSubwayData(
     GF_ASSERT( poke_index < data_max );
 
     //選ばれたデータは次の抽選で使えない
-    select_data[ poke_index ].available = FALSE;
-    prd_d = &select_data[ poke_index ].prd;
+    candidates_array[ poke_index ].available = FALSE;
+
+    prd_d = &candidates_array[ poke_index ].prd;
     //同一のポケモンを含むデータは使えなくなる
     NGINFO_AddNGMons( ng_info, prd_d->mons_no );
     //同一のアイテムを持つデータは使えなくなる
@@ -410,12 +418,12 @@ static void choiceBSubwayData(
   TAMADA_Printf("indexes = [");
   for(i = 0; i < set_count; i++)
   {
-    index_array[ i ] = select_data[ selected[i] ].index_no;
+    index_array[ i ] = candidates_array[ selected[i] ].index_no;
     TAMADA_Printf("%03d,", index_array[ i ] );
   }
   TAMADA_Printf("]\n");
 
-  GFL_HEAP_FreeMemory( select_data );
+  GFL_HEAP_FreeMemory( candidates_array );
 }
 
 //-----------------------------------------------------------------------------
@@ -484,7 +492,8 @@ static void makeRomTrainerData(
 
     TAMADA_Printf(" WBT TrData:arc_id=%d id=%d use_poke_cnt = %d\n", base_arc_id, tr_id, trd->use_poke_cnt );
     //ポケモンデータを選択
-    choiceBSubwayData( index_array, trd, base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, cnt, &ng_info, NULL, inHeapID);
+    choiceBSubwayData( index_array, base_arc_id + WBTBTD_ARCOFS_PM_NORMAL,
+        trd->use_poke_cnt, trd->use_poke_table, cnt, &ng_info, NULL, inHeapID);
 
     for(i = 0; i < cnt; i++)
     {
@@ -871,6 +880,12 @@ void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
       WBTTOOL_GetRomTrainerData( wbtsys->rom_trdata, wbt_tr->tr_id, &tr_rom_data );
       *btl_bgm = tr_rom_data.btl_bgm_id;
       *win_bgm = tr_rom_data.win_bgm_id;
+      //チャンピオン戦以外で決勝の場合はWBT専用曲にする
+      if ( wbtsys->stage == WBTSTAGE_FINAL && wbtsys->wbtcup != WBTCUP_CHAMPION )
+      {
+        *btl_bgm = SEQ_BGM_VS_WBT;
+        *win_bgm = SEQ_BGM_WIN_WBT;
+      }
     }
     break;
   }
