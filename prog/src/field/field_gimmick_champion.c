@@ -281,10 +281,10 @@ static FIELD_TASK_RETVAL CameraShake( void* wk );
 static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID );
 static void DEBUGMENU_Exit( void );
 
-static u32  debug_cam_width = 4;
-static u32  debug_cam_sync = 4;
-static u32  debug_cam_time = 20;
-static u32  debug_cam_wait = 30;
+static u32  debug_cam_width = 1;
+static u32  debug_cam_sync = 3;
+static u32  debug_cam_time = 22;
+static u32  debug_cam_wait = 149;
 
 #endif // CHAMPION_DEBUG_MENU
 
@@ -946,10 +946,10 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk )
         shakeParam.Time            = debug_cam_time;
         shakeParam.WaitStartFrame  = debug_cam_wait;
 #else
-        shakeParam.Height          = 4;
-        shakeParam.Sync            = 4;
-        shakeParam.Time            = 20;
-        shakeParam.WaitStartFrame  = 130;
+        shakeParam.Height          = 1;
+        shakeParam.Sync            = 3;
+        shakeParam.Time            = 22;
+        shakeParam.WaitStartFrame  = 149;
 #endif
 
         cam = FIELD_TASK_CameraShake( p_fieldmap, &shakeParam );
