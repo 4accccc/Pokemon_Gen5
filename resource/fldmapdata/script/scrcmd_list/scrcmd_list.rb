@@ -96,7 +96,7 @@ file_lines.each do |line|
     if items[COL::COMMAND] =~ /(_\w+)\(/ then
       command_data.command = $1.strip
     end 
-  elsif seq != "簡易コマンド" && items[COL::OVERLAY] != "常駐" then
+  elsif seq != "簡易コマンド" && items[COL::OVERLAY] == "常駐" then
     STDERR.printf("Error: %s\n", items[COL::COMMAND] )
     STDERR.printf("未定義のシーケンス(%s)を使用しています！\n", seq )
     exit -1
