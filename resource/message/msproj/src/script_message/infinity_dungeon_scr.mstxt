@@ -1507,10 +1507,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　かいし（ホワイト）▼</Text>
+			<Text>ようやくきたな　まちくたびれたぜ▼
+いままで　なんにんも　あいてを
+してきたけど　みんな　よわくてな▼
+おまえを　まっていたんだ▼
+あのとき　おまえに　あったときに
+おまえの　めを　みて　おもったんだ▼
+こいつは　……　つよい　ってな▼
+さあ　あのときの　やくそくだ
+しんけんしょうぶを　してもらうぞ！▼
+ここで　いちばんつよいのは
+おれか　おまえか▼
+きめようぜ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-23T07:39:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1518,10 +1529,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　かいし（ホワイト）▼</Text>
+			<Text>ようやく来たな　待ちくたびれたぜ▼
+今まで　何人も　相手を
+してきたけど　みんな　弱くてな▼
+おまえを　待っていたんだ▼
+あのとき　おまえに　会ったときに
+おまえの　目を　見て　思ったんだ▼
+こいつは　……　強い　ってな▼
+さあ　あのときの　約束だ
+真剣勝負を　してもらうぞ！▼
+ここで　一番強いのは
+おれか　おまえか▼
+決めようぜ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-23T07:39:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1532,7 +1554,7 @@
 			<Comment>初回　戦闘開始　ホワイトエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:21:33" />
+				Time="2011-08-23T07:39:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3248,10 +3270,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア1</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア1</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:39:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3319,10 +3341,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア2</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア2</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:40:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3378,10 +3400,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア3</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア3</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:40:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3425,10 +3447,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア4</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア4</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:40:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3472,10 +3494,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア5</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア5</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:40:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3529,10 +3551,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア6</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア6</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:40:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3576,10 +3598,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア7</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア7</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:40:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3623,10 +3645,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア8</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア8</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:40:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3670,10 +3692,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア9</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア9</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:40:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3695,10 +3717,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょかい　せんとう　おわり（ブラック）▼</Text>
+			<Text>まけた　ここで　はじめてまけた！▼
+やっぱり　おまえ　つよいな！
+おれの　めに　くるいはなかった▼
+まけたのに　ふしぎと　きもちが　いいぜ▼
+ここでの　もくひょうが　なくて
+こまっていたけど▽
+あたらしい　もくひょうが　できたぞ▼
+……　おまえを　たおす！▼
+つぎは　かならず　おれが　かつ！▼
+おれも　もっとしゅぎょうするから
+また　しょうぶしてくれよな！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-23T07:38:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3706,10 +3738,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょかい　せんとう　おわり（ブラック）▼</Text>
+			<Text>負けた　ここで　はじめて負けた！▼
+やっぱり　おまえ　強いな！
+おれの　目に　くるいはなかった▼
+負けたのに　不思議と　気持ちが　いいぜ▼
+ここでの　目標が　なくて困っていたけど
+新しい　目標が　できたぞ▼
+……　おまえを　倒す！
+次は　必ず　おれが　勝つ！▼
+おれも　もっと　修行するから
+また　勝負してくれよな！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-23T07:38:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3717,10 +3758,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア10（バンジロウ））</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:38:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3763,11 +3804,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア10
+			<Comment>初回　戦闘終了　ブラックエリア10
 （バージョン違いに登場するトレーナー用）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:40:50" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -3809,10 +3850,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア1</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア1</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:40:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3880,10 +3921,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア2</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア2</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:41:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3939,10 +3980,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア3</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア3</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:41:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3986,10 +4027,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア4</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア4</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:41:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4033,10 +4074,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア5</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア5</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:41:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4080,10 +4121,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア6</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア6</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:41:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4127,10 +4168,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア7</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア7</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:41:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4174,10 +4215,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア8</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア8</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:41:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4221,10 +4262,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア9</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア9</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:41:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4287,10 +4328,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア10（バンジロウ））</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4333,11 +4374,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア10
+			<Comment>初回　戦闘終了　ホワイトエリア10
 （バージョン違いに登場するトレーナー用）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:22:21" />
+				Time="2011-08-23T07:41:56" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
