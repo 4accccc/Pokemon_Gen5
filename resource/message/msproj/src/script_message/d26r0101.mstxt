@@ -6,10 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッジ１ヲチェックシマシタ</Text>
+			<Text>ベーシックバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:04:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -17,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッジ１ヲチェックシマシタ</Text>
+			<Text>ベーシックバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -46,13 +48,15 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d26r0101_badge_check_02">
+		Label="msg_d26r0101_badge_check_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッジ２ヲチェックシマシタ</Text>
+			<Text>トキシックバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:04:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -60,10 +64,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッジ２ヲチェックシマシタ</Text>
+			<Text>トキシックバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -89,13 +94,15 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d26r0101_badge_check_03">
+		Label="msg_d26r0101_badge_check_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッジ３ヲチェックシマシタ</Text>
+			<Text>インセクトバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:21" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:05:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -103,10 +110,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッジ３ヲチェックシマシタ</Text>
+			<Text>インセクトバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -132,13 +140,15 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d26r0101_badge_check_04">
+		Label="msg_d26r0101_badge_check_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッジ４ヲチェックシマシタ</Text>
+			<Text>ボルトバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:05:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -146,10 +156,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッジ４ヲチェックシマシタ</Text>
+			<Text>ボルトバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -175,13 +186,15 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d26r0101_badge_check_05">
+		Label="msg_d26r0101_badge_check_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッジ５ヲチェックシマシタ</Text>
+			<Text>クエイクバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:29" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -189,10 +202,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッジ５ヲチェックシマシタ</Text>
+			<Text>クエイクバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -218,13 +232,15 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d26r0101_badge_check_06">
+		Label="msg_d26r0101_badge_check_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッジ６ヲチェックシマシタ</Text>
+			<Text>ジェットバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:33" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -232,10 +248,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッジ６ヲチェックシマシタ</Text>
+			<Text>ジェットバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -261,13 +278,15 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d26r0101_badge_check_07">
+		Label="msg_d26r0101_badge_check_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッジ７ヲチェックシマシタ</Text>
+			<Text>レジェンドバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:38" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -275,10 +294,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッジ７ヲチェックシマシタ</Text>
+			<Text>レジェンドバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -304,13 +324,15 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d26r0101_badge_check_08">
+		Label="msg_d26r0101_badge_check_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッジ８ヲチェックシマシタ</Text>
+			<Text>ウェーブバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:42" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -318,10 +340,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッジ８ヲチェックシマシタ</Text>
+			<Text>ウェーブバッジ　ヲ
+チェック　シマシタ！！</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-02T09:12:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-23T07:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
