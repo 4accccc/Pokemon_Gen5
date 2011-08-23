@@ -46,7 +46,13 @@ CDAT	= wbt_trainer.dat
 #------------------------------------------------------------------------------
 #ヘッダ参照先
 #------------------------------------------------------------------------------
-
+WBT_DEPENDS	= $(PROJECT_PROGDIR)include/pm_version.h \
+							$(PROJECT_PROGDIR)include/poke_tool/poketype_def.h \
+							$(PROJECT_PROGDIR)src/field/wbt_trlist_struct.h \
+							$(PROJECT_PROGDIR)include/field/wbt.h \
+							../../sound/swan_sound_data.sadl \
+							../../trtype/trtype_def.h \
+							../../fldmmdl/fldmmdl_objcode.h
 
 #------------------------------------------------------------------------------
 #	#サフィックス
@@ -81,7 +87,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 #%.bin: %.c
 #wbt_trainer.bin: wbt_trainer.dat
-wbt_trainer.bin: $(DATATXT)
+wbt_trainer.bin: $(DATATXT) $(WBT_DEPENDS)
 	@ruby wbt_trainer.rb $(DATATXT) > wbt_trainer.cdat
 	@echo "WBT trainer parameter convert"
 	@echo "//" > temp.c
