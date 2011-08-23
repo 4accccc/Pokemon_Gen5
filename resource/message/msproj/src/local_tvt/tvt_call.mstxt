@@ -1756,11 +1756,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくに　[Name:Status Idx="0" ]は
+			<Text>特に　[Name:Status Idx="0" ]は
 本当　がんばったと　思うよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:20:40" />
+				Time="2011-08-23T04:30:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
