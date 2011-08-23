@@ -46,6 +46,12 @@ ntrcomp -lex -A4 -o mono_bgu_mission_lz.NSCR mono_bgu_mission.NSCR
 g2dcvtr mono_bgu_power.nsc -bg
 ntrcomp -lex -A4 -o mono_bgu_power_lz.NSCR mono_bgu_power.NSCR
 
+g2dcvtr mono_bgd_fmission.nsc -bg
+ntrcomp -lex -A4 -o mono_bgd_fmission_lz.NSCR mono_bgd_fmission.NSCR
+
+g2dcvtr mono_bgu_fmission.nsc -bg
+ntrcomp -lex -A4 -o mono_bgu_fmission_lz.NSCR mono_bgu_fmission.NSCR
+
 ntrcomp -lex -A4 -o mono_bgd_lz.NCGR mono_bgd.NCGR
 ntrcomp -lex -A4 -o mono_bgu_lz.NCGR mono_bgu.NCGR
 

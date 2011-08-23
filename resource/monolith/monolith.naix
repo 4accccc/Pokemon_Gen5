@@ -21,14 +21,16 @@ enum {
 	NARC_monolith_mono_bgd_power_lz_NSCR = 7,
 	NARC_monolith_mono_bgd_rireki_lz_NSCR = 8,
 	NARC_monolith_mono_bgd_title_lz_NSCR = 9,
-	NARC_monolith_mono_bgu_base_lz_NSCR = 10,
-	NARC_monolith_mono_bgu_map_lz_NSCR = 11,
-	NARC_monolith_mono_bgu_mission_lz_NSCR = 12,
-	NARC_monolith_mono_bgu_power_lz_NSCR = 13,
-	NARC_monolith_mono_bgd_lz_NCGR = 14,
-	NARC_monolith_mono_bgu_lz_NCGR = 15,
-	NARC_monolith_mono_bgu_NCLR = 16,
-	NARC_monolith_mono_bgd_NCLR = 17
+	NARC_monolith_mono_bgd_fmission_lz_NSCR = 10,
+	NARC_monolith_mono_bgu_base_lz_NSCR = 11,
+	NARC_monolith_mono_bgu_map_lz_NSCR = 12,
+	NARC_monolith_mono_bgu_mission_lz_NSCR = 13,
+	NARC_monolith_mono_bgu_power_lz_NSCR = 14,
+	NARC_monolith_mono_bgu_fmission_lz_NSCR = 15,
+	NARC_monolith_mono_bgd_lz_NCGR = 16,
+	NARC_monolith_mono_bgu_lz_NCGR = 17,
+	NARC_monolith_mono_bgu_NCLR = 18,
+	NARC_monolith_mono_bgd_NCLR = 19
 };
 
 /* NARC_MONOLITH_NAIX_ */
