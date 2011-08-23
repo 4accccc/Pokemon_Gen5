@@ -219,6 +219,8 @@ _WBT_LIST_CALL( SCR_WBT_LIST_1ST_START )
 //WBTシステムに状態を通知：1回戦へ
 _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_1ST )
 
+_WBT_GET_WBT_CUP(LWK_CUP)
+
 //初回イベントトーナメントかどうかをチェック
 IF $LWK_CUP == SCR_WBT_CUP_HODOMOE_EVENT THEN
 
@@ -269,51 +271,6 @@ IF $LWK_CUP == SCR_WBT_CUP_HODOMOE_EVENT THEN
 
 	_TIME_WAIT( 30 )
 
-	//カメラを対戦者側に移動
-	_CAMERA_MOVE( 3544,0,970752,208896,131103,1081344,60 )	//一番最後の引数は移動にかかるフレーム数
-
-	//暗転処理
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	
-	_TIME_WAIT( 60 )
-	
-	//暗転復帰
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
-
-	//対戦者の前口上メッセージ表示　ＭＳＧ表示専用コマンド
-	_WBT_ANNOUNCE( POS_UP )
-	_MSGWIN_CLOSE()
-
-	//対戦者非表示解除後
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_off )
-	_OBJ_ANIME_WAIT()
-
-	//歓声ＳＥ再生
-	//_SE_PLAY(SEQ_SE_SW_WBT_03)
-
-	//対戦者中央のステージまで歩き出す
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_in )
-
-	//カメラ対戦者追従
-	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,120 )	//一番最後の引数は移動にかかるフレーム数
-
-	_TIME_WAIT( 30 )
-
-	//暗転処理
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-
-	_TIME_WAIT( 70 )
-
-	//暗転復帰
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
-
-	_OBJ_ANIME_WAIT()
-	_CAMERA_WAIT_MOVE()
-
 //それ以外の場合
 ELSE
 
@@ -353,49 +310,49 @@ ELSE
 
 	_TIME_WAIT( 30 )
 
-	//カメラを対戦者側に移動
-	_CAMERA_MOVE( 3544,0,970752,208896,131103,1081344,60 )	//一番最後の引数は移動にかかるフレーム数
-
-	//暗転処理
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	
-	_TIME_WAIT( 60 )
-	
-	//暗転復帰
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
-
-	//対戦者の前口上メッセージ表示　ＭＳＧ表示専用コマンド
-	_WBT_ANNOUNCE( POS_UP )
-	_MSGWIN_CLOSE()
-
-	//対戦者非表示解除後
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_off )
-	_OBJ_ANIME_WAIT()
-
-	//対戦者中央のステージまで歩き出す
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
-
-	//カメラ対戦者追従
-	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,90 )	//一番最後の引数は移動にかかるフレーム数
-
-	_TIME_WAIT( 30 )
-
-	//暗転処理
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-
-	_TIME_WAIT( 50 )
-
-	//暗転復帰
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
-
-	_OBJ_ANIME_WAIT()
-	_CAMERA_WAIT_MOVE()
-
 ENDIF
+
+//カメラを対戦者側に移動
+_CAMERA_MOVE( 3544,0,970752,208896,131103,1081344,60 )	//一番最後の引数は移動にかかるフレーム数
+
+//暗転処理
+_BLACK_OUT()
+_DISP_FADE_END_CHECK()
+	
+_TIME_WAIT( 60 )
+	
+//暗転復帰
+_BLACK_IN()
+_DISP_FADE_END_CHECK()
+
+//対戦者の前口上メッセージ表示　ＭＳＧ表示専用コマンド
+_WBT_ANNOUNCE( POS_UP )
+_MSGWIN_CLOSE()
+
+//対戦者非表示解除後
+_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_off )
+_OBJ_ANIME_WAIT()
+
+//対戦者中央のステージまで歩き出す
+_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_in )
+
+//カメラ対戦者追従
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,90 )	//一番最後の引数は移動にかかるフレーム数
+
+_TIME_WAIT( 30 )
+
+//暗転処理
+_BLACK_OUT()
+_DISP_FADE_END_CHECK()
+
+_TIME_WAIT( 40 )
+
+//暗転復帰
+_BLACK_IN()
+_DISP_FADE_END_CHECK()
+
+_OBJ_ANIME_WAIT()
+_CAMERA_WAIT_MOVE()
 
 //１回戦の対戦者名を格納する
 _WBT_SET_ENEMY_NAME( 0 )
@@ -507,7 +464,7 @@ _PLAINWIN_CLOSE()
 _MAP_FADE_BLACK_OUT_SLOW()
 
 //カメラ操作　ステージ中央にカメラを合わせる
-_CAMERA_MOVE( 3554,0,970572,1507328,172063,352256,24 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 3554,0,970572,1507328,172063,352256,18 )	//一番最後の引数は移動にかかるフレーム数
 
 _MAP_FADE_END_CHECK()
 _CAMERA_WAIT_MOVE()
@@ -753,7 +710,7 @@ _PLAINWIN_CLOSE()
 _MAP_FADE_BLACK_OUT_SLOW()
 
 //カメラ操作　ステージ中央にカメラを合わせる
-_CAMERA_MOVE( 3554,0,970572,1507328,172063,352256,24 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 3554,0,970572,1507328,172063,352256,18 )	//一番最後の引数は移動にかかるフレーム数
 
 _MAP_FADE_END_CHECK()
 _CAMERA_WAIT_MOVE()

@@ -8171,7 +8171,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D10,
 		MAPNAME_D10,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
-		WEATHER_NO_SNOWSTORM,
+		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
@@ -20925,9 +20925,9 @@ static const ZONEDATA ZoneData[] = {
 		MATRIX_ID_SWBCGATE, // camera_area
 		19,   // padding > placeicon
     0,
-		16,
+		31,
 		0,
-		16,
+		20,
 	},
 	{//ZONE_ID_C15R0301 = 598
 		RSC_GRID_DEFAULT,
