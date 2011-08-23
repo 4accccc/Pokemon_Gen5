@@ -2,6 +2,541 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d26r0101_boss_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……きたね[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……来たね[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・配置
+　GRIDX＝80、GRIDZ＝46、下向き
+・posイベント
+　GRIDX＝619～621、GRIDZ＝67
+・続けてboss_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:10:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_boss_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]この　チャンピオンロードの
+さきに　ポケモンリーグが　ある[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]この　チャンピオンロードの
+先に　ポケモンリーグが　ある[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・バッジチェックゲート方向を向いて
+・続けてboss_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:10:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_boss_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンしょうぶ　とは
+ポケモンを　きずつけること……▼
+そうとらえ　きらっていたが
+そんな　たんじゅんな　ものでは　ない[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモン勝負　とは
+ポケモンを　傷つけること……▼
+そうとらえ　忌避していたが
+そんな　単純な　ものでは　ない[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、首フリアニメ
+・主人公に近づいて
+・続けてboss_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_boss_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンしょうぶ　とは！▼
+かちまけを　きめる……
+それいじょう　に！▼
+じぶんと！　じぶんの　ポケモンと！
+あいての　ポケモンと！　あいて！▽
+すべてを　みとめあうための　もの！▼
+きずついて　たたかう　ポケモン！
+その　いたみを　うけとめる　ヒト！▼
+ヒトと　ポケモン
+おたがいを　しんじなければ！▽
+たかみに　すすめない▼
+そう！　ことなる　かんがえ
+ことなる　そんざいを　うけいれ▽
+せかいは　かがくはんおうを　おこす！▼
+ポケモンしょうぶは　その
+ちいさくて　おおきな　いっぽ　なんだ！[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモン勝負とは！▼
+勝敗を　決する……
+それ以上に！▼
+自分と！　自分の　ポケモンと！
+相手の　ポケモンと！　相手！▽
+すべてを　認めあうための　もの！▼
+傷ついて　戦う　ポケモン！
+その　痛みを　受け止める　ヒト！▼
+ヒトと　ポケモン
+お互いを　信じなければ！▽
+高みに　進めない▼
+そう！　異なる　考え
+異なる　存在を　受け入れ▽
+世界は　科学反応を　起こす！▼
+ポケモン勝負は　その
+小さくて　大きな　一歩なんだ！[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて
+　Black2→boss_05b
+　White2→boss_05w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_boss_05b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
+ゼクロムが　おしえてくれた▼
+そして　せかいを　たびして　えた
+ボクの　すうしき！▼
+この　いみを
+キミじしんで　かんがえてほしい[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
+ゼクロムが　教えてくれた▼
+そして　世界を　旅して　えた
+ボクの　数式！▼
+この　意味を
+キミ自身で　考えてほしい[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・続けてboss_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_boss_05w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
+レシラムが　おしえてくれた▼
+そして　せかいを　たびして　えた
+ボクの　すうしき！▼
+この　いみを
+キミじしんで　かんがえてほしい[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
+レシラムが　教えてくれた▼
+そして　世界を　旅して　えた
+ボクの　数式！▼
+この　意味を
+キミ自身で　考えてほしい[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・続けてboss_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_boss_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]おや……？
+キミは……▼
+あのとき　ボクを　たすけてくれた
+[Name:PokemonName ]だね　アリガトウ！[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]おや……？
+キミは……▼
+あのとき　ボクを　助けてくれた
+[Name:PokemonName ]だね　アリガトウ！[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・手持ちにＮポケモンがいる
+・続けて
+　Black2→boss_07b
+　White2→boss_07w
+・0＝ポケモン種族名（Nポケモン）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_boss_07b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
+キミと　キミの　ポケモンなら！▼
+ポケモンリーグを　かちぬき
+キミたちだけの　りそうを　みる！▼
+ボクに　みえるのは
+そんな　みらい　だね[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
+キミと　キミの　ポケモンなら！▼
+ポケモンリーグを　勝ち抜き
+キミたちだけの　理想を　みる！▼
+ボクに　みえるのは
+そんな　未来だね[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:19:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・メッセージ表示後、退場
+　画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_boss_07w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
+キミと　キミの　ポケモンなら！▼
+ポケモンリーグを　かちぬき
+キミたちだけの　しんじつを　みる！▼
+ボクに　みえるのは
+そんな　みらい　だね[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:20:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
+キミと　キミの　ポケモンなら！▼
+ポケモンリーグを　勝ち抜き
+キミたちだけの　真実を　みる！▼
+ボクに　みえるのは
+そんな　未来だね[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:20:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・メッセージ表示後、退場
+　画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d26r0101_badge_check_01"
 		Style="Large">
 		<LanguageCell
@@ -46,6 +581,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-02T09:13:41" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d26r0101_badge_check_02"
@@ -92,6 +634,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-02T09:13:41" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d26r0101_badge_check_03"
@@ -138,6 +687,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-02T09:13:41" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d26r0101_badge_check_04"
@@ -184,6 +740,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-02T09:13:41" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d26r0101_badge_check_05"
@@ -230,6 +793,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-02T09:13:41" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d26r0101_badge_check_06"
@@ -276,6 +846,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-02T09:13:41" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d26r0101_badge_check_07"
@@ -322,6 +899,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-02T09:13:41" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d26r0101_badge_check_08"
@@ -368,5 +952,112 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-02T09:13:41" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_sign1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このさき
+バッジチェックゲート</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:09:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:06:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この先
+バッジチェックゲート</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:09:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:06:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝77、GRIDZ＝47</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:09:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:06:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0101_sign2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このさき
+チャンピオンロード</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:08:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:06:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この先
+チャンピオンロード</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:10:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:06:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝35、GRIDZ＝19</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:09:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

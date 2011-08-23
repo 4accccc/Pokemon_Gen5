@@ -1,3 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d26r1101_poke23_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くあぁああああぁん！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:15:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:15:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くあぁああああぁん！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:15:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:15:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・GRIDX＝4、GRIDZ＝17
+・posイベント
+　GRIDX＝25、GRIDZ＝19
+　表示後、Nの城方面へ移動</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:16:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE23
+ポケモン・ゾロアーク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-23T09:15:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
