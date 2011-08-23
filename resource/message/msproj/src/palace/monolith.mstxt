@@ -2658,4 +2658,276 @@
 				Time="2011-07-14T02:34:33" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_010"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッションせつめい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:36:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:36:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッションせつめい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:36:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:36:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:36:58" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_011"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいげんじかん</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:37:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:37:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいげんじかん</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:37:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:37:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:37:47" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_012"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアもくひょう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:38:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:38:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリアもくひょう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:38:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:38:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:38:17" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_013"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほうしゅう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:38:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:38:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほうしゅう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:38:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:38:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:38:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_014"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイスコア</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:39:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:39:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイスコア</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:39:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:39:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_015"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits ]ふん[Digit:2digits Idx="1" ]びょう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:39:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:2digits ]ふん[Digit:2digits Idx="1" ]びょう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:40:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:40:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:40:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_016"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:4digits ]ひき</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:41:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:41:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:4digits ]ひき</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:42:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:41:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:41:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_017"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ][Digit:3digits Idx="1" ]こ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:42:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ][Digit:3digits Idx="1" ]こ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:44:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:44:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-23T10:44:11" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

@@ -214,3 +214,4 @@ extern const GFL_PROC_DATA MonolithAppProc_Down_Status;
 extern const GFL_PROC_DATA MonolithAppProc_Down_PowerSelect;
 extern const GFL_PROC_DATA MonolithAppProc_Up_PowerExplain;
 extern const GFL_PROC_DATA MonolithAppProc_Down_FMissionSelect;
+extern const GFL_PROC_DATA MonolithAppProc_Up_FMission;
