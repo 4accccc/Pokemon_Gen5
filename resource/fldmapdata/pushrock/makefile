@@ -5,7 +5,7 @@
 #---------------------------------------------------------------
 #	共通ルールファイルのインクルード
 #---------------------------------------------------------------
-USERS = kagaya takahashi obata_toshihiro nakamura_akira
+USERS = kagaya takahashi obata_toshihiro nakamura_akira suginaka_katsunori
 include $(PROJECT_RSCDIR)/macro_define
 
 #---------------------------------------------------------------
