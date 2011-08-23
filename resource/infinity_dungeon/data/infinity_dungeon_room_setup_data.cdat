@@ -10,7 +10,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#define INF_AREA_ROOM_SET_MAX (16)
+#define INF_AREA_ROOM_SET_MAX (12)
 
 //-------------------------------------
 ///	ïîâÆÉfÅ[É^
@@ -34,24 +34,20 @@ static const INF_ROOM_SETUP_PARAM sc_room_setup_param[] = {
     { 
       { INF_ROOM_POS_TYPE_B_1 ,30 ,}, 
 
-      { INF_ROOM_POS_TYPE_C_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_C_1 ,35 ,}, 
 
-      { INF_ROOM_POS_TYPE_D_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_D_1 ,35 ,}, 
 
     },
   }, 
   {
-    5 ,
+    3 ,
     { 
       { INF_ROOM_POS_TYPE_B_1 ,30 ,}, 
 
-      { INF_ROOM_POS_TYPE_C_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_C_1 ,35 ,}, 
 
-      { INF_ROOM_POS_TYPE_D_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_E_1 ,15 ,}, 
-
-      { INF_ROOM_POS_TYPE_F_1 ,15 ,}, 
+      { INF_ROOM_POS_TYPE_D_1 ,35 ,}, 
 
     },
   }, 
@@ -64,43 +60,66 @@ static const INF_ROOM_SETUP_PARAM sc_room_setup_param[] = {
 
       { INF_ROOM_POS_TYPE_D_1 ,20 ,}, 
 
-      { INF_ROOM_POS_TYPE_E_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_E_1 ,15 ,}, 
 
-      { INF_ROOM_POS_TYPE_F_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_F_1 ,15 ,}, 
 
-      { INF_ROOM_POS_TYPE_Q_1 ,5 ,}, 
+      { INF_ROOM_POS_TYPE_Q_1 ,10 ,}, 
 
-      { INF_ROOM_POS_TYPE_S_1 ,5 ,}, 
+      { INF_ROOM_POS_TYPE_S_1 ,10 ,}, 
 
     },
   }, 
   {
     8 ,
     { 
-      { INF_ROOM_POS_TYPE_E_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_D_1 ,20 ,}, 
 
-      { INF_ROOM_POS_TYPE_F_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_E_1 ,20 ,}, 
 
-      { INF_ROOM_POS_TYPE_G_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_F_1 ,20 ,}, 
 
-      { INF_ROOM_POS_TYPE_H_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_G_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_H_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_I_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_Q_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_S_1 ,10 ,}, 
+
+    },
+  }, 
+  {
+    9 ,
+    { 
+      { INF_ROOM_POS_TYPE_D_1 ,20 ,}, 
+
+      { INF_ROOM_POS_TYPE_E_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_F_1 ,20 ,}, 
+
+      { INF_ROOM_POS_TYPE_G_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_H_1 ,10 ,}, 
 
       { INF_ROOM_POS_TYPE_I_1 ,10 ,}, 
 
       { INF_ROOM_POS_TYPE_J_1 ,10 ,}, 
 
-      { INF_ROOM_POS_TYPE_Q_1 ,5 ,}, 
+      { INF_ROOM_POS_TYPE_Q_1 ,10 ,}, 
 
-      { INF_ROOM_POS_TYPE_S_1 ,5 ,}, 
+      { INF_ROOM_POS_TYPE_S_1 ,10 ,}, 
 
     },
   }, 
   {
-    8 ,
+    10 ,
     { 
-      { INF_ROOM_POS_TYPE_E_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_E_1 ,10 ,}, 
 
-      { INF_ROOM_POS_TYPE_F_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_F_1 ,10 ,}, 
 
       { INF_ROOM_POS_TYPE_G_1 ,15 ,}, 
 
@@ -110,58 +129,6 @@ static const INF_ROOM_SETUP_PARAM sc_room_setup_param[] = {
 
       { INF_ROOM_POS_TYPE_J_1 ,15 ,}, 
 
-      { INF_ROOM_POS_TYPE_Q_1 ,5 ,}, 
-
-      { INF_ROOM_POS_TYPE_S_1 ,5 ,}, 
-
-    },
-  }, 
-  {
-    10 ,
-    { 
-      { INF_ROOM_POS_TYPE_E_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_F_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_G_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_H_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_I_1 ,10 ,}, 
-
-      { INF_ROOM_POS_TYPE_J_1 ,10 ,}, 
-
-      { INF_ROOM_POS_TYPE_Q_1 ,10 ,}, 
-
-      { INF_ROOM_POS_TYPE_R_1 ,5 ,}, 
-
-      { INF_ROOM_POS_TYPE_S_1 ,10 ,}, 
-
-      { INF_ROOM_POS_TYPE_T_1 ,5 ,}, 
-
-    },
-  }, 
-  {
-    13 ,
-    { 
-      { INF_ROOM_POS_TYPE_E_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_F_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_G_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_H_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_I_1 ,20 ,}, 
-
-      { INF_ROOM_POS_TYPE_J_1 ,20 ,}, 
-
-      { INF_ROOM_POS_TYPE_K_1 ,20 ,}, 
-
-      { INF_ROOM_POS_TYPE_L_1 ,10 ,}, 
-
-      { INF_ROOM_POS_TYPE_M_1 ,10 ,}, 
-
       { INF_ROOM_POS_TYPE_Q_1 ,10 ,}, 
 
       { INF_ROOM_POS_TYPE_R_1 ,10 ,}, 
@@ -173,15 +140,11 @@ static const INF_ROOM_SETUP_PARAM sc_room_setup_param[] = {
     },
   }, 
   {
-    13 ,
+    9 ,
     { 
-      { INF_ROOM_POS_TYPE_E_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_E_1 ,15 ,}, 
 
-      { INF_ROOM_POS_TYPE_F_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_G_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_H_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_F_1 ,15 ,}, 
 
       { INF_ROOM_POS_TYPE_I_1 ,20 ,}, 
 
@@ -189,9 +152,28 @@ static const INF_ROOM_SETUP_PARAM sc_room_setup_param[] = {
 
       { INF_ROOM_POS_TYPE_K_1 ,10 ,}, 
 
-      { INF_ROOM_POS_TYPE_L_1 ,10 ,}, 
+      { INF_ROOM_POS_TYPE_Q_1 ,10 ,}, 
 
-      { INF_ROOM_POS_TYPE_M_1 ,10 ,}, 
+      { INF_ROOM_POS_TYPE_R_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_S_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_T_1 ,10 ,}, 
+
+    },
+  }, 
+  {
+    9 ,
+    { 
+      { INF_ROOM_POS_TYPE_E_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_F_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_I_1 ,20 ,}, 
+
+      { INF_ROOM_POS_TYPE_J_1 ,20 ,}, 
+
+      { INF_ROOM_POS_TYPE_K_1 ,20 ,}, 
 
       { INF_ROOM_POS_TYPE_Q_1 ,10 ,}, 
 
@@ -204,68 +186,50 @@ static const INF_ROOM_SETUP_PARAM sc_room_setup_param[] = {
     },
   }, 
   {
-    16 ,
+    11 ,
     { 
-      { INF_ROOM_POS_TYPE_E_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_E_1 ,15 ,}, 
 
-      { INF_ROOM_POS_TYPE_F_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_F_1 ,15 ,}, 
 
-      { INF_ROOM_POS_TYPE_G_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_I_1 ,15 ,}, 
 
-      { INF_ROOM_POS_TYPE_H_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_J_1 ,15 ,}, 
 
-      { INF_ROOM_POS_TYPE_I_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_K_1 ,10 ,}, 
 
-      { INF_ROOM_POS_TYPE_J_1 ,30 ,}, 
+      { INF_ROOM_POS_TYPE_L_1 ,5 ,}, 
+
+      { INF_ROOM_POS_TYPE_N_1 ,5 ,}, 
+
+      { INF_ROOM_POS_TYPE_Q_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_R_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_S_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_T_1 ,10 ,}, 
+
+    },
+  }, 
+  {
+    12 ,
+    { 
+      { INF_ROOM_POS_TYPE_E_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_F_1 ,10 ,}, 
+
+      { INF_ROOM_POS_TYPE_I_1 ,15 ,}, 
+
+      { INF_ROOM_POS_TYPE_J_1 ,15 ,}, 
 
       { INF_ROOM_POS_TYPE_K_1 ,10 ,}, 
 
       { INF_ROOM_POS_TYPE_L_1 ,10 ,}, 
 
-      { INF_ROOM_POS_TYPE_M_1 ,10 ,}, 
-
       { INF_ROOM_POS_TYPE_N_1 ,5 ,}, 
 
       { INF_ROOM_POS_TYPE_O_1 ,5 ,}, 
-
-      { INF_ROOM_POS_TYPE_P_1 ,5 ,}, 
-
-      { INF_ROOM_POS_TYPE_Q_1 ,10 ,}, 
-
-      { INF_ROOM_POS_TYPE_R_1 ,10 ,}, 
-
-      { INF_ROOM_POS_TYPE_S_1 ,10 ,}, 
-
-      { INF_ROOM_POS_TYPE_T_1 ,10 ,}, 
-
-    },
-  }, 
-  {
-    16 ,
-    { 
-      { INF_ROOM_POS_TYPE_E_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_F_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_G_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_H_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_I_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_J_1 ,30 ,}, 
-
-      { INF_ROOM_POS_TYPE_K_1 ,20 ,}, 
-
-      { INF_ROOM_POS_TYPE_L_1 ,20 ,}, 
-
-      { INF_ROOM_POS_TYPE_M_1 ,20 ,}, 
-
-      { INF_ROOM_POS_TYPE_N_1 ,5 ,}, 
-
-      { INF_ROOM_POS_TYPE_O_1 ,5 ,}, 
-
-      { INF_ROOM_POS_TYPE_P_1 ,5 ,}, 
 
       { INF_ROOM_POS_TYPE_Q_1 ,10 ,}, 
 
