@@ -12,6 +12,8 @@
 #ifndef ZONE_D26R0301_EVC_H
 #define ZONE_D26R0301_EVC_H
 
+#define D26R0301_TREE_01                   0
+#define D26R0301_TREE_02                   1
 
 #endif //ZONE_D26R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

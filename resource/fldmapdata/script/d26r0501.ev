@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_zone_d26r0501
+_EVENT_DATA		ev_zone_d26r0501
+_EVENT_DATA		ev_init_d26r0501
 _EVENT_DATA_END
 
 //バージョン取得
@@ -40,11 +41,21 @@ INIT_EVENT_START   ev_zone_d26r0501
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0501_D26R1001_EXIT01, -248, 80, 248 )
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0501_D26R1001_EXIT02, -248, 80, 232 )
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0501_D26R1001_EXIT03, -248, 80, 216 )
+    _FLAG_SET(FV_D26R0501_ROCK_W)
   //W2
   ELSE
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0501_D26R0401_EXIT01, -248, 80, 248 )
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0501_D26R0401_EXIT02, -248, 80, 232 )
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0501_D26R0401_EXIT03, -248, 80, 216 )
+    _FLAG_SET(FV_D26R0501_ROCK_B)
   ENDIF
-  
+ 
 INIT_EVENT_END
+
+/**************************************************************/
+/*			INIT_CHANGE_LABEL								  */
+/**************************************************************/
+INIT_EVENT_START	ev_init_d26r0501
+
+INIT_EVENT_END
+
