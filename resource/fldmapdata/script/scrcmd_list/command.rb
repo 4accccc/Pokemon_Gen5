@@ -7,10 +7,12 @@ class CommandData
     @init_enable = false
     @recover_enable = false
     @zone_change_enable = false
+    @defined = false
   end
   attr_accessor :command, :seq, :code_no, 
                 :normal_enable, :init_enable, 
-                :recover_enable, :zone_change_enable
+                :recover_enable, :zone_change_enable,
+                :defined
 end
 
 class CommandList
