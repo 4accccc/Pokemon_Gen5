@@ -28,5 +28,6 @@
 */
 //=============================================================================
 extern void KEYSYS_DATACONVFLOW_Init( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
+extern void KEYSYS_DATACONVFLOW_Exit( KEY_SYSTEM_WORK *p_wk );
 
 extern void KEYSYS_DATACONVFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );

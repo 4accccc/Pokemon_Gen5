@@ -136,16 +136,31 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   ( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk;
+  u32 heap_size;
+
+  //タイトルから来るときだけヒープを大きくし、
+  //セーブデータ受信用メモリを確保する
+  if( p_param_adrs == NULL )
+  {
+    heap_size = 0x100000;
+  }
+  else
+  {
+    heap_size = 0x50000;
+  }
 
   //ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_KEY_SYSTEM, 0x70000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_KEY_SYSTEM, heap_size );
   //プロセスワーク作成
   p_wk  = GFL_PROC_AllocWork( p_proc, sizeof(KEY_SYSTEM_WORK), HEAPID_KEY_SYSTEM );
   GFL_STD_MemClear( p_wk, sizeof(KEY_SYSTEM_WORK) );
   p_wk->p_param = p_param_adrs;
 
   //ダウンロードデータ
-  p_wk->p_download_data = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, WB_SAVE_SIZE );
+  if( p_param_adrs == NULL )
+  {
+    p_wk->p_download_data = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, 0x80000 );
+  }
 
   //もし引数がNULLならばタイトルから呼び出された＝APPモード
   if( p_param_adrs == NULL )
@@ -238,7 +253,10 @@ static GFL_PROC_RESULT Key_System_Proc_Exit
   }
 
   //ダウンロードデータ
-  GFL_HEAP_FreeMemory( p_wk->p_download_data );
+  if( p_wk->p_download_data )
+  {
+    GFL_HEAP_FreeMemory( p_wk->p_download_data );
+  }
 
   //プロセスワーク破棄
   GFL_PROC_FreeWork( p_proc );

@@ -110,7 +110,16 @@ static void DataConv_Display_DeleteWifi( void *p_wk_adrs );
 //-----------------------------------------------------------------------------
 void KEYSYS_DATACONVFLOW_Init( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
 {
-  //KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE net_type );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データコンバートフロー用破棄
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_DATACONVFLOW_Exit( KEY_SYSTEM_WORK *p_wk )
+{
 }
 //=============================================================================
 /**
