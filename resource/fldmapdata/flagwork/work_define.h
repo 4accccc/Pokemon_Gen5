@@ -101,7 +101,7 @@
 #define WK_SYS_AREA_END                  16495 /* 0x406f  */
 
 
-/* flags "scene_work.xls" 16496 ～ 16655 */
+/* flags "scene_work.xls" 16496 ～ 16735 */
 
 #define WK_SCENE_AREA_START              16496 /* 0x4070  */
 
@@ -263,57 +263,57 @@
 #define WK_SCENE_C16_TUTORIAL_01         16651 /* 0x410b ジョインアベニュー：チュートリアルイベント制御ワーク */
 #define WK_SCENE_D01R0101_RATI2          16652 /* 0x410c 夢の跡地：ラティオス（ラティアス）POSイベントの制御 */
 
-#define WK_SCENE_AREA_END                16655 /* 0x410f  */
+#define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
 
-/* flags "other_work.xls" 16656 ～ 16702 */
+/* flags "other_work.xls" 16736 ～ 16815 */
 
-#define WK_AREA_START                    16656 /* 0x4110  */
+#define WK_AREA_START                    16736 /* 0x4160  */
 
-#define WK_OTHER_SPORTS_EVENT            16656 /* 0x4110 ビッグスタジアム/リトルコート：種目判別用ワーク 戻り値は user_define.h を参照 */
-#define WK_OTHER_SYMMAP_POS              16657 /* 0x4111 シンボルマップでのPOSイベント制御用 */
-#define WK_OTHER_T05_TRAIN               16658 /* 0x4112 T05カナワタウン：転車台に配置される車両の状態を保存するワーク 00 車両が配置されていない 01 シングルトレイン 02 スーパーシングルトレイン 03 ダブルトレイン 04 スーパーダブルトレイン 05 マルチトレイン 06 スーパーマルチトレイン 07 i-Fiトレイン 08 トレインタウン 09 古いレアトレイン 10 新しいレアトレイン※特別な日に出現 */
-#define WK_OTHER_EMPEROR_MONSNUM         16659 /* 0x4113 シリンダーブリッジ暴走族イベント：暴走族のヘッドを倒した時の 戦闘可能な先頭ポケモンのモンスターナンバーを格納 */
-#define WK_OTHER_BSEVENT_ITEM            16660 /* 0x4114 カナワタウン民家：バトルサブウェイの落し物イベントの入手アイテムを格納 */
-#define WK_OTHER_BSEVENT_NUM             16661 /* 0x4115 カナワタウン民家：バトルサブウェイの落し物イベントの入手アイテム数を格納 */
-#define WK_OTHER_T04R0401_SHIRONA        16662 /* 0x4116 サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
-#define WK_OTHER_T04R0401_BIGFOUR4       16663 /* 0x4117 サザナミタウン別荘：日替わり固定のメッセージを格納（春のみ） */
-#define WK_OTHER_T04R0401_BIGFOUR1       16664 /* 0x4118 サザナミタウン別荘：日替わり固定のメッセージを格納（春のみ） */
-#define WK_OTHER_T04R0401_LEADER8W       16665 /* 0x4119 サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
-#define WK_OTHER_T04R0401_LEADER6        16666 /* 0x411a サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
-#define WK_OTHER_T04R0401_LEADER4        16667 /* 0x411b サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
-#define WK_OTHER_T04R0401_LEADER2        16668 /* 0x411c サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
-#define WK_OTHER_SPORTS_RND_TR0          16669 /* 0x411d ビッグスタジアムのランダム配置トレーナー１人目 */
-#define WK_OTHER_SPORTS_RND_TR1          16670 /* 0x411e ビッグスタジアムのランダム配置トレーナー２人目 */
-#define WK_OTHER_SPORTS_RND_TR2          16671 /* 0x411f ビッグスタジアムのランダム配置トレーナー３人目 */
-#define WK_OTHER_SPORTS_RND_TR3          16672 /* 0x4120 リトルコートのランダム配置トレーナー１人目 */
-#define WK_OTHER_SPORTS_RND_TR4          16673 /* 0x4121 リトルコートのランダム配置トレーナー２人目 */
-#define WK_OTHER_SPORTS_RND_TR5          16674 /* 0x4122 リトルコートのランダム配置トレーナー３人目 */
-#define WK_OTHER_WHEEL_SEASON            16675 /* 0x4123 観覧車イベント：季節を保存しておくワーク。 C04P01のゾーンチェンジで季節を取得し、前回から季節が変化していたら、観覧車トレーナー用のタイムフラグをリセットする */
-#define WK_OTHER_D11R0101_PAIR           16676 /* 0x4124 下水道：アイリス連れ歩きセリフ */
-#define WK_OTHER_R05_KINOMI              16677 /* 0x4125 スワン5番道路木の実販売 */
-#define WK_OTHER_BSUBWAY_RECEIPT         16678 /* 0x4126 バトルサブウェイ、受付制御 */
-#define WK_OTHER_BSUBWAY_TEST            16679 /* 0x4127 バトルサブウェイ、テスト */
-#define WK_OTHER_BSUBWAY_TRAIN           16680 /* 0x4128 バトルサブウェイ、列車内制御 */
-#define WK_OTHER_BSUBWAY_HOME            16681 /* 0x4129 バトルサブウェイ、ホーム制御 */
-#define WK_OTHER_KASEKI_NUM              16682 /* 0x412a 化石復元イベント用ワーク 化石ポケモン預かり状態か識別するためのワーク。アイテムナンバーを格納。 */
-#define WK_OTHER_PASSENGERBOAT           16683 /* 0x412b 遊覧船イベント用ワーク 遊覧船のイベント状態を保存するワーク。船内案内済みか判定に使用 00 初期状態 01 乗船後、案内イベント済み 02 全てのトレーナーを倒した */
-#define WK_OTHER_STATION_CONNECT         16684 /* 0x412c C04とギアステーションの接続イベント用ワーク 00 ギアステーションからC04にでる階段前のPOSイベント有効 01 ギアステーション入場アニメ有効（シーンチェンジスクリプト） */
-#define WK_OTHER_C03R0201_GALLERY        16685 /* 0x412d 日替わりタイプ指定ポケモン見せ用ワーク */
-#define WK_OTHER_UN                      16686 /* 0x412e 国連イベント用ワーク 00 参加していない（受付がゲートを塞いでいる） 01 参加状態（受付を通過している→受付をどかした状態にする） */
-#define WK_OTHER_DISCOVER_EGG            16687 /* 0x412f ３番道路：育て屋でタマゴが発見されたときに教えてくれるPOSイベント用のワーク 00 なし 01 POSイベント有効。「おーい！」と声をかけてくれる。 */
-#define WK_OTHER_C05R0701_WAZA           16688 /* 0x4130 日替わり指定わざ見せ用ワーク */
-#define WK_OTHER_C12_RIVAL_PAIR          16689 /* 0x4131 スワン：ヒオウギシティ連れ歩き用ワーク 0&#xff5e;2でセリフを変える */
-#define WK_OTHER_FISHING_MONSNUM         16690 /* 0x4132 ビレッジブリッジ：日替わり指定ポケモン格納用ワーク */
-#define WK_OTHER_C05R0301_WAZA           16691 /* 0x4133 日替わり指定わざ見せ用ワーク */
-#define WK_OTHER_R9R0201_ITEMBUY         16692 /* 0x4134 アールナイン：１日１回買い物お願いお嬢様イベント制御用ワーク */
-#define WK_OTHER_H03_BOUON_MONSNUM       16693 /* 0x4135 シリンダーブリッジ：特性「ぼうおん」のポケモンを見せた後、そのポケモン名を固定する */
-#define WK_OTHER_R02_HAADOROKKU          16694 /* 0x4136 2番道路：特性「ハードロック」のポケモンを見せた後、そのポケモン名を固定する */
-#define WK_OTHER_R04_PARA_CHECK_01       16695 /* 0x4137 パラメータチェッカーで指定されたパラメータ格納用ワーク。 ブラック版は「すばやさ」、ホワイト版は「ＨＰ」をチェックする */
-#define WK_OTHER_AMUSEMENT_PARTNER       16696 /* 0x4138 ライモン遊園地：観覧車でのパートナーを保存しておく用ワーク */
-#define WK_OTHER_LCC_TRADE_CNT           16697 /* 0x4139 ライモン遊園地：観覧車で隠しキャラとのデート後の交換回数カウント用ワーク */
+#define WK_OTHER_SPORTS_EVENT            16736 /* 0x4160 ビッグスタジアム/リトルコート：種目判別用ワーク 戻り値は user_define.h を参照 */
+#define WK_OTHER_SYMMAP_POS              16737 /* 0x4161 シンボルマップでのPOSイベント制御用 */
+#define WK_OTHER_T05_TRAIN               16738 /* 0x4162 T05カナワタウン：転車台に配置される車両の状態を保存するワーク 00 車両が配置されていない 01 シングルトレイン 02 スーパーシングルトレイン 03 ダブルトレイン 04 スーパーダブルトレイン 05 マルチトレイン 06 スーパーマルチトレイン 07 i-Fiトレイン 08 トレインタウン 09 古いレアトレイン 10 新しいレアトレイン※特別な日に出現 */
+#define WK_OTHER_EMPEROR_MONSNUM         16739 /* 0x4163 シリンダーブリッジ暴走族イベント：暴走族のヘッドを倒した時の 戦闘可能な先頭ポケモンのモンスターナンバーを格納 */
+#define WK_OTHER_BSEVENT_ITEM            16740 /* 0x4164 カナワタウン民家：バトルサブウェイの落し物イベントの入手アイテムを格納 */
+#define WK_OTHER_BSEVENT_NUM             16741 /* 0x4165 カナワタウン民家：バトルサブウェイの落し物イベントの入手アイテム数を格納 */
+#define WK_OTHER_T04R0401_SHIRONA        16742 /* 0x4166 サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0401_BIGFOUR4       16743 /* 0x4167 サザナミタウン別荘：日替わり固定のメッセージを格納（春のみ） */
+#define WK_OTHER_T04R0401_BIGFOUR1       16744 /* 0x4168 サザナミタウン別荘：日替わり固定のメッセージを格納（春のみ） */
+#define WK_OTHER_T04R0401_LEADER8W       16745 /* 0x4169 サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0401_LEADER6        16746 /* 0x416a サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0401_LEADER4        16747 /* 0x416b サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0401_LEADER2        16748 /* 0x416c サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_SPORTS_RND_TR0          16749 /* 0x416d ビッグスタジアムのランダム配置トレーナー１人目 */
+#define WK_OTHER_SPORTS_RND_TR1          16750 /* 0x416e ビッグスタジアムのランダム配置トレーナー２人目 */
+#define WK_OTHER_SPORTS_RND_TR2          16751 /* 0x416f ビッグスタジアムのランダム配置トレーナー３人目 */
+#define WK_OTHER_SPORTS_RND_TR3          16752 /* 0x4170 リトルコートのランダム配置トレーナー１人目 */
+#define WK_OTHER_SPORTS_RND_TR4          16753 /* 0x4171 リトルコートのランダム配置トレーナー２人目 */
+#define WK_OTHER_SPORTS_RND_TR5          16754 /* 0x4172 リトルコートのランダム配置トレーナー３人目 */
+#define WK_OTHER_WHEEL_SEASON            16755 /* 0x4173 観覧車イベント：季節を保存しておくワーク。 C04P01のゾーンチェンジで季節を取得し、前回から季節が変化していたら、観覧車トレーナー用のタイムフラグをリセットする */
+#define WK_OTHER_D11R0101_PAIR           16756 /* 0x4174 下水道：アイリス連れ歩きセリフ */
+#define WK_OTHER_R05_KINOMI              16757 /* 0x4175 スワン5番道路木の実販売 */
+#define WK_OTHER_BSUBWAY_RECEIPT         16758 /* 0x4176 バトルサブウェイ、受付制御 */
+#define WK_OTHER_BSUBWAY_TEST            16759 /* 0x4177 バトルサブウェイ、テスト */
+#define WK_OTHER_BSUBWAY_TRAIN           16760 /* 0x4178 バトルサブウェイ、列車内制御 */
+#define WK_OTHER_BSUBWAY_HOME            16761 /* 0x4179 バトルサブウェイ、ホーム制御 */
+#define WK_OTHER_KASEKI_NUM              16762 /* 0x417a 化石復元イベント用ワーク 化石ポケモン預かり状態か識別するためのワーク。アイテムナンバーを格納。 */
+#define WK_OTHER_PASSENGERBOAT           16763 /* 0x417b 遊覧船イベント用ワーク 遊覧船のイベント状態を保存するワーク。船内案内済みか判定に使用 00 初期状態 01 乗船後、案内イベント済み 02 全てのトレーナーを倒した */
+#define WK_OTHER_STATION_CONNECT         16764 /* 0x417c C04とギアステーションの接続イベント用ワーク 00 ギアステーションからC04にでる階段前のPOSイベント有効 01 ギアステーション入場アニメ有効（シーンチェンジスクリプト） */
+#define WK_OTHER_C03R0201_GALLERY        16765 /* 0x417d 日替わりタイプ指定ポケモン見せ用ワーク */
+#define WK_OTHER_UN                      16766 /* 0x417e 国連イベント用ワーク 00 参加していない（受付がゲートを塞いでいる） 01 参加状態（受付を通過している→受付をどかした状態にする） */
+#define WK_OTHER_DISCOVER_EGG            16767 /* 0x417f ３番道路：育て屋でタマゴが発見されたときに教えてくれるPOSイベント用のワーク 00 なし 01 POSイベント有効。「おーい！」と声をかけてくれる。 */
+#define WK_OTHER_C05R0701_WAZA           16768 /* 0x4180 日替わり指定わざ見せ用ワーク */
+#define WK_OTHER_C12_RIVAL_PAIR          16769 /* 0x4181 スワン：ヒオウギシティ連れ歩き用ワーク 0&#xff5e;2でセリフを変える */
+#define WK_OTHER_FISHING_MONSNUM         16770 /* 0x4182 ビレッジブリッジ：日替わり指定ポケモン格納用ワーク */
+#define WK_OTHER_C05R0301_WAZA           16771 /* 0x4183 日替わり指定わざ見せ用ワーク */
+#define WK_OTHER_R9R0201_ITEMBUY         16772 /* 0x4184 アールナイン：１日１回買い物お願いお嬢様イベント制御用ワーク */
+#define WK_OTHER_H03_BOUON_MONSNUM       16773 /* 0x4185 シリンダーブリッジ：特性「ぼうおん」のポケモンを見せた後、そのポケモン名を固定する */
+#define WK_OTHER_R02_HAADOROKKU          16774 /* 0x4186 2番道路：特性「ハードロック」のポケモンを見せた後、そのポケモン名を固定する */
+#define WK_OTHER_R04_PARA_CHECK_01       16775 /* 0x4187 パラメータチェッカーで指定されたパラメータ格納用ワーク。 ブラック版は「すばやさ」、ホワイト版は「ＨＰ」をチェックする */
+#define WK_OTHER_AMUSEMENT_PARTNER       16776 /* 0x4188 ライモン遊園地：観覧車でのパートナーを保存しておく用ワーク */
+#define WK_OTHER_LCC_TRADE_CNT           16777 /* 0x4189 ライモン遊園地：観覧車で隠しキャラとのデート後の交換回数カウント用ワーク */
 
-#define WK_AREA_END                      16702 /* 0x413e  */
+#define WK_AREA_END                      16815 /* 0x41af  */
 
 
 /* flags "temp_work.xls" 32768 ～ 32799 */

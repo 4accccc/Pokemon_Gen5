@@ -195,6 +195,7 @@ enum{
   GMDATA_ID_INFINITYDUNGEON,  // 無限ダンジョン
   GMDATA_ID_FMISSION_SAVE,    // フェスミッション
   GMDATA_ID_POKEWOOD,         // ポケウッド
+  GMDATA_ID_CYGNUS,           // 3DS外部連動
   GMDATA_ID_MAX,
 };
 

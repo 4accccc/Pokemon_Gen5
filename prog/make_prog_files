@@ -75,7 +75,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/data_convert_save.c \
         savedata/habitat_list_save.c \
         savedata/fmission_save.c \
-        savedata/pokewood_savedata.c
+        savedata/pokewood_savedata.c \
+        savedata/cygnus_savedata.c
 
 
 #’ÊM‚Ìí’“
