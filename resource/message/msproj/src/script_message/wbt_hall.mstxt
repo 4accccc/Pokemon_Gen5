@@ -3839,7 +3839,7 @@ msg_wbt_announce_09へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_announce_13"
+		Label="msg_wbt_announce_14"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3894,7 +3894,7 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_announce_14"
+		Label="msg_wbt_announce_15"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
