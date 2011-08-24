@@ -1254,5 +1254,7 @@ SCRIPTFILES += \
 	sp_oldc08r0101.ev \
 	oldt01r0101.ev \
 	sp_oldt01r0101.ev \
+	d26pc0101.ev \
+	sp_d26pc0101.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö

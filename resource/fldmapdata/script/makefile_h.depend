@@ -2052,6 +2052,9 @@ oldc08r0101_def.h: oldc08r0101.ev
 oldt01r0101_def.h: oldt01r0101.ev
 	$(EV_DEF) oldt01r0101.ev $(SCR_OFFS_ID_H)
 
+d26pc0101_def.h: d26pc0101.ev
+	$(EV_DEF) d26pc0101.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
