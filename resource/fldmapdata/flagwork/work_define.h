@@ -108,8 +108,8 @@
 #define WK_SCENE_D10R0101_SWPLAZMA_01    16496 /* 0x4070 ジャイアントホールエントランス：POS制御用ワーク */
 #define WK_SCENE_D10R0301_SWPLAZMA_01    16497 /* 0x4071 ジャイアントホール広場：POS制御用ワーク */
 #define WK_SCENE_D10R0401_SWSAGE1_01     16498 /* 0x4072 ジャイアントホール最深部：POS制御用ワーク */
-		/* not used 16499(0x4073) */
-		/* not used 16500(0x4074) */
+#define WK_SCENE_H05_POKE488             16499 /* 0x4073 ワンダーブリッジ：クレセリアPOS制御用ワーク */
+#define WK_SCENE_D24_POKE485             16500 /* 0x4074 リバースマウンテン：ヒードランPOS制御用ワーク */
 		/* not used 16501(0x4075) */
 		/* not used 16502(0x4076) */
 #define WK_SCENE_D03R0101_AFTER          16503 /* 0x4077 リゾートデザート：クリア後イベント用ワーク */
