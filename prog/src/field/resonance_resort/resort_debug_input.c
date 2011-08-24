@@ -2648,16 +2648,6 @@ static void Resident_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_r
     RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
     GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ], strcode );
 
-    //アンケート
-    {
-      QUESTIONNAIRE_ANSWER_WORK answer_wk;
-      RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_QANSWER, &answer_wk );
-      for( i = 0; i < QUESTION_ID_NUM; i++ )
-      {
-        u32 ansIdx  = QuestionnaireAnswer_ReadBit( &answer_wk, i );
-        p_wk->BoxValue[EDITBOX_ID_BASIC_Q_00+i] = ansIdx;
-      }
-    }
 
     //施設データ
     {
@@ -2750,16 +2740,6 @@ static BOOL Resident_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_
   cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ] );
   RESORT_RESIDENT_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode );
 
-  //アンケート
-  {
-    QUESTIONNAIRE_ANSWER_WORK answer_wk = {0};
-    for( i = 0; i < QUESTION_ID_NUM; i++ )
-    {
-      QuestionnaireAnswer_WriteBit( &answer_wk, i, cp_wk->BoxValue[EDITBOX_ID_BASIC_Q_00+i] );
-    }
-    RESORT_RESIDENT_DATA_SetData( p_data, RESORT_DATA_PARAM_QANSWER, (u32)&answer_wk );
-  }
-
   //施設データ
   {
     RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
@@ -2839,17 +2819,6 @@ static void Tourist_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_re
     GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ], strcode );
     RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
     GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ], strcode );
-
-    //アンケート
-    {
-      QUESTIONNAIRE_ANSWER_WORK answer_wk;
-      RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_QANSWER, &answer_wk );
-      for( i = 0; i < QUESTION_ID_NUM; i++ )
-      {
-        u32 ansIdx  = QuestionnaireAnswer_ReadBit( &answer_wk, i );
-        p_wk->BoxValue[EDITBOX_ID_BASIC_Q_00+i] = ansIdx;
-      }
-    }
 
     //施設データ
     {
@@ -2943,16 +2912,6 @@ static BOOL Tourist_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_I
   cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ] );
   RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode );
 
-  //アンケート
-  {
-    QUESTIONNAIRE_ANSWER_WORK answer_wk = {0};
-    for( i = 0; i < QUESTION_ID_NUM; i++ )
-    {
-      QuestionnaireAnswer_WriteBit( &answer_wk, i, cp_wk->BoxValue[EDITBOX_ID_BASIC_Q_00+i] );
-    }
-    RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_QANSWER, (u32)&answer_wk );
-  }
-
   //施設データ
   {
     RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
@@ -3023,16 +2982,6 @@ static void Owner_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_reso
     RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
     GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ], strcode );
 
-    //アンケート
-    {
-      QUESTIONNAIRE_ANSWER_WORK answer_wk;
-      RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_QANSWER, &answer_wk );
-      for( i = 0; i < QUESTION_ID_NUM; i++ )
-      {
-        u32 ansIdx  = QuestionnaireAnswer_ReadBit( &answer_wk, i );
-        p_wk->BoxValue[EDITBOX_ID_BASIC_Q_00+i] = ansIdx;
-      }
-    }
 
     //施設データ
     {
@@ -3095,15 +3044,6 @@ static BOOL Owner_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INP
   cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ] );
   RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode );
 
-  //アンケート
-  {
-    QUESTIONNAIRE_ANSWER_WORK answer_wk = {0};
-    for( i = 0; i < QUESTION_ID_NUM; i++ )
-    {
-      QuestionnaireAnswer_WriteBit( &answer_wk, i, cp_wk->BoxValue[EDITBOX_ID_BASIC_Q_00+i] );
-    }
-    RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_QANSWER, (u32)&answer_wk );
-  }
 
   //施設データ
   {

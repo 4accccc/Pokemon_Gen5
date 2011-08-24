@@ -3501,8 +3501,7 @@ static void WifiBattleMatch_RecvResort(const int netID, const int size, const vo
   WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_wk->p_gamedata);
   RESONANCE_RESORT_SV *p_resort_sv  = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_RECV_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+  RESORT_RECV_DATA  *p_recv = (RESORT_RECV_DATA*)cp_data_adrs;
 
   if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
   {
@@ -3515,10 +3514,8 @@ static void WifiBattleMatch_RecvResort(const int netID, const int size, const vo
 
   OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
 
-  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, cp_data_adrs,RESORT_COMM_TYPE_RNDMATCH ) )
-  {
-    RESORT_RECV_BUFF_AddRecv( p_buff, cp_data_adrs, RESORT_COMM_TYPE_RNDMATCH );
-  }
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_COMM_ID, RESORT_COMM_TYPE_RNDMATCH );
+  RESONANCE_RESORT_SV_SetData( p_resort_sv, p_wk->p_gamedata, p_recv, RESORT_MERGE_TYPE_RECV );
   p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_RESORT] = TRUE;
 }
 //=============================================================================

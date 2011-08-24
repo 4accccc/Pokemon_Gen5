@@ -708,9 +708,6 @@ VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs )
       RESORT_RESIDENT_DATA_InitInstance( p_resident );
     }
     break;
-  case RESORT_PEOPLE_TYPE_VISITOR:
-    GF_ASSERT(0);
-    break;
   default:
     GF_ASSERT(0);
   }

@@ -22,7 +22,7 @@
 */
 //=============================================================================
 #define RESONANCE_RESORT_SV_RECV_BUFF_NUM   (8)
-#define RESONANCE_RESORT_SV_PROXY_BUFF_NUM  (8)
+#define RESONANCE_RESORT_SV_PROXY_BUFF_NUM  (12)
 
 //-------------------------------------
 ///	セーブデータ
@@ -41,3 +41,4 @@ extern RESORT_PROXY_BUFF * RESONANCE_RESORT_SV_GetProxyBuff( RESONANCE_RESORT_SV
 extern RESORT_PEOPLE_ALL_DATA * RESONANCE_RESORT_SV_GetPeopleAllData( RESONANCE_RESORT_SV *p_wk );
 extern RESORT_CITY_DATA * RESONANCE_RESORT_SV_GetCityData( RESONANCE_RESORT_SV *p_wk );
 
+extern BOOL RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type );

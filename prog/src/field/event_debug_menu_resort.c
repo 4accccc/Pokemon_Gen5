@@ -63,14 +63,10 @@ static BOOL debugMenuCallProc_DesignerSetup3( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DesignerSetup4( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DesignerSetup5( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DesignerSetup6( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_PresenRecvAdd( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
   { DEBUG_FIELD_RESORT_18, debugMenuCallProc_ChangeMap, GFL_OVERLAY_BLANK_ID },
-//  { DEBUG_FIELD_RESORT_39, debugMenuCallProc_PresenSetup, GFL_OVERLAY_BLANK_ID },
-//  { DEBUG_FIELD_RESORT_40, debugMenuCallProc_PresenRecvAdd, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup1, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_41, debugMenuCallProc_DesignerSetup2, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_42, debugMenuCallProc_DesignerSetup3, GFL_OVERLAY_BLANK_ID },
@@ -297,30 +293,59 @@ static BOOL debugMenuCallProc_SetRecv( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
-  RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
 
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
   RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
-  if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_COMM_TYPE_BEACON ) )
-  {
-    p_recv_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
-    if( p_recv_buff )
-    {
-      RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_COMM_TYPE_BEACON );
-    }
-  }
+
+  RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_recv, RESORT_MERGE_TYPE_RECV );
+
   RESORT_RECV_DATA_Exit( p_recv );
   return FALSE;
 }
+
+static void Debug_Resort_SetProxy( RESORT_PROXY_DATA *p_proxy, GAMEDATA *p_gamedata, HEAPID heapID )
+{
+  const MYSTATUS  *cp_mystatus = GAMEDATA_GetMyStatus(p_gamedata);
+  MYSTATUS  *p_status = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapID), MYSTATUS_SAVE_SIZE );
+
+  int pokemon = 1+GFL_STD_MtRand(151+1);
+  RESORT_COMM_TYPE  comm_type = GFL_STD_MtRand(2) ? RESORT_COMM_TYPE_GTS: RESORT_COMM_TYPE_PDW;
+
+  GFL_STD_MemCopy( cp_mystatus, p_status, MYSTATUS_SAVE_SIZE );
+
+  //名前セット
+  {
+    GFL_MSGDATA* p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(heapID) );
+    
+    STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, RESORT_NAME_00+GFL_STD_MtRand(20) );
+    MyStatus_SetMyNameFromString( p_status, p_strbuf );
+    GFL_STR_DeleteBuffer( p_strbuf );
+    GFL_MSG_Delete( p_msg );
+  }
+
+  //トレーナーID
+  MyStatus_SetID( p_status, GFL_STD_MtRand(GFL_STD_RAND_MAX) );
+
+  //性別
+  MyStatus_SetMySex( p_status, GFL_STD_MtRand(2) );
+
+  //見た目
+  MyStatus_SetTrainerView( p_status, MyStatus_GetMySex(p_status)*8 + GFL_STD_MtRand(8) );
+
+  RESORT_PROXY_DATA_SetCommData( p_proxy, p_status, pokemon, comm_type );
+
+  GFL_HEAP_FreeMemory( p_status );
+}
+
 static BOOL debugMenuCallProc_SetProxy( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
-  RESORT_PROXY_BUFF *p_proxy_buff = RESONANCE_RESORT_SV_GetProxyBuff( p_resort );
 
   RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
-  RESORT_PROXY_DATA_SetCommData( p_proxy, 0 );
-  RESORT_PROXY_BUFF_Add( p_proxy_buff, p_proxy );
+  Debug_Resort_SetProxy( p_proxy, p_wk->gdata, p_wk->heapID );
+  RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_proxy, RESORT_MERGE_TYPE_PROXY );
+
   RESORT_PROXY_DATA_Exit( p_proxy );
   return FALSE;
 }
@@ -359,25 +384,27 @@ static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk )
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
   RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
-  RESORT_RECV_BUFF *p_recv_tmp_buff = NULL;
+  RESORT_RECV_BUFF *p_recv_tmp_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
 
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
   while( TRUE )
   {
     RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
-    if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_COMM_TYPE_BEACON ) )
+    RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_recv, RESORT_MERGE_TYPE_RECV );
+
+    if( p_recv_tmp_buff )
     {
-      p_recv_tmp_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
-      if( !p_recv_tmp_buff )
+      if( RESORT_RECV_BUFF_GetCnt(p_recv_buff) >= RESONANCE_RESORT_SV_RECV_BUFF_NUM
+        && RESORT_RECV_BUFF_GetCnt(p_recv_tmp_buff) >= RESONANCE_RESORT_BUFF_RECV_EX_NUM )
       {
         break;
       }
-      else 
-      { 
-        if( !RESORT_RECV_BUFF_AddRecv( p_recv_tmp_buff, p_recv, RESORT_COMM_TYPE_BEACON ) )
-        {
-          break;
-        }
+    }
+    else
+    {
+      if( RESORT_RECV_BUFF_GetCnt(p_recv_buff) >= RESONANCE_RESORT_SV_RECV_BUFF_NUM )
+      {
+        break;
       }
     }
   }
@@ -393,8 +420,9 @@ static BOOL debugMenuCallProc_AllProxy( DEBUG_MENU_EVENT_WORK *p_wk )
   RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
   while(TRUE)
   {
-    RESORT_PROXY_DATA_SetCommData( p_proxy, 0 );
-    if( !RESORT_PROXY_BUFF_Add( p_proxy_buff, p_proxy ) )
+    Debug_Resort_SetProxy( p_proxy, p_wk->gdata, p_wk->heapID );
+    RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_proxy, RESORT_MERGE_TYPE_PROXY );
+    if( RESORT_PROXY_BUFF_GetCnt( p_proxy_buff ) >= RESONANCE_RESORT_SV_PROXY_BUFF_NUM )
     {
       break;
     }
@@ -937,137 +965,6 @@ static BOOL PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
   return TRUE;
 }
 
-static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
-  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
-
-  GFL_MSGDATA *p_msg;
-  RESORT_RECV_DATA *p_recv;
-  int i;
-
-  //迎賓館では使えない
-  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_RECEPTION )
-  {
-    return FALSE;
-  }
-
-  p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(p_wk->heapID) );
-  p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
-
-  //まずはデータクリア
-  debugMenuCallProc_AllClear( p_wk );
-
-  //お金を最大に
-  {
-    MISC *p_misc = SaveData_GetMisc(pSave);
-    MISC_SetGold(p_misc, MY_GOLD_MAX);
-  }
-
-  //受信バッファに入れる
-  debugMenuCallProc_PresenRecvAdd(p_wk);
- 
-  //秘書への追加
-  for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
-  {
-    RESORT_SECRETARY_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
-    PresenSetup_SetRecv( p_recv, p_msg, RESORT_PEOPLE_TYPE_SECRETARY, i );
-    RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 16+i, RESORT_MAP_GetSecretaryPlace( i ), i );
-  }
-
-  //住人への追加
-  for( i = 0; i < 3; i++ )
-  {
-    RESORT_RESIDENT_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, i );
-    PresenSetup_SetRecv( p_dst, p_msg, RESORT_PEOPLE_TYPE_RESIDENT, i );
-  }
-
-  //自分の街、自分のよびな
-  {
-    RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort );
-    MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus(p_wk->gdata);
-
-    STRBUF *p_myname = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(p_wk->heapID) );
-    const STRCODE *cp_strcode;
-    MyStatus_CopyNameString( p_mystatus, p_myname );
-
-    {
-      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, RESORT_CITY_00 + GFUser_GetPublicRand(10) );
-
-      GFL_STR_AddString( p_myname, p_strbuf );
-      cp_strcode = GFL_STR_GetStringCodePointer(p_myname);
-      RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, (u32)cp_strcode );
-      GFL_STR_DeleteBuffer( p_strbuf );
-    }
-    MyStatus_CopyNameString( p_mystatus, p_myname );
-    {
-      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, RESORT_AUTHER_00 + GFUser_GetPublicRand(5) );
-      GFL_STR_AddString( p_myname, p_strbuf );
-      cp_strcode = GFL_STR_GetStringCodePointer(p_myname);
-      RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_AUTHER_NAME, (u32)cp_strcode );
-      GFL_STR_DeleteBuffer( p_strbuf );
-    }
-    {
-      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, RESORT_MYPHRASE_00 + GFUser_GetPublicRand(5) );
-      RESORT_RECV_DATA *p_own = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
-      cp_strcode = GFL_STR_GetStringCodePointer(p_strbuf);
-      RESORT_RECV_DATA_SetData( p_own, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode );
-      GFL_STR_DeleteBuffer( p_strbuf );
-    }
-
-    GFL_STR_DeleteBuffer( p_myname );
-  }
-
-  RESORT_RECV_DATA_Exit( p_recv );
-  GFL_MSG_Delete( p_msg );
-
-  return FALSE;
-}
-static BOOL debugMenuCallProc_PresenRecvAdd( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
-  RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
-  RESORT_RECV_BUFF *p_recv_tmp_buff = NULL;
-  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
-
-  GFL_MSGDATA *p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(p_wk->heapID) );
-  RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
-  int cnt = 0;
-  //旅行者への追加
-  while( TRUE )
-  {
-    if( PresenSetup_SetRecv( p_recv, p_msg, RESORT_PEOPLE_TYPE_TOURIST, cnt++ ) == FALSE )
-    {
-      break;
-    }
-    NAGI_Printf( "cnt = %d\n", cnt );
-    if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_all_people, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
-    {
-      if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
-      {
-        p_recv_tmp_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
-        if( !p_recv_tmp_buff )
-        {
-          break;
-        }
-        else 
-        { 
-          if( !RESORT_RECV_BUFF_AddRecv( p_recv_tmp_buff, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
-          {
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  RESORT_RECV_DATA_Exit( p_recv );
-  GFL_MSG_Delete( p_msg );
-
-  return FALSE;
-}
 
 static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {

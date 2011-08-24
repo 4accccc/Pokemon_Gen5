@@ -3683,6 +3683,8 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
   RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_reso );
   RESORT_PEOPLE_ALL_DATA *p_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_reso );
   RESORT_RECV_BUFF *p_buff = RESONANCE_RESORT_SV_GetDataBuff( p_reso );
+  RESORT_PROXY_BUFF *p_proxy = RESONANCE_RESORT_SV_GetProxyBuff( p_reso );
+  RESORT_RECV_BUFF **pp_tmp_buff  = (RESORT_RECV_BUFF **)GAMEDATA_GetResortBuffer( p_wk->p_gamedata );
 
 	//クリア
 	GFL_BMP_Clear( p_bmp, 0 );
@@ -3755,9 +3757,15 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
         RECORD * p_rec  = SaveData_GetRecord( p_sv );
         u32 city_lv = 1 + RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
         u32 come_cnt = RECORD_Get( p_rec, RECID_RESORT_GUID_CNT ) + RECORD_Get( p_rec, RECID_RESORT_SHOP_MAKE_CNT );
-        u32 now_cnt = RESORT_RECV_BUFF_GetCnt( p_buff );  //TODO これ以外のバッファもみる？
+        u32 now_cnt = RESORT_RECV_BUFF_GetCnt( p_buff ) 
+                    + RESORT_PROXY_BUFF_GetCnt( p_proxy );
 
         STRBUF *p_strbuf = GFL_STR_CreateBuffer( 128, HEAPID_TOWNMAP );
+
+        if( *pp_tmp_buff )
+        {
+          now_cnt += RESORT_RECV_BUFF_GetCnt( *pp_tmp_buff );
+        }
 
         //PLACE4
         msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE4_MSGID);

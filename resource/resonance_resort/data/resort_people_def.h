@@ -11,10 +11,9 @@
 //l•¨
 #define RESORT_PEOPLE_TYPE_TOURIST (2) //ŠÏŒõ‹q
 #define RESORT_PEOPLE_TYPE_PROXY (1) //‘ã—l
-#define RESORT_PEOPLE_TYPE_SECRETARY (4) //”é‘
+#define RESORT_PEOPLE_TYPE_SECRETARY (3) //”é‘
 #define RESORT_PEOPLE_TYPE_RESIDENT (0) //Z–¯
-#define RESORT_PEOPLE_TYPE_VISITOR (3) //‘ØÝŽÒ
-#define RESORT_PEOPLE_TYPE_MAX (5) //Å‘å
+#define RESORT_PEOPLE_TYPE_MAX (4) //Å‘å
 //Z–¯
 #define RESORT_RESIDENT_TYPE_NURSERY (6) //•ÛˆçŠ
 #define RESORT_RESIDENT_TYPE_EXERCICE (5) //“¹ê

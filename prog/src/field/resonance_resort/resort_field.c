@@ -476,7 +476,7 @@ static void Reception_Buff_UpdateProxy( RESORT_FIELD_BUFF *p_wk )
  */
 //=============================================================================
 #define RESORT_CROWD_MOVE_LINE_MAX          (6)
-#define RESORT_CROWD_MOVE_LINE_PEOPLE_MAX   (4)
+#define RESORT_CROWD_MOVE_LINE_PEOPLE_MAX   (5)
 #define RESORT_CROWD_PEOPLE_BUFFER_MAX      (RESORT_CROWD_MOVE_LINE_PEOPLE_MAX*RESORT_CROWD_MOVE_LINE_MAX)
 #define RESORT_CROWD_MOVE_LIMIT_BACK        (9)
 #define RESORT_CROWD_MOVE_LIMIT_FRONT       (77)
@@ -527,8 +527,8 @@ static void RESORT_CROWD_PEOPLE_WK_StartMove( RESORT_CROWD_PEOPLE_WK *p_wk, u16 
 static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u16 acmd, u16 move_dir, u16 x, u16 z );
 static void RESORT_CROWD_PEOPLE_WK_Stop( RESORT_CROWD_PEOPLE_WK *p_wk, const FIELD_PLAYER *cp_player );
 static BOOL RESORT_CROWD_PEOPLE_WK_IsEndMove( const RESORT_CROWD_PEOPLE_WK *cp_wk );
-static BOOL RESORT_CLOWD_PEOPLE_WK_IsNewData( const RESORT_CROWD_PEOPLE_WK *cp_wk );
-static u16 RESORT_CLOWD_PEOPLE_WK_GetDir( const RESORT_CROWD_PEOPLE_WK *cp_wk );
+static BOOL RESORT_CROWD_PEOPLE_WK_IsNewData( const RESORT_CROWD_PEOPLE_WK *cp_wk );
+static u16 RESORT_CROWD_PEOPLE_WK_GetDir( const RESORT_CROWD_PEOPLE_WK *cp_wk );
 
 static BOOL Resort_Crowd_People_Wk_IsFrontPlayer( const RESORT_CROWD_PEOPLE_WK *cp_wk, const MMDL* cp_mmdl, u16 grid, u16 min_grid );
 static BOOL Resort_Crowd_People_Wk_IsFrontAllMMdl( const RESORT_CROWD_PEOPLE_WK* cp_wk, const MMDLSYS* cp_fos, MMDL** pp_mmdl, u16 grid, u16 min_grid );
@@ -556,8 +556,8 @@ typedef struct
   u16 x;
 } RESORT_CROWD_LINE;
 
-#define RESORT_CROWD_LINE_WAIT_MIN  (60)
-#define RESORT_CROWD_LINE_WAIT_MAX  (180)
+#define RESORT_CROWD_LINE_WAIT_MIN  (120)
+#define RESORT_CROWD_LINE_WAIT_MAX  (240)
 #define RESORT_CROWD_LINE_WAIT_DIF  (RESORT_CROWD_LINE_WAIT_MAX-RESORT_CROWD_LINE_WAIT_MIN)
 #define RESORT_CROWD_LINE_WAIT_RND  (RESORT_CROWD_LINE_WAIT_MIN+GFL_STD_MtRand( RESORT_CROWD_LINE_WAIT_DIF ))
 
@@ -565,9 +565,9 @@ static void RESORT_CROWD_LINE_Init( RESORT_CROWD_LINE *p_wk, u16 x, u16 dir, HEA
 static void RESORT_CROWD_LINE_Exit( RESORT_CROWD_LINE *p_wk );
 static void RESORT_CROWD_LINE_Main( RESORT_CROWD_LINE *p_wk );
 static void RESORT_CROWD_LINE_SetUp( RESORT_CROWD_LINE *p_wk );
-static void RESORT_CLOWD_LINE_Register( RESORT_CROWD_LINE *p_wk, u16 index, RESORT_CROWD_PEOPLE_WK *p_people );
-static void RESORT_CLOWD_LINE_UnRegister( RESORT_CROWD_LINE *p_wk, const RESORT_CROWD_PEOPLE_WK *cp_people );
-static BOOL RESORT_CLOWD_LINE_GetRegisterData( const RESORT_PEOPLE *cp_people, u16 *p_line, u16 *p_index );
+static void RESORT_CROWD_LINE_Register( RESORT_CROWD_LINE *p_wk, u16 index, RESORT_CROWD_PEOPLE_WK *p_people );
+static void RESORT_CROWD_LINE_UnRegister( RESORT_CROWD_LINE *p_wk, const RESORT_CROWD_PEOPLE_WK *cp_people );
+static BOOL RESORT_CROWD_LINE_GetRegisterData( const RESORT_PEOPLE *cp_people, u16 *p_line, u16 *p_index );
 
 //-------------------------------------
 ///	群集管理
@@ -722,13 +722,13 @@ static void RESORT_CROWD_PEOPLE_Add( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p
       {
         u16 line;
         u16 index;
-        if( RESORT_CLOWD_LINE_GetRegisterData( p_people, &line, &index ) )
+        if( RESORT_CROWD_LINE_GetRegisterData( p_people, &line, &index ) )
         {
           //ワークへの設定
           RESORT_CROWD_PEOPLE_WK_SetUp( &p_wk->wk[i], p_people, p_wk->cp_shop, p_wk->cp_institution, p_wk->p_all_people );
 
           //隊列への登録
-          RESORT_CLOWD_LINE_Register( &p_wk->line[line], index, &p_wk->wk[i] );
+          RESORT_CROWD_LINE_Register( &p_wk->line[line], index, &p_wk->wk[i] );
         }
         break;
       }
@@ -749,7 +749,7 @@ static void RESORT_CROWD_PEOPLE_Delete( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE
 {
   u16 line;
   u16 index;
-  if( RESORT_CLOWD_LINE_GetRegisterData( p_people, &line, &index ) )
+  if( RESORT_CROWD_LINE_GetRegisterData( p_people, &line, &index ) )
   {
     RESORT_CROWD_PEOPLE_WK *p_crowd = NULL;
     int i;
@@ -768,7 +768,7 @@ static void RESORT_CROWD_PEOPLE_Delete( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE
     if( p_crowd )
     {
       //まずは隊列から外す
-      RESORT_CLOWD_LINE_UnRegister( &p_wk->line[line], p_crowd );
+      RESORT_CROWD_LINE_UnRegister( &p_wk->line[line], p_crowd );
 
       //群集人物から外す
       RESORT_CROWD_PEOPLE_WK_Clear( p_crowd );
@@ -787,7 +787,7 @@ static void RESORT_CROWD_PEOPLE_Stop( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *
 {
   u16 line;
   u16 index;
-  if( RESORT_CLOWD_LINE_GetRegisterData( p_people, &line, &index ) )
+  if( RESORT_CROWD_LINE_GetRegisterData( p_people, &line, &index ) )
   {
     RESORT_CROWD_PEOPLE_WK *p_crowd = NULL;
     int i;
@@ -959,7 +959,7 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
 
     MMDL_GetVectorPos( p_mmdl, &vec );
 
-    if( RESORT_CLOWD_PEOPLE_WK_IsNewData(p_wk) )
+    if( RESORT_CROWD_PEOPLE_WK_IsNewData(p_wk) )
     {
       vec.x = GRID_TO_FX32(x) + MMDL_VEC_X_GRID_OFFS_FX32;
       MMDL_SetGridPosX( p_mmdl, x );
@@ -1084,7 +1084,7 @@ static BOOL RESORT_CROWD_PEOPLE_WK_IsEndMove( const RESORT_CROWD_PEOPLE_WK *cp_w
  *	@return TRUE新規データ  FALSE読み込みデータ
  */
 //-----------------------------------------------------------------------------
-static BOOL RESORT_CLOWD_PEOPLE_WK_IsNewData( const RESORT_CROWD_PEOPLE_WK *cp_wk )
+static BOOL RESORT_CROWD_PEOPLE_WK_IsNewData( const RESORT_CROWD_PEOPLE_WK *cp_wk )
 {
   MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( cp_wk->p_people );
 
@@ -1102,7 +1102,7 @@ static BOOL RESORT_CLOWD_PEOPLE_WK_IsNewData( const RESORT_CROWD_PEOPLE_WK *cp_w
  *	@return 方向
  */
 //-----------------------------------------------------------------------------
-static u16 RESORT_CLOWD_PEOPLE_WK_GetDir( const RESORT_CROWD_PEOPLE_WK *cp_wk )
+static u16 RESORT_CROWD_PEOPLE_WK_GetDir( const RESORT_CROWD_PEOPLE_WK *cp_wk )
 {
   MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( cp_wk->p_people );
   return MMDL_GetDirDisp(p_mmdl);
@@ -1273,6 +1273,7 @@ static void Resort_Crowd_People_Wk_UpdateStreat( RESORT_CROWD_PEOPLE_WK *p_wk, M
       /* fall throght */
     case SEQ_NORMAL_WALK:
       //歩き終了
+      if( !RESORT_PEOPLE_GetTalkFlag( p_wk->p_people ) )
       {
         if( p_wk->move_grid <= 0 )
         {
@@ -1661,8 +1662,22 @@ static void RESORT_CROWD_LINE_Exit( RESORT_CROWD_LINE *p_wk )
 //-----------------------------------------------------------------------------
 static void RESORT_CROWD_LINE_Main( RESORT_CROWD_LINE *p_wk )
 {
+  u32 move_cnt  = 0;
+  //２人未満のとき移動開始
+  {
+    int i;
+
+    for( i = 0; i < RESORT_CROWD_MOVE_LINE_PEOPLE_MAX; i++ )
+    {
+      if( p_wk->p_move[i] && !RESORT_CROWD_PEOPLE_WK_IsEndMove(p_wk->p_move[i]) )
+      {
+        move_cnt++;
+      }
+    }
+  }
+
   //移動開始処理
-  if( p_wk->register_cnt > 0 )
+  if( p_wk->register_cnt > 0 && move_cnt < 2 )
   {
     if( p_wk->wait-- <= 0 )
     {
@@ -1670,10 +1685,7 @@ static void RESORT_CROWD_LINE_Main( RESORT_CROWD_LINE *p_wk )
       while( p_wk->p_move[ p_wk->start_index ] == NULL )
       {
         p_wk->start_index++;
-        if( p_wk->start_index >= RESORT_CROWD_MOVE_LINE_PEOPLE_MAX )
-        {
-          p_wk->start_index = 0;
-        }
+        p_wk->start_index %= RESORT_CROWD_MOVE_LINE_PEOPLE_MAX;
       }
 
       if( RESORT_CROWD_PEOPLE_WK_IsEndMove( p_wk->p_move[ p_wk->start_index ] ) )
@@ -1682,6 +1694,7 @@ static void RESORT_CROWD_LINE_Main( RESORT_CROWD_LINE *p_wk )
         p_wk->wait  = RESORT_CROWD_LINE_WAIT_RND;
       }
       p_wk->start_index++;
+      p_wk->start_index %= RESORT_CROWD_MOVE_LINE_PEOPLE_MAX;
     }
   }
 }
@@ -1701,7 +1714,7 @@ static void RESORT_CROWD_LINE_SetUp( RESORT_CROWD_LINE *p_wk )
     {
       if( p_wk->p_move[i] 
           && RESORT_CROWD_PEOPLE_WK_IsExist(p_wk->p_move[i])
-          && !RESORT_CLOWD_PEOPLE_WK_IsNewData(p_wk->p_move[i]) )
+          && !RESORT_CROWD_PEOPLE_WK_IsNewData(p_wk->p_move[i]) )
       {
         u16 init_z;
 
@@ -1716,6 +1729,7 @@ static void RESORT_CROWD_LINE_SetUp( RESORT_CROWD_LINE *p_wk )
 
         RESORT_CROWD_PEOPLE_WK_StartMovePos( p_wk->p_move[i], AC_WALK_U_8F, p_wk->move_dir, p_wk->x, init_z );
         p_wk->start_index = i + 1;
+        p_wk->start_index %= RESORT_CROWD_MOVE_LINE_PEOPLE_MAX;
       }
     }
   }
@@ -1729,7 +1743,7 @@ static void RESORT_CROWD_LINE_SetUp( RESORT_CROWD_LINE *p_wk )
  *	@param	*p_people               人物
  */
 //-----------------------------------------------------------------------------
-static void RESORT_CLOWD_LINE_Register( RESORT_CROWD_LINE *p_wk, u16 index, RESORT_CROWD_PEOPLE_WK *p_people )
+static void RESORT_CROWD_LINE_Register( RESORT_CROWD_LINE *p_wk, u16 index, RESORT_CROWD_PEOPLE_WK *p_people )
 {
   GF_ASSERT( index < RESORT_CROWD_MOVE_LINE_PEOPLE_MAX );
   GF_ASSERT( p_wk->p_move[ index ] == NULL );
@@ -1744,7 +1758,7 @@ static void RESORT_CLOWD_LINE_Register( RESORT_CROWD_LINE *p_wk, u16 index, RESO
  *	@param  RESORT_CROWD_PEOPLE cp_people 消す群集ワーク
  */
 //-----------------------------------------------------------------------------
-static void RESORT_CLOWD_LINE_UnRegister( RESORT_CROWD_LINE *p_wk, const RESORT_CROWD_PEOPLE_WK *cp_people )
+static void RESORT_CROWD_LINE_UnRegister( RESORT_CROWD_LINE *p_wk, const RESORT_CROWD_PEOPLE_WK *cp_people )
 {
   int i;
   for( i = 0; i < RESORT_CROWD_MOVE_LINE_PEOPLE_MAX; i++ )
@@ -1768,7 +1782,7 @@ static void RESORT_CLOWD_LINE_UnRegister( RESORT_CROWD_LINE *p_wk, const RESORT_
  *	@retval TRUE登録する  FALSE取得登録しない
  */
 //-----------------------------------------------------------------------------
-static BOOL RESORT_CLOWD_LINE_GetRegisterData( const RESORT_PEOPLE *cp_people, u16 *p_line, u16 *p_index )
+static BOOL RESORT_CROWD_LINE_GetRegisterData( const RESORT_PEOPLE *cp_people, u16 *p_line, u16 *p_index )
 { 
   static const struct
   {
@@ -1802,6 +1816,10 @@ static BOOL RESORT_CLOWD_LINE_GetRegisterData( const RESORT_PEOPLE *cp_people, u
     { RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,    5, 3, 3, },
     { RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,    6, 4, 3, },
     { RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,    7, 5, 3, },
+    { RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,    8, 0, 4, },
+    { RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,    9, 1, 4, },
+    { RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,   10, 2, 4, },
+    { RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,   11, 3, 4, },
   };
 
   int i;
@@ -1959,13 +1977,14 @@ static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WO
       SEQ_START,
       SEQ_END,
     };
-    Resort_Crowd_Noise_CheckBufferNum( p_wk );
 
     switch( p_wk->seq )
     {
     case SEQ_CHECK:
       if( p_wk->wait++ >= p_wk->wait_max )
       {
+        Resort_Crowd_Noise_CheckBufferNum( p_wk );
+
         p_wk->wnd_idx   = 0;
         p_wk->wnd_num   = 1 + GFL_STD_MtRand( RESORT_CROWD_NOISE_WND_DRAW_MAX-1);
         p_wk->wnd_wait  = 0;
@@ -2104,7 +2123,11 @@ static void Resort_Crowd_Noise_CheckBufferNum( RESORT_CROWD_NOISE *p_wk )
     }
   }
 
-  if( cnt >= 16 )
+  if( cnt >= 22 )
+  {
+    p_wk->wait_max  = 1*60;
+  }
+  else if( cnt >= 16 )
   {
     p_wk->wait_max  = 2*60;
   }
@@ -2891,6 +2914,7 @@ static void Field_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_DATA
   {
     RESORT_PEOPLE_SYS_ADD_PARAM param;
     GFL_STD_MemClear(&param,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
+
     param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByAdrs( RESORT_SYSTEM_GetAbstructManager(p_wk->p_sys), p_proxy );
     param.placeID = RESORT_PLACEID_FIELD;
     p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );

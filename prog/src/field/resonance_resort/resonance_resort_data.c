@@ -18,6 +18,7 @@
 #include "savedata/misc.h"
 #include "system/main.h"
 #include "field/resort_work.h"
+#include "app/research_radar/question_id.h"
 
 //arc
 #include "arc/arc_def.h"
@@ -286,13 +287,43 @@ typedef struct
   u8  sex:4;                          ///<性別          1 36
   u8  dummy1;
   u16 trainerID;                    ///<トレーナーID(下位16ビット)  2 38
-  u16 dummy2;                      ///<パディング  2 40
-  QUESTIONNAIRE_ANSWER_WORK qanswer;  ///<アンケート  10  50
-  u16 play_hour     :10;  ///< プレイ時間 2 52
+  u8 job;                        ///<仕事  1 39
+  u8 hobby;                      ///<趣味  1 40
+  u16 play_hour     :10;          ///< プレイ時間 2 42
   u16 play_min      :6;
+  u16 dummy2;
 }RESORT_BASIC1_DATA;
 
 SDK_COMPILER_ASSERT( sizeof(RESORT_BASIC1_DATA) == RESORT_BASIC1_DATA_SIZE );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BASIC1にMYSTATUSを設定する
+ *
+ *	@param	RESORT_BASIC1_DATA *p_wk  ワーク
+ *	@param	MYSTATUS *cp_mystatus     MYSTATUS
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_BASIC1_DATA_SetMyStatus( RESORT_BASIC1_DATA *p_wk, const MYSTATUS *cp_mystatus )
+{
+  //EOMが入らないサイズを取得するので、自分でコピーする
+  GFL_STD_MemCopy( MyStatus_GetMyName(cp_mystatus), p_wk->name, sizeof(STRCODE)*PERSON_NAME_SIZE );
+  p_wk->trainerID = MyStatus_GetID_Low(cp_mystatus);
+  p_wk->nation    = MyStatus_GetMyNation(cp_mystatus);
+  p_wk->area      = MyStatus_GetMyArea(cp_mystatus);
+  p_wk->sex       = MyStatus_GetMySex(cp_mystatus);
+  p_wk->version   = MyStatus_GetRomCode( cp_mystatus );
+  p_wk->language  = MyStatus_GetRegionCode( cp_mystatus );
+
+  if( p_wk->sex == PM_MALE )
+  {
+    p_wk->trainer_view = MyStatus_GetTrainerView(cp_mystatus);
+  }
+  else
+  {
+    p_wk->trainer_view = MyStatus_GetTrainerView(cp_mystatus) - UNION_VIEW_INDEX_WOMAN_START;
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -308,23 +339,7 @@ static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDA
   //MYSTATUS
   {
     MYSTATUS *p_mystatus  = GAMEDATA_GetMyStatus((GAMEDATA*)cp_gamedata);
-    //EOMが入らないサイズを取得するので、自分でコピーする
-    GFL_STD_MemCopy( MyStatus_GetMyName(p_mystatus), p_wk->name, sizeof(STRCODE)*PERSON_NAME_SIZE );
-    p_wk->trainerID = MyStatus_GetID_Low( p_mystatus );
-    p_wk->nation    = MyStatus_GetMyNation(p_mystatus);
-    p_wk->area      = MyStatus_GetMyArea(p_mystatus);
-    p_wk->sex       = MyStatus_GetMySex(p_mystatus);
-    p_wk->version   = GET_VERSION();
-    p_wk->language  = PM_LANG;
-
-    if( p_wk->sex == PM_MALE )
-    {
-      p_wk->trainer_view = MyStatus_GetTrainerView(p_mystatus);
-    }
-    else
-    {
-      p_wk->trainer_view = MyStatus_GetTrainerView(p_mystatus) - UNION_VIEW_INDEX_WOMAN_START;
-    }
+    RESORT_BASIC1_DATA_SetMyStatus( p_wk, p_mystatus );
   }
 
   {
@@ -337,8 +352,10 @@ static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDA
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork((GAMEDATA*)cp_gamedata);
     QUESTIONNAIRE_SAVE_WORK *p_ques_sv = SaveData_GetQuestionnaire(p_sv);
+    QUESTIONNAIRE_ANSWER_WORK *p_ques_ans = Questionnaire_GetAnswerWork(p_ques_sv);
 
-    GFL_STD_MemCopy( Questionnaire_GetAnswerWork(p_ques_sv), &p_wk->qanswer, sizeof(QUESTIONNAIRE_ANSWER_WORK) );
+    p_wk->job   = QuestionnaireAnswer_ReadBit(p_ques_ans, QUESTION_ID_JOB);
+    p_wk->hobby = QuestionnaireAnswer_ReadBit(p_ques_ans, QUESTION_ID_HOBBY);
   }
 
   //プレイ時間
@@ -369,7 +386,12 @@ static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GA
   p_wk->nation    = cp_beacon_info->nation;
   p_wk->area      = cp_beacon_info->area;
   p_wk->trainer_view  = cp_beacon_info->trainer_view;
-  p_wk->qanswer   = cp_beacon_info->question_answer;
+  {
+    const QUESTIONNAIRE_ANSWER_WORK *cp_ques_ans = &cp_beacon_info->question_answer;
+    p_wk->job   = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_JOB);
+    p_wk->hobby = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_HOBBY);
+  }
+
   p_wk->play_hour = cp_beacon_info->play_hour;
   p_wk->play_min  = cp_beacon_info->play_min;
 }
@@ -938,13 +960,6 @@ struct _RESORT_RECV_DATA
   u8                  keep_flag :1;
   u8                  want_spot;
   RESORT_INSTITUTION_DATA institution;
-#if 0
-  u8                  lv;
-  u8                  institutionID;//12
-  u8                  ev_work1;
-  u8                  ev_work2; //16
-  u32                 bit; //20
-#endif
   u32                 kosei;  //TODO　個性？  //16
   u32                 extend_flag:9;  //20
   u32                 lock      :1;
@@ -971,29 +986,20 @@ struct _RESORT_BEACON_DATA
 //=====================================
 struct _RESORT_PROXY_DATA
 {
-  STRCODE name[PERSON_NAME_SIZE];
-  u16     trainerID;
-  u8      nation;
-  u8      area;
+  RESORT_BASIC1_DATA  basic1;
+  RESORT_EXTEND6_DATA extend6;
+  RESORT_EXTEND7_DATA extend7;
 
-  u8      language;
-  u8      version;
-  u8      trainer_view;
-  u8      sex;
-  u8      id;
-  u8      celevID;
-  u8      type;
-  u8      presentID;
-  
-  STRCODE  phrase[RESORT_PHRASE_LEN];
-  STRCODE  thanks[RESORT_THANKS_LEN];
-
+  u8    id;
+  u8    celevID;
+  u8    type;
+  u8    presentID;
   u16   pokemon;
-  u16   want_job;
   u16   goto_shop;
+  u8    want_job;
   u8    placeID;
   u8    peopleID;
-  u16   a;
+  u8    comm_type;  //RESORT_COMM_TYPE
 };
 
 SDK_COMPILER_ASSERT(sizeof(RESORT_PROXY_DATA)==RESORT_PROXY_DATA_SIZE);
@@ -1074,6 +1080,7 @@ void RESORT_RECV_DATA_InitInstance( RESORT_RECV_DATA *p_wk )
   GFL_STD_MemClear( p_wk, sizeof(RESORT_RECV_DATA) );
   p_wk->extend6.phrase[0] = GFL_STR_GetEOMCode();
   p_wk->extend7.thanks[0] = GFL_STR_GetEOMCode();
+  p_wk->basic1.introduction[0]  = GFL_STR_GetEOMCode();
 
   RESORT_INSTITUTION_DATA_InitInstance( &p_wk->institution );
 }
@@ -1132,6 +1139,20 @@ BOOL RESORT_RECV_DATA_IsSameOwnerRecv( const RESORT_RECV_DATA *cp_wk, const RESO
 {
   return RESORT_BASIC1_DATA_IsSameOwner( &cp_wk->basic1, &cp_recv->basic1 );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ所有者かチェック
+ *
+ *	@param	const RESORT_RECV_DATA *cp_wk ワーク
+ *	@param	RESORT_PROXY_DATA *cp_proxy   代理人
+ *
+ *	@return TRUEで同じ所有者  FALSEで異なる所有者
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_DATA_IsSameOwnerProxy( const RESORT_RECV_DATA *cp_wk, const RESORT_PROXY_DATA *cp_proxy )
+{
+  return RESORT_BASIC1_DATA_IsSameOwner( &cp_wk->basic1, &cp_proxy->basic1 );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1142,11 +1163,8 @@ BOOL RESORT_RECV_DATA_IsSameOwnerRecv( const RESORT_RECV_DATA *cp_wk, const RESO
  *	@param	type                    通信タイプ
  */
 //-----------------------------------------------------------------------------
-static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE type )
+static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk )
 {
-  //初期生成データ TODO
-  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,type);
-
 
   NAGI_Printf( "ID[%d]\n", RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_TRAINER_ID,NULL ) );
 
@@ -1162,45 +1180,64 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_MEET_MIN, time.minute );
   }
 
-#if 0 //TODO
-  {
-    u32 lv  = RESORT_CITY_DATA_GetData( sp_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
-    RESORT_BINARY_CITY *p_city = RESORT_BINARY_CITY_Init( GFL_HEAP_LOWID(HEAPID_PROC) );
-    RESORT_BINARY_PRESENT *p_present = RESORT_BINARY_PRESENT_Init( GFL_HEAP_LOWID(HEAPID_PROC) );
-    u32 city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
-    u32 list = RESORT_BINARY_CITY_GetData(p_city,city_idx,RESORT_BINARY_CITY_PARAM_PRESENT_LIST);
-    u32 per = RESORT_BINARY_CITY_GetData(p_city,city_idx, RESORT_BINARY_CITY_PARAM_PRESENT_PER);
-    NAGI_Printf( "list[%d] lv[%d] city[%d]\n",list,lv,city_idx );
-    if( per > RESORT_DATA_GetRndRecv( p_wk, 100 ))
-    {
-      u32 rnd = RESORT_DATA_GetRndRecv( p_wk, 100 );
-      int i;
-      for( i = 0; i < RESORT_BINARY_PRESENT_PARAM_ITEM_MAX; i++ )
-      {
-        per = RESORT_BINARY_PRESENT_GetData(p_present,list,RESORT_BINARY_PRESENT_PARAM_PERCENT_00+i*2);
-        if( per > rnd )
-        {
-          u32 item = RESORT_BINARY_PRESENT_GetData(p_present,list,RESORT_BINARY_PRESENT_PARAM_ITEM_00+i*2);
-          NAGI_Printf( "item[%d]\n",item );
-          RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, item);
-          RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1);
-          break;
-        }
-        else
-        {
-          rnd -= per;
-        }
-      }
-      GF_ASSERT_MSG( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, NULL) != 0, "%d\n", i );
-    }
-    RESORT_BINARY_PRESENT_Exit(p_present);
-    RESORT_BINARY_CITY_Exit(p_city);
-  }
-#endif
-
   Resort_Recv_Data_SetWantJob( p_wk );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンを追加
+ *
+ *	@param	RESORT_RECV_DATA *p_wk          ワーク
+ *	@param	RESORT_BEACON_DATA *cp_beacon   マージするビーコン
+ *
+ *	@retval TRUE追加した  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_DATA_AddBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+{
+  GF_ASSERT( RESORT_RECV_DATA_IsEmpty( p_wk ) );
+
+  //まずは初期化
+  RESORT_RECV_DATA_InitInstance( p_wk );
+
+  //ベーシックは必ずいれる
+  p_wk->basic1  = cp_beacon->basic1;
+
+  //パックの中身があったら入れる
+  if( cp_beacon->extend_type < RESORT_EXTEND_TYPE_NULL )
+  {
+    p_wk->basic2  = cp_beacon->basic2;
+
+    //入れる処理
+    Resort_Recv_Data_SetBeaconExtendData( p_wk, cp_beacon );
+  }
+
+  //初期生成データ
+  Resort_Recv_Data_InitSetup( p_wk );
+  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データを追加
+ *
+ *	@param	RESORT_RECV_DATA *p_wk      ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv   受信データ
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_DATA_AddRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
+{
+  GF_ASSERT( RESORT_RECV_DATA_IsEmpty( p_wk ) );
+
+  //完全コピー
+  *p_wk = *cp_recv;
+
+  Resort_Recv_Data_InitSetup( p_wk );
+  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
+
+  return TRUE;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  ビーコンをマージ
@@ -1213,50 +1250,22 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
 //-----------------------------------------------------------------------------
 BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
-  BOOL change_view   = p_wk->basic1.trainer_view != cp_beacon->basic1.trainer_view;
+  GF_ASSERT( !RESORT_RECV_DATA_IsEmpty( p_wk ) );
 
-  //ロック
+  //ロックされていたらマージしない
   if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
   {
     return FALSE;
   }
-  //不正対策
-  if( !RESORT_BEACON_DATA_IsValid( cp_beacon ) )
-  {
-    return FALSE;
-  }
-
-  if( RESORT_RECV_DATA_IsEmpty( p_wk ) )
-  {
-    RESORT_RECV_DATA_InitInstance( p_wk );
-
-    //空だったら、全部いれる
-    p_wk->basic1  = cp_beacon->basic1;
-
-    //中身があったら入れる
-    if( cp_beacon->extend_type <  RESORT_EXTEND_TYPE_NULL )
-    {
-      p_wk->basic2  = cp_beacon->basic2;
-
-      //入れる処理
-      Resort_Recv_Data_SetBeaconExtendData( p_wk, cp_beacon );
-    }
-
-    //初期生成データ
-    Resort_Recv_Data_InitSetup( p_wk, RESORT_COMM_TYPE_BEACON );
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
-
-    if( p_wk->extend_flag == 0x1F )
-    {
-      RESORT_Printf( "!!!すべてマージ完了\n!!!" );
-    }
-  }
   else
   {
-    //空だったら、全部いれる
+    //見た目が変わるか変更
+    BOOL change_view   = p_wk->basic1.trainer_view != cp_beacon->basic1.trainer_view;
+
+    //ベーシックは必ずマージ
     p_wk->basic1  = cp_beacon->basic1;
 
-    //中身があったら入れる
+    //中身があったらマージ
     if( cp_beacon->extend_type <  RESORT_EXTEND_TYPE_NULL )
     {
       p_wk->basic2  = cp_beacon->basic2;
@@ -1272,7 +1281,6 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
 
     if( change_view )
     {
-
       NAGI_Printf( "recv view %d\n", p_wk->basic1.trainer_view );
       RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_VIEW);
     }
@@ -1280,9 +1288,9 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
     {
       RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_DATA);
     }
-  }
 
-  return TRUE;
+    return TRUE;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1292,34 +1300,39 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
  *	@param	RESORT_RECV_DATA *cp_recv   受信データ
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, RESORT_COMM_TYPE type )
+BOOL RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
-
-  BOOL change_view   = p_wk->basic1.trainer_view != cp_recv->basic1.trainer_view;
+  GF_ASSERT( !RESORT_RECV_DATA_IsEmpty( p_wk ) );
 
   //ロック
   if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
   {
     return FALSE;
   }
-
-  //不正対策
-  if( !RESORT_RECV_DATA_IsValid( cp_recv ) )
-  {
-    return FALSE;
-  }
-
-  if( RESORT_RECV_DATA_IsEmpty( p_wk ) )
-  {
-    GFL_STD_MemCopy( cp_recv, p_wk, sizeof(RESORT_RECV_DATA) );
-
-    Resort_Recv_Data_InitSetup( p_wk, type );
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
-  }
   else
   {
-    //TODO
-    //マージ処理
+
+    BOOL change_view   = p_wk->basic1.trainer_view != cp_recv->basic1.trainer_view;
+
+    //必ずいれる
+    p_wk->basic1  = cp_recv->basic1;
+    p_wk->basic2  = cp_recv->basic2;
+
+    //拡張パックがあるだけいれる
+    {
+      int i;
+      const u8  *cp_extend_src  = (const u8*)&cp_recv->extend1;
+      u8  *p_extend_dst  = (u8*)&p_wk->extend1;
+      for( i = 0; i < RESORT_EXTEND_TYPE_MAX; i++ )
+      {
+        if( cp_recv->extend_flag & (1<<i) )
+        {
+          GFL_STD_MemCopy( cp_extend_src, p_extend_dst, RESORT_EXTEND_DATA_SIZE );
+        }
+        cp_extend_src += RESORT_EXTEND_DATA_SIZE;
+        p_extend_dst += RESORT_EXTEND_DATA_SIZE;
+      }
+    }
 
     if( change_view )
     {
@@ -1329,9 +1342,45 @@ BOOL RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
     {
       RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_DATA);
     }
+
+    return TRUE;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人データをマージ
+ *
+ *	@param	RESORT_RECV_DATA *p_wk      ワーク
+ *	@param	RESORT_PROXY_DATA *cp_proxy 代理人
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_DATA_MergeProxy( RESORT_RECV_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+{
+  GF_ASSERT( !RESORT_RECV_DATA_IsEmpty(p_wk ) );
+
+  //ロック
+  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
+  {
+    return FALSE;
+  }
+  else
+  {
+    BOOL change_view   = p_wk->basic1.trainer_view != cp_proxy->basic1.trainer_view;
+
+    //見た目だけマージ
+    p_wk->basic1.trainer_view = cp_proxy->basic1.trainer_view;
+
+    if( change_view )
+    {
+      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_VIEW);
+    }
+    else
+    {
+      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_DATA);
+    }
+    return TRUE;
   }
 
-  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1412,9 +1461,10 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return cp_wk->basic1.play_hour;
   case RESORT_DATA_PARAM_PLAY_MIN:
     return cp_wk->basic1.play_min;
-  case RESORT_DATA_PARAM_QANSWER:  //p_ret_adrsから取得
-    GFL_STD_MemCopy( &cp_wk->basic1.qanswer, p_ret_adrs, sizeof(QUESTIONNAIRE_ANSWER_WORK) );
-    return 0;
+  case RESORT_DATA_PARAM_JOB:
+    return cp_wk->basic1.job;
+  case RESORT_DATA_PARAM_HOBBY:
+    return cp_wk->basic1.hobby;
   case RESORT_DATA_PARAM_TRAINER_ID:
     return cp_wk->basic1.trainerID;
   case RESORT_DATA_PARAM_VER:
@@ -1599,8 +1649,11 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_PLAY_MIN:
     p_wk->basic1.play_min = data;
     break;
-  case RESORT_DATA_PARAM_QANSWER:  //p_ret_adrsから取得
-    GFL_STD_MemCopy( (const void*)data, &p_wk->basic1.qanswer, sizeof(QUESTIONNAIRE_ANSWER_WORK) );
+  case RESORT_DATA_PARAM_JOB:
+    p_wk->basic1.job  = data;
+    break;
+  case RESORT_DATA_PARAM_HOBBY:
+    p_wk->basic1.hobby  = data;
     break;
   case RESORT_DATA_PARAM_TRAINER_ID:
     p_wk->basic1.trainerID = data;
@@ -1796,6 +1849,8 @@ void RESORT_RECV_DATA_SetDebugData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_g
 
   p_wk->basic1.trainerID = GFUser_GetPublicRand(0xFFFF);
 
+  p_wk->commID  = RESORT_COMM_TYPE_BEACON;
+
   {
     static const struct
     {
@@ -1970,6 +2025,9 @@ void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACO
   }
   else
   {
+    //TODO  あとハイリンクフェスも
+    //BASIC2を作らないといけない
+
     //その他のソフトでは基本情報のみ
     p_wk->extend_type = RESORT_EXTEND_TYPE_NULL;
   }
@@ -2025,6 +2083,19 @@ BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk )
 
   return TRUE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空かチェック
+ *
+ *	@param	const RESORT_BEACON_DATA *cp_wk   ワーク
+ *
+ *	@return TRUE空  FALSE空じゃない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_BEACON_DATA_IsEmpty( const RESORT_BEACON_DATA *cp_wk )
+{
+  return RESORT_BASIC1_DATA_IsEmpty( &cp_wk->basic1 );
+}
 
 //=============================================================================
 /**
@@ -2067,6 +2138,9 @@ void RESORT_PROXY_DATA_Exit( RESORT_PROXY_DATA *p_wk )
 void RESORT_PROXY_DATA_InitInstance( RESORT_PROXY_DATA *p_wk )
 {
   GFL_STD_MemClear(p_wk, sizeof(RESORT_PROXY_DATA) );
+  p_wk->extend6.phrase[0] = GFL_STR_GetEOMCode();
+  p_wk->extend7.thanks[0] = GFL_STR_GetEOMCode();
+  p_wk->basic1.introduction[0]  = GFL_STR_GetEOMCode();
 }
 
 //----------------------------------------------------------------------------
@@ -2080,19 +2154,50 @@ void RESORT_PROXY_DATA_InitInstance( RESORT_PROXY_DATA *p_wk )
 //-----------------------------------------------------------------------------
 BOOL RESORT_PROXY_DATA_IsEmpty( const RESORT_PROXY_DATA *cp_wk )
 {
-  return cp_wk->name[0] == 0 || cp_wk->version == 0;
+  return RESORT_BASIC1_DATA_IsEmpty( &cp_wk->basic1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正かチェック
+ *
+ *	@param	const RESORT_PROXY_DATA *cp_wk  ワーク
+ *
+ *	@return TRUE不正じゃない  FALSE不正
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_PROXY_DATA_IsValid( const RESORT_PROXY_DATA *cp_wk )
+{
+  if( !RESORT_BASIC1_DATA_IsValid( &cp_wk->basic1 ) )
+  {
+    RESORT_VALID_ASSERT( "代理人データ：性別が不正です\n" );
+    return FALSE;
+  }
+
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  代理人データを設定
  *
  *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param  MYSTATUS  マイステータス
  *	@param	type  代理人タイプ  RESORT_PROXY_TYPE_xxxx
  */
 //-----------------------------------------------------------------------------
-void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, u16 type )
+void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, const MYSTATUS *cp_status, u16 pokemon, RESORT_COMM_TYPE comm_type )
 {
-  p_wk->type = type;
+  RESORT_PROXY_DATA_InitInstance( p_wk );
+
+  p_wk->type = 1;  //TODO
+  p_wk->comm_type = comm_type;
+
+  RESORT_BASIC1_DATA_SetMyStatus( &p_wk->basic1, cp_status );
+
+  //ポケモン
+  p_wk->pokemon = pokemon;
+
+  //TODO
+  //生成？
 }
 //----------------------------------------------------------------------------
 /**
@@ -2113,13 +2218,20 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
   case RESORT_DATA_PARAM_PLACE_ID:
     return cp_wk->placeID; 
   case RESORT_DATA_PARAM_SEX:
-    return cp_wk->sex;
+    return cp_wk->basic1.sex;
   case RESORT_DATA_PARAM_TRAINERVIEW:
-    return cp_wk->trainer_view;
+    if( cp_wk->basic1.sex == PM_MALE )
+    {
+      return cp_wk->basic1.trainer_view;
+    }
+    else
+    {
+      return cp_wk->basic1.trainer_view + UNION_VIEW_INDEX_WOMAN_START;
+    }
   case RESORT_DATA_PARAM_NAME:
     {
       STRCODE *p_str  = p_ret_adrs;
-      GFL_STD_MemCopy( cp_wk->name, p_str, sizeof(u16)*(PERSON_NAME_SIZE) );
+      GFL_STD_MemCopy( cp_wk->basic1.name, p_str, sizeof(STRCODE)*(PERSON_NAME_SIZE) );
       p_str[PERSON_NAME_SIZE] = GFL_STR_GetEOMCode();
     }
     return 0;
@@ -2127,8 +2239,68 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     return cp_wk->presentID;
   case RESORT_DATA_PARAM_TYPE:
     return cp_wk->type;
+  case RESORT_DATA_PARAM_COMM_ID:
+    return cp_wk->comm_type;
+  case RESORT_DATA_PARAM_WANT_JOB:
+    return cp_wk->want_job;
+  case RESORT_DATA_PARAM_NATION:
+    return cp_wk->basic1.nation;
+  case RESORT_DATA_PARAM_AREA:
+    return cp_wk->basic1.area;
+  case RESORT_DATA_PARAM_PLAY_HOUR:
+    //TODO
+    return 0;
+  case RESORT_DATA_PARAM_PLAY_MIN:
+    //TODO
+    return 0;
+  case RESORT_DATA_PARAM_TRAINER_ID:
+    return cp_wk->basic1.trainerID;
+  case RESORT_DATA_PARAM_VER:
+    return cp_wk->basic1.version;
+  case RESORT_DATA_PARAM_LANG:
+    return cp_wk->basic1.language;
+
+  case RESORT_DATA_PARAM_EXT6_PHRASE:
+    if( cp_wk->extend6.phrase[0] != GFL_STR_GetEOMCode() )
+    {
+      RESORT_EXTEND6_DATA_GetPhrase( &cp_wk->extend6, p_ret_adrs );
+    }
+    else
+    {
+      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
+      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_kutiguse_00+cp_wk->basic1.trainerID%10 );
+      GFL_STR_GetStringCode( p_str, (STRCODE*)p_ret_adrs, RESORT_PHRASE_LEN+EOM_SIZE );
+      GFL_STR_DeleteBuffer( p_str );
+      GFL_MSG_Delete( p_msg );
+    }
+    return 0;
+  case RESORT_DATA_PARAM_EXT7_THANKS:
+    if( cp_wk->extend7.thanks[0] != GFL_STR_GetEOMCode() )
+    {
+      RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, p_ret_adrs );
+    }
+    else
+    {
+      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
+      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_thanks_00+cp_wk->basic1.trainerID%10 );
+      GFL_STR_GetStringCode( p_str, (STRCODE*)p_ret_adrs, RESORT_THANKS_LEN+EOM_SIZE );
+      GFL_STR_DeleteBuffer( p_str );
+      GFL_MSG_Delete( p_msg );
+    }
+    return 0;
+  case RESORT_DATA_PARAM_INTRODUCTION:
+    {
+      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
+      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_introduction_00+cp_wk->basic1.trainerID%10 );
+      GFL_STR_GetStringCode( p_str, (STRCODE*)p_ret_adrs, RESORT_THANKS_LEN+EOM_SIZE );
+      GFL_STR_DeleteBuffer( p_str );
+      GFL_MSG_Delete( p_msg );
+    }
+    return 0;
+  case RESORT_DATA_PARAM_PRESENT_NUM:
+    return 1; //TODO
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"未対応%d\n",param);
     return 0;
   }
 }
@@ -2155,8 +2327,44 @@ void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_DATA_PARAM param
     //なにもしない
     break;
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"未対応%d\n",param);
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人をマージ
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	RESORT_PROXY_DATA *cp_proxy   代理人
+ *
+ *	@return TRUEマージした  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_PROXY_DATA_MergeProxy( RESORT_PROXY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+{
+  GF_ASSERT( !RESORT_PROXY_DATA_IsEmpty(p_wk) );
+
+  p_wk->basic1  = cp_proxy->basic1;
+  p_wk->extend6  = cp_proxy->extend6;
+  p_wk->extend7  = cp_proxy->extend7;
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人をセット
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	RESORT_PROXY_DATA *cp_proxy   代理人
+ *
+ *	@return TRUEセットした  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_PROXY_DATA_AddProxy( RESORT_PROXY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+{
+  GF_ASSERT( RESORT_PROXY_DATA_IsEmpty(p_wk) );
+  *p_wk = *cp_proxy;
+  return TRUE;
 }
 //=============================================================================
 /**
@@ -2178,6 +2386,7 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_PROXY_BUFF) == RESORT_PROXY_BUFF_HEADER_SIZE 
 ///	private
 //=====================================
 static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetEmptyData( RESORT_PROXY_BUFF *p_wk );
+static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetSameOwnerData( RESORT_PROXY_BUFF *p_wk, const RESORT_BASIC1_DATA *cp_owner );
 
 //-------------------------------------
 ///	外部公開
@@ -2235,7 +2444,7 @@ BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp
   p_data  = Resort_Proxy_Buff_GetEmptyData( p_wk );
   if( p_data )
   {
-    *p_data = *cp_proxy;
+    RESORT_PROXY_DATA_AddProxy( p_data, cp_proxy );
     RESORT_Printf( "空のデータに入れた！\n" );
     return TRUE;
   }
@@ -2258,6 +2467,29 @@ u32 RESORT_PROXY_BUFF_GetMax( const RESORT_PROXY_BUFF *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  バッファの数取得
+ *
+ *	@param	const RESORT_PROXY_BUFF *cp_wk  ワーク
+ *
+ *	@return バッファの数取得
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_PROXY_BUFF_GetCnt( const RESORT_PROXY_BUFF *cp_wk )
+{
+  int i;
+  int cnt = 0;
+  for( i = 0; i < cp_wk->max; i++ )
+  {
+    const RESORT_PROXY_DATA *cp_data  = &cp_wk->data[i];
+    if( !RESORT_PROXY_DATA_IsEmpty( cp_data ) )
+    {
+      cnt++;
+    }
+  }
+  return cnt;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  バッファから代理人データ取得
  *
  *	@param	RESORT_PROXY_BUFF *p_wk ワーク
@@ -2270,6 +2502,69 @@ RESORT_PROXY_DATA * RESORT_PROXY_BUFF_GetData( RESORT_PROXY_BUFF *p_wk, u32 inde
 {
   GF_ASSERT( index < RESORT_PROXY_BUFF_GetMax(p_wk ) );
   return &p_wk->data[index];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンをマージ
+ *
+ *	@param	RESORT_PROXY_BUFF *p_wk ワーク
+ *	@param	RESORT_BEACON_DATA *cp_beacon   ビーコン
+ *
+ *	@return TRUEマージorセットした  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_PROXY_BUFF_MergeBeacon( RESORT_PROXY_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+{
+  RESORT_PROXY_DATA *p_data = Resort_Proxy_Buff_GetSameOwnerData( p_wk, &cp_beacon->basic1 );
+  if( p_data )
+  {
+    //何もしない。
+    return TRUE;
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データをマージ
+ *
+ *	@param	RESORT_PROXY_BUFF *p_wk ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv   ビーコン
+ *
+ *	@return TRUEマージorセットした  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_PROXY_BUFF_MergeRecv( RESORT_PROXY_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
+{
+  RESORT_PROXY_DATA *p_data = Resort_Proxy_Buff_GetSameOwnerData( p_wk, &cp_recv->basic1 );
+  if( p_data )
+  {
+    //何もしない。
+    return TRUE;
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人データをマージ
+ *
+ *	@param	RESORT_PROXY_BUFF *p_wk       ワーク
+ *	@param	RESORT_PROXY_DATA *cp_proxy   代理人データ
+ *
+ *	@return TRUEマージorセットした  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_PROXY_BUFF_MergeProxy( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+{
+  RESORT_PROXY_DATA *p_data = Resort_Proxy_Buff_GetSameOwnerData( p_wk, &cp_proxy->basic1 );
+  if( p_data )
+  {
+    RESORT_PROXY_DATA_MergeProxy( p_data, cp_proxy );
+    return TRUE;
+  }
+
+  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2287,6 +2582,30 @@ static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetEmptyData( RESORT_PROXY_BUFF *p_
   {
     RESORT_PROXY_DATA  *p_data = &p_wk->data[i];
     if( RESORT_PROXY_DATA_IsEmpty( p_data ) )
+    {
+      return p_data;
+    }
+  }
+
+  return NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ所有者のデータを収録
+ *
+ *	@param	RESORT_PROXY_BUFF *p_wk ワーク
+ *	@param	RESORT_BASIC1_DATA *cp_owner  比べる基本データ
+ *
+ *	@return 代理人データ
+ */
+//-----------------------------------------------------------------------------
+static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetSameOwnerData( RESORT_PROXY_BUFF *p_wk, const RESORT_BASIC1_DATA *cp_owner )
+{
+  int i;
+  for( i = 0; i < p_wk->max; i++ )
+  {
+    RESORT_PROXY_DATA  *p_data = &p_wk->data[i];
+    if( RESORT_BASIC1_DATA_IsSameOwner( &p_data->basic1, cp_owner ) )
     {
       return p_data;
     }
@@ -2473,7 +2792,7 @@ void RESORT_RECV_BUFF_Clear( RESORT_RECV_BUFF *p_wk, u32 index )
  *	@retval TRUEビーコン挿し込みした  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+BOOL RESORT_RECV_BUFF_MergeBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   RESORT_RECV_DATA *p_data;
 
@@ -2493,6 +2812,95 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
     return TRUE;
   }
 
+  RESORT_Printf( "ビーコンを受け取ったが、バッファがいっぱい！\n" );
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ受信バッファにビーコン差込
+ *
+ *	@param	RESORT_RECV_BUFF *p_wk  ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv 受信したデータ
+ *	@param  RESORT_COMM_TYPE type 通信タイプ
+ *
+ *	@retval TRUEビーコン挿し込みした  FALSEしていない*
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_BUFF_MergeRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
+{
+  RESORT_RECV_DATA *p_data;
+
+  //ロック中は追加しない
+  if( p_wk->is_lock )
+  {
+    RESORT_Printf( "リゾート　ロック中\n" );
+    return FALSE;
+  }
+
+  //同じ所有者のものがあったら優先的に入れる
+  p_data  = Resort_Recv_Buff_GetSameOwnerData( p_wk, &cp_recv->basic1 );
+  if( p_data )
+  {
+    RESORT_RECV_DATA_MergeRecv( p_data, cp_recv );
+    RESORT_Printf( "受信データをマージした！\n" );
+    return TRUE;
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人バッファをマージ
+ *  
+ *	@param	RESORT_RECV_BUFF *p_wk  ワーク
+ *	@param	RESORT_PROXY_DATA *cp_proxy   代理人バッファ
+ *
+ *	@return TRUEマージした  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_BUFF_MergeProxy( RESORT_RECV_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+{
+  RESORT_RECV_DATA *p_data;
+
+  //ロック中は追加しない
+  if( p_wk->is_lock )
+  {
+    RESORT_Printf( "リゾート　ロック中\n" );
+    return FALSE;
+  }
+
+  //同じ所有者のものがあったら優先的に入れる
+  p_data  = Resort_Recv_Buff_GetSameOwnerData( p_wk, &cp_proxy->basic1 );
+  if( p_data )
+  {
+    RESORT_RECV_DATA_MergeProxy( p_data, cp_proxy );
+    RESORT_Printf( "受信データをマージした！\n" );
+    return TRUE;
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンをセット
+ *
+ *	@param	RESORT_RECV_BUFF *p_wk  ワーク
+ *	@param	RESORT_BEACON_DATA *cp_beacon ビーコン
+ *
+ *	@return TRUEビーコンをセット  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+{
+  RESORT_RECV_DATA *p_data;
+
+  //ロック中は追加しない
+  if( p_wk->is_lock )
+  {
+    RESORT_Printf( "リゾート　ロック中\n" );
+    return FALSE;
+  }
+
   {
     u32 trainerID = RESORT_BEACON_DATA_GetTrainerID( cp_beacon );
     //連続で受信チェック
@@ -2502,7 +2910,7 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
       p_data  = Resort_Recv_Buff_GetEmptyData( p_wk );
       if( p_data )
       {
-        RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
+        RESORT_RECV_DATA_AddBeacon( p_data, cp_beacon );
 
 #ifdef  PM_DEBUG
         RESORT_BASIC1_DATA_PrintDebug( &cp_beacon->basic1 );
@@ -2520,16 +2928,15 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  データ受信バッファにビーコン差込
+ *	@brief  受信データをセット
  *
  *	@param	RESORT_RECV_BUFF *p_wk  ワーク
- *	@param	RESORT_RECV_DATA *cp_recv 受信したデータ
- *	@param  RESORT_COMM_TYPE type 通信タイプ
+ *	@param	RESORT_RECV_DATA *cp_recv   受信データ
  *
- *	@retval TRUEビーコン挿し込みした  FALSEしていない*
+ *	@return TRUE受信データをセット  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv, RESORT_COMM_TYPE type )
+BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
   RESORT_RECV_DATA *p_data;
 
@@ -2540,20 +2947,11 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
     return FALSE;
   }
 
-  //同じ所有者のものがあったら優先的に入れる
-  p_data  = Resort_Recv_Buff_GetSameOwnerData( p_wk, &cp_recv->basic1 );
-  if( p_data )
-  {
-    RESORT_RECV_DATA_MergeRecv( p_data, cp_recv, type );
-    RESORT_Printf( "受信データをマージした！\n" );
-    return TRUE;
-  }
-
   //空のデータがあったら入れる
   p_data  = Resort_Recv_Buff_GetEmptyData( p_wk );
   if( p_data )
   {
-    RESORT_RECV_DATA_MergeRecv( p_data, cp_recv, type );
+    RESORT_RECV_DATA_AddRecv( p_data, cp_recv );
 
 #ifdef  PM_DEBUG
     RESORT_BASIC1_DATA_PrintDebug( &cp_recv->basic1 );
@@ -2563,6 +2961,7 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
   }
 
   RESORT_Printf( "受信データを受け取ったが、バッファがいっぱい！\n" );
+
   return FALSE;
 }
 //----------------------------------------------------------------------------
@@ -2712,189 +3111,6 @@ void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk )
 
 //=============================================================================
 /**
- *  滞在者
- */
-//=============================================================================
-//-------------------------------------
-///	滞在者
-//=====================================
-struct _RESORT_VISITOR_DATA
-{
-  RESORT_BASIC1_DATA basic1;
-  RESORT_BASIC2_DATA basic2;
-  RESORT_EXTEND4_DATA extend4;
-  u8    placeID;
-  u8    peopleID;
-  u8    dataID;
-  u8    event_flag;
-  u8    type;
-  u8    day_flag;
-  u8    dummy[2];
-};
-SDK_COMPILER_ASSERT( sizeof(RESORT_VISITOR_DATA) == RESORT_VISITOR_DATA_SIZE );
-
-//-------------------------------------
-///	外部公開
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  滞在者ワーク作成
- *
- *	@param	HEAPID heapID ヒープID
- *
- *	@return 滞在者ワーク
- */
-//-----------------------------------------------------------------------------
-RESORT_VISITOR_DATA * RESORT_VISITOR_DATA_Init( HEAPID heapID )
-{
-  RESORT_VISITOR_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID, sizeof(RESORT_VISITOR_DATA) );
-  RESORT_VISITOR_DATA_InitInstance(p_wk);
-  return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  滞在者ワーク破棄
- *
- *	@param	RESORT_VISITOR_DATA *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_VISITOR_DATA_Exit( RESORT_VISITOR_DATA *p_wk )
-{
-  GFL_HEAP_FreeMemory(p_wk);
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  滞在者ワーク初期化
- *
- *	@param	RESORT_VISITOR_DATA *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_VISITOR_DATA_InitInstance( RESORT_VISITOR_DATA *p_wk )
-{
-  GFL_STD_MemClear( p_wk, sizeof(RESORT_VISITOR_DATA) );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  滞在者ワークが空かチェック
- *
- *	@param	const RESORT_VISITOR_DATA *cp_wk  ワーク
- *
- *	@return TRUEで空  FALSEで存在
- */
-//-----------------------------------------------------------------------------
-BOOL RESORT_VISITOR_DATA_IsEmpty( const RESORT_VISITOR_DATA *cp_wk )
-{
-  return RESORT_BASIC1_DATA_IsEmpty( &cp_wk->basic1 );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief　受信データから滞在者ワークを設定
- *
- *	@param	RESORT_VISITOR_DATA *p_wk   ワーク
- *	@param	RESORT_RECV_DATA *cp_recv   受信でーた
- */
-//-----------------------------------------------------------------------------
-void RESORT_VISITOR_DATA_SetRecv( RESORT_VISITOR_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type )
-{
-  //TODO
-  p_wk->basic1    = cp_recv->basic1;
-  p_wk->basic2    = cp_recv->basic2;
-  p_wk->extend4   = cp_recv->extend4;
-  p_wk->peopleID  = peopleID;
-  p_wk->placeID   = placeID;
-  p_wk->type      = type;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  住民データから滞在者ワークを設定
- *
- *	@param	RESORT_VISITOR_DATA *p_wk ワーク
- *	@param	RESORT_RESIDENT_DATA *cp_resident 住民データ
- *	@param	peopleID  ID
- *	@param	placeID   場所ID
- */
-//-----------------------------------------------------------------------------
-void RESORT_VISITOR_DATA_SetResident( RESORT_VISITOR_DATA *p_wk, const RESORT_RESIDENT_DATA *cp_resident, u16 peopleID, u16 placeID )
-{
-  //TODO
-  p_wk->basic1    = cp_resident->basic1;
-  p_wk->basic2    = cp_resident->basic2;
-  p_wk->extend4   = cp_resident->extend4;
-  p_wk->peopleID  = peopleID;
-  p_wk->placeID   = placeID;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データ取得
- *
- *	@param	const RESORT_VISITOR_DATA *cp_wk  ワーク
- *	@param	なんのデータを取得するか
- *
- *	@return　データ
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs )
-{
-  switch( param )
-  {
-  case RESORT_DATA_PARAM_PEOPLE_ID:
-    return cp_wk->peopleID;
-  case RESORT_DATA_PARAM_PLACE_ID:
-    return cp_wk->placeID;
-  case RESORT_DATA_PARAM_NAME:
-    RESORT_BASIC1_DATA_GetName(&cp_wk->basic1, p_ret_adrs );
-    return 0;
-  case RESORT_DATA_PARAM_INTRODUCTION:
-    RESORT_BASIC1_DATA_GetIntroduction( &cp_wk->basic1, p_ret_adrs );
-    return 0;
-  case RESORT_DATA_PARAM_SEX: 
-    return cp_wk->basic1.sex;
-  case RESORT_DATA_PARAM_TRAINERVIEW:
-    return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
-  case RESORT_DATA_PARAM_EVENT_FLAG:
-    return cp_wk->event_flag;
-  case RESORT_DATA_PARAM_TYPE:
-    return cp_wk->type;
-  case RESORT_DATA_PARAM_DAY_FLAG:
-    return cp_wk->day_flag;
-  default:
-    GF_ASSERT(0);
-    return 0;
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  データ設定
- *
- *	@param	RESORT_VISITOR_DATA *cp_wk  ワーク
- *	@param	param   なんのデータを設定するか
- *	@param   data   設定するデータ
- */
-//-----------------------------------------------------------------------------
-void RESORT_VISITOR_DATA_SetData( RESORT_VISITOR_DATA *p_wk, RESORT_DATA_PARAM param, u32 data )
-{
-  switch( param )
-  {
-  case RESORT_DATA_PARAM_PEOPLE_ID:
-    p_wk->peopleID  = data;
-    break;
-  case RESORT_DATA_PARAM_PLACE_ID:
-    p_wk->placeID   = data;
-    break;
-  case RESORT_DATA_PARAM_LOCK:
-    //なにもしない
-    break;
-  case RESORT_DATA_PARAM_DAY_FLAG:
-    p_wk->day_flag  = data;
-    break;
-  default:
-    GF_ASSERT(0);
-  }
-}
-//=============================================================================
-/**
  *  秘書データ
  */
 //=============================================================================
@@ -2904,7 +3120,6 @@ void RESORT_VISITOR_DATA_SetData( RESORT_VISITOR_DATA *p_wk, RESORT_DATA_PARAM p
 struct _RESORT_SECRETARY_DATA 
 {
   RESORT_BASIC1_DATA basic1;
-  RESORT_BASIC2_DATA basic2;
   u8    placeID;
   u8    peopleID;
   u8    type;
@@ -2913,7 +3128,8 @@ struct _RESORT_SECRETARY_DATA
   u8    meet_month;
   u8    meet_day;
   u8    dummy2;
-
+  RESORT_EXTEND6_DATA extend6;
+  RESORT_EXTEND7_DATA extend7;
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_SECRETARY_DATA) == RESORT_SECRETARY_DATA_SIZE );
 
@@ -2969,6 +3185,130 @@ void RESORT_SECRETARY_DATA_InitInstance( RESORT_SECRETARY_DATA *p_wk )
 BOOL RESORT_SECRETARY_DATA_IsEmpty( const RESORT_SECRETARY_DATA *cp_wk )
 {
   return RESORT_BASIC1_DATA_IsEmpty( &cp_wk->basic1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ人物かチェック  ビーコン版
+ *
+ *	@param	const RESORT_SECRETARY_DATA *cp_wk  ワーク
+ *	@param	RESORT_BEACON_DATA *cp_beacon ビーコン
+ *
+ *	@return TRUE同じ  FALSE違う
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_SECRETARY_DATA_IsSameOwnerBeacon( const RESORT_SECRETARY_DATA *cp_wk, const RESORT_BEACON_DATA *cp_beacon )
+{
+  return RESORT_BASIC1_DATA_IsSameOwner( &cp_wk->basic1, &cp_beacon->basic1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ人物かチェック  受信データ版
+ *
+ *	@param	const RESORT_SECRETARY_DATA *cp_wk  ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv   受信データ
+ *
+ *	@return TRUE同じ  FALSE違う
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_SECRETARY_DATA_IsSameOwnerRecv( const RESORT_SECRETARY_DATA *cp_wk, const RESORT_RECV_DATA *cp_recv )
+{
+  return RESORT_BASIC1_DATA_IsSameOwner( &cp_wk->basic1, &cp_recv->basic1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ人物かチェック  代理人版
+ *
+ *	@param	const RESORT_SECRETARY_DATA *cp_wk  ワーク
+ *	@param	RESORT_PROXY_DATA *cp_proxy         代理人
+ *
+ *	@return TRUE同じ  FALSE違う
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_SECRETARY_DATA_IsSameOwnerProxy( const RESORT_SECRETARY_DATA *cp_wk, const RESORT_PROXY_DATA *cp_proxy )
+{
+  return RESORT_BASIC1_DATA_IsSameOwner( &cp_wk->basic1, &cp_proxy->basic1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンをマージ
+ *
+ *	@param	RESORT_SECRETARY_DATA *p_wk     ワーク
+ *	@param	RESORT_BEACON_DATA *cp_beacon   マージするビーコン
+ *
+ *	@return TRUEマージした  FALSEマージしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_SECRETARY_DATA_MergeBeacon( RESORT_SECRETARY_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+{
+  GF_ASSERT( !RESORT_SECRETARY_DATA_IsEmpty( p_wk ) );
+
+  //ベーシックは必ずマージ
+  p_wk->basic1  = cp_beacon->basic1;
+
+  if( cp_beacon->extend_type ==  RESORT_EXTEND_TYPE_06 )
+  {
+    GFL_STD_MemCopy( cp_beacon->extend, &p_wk->extend6, RESORT_EXTEND_DATA_SIZE );
+  }
+  else if( cp_beacon->extend_type ==  RESORT_EXTEND_TYPE_07 )
+  {
+    GFL_STD_MemCopy( cp_beacon->extend, &p_wk->extend7, RESORT_EXTEND_DATA_SIZE );
+  }
+
+  //秘書は見た目とフリーワードが変わるだけなのでフラグたてる必要ないはず
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データをマージ
+ *
+ *	@param	RESORT_SECRETARY_DATA *p_wk ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv マージする受信データ
+ *	@param	type  通信タイプ
+ *
+ *	@return TRUEマージした  FALSEマージしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_SECRETARY_DATA_MergeRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
+{
+  GF_ASSERT( !RESORT_SECRETARY_DATA_IsEmpty( p_wk ) );
+
+  //ベーシックは必ずマージ
+  p_wk->basic1  = cp_recv->basic1;
+
+  if( cp_recv->extend_flag & (1<<RESORT_EXTEND_TYPE_06) )
+  {
+    p_wk->extend6 = cp_recv->extend6;
+  }
+
+  if( cp_recv->extend_flag & (1<<RESORT_EXTEND_TYPE_07) )
+  {
+    p_wk->extend7 = cp_recv->extend7;
+  }
+
+  //秘書は見た目とフリーワードが変わるだけなのでフラグたてる必要ないはず
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人をマージ
+ *  
+ *	@param	RESORT_SECRETARY_DATA *p_wk   ワーク
+ *	@param	RESORT_PROXY_DATA *cp_proxy   マージする代理人データ
+ *
+ *	@return TRUEマージした  FALSEマージしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_SECRETARY_DATA_MergeProxy( RESORT_SECRETARY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+{
+  GF_ASSERT( !RESORT_SECRETARY_DATA_IsEmpty( p_wk ) );
+
+  //見た目だけマージ
+  p_wk->basic1.trainer_view = cp_proxy->basic1.trainer_view;
+
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3066,13 +3406,14 @@ void RESORT_SECRETARY_DATA_SetRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RE
 {
   //TODO
   p_wk->basic1    = cp_recv->basic1;
-  p_wk->basic2    = cp_recv->basic2;
   p_wk->peopleID  = peopleID;
   p_wk->placeID   = placeID;
   p_wk->type      = type;
   p_wk->meet_year = cp_recv->meet_year;
   p_wk->meet_month = cp_recv->meet_month;
   p_wk->meet_day  = cp_recv->meet_day;
+  p_wk->extend6   = cp_recv->extend6;
+  p_wk->extend7   = cp_recv->extend7;
 }
 
 //=============================================================================
@@ -3090,7 +3431,6 @@ void RESORT_SECRETARY_DATA_SetRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RE
 struct _RESORT_PEOPLE_ALL_DATA
 {
   RESORT_RESIDENT_DATA    resident[RESORT_RESIDENT_DATA_NUM];
-  RESORT_VISITOR_DATA     visitor[RESORT_VISITOR_DATA_NUM];
   RESORT_SECRETARY_DATA   secretary[RESORT_SECRETARY_DATA_NUM];
   RESORT_RECV_DATA        owner;
 };
@@ -3141,10 +3481,6 @@ void RESORT_PEOPLE_ALL_DATA_InitInstance( RESORT_PEOPLE_ALL_DATA *p_wk )
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
     RESORT_RESIDENT_DATA_InitInstance(&p_wk->resident[i] );
-  }
-  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
-  {
-    RESORT_VISITOR_DATA_InitInstance(&p_wk->visitor[i]);
   }
   for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
   {
@@ -3212,43 +3548,6 @@ u32 RESORT_PEOPLE_ALL_DATA_GetResidentCount( const RESORT_PEOPLE_ALL_DATA *p_wk 
     }
   }
   return cnt;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  滞在者データ取得
- *
- *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
- *	@param	index   インデックス
- *
- *	@return　滞在者データ
- */
-//-----------------------------------------------------------------------------
-RESORT_VISITOR_DATA * RESORT_PEOPLE_ALL_DATA_GetVisitor( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index )
-{
-  GF_ASSERT( index < RESORT_VISITOR_DATA_NUM );
-  return &p_wk->visitor[ index ];
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  空きの滞在者データを取得
- *
- *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
- *
- *	@return 空きの滞在者データ  NULLならば空きがない
- */
-//-----------------------------------------------------------------------------
-RESORT_VISITOR_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptyVisitor( RESORT_PEOPLE_ALL_DATA *p_wk )
-{
-  int i;
-  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
-  {
-    RESORT_VISITOR_DATA *p_visitor = RESORT_PEOPLE_ALL_DATA_GetVisitor( p_wk, i );
-    if( RESORT_VISITOR_DATA_IsEmpty(p_visitor) )
-    {
-      return p_visitor;
-    }
-  }
-  return NULL;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3320,57 +3619,71 @@ RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( RESORT_PEOP
  *	@param	RESORT_BEACON_DATA *cp_beacon   ビーコンデータ
  *
  *	@return TRUEいれた　FALSEいれなかった
+ *
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_PEOPLE_ALL_DATA_MergeBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+BOOL RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_wk, const void *cp_data_adrs, RESORT_MERGE_TYPE type )
 {
+  typedef BOOL (*IS_SAME_OWNER)( const void *, const void * );
+  typedef BOOL (*MERGE_DATA)( void *, const void * );
+
+  static const struct
+  {
+    IS_SAME_OWNER Resident_IsSameOwner;
+    MERGE_DATA    Resident_MergeData;
+    IS_SAME_OWNER Secretary_IsSameOwner;
+    MERGE_DATA    Secretary_MergeData;
+  } sc_data_function_tbl[] =
+  {
+    //RESORT_MERGE_TYPE_BEACON
+    {
+      (IS_SAME_OWNER)RESORT_RECV_DATA_IsSameOwnerBeacon,
+      (MERGE_DATA)RESORT_RECV_DATA_MergeBeacon,
+      (IS_SAME_OWNER)RESORT_SECRETARY_DATA_IsSameOwnerBeacon,
+      (MERGE_DATA)RESORT_SECRETARY_DATA_MergeBeacon,
+    },
+    //RESORT_MERGE_TYPE_RECV,
+    {
+      (IS_SAME_OWNER)RESORT_RECV_DATA_IsSameOwnerRecv,
+      (MERGE_DATA)RESORT_RECV_DATA_MergeRecv,
+      (IS_SAME_OWNER)RESORT_SECRETARY_DATA_IsSameOwnerRecv,
+      (MERGE_DATA)RESORT_SECRETARY_DATA_MergeRecv,
+    },
+    //RESORT_MERGE_TYPE_PROXY,
+    {
+      (IS_SAME_OWNER)RESORT_RECV_DATA_IsSameOwnerProxy,
+      (MERGE_DATA)RESORT_RECV_DATA_MergeProxy,
+      (IS_SAME_OWNER)RESORT_SECRETARY_DATA_IsSameOwnerProxy,
+      (MERGE_DATA)RESORT_SECRETARY_DATA_MergeRecv,
+    },
+  };
+
   int i;
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
     RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_wk, i );
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) 
-      &&  RESORT_RESIDENT_DATA_IsSameOwnerBeacon(p_resident,cp_beacon) )
+      &&  sc_data_function_tbl[type].Resident_IsSameOwner(p_resident,cp_data_adrs) )
     {
-      if( RESORT_RESIDENT_DATA_MergeBeacon( p_resident, cp_beacon ) )
+      if( sc_data_function_tbl[type].Resident_MergeData(p_resident,cp_data_adrs) )
       {
         return TRUE;
       }
     }
   }
 
-  //TODO  住人以外もマージする？
-
-
-  return FALSE;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  受信を他のデータにマージ
- *
- *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
- *	@param	RESORT_RECV_DATA *cp_recv     受信データ
- *
- *	@return TRUEいれた　FALSEいれなかった
- */
-//-----------------------------------------------------------------------------
-BOOL RESORT_PEOPLE_ALL_DATA_MergeRecv( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, RESORT_COMM_TYPE type )
-{
-  int i;
-  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
   {
-    RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_wk, i );
-    if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) 
-      &&  RESORT_RESIDENT_DATA_IsSameOwnerRecv(p_resident,cp_recv) )
+    RESORT_SECRETARY_DATA *p_secret = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_wk, i );
+    if( !RESORT_SECRETARY_DATA_IsEmpty(p_secret) 
+      &&  sc_data_function_tbl[type].Secretary_IsSameOwner(p_secret,cp_data_adrs) )
     {
-      if( RESORT_RESIDENT_DATA_MergeRecv( p_resident, cp_recv, type ) )
+      if( sc_data_function_tbl[type].Secretary_MergeData(p_secret,cp_data_adrs) )
       {
         return TRUE;
       }
     }
   }
-
-
-  //TODO 住人マージ
 
   return FALSE;
 }
@@ -3398,14 +3711,6 @@ void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
       {
         RESORT_INSTITUTION_DATA_SetBit( p_institution, j, FALSE );
       }
-    }
-  }
-  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
-  {
-    RESORT_VISITOR_DATA *p_visitor =  RESORT_PEOPLE_ALL_DATA_GetVisitor( p_wk, i );
-    if( !RESORT_VISITOR_DATA_IsEmpty(p_visitor) )
-    {
-      RESORT_VISITOR_DATA_SetData(p_visitor,RESORT_DATA_PARAM_DAY_FLAG, FALSE );
     }
   }
 }

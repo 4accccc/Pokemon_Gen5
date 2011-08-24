@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 //ライブラリ
 #include <gflib.h>
+#include "gamesystem/game_data.h"
 
 //セーブ
 #include "savedata/save_tbl.h"
@@ -135,4 +136,141 @@ RESORT_PEOPLE_ALL_DATA * RESONANCE_RESORT_SV_GetPeopleAllData( RESONANCE_RESORT_
 RESORT_CITY_DATA * RESONANCE_RESORT_SV_GetCityData( RESONANCE_RESORT_SV *p_wk )
 {
   return (RESORT_CITY_DATA *)p_wk->city_data;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  全データをチェックし、データをマージorセットor破棄する
+ *
+ *	@param	RESONANCE_RESORT_SV *p_wk ワーク
+ *	@param	*p_gamedata               ゲームデータ
+ *	@param	void *cp_data_adrs        データアドレス
+ *	@param	type                      データ種類
+ *
+ *	@return TRUEデータマージorセット  FALSEデータ破棄
+ */
+//-----------------------------------------------------------------------------
+BOOL RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type )
+{
+
+  typedef BOOL (*IS_VALID)(  const void *cp_data_adrs );
+
+  typedef BOOL (*MERGE_RECV_BUFF)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
+  typedef BOOL (*MERGE_PROXY_BUFF)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
+  typedef BOOL (*ADD_RECV_DATA)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
+  typedef BOOL (*ADD_PROXY_DATA)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
+
+  //チェック順
+  typedef enum
+  {
+    RESRT_MERGE_ORDER_PROXY_RECV,
+    RESRT_MERGE_ORDER_RECV_PROXY,
+    RESRT_MERGE_ORDER_MAX,
+  }RESRT_MERGE_ORDER;
+
+  static const struct
+  {
+    IS_VALID          IsValid;
+    MERGE_RECV_BUFF   MergeRecvBuff;
+    MERGE_PROXY_BUFF  MergeProxyBuff;
+    ADD_RECV_DATA     AddRecvData;
+    ADD_PROXY_DATA    AddProxyData;
+    RESRT_MERGE_ORDER order;
+  }sc_data_function_tbl[] =
+  {
+    //ビーコンデータ  代理人→ビーコン
+    {
+      (IS_VALID)RESORT_BEACON_DATA_IsValid,
+      (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeBeacon,
+      (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeBeacon,
+      (ADD_RECV_DATA)RESORT_RECV_BUFF_AddBeacon,
+      NULL,
+      RESRT_MERGE_ORDER_PROXY_RECV,
+    },
+    //受信データ      代理人→ビーコン
+    {
+      (IS_VALID)RESORT_RECV_DATA_IsValid,
+      (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeRecv,
+      (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeRecv,
+      (ADD_RECV_DATA)RESORT_RECV_BUFF_AddRecv,
+      NULL,
+      RESRT_MERGE_ORDER_PROXY_RECV,
+    },
+    //代理人データ    ビーコン→代理人
+    {
+      (IS_VALID)RESORT_PROXY_DATA_IsValid,
+      (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeProxy,
+      (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeProxy,
+      NULL,
+      (ADD_PROXY_DATA)RESORT_PROXY_BUFF_Add,
+      RESRT_MERGE_ORDER_RECV_PROXY,
+    },
+  };
+
+  RESORT_RECV_BUFF *p_sv_buff   =  RESONANCE_RESORT_SV_GetDataBuff( p_wk );
+  RESORT_RECV_BUFF *p_temp_buff =  *(RESORT_RECV_BUFF **)GAMEDATA_GetResortBuffer( p_gamedata );
+  RESORT_PROXY_BUFF *p_proxy_buff  =  RESONANCE_RESORT_SV_GetProxyBuff( p_wk );
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_wk );
+
+  //不正ならば何もしない
+  if( !sc_data_function_tbl[type].IsValid( cp_data_adrs ) )
+  {
+    return FALSE;
+  }
+
+  //市民データのマージ
+  if( RESORT_PEOPLE_ALL_DATA_MergeData( p_all_people, cp_data_adrs, type ) )
+  {
+    return TRUE;
+  }
+  else
+  {
+    int i;
+    //バッファのマージ
+    //どちらのバッファを先にチェックするか順番が違う
+    RESRT_MERGE_ORDER order = sc_data_function_tbl[type].order;
+    for( i = 0; i < RESRT_MERGE_ORDER_MAX; i++ )
+    {
+      switch( order )
+      {
+      case RESRT_MERGE_ORDER_PROXY_RECV:
+        if( sc_data_function_tbl[type].MergeRecvBuff( p_sv_buff, cp_data_adrs ) )
+        {
+          return TRUE;
+        }
+        if( p_temp_buff )
+        {
+          if( sc_data_function_tbl[type].MergeRecvBuff( p_temp_buff, cp_data_adrs ) )
+          {
+            return TRUE;
+          }
+        }
+        order ^=  1;
+        break;
+      case RESRT_MERGE_ORDER_RECV_PROXY:
+        if( sc_data_function_tbl[type].MergeProxyBuff( p_proxy_buff, cp_data_adrs ) )
+        {
+          return TRUE;
+        }
+        order ^=  1;
+        break;
+      default:
+        GF_ASSERT(0);
+      }
+    }
+  }
+
+  if( sc_data_function_tbl[type].AddRecvData )
+  {
+    BOOL is_set = sc_data_function_tbl[type].AddRecvData( p_sv_buff, cp_data_adrs );
+    if( !is_set && p_temp_buff )
+    {
+      is_set = sc_data_function_tbl[type].AddRecvData( p_temp_buff, cp_data_adrs );
+    }
+    return is_set;
+  }
+  else
+  {
+    return sc_data_function_tbl[type].AddProxyData( p_proxy_buff, cp_data_adrs );
+  }
 }

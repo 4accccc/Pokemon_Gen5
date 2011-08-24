@@ -73,9 +73,6 @@ static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
 //観光客
 static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
 
-//滞在者
-static void Visitor_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-
 //秘書
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
 
@@ -95,10 +92,6 @@ static const RESORT_PEOPLE_FUNCTION sc_people_function[RESORT_PEOPLE_TYPE_MAX]  
   //RESORT_PEOPLE_TYPE_TOURIST
   {
     Tourist_SetupMmdHeader,
-  },
-  //RESORT_PEOPLE_TYPE_VISITOR
-  {
-    Visitor_SetupMmdHeader,
   },
   //RESORT_PEOPLE_TYPE_SECRETARY
   {
@@ -476,9 +469,9 @@ static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder 
 //-----------------------------------------------------------------------------
 static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
-  //u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
-  p_hedder->obj_code = GIRL2;//UnionView_GetObjCode( trainer_view );
-  p_hedder->move_code = MV_DOWN; //TODO
+  u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
+  p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
+  p_hedder->move_code = MV_DOWN;
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
 }
 
@@ -499,24 +492,6 @@ static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
   NAGI_Printf( "mmdl view %d\n", trainer_view );
   p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
   p_hedder->move_code = MV_DOWN;
-  p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
-}
-//-------------------------------------
-///滞在者
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  MMDLヘッダ作成
- *
- *	@param	void *p_data_adrs   データ
- *	@param	*p_hedder           MMDL作成用ヘッダ
- */
-//-----------------------------------------------------------------------------
-static void Visitor_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
-{
-  u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
-  p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
-  p_hedder->move_code = MV_DOWN; //TODO
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
 }
 

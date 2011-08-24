@@ -1032,8 +1032,7 @@ static void _UnionRecv_FirstResortData(const int netID, const int size, const vo
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
   RESONANCE_RESORT_SV *p_resort_sv  = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_RECV_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+  RESORT_RECV_DATA *p_recv  = (RESORT_RECV_DATA *)pData;
 
 	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return; //自分のデータなので無視
@@ -1042,11 +1041,8 @@ static void _UnionRecv_FirstResortData(const int netID, const int size, const vo
   OS_TPrintf("COmmCOmmand リゾート受信 netID = %d\n", netID);
   situ->mycomm.resort_receive = TRUE;
 
-
-  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, pData, RESORT_COMM_TYPE_UNION ) )
-  {
-    RESORT_RECV_BUFF_AddRecv( p_buff, pData, RESORT_COMM_TYPE_UNION );
-  }
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_COMM_ID, RESORT_COMM_TYPE_UNION );
+  RESONANCE_RESORT_SV_SetData( p_resort_sv, unisys->uniparent->game_data, p_recv, RESORT_MERGE_TYPE_RECV );
 }
 
 //==================================================================

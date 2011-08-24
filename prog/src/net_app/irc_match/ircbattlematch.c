@@ -893,8 +893,7 @@ static void _recvResortData(const int netID, const int size, const void* pData, 
   GAMEDATA* pGameData = pWork->pBattleWork->gamedata;
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(pGameData);
   RESONANCE_RESORT_SV *p_resort_sv  = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_RECV_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+  RESORT_RECV_DATA *p_recv  = (RESORT_RECV_DATA *)pData;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
@@ -904,11 +903,10 @@ static void _recvResortData(const int netID, const int size, const void* pData, 
   }
 
   OS_TPrintf("リゾート受信 netID = %d\n", netID);
+
   //TODO ミュージカルとサブウェイの赤外線受付もここになってしまう
-  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, pData, RESORT_COMM_TYPE_CGEAR_IRC ) )
-  {
-    RESORT_RECV_BUFF_AddRecv( p_buff, pData, RESORT_COMM_TYPE_CGEAR_IRC );
-  }
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_COMM_ID, RESORT_COMM_TYPE_CGEAR_IRC );
+  RESONANCE_RESORT_SV_SetData( p_resort_sv, pGameData, p_recv, RESORT_MERGE_TYPE_RECV );
 }
 
 

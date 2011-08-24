@@ -51,6 +51,7 @@
 #include "savedata/perapvoice.h"
 #include "savedata/mail.h"
 #include "item/item.h"
+#include "savedata/resonance_resort_sv.h"
 
 #include "msg/msg_place_name.h"
 #define FIRST_NATUKIDO  (70)		///交換されたポケモンに入れるなつき度
@@ -2013,6 +2014,20 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *rec
     GFL_HEAP_FreeMemory( p_status );
 
     NAGI_Printf( "recv=%d send=%d\n", un_data.recvPokemon, un_data.sendPokemon );
+  }
+
+  //リゾートデータ
+  {
+    GAMEDATA  *p_gamedata = GAMESYSTEM_GetGameData(wk->param->gamesys);
+    MYSTATUS  *p_status = MakePartnerStatusData( recv_tr );
+    RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( wk->param->savedata );
+    RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(HEAPID_WORLDTRADE) );
+
+    RESORT_PROXY_DATA_SetCommData( p_proxy, p_status, PP_Get( recv_pp, ID_PARA_monsno, NULL ), RESORT_COMM_TYPE_GTS );
+    RESONANCE_RESORT_SV_SetData( p_resort_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY );
+
+    RESORT_PROXY_DATA_Exit( p_proxy );
+    GFL_HEAP_FreeMemory( p_status );
   }
 
 #if 0	//TV_OFF
