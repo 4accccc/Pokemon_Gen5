@@ -1200,7 +1200,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1402,7 +1402,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1437,10 +1437,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ロットと戦う
-・ゲーチス線終了で削除</Comment>
+・ゲーチス戦終了で削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:26:21" />
+				Time="2011-08-24T02:44:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1487,10 +1487,10 @@
 			Language="JPN">
 			<Comment>♀
 ・元プラズマ団♂その１と戦う
-・ゲーチス線終了で削除</Comment>
+・ゲーチス戦終了で削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:26:42" />
+				Time="2011-08-24T02:44:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1537,10 +1537,10 @@
 			Language="JPN">
 			<Comment>♀
 ・元プラズマ団♂その２と戦う
-・ゲーチス線終了で削除</Comment>
+・ゲーチス戦終了で削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:26:37" />
+				Time="2011-08-24T02:44:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

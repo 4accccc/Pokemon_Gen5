@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレの　ポケモンだけど
-たたかい　おわった　あとに▼
-なんと！　しんか　して
-すがたかたちが　かわったんだ！</Text>
+			<Text>デント　ポッド　コーンの　３にん▼
+しゅぎょう　しなおすため
+ジムリーダーを　やめたって▽
+そうとうな　おもい　だったろうな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T02:50:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -35,10 +35,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T08:59:47" />
+				Time="2011-08-24T02:58:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -61,12 +61,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しんか　したり　しなかったり……▼
-ポケモンって　ほんとうに
-ふしぎな　いきもの　よね……</Text>
+			<Text>ちかごろ　ゆめのあとちで
+ポケモンの　そんざいを▽
+かんじる　ひとが　いるんですって！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:09:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -74,12 +74,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>進化したり　しなかったり……▼
-ポケモンって　本当に
-不思議な　生き物　よね……</Text>
+			<Text>ちかごろ　夢の跡地で
+ポケモンの　存在を▽
+感じる　人が　いるんですって！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:14:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -88,72 +88,16 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ修正予定</Comment>
+・ラティオスorラティアスイベント前
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T08:59:48" />
+				Time="2011-08-24T03:04:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>WOMAN1
 女性</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c01r0101_boy3_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>うえは　ダメダメ！！
-いま　じっけんちゅう　なんだって！▼
-マコモねえちゃん
-すっげー　かおして　いってたもん！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>上は　ダメダメ！！
-今　実験中　なんだって！▼
-マコモねえちゃん
-すっげー　顔して　いってたもん！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・c01ジムバッジ取得まで
-　階段前に配置、２Fへのストッパー
-※swanでメッセージ修正予定</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-19T08:59:50" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BOY3
-少年（聡明）</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -174,15 +118,130 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c01r0101_boy3_02"
+		Label="msg_c01r0101_woman1_02b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うえの　マコモねえちゃん
-ああみえて　すごい　けんきゅうか！</Text>
+			<Text>ゆめのあとちに……
+ラティオスが　いたの……！？▼
+あそこに　のこる　ゆめを
+かんじとって　あらわれたのかもね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:13:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:11:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>夢の跡地に……
+ラティオスが　いたの……！？▼
+あそこに　残る　夢を
+感じ取って　現れたのかもね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:14:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:14:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・Black2ver
+・ラティオスエンカウント後
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:06:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN1
+女性</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T02:58:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0101_woman1_02w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆめのあとちに……
+ラティアスが　いたの……！？▼
+あそこに　のこる　ゆめを
+かんじとって　あらわれたのかもね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:14:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:13:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>夢の跡地に……
+ラティアスが　いたの……！？▼
+あそこに　残る　夢を
+感じ取って　現れたのかもね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:14:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:14:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・White2ver
+・ラティアスエンカウント後
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:07:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN1
+女性</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:04:00" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0101_boy3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マコモねえちゃん
+ヒウンに　いっちゃったよ……▽
+とかいって　そんなに　いいの？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T02:43:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -190,11 +249,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２階の　マコモねえちゃん
-ああ見えて　すごい　研究家だって</Text>
+			<Text>マコモねえちゃん
+ヒウンに　いっちゃったよ……▽
+都会って　そんなに　いいの？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T02:43:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -203,11 +263,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・c01ジムバッジ取得後、座標移動
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T08:59:51" />
+				Time="2011-08-24T02:43:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -226,7 +285,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
