@@ -8707,4 +8707,58 @@ msg_wbt_subev_sinou_～</Comment>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_wbt_subev_sunglasses_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼
+まだジムリーダーとたたかっていない
+じょうたいで　はなしかけたとき</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T03:52:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T03:51:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ▼
+まだジムリーダーとたたかっていない
+じょうたいで　はなしかけたとき</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T03:53:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T03:51:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・キャラ未解禁時に話しかけ
+・一言メッセージ
+・2011.8.24新規追加</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T03:54:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SUNGLASSES</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T03:51:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
