@@ -6,11 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しゅうまつは　でんしゃを　みようと
-おおぜいのひとが　やってくるよ</Text>
+			<Text>しゅうまつの　カノコタウンは
+ひとで　あふれかえる！▽
+みんな　でんしゃが　だいすきだね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:40:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>週末は　電車を　みようと
-大勢の人が　やってくるよ</Text>
+			<Text>週末の　カノコタウンは
+人で　あふれかえる！▽
+みんな　電車が　大好きだね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,10 +33,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-週末に人が増える説明</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:39:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -56,16 +58,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しゅうまつに　なるとよ
+			<Text>どにちに　なるとな
 [Name:Item Idx="0" ]を　あつめている▽
-ひとが　くるんじゃよ▼
-なにか　べつの　どうぐと
-こうかん　してくれるそうな▼
-ひとが　たっくさん　くるから
-きっと　あつまり　やすいのだろうね</Text>
+ひとが　やってきてな▽
+べつの　どうぐと　とりかえてくれるぞ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:45:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73,16 +72,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>週末に　なるとよ
+			<Text>土日に　なるとな
 [Name:Item Idx="0" ]を　集めている▽
-人が　来るんじゃよ▼
-なにか　別の　道具と
-交換してくれるそうな▼
-人が　たっくさん　くるから
-きっと　集まりやすいのだろうね</Text>
+人が　やってきてな▽
+別の　道具と　取替えてくれるぞ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:46:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -91,10 +87,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-どうぐ交換NPCの説明</Comment>
+・0＝道具名
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:41:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -109,6 +106,49 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05r0201_babyboy1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼくは　いつか　サブウェイマスターの
+ノボリ　クダリを　ぶっとばすんだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:10:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:48:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼくは　いつか　サブウェイマスターの
+ノボリ　クダリを　ぶっとばすんだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:10:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:10:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:46:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABYBOY1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:46:50" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

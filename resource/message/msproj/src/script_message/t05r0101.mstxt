@@ -6,12 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カナワタウンと　いえば
-てんしゃだいが　ゆうめいね▽
-はしから　みえたでしょ？</Text>
+			<Text>しゃりょうの　ほうこうを
+かえるための　てんしゃだい▽
+ターンテーブルとも　いうのよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:07:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カナワタウンと　いえば
-転車台が　有名ね▽
-橋から　みえたでしょ？</Text>
+			<Text>車両の　方向を
+変えるための　転車台▽
+ターンテーブルとも　いうのよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:07:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -32,10 +32,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:57:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -57,14 +58,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんしゃってさ
-たくさんの　ひとを　のせるでしょ？▼
-うんてんする　ひとも
-せいびする　ひとも▽
-おっきな　せきにんを　かかえてるの！</Text>
+			<Text>でんしゃ　てさ
+のってるだけで　いろんな▽
+けしきが　みれて　すごくない？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:07:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -72,14 +71,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>電車ってさ
-たくさんの人を　乗せるでしょ？▼
-だからね　運転する人も
-整備をする人も▽
-おっきな　責任を　かかえてるの！</Text>
+			<Text>電車てさ
+乗ってるだけで　いろんな▽
+景色が　みれて　すごくない？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -87,10 +84,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:07:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -105,6 +103,49 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05r0101_poke41_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちゅうう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:58:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:58:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちゅうう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:58:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:58:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE41
+ポケモン・デンチュラ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T07:58:30" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

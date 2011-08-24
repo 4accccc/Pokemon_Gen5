@@ -2,14 +2,16 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_r04r0502_policeman_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>わるガキ　ったって
+たむろ　してるだけでしょ？▽
+イメージだけで　さわいじゃ　ダメだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:19:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>悪ガキ　ったって
+たむろ　してるだけでしょ？▽
+イメージだけで　騒いじゃ　ダメだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:20:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +32,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・Black2ver</Comment>
+			<Comment>♂
+・Black2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:02:15" />
+				Time="2011-08-24T08:20:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>POLICEMAN</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:19:20" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

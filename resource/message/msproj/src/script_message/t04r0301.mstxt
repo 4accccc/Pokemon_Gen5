@@ -96,10 +96,11 @@
 			<Comment>♀：シロナ初回イベント
 ・主人公に近づき、メッセージ表示
 ・続けてshirona_first_03
-・0＝主人公名前</Comment>
+・0＝主人公名前
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:42" />
+				Time="2011-08-24T05:56:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -772,19 +773,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シロナ『なんだか　おもいだしちゃった▼
-もっともっと　いろんな　ところで
-いろんな　ひと　いろんな　ポケモンに▽
-であってほしい　って▼
-あなたに　そっくりの　トレーナーに
-つたえたことが　あるの▼
-あたしも　とおく　イッシュまで　きて
+			<Text>シロナ『とおく　イッシュまで　きて
 ほんとうに　よかったと　おもってるの▼
 だって　きみに　あえて
 あたしの　せかいは　ひろがったから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T05:53:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -792,19 +787,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シロナ『なんだか　思い出しちゃった▼
-もっともっと　いろんな所で
-いろんな　人　いろんな　ポケモンに▽
-出会ってほしい　って▼
-きみに　そっくりの　トレーナーに
-伝えたことが　あるの▼
-あたしも　遠く　イッシュまで　来て
+			<Text>シロナ『遠く　イッシュまで　来て
 本当に　よかったと　思ってるの▼
 だって　きみに　会えて
 あたしの　世界は　広がったから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T05:53:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -814,10 +803,11 @@
 			Language="JPN">
 			<Comment>♀
 ・春イベント：パターン1
-・戦闘後</Comment>
+・戦闘後
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T05:56:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1143,16 +1133,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カトレア『なんでも　おもいどおりに
-なってしまうのは　ふこうの　はじまり▼
-できないことが　あって
-できることが　ある▽
-それをしることが　だいじですって▼
-むかし　そういうことを　いう
-うるさい　にんげんが　いたの……</Text>
+			<Text>カトレア『むかしは
+バトルキャッスルの　オーナー▼
+イッシュの　してんのう▼
+つぎは　どこかの　チャンピオン？▼
+なんて　いってみたりして</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T06:05:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1160,16 +1148,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カトレア『なんでも　思い通りに
-なってしまうのは　不幸の　始まり▼
-できないことが　あって
-できることが　ある▽
-それを知ることが　大事ですって▼
-昔　そういうことを　いう
-うるさい　人間が　いたの……</Text>
+			<Text>カトレア『むかしは
+バトルキャッスルの　オーナー▼
+イッシュの　四天王▼
+次は　どこかの　チャンピオン？▼
+なんて　いってみたりして</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T06:05:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1179,10 +1165,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ランダムメッセージその１
-・その日固定</Comment>
+・その日固定
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T05:58:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1205,16 +1192,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カトレア『……どうしても
-シロナさんには　かてない▼
-いぜんの　アタクシなら
-いかりを　ばくはつ　させていたかも▼
-だけど　いまは　おちついて
-たいせんを　みなおし　どうすれば▽
-つよくなれるか　かんがえられるの</Text>
+			<Text>カトレア『コクランったら
+あいかわらず　きれいずき　ね▼
+わざわざ　イッシュまで　きて
+そうじ　だけして　かえるなんて……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T05:57:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1222,16 +1206,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カトレア『……どうしても
-シロナさんには　勝てない▼
-以前の　アタクシなら
-怒りを　爆発させていたかも▼
-だけど　今は　落ち着いて
-対戦を　見直し　どうすれば▽
-強くなれるか　考えられるの</Text>
+			<Text>カトレア『コクランったら
+あいかわらず　きれい好き　ね▼
+わざわざ　イッシュまで　来て
+掃除だけして　帰るなんて……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T05:58:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1241,10 +1222,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ランダムメッセージその２
-・その日固定</Comment>
+・その日固定
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T05:56:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1779,14 +1761,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シロナ『すうねんに　いちど
-かくちほうの　チャンピオンが　つどい▽
+			<Text>シロナ『かくちほうの
+チャンピオンが　つどい▽
 だれが　さいきょうなのか　きそう！▼
-そんな　あつまりが　あると
-おもしろいと　おもわない？</Text>
+それが　チャンピオンズトーナメント！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T06:07:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1794,14 +1775,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シロナ『数年に　一度
-各地方の　チャンピオンが　集い▽
+			<Text>シロナ『各地方の
+チャンピオンが　集い▽
 だれが　最強なのか　競う！▼
-そんな　集まりが　あると
-おもしろいと　思わない？</Text>
+それが　チャンピオンズトーナメント！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T06:08:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1811,10 +1791,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ランダムメッセージその２
-・その日固定</Comment>
+・その日固定
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T06:06:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2009,10 +1990,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『</Text>
+			<Text>ホミカ『つよい　トレーナーになりたい
+もっと　ベースが　うまくなりたい▼
+どっちも　じつげん　させるから
+２ばい　おいしい　じんせい　だよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:55:47" />
+				Time="2011-08-24T07:36:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2020,10 +2004,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『</Text>
+			<Text>ホミカ『強い　トレーナーになりたい
+もっと　ベースが　巧くなりたい▼
+どっちも　実現させるから
+２倍　おいしい　人生だよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:55:50" />
+				Time="2011-08-24T07:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2060,10 +2047,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『</Text>
+			<Text>ホミカ『ベースを　ひくのは
+ゆびでも　ピックでも　いいけど▽
+すきなほうが　たのしーよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:55:50" />
+				Time="2011-08-24T07:28:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2071,10 +2060,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『</Text>
+			<Text>ホミカ『ベースを　弾くのは
+ゆびでも　ピックでも　いいけど▽
+好きなほうが　楽しーよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:55:50" />
+				Time="2011-08-24T07:28:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2111,10 +2102,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『</Text>
+			<Text>ホミカ『ベースって
+ギターより　おもいんだ……▼
+そのぶん
+はかいりょく　あるけどね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:55:50" />
+				Time="2011-08-24T07:10:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2122,10 +2116,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『</Text>
+			<Text>ホミカ『ベースって
+ギターより　重いんだ……▼
+その分
+破壊力　あるけどね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:55:50" />
+				Time="2011-08-24T07:10:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2162,10 +2159,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『</Text>
+			<Text>ホミカ『まんぞくしたら　ダメ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:55:50" />
+				Time="2011-08-24T07:26:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2173,10 +2170,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『</Text>
+			<Text>ホミカ『満足したら　ダメ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:55:50" />
+				Time="2011-08-24T07:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2213,10 +2210,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『</Text>
+			<Text>ホミカ『……アタシ
+キミの　なかで　いきてるの？▼
+あーもー！
+かし　かんがえるの　むずかし！▼
+うたいだしたら　かってに
+ことばが　でてくるんだけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:55:50" />
+				Time="2011-08-24T06:25:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2224,10 +2226,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『</Text>
+			<Text>ホミカ『……アタシ
+キミの　なかで　いきてるの？▼
+あーもー！
+歌詞　考えるの　難し！▼
+歌いだしたら　勝手に
+言葉が　でてくるんだけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:55:50" />
+				Time="2011-08-24T06:25:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2433,12 +2440,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フウロ『はるか　とおくの　シンオウも
-かもつきを　つかえば　ひとっとび！▼
+ひこうきを　つかえば　ひとっとび！▼
 アタシは　ポケモンの　そらをとぶも
 きもちよくて　だいすき　だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T06:09:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2447,12 +2454,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フウロ『はるか　遠くの　シンオウも
-貨物機を　使えば　ひとっとび！▼
+飛行機を　使えば　ひとっとび！▼
 アタシは　ポケモンの　そらをとぶも
 気持ちよくて　大好き　だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T06:09:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2462,10 +2469,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ランダムメッセージその４
-・その日固定</Comment>
+・その日固定
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T06:09:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2583,7 +2591,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2639,7 +2647,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2697,7 +2705,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2753,7 +2761,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2805,298 +2813,58 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04r0301_leader2_summer_01"
+		Label="msg_t04r0301_lady_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アロエ『カセキって　すごくないかい？▼
-しんで　なにも　いえないはずなのに
-いきていた　じだいのことを▽
-あたしらに　おしえてくれるんだ▼
-ふふふ　いまのは　アララギの
-むすめの　うけうり　だけどさ！</Text>
+			<Text>こちら　カトレアさまの
+べっそうで　ございます</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T07:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T07:31:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アロエ『カセキって　すごくないかい？▼
-死んで　なにも　いえないはずなのに
-生きていた　時代のことを▽
-あたしらに　教えてくれるんだ▼
-ふふふ　今のは　アララギの
-娘の　受け売り　だけどさ！</Text>
+			<Text>こちら　カトレアさまの
+別荘で　ございます</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T07:31:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T07:31:18" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ランダムメッセージその１
-・その日固定</Comment>
+・クリア前まで出現</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T07:33:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>LEADER2
-アロエ</Text>
+			<Text>LADY
+管理人？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2011-08-24T08:11:03" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0301_leader2_summer_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アロエ『わざマシンは
-なんどでも　つかえるんだろ？▼
-いろんな　ポケモンに
-かたきうちの　わざを　おしえれば▼
-いつかは　ぴったりの
-ポケモンが　みつかるはずさ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アロエ『わざマシンは
-なんどでも　使えるんだろ？▼
-いろんな　ポケモンに
-かたきうちの　技を　教えれば▼
-いつかは　ぴったりの
-ポケモンが　みつかるはずさ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ランダムメッセージその２
-・その日固定</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>LEADER2
-アロエ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0301_leader2_summer_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アロエ『あたしが　ちいさいころさ▼
-こうざんで　いしを　ほっていた
-おやじは　いつも▽
-ホネを　もってかえってきたよ▼
-こどもごころに　ホネの　みりょくに
-やられて　きづけば　けんきゅうかさ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アロエ『あたしが　ちいさいころさ▼
-鉱夫だった　おやじは　いつも
-ホネを　持ってかえってきたよ▼
-子供心に　ホネの　魅力に　やられて
-気づけば　いつしか　研究家さ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ランダムメッセージその３
-・その日固定</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>LEADER2
-アロエ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0301_leader2_summer_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アロエ『こないだ　ベルって　こが
-ポケモンのことを　ききに　きたよ▼
-すきなことを　しりたいって　きもち
-つきること　ないんだよね</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アロエ『こないだ　ベルって　子が
-ポケモンについて　質問しにきたよ▼
-好きなことを　知りたいって　気持ち
-尽きること　ないんだよね</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ランダムメッセージその４
-・その日固定</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>LEADER2
-アロエ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0301_leader2_summer_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アロエ『シロナは　ゆうめいな
-こうこがくしゃ　だからね▼
-おなじ　けんきゅうしゃ　どうし
-アカデミックな　はなしを　してるのさ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アロエ『シロナは　有名な
-考古学者　だからね▼
-同じ　研究者として
-アカデミックな　話を　してるのさ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ランダムメッセージその５
-・その日固定</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>LEADER2
-アロエ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
