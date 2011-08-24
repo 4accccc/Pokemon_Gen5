@@ -390,8 +390,8 @@
 #define FE_D01R0101_RATI2_GET_01           374 /* 0x0176 夢の跡地：ラティオス（ラティアス）捕獲フラグ */
 #define FE_C06R0201_PILOT_TALK             375 /* 0x0177 フキヨセシティ：パイロット初回会話フラグ */
 #define FE_C06R0201_PILOT_CLEAR            376 /* 0x0178 フキヨセシティ：パイロットイベント終了（メダル見せ）フラグ */
-		/* not used   377(0x0179) */
-		/* not used   378(0x017a) */
+#define FE_C04R1101_TRBTL1                 377 /* 0x0179 旧電気ジムのコースタートレーナーの対戦済みチェックフラグ（１台目） */
+#define FE_C04R1101_TRBTL2                 378 /* 0x017a 旧電気ジムのコースタートレーナーの対戦済みチェックフラグ（２台目） */
 		/* not used   379(0x017b) */
 		/* not used   380(0x017c) */
 		/* not used   381(0x017d) */
@@ -710,6 +710,8 @@
 #define FV_D05R0101_SWLEADER1_01           792 /* 0x0318 WBT屋内：チェレン */
 #define FV_D05R0101_SWLEADER5_01           793 /* 0x0319 WBT屋内：ヤーコン */
 #define FV_D05R0101_SWLEADER2_01           794 /* 0x031a WBT屋内：ホミカ */
+#define FV_C04R1101_TR_01                  795 /* 0x031b 旧電気ジム：コースターに乗っているトレーナー１人目 */
+#define FV_C04R1101_TR_02                  796 /* 0x031c 旧電気ジム：コースターに乗っているトレーナー２人目 */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
