@@ -160,7 +160,9 @@ typedef struct{
   u8 power_select_no;        ///<パワー画面：選択しているパワー番号
   u8 power_mono_use;         ///<パワー画面：power_select_noのMONO_USE_POWER状態
   u8 power_eqp_update;       ///<パワー画面：TRUE:装備しているパワーに変更があった
-  u8 padding;
+//  u8 padding;
+  u8 fmission_id;
+  u8 fmission_level;
 }MONOLITH_COMMON_WORK;
 
 ///キャンセルアイコン制御構造体

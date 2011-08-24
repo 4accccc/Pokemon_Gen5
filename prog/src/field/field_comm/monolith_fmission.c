@@ -140,6 +140,37 @@ enum{
   _SCROLL_ARROW_DOWN_Y = 192 - _MENU_BAR_Y_LEN - 4,
 };
 
+// CLWKの番号
+enum{
+  FMISS_CLWK_LV1 = 0,	// level
+  FMISS_CLWK_LV2,
+  FMISS_CLWK_LV3,
+  //
+  FMISS_CLWK_NEW_00,	// newマーク
+  FMISS_CLWK_NEW_01,
+  FMISS_CLWK_NEW_02,
+  FMISS_CLWK_NEW_03,
+  FMISS_CLWK_NEW_04,
+  FMISS_CLWK_NEW_05,
+  FMISS_CLWK_NEW_06,
+  //
+  FMISS_CLWK_STAR_00,	// 星マーク
+  FMISS_CLWK_STAR_01,
+  FMISS_CLWK_STAR_02,
+  FMISS_CLWK_STAR_03,
+  FMISS_CLWK_STAR_04,
+  FMISS_CLWK_STAR_05,
+  FMISS_CLWK_STAR_06,
+  //
+  FMISS_CLWK_MAX,
+};
+
+// 星マークのシーケンス
+enum{
+  FMISS_LV1_SEQ = 4,
+  FMISS_LV2_SEQ = 5,
+  FMISS_LV3_SEQ = 11,
+};
 
 //==============================================================================
 //  構造体定義
@@ -159,6 +190,8 @@ typedef struct{
   PANEL_ACTOR panel;
   GFL_CLWK *act_arrow_up;       ///<上矢印
   GFL_CLWK *act_arrow_down;     ///<下矢印
+  GFL_CLWK *clwk[FMISS_CLWK_MAX];     ///<clwkまとめ
+  
   
   GFL_BMP_DATA *bmp_power_name[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];
   GPOWER_ID use_gpower_id[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];      ///<bmp_power_nameに対応したGPOWER_IDが入っている
@@ -246,7 +279,15 @@ static s32 _GetTouchListNo(MONOLITH_FMSELECT_WORK *mfw, u32 tp_y);
 static void _CursorPos_PanelScreenChange(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos, int palno);
 static void _CursorPos_PanelFocus(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos);
 static void _CursorPos_NotFocus(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos);
-
+//
+static void fmission_set_up_curpos( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
+static void fmission_create_obj( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
+static void fmission_exit_obj(   MONOLITH_FMSELECT_WORK *mfw );
+static void fmission_set_pos( MONOLITH_FMSELECT_WORK *mfw, const s32 num, const s32 y );
+static void fmission_disp_onoff( MONOLITH_FMSELECT_WORK *mfw, const s32 num, const BOOL bflg );
+static void fmission_set_seq( MONOLITH_FMSELECT_WORK *mfw, const s32 num, const s32 seq );
+static void fmission_chk_newmark_disp( MONOLITH_FMSELECT_WORK *mfw );
+static void fmission_chk_startmark_disp( MONOLITH_FMSELECT_WORK *mfw );
 
 //==============================================================================
 //  データ
@@ -273,6 +314,32 @@ enum{
   TOUCH_CANCEL,
 };
 
+//
+// CLWKのテーブル
+// (x,y),seq,soft,bg,pad
+static const s16 clwk_header_tbl[] = {
+  144, 180, 5, 0, 1, 0,		// lv1
+  176, 180, 5, 0, 1, 0,		// lv2
+  208, 180, 5, 0, 1, 0,		// lv3
+  //
+  16,   32, 7, 0x40, 3, 0,	// new00
+  16,   32, 7, 0x40, 3, 0,	// new01
+  16,   32, 7, 0x40, 3, 0,	// new02
+  16,   32, 7, 0x40, 3, 0,	// new03
+  16,   32, 7, 0x40, 3, 0,	// new04
+  16,   32, 7, 0x40, 3, 0,	// new05
+  16,   32, 7, 0x40, 3, 0,	// new06
+  //
+  200,  32, 4, 0x40, 3, 0,	// star00
+  200,  32, 4, 0x40, 3, 0,	// star01
+  200,  32, 4, 0x40, 3, 0,	// star02
+  200,  32, 4, 0x40, 3, 0,	// star03
+  200,  32, 4, 0x40, 3, 0,	// star04
+  200,  32, 4, 0x40, 3, 0,	// star05
+  200,  32, 4, 0x40, 3, 0,	// star06
+  //
+  -1,-1,-1,-1,-1,-1,
+};
 
 //==============================================================================
 //
@@ -319,6 +386,8 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Init(GFL_PROC * proc, int * se
     _BmpOamCreate(mfw, appwk->setup);
     _DecidePanelCreate(appwk, mfw);
     _ScrollArrowCreate(appwk, mfw);
+    // obj
+    fmission_create_obj( appwk, mfw );
 
     _Set_TitlePrint(appwk, mfw);
 
@@ -479,6 +548,10 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
         _ScrollPos_BGReflection(mfw);
         _ScrollPos_NameOamReflection(mfw);
         mfw->scroll_update = TRUE;
+        //
+        // test
+        fmission_chk_newmark_disp( mfw );
+        fmission_chk_startmark_disp( mfw );
       }
       _ScrollAfterUpdate(appwk, mfw);
     }
@@ -497,6 +570,9 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
         MonolithTool_PanelOBJ_SetEnable(&mfw->panel, FALSE);
       }
     }
+    // フェスミッション用処理
+    // パラメータの受け渡し用で追加
+    fmission_set_up_curpos( appwk, mfw );
     
     if(mfw->decide_cursor_pos != _CURSOR_POS_NONE){
       PMSND_PlaySE( MONOLITH_SE_DECIDE );
@@ -689,6 +765,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_End( GFL_PROC * proc, int * se
   _BmpOamDelete(mfw);
   _CancelIconDelete(mfw);
   _ScrollArrowDelete(mfw);
+  fmission_exit_obj(mfw);
   //BG
   _Setup_BGGraphicUnload(mfw);
   _Setup_BmpWinDelete(mfw);
@@ -1702,6 +1779,11 @@ static void _ScrollPos_NameOamReflection(MONOLITH_FMSELECT_WORK *mfw)
       GFL_BMP_Copy( mfw->bmp_power_name[list_top_no + i], mfw->bmpoam_power_bmp[i] );
     }
     //転送はVブランクで行う
+    //---------------
+    // new,starマーク対応
+    //---------------
+    fmission_set_pos( mfw, 3+i,  oam_top_y + POWER_LIST_SPACE * i);
+    fmission_set_pos( mfw, 10+i, oam_top_y + POWER_LIST_SPACE * i);
   }
 }
 
@@ -1746,3 +1828,189 @@ static s32 _GetTouchListNo(MONOLITH_FMSELECT_WORK *mfw, u32 tp_y)
   }
   return list_no;
 }
+
+//--------------------------------------------------------------
+/**
+ * カーソル位置から上画面用のid,levelをセット
+ *
+ * @param   mfw		
+ *
+ */
+//--------------------------------------------------------------
+static void fmission_set_up_curpos( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
+{
+  // idをセット(仮)
+  if(mfw->cursor_pos == _CURSOR_POS_NONE){
+    appwk->common->fmission_id    = 0xff;
+    appwk->common->fmission_level = 0;
+  }else{
+    // カーソルが1始まりらしい
+    appwk->common->fmission_id = mfw->cursor_pos-1;
+    if(appwk->common->fmission_id < 0){
+      appwk->common->fmission_id = 0;
+    }
+    appwk->common->fmission_level = 0;
+  }
+}
+
+//==================================================================
+/**
+ * objの初期化(レベル表示の下地obj)
+ *
+ * @param   MONOLITH_APP_PARENT
+ * @param   MONOLITH_FMSELECT_WORK
+ */
+//==================================================================
+static void fmission_create_obj( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
+{
+  s32			i;
+  GFL_CLWK_DATA	header;
+  //
+  for(i=0;i<FMISS_CLWK_MAX;i++){
+    header.pos_x   = clwk_header_tbl[6*i];
+    header.pos_y   = clwk_header_tbl[6*i+1];
+    header.anmseq  = clwk_header_tbl[6*i+2];
+    header.softpri = clwk_header_tbl[6*i+3];
+    header.bgpri   = clwk_header_tbl[6*i+4];
+    //
+    // 作成
+    mfw->clwk[i] = GFL_CLACT_WK_Create( appwk->setup->clunit, 
+      appwk->setup->common_res[COMMON_RESOURCE_INDEX_DOWN].char_index, 
+      appwk->setup->common_res[COMMON_RESOURCE_INDEX_DOWN].pltt_index, 
+      appwk->setup->common_res[COMMON_RESOURCE_INDEX_DOWN].cell_index, 
+      &header, CLSYS_DEFREND_SUB, HEAPID_MONOLITH );
+    //
+    GFL_CLACT_WK_SetAutoAnmFlag( mfw->clwk[i], TRUE );
+  }
+}
+
+//==================================================================
+/**
+ * objの破棄(レベル表示の下地obj)
+ *
+ * @param   MONOLITH_FMSELECT_WORK *mfw
+ */
+//==================================================================
+static void fmission_exit_obj( MONOLITH_FMSELECT_WORK *mfw )
+{
+  s32  i;
+  
+  for(i=0;i<FMISS_CLWK_MAX;i++){
+    GFL_CLACT_WK_Remove( mfw->clwk[i] );
+  }
+}
+
+//==================================================================
+/**
+ * NEWマークの座標の更新
+ *
+ * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   const s32				clwk番号
+ * @param   const s32				y座標
+ */
+//==================================================================
+static void fmission_set_pos( MONOLITH_FMSELECT_WORK *mfw, const s32 num, const s32 y )
+{
+  GFL_CLACTPOS	pos;
+  // 座標の取得
+  GFL_CLACT_WK_GetPos( mfw->clwk[num], &pos, CLSYS_DEFREND_SUB );
+  pos.y = y;
+  pos.y += 8;		// 調整
+  GFL_CLACT_WK_SetPos( mfw->clwk[num], &pos, CLSYS_DEFREND_SUB );
+}
+
+//==================================================================
+/**
+ * clwkのon/off
+ *
+ * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   const s32				clwk番号
+ * @param   const BOOL				(TRUE:表示、FALSE:非表示)
+ */
+//==================================================================
+static void fmission_disp_onoff( MONOLITH_FMSELECT_WORK *mfw, const s32 num, const BOOL bflg )
+{
+  GFL_CLACT_WK_SetDrawEnable( mfw->clwk[num], bflg );
+}
+
+//==================================================================
+/**
+ * clwkのseq変更
+ *
+ * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   const s32				clwk番号
+ * @param   const s32				seq
+ */
+//==================================================================
+static void fmission_set_seq( MONOLITH_FMSELECT_WORK *mfw, const s32 num, const s32 seq )
+{
+  // 切り替え
+  GFL_CLACT_WK_SetAnmSeq( mfw->clwk[num], seq );
+  GFL_CLACT_WK_SetAutoAnmFlag( mfw->clwk[num], TRUE );
+}
+
+//==================================================================
+/**
+ * newマークのチェック(on/off)
+ *
+ * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   const s32				clwk番号
+ * @param   const BOOL				(TRUE:表示、FALSE:非表示)
+ */
+//==================================================================
+static void fmission_chk_newmark_disp( MONOLITH_FMSELECT_WORK *mfw )
+{
+  s32 i;
+  s32 tmp;
+  s32 list_top_no;
+  
+  //リスト座標から先頭になる項目番号を算出する
+  list_top_no = (mfw->list_y >> 8) / POWER_LIST_SPACE;
+  //
+  for(i=0;i<POWER_ITEM_DISP_NUM;i++){
+    fmission_disp_onoff( mfw, 3+i, TRUE );
+    //
+    tmp = i+list_top_no-1;	// 1枚ダミーが入っているようなのでこれでよいはず
+    if(tmp == 10){
+      fmission_disp_onoff( mfw, 3+i, FALSE );
+    }
+  }
+}
+
+//==================================================================
+/**
+ * 星マークチェック(on/off、シーケンス)
+ *
+ * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   const s32				clwk番号
+ */
+//==================================================================
+static void fmission_chk_startmark_disp( MONOLITH_FMSELECT_WORK *mfw )
+{
+  s32 i;
+  s32 tmp;
+  s32 list_top_no;
+  
+  //リスト座標から先頭になる項目番号を算出する
+  list_top_no = (mfw->list_y >> 8) / POWER_LIST_SPACE;
+  //
+//  OS_Printf("star list_top_no :%d\n",list_top_no);
+  //
+  for(i=0;i<POWER_ITEM_DISP_NUM;i++){
+    fmission_disp_onoff( mfw, 10+i, TRUE );
+    // test
+    tmp = i+list_top_no-1;
+    if(tmp == 6){		// test(1枚ダミーが入っているようだ)
+      fmission_disp_onoff( mfw, 10+i, FALSE );
+    }else if(tmp == 7){
+      fmission_set_seq( mfw, 10+i, FMISS_LV1_SEQ );
+    }else if(tmp == 8){
+      fmission_set_seq( mfw, 10+i, FMISS_LV2_SEQ );
+    }else if(tmp == 9){
+      fmission_set_seq( mfw, 10+i, FMISS_LV3_SEQ );
+    }else{
+      fmission_set_seq( mfw, 10+i, FMISS_LV1_SEQ );
+    }
+  }
+}
+

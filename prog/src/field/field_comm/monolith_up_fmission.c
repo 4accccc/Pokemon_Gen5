@@ -14,6 +14,7 @@
 #include "monolith_tool.h"
 #include "msg/msg_monolith.h"
 #include "intrude_work.h"
+#include "gamesystem/fest_mission_data.h"
 #include "monolith.naix"
 
 
@@ -42,10 +43,15 @@ enum{
 //==============================================================================
 ///ミッション説明画面制御ワーク
 typedef struct{
-  GFL_BMPWIN 	*bmpwin[BMPWIN_MAX];	// bmpwin
-  PRINT_UTIL 	print_util[BMPWIN_MAX];	// print_util
+  GFL_BMPWIN 			*bmpwin[BMPWIN_MAX];	// bmpwin
+  PRINT_UTIL 			print_util[BMPWIN_MAX];	// print_util
   
-  s32  			mode;
+  FMISSION_DATA_MAN		*FMissionManager;		// manager
+  ARCHANDLE				*Handle;
+  FMISSION_ARCDATA		*ArcData;
+  //
+  s32  					Id;						// 表示するID
+  s32					Level;					// 表示するレベル
 }MONOLITH_UP_WORK;
 
 //-----------------------------------------
@@ -92,7 +98,7 @@ const s16 mono_mes_tbl[] = {
   msg_mono_fmission_013,0,		// 報酬
   msg_mono_fmission_014,0,		// ハイスコア
   //
-  msg_mono_fmission_015,-1,		// 制限時間
+  msg_mono_fmission_015,msg_mono_fmission_019,		// 制限時間(特別処理)
   msg_mono_fmission_016,-1,		// クリア目標
   msg_mono_fmission_017,-1,		// 報酬
   msg_mono_fmission_016,-1,		// ハイスコア
@@ -104,7 +110,9 @@ const s16 mono_mes_tbl[] = {
 static GFL_PROC_RESULT UpFMisssionProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk);
 static GFL_PROC_RESULT UpFMisssionProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk);
 static GFL_PROC_RESULT UpFMisssionProc_End(  GFL_PROC * proc, int * seq, void * pwk, void * mywk);
-
+//
+static void up_fmission_init( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk );
+//
 static void _Setup_BGFrameSetting(void);
 static void _Setup_BGFrameExit(void);
 static void _Setup_BGGraphicLoad(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup);
@@ -112,6 +120,13 @@ static void _Setup_BGGraphicLoad(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *set
 static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk);
 static void _Setup_BmpWin_Exit(MONOLITH_UP_WORK *wk);
 static void _Write_String( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const s32 mode );
+
+//
+static void fmission_init( MONOLITH_UP_WORK *wk );
+static void fmission_exit( MONOLITH_UP_WORK *wk );
+//
+static void fmission_explain( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const s32 id, const s32 level );
+static void fmission_string(  MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const s32 id, const s32 level, const s32 mode );
 
 //==============================================================================
 //  データ
@@ -149,13 +164,9 @@ static GFL_PROC_RESULT UpFMisssionProc_Init(GFL_PROC * proc, int * seq, void * p
     mpw = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_UP_WORK), HEAPID_MONOLITH);
     GFL_STD_MemClear(mpw, sizeof(MONOLITH_UP_WORK));
     
-    //BG
-    _Setup_BGFrameSetting();
-    _Setup_BGGraphicLoad(appwk, appwk->setup);
-    _Setup_BmpWin_Create(appwk->setup, mpw);
-    // 文字列表示
-    _Write_String( appwk->setup, mpw, 0 );
-    
+    // 初期化まとめ
+    up_fmission_init( appwk, mpw );
+    //
     (*seq)++;
     break;
   case 1:
@@ -204,6 +215,16 @@ static GFL_PROC_RESULT UpFMisssionProc_Main( GFL_PROC * proc, int * seq, void * 
     trans_ret[i] = PRINT_UTIL_Trans(&mpw->print_util[i], appwk->setup->printQue);
   }
   //
+  // 一つ前のデータと比較
+  if(appwk->common->fmission_id != mpw->Id){
+//    OS_Printf("id : %d -> %d(level :%d)\n",mpw->Id, appwk->common->fmission_id, appwk->common->fmission_level);
+    mpw->Id = appwk->common->fmission_id;
+    // 該当なし
+    if(mpw->Id != 0xff){
+      _Write_String( appwk->setup, mpw, 1 );
+    }
+  }
+  //
   switch(*seq){
   case 0:
     return GFL_PROC_RES_CONTINUE;
@@ -233,6 +254,9 @@ static GFL_PROC_RESULT UpFMisssionProc_End( GFL_PROC * proc, int * seq, void * p
   
   GFL_DISP_GX_SetVisibleControlDirect(GX_PLANEMASK_BG3);
   
+  // フェスミッション破棄
+  fmission_exit( mpw );
+  
   //BG
   _Setup_BGFrameExit();
   _Setup_BmpWin_Exit( mpw );
@@ -245,6 +269,28 @@ static GFL_PROC_RESULT UpFMisssionProc_End( GFL_PROC * proc, int * seq, void * p
 //==============================================================================
 //  
 //==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   初期化まとめ
+ */
+//--------------------------------------------------------------
+static void up_fmission_init( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk )
+{
+  wk->Id    = 0;   // test
+  wk->Level = 0;
+  
+  //BG
+  _Setup_BGFrameSetting();
+  _Setup_BGGraphicLoad( appwk, appwk->setup );
+  _Setup_BmpWin_Create( appwk->setup, wk );
+  
+  // フェスミッション初期化
+  fmission_init( wk );
+  
+  // 文字列表示
+  _Write_String( appwk->setup, wk, 0 );
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   BGフレーム設定
@@ -308,7 +354,7 @@ static void _Setup_BGGraphicLoad(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *set
 /**
  * BMPWIN作成
  *
- * @param   setup		
+ * @param   setup	
  * @param   wk		
  */
 //--------------------------------------------------------------
@@ -355,19 +401,17 @@ static void _Setup_BmpWin_Exit(MONOLITH_UP_WORK *wk)
 
 //--------------------------------------------------------------
 /**
- * 文字列表示
+ * 文字列表示まとめ
  *
- * @param   setup		
+ * @param   setup
  * @param   wk
+ * @param   const s32	(0:初期化、1:通常)
  */
 //--------------------------------------------------------------
 static void _Write_String( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const s32 mode )
 {
-  s32       buf[4];
   s32       i;
-  s32       width;
   STRBUF	*str;
-  STRBUF	*expbuf;
   
   // 初期化
   if(mode == 0){
@@ -380,76 +424,160 @@ static void _Write_String( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const s3
       }
     }
   }
-  // 置き換えること
-  buf[0] = 59;
-  buf[1] = 58;
-  buf[2] = 9999;
-  buf[3] = 99;
+  // 説明文
+  fmission_explain( setup, wk, wk->Id, wk->Level );
   
-  //-----------
-  // 説明文(仮)
-  //-----------
+  // 制限時間
+  fmission_string( setup, wk, wk->Id, wk->Level, BMPWIN_TIME_R );
+  //
+  // クリア目標
+  fmission_string( setup, wk, wk->Id, wk->Level, BMPWIN_CLEAR_R );
+  //
+  // 報酬
+  fmission_string( setup, wk, wk->Id, wk->Level, BMPWIN_GAIN_R );
+  //
+  // ハイスコア
+  fmission_string( setup, wk, wk->Id, wk->Level, BMPWIN_SCORE_R );
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション処理初期化(念のため、別にしておく)
+ *
+ * @param   wk
+ */
+//--------------------------------------------------------------
+static void fmission_init( MONOLITH_UP_WORK *wk )
+{
+  // 初期化
+  wk->FMissionManager = FMISSION_DATA_Init( HEAPID_MONOLITH );
+  wk->Handle  = GFL_ARC_OpenDataHandle( ARCID_FMISSION_DATA, HEAPID_MONOLITH );
+  wk->ArcData = FMISSION_DATA_AllocArcParamAllByHandle( wk->Handle, HEAPID_MONOLITH );
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション処理破棄(念のため、別にしておく)
+ *
+ * @param   wk
+ */
+//--------------------------------------------------------------
+static void fmission_exit( MONOLITH_UP_WORK *wk )
+{
+  // 破棄
+  FMISSION_DATA_Release( wk->FMissionManager );
+  wk->FMissionManager = 0;
+  //
+  GFL_ARC_CloseDataHandle( wk->Handle );
+  //
+  GFL_HEAP_FreeMemory( wk->ArcData );
+}
+
+//--------------------------------------------------------------
+/**
+ * 説明文
+ *
+ * @param   MONOLITH_SETUP			
+ * @param   MONOLITH_UP_WORK		
+ * @param   const s32				(id)
+ * @param   const s32				(level)
+ */
+//--------------------------------------------------------------
+static void fmission_explain( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const s32 id, const s32 level )
+{
+  STRBUF		*str;
+  FEST_MISSION  fmwk;
+  //
+  // 一旦クリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->print_util[BMPWIN_EXPLAIN].win ), 0 );
-  str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[0] );		// test
+  //
+  // FEST_MISSION取得(?)
+  FMISSION_DATA_GetMissionParam( wk->FMissionManager, id, level, &fmwk );
+  // 説明文取得
+  str = GFL_STR_CreateBuffer( 256, HEAPID_MONOLITH );
+  FMISSION_DATA_GetExpStr( wk->FMissionManager, str, &fmwk, HEAPID_MONOLITH );
   PRINT_UTIL_Print(&wk->print_util[BMPWIN_EXPLAIN], setup->printQue, 0, 0, str, setup->font_handle);
   GFL_STR_DeleteBuffer(str);
+}
+
+//--------------------------------------------------------------
+/**
+ * 文字列表示まとめ(要整理)
+ *
+ * @param   MONOLITH_SETUP			
+ * @param   MONOLITH_UP_WORK		
+ * @param   const s32				(id)
+ * @param   const s32				(level)
+ * @param   const s32				種類
+ */
+//--------------------------------------------------------------
+static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const s32 id, const s32 level, const s32 mode )
+{
+  u16		width;
+  u16		buf[4];
+  STRBUF	*str;
+  STRBUF	*expbuf;
   
-  //-----------
+  // 一旦クリア
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->print_util[mode].win ), 0 );
+  
   // 制限時間
-  //-----------
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->print_util[BMPWIN_TIME_R].win ), 0 );
-  WORDSET_RegisterNumber(setup->wordset, 0, buf[0], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  WORDSET_RegisterNumber(setup->wordset, 1, buf[1], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-  str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[BMPWIN_TIME_R*2] );
-  WORDSET_ExpandStr( setup->wordset, expbuf, str );
-  // 右そろえ
-  width = PRINTSYS_GetStrWidth( expbuf, setup->font_handle, 0 );
-  PRINT_UTIL_Print(&wk->print_util[BMPWIN_TIME_R], setup->printQue, 120-width, 0, expbuf, setup->font_handle);
-  GFL_STR_DeleteBuffer(str);
-  GFL_STR_DeleteBuffer(expbuf);
-  //
-  //-----------
+  if(mode == BMPWIN_TIME_R){
+    // 制限時間の取得
+    buf[0] = wk->ArcData[wk->Id].level[wk->Level].time;
+    buf[1] = buf[0]/60;		// 分
+    buf[2] = buf[0]%60;		// 秒
+    //
+    WORDSET_RegisterNumber(setup->wordset, 0, buf[1], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    WORDSET_RegisterNumber(setup->wordset, 1, buf[2], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
+    if(buf[2] != 0){		// 通常
+      str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*2] );
+    }else{					// 秒がない
+      str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*2+1] );
+    }
+    WORDSET_ExpandStr( setup->wordset, expbuf, str );
+  }
   // クリア目標
-  //-----------
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->print_util[BMPWIN_CLEAR_R].win ), 0 );
-  WORDSET_RegisterNumber(setup->wordset, 0, buf[2], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-  str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[BMPWIN_CLEAR_R*2] );
-  WORDSET_ExpandStr( setup->wordset, expbuf, str );
-  // 右そろえ
-  width = PRINTSYS_GetStrWidth( expbuf, setup->font_handle, 0 );
-  PRINT_UTIL_Print(&wk->print_util[BMPWIN_CLEAR_R], setup->printQue, 120-width, 0, expbuf, setup->font_handle);
-  GFL_STR_DeleteBuffer(str);
-  GFL_STR_DeleteBuffer(expbuf);
+  else if(mode == BMPWIN_CLEAR_R){
+    // 目標取得
+    buf[0] = wk->ArcData[wk->Id].level[wk->Level].goal;
+    //
+    WORDSET_RegisterNumber(setup->wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
+    str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*2] );
+    WORDSET_ExpandStr( setup->wordset, expbuf, str );
+  }
+  // 報酬
+  else if(mode == BMPWIN_GAIN_R){
+    // 報酬アイテム取得
+    buf[0] = wk->ArcData[wk->Id].item;
+    // 報酬数取得
+    buf[1] = wk->ArcData[wk->Id].level[wk->Level].pay;
+    //
+    WORDSET_RegisterItemName( setup->wordset, 0, buf[0] );
+    WORDSET_RegisterNumber(   setup->wordset, 1, buf[1], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
+    str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*2] );
+    WORDSET_ExpandStr( setup->wordset, expbuf, str );
+  }
+  // ハイスコア(仮)
+  else if(mode == BMPWIN_SCORE_R){
+    // 仮対応
+    buf[0] = 9999;
+    //
+    WORDSET_RegisterNumber(setup->wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
+    str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*2] );
+    WORDSET_ExpandStr( setup->wordset, expbuf, str );
+  }
   //
-  //-----------
-  // 報酬(仮)
-  //-----------
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->print_util[BMPWIN_GAIN_R].win ), 0 );
-  WORDSET_RegisterItemName( setup->wordset, 0, 1 );		// 決めうち(要修正)
-  WORDSET_RegisterNumber(setup->wordset, 1, buf[3], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-  str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[BMPWIN_GAIN_R*2] );
-  WORDSET_ExpandStr( setup->wordset, expbuf, str );
+  // ここまででexpbufにセットされているものとする
   // 右そろえ
   width = PRINTSYS_GetStrWidth( expbuf, setup->font_handle, 0 );
-  PRINT_UTIL_Print(&wk->print_util[BMPWIN_GAIN_R], setup->printQue, 120-width, 0, expbuf, setup->font_handle);
-  GFL_STR_DeleteBuffer(str);
-  GFL_STR_DeleteBuffer(expbuf);
-  //
-  //-----------
-  // ハイスコア
-  //-----------
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->print_util[BMPWIN_SCORE_R].win ), 0 );
-  WORDSET_RegisterNumber(setup->wordset, 0, buf[2], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-  str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[BMPWIN_SCORE_R*2] );
-  WORDSET_ExpandStr( setup->wordset, expbuf, str );
-  // 右そろえ
-  width = PRINTSYS_GetStrWidth( expbuf, setup->font_handle, 0 );
-  PRINT_UTIL_Print(&wk->print_util[BMPWIN_SCORE_R], setup->printQue, 120-width, 0, expbuf, setup->font_handle);
+  PRINT_UTIL_Print(&wk->print_util[mode], setup->printQue, 120-width, 0, expbuf, setup->font_handle);
   GFL_STR_DeleteBuffer(str);
   GFL_STR_DeleteBuffer(expbuf);
 }
+
 

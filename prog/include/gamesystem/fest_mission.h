@@ -13,7 +13,8 @@
 #define OSPRINT_LINKFEST_PAGE (2) //OS_FPrintf出力ページ指定
 
 #define BUFLEN_FMISSION_TITLE (15*2+EOM_SIZE) //15文字*2+EOM
-#define BUFLEN_FMISSION_EXP   (18*3*2+EOM_SIZE) //(18文字*3行)*2+EOM
+//#define BUFLEN_FMISSION_EXP   (18*3*2+EOM_SIZE) //(18文字*3行)*2+EOM
+#define BUFLEN_FMISSION_EXP   (18*4*2+EOM_SIZE) //(18文字*4行)*2+EOM
 
 ///外部参照用
 typedef struct _FEST_MISSION FEST_MISSION;
