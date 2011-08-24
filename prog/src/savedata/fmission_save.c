@@ -32,7 +32,13 @@ int FMISSION_SAVE_GetWorkSize(void)
 //---------------------------------------------------------------------------
 void FMISSION_SAVE_Init( FMISSION_SAVE * sv )
 {
+  int i;
+
 	MI_CpuClear8( sv, sizeof(FMISSION_SAVE));
+
+  for( i = 0;i < FMISSION_ID_MAX; i++ ){
+    sv->status[i].new_f = TRUE;  //初期値がTRUE
+  } 
 }
 
 //---------------------------------------------------------------------------
@@ -159,11 +165,11 @@ void FMISSION_SAVE_SetMissionClearNum( FMISSION_SAVE* sv, u32 value )
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス ハイスコアを返す	
+ * @brief ミッションステータス ハイスコア(数値)を返す	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-u16 FMISSION_SAVE_GetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID id )
+u16 FMISSION_SAVE_GetMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
     return 0;
@@ -173,17 +179,50 @@ u16 FMISSION_SAVE_GetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID 
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス ハイスコアをアップデートする	
+ * @brief ミッションステータス ハイスコア(数値)をアップデートする	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-void FMISSION_SAVE_UpdateMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score )
+void FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score )
 {
   if( id >= FMISSION_ID_MAX || new_score > FMISSION_SAVE_HIGH_SCORE_MAX ){
     return;
   }
   if( sv->status[id].high_score < new_score ){
-    sv->status[id].high_score;
+    sv->status[id].high_score = new_score;
+  }
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス ハイスコア(時間)を返す	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u8* min, u8* sec )
+{
+  if( id >= FMISSION_ID_MAX ){
+    *min = 0;
+    *sec = 0;
+    return;
+  }
+  *min = sv->status[id].high_score/60;
+  *sec = sv->status[id].high_score%60;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス ハイスコア(数値)をアップデートする	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_time )
+{
+  if( id >= FMISSION_ID_MAX ){
+    return;
+  }
+  if( new_time < sv->status[id].high_score ){
+    sv->status[id].high_score = new_time;
   }
 }
 
@@ -203,29 +242,33 @@ void FMISSION_SAVE_SetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス レベルを返す	
+ * @brief ミッションステータス クリアしたレベルを返す	
  * @param	work		ワークへのポインタ
+ *
+ * @retval  0 未クリア
+ * @retval  1～3  各レベルまでをクリアした
  */
 //---------------------------------------------------------------------------
-FMISSION_LEVEL FMISSION_SAVE_GetMissionStatusLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id )
+u8 FMISSION_SAVE_GetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
     return 0;
   }
   return sv->status[id].level;
 }
+
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス レベルをセットする	
+ * @brief ミッションステータス クリアしたレベルをセットする	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-void FMISSION_SAVE_SetMissionStatusLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id, FMISSION_LEVEL level )
+void FMISSION_SAVE_SetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id, FMISSION_LEVEL level )
 {
   if( id >= FMISSION_ID_MAX ){
     return;
   }
-  sv->status[id].level = level;
+  sv->status[id].level = (level+1);
 }
 
 //---------------------------------------------------------------------------
@@ -247,7 +290,7 @@ BOOL FMISSION_SAVE_CheckMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-BOOL FMISSION_SAVE_SetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id )
+void FMISSION_SAVE_SetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
     return;
@@ -260,7 +303,7 @@ BOOL FMISSION_SAVE_SetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID i
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-BOOL FMISSION_SAVE_ResetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id )
+void FMISSION_SAVE_ResetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
     return;

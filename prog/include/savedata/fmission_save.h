@@ -118,19 +118,43 @@ extern void FMISSION_SAVE_SetMissionClearNum( FMISSION_SAVE* sv, u32 value );
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス ハイスコアを返す	
+ * @brief ミッションステータス ハイスコア(数値)を返す	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern u16 FMISSION_SAVE_GetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID id );
+extern u16 FMISSION_SAVE_GetMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id );
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス ハイスコアをアップデートする	
+ * @brief ミッションステータス ハイスコア(数値)をアップデートする	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern void FMISSION_SAVE_UpdateMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
+extern void FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス ハイスコア(数値)をアップデートする	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+extern void FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス ハイスコア(時間)を返す	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+extern void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u8* min, u8* sec );
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス ハイスコア(数値)をアップデートする	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+extern void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_time );
 
 //---------------------------------------------------------------------------
 /**
@@ -142,11 +166,14 @@ extern void FMISSION_SAVE_SetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MIS
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス レベルを返す	
+ * @brief ミッションステータス クリアしたレベルを返す	
  * @param	work		ワークへのポインタ
+ *
+ * @retval  0 未クリア
+ * @retval  1～3  各レベルまでをクリアした
  */
 //---------------------------------------------------------------------------
-extern FMISSION_LEVEL FMISSION_SAVE_GetMissionStatusLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id );
+extern u8 FMISSION_SAVE_GetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id );
 
 //---------------------------------------------------------------------------
 /**
@@ -154,7 +181,7 @@ extern FMISSION_LEVEL FMISSION_SAVE_GetMissionStatusLevel( FMISSION_SAVE* sv, FE
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern void FMISSION_SAVE_SetMissionStatusLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id, FMISSION_LEVEL level );
+extern void FMISSION_SAVE_SetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id, FMISSION_LEVEL level );
 
 //---------------------------------------------------------------------------
 /**
@@ -170,14 +197,14 @@ extern BOOL FMISSION_SAVE_CheckMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MIS
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern BOOL FMISSION_SAVE_SetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id );
+extern void FMISSION_SAVE_SetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id );
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス 新着フラグをセットする	
+ * @brief ミッションステータス 新着フラグをリセットする	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern BOOL FMISSION_SAVE_ResetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id );
+extern void FMISSION_SAVE_ResetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id );
 
 
