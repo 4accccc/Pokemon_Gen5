@@ -6,14 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーの　つよさは　もっている
-ジムバッジの　かずで　わかるんだよ！▼
-あなたも　トレーナーなら
-ジムリーダーに　ちょうせんして▽
-どんどん　バッジを　あつめなさいな！</Text>
+			<Text>まあ　ジムバッジを　８こも！
+あなた　おつよいんですわね！▼
+ただ　ジムバッジ　８こどうしの
+トレーナーが　たたかったとき▼
+なにが　しょうぶの　わかれめと
+なるのかしらね？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:41:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,14 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナーの　強さは　持っている
-ジムバッジの　数で　わかるんだよ！▼
-あなたも　トレーナーなら
-ジムリーダーに　挑戦して▽
-どんどん　バッジを　集めなさいな！</Text>
+			<Text>まあ　ジムバッジを　８個も！
+あなた　お強いんですわね！▼
+ただ　ジムバッジ　８個同士の
+ポケモントレーナーが　戦ったとき▼
+なにが　勝負の　分かれ目と
+なるのかしらね？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:42:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37,10 +39,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:00:55" />
+				Time="2011-08-24T03:42:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -96,10 +98,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:00:57" />
+				Time="2011-08-24T03:38:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -132,10 +134,13 @@
 			<Text>ポケモンセンターの　２かい　から
 せかいに　つながる　ＧＴＳ！！▼
 ＧＴＳの　せいしきな　なまえは
-グローバル　トレード　ステーション！</Text>
+グローバル　トレード　ステーション！▼
+ホドモエに　できた
+ワールド　バトル　トーナメント！▽
+ちぢめて　いうと　ＷＢＴ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:44:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -146,10 +151,13 @@
 			<Text>ポケモンセンターの　２階から
 世界に　つながる　ＧＴＳ！！▼
 ＧＴＳの　正式名称は
-グローバル　トレード　ステーション！</Text>
+グローバル　トレード　ステーション！▼
+ホドモエに　できた
+ワールド　バトル　トーナメント！▽
+縮めて　いうと　ＷＢＴ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:44:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -158,10 +166,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:00:58" />
+				Time="2011-08-24T03:44:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

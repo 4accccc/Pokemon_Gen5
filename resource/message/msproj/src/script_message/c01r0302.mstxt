@@ -6,15 +6,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクは　すきで　ほのおタイプの
+			<Text>ボクは　ほのおタイプの
 ポケモンばかり　そだてているのさ▼
-だけど　みずタイプの　ポケモンに
-まるで　はが　たたなかったのさ……▼
-はあ……　ほかの　タイプの
-ポケモンも　そだててみようかな</Text>
+みずや　いわ　じめんが　にがてだけど
+たいさくを　かんがえるのも▽
+トレーナーの　だいごみ　だからね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:52:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクは　好きで　ほのおタイプの
+			<Text>ボクは　ほのおタイプの
 ポケモンばかり　育てているのさ▼
-だけど　みずタイプの　ポケモンに
-まるで　歯が　立たなかったのさ……▼
-はあ……　他の　タイプの
-ポケモンも　育ててみようかな</Text>
+みずや　いわ　じめんが　苦手だけど
+たいさくを　考えるのも▽
+トレーナーの　だいごみ　だからね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39,10 +37,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:01:05" />
+				Time="2011-08-24T03:52:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -65,13 +63,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>６ひきも　ポケモンを　そだてるのは
-なかなか　たいへん　だから▼
-３びきぐらいを　じゅうてんてきに
-つよくする　トレーナーも　いるそうよ</Text>
+			<Text>ときどきは　ボックスを　みて
+きになる　ポケモンを　そだてるの！▼
+そだててみないと
+わからないこと　いっぱい　あるし！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:55:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -79,13 +77,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>６匹も　ポケモンを　育てるのは
-なかなか　大変だから▼
-３匹ぐらいを　重点的に
-強くする　トレーナーも　いるそうよ</Text>
+			<Text>時々は　ボックスを　みて
+気になる　ポケモンを　育てるの！▼
+育ててみないと
+わからないこと　いっぱい　あるし！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:55:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -94,10 +92,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:01:06" />
+				Time="2011-08-24T03:55:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -165,6 +163,56 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c01r0302_poke2_01b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぽんわあ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:45:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:45:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぽんわあ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:45:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:45:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・Black2ver
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:45:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE24
+モンメン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T03:45:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c01r0302_poke2_01"
 		Style="Large">
 		<LanguageCell
@@ -192,73 +240,16 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・WHITEver
+・White2ver
 ・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:01:18" />
+				Time="2011-08-24T03:45:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>POKE18
 チュリネ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c01r0302_poke2_01b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ぽんわあ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ぽんわあ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ポケモン
-・BLACKver
-・あわせて鳴き声再生</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-19T09:01:21" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE24
-モンメン</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
