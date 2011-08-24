@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-18T21:46:31" source="m_champ01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-23T19:12:14" source="m_champ01.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,42 +11,17 @@
 <body>
 
 <mat_color_info
-	frame_size="250"
+	frame_size="370"
 	tool_start_frame="1"
-	tool_end_frame="250"
+	tool_end_frame="370"
 	interpolation="frame"
-	compress_material="on" material_size="11 11"
+	compress_material="on" material_size="10 10"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="502">
-	25 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 3 6 10 14
-	18 21 24 27 29 31 31 31 31 31
-	31 30 30 30 29 29 28 28 27 27
-	26 25 25 24 23 22 21 21 20 19
-	18 17 16 15 14 14 13 12 11 10
-	9 8 7 6 5 5 4 3 2 1
-	1 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 31 31 31 31 31 31 31 31
+<mat_color_data size="372">
+	25 0 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -59,8 +34,20 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 28 25 22 19 16 12 9 6
-	3 0 0 0 0 0 0 0 0 0
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 25 19 12
+	6 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -74,8 +61,8 @@
 	0 0
 </mat_color_data>
 
-<mat_color_anm_array size="2">
-	<mat_color_anm index="0" material_name="in38_kemuri01">
+<mat_color_anm_array size="1">
+	<mat_color_anm index="0" material_name="in38_relief04">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -88,22 +75,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="250" data_head="2"/>
-	</mat_color_anm>
-	<mat_color_anm index="1" material_name="in38_relief04">
-		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
-		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
-		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
-		<ambient_r frame_step="1" data_size="1" data_head="1"/>
-		<ambient_g frame_step="1" data_size="1" data_head="1"/>
-		<ambient_b frame_step="1" data_size="1" data_head="1"/>
-		<specular_r frame_step="1" data_size="1" data_head="1"/>
-		<specular_g frame_step="1" data_size="1" data_head="1"/>
-		<specular_b frame_step="1" data_size="1" data_head="1"/>
-		<emission_r frame_step="1" data_size="1" data_head="1"/>
-		<emission_g frame_step="1" data_size="1" data_head="1"/>
-		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="250" data_head="252"/>
+		<polygon_alpha frame_step="1" data_size="370" data_head="2"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
