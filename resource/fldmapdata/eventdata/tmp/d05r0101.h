@@ -16,7 +16,7 @@
 #define D05R0101_FIGHTERM_01               3
 #define D05R0101_BADMAN_01                 4
 #define D05R0101_GIRL2_01                  5
-#define D05R0101_BACKPACKERW_01            6
+#define D05R0101_SWRIVAL_01                6
 #define D05R0101_POLICEMAN_01              7
 #define D05R0101_POLICEMAN_02              8
 #define D05R0101_INFOMATIONW_02            9
@@ -24,6 +24,11 @@
 #define D05R0101_WKOBJCODE01              11
 #define D05R0101_WKOBJCODE02              12
 #define D05R0101_SUNGLASSES_01            13
+#define D05R0101_SWLEADER5_01             14
+#define D05R0101_SWLEADER1_01             15
+#define D05R0101_BACKPACKERW_01           16
+#define D05R0101_SWLEADER2_01             17
+#define D05R0101_SWBOSS_01                18
 
 #endif //ZONE_D05R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

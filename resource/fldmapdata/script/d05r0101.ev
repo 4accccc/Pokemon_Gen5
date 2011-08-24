@@ -11,9 +11,11 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d05r0101.h"
   .include  "d05r0101.h"
+  .include  "d05r0101_def.h"  //WBTチュートリアルイベント用参照
   .include  "d05r0201_def.h"
-  
+
   //@author Mizuguchi_Mai
+  //@author fujimura_souichirou（WBTチュートリアルイベント作成）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -30,20 +32,238 @@ _EVENT_DATA		ev_d05r0101_policeman_01
 _EVENT_DATA		ev_d05r0101_policeman_02
 _EVENT_DATA		ev_d05r0101_shopm_01
 _EVENT_DATA		ev_reserve_d05r0101_tutorial
+_EVENT_DATA   ev_init_d05r0101
+_EVENT_DATA   ev_d05r0101_swleader5_01
+_EVENT_DATA   ev_d05r0101_swboss_01
+_EVENT_DATA   ev_reserve_d05r0101_tutorial_02
 _EVENT_DATA_END
 
+
+/************************************************************/
+/*  FIELD_INIT_LABEL                                        */
+/************************************************************/
+INIT_EVENT_START  ev_init_d05r0101
+
+  //トーナメント後から入ってきた場合、ユニットを再配置
+  IF $WK_SCENE_D05 == 2 THEN
+
+    //========================================//
+    //チェレン、ライバル表示
+    _FLAG_RESET( FV_D05R0101_SWLEADER1_01 )
+    _FLAG_RESET( FV_D05R0101_SWRIVAL_01 )
+    //========================================//
+
+    _OBJ_ADD( D05R0101_SWLEADER1_01 )  //チェレン表示
+    _OBJ_ADD( D05R0101_SWRIVAL_01 )  //ライバル表示
+
+    //ヤーコン、チェレン、ライバル再配置
+    _OBJ_POS_CHANGE( D05R0101_SWLEADER5_01, 15, 0, 11, DIR_UP )
+    _OBJ_POS_CHANGE( D05R0101_SWLEADER1_01, 14, 0, 11, DIR_UP )
+    _OBJ_POS_CHANGE( D05R0101_SWRIVAL_01, 14, 0, 9, DIR_DOWN )
+
+  ENDIF
+
+INIT_EVENT_END
+
+
 /**************************************************************/
-/*		RESERVE：WBTチュートリアルイベント				  */
+/*  RESERVE：WBTチュートリアルイベント                        */
 /**************************************************************/
-EVENT_START		ev_reserve_d05r0101_tutorial
+EVENT_START   ev_reserve_d05r0101_tutorial
 
   //このイベントはD05のx191 z468周辺のPOSを踏むことで起動します
 
+  //アニメ：主人公指定位置へ
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 15, 25, FORCE_TYPE_NPC, 8, DIR_UD )
+  _TIME_WAIT( 8 )
+
   //========================================//
+  //ライバルを表示
+  _FLAG_RESET( FV_D05R0101_SWRIVAL_01 )
+  //========================================//
+  _OBJ_ADD( D05R0101_SWRIVAL_01 )  //ライバル表示
+  _SE_PLAY( SEQ_SE_KAIDAN ) //【仮】階段SE
+  _SE_WAIT()
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：主人公、ライバル指定位置へ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_work_a )
+  _OBJ_ANIME( D05R0101_SWRIVAL_01, anm_swrival_work_a )
+  _OBJ_ANIME_WAIT()
+
+  //ヤーコン：こんかい　おまえたちに
+  _BALLOONWIN_OBJMSG_POS( msg_d05r0101_swleader5_01, D05R0101_SWLEADER5_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：チェレン、ヤーコンを見る
+  _OBJ_ANIME( D05R0101_SWLEADER1_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //チェレン：なぜ　ぼくまで……
+  _BALLOONWIN_OBJMSG_POS( msg_d05r0101_swleader1_01, D05R0101_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：ヤーコン、チェレンを見る
+  _OBJ_ANIME( D05R0101_SWLEADER5_01, anm_common_turn_l )
+  _OBJ_ANIME_WAIT()
+
+  //ヤーコン：わかるか　チェレン
+  _BALLOONWIN_OBJMSG_POS( msg_d05r0101_swleader5_02, D05R0101_SWLEADER5_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //チェレン：やれやれ……
+  _BALLOONWIN_OBJMSG_POS( msg_d05r0101_swleader1_02, D05R0101_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：チェレン受付へ
+  _OBJ_ANIME( D05R0101_SWLEADER1_01, anm_swleader1_work_a )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( D05R0101_SWLEADER5_01, anm_common_turn_u )
+
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
+  //ライバル：あっ　オレも！▼
+  _BALLOONWIN_OBJMSG_POS( msg_d05r0101_swrival_01, D05R0101_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：ライバル、主人公向かい合う
+  _OBJ_ANIME( D05R0101_SWRIVAL_01, anm_common_turn_l )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //ライバル：《主人公》も　はやくな！▼
+  _BALLOONWIN_OBJMSG_POS( msg_d05r0101_swrival_02, D05R0101_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：ライバル受付へ
+  _OBJ_ANIME( D05R0101_SWRIVAL_01, anm_swrival_work_b )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 30 )  //間
+
+  //アニメ：チェレン、ライバル会場へ
+  _OBJ_ANIME( D05R0101_INFOMATIONW_01, anm_infomationw_work_a )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( D05R0101_SWLEADER1_01, anm_swleader1_work_a )
+  _OBJ_ANIME( D05R0101_SWRIVAL_01, anm_swrival_work_c )
+  _OBJ_ANIME_WAIT()
+
+  //チェレン、ライバル退場
+  _OBJ_DEL( D05R0101_SWLEADER1_01 )
+  _OBJ_DEL( D05R0101_SWRIVAL_01 )
+
+  //========================================//
+  //チェレン、ライバル非表示
+  _FLAG_SET( FV_D05R0101_SWLEADER1_01 )
+  _FLAG_SET( FV_D05R0101_SWRIVAL_01 )
   //D05 プラズマ団イベントSCENE_CHANGE有効
   $WK_SCENE_D05 = 2
   //========================================//
-  
+
+  //【仮】トーナメント後のイベントまでジャンプ
+
+  _TIME_WAIT( 30 )
+
+  //予約スクリプト(トーナメント後イベント開始）
+  _RESERVE_SCRIPT( SCRID_RESERVE_D05R0101_TUTORIAL_02 )
+
+  //D05R0101マップチェンジ
+  _MAP_CHANGE( ZONE_ID_D05R0101, 15, 9, DIR_DOWN )
+
+EVENT_END
+
+/**************************************************************/
+/*  RESERVE：WBTチュートリアルイベント（トーナメント後）      */
+/**************************************************************/
+EVENT_START   ev_reserve_d05r0101_tutorial_02
+
+  //ヤーコン：おまえら！
+  _BALLOONWIN_OBJMSG_POS( msg_d05r0101_swleader5_04, D05R0101_SWLEADER5_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //========================================//
+  //ホミカを表示
+  _FLAG_RESET( FV_D05R0101_SWLEADER2_01 )
+  //========================================//
+  _OBJ_ADD( D05R0101_SWLEADER2_01 )  //ホミカ表示
+
+  //アニメ：ホミカ登場
+  _OBJ_ANIME( D05R0101_SWLEADER2_01, anm_swleader2_work_a )
+  _TIME_WAIT( 8*4 )
+
+  //アニメ：主人公ら振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _OBJ_ANIME( D05R0101_SWLEADER5_01, anm_common_turn_r )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( D05R0101_SWRIVAL_01, anm_common_turn_r )
+  _OBJ_ANIME( D05R0101_SWLEADER1_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //ホミカ：《主人公》たち　ひさしぶり！▼
+  _BALLOONWIN_OBJMSG_POS( msg_d05r0101_swleader2_01, D05R0101_SWLEADER2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：ホミカ退場
+  _OBJ_ANIME( D05R0101_SWLEADER2_01, anm_swleader2_work_b )
+  _TIME_WAIT( 8*3 )
+
+  //アニメ：ライバル、主人公向かい合う
+  _OBJ_ANIME( D05R0101_SWLEADER5_01, anm_common_turn_u )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( D05R0101_SWRIVAL_01, anm_common_turn_d )
+  _OBJ_ANIME( D05R0101_SWLEADER1_01, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+  //ヤーコン：ほら　どうだ！
+  _BALLOONWIN_OBJMSG_POS( msg_d05r0101_swleader5_05, D05R0101_SWLEADER5_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：ヤーコン退場
+  _OBJ_ANIME_AUTO( D05R0101_SWLEADER5_01, 15, 19, FORCE_TYPE_NPC, 8, DIR_UD )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( D05R0101_SWLEADER1_01, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
+
+  //ホミカ、ヤーコン退場
+  _OBJ_DEL( D05R0101_SWLEADER2_01 )
+  _OBJ_DEL( D05R0101_SWLEADER5_01 )
+
+  //========================================//
+  //ホミカ、ヤーコン非表示
+  _FLAG_SET( FV_D05R0101_SWLEADER2_01 )
+  _FLAG_SET( FV_D05R0101_SWLEADER5_01 )
+  //チェレン、ライバル非表示（外に出ると非表示に）
+  _FLAG_SET( FV_D05R0101_SWLEADER1_01 )
+  _FLAG_SET( FV_D05R0101_SWRIVAL_01 )
+  //アクロマもこのタイミングで非表示に
+  _FLAG_SET( FV_D05R0101_SWBOSS_01 )
+  //D05 プラズマ団イベントSCENE_CHANGE有効
+  //$WK_SCENE_D05 = 2
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  ヤーコン：話しかけ（参加まで繰り返し）                    */
+/**************************************************************/
+EVENT_START   ev_d05r0101_swleader5_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_swleader5_03 )
+EVENT_END
+
+/**************************************************************/
+/*  アクロマ：話しかけ（外に出るまで繰り返し）                */
+/**************************************************************/
+EVENT_START   ev_d05r0101_swboss_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_swboss_01 )
 EVENT_END
 
 /**************************************************************/
@@ -94,3 +314,100 @@ EVENT_END
 EVENT_START		ev_d05r0101_shopm_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_shopm_01 )
 EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  主人公：歩きa（チュートリアルイベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_work_a
+  _ANIME_DATA AC_WALK_U_8F,11
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  チェレン：歩きa（チュートリアルイベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swleader1_work_a
+  _ANIME_DATA AC_WALK_U_8F,5
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  受付嬢：歩きa（チュートリアルイベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_infomationw_work_a
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_WAIT_8F,6
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ライバル：歩きa（チュートリアルイベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swrival_work_a
+  _ANIME_DATA AC_WALK_U_8F,11
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ライバル：歩きb（チュートリアルイベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swrival_work_b
+  _ANIME_DATA AC_WALK_U_8F,6
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ライバル：歩きc（チュートリアルイベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swrival_work_c
+  _ANIME_DATA AC_WALK_U_8F,5
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ホミカ：歩きa（チュートリアルイベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swleader2_work_a
+  _ANIME_DATA AC_WALK_U_8F,5
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ホミカ：歩きb（チュートリアルイベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swleader2_work_b
+  _ANIME_DATA AC_WALK_D_8F,6
+  _ANIME_DATA ACMD_END,0
+
+

@@ -142,6 +142,10 @@ init_flags:
   //D05：アクロマを非表示に
   _FLAG_SET( FV_D05_SWBOSS_01 )
   
+  //D05R0101：WBT内部
+  _FLAG_SET( FV_D05R0101_SWLEADER2_01 ) //ホミカ
+  _FLAG_SET( FV_D05R0101_SWRIVAL_01 )   //ライバル
+  
   //R06
   
   //R06：季節研究所前チェレン
