@@ -314,10 +314,7 @@ EVENT_END
 ev_trainer_btl_01:
 
 	//視線曲を再生
-  //TODO
-  //【仮】トレーナーIDがない
-	//_TRAINER_BGM_SET( TRID_PRINCE_02 )
-	_TRAINER_BGM_SET( TRID_PRINCE_03 )
+	_TRAINER_BGM_SET( TRID_PRINCE_10 )
 
 	//トレーナー：主人公前へ
 	_OBJ_ANIME( C04R1101_TRAINER_01, anm_trainer_move_02 )
@@ -328,10 +325,7 @@ ev_trainer_btl_01:
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-  //TODO
-  //【仮】トレーナーIDがない
-	//_TRAINER_BTL_SET( TRID_PRINCE_02, 0 )
-	_TRAINER_BTL_SET( TRID_PRINCE_03, 0 )
+	_TRAINER_BTL_SET( TRID_PRINCE_10, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -357,10 +351,7 @@ ev_trainer_btl_01:
 //トレーナーの入っているコースター２台目
 ev_trainer_btl_02:
 	//視線曲を再生
-  //TODO
-  //【仮】トレーナーIDがない
-	//_TRAINER_BGM_SET( TRID_PRINCESS_02 )
-	_TRAINER_BGM_SET( TRID_PRINCESS_03 )
+	_TRAINER_BGM_SET( TRID_PRINCESS_10 )
 
 	//トレーナー：主人公前へ
 	_OBJ_ANIME( C04R1101_TRAINER_02, anm_trainer_move_02 )
@@ -371,10 +362,7 @@ ev_trainer_btl_02:
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-  //TODO
-  //【仮】トレーナーIDがない
-	//_TRAINER_BTL_SET( TRID_PRINCESS_02, 0 )
-	_TRAINER_BTL_SET( TRID_PRINCESS_03, 0 )
+	_TRAINER_BTL_SET( TRID_PRINCESS_10, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
