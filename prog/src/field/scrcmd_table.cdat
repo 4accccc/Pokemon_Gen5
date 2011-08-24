@@ -519,9 +519,9 @@
   //ジムギミック関連
   //WB用ジム命令とSWAN用ジム命令が点在してしまうので、WB用ジム命令は消します。
   //新たにSWAN用に下部にジム命令を切ってください。
-  NO_CMD() //DEF_CMD( EvCmdGymElec_Init, EV_SEQ_GYM_ELEC_INIT )
-  NO_CMD() //DEF_CMD( EvCmdGymElec_PushSw, EV_SEQ_GYM_ELEC_PUSH_SW )
-  NO_CMD() //DEF_CMD( EvCmdGymElec_SetTrEncFlg, EV_SEQ_GYM_ELEC_SET_TR_ENC_FLG )
+  DEF_CMD( EvCmdGymOldElec_Init, EV_SEQ_GYM_OLD_ELEC_INIT )
+  DEF_CMD( EvCmdGymOldElec_PushSw, EV_SEQ_GYM_OLD_ELEC_PUSH_SW )
+  DEF_CMD( EvCmdGymOldElec_SetTrEncFlg, EV_SEQ_GYM_OLD_ELEC_SET_TR_ENC_FLG )
 
   NO_CMD() //DEF_CMD( EvCmdGymNormal_Init, EV_SEQ_GYM_NORMAL_INIT )
   NO_CMD() //DEF_CMD( EvCmdGymNormal_Unrock, EV_SEQ_GYM_NORMAL_UNROCK )
@@ -893,7 +893,7 @@
   DEF_CMD( EvCmdEnvSeBGMPlayClear, EV_SEQ_CLEAR_ENVSE_BGMPLAY_PAUSE )
 
   //電気ジム環境ＳＥ初期化（セーブ復帰用）WB用ジム命令は一旦消します
-  NO_CMD() //DEF_CMD( EvCmdGymElec_InitSe, EV_SEQ_GYM_ELEC_INIT_SE )
+  DEF_CMD( EvCmdGymOldElec_InitSe, EV_SEQ_GYM_OLD_ELEC_INIT_SE )
   
 
   //=============================================================================

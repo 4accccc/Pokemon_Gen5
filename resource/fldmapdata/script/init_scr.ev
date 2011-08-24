@@ -235,6 +235,9 @@ init_flags:
   _FLAG_SET( FV_C04_POKE33_01 )   //ライモンシティ：ヤナップ
   _FLAG_SET( FV_T05_POKE33_01 )   //カナワタウン：ヤナップ
 
+	//旧電気ジム：コースターのトレーナー・プレイヤーが乗ろうとするまで非表示
+	_FLAG_SET( FV_C04R1101_TR_01 )
+	_FLAG_SET( FV_C04R1101_TR_02 )
 
 }
 _RET

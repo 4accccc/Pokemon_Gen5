@@ -41,6 +41,7 @@
 #include "gym_dragon.h"
 #include "gym_poison.h"
 #include "gym_water.h"
+#include "gym_old_elec.h"
 
 //--電気--
 //--------------------------------------------------------------
@@ -634,5 +635,73 @@ VMCMD_RESULT EvCmdGymWater_ReturnAnime( VMHANDLE * core, void *wk )
 
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
+}
+
+// 旧電気ジム
+//--------------------------------------------------------------
+/**
+ * 旧電気ジムスイッチ押下
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymOldElec_PushSw( VMHANDLE *core, void *wk )
+{
+  u8 sw_idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  sw_idx = VMGetU16( core );
+
+  call_event = GYM_ELEC_ChangePoint(gsys, sw_idx);
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );
+  
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 旧電気ジムカプセルトレーナー処理ご処理
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymOldElec_SetTrEncFlg( VMHANDLE *core, void *wk )
+{
+  u8 cap_idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  cap_idx = VMGetU16( core );
+  GYM_ELEC_SetTrEncFlg(gsys, cap_idx);
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 旧電気ジム環境ＳＥ初期化
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymOldElec_InitSe( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  GYM_ELEC_InitSe( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
 }
 

@@ -365,4 +365,5 @@
   ARCID_FMISSION_DATA    "fmission_data.narc"   #フェスミッションデータアーカイブ
   ARCID_CHAMPION "fieldmap/champion.narc"  #チャンピオン部屋
   ARCID_WBT_CUT_GRA   "face_gra.narc"   #WBTビジョンでの顔グラフィック用データ
+  ARCID_GYM_OLD_ELEC "fieldmap/gym_old_elec.narc"  #旧電気ジム
   

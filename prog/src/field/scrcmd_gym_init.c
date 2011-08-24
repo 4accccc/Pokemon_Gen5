@@ -31,6 +31,7 @@
 #include "gym_init.h"
 #include "gym_elec.h"
 #include "gym_normal.h"
+#include "gym_old_elec.h"
 
 FS_EXTERN_OVERLAY(field_gym_init);
 
@@ -75,6 +76,29 @@ VMCMD_RESULT EvCmdGymDragon_Init( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * 旧電気ジム初期化
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymOldElec_Init( VMHANDLE *core, void *wk )
+{
+  u16 *evt1,*evt2;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  evt1 = SCRCMD_GetVMWork( core, work );
+  evt2 = SCRCMD_GetVMWork( core, work );
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
+  GYM_OLD_INIT_Elec(gsys, *evt1, *evt2);
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--ノーマル--
 #if 0
 //--------------------------------------------------------------

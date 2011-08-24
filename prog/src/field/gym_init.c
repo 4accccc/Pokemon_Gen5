@@ -10,6 +10,7 @@
 #include "savedata/gimmickwork.h"
 #include "field_gimmick_def.h"
 #include "gym_elec_sv.h"
+#include "gym_old_elec_sv.h"
 #include "gym_normal_sv.h"
 #include "gym_anti_sv.h"
 #include "gym_insect_sv.h"
@@ -148,4 +149,32 @@ void GYM_INIT_Dragon(GAMESYS_WORK *gsys)
   }
 }
 
+
+//--------------------------------------------------------------
+/**
+ * 旧電気ジム初期化
+ * @param   gsys            ゲームシステムポインタ
+ * @param   inEvtFlgBtl1    イベントフラグ状況　トレーナー戦1を終えたか？　1で終了
+ * @param   inEvtFlgBtl2    イベントフラグ状況　トレーナー戦2を終えたか？　1で終了
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------
+void GYM_OLD_INIT_Elec(GAMESYS_WORK *gsys, const u16 inEvtFlgBtl1, const u16 inEvtFlgBtl2)
+{
+  GYM_OLD_ELEC_SV_WORK *gmk_sv_work;
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_OLD_ELEC );
+  }
+
+  //トレーナー戦進捗状況をセット
+  if (inEvtFlgBtl1){
+    gmk_sv_work->EvtFlg[0] = 1;
+  }
+  if (inEvtFlgBtl2){
+    gmk_sv_work->EvtFlg[1] = 1;
+  }
+}
 

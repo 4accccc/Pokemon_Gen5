@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/29 12:44:50
+#save date:2011/08/23 21:39:21
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c04r1101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,69 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c04r1101.wms
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#type
+1
+#ID name
+C04R1101_TRAINER_02
+#OBJ CODE Number
+GIRL4
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04R1101_TR_02
+#Event Script Name
+SCRID_C04R1101_TRAINER_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 32 -360
+#event number: 1
+#type
+1
+#ID name
+C04R1101_TRAINER_01
+#OBJ CODE Number
+BOY4
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04R1101_TR_01
+#Event Script Name
+SCRID_C04R1101_TRAINER_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 32 40
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -29,7 +91,75 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c04r1101.wms
 #hold event type:
 1
 #hold event number:
+4
+#event number: 0
+#Pos Event Label
+POSID_C04R1101_SW1
+#Pos Script Name
+SCRID_POS_C04R1101_SW1
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK11
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+208 32 -272
+#size
+1 1
+#event number: 1
+#Pos Event Label
+POSID_C04R1101_SW2
+#Pos Script Name
+SCRID_POS_C04R1101_SW2
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK12
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-48 32 0
+#size
+1 1
+#event number: 2
+#Pos Event Label
+POSID_C04R1101_SW3
+#Pos Script Name
+SCRID_POS_C04R1101_SW3
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK13
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+480 32 -400
+#size
+1 1
+#event number: 3
+#Pos Event Label
+POSID_C04R1101_SW4
+#Pos Script Name
+SCRID_POS_C04R1101_SW4
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK14
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+144 32 112
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

@@ -89,4 +89,490 @@
 				Time="2011-08-01T08:14:54" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_prince1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジェットコースターの
+のりごこちは　どうだった？[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:50:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジェットコースターの
+乗り心地は　どうだった？[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:51:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:51:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー登場メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:49:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナー
+prince_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_prince1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コースターに　のったときの
+めくるめく　スピード！[Ctrl2:PageClear ]
+それにまけない　ポケモンしょうぶで
+きみを　クラクラさせるよ[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コースターに　のったときの
+めくるめく　スピード！[Ctrl2:PageClear ]
+それに負けない　ポケモン勝負で
+きみを　クラクラさせるよ[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:53:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:51:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:52:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナー
+prince_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_prince1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きみの　たたかいかた
+カミツレさまに　みおとり　しないな！[Ctrl2:LineFeed ]
+まさに　エレガントで　ゴージャスだ▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:55:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きみの　戦い方
+カミツレさまに　見劣りしないな！[Ctrl2:LineFeed ]
+まさに　エレガントで　ゴージャスだ▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:55:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:51:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:54:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナー
+prince_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_prince1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポイントを　きりかえれば
+ジェットコースターの[Ctrl2:LineFeed ]
+すすむ　ルートも　かわるのさ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポイントを　切り替えれば
+ジェットコースターの[Ctrl2:LineFeed ]
+進む　ルートも　変わるのさ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:56:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:51:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー再会話メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:54:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナー
+prince_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_princess1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライモンジム　ちょうせんも
+いよいよ　おおづめ　ね[Ctrl2:PageClear ]
+ただし　あたくしに　かてないと
+カミツレさまに　あえないわ[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:59:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライモンジム　挑戦も
+いよいよ　大詰め　ね[Ctrl2:PageClear ]
+ただし　あたくしに　勝てないと
+カミツレさまに　会えないわ[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:59:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:51:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・トレーナー登場メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:58:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナー
+princess_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:57:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_princess1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたくしも　カミツレさまに
+きたえられた　ポケモントレーナー[Ctrl2:PageClear ]
+このジムに　ふさわしい　つよさ
+ふさわしい　たたかいかたを　みせます[Ctrl2:PageClear ]
+</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T02:33:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたくしも　カミツレさまに
+鍛えられた　ポケモントレーナー[Ctrl2:PageClear ]
+このジムに　ふさわしい　強さ
+ふさわしい　戦い方を　みせます[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T02:38:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:51:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・トレーナー戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:58:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナー
+princess_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:57:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_princess1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アナタのような　けだかく　つよい
+トレーナーの　おあいてが　できて[Ctrl2:LineFeed ]
+あたくし　こうえい　ですわ！▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T02:38:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アナタのような　気高く　強い
+トレーナーの　お相手が　できて[Ctrl2:LineFeed ]
+あたくし　光栄ですわ！▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T02:39:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:51:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・トレーナー戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:58:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナー
+princess_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:57:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_princess1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムの　ギミックに　おどろかず
+いつもどおり　れいせいで　いれば[Ctrl2:PageClear ]
+カミツレさま　だけでなく
+どんな　トレーナーにも　かてますわ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T02:40:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムの　ギミックに　驚かず
+いつもどおり　冷静で　いれば[Ctrl2:PageClear ]
+カミツレさま　だけでなく
+どんな　トレーナーにも　勝てますわ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T02:41:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:51:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・トレーナー再会話メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:58:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナー
+princess_01</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:57:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_point_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+ポイントを　きりかえた！[Ctrl2:PageClear ]
+ジェットコースターの
+すすむ　ルートが　かわった！</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T02:42:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:46:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+ポイントを　切り替えた！[Ctrl2:PageClear ]
+ジェットコースターの
+進む　ルートが　変わった！</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T02:43:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T01:51:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ（共通）
+・はい選択時
+・ME終了後にメッセージ表示</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T02:41:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポイント切替機</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-08-24T02:41:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

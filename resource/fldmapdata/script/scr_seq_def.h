@@ -7291,6 +7291,60 @@
   .short  EV_SEQ_GYM_WATER_RETURN_ANIME 
   .endm
 
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　旧電気ジム初期化
+ */
+//--------------------------------------------------------------
+#define _GYM_OLD_ELEC_INIT( evt1, evt2 ) \
+    _ASM_GYM_OLD_ELEC_INIT evt1, evt2
+
+  .macro  _ASM_GYM_OLD_ELEC_INIT evt1, evt2
+  .short  EV_SEQ_GYM_OLD_ELEC_INIT
+  .short  \evt1
+  .short  \evt2
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　旧電気ジムスイッチ
+ * @param sw_idx   スイッチインデックス0～3
+ */
+//--------------------------------------------------------------
+#define _GYM_OLD_ELEC_PUSH_SW( sw_idx ) \
+    _ASM_GYM_OLD_ELEC_PUSH_SW sw_idx 
+
+  .macro  _ASM_GYM_OLD_ELEC_PUSH_SW sw_idx
+  .short  EV_SEQ_GYM_OLD_ELEC_PUSH_SW
+  .short  \sw_idx
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　旧電気ジムカプセルトレーナー戦勝利後処理
+ * @param cap_idx   一人目に勝利のとき：1　二人目に勝利のとき：2
+ */
+//--------------------------------------------------------------
+#define _GYM_OLD_ELEC_SET_TR_ENC_FLG( cap_idx ) \
+    _ASM_GYM_OLD_ELEC_SET_TR_ENC_FLG cap_idx 
+
+  .macro  _ASM_GYM_OLD_ELEC_SET_TR_ENC_FLG cap_idx
+  .short  EV_SEQ_GYM_OLD_ELEC_SET_TR_ENC_FLG
+  .short  \cap_idx
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　旧電気ジム環境ＳＥ初期化（セーブ復帰用）
+ */
+//--------------------------------------------------------------
+#define _GYM_OLD_ELEC_INIT_SE() \
+    _ASM_GYM_OLD_ELEC_INIT_SE
+
+  .macro  _ASM_GYM_OLD_ELEC_INIT_SE
+  .short  EV_SEQ_GYM_OLD_ELEC_INIT_SE
+  .endm
+
 
 //======================================================================
 //

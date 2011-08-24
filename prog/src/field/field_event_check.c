@@ -75,7 +75,7 @@
 
 #include "field_gimmick.h"   //for FLDGMK_GimmickCodeCheck
 #include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_～
-#include "gym_elec.h"     //for GYM_ELEC_CreateMoveEvt
+#include "gym_old_elec.h"     //for GYM_ELEC_CreateMoveEvt
 #include "gym_fly.h"     //for GYM_FLY_CheckEvent
 #include "gym_insect.h"     //for GYM_INSECT_CreateGateInEvent
 #include "gym_ground.h"     //for GYM_GROUND_CheckBeltEvent
@@ -2656,6 +2656,10 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
       if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_WATER) )
       { //水ジム
         return GYM_WATER_CheckHasuEvent(gsys);
+      }
+      if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_OLD_ELEC) )
+      { //旧電気ジム
+        return GYM_ELEC_CreateMoveEvt(gsys);
       }
     }
   }

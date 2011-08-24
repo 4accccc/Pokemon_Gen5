@@ -300,5 +300,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     HIDE_SHIP_BOW_End,    // アジト船　船首
     HIDE_SHIP_BOW_Move,   // アジト船　船首
   },
+  { //旧電気ジム
+    FS_OVERLAY_ID(field_gym_old_elec),  // C04R1101
+    GYM_OLD_ELEC_Setup,
+    GYM_OLD_ELEC_End,
+    GYM_OLD_ELEC_Move,
+  },
 };
 

@@ -61,3 +61,9 @@ extern VMCMD_RESULT EvCmdGymPoison_IssObjStop( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGymWater_SplashAnime( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGymWater_ReturnAnime( VMHANDLE * core, void *wk );
 
+// ‹Œ“d‹CƒWƒ€
+extern VMCMD_RESULT EvCmdGymOldElec_Init( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymOldElec_PushSw( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymOldElec_SetTrEncFlg( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymOldElec_InitSe( VMHANDLE *core, void *wk );
+
