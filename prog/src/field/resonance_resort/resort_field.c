@@ -76,8 +76,7 @@ typedef struct
   RESORT_RECV_BUFF *p_recv_tmp_buff;
   RESORT_PROXY_BUFF *p_proxy_buff;
   void *p_wk_adrs;      //コールバックに与える引数
-  void (*UpdateRecvCallback)( void *p_wk_adrs, RESORT_RECV_DATA *p_recv, RESORT_RECV_DATA_UPDATE update ); //データに更新があれば更新間隔ごとに呼ばれる
-  void (*UpdateProxyCallback)( void *p_wk_adrs, RESORT_PROXY_DATA *p_proxy ); //データに更新があれば更新間隔ごとに呼ばれる
+  void (*UpdateDataCallback)( void *p_wk_adrs, void *p_data_adrs, RESORT_RECV_DATA_UPDATE update ); //データに更新があれば更新間隔ごとに呼ばれる
   u32 update_interval; //更新間隔
 }RESORT_FIELD_BUFF_INIT_PARAM;
 
@@ -103,6 +102,7 @@ static void RESORT_CROWD_PEOPLE_SetUp( RESORT_CROWD_PEOPLE *p_wk );
 static void RESORT_CROWD_PEOPLE_Add( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
 static void RESORT_CROWD_PEOPLE_Delete( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
 static void RESORT_CROWD_PEOPLE_Stop( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
+static void RESORT_CROWD_PEOPLE_ChangeOBJCodeReq( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
 
 //=============================================================================
 /**
@@ -423,7 +423,7 @@ static void Reception_Buff_UpdateRecv( RESORT_FIELD_BUFF *p_wk )
         && ( update != RESORT_RECV_DATA_UPDATE_NONE ) )
     {
       RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_NONE );
-      p_wk->param.UpdateRecvCallback( p_wk->param.p_wk_adrs, p_recv, update );
+      p_wk->param.UpdateDataCallback( p_wk->param.p_wk_adrs, p_recv, update );
     }
   }
 
@@ -437,7 +437,7 @@ static void Reception_Buff_UpdateRecv( RESORT_FIELD_BUFF *p_wk )
     {
       RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_NONE );
 
-      p_wk->param.UpdateRecvCallback( p_wk->param.p_wk_adrs, p_recv, update );
+      p_wk->param.UpdateDataCallback( p_wk->param.p_wk_adrs, p_recv, update );
     }
   }
 }
@@ -460,10 +460,9 @@ static void Reception_Buff_UpdateProxy( RESORT_FIELD_BUFF *p_wk )
   for( i = 0; i < RESORT_PROXY_BUFF_GetMax(p_wk->p_proxy_buff ); i++ )
   {
     RESORT_PROXY_DATA * p_proxy = RESORT_PROXY_BUFF_GetData( p_wk->p_proxy_buff, i );
-
     if( !RESORT_PROXY_DATA_IsEmpty( p_proxy ) )
     {
-      p_wk->param.UpdateProxyCallback( p_wk->param.p_wk_adrs, p_proxy );
+      p_wk->param.UpdateDataCallback( p_wk->param.p_wk_adrs, p_proxy, RESORT_RECV_DATA_UPDATE_FIRST );
     }
   }
 
@@ -493,7 +492,7 @@ typedef struct _RESORT_CROWD_PEOPLE_WK
   u16 seq;
   s16 move_grid;
   u16 state;
-  u16 dummy;
+  u16 changeObjCode;
   void (*InitMove)(struct _RESORT_CROWD_PEOPLE_WK* );
   void (*UpdateMove)(struct _RESORT_CROWD_PEOPLE_WK*, MMDLSYS*, const FIELD_PLAYER* );
 
@@ -529,6 +528,7 @@ static void RESORT_CROWD_PEOPLE_WK_Stop( RESORT_CROWD_PEOPLE_WK *p_wk, const FIE
 static BOOL RESORT_CROWD_PEOPLE_WK_IsEndMove( const RESORT_CROWD_PEOPLE_WK *cp_wk );
 static BOOL RESORT_CROWD_PEOPLE_WK_IsNewData( const RESORT_CROWD_PEOPLE_WK *cp_wk );
 static u16 RESORT_CROWD_PEOPLE_WK_GetDir( const RESORT_CROWD_PEOPLE_WK *cp_wk );
+static void RESORT_CROWD_PEOPLE_WK_ChangeOBJCodeReq( RESORT_CROWD_PEOPLE_WK *p_wk );
 
 static BOOL Resort_Crowd_People_Wk_IsFrontPlayer( const RESORT_CROWD_PEOPLE_WK *cp_wk, const MMDL* cp_mmdl, u16 grid, u16 min_grid );
 static BOOL Resort_Crowd_People_Wk_IsFrontAllMMdl( const RESORT_CROWD_PEOPLE_WK* cp_wk, const MMDLSYS* cp_fos, MMDL** pp_mmdl, u16 grid, u16 min_grid );
@@ -582,6 +582,8 @@ struct _RESORT_CROWD_PEOPLE
   const RESORT_BINARY_INSTITUTION *cp_institution;
   RESORT_PEOPLE_ALL_DATA    *p_all_people;
 };
+
+static RESORT_CROWD_PEOPLE_WK * Resort_Crowd_People_GetWkByPeople( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
 
 //----------------------------------------------------------------------------
 /**
@@ -751,18 +753,7 @@ static void RESORT_CROWD_PEOPLE_Delete( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE
   u16 index;
   if( RESORT_CROWD_LINE_GetRegisterData( p_people, &line, &index ) )
   {
-    RESORT_CROWD_PEOPLE_WK *p_crowd = NULL;
-    int i;
-
-    //登録されているかチェックする
-    for( i = 0; i < RESORT_CROWD_PEOPLE_BUFFER_MAX; i++ )
-    {
-      if( RESORT_CROWD_PEOPLE_WK_IsCompPeople(&p_wk->wk[i], p_people) )
-      {
-        p_crowd = &p_wk->wk[i];
-        break;
-      }
-    }
+    RESORT_CROWD_PEOPLE_WK *p_crowd = Resort_Crowd_People_GetWkByPeople( p_wk, p_people );
 
     //登録されていた
     if( p_crowd )
@@ -775,6 +766,7 @@ static void RESORT_CROWD_PEOPLE_Delete( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE
     }
   }
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  群集から停止
@@ -785,30 +777,62 @@ static void RESORT_CROWD_PEOPLE_Delete( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE
 //-----------------------------------------------------------------------------
 static void RESORT_CROWD_PEOPLE_Stop( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people )
 {
+  RESORT_CROWD_PEOPLE_WK *p_crowd = Resort_Crowd_People_GetWkByPeople( p_wk, p_people );
+
+  //登録されていた
+  if( p_crowd )
+  {
+    //群集人物を停止
+    RESORT_CROWD_PEOPLE_WK_Stop( p_crowd, p_wk->cp_player );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  群集の人物にOBJCode変更リクエスト
+ *
+ *	@param	RESORT_CROWD_PEOPLE *p_wk ワーク
+ *	@param	*p_people 人物
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_PEOPLE_ChangeOBJCodeReq( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people )
+{
+  RESORT_CROWD_PEOPLE_WK *p_crowd = Resort_Crowd_People_GetWkByPeople( p_wk, p_people );
+
+  //登録されていた
+  if( p_crowd )
+  {
+    RESORT_CROWD_PEOPLE_WK_ChangeOBJCodeReq( p_crowd );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  群集人物ワーク取得
+ *
+ *	@param	RESORT_CROWD_PEOPLE *p_wk ワーク
+ *	@param	*p_people   人物
+ *
+ *	@return 群集人物ワーク
+ */
+//-----------------------------------------------------------------------------
+static RESORT_CROWD_PEOPLE_WK * Resort_Crowd_People_GetWkByPeople( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people )
+{
   u16 line;
   u16 index;
   if( RESORT_CROWD_LINE_GetRegisterData( p_people, &line, &index ) )
   {
-    RESORT_CROWD_PEOPLE_WK *p_crowd = NULL;
     int i;
-
     //登録されているかチェックする
     for( i = 0; i < RESORT_CROWD_PEOPLE_BUFFER_MAX; i++ )
     {
       if( RESORT_CROWD_PEOPLE_WK_IsCompPeople(&p_wk->wk[i], p_people) )
       {
-        p_crowd = &p_wk->wk[i];
-        break;
+        return &p_wk->wk[i];
       }
     }
-
-    //登録されていた
-    if( p_crowd )
-    {
-      //群集人物を停止
-      RESORT_CROWD_PEOPLE_WK_Stop( p_crowd, p_wk->cp_player );
-    }
   }
+  return NULL;
 }
 
 //----------------------------------------------------------------------------
@@ -843,9 +867,20 @@ static void RESORT_CROWD_PEOPLE_WK_Exit( RESORT_CROWD_PEOPLE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void RESORT_CROWD_PEOPLE_WK_Main( RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player )
 {
+  //歩き動作
   if( p_wk->UpdateMove )
   {
     p_wk->UpdateMove( p_wk, p_mmdlsys, cp_player );
+  }
+
+  //見た目変更処理
+  if( p_wk->changeObjCode )
+  {
+    if( RESORT_CROWD_PEOPLE_WK_IsEndMove(p_wk) )
+    {
+      RESORT_PEOPLE_ChangeOBJCode( p_wk->p_people );
+      p_wk->changeObjCode = FALSE;
+    }
   }
 }
 //----------------------------------------------------------------------------
@@ -1106,6 +1141,17 @@ static u16 RESORT_CROWD_PEOPLE_WK_GetDir( const RESORT_CROWD_PEOPLE_WK *cp_wk )
 {
   MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( cp_wk->p_people );
   return MMDL_GetDirDisp(p_mmdl);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  見た目変更リクエスト
+ *
+ *	@param	RESORT_CROWD_PEOPLE_WK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_PEOPLE_WK_ChangeOBJCodeReq( RESORT_CROWD_PEOPLE_WK *p_wk )
+{
+  p_wk->changeObjCode = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -1662,11 +1708,16 @@ static void RESORT_CROWD_LINE_Exit( RESORT_CROWD_LINE *p_wk )
 //-----------------------------------------------------------------------------
 static void RESORT_CROWD_LINE_Main( RESORT_CROWD_LINE *p_wk )
 {
+  enum
+  {
+    RESORT_CROWD_LINE_WALK_NUM  = 2,  //１ラインに歩く人の数
+  };
+
   u32 move_cnt  = 0;
+
   //２人未満のとき移動開始
   {
     int i;
-
     for( i = 0; i < RESORT_CROWD_MOVE_LINE_PEOPLE_MAX; i++ )
     {
       if( p_wk->p_move[i] && !RESORT_CROWD_PEOPLE_WK_IsEndMove(p_wk->p_move[i]) )
@@ -1677,7 +1728,7 @@ static void RESORT_CROWD_LINE_Main( RESORT_CROWD_LINE *p_wk )
   }
 
   //移動開始処理
-  if( p_wk->register_cnt > 0 && move_cnt < 2 )
+  if( p_wk->register_cnt > 0 && move_cnt < RESORT_CROWD_LINE_WALK_NUM )
   {
     if( p_wk->wait-- <= 0 )
     {
@@ -2713,8 +2764,7 @@ struct _RESORT_FIELD_PEOPLE
 //-------------------------------------
 ///	PRIVATE
 //=====================================
-static void Field_People_UpdateRecvCallback( void *p_wk_adrs, RESORT_RECV_DATA *p_recv, RESORT_RECV_DATA_UPDATE update );
-static void Field_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_DATA *p_proxy );
+static void Field_People_UpdateDataCallback( void *p_wk_adrs, void *p_data_adrs, RESORT_RECV_DATA_UPDATE update );
 //-------------------------------------
 ///	PUBLIC
 //=====================================
@@ -2741,8 +2791,7 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
     param.p_recv_tmp_buff = RESORT_SYSTEN_GetRecvTmpBuff( p_sys );
     param.p_proxy_buff    = RESORT_SYSTEM_GetProxyBuff( p_sys );
     param.p_wk_adrs = p_wk;
-    param.UpdateRecvCallback = Field_People_UpdateRecvCallback;
-    param.UpdateProxyCallback = Field_People_UpdateProxyCallback;
+    param.UpdateDataCallback = Field_People_UpdateDataCallback;
     param.update_interval = RESORT_FIELD_PEOPLE_UPDATE_INTERVAL;
 
 
@@ -2856,70 +2905,55 @@ static void RESORT_FIELD_PEOPLE_StopCrowd( RESORT_FIELD_PEOPLE *p_wk, RESORT_PEO
  *	@param update
  */
 //-----------------------------------------------------------------------------
-static void Field_People_UpdateRecvCallback( void *p_wk_adrs, RESORT_RECV_DATA *p_recv, RESORT_RECV_DATA_UPDATE update )
+static void Field_People_UpdateDataCallback( void *p_wk_adrs, void *p_data_adrs, RESORT_RECV_DATA_UPDATE update )
 {
   RESORT_FIELD_PEOPLE *p_wk = p_wk_adrs;
   RESORT_PEOPLE *p_people;
 
-  if( update == RESORT_RECV_DATA_UPDATE_MERGE_DATA )
+  switch( update )
   {
+  default:
+    GF_ASSERT(0);
+    return;
+  case RESORT_RECV_DATA_UPDATE_NONE:         //更新していない
+    GF_ASSERT(0);
+    return;
+  case RESORT_RECV_DATA_UPDATE_FIRST:        //初回更新        優先度：高
+    //何もせず新規人物作成へ
+    break;
+  case RESORT_RECV_DATA_UPDATE_MERGE_VIEW:   //見た目更新
+    //見た目変更
+    p_people = RESORT_PEOPLE_SYS_GetPeopleByData( p_wk->p_people_sys, p_data_adrs );
+    GF_ASSERT(p_people);
+    RESORT_CROWD_PEOPLE_ChangeOBJCodeReq( p_wk->p_crowd, p_people );
+    return;
+  case RESORT_RECV_DATA_UPDATE_MERGE_DATA:   //データ更新      優先度：低
     //データの更新のみなら何も行わない
     return;
+  case RESORT_RECV_DATA_UPDATE_OVERWRITE:    //新規データで上書きした
+    //上書きした場合は、
+    //一旦このデータを消してから新規人物登録
+    //アドレスの位置は同じなのでこの人を一旦消す
+    p_people = RESORT_PEOPLE_SYS_GetPeopleByData( p_wk->p_people_sys, p_data_adrs );
+    GF_ASSERT(p_people);
+    //群集から外し
+    RESORT_FIELD_PEOPLE_DeleteCrowd( p_wk, p_people );
+    //完全に人を消す
+    RESORT_PEOPLE_Delete( p_wk->p_people_sys, p_people );
+    break;
   }
 
-  //受信したデータ番地をもっている人がいるか検索
-  p_people = RESORT_PEOPLE_SYS_GetPeopleByData( p_wk->p_people_sys, p_recv );
-
-  if( p_people )
-  {
-    //いるならなら置き換え動作
-  }
-  else
-  {
-    //いないなら人物作成
-    RESORT_PEOPLE_SYS_ADD_PARAM param;
-    GFL_STD_MemClear(&param,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
-
-    param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByAdrs( RESORT_SYSTEM_GetAbstructManager(p_wk->p_sys), p_recv );
-    param.placeID = RESORT_PLACEID_FIELD;
-
-    p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );
-
-    RESORT_CROWD_PEOPLE_Add( p_wk->p_crowd, p_people );
-
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  代理人更新コールバック
- *　
- *	@param	void *p_wk_adrs　ワーク
- *	@param	*p_proxy  更新があったデータ
- */
-//-----------------------------------------------------------------------------
-static void Field_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_DATA *p_proxy )
-{
-  RESORT_FIELD_PEOPLE *p_wk = p_wk_adrs;
-  RESORT_PEOPLE *p_people;
-
-  //受信したデータ番地をもっている人がいるか検索
-  p_people = RESORT_PEOPLE_SYS_GetPeopleByData( p_wk->p_people_sys, p_proxy );
-
-  if( p_people )
-  {
-    //ここに来た場合、一旦代理人を生成して、
-    //セーブや復帰に来た場合なので、MMDLが残っているため作成しない
-  }
-  else
+  //新規人物作成処理
+  p_people = RESORT_PEOPLE_SYS_GetPeopleByData( p_wk->p_people_sys, p_data_adrs );
+  if( !p_people )
   {
     RESORT_PEOPLE_SYS_ADD_PARAM param;
     GFL_STD_MemClear(&param,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
 
-    param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByAdrs( RESORT_SYSTEM_GetAbstructManager(p_wk->p_sys), p_proxy );
+    param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByAdrs( RESORT_SYSTEM_GetAbstructManager(p_wk->p_sys), p_data_adrs );
     param.placeID = RESORT_PLACEID_FIELD;
-    p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );
 
+    p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );
     RESORT_CROWD_PEOPLE_Add( p_wk->p_crowd, p_people );
   }
 }
-

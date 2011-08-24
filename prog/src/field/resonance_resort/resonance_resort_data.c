@@ -963,9 +963,9 @@ struct _RESORT_RECV_DATA
   u32                 kosei;  //TODO　個性？  //16
   u32                 extend_flag:9;  //20
   u32                 lock      :1;
-  u32                 update    :2; //RESORT_RECV_DATA_UPDATEの値 
+  u32                 update    :3; //RESORT_RECV_DATA_UPDATEの値 
   u32                 peopleID  :8;
-  u32                 placeID   :8;
+  u32                 placeID   :7;
   u32                 type     :4;  //自分がなんのタイプRESORT_RESIDENT_TYPE_xxx
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_RECV_DATA) == RESORT_RECV_DATA_SIZE );
@@ -1214,7 +1214,6 @@ BOOL RESORT_RECV_DATA_AddBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DAT
 
   //初期生成データ
   Resort_Recv_Data_InitSetup( p_wk );
-  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
 
   return TRUE;
 }
@@ -1234,7 +1233,6 @@ BOOL RESORT_RECV_DATA_AddRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *c
   *p_wk = *cp_recv;
 
   Resort_Recv_Data_InitSetup( p_wk );
-  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
 
   return TRUE;
 }
@@ -1831,6 +1829,73 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
 
   default:
     GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保存期間チェック
+ *
+ *	@param	const RESORT_RECV_DATA *p_wk ワーク
+ *
+ *	@return TRUE保存期間すぎた   FALSE保存期間内
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk )
+{
+  s64 now;
+  s64 pre;
+
+  //現在秒を取る
+  {
+    RTCDate date;
+    RTCTime time;
+    GFL_RTC_GetDateTime( &date, &time );
+    now = RTC_ConvertDateTimeToSecond( &date, &time );
+  }
+
+  //会った時間を取る
+  {
+    RTCDate date;
+    RTCTime time;
+    date.year   = cp_wk->meet_year;
+    date.month  = cp_wk->meet_month;
+    date.day    = cp_wk->meet_day;
+    date.week   = 0;
+    time.hour   = cp_wk->meet_hour;
+    time.minute = cp_wk->meet_min;
+    time.second = 0;
+    pre = RTC_ConvertDateTimeToSecond( &date, &time );
+  }
+
+  {
+    enum
+    {
+      SPECIAL_DELIVALY  = 180*60,
+    };
+    static const u32 sc_extend_num_time[RESORT_EXTEND_TYPE_MAX+1] =
+    {
+      1*60,3*60,4*60,5*60,7*60,8*60,1440*60
+    };
+
+    int extend_num  = 0;
+    int i;
+    for( i = 0; i < RESORT_EXTEND_TYPE_MAX; i++ )
+    {
+      if( cp_wk->extend_flag & 1<<i )
+      {
+        extend_num++;
+      }
+    }
+    GF_ASSERT( extend_num < NELEMS(sc_extend_num_time) );
+
+    if( cp_wk->basic2.special_deliverly )
+    {
+      return (u32)(pre-now) < SPECIAL_DELIVALY;
+    }
+    else
+    {
+      return (u32)(pre-now) < sc_extend_num_time[extend_num];
+    }
   }
 }
 #ifdef PM_DEBUG
@@ -2448,6 +2513,9 @@ BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp
     RESORT_Printf( "空のデータに入れた！\n" );
     return TRUE;
   }
+  else
+  {
+  }
 
   RESORT_Printf( "代理人データを受け取ったが、バッファがいっぱい！\n" );
   return FALSE;
@@ -2636,6 +2704,7 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_RECV_BUFF) == RESORT_RECV_BUFF_HEADER_SIZE );
 //=====================================
 static RESORT_RECV_DATA * Resort_Recv_Buff_GetEmptyData( RESORT_RECV_BUFF *p_wk );
 static RESORT_RECV_DATA * Resort_Recv_Buff_GetSameOwnerData( RESORT_RECV_BUFF *p_wk, const RESORT_BASIC1_DATA *cp_owner );
+static RESORT_RECV_DATA * Resort_Recv_Buff_GetOverReserveData( RESORT_RECV_BUFF *p_wk );
 
 //-------------------------------------
 ///	外部公開
@@ -2911,11 +2980,28 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
       if( p_data )
       {
         RESORT_RECV_DATA_AddBeacon( p_data, cp_beacon );
+        RESORT_RECV_DATA_SetData(p_data,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
 
 #ifdef  PM_DEBUG
         RESORT_BASIC1_DATA_PrintDebug( &cp_beacon->basic1 );
 #endif
         RESORT_Printf( "空のデータに入れた！%d\n", cp_beacon->extend_type );
+
+        RESORT_CITY_DATA_AddTrainerID( sp_city_data, trainerID );
+        return TRUE;
+      }
+
+      //期間外のデータがあったら入れる
+      p_data = Resort_Recv_Buff_GetOverReserveData( p_wk );
+      if( p_data )
+      {
+        RESORT_RECV_DATA_AddBeacon( p_data, cp_beacon );
+        RESORT_RECV_DATA_SetData(p_data,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_OVERWRITE);
+
+#ifdef  PM_DEBUG
+        RESORT_BASIC1_DATA_PrintDebug( &cp_beacon->basic1 );
+#endif
+        RESORT_Printf( "受信データを押し出して入れた！\n" );
 
         RESORT_CITY_DATA_AddTrainerID( sp_city_data, trainerID );
         return TRUE;
@@ -2951,7 +3037,8 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
   p_data  = Resort_Recv_Buff_GetEmptyData( p_wk );
   if( p_data )
   {
-    RESORT_RECV_DATA_AddRecv( p_data, cp_recv );
+    RESORT_RECV_DATA_AddRecv(p_data, cp_recv);
+    RESORT_RECV_DATA_SetData(p_data,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
 
 #ifdef  PM_DEBUG
     RESORT_BASIC1_DATA_PrintDebug( &cp_recv->basic1 );
@@ -2960,7 +3047,18 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
     return TRUE;
   }
 
-  RESORT_Printf( "受信データを受け取ったが、バッファがいっぱい！\n" );
+  //期間外のデータがあったら入れる
+  p_data = Resort_Recv_Buff_GetOverReserveData( p_wk );
+  if( p_data )
+  {
+    RESORT_RECV_DATA_AddRecv(p_data, cp_recv);
+    RESORT_RECV_DATA_SetData(p_data,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_OVERWRITE);
+#ifdef  PM_DEBUG
+    RESORT_BASIC1_DATA_PrintDebug( &cp_recv->basic1 );
+#endif
+    RESORT_Printf( "受信データを押し出して入れた！\n" );
+    return TRUE;
+  }
 
   return FALSE;
 }
@@ -3004,6 +3102,30 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetSameOwnerData( RESORT_RECV_BUFF *p
   {
     RESORT_RECV_DATA  *p_data = &p_wk->data[i];
     if( RESORT_BASIC1_DATA_IsSameOwner( &p_data->basic1, cp_owner ) )
+    {
+      return p_data;
+    }
+  }
+
+  return NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保存期間終了データを取得する
+ *
+ *	@param	RESORT_RECV_BUFF *p_wk  ワーク
+ *
+ *	@return 保存期間終了データ  なければNULL
+ */
+//-----------------------------------------------------------------------------
+static RESORT_RECV_DATA * Resort_Recv_Buff_GetOverReserveData( RESORT_RECV_BUFF *p_wk )
+{
+  int i;
+  for( i = 0; i < p_wk->max; i++ )
+  {
+    RESORT_RECV_DATA  *p_data = &p_wk->data[i];
+    if( !RESORT_RECV_DATA_IsEmpty(p_data)
+      && RESORT_RECV_DATA_OverReservePeriod(p_data) )
     {
       return p_data;
     }

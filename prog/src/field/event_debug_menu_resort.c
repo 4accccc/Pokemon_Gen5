@@ -484,7 +484,7 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
 
       RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_WANT_JOB, 12 );
 
-      RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, 31-i, RESORT_PLACEID_FIELD );
+      RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, 63-i, RESORT_PLACEID_FIELD );
     }
   }
 

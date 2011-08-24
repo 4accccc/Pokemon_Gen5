@@ -294,7 +294,8 @@ typedef enum
 typedef enum
 {
   RESORT_RECV_DATA_UPDATE_NONE,         //更新していない    
-  RESORT_RECV_DATA_UPDATE_FIRST,        //初回更新        優先度：高
+  RESORT_RECV_DATA_UPDATE_OVERWRITE,    //新規データで上書きした  優先度：高
+  RESORT_RECV_DATA_UPDATE_FIRST,        //初回更新        
   RESORT_RECV_DATA_UPDATE_MERGE_VIEW,   //見た目更新    
   RESORT_RECV_DATA_UPDATE_MERGE_DATA,   //データ更新      優先度：低
 
@@ -339,6 +340,7 @@ extern BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk );
 
 extern u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
 extern void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, u32 data );
+BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk );
 
 #ifdef PM_DEBUG
 extern void RESORT_RECV_DATA_SetDebugData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_gamedata );
