@@ -39,31 +39,31 @@ static const DEBUG_NUMINPUT_PARAM NumInputParam_todayCountOfQ =
 }; 
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfQ[ QUESTION_ID_NUM ] = 
 {
-  { dni_q01, QUESTION_ID_WB,               &NumInputParam_todayCountOfQ }, // Q1
+  { dni_q01, QUESTION_ID_W2B2,             &NumInputParam_todayCountOfQ }, // Q1
   { dni_q02, QUESTION_ID_SEX,              &NumInputParam_todayCountOfQ }, // Q2
   { dni_q03, QUESTION_ID_FUN,              &NumInputParam_todayCountOfQ }, // Q3
   { dni_q04, QUESTION_ID_PLACE,            &NumInputParam_todayCountOfQ }, // Q4
   { dni_q05, QUESTION_ID_PARTNER,          &NumInputParam_todayCountOfQ }, // Q5
   { dni_q06, QUESTION_ID_WANT,             &NumInputParam_todayCountOfQ }, // Q6
-  { dni_q07, QUESTION_REQUIREMENT,         &NumInputParam_todayCountOfQ }, // Q7
+  { dni_q07, QUESTION_ID_REQUIREMENT,      &NumInputParam_todayCountOfQ }, // Q7
   { dni_q08, QUESTION_ID_FAVORITE_POKEMON, &NumInputParam_todayCountOfQ }, // Q8
   { dni_q09, QUESTION_ID_FIRST_POKEMON,    &NumInputParam_todayCountOfQ }, // Q9
-  { dni_q10, QUESTION_ID_PLAY_SPOT,        &NumInputParam_todayCountOfQ }, // Q10
-  { dni_q11, QUESTION_ID_FAVORITE_CLASS,   &NumInputParam_todayCountOfQ }, // Q11
+  { dni_q10, QUESTION_ID_PLAY_HOW,         &NumInputParam_todayCountOfQ }, // Q10
+  { dni_q11, QUESTION_ID_TIME_MACHINE,     &NumInputParam_todayCountOfQ }, // Q11
   { dni_q12, QUESTION_ID_PRECIOUS,         &NumInputParam_todayCountOfQ }, // Q12
-  { dni_q13, QUESTION_ID_SEASON,           &NumInputParam_todayCountOfQ }, // Q13
-  { dni_q14, QUESTION_ID_FOOD,             &NumInputParam_todayCountOfQ }, // Q14
+  { dni_q13, QUESTION_ID_PERSON,           &NumInputParam_todayCountOfQ }, // Q13
+  { dni_q14, QUESTION_ID_DREAM_OR_REAL,    &NumInputParam_todayCountOfQ }, // Q14
   { dni_q15, QUESTION_ID_CHARACTER,        &NumInputParam_todayCountOfQ }, // Q15
   { dni_q16, QUESTION_ID_POKEMON,          &NumInputParam_todayCountOfQ }, // Q16
-  { dni_q17, QUESTION_ID_STRONG_CLASS,     &NumInputParam_todayCountOfQ }, // Q17
-  { dni_q18, QUESTION_ID_WEAK_CLASS,       &NumInputParam_todayCountOfQ }, // Q18
-  { dni_q19, QUESTION_ID_DREAM,            &NumInputParam_todayCountOfQ }, // Q19
+  { dni_q17, QUESTION_ID_MAGIC,            &NumInputParam_todayCountOfQ }, // Q17
+  { dni_q18, QUESTION_ID_RICH,             &NumInputParam_todayCountOfQ }, // Q18
+  { dni_q19, QUESTION_ID_HOW_LONG_PLAY,    &NumInputParam_todayCountOfQ }, // Q19
   { dni_q20, QUESTION_ID_DAY_OFF,          &NumInputParam_todayCountOfQ }, // Q20
   { dni_q21, QUESTION_ID_MUSIC,            &NumInputParam_todayCountOfQ }, // Q21
   { dni_q22, QUESTION_ID_TV,               &NumInputParam_todayCountOfQ }, // Q22
   { dni_q23, QUESTION_ID_MOVIE,            &NumInputParam_todayCountOfQ }, // Q23
-  { dni_q24, QUESTION_ID_SPORTS,           &NumInputParam_todayCountOfQ }, // Q24
-  { dni_q25, QUESTION_ID_COLOR,            &NumInputParam_todayCountOfQ }, // Q25
+  { dni_q24, QUESTION_ID_GAME,             &NumInputParam_todayCountOfQ }, // Q24
+  { dni_q25, QUESTION_ID_WORK_HARD,        &NumInputParam_todayCountOfQ }, // Q25
   { dni_q26, QUESTION_ID_HOBBY,            &NumInputParam_todayCountOfQ }, // Q26
   { dni_q27, QUESTION_ID_JOB,              &NumInputParam_todayCountOfQ }, // Q27
   { dni_q28, QUESTION_ID_GYM_LEADER,       &NumInputParam_todayCountOfQ }, // Q28
@@ -82,31 +82,31 @@ static const DEBUG_NUMINPUT_PARAM NumInputParam_totalCountOfQ =
 }; 
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfQ[ QUESTION_ID_NUM ] = 
 {
-  { dni_q01, QUESTION_ID_WB,               &NumInputParam_totalCountOfQ }, // Q1
+  { dni_q01, QUESTION_ID_W2B2,             &NumInputParam_totalCountOfQ }, // Q1
   { dni_q02, QUESTION_ID_SEX,              &NumInputParam_totalCountOfQ }, // Q2
   { dni_q03, QUESTION_ID_FUN,              &NumInputParam_totalCountOfQ }, // Q3
   { dni_q04, QUESTION_ID_PLACE,            &NumInputParam_totalCountOfQ }, // Q4
   { dni_q05, QUESTION_ID_PARTNER,          &NumInputParam_totalCountOfQ }, // Q5
   { dni_q06, QUESTION_ID_WANT,             &NumInputParam_totalCountOfQ }, // Q6
-  { dni_q07, QUESTION_REQUIREMENT,         &NumInputParam_totalCountOfQ }, // Q7
+  { dni_q07, QUESTION_ID_REQUIREMENT,      &NumInputParam_totalCountOfQ }, // Q7
   { dni_q08, QUESTION_ID_FAVORITE_POKEMON, &NumInputParam_totalCountOfQ }, // Q8
   { dni_q09, QUESTION_ID_FIRST_POKEMON,    &NumInputParam_totalCountOfQ }, // Q9
-  { dni_q10, QUESTION_ID_PLAY_SPOT,        &NumInputParam_totalCountOfQ }, // Q10
-  { dni_q11, QUESTION_ID_FAVORITE_CLASS,   &NumInputParam_totalCountOfQ }, // Q11
+  { dni_q10, QUESTION_ID_PLAY_HOW,         &NumInputParam_totalCountOfQ }, // Q10
+  { dni_q11, QUESTION_ID_TIME_MACHINE,     &NumInputParam_totalCountOfQ }, // Q11
   { dni_q12, QUESTION_ID_PRECIOUS,         &NumInputParam_totalCountOfQ }, // Q12
-  { dni_q13, QUESTION_ID_SEASON,           &NumInputParam_totalCountOfQ }, // Q13
-  { dni_q14, QUESTION_ID_FOOD,             &NumInputParam_totalCountOfQ }, // Q14
+  { dni_q13, QUESTION_ID_PERSON,           &NumInputParam_totalCountOfQ }, // Q13
+  { dni_q14, QUESTION_ID_DREAM_OR_REAL,    &NumInputParam_totalCountOfQ }, // Q14
   { dni_q15, QUESTION_ID_CHARACTER,        &NumInputParam_totalCountOfQ }, // Q15
   { dni_q16, QUESTION_ID_POKEMON,          &NumInputParam_totalCountOfQ }, // Q16
-  { dni_q17, QUESTION_ID_STRONG_CLASS,     &NumInputParam_totalCountOfQ }, // Q17
-  { dni_q18, QUESTION_ID_WEAK_CLASS,       &NumInputParam_totalCountOfQ }, // Q18
-  { dni_q19, QUESTION_ID_DREAM,            &NumInputParam_totalCountOfQ }, // Q19
+  { dni_q17, QUESTION_ID_MAGIC,            &NumInputParam_totalCountOfQ }, // Q17
+  { dni_q18, QUESTION_ID_RICH,             &NumInputParam_totalCountOfQ }, // Q18
+  { dni_q19, QUESTION_ID_HOW_LONG_PLAY,    &NumInputParam_totalCountOfQ }, // Q19
   { dni_q20, QUESTION_ID_DAY_OFF,          &NumInputParam_totalCountOfQ }, // Q20
   { dni_q21, QUESTION_ID_MUSIC,            &NumInputParam_totalCountOfQ }, // Q21
   { dni_q22, QUESTION_ID_TV,               &NumInputParam_totalCountOfQ }, // Q22
   { dni_q23, QUESTION_ID_MOVIE,            &NumInputParam_totalCountOfQ }, // Q23
-  { dni_q24, QUESTION_ID_SPORTS,           &NumInputParam_totalCountOfQ }, // Q24
-  { dni_q25, QUESTION_ID_COLOR,            &NumInputParam_totalCountOfQ }, // Q25
+  { dni_q24, QUESTION_ID_GAME,             &NumInputParam_totalCountOfQ }, // Q24
+  { dni_q25, QUESTION_ID_WORK_HARD,        &NumInputParam_totalCountOfQ }, // Q25
   { dni_q26, QUESTION_ID_HOBBY,            &NumInputParam_totalCountOfQ }, // Q26
   { dni_q27, QUESTION_ID_JOB,              &NumInputParam_totalCountOfQ }, // Q27
   { dni_q28, QUESTION_ID_GYM_LEADER,       &NumInputParam_totalCountOfQ }, // Q28

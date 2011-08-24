@@ -63,7 +63,7 @@ void QuestionnaireSave_WorkInit(void *work)
   
   GFL_STD_MemClear(anketo_save, sizeof(QUESTIONNAIRE_SAVE_WORK));
 
-  anketo_save->investigating_question_id[0] = QUESTION_ID_WB;
+  anketo_save->investigating_question_id[0] = QUESTION_ID_W2B2;
   anketo_save->investigating_question_id[1] = QUESTION_ID_FIRST_POKEMON;
   anketo_save->investigating_question_id[2] = QUESTION_ID_PLAY_TIME;
 }

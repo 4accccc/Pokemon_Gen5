@@ -158,8 +158,8 @@
 #define FE_C01_ITEMGET_02                  142 /* 0x008e C01サンヨウシティ：ビル裏の人アイテム入手フラグ */
 #define FE_C03R0302_ITEM_01                143 /* 0x008f C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ（ピントレンズ） */
 #define FE_C05R0701_WAZALADY               144 /* 0x0090 C05ホドモエシティ：日替わりわざ見せお嬢様初回会話フラグ */
-#define FE_RES_REQ_WB_COUNT                145 /* 0x0091 すれ違い調査「ブラックと　ホワイト　おおいのは？」( 人数 )を達成 */
-#define FE_RES_REQ_WB_TIME                 146 /* 0x0092 すれ違い調査「ブラックと　ホワイト　おおいのは？」( 時間 )を達成 */
+#define FE_RES_REQ_W2B2_COUNT              145 /* 0x0091 すれ違い調査「ブラック２と　ホワイト２　おおいのは？」( 人数 )を達成 */
+#define FE_RES_REQ_W2B2_TIME               146 /* 0x0092 すれ違い調査「ブラック２と　ホワイト２　おおいのは？」( 時間 )を達成 */
 #define FE_RES_REQ_FIRST_POKE_COUNT        147 /* 0x0093 すれ違い調査「えらんだ　さいしょのポケモンは？」( 人数 )を達成 */
 #define FE_RES_REQ_FIRST_POKE_TIME         148 /* 0x0094 すれ違い調査「えらんだ　さいしょのポケモンは？」( 時間 )を達成 */
 #define FE_RES_REQ_PLAY_TIME_COUNT         149 /* 0x0095 すれ違い調査「いちばんおおい　プレイじかんは？」( 人数 )を達成 */
@@ -182,24 +182,24 @@
 #define FE_RES_REQ_PRECIOUS_TIME           166 /* 0x00a6 すれ違い調査「だいじにしているものに　ついて」( 時間 )を達成 */
 #define FE_RES_REQ_PARTNER_COUNT           167 /* 0x00a7 すれ違い調査「ひとのみりょくに　ついて」( 人数 )を達成 */
 #define FE_RES_REQ_PARTNER_TIME            168 /* 0x00a8 すれ違い調査「ひとのみりょくに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_SEASON_COUNT            169 /* 0x00a9 すれ違い調査「きせつに　ついて」( 人数 )を達成 */
-#define FE_RES_REQ_SEASON_TIME             170 /* 0x00aa すれ違い調査「きせつに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_FUTURE_COUNT            169 /* 0x00a9 すれ違い調査「どんな　ひとに　なりたい」( 人数 )を達成 */
+#define FE_RES_REQ_FUTURE_TIME             170 /* 0x00aa すれ違い調査「どんな　ひとに　なりたい」( 時間 )を達成 */
 #define FE_RES_REQ_ART_COUNT               171 /* 0x00ab すれ違い調査「げいじゅつに　ついて」( 人数 )を達成 */
 #define FE_RES_REQ_ART_TIME                172 /* 0x00ac すれ違い調査「げいじゅつに　ついて」( 時間 )を達成 */
 #define FE_RES_REQ_MUSIC_COUNT             173 /* 0x00ad すれ違い調査「いちばんすきな　おんがくは？」( 人数 )を達成 */
 #define FE_RES_REQ_MUSIC_TIME              174 /* 0x00ae すれ違い調査「いちばんすきな　おんがくは？」( 時間 )を達成 */
 #define FE_RES_REQ_MOVIE_COUNT             175 /* 0x00af すれ違い調査「えいぞうに　ついて」( 人数 )を達成 */
 #define FE_RES_REQ_MOVIE_TIME              176 /* 0x00b0 すれ違い調査「えいぞうに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_SCHOOL_COUNT            177 /* 0x00b1 すれ違い調査「いちばんすきな　がっこうのじかんは？」( 人数 )を達成 */
-#define FE_RES_REQ_SCHOOL_TIME             178 /* 0x00b2 すれ違い調査「いちばんすきな　がっこうのじかんは？」( 時間 )を達成 */
-#define FE_RES_REQ_STUDY_COUNT             179 /* 0x00b3 すれ違い調査「べんきょうに　ついて」( 人数 )を達成 */
-#define FE_RES_REQ_STUDY_TIME              180 /* 0x00b4 すれ違い調査「べんきょうに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_STORTS_COUNT            181 /* 0x00b5 すれ違い調査「いちばんにんきのある　スポーツは？」( 人数 )を達成 */
-#define FE_RES_REQ_STORTS_TIME             182 /* 0x00b6 すれ違い調査「いちばんにんきのある　スポーツは？」( 時間 )を達成 */
+#define FE_RES_REQ_TIME_MACHINE_COUNT      177 /* 0x00b1 すれ違い調査「タイムマシンが　あったら？」( 人数 )を達成 */
+#define FE_RES_REQ_TIME_MACHINE_TIME       178 /* 0x00b2 すれ違い調査「タイムマシンが　あったら？」( 時間 )を達成 */
+#define FE_RES_REQ_IF_COUNT                179 /* 0x00b3 すれ違い調査「もしもシリーズ」( 人数 )を達成 */
+#define FE_RES_REQ_IF_TIME                 180 /* 0x00b4 すれ違い調査「もしもシリーズ」( 時間 )を達成 */
+#define FE_RES_REQ_GAME_COUNT              181 /* 0x00b5 すれ違い調査「いちばん　にんきの　げーむは？」( 人数 )を達成 */
+#define FE_RES_REQ_GAME_TIME               182 /* 0x00b6 すれ違い調査「いちばん　にんきの　げーむは？」( 時間 )を達成 */
 #define FE_RES_REQ_DAY_OFF_COUNT           183 /* 0x00b7 すれ違い調査「きゅうじつに　ついて」( 人数 )を達成 */
 #define FE_RES_REQ_DAY_OFF_TIME            184 /* 0x00b8 すれ違い調査「きゅうじつに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_DREAM_COUNT             185 /* 0x00b9 すれ違い調査「いちばんなりたいものは？」( 人数 )を達成 */
-#define FE_RES_REQ_DREAM_TIME              186 /* 0x00ba すれ違い調査「いちばんなりたいものは？」( 時間 )を達成 */
+#define FE_RES_REQ_HOW_LONG_PLAY_COUNT     185 /* 0x00b9 すれ違い調査「ポケモンを　どれくらい　あそんでる？」( 人数 )を達成 */
+#define FE_RES_REQ_HOW_LONG_PLAY_TIME      186 /* 0x00ba すれ違い調査「ポケモンを　どれくらい　あそんでる？」( 時間 )を達成 */
 #define FE_RES_REQ_LEADER_COUNT            187 /* 0x00bb すれ違い調査「いちばんにんきのある　ジムリーダーは？」( 人数 )を達成 */
 #define FE_RES_REQ_LEADER_TIME             188 /* 0x00bc すれ違い調査「いちばんにんきのある　ジムリーダーは？」( 時間 )を達成 */
 #define FE_RES_REQ_FUN_COUNT               189 /* 0x00bd すれ違い調査「ポケモンのおもしろいところは？」( 人数 )を達成 */
@@ -208,9 +208,9 @@
 #define FE_RES_QUESTION_FAVARITE           192 /* 0x00c0 調査隊アンケート『すきなポケモン』に回答 */
 #define FE_RES_QUESTION_WISH               193 /* 0x00c1 調査隊アンケート『みんなの　りそう』に回答 */
 #define FE_RES_QUESTION_PARTNER            194 /* 0x00c2 調査隊アンケート『すきなひと』に回答 */
-#define FE_RES_QUESTION_TASTE              195 /* 0x00c3 調査隊アンケート『みんなの　このみ』に回答 */
+#define FE_RES_QUESTION_FUTURE             195 /* 0x00c3 調査隊アンケート『みんなの　しょうらい』に回答 */
 #define FE_RES_QUESTION_HOBBY              196 /* 0x00c4 調査隊アンケート『みんなの　しゅみ』に回答 */
-#define FE_RES_QUESTION_SCHOOL             197 /* 0x00c5 調査隊アンケート『がっこうせいかつ』に回答 */
+#define FE_RES_QUESTION_IF                 197 /* 0x00c5 調査隊アンケート『もしも･･･だったら』に回答 */
 #define FE_RES_QUESTION_PLAY               198 /* 0x00c6 調査隊アンケート『どんな　あそびがすきか』に回答 */
 #define FE_RES_QUESTION_POKEMON            199 /* 0x00c7 調査隊アンケート『ポケモン』に回答 */
 #define FE_C07R0401_GENTLEMAN_FIRST        200 /* 0x00c8 セッカシティだいすきクラブ：会長初回話しかけ */

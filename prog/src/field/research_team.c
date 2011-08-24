@@ -34,7 +34,7 @@ typedef struct {
 static const RESEARCH_REQUEST_DATA RequestData[ RESEARCH_REQ_ID_NUM ] = 
 {
   { RESEARCH_REQ_TYPE_TIME,  0, QUESTION_ID_DUMMY,            QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      0,  0 }, // ダミー
-  { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_WB,               QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1,  2 }, //「ブラックと　ホワイト　おおいのは？」( 時間 )
+  { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_W2B2,             QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1,  2 }, //「ブラック２と　ホワイト２　おおいのは？」( 時間 )
   { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_FIRST_POKEMON,    QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1,  2 }, //「えらんだ　さいしょのポケモンは？」( 時間 )
   { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_PLAY_TIME,        QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1,  4 }, //「いちばんおおい　プレイじかんは？」( 時間 )
   { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_SEX,              QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1,  4 }, //「おとこのこと　おんなのこ　おおいのは？」( 時間 )
@@ -45,19 +45,19 @@ static const RESEARCH_REQUEST_DATA RequestData[ RESEARCH_REQ_ID_NUM ] =
   { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_POKEMON_TYPE,     QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1,  8 }, //「すきな　ポケモンのタイプは？」( 時間 )
   { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_PLACE,            QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1,  8 }, //「とかいと　いなか　すみたいのは？」( 時間 )
   { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_WANT,             QUESTION_ID_PRECIOUS,   QUESTION_ID_DUMMY,      1, 12 }, //「だいじにしているものに　ついて」( 時間 )
-  { RESEARCH_REQ_TYPE_TIME,  3, QUESTION_ID_PARTNER,          QUESTION_REQUIREMENT,   QUESTION_ID_CHARACTER,  1, 12 }, //「ひとのみりょくに　ついて」( 時間 )
-  { RESEARCH_REQ_TYPE_TIME,  2, QUESTION_ID_SEASON,           QUESTION_ID_FOOD,       QUESTION_ID_DUMMY,      1, 12 }, //「きせつに　ついて」( 時間 )
-  { RESEARCH_REQ_TYPE_TIME,  2, QUESTION_ID_COLOR,            QUESTION_ID_MUSIC,      QUESTION_ID_DUMMY,      1, 12 }, //「げいじゅつに　ついて」( 時間 )
+  { RESEARCH_REQ_TYPE_TIME,  3, QUESTION_ID_PARTNER,          QUESTION_ID_REQUIREMENT,QUESTION_ID_CHARACTER,  1, 12 }, //「ひとのみりょくに　ついて」( 時間 )
+  { RESEARCH_REQ_TYPE_TIME,  2, QUESTION_ID_PERSON,           QUESTION_ID_DREAM_OR_REAL, QUESTION_ID_DUMMY,    1, 12 }, //「どんな　ひとに　なりたい？」( 時間 )
+  { RESEARCH_REQ_TYPE_TIME,  2, QUESTION_ID_WORK_HARD,        QUESTION_ID_MUSIC,      QUESTION_ID_DUMMY,      1, 12 }, //「がんばりたいことは？」( 時間 )
   { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_MUSIC,            QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1, 16 }, //「いちばんすきな　おんがくは？」( 時間 )
   { RESEARCH_REQ_TYPE_TIME,  2, QUESTION_ID_TV,               QUESTION_ID_MOVIE,      QUESTION_ID_DUMMY,      1, 16 }, //「えいぞうに　ついて」( 時間 )
-  { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_FAVORITE_CLASS,   QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1, 16 }, //「いちばんすきな　がっこうのじかんは？」( 時間 )
-  { RESEARCH_REQ_TYPE_TIME,  2, QUESTION_ID_STRONG_CLASS,     QUESTION_ID_WEAK_CLASS, QUESTION_ID_DUMMY,      1, 16 }, //「べんきょうに　ついて」( 時間 )
-  { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_SPORTS,           QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1, 20 }, //「いちばんにんきのある　スポーツは？」( 時間 )
-  { RESEARCH_REQ_TYPE_TIME,  2, QUESTION_ID_DAY_OFF,          QUESTION_ID_PLAY_SPOT,  QUESTION_ID_DUMMY,      1, 20 }, //「きゅうじつに　ついて」( 時間 )
-  { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_DREAM,            QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1, 20 }, //「いちばんなりたいものは？」( 時間 )
+  { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_TIME_MACHINE,     QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1, 16 }, //「タイムマシンが　あったら？」( 時間 )
+  { RESEARCH_REQ_TYPE_TIME,  2, QUESTION_ID_MAGIC,            QUESTION_ID_RICH,       QUESTION_ID_DUMMY,      1, 16 }, //「どんな　まほうが　ほしい？」( 時間 )
+  { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_GAME,             QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1, 20 }, //「すきな　ゲームは？」( 時間 )
+  { RESEARCH_REQ_TYPE_TIME,  2, QUESTION_ID_DAY_OFF,          QUESTION_ID_PLAY_HOW,   QUESTION_ID_DUMMY,      1, 20 }, //「きゅうじつに　ついて」( 時間 )
+  { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_HOW_LONG_PLAY,    QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1, 20 }, //「ポケモンを　どれくらい　あそんでる？」( 時間 )
   { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_GYM_LEADER,       QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1, 24 }, //「いちばんにんきのある　ジムリーダーは？」( 時間 )
   { RESEARCH_REQ_TYPE_TIME,  1, QUESTION_ID_POKEMON,          QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      1, 24 }, //「ポケモンのおもしろいところは？」( 時間 )
-  { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_WB,               QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      5,  0 }, //「ブラックと　ホワイト　おおいのは？」( 人数 )
+  { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_W2B2,             QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      5,  0 }, //「ブラック２と　ホワイト２　おおいのは？」( 人数 )
   { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_FIRST_POKEMON,    QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,      5,  0 }, //「えらんだ　さいしょのポケモンは？」( 人数 )
   { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_PLAY_TIME,        QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     10,  0 }, //「いちばんおおい　プレイじかんは？」( 人数 )
   { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_SEX,              QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     10,  0 }, //「おとこのこと　おんなのこ　おおいのは？」( 人数 )
@@ -68,16 +68,16 @@ static const RESEARCH_REQUEST_DATA RequestData[ RESEARCH_REQ_ID_NUM ] =
   { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_POKEMON_TYPE,     QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     20,  0 }, //「すきな　ポケモンのタイプは？」( 人数 )
   { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_PLACE,            QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     20,  0 }, //「とかいと　いなか　すみたいのは？」( 人数 )
   { RESEARCH_REQ_TYPE_COUNT, 2, QUESTION_ID_WANT,             QUESTION_ID_PRECIOUS,   QUESTION_ID_DUMMY,     30,  0 }, //「だいじにしているものに　ついて」( 人数 )
-  { RESEARCH_REQ_TYPE_COUNT, 3, QUESTION_ID_PARTNER,          QUESTION_REQUIREMENT,   QUESTION_ID_CHARACTER, 30,  0 }, //「ひとのみりょくに　ついて」( 人数 )
-  { RESEARCH_REQ_TYPE_COUNT, 2, QUESTION_ID_SEASON,           QUESTION_ID_FOOD,       QUESTION_ID_DUMMY,     30,  0 }, //「きせつに　ついて」( 人数 )
-  { RESEARCH_REQ_TYPE_COUNT, 2, QUESTION_ID_COLOR,            QUESTION_ID_MUSIC,      QUESTION_ID_DUMMY,     30,  0 }, //「げいじゅつに　ついて」( 人数 )
+  { RESEARCH_REQ_TYPE_COUNT, 3, QUESTION_ID_PARTNER,          QUESTION_ID_REQUIREMENT,QUESTION_ID_CHARACTER, 30,  0 }, //「ひとのみりょくに　ついて」( 人数 )
+  { RESEARCH_REQ_TYPE_COUNT, 2, QUESTION_ID_PERSON,           QUESTION_ID_DREAM_OR_REAL, QUESTION_ID_DUMMY,  30,  0 }, //「どんな　ひとに　なりたい？」( 人数 )
+  { RESEARCH_REQ_TYPE_COUNT, 2, QUESTION_ID_WORK_HARD,        QUESTION_ID_MUSIC,      QUESTION_ID_DUMMY,     30,  0 }, //「がんばりたいことは？」( 人数 )
   { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_MUSIC,            QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     40,  0 }, //「いちばんすきな　おんがくは？」( 人数 )
   { RESEARCH_REQ_TYPE_COUNT, 2, QUESTION_ID_TV,               QUESTION_ID_MOVIE,      QUESTION_ID_DUMMY,     40,  0 }, //「えいぞうに　ついて」( 人数 )
-  { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_FAVORITE_CLASS,   QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     40,  0 }, //「いちばんすきな　がっこうのじかんは？」( 人数 )
-  { RESEARCH_REQ_TYPE_COUNT, 2, QUESTION_ID_STRONG_CLASS,     QUESTION_ID_WEAK_CLASS, QUESTION_ID_DUMMY,     40,  0 }, //「べんきょうに　ついて」( 人数 )
-  { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_SPORTS,           QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     50,  0 }, //「いちばんにんきのある　スポーツは？」( 人数 )
-  { RESEARCH_REQ_TYPE_COUNT, 2, QUESTION_ID_DAY_OFF,          QUESTION_ID_PLAY_SPOT,  QUESTION_ID_DUMMY,     50,  0 }, //「きゅうじつに　ついて」( 人数 )
-  { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_DREAM,            QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     50,  0 }, //「いちばんなりたいものは？」( 人数 )
+  { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_TIME_MACHINE,     QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     40,  0 }, //「タイムマシンが　あったら？」( 人数 )
+  { RESEARCH_REQ_TYPE_COUNT, 2, QUESTION_ID_MAGIC,            QUESTION_ID_RICH,       QUESTION_ID_DUMMY,     40,  0 }, //「どんな　まほうが　ほしい？」( 人数 )
+  { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_GAME,             QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     50,  0 }, //「すきな　ゲームは？」( 人数 )
+  { RESEARCH_REQ_TYPE_COUNT, 2, QUESTION_ID_DAY_OFF,          QUESTION_ID_PLAY_HOW,   QUESTION_ID_DUMMY,     50,  0 }, //「きゅうじつに　ついて」( 人数 )
+  { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_HOW_LONG_PLAY,    QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,     50,  0 }, //「ポケモンを　どれくらい　あそんでる？」( 人数 )
   { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_GYM_LEADER,       QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,    100,  0 }, //「いちばんにんきのある　ジムリーダーは？」( 人数 )
   { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_POKEMON,          QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,    100,  0 }, //「ポケモンのおもしろいところは？」( 人数 )
 };
@@ -242,7 +242,7 @@ BOOL RESEARCH_TEAM_CheckCurrentResearchFinishForCGear( GAMEDATA* gdata )
   if( RID == RESEARCH_REQ_ID_NONE ){
     return FALSE;
   }
-  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_REQ_WB_COUNT+RID ) ){
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_REQ_W2B2_COUNT+RID ) ){
     return FALSE; //すでに評価済み
   }
 

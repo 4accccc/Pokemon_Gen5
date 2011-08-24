@@ -643,11 +643,11 @@ static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_qu
       static const int sc_quest_tbl[] =
       {
         QUESTION_ID_HOBBY,
-        QUESTION_ID_STRONG_CLASS,
-        QUESTION_ID_COLOR,
-        QUESTION_ID_SPORTS,
-        QUESTION_ID_FOOD,
-        QUESTION_ID_WEAK_CLASS,
+        QUESTION_ID_MAGIC,
+        QUESTION_ID_WORK_HARD,
+        QUESTION_ID_GAME,
+        QUESTION_ID_DREAM_OR_REAL,
+        QUESTION_ID_RICH,
         QUESTION_ID_PLACE,
         QUESTION_ID_FAVORITE_POKEMON,
       };

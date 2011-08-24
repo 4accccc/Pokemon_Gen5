@@ -6,9 +6,9 @@ static const u8 StringID_topicCaption[ TOPIC_ID_NUM ] =
   str_topic_2_caption,  // [TOPIC_ID_POKEMON]
   str_topic_3_caption,  // [TOPIC_ID_TREND]
   str_topic_4_caption,  // [TOPIC_ID_PARTNER]
-  str_topic_5_caption,  // [TOPIC_ID_FAVARITE]
+  str_topic_5_caption,  // [TOPIC_ID_FUTURE]
   str_topic_6_caption,  // [TOPIC_ID_HOBBY]
-  str_topic_7_caption,  // [TOPIC_ID_SCOOL]
+  str_topic_7_caption,  // [TOPIC_ID_IF]
   str_topic_8_caption,  // [TOPIC_ID_PLAY]
   str_topic_9_caption,  // [TOPIC_ID_DETAIL]
 };
