@@ -35,11 +35,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX＝0、GRIDZ＝0
-※d25r0201と同じ（暫定）</Comment>
+・GRIDX＝7～10、GRIDZ＝9</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:58:49" />
+				Time="2011-08-24T12:13:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -97,10 +96,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX＝0、GRIDZ＝0</Comment>
+・GRIDX＝14～17、GRIDZ＝9</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:58:42" />
+				Time="2011-08-24T12:13:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -151,10 +150,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX＝0、GRIDZ＝0</Comment>
+・GRIDX＝21～24、GRIDZ＝9</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:58:42" />
+				Time="2011-08-24T12:13:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -205,10 +204,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX＝0、GRIDZ＝0</Comment>
+・GRIDX＝7～10、GRIDZ＝12</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:58:42" />
+				Time="2011-08-24T12:13:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -259,10 +258,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX＝0、GRIDZ＝0</Comment>
+・GRIDX＝14～17、GRIDZ＝12</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:58:42" />
+				Time="2011-08-24T12:13:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -313,10 +312,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX＝0、GRIDZ＝0</Comment>
+・GRIDX＝21～24、GRIDZ＝12</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:58:42" />
+				Time="2011-08-24T12:13:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
