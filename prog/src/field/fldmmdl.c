@@ -5353,7 +5353,15 @@ static BOOL mmdl_rockpos_GetPos( const MMDL *mmdl, VecFx32 *pos )
         pos->y = height;
 
         // 1グリッドずれ
-        pos->y += GRID_FX32;
+        if( rockpos->gy[no] <= 0 )
+        {
+          pos->y += GRID_SIZE_FX32(1);
+        }
+        // 2グリッドずれ
+        else
+        {
+          pos->y += GRID_SIZE_FX32(2);
+        }
       }
 
       ICHI_Printf("kairiri get \n");
