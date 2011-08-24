@@ -11,6 +11,9 @@
 #include <gflib.h>
 #include "savedata/shortcut.h"
 #include "savedata/save_tbl.h"
+#include "options_local.h"      // OPTIONS_SAVEDATA
+#include "shortcut_local.h"     // struct _SHORTCUT
+
 //=============================================================================
 /**
  *					定数宣言
@@ -28,13 +31,6 @@
  *					構造体宣言
 */
 //=============================================================================
-//-------------------------------------
-///	Yボタン登録用セーブデータ
-//=====================================
-struct _SHORTCUT
-{	
-	u8	data[SHORTCUT_SAVE_FLAG_MAX];
-};
 
 SDK_COMPILER_ASSERT( SHORTCUT_ID_MAX <= SHORTCUT_SAVE_FLAG_MAX );
 
@@ -116,8 +112,11 @@ const SHORTCUT * SaveData_GetShortCutConst( const SAVE_CONTROL_WORK * cp_sv)
 //-----------------------------------------------------------------------------
 SHORTCUT * SaveData_GetShortCut( SAVE_CONTROL_WORK * p_sv)
 {	
+  OPTIONS_SAVEDATA * opt;
 	SHORTCUT	*p_msc;
-	p_msc = SaveControl_DataPtrGet(p_sv, GMDATA_ID_SHORTCUT);
+  //OPTIONS_SAVEDATAのメンバーとして保持している：呼び出し側は意識する必要はない
+  opt = SaveControl_DataPtrGet(p_sv, GMDATA_ID_OPTIONS);
+  p_msc = &opt->shortcut;
 	return p_msc;
 }
 

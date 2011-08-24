@@ -155,7 +155,7 @@ enum{
   GMDATA_ID_WIFIHISTORY,      // Wi-Fi遊んだ履歴
   GMDATA_ID_WIFILIST,         // ともだちコード 30
   GMDATA_ID_WIFI_NEGOTIATION, // Wi-Fiネゴシエーション用交換した人のPID
-  GMDATA_ID_CGEAR,            // C-GEAR
+  GMDATA_ID_OPTIONS,          // ユーザー設定（CGEAR、簡易会話、ショートカット等）
   GMDATA_ID_TRCARD,           // トレーナーカード(サイン
   GMDATA_ID_MYSTERYDATA,      // 不思議な贈り物
   GMDATA_ID_DREAMWORLD,       // PDW
@@ -177,7 +177,6 @@ enum{
   GMDATA_ID_ROCKPOS,          // かいりき岩
   GMDATA_ID_MISC,             // 未分類(小さいデータの集まり）
   GMDATA_ID_INTRUDE,          // 侵入
-  GMDATA_ID_SHORTCUT,         // Yボタン登録
   GMDATA_ID_ZUKAN,            // ポケモン図鑑
   GMDATA_ID_ENCOUNT,          // エンカウント関連セーブデータ
   GMDATA_ID_BSUBWAY_PLAYDATA, // バトルサブウェイ　プレイデータ
@@ -185,7 +184,6 @@ enum{
   GMDATA_ID_BSUBWAY_WIFIDATA, // バトルサブウェイ WiFiデータ
   GMDATA_ID_BATTLEMATCH,      // バトル大会 60
   GMDATA_ID_SYMBOL,           // シンボルエンカウント
-  GMDATA_ID_MYPMS,            // 主人公の挨拶文データ
   GMDATA_ID_QUESTIONNAIRE,    // すれ違いアンケート
   GMDATA_ID_UNSV,             // 国連
   GMDATA_ID_THSV,             // トライアルハウスランキング表示用

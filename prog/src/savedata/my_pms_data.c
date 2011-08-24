@@ -12,6 +12,8 @@
 #include "savedata/save_tbl.h"
 
 #include "savedata/my_pms_data.h"
+#include "options_local.h"      // OPTIONS_SAVEDATA
+#include "my_pms_data_local.h"    // struct _MYPMS_DATA
 //=============================================================================
 /**
  *					定数宣言
@@ -23,13 +25,6 @@
  *					構造体宣言
 */
 //=============================================================================
-//-------------------------------------
-///	PMS情報セーブデータ
-//=====================================
-struct _MYPMS_DATA
-{
-  PMS_DATA  pms[MYPMS_PMS_TYPE_MAX];
-} ;
 
 //=============================================================================
 /**
@@ -110,7 +105,12 @@ const MYPMS_DATA * SaveData_GetMyPmsDataConst( const SAVE_CONTROL_WORK * cp_sv)
 //-----------------------------------------------------------------------------
 MYPMS_DATA * SaveData_GetMyPmsData( SAVE_CONTROL_WORK * p_sv)
 { 
-  return SaveControl_DataPtrGet(p_sv, GMDATA_ID_MYPMS);
+  OPTIONS_SAVEDATA * opt;
+  MYPMS_DATA * my_pms;
+  //OPTIONS_SAVEDATAのメンバーとして保持している：呼び出し側は意識する必要はない
+  opt = SaveControl_DataPtrGet(p_sv, GMDATA_ID_OPTIONS);
+  my_pms = &opt->mypms_data;
+  return my_pms;
 }
 
 //----------------------------------------------------------

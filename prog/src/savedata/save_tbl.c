@@ -17,7 +17,6 @@
 #include "playerdata_local.h"
 #include "savedata/wifihistory.h"
 #include "savedata/wifilist.h"
-#include "savedata/c_gear_data.h"
 #include "savedata/trainercard_data.h"
 #include "savedata/mystery_data.h"
 #include "savedata/dreamworld_data.h"
@@ -41,7 +40,6 @@
 #include "savedata/wifi_negotiation.h"
 #include "savedata/misc.h"
 #include "savedata/intrude_save.h"
-#include "savedata/shortcut.h"
 #include "savedata/musical_dist_save.h"
 #include "savedata/zukan_savedata.h"
 #include "savedata/encount_sv.h"
@@ -49,7 +47,6 @@
 #include "savedata/bsubway_savedata.h"
 #include "savedata/battlematch_savedata.h"
 #include "savedata/symbol_save.h"
-#include "savedata/my_pms_data.h"
 #include "savedata/battle_examination.h"
 #include "savedata/questionnaire_save.h"
 #include "savedata/un_savedata.h"
@@ -66,6 +63,7 @@
 #include "savedata/pokewood_rec.h"
 #include "savedata/fmission_save.h"
 #include "savedata/pokewood_savedata.h"
+#include "savedata/options_savedata.h"
 
 //--------------------------------------------------------------
 //  通常セーブデータのテーブル
@@ -231,10 +229,10 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_GET_SIZE)WIFI_NEGOTIATION_SV_GetWorkSize,
     (FUNC_INIT_WORK)WIFI_NEGOTIATION_SV_Init,
   },
-  { // C-GEAR
-    GMDATA_ID_CGEAR,
-    (FUNC_GET_SIZE)CGEAR_SV_GetWorkSize,
-    (FUNC_INIT_WORK)CGEAR_SV_Init,
+  { // 細かい設定データ（CGEAR/SHORTCUT/MYPMS）
+    GMDATA_ID_OPTIONS,
+    (FUNC_GET_SIZE)OPTIONS_SAVEDATA_GetWorkSize,
+    (FUNC_INIT_WORK)OPTIONS_SAVEDATA_Init,
   },
   { //トレーナーカード(サイン
     GMDATA_ID_TRCARD,
@@ -341,11 +339,6 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_GET_SIZE)IntrudeSave_GetWorkSize,
     (FUNC_INIT_WORK)IntrudeSave_WorkInit,
   },
-  { //Yボタン登録セーブデータ
-    GMDATA_ID_SHORTCUT,
-    (FUNC_GET_SIZE)SHORTCUT_GetWorkSize,
-    (FUNC_INIT_WORK)SHORTCUT_Init,
-  },
   { //ポケモン図鑑セーブデータ
     GMDATA_ID_ZUKAN,
     (FUNC_GET_SIZE)ZUKANSAVE_GetWorkSize,
@@ -380,11 +373,6 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_SYMBOL,
     (FUNC_GET_SIZE)SymbolSave_GetWorkSize,
     (FUNC_INIT_WORK)SymbolSave_WorkInit,
-  },
-  { //主人公の挨拶文データ
-    GMDATA_ID_MYPMS,
-    (FUNC_GET_SIZE)MYPMS_GetWorkSize,
-    (FUNC_INIT_WORK)MYPMS_Init,
   },
   { //すれ違いアンケート
     GMDATA_ID_QUESTIONNAIRE,

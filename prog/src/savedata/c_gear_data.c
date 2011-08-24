@@ -14,6 +14,9 @@
 #include "gamesystem/game_data.h"
 #include "system/gf_date.h"
 
+#include "c_gear_data_local.h"    // struct _CGEAR_SAVEDATA
+#include "options_local.h"    //OPTIONS_SAVEDATA
+
 #define CGEAR_PANELTYPE_GET_ICON_TYPE(type) ((type) | 0x80)
 #define CGEAR_PANELTYPE_GET_LAST_IR(type) ((type) | 0x40)
 #define CGEAR_PANELTYPE_GET_LAST_WIFI(type) ((type) | 0x20)
@@ -33,17 +36,6 @@
  */
 //----------------------------------------------------------
 
-struct _CGEAR_SAVEDATA {
-	u8  type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
-  u8  panel_pos[CGEAR_PANEL_MAX];
-  u8  ring_col[C_GEAR_RING_NUM];
-  u8  CGearPowerON;
-  u8  CGearON;
-  u8  gearType;
-  
-  u16 CGearPictCRC;
-  u8  CGearPictureON;
-};
 
 static u8 _inittable[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT]={
 	{CGEAR_PANELTYPE_NONE,
@@ -485,8 +477,11 @@ BOOL CGEAR_SV_GetPowerFlag( const CGEAR_SAVEDATA* cpSV )
 //----------------------------------------------------------
 CGEAR_SAVEDATA* CGEAR_SV_GetCGearSaveData(SAVE_CONTROL_WORK* pSave)
 {
+  OPTIONS_SAVEDATA * opt;
 	CGEAR_SAVEDATA* pData;
-	pData = SaveControl_DataPtrGet(pSave, GMDATA_ID_CGEAR);
+  //OPTIONS_SAVEDATAのメンバーとして保持している：呼び出し側は意識する必要はない
+  opt = SaveControl_DataPtrGet(pSave, GMDATA_ID_OPTIONS);
+  pData = &opt->cgear_savedata;
 	return pData;
 
 }
