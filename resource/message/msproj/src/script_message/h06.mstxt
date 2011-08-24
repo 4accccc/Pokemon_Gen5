@@ -240,4 +240,406 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_h06_fighterm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うみの　なかって　こんなのか！▼
+およげないから　みることは　ない▼
+そう　あきらめてたから　かんどうだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:24:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:20:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>海中って　こんなのか！▼
+泳げないから　みることは　ない▼
+そう　あきらめてたから　感動だ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:24:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:23:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・t04側</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:21:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:20:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h06_man3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あるく　すいぞくかん　っていうけど
+これって　ポケモンたちが▽
+ぼくらを　みてるんじゃないの？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:06:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:06:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>歩く　水族館　っていうけど
+これって　ポケモンたちが▽
+ぼくらを　みてるんじゃないの？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:08:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:07:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・c14側</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:09:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:07:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h06_soccerm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うわー！
+かいこうだ！▼
+ふかいなー！
+１まんメートルとか　あるのかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:42:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:40:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うわー！
+海溝だ！▼
+深いなー！
+１万メートルとか　あるのかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:43:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:43:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・下記動作モデルに隣接
+・橋の中間部、海溝辺り</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:42:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SOCCERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:19:54" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h06_maid_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうよ……　ふかいのよ……
+あいは……　どこまでも……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:42:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:41:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうよ……　深いのよ……
+愛は……　どこまでも……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:43:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:41:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・上記動作モデルに隣接
+・橋の中間部、海溝辺り</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:42:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAID</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:19:36" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h06_lady_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さて　あまごい　ですが
+これは　もう　せつなる　おもいを▽
+こめて　つかう　わざ　です▼
+つかいどころ　としては……▼
+ダメね……　あたしったら！
+グッとくる　アイデアが　うかばないわ▼
+これでは　テレビで
+うまく　せつめい　できいないわね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:19:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:11:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さて　あまごい　ですが
+これは　もう　切なる　想いを▽
+こめて　使う　技　です▼
+使いどころ　としては……▼
+ダメね……　あたしったら！
+グッとくる　アイデアが　浮かばないわ▼
+これでは　テレビで
+うまく　説明できいないわね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:19:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:11:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・テレビに登場するワザマ・シン先生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:58:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:01:58" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h06_trainerw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたって　ポケモンに
+どくバリを　もたせてる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:18:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:12:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたって　ポケモンに
+どくバリを　持たせてる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:18:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:17:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・No245「どくバリ」を持っているポケモンがいたら
+　trainerw_02から</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:17:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:02:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h06_trainerw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたって　ポケモンに
+どくバリを　もたせてる？▼
+わお！　[Name:PokemonName ]が
+どくバリを　もってる！▼
+やるじゃない！　あなたなら
+これも　つかいこなせそうね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:15:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:13:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたって　ポケモンに
+どくバリを　持たせてる？▼
+わお！　[Name:PokemonName ]が
+どくバリを　持ってる！▼
+やるじゃない！　あなたなら
+これも　使いこなせそうね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:18:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:17:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手処理
+　No281「くろいヘドロ」
+・続けてtrainerw_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:17:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:06:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h06_trainerw_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろいヘドロ！　それを　もって
+よろこぶ　ポケモンも　すくないけどね▼
+ちなみに　あたしは
+ホミカの　ファン　だい１ごうよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:17:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:15:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くろいヘドロ！　それを　持って
+喜ぶ　ポケモンも　少ないけどね▼
+ちなみに　あたしは
+ホミカの　ファン　第１号よ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:18:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:17:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:14:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-24T09:13:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

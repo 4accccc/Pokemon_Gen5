@@ -6,11 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リゾートデザートの　めいしょは
-こだいのしろと　なっております</Text>
+			<Text>リゾートデザートの　こだいのしろ▼
+ごらんになれば　わかりますが
+じかんというのは　ざんこくですね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:34:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リゾートデザートの　名所は
-古代の城と　なっております</Text>
+			<Text>リゾートデザートの　古代の城▼
+ご覧になれば　わかりますが
+時間というのは　残酷ですね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:35:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -30,10 +32,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:34:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -56,15 +59,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゅくがえりの　ボクは　しってます▼
+			<Text>じゅくがえりの　ボクが　おしえます▼
 さばくは　どうくつと　おなじで
 あちこちから　ポケモンが　でてきます▼
 つけくわえるとですね
 すなの　いろが　うすい　ところは▽
 あるいても　だいじょうぶ　です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:33:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -72,15 +75,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゅくがえりの　ボクは　知ってます▼
+			<Text>じゅくがえりが　ボクは　教えます▼
 砂漠は　洞くつと　同じで
 あちこちから　ポケモンが　でてきます▼
 つけくわえるとですね
 砂の　色が　薄いところは▽
 歩いても　大丈夫です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -89,11 +92,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・r04のmouontainnと同じ情報
-・念のため</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T08:33:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
