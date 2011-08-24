@@ -532,7 +532,7 @@ struct rec_pokepara{
 	//--------------------------------------------------------------
 	u32			condition;							//04h	コンディション
 	u8			level;								//05h	レベル
-	u8			cb_id;								//06h	カスタムボールID
+	u8			star_point;					//06h	カスタムボールID -> Swanにてスターポイントへ変更
 	u16			hp;									//08h	HP
 	u16			hpmax;								//0ah	HPMAX
 	u16			pow;								//0ch	攻撃力

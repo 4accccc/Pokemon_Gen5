@@ -106,11 +106,11 @@ void POKETOOL_PokePara_to_RecPokePara( POKEMON_PARAM *pp, REC_POKEPARA *rec)
     rec->oyaname[i] = ppp4->oyaname[i];
   }
   rec->get_ball = ppp4->get_ball;
+  rec->star_point = ppp4->star_point;
 
   //calc
   rec->condition = pp->pcp.condition;
   rec->level = pp->pcp.level;
-  rec->cb_id = pp->pcp.cb_id;
   rec->hp = pp->pcp.hp;
   rec->hpmax = pp->pcp.hpmax;
   rec->pow = pp->pcp.pow;

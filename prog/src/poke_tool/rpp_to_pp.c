@@ -107,12 +107,12 @@ void POKETOOL_RecPokePara_to_PokePara( REC_POKEPARA *rec, POKEMON_PARAM *pp)
     ppp4->oyaname[i] = rec->oyaname[i];
   }
   ppp4->get_ball    = rec->get_ball;
+  ppp4->star_point = rec->star_point;
   TAYA_Printf("RPPtoPP : line=%d\n", __LINE__);
 
   //calc
   pp->pcp.condition = rec->condition;
   pp->pcp.level = rec->level;
-  pp->pcp.cb_id = rec->cb_id;
   pp->pcp.hp = rec->hp;
   pp->pcp.hpmax = rec->hpmax;
   pp->pcp.pow = rec->pow;
