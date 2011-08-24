@@ -11,11 +11,8 @@
 //ó∑çsé“ÇÃï™äÚ
 #define SEQ_TOURIST_INVITATION  (0)
 #define SEQ_TOURIST_SCOUT       (1)
-#define SEQ_TOURIST_FAREWELL    (2)
+#define SEQ_TOURIST_SPOT        (2)
 #define SEQ_TOURIST_DOING       (3)
-#define SEQ_TOURIST_SPOT        (4)
-#define SEQ_TOURIST_APPEAL      (5)
-#define SEQ_TOURIST_WAIT        (6)
 #define SEQ_TOURIST_BYE         (7)
 
 //èZñØÇÃï™äÚ
@@ -23,11 +20,6 @@
 #define SEQ_RESIDENT_DOING        (1)
 #define SEQ_RESIDENT_TROUBLE      (2)
 #define SEQ_RESIDENT_BYE          (3)
-
-//ëÿç›é“ÇÃï™äÚ
-#define SEQ_VISITOR_SPOT    (0)
-#define SEQ_VISITOR_DOING   (1)
-#define SEQ_VISITOR_BYE     (2)
 
 //îÈèëÇÃï™äÚ
 #define SEQ_SECRETARY_WORK_GOSSIP       (0)
