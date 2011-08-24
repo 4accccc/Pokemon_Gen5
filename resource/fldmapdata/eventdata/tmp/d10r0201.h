@@ -18,6 +18,9 @@
 #define FLD_ITEM_184                       5
 #define FLD_ITEM_185                       6
 #define FLD_ITEM_186                       7
+#define D10R0201_SAGE6_01                  8
+#define D10R0201_PLAZMAM_01                9
+#define D10R0201_PLAZMAM_02               10
 
 #endif //ZONE_D10R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

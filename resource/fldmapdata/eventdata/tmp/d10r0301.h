@@ -10,6 +10,15 @@
 #ifndef ZONE_D10R0301_EVC_H
 #define ZONE_D10R0301_EVC_H
 
+#define D10R0301_PLAZMAM_01                0
+#define D10R0301_PLAZMAM_02                1
+#define D10R0301_SAGE6_01                  2
+#define D10R0301_SWPLAZMAM_01              3
+#define D10R0301_SWPLAZMAM_03              4
+#define D10R0301_SWPLAZMAM_04              5
+#define D10R0301_SWRIVAL_01                6
+#define D10R0301_SWPLAZMAM_02              7
+#define D10R0301_SWPLAZMAW_01              8
 
 #endif //ZONE_D10R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

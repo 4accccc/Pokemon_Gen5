@@ -19,6 +19,12 @@
 #define D10R0101_ROCK_03                   3
 #define FLD_ITEM_177                       4
 #define FLD_ITEM_178                       5
+#define D10R0101_SWPLAZMAM_02              6
+#define D10R0101_SWPLAZMAM_04              7
+#define D10R0101_SWPLAZMAM_05              8
+#define D10R0101_SWRIVAL_01                9
+#define D10R0101_SWPLAZMAM_03             10
+#define D10R0101_SWPLAZMAM_01             11
 
 #endif //ZONE_D10R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

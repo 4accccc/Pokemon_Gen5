@@ -12,7 +12,7 @@
   .include  "../../message/dst/script/msg_d10r0101.h"
   .include  "d10r0101.h"
   
-  //@author Mizuguchi_Mai（接続担当）
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,8 +23,20 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_d10r0101
 _EVENT_DATA    ev_init_d10r0101
+_EVENT_DATA    ev_d10r0101_swplazmam_01
+_EVENT_DATA    ev_d10r0101_swplazmam_02
+_EVENT_DATA    ev_d10r0101_swplazmam_03
+_EVENT_DATA    ev_d10r0101_swplazmam_04
+_EVENT_DATA    ev_d10r0101_swplazmam_05
+_EVENT_DATA    ev_pos_d10r0101_swplazmam_03
 _EVENT_DATA_END
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
@@ -50,3 +62,235 @@ INIT_EVENT_START ev_init_d10r0101
 //
 
 INIT_EVENT_END
+
+/************************************************************/
+/*					POS：元プラズマ団とライバル						*/
+/************************************************************/
+EVENT_START ev_pos_d10r0101_swplazmam_03
+
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+
+  //========================================//
+  //ライバル・元プラズマ団員表示
+  _FLAG_RESET( FV_D10R0101_SWPLAZMAM_03 )
+  _FLAG_RESET( FV_D10R0101_SWRIVAL_01 )
+  //========================================//
+  
+  //ライバル・元プラズマ団員動作モデル生成
+  _OBJ_ADD( D10R0101_SWRIVAL_01 )
+  _OBJ_ADD( D10R0101_SWPLAZMAM_03 )
+  
+  //アニメ：ライバル隣接
+  _OBJ_ANIME_AUTO( D10R0101_SWRIVAL_01 , 61, 35, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT( 40 )
+  //アニメ；主人公振り向く
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：もうきてたのか
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swrival_01 , D10R0101_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル「？」
+  _OBJ_ANIME( D10R0101_SWRIVAL_01 , anm_common_hatena )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：元プラズマ団員接近
+  _OBJ_ANIME_AUTO( D10R0101_SWPLAZMAM_03 , 60, 38, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //元プラズマ団員：おーい！
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swplazmam_01 , D10R0101_SWPLAZMAM_03 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME( D10R0101_SWPLAZMAM_02 , anm_staystep_l )
+  _OBJ_ANIME( D10R0101_SWPLAZMAM_03 , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //プラズマ団員：いよいよ　だな！
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swplazmam1_02 , D10R0101_SWPLAZMAM_02 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME_AUTO( D10R0101_SWPLAZMAM_02 , 61, 52, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D10R0101_SWPLAZMAM_03 , 60, 41, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //プラズマ団（２）動作モデル削除
+  _OBJ_DEL( D10R0101_SWPLAZMAM_02 )
+  
+  //アニメ：プラズマ団の手前へ
+  _OBJ_ANIME_AUTO( D10R0101_SWRIVAL_01 , 61, 39, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 60, 39, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：主人公下を見る
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：ひとりになったな
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swrival_02 , D10R0101_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：プラズマ団「！」
+  _OBJ_ANIME( D10R0101_SWPLAZMAM_03 , anm_common_hatena )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：プラズマ団ふりむく
+  _OBJ_ANIME( D10R0101_SWPLAZMAM_03 , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //元プラズマ団員：おれです！　おれ！
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swplazmam_02 , D10R0101_SWPLAZMAM_03 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：なるほどね
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swrival_03 , D10R0101_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //元プラズマ団員：おれです！　おれ！
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swplazmam_03 , D10R0101_SWPLAZMAM_03 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：フンッ！
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swrival_04 , D10R0101_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME_AUTO( D10R0101_SWRIVAL_01 , 61, 51, FORCE_TYPE_NPC, 4, DIR_UD)
+  _TIME_WAIT( 12 )
+  _OBJ_ANIME( D10R0101_SWPLAZMAM_03 , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //元プラズマ団員：ああいうふうに
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swplazmam_04 , D10R0101_SWPLAZMAM_03 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル動作モデル削除
+  _OBJ_DEL( D10R0101_SWRIVAL_01 )
+
+  //========================================//
+  //ライバル・見張り（２）非表示
+  _FLAG_SET( FV_D10R0101_SWPLAZMAM_02 )
+  _FLAG_SET( FV_D10R0101_SWRIVAL_01 )
+  //D10R0101 POS無効
+  $WK_SCENE_D10R0101_SWPLAZMA_01 = 2
+  //========================================//
+EVENT_END
+
+//--------------------------------------------------------------------
+//	主人公：ライバルに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ply_look_rival
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*					話しかけ：プラズマ団（１）						*/
+/************************************************************/
+EVENT_START ev_d10r0101_swplazmam_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0101_swplazmam1_01 )
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団（２）						*/
+/************************************************************/
+EVENT_START ev_d10r0101_swplazmam_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0101_swplazmam2_01 )
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団（３）						*/
+/************************************************************/
+EVENT_START ev_d10r0101_swplazmam_03
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0101_swplazmam_04 )
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団（４）						*/
+/************************************************************/
+EVENT_START ev_d10r0101_swplazmam_04
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0101_swplazmam3_01 )
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団（５）						*/
+/************************************************************/
+EVENT_START ev_d10r0101_swplazmam_05
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0101_swplazmam4_01 )
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

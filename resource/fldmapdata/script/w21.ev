@@ -343,8 +343,12 @@ EVENT_START	ev_reserve_w21_swplazma_end_01
   //========================================//
   //W21イベント終了
   $WK_SCENE_W21_01 = 4
+  //D10R0101 POSイベント起動
+  $WK_SCENE_D10R0101_SWPLAZMA_01 = 1
   //W21ライバル非表示
   _FLAG_SET( FV_W21_SWRIVAL_01 )
+  //D10マップ差し替え
+  _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
   //========================================//
   
 EVENT_END
