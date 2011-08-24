@@ -1600,6 +1600,11 @@
 		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
+	<row id="MSG_TRTYPE_PILOT_1">
+		<language name="JPN" width="216">ヒウンマニア</language>
+		<language name="JPN_KANJI" width="216">ヒウンマニア</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

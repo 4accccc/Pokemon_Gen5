@@ -662,7 +662,13 @@
 #define	TRID_BACKPACKERW_22   ( 649 ) 
 #define	TRID_VETERANM_19   ( 650 ) 
 #define	TRID_VETERANW_16   ( 651 ) 
-#define TRID_MAX  ( 652 )
+#define	TRID_PILOT_1_01   ( 652 ) 
+#define	TRID_PILOT_1_02   ( 653 ) 
+#define	TRID_PILOT_1_03   ( 654 ) 
+#define	TRID_PILOT_1_04   ( 655 ) 
+#define	TRID_PILOT_1_05   ( 656 ) 
+#define	TRID_PRINCE_10   ( 657 ) 
+#define TRID_MAX  ( 658 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;

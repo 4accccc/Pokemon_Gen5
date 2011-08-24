@@ -241,4 +241,5 @@
 #define	TRTYPE_KARATE_1    ( 228 )    //KARATE_1♂ポケモントレーナー
 #define	TRTYPE_BATTLEG_1    ( 229 )    //BATTLEG_1♀ポケモントレーナー
 #define	TRTYPE_SCIENTISTW_1    ( 230 )    //SCIENTISTW_1♀ポケモントレーナー
-#define	TRTYPE_MAX	( 231 )
+#define	TRTYPE_PILOT_1    ( 231 )    //PILOT_1♂ヒウンマニア
+#define	TRTYPE_MAX	( 232 )

@@ -1231,8 +1231,8 @@
 	</row>
 
 	<row id="princess_10">
-		<language name="JPN" width="216">アンペール</language>
-		<language name="JPN_KANJI" width="216">アンペール</language>
+		<language name="JPN" width="216">コレット</language>
+		<language name="JPN_KANJI" width="216">コレット</language>
 	</row>
 
 	<row id="juggling_10">
@@ -3703,6 +3703,36 @@
 	<row id="veteranw_16">
 		<language name="JPN" width="216">●</language>
 		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="pilot_1_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="pilot_1_02">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="pilot_1_03">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="pilot_1_04">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="pilot_1_05">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="prince_10">
+		<language name="JPN" width="216">ロラン</language>
+		<language name="JPN_KANJI" width="216">ロラン</language>
 	</row>
 
 	<flowchart-group-list>

@@ -232,6 +232,7 @@
 		"KARATE_1♂ポケモントレーナー"=>228,
 		"BATTLEG_1♀ポケモントレーナー"=>229,
 		"SCIENTISTW_1♀ポケモントレーナー"=>230,
+		"PILOT_1♂ヒウンマニア"=>231,
 	}
 #
 	$trtype_id_hash = {
@@ -466,4 +467,5 @@
 		"TRTYPE_KARATE_1" =>228,
 		"TRTYPE_BATTLEG_1" =>229,
 		"TRTYPE_SCIENTISTW_1" =>230,
+		"TRTYPE_PILOT_1" =>231,
 	}

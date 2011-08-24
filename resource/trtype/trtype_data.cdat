@@ -931,6 +931,10 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 46,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_09
 	},
+	{ // No.231 PILOT_1♂ヒウンマニア
+		 43,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
 };
 
 const u16 DATA_TrainerBackCGIndex[][2] = {
