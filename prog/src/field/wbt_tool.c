@@ -350,7 +350,7 @@ WBTROM_TRID WBTTOOL_GetBWRomTrainerID( const WBTROM_TRDATA * rom_trdata, u8 sex 
 {
   WBTROM_TRID tr_id;
   u16 search_mmdl = HERO;
-  if (sex == PM_FEMALE)
+  if (sex == PM_MALE)
   {
     search_mmdl = HEROINE;
   }

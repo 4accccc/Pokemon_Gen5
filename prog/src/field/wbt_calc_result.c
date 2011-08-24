@@ -156,8 +156,8 @@ static void calcWBTResult( WBTRESULT * result,
     GFL_STD_RandContext * context,
     const WBTTRAINER * tr_a, const WBTTRAINER * tr_b )
 {
-  u32 pri_a = tr_a->pri;
-  u32 pri_b = tr_b->pri;
+  const int pri_a = tr_a->pri;
+  const int pri_b = tr_b->pri;
 
   u8 aff_a = BTL_CALC_TypeAff( tr_a->poketype, tr_b->poketype );
   u8 aff_b = BTL_CALC_TypeAff( tr_b->poketype, tr_a->poketype );
@@ -243,6 +243,7 @@ static void calcWBTResult( WBTRESULT * result,
     }
     msg_side += 1;
 
+    TAMADA_Printf("MsgLayer=%d,side=%d\n", msg_layer, msg_side );
     result->msg_id = msg_table[msg_layer][msg_side];
   }
 }
