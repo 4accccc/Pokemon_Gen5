@@ -4225,7 +4225,7 @@ static fx32 fldmap_getProjMatZOffsValue( u16 zone_id )
 //==================================================================
 static BOOL zonedata_GetShadowUse( u16 zone_id )
 {
-  if ( zone_id == ZONE_ID_C04GYM0101 ) return FALSE;
+  if ( zone_id == ZONE_ID_C04R1101 ) return FALSE;
   if ( ZONEDATA_IsColosseum(zone_id) == TRUE) return FALSE;
   return TRUE;
 }
@@ -4240,7 +4240,6 @@ static BOOL zonedata_GetShadowUse( u16 zone_id )
 //==================================================================
 static BOOL zonedata_IsEnvSE( u16 zone_id )
 {
-  if ( zone_id == ZONE_ID_C04GYM0101 ) return TRUE;
   if ( zone_id == ZONE_ID_C06GYM0101 ) return TRUE;
   if ( zone_id == ZONE_ID_C04R1101 ) return TRUE;
   return FALSE;
