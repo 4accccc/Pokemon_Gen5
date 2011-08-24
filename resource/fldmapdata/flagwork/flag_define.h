@@ -691,6 +691,25 @@
 #define FV_WBT_LOBBY_LEADER3               773 /* 0x0305 WBTロビー：優勝後ロビーにいる対戦者 */
 #define FV_D26R0501_ROCK_B                 774 /* 0x0306 チャンピオンロード：ブラックのかいりき岩 */
 #define FV_D26R0501_ROCK_W                 775 /* 0x0307 チャンピオンロード：ホワイトのかいりき岩 */
+#define FV_D10R0101_SWPLAZMAM_01           776 /* 0x0308 ジャイアントホールエントランス：見張り（１） */
+#define FV_D10R0101_SWPLAZMAM_02           777 /* 0x0309 ジャイアントホールエントランス：見張り（２） */
+#define FV_D10R0101_SWPLAZMAM_03           778 /* 0x030a ジャイアントホールエントランス：元プラズマ団員 */
+#define FV_D10R0101_SWPLAZMAM_04           779 /* 0x030b ジャイアントホールエントランス：見張り（３） */
+#define FV_D10R0101_SWRIVAL_01             780 /* 0x030c ジャイアントホールエントランス：ライバル */
+#define FV_D10R0301_SWPLAZMAM_01           781 /* 0x030d ジャイアントホール広場：プラズマ団員 */
+#define FV_D10R0301_SWPLAZMAM_02           782 /* 0x030e ジャイアントホール広場：プラズマ団員（後から来た人々） */
+#define FV_D10R0301_SAGE6_01               783 /* 0x030f ジャイアントホール広場：ロット */
+#define FV_D10R0301_SWRIVAL_01             784 /* 0x0310 ジャイアントホール広場：ライバル */
+#define FV_D10R0401_SWSAGE1_01             785 /* 0x0311 ジャイアントホール最深部：ゲーチス */
+#define FV_D10R0401_BOSS_01                786 /* 0x0312 ジャイアントホール最深部：N */
+#define FV_D10R0401_POKE_01                787 /* 0x0313 ジャイアントホール最深部：キュレム */
+#define FV_D10R0401_POKE_02                788 /* 0x0314 ジャイアントホール最深部：Nのレシラム・ゼクロム */
+#define FV_D10R0401_POKE_03                789 /* 0x0315 ジャイアントホール最深部：キュラム・キュロム */
+#define FV_D05R0101_SWBOSS_01              790 /* 0x0316 WBT屋内：アクロマ */
+#define FV_D05R0101_SWRIVAL_01             791 /* 0x0317 WBT屋内：ライバル */
+#define FV_D05R0101_SWLEADER1_01           792 /* 0x0318 WBT屋内：チェレン */
+#define FV_D05R0101_SWLEADER5_01           793 /* 0x0319 WBT屋内：ヤーコン */
+#define FV_D05R0101_SWLEADER2_01           794 /* 0x031a WBT屋内：ホミカ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

@@ -105,9 +105,9 @@
 
 #define WK_SCENE_AREA_START              16496 /* 0x4070  */
 
-		/* not used 16496(0x4070) */
-		/* not used 16497(0x4071) */
-		/* not used 16498(0x4072) */
+#define WK_SCENE_D10R0101_SWPLAZMA_01    16496 /* 0x4070 ジャイアントホールエントランス：POS制御用ワーク */
+#define WK_SCENE_D10R0301_SWPLAZMA_01    16497 /* 0x4071 ジャイアントホール広場：POS制御用ワーク */
+#define WK_SCENE_D10R0401_SWSAGE1_01     16498 /* 0x4072 ジャイアントホール最深部：POS制御用ワーク */
 		/* not used 16499(0x4073) */
 		/* not used 16500(0x4074) */
 		/* not used 16501(0x4075) */
