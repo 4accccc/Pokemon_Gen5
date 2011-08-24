@@ -14,6 +14,8 @@
 #define TR_MOUNT_20                        0
 #define TR_WORKER2_34                      1
 #define TR_WORKER2_35                      2
+#define D29R0201_ROCK_01                   3
+#define D29R0201_ROCK_02                   4
 
 #endif //ZONE_D29R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d29r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

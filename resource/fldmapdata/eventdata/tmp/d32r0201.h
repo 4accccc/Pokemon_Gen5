@@ -15,6 +15,13 @@
 #define FLD_ITEM_162                       2
 #define TR_BATTLEG_17                      3
 #define TR_KARATE_18                       4
+#define D32R0201_ROCK_01                   5
+#define D32R0201_ROCK_02                   6
+#define D32R0201_ROCK_03                   7
+#define D32R0201_ROCK_04                   8
+#define D32R0201_ROCK_05                   9
+#define D32R0201_ROCK_06                  10
+#define D32R0201_ROCK_07                  11
 
 #endif //ZONE_D32R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d32r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

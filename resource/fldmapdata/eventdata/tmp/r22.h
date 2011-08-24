@@ -21,6 +21,7 @@
 #define FLD_ITEM_173                       9
 #define FLD_ITEM_174                      10
 #define FLD_ITEM_175                      11
+#define R22_ROCK_01                       12
 
 #endif //ZONE_R22_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r22.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

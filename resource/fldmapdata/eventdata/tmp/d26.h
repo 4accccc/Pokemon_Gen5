@@ -19,6 +19,12 @@
 #define D26_TREE_02                        7
 #define D26_TREE_03                        8
 #define D26_TREE_04                        9
+#define D26_ROCK_01                       10
+#define D26_ROCK_02                       11
+#define D26_ROCK_03                       12
+#define D26_ROCK_04                       13
+#define D26_ROCK_05                       14
+#define D26_ROCK_06                       15
 
 #endif //ZONE_D26_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

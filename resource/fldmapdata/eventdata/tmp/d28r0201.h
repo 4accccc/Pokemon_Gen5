@@ -20,6 +20,8 @@
 #define TR_ESPW_12                         5
 #define TR_ESPM_13                         6
 #define TR_MOUNT_27                        7
+#define D28R0201_ROCK_01                   8
+#define D28R0201_ROCK_02                   9
 
 #endif //ZONE_D28R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d28r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
