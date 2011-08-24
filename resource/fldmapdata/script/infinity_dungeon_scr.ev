@@ -2032,48 +2032,48 @@ talk_hint:
   IF $LWK_D_VERSION == VERSION_B2 THEN
       SWITCH $LWK_NOW_AREA
       CASE 0 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_512 )	//ポケモン名タグをセット
       CASE 1 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_538 )	//ポケモン名タグをセット
       CASE 2 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_582 )	//ポケモン名タグをセット
       CASE 3 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_602 )	//ポケモン名タグをセット
       CASE 4 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_437 )	//ポケモン名タグをセット
       CASE 5 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_474 )	//ポケモン名タグをセット
       CASE 6 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_130 )	//ポケモン名タグをセット
       CASE 7 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_392 )	//ポケモン名タグをセット
       CASE 8 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_642 )	//ポケモン名タグをセット
       CASE 9 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_381 )	//ポケモン名タグをセット
       ENDSWITCH
     ELSE
       SWITCH $LWK_NOW_AREA
       CASE 0 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_538 )	//ポケモン名タグをセット
       CASE 1 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_512 )	//ポケモン名タグをセット
       CASE 2 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_592 )	//ポケモン名タグをセット
       CASE 3 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_638 )	//ポケモン名タグをセット
       CASE 4 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_344 )	//ポケモン名タグをセット
       CASE 5 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_468 )	//ポケモン名タグをセット
       CASE 6 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_350 )	//ポケモン名タグをセット
       CASE 7 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_389 )	//ポケモン名タグをセット
       CASE 8 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_373 )	//ポケモン名タグをセット
       CASE 9 THEN
-        _MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
+        _MONS_NAME( 1, MONSNO_380 )	//ポケモン名タグをセット
       ENDSWITCH
   ENDIF
 
