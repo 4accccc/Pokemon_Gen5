@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-08-16T13:30:17" source="freezemap15_05.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-08-22T13:02:52" source="freezemap15_05.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-08-16T13:30:17" source="freezemap15_05.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-08-22T13:02:52" source="freezemap15_05.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1401,24 +1401,24 @@
 			0000 d000 9999 5555 dd95 0000 0000 0000
 			0000 9d00 5559 5555 d999 0000 0000 0000
 			0000 99d0 5555 9555 d999 000d 0000 0000
-			0000 599d 5555 9955 b999 dddd dddd 00dd
-			0000 399d 3333 9993 d999 999d 9999 00d9
-			d000 d999 dddd 955d d999 339d 3333 00d9
-			d000 9999 dd99 5ddd db99 5599 3556 00d9
-			9d00 6569 9995 dddd dd9c 5599 3555 00d9
-			9d00 5569 d355 dddd 9dcd 5539 3555 00d9
-			9d00 5555 cd33 dddc 9ddd 5396 3655 00d8
-			9d00 3355 ccdd dddc 59dd 3965 a656 00d9
-			dd00 dd33 99cc bdd9 7ccb c977 9cc7 00db
-			dd00 ccdd 999c bdb9 cc99 cdcc 999c 01db
-			d100 cccd b9cc bdbb 999b cdc9 b999 01db
-			2100 ccdd bbcc bddd 9bbb cdc9 dbb9 012d
-			2100 cdd2 dddc dddd bbbd cdcb dddd 0012
-			2100 dd22 2ddd 2222 dddd dddd 222d 0001
-			1000 2221 2222 2222 2222 2222 1122 0000
-			0000 2221 2222 2222 2222 1222 0111 0000
-			0000 2110 2222 2222 1222 0111 0000 0000
-			0000 1100 1111 1111 1111 0011 0000 0000
+			0000 599d 5555 9955 b999 dddd 0ddd 0000
+			0000 499d 4444 9994 d999 999d d999 0000
+			d000 d999 dddd 955d d999 449d 9444 000d
+			d000 9999 dd99 5ddd db99 5599 9556 000d
+			9d20 6569 9995 dddd dd9c 5599 4555 00d9
+			9d20 5569 d455 dddd 9dcd 5549 4555 02d9
+			9d32 5555 cd44 dddc 9ddd 5496 4655 02d8
+			9d32 4455 ccdd dddc 59dd 4965 a656 23d9
+			dd32 dd44 99cc bdd9 7ccb c977 9cc7 23db
+			dd32 ccdd 999c bdb9 cc99 cdcc 999c 23db
+			d132 cccd b9cc bdbb 999b cdc9 b999 23db
+			1332 ccdd bbcc bddd 9bbb cdc9 dbb9 231d
+			3320 cdd1 dddc dddd bbbd cdcb dddd 0331
+			3320 dd13 1ddd 1111 dddd dddd 111d 0233
+			3200 1133 1111 1111 1111 1111 3331 0023
+			2200 3333 3333 3333 3333 3333 2233 0002
+			0000 3322 3333 3333 3333 2233 0022 0000
+			0000 2200 2222 2222 2222 0022 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1912,7 +1912,7 @@
 		318c 35ad 39ce 3def 4210 4631 4a52 7fff
 	</tex_palette>
 	<tex_palette index="37" name="r11_kuzu01_pl" color_size="16">
-		7fff 6737 5ed4 5ad6 56b5 4e73 4e73 4a52
+		7fff 4a2f 6737 5ed4 5ad6 4e73 4e73 4a52
 		4210 4210 3def 39ce 35ad 318c 7fff 7fff
 	</tex_palette>
 	<tex_palette index="38" name="saku01a_pl" color_size="16">
