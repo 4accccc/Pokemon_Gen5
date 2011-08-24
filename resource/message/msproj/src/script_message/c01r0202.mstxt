@@ -8,11 +8,11 @@
 			Language="JPN">
 			<Text>きみの　ポケモンは
 どんな　ニックネームだい？▼
-ニックネームを　つけると
-あいちゃく　わいちゃうよね</Text>
+わがはいは　すべての　ポケモンも
+たろう　とつけちゃうんだよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T05:03:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,11 +22,11 @@
 			Language="JPN_KANJI">
 			<Text>きみの　ポケモンは
 どんな　ニックネームだい？▼
-ニックネームを　つけると
-愛着　わいちゃうよね</Text>
+我輩は　すべての　ポケモンも
+たろう　とつけちゃうんだよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T05:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -35,10 +35,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:00:44" />
+				Time="2011-08-24T05:04:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -61,11 +61,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレさ　がいこくに　いってさ
-ポケモンしょうぶ　してきたんだぜ！</Text>
+			<Text>オレさ　また　がいこくに　いってさ
+ポケモンしょうぶ　してくるつもり▼
+だって　がいこくに　いくと
+じぶんの　あたりまえが　つうじなくて▽
+いろいろ　はっけんが　あるんだよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T05:02:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73,11 +76,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレさ　外国に　行ってさ
-ポケモン勝負　してきたんだぜ！</Text>
+			<Text>オレさ　また　外国に　行ってさ
+ポケモン勝負　してくるつもり▼
+だって　外国に　いくと
+自分の　当たり前が　通じなくて▽
+いろいろ　発見が　あるんだよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T05:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,10 +92,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:00:45" />
+				Time="2011-08-24T05:02:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -112,11 +118,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>たびの　トレーナーさん▼
-あなたの　かぞくは　きっと　いまごろ
-あなたの　はなしを　しているわね！</Text>
+あなたの　かぞくは
+ライブキャスターを▼
+かけてくる　ひと？
+それとも　まっている　ひと？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T05:00:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -124,12 +132,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>旅の　トレーナーさん▼
-あなたの　家族は　きっと　いまごろ
-あなたの　話を　しているわね！</Text>
+			<Text>たびの　トレーナーさん▼
+あなたの　家族は　ライブキャスターを
+かけてくる　人？▽
+それとも　待っている　人？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-24T05:01:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -138,10 +147,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:00:47" />
+				Time="2011-08-24T05:02:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
