@@ -3838,4 +3838,114 @@ msg_wbt_announce_09へ</Comment>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_wbt_announce_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+なんと　[Digit:1digit ]ひき　のこしての　しょうり！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:39:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:34:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ
+なんと　[Digit:1digit ]匹　残しての　勝利！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:39:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:34:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ワールド・チャンピオンズ限定アナウンス
+手持ちが２匹以上で完封ではない場合表示
+続けて　1回戦の場合は
+msg_wbt_announce_06へ
+2回戦の場合は
+msg_wbt_announce_07へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:38:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アナウンス
+シッポなしメッセージ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:34:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_announce_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+なんと　かんぜんしょうり！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:39:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:34:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ
+なんと　完全勝利！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:39:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:34:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ワールド・チャンピオンズ限定アナウンス
+手持ちが欠けずに完封した場合に表示
+続けて　1回戦の場合は
+msg_wbt_announce_06へ
+2回戦の場合は
+msg_wbt_announce_07へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:38:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アナウンス
+シッポなしメッセージ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-08-24T04:34:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
