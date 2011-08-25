@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/12 16:07:15
+#save date:2011/08/25 15:31:07
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r09.wms
 #SECTION START:OBJ_EVENT
@@ -319,7 +319,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -88
+104 0 -88
 #event number: 10
 #type
 1
@@ -360,7 +360,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-6
+5
 #event number: 0
 #Bg Event Label
 BG_R09_SIGN2_01
@@ -414,19 +414,6 @@ EVENTDATA_POSTYPE_GRID
 #position
 72 0 56
 #event number: 4
-#Bg Event Label
-R09_HIDE_ITEM_01
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_081
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-104 0 -88
-#event number: 5
 #Bg Event Label
 BGID_R09_ANIMAL_TRAIL_01_1
 #Bg Event Type
