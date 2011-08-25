@@ -328,10 +328,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所１</Comment>
+			<Comment>名所１
+※swanで修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:12:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -469,10 +470,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所３</Comment>
+			<Comment>名所３
+※swanで修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:13:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -565,10 +567,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所１</Comment>
+			<Comment>名所１
+※swanで修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:13:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1795,10 +1798,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所３</Comment>
+			<Comment>名所３
+※swanで修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:13:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1938,10 +1942,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所１</Comment>
+			<Comment>名所１
+※swanで修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:13:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2272,10 +2277,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所３</Comment>
+			<Comment>名所３
+※swanで修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:13:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3832,10 +3838,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>まよいのもり</Comment>
+			<Comment>まよいのもり
+※swanで修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:13:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7221,10 +7228,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やってきた　人　合計</Text>
+			<Text>やってきた人　合計</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-22T10:22:30" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:17:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7269,10 +7276,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今　遊びに　きている　人</Text>
+			<Text>今　遊びに　来ている人</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-22T10:22:02" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:17:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
