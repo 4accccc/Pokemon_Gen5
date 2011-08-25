@@ -31,9 +31,6 @@
 #define D12_POLICE_09                     19
 #define D12_POLICE_10                     20
 #define D12_POLICE_11                     21
-#define TR_HAKAIM1_01                     22
-#define TR_HAKAIM1_02                     23
-#define TR_HAKAIM1_03                     24
 
 #endif //ZONE_D12_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d12.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

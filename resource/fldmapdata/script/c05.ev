@@ -675,7 +675,8 @@ ev_c08r0201_white_battle:
 			_BALLOONWIN_OBJMSG(msg_c05_badrider_05w,C05_BADRIDER_01)
 			_BALLOONWIN_CLOSE()
 			
-			//戦闘処理
+			//【仮】戦闘処理（トレーナーID待ち）
+			/*
 			_TRAINER_BTL_SET( TRID_BADRIDER_01_03, 0 )
 		
 			//結果チェック
@@ -685,6 +686,7 @@ ev_c08r0201_white_battle:
 			ELSE
 				_TRAINER_LOSE()
 			ENDIF
+			*/
 			
 			_BALLOONWIN_OBJMSG(msg_c05_badrider_08w,C05_BADRIDER_01)
 			_LAST_KEYWAIT()
@@ -738,7 +740,8 @@ ev_c08r0201_black_battle:
 			_BALLOONWIN_OBJMSG(msg_c05_badrider_05b,C05_BADRIDER_01)
 			_BALLOONWIN_CLOSE()
 			
-			//戦闘処理
+			//【仮】戦闘処理（トレーナーID待ち）
+			/*
 			_TRAINER_BTL_SET( TRID_BADRIDER_01_07, 0 )
 		
 			//結果チェック
@@ -748,6 +751,7 @@ ev_c08r0201_black_battle:
 			ELSE
 				_TRAINER_LOSE()
 			ENDIF
+			*/
 			
 			_BALLOONWIN_OBJMSG(msg_c05_badrider_08b,C05_BADRIDER_01)
 			_LAST_KEYWAIT()

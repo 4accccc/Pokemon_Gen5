@@ -11,15 +11,9 @@
 #define ZONE_H03_EVC_H
 
 #define H03_MIDDLEWOMAN1_01                0
-#define H03_BADRIDER1_04                   1
-#define H03_BADRIDER1_05                   2
-#define H03_BADRIDER1_03                   3
-#define H03_BADRIDER1_02                   4
-#define H03_BADRIDER1_01                   5
-#define H03_MIDDLEWOMAN2_01                6
-#define H03_FIGHTERW_01                    7
-#define H03_BADRIDER2_01                   8
-#define H03_MAN3_01                        9
+#define H03_MIDDLEWOMAN2_01                1
+#define H03_FIGHTERW_01                    2
+#define H03_MAN3_01                        3
 
 #endif //ZONE_H03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
