@@ -7,16 +7,17 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ホッ　ホッ　フォッ
-ホワイトフォレストへ　ようこそ[Ctrl2:PageClear ]
+ホワイトフォレストへ　ようこそ！▼
 しぜんと　ともに　
-ポケモンと　ともに　くらす[Ctrl2:LineFeed ]
-それが　このホワイトフォレスト[Ctrl2:PageClear ]
-きみも　もりのこえを　きいてみなさい
-ウエルカムと　いっておるよ[Ctrl2:PageClear ]
+ポケモンと　ともに　くらす▽
+それが　このホワイトフォレスト▼
+きみも　もりのこえを
+しろのじゅどうの　こえを　ききなさい▼
+ウエルカムと　いっておるよ
 ホッ　ホッ　フォッー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:16:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25,16 +26,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホッ　ホッ　フォッ
-ホワイトフォレストへ　ようこそ[Ctrl2:PageClear ]
-自然と　共に　
-ポケモンと　共に　暮らす[Ctrl2:LineFeed ]
-それが　このホワイトフォレスト[Ctrl2:PageClear ]
-きみも　森の声を　聞いてみなさい
-ウエルカムと　いっておるよ[Ctrl2:PageClear ]
+ホワイトフォレストへ　ようこそ！▼
+自然と　共に
+ポケモンと　共に　暮らす▽
+それが　このホワイトフォレスト▼
+きみも　森の声を
+白の樹洞の　声を　ききなさい▼
+ウエルカムと　いっておるよ
 ホッ　ホッ　フォッー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:16:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -42,10 +44,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・初期状態
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:25:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -74,13 +78,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　この　もりと　ともにいきる
-ポケモンを　しらべておるんだが[Ctrl2:PageClear ]
-[Name:PokemonName Idx="0" ]が　このもりに
-すんでいる　はずなんだ▼</Text>
+			<Text>ホッ　ホッ　フォッ▼
+きみ　しろのじゅどうの
+こえを　きいているようだね▼
+だが　いちばん　おくまで　いかねば
+ほんとうの　こえは　きこえない▼
+ほらほら　がんばってみなさい
+ホッ　ホッ　フォッー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:13:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -88,18 +95,30 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　この森と　共に生きる
-ポケモンを　調べておるんだが[Ctrl2:PageClear ]
-[Name:PokemonName Idx="0" ]が　この森に
-住んでいる　はずなんだ▼</Text>
+			<Text>ホッ　ホッ　フォッ▼
+きみ　白の樹洞の
+声を　きいているようだね▼
+だが　一番　奥まで　行かねば
+本当の　声は　きこえない▼
+ほらほら　がんばってみなさい
+ホッ　ホッ　フォッー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:17:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・エリア５クリアから
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:26:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>OLDMAN1</Text>
@@ -127,12 +146,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フォー！
-それは　[Name:PokemonName Idx="0" ]！[Ctrl2:PageClear ]
-この　もりに　すんでたんだ！▼</Text>
+			<Text>ホッ　ホッ　フォッ▼
+きみ　しろのじゅどうの
+こころの　こえを　きいたようだね▽
+ぜひ　きかせてねがおう……▼
+いや　またれい！
+こういうことは　ひとづて　では　ダメだ▼
+じぶんで　いちばん　おくまで　いかねば
+ほんとうの　こえは　きこえない▼
+ほれほれ　がんばってみますかな
+ホッ　ホッ　フォッー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:15:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -140,345 +166,33 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フォー！
-それは　[Name:PokemonName Idx="0" ]！[Ctrl2:PageClear ]
-この森に　住んでたんだ！▼</Text>
+			<Text>ホッ　ホッ　フォッ▼
+きみ　白の樹洞の
+心の　声を　きいたようだね▽
+ぜひ　きかせて願おう……▼
+いや　待たれい！
+こういうことは　人づて　では　ダメだ▼
+自分で　一番　奥まで　行かねば
+本当の　声は　きこえない▼
+ほれほれ　がんばってみますかな
+ホッ　ホッ　フォッー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:17:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10r0101_oldman1_04"
-		Style="Large">
-		<LanguageCell
+		<CommentCell
 			Language="JPN">
-			<Text>しかも　きょう　つかまえたんだ[Ctrl2:PageClear ]
-ホホー
-そうかそうか　このホワイトフォレストにも[Ctrl2:LineFeed ]
-[Name:PokemonName Idx="0" ]が　いるなんてなぁ[Ctrl2:LineFeed ]
-フォッ　フォッ　フォッ[Ctrl2:PageClear ]
-そんな　きみに
-これを　あげちゃおう▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>しかも　今日　つかまえたんだ[Ctrl2:PageClear ]
-ホホー
-そうかそうか　このホワイトフォレストにも[Ctrl2:LineFeed ]
-[Name:PokemonName Idx="0" ]が　いるなんてなぁ[Ctrl2:LineFeed ]
-フォッ　フォッ　フォッ[Ctrl2:PageClear ]
-そんな　きみに
-これを　あげちゃおう▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10r0101_oldman1_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>また　あした
-ここに　きておくれ[Ctrl2:PageClear ]
-もりも　ウエルカムを
-いってくれる　だろうから</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>また　明日
-ここに　来ておくれ[Ctrl2:PageClear ]
-森も　ウエルカムを
-いってくれる　だろうから</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10r0101_oldman1_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>きょうは　ほんとうに
-ありがとう[Ctrl2:PageClear ]
-また　あしたな
-シー　ユー　トゥモロー！[Ctrl2:LineFeed ]
-と　もりが　ささやいておる▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>今日は　本当に
-ありがとう[Ctrl2:PageClear ]
-また　明日な
-シー　ユー　トゥモロー！[Ctrl2:LineFeed ]
-と　森が　ささやいておる▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10r0101_oldman1_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>わたしは　このもりと　ともにいきる
-ポケモンを　しらべておるんだが[Ctrl2:PageClear ]
-さいきんは　ポケモンが　いなくてな
-もりも　かなしんでおる……</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>わたしは　この森と　共に生きる
-ポケモンを　調べておるんだが[Ctrl2:PageClear ]
-最近は　ポケモンが　いなくてな
-森も　悲しんでおる……</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10r0101_oldman1_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>もし　この　もりで　[Name:PokemonName Idx="0" ]を
-みかけたら　わたしに　みせておくれ[Ctrl2:PageClear ]
-それは　この　もりと　ポケモンが
-いきている　しょうこ　なんだ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>もし　この森で　[Name:PokemonName Idx="0" ]を
-見かけたら　わたしに　見せておくれ[Ctrl2:PageClear ]
-それは　この森と　ポケモンが
-生きている　証拠なんだ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10r0101_oldman1_09"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>しかし　きょう　つかまえた
-[Name:PokemonName Idx="0" ]では　ないな[Ctrl2:PageClear ]
-いまでも　[Name:PokemonName Idx="0" ]は
-この　もりと　ともに　いきているのか……[Ctrl2:LineFeed ]
-もりも　それを　しりたがっておる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>しかし　今日　つかまえた
-[Name:PokemonName Idx="0" ]では　ないな[Ctrl2:PageClear ]
-今でも　[Name:PokemonName Idx="0" ]は
-この森と共に　生きているのか……[Ctrl2:LineFeed ]
-森も　それを　知りたがっておる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
+			<Comment>♂
+・エリア10クリアから
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:15:22" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>OLDMAN1</Text>
@@ -506,11 +220,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうも　そらが　きれいだなー
-あしたも　きっと　はれるよ！</Text>
+			<Text>でかいビルが　たちすぎると
+そらが　ちいさくなって▽
+たいようが　みえなくなっちゃう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:09:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -518,16 +233,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今日も　空が　きれいだなー
-明日も　きっと　晴れるよ！</Text>
+			<Text>でかいビルが　建ちすぎると
+空が　小さくなって▽
+太陽が　みえなくなっちゃう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:10:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:20:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>BOY2</Text>
@@ -548,11 +272,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いっしょに　きのみを
-とって　こようぜ！</Text>
+			<Text>ポケモンの　きもちを　しりたくて
+しぜんの　なかで　くらしてるんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:06:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -560,16 +284,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いっしょに　きのみを
-取って　こようぜ！</Text>
+			<Text>ポケモンの　気持ちを　知りたくて
+自然の　中で　暮らしてるんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:06:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:20:36" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>BOY3</Text>
@@ -590,11 +322,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あしたの　ごはんにするから
-きのみ　とってきてね</Text>
+			<Text>きのみごはんの　おいしさを　しれば
+あれも　これも　たべたいとか▽
+やなまなくて　すむのにねー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -602,16 +335,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>明日の　ご飯にするから
-きのみ　とってきてね</Text>
+			<Text>きのみご飯の　美味しさを　知れば
+あれも　これも　食べたいとか▽
+悩まなくても　すむのにねー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:08:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:20:40" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>MIDDLEWOMAN2</Text>

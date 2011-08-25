@@ -6,8 +6,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……
-ブラックシティへ　ようこそ……▼
+			<Text>ようこそ……
+ブラックシティへ！▼
 ここは　ゆめと　よくぼう　そして
 ……よくぼうの　まちさ▼
 そして　おれは
@@ -15,7 +15,7 @@
 ブラックシティの　ボスなのさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:52:41" />
+				Time="2011-08-25T07:34:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,15 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……
-ブラックシティへ　ようこそ……▼
+			<Text>ようこそ……
+ブラックシティへ！▼
 ここは　夢と　欲望　そして
 ……欲望の　街さ▼
-そして　おれは　そんな　欲望うずまく
+そして　おれは
+そんな　欲望　うずまく▽
 ブラックシティの　ボスなのさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:52:43" />
+				Time="2011-08-25T07:34:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39,10 +40,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・初期状態
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:26:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -71,17 +74,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　まちには
-よくぼうの　かたまりのような▽
-いきのいい　ヤツらが　そろっている……▼
-……そうだな　そとにいる
-いきのいい　ヤツらを▽
-[Digit:5digits Idx="0" ]にん　たおしてみな▼
-そしたら　おまえの
-よくぼうも　かなえてやるよ……▼</Text>
+			<Text>おまえの
+よくぼうも　たいしたもんだ▼
+しってるんぜ▼
+ちょうしよく
+くろのまてんろうを　のぼってるんだろ▼
+いいんだぜ……▼
+おれは　よくぼう　あふれる　ヤツは
+しょうじきだから　すき　なんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:06:11" />
+				Time="2011-08-25T07:41:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -89,22 +92,31 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この街には
-欲望の　かたまりのような▽
-活きのいい　奴らが　そろっている……▼
-……そうだな　外にいる
-活きのいい　奴らを▽
-[Digit:5digits Idx="0" ]人　倒してみな▼
-そしたら　おまえの
-欲望も　かなえてやるよ……▼</Text>
+			<Text>おまえの
+欲望も　たいしたもんだ▼
+知ってるんだぜ▼
+調子よく
+黒の摩天楼を　昇ってるんだろ▼
+いいんだぜ……▼
+おれは　欲望　あふれる　ヤツは
+正直だから　好き　なんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:06:17" />
+				Time="2011-08-25T07:41:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・エリア５クリアから
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:26:45" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>GENTLEMAN(BCのボス）</Text>
@@ -121,7 +133,74 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_gentleman_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろのまてんろうの　バンジロウに
+おまえ……▼
+ブラックシティで　おまえらのように
+すごい　やつが　いると▽　
+オレの　そんざいが　かすんでしまう▼
+いいや！▼
+おれの　よくぼうは
+とどまることを　しらねえ……▼
+そうよ！　おれさまこそが
+ブラックシティの　ボスだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:39:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:26:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>黒の摩天楼の　バンジロウに
+おまえ……▼
+ブラックシティで　おまえらのように
+すごい　やつが　いると▽　
+オレの　存在が　かすんでしまう▼
+いいや！▼
+おれの　欲望は
+とどまることを　知らねえ……▼
+そうよ！　おれさまこそが
+ブラックシティの　ボスだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:41:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:26:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・エリア10クリアから
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:15:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN(BCのボス）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:26:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -132,13 +211,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わあー
-ねだんが　たかいから▽
-きっと　すごいもの　なんだろう……▽
-あれもほしい　これもほしい</Text>
+			<Text>ねだんが　たかいから
+かちが　ある……▼
+そんな　おもいこみだと　そんをする！
+だまされないため　かしこくなる！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:45:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -146,18 +225,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わあー
-値段が　高いから▽
-きっと　すごいもの　なんだろう……▽
-あれも欲しい　これも欲しい</Text>
+			<Text>値段が　高いから
+価値が　ある……▼
+そんな　思い込みだと　損をする！
+だまされないため　賢くなる！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:46:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:26:54" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>BOY4</Text>
@@ -178,11 +265,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もっと　えらくなって
-もっと　かせぎたい！</Text>
+			<Text>もっと　かせぐために
+もっともっと　えらくなるぜ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:44:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -190,16 +277,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もっと　偉くなって
-もっと　稼ぎたい！</Text>
+			<Text>もっと　稼ぐために
+もっともっと　偉くなるぜ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:44:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:26:57" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>MIDDLEMAN2</Text>
@@ -220,11 +315,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このまちでは　かねがあれば
-なんでも　てにはいるぜ！</Text>
+			<Text>おかねで　なんでも
+てにはいるとは　かぎらない▼
+だが　たいていの　ものは
+おかねで　てにはいるんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:47:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -232,16 +329,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この街では　金があれば
-何でも　手に入るぜ！</Text>
+			<Text>お金で　なんでも
+手に入るとは　限らない▼
+だが　大抵の　ものは
+お金で　手に入るんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:26:58" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>MAN3</Text>
@@ -262,11 +369,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　まちには　すべてがある！
-なにもかもが　ある！</Text>
+			<Text>みんなと　おなじなら
+まんぞく！　って　ダメよ▼
+そんなの　わるい　おとなに　だまされ
+なんにも　かんがえてないだけ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:56:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -274,16 +383,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　街には　全てがある！
-何もかもが　ある！</Text>
+			<Text>みんなと　おなじなら
+満足！　って　ダメよ▼
+そんなの　悪い　大人に　だまされ
+なんにも　考えてないだけ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:56:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:27:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>MIDDLEWOMAN1</Text>
@@ -305,10 +424,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うーん　もっと　かねになる
-いい　しごとは　ないか！？</Text>
+いい　しごとは　ないか！？▼
+だって　そうだろ？▼
+おなじ　しごとを　するなら
+たくさん　おかねを　もらいたいよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -317,15 +439,26 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うーん　もっと　金になる
-良い仕事は　ないか！？</Text>
+いい　仕事は　ないか！？▼
+だって　そうだろ？▼
+同じ　仕事を　するなら
+たくさん　お金を　もらいたいよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:50:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:26:59" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>MIDDLEMAN1</Text>
@@ -346,11 +479,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　ポケモンは
-いったい　いくらで　うれるかな……</Text>
+			<Text>この　ポケモン
+うったら　いくらに　なるのか？▼
+ん？　ねだん　だって
+こいつの　かちを　あらわしてるぜ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:53:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -358,16 +493,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　ポケモンは
-いったい　いくらで　売れるかな……</Text>
+			<Text>この　ポケモン
+売ったら　いくらに　なるのか？▼
+ん？　値段だって
+こいつの　価値を　表してるぜ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:53:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:27:00" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>BADMAN</Text>
@@ -389,10 +534,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ほしいものが　すべてある
-おかねさえ　あれば！　あれば！！</Text>
+おかねさえ　あれば！　あれば！！▽
+そうよ！　ほんきで　かせぐわよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:01:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -401,15 +547,24 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>欲しいものが　全てある
-お金さえ　あれば！　あれば！！</Text>
+お金さえ　あれば！　あれば！！▽
+そうよ！　本気で　稼ぐわよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:01:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:27:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>WOMAN3</Text>
@@ -430,13 +585,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぶんめいの　ちからとは
-すごいものだな……▼
-ひとが　ほしいもの　すべて
-つくって　しまうのだからな</Text>
+			<Text>ひとは　のぞむものを　てにいれるため
+ぶんめいを　はったつ　させてきたのか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:05:25" />
+				Time="2011-08-25T07:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -444,18 +597,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>文明の　力とは
-すごいものだな……▼
-人が欲しいもの　すべて
-つくって　しまうのだからな</Text>
+			<Text>人は　望むものを　入手するため
+文明を　発達させてきたのか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:06:02" />
+				Time="2011-08-25T07:51:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-25T07:27:01" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>OLDMAN1</Text>
