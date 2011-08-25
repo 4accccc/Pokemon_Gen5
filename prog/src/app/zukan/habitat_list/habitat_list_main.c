@@ -53,6 +53,7 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk );
 // データ処理 ---------------------------------
 static void CreateAppData( HABITAT_LIST_WK *p_wk );
 static void InitModeButton( HABITAT_LIST_WK *p_wk );
+static BOOL CheckInput( HABITAT_LIST_WK *p_wk );
 
 //--------------------------------------------------
 // ID定義
@@ -85,6 +86,97 @@ static const BOOL ListEnable[] = {
   FALSE,   // ページ移動
   FALSE,  // アプリケーションの終了処理
   FALSE,  // 何も処理をしない
+};
+
+// タッチバー上のボタン座標
+#define TOUCHBAR_ICON_Y						(168)
+#define TOUCHBAR_ICON_X_07				(232)
+#define	TB_SX			( 24 )
+#define	TB_SY			( 24 )
+#define	TB_PY			( TOUCHBAR_ICON_Y )
+#define	TB_PX07		( TOUCHBAR_ICON_X_07 )
+#define	TB_PX06		( TB_PX07 - TB_SX )
+#define	TB_PX05		( TB_PX06 - TB_SX )
+
+// 入力結果
+enum
+{
+  HABITATLIST_UI_MINIMAP,
+
+  HABITATLIST_UI_ICON_R_01,
+  HABITATLIST_UI_ICON_R_02,
+  HABITATLIST_UI_ICON_R_03,
+  HABITATLIST_UI_ICON_R_04,
+  HABITATLIST_UI_ICON_R_05,
+  HABITATLIST_UI_ICON_R_06,
+  HABITATLIST_UI_ICON_R_07,
+
+  HABITATLIST_UI_ICON_C_01,
+  HABITATLIST_UI_ICON_C_02,
+  HABITATLIST_UI_ICON_C_03,
+  HABITATLIST_UI_ICON_C_04,
+  HABITATLIST_UI_ICON_C_05,
+  HABITATLIST_UI_ICON_C_06,
+  HABITATLIST_UI_ICON_C_07,
+  
+  HABITATLIST_UI_ICON_L_01,
+  HABITATLIST_UI_ICON_L_02,
+  HABITATLIST_UI_ICON_L_03,
+  HABITATLIST_UI_ICON_L_04,
+  HABITATLIST_UI_ICON_L_05,
+  HABITATLIST_UI_ICON_L_06,
+  HABITATLIST_UI_ICON_L_07,
+  
+  HABITATLIST_UI_BUTTON_SELECT,
+  HABITATLIST_UI_BUTTON_Y,
+  HABITATLIST_UI_BUTTON_X,
+  HABITATLIST_UI_BUTTON_RETURN,
+  
+  HABITATLIST_UI_MODE_BUTTON_01,
+  HABITATLIST_UI_MODE_BUTTON_02,
+  HABITATLIST_UI_MODE_BUTTON_03,
+};
+
+// タッチ座標テーブル
+static const GFL_UI_TP_HITTBL sc_touch_hit_tbl[] =
+{
+	{   0,  64,   0,  64 },		// ミニマップ
+
+	{   0,  23,  96, 127 },		// 01: 右アイコン
+	{  24,  47,  96, 127 },		// 02: 右アイコン
+	{  48,  71,  96, 127 },		// 03: 右アイコン
+	{  72,  95,  96, 127 },		// 04: 右アイコン
+	{  96, 119,  96, 127 },		// 05: 右アイコン
+	{ 120, 143,  96, 127 },		// 06: 右アイコン
+	{ 144, 167,  96, 127 },		// 07: 右アイコン
+
+	{   0,  23,  96-16, 127-16 },		// 01: 中アイコン
+	{  24,  47,  96-16, 127-16 },		// 02: 中アイコン
+	{  48,  71,  96-16, 127-16 },		// 03: 中アイコン
+	{  72,  95,  96-16, 127-16 },		// 04: 中アイコン
+	{  96, 119,  96-16, 127-16 },		// 05: 中アイコン
+	{ 120, 143,  96-16, 127-16 },		// 06: 中アイコン
+	{ 144, 167,  96-16, 127-16 },		// 07: 中アイコン
+
+	{   0,  23,  96-32, 127-32 },		// 01: 左アイコン
+	{  24,  47,  96-32, 127-32 },		// 02: 左アイコン
+	{  48,  71,  96-32, 127-32 },		// 03: 左アイコン
+	{  72,  95,  96-32, 127-32 },		// 04: 左アイコン
+	{  96, 119,  96-32, 127-32 },		// 05: 左アイコン
+	{ 120, 143,  96-32, 127-32 },		// 06: 左アイコン
+	{ 144, 167,  96-32, 127-32 },		// 07: 左アイコン
+
+	{ 168, 191,   0,  71 },		// SELECT 
+
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX05, TB_PX05+TB_SX-1 },		// 10: Ｙ
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX06, TB_PX06+TB_SX-1 },		// 11: Ｘ
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX07, TB_PX07+TB_SX-1 },		// 12: 戻る
+	
+	{ 168, 191-24*3,   0,  71 },		// モードボタン1
+	{ 168, 191-24*2,   0,  71 },		// モードボタン2
+  { 168, 191-24*1,   0,  71 },		// モードボタン3
+
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
 //----------------------------------------------------------------------------
@@ -246,6 +338,7 @@ static void MAINSEQ_KeyInput( HABITAT_LIST_WK *p_wk )
   {
 	case FRAMELIST_RET_NONE:				// 動作なし
     // キー入力
+    CheckInput( p_wk );
     break;
 	case FRAMELIST_RET_CURSOR_ON:		// カーソル表示
 		break;
@@ -286,6 +379,96 @@ static void MAINSEQ_KeyInput( HABITAT_LIST_WK *p_wk )
     SetNextSeq( p_wk, MAIN_SEQ_PAGE_MOVE ,SEQ_CHANGE_PARAM_NONE);
 		break;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  入力処理
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval TRUEの時入力あり
+ */
+//-----------------------------------------------------------------------------
+static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
+{
+  s32   key_status;
+  BOOL  ret = FALSE;
+	key_status = GFL_UI_TP_HitTrg( sc_touch_hit_tbl );
+
+  switch( key_status )
+  {
+  case HABITATLIST_UI_MINIMAP:
+    ONOUE_Printf("ミニマップタッチ\n");
+    break;
+
+  case HABITATLIST_UI_ICON_R_01:
+  case HABITATLIST_UI_ICON_R_02:
+  case HABITATLIST_UI_ICON_R_03:
+  case HABITATLIST_UI_ICON_R_04:
+  case HABITATLIST_UI_ICON_R_05:
+  case HABITATLIST_UI_ICON_R_06:
+  case HABITATLIST_UI_ICON_R_07:
+    ONOUE_Printf("右アイコンタッチ\n");
+    break;
+
+  case HABITATLIST_UI_ICON_C_01:
+  case HABITATLIST_UI_ICON_C_02:
+  case HABITATLIST_UI_ICON_C_03:
+  case HABITATLIST_UI_ICON_C_04:
+  case HABITATLIST_UI_ICON_C_05:
+  case HABITATLIST_UI_ICON_C_06:
+  case HABITATLIST_UI_ICON_C_07:
+    ONOUE_Printf("中アイコンタッチ\n");
+    break;
+
+  case HABITATLIST_UI_ICON_L_01:
+  case HABITATLIST_UI_ICON_L_02:
+  case HABITATLIST_UI_ICON_L_03:
+  case HABITATLIST_UI_ICON_L_04:
+  case HABITATLIST_UI_ICON_L_05:
+  case HABITATLIST_UI_ICON_L_06:
+  case HABITATLIST_UI_ICON_L_07:
+    ONOUE_Printf("左アイコンタッチ\n");
+    break;
+
+  case HABITATLIST_UI_BUTTON_SELECT:
+    ONOUE_Printf("SELECTタッチ\n");
+    break;
+
+  case HABITATLIST_UI_BUTTON_X:
+    ONOUE_Printf("Xタッチ\n");
+    break;
+
+  case HABITATLIST_UI_BUTTON_Y:
+    ONOUE_Printf("Yタッチ\n");
+    break;
+
+  case HABITATLIST_UI_BUTTON_RETURN:
+    ONOUE_Printf("戻るタッチ\n");
+    break;
+
+  case HABITATLIST_UI_MODE_BUTTON_01:
+    ONOUE_Printf("モード切替1タッチ\n");
+    break;
+
+  case HABITATLIST_UI_MODE_BUTTON_02:
+    ONOUE_Printf("モード切替2タッチ\n");
+    break;
+
+  case HABITATLIST_UI_MODE_BUTTON_03:
+    ONOUE_Printf("モード切替3タッチ\n");
+    break;
+
+  // キー入力なし
+  case GFL_UI_TP_HIT_NONE:
+    break;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+
+  return ret;
 }
 
 //----------------------------------------------------------------------------

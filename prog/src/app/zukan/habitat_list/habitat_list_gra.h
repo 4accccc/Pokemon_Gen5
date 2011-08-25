@@ -110,9 +110,9 @@ enum{
   MODE_BUTTON_03_POS_Y    = 180-24, // モード切替ボタン位置Y
   SELECT_BUTTON_POS_X     = 32,  // セレクトボタン位置X
   SELECT_BUTTON_POS_Y     = 180, // セレクトボタン位置Y
-  BUTTON_LEFT_ARROW_X     = 136, // 左矢印
+  BUTTON_LEFT_ARROW_X     = 132, // 左矢印
   BUTTON_LEFT_ARROW_Y     = 168, // 左矢印
-  BUTTON_RIGHT_ARROW_X    = 160, // 右矢印
+  BUTTON_RIGHT_ARROW_X    = 156, // 右矢印
   BUTTON_RIGHT_ARROW_Y    = 168, // 右矢印
   BUTTON_CHECK_X          = 184, // チェックボックス
   BUTTON_CHECK_Y          = 172, // チェックボックス
