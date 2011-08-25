@@ -603,4 +603,37 @@
 				Time="2011-07-07T10:47:30" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_oyaname"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-25T09:12:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:47:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-25T09:12:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:47:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>レンタルポケモンの親名</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-25T09:13:01" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
