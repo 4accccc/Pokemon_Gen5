@@ -12,14 +12,14 @@
 
 #include "savedata/zukan_savedata.h"
 #include "gamesystem/game_data.h"
-#include "habitat_zone_gra.h"
 #include "gamesystem/pm_season.h"
 
-//=============================================================================
-//
-//					定数宣言
-//
-//=============================================================================
+//===================================================================================
+//	定数
+//===================================================================================
+enum{
+  HABITAT_ZONE_POKE_LIST_MAX  = 15,  // ゾーン詳細画面のポケモンデータ最大数
+};
 
 // コンプリートタイプ
 typedef enum{
@@ -27,14 +27,6 @@ typedef enum{
   ZONE_COMTYPE_LOOK,  // 見たコンプリート
   ZONE_COMTYPE_GET,   // 捕まえたコンプリート
 }ZONE_COMTYPE;
-
-// 出現場所定義
-typedef enum{
-  HABITAT_ZONE_APPEAR_LAND,
-  HABITAT_ZONE_APPEAR_WATERSIDE,
-  HABITAT_ZONE_APPEAR_FISHING,
-  HABITAT_ZONE_APPEAR_MAX,
-}HABITAT_ZONE_APPEAR;
 
 // ポケモンの見た、捕獲状態
 typedef enum{
@@ -44,32 +36,13 @@ typedef enum{
   HABITAT_ZONE_STATUS_GET,
 }HABITAT_ZONE_STATUS;
 
-//-------------------------------------
-///	シーケンス切替パラメータ
-//=====================================
-typedef enum {
-  SEQ_CHANGE_PARAM_L,
-  SEQ_CHANGE_PARAM_R,
-  SEQ_CHANGE_PARAM_UP,
-  SEQ_CHANGE_PARAM_DOWN,
-  SEQ_CHANGE_PARAM_A,
-  SEQ_CHANGE_PARAM_B,
-  SEQ_CHANGE_PARAM_X,
-  SEQ_CHANGE_PARAM_TOUCH,
-  SEQ_CHANGE_PARAM_NONE,
-}SEQ_CHANGE_PARAM;
-
-// メインシーケンス状態定義
+// 地形タイプ
 typedef enum{
-  HABITAT_ZONE_MAIN_CONTINUE,
-  HABITAT_ZONE_MAIN_EXIT,
-}HABITAT_ZONE_MAIN_STATUS;
-
-//=============================================================================
-//
-//					構造体宣言
-//
-//=============================================================================
+  HABITAT_ZONE_APPEAR_LAND,
+  HABITAT_ZONE_APPEAR_WATERSIDE,
+  HABITAT_ZONE_APPEAR_FISHING,
+  HABITAT_ZONE_APPEAR_MAX,
+}HABITAT_ZONE_APPEAR;
 
 // リストデータ
 typedef struct {
@@ -78,12 +51,15 @@ typedef struct {
   HABITAT_ZONE_STATUS status; // 見た、捕獲、知らない
 }HABITAT_ZONE_POKE_DATA;
 
-
+// ゾーンデータ
 typedef struct {
   u16 zone_id;              // ゾーンID
   HABITAT_ZONE_POKE_DATA poke_data[ HABITAT_ZONE_POKE_LIST_MAX ]; // データリスト
 }HABITAT_ZONE_DATA;
 
+//===================================================================================
+//	構造体
+//===================================================================================
 // 外部設定データ
 typedef struct {
 	// [in]
@@ -98,40 +74,8 @@ typedef struct {
 	u32	ret_mode;								// 終了モード
 }ZUKANHABITAT_ZONE_DATA;
 
-// ゾーン詳細画面ワーク
-typedef struct {
-  HABITAT_ZONE_MAIN_STATUS main_status;
-  u32 main_seq;
-  u32 sub_seq;
-  ZUKANHABITAT_ZONE_DATA *p_init_param;
-  HABITAT_ZONE_GRA_WK gra_sys;
-  GFL_MSGDATA         *p_app_msg;
-  GFL_TCB             *p_vtask;
-
-  BOOL  is_cursor_active;           // カーソルが選択状態かどうか
-  s32   select_index;               // 選択中のポケモン
-  s32   zone_data_cnt;              // データ数
-  s32   list_size;                  // ポケモンリストに表示されている数
-  s32   zone_data_index;            // リストのインデックス
-  s32   season;                     // 表示中のの季節
-  HABITAT_ZONE_APPEAR land_type;  // 表示中のの場所タイプ
-  WORDSET *p_word_set;
-
-  // ゾーンごとに更新されるデータ -----------------
-  BOOL  land_appear[ HABITAT_ZONE_APPEAR_MAX ];           // 地形を表示するか
-  BOOL  land_complete_status[ HABITAT_ZONE_APPEAR_MAX ];  // 地形ごとのコンプリート
-  u32   monsno_list[HABITAT_ZONE_POKE_LIST_MAX];  // 表示中のモンスター番号リスト
-
-  SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ
-
-}HABITAT_ZONE_WK;
-
-//=============================================================================
-//
-//					プロトタイプ宣言
-//
-//=============================================================================
-
+// メインワーク
+typedef struct _HABITAT_ZONE_WK HABITAT_ZONE_WK;
 
 //===================================================================================
 //	グローバル

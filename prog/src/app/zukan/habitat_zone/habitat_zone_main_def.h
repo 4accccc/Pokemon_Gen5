@@ -10,6 +10,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "habitat_zone_gra.h" // for HABITAT_ZONE_GRA_WK
+#include "habitat_zone.h"
+
 //=============================================================================
 //
 //					定数宣言
@@ -41,3 +44,61 @@ enum
   NOHABITATDATA_MSG_W = 200,
   NOHABITATDATA_MSG_H = 16,
 };
+
+
+//-------------------------------------
+///	シーケンス切替パラメータ
+//=====================================
+typedef enum {
+  SEQ_CHANGE_PARAM_L,
+  SEQ_CHANGE_PARAM_R,
+  SEQ_CHANGE_PARAM_UP,
+  SEQ_CHANGE_PARAM_DOWN,
+  SEQ_CHANGE_PARAM_A,
+  SEQ_CHANGE_PARAM_B,
+  SEQ_CHANGE_PARAM_X,
+  SEQ_CHANGE_PARAM_TOUCH,
+  SEQ_CHANGE_PARAM_NONE,
+}SEQ_CHANGE_PARAM;
+
+// メインシーケンス状態定義
+typedef enum{
+  HABITAT_ZONE_MAIN_CONTINUE,
+  HABITAT_ZONE_MAIN_EXIT,
+}HABITAT_ZONE_MAIN_STATUS;
+
+//=============================================================================
+//
+//					構造体宣言
+//
+//=============================================================================
+
+
+// ゾーン詳細画面ワーク
+struct _HABITAT_ZONE_WK{
+  HABITAT_ZONE_MAIN_STATUS main_status;
+  u32 main_seq;
+  u32 sub_seq;
+  ZUKANHABITAT_ZONE_DATA *p_init_param;
+  HABITAT_ZONE_GRA_WK gra_sys;
+  GFL_MSGDATA         *p_app_msg;
+  GFL_TCB             *p_vtask;
+
+  BOOL  is_cursor_active;           // カーソルが選択状態かどうか
+  s32   select_index;               // 選択中のポケモン
+  s32   zone_data_cnt;              // データ数
+  s32   list_size;                  // ポケモンリストに表示されている数
+  s32   zone_data_index;            // リストのインデックス
+  s32   season;                     // 表示中のの季節
+  HABITAT_ZONE_APPEAR land_type;  // 表示中のの場所タイプ
+  WORDSET *p_word_set;
+
+  // ゾーンごとに更新されるデータ -----------------
+  BOOL  land_appear[ HABITAT_ZONE_APPEAR_MAX ];           // 地形を表示するか
+  BOOL  land_complete_status[ HABITAT_ZONE_APPEAR_MAX ];  // 地形ごとのコンプリート
+  u32   monsno_list[HABITAT_ZONE_POKE_LIST_MAX];  // 表示中のモンスター番号リスト
+
+  SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ
+
+};
+

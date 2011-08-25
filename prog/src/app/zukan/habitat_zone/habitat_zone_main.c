@@ -83,7 +83,7 @@ static const MainFunc MainSeq[] = {
 };
 
 // メッセージ---------------------------------------
-static PRINTSYS_LSB GetMedalFontColor( void );
+static PRINTSYS_LSB GetMsgFontColor( void );
 static void DrawLandMsg( HABITAT_ZONE_WK *p_wk );
 static void DrawSeasonMsg( HABITAT_ZONE_WK *p_wk );
 static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk );
@@ -499,14 +499,14 @@ static void MAINSEQ_AppExit( HABITAT_ZONE_WK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  下画面メダルタイトル部分のフォントカラーを取得する
+ *	@brief  フォントカラーを取得する
  *
  *	@param	
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static PRINTSYS_LSB GetMedalFontColor( void )
+static PRINTSYS_LSB GetMsgFontColor( void )
 {
   return PRINTSYS_LSB_Make(1,2,3);
 }
@@ -1008,7 +1008,7 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
   u32     msg_id = msg_seisoku_zone_01;
   STRBUF  *str;
   STRBUF  *dest_str;
-  PRINTSYS_LSB  font_colro = GetMedalFontColor();
+  PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
   // ゾーンIDに対応した地名メッセージIDを取得
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
@@ -1069,7 +1069,7 @@ static void DrawSeasonMsg( HABITAT_ZONE_WK *p_wk )
 {
   s32           index = p_wk->season;
   STRBUF        *str;
-  PRINTSYS_LSB  font_colro = GetMedalFontColor();
+  PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
   // 季節
   u32 season_msg_id[] =
@@ -1104,7 +1104,7 @@ static void DrawSeasonMsg( HABITAT_ZONE_WK *p_wk )
 static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk )
 {
   STRBUF        *str;
-  PRINTSYS_LSB  font_colro = GetMedalFontColor();
+  PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
   // メッセージの書き込み
   str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_explanation_button_01 );
@@ -1149,7 +1149,7 @@ static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk )
 {
   STRBUF  *str;
   STRBUF  *dest_str;
-  PRINTSYS_LSB  font_colro = GetMedalFontColor();
+  PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
   // ゾーンIDに対応した地名メッセージIDを取得
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
@@ -1188,8 +1188,8 @@ static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void DrawNoHabitatDatatMsg( HABITAT_ZONE_WK *p_wk )
 {
-   STRBUF       *str;
-  PRINTSYS_LSB  font_colro = GetMedalFontColor();
+  STRBUF       *str;
+  PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
   // メッセージの書き込み
   str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_seisoku_err_01 );

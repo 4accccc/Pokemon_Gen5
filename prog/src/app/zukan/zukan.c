@@ -19,6 +19,7 @@
 #include "search/zukansearch.h"
 #include "detail/zukan_detail.h"
 #include "habitat_zone/habitat_zone.h"
+#include "habitat_list/habitat_list.h"
 
 
 //============================================================================================
@@ -27,22 +28,25 @@
 
 // メインシーケンス
 enum {
-	SEQ_LOCAL_PROC_WAIT,	// 各処理終了待ち
+	SEQ_LOCAL_PROC_WAIT,	      // 各処理終了待ち
 
-	SEQ_TOP_CALL,					// トップ呼び出し
-	SEQ_TOP_END,					// トップ終了後
+	SEQ_TOP_CALL,					      // トップ呼び出し
+	SEQ_TOP_END,					      // トップ終了後
 
-	SEQ_LIST_CALL,				// リスト呼び出し
-	SEQ_LIST_END,					// リスト終了後
+	SEQ_LIST_CALL,				      // リスト呼び出し
+	SEQ_LIST_END,					      // リスト終了後
 
-	SEQ_INFO_CALL,				// 情報呼び出し(INFO,MAP,VOICE,FORMのどれかを呼び出す)
-	SEQ_INFO_END,					// 情報終了後
+	SEQ_INFO_CALL,				      // 情報呼び出し(INFO,MAP,VOICE,FORMのどれかを呼び出す)
+	SEQ_INFO_END,					      // 情報終了後
 
-	SEQ_SEARCH_CALL,			// 検索呼び出し
-	SEQ_SEARCH_END,				// 検索終了後
+	SEQ_SEARCH_CALL,			      // 検索呼び出し
+	SEQ_SEARCH_END,				      // 検索終了後
 
-	SEQ_HABITAT_ZONE_CALL,// 生息地リストゾーン詳細画面呼出
-	SEQ_HABITAT_ZONE_END, // 生息地リストゾーン詳細画面終了後
+	SEQ_HABITAT_ZONE_CALL,      // 生息地リストゾーン詳細画面呼出
+	SEQ_HABITAT_ZONE_END,       // 生息地リストゾーン詳細画面終了後
+
+	SEQ_HABITAT_ZONE_LIST_CALL, // 生息地リストゾーンリスト画面呼出
+	SEQ_HABITAT_ZONE_LIST_END,  // 生息地リストゾーンリスト画面終了後
 
 	SEQ_PROC_FINISH,			// 図鑑終了
 };
@@ -97,6 +101,9 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk );
 static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk );
 static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk );
 
+static int MainSeq_CallHabitatZoneList( ZUKAN_MAIN_WORK * wk );
+static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk );
+
 
 //============================================================================================
 //	グローバル
@@ -127,6 +134,9 @@ static const pZUKAN_FUNC MainSeq[] = {
   
 	MainSeq_CallHabitatZone,// 生息地リストゾーン詳細画面呼出
 	MainSeq_EndHabitatZone,	// 生息地リストゾーン詳細画面呼出終了後
+  
+	MainSeq_CallHabitatZoneList,// 生息地リストリスト画面呼出
+	MainSeq_EndHabitatZoneList,	// 生息地リストゾーンリスト画面呼出終了後
 };
 
 
@@ -186,6 +196,25 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
   {
     wk->mainSeq = SEQ_HABITAT_ZONE_CALL;
   }
+#ifdef DEBUG_ONLY_FOR_onoue_masayuki
+  else
+  {
+    // Bを押しているときは通常通り、図鑑を起動する
+    if( !(GFL_UI_KEY_GetCont() & PAD_BUTTON_B) )
+    {
+      wk->mainSeq = SEQ_HABITAT_ZONE_LIST_CALL;
+    }
+  }
+#else
+  else
+  {
+    // Bを押しているときは生息地リスト画面を呼び出す
+    if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_B) )
+    {
+      wk->mainSeq = SEQ_HABITAT_ZONE_LIST_CALL;
+    }
+  }
+#endif
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -704,6 +733,102 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
     ZUKANHABITAT_ZONE_DATA * zone_info;
     zone_info = wk->work;
     GFL_HEAP_FreeMemory( zone_info->p_zone_list_data );
+  }
+  // ワーク開放
+	GFL_HEAP_FreeMemory( wk->work );
+
+  // 終了モードの設定
+  ret = SEQ_PROC_FINISH;
+  return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生息地リスト：リスト画面呼出
+ *
+ *	@param	* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static int MainSeq_CallHabitatZoneList( ZUKAN_MAIN_WORK * wk )
+{
+  ZUKANHABITAT_LIST_DATA * zone_list;
+
+	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANHABITAT_LIST_DATA) );
+	GFL_STD_MemClear( wk->work, sizeof(ZUKANHABITAT_LIST_DATA) );
+	zone_list = wk->work;
+	zone_list->p_gdata = wk->prm->gamedata;
+
+  // @todo ダミーデータではないデータを入れる必要がある
+  // @todo データを作る際はBC、WF、火山、４番道路、チャンピオンロードに注意する
+  {
+    s32 i;
+    ZUKANHABITAT_LIST_LISTDATA *p_ld;
+    zone_list->p_list_data = GFL_HEAP_AllocClearMemory(
+        HEAPID_ZUKAN_SYS, sizeof(ZUKANHABITAT_LIST_LISTDATA)*20 );
+    for( i = 0; i < 20 ; i ++ )
+    {
+      p_ld = &zone_list->p_list_data[i];
+      // ダミーデータを保存する
+      p_ld->zone_group = i;
+      p_ld->is_exist_landtype[0] = TRUE;
+      p_ld->is_exist_landtype[1] = TRUE;
+      p_ld->is_exist_landtype[2] = FALSE;
+      p_ld->is_complete[0] = TRUE;
+      p_ld->list_status[0] = HABITAT_LIST_STATUS_LOOK_CMP;
+      p_ld->list_status[1] = HABITAT_LIST_STATUS_NOTICE;
+      p_ld->list_status[2] = HABITAT_LIST_STATUS_NONE;
+    }
+    // リストサイズを設定
+    zone_list->list_size = i;
+    
+    // 地形タイプを上書き
+    p_ld = &zone_list->p_list_data[0];
+    p_ld->is_exist_landtype[0] = TRUE;
+    p_ld->is_exist_landtype[1] = FALSE;
+    p_ld->is_exist_landtype[2] = FALSE;
+    p_ld = &zone_list->p_list_data[1];
+    p_ld->is_exist_landtype[0] = FALSE;
+    p_ld->is_exist_landtype[1] = TRUE;
+    p_ld->is_exist_landtype[2] = FALSE;
+    p_ld = &zone_list->p_list_data[2];
+    p_ld->is_exist_landtype[0] = TRUE;
+    p_ld->is_exist_landtype[1] = TRUE;
+    p_ld->is_exist_landtype[2] = FALSE;
+    p_ld = &zone_list->p_list_data[3];
+    p_ld->is_exist_landtype[0] = FALSE;
+    p_ld->is_exist_landtype[1] = TRUE;
+    p_ld->is_exist_landtype[2] = TRUE;
+    p_ld = &zone_list->p_list_data[4];
+    p_ld->is_exist_landtype[0] = TRUE;
+    p_ld->is_exist_landtype[1] = TRUE;
+    p_ld->is_exist_landtype[2] = TRUE;
+  }
+
+  GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_habitat_list), &ZUKANHABITAT_LIST_ProcData, zone_list );
+  return NextProcCall( wk, SEQ_HABITAT_ZONE_LIST_END );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生息地リスト：リスト画面終了後
+ *
+ *	@param	* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
+{
+	int ret;
+  wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+
+    // 確保したデータ開放
+  {
+    ZUKANHABITAT_LIST_DATA * zone_list;
+    zone_list = wk->work;
+    GFL_HEAP_FreeMemory( zone_list->p_list_data );
   }
   // ワーク開放
 	GFL_HEAP_FreeMemory( wk->work );

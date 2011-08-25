@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #include <gflib.h>
 
+#include "habitat_zone_main_def.h"  // ’è”’è‹`
 #include "habitat_zone.h"
 #include "habitat_zone_main.h"
 #include "system/main.h"

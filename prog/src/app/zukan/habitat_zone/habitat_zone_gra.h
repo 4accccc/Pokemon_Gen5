@@ -10,6 +10,8 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "habitat_zone.h"
+
 //=============================================================================
 //
 //					定数宣言
@@ -141,7 +143,6 @@ enum
 
 // 定数定義
 enum{
-  HABITAT_ZONE_POKE_LIST_MAX  = 15,  // ゾーン詳細画面のポケモンデータ最大数
   HABITAT_ZONE_UNIT_CLWK_MAX  = HABITAT_ZONE_POKE_LIST_MAX + COMMON_OBJ_WK_MAX,
   LAND_TYPE_ICON_PAL_ON       = 0xA,  // 地形タイプがONの時のパレット
   LAND_TYPE_ICON_PAL_OFF      = 0x9,  // 地形タイプがOFFの時のパレット

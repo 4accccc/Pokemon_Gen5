@@ -547,4 +547,80 @@
 				Time="2011-08-17T10:14:42" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_list_title"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいそくち</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T11:09:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T07:50:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>生息地</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T11:09:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T07:50:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_list_local">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T11:28:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T11:28:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T11:28:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T11:28:53" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_list_zenkoku">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぜんこく</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T11:28:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T11:28:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>全国</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T11:29:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-24T11:29:02" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
