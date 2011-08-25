@@ -198,8 +198,8 @@
 #define FE_RES_REQ_GAME_TIME               182 /* 0x00b6 すれ違い調査「いちばん　にんきの　げーむは？」( 時間 )を達成 */
 #define FE_RES_REQ_DAY_OFF_COUNT           183 /* 0x00b7 すれ違い調査「きゅうじつに　ついて」( 人数 )を達成 */
 #define FE_RES_REQ_DAY_OFF_TIME            184 /* 0x00b8 すれ違い調査「きゅうじつに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_HOW_LONG_PLAY_COUNT     185 /* 0x00b9 すれ違い調査「ポケモンを　どれくらい　あそんでる？」( 人数 )を達成 */
-#define FE_RES_REQ_HOW_LONG_PLAY_TIME      186 /* 0x00ba すれ違い調査「ポケモンを　どれくらい　あそんでる？」( 時間 )を達成 */
+#define FE_RES_REQ_PLAY_PERIOD_COUNT       185 /* 0x00b9 すれ違い調査「ポケモンを　どれくらい　あそんでる？」( 人数 )を達成 */
+#define FE_RES_REQ_PLAY_PERIOD_TIME        186 /* 0x00ba すれ違い調査「ポケモンを　どれくらい　あそんでる？」( 時間 )を達成 */
 #define FE_RES_REQ_LEADER_COUNT            187 /* 0x00bb すれ違い調査「いちばんにんきのある　ジムリーダーは？」( 人数 )を達成 */
 #define FE_RES_REQ_LEADER_TIME             188 /* 0x00bc すれ違い調査「いちばんにんきのある　ジムリーダーは？」( 時間 )を達成 */
 #define FE_RES_REQ_FUN_COUNT               189 /* 0x00bd すれ違い調査「ポケモンのおもしろいところは？」( 人数 )を達成 */

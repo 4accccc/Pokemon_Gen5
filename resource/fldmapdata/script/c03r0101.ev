@@ -665,8 +665,8 @@ SET_RES_REQ_ACHIEVE_FLAG:
   CASE RESEARCH_REQ_ID_GAME_time           THEN _FLAG_SET( FE_RES_REQ_GAME_TIME       ) //「いちばん　にんきの　げーむは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN _FLAG_SET( FE_RES_REQ_DAY_OFF_COUNT   )//「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN _FLAG_SET( FE_RES_REQ_DAY_OFF_TIME    )//「きゅうじつに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN _FLAG_SET( FE_RES_REQ_HOW_LONG_PLAY_COUNT     )//「ポケモンを　どれくらい　あそんでる？」( 人数 )
-  CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_time  THEN _FLAG_SET( FE_RES_REQ_HOW_LONG_PLAY_TIME      )//「ポケモンを　どれくらい　あそんでる？」( 時間 )
+  CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN _FLAG_SET( FE_RES_REQ_PLAY_PERIOD_COUNT     )//「ポケモンを　どれくらい　あそんでる？」( 人数 )
+  CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_time  THEN _FLAG_SET( FE_RES_REQ_PLAY_PERIOD_TIME      )//「ポケモンを　どれくらい　あそんでる？」( 時間 )
   CASE RESEARCH_REQ_ID_GYM_LEADER_count    THEN _FLAG_SET( FE_RES_REQ_LEADER_COUNT    )//「いちばんにんきのある　ジムリーダーは？」( 人数 )
   CASE RESEARCH_REQ_ID_GYM_LEADER_time     THEN _FLAG_SET( FE_RES_REQ_LEADER_TIME     )//「いちばんにんきのある　ジムリーダーは？」( 時間 )
   CASE RESEARCH_REQ_ID_FUN_count           THEN _FLAG_SET( FE_RES_REQ_FUN_COUNT       )//「ポケモンのおもしろいところは？」( 人数 )
@@ -1416,7 +1416,7 @@ RES_REQ_MENU:
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03t, RESEARCH_REQ_ID_DAY_OFF_count ) 
       ENDIF
       //「ポケモンを　どれくらい　あそんでる？」( 人数 )
-      _FLAG_CHECK( FE_RES_REQ_HOW_LONG_PLAY_COUNT, SCWK_ANSWER )
+      _FLAG_CHECK( FE_RES_REQ_PLAY_PERIOD_COUNT, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03u, RESEARCH_REQ_ID_HOW_LONG_PLAY_count )   
       ENDIF
@@ -1548,7 +1548,7 @@ RES_REQ_MENU:
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03t, RESEARCH_REQ_ID_DAY_OFF_time ) 
       ENDIF
       //「ポケモンを　どれくらい　あそんでる？」( 時間 )
-      _FLAG_CHECK( FE_RES_REQ_HOW_LONG_PLAY_TIME, SCWK_ANSWER )
+      _FLAG_CHECK( FE_RES_REQ_PLAY_PERIOD_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03u, RESEARCH_REQ_ID_HOW_LONG_PLAY_time )   
       ENDIF
