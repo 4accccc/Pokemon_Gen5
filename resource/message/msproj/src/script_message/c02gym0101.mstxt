@@ -550,11 +550,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほんとうに
+			<Text>本当に
 はねのカセキで　いいんだね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T10:44:26" />
+				Time="2011-08-25T10:16:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2124,36 +2124,35 @@ RANGERW</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c02gym0101_counter2_01"
-		Style="Large">
+		Label="msg_c02gym0101_counter2_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T11:49:41" />
+				Time="2011-08-25T10:17:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T11:49:38" />
+				Time="2011-08-25T10:17:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T11:49:43" />
+				Time="2011-08-25T10:17:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T11:49:43" />
+				Time="2011-08-25T10:17:40" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T11:49:50" />
+				Time="2011-08-25T10:17:47" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
