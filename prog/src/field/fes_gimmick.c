@@ -133,6 +133,13 @@ FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWor
   wk->fieldWork = fieldWork;
   //フィールドエフェクトコントローラ取得
   wk->fectrl = FIELDMAP_GetFldEffCtrl( fieldWork );
+  //MMDLSYS
+  wk->mmdl_sys = FIELDMAP_GetMMdlSys( fieldWork );
+  //自機のMMDLを取得しておく
+  wk->player_mmdl = FIELD_PLAYER_GetMMdl(FIELDMAP_GetFieldPlayer( fieldWork ));
+
+  wk->evdata = GAMEDATA_GetEventData( wk->gdata );
+  wk->evwork = GAMEDATA_GetEventWork( wk->gdata );
 
   {
     const FLDNOGRID_MAPPER* cp_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
@@ -175,9 +182,11 @@ void FES_GIMMICK_ZoneChangeSetup( FES_GIMMICK* wk, u16 zone_id )
   if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
     return;
   }
-  if( wk->fmwk->m_type == FMISSION_TYPE_ITEM ){
+
+  wk->zone_id = zone_id;  //現在のゾーンIDを保存
+  if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ){
     FES_GIMMICK_ITEM_ZoneChangeSetup( wk, zone_id );
-  IWASAWA_Printf("FesGimmick %d\n",OS_GetTick()-s_tick);
+    IWASAWA_Printf("FesGimmick %d\n",OS_GetTick()-s_tick);
     FES_GIMMICK_ITEM_FieldRecoverSetup( wk );
 
 //    itemball_Setup( fest_sys, fmwk, gsys, zone_id );
@@ -194,7 +203,7 @@ void FES_GIMMICK_FieldRecoverSetup( FES_GIMMICK* wk )
   if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
     return;
   }
-  if( wk->fmwk->m_type == FMISSION_TYPE_ITEM ){
+  if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ){
     FES_GIMMICK_ITEM_FieldRecoverSetup( wk );
 
 //    itemball_Setup( fest_sys, fmwk, gsys, zone_id );
@@ -234,7 +243,7 @@ GMEVENT* FES_GIMMICK_CheckPosEventGrid( FES_GIMMICK* wk, const VecFx32* cp_pos )
   if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
     return NULL;
   }
-  if( wk->fmwk->m_type == FMISSION_TYPE_ITEM ){
+  if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ){
     return FES_GIMMICK_ITEM_CheckEventForGrid( wk, cp_pos );
   }
   return NULL;
@@ -253,7 +262,7 @@ GMEVENT* FES_GIMMICK_CheckPosEventRail( FES_GIMMICK* wk, const RAIL_LOCATION* cp
   if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
     return NULL;
   }
-  if( wk->fmwk->m_type == FMISSION_TYPE_ITEM ){
+  if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ){
     return FES_GIMMICK_ITEM_CheckEventForRail( wk, cp_location );
   }
   return NULL;
@@ -346,9 +355,9 @@ static void itemball_Setup( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk, G
   if( dat == NULL){
     return;
   }
-  IWASAWA_Printf("FMissionGimmick key=%d\n", fmwk->key );
+  IWASAWA_Printf("FMissionGimmick key=%d\n", fmwk->beacon.key );
 
-  FES_GIMMICK_SUB_RndInit( fmwk->key, zone_id, &rnd_c );
+  FES_GIMMICK_SUB_RndInit( fmwk->beacon.key, zone_id, &rnd_c );
   itemball_MMdlSet( fest_sys, &rnd_c, dat, zone_id, GAMEDATA_GetMMdlSys( gdata ));
 }
 

@@ -104,7 +104,6 @@ static void effReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
 static void effReq_PopupMsgSys( BEACON_VIEW_PTR wk, u8 msg_id );
 static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL haifu_f );
 static void effReq_PopupMsgGPowerSpecial( BEACON_VIEW_PTR wk, GPOWER_ID sp_gpower_id );
-static BOOL effReq_PopupMsgFMission( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
 static void effReq_SetPanelFlash( BEACON_VIEW_PTR wk, u8 target_ofs );
 
 static void printReq_FOamPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str, PRINTSYS_LSB color, int* task_ct );
@@ -1881,7 +1880,7 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
     return TRUE;
   }
   if( GAMEBEACON_Check_FestMission( info ) ){
-    return FALSE; //フェスビーコンはポップアップ出さない//effReq_PopupMsgFMission( wk, info );
+    return FALSE; //フェスビーコンはポップアップ出さない
   }
   switch( action ){
   case GAMEBEACON_ACTION_SEARCH:
@@ -2196,34 +2195,6 @@ typedef struct _TASKWK_WIN_FMISSION{
 
 static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* work);
 
-static BOOL effReq_PopupMsgFMission( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
-{
-  FEST_MISSION mission;
-  BOOL ret;
-
-  //セキュリティ
-  ret = GAMEBEACON_Get_Action_FestMission(info,&mission);
-  if( ret == FALSE ){
-    return FALSE;
-  }
-  //なにか別のミッションに参加中ならスルーする
-  if( FEST_MISSION_IsEntry( wk->fmwk ) ){
-    return FALSE;
-  }
-  //無視対象のミッションはスルーする
-  if( LINK_FESTIVAL_IsEgnoreMission( wk->fest_sys, (const FEST_MISSION*)&mission )){
-    return FALSE;
-  }
-  //ハイリンクに侵入されていたらスルー
-  if( GameCommSys_BootCheck( wk->game_comm ) != GAME_COMM_NO_FIELD_BEACON_SEARCH ){
-    return FALSE;
-  }
-  GAMEBEACON_InfoWordset( info, wk->wordset, wk->tmpHeapID );
-  WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
-  taskAdd_WinFMission( wk, &mission, &wk->eff_task_ct);
-  return TRUE;
-}
-
 /*
  *  @brief  メッセージウィンドウ フェスタミッション参加確認タスク登録
  */
@@ -2307,7 +2278,7 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
     }
     return;
   case 4: //使うイベント待ち
-    if( bvp->ctrl.mission.m_id != FMISSION_ID_NULL ) {
+    if( bvp->ctrl.mission.beacon.m_id != FMISSION_ID_NULL ) {
       //途中キャンセルされていたら、選択しなおし
       FEST_MISSION_Clear( &bvp->ctrl.mission );
       twk->seq = 3;

@@ -909,7 +909,7 @@ static u16 getPosCheckCode( u16 dir )
  * @param	evdata イベントデータへのポインタ
  * @param evwork イベントワークへのポインタ 
  * @param pos チェックする座標
- * @param dir チェックする方向（DIR_NOTのとき、向き指定なし）
+ * @param dir チェックする方向（DIR_NOTの時向き指定なし、DIR_MAXの時全方向チェック<フェスイベント用>）
  * @retval POS_EVENT_DATA* (NULL = イベントなし)
  */
 //------------------------------------------------------------------
@@ -931,7 +931,10 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
       {
         continue;
       }
-      if ( data->check_type != check_type )
+      if( data->check_type >= POS_CHECK_TYPE_MAX ){
+        continue;
+      }
+      if ( (dir != DIR_MAX) && (data->check_type != check_type) )
       {
         continue;
       }

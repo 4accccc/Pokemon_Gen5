@@ -80,6 +80,11 @@ static GMEVENT* sub_MakeEvent( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, u
 static BOOL sub_SetPosByLot( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, u16 zone_id, GFL_STD_RandContext* rnd_c );
 static u16 sub_LotItem( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, GFL_STD_RandContext* rnd_c );
 static BOOL sub_SetEffect( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk );
+static BOOL sub_CheckHitAnotherEventForGrid( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, const VecFx32* ev_pos );
+static BOOL sub_CheckHitAnotherEventForRail( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, const RAIL_LOCATION* ev_loc );
+
+static void sub_FlagTableUpdate( FES_GIMMICK_ITEM_WORK* wk, u16 zone_id );
+static FES_GIMMICK_ITEM_FLAG* sub_FlagTableGet( FES_GIMMICK_ITEM_WORK* wk, u16 zone_id );
 
 //----------------------------------------------------------------------
 /*
@@ -96,11 +101,16 @@ void FES_GIMMICK_ITEM_ZoneChangeSetup( FES_GIMMICK* sys_wk, u16 zone_id )
 
   //ワーククリア
   MI_CpuClear32( wk, sizeof(FES_GIMMICK_ITEM_WORK) );
+  wk->flag_wk = (FES_GIMMICK_ITEM_FLAG_WORK*)LINK_FESTIVAL_MissionFlagBufPointerGet( sys_wk->fest_sys );
+  wk->zone_id = zone_id;
 
   //乱数コンテキスト初期化
-  FES_GIMMICK_SUB_RndInit( sys_wk->fmwk->key, zone_id, &rnd_c );
+  FES_GIMMICK_SUB_RndInit( sys_wk->fmwk->beacon.key, zone_id, &rnd_c );
 
   sub_SetPosByLot( sys_wk, wk, zone_id, &rnd_c );
+  
+  //フラグ領域セット
+  sub_FlagTableUpdate( wk, zone_id );
 }
 
 //----------------------------------------------------------------------
@@ -111,7 +121,10 @@ void FES_GIMMICK_ITEM_ZoneChangeSetup( FES_GIMMICK* sys_wk, u16 zone_id )
 void FES_GIMMICK_ITEM_FieldRecoverSetup( FES_GIMMICK* sys_wk )
 {
   FES_GIMMICK_ITEM_WORK* wk = (FES_GIMMICK_ITEM_WORK*)&sys_wk->wk_buf;
-  sub_SetEffect( sys_wk, wk );
+
+  if( wk->point_max > 0 ){
+    sub_SetEffect( sys_wk, wk );
+  }
 }
 
 //----------------------------------------------------------------------
@@ -200,13 +213,16 @@ static GMEVENT* sub_MakeEvent( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, u
 {
   GMEVENT* event;
   SCRIPT_WORK* sc;
+  FES_GIMMICK_ITEM_FLAG* f_tbl = sub_FlagTableGet( wk, wk->zone_id );
   u16 item = FLDEFF_FES_KIRA_ObjItemGet( sys_wk->eff_task, id );
 
   FLDEFF_FES_KIRA_ObjDel( sys_wk->eff_task, id );
+  f_tbl->flag[id] = TRUE; //取得済みフラグ立てる
 
   //イベント生成
   if( item == 0 ){
     //万一アイテム未設定なら、エフェクトだけ消してイベント起こさず帰る
+    GF_ASSERT(0);
     return NULL;
   } 
   event = SCRIPT_SetEventScript( sys_wk->gsys, SCRID_FMISSION_ITEM_GET, NULL, HEAPID_FIELDMAP );
@@ -226,11 +242,7 @@ static BOOL sub_SetPosByLot( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, u16
   int i, pos_num;
   const POS_EVENT_DATA *pos;
 
-  EVENTDATA_SYSTEM* evdata = GAMEDATA_GetEventData( sys_wk->gdata );
-
-  wk->now_zone = FIELDMAP_GetZoneID( sys_wk->fieldWork );
-
-  pos = EVENTDATA_GetPosEventDataTbl( evdata, &pos_num ); 
+  pos = EVENTDATA_GetPosEventDataTbl( sys_wk->evdata, &pos_num ); 
 
   if( pos == NULL ){  //POSデータそのものがない
     return FALSE;
@@ -289,22 +301,91 @@ static BOOL sub_SetEffect( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk )
   int i;
   VecFx32 vec;
   FLDMAP_BASESYS_TYPE ftype = FIELDMAP_GetBaseSystemType( sys_wk->fieldWork );
+  FES_GIMMICK_ITEM_FLAG* f_tbl = sub_FlagTableGet( wk, wk->zone_id );
 
   for( i = 0;i < wk->point_max; i++)
   {
     POS_EVENT_DATA* pd = &wk->data[ wk->idx[i] ];
 
+    if( f_tbl->flag[i] ){
+      continue; //すでに取得済み
+    }
     if( pd->pos_type == EVENTDATA_POSTYPE_GRID ){
       EVENTDATA_GetPosEventCenterPos( pd, &vec);
+      if( sub_CheckHitAnotherEventForGrid( sys_wk, wk, &vec ) ){
+        //他のイベントと重なったのでエフェクト出さない&ゾーンチェンジするまで再チェックしないようにフラグ立てちゃう
+        f_tbl->flag[i] = TRUE;
+        continue;
+      }
     }else{
       RAIL_LOCATION loc;
       EVENTDATA_GetPosEventCenterRailLocation( pd, &loc );
+      if( sub_CheckHitAnotherEventForRail( sys_wk, wk, &loc ) ){
+        //他のイベントと重なったのでエフェクト出さない&ゾーンチェンジするまで再チェックしないようにフラグ立てちゃう
+        f_tbl->flag[i] = TRUE;
+        continue;
+      }
       FIELD_RAIL_MAN_GetLocationPosition( sys_wk->railman, &loc, &vec );
     }
 
     FLDEFF_FES_KIRA_ObjAdd( sys_wk->eff_task, i, wk->item[i], &vec );
   }
   return TRUE;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  アイテムミッションギミック　エフェクト生成時の当たり判定(グリッド)
+ */
+//----------------------------------------------------------------------
+static BOOL sub_CheckHitAnotherEventForGrid( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, const VecFx32* ev_pos )
+{
+  MMDL* mmdl;
+  //動作モデルとの判定を取る
+  mmdl = MMDLSYS_SearchGridPosEx( sys_wk->mmdl_sys,
+        SIZE_GRID_FX32(ev_pos->x), SIZE_GRID_FX32(ev_pos->z), ev_pos->y, H_DIFF_COLLISION_FOR_GROUND, FALSE );
+  if( mmdl != NULL && mmdl != sys_wk->player_mmdl ){  //自機は除外する
+    return TRUE;
+  }
+
+  //他のPOSイベントとの当たり判定を取る
+  if( EVENTDATA_CheckPosEvent( sys_wk->evdata, sys_wk->evwork, ev_pos, DIR_MAX ) != EVENTDATA_ID_NONE ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  アイテムミッションギミック　エフェクト生成時の当たり判定(レール)
+ */
+//----------------------------------------------------------------------
+static BOOL sub_CheckHitAnotherEventForRail( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, const RAIL_LOCATION* ev_loc )
+{
+  MMDL* mmdl;
+#if 0
+  FLDMAP_BASESYS_TYPE ftype = FIELDMAP_GetBaseSystemType( sys_wk->fieldWork );
+
+  //自分の初期位置との当たり判定を取る
+  if( MMDL_GetRailLocation( sys_wk->player_mmdl, &location ) )
+  {
+    if( PosEventData_RPOS_IsHit( pd, &location)){
+      return TRUE;
+    }
+  }
+#endif
+  //動作モデルとの判定を取る
+  mmdl = MMDLSYS_SearchRailLocation( sys_wk->mmdl_sys, ev_loc, FALSE );
+  if( mmdl != NULL && mmdl != sys_wk->player_mmdl ){  //自機は除外する
+    return TRUE;
+  }
+
+  //他のPOSイベントとの当たり判定を取る
+  if( EVENTDATA_CheckPosEventRailLocation( sys_wk->evdata, sys_wk->evwork, ev_loc ) != EVENTDATA_ID_NONE ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------
@@ -318,11 +399,11 @@ static u16 sub_LotItem( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, GFL_STD_
   u32 rnd;
   const FES_ITEM_SET* ps;
 
-  if( sys_wk->fmwk->param >= FMISSION_ITEM_SET_MAX ){
+  if( sys_wk->fmwk->beacon.base_param >= FMISSION_ITEM_SET_MAX ){
     ps = &DATA_ItemSetTbl[FMISSION_ITEM_SET_KAKERA];
     GF_ASSERT(0);
   }else{
-    ps = &DATA_ItemSetTbl[ sys_wk->fmwk->param ];
+    ps = &DATA_ItemSetTbl[ sys_wk->fmwk->beacon.base_param ];
   }
   rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_ITEM_PROB_MAG, NULL, 0 );
 
@@ -339,4 +420,50 @@ static u16 sub_LotItem( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, GFL_STD_
 }
 
 
+//----------------------------------------------------------------------
+/*
+ *  @brief  アイテムミッションギミック ゾーンチェンジ時のフラグ初期化
+ */
+//----------------------------------------------------------------------
+static void sub_FlagTableUpdate( FES_GIMMICK_ITEM_WORK* wk, u16 zone_id )
+{
+  int i,idx = 0;
+
+  //データの無いゾーンなら何もしない
+  if( wk->data_max == 0 ){
+    return;
+  }
+  //すでにテーブルに登録済みなら何もしない
+  for( i = 0;i < wk->flag_wk->tbl_num;i++){
+   if( wk->flag_wk->tbl[i].zone_id == zone_id ){
+     return;
+   }
+  }
+  if( wk->flag_wk->tbl_num < FES_GIMMCIK_ITEM_FLAG_WORK_NUM ){  //新しい場所に登録
+    idx = wk->flag_wk->tbl_num++;
+  }else{  //一番古いテーブルを押し出し
+    idx = FES_GIMMCIK_ITEM_FLAG_WORK_NUM-1;
+    MI_CpuCopy8( &wk->flag_wk->tbl[1], &(wk->flag_wk->tbl[0]), sizeof(FES_GIMMICK_ITEM_FLAG)*(FES_GIMMCIK_ITEM_FLAG_WORK_NUM-1)); 
+  }
+  MI_CpuClear8( &wk->flag_wk->tbl[ idx ], sizeof(FES_GIMMICK_ITEM_FLAG));
+  wk->flag_wk->tbl[ idx ].zone_id = zone_id;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  アイテムミッションギミック 指定ゾーンのフラグテーブル取得
+ */
+//----------------------------------------------------------------------
+static FES_GIMMICK_ITEM_FLAG* sub_FlagTableGet( FES_GIMMICK_ITEM_WORK* wk, u16 zone_id )
+{
+  int i,idx = 0;
+
+  for( i = 0;i < wk->flag_wk->tbl_num;i++){
+   if( wk->flag_wk->tbl[i].zone_id == zone_id ){
+     return &wk->flag_wk->tbl[i];
+   }
+  }
+  GF_ASSERT(0); //見つからなかった
+  return &wk->flag_wk->tbl[0];
+}
 

@@ -17,6 +17,7 @@
 #define BUFLEN_FMISSION_EXP   (18*4*2+EOM_SIZE) //(18文字*4行)*2+EOM
 
 ///外部参照用
+typedef struct _FEST_BEACON FEST_BEACON;
 typedef struct _FEST_MISSION FEST_MISSION;
 
 #include "gamesystem/fmission_data_id.h"
@@ -100,6 +101,13 @@ extern BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk,  FMISSION_LOG_ACTION act
  */
 //---------------------------------------------------------
 extern u32 FEST_MISSION_TimeBonusCalc( FEST_MISSION* fmwk,  u16 score_diff );
+
+//---------------------------------------------------------
+/*
+ * @brief フェスビーコン比較
+ */
+//---------------------------------------------------------
+extern BOOL FEST_BEACON_IsSame( const FEST_BEACON* b1, const FEST_BEACON* b2 );
 
 //=================================================
 //以下デバッグルーチン

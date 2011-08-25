@@ -104,6 +104,7 @@ extern void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send);
 //--------------------------------------------------------------
 extern void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGER *send, u16 action, u32 param );
 
+#if 0
 //--------------------------------------------------------------
 /**
  * フェスビーコン送信をセットした時の共通処理
@@ -113,6 +114,7 @@ extern void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGE
  */
 //--------------------------------------------------------------
 extern void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 action, u16 param );
+#endif
 
 //--------------------------------------------------------------
 /**

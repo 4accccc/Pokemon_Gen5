@@ -172,9 +172,10 @@ void FMISSION_SAVE_SetMissionClearNum( FMISSION_SAVE* sv, u32 value )
 u16 FMISSION_SAVE_GetMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
+    GF_ASSERT(0);
     return 0;
   }
-  return sv->status[id].high_score;
+  return sv->high_score[id];
 }
 
 //---------------------------------------------------------------------------
@@ -186,10 +187,11 @@ u16 FMISSION_SAVE_GetMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_
 void FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score )
 {
   if( id >= FMISSION_ID_MAX || new_score > FMISSION_SAVE_HIGH_SCORE_MAX ){
+    GF_ASSERT(0);
     return;
   }
-  if( sv->status[id].high_score < new_score ){
-    sv->status[id].high_score = new_score;
+  if( sv->high_score[id] < new_score ){
+    sv->high_score[id] = new_score;
   }
 }
 
@@ -204,10 +206,11 @@ void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSIO
   if( id >= FMISSION_ID_MAX ){
     *min = 0;
     *sec = 0;
+    GF_ASSERT(0);
     return;
   }
-  *min = sv->status[id].high_score/60;
-  *sec = sv->status[id].high_score%60;
+  *sec = sv->high_score[id]%60;
+  *min = sv->high_score[id]/60;
 }
 
 //---------------------------------------------------------------------------
@@ -219,10 +222,11 @@ void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSIO
 void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_time )
 {
   if( id >= FMISSION_ID_MAX ){
+    GF_ASSERT(0);
     return;
   }
-  if( new_time < sv->status[id].high_score ){
-    sv->status[id].high_score = new_time;
+  if( new_time < sv->high_score[id] ){
+    sv->high_score[id] = new_time;
   }
 }
 
@@ -235,9 +239,10 @@ void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MIS
 void FMISSION_SAVE_SetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 score )
 {
   if( id >= FMISSION_ID_MAX || score > FMISSION_SAVE_HIGH_SCORE_MAX ){
+    GF_ASSERT(0);
     return;
   }
-  sv->status[id].high_score = score;
+  sv->high_score[id] = score;
 }
 
 //---------------------------------------------------------------------------
@@ -252,6 +257,7 @@ void FMISSION_SAVE_SetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID
 u8 FMISSION_SAVE_GetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
+    GF_ASSERT(0);
     return 0;
   }
   return sv->status[id].level;
@@ -266,6 +272,7 @@ u8 FMISSION_SAVE_GetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID 
 void FMISSION_SAVE_SetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id, FMISSION_LEVEL level )
 {
   if( id >= FMISSION_ID_MAX ){
+    GF_ASSERT(0);
     return;
   }
   sv->status[id].level = (level+1);
@@ -280,6 +287,7 @@ void FMISSION_SAVE_SetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_I
 BOOL FMISSION_SAVE_CheckMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
+    GF_ASSERT(0);
     return FALSE;
   }
   return sv->status[id].new_f;
@@ -293,6 +301,7 @@ BOOL FMISSION_SAVE_CheckMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID
 void FMISSION_SAVE_SetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
+    GF_ASSERT(0);
     return;
   }
   sv->status[id].new_f = TRUE;
@@ -306,6 +315,7 @@ void FMISSION_SAVE_SetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID i
 void FMISSION_SAVE_ResetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
+    GF_ASSERT(0);
     return;
   }
   sv->status[id].new_f = FALSE;

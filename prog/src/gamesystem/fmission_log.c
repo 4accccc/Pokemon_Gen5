@@ -264,8 +264,12 @@ void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *inf
 
   FMISSION_ENTRY_Clear(&entry);
 
-  //パラメータセット
-  entry.mission = info->action.fmission;
+  //ビーコン継承パラメータセット
+  entry.mission.beacon = info->action.fmission;
+
+  //コモンアーカイブデータセット
+  LINK_FESTIVAL_GetMissionArcCommonData( fest_sys, info->action.fmission.m_id, &entry.mission.arc );
+ 
   //名前(info->nameはEOM抜き)
   GFL_STD_MemCopy16( info->name, entry.name, PERSON_NAME_SIZE);
 
@@ -299,8 +303,8 @@ void FMISSION_ENTRY_TBL_Update( LINK_FESTIVAL* fest_sys )
   FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
 
   for(i = 0;i < tbl->entry_num; i++ ){
-    if( tbl->entry[i].mission.life ){
-      if( --tbl->entry[i].mission.life < LINKFEST_LIFE_LIMIT ){
+    if( tbl->entry[i].mission.beacon.life ){
+      if( --tbl->entry[i].mission.beacon.life < LINKFEST_LIFE_LIMIT ){
         end = tbl->entry_num-1;
         if( i < end ){
           GFL_STD_MemCopy32( &tbl->entry[i+1], &tbl->entry[i], sizeof(FMISSION_ENTRY)*(end-i));
@@ -382,7 +386,7 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
   }else if( action == FMISSION_LOG_ACT_MAP_CHANGE){
     p_log->param = info->townmap_root_zone_id;
   }else{
-    p_log->param = info->action.fmission.param;
+    p_log->param = info->action.fmission.act_param;
   }
   return TRUE;
 }
@@ -398,20 +402,19 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
 static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info )
 {
   int i;
-  const FEST_MISSION* fmwk;
+  const FEST_BEACON* beacon;
   FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
 
   //アクションチェック
   if(GAMEBEACON_Check_FestMissionWithParam(info) == FALSE){
     return ENTRY_NONE;
   }
-  fmwk = &info->action.fmission;
+  beacon = &info->action.fmission;
 
   //スタックにすでに積まれているミッションと同一なら無視か上書き
   for( i = 0;i < tbl->entry_num;i++){
-    if( tbl->entry[i].mission.m_id == fmwk->m_id &&
-        tbl->entry[i].mission.key == fmwk->key ){
-      if( tbl->entry[i].mission.life < fmwk->life ){  //新しい方がライフが長ければ上書き
+    if( FEST_BEACON_IsSame( &tbl->entry[i].mission.beacon, beacon )){
+      if( tbl->entry[i].mission.beacon.life < beacon->life ){  //新しい方がライフが長ければ上書き
         return ENTRY_UPDATE0+i;
       }
       return ENTRY_NONE;
@@ -419,13 +422,12 @@ static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_I
   }
   //現在のミッションと同一なら積まない
   if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
-    if( fmwk->m_id == fest_sys->mission.m_id  && 
-        fmwk->key == fest_sys->mission.key ){
+    if( FEST_BEACON_IsSame( beacon, fest_sys->m_beacon )){
       return ENTRY_NONE;
     }
   }
   //無視対象のミッションなら積まない
-  if( LINK_FESTIVAL_IsEgnoreMission( fest_sys, fmwk )){
+  if( LINK_FESTIVAL_IsEgnoreMission( fest_sys, beacon )){
     return ENTRY_NONE;
   }
   return ENTRY_NEW;

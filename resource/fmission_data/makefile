@@ -19,6 +19,7 @@ GSYS_S_DIR = $(PROJECT_PROGDIR)src/gamesystem/
 target_name = fmission_data
 data_xls = $(target_name).xls
 data_bin = $(target_name).bin
+data_common_bin = $(target_name)_common.bin
 def_header = $(target_name)_def.h
 mission_id_h = $(target_name)_id.h
 msg_data = $(PROJECT_RSCDIR)/message/msproj/src/fest_mission.mstxt
@@ -81,7 +82,10 @@ $(data_def_csv): $(data_xls)
 	$(EXCELCONV) -o $@ -p 2 -s csv $<
 
 $(data_bin): $(BIN_DEPEND_LIST)
-	$(RUBY) $(RUBY_DAT_RES) $(data_bin) $(def_header) $(mission_id_h) $(data_csv) $(data_def_csv) $(evflag_h) $(msg_id_h)
+	$(RUBY) $(RUBY_DAT_RES) $(data_bin) $(data_common_bin) $(def_header) $(mission_id_h) $(data_csv) $(data_def_csv) $(evflag_h) $(msg_id_h)
+
+$(data_common_bin): $(BIN_DEPEND_LIST)
+	$(RUBY) $(RUBY_DAT_RES) $(data_bin) $(data_common_bin) $(def_header) $(mission_id_h) $(data_csv) $(data_def_csv) $(evflag_h) $(msg_id_h)
 
 $(mission_id_h): $(BIN_DEPEND_LIST)
 	@echo $@ $<
@@ -93,8 +97,8 @@ $(def_header): $(BIN_DEPEND_LIST)
 	ruby $(RUBY_DAT_DEF) $< $(DATDIR)
 	unix2dos -D $@
 
-$(data_narc): $(data_bin)
-	nnsarc -c -l -n -i $(data_narc) $(data_bin) >arc_result.txt
+$(data_narc): $(data_bin) $(data_common_bin)
+	nnsarc -c -l -n -i $(data_narc) $(data_common_bin) $(data_bin) >arc_result.txt
 	$(NAIXCUT) $(data_naix)
 
 endif

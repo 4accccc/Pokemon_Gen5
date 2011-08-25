@@ -812,7 +812,10 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
 
         if( comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH ){
           *seq = SEQ_FINISH;
-        }else if( comm_no != GAME_COMM_NO_NULL ){
+        }else if( comm_no == GAME_COMM_NO_NULL ){
+          *seq = SEQ_COMM_RESTART;
+        }
+        else{
           GameCommSys_ExitReq( mfw->gcsp );
           OS_TPrintf("パレス通信終了\n");
           *seq = SEQ_COMM_EXIT_WAIT;

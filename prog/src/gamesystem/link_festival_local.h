@@ -35,7 +35,14 @@ struct _LINK_FESTIVAL{
   u16 log_num;  //スコアログ登録数
   u16 log_idx;  //スコアログリング参照トップindex
   
+
+  //ミッションアーカイブ常駐データ
+  FMISSION_ARC_COMMON*  p_arc_data;
+
   FEST_MISSION  mission;            //現ミッションデータ
+  FEST_BEACON*  m_beacon;           //現ミッションデータ ビーコン構造体へのアクセスポインタ
+  FMISSION_ARC_COMMON*  m_arc;      //現ミッションデータ コモンアーカイブデータ構造体へのアクセスポインタ
+
 //  GFL_STD_RandContext rnd_context;  //現ミッションで用いる乱数コンテキスト
 
   //ミッションフラグ領域

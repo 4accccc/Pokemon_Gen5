@@ -1237,19 +1237,16 @@ u16 GAMEBEACON_Get_Action_GPowerID(const GAMEBEACON_INFO *info)
 /**
  * フェスタミッションパラメータ取得：
  * @param   info	ビーコン情報へのポインタ
- * @param  FEST_MISSION*		データを格納するフェスタミッション構造体型ワークへのポインタ
+ * @param  FEST_BEACON*		データを格納するフェスビーコン構造体型ワークへのポインタ
  *
  * @retval  TRUE  データ取得成功
  * @retval  FALSE データ取得失敗
  */
 //==================================================================
-BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_MISSION* fmwk )
+BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_BEACON* fbwk )
 {
-  int i;
-
   if( GAMEBEACON_Check_FestMissionWithParam(info)){
-    FEST_MISSION_Clear(fmwk);
-    *fmwk = info->action.fmission;
+    *fbwk = info->action.fmission;
     return TRUE;
   }
   return FALSE;

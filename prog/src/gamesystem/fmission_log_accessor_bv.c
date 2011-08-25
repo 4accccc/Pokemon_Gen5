@@ -59,7 +59,7 @@ BOOL FMISSION_ENTRY_TBL_GetData( FMISSION_ENTRY_TBL* tbl, FEST_MISSION* fmwk, ST
   if( tbl->entry_num == 0 ){
     return FALSE;
   }
-  if( tbl->entry[0].mission.life > (30*60) ){
+  if( tbl->entry[0].mission.beacon.life > (30*60) ){  //Žc‚èŽžŠÔ‚ª30•bˆÈã‚¶‚á‚È‚¢‚Æ•Ô‚³‚È‚¢
     GFL_STR_SetStringCodeOrderLength( name_buf, tbl->entry[0].name, PERSON_NAME_SIZE+EOM_SIZE );
     *fmwk = tbl->entry[0].mission;
     ret = TRUE;

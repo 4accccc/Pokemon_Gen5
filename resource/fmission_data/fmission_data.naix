@@ -11,7 +11,8 @@
 #define NARC_FMISSION_DATA_NAIX_
 
 enum {
-	NARC_fmission_data_fmission_data_bin = 0
+	NARC_fmission_data_fmission_data_common_bin = 0,
+	NARC_fmission_data_fmission_data_bin = 1
 };
 
 /* NARC_FMISSION_DATA_NAIX_ */

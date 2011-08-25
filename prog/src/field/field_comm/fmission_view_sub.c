@@ -95,9 +95,9 @@ void FMissionView_InitialDraw( FMISSION_VIEW_PTR wk )
 {
   int i;
 
-  wk->ctrl.fm_my_score = wk->fmwk->my_score;
+  wk->ctrl.fm_my_score = wk->fmwk->beacon.my_score;
   wk->ctrl.fm_score = LINK_FESTIVAL_GetNowScore( wk->fest_sys );
-  wk->ctrl.fm_sec = wk->fmwk->life/60;
+  wk->ctrl.fm_sec = wk->fmwk->beacon.life/60;
   wk->ctrl.fm_entry = LINK_FESTIVAL_GetMissionEntryNum( wk->fest_sys );
 
   PaletteTrans_AutoSet( wk->pfd, TRUE );

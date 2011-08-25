@@ -481,7 +481,7 @@ static void panel_NumberDraw( FIELD_FMISSION_INFO* wk, int num, int keta, u8 act
 //--------------------------------------------------------------
 static void panel_TimeUpdate( FIELD_FMISSION_INFO* wk, BOOL force_f )
 {
-  int sec = wk->fmwk->life/60;
+  int sec = wk->fmwk->beacon.life/60;
   int min = sec/60;
 
   if( sec == wk->old_sec && !force_f ){
@@ -518,7 +518,7 @@ static void panel_ScrollInit( FIELD_FMISSION_INFO* wk )
 
   //•`‰æó‘ÔƒZƒbƒg
   panel_TimeUpdate( wk, TRUE );
-  panel_ScoreUpdate( wk, wk->fmwk->goal, ACT_MSN01 );
+  panel_ScoreUpdate( wk, wk->fmwk->beacon.goal, ACT_MSN01 );
   panel_ScoreUpdate( wk, LINK_FESTIVAL_FInfoScoreGet( wk->fest_sys ), ACT_TSN01 );
 
   wk->visible_f = TRUE;

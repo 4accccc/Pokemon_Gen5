@@ -61,7 +61,7 @@
 #define  FMISSION_ID_TRBTL_TR_01  ( 49 )  ///<トレーナーを倒せ！
 #define  FMISSION_ID_MAX  ( 50 )
 #define  FMISSION_ID_END  ( FMISSION_ID_MAX-1 )
-#define  FMISSION_ID_NULL ( 0xFF )
+#define  FMISSION_ID_NULL ( 0x7F )
 
 #ifndef __ASM_NO_DEF_  //ここからアセンブラでは無視
 

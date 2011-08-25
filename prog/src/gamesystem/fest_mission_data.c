@@ -35,6 +35,7 @@
 
 #include "message.naix"
 #include "msg/msg_fest_mission.h"
+#include "fmission_data.naix"
 
 #define MIN2SEC(x)  (x*60)
 
@@ -60,6 +61,7 @@ static const FMISSION_DATA_TYPE DATA_FMissionDataType[FMISSION_TYPE_MAX] = {
 };
 
 static void wset_MissionParam( WORDSET* wset, STRBUF* tmp, u8 bufID, FMISSION_WSET type, int value );
+SDK_COMPILER_ASSERT( sizeof(FMISSION_ARC_COMMON) <= 6); //フェスミッション構造体型サイズはmax20byteまで
 
 //------------------------------------------------------------
 /*
@@ -93,14 +95,32 @@ void FMISSION_DATA_Release( FMISSION_DATA_MAN* man )
 
 //------------------------------------------------------------
 /*
+ *  @brief  フェスミッション常駐データをアロケートしたメモリに取得する(アーカイブをその場で開く)
+ *
+ *  使用後はGFL_HEAP_FreeMemory()で開放してください
+ */
+//------------------------------------------------------------
+FMISSION_ARC_COMMON* FMISSION_DATA_AllocArcCommonAllDirect( HEAPID heapID )
+{
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_FMISSION_DATA, GFL_HEAP_LOWID(heapID) );
+  FMISSION_ARC_COMMON* buf = GFL_ARC_LoadDataAllocByHandle( handle, NARC_fmission_data_fmission_data_common_bin, heapID );
+  GFL_ARC_CloseDataHandle( handle );
+
+  return buf;
+}
+
+//------------------------------------------------------------
+/*
  *  @brief  指定ミッションのパラメータをFMISSION_ARCDATA型ワークに取得する
  *  データハンドルは GFL_ARC_OpenDataHandle( ARCID_FMISSION_DATA, heapID ); であらかじめ取得してください
  */
 //------------------------------------------------------------
-void FMISSION_DATA_GetArcParamByHandle( ARCHANDLE* handle, FEST_MISSION_ID id, FMISSION_ARCDATA* fm_arc )
+void FMISSION_DATA_GetArcByHandle( ARCHANDLE* handle, FEST_MISSION_ID id, FMISSION_ARCDATA* fm_arc )
 {
-  GFL_ARC_LoadDataOfsByHandle( handle, 0,
-      id*sizeof(FMISSION_ARCDATA), sizeof(FMISSION_ARCDATA), fm_arc );
+  GFL_ARC_LoadDataOfsByHandle( handle, NARC_fmission_data_fmission_data_common_bin,
+      id*sizeof(FMISSION_ARC_COMMON), sizeof(FMISSION_ARC_COMMON), &fm_arc->common );
+  GFL_ARC_LoadDataOfsByHandle( handle, NARC_fmission_data_fmission_data_bin,
+      id*sizeof(FMISSION_ARC_PARAM), sizeof(FMISSION_ARC_PARAM), &fm_arc->param );
 }
 
 //------------------------------------------------------------
@@ -111,9 +131,15 @@ void FMISSION_DATA_GetArcParamByHandle( ARCHANDLE* handle, FEST_MISSION_ID id, F
  *  使用後はGFL_HEAP_FreeMemory()で開放してください
  */
 //------------------------------------------------------------
-FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAllByHandle( ARCHANDLE* handle, HEAPID heapID )
+FMISSION_ARCDATA* FMISSION_DATA_AllocArcAllByHandle( ARCHANDLE* handle, HEAPID heapID )
 {
-  return (FMISSION_ARCDATA*)GFL_ARC_LoadDataAllocByHandle( handle, 0, heapID );
+  int i;
+  FMISSION_ARCDATA* buf = GFL_HEAP_AllocClearMemory( heapID, sizeof(FMISSION_ARCDATA)*FMISSION_ID_MAX);
+
+  for( i = 0;i < FMISSION_ID_MAX;i++){
+    FMISSION_DATA_GetArcByHandle( handle, i, &buf[i] );
+  }
+  return buf;
 }
 
 //------------------------------------------------------------
@@ -123,9 +149,9 @@ FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAllByHandle( ARCHANDLE* handle, HEA
  *  使用後はGFL_HEAP_FreeMemory()で開放してください
  */
 //------------------------------------------------------------
-FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAll( FMISSION_DATA_MAN* man, HEAPID heapID )
+FMISSION_ARCDATA* FMISSION_DATA_AllocArcAll( FMISSION_DATA_MAN* man, HEAPID heapID )
 {
-  return FMISSION_DATA_AllocArcParamAllByHandle( man->data_h, heapID );
+  return FMISSION_DATA_AllocArcAllByHandle( man->data_h, heapID );
 }
 
 //------------------------------------------------------------
@@ -135,10 +161,10 @@ FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAll( FMISSION_DATA_MAN* man, HEAPID
  *  使用後はGFL_HEAP_FreeMemory()で開放してください
  */
 //------------------------------------------------------------
-FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAllDirect( HEAPID heapID )
+FMISSION_ARCDATA* FMISSION_DATA_AllocArcAllDirect( HEAPID heapID )
 {
   ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_FMISSION_DATA, heapID );
-  FMISSION_ARCDATA* wk = FMISSION_DATA_AllocArcParamAllByHandle( handle, heapID );
+  FMISSION_ARCDATA* wk = FMISSION_DATA_AllocArcAllByHandle( handle, heapID );
   GFL_ARC_CloseDataHandle( handle );
 
   return wk;
@@ -152,23 +178,31 @@ FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAllDirect( HEAPID heapID )
 void FMISSION_DATA_GetMissionParamByHandle( ARCHANDLE* handle, FEST_MISSION_ID id, FMISSION_LEVEL level, FEST_MISSION* fmwk )
 {
   FMISSION_ARCDATA dat;
+  FEST_BEACON* beacon;
+  FMISSION_ARC_PARAM* pp;
 
   MI_CpuClear8(fmwk,sizeof(FEST_MISSION));
-  FMISSION_DATA_GetArcParamByHandle( handle, id, &dat);
+  FMISSION_DATA_GetArcByHandle( handle, id, &dat);
 
-  fmwk->m_id = id;
-  fmwk->m_type = dat.m_type; 
-  fmwk->param = dat.param;
+  beacon = &fmwk->beacon;
+  pp = &dat.param;
+
+  beacon->m_id = id;
+//  beacon->m_type = pc->m_type; 
+  beacon->base_param = pp->param;
   
-  fmwk->m_time = dat.level[level].time;
-  fmwk->goal = dat.level[level].goal;
-  fmwk->pay = dat.level[level].pay;
-  fmwk->item = dat.item;
-  fmwk->end_type = dat.end_type;
-  fmwk->time_bonus = dat.time_bonus;
-  fmwk->pay_bonus = dat.pay_bonus;
+//  beacon->m_time = pp->level[level].time;
+  beacon->goal = pp->level[level].goal;
+  beacon->pay = pp->level[level].pay;
+  beacon->item = pp->item;
+  beacon->end_type = pp->end_type;
+  beacon->time_bonus = pp->time_bonus;
+  beacon->pay_bonus = pp->pay_bonus;
 
-  fmwk->life = fmwk->m_time*60; //sec2frame
+  beacon->life = pp->level[level].time*60; //sec2frame
+
+  //アーカイブコモンデータセット
+  fmwk->arc = dat.common;
 }
 
 //------------------------------------------------------------
@@ -202,15 +236,16 @@ void FMISSION_DATA_GetMissionParamDirect( FEST_MISSION_ID id, FMISSION_LEVEL lev
 //---------------------------------------------------------
 void FMISSION_DATA_WordsetParamAll( WORDSET* wset, FEST_MISSION* fmwk )
 {
-  int sec = LINKFEST_FRAME2SEC(fmwk->life);
+  FEST_BEACON* beacon = &fmwk->beacon;
+  int sec = LINKFEST_FRAME2SEC(beacon->life);
 
 #if 0
-  WORDSET_RegisterNumber( wset, 0, fmwk->m_time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 1, fmwk->goal, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  wset_MissionParam( wset, 2, DATA_FMissionDataType[fmwk->m_type].param_wset,fmwk->param, WSET_MODE_TITLE );
+  WORDSET_RegisterNumber( wset, 0, beacon->m_time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wset, 1, beacon->goal, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  wset_MissionParam( wset, 2, DATA_FMissionDataType[beacon->m_type].param_wset,beacon->param, WSET_MODE_TITLE );
 #endif
-  WORDSET_RegisterItemName( wset, 3, fmwk->item );
-  WORDSET_RegisterNumber( wset, 4, fmwk->pay, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterItemName( wset, 3, beacon->item );
+  WORDSET_RegisterNumber( wset, 4, beacon->pay, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wset, 5, sec/60, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wset, 6, sec%60, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }
@@ -224,19 +259,19 @@ void FMISSION_DATA_WordsetParamAll( WORDSET* wset, FEST_MISSION* fmwk )
 //---------------------------------------------------------
 void FMISSION_DATA_GetTitleStr( FMISSION_DATA_MAN* man, STRBUF* str, const FEST_MISSION* fmwk, HEAPID heapID )
 {
-  FMISSION_ARCDATA  fm_arc;
+  const FEST_BEACON* beacon = &fmwk->beacon;
+  const FMISSION_ARC_COMMON* arc = &fmwk->arc;
   WORDSET* wset = WORDSET_CreateEx( 2, WORDSET_FMISSION_BUFLEN, GFL_HEAP_LOWID(heapID));
   STRBUF* tmp = GFL_STR_CreateBuffer( BUFLEN_FMISSION_TITLE, GFL_HEAP_LOWID(heapID) );
-  FMISSION_DATA_GetArcParamByHandle( man->data_h, fmwk->m_id, &fm_arc );
-
+  
   //パラメータ
-  wset_MissionParam( wset, tmp, 0, DATA_FMissionDataType[fmwk->m_type].param_wset, fmwk->param ); 
-  IWASAWA_Printf("FmissionTitle type%d\n", fmwk->m_type );
+  wset_MissionParam( wset, tmp, 0, DATA_FMissionDataType[arc->m_type].param_wset, beacon->base_param ); 
+  IWASAWA_Printf("FmissionTitle type%d\n", arc->m_type );
 
   //目標
-  WORDSET_RegisterNumber( wset, 1, fmwk->goal, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wset, 1, beacon->goal, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   
-  GFL_MSG_GetString( man->msg, fm_arc.m_title_id, tmp );
+  GFL_MSG_GetString( man->msg, arc->m_title_id, tmp );
   WORDSET_ExpandStr( wset, str, tmp );
 
   GFL_STR_DeleteBuffer( tmp );
@@ -252,21 +287,18 @@ void FMISSION_DATA_GetTitleStr( FMISSION_DATA_MAN* man, STRBUF* str, const FEST_
 //---------------------------------------------------------
 void FMISSION_DATA_GetExpStr( FMISSION_DATA_MAN* man, STRBUF* str, const FEST_MISSION* fmwk, HEAPID heapID )
 {
-  FMISSION_ARCDATA  fm_arc;
-  WORDSET* wset = WORDSET_CreateEx( 3, WORDSET_FMISSION_BUFLEN, GFL_HEAP_LOWID(heapID));
+  const FEST_BEACON* beacon = &fmwk->beacon;
+  const FMISSION_ARC_COMMON* arc = &fmwk->arc;
+  WORDSET* wset = WORDSET_CreateEx( 2, WORDSET_FMISSION_BUFLEN, GFL_HEAP_LOWID(heapID));
   STRBUF* tmp = GFL_STR_CreateBuffer( BUFLEN_FMISSION_EXP, GFL_HEAP_LOWID(heapID) );
  
-  FMISSION_DATA_GetArcParamByHandle( man->data_h, fmwk->m_id, &fm_arc );
-  
-  //時間
-  WORDSET_RegisterNumber( wset, 0, fmwk->m_time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   //目標
-  WORDSET_RegisterNumber( wset, 1, fmwk->goal, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wset, 0, beacon->goal, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 
   //パラメータ
-  wset_MissionParam( wset, tmp, 2, DATA_FMissionDataType[fmwk->m_type].param_wset, fmwk->param ); 
+  wset_MissionParam( wset, tmp, 1, DATA_FMissionDataType[arc->m_type].param_wset, beacon->base_param ); 
   
-  GFL_MSG_GetString( man->msg, fm_arc.m_exp_id, tmp );
+  GFL_MSG_GetString( man->msg, arc->m_exp_id, tmp );
   WORDSET_ExpandStr( wset, str, tmp );
 
   GFL_STR_DeleteBuffer( tmp );

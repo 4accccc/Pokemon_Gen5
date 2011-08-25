@@ -1754,7 +1754,7 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
       fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
       if( FEST_MISSION_IsLive( fmwk ) ){
         mission = *fmwk;
-        mission.my_score = value;
+        mission.beacon.my_score = value;
         ((BEACON_SET_FUNC_FMISSION)evwk->b_prm->func)( &mission );
       }
     }

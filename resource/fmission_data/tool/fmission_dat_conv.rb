@@ -47,31 +47,38 @@ COLUMN_UNIT = 5
 COLUMN_END_TYPE = 6
 COLUMN_TBONUS = 7
 COLUMN_PAY_BONUS = 8
-COLUMN_FLAG = 9
-COLUMN_LOCATION = 10 
-COLUMN_HOST = 11
-COLUMN_LV1_TIME = 12
-COLUMN_LV1_GOAL = 13
-COLUMN_LV1_NUM = 14
-COLUMN_LV2_TIME = 15
-COLUMN_LV2_GOAL = 16
-COLUMN_LV2_NUM = 17
-COLUMN_LV3_TIME = 18
-COLUMN_LV3_GOAL = 19
-COLUMN_LV3_NUM = 20
-COLUMN_ITEM = 21
-COLUMN_TITLE = 22
-COLUMN_EXP = 23
+COLUMN_OPEN_FLAG = 9
+COLUMN_ENTRY_FLAG = 10 
+COLUMN_LOCATION = 11 
+COLUMN_HOST = 12
+COLUMN_LV1_TIME = 13
+COLUMN_LV1_GOAL = 14
+COLUMN_LV1_NUM = 15
+COLUMN_LV2_TIME = 16
+COLUMN_LV2_GOAL = 17
+COLUMN_LV2_NUM = 18
+COLUMN_LV3_TIME = 19
+COLUMN_LV3_GOAL = 20
+COLUMN_LV3_NUM = 21
+COLUMN_LV4_TIME = 22
+COLUMN_LV4_GOAL = 23
+COLUMN_LV4_NUM = 24
+COLUMN_ITEM = 25
+COLUMN_DSCORE_ITEM = 26
+COLUMN_DSCORE_PAY = 27
+COLUMN_TITLE = 28
+COLUMN_EXP = 29
 
 arg = $*
 
 $fpath_out_bin = arg[0]
-$fpath_out_def = arg[1]
-$fpath_out_mid = arg[2]
-$fpath_in_dat_csv = arg[3]
-$fpath_in_def_csv = arg[4]
-$fpath_in_evflag_h = arg[5]
-$fpath_in_msg_h = arg[6]
+$fpath_out_common_bin = arg[1]
+$fpath_out_def = arg[2]
+$fpath_out_mid = arg[3]
+$fpath_in_dat_csv = arg[4]
+$fpath_in_def_csv = arg[5]
+$fpath_in_evflag_h = arg[6]
+$fpath_in_msg_h = arg[7]
 
 #構造体定義
 
@@ -267,36 +274,47 @@ class CMission
   def print_mission_id fp, prefix, idx
     fp.puts("#define  #{prefix}_#{@type_str}_#{@id}  ( #{idx} )  ///<#{@memo}\n")
   end
+  
+  #ミッションコモンデータバイナリ出力
+  def print_common_bin fp
+    buf = Array.new
+
+    #u8*4 ミッションタイプ、表示単位、開催制限、タイトルMsgID、説明文MsgID
+    buf[0] = @type
+    buf[1] = @unit
+    buf[1] |= (@host<<4)
+    buf[2] = @title
+    buf[3] = @exp
+    fp.write( buf.pack("C4") )
+
+    #u16*1 参加条件フラグID
+    buf[0] = @entry_flag_id
+    fp.write( buf.pack("S1"))
+
+  end
 
   #ミッションデータバイナリ出力
   def print_bin fp
     buf = Array.new
 
-    #u8*6 ミッションタイプ、クリアタイプ、ボーナスタイム、範囲、開催制限、表示単位
-    buf[0] = @type
-    buf[1] = @end_type
-    buf[2] = @location
-    buf[3] = @host
-    buf[4] = @unit 
-    buf[5] = 0  #パディング 
-    fp.write( buf.pack("C6") )
-
-    #u16*3 汎用パラメータ、参加条件フラグID,報酬アイテム
-    buf[0] = @param
-    buf[1] = @flag
-    buf[2] = @item
-    print("mission_param = #{@param}, #{@flag}, #{@item}\n")
-    fp.write( buf.pack("S3"))
-
-    #u8 * 4 報酬ボーナスタイプ、タイトルメッセージ、説明文、パディング
-    buf[0] = @time_bonus
-    buf[1] = @pay_bonus
-    buf[2] = @title
-    buf[3] = @exp
+    #u8*4  クリアタイプ、範囲、タイムボーナス、報酬ボーナス、ダブルスコア報酬数
+    buf[0] = @end_type
+    buf[0] |= (@location<<4)
+    buf[1] = @time_bonus
+    buf[2] = @pay_bonus
+    buf[3] = @ds_pay
     fp.write( buf.pack("C4") )
-    
-    #(u16,u8,u8) * 3 レベルごとの制限時間と目標と報酬数
-    fp.write( @level.pack("SCCSCCSCC") )
+
+    #u16*4 ダブルスコアアイテム、汎用パラメータ、報酬アイテム、ミッションの開放条件フラグID
+    buf[0] = @ds_item
+    buf[1] = @param
+    buf[2] = @item
+    buf[3] = @open_flag_id 
+    print("mission_param = #{@param}, #{@item}, #{@ds_item}\n")
+    fp.write( buf.pack("S4"))
+
+    #(u16,u8,u8) * 4 レベルごとの制限時間と目標と報酬数
+    fp.write( @level.pack("SCCSCCSCCSCC") )
 
   end
 
@@ -340,13 +358,23 @@ class CMission
     @end_type = c_def_list.search( work[COLUMN_END_TYPE], "終了条件" ) 
     @time_bonus = work[COLUMN_TBONUS].to_i
     @pay_bonus = c_def_list.search( work[COLUMN_PAY_BONUS], "報酬ボーナスタイプ" )
-
-    ev_flag = work[COLUMN_FLAG]
+    
+    ev_flag = work[COLUMN_OPEN_FLAG]
     if ev_flag.to_i == 0 then
-      @flag = 0
+      @open_flag_id = 0
     else
-      @flag = c_evflag_list.searchID( ev_flag )
-      if @flag == nil then
+      @open_flag_id = c_evflag_list.searchID( ev_flag )
+      if @open_flag_id == nil then
+        print_err("オープン条件イベントフラグが不正です", ev_flag )
+      end
+    end
+
+    ev_flag = work[COLUMN_ENTRY_FLAG]
+    if ev_flag.to_i == 0 then
+      @entry_flag_id = 0
+    else
+      @entry_flag_id = c_evflag_list.searchID( ev_flag )
+      if @entry_flag_id == nil then
         print_err("参加条件イベントフラグが不正です", ev_flag )
       end
     end
@@ -354,7 +382,7 @@ class CMission
     @host = c_def_list.search( work[COLUMN_HOST], "開催制限" )
 
     @level = Array.new
-    for i in 0..3 do
+    for i in 0..4 do
       @level[i*3+0] = work[COLUMN_LV1_TIME+(i*3)].to_i
       @level[i*3+1] = work[COLUMN_LV1_GOAL+(i*3)].to_i
       @level[i*3+2] = work[COLUMN_LV1_NUM+(i*3)].to_i
@@ -364,6 +392,13 @@ class CMission
     if @item == nil then
       print_err("アイテム名が不正です",work[COLUMN_ITEM])
     end
+    
+    @ds_item = $item_hash.fetch(work[COLUMN_DSCORE_ITEM],nil)
+    if @ds_item == nil then
+      print_err("DScoreアイテム名が不正です",work[COLUMN_DSCORE_ITEM])
+    end
+    
+    @ds_pay = work[COLUMN_DSCORE_PAY].to_i
 
     @title = c_msg_list.searchID( work[COLUMN_TITLE] )
     if @title == nil then
@@ -419,11 +454,19 @@ class CMissionList
       end
       file.puts("#define  FMISSION_ID_MAX  ( #{idx} )\n")
       file.puts("#define  FMISSION_ID_END  ( FMISSION_ID_MAX-1 )\n")
-      file.puts("#define  FMISSION_ID_NULL ( 0xFF )\n\n")
+      file.puts("#define  FMISSION_ID_NULL ( 0x7F )\n\n")
       file.puts("#ifndef __ASM_NO_DEF_  //ここからアセンブラでは無視\n\n")
       file.puts("typedef u8 FEST_MISSION_ID;\n\n")
       file.puts("#endif //__ASM_NO_DEF_\n\n")
       file.puts("#endif //__H_FMISSION_DATA_ID_H__\n\n");
+    }
+  end
+  
+  def output_mission_common_bin f_path
+    File::open( f_path, "wb"){  |file|
+      for m in @mission do
+        m.print_common_bin( file )
+      end
     }
   end
 
@@ -454,6 +497,7 @@ def convert
 
   #出力
   c_mission.output_mission_id( $fpath_out_mid )
+  c_mission.output_mission_common_bin( $fpath_out_common_bin )
   c_mission.output_mission_bin( $fpath_out_bin )
  
   #定義出力

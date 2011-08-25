@@ -426,10 +426,11 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
 static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * work)
 {
   FMISSION_EVWORK* wk = work;
+  FEST_BEACON* beacon = &wk->mission.beacon;
 
   switch (*seq) {
   case 0:
-    if( wk->result && wk->mission.life > 0 ){ //クリアでミッション終了した場合
+    if( wk->result && beacon->life > 0 ){ //クリアでミッション終了した場合
       evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_clear );
     }else{  //タイムアップの場合
       evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_timeup );
@@ -499,8 +500,8 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
     { //クリアしていればアイテム入手イベントコール
       s16 num;
       MYITEM_PTR item_sv = GAMEDATA_GetMyItem( wk->gdata );
-      u32 max = MYITEM_GetItemMax( wk->mission.item );
-      u16 now = MYITEM_GetItemNum( item_sv, wk->mission.item, GFL_HEAP_LOWID(wk->heapID) );
+      u32 max = MYITEM_GetItemMax( beacon->item );
+      u16 now = MYITEM_GetItemNum( item_sv, beacon->item, GFL_HEAP_LOWID(wk->heapID) );
       GMEVENT* sc_event = SCRIPT_SetEventScript( wk->gsys, SCRID_ITEM_EVENT_FMISSION_CLEAR, NULL, HEAPID_FIELDMAP );
 
       SCRIPT_WORK* sc = SCRIPT_GetScriptWorkFromEvent( sc_event );
@@ -509,7 +510,7 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
       if( num >= wk->res_item_num ){
         num = wk->res_item_num;  
       }
-      SCRIPT_SetScriptWorkParam( sc, wk->mission.item, num, 0, 0 );
+      SCRIPT_SetScriptWorkParam( sc, beacon->item, num, 0, 0 );
       GMEVENT_CallEvent( event, sc_event );
     }
     (*seq)++;
@@ -596,7 +597,6 @@ static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void
 //-----------------------------------------------------------------
 static void sub_FMissionParamWordExpand( FMISSION_EVWORK* wk )
 {
-  IWASAWA_Printf("Mission %d Time = %d\n",wk->mission.m_time);
   FMISSION_DATA_WordsetParamAll( wk->wset, &wk->mission );
   WORDSET_RegisterNumber( wk->wset, 7, wk->res_score, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }
@@ -619,7 +619,7 @@ static void sub_FMissionParamDraw( FMISSION_EVWORK* wk, STRBUF* str, u8 px, u8 l
 //-----------------------------------------------------------------
 static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
 {
-  int sec = LINKFEST_FRAME2SEC(wk->mission.life);
+  int sec = LINKFEST_FRAME2SEC(wk->mission.beacon.life);
 
   //パラメータ
   FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
@@ -691,7 +691,7 @@ static void sub_FMissionCheckParamDraw( FMISSION_EVWORK* wk )
   sub_FMissionParamWordExpand( wk );
   
   //残り時間
-  if( (wk->mission.life / (60*60)) == 0 ){
+  if( (wk->mission.beacon.life / (60*60)) == 0 ){
     GFL_MSG_GetString( wk->msgData, msg_fmission_life02, wk->s_buf );
   }else{
     GFL_MSG_GetString( wk->msgData, msg_fmission_life01, wk->s_buf );

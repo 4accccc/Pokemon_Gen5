@@ -1569,12 +1569,12 @@ static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 d
   }
   MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
   FMISSION_DATA_GetMissionParamDirect( FMISSION_ID_POKEBTL_TABUNNE01, 0, &param.mission, wk->tmpHeapID );
-  param.mission.m_type = evwk->action;
-  param.mission.item = fake[FAKE_ITEM];
-  param.mission.pay = fake[FAKE_PAY];
-  param.mission.goal = fake[FAKE_GOAL];
-  param.mission.param = fake[FAKE_PARAM];
-  param.mission.m_time = fake[FAKE_TIME];
+  param.mission.beacon.m_id = evwk->action;
+  param.mission.beacon.item = fake[FAKE_ITEM];
+  param.mission.beacon.pay = fake[FAKE_PAY];
+  param.mission.beacon.goal = fake[FAKE_GOAL];
+  param.mission.beacon.base_param = fake[FAKE_PARAM];
+  param.mission.beacon.life = fake[FAKE_TIME]*60;
 
   param.succeed_f = FALSE;
 

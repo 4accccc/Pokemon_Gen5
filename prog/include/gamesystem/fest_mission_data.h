@@ -21,6 +21,50 @@ typedef struct _FMISSION_ARCDATA_LV_PARAM{
 }FMISSION_ARCDATA_LV_PARAM;
 
 /*
+ *  ミッションアーカイブデータアーカイブは、フィールドメインループのバックグラウンド処理中で
+ *  参照したい常駐データと、イベント発生時やアプリ中のみでだけ参照したい非常駐データで
+ *  ファイルを分けています。
+ */
+
+/*
+ * @brief ミッションアーカイブ 常駐データフォーマット
+ *
+ * この構造体の構成を変えた場合、resource/fmission_data/tool/fmission_dat_conv.rbを
+ * 修正する必要があります
+ *
+ * 8bitのメンバをu8で定義せずu16のbit field として扱っているのは
+ * 構造体サイズをu16[3]にするためです
+ */
+typedef struct _FMISSION_ARC_COMMON{
+  u16  m_type:8;         ///<ミッションタイプ FMISSION_TYPE_ID
+  u16  unit:4;           ///<表示単位 FMISSION_UNIT_ID
+  u16  host:4;           ///<開催制限 FMISSION_HOST_TYPE
+  u16  m_title_id:8;     ///<タイトルメッセージID
+  u16  m_exp_id:8;       ///<説明文メッセージID
+  u16  entry_flag_id;    ///<参加条件フラグID
+}FMISSION_ARC_COMMON;
+
+/*
+ * @brief ミッションアーカイブ 非常駐データフォーマット
+ *
+ * この構造体の構成を変えた場合、resource/fmission_data/tool/fmission_dat_conv.rbを
+ * 修正する必要があります
+ */
+typedef struct _FMISSION_ARC_PARAM{
+  u8  end_type:4;       ///<クリアタイプ FMISSION_END_TYPE
+  u8  location:4;       ///<範囲 FMISSION_LOCATION
+  u8  time_bonus;     ///<ボーナスタイム FMISSION_TBONUS
+  u8  pay_bonus;      ///<報酬計算式タイプ FMISSION_PAY_BONUS
+  u8  sp_pay;         ///<ダブルスコアのスペシャルボーナス数
+
+  u16 sp_item;        ///<ダブルスコアのスペシャルボーナスアイテム
+  u16 param;          ///<汎用パラメータ
+  u16 item;           ///<報酬アイテム
+  u16 open_flag_id;   ///<ミッションの開放条件フラグID
+  FMISSION_ARCDATA_LV_PARAM level[FMISSION_LEVEL_MAX];
+}FMISSION_ARC_PARAM;
+
+/*
  * @brief ミッションアーカイブデータフォーマット
  *
  * この構造体の構成を変えた場合、resource/fmission_data/tool/fmission_dat_conv.rbを
@@ -28,44 +72,32 @@ typedef struct _FMISSION_ARCDATA_LV_PARAM{
  */
 #if 1
 typedef struct _FMISSION_ARCDATA{
-  u8  m_type;         ///<ミッションタイプ
-  u8  end_type;       ///<クリアタイプ
-  u8  location;       ///<範囲
-  u8  host;           ///<開催制限
+  FMISSION_ARC_COMMON common;  ///<コモンパラメータ
+  FMISSION_ARC_PARAM  param;    ///<非常駐パラメータ
+}FMISSION_ARCDATA;
+#else
+typedef struct _FMISSION_ARCDATA{
+  u8  m_type;         ///<ミッションタイプ FMISSION_TYPE_ID
+  u8  end_type;       ///<クリアタイプ FMISSION_END_TYPE
+  u8  location;       ///<範囲 FMISSION_LOCATION
+  u8  host;           ///<開催制限 FMISSION_HOST_TYPE
   
-  u8  unit;           ///<表示単位
+  u8  unit;           ///<表示単位 FMISSION_UNIT_ID
   u8  dummy;          ///<パディング
 
   u16 param;          ///<汎用パラメータ
   u16 entry_flag_id;  ///<参加条件フラグID
   u16 item;           ///<報酬アイテム
 
-  u8  time_bonus;     ///<ボーナスタイム
-  u8  pay_bonus;      ///<報酬計算式タイプ
+  u8  time_bonus;     ///<ボーナスタイム FMISSION_TBONUS
+  u8  pay_bonus;      ///<報酬計算式タイプ FMISSION_PAY_BONUS
   u8  m_title_id;     ///<タイトルメッセージID
   u8  m_exp_id;       ///<説明文メッセージID
 
   FMISSION_ARCDATA_LV_PARAM level[FMISSION_LEVEL_MAX];
 }FMISSION_ARCDATA;
-
-#else
-typedef struct _FMISSION_ARCDATA{
-  //1
-  u16   type:4;     //ミッションタイプ 4bit(15種類 FMISSION_TYPE_ID型)
-  u16   time:12;    //ミッション時間(秒、最大1時間) 12bit(3600s/4095s)
-  u16   param;      //ミッションパラメータ            16bit
-  //2
-  u32   target:10;    ///<達成目標
-  u32   item:10;      ///<報酬のアイテムNo 
-  u32   item_num:8;   ///<報酬数の基礎値
-  u32   calc_type:3;  ///<報酬計算式タイプ
-  u32   end_type:1;   ///<終了条件タイプ
-
-  //3
-  u8    bonus;        //スコアボーナス 4bit(max15秒or15パターン 現在はx*10でmax150秒ボーナス)
-
-}FMISSION_ARCDATA;
 #endif
+
 ///ミッションアーカイブデータマネージャー
 typedef struct _FMISSION_DATA_MAN{
   ARCHANDLE* data_h;    ///<ミッションデータアーカイブハンドル
@@ -88,11 +120,20 @@ extern void FMISSION_DATA_Release( FMISSION_DATA_MAN* man );
 
 //------------------------------------------------------------
 /*
+ *  @brief  フェスミッション常駐データをアロケートしたメモリに取得する(アーカイブをその場で開く)
+ *
+ *  使用後はGFL_HEAP_FreeMemory()で開放してください
+ */
+//------------------------------------------------------------
+extern FMISSION_ARC_COMMON* FMISSION_DATA_AllocArcCommonAllDirect( HEAPID heapID );
+
+//------------------------------------------------------------
+/*
  *  @brief  指定ミッションのパラメータをFMISSION_ARCDATA型ワークに取得する
  *  データハンドルは GFL_ARC_OpenDataHandle( ARCID_FMISSION_DATA, heapID ); であらかじめ取得してください
  */
 //------------------------------------------------------------
-extern void FMISSION_DATA_GetArcParamByHandle( ARCHANDLE* handle, FEST_MISSION_ID id, FMISSION_ARCDATA* fm_arc );
+extern void FMISSION_DATA_GetArcByHandle( ARCHANDLE* handle, FEST_MISSION_ID id, FMISSION_ARCDATA* fm_arc );
 
 //------------------------------------------------------------
 /*
@@ -102,7 +143,7 @@ extern void FMISSION_DATA_GetArcParamByHandle( ARCHANDLE* handle, FEST_MISSION_I
  *  使用後はGFL_HEAP_FreeMemory()で開放してください
  */
 //------------------------------------------------------------
-extern FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAllByHandle( ARCHANDLE* handle, HEAPID heapID );
+extern FMISSION_ARCDATA* FMISSION_DATA_AllocArcAllByHandle( ARCHANDLE* handle, HEAPID heapID );
 
 //------------------------------------------------------------
 /*
@@ -111,7 +152,7 @@ extern FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAllByHandle( ARCHANDLE* hand
  *  使用後はGFL_HEAP_FreeMemory()で開放してください
  */
 //------------------------------------------------------------
-extern FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAll( FMISSION_DATA_MAN* man, HEAPID heapID );
+extern FMISSION_ARCDATA* FMISSION_DATA_AllocArcAll( FMISSION_DATA_MAN* man, HEAPID heapID );
 
 //------------------------------------------------------------
 /*
@@ -120,7 +161,7 @@ extern FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAll( FMISSION_DATA_MAN* man,
  *  使用後はGFL_HEAP_FreeMemory()で開放してください
  */
 //------------------------------------------------------------
-extern FMISSION_ARCDATA* FMISSION_DATA_AllocArcParamAllDirect( HEAPID heapID );
+extern FMISSION_ARCDATA* FMISSION_DATA_AllocArcAllDirect( HEAPID heapID );
 
 //------------------------------------------------------------
 /*

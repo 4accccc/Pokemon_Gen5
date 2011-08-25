@@ -156,7 +156,7 @@ extern u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata );
  * @param	evdata イベントデータへのポインタ
  * @param evwork イベントワークへのポインタ 
  * @param pos チェックする座標
- * @param dir チェックする方向（DIR_NOTのとき、向き指定なし）
+ * @param dir チェックする方向（DIR_NOTの時向き指定なし、DIR_MAXの時全方向チェック<フェスイベント用>）
  * @retval NULL = イベントなし
  */
 //------------------------------------------------------------------

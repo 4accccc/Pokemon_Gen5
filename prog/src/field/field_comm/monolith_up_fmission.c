@@ -457,7 +457,7 @@ static void fmission_init( MONOLITH_UP_WORK *wk )
   // 初期化
   wk->FMissionManager = FMISSION_DATA_Init( HEAPID_MONOLITH );
   wk->Handle  = GFL_ARC_OpenDataHandle( ARCID_FMISSION_DATA, HEAPID_MONOLITH );
-  wk->ArcData = FMISSION_DATA_AllocArcParamAllByHandle( wk->Handle, HEAPID_MONOLITH );
+  wk->ArcData = FMISSION_DATA_AllocArcAllByHandle( wk->Handle, HEAPID_MONOLITH );
 }
 
 //--------------------------------------------------------------
@@ -529,7 +529,7 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
   // 制限時間
   if(mode == BMPWIN_TIME_R){
     // 制限時間の取得
-    buf[0] = wk->ArcData[wk->Id].level[wk->Level].time;
+    buf[0] = wk->ArcData[wk->Id].param.level[wk->Level].time;
     buf[1] = buf[0]/60;		// 分
     buf[2] = buf[0]%60;		// 秒
     //
@@ -546,7 +546,7 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
   // クリア目標
   else if(mode == BMPWIN_CLEAR_R){
     // 目標取得
-    buf[0] = wk->ArcData[wk->Id].level[wk->Level].goal;
+    buf[0] = wk->ArcData[wk->Id].param.level[wk->Level].goal;
     //
     WORDSET_RegisterNumber(setup->wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
@@ -556,9 +556,9 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
   // 報酬
   else if(mode == BMPWIN_GAIN_R){
     // 報酬アイテム取得
-    buf[0] = wk->ArcData[wk->Id].item;
+    buf[0] = wk->ArcData[wk->Id].param.item;
     // 報酬数取得
-    buf[1] = wk->ArcData[wk->Id].level[wk->Level].pay;
+    buf[1] = wk->ArcData[wk->Id].param.level[wk->Level].pay;
     //
     WORDSET_RegisterItemName( setup->wordset, 0, buf[0] );
     WORDSET_RegisterNumber(   setup->wordset, 1, buf[1], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
@@ -612,12 +612,12 @@ static void fmission_highscore( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk
   //
   // レベルは問わない
   FMISSION_DATA_GetMissionParam( wk->FMissionManager, id, 0, &fmwk );
-  if(fmwk.end_type == FMISSION_ENDTYPE_TIME){
+  if(fmwk.beacon.end_type == FMISSION_ENDTYPE_TIME){
     // 時間優先=>スコアを表示
     flg = 0;
     num = FMISSION_SAVE_GetMissionStatusHighScoreNum( fsave, id );
   }
-  else if(fmwk.end_type == FMISSION_ENDTYPE_SCORE){
+  else if(fmwk.beacon.end_type == FMISSION_ENDTYPE_SCORE){
     // スコア優先 => 時間を表示
     flg = 1;
     FMISSION_SAVE_GetMissionStatusHighScoreTime( fsave, id, &buf[0], &buf[1] );

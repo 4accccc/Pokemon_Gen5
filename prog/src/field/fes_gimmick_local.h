@@ -27,6 +27,11 @@ struct _FES_GIMMICK{
   const FEST_MISSION* fmwk; ///<現在のミッション情報ワーク
 
   FIELDMAP_WORK* fieldWork;
+  MMDLSYS* mmdl_sys;
+  MMDL* player_mmdl;        ///<自機のMMDL
+  EVENTDATA_SYSTEM* evdata;
+  EVENTWORK*  evwork;
+
   FLDEFF_CTRL* fectrl;
   const FIELD_RAIL_MAN* railman;
 

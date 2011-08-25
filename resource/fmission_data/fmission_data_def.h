@@ -62,10 +62,12 @@ typedef enum{
 }FMISSION_END_TYPE;
 
 //=========================================
-///ミッション終了タイプ
+///開催制限タイプ
 //=========================================
 typedef enum{
   FMISSION_HOST_FREE,  ///<フリー
+  FMISSION_HOST_WHITE,  ///<ホワイト限定
+  FMISSION_HOST_BLACK,  ///<ブラック限定
   FMISSION_HOST_COMM,  ///<配信限定
   FMISSION_HOST_MAX,  ///<
 }FMISSION_HOST_TYPE;
@@ -80,7 +82,7 @@ typedef enum{
 }FMISSION_LOCATION;
 
 //=========================================
-///報酬ボーナスタイプ
+///報酬ボーナス計算タイプ
 //=========================================
 typedef enum{
   FMISSION_PAY_BONUS_NONE,  ///<ボーナス無し
@@ -95,6 +97,7 @@ typedef enum{
   FMISSION_LEVEL_1,  ///<level1
   FMISSION_LEVEL_2,  ///<level2
   FMISSION_LEVEL_3,  ///<level3
+  FMISSION_LEVEL_4,  ///<level4
   FMISSION_LEVEL_MAX,  ///<
 }FMISSION_LEVEL;
 

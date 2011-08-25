@@ -13,6 +13,7 @@
 #include "gamesystem/gamesystem_def.h"
 #include "print/wordset.h"
 #include "fest_mission.h"
+#include "fest_mission_data.h"
 #include "fmission_log.h"
 
 /*
@@ -52,7 +53,7 @@ typedef struct _LINKFEST_LOG{
 
     struct{ //受信ミッションログ
       u8  m_id;   //<ミッションID
-      u16 param;  //<ミッションパラメータ
+      u16 base_param;  //<ミッションパラメータ
       u32 key;    ///<ミッションマジックキー
     }mission;
   };
@@ -61,8 +62,8 @@ typedef struct _LINKFEST_LOG{
 //フェスタログ受け渡し構造体
 typedef struct _LINKFEST_LOG_PARAM{
   FEST_MISSION_ID  m_id; ///<ミッションID
-  FMISSION_TYPE_ID m_type; ///<ミッションタイプ
   u32 key;  ///<ミッションマジックキー
+  u16 base_param;  ///<基礎パラメータ
   LINKFEST_LOG prm;
 }LINKFEST_LOG_PARAM;
 
@@ -131,6 +132,13 @@ extern FMISSION_GPOWER_TBL* LINK_FESTIVAL_GetMissionLogGPowerTbl( LINK_FESTIVAL*
  */
 //---------------------------------------------------------
 extern FMISSION_ENTRY_TBL* LINK_FESTIVAL_GetMissionLogEntryTbl( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションデータコモンアーカイブパラメータ取得
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_GetMissionArcCommonData( LINK_FESTIVAL* wk, u8 m_id, FMISSION_ARC_COMMON* arc );
 
 //---------------------------------------------------------
 /*
@@ -272,7 +280,7 @@ extern int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk );
  * @param log 情報を格納したLINKFEST_LOG_PARAM構造体型ワークへのポインタ
  */
 //---------------------------------------------------------
-extern LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src );
+extern LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src, BOOL with_param );
 
 //---------------------------------------------------------
 /*
@@ -287,11 +295,10 @@ extern void LINK_FESTIVAL_EgnoreLogStore( LINK_FESTIVAL* wk, const FEST_MISSION*
 /*
  * @brief リンクフェスティバル　無視するミッションかチェック
  *
- * @param fmwk ミッション情報を格納したFEST_MISSION構造体型ワークへのポインタ
+ * @param beacon フェスビーコン情報を格納したFEST_BEACON構造体型ワークへのポインタ
  */
 //---------------------------------------------------------
-extern BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
-
+extern BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_BEACON* beacon );
 
 //---------------------------------------------------------
 /*

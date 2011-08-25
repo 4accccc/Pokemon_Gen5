@@ -513,14 +513,16 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   LINK_FESTIVAL*  fest_sys;
   LINKFEST_LOG_PARAM log;
   LINKFEST_SCORELOG_SET_CODE ret = LINKFEST_SCORELOG_SET_FAILED;
-  
+  BOOL is_entry,with_param;
+
   if( bsys->gsys == NULL ){
     GF_ASSERT(0);
     return;
   }
   fest_sys = GAMESYSTEM_GetLinkFestivalWork( bsys->gsys );
 
-  if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
+  is_entry = LINK_FESTIVAL_IsMissionEntry( fest_sys );
+  if( is_entry ){
     //Gパワーストック
     FMISSION_GPOWER_TBL_Set( 
       LINK_FESTIVAL_GetMissionLogGPowerTbl(fest_sys), info );
@@ -532,22 +534,24 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
 
   //エントリーデータストック
   FMISSION_ENTRY_TBL_Set( fest_sys, info );
- 
+  
+  if( !is_entry ){
+    return;
+  }
   //ログストアパラメータ生成
   LINKFEST_LOG_PARAM_Clear( &log );
   log.prm.score.tr_id = info->trainer_id;
   log.prm.score.tmap_root = info->townmap_root_zone_id;
 
-  if( GAMEBEACON_Check_FestMissionWithParam( info ) ){
+  with_param = GAMEBEACON_Check_FestMissionWithParam( info );
+  if( with_param ){
     log.m_id = info->action.fmission.m_id;
-    log.m_type = info->action.fmission.m_type;
     log.key = info->action.fmission.key;
+    log.base_param = info->action.fmission.base_param;
     log.prm.score.value = info->action.fmission.my_score;
-  }else{
-    log.m_type = FMISSION_TYPE_EX_WITHOUT_PARAM;
   }  
   
-  ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log );
+  ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log, with_param );
 
   if( ret != LINKFEST_SCORELOG_SET_FAILED ){
     FMISSION_LOG_TBL* tbl = LINK_FESTIVAL_GetMissionLogStackTbl( fest_sys );
@@ -1070,8 +1074,8 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGER *send
     BEACONINFO_Set_Dying( info, (const STRBUF*)param);
     break;
   default:
-    info->action.fmission = *LINK_FESTIVAL_GetMissionWork( fest_sys );
-    info->action.fmission.param = (u16)param;
+    info->action.fmission = LINK_FESTIVAL_GetMissionWork( fest_sys )->beacon;
+    info->action.fmission.act_param = (u16)param;
     break;
   }
   info->action.action_no = action;
@@ -1123,6 +1127,7 @@ BOOL GAMEBEACON_Check_FestMissionWithParam(const GAMEBEACON_INFO *info)
   return TRUE;
 }
 
+#if 0 
 //--------------------------------------------------------------
 /**
  * フェスビーコン送信をセットした時の共通処理
@@ -1135,11 +1140,12 @@ void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 action, u1
 {
   LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
   info->action.action_no = action;
-  info->action.fmission = *LINK_FESTIVAL_GetMissionWork( fest_sys );
-  info->action.fmission.param = param;
+  info->action.fmission = (LINK_FESTIVAL_GetMissionWork( fest_sys )->beacon);
+  info->action.fmission.act_param = param;
 
   info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;  //スワン以降のみ
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1516,6 +1522,7 @@ void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno)
   GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE, monsno );
 }
 
+#if 0
 //==================================================================
 /**
  * ビーコンセット：フェスミッションポケモン捕獲
@@ -1529,6 +1536,7 @@ void BEACONINFO_Set_FMissionWildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
   
   BEACONINFO_Set_Details_Walk(info);
 }
+#endif
 
 //==================================================================
 /**
@@ -2108,10 +2116,10 @@ static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys )
  * @param   FEST_MISSION		ミッションパラメータ
  */
 //==================================================================
-void BEACONINFO_Set_FestMission(GAMEBEACON_INFO *info, FEST_MISSION* mission )
+void BEACONINFO_Set_FestMission(GAMEBEACON_INFO *info, FEST_MISSION* fmwk )
 {
   info->action.action_no = GAMEBEACON_ACTION_FMISSION;
-  info->action.fmission = *mission;
+  info->action.fmission = fmwk->beacon;
   BEACONINFO_Set_Details_Walk(info);
 }
 
