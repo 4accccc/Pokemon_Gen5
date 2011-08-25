@@ -384,6 +384,16 @@
 				<ContentItem
 					Name="pw_briefing040.mstxt" />
 				<ContentItem
+					Name="pw_director_adultw.mstxt" />
+				<ContentItem
+					Name="pw_director_gentleman.mstxt" />
+				<ContentItem
+					Name="pw_director_middleman2.mstxt" />
+				<ContentItem
+					Name="pw_director_oldman.mstxt" />
+				<ContentItem
+					Name="pw_director_sunglasses.mstxt" />
+				<ContentItem
 					Name="pw_hint001.mstxt" />
 				<ContentItem
 					Name="pw_hint002.mstxt" />
