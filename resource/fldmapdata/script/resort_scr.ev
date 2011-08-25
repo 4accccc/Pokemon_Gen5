@@ -652,8 +652,6 @@ sub_resident_institution:
         _CALL sub_resident_lot
       CASE RESORT_RESIDENT_TYPE_PARLOR THEN //美容室
         _CALL sub_resident_parlor
-      CASE RESORT_RESIDENT_TYPE_BREEDER THEN //育て屋
-        _CALL sub_resident_breeder
       CASE RESORT_RESIDENT_TYPE_MARKET THEN //マーケット
         _CALL sub_resident_market
       CASE RESORT_RESIDENT_TYPE_FLORIST THEN //花屋
@@ -662,16 +660,10 @@ sub_resident_institution:
         _CALL sub_resident_exercice
       CASE RESORT_RESIDENT_TYPE_NURSERY THEN //保育所
         _CALL sub_resident_nursery
-      CASE RESORT_RESIDENT_TYPE_JEWELLERY THEN //宝石店
-        _CALL sub_resident_jewellery
       CASE RESORT_RESIDENT_TYPE_ANTIQUE THEN //古道具屋
         _CALL sub_resident_antique
       CASE RESORT_RESIDENT_TYPE_CAFE THEN //カフェ（レストラン？）
         _CALL sub_resident_cafe
-      CASE RESORT_RESIDENT_TYPE_GYM THEN //ジム
-        _CALL sub_resident_gym
-      CASE RESORT_RESIDENT_TYPE_HOUSE THEN //民家
-        _CALL sub_resident_house
       ENDSWITCH
       $LWK_MENU_LOOP = FALSE
 
@@ -777,14 +769,6 @@ sub_resident_parlor:
 }
 _RET
 //==============================================================
-//サブルーチン：住民育て屋処理
-//==============================================================
-sub_resident_breeder:
-{
-  _CALL sub_resident_buy_list
-}
-_RET
-//==============================================================
 //サブルーチン：住民マーケット処理
 //==============================================================
 sub_resident_market:
@@ -817,14 +801,6 @@ sub_resident_nursery:
 }
 _RET
 //==============================================================
-//サブルーチン：住民宝石店処理
-//==============================================================
-sub_resident_jewellery:
-{
-  _CALL sub_resident_buy_list
-}
-_RET
-//==============================================================
 //サブルーチン：住民古道具屋処理
 //==============================================================
 sub_resident_antique:
@@ -838,22 +814,6 @@ _RET
 sub_resident_cafe:
 {
   _CALL sub_resident_buy_list
-}
-_RET
-//==============================================================
-//サブルーチン：住民ジム処理
-//==============================================================
-sub_resident_gym:
-{
-  //TODO
-}
-_RET
-//==============================================================
-//サブルーチン：住民民家処理
-//==============================================================
-sub_resident_house:
-{
-  //TODO
 }
 _RET
 
