@@ -6,14 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここは　ホワイトフォレストから
-きたひとが　おおい▼
-ホワイトフォレストに　はいりこんで
-こっちに　さそえば▽
-ひっこして　くるかもな</Text>
+			<Text>きいたことが　あるか……？
+キーの　はなし……▼
+なんでも　くろと　しろ……
+それが　いれかわるんだとよ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T06:13:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,14 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここは　ホワイトフォレストから
-来た人が　多い▼
-ホワイトフォレストに　入り込んで
-こっちに　誘えば▽
-引っ越して　来るかもな</Text>
+			<Text>きいたことが　あるか……？
+キーの　話……▼
+なんでも　黒と　白……
+それが　入れ替わるんだとよ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T06:14:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37,10 +35,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACKver</Comment>
+・Black2ver
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T06:13:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
