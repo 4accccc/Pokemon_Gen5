@@ -12,6 +12,7 @@
 #ifndef ZONE_D26R0101_EVC_H
 #define ZONE_D26R0101_EVC_H
 
+#define D26R0101_BOSS_01                   0
 
 #endif //ZONE_D26R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

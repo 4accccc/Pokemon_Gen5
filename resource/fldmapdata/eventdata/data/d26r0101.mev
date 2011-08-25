@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/24 18:14:39
+#save date:2011/08/25 16:00:05
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d26r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,38 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d26r0101.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+D26R0101_BOSS_01
+#OBJ CODE Number
+BOSS
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D26R0101_BOSS
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1032 80 -488
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -29,7 +60,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d26r0101.wms
 #hold event type:
 1
 #hold event number:
-9
+10
 #event number: 0
 #Pos Event Label
 POSID_D26R0101_BADGE_CHECK_01
@@ -181,6 +212,23 @@ WK_SCENE_D26R0101_GATE_09
 EVENTDATA_POSTYPE_GRID
 #position
 200 96 -456
+#size
+7 1
+#event number: 9
+#Pos Event Label
+POS_D26R0101_BOSS_01
+#Pos Script Name
+SCRID_POS_D26R0101_BOSS_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D26R0101_BOSS
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+984 80 -584
 #size
 7 1
 #Map Event List Data End
