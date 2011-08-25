@@ -10,8 +10,6 @@
 #ifndef ZONE_D26R0601_EVC_H
 #define ZONE_D26R0601_EVC_H
 
-#define TR_ELITEM_41                       0
-#define TR_ELITEW_40                       1
 
 #endif //ZONE_D26R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

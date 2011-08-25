@@ -23,6 +23,9 @@
 #define D26R0501_ROCK_04                   3
 #define TR_ELITEM_39                       4
 #define TR_ELITEW_38                       5
+#define TR_VETERANM_21                     6
+#define TR_RANGERW_29                      7
+#define TR_RANGERM_29                      8
 
 #endif //ZONE_D26R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
