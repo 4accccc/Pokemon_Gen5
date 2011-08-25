@@ -30,8 +30,9 @@ struct _POKEWOOD_SAVEDATA{
   POKEWOOD_BOXOFFICE_RECORD boxoffice_record[POKEWOOD_BOXOFFICE_DATA_MAX];  // 興行成績ランキング 16*40
   s16 star_point;                             ///< プレイヤーのスターポイント 2
   s16 padding;                                ///< 2
+  u8  title_no[POKEWOOD_SHOWING_MAX];         ///< 上映中の映画の看板ナンバー
   
-  u8 array[320];                              ///<
+  u8 array[316];                              ///<
 };
 
 //---------------------------------------------------------------------------
@@ -331,3 +332,36 @@ void POKEWOOD_SAVEDATA_SetStarPoint( POKEWOOD_SAVEDATA *sv, int value )
   POKEWOOD_SAVEDATA_DecStarPoint( sv, POKEWOOD_STAR_POINT_MAX );
   POKEWOOD_SAVEDATA_AddStarPoint( sv, value );
 }
+
+
+//=============================================================================================
+/**
+ * @brief	上映中の看板ワークを設定
+ *
+ * @param   sv		POKEWOOD_SAVEDATA
+ * @param   index	上映映画INDEX(0-4)
+ *
+ * @retval  int		看板NO
+ */
+//=============================================================================================
+int POKEWOOD_SAVEDATA_GetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index )
+{
+  GF_ASSERT_MSG( index<POKEWOOD_SHOWING_MAX, "上映映画のindexが4を超えている\n" );
+  return sv->title_no[index];
+}
+
+//=============================================================================================
+/**
+ * @brief	上映中の看板ワークを設定
+ *
+ * @param   sv        POKEWOOD_SAVEDATA
+ * @param   index	    上映映画INDEX(0-4)
+ * @param   title_no	設定する看板NO
+ */
+//=============================================================================================
+void POKEWOOD_SAVEDATA_SetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index, int title_no )
+{
+  GF_ASSERT_MSG( index<POKEWOOD_SHOWING_MAX, "上映映画のindexが4を超えている\n" );
+  sv->title_no[index] = title_no;
+}
+
