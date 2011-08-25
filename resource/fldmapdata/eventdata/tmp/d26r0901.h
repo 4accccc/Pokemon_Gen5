@@ -14,6 +14,12 @@
 
 #define D26R0901_ROCK_01                   0
 #define D26R0901_ROCK_02                   1
+#define TR_VETERANM_19W                    2
+#define TR_VETERANW_16W                    3
+#define TR_ELITEW_36W                      4
+#define TR_ESPM_14W                        5
+#define TR_ESPW_13W                        6
+#define TR_ELITEM_37W                      7
 
 #endif //ZONE_D26R0901_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r0901.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

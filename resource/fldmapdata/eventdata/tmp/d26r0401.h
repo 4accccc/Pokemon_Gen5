@@ -14,6 +14,11 @@
 #ifndef ZONE_D26R0401_EVC_H
 #define ZONE_D26R0401_EVC_H
 
+#define TR_BACKPACKERW_22                  0
+#define TR_DOCTOR_07                       1
+#define TR_ELITEW_37                       2
+#define TR_ELITEM_38                       3
+#define TR_VETERANW_14                     4
 
 #endif //ZONE_D26R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

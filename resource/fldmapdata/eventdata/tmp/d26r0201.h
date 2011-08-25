@@ -14,6 +14,12 @@
 
 #define D26R0201_ROCK_01                   0
 #define D26R0201_ROCK_02                   1
+#define TR_VETERANM_19                     2
+#define TR_VETERANW_16                     3
+#define TR_ELITEM_37                       4
+#define TR_ELITEW_36                       5
+#define TR_ESPW_13                         6
+#define TR_ESPM_14                         7
 
 #endif //ZONE_D26R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
