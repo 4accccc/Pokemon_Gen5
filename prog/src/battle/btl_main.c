@@ -2444,6 +2444,7 @@ BOOL BTL_MAIN_IsIrekaeMode( const BTL_MAIN_MODULE* wk )
   if( (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_TRAINER)
   &&  (BTL_MAIN_GetRule(wk) == BTL_RULE_SINGLE)
   &&  (BTL_MAIN_GetCommMode(wk) == BTL_COMM_NONE)
+  &&  (BTL_MAIN_GetPokewoodMode(wk) == BTL_POKEWOOD_NONE)
   &&  (CONFIG_GetBattleRule(wk->setupParam->configData) == BATTLERULE_IREKAE)
   ){
     return TRUE;
