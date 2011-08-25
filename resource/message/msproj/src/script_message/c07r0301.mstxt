@@ -145,12 +145,12 @@
 			Language="JPN">
 			<Comment>♂
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→
+　はい　→trainerm_02
+　いいえ→trainerm_03
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T03:34:59" />
+				Time="2011-08-25T04:40:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

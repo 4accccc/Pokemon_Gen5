@@ -174,11 +174,11 @@
 			<Text>おめでとう　ございます！▼
 ７れんしょうを　たっせいし　みごと
 サブウェイマスターに　かちました！▼
-それを　たたえ　バトルポイントを
-しんてい　いたします▼</Text>
+それを　たたえ
+バトルポイントを　しんてい　します▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T07:36:09" />
+				Time="2011-08-25T04:22:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -189,11 +189,11 @@
 			<Text>おめでとう　ございます！▼
 ７連勝を　達成し　みごと
 サブウェイマスターに　勝ちました！▼
-それを　称え　バトルポイントを
-進呈いたします▼</Text>
+それを　称え
+バトルポイントを　進呈します▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T07:36:28" />
+				Time="2011-08-25T04:22:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1550,13 +1550,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>７連勝　するごとにね
+			<Text>７連勝するごとにね
 勝負を　挑んでくる▽
 トレーナーも　ポケモンも▽
 強く　手ごわくなっていくの</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:24:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2811,11 +2811,11 @@
 			Language="JPN">
 			<Comment>スーパー　２１連勝
 ♂
-no.051
-ポイントアップをくれる人</Comment>
+・アイテム入手処理
+　No051「ポイントアップ」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:25:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2873,12 +2873,10 @@ no.051
 			Language="JPN">
 			<Comment>スーパー　２１連勝
 ♂
-no.051
-ポイントアップをくれる人
-アイテム入手後</Comment>
+・アイテム入手後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:25:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3599,11 +3597,10 @@ no.051
 		<CommentCell
 			Language="JPN">
 			<Comment>スーパー　100連勝
-
 ♂</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:25:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3651,11 +3648,10 @@ no.051
 		<CommentCell
 			Language="JPN">
 			<Comment>スーパー　7連勝
-
 ♂</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:25:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4080,11 +4076,11 @@ no.051
 			Language="JPN">
 			<Comment>スーパー　28連勝
 ♀
-no.050
-ふしぎなあめをくれる人</Comment>
+・アイテム入手処理
+　No050「ふしぎなあめ」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:25:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4144,12 +4140,10 @@ no.050
 			Language="JPN">
 			<Comment>スーパー　28連勝
 ♀
-no.050
-ふしぎなあめをくれる人
-アイテム入手後</Comment>
+・アイテム入手後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:25:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4376,11 +4370,11 @@ no.050
 			Language="JPN">
 			<Comment>スーパー　203連勝
 ♀
-no.207
-スターの実をくれる人</Comment>
+・アイテム入手処理
+　No207「スターのみ」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:26:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4438,13 +4432,11 @@ no.207
 			Language="JPN">
 			<Comment>スーパー　203連勝
 ♀
-no.207
-スターの実をくれる人
-アイテム入手後
+・アイテム入手後
 </Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:26:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4655,11 +4647,11 @@ no.207
 			Language="JPN">
 			<Comment>ノーマル　２１連勝
 ♂
-no.051
-ポイントアップをくれる人</Comment>
+・アイテム入手処理
+　No051「ポイントアップ」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:27:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4719,12 +4711,10 @@ no.051
 			Language="JPN">
 			<Comment>ノーマル ２１連勝
 ♂
-no.051
-ポイントアップをくれる人
-アイテム入手後</Comment>
+・アイテム入手後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:26:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6018,11 +6008,11 @@ no.051
 			Language="JPN">
 			<Comment>♂
 スーパー　105連勝
-・no.206
-　サンのみをくれる人</Comment>
+・アイテム入手処理
+　No206「サンのみ」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T07:42:40" />
+				Time="2011-08-25T04:26:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6080,12 +6070,10 @@ no.051
 			Language="JPN">
 			<Comment>♂
 スーパー　105連勝
-・no.206
-　サンのみをくれる人
 ・アイテム入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T07:42:36" />
+				Time="2011-08-25T04:26:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
