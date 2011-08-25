@@ -29,6 +29,8 @@
 ///「ミッションを受ける」を選択
 #define MONOLITH_SE_DECIDE_MISSION    (SEQ_SE_SYS_68)
 
+///「隠しコマンド入力成功」
+#define MONOLITH_SE_SECRET_COMMAND    (SEQ_SE_FLD_133)
 
 
 //==============================================================================

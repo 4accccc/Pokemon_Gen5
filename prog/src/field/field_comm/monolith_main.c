@@ -32,7 +32,7 @@
 //  定数定義
 //==============================================================================
 ///モノリス共通素材アクターパレット本数
-#define MONOLITH_COMMON_PLTT_NUM    (3)
+#define MONOLITH_COMMON_PLTT_NUM    (4)    // 3->4
 
 ///PFDで管理するメインBGパレットサイズ
 #define MONOLITH_PLTT_SIZE_BG_MAIN      (16 - 2)  //-2=「YES/NO」用
