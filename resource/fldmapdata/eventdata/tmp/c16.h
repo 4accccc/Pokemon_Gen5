@@ -17,6 +17,9 @@
 #define DOOR_ID_C16_C16R0601_EXIT01      12
 #define DOOR_ID_C16_C16R0701_EXIT01      13
 #define DOOR_ID_C16_C16R0801_EXIT01      14
+#define DOOR_ID_C16_R04_EXIT01           15
+#define DOOR_ID_C16_R04W_EXIT01          16
+#define DOOR_ID_C16_C04_EXIT01           17
 
 #endif //ZONE_C16_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c16.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

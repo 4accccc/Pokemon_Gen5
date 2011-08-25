@@ -8,5 +8,6 @@
 #define SCRID_ZONE_C16 (1)
 #define SCRID_INIT_C16 (2)
 #define SCRID_SCENE_C16_TUTORIAL_01 (3)
+#define SCRID_RECOVER_C16 (4)
 
 #endif //_C16_DEF_H_

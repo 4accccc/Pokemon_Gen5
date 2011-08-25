@@ -1,18 +1,17 @@
 #WorldMap SaveData 
-#save date:2011/04/15 11:36:28
+#save date:2011/08/25 12:21:25
 #Width
-2
+1
 #Height
-2
+3
 #block x offset
 0
 #block z offset
 0
 #3dp file names
-C:\home\swan_data3d\field\out60\resort01_00_00.3dp
-C:\home\swan_data3d\field\out60\resort01_00_01.3dp
-C:\home\swan_data3d\field\out60\resort01_01_00.3dp
-C:\home\swan_data3d\field\out60\resort01_01_01.3dp
+C:\home\swan_data3d\field\in72\m_resonance02_00_00.3dp
+C:\home\swan_data3d\field\in72\m_resonance02_00_01.3dp
+C:\home\swan_data3d\field\in72\m_resonance02_00_02.3dp
 #block size
 32 32
 #End of WorldMap SaveData

@@ -24,9 +24,15 @@
 _EVENT_DATA    ev_zone_c16
 _EVENT_DATA    ev_init_c16
 _EVENT_DATA    ev_scene_c16_tutorial_01
+_EVENT_DATA    ev_recover_c16
 _EVENT_DATA_END
 
-
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
@@ -45,8 +51,37 @@ INIT_EVENT_START ev_init_c16
   IF $WK_SCENE_C16_TUTORIAL_01 == 1 THEN
     _OBJ_POS_CHANGE( C16_SWRIVAL_01, 0, 0, 0, DIR_DOWN )
   ENDIF
+  
+  // 出口位置変更
+  _CALL ev_c16_exit_change
 
 INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_c16
+
+  // 出口位置変更
+  _CALL ev_c16_exit_change
+
+INIT_EVENT_END
+
+// バージョン別で出口位置変更
+ev_c16_exit_change:
+
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  // B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_C16_R04W_EXIT01, 0, 0, 0 ) 
+  // W2
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_C16_R04_EXIT01, 0, 0, 0 ) 
+  ENDIF
+  
+_RET
 
 /**************************************************************/
 /*			SCENE_CHANGE：【仮】誘導イベント					  */
