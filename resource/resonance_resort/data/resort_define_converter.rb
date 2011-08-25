@@ -50,32 +50,27 @@ DEFINE_COL_PERSON_TYPE   = DEFINE_COL_START #列：人物タイプ
 DEFINE_COL_RESIDENT_TYPE = 2         #列：住民タイプ
 DEFINE_COL_PROXY_TYPE    = 4         #列：代理人タイプ
 DEFINE_COL_TURIST_TYPE   = 6         #列：観光客タイプ
-DEFINE_COL_VISITOR_TYPE  = 8         #列：滞在者フラグ
-DEFINE_COL_SECRETARY_TYPE = 10       #列：秘書タイプ
-DEFINE_COL_NPC_TYPE      = 12        #列：NPCタイプ
-DEFINE_COL_PERSONALITY   = 14        #列：性格
-DEFINE_COL_VIEW          = 16        #列：見た目
-DEFINE_COL_SEX           = 18        #列：性別
-DEFINE_COL_SERVICE       = 20        #列：サービス
-DEFINE_COL_SPOTTYPE      = 22        #列：行きたいスポットタイプ
-DEFINE_COL_GRADE         = 24        #列：評価
-DEFINE_COL_MOVECODE      = 26        #列：動作コード
-DEFINE_COL_KUTIKOMI_ANS  = 28        #列：クチコミ答え
-DEFINE_COL_OFFRECO_TYPE  = 30        #列：オフレコタイプ
-DEFINE_COL_WANTOGOGROUP  = 32        #列：行きたいお店グループ
-DEFINE_COL_NUMBER        = 34        #列：数値
-DEFINE_COL_PLACE         = 36        #列：場所
-DEFINE_COL_END           = 38        #列最後
+DEFINE_COL_SECRETARY_TYPE = 8       #列：秘書タイプ
+DEFINE_COL_NPC_TYPE      = 10        #列：NPCタイプ
+DEFINE_COL_SEX           = 12        #列：性別
+DEFINE_COL_SERVICE       = 14        #列：サービス
+DEFINE_COL_SPOTTYPE      = 16        #列：行きたいスポットタイプ
+DEFINE_COL_GRADE         = 18        #列：評価
+DEFINE_COL_MOVECODE      = 20        #列：動作コード
+DEFINE_COL_KUTIKOMI_ANS  = 22        #列：クチコミ答え
+DEFINE_COL_OFFRECO_TYPE  = 24        #列：オフレコタイプ
+DEFINE_COL_WANTOGOGROUP  = 26        #列：行きたいお店グループ
+DEFINE_COL_NUMBER        = 28        #列：数値
+DEFINE_COL_PLACE         = 30        #列：場所
+DEFINE_COL_END           = 32        #列最後
 def convertDefine( csv, header, hash, hashNumber )
 
   hashPersonStr     = Hash.new()
   hashResidentStr   = Hash.new()
   hashProxyStr      = Hash.new()
   hashTuristStr     = Hash.new()
-  hashVisitorStr    = Hash.new()
   hashSecretaryStr  = Hash.new()
   hashNPCStr        = Hash.new()
-  hashPersonaliry   = Hash.new()
   hashService       = Hash.new()
   hashSpotType      = Hash.new()
   hashGrade         = Hash.new()
@@ -104,14 +99,10 @@ def convertDefine( csv, header, hash, hashNumber )
         hashProxyStr.store( japStr, engStr )
       when DEFINE_COL_TURIST_TYPE
         hashTuristStr.store( japStr, engStr )
-      when DEFINE_COL_VISITOR_TYPE
-        hashVisitorStr.store( japStr, engStr )
       when DEFINE_COL_SECRETARY_TYPE
         hashSecretaryStr.store( japStr, engStr )
       when DEFINE_COL_NPC_TYPE
         hashNPCStr.store( japStr, engStr )
-      when DEFINE_COL_PERSONALITY
-        hashPersonaliry.store( japStr, engStr )
       when DEFINE_COL_SERVICE
         hashService.store( japStr, engStr )
       when DEFINE_COL_SPOTTYPE
@@ -152,12 +143,6 @@ def convertDefine( csv, header, hash, hashNumber )
   }
   header.write( "#define RESORT_TURIST_TYPE_MAX (#{hashTuristStr.size}) //最大\n" )
 
-  header.write( "//滞在者\n" )
-  hashVisitorStr.each{ |k,v|
-    header.write( "#define RESORT_VISITOR_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
-  }
-  header.write( "#define RESORT_VISITOR_TYPE_MAX (#{hashVisitorStr.size}) //最大\n" )
-
   header.write( "//秘書\n" )
   hashSecretaryStr.each{ |k,v|
     header.write( "#define RESORT_SECRETARY_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
@@ -169,12 +154,6 @@ def convertDefine( csv, header, hash, hashNumber )
     header.write( "#define RESORT_NPC_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
   }
   header.write( "#define RESORT_NPC_TYPE_MAX (#{hashNPCStr.size}) //最大\n" )
-
-  header.write( "//性格\n" )
-  hashPersonaliry.each{ |k,v|
-    header.write( "#define RESORT_PERSONALITY_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
-  }
-  header.write( "#define RESORT_PERSONALITY_TYPE_MAX (#{hashPersonaliry.size}) //最大\n" )
 
   header.write( "//サービス\n" )
   hashService.each{ |k,v|

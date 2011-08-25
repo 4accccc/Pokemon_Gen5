@@ -344,6 +344,8 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   u16 param  = VMGetU16( p_core );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
   u32 peopleID;
 
   RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
@@ -354,28 +356,10 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
 
   switch( param )
   {
-  case RESORT_JOBCHANGE_RESIDENT_AUTO:
+  case RESORT_JOBCHANGE_RESIDENT:
     {
       //TODO
-      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
-    }
-    break;
-
-  case RESORT_JOBCHANGE_RESIDENT_LOT:
-  case RESORT_JOBCHANGE_RESIDENT_PARLOR:
-  case RESORT_JOBCHANGE_RESIDENT_BREEDER:
-  case RESORT_JOBCHANGE_RESIDENT_MARKET:
-  case RESORT_JOBCHANGE_RESIDENT_FLORIST:
-  case RESORT_JOBCHANGE_RESIDENT_EXRCICE:
-  case RESORT_JOBCHANGE_RESIDENT_NURSERY:
-  case RESORT_JOBCHANGE_RESIDENT_JEWELLEY:
-  case RESORT_JOBCHANGE_RESIDENT_ANTIQUE:
-  case RESORT_JOBCHANGE_RESIDENT_CAFE:
-  case RESORT_JOBCHANGE_RESIDENT_GYM:
-  case RESORT_JOBCHANGE_RESIDENT_HOUSE:
-    {
-      //u32 type = param-1;
-      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
+      *p_ret_wk = RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
     }
     break;
 
@@ -689,6 +673,7 @@ VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs )
   {
   case RESORT_DELTE_PEOPLE_MINE:
     p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
+    GF_ASSERT( p_people );
     break;
   case RESORT_PEOPLE_TYPE_TOURIST:
     GF_ASSERT(0);
@@ -783,29 +768,9 @@ VMCMD_RESULT EvCmdResortJobChangeEx( VMHANDLE *p_core, void *p_wk_adrs )
 
   switch( param )
   {
-  case RESORT_JOBCHANGE_RESIDENT_AUTO:
+  case RESORT_JOBCHANGE_RESIDENT:
     {
       //TODO
-      //u32 type = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
-      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
-    }
-    break;
-
-  case RESORT_JOBCHANGE_RESIDENT_LOT:
-  case RESORT_JOBCHANGE_RESIDENT_PARLOR:
-  case RESORT_JOBCHANGE_RESIDENT_BREEDER:
-  case RESORT_JOBCHANGE_RESIDENT_MARKET:
-  case RESORT_JOBCHANGE_RESIDENT_FLORIST:
-  case RESORT_JOBCHANGE_RESIDENT_EXRCICE:
-  case RESORT_JOBCHANGE_RESIDENT_NURSERY:
-  case RESORT_JOBCHANGE_RESIDENT_JEWELLEY:
-  case RESORT_JOBCHANGE_RESIDENT_ANTIQUE:
-  case RESORT_JOBCHANGE_RESIDENT_CAFE:
-  case RESORT_JOBCHANGE_RESIDENT_GYM:
-  case RESORT_JOBCHANGE_RESIDENT_HOUSE:
-    {
-      //TODO
-      //u32 type = param-1;
       RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
     }
     break;

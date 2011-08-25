@@ -13467,15 +13467,17 @@
 /**
  * @brief リゾート用　転職
  * @param[in]  param 何に転職するか「下記値を設定」
+ *  RESORT_JOBCHANGE_RESIDENT…住人に転職
  *  RESORT_JOBCHANGE_SECETARY…秘書へ転職
  */
 //--------------------------------------------------------------
-#define _RESORT_JOB_CHANGE( param ) \
-    _ASM_RESORT_JOB_CHANGE param
+#define _RESORT_JOB_CHANGE( param, ret_wk ) \
+    _ASM_RESORT_JOB_CHANGE param, ret_wk
 
-  .macro _ASM_RESORT_JOB_CHANGE param
+  .macro _ASM_RESORT_JOB_CHANGE param, ret_wk
   .short EV_SEQ_RESORT_JOB_CHANGE
   .short  \param
+  .short  \ret_wk
   .endm
 
 //--------------------------------------------------------------

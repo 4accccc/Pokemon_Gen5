@@ -22,6 +22,8 @@
 #include "debug_message.naix"
 #include "msg/debug/msg_d_field.h"
 #include "msg/debug/msg_debug_resort2.h"
+#include "arc/script_message.naix"
+#include "msg/script/msg_resort_scr.h"
 
 #include "item/itemsym.h"
 #include "event_debug_menu_resort.h"
@@ -287,7 +289,53 @@ static BOOL debugMenuCallProc_Input( DEBUG_MENU_EVENT_WORK *p_wk )
   return TRUE;
 }
 
+static void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gamedata )
+{
+  u32 trainerID;
+  u32 sex;
 
+  //自分のデータをいれた後、トレーナーIDと名前を変える
+  RESORT_RECV_DATA_SetMyData( p_wk, p_gamedata );
+
+  //トレーナーID
+  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, GFL_STD_MtRand(GFL_STD_RAND_MAX) );
+  trainerID = RESORT_RECV_DATA_GetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, NULL );
+
+  //性別
+  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_SEX, GFL_STD_MtRand(2) );
+  sex = RESORT_RECV_DATA_GetData( p_wk, RESORT_DATA_PARAM_SEX, NULL );
+
+  //見た目
+  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINERVIEW, sex*8+GFL_STD_MtRand(8) );
+  //名前セット
+  {
+    GFL_MSGDATA* p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
+    STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, RESORT_NAME_00+GFL_STD_MtRand(20) );
+    RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_NAME, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
+    GFL_STR_DeleteBuffer( p_strbuf );
+    GFL_MSG_Delete( p_msg );
+  }
+  //自己紹介、感謝、くちぐせ
+  {
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
+    {
+      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_introduction_00+trainerID%10 );
+      RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_INTRODUCTION, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
+      GFL_STR_DeleteBuffer( p_strbuf );
+    }
+    {
+      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_kutiguse_00+trainerID%10 );
+      RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
+      GFL_STR_DeleteBuffer( p_strbuf );
+    }
+    {
+      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_thanks_00+trainerID%10 );
+      RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT7_THANKS, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
+      GFL_STR_DeleteBuffer( p_strbuf );
+    }
+    GFL_MSG_Delete( p_msg );
+  }
+}
 
 static BOOL debugMenuCallProc_SetRecv( DEBUG_MENU_EVENT_WORK *p_wk )
 {
@@ -295,7 +343,7 @@ static BOOL debugMenuCallProc_SetRecv( DEBUG_MENU_EVENT_WORK *p_wk )
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
 
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
-  RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
+  Debug_Resort_SetRecv( p_recv, p_wk->gdata );
 
   RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_recv, RESORT_MERGE_TYPE_RECV );
 
@@ -389,7 +437,7 @@ static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk )
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
   while( TRUE )
   {
-    RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
+    Debug_Resort_SetRecv( p_recv, p_wk->gdata );
     RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_recv, RESORT_MERGE_TYPE_RECV );
 
     if( p_recv_tmp_buff )
@@ -458,7 +506,7 @@ static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk )
     RESORT_SECRETARY_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
     if( RESORT_SECRETARY_DATA_IsEmpty( p_dst ) )
     {
-        RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
+        Debug_Resort_SetRecv( p_recv, p_wk->gdata );
         RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 8+i, RESORT_MAP_GetSecretaryPlace( i ), i );
     }
   }
@@ -480,7 +528,7 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
     RESORT_RESIDENT_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, i );
     if( RESORT_RESIDENT_DATA_IsEmpty( p_dst ) )
     {
-      RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
+      Debug_Resort_SetRecv( p_recv, p_wk->gdata );
 
       RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_WANT_JOB, 12 );
 
@@ -671,300 +719,6 @@ static BOOL debugMenuCallProc_DesignerSetup6( DEBUG_MENU_EVENT_WORK *p_wk )
 
   return FALSE;
 }
-static BOOL PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u32 people_type, int cnt )
-{
-  typedef struct
-  {
-    u8  name;
-    u8  phrase;
-    u8  commID;
-    u8  view;
-    u8  shop_id;
-    u8  shop_type;
-    u8  placeID;
-    u8  dummy;
-  } PRESEN_DATA;
-
-  static const PRESEN_DATA sc_tourist_data[]  =
-  {
-    //旅行者
-    {
-      RESORT_NAME_00,
-      RESORT_PHRASE_00,
-      RESORT_COMM_TYPE_BEACON,
-      9,
-    },
-    {
-      RESORT_NAME_01,
-      RESORT_PHRASE_01,
-      RESORT_COMM_TYPE_CGEAR_IRC,
-      1,
-    },
-    {
-      RESORT_NAME_02,
-      RESORT_PHRASE_02,
-      RESORT_COMM_TYPE_UNION,
-      2,
-    },
-    {
-      RESORT_NAME_03,
-      RESORT_PHRASE_03,
-      RESORT_COMM_TYPE_RNDMATCH,
-      3,
-    },
-    {
-      RESORT_NAME_04,
-      RESORT_PHRASE_04,
-      RESORT_COMM_TYPE_GTSNEGO,
-      4,
-    },
-    {
-      RESORT_NAME_05,
-      RESORT_PHRASE_05,
-      RESORT_COMM_TYPE_HYLINK,
-      1,
-    },
-    {
-      RESORT_NAME_06,
-      RESORT_PHRASE_06,
-      RESORT_COMM_TYPE_BEACON,
-      12,
-    },
-    {
-      RESORT_NAME_07,
-      RESORT_PHRASE_07,
-      RESORT_COMM_TYPE_CGEAR_IRC,
-      7,
-    },
-    {
-      RESORT_NAME_08,
-      RESORT_PHRASE_08,
-      RESORT_COMM_TYPE_UNION,
-      0,
-    },
-    {
-      RESORT_NAME_09,
-      RESORT_PHRASE_09,
-      RESORT_COMM_TYPE_RNDMATCH,
-      1,
-    },
-    {
-      RESORT_NAME_10,
-      RESORT_PHRASE_10,
-      RESORT_COMM_TYPE_GTSNEGO,
-      14,
-    },
-    {
-      RESORT_NAME_11,
-      RESORT_PHRASE_11,
-      RESORT_COMM_TYPE_HYLINK,
-      3,
-    },
-    {
-      RESORT_NAME_12,
-      RESORT_PHRASE_12,
-      RESORT_COMM_TYPE_BEACON,
-      4,
-    },
-    {
-      RESORT_NAME_13,
-      RESORT_PHRASE_13,
-      RESORT_COMM_TYPE_CGEAR_IRC,
-      5,
-    },
-    {
-      RESORT_NAME_14,
-      RESORT_PHRASE_14,
-      RESORT_COMM_TYPE_UNION,
-      5,
-    },
-    {
-      RESORT_NAME_15,
-      RESORT_PHRASE_15,
-      RESORT_COMM_TYPE_RNDMATCH,
-      7,
-    },
-  };
-
-  static const PRESEN_DATA sc_secretary_data[]  =
-  {
-    //秘書
-    {
-      RESORT_NAME_16,
-      RESORT_PHRASE_16,
-      RESORT_COMM_TYPE_BEACON,
-      0,
-    },
-    {
-      RESORT_NAME_17,
-      RESORT_PHRASE_17,
-      RESORT_COMM_TYPE_BEACON,
-      1,
-    },
-    {
-      RESORT_NAME_18,
-      RESORT_PHRASE_18,
-      RESORT_COMM_TYPE_BEACON,
-      6,
-    },
-    {
-      RESORT_NAME_19,
-      RESORT_PHRASE_19,
-      RESORT_COMM_TYPE_BEACON,
-      3,
-    },
-    {
-      RESORT_NAME_20,
-      RESORT_PHRASE_20,
-      RESORT_COMM_TYPE_BEACON,
-      4,
-    },
-  };
-
-  static const PRESEN_DATA sc_resident_data[]  =
-  {
-    //住人
-    {
-      RESORT_NAME_21,
-      RESORT_PHRASE_21,
-      RESORT_COMM_TYPE_BEACON,
-      1,
-      RESORT_SHOP_ID_MARKET_00,
-      RESORT_RESIDENT_TYPE_MARKET,
-      RESORT_PLACEID_FIELD,
-    },
-    {
-      RESORT_NAME_22,
-      RESORT_PHRASE_22,
-      RESORT_COMM_TYPE_BEACON,
-      11,
-      RESORT_SHOP_ID_PARLOR_00,
-      RESORT_RESIDENT_TYPE_PARLOR,
-      RESORT_PLACEID_FIELD,
-    },
-    {
-      RESORT_NAME_23,
-      RESORT_PHRASE_23,
-      RESORT_COMM_TYPE_BEACON,
-      4,
-      RESORT_SHOP_ID_BREEDER_00,
-      RESORT_RESIDENT_TYPE_BREEDER,
-      RESORT_PLACEID_FIELD,
-    },
-  };
-
-  int i;
-
-  const PRESEN_DATA * sc_presen_data;
-
-  switch( people_type )
-  {
-  default:
-    GF_ASSERT(0);
-  case RESORT_PEOPLE_TYPE_TOURIST:
-    sc_presen_data = sc_tourist_data;
-    if( cnt >= NELEMS(sc_tourist_data) )
-    {
-      return FALSE;
-    }
-    break;
-  case RESORT_PEOPLE_TYPE_SECRETARY:
-    sc_presen_data = sc_secretary_data;
-    if( cnt >= NELEMS(sc_secretary_data) )
-    {
-      return FALSE;
-    }
-    break;
-  case RESORT_PEOPLE_TYPE_RESIDENT:
-    sc_presen_data = sc_resident_data;
-    if( cnt >= NELEMS(sc_resident_data) )
-    {
-      return FALSE;
-    }
-    break;
-  }
-
-  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_TRAINER_ID, people_type*1000 + cnt );
-  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_TRAINERVIEW, sc_presen_data[cnt].view );
-  if( sc_presen_data[cnt].view < 8 )
-  {
-    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_SEX, PM_MALE );
-  }
-  else
-  {
-    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_SEX, PM_FEMALE );
-  }
-
-  //名前
-  {
-    STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, sc_presen_data[cnt].name );
-    const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(p_strbuf);
-    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_NAME, (u32)cp_strcode );
-    GFL_STR_DeleteBuffer( p_strbuf );
-  }
-
-  //口癖
-  {
-    STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, sc_presen_data[cnt].phrase );
-    const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(p_strbuf);
-    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_INTRODUCTION, (u32)cp_strcode );
-    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode );
-    GFL_STR_DeleteBuffer( p_strbuf );
-  }
-
-  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_EXTEND_BIT, 0x1FF );
-  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_VER, PM_VERSION );
-  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_LANG, PM_LANG );
-  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_COMM_ID, sc_presen_data[cnt].commID );
-
-  {
-    RESORT_BINARY_MOUTHCOMM *p_data = RESORT_BINARY_MOUTHCOMM_Init( GFL_HEAP_LOWID(HEAPID_PROC) );
-    //クチコミ
-    for( i = RESORT_DATA_PARAM_EXT4_GOSSIP_00; i <= RESORT_DATA_PARAM_EXT4_GOSSIP_15; i++ )
-    {
-      u32 max = RESORT_BINARY_MOUTHCOMM_GetData(p_data,i-RESORT_DATA_PARAM_EXT4_GOSSIP_00, RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_NUM );
-      RESORT_RECV_DATA_SetData( p_recv, i, GFUser_GetPublicRand(max+1) );
-    }
-
-    RESORT_BINARY_MOUTHCOMM_Exit(p_data);
-  }
-
-  //オフレコ
-  {
-    u8  bit[12];
-    for( i  = 0; i < NELEMS(bit); i++ )
-    {
-      bit[i]  = GFUser_GetPublicRand( 0xFF );
-    }
-    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, (u32)bit );
-  }
-
-  //お店
-  if( people_type == RESORT_PEOPLE_TYPE_RESIDENT )
-  {
-
-    RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_recv );
-    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, sc_presen_data[cnt].shop_id );
-    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_TYPE, sc_presen_data[cnt].shop_type );
-    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_WANT_JOB, sc_presen_data[cnt].shop_type );
-    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_PLACE_ID, sc_presen_data[cnt].placeID );
-  }
-
-  //受信日時
-  {
-    RTCDate date;
-    RTCTime time;
-    GFL_RTC_GetDateTime(&date, &time);
-    RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_YEAR, date.year );
-    RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_MONTH, date.month );
-    RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_DAY, date.day );
-    RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_HOUR, time.hour );
-    RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_MIN, time.minute );
-  }
-
-  return TRUE;
-}
-
 
 static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {

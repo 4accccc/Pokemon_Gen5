@@ -43,6 +43,7 @@
 
 #ifdef PM_DEBUG
 #define DEBUG_RESORT_PRINT_ON
+#define DEBUG_RESORT_RECV_PRINT_ON
 //#define DEBUG_EXTEND_SET_GET_CHECK
 #define DEBUG_PERMISSION_CHECK
 
@@ -53,6 +54,12 @@ static BOOL s_debug_permission = FALSE;
 #define RESORT_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
 #else
 #define RESORT_Printf(...)  /* */
+#endif
+
+#if defined(DEBUG_RESORT_RECV_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada) )
+#define RESORT_RECV_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
+#else
+#define RESORT_RECV_Printf(...)  /* */
 #endif
 
 #ifdef DEBUG_PERMISSION_CHECK
@@ -501,8 +508,8 @@ static void RESORT_BASIC1_DATA_PrintDebug( const RESORT_BASIC1_DATA *cp_wk )
   name[PERSON_NAME_SIZE]  = GFL_STR_GetEOMCode();
 
   GFL_STR_CONV_StrcodeToSjis( name,str_name,PERSON_NAME_SIZE+1 );
-  RESORT_Printf( "name=%s\n", str_name );
-  RESORT_Printf( "trainerID=%d\n", cp_wk->trainerID );
+  RESORT_RECV_Printf( "name=%s\n", str_name );
+  RESORT_RECV_Printf( "trainerID=%d\n", cp_wk->trainerID );
 }
 #endif
 
@@ -1200,6 +1207,9 @@ BOOL RESORT_RECV_DATA_AddBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DAT
   //まずは初期化
   RESORT_RECV_DATA_InitInstance( p_wk );
 
+  //通信経路は必ずビーコン
+  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_COMM_ID, RESORT_COMM_TYPE_BEACON );
+
   //ベーシックは必ずいれる
   p_wk->basic1  = cp_beacon->basic1;
 
@@ -1274,7 +1284,7 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
 
     if( p_wk->extend_flag == 0x1F )
     {
-      RESORT_Printf( "!!!すべてマージ完了\n!!!" );
+      RESORT_RECV_Printf( "!!!すべてマージ完了\n!!!" );
     }
 
     if( change_view )
@@ -1890,91 +1900,14 @@ BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk )
 
     if( cp_wk->basic2.special_deliverly )
     {
-      return (u32)(pre-now) < SPECIAL_DELIVALY;
+      return (s64)(now-pre) < SPECIAL_DELIVALY;
     }
     else
     {
-      return (u32)(pre-now) < sc_extend_num_time[extend_num];
+      return (s64)(now-pre) < sc_extend_num_time[extend_num];
     }
   }
 }
-#ifdef PM_DEBUG
-//----------------------------------------------------------------------------
-/**
- *	@brief  デバッグ用データを作成
- *
- *	@param	RESORT_RECV_DATA *p_wk  ワーク
- *	@param	GAMEDATA *cp_gamedata   ゲームデータ
- */
-//-----------------------------------------------------------------------------
-void RESORT_RECV_DATA_SetDebugData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_gamedata )
-{
-  //自分のデータをいれた後、トレーナーIDと名前を変える
-  RESORT_RECV_DATA_SetMyData( p_wk, cp_gamedata );
-
-  p_wk->basic1.trainerID = GFUser_GetPublicRand(0xFFFF);
-
-  p_wk->commID  = RESORT_COMM_TYPE_BEACON;
-
-  {
-    static const struct
-    {
-      STRCODE *p_str;
-      u32 len;
-    } sc_name[] = 
-    {
-      {
-        L"いちろう",
-        4,
-      },
-      {
-        L"じろう",
-        3,
-      },
-      {
-        L"さぶろう",
-        4,
-      },
-      {
-        L"しろう",
-        3,
-      },
-      {
-        L"ごろう",
-        3,
-      },
-      {
-        L"ろくろう",
-        4,
-      },
-      {
-        L"ななろう",
-        4,
-      },
-      {
-        L"はちろう",
-        4,
-      },
-      {
-        L"くろう",
-        3,
-      },
-      {
-        L"たろう",
-        3,
-      }
-    };
-
-    u8 idx = GFUser_GetPublicRand(NELEMS(sc_name));
-    GFL_STD_MemCopy( sc_name[idx].p_str, p_wk->basic1.name, sizeof(STRCODE)*sc_name[idx].len );
-    p_wk->basic1.name[sc_name[idx].len] = GFL_STR_GetEOMCode();
-
-    p_wk->basic1.trainer_view = GFUser_GetPublicRand(8);
-
-  }
-}
-#endif
-
 //=============================================================================
 /**
  *    RESORT_BEACON_DATAの関数
@@ -2510,14 +2443,14 @@ BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp
   if( p_data )
   {
     RESORT_PROXY_DATA_AddProxy( p_data, cp_proxy );
-    RESORT_Printf( "空のデータに入れた！\n" );
+    RESORT_RECV_Printf( "空のデータに入れた！\n" );
     return TRUE;
   }
   else
   {
   }
 
-  RESORT_Printf( "代理人データを受け取ったが、バッファがいっぱい！\n" );
+  RESORT_RECV_Printf( "代理人データを受け取ったが、バッファがいっぱい！\n" );
   return FALSE;
 }
 //----------------------------------------------------------------------------
@@ -2868,7 +2801,7 @@ BOOL RESORT_RECV_BUFF_MergeBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_D
   //ロック中は追加しない
   if( p_wk->is_lock )
   {
-    RESORT_Printf( "リゾート　ロック中\n" );
+    RESORT_RECV_Printf( "リゾート　ロック中\n" );
     return FALSE;
   }
 
@@ -2877,11 +2810,11 @@ BOOL RESORT_RECV_BUFF_MergeBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_D
   if( p_data )
   {
     RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
-    RESORT_Printf( "マージしていれた！%d\n", cp_beacon->extend_type );
+    RESORT_RECV_Printf( "マージしていれた！%d\n", cp_beacon->extend_type );
     return TRUE;
   }
 
-  RESORT_Printf( "ビーコンを受け取ったが、バッファがいっぱい！\n" );
+  RESORT_RECV_Printf( "ビーコンを受け取ったが、バッファがいっぱい！\n" );
   return FALSE;
 }
 //----------------------------------------------------------------------------
@@ -2902,7 +2835,7 @@ BOOL RESORT_RECV_BUFF_MergeRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA 
   //ロック中は追加しない
   if( p_wk->is_lock )
   {
-    RESORT_Printf( "リゾート　ロック中\n" );
+    RESORT_RECV_Printf( "リゾート　ロック中\n" );
     return FALSE;
   }
 
@@ -2911,7 +2844,7 @@ BOOL RESORT_RECV_BUFF_MergeRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA 
   if( p_data )
   {
     RESORT_RECV_DATA_MergeRecv( p_data, cp_recv );
-    RESORT_Printf( "受信データをマージした！\n" );
+    RESORT_RECV_Printf( "受信データをマージした！\n" );
     return TRUE;
   }
 
@@ -2934,7 +2867,7 @@ BOOL RESORT_RECV_BUFF_MergeProxy( RESORT_RECV_BUFF *p_wk, const RESORT_PROXY_DAT
   //ロック中は追加しない
   if( p_wk->is_lock )
   {
-    RESORT_Printf( "リゾート　ロック中\n" );
+    RESORT_RECV_Printf( "リゾート　ロック中\n" );
     return FALSE;
   }
 
@@ -2943,7 +2876,7 @@ BOOL RESORT_RECV_BUFF_MergeProxy( RESORT_RECV_BUFF *p_wk, const RESORT_PROXY_DAT
   if( p_data )
   {
     RESORT_RECV_DATA_MergeProxy( p_data, cp_proxy );
-    RESORT_Printf( "受信データをマージした！\n" );
+    RESORT_RECV_Printf( "受信データをマージした！\n" );
     return TRUE;
   }
 
@@ -2966,7 +2899,7 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
   //ロック中は追加しない
   if( p_wk->is_lock )
   {
-    RESORT_Printf( "リゾート　ロック中\n" );
+    RESORT_RECV_Printf( "リゾート　ロック中\n" );
     return FALSE;
   }
 
@@ -2985,7 +2918,7 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
 #ifdef  PM_DEBUG
         RESORT_BASIC1_DATA_PrintDebug( &cp_beacon->basic1 );
 #endif
-        RESORT_Printf( "空のデータに入れた！%d\n", cp_beacon->extend_type );
+        RESORT_RECV_Printf( "空のデータに入れた！%d\n", cp_beacon->extend_type );
 
         RESORT_CITY_DATA_AddTrainerID( sp_city_data, trainerID );
         return TRUE;
@@ -2995,13 +2928,14 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
       p_data = Resort_Recv_Buff_GetOverReserveData( p_wk );
       if( p_data )
       {
+        RESORT_RECV_DATA_InitInstance( p_data );
         RESORT_RECV_DATA_AddBeacon( p_data, cp_beacon );
         RESORT_RECV_DATA_SetData(p_data,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_OVERWRITE);
 
 #ifdef  PM_DEBUG
         RESORT_BASIC1_DATA_PrintDebug( &cp_beacon->basic1 );
 #endif
-        RESORT_Printf( "受信データを押し出して入れた！\n" );
+        RESORT_RECV_Printf( "受信データを押し出して入れた！\n" );
 
         RESORT_CITY_DATA_AddTrainerID( sp_city_data, trainerID );
         return TRUE;
@@ -3009,7 +2943,7 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
     }
   }
 
-  RESORT_Printf( "ビーコンを受け取ったが、バッファがいっぱい！\n" );
+  RESORT_RECV_Printf( "ビーコンを受け取ったが、バッファがいっぱい！\n" );
   return FALSE;
 }
 //----------------------------------------------------------------------------
@@ -3029,7 +2963,7 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
   //ロック中は追加しない
   if( p_wk->is_lock )
   {
-    RESORT_Printf( "リゾート　ロック中\n" );
+    RESORT_RECV_Printf( "リゾート　ロック中\n" );
     return FALSE;
   }
 
@@ -3043,7 +2977,7 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
 #ifdef  PM_DEBUG
     RESORT_BASIC1_DATA_PrintDebug( &cp_recv->basic1 );
 #endif
-    RESORT_Printf( "受信データを空のデータに入れた！\n" );
+    RESORT_RECV_Printf( "受信データを空のデータに入れた！\n" );
     return TRUE;
   }
 
@@ -3051,12 +2985,13 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
   p_data = Resort_Recv_Buff_GetOverReserveData( p_wk );
   if( p_data )
   {
+    RESORT_RECV_DATA_InitInstance( p_data );
     RESORT_RECV_DATA_AddRecv(p_data, cp_recv);
     RESORT_RECV_DATA_SetData(p_data,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_OVERWRITE);
 #ifdef  PM_DEBUG
     RESORT_BASIC1_DATA_PrintDebug( &cp_recv->basic1 );
 #endif
-    RESORT_Printf( "受信データを押し出して入れた！\n" );
+    RESORT_RECV_Printf( "受信データを押し出して入れた！\n" );
     return TRUE;
   }
 

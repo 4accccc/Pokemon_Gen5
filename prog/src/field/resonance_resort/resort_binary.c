@@ -165,7 +165,7 @@ u16 RESORT_BINARY_PEOPLE_DATA_GetMsgID( const RESORT_BINARY_PEOPLE_DATA *cp_wk, 
  *	@return　バイナリデータ
  */
 //-----------------------------------------------------------------------------
-const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_PEOPLE *cp_wk, RESORT_PEOPLE_TYPE people_type, RESORT_KIND_TYPE kind )
+const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_PEOPLE *cp_wk, RESORT_PEOPLE_TYPE people_type, RESORT_KIND_TYPE kind, u16 sex )
 {
   int i;
   const RESORT_BINARY_PEOPLE_DATA *cp_data;
@@ -173,13 +173,15 @@ const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_
   {
     cp_data   = RESORT_BINARY_GetStruct(cp_wk, i);
     if( RESORT_BINARY_GetData(cp_wk,i,RESORT_BINARY_PEOPLE_PARAM_PEOPLE_TYPE) == people_type
-        && RESORT_BINARY_GetData(cp_wk,i,RESORT_BINARY_PEOPLE_PARAM_KIND) == kind )
+        && RESORT_BINARY_GetData(cp_wk,i,RESORT_BINARY_PEOPLE_PARAM_KIND) == kind
+        && RESORT_BINARY_GetData(cp_wk,i,RESORT_BINARY_PEOPLE_PARAM_SEX) == sex
+      )
     {
       return cp_data;
     }
   }
 
-  GF_ASSERT_MSG(0, "people_type%d kind%d\n", people_type, kind);
+  GF_ASSERT_MSG(0, "people_type%d kind%d sex%d\n", people_type, kind, sex);
   return NULL;
 }
 

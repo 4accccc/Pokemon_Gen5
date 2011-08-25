@@ -566,7 +566,7 @@ static void RESORT_CROWD_LINE_Exit( RESORT_CROWD_LINE *p_wk );
 static void RESORT_CROWD_LINE_Main( RESORT_CROWD_LINE *p_wk );
 static void RESORT_CROWD_LINE_SetUp( RESORT_CROWD_LINE *p_wk );
 static void RESORT_CROWD_LINE_Register( RESORT_CROWD_LINE *p_wk, u16 index, RESORT_CROWD_PEOPLE_WK *p_people );
-static void RESORT_CROWD_LINE_UnRegister( RESORT_CROWD_LINE *p_wk, const RESORT_CROWD_PEOPLE_WK *cp_people );
+static void RESORT_CROWD_LINE_UnRegister( RESORT_CROWD_LINE *p_wk, u16 index );
 static BOOL RESORT_CROWD_LINE_GetRegisterData( const RESORT_PEOPLE *cp_people, u16 *p_line, u16 *p_index );
 
 //-------------------------------------
@@ -716,22 +716,21 @@ static void RESORT_CROWD_PEOPLE_SetUp( RESORT_CROWD_PEOPLE *p_wk )
 //-----------------------------------------------------------------------------
 static void RESORT_CROWD_PEOPLE_Add( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people )
 {
+  u16 line;
+  u16 index;
+
+  if( RESORT_CROWD_LINE_GetRegisterData( p_people, &line, &index ) )
   {
     int i;
     for( i = 0; i < RESORT_CROWD_PEOPLE_BUFFER_MAX; i++ )
     {
       if( !RESORT_CROWD_PEOPLE_WK_IsExist(&p_wk->wk[i]) )
       {
-        u16 line;
-        u16 index;
-        if( RESORT_CROWD_LINE_GetRegisterData( p_people, &line, &index ) )
-        {
-          //ワークへの設定
-          RESORT_CROWD_PEOPLE_WK_SetUp( &p_wk->wk[i], p_people, p_wk->cp_shop, p_wk->cp_institution, p_wk->p_all_people );
+        //ワークへの設定
+        RESORT_CROWD_PEOPLE_WK_SetUp( &p_wk->wk[i], p_people, p_wk->cp_shop, p_wk->cp_institution, p_wk->p_all_people );
 
-          //隊列への登録
-          RESORT_CROWD_LINE_Register( &p_wk->line[line], index, &p_wk->wk[i] );
-        }
+        //隊列への登録
+        RESORT_CROWD_LINE_Register( &p_wk->line[line], index, &p_wk->wk[i] );
         break;
       }
     }
@@ -759,7 +758,7 @@ static void RESORT_CROWD_PEOPLE_Delete( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE
     if( p_crowd )
     {
       //まずは隊列から外す
-      RESORT_CROWD_LINE_UnRegister( &p_wk->line[line], p_crowd );
+      RESORT_CROWD_LINE_UnRegister( &p_wk->line[line], index );
 
       //群集人物から外す
       RESORT_CROWD_PEOPLE_WK_Clear( p_crowd );
@@ -1764,9 +1763,13 @@ static void RESORT_CROWD_LINE_SetUp( RESORT_CROWD_LINE *p_wk )
     for( i = 0; i < RESORT_CROWD_MOVE_LINE_PEOPLE_MAX; i++ )
     {
       if( p_wk->p_move[i] 
-          && RESORT_CROWD_PEOPLE_WK_IsExist(p_wk->p_move[i])
-          && !RESORT_CROWD_PEOPLE_WK_IsNewData(p_wk->p_move[i]) )
+          && RESORT_CROWD_PEOPLE_WK_IsExist(p_wk->p_move[i]) )
       {
+        if( !RESORT_CROWD_PEOPLE_WK_IsNewData(p_wk->p_move[i]) )
+        {
+          RESORT_CROWD_PEOPLE_WK_StartMovePos( p_wk->p_move[i], AC_WALK_U_8F, p_wk->move_dir, p_wk->x, 0 );
+        }
+#if 0
         u16 init_z;
 
         if( p_wk->move_dir == DIR_UP )
@@ -1781,6 +1784,7 @@ static void RESORT_CROWD_LINE_SetUp( RESORT_CROWD_LINE *p_wk )
         RESORT_CROWD_PEOPLE_WK_StartMovePos( p_wk->p_move[i], AC_WALK_U_8F, p_wk->move_dir, p_wk->x, init_z );
         p_wk->start_index = i + 1;
         p_wk->start_index %= RESORT_CROWD_MOVE_LINE_PEOPLE_MAX;
+#endif
       }
     }
   }
@@ -1806,21 +1810,16 @@ static void RESORT_CROWD_LINE_Register( RESORT_CROWD_LINE *p_wk, u16 index, RESO
  *	@brief  隊列から群集人物をクリア
  *
  *	@param	RESORT_CROWD_LINE *p_wk ワーク
- *	@param  RESORT_CROWD_PEOPLE cp_people 消す群集ワーク
+ *	@param  消すインデックス
  */
 //-----------------------------------------------------------------------------
-static void RESORT_CROWD_LINE_UnRegister( RESORT_CROWD_LINE *p_wk, const RESORT_CROWD_PEOPLE_WK *cp_people )
+static void RESORT_CROWD_LINE_UnRegister( RESORT_CROWD_LINE *p_wk, u16 index )
 {
-  int i;
-  for( i = 0; i < RESORT_CROWD_MOVE_LINE_PEOPLE_MAX; i++ )
-  {
-    if( p_wk->p_move[i] == cp_people )
-    {
-      p_wk->p_move[i] = NULL;
-      p_wk->register_cnt--;
-      break;
-    }
-  }
+  GF_ASSERT( index < RESORT_CROWD_MOVE_LINE_PEOPLE_MAX );
+  GF_ASSERT( p_wk->p_move[index] );
+
+  p_wk->register_cnt--;
+  p_wk->p_move[ index ] = NULL;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2816,7 +2815,10 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
   //群集システム
   {
     int i;
-    p_wk->p_crowd = RESORT_CROWD_PEOPLE_Init( heapID, p_mmdlsys, cp_player, RESORT_SYSTEM_GetBinaryShop(p_sys),RESORT_SYSTEM_GetBinaryInstitution(p_sys), RESORT_SYSTEM_GetPeopleAllData(p_sys));
+    p_wk->p_crowd = RESORT_CROWD_PEOPLE_Init( heapID, p_mmdlsys, cp_player, 
+        RESORT_SYSTEM_GetBinaryShop(p_sys),
+        RESORT_SYSTEM_GetBinaryInstitution(p_sys), 
+        RESORT_SYSTEM_GetPeopleAllData(p_sys));
 
     for( i = 0; i < RESORT_FIELD_PEOPLE_MAX; i++ )
     {
@@ -2935,11 +2937,13 @@ static void Field_People_UpdateDataCallback( void *p_wk_adrs, void *p_data_adrs,
     //一旦このデータを消してから新規人物登録
     //アドレスの位置は同じなのでこの人を一旦消す
     p_people = RESORT_PEOPLE_SYS_GetPeopleByData( p_wk->p_people_sys, p_data_adrs );
-    GF_ASSERT(p_people);
-    //群集から外し
-    RESORT_FIELD_PEOPLE_DeleteCrowd( p_wk, p_people );
-    //完全に人を消す
-    RESORT_PEOPLE_Delete( p_wk->p_people_sys, p_people );
+    if( p_people )
+    {
+      //群集から外し
+      RESORT_FIELD_PEOPLE_DeleteCrowd( p_wk, p_people );
+      //完全に人を消す
+      RESORT_PEOPLE_Delete( p_wk->p_people_sys, p_people );
+    }
     break;
   }
 

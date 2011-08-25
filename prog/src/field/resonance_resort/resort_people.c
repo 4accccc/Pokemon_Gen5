@@ -31,7 +31,7 @@
 //=====================================
 typedef struct
 {
-  void (*SetupMmdHeader)( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
+  void (*SetupMmdHeader)( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
 } RESORT_PEOPLE_FUNCTION;
 
 //-------------------------------------
@@ -65,16 +65,16 @@ typedef struct
 ///	PRIVATE
 //=====================================
 //住民
-static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
+static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
 
 //代理人
-static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
+static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
 
 //観光客
-static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
+static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
 
 //秘書
-static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
+static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
 
 //-------------------------------------
 ///	抽象動作
@@ -134,6 +134,7 @@ static const MMDL_HEADER sc_default_header =
 static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_INIT_PARAM *cp_param )
 {
   int kind;
+  int sex;
 
   RESORT_PEOPLE *p_wk = GFL_HEAP_AllocClearMemory(heapID, sizeof(RESORT_PEOPLE));
   p_wk->peopleID    = cp_param->peopleID;
@@ -142,40 +143,31 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
   p_wk->people_type = RESORT_ABSTRUCT_DATA_GetPeopleType( p_wk->p_abstruct_data );
 
   kind = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TYPE, NULL );
-  p_wk->cp_binary   = RESORT_BINARY_SearchData( cp_param->cp_binary, p_wk->people_type, kind );
+  sex  = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_SEX, NULL );
+  p_wk->cp_binary   = RESORT_BINARY_SearchData( cp_param->cp_binary, p_wk->people_type, kind, sex );
 
   p_wk->cp_function = &sc_people_function[ p_wk->people_type ];
 
+  //もし自分のMMDLがなかったら作成
+  //（メニュー・セーブ復帰など存在することがありえる）
   {
     MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
     if( p_mmdl == NULL )
     {
-      u16 grid_x, grid_z, dir;
       MMDL_HEADER header = sc_default_header;
 
-      header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
+      //ヘッダ共通設定
+      {
+        u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
+        header.obj_code = UnionView_GetObjCode( trainer_view );
+        header.event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary  );
+        header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
+      }
+
+      //ヘッダ個別設定
       p_wk->cp_function->SetupMmdHeader( p_wk, &header );
 
-      if( p_wk->people_type == RESORT_PEOPLE_TYPE_TOURIST
-          || p_wk->people_type == RESORT_PEOPLE_TYPE_PROXY )
-      {
-        grid_x  = 0;
-        grid_z  = 0;
-        dir = DIR_UP;
-      }
-      else if( p_wk->people_type == RESORT_PEOPLE_TYPE_RESIDENT )
-      {
-        RESORT_MAP_GetResidentGridPos( RESORT_ABSTRUCT_DATA_GetBufferIndex(p_wk->p_abstruct_data), 0, &grid_x, &grid_z, &dir );
-      }
-      else
-      {
-        RESORT_MAP_GetPlaceGridPosByIndex( cp_param->placeID, p_wk->people_type, kind, cp_param->peopleID, &grid_x, &grid_z, &dir );
-      }
-
-
-      header.dir = dir;
-
-      MMDLHEADER_SetGridPos( &header, grid_x, grid_z, 0 );
+      //MMDL作成
       MMDLSYS_AddMMdl( cp_param->p_mmdlsys, &header, RESORT_MAP_PlaceIDToZoneID(cp_param->placeID) );
 
       //作成した場合は、データとMMDLをひもづけるため、データにPEOPLEIDとPLACEIDを設定
@@ -446,14 +438,16 @@ RESORT_ABSTRUCT_DATA * RESORT_PEOPLE_GetAbstructData( RESORT_PEOPLE *p_wk )
  *	@brief  MMDLヘッダ作成
  *
  *	@param	void *p_data_adrs   データ
- *	@param	*p_hedder           MMDL作成用ヘッダ
+ *	@param	*p_header           MMDL作成用ヘッダ
  */
 //-----------------------------------------------------------------------------
-static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
+static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
 {
-  u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
-  p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
-  p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
+  u16 grid_x, grid_z, dir;
+  RESORT_MAP_GetResidentGridPos( RESORT_ABSTRUCT_DATA_GetBufferIndex(p_wk->p_abstruct_data), 0, &grid_x, &grid_z, &dir );
+
+  p_header->dir = dir;
+  MMDLHEADER_SetGridPos( p_header, grid_x, grid_z, 0 );
 }
 
 //-------------------------------------
@@ -464,15 +458,13 @@ static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder 
  *	@brief  MMDLヘッダ作成
  *
  *	@param	void *p_data_adrs   データ
- *	@param	*p_hedder           MMDL作成用ヘッダ
+ *	@param	*p_header           MMDL作成用ヘッダ
  */
 //-----------------------------------------------------------------------------
-static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
+static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
 {
-  u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
-  p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
-  p_hedder->move_code = MV_DOWN;
-  p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
+  p_header->dir = DIR_UP;
+  MMDLHEADER_SetGridPos( p_header, 0, 0, 0 );
 }
 
 //-------------------------------------
@@ -483,16 +475,13 @@ static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
  *	@brief  MMDLヘッダ作成
  *
  *	@param	void *p_data_adrs   データ
- *	@param	*p_hedder           MMDL作成用ヘッダ
+ *	@param	*p_header           MMDL作成用ヘッダ
  */
 //-----------------------------------------------------------------------------
-static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
+static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
 {
-  u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
-  NAGI_Printf( "mmdl view %d\n", trainer_view );
-  p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
-  p_hedder->move_code = MV_DOWN;
-  p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
+  p_header->dir = DIR_UP;
+  MMDLHEADER_SetGridPos( p_header, 0, 0, 0 );
 }
 
 //-------------------------------------
@@ -503,15 +492,17 @@ static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
  *	@brief  MMDLヘッダ作成
  *
  *	@param	void *p_data_adrs   データ
- *	@param	*p_hedder           MMDL作成用ヘッダ
+ *	@param	*p_header           MMDL作成用ヘッダ
  *	@param	RESORT_BINARY_PEOPLE *cp_binary バイナリデータ
  */
 //-----------------------------------------------------------------------------
-static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
+static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
 {
-  u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
-  p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
-  p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary  );
+  u16 grid_x, grid_z, dir;
+  u16 kind = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TYPE, NULL );
+  RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID_RECEPTION, RESORT_PEOPLE_TYPE_SECRETARY, kind, p_wk->peopleID, &grid_x, &grid_z, &dir );
+  p_header->dir = dir;
+  MMDLHEADER_SetGridPos( p_header, grid_x, grid_z, 0 );
 }
 //=============================================================================
 /**

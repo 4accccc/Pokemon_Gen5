@@ -61,13 +61,11 @@ PEOPLE_ROW_START         = 1         #行開始位置
 PEOPLE_COL_START         = 0         #列開始位置
 PEOPLE_COL_PERSON_TYPE   = PEOPLE_COL_START #列：人物タイプ
 PEOPLE_COL_KIND          = 1         #列：種類
-PEOPLE_COL_PERSONALITY   = 2         #列：性格
-PEOPLE_COL_VIEW          = 3         #列：見た目
-PEOPLE_COL_SEX           = 4         #列：性別
-PEOPLE_COL_SCRID         = 5         #列：SCRID
-PEOPLE_COL_MSGID_START   = 6         #列：MSGID開始
-PEOPLE_COL_MSGID_END     = 11        #列：MSGID終了
-PEOPLE_COL_END           = 12        #列最後
+PEOPLE_COL_SEX           = 2         #列：性別
+PEOPLE_COL_SCRID         = 3         #列：SCRID
+PEOPLE_COL_MSGID_START   = 4         #列：MSGID開始
+PEOPLE_COL_MSGID_END     = 9        #列：MSGID終了
+PEOPLE_COL_END           = 10        #列最後
 def convertPeople( csv, data, hashNumber, gmm, script )
 
   #データの作成
@@ -82,16 +80,12 @@ def convertPeople( csv, data, hashNumber, gmm, script )
     #データ取得
     person  = csv.get( row, PEOPLE_COL_PERSON_TYPE )
     kind    = csv.get( row, PEOPLE_COL_KIND )
-    seikaku = csv.get( row, PEOPLE_COL_PERSONALITY )
-    view    = csv.get( row, PEOPLE_COL_VIEW );
     sex     = csv.get( row, PEOPLE_COL_SEX );
     scrid   = csv.get( row, PEOPLE_COL_SCRID )
 
     #データ書き込み
     data.write_u16( hashNumber[person] )
     data.write_u16( hashNumber[kind] )
-    data.write_u16( hashNumber[seikaku] )
-    data.write_u16( hashNumber[view] )
     data.write_u16( hashNumber[sex] )
 
     #SCRIDから値への変換
