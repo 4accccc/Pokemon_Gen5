@@ -366,4 +366,5 @@
   ARCID_CHAMPION "fieldmap/champion.narc"  #チャンピオン部屋
   ARCID_WBT_CUT_GRA   "face_gra.narc"   #WBTビジョンでの顔グラフィック用データ
   ARCID_GYM_OLD_ELEC "fieldmap/gym_old_elec.narc"  #旧電気ジム
+  ARCID_PKWD_FIELD_GIMMICK_DATA   "fieldmap/pkwd_field_gmk.narc"   #ポケウッド(フィールド)ギミックデータ
   

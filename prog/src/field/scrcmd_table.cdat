@@ -548,9 +548,9 @@
   DEF_CMD( EvCmdGymGroundEnt_ExitLift, EV_SEQ_GYM_GROUND_ENT_EXIT_LIFT )
 
   // •XƒWƒ€
-  NO_CMD() //DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )
-  NO_CMD() //DEF_CMD( EvCmdGymIce_WallAnm, EV_SEQ_GYM_ICE_WALL_ANM )
-  NO_CMD() //DEF_CMD( EvCmdGymIce_ChgRail, EV_SEQ_GYM_ICE_CHG_RAIL )
+  DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )
+  DEF_CMD( EvCmdGymIce_WallAnm, EV_SEQ_GYM_ICE_WALL_ANM )
+  DEF_CMD( EvCmdGymIce_ChgRail, EV_SEQ_GYM_ICE_CHG_RAIL )
 
   //ƒhƒ‰ƒSƒ“ƒWƒ€
   NO_CMD() //DEF_CMD( EvCmdGymDragon_Init, EV_SEQ_GYM_DRAGON_INIT )
