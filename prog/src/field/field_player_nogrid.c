@@ -1134,6 +1134,15 @@ static BOOL nogrid_CheckMoveStart( const FIELD_PLAYER_NOGRID* cp_player, u16 dir
     }
   }
 
+  // ã≠êßâÒì]è∞Ç»ÇÁà⁄ìÆOK
+  if( nogrid_CheckMoveBit( cp_player,
+        FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R |
+        FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_L )
+      == TRUE )
+  {
+    return TRUE;
+  }
+
   return FALSE;
 }
 
