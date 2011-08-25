@@ -1332,6 +1332,10 @@ SRCS_OVERLAY_WBT_GIMMICK = field/wbt_gimmick.c \
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_PKWD_FIELD_GIMMICK = field/field_gimmick_pkwd_field.c
+
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_RESONANCE_RESORT_GIMMICK = field/resonance_resort/resort_field.c \
                                         field/resonance_resort/resort_reception.c \
                                         field/resonance_resort/resort_people.c \
