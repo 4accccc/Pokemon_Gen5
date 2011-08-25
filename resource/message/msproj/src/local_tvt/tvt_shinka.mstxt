@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコが　しんかする　ほうほうは
-まだ　はっけんされて　いないわね▼</Text>
+			<Text>このコが　進化する　方法は
+まだ　発見されて　いないわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:50:03" />
+				Time="2011-08-25T04:43:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -68,10 +68,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　よく　なついているときに
-レベルアップすると　しんか　するわね▼</Text>
+レベルアップすると　進化するわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:50:03" />
+				Time="2011-08-25T04:43:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -120,11 +120,11 @@
 			Language="JPN_KANJI">
 			<Text>このコが　よく　なついているときに
 レベルアップするでしょ▼
-そのときの　じかんたいに　よって
-しんかすることが　あるわね▼</Text>
+そのときの　時間帯に　よって
+進化することが　あるわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:59:53" />
+				Time="2011-08-25T04:43:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -173,15 +173,15 @@
 			Language="JPN_KANJI">
 			<Text>このコが　よく　なついているときに
 レベルアップするでしょ▼
-そのときの　じかんたいに　よって
-しんかすることが　あるわね▼</Text>
+そのときの　時間帯に　よって
+進化することが　あるわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-22T11:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:28" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -223,14 +223,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼</Text>
+進化することが　あるわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:50:03" />
+				Time="2011-08-25T04:45:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -271,15 +271,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコは　つうしんこうかんで
-やってきたときに　しんか　するわよ▼</Text>
+			<Text>このコは　通信交換で
+やってきたときに　進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:50:03" />
+				Time="2011-08-25T04:45:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:48" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -368,16 +368,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコは　つうしんこうかんで
-ある　ポケモンと　こうかんすると▽
-しんかすることが　あるわね▼</Text>
+			<Text>このコは　通信交換で
+ある　ポケモンと　交換すると▽
+進化することが　あるわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:50:04" />
+				Time="2011-08-25T04:45:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:48" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -471,19 +471,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
-３しゅるいの　ポケモンに
-しんかする　かのうせいが　あるけれど▼
-どれに　しんか　するかは
-こうげきと　ぼうぎょの▽
-バランスで　きまるようね▼</Text>
+進化することが　あるわね▼
+３種類の　ポケモンに
+進化する　可能性が　あるけれど▼
+どれに　進化するかは
+攻撃と　防御の▽
+バランスで　決まるようね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:53:23" />
+				Time="2011-08-25T04:45:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -530,19 +530,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
-３しゅるいの　ポケモンに
-しんかする　かのうせいが　あるけれど▼
-どれに　しんか　するかは
-こうげきと　ぼうぎょの▽
-バランスで　きまるようね▼</Text>
+進化することが　あるわね▼
+３種類の　ポケモンに
+進化する　可能性が　あるけれど▼
+どれに　進化するかは
+攻撃と　防御の▽
+バランスで　決まるようね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:53:23" />
+				Time="2011-08-25T04:46:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -589,19 +589,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
-３しゅるいの　ポケモンに
-しんかする　かのうせいが　あるけれど▼
-どれに　しんか　するかは
-こうげきと　ぼうぎょの▽
-バランスで　きまるようね▼</Text>
+進化することが　あるわね▼
+３種類の　ポケモンに
+進化する　可能性が　あるけれど▼
+どれに　進化するかは
+攻撃と　防御の▽
+バランスで　決まるようね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:53:23" />
+				Time="2011-08-25T04:46:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -647,18 +647,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
-２しゅるいの　ポケモンに
-しんかする　かのうせいが　あるけれど▼
-どちらに　しんかするかは
-しんか　するまで　わからないのよね▼</Text>
+進化することが　あるわね▼
+２種類の　ポケモンに
+進化する　可能性が　あるけれど▼
+どちらに　進化するかは
+進化するまで　わからないのよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:54:20" />
+				Time="2011-08-25T04:48:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:48:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -704,18 +704,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
-２しゅるいの　ポケモンに
-しんかする　かのうせいが　あるけれど▼
-どちらに　しんかするかは
-しんか　するまで　わからないのよね▼</Text>
+進化することが　あるわね▼
+２種類の　ポケモンに
+進化する　可能性が　あるけれど▼
+どちらに　進化するかは
+進化するまで　わからないのよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:54:25" />
+				Time="2011-08-25T04:48:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:48:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -757,14 +757,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼</Text>
+進化することが　あるわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:56:11" />
+				Time="2011-08-25T04:48:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -810,18 +810,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
-そのとき　てもちに
-よゆうが　あれば▼
-べつの　ポケモンが
+進化することが　あるわね▼
+そのとき　手持ちに
+余裕が　あれば▼
+別の　ポケモンが
 みつかることが　あるようね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:57:43" />
+				Time="2011-08-25T04:48:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -864,15 +864,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップするときに
-うつくしさが　たかいと▽
-しんか　するわよ▼</Text>
+うつくしさが　高いと　進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:58:19" />
+				Time="2011-08-25T04:48:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -915,15 +914,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコが　♂なら
-めざめいしを　つかってあげると▽
-しんか　するわよ▼</Text>
+めざめいしを　使ってあげると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T11:59:03" />
+				Time="2011-08-25T04:49:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -966,15 +965,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコが　♀なら
-めざめいしを　つかってあげると▽
-しんか　するわよ▼</Text>
+めざめいしを　使ってあげると▽
+進化　するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-22T11:59:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1017,17 +1016,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコに　まんまるいしを　もたせて
+			<Text>このコに　まんまるいしを　持たせて
 レベルアップ　させるでしょ▼
-そのときの　じかんたいに　よって
-しんかすることが　あるわね▼</Text>
+そのときの　時間帯に　よって
+進化することが　あるわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:01:12" />
+				Time="2011-08-25T04:49:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:28" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1164,15 +1163,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップの　ときに
-てもちに　テッポウオが　いると▽
-しんか　するわよ▼</Text>
+手持ちに　テッポウオが　いると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:05:15" />
+				Time="2011-08-25T04:49:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1216,14 +1215,14 @@
 			Language="JPN_KANJI">
 			<Text>このコが　♂なら
 レベルアップした　ときに▽
-しんかすることが　あるわね▼</Text>
+進化することが　あるわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-22T12:05:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1267,14 +1266,14 @@
 			Language="JPN_KANJI">
 			<Text>このコが　♀なら
 レベルアップした　ときに▽
-しんかすることが　あるわね▼</Text>
+進化することが　あるわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-22T12:05:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1303,13 +1302,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこは　とくしゅな
+			<Text>このコは　とくしゅな
 じりょくの　ある　ばしょで▼
 レベルアップすると
 しんか　するわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:05:48" />
+				Time="2011-08-25T04:49:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1317,17 +1316,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このこは　とくしゅな
-じりょくの　ある　ばしょで▼
+			<Text>このコは　特殊な
+磁力の　ある　場所で▼
 レベルアップすると
-しんか　するわね▼</Text>
+進化するわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:05:55" />
+				Time="2011-08-25T04:49:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1370,17 +1369,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコは　コケに　おおわれた
-みどりの　おおい　ばしょで▼
+			<Text>このコは　コケに　覆われた
+緑の　多い　場所で▼
 レベルアップすると
-しんか　するわね▼</Text>
+進化するわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:05:55" />
+				Time="2011-08-25T04:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1423,17 +1422,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコは　こおりで　おおわれた
-つめたい　ばしょで▼
+			<Text>このコは　氷で　覆われた
+冷たい　場所で▼
 レベルアップすると
-しんか　するわね▼</Text>
+進化するわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:09:59" />
+				Time="2011-08-25T04:50:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1476,17 +1475,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコは　とくしゅな
-じりょくの　ある　ばしょで▼
+			<Text>このコは　特殊な
+磁力の　ある　場所で▼
 レベルアップすると
-しんか　するわね▼</Text>
+進化するわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:09:59" />
+				Time="2011-08-25T04:50:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1529,15 +1528,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに　アップグレードを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+持たせて　通信交換すると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:10:56" />
+				Time="2011-08-25T04:51:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:48" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1580,15 +1579,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに　おうじゃのしるしを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+持たせて　通信交換すると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:10:56" />
+				Time="2011-08-25T04:52:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1630,16 +1629,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコに　しんかいのウロコを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+			<Text>このコに　進化いのウロコを
+持たせて　通信交換すると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:10:56" />
+				Time="2011-08-25T04:52:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1681,16 +1680,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコに　しんかいのキバを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+			<Text>このコに　進化いのキバを
+持たせて　通信交換　すると▽
+進化　するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1733,15 +1732,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに　メタルコートを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+持たせて　通信交換すると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:10:56" />
+				Time="2011-08-25T04:52:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1784,15 +1783,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに　りゅうのウロコを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+持たせて　通信交換　すると▽
+進化　するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1835,15 +1834,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに　プロテクターを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+持たせて　通信交換すると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:10:56" />
+				Time="2011-08-25T04:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1879,15 +1878,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに　エレキブースターを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+持たせて　通信交換すると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:10:56" />
+				Time="2011-08-25T04:52:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1923,15 +1922,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに　マグマブースターを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+持たせて　通信交換すると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:10:56" />
+				Time="2011-08-25T04:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1967,15 +1966,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに　あやしいパッチを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+持たせて　通信交換すると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:10:56" />
+				Time="2011-08-25T04:52:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2011,15 +2010,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに　れいかいのぬのを
-もたせて　つうしんこうかん　すると▽
-しんか　するわよ▼</Text>
+持たせて　通信交換　すると▽
+進化　するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-22T12:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2055,17 +2054,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコに　するどいキバを　もたせて
+			<Text>このコに　するどいキバを　持たせて
 レベルアップ　させるでしょ▼
-そのときの　じかんたいに　よって
-しんかすることが　あるわね▼</Text>
+そのときの　時間帯に　よって
+進化することが　あるわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-22T12:26:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2101,17 +2100,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコに　するどいツメを　もたせて
+			<Text>このコに　するどいツメを　持たせて
 レベルアップ　させるでしょ▼
-そのときの　じかんたいに　よって
-しんかすることが　あるわね▼</Text>
+そのときの　時間帯に　よって
+進化することが　あるわね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-22T12:26:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2147,15 +2146,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに
-かみなりのいしを　つかってあげると▽
-しんか　するわよ▼</Text>
+かみなりのいしを　使ってあげると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:13:34" />
+				Time="2011-08-25T04:52:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2191,15 +2190,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに
-たいようのいしを　つかってあげると▽
-しんか　するわよ▼</Text>
+たいようのいしを　使ってあげると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:13:34" />
+				Time="2011-08-25T04:52:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2242,15 +2241,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに
-つきのいしを　つかってあげると▽
-しんか　するわよ▼</Text>
+つきのいしを　使ってあげると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:13:34" />
+				Time="2011-08-25T04:52:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2293,15 +2292,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに
-ほのおのいしを　つかってあげると▽
-しんか　するわよ▼</Text>
+ほのおのいしを　使ってあげると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:13:34" />
+				Time="2011-08-25T04:52:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2344,15 +2343,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに
-みずのいしを　つかってあげると▽
-しんか　するわよ▼</Text>
+みずのいしを　使ってあげると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:13:34" />
+				Time="2011-08-25T04:52:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2395,15 +2394,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに
-リーフのいしを　つかってあげると▽
-しんか　するわよ▼</Text>
+リーフのいしを　使ってあげると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:13:34" />
+				Time="2011-08-25T04:52:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2446,15 +2445,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに
-ひかりのいしを　つかってあげると▽
-しんか　するわよ▼</Text>
+ひかりのいしを　使ってあげると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:13:34" />
+				Time="2011-08-25T04:52:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2497,15 +2496,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに
-やみのいしを　つかってあげると▽
-しんか　するわよ▼</Text>
+やみのいしを　使ってあげると▽
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:13:34" />
+				Time="2011-08-25T04:52:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2549,16 +2548,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは
-ものまねを　おぼえていると▼
+ものまねを　覚えていると▼
 レベルアップの　ときに
-しんか　するわよ▼</Text>
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:16:51" />
+				Time="2011-08-25T04:53:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2602,16 +2601,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは
-ダブルアタックを　おぼえていると▼
+ダブルアタックを　覚えていると▼
 レベルアップの　ときに
-しんか　するわよ▼</Text>
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:16:51" />
+				Time="2011-08-25T04:52:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2643,11 +2642,10 @@
 			<Text>このコは
 ころがるを　おぼえていると▼
 レベルアップの　ときに
-しんか　するわよ▼
-</Text>
+しんか　するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:16:11" />
+				Time="2011-08-25T04:53:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2658,15 +2656,14 @@
 			<Text>このコは
 ころがるを　おぼえていると▼
 レベルアップの　ときに
-しんか　するわよ▼
-</Text>
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:16:51" />
+				Time="2011-08-25T04:52:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2698,11 +2695,10 @@
 			<Text>このコは　げんしのちからを
 おぼえていると▼
 レベルアップの　ときに
-しんか　するわよ▼
-</Text>
+しんか　するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:16:22" />
+				Time="2011-08-25T04:53:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2711,17 +2707,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　げんしのちからを
-おぼえていると▼
+覚えていると▼
 レベルアップの　ときに
-しんか　するわよ▼
-</Text>
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:16:51" />
+				Time="2011-08-25T04:53:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2765,16 +2760,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに　リーフのいしか
-たいようのいしを　つかってあげると▼
-それぞれ　ちがう　ポケモンに
-しんか　するわよ▼</Text>
+たいようのいしを　使ってあげると▼
+それぞれ　違う　ポケモンに
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:16:51" />
+				Time="2011-08-25T04:53:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2821,19 +2816,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコに
-みずのいしを　つかってあげると▽
-しんか　するわ▼
+みずのいしを　使ってあげると▽
+進化するわ▼
 あと　おうじゃのしるしを
-もたせて　つうしんこうかん　すると▼
-そのときは　ちがう　ポケモンに
-しんか　するわよ▼</Text>
+持たせて　通信交換　すると▼
+そのときは　違う　ポケモンに
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:17:57" />
+				Time="2011-08-25T04:53:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2879,18 +2874,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
+進化　することが　あるわね▼
 あと　おうじゃのしるしを
-もたせて　つうしんこうかん　すると▼
-そのときは　ちがう　ポケモンに
-しんか　するわよ▼</Text>
+持たせて　通信交換すると▼
+そのときは　違う　ポケモンに
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:17:17" />
+				Time="2011-08-25T04:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2919,7 +2914,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このこには　いろいろな
+			<Text>このコには　いろいろな
 しんかの　ほうほうが　あるわね▼
 みずのいし　かみなりのいし
 ほのおのいし　を　つかってあげると▼
@@ -2935,7 +2930,7 @@
 べつの　ポケモンに　しんか　するわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:25:43" />
+				Time="2011-08-25T04:54:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2943,27 +2938,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このこには　いろいろな
-しんかの　ほうほうが　あるわね▼
+			<Text>このコには　いろいろな
+進化の　方法が　あるわね▼
 みずのいし　かみなりのいし
-ほのおのいし　を　つかってあげると▼
-それぞれ　ちがうポケモンに
-しんか　するし▼
+ほのおのいし　を　使ってあげると▼
+それぞれ　違う　ポケモンに
+進化するし▼
 よく　なついている　ときに
 レベルアップすると▼
-じかんたいに　よって
-ちがう　ポケモンに　しんか　するの▼
-あと　コケに　おおわれた　ばしょや
-こおりで　おおわれた　ばしょで▼
+時間帯に　よって
+違う　ポケモンに　進化するの▼
+あと　コケに　覆われた　場所や
+氷で　覆われた　場所で▼
 レベルアップした　ときも
-べつの　ポケモンに　しんか　するわ▼</Text>
+別の　ポケモンに　進化するわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:25:45" />
+				Time="2011-08-25T04:54:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3010,19 +3005,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
-３しゅるいの　ポケモンに
-しんかする　かのうせいが　あるけれど▼
-どれに　しんか　するかは
-こうげきと　ぼうぎょの▽
-バランスで　きまるようね▼</Text>
+進化することが　あるわね▼
+３種類の　ポケモンに
+進化する　可能性が　あるけれど▼
+どれに　進化　するかは
+攻撃と　防御の▽
+バランスで　決まるようね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:24:08" />
+				Time="2011-08-25T04:54:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:48:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3069,18 +3064,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
-２しゅるいの　ポケモンに
-しんかする　かのうせいが　あるけれど▼
-どちらに　しんかするかは
-しんか　するまで　わからないのよね▼</Text>
+進化することが　あるわね▼
+２種類の　ポケモンに
+進化する　可能性が　あるけれど▼
+どちらに　進化するかは
+進化するまで　わからないのよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:24:42" />
+				Time="2011-08-25T04:54:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:48:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3127,18 +3122,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
+進化することが　あるわね▼
 でも　♂なら
-めざめいしを　つかってあげると▼
-ちがう　ポケモンに
-しんか　するわよ▼</Text>
+めざめいしを　使ってあげると▼
+違う　ポケモンに
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:24:52" />
+				Time="2011-08-25T04:55:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3184,18 +3179,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
-そのとき　てもちに
-よゆうが　あれば▼
-べつの　ポケモンが
+進化することが　あるわね▼
+そのとき　手持ちに
+余裕が　あれば▼
+別の　ポケモンが
 みつかることが　あるようね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:23:31" />
+				Time="2011-08-25T04:55:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3242,18 +3237,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
+進化することが　あるわね▼
 でも　♀なら
-めざめいしを　つかってあげると▼
-ちがう　ポケモンに
-しんか　するわよ▼</Text>
+めざめいしを　使ってあげると▼
+違う　ポケモンに
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:23:12" />
+				Time="2011-08-25T04:55:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:49:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3300,21 +3295,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このコは　どうぐを　もたせて
-つうしんこうかん　すると▽
-しんかすることが　あるわね▼
-もたせてあげる　どうぐが
+			<Text>このコは　道具を　持たせて
+通信交換すると▽
+進化することが　あるわね▼
+持たせてあげる　道具が
 しんかいのキバか▽
 しんかいのウロコかで▼
-ちがった　ポケモンに
-しんか　するわよ▼</Text>
+違った　ポケモンに
+進化するわよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:22:52" />
+				Time="2011-08-25T04:55:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:51:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3362,20 +3357,20 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコは　レベルアップすると
-しんか　することが　あるわね▼
+進化することが　あるわね▼
 しかも　♂と♀で　ちがう
-ポケモンに　しんか　するわよ▼
-♀なら　しんかする　まえの
-すがたに　よって▼
-しんかした　あとの
-すがたも　かわるのよ▼</Text>
+ポケモンに　進化するわよ▼
+♀なら　進化する　前の
+姿に　よって▼
+進化した　後の
+姿も　かわるのよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T12:22:22" />
+				Time="2011-08-25T04:55:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T04:44:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
