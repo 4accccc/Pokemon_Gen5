@@ -698,7 +698,15 @@
 #define	TRID_KINDERGARTENM_11   ( 685 ) 
 #define	TRID_KINDERGARTENW_09   ( 686 ) 
 #define	TRID_FUTAGO_09   ( 687 ) 
-#define TRID_MAX  ( 688 )
+#define	TRID_DAISUKIM_06   ( 688 ) 
+#define	TRID_DAISUKIW_05   ( 689 ) 
+#define	TRID_SCIENTISTW_14   ( 690 ) 
+#define	TRID_BACKPACKERM_28   ( 691 ) 
+#define	TRID_BACKPACKERW_23   ( 692 ) 
+#define	TRID_VETERANM_21   ( 693 ) 
+#define	TRID_RANGERM_29   ( 694 ) 
+#define	TRID_RANGERW_29   ( 695 ) 
+#define TRID_MAX  ( 696 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
