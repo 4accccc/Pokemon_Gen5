@@ -54,6 +54,8 @@
 #include "savedata/bsubway_savedata.h"
 
 #include "savedata/save_tbl.h"  //GMDATA_ID_BSUBWAY_SCOREDATA
+#include "field/zonedata.h" //ZONEDATA_GetPlaceNameID
+
 //============================================================================================
 //============================================================================================
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_NULL == WBTCUP_NULL );
@@ -831,6 +833,12 @@ VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetupRentalParty( VMHANDLE * core, void * wk )
 {
+  WBTSYS * wbtsys = getWBTSys( wk );
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
+  const MYSTATUS * myStatus = GAMEDATA_GetMyStatus( gamedata );
+  u16 place_id = ZONEDATA_GetPlaceNameID( SCRCMD_WORK_GetZoneID( wk ) );
+
+  WBTSYS_SetupMyRentalParty( wbtsys, myStatus, place_id );
   /* 仮：コマンドを用意しただけ */
   TAMADA_Printf("EvCmdWBTSetupRentalParty\n");
   return VMCMD_RESULT_CONTINUE;
@@ -889,7 +897,16 @@ VMCMD_RESULT EvCmdWBTSetupEnemyParty( VMHANDLE * core, void * wk )
   WBTSYS * wbtsys = getWBTSys( wk );
   const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
 
-  WBTSYS_SetupEnemyParty( wbtsys, gsys, wbt_tr );
+  switch ( WBTSYS_GetWBTCup(wbtsys) )
+  {
+  case WBTCUP_RENTAL:
+  case WBTCUP_RENTALMASTER:
+    WBTSYS_SetupEnemyRentalParty( wbtsys );
+    break;
+  default:
+    WBTSYS_SetupEnemyParty( wbtsys, gsys, wbt_tr );
+  }
+  TAMADA_Printf("EvCmdWBTSetupEnemyParty\n");
   return VMCMD_RESULT_CONTINUE;
 }
 

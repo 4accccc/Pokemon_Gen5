@@ -884,13 +884,20 @@ void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_data )
 static POKEPARTY * getUsePokeParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 {
   POKEPARTY * party;
-  if ( wbtsys->use_btlbox == FALSE )
+  if ( wbtsys->wbtcup == WBTCUP_RENTAL || wbtsys->wbtcup == WBTCUP_RENTALMASTER )
   {
-    party = GAMEDATA_GetMyPokemon( gamedata );
+    party = wbtsys->my_party;
   }
   else
   {
-    party = wbtsys->btl_box_party;
+    if ( wbtsys->use_btlbox == FALSE )
+    {
+      party = GAMEDATA_GetMyPokemon( gamedata );
+    }
+    else
+    {
+      party = wbtsys->btl_box_party;
+    }
   }
   GF_ASSERT( party );
   return party;
@@ -962,7 +969,8 @@ void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
   POKEMON_PARAM * entry_pp;
   u32 cnt, max;
 
-  entry_party = wbtsys->my_party;
+  //entry_party = wbtsys->my_party;
+  entry_party = PokeParty_AllocPartyWork( GFL_HEAP_LOWID(wbtsys->heapID) );
   PokeParty_InitWork( entry_party );
   base_party = getUsePokeParty( wbtsys, gamedata );
   entry_pp = GFL_HEAP_AllocMemoryLo( wbtsys->heapID, POKETOOL_GetWorkSize() );
@@ -991,6 +999,8 @@ void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 #endif
     PokeParty_Add( entry_party, entry_pp );
   }
+  PokeParty_Copy( entry_party, wbtsys->my_party );
+  GFL_HEAP_FreeMemory( entry_party );
   GFL_HEAP_FreeMemory( entry_pp );
 }
 

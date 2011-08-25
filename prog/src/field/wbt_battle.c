@@ -47,6 +47,14 @@ enum {
   WBT_TRAINER_MSG_LEN = ((18+1)*2*8),
 };
 
+enum {
+  DUMMY_LEVEL_VALUE = 50, //後でレベル調整するので何でもよい
+};
+
+enum {
+  ROM_POKE_MAX = 10,
+};
+
 //============================================================================================
 //
 //
@@ -195,236 +203,6 @@ static u32 getWBTRivalTrainerID( GAMESYS_WORK * gsys )
     return TRID_SWRIVAL_09;
   }
 }
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static u16 GetRand( GFL_STD_RandContext *rand_context )
-{
-  if( rand_context == NULL )
-  {
-    return( GFUser_GetPublicRand(0xffffffff)/65535 );
-  }
-  else
-  {
-    return( GFL_STD_Rand( rand_context, 0xffffffff )/65535 );
-  }
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void GetPokemonRomData(
-    ARCID poke_arc_id,BSUBWAY_POKEMON_ROM_DATA *prd,int index)
-{
-  GFL_ARC_LoadData( (void*)prd, poke_arc_id, index );
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-enum {
-  ROM_POKE_MAX = 10,
-
-  NG_POKE_MAX = 10,
-  NG_ITEM_MAX = 10,
-};
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-typedef struct {
-  u16 ng_mons_no[ NG_POKE_MAX ];
-  u16 ng_item_no[ NG_ITEM_MAX ];
-}WBT_NG_INFO;
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-typedef struct {
-  u8 available;
-  u16 index_no;
-  BSUBWAY_POKEMON_ROM_DATA prd;
-}CANDIDATE_DATA;
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void NGINFO_Init( WBT_NG_INFO * ng_info )
-{
-  GFL_STD_MemClear( ng_info, sizeof(WBT_NG_INFO) );
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void NGINFO_AddNGItem( WBT_NG_INFO * ng_info, u16 item_no )
-{
-  int i;
-  for ( i = 0; i < NG_ITEM_MAX; i ++ )
-  {
-    if (ng_info->ng_item_no[ i ] == 0 )
-    {
-      ng_info->ng_item_no[ i ] = item_no;
-      TAMADA_Printf("NG item(%d)\n", item_no );
-      return;
-    }
-  }
-  GF_ASSERT(0);
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void NGINFO_AddNGMons( WBT_NG_INFO * ng_info, u16 mons_no )
-{
-  int i;
-  for ( i = 0; i < NG_POKE_MAX; i ++ )
-  {
-    if (ng_info->ng_mons_no[ i ] == 0 )
-    {
-      ng_info->ng_mons_no[ i ] = mons_no;
-      TAMADA_Printf("NG pokemon(%d)\n", mons_no );
-      return;
-    }
-  }
-  GF_ASSERT(0);
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static BOOL NGINFO_Check( const WBT_NG_INFO * ng_info, u16 mons_no, u16 item_no )
-{
-  int i;
-  //データ無し→チェックOKする
-  if ( ng_info == NULL ) return TRUE;
-
-  for ( i = 0; i < NG_POKE_MAX; i ++ )
-  {
-    if ( mons_no != 0 && mons_no == ng_info->ng_mons_no[i] ) return TRUE;
-  }
-  for ( i = 0; i < NG_ITEM_MAX; i ++ )
-  {
-    if ( item_no != 0 && item_no == ng_info->ng_item_no[i] ) return TRUE;
-  }
-  return FALSE;
-}
-
-#ifdef  PM_DEBUG
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void DEBUG_dumpCandidates( const CANDIDATE_DATA * candidates_array, int num )
-{
-  int i;
-  TAMADA_Printf("DEBUG_dumpCandidates\n");
-  for ( i = 0; i < num; i ++ )
-  {
-    const CANDIDATE_DATA * candidate = &candidates_array[i];
-    TAMADA_Printf("Index(%3d) monsno(%3d) itemno(%3d) =:%d\n",
-        candidate->index_no, candidate->prd.mons_no, candidate->prd.item_no, candidate->available );
-  }
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- * @brief WBTのロムトレーナーのポケモンを決める
- *
- * @param[out]    index_array   BSubwayデータ内のインデックスを保持する配列
- * @param[in]     poke_arc_id   ポケモンデータが格納されているアーカイブID
- * @param[in]     use_poke_cnt
- * @param[in]     use_poke_table
- * @param[in]     cnt           トレーナーに持たせるポケモンの数
- * @param[in,out] ng_info       NGにするポケモンの情報
- * @param[in]     rand_context  乱数値ポインタ(NULL GFUser_GetPublicRandを使用
- * @param[in]     tempHeapID    テンポラリに使用するヒープID
- *
- * @todo  異常なデータに対するリカバリ処理が必要
- *
- * (1)BSUBWAY_TRAINER_ROM_DATAを解析、BSUBWAY_POKEMON_ROM_DATAをcandidates_arrayとして読み込む
- * (2)candidates_array中のNG登録のアイテム、ポケモンを含むデータを使用できないようにする
- * (3)candidates_arrayの利用可能なものをランダムに選択、同じポケモン・アイテムをNGINFOに登録
- * (4)　(2)～(3)を必要なだけ繰り返し、完了
- */
-//--------------------------------------------------------------
-static void choiceBSubwayData(
-    u16 index_array[TEMOTI_POKEMAX],
-    ARCID poke_arc_id, u16 use_poke_cnt, const u16 * use_poke_table,
-    u8 cnt, WBT_NG_INFO * ng_info, GFL_STD_RandContext *rand_context, HEAPID tempHeapID )
-{
-  int i;
-  int data_max;
-  int  set_count;
-  u8 selected[TEMOTI_POKEMAX];
-  CANDIDATE_DATA * candidates_array;
-
-  data_max = use_poke_cnt;
-  GF_ASSERT( data_max < ROM_POKE_MAX );
-
-  candidates_array = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(CANDIDATE_DATA) * ROM_POKE_MAX );
-  GFL_STD_MemClear( candidates_array, sizeof(CANDIDATE_DATA) * ROM_POKE_MAX );
-  GFL_STD_MemClear( selected, sizeof(u8) * TEMOTI_POKEMAX );
-  GFL_STD_MemClear( index_array, sizeof(u16) * TEMOTI_POKEMAX );
-
-  for ( i = 0; i < data_max; i ++ )
-  { 
-    CANDIDATE_DATA * candidate = &candidates_array[i];
-    candidate->available = TRUE;
-    candidate->index_no = use_poke_table[ i ];
-    GetPokemonRomData( poke_arc_id, &candidate->prd, candidate->index_no );
-  }
-#ifdef  PM_DEBUG
-  DEBUG_dumpCandidates( candidates_array, data_max );
-#endif
-
-  for( set_count = 0; set_count != cnt; set_count ++ )
-  {
-    u8  poke_index;
-    const BSUBWAY_POKEMON_ROM_DATA * prd_d;
-    u32 available_count;
-    u32 choice;
-
-    //抽選可能な対象を数える
-    available_count = 0;
-    for ( i = 0; i < data_max; i ++ )
-    {
-      CANDIDATE_DATA * candidate = &candidates_array[i];
-      if ( NGINFO_Check( ng_info, candidate->prd.mons_no, candidate->prd.item_no ) == TRUE )
-      { //NGのものは使用できないようにする
-        candidate->available = FALSE;
-      }
-      if (candidate->available) available_count ++;
-    }
-#ifdef  PM_DEBUG
-    DEBUG_dumpCandidates( candidates_array, data_max );
-#endif
-
-    //抽選対象が必要な数に満たない場合Assert
-    GF_ASSERT( available_count >= cnt - set_count );
-
-    choice = GetRand( rand_context ) % available_count;
-    TAMADA_Printf("need = %d,", cnt - set_count );
-    TAMADA_Printf(" choose range(0-%d), choice = %d\n", ( available_count - 1 ), choice );
-    for ( poke_index = 0; poke_index < data_max; poke_index ++ )
-    {
-      if ( candidates_array[poke_index].available )
-      {
-        if ( choice == 0 ) break;
-        choice --;
-      }
-    }
-    GF_ASSERT( poke_index < data_max );
-
-    //選ばれたデータは次の抽選で使えない
-    candidates_array[ poke_index ].available = FALSE;
-
-    prd_d = &candidates_array[ poke_index ].prd;
-    //同一のポケモンを含むデータは使えなくなる
-    NGINFO_AddNGMons( ng_info, prd_d->mons_no );
-    //同一のアイテムを持つデータは使えなくなる
-    NGINFO_AddNGItem( ng_info, prd_d->item_no );
-
-    selected[ set_count ] = poke_index;
-  }
-
-  TAMADA_Printf("indexes = [");
-  for(i = 0; i < set_count; i++)
-  {
-    index_array[ i ] = candidates_array[ selected[i] ].index_no;
-    TAMADA_Printf("%03d,", index_array[ i ] );
-  }
-  TAMADA_Printf("]\n");
-
-  GFL_HEAP_FreeMemory( candidates_array );
-}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -454,13 +232,13 @@ static void makeRomTrainerData(
   u32 base_arc_id  = WBTTOOL_GetRomArcID( wbtcup );
   u32 id;
   GFL_STD_RandContext * rand_context = NULL;
-  WBT_NG_INFO ng_info;
+  WBT_NGPMINFO * ng_info;
 
-  NGINFO_Init( &ng_info );
+  ng_info = NGINFO_Create( inHeapID );
   
   // パワー乱数を決定する
-  pow_rnd= pri2pow_table[ tr_pri - 1 ];
-  id=(GetRand( rand_context )|(GetRand( rand_context )<<16));
+  pow_rnd = pri2pow_table[ tr_pri - 1 ];
+  //id=(GetRand( rand_context )|(GetRand( rand_context )<<16));
 
   //実際には使用しないがFBI_TOOL_AllocTrainerRomDataの呼び出しに必要
   dummy_tr_data = GFL_HEAP_AllocMemoryLo( inHeapID, sizeof(BSUBWAY_PARTNER_DATA) );
@@ -473,10 +251,10 @@ static void makeRomTrainerData(
     //切り札ポケモンは１体だけなので０番決めうちで取得
     index_no = trd->use_poke_table[0];
     FBI_TOOL_MakePokemonParam( btpwd,
-        base_arc_id + WBTBTD_ARCOFS_PM_ACE, index_no, id, 0, pow_rnd, 0, FALSE, inHeapID );
+        base_arc_id + WBTBTD_ARCOFS_PM_ACE, index_no, tr_id, 0, pow_rnd, 0, FALSE, inHeapID );
 
-    NGINFO_AddNGMons( &ng_info, btpwd->mons_no );
-    NGINFO_AddNGItem( &ng_info, btpwd->item_no );
+    WBT_NGINFO_AddNGMons( ng_info, btpwd->mons_no );
+    WBT_NGINFO_AddNGItem( ng_info, btpwd->item_no );
     btpwd ++;
     cnt --;
     GFL_HEAP_FreeMemory( trd );
@@ -492,19 +270,23 @@ static void makeRomTrainerData(
 
     TAMADA_Printf(" WBT TrData:arc_id=%d id=%d use_poke_cnt = %d\n", base_arc_id, tr_id, trd->use_poke_cnt );
     //ポケモンデータを選択
-    choiceBSubwayData( index_array, base_arc_id + WBTBTD_ARCOFS_PM_NORMAL,
-        trd->use_poke_cnt, trd->use_poke_table, cnt, &ng_info, NULL, inHeapID);
+    GF_ASSERT( trd->use_poke_cnt < ROM_POKE_MAX );
+    WBTSYS_ChooseBSubwayData( index_array, ng_info,
+        inHeapID, trd->use_poke_cnt, trd->use_poke_table,
+        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, cnt, NULL );
 
     for(i = 0; i < cnt; i++)
     {
       u32 index_no = index_array[ i ];
       FBI_TOOL_MakePokemonParam( &(btpwd[i]),
-        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, index_no, id, 0, pow_rnd, i, FALSE, inHeapID);
+        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, index_no, tr_id, 0, pow_rnd, i, FALSE, inHeapID);
     }
 
     GFL_HEAP_FreeMemory( trd );
   }
   GFL_HEAP_FreeMemory( dummy_tr_data );
+
+  WBT_NGINFO_Delete( ng_info );
 }
 
 //------------------------------------------------------------------
@@ -512,9 +294,6 @@ static void makeRomTrainerData(
 static void setRomPokeParty( POKEPARTY * party,
     const WBTTRAINER * wbt_tr, WBTCUP wbtcup, u8 num, HEAPID tempHeapID )
 {
-  enum {
-    DUMMY_LEVEL_VALUE = 50, //後でレベル調整するので何でもよい
-  };
   BSUBWAY_POKEMON * btpwd;
 
   btpwd = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(BSUBWAY_POKEMON) * TEMOTI_POKEMAX );

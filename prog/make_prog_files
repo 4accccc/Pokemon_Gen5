@@ -1012,7 +1012,8 @@ SRCS_OVERLAY_SCRCMD_WBT  =  field/scrcmd_wbt.c \
                             field/wbt_calc_result.c \
                             field/wbt_tool.c \
                             field/wbt_makematch.c \
-                            field/wbt_setup.c
+                            field/wbt_setup.c \
+                            field/wbt_party.c
 
 # スクリプトコマンド並列化　レゾナンスリゾート
 #===> GROUP_OVERLAY_DEBUGMENU

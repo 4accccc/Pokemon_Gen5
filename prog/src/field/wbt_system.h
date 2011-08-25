@@ -37,6 +37,7 @@ typedef struct _WBTRESULT WBTRESULT;
 
 typedef struct _WBT_MATCH_CONDITION WBT_MATCH_CONDITION;
 
+typedef struct _WBT_NGPMINFO WBT_NGPMINFO;
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -142,6 +143,20 @@ extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
 extern void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond, u16 * tr_list );
 extern void WBTSYS_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID );
 
+//------------------------------------------------------------------
+//  in wbt_party.c
+//------------------------------------------------------------------
+extern void WBTSYS_ChooseBSubwayData( u16 * index_array, WBT_NGPMINFO * ng_info,
+    HEAPID tempHeapID,
+    u16 use_poke_cnt, const u16 * use_poke_table,
+    ARCID arc_id, u8 num, GFL_STD_RandContext * rand );
+extern void WBTSYS_SetupMyRentalParty( WBTSYS * wbtsys, const MYSTATUS * mystatus, u16 place_id );
+extern void WBTSYS_SetupEnemyRentalParty( WBTSYS * wbtsys );
+
+extern WBT_NGPMINFO * NGINFO_Create( HEAPID heapID );
+extern void WBT_NGINFO_Delete( WBT_NGPMINFO * ng_info );
+extern void WBT_NGINFO_AddNGItem( WBT_NGPMINFO * ng_info, u16 item_no );
+extern void WBT_NGINFO_AddNGMons( WBT_NGPMINFO * ng_info, u16 mons_no );
 //------------------------------------------------------------------
 //  in wbt_battle.c
 //------------------------------------------------------------------
