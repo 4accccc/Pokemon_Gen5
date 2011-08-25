@@ -19,6 +19,7 @@
 #define TR_ELITEW_37                       2
 #define TR_ELITEM_38                       3
 #define TR_VETERANW_14                     4
+#define TR_ELITEM_41                       5
 
 #endif //ZONE_D26R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
