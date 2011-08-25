@@ -891,12 +891,12 @@
 			Language="JPN_KANJI">
 			<Text>ああ　そうだったね▼
 あたしは　アロエ
-この　はくぶつかんの　かんちょうさ！▼
-いつもは　おくに　こもっているから
-ヒマなら　あそびに　おいで！▼</Text>
+この　博物館の　館長さ！▼
+いつもは　奥に　こもっているから
+ヒマなら　遊びに　おいで！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T10:44:32" />
+				Time="2011-08-25T10:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -951,13 +951,13 @@
 			Language="JPN_KANJI">
 			<Text>ああ　そうだったね▼
 あたしは　アロエ
-この　はくぶつかんの　かんちょうさ！▼
-いつもは　おくに　こもっているから
-カセキが　ほしくなったら▽
-あそびに　おいで！▼</Text>
+この　博物館の　館長さ！▼
+いつもは　奥に　こもっているから
+カセキが　欲しくなったら▽
+遊びに　おいで！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T10:44:32" />
+				Time="2011-08-25T10:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -999,12 +999,12 @@
 こちらの　こっかく……
 ドラゴンタイプの　ポケモンですね▼
 おそらく　せかいかくちを
-とびまわっている　うちに▽
-なんらかの　じこにあって▽
+とびまわっている　うちに▼
+なんらかの　じこにあって
 そのまま　カセキに　なったようです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T10:38:44" />
+				Time="2011-08-25T10:09:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1017,12 +1017,12 @@
 こちらの　骨格……
 ドラゴンタイプの　ポケモンですね▼
 おそらく　世界各地を
-飛び回っている　うちに▽
-なんらかの　事故にあって▽
+飛び回っている　うちに▼
+なんらかの　事故にあって
 そのまま　カセキに　なったようです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T10:38:58" />
+				Time="2011-08-25T10:09:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1125,7 +1125,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああ！　こちらです　こちら！
+			<Text>ああ！
+こちらです　こちら！▼
 これが　あの　ダークストーンの
 レプリカ　なんですよ！▼
 ごぞんじ　ですか？
@@ -1137,7 +1138,7 @@
 わたしの　かいせつは　だそくですね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:16:40" />
+				Time="2011-08-25T10:09:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1145,7 +1146,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああ！　こちらです　こちら！
+			<Text>ああ！
+こちらです　こちら！▼
 これが　あの　ダークストーンの
 レプリカ　なんですよ！▼
 ご存知ですか？
@@ -1157,7 +1159,7 @@
 わたしの　解説は　蛇足ですね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:16:32" />
+				Time="2011-08-25T10:09:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1166,12 +1168,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACKver
+・Black2ver
 ・「ダークストーン（黒）」
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T05:43:26" />
+				Time="2011-08-25T10:09:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1201,7 +1203,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああ！　こちらです　こちら！
+			<Text>ああ！
+こちらです　こちら！▼
 これが　あの　ライトストーンの
 レプリカ　なんですよ！▼
 ごぞんじ　ですか？
@@ -1213,7 +1216,7 @@
 わたしの　かいせつは　だそくですね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:16:46" />
+				Time="2011-08-25T10:09:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1221,7 +1224,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああ！　こちらです　こちら！
+			<Text>ああ！
+こちらです　こちら！▼
 これが　あの　ライトストーンの
 レプリカ　なんですよ！▼
 ご存知ですか？
@@ -1233,7 +1237,7 @@
 わたしの　解説は　蛇足ですね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:17:03" />
+				Time="2011-08-25T10:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1242,12 +1246,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITEver
+・White2ver
 ・「ライトストーン（白）」
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T05:43:29" />
+				Time="2011-08-25T10:09:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1461,11 +1465,11 @@ MAN1</Text>
 			Language="JPN">
 			<Text>かんちょうの　アロエさんは
 カセキや　ポケモンのホネ　の▼
-けんきゅうが　いそがしくて
+けんきゅうが　いそがしすぎて
 ジムリーダーを　やすんでるって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:05:16" />
+				Time="2011-08-25T10:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1475,11 +1479,11 @@ MAN1</Text>
 			Language="JPN_KANJI">
 			<Text>館長の　アロエさんは
 カセキや　ポケモンのホネ　の▼
-研究が　忙しくて
+研究が　忙しすぎて
 ジムリーダーを　休んでるって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:05:35" />
+				Time="2011-08-25T10:12:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1567,14 +1571,14 @@ OLDMAN1</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ガラガラの　もつ　ふといほね……▼
-カラカラが　ははおやの　ほねを
+			<Text>ガラガラの　もつ　ふといホネ……▼
+カラカラが　ははおやの　ホネを
 かぶって　すごすように▼
 ガラガラも　したしい　だれかの
-ほねで　ふるって　たたかうのかしら</Text>
+ホネで　ふるって　たたかうのかしら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:58:21" />
+				Time="2011-08-25T10:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1582,14 +1586,14 @@ OLDMAN1</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ガラガラの　持つ　ふといほね……▼
-カラカラが　母親の　ほねを
+			<Text>ガラガラの　持つ　ふといホネ……▼
+カラカラが　母親の　ホネを
 かぶって　過ごすように▼
 ガラガラも　親しい　だれかの
-ほねで　奮って　戦うのかしら</Text>
+ホネで　奮って　戦うのかしら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:06:04" />
+				Time="2011-08-25T10:12:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
