@@ -15,6 +15,12 @@
 #ifndef ZONE_D26R0701_EVC_H
 #define ZONE_D26R0701_EVC_H
 
+#define TR_VETERANM_17                     0
+#define TR_ELITEW_39                       1
+#define TR_KARATE_23                       2
+#define TR_ELITEM_40                       3
+#define TR_BATTLEG_21                      4
+#define TR_VETERANW_15                     5
 
 #endif //ZONE_D26R0701_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r0701.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/22 16:58:25
+#save date:2011/08/25 12:27:55
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d26r0701.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,193 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d26r0701.wms
 #hold event type:
 1
 #hold event number:
+6
+#event number: 0
+#type
+1
+#ID name
+TR_VETERANM_17
+#OBJ CODE Number
+VETERANM
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
 0
+#Event Script Name
+SCRID_TRID_VETERANM_17
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+248 272 200
+#event number: 1
+#type
+1
+#ID name
+TR_ELITEW_39
+#OBJ CODE Number
+TRAINERW
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ELITEW_39
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+632 176 -72
+#event number: 2
+#type
+1
+#ID name
+TR_KARATE_23
+#OBJ CODE Number
+FIGHTERM
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_KARATE_23
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+1
+#Parameter 1 Number
+7
+#Parameter 2 Number
+0
+#Move Limit X Number
+6
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 32 -344
+#event number: 3
+#type
+1
+#ID name
+TR_ELITEM_40
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ELITEM_40
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -440
+#event number: 4
+#type
+1
+#ID name
+TR_BATTLEG_21
+#OBJ CODE Number
+FIGHTERW
+#MOVE CODE Number
+MV_RND_DLR
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BATTLEG_21
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 96 -168
+#event number: 5
+#type
+1
+#ID name
+TR_VETERANW_15
+#OBJ CODE Number
+VETERANW
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_VETERANW_15
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+328 224 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

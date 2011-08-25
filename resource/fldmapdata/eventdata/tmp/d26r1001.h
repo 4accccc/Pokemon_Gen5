@@ -14,6 +14,9 @@
 #ifndef ZONE_D26R1001_EVC_H
 #define ZONE_D26R1001_EVC_H
 
+#define TR_BACKPACKERW_22W                 0
+#define TR_DOCTOR_07W                      1
+#define TR_VETERANW_14W                    2
 
 #endif //ZONE_D26R1001_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r1001.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
