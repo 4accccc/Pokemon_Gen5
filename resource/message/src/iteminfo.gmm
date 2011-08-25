@@ -5841,6 +5841,15 @@
 ほのかに　ポケモンの　香りがする。</language>
 	</row>
 
+	<row id="ITEMINFO_635">
+		<language name="JPN" width="256">ポケモンの　のうりょくを　むりやり
+めざめさせる　とくしゅな　そうち。
+だが　しさくひんのため　ふかんぜん。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　能力を　無理やり
+目覚めさせる　特殊な　装置。
+だが　試作品のため　不完全。</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

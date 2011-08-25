@@ -624,8 +624,9 @@
 #define ITEM_HIKARUOMAMORI		( 632 )		// ひかるおまもり
 #define ITEM_PURAZUMAKAADO		( 633 )		// プラズマカード
 #define ITEM_YOGORETAHANKATI		( 634 )		// よごれたハンカチ
+#define ITEM_AKUROMAMASIIN		( 635 )		// アクロママシーン
 
-#define ITEM_DATA_MAX		( 634 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 635 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数
