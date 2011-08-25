@@ -306,10 +306,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サンヨウシティジム</Text>
+			<Text>サンヨウレストラン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:24:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -317,10 +317,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サンヨウシティジム</Text>
+			<Text>サンヨウレストラン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-25T08:24:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -471,10 +471,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>名所３
-※swanで修正</Comment>
+※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T04:13:00" />
+				Time="2011-08-25T08:23:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -485,7 +485,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
