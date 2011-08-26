@@ -2222,7 +2222,9 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 design_no, BOOL pal_
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
     pWork->handle, NARC_c_gear_sw_c_gear_ncgr, GEAR_MAIN_FRAME, 0, 
     0, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
-  
+
+  GFL_BG_ClearCharacter( GEAR_DECAL_FRAME );
+ 
   //ƒXƒNƒŠ[ƒ““]‘—
   GFL_ARCHDL_UTIL_TransVramScreen(
     pWork->handle, NARC_c_gear_sw_c_gear01_nscr, GEAR_MAIN_FRAME, 0, 
