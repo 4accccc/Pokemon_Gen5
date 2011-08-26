@@ -335,6 +335,7 @@ static void choiceBSubwayData(
     TAMADA_Printf("need = %d,", cnt - set_count );
     TAMADA_Printf(" choose range(0-%d), choice = %d\n", ( available_count - 1 ), choice );
     poke_index = POKECANDIDATE_CountAvailableIndex( pcan, choice );
+    TAMADA_Printf(" get index = %3d\n", poke_index );
 
     POKECANDIDATE_MarkSelected( pcan, ng_info, poke_index );
 

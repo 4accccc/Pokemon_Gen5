@@ -633,7 +633,12 @@ VMCMD_RESULT EvCmdWBTGetSurvivalCount( VMHANDLE * core, void * wk )
   WBTSYS * wbtsys = getWBTSys( wk );
   u16   stage  = WBTSYS_GetStage( wbtsys );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = WBTSYS_GetSurvivalCount( wbtsys, stage );
+  u8 count = WBTSYS_GetSurvivalCount( wbtsys, stage );
+  if ( WBTSYS_GetPartyMax(wbtsys) == count )
+  { //Ÿ—˜‚Éc‚è0•C‚Í‚È‚¢B–³‚Ìê‡‚Í0‚ğ•Ô‚·‚±‚Æ‚Æ‚·‚é
+    count = 0;
+  }
+  *ret_wk = count;
 
   TAMADA_Printf("EvCmdWBTGetSurvivalCount == %d\n", *ret_wk );
   return VMCMD_RESULT_CONTINUE;
