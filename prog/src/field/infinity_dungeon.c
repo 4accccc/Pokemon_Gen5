@@ -2644,12 +2644,12 @@ static int GetSetTrainerIDTable( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,
       }
     }
   }
-  // お金トレーナー
-  for( i = 0; i < INF_TRID_CNT_MONEY; i++ )
-  {
-    p_trid_array[cnt] = INF_TRID_START_MONEY+i;
-    cnt++;
-  }
+//  // お金トレーナー(通常トレーナーと同じ扱いに変更)
+//  for( i = 0; i < INF_TRID_CNT_MONEY; i++ )
+//  {
+//    p_trid_array[cnt] = INF_TRID_START_MONEY+i;
+//    cnt++;
+//  }
   // 1階に32人まで出現する可能性がある
   GF_ASSERT_MSG(cnt>=32,"エリア%u-抽選に使用するトレーナーが少なすぎます(%d<=%d)\n",area_no,cnt,32);
 
@@ -4092,7 +4092,7 @@ static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_S
 //-----------------------------------------------------------------------------
 void DEBUG_INFINITY_DUNGEON_MakeDungeonData()
 {
-  int i,n;
+  int n;
   s32 seed;
   s32 area;
   INF_DUNGEON_DATA *p_dungeon_data;
@@ -4100,15 +4100,13 @@ void DEBUG_INFINITY_DUNGEON_MakeDungeonData()
   // 生成テスト
   seed = GFUser_GetPublicRand( GFL_STD_RAND_MAX );
   OS_TFPrintf(3,"Seed = %u--------------\n",seed);
-  for( i = 3 ; i <= 4; i++ )
+  for( n = 0 ; n < INFINITY_DUNGEON_AREA_ID_MAX; n++ )
   {
-    for( n = 0 ; n < INFINITY_DUNGEON_AREA_ID_MAX; n++ )
-    {
-      p_dungeon_data = GFL_HEAP_AllocMemoryLo( HEAPID_FIELDMAP ,sizeof( INF_DUNGEON_DATA ) );
-      SetDungeonData( p_dungeon_data ,n ,seed ,i ,i);
-      SetTrainerData( p_dungeon_data ,n ,seed );
-      GFL_HEAP_FreeMemory( p_dungeon_data );
-    }
+    p_dungeon_data = GFL_HEAP_AllocMemoryLo( HEAPID_FIELDMAP ,sizeof( INF_DUNGEON_DATA ) );
+    SetDungeonData( p_dungeon_data ,n ,seed ,sc_floor_size[n].fs_x ,sc_floor_size[n].fs_y);
+
+    SetTrainerData( p_dungeon_data ,n ,seed );
+    GFL_HEAP_FreeMemory( p_dungeon_data );
   }
 }
 #endif
