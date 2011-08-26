@@ -170,13 +170,13 @@ static u16 calcTotalVictory( SCRCMD_WORK * work, WBTCUP wbtcup, PokeType poketyp
     else
     {
       id_start = poketype;
-      id_end = id_start;
+      id_end = id_start + 1;
     }
   }
   else
   {
     id_start = WBTTOOL_WBTCupToWinCount( wbtcup, 0 );
-    id_end = id_start;
+    id_end = id_start + 1;
   }
 
   for ( id_start = 0; id_start < id_end; id_start ++ )
