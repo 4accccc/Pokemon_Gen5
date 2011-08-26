@@ -21,6 +21,13 @@ enum{
   HABITAT_ZONE_POKE_LIST_MAX  = 15,  // ゾーン詳細画面のポケモンデータ最大数
 };
 
+// 戻り値
+typedef enum{
+  HABITAT_ZONE_RET_EXIT,
+  HABITAT_ZONE_RET_RETURN,
+  HABITAT_ZONE_RET_INFO,
+}HABITAT_ZONE_RET_MODE;
+
 // コンプリートタイプ
 typedef enum{
   ZONE_COMTYPE_NONE,  // 未コンプリート

@@ -105,6 +105,9 @@ static HABITAT_ZONE_DATA* GetNowListData( HABITAT_ZONE_WK *p_wk );
 static void SetCursorstatus( HABITAT_ZONE_WK *p_wk ,s32 index ,BOOL is_active );
 static void MakeZoneCommonData( HABITAT_ZONE_WK *p_wk );
 static void SkipLandType( HABITAT_ZONE_WK *p_wk ,BOOL is_skip_r );
+static void SetRetMod( HABITAT_ZONE_WK *p_wk ,HABITAT_ZONE_RET_MODE ret_mode );
+static void CreateAppData( HABITAT_ZONE_WK *p_wk );
+static s32 CheckIsExistPoke( HABITAT_ZONE_WK *p_wk ,u8 index );
 
 // ポケモンアイコン系---------------------------------------
 static void MakePokeIconList( HABITAT_ZONE_WK *p_wk );
@@ -371,29 +374,41 @@ static void MAINSEQ_PokeSelectKeyInput( HABITAT_ZONE_WK *p_wk )
       // 四季切替
       if( key_trg & PAD_KEY_LEFT )
       {
-        ONOUE_Printf("ポケモン選択：リスト左移動\n");
         SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_L );
+        ONOUE_Printf("ポケモン選択：リスト左移動\n");
       }
       else if( key_trg & PAD_KEY_RIGHT )
       {
-        ONOUE_Printf("ポケモン選択：リスト右移動\n");
         SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_R );
+        ONOUE_Printf("ポケモン選択：リスト右移動\n");
       }
       else if( key_trg & PAD_KEY_UP )
       {
-        ONOUE_Printf("ポケモン選択：リスト上移動\n");
         SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_UP );
+        ONOUE_Printf("ポケモン選択：リスト上移動\n");
       }
       else if( key_trg & PAD_KEY_DOWN )
       {
-        ONOUE_Printf("ポケモン選択：リスト下移動\n");
         SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_DOWN );
+        ONOUE_Printf("ポケモン選択：リスト下移動\n");
       }
       else if( key_trg & PAD_BUTTON_B )
       {
-        ONOUE_Printf("ポケモン選択：ゾーン詳細画面に戻る\n");
         // トップキー入力処理に移動
         SetNextSeq( p_wk ,MAIN_SEQ_RETURN_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_B );
+        ONOUE_Printf("ポケモン選択：ゾーン詳細画面に戻る\n");
+      }
+      else if( key_trg & PAD_BUTTON_A )
+      {
+        // ポケモンを選択しているか調べる
+        s32 mons_no = CheckIsExistPoke( p_wk ,p_wk->select_index );
+        if( mons_no >= 0 )
+        {
+          ZUKANSAVE_SetDefaultMons( p_wk->p_zkn_sv ,mons_no );
+          SetNextSeq( p_wk ,MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_POKE_SELECT );
+          ONOUE_Printf("ポケモン選択：ポケモン選択[%d]\n",mons_no);
+
+        }
       }
     }
     break;
@@ -416,12 +431,9 @@ static void MAINSEQ_AppInit( HABITAT_ZONE_WK *p_wk )
   
   // 通信アイコンを表示
   GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_ZUKAN_HABITAT_ZONE );
-  
-  // 初期化パラメータからデータを取得
-  p_wk->zone_data_cnt   = p_wk->p_init_param->zone_cnt;
-  p_wk->season          = p_wk->p_init_param->start_season;
-  p_wk->land_type       = p_wk->p_init_param->start_land_type;
-  p_wk->zone_data_index = p_wk->p_init_param->start_zone_index;
+ 
+  // アプリケーションに必要なデータを取得する
+  CreateAppData( p_wk );
 
   // リストデータを解析し、必要なデータを作成する
   MakeZoneCommonData( p_wk );
@@ -463,10 +475,17 @@ static void MAINSEQ_AppExit( HABITAT_ZONE_WK *p_wk )
   if( p_wk->seq_param == SEQ_CHANGE_PARAM_X )
   {
     p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_CANCEL );
+    SetRetMod( p_wk ,HABITAT_ZONE_RET_EXIT );
   }
   else if( p_wk->seq_param == SEQ_CHANGE_PARAM_B )
   {
     p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_RETURN );
+    SetRetMod( p_wk ,HABITAT_ZONE_RET_RETURN );
+  }
+  else if( p_wk->seq_param == SEQ_CHANGE_PARAM_POKE_SELECT )
+  {
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk(&p_wk->gra_sys,OBJ_WK_BUTTON_EXPLANATION);
+    SetRetMod( p_wk ,HABITAT_ZONE_RET_INFO );
   }
   else
   {
@@ -486,6 +505,10 @@ static void MAINSEQ_AppExit( HABITAT_ZONE_WK *p_wk )
       else if( p_wk->seq_param == SEQ_CHANGE_PARAM_B )
       {
         GFL_CLACT_WK_SetAnmSeq( p_clwk , APP_COMMON_BARICON_RETURN_ON);
+      }
+      else if( p_wk->seq_param == SEQ_CHANGE_PARAM_POKE_SELECT )
+      {
+        GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_BUTTON_EXPLANATION_ANM );
       }
       GFL_CLACT_WK_SetAnmFrame( p_clwk ,0);
       GFL_CLACT_WK_SetAutoAnmFlag( p_clwk ,TRUE );
@@ -984,7 +1007,7 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
 
       // 新しいカーソル位置をONに
       SetCursorstatus( p_wk ,p_wk->select_index ,TRUE );
-      
+
       // サブシーケンスを進める
       p_wk->sub_seq++;
     }
@@ -1513,7 +1536,12 @@ static void SetCursorstatus( HABITAT_ZONE_WK *p_wk ,s32 index ,BOOL is_active )
     HABITAT_ZONE_GRA_SetCursorStatus( &p_wk->gra_sys ,
                 p_wk->select_index ,GRA_POKEICON_CURSOR_OFF);
   }
-  HABITAT_ZONE_GRA_SetPokeAnmFlag( &p_wk->gra_sys ,index , is_active );
+  
+  // ポケモンが存在する時のみ
+  if( CheckIsExistPoke( p_wk ,p_wk->select_index ) >= 0 )
+  {
+    HABITAT_ZONE_GRA_SetPokeAnmFlag( &p_wk->gra_sys ,index , is_active );
+  }
   p_wk->is_cursor_active = is_active;
 }
 
@@ -1706,5 +1734,67 @@ static void RefreshMapWin( HABITAT_ZONE_WK *p_wk )
 
   // マップ名を上画面に書き込む
   DrawMapNameMsg( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  戻りパラメータを設定する
+ *
+ *	@param	*p_wk 
+ *	@param	ret_mode 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetRetMod( HABITAT_ZONE_WK *p_wk ,HABITAT_ZONE_RET_MODE ret_mode )
+{
+  p_wk->p_init_param->ret_mode = ret_mode;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アプリケーションに必要なデータを取得する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CreateAppData( HABITAT_ZONE_WK *p_wk )
+{
+  GAMEDATA *p_gdata = p_wk->p_init_param->p_gdata;
+  ZUKAN_SAVEDATA* p_zkn_sv = GAMEDATA_GetZukanSave( p_gdata );
+
+   
+  // 初期化パラメータからデータを取得
+  p_wk->p_zkn_sv        = p_zkn_sv;
+  p_wk->zone_data_cnt   = p_wk->p_init_param->zone_cnt;
+  p_wk->season          = p_wk->p_init_param->start_season;
+  p_wk->land_type       = p_wk->p_init_param->start_land_type;
+  p_wk->zone_data_index = p_wk->p_init_param->start_zone_index;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソル位置にポケモンが存在しているか調べる
+ *
+ *	@param	*p_wk 
+ *	@param	index 
+ *
+ *	@retval 存在するときは モンスターナンバーを返し、それ以外は-1
+ */
+//-----------------------------------------------------------------------------
+static s32 CheckIsExistPoke( HABITAT_ZONE_WK *p_wk ,u8 index )
+{
+  // 詳細画面に移動
+  HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
+
+  // ポケモンが存在するかどうか
+  if( p_zd->poke_data[index].status >= HABITAT_ZONE_STATUS_LOOK )
+  {
+    return p_zd->poke_data[index].monsno;
+  }
+  return -1;
 }
 

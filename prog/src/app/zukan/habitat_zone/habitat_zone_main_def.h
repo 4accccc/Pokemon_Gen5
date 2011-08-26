@@ -58,6 +58,7 @@ typedef enum {
   SEQ_CHANGE_PARAM_B,
   SEQ_CHANGE_PARAM_X,
   SEQ_CHANGE_PARAM_TOUCH,
+  SEQ_CHANGE_PARAM_POKE_SELECT,
   SEQ_CHANGE_PARAM_NONE,
 }SEQ_CHANGE_PARAM;
 
@@ -99,6 +100,8 @@ struct _HABITAT_ZONE_WK{
   u32   monsno_list[HABITAT_ZONE_POKE_LIST_MAX];  // 表示中のモンスター番号リスト
 
   SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ
-
+  
+  // 図鑑セーブデータ
+  ZUKAN_SAVEDATA  *p_zkn_sv;
 };
 

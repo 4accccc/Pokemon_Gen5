@@ -15,6 +15,15 @@
 #include "gamesystem/pm_season.h"
 #include "../habitat_zone/habitat_zone.h" // for HABITAT_ZONE_APPEAR_MAX
 
+// 戻り値
+typedef enum{
+  HABITAT_LIST_RET_EXIT,
+  HABITAT_LIST_RET_RETURN,
+  HABITAT_LIST_RET_CALL_ZONE_INFO,
+  HABITAT_LIST_RET_ZENKOKU,
+  HABITAT_LIST_RET_LOCAL,
+}HABITAT_LIST_RET_MODE;
+
 // ゾーンの状態
 typedef enum{
   HABITAT_LIST_STATUS_NEW,        // 新着(高優先度)

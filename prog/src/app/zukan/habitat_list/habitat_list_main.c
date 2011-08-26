@@ -60,6 +60,7 @@ static HABITAT_ZONE_APPEAR GetButtonType(
                   ZUKANHABITAT_LIST_LISTDATA *p_data,u8 button_no );
 static void CallCellAnm( HABITAT_LIST_WK *p_wk ,u16 clwk_id, u16 anm_seq,
                                   u16 next_seq_id,SEQ_CHANGE_PARAM param );
+static void SetRetMod( HABITAT_LIST_WK *p_wk ,HABITAT_LIST_RET_MODE ret_mode );
 
 //--------------------------------------------------
 // ID定義
@@ -387,6 +388,7 @@ static void MAINSEQ_KeyInput( HABITAT_LIST_WK *p_wk )
     {
       // @todo 戻り値にゾーングループを設定する
       u32 list_pos = HABITAT_LIST_GRA_GetListPos( &p_wk->gra_sys );
+      SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
       SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
       ONOUE_Printf("項目選択 %d\n",list_pos);
     }
@@ -452,6 +454,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
     {
       // @todo 戻り値にゾーングループを設定する
       u32 list_pos = HABITAT_LIST_GRA_GetListPos( &p_wk->gra_sys );
+      SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
       SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
     }
     break;
@@ -473,6 +476,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       p_data = HABITAT_LIST_GRA_GetListData( &p_wk->gra_sys ,list_index);
       if( GetButtonType( p_data , 2 ) != HABITAT_ZONE_APPEAR_MAX )
       {
+        SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
         HABITAT_LIST_GRA_SetCursorPos( &p_wk->gra_sys, cursor_pos );
         SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
       }
@@ -497,6 +501,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       p_data = HABITAT_LIST_GRA_GetListData( &p_wk->gra_sys ,list_index);
       if( GetButtonType( p_data , 1 ) != HABITAT_ZONE_APPEAR_MAX )
       {
+        SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
         HABITAT_LIST_GRA_SetCursorPos( &p_wk->gra_sys, cursor_pos );
         SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
       }
@@ -521,6 +526,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       p_data = HABITAT_LIST_GRA_GetListData( &p_wk->gra_sys ,list_index);
       if( GetButtonType( p_data , 0 ) != HABITAT_ZONE_APPEAR_MAX )
       {
+        SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
         HABITAT_LIST_GRA_SetCursorPos( &p_wk->gra_sys, cursor_pos );
         SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
       }
@@ -529,15 +535,21 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
     break;
 
   case HABITATLIST_UI_BUTTON_SELECT:
-    CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_NAM,
-        MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
-    ONOUE_Printf("SELECTタッチ\n");
+    {
+      SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
+      CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_NAM,
+          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+      ONOUE_Printf("SELECTタッチ\n");
+    }
     break;
 
   case HABITATLIST_UI_BUTTON_X:
-    ONOUE_Printf("Xタッチ\n");
-    CallCellAnm( p_wk ,EXIT_BUTTON_CLWKID,APP_COMMON_BARICON_EXIT_ON,
-         MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+    {
+      SetRetMod( p_wk ,HABITAT_LIST_RET_EXIT );
+      CallCellAnm( p_wk ,EXIT_BUTTON_CLWKID,APP_COMMON_BARICON_EXIT_ON,
+          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+      ONOUE_Printf("Xタッチ\n");
+    }
     break;
 
   case HABITATLIST_UI_BUTTON_Y:
@@ -545,53 +557,78 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
     break;
 
   case HABITATLIST_UI_BUTTON_RETURN:
-    ONOUE_Printf("戻るタッチ\n");
-    CallCellAnm( p_wk ,RETURN_BUTTON_CLWKID,APP_COMMON_BARICON_RETURN_ON,
-         MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+    {
+      SetRetMod( p_wk ,HABITAT_LIST_RET_RETURN );
+      CallCellAnm( p_wk ,RETURN_BUTTON_CLWKID,APP_COMMON_BARICON_RETURN_ON,
+          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+      ONOUE_Printf("戻るタッチ\n");
+    }
     break;
 
   case HABITATLIST_UI_MODE_BUTTON_01:
-    CallCellAnm( p_wk ,MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
-        MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
-    ONOUE_Printf("モード切替1タッチ\n");
+    {
+      if( p_wk->is_zenkoku == TRUE )
+      {
+        SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
+        CallCellAnm( p_wk ,MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
+            MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+        ONOUE_Printf("モード切替1タッチ\n");
+      }
+    }
     break;
 
   case HABITATLIST_UI_MODE_BUTTON_02:
-    CallCellAnm( p_wk ,MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
-        MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
-    ONOUE_Printf("モード切替2タッチ\n");
+    {
+      if( p_wk->is_zenkoku == TRUE )
+      {
+        SetRetMod( p_wk ,HABITAT_LIST_RET_ZENKOKU );
+      }
+      else
+      {
+        SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
+      }
+      CallCellAnm( p_wk ,MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
+          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+      ONOUE_Printf("モード切替2タッチ\n");
+    }
     break;
 
   case HABITATLIST_UI_MODE_BUTTON_03:
-    CallCellAnm( p_wk ,MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
-        MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
-    ONOUE_Printf("モード切替3タッチ\n");
+    // 機能なし
+//    CallCellAnm( p_wk ,MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
+//        MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+//    ONOUE_Printf("モード切替3タッチ\n");
     break;
 
   // タッチ入力なし
   case GFL_UI_TP_HIT_NONE:
-    // ボタン入力を行う
-    if( trg & PAD_BUTTON_X )
     {
-      CallCellAnm( p_wk ,EXIT_BUTTON_CLWKID,APP_COMMON_BARICON_EXIT_ON,
-          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
-      ONOUE_Printf("Xボタン\n");
-    }
-    else if( trg & PAD_BUTTON_B )
-    {
-      CallCellAnm( p_wk ,RETURN_BUTTON_CLWKID,APP_COMMON_BARICON_RETURN_ON,
-          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
-      ONOUE_Printf("Bボタン\n");
-    }
-    else if( trg & PAD_BUTTON_Y )
-    {
-      ONOUE_Printf("Yボタン\n");
-    }
-    else if( trg & PAD_BUTTON_SELECT )
-    {
-      CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_NAM,
-          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
-      ONOUE_Printf("SELECTボタン\n");
+      // ボタン入力を行う
+      if( trg & PAD_BUTTON_X )
+      {
+        SetRetMod( p_wk ,HABITAT_LIST_RET_EXIT );
+        CallCellAnm( p_wk ,EXIT_BUTTON_CLWKID,APP_COMMON_BARICON_EXIT_ON,
+            MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+        ONOUE_Printf("Xボタン\n");
+      }
+      else if( trg & PAD_BUTTON_B )
+      {
+        SetRetMod( p_wk ,HABITAT_LIST_RET_RETURN );
+        CallCellAnm( p_wk ,RETURN_BUTTON_CLWKID,APP_COMMON_BARICON_RETURN_ON,
+            MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+        ONOUE_Printf("Bボタン\n");
+      }
+      else if( trg & PAD_BUTTON_Y )
+      {
+        ONOUE_Printf("Yボタン\n");
+      }
+      else if( trg & PAD_BUTTON_SELECT )
+      {
+        SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
+        CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_NAM,
+            MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
+        ONOUE_Printf("SELECTボタン\n");
+      }
     }
     break;
   default:
@@ -896,5 +933,20 @@ static void CallCellAnm( HABITAT_LIST_WK *p_wk ,u16 clwk_id, u16 anm_seq,
   p_wk->next_seq_id     = next_seq_id;
   p_wk->next_seq_param  = param; 
   SetNextSeq( p_wk, MAIN_SEQ_ANIM_WAIT ,SEQ_CHANGE_PARAM_NONE);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  戻りパラメータを設定する
+ *
+ *	@param	*p_wk 
+ *	@param	ret_mode 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetRetMod( HABITAT_LIST_WK *p_wk ,HABITAT_LIST_RET_MODE ret_mode )
+{
+  p_wk->p_init_param->ret_mode = ret_mode;
 }
 

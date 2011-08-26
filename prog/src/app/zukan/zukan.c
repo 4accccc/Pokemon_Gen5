@@ -722,20 +722,38 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
 //-----------------------------------------------------------------------------
 static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
 {
-	int ret;
-  wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+  int ret;
+  ZUKANHABITAT_ZONE_DATA * zone_info;
+  zone_info = wk->work;
 
-  // 確保したデータ開放
-  {
-    ZUKANHABITAT_ZONE_DATA * zone_info;
-    zone_info = wk->work;
-    GFL_HEAP_FreeMemory( zone_info->p_zone_list_data );
+  switch( zone_info->ret_mode ){
+  case HABITAT_ZONE_RET_EXIT:		// 図鑑終了
+    wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+    ret = SEQ_PROC_FINISH;
+    break;
+
+  case HABITAT_ZONE_RET_RETURN:
+    ret = SEQ_HABITAT_ZONE_LIST_CALL;
+    break;
+
+  case HABITAT_ZONE_RET_INFO:
+    ret = SEQ_INFO_CALL;
+    wk->detail_type = ZUKAN_DETAIL_TYPE_INFO;
+    break;
+
+  default:
+    GF_ASSERT(0);
+    wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+    ret = SEQ_PROC_FINISH;
+    break;
   }
+		
+  // 確保したデータ開放
+  GFL_HEAP_FreeMemory( zone_info->p_zone_list_data );
   // ワーク開放
 	GFL_HEAP_FreeMemory( wk->work );
 
   // 終了モードの設定
-  ret = SEQ_PROC_FINISH;
   return ret;
 }
 
@@ -819,19 +837,57 @@ static int MainSeq_CallHabitatZoneList( ZUKAN_MAIN_WORK * wk )
 static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
 {
 	int ret;
-  wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+  ZUKANHABITAT_LIST_DATA * zone_list;
+  
+  zone_list = wk->work;
 
-    // 確保したデータ開放
+  switch( zone_list->ret_mode )
   {
-    ZUKANHABITAT_LIST_DATA * zone_list;
-    zone_list = wk->work;
-    GFL_HEAP_FreeMemory( zone_list->p_list_data );
+  case HABITAT_LIST_RET_EXIT:
+    ret = SEQ_PROC_FINISH;
+    wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+    break;
+  case HABITAT_LIST_RET_RETURN:
+    ret = SEQ_PROC_FINISH;
+    wk->prm->retMode = ZUKAN_RET_NORMAL;
+    break;
+  case HABITAT_LIST_RET_CALL_ZONE_INFO:
+    ret = SEQ_HABITAT_ZONE_CALL;
+    break;
+  case HABITAT_LIST_RET_ZENKOKU:
+    {
+      // 地方図鑑だった場合は切り替えて呼び出し
+      if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) == FALSE ){
+        ZUKANSAVE_SetZukanMode( wk->prm->savedata , TRUE);
+        FreeListData( wk );
+        wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
+      }
+      ret = SEQ_LIST_CALL;
+    }
+    break;
+  case HABITAT_LIST_RET_LOCAL:
+    {
+      // 全国図鑑だった場合は切り替えて呼び出し
+      if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) == TRUE ){
+        ZUKANSAVE_SetZukanMode( wk->prm->savedata , FALSE);
+        FreeListData( wk );
+        wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
+      }
+      ret = SEQ_LIST_CALL;
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+    ret = SEQ_PROC_FINISH;
+    wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+    break;
   }
-  // ワーク開放
-	GFL_HEAP_FreeMemory( wk->work );
 
-  // 終了モードの設定
-  ret = SEQ_PROC_FINISH;
+  // 確保したデータ開放
+  GFL_HEAP_FreeMemory( zone_list->p_list_data );
+  // ワーク開放
+  GFL_HEAP_FreeMemory( wk->work );
+  
   return ret;
 }
 
