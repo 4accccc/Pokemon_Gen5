@@ -323,8 +323,8 @@ int FIELD_LAND_DATA_PATCH_AddBuildModelEx( const FIELD_DATA_PATCH* cp_sys, FIELD
     NAGI_Printf( "regist pos x=%d z=%d sx=%d sz=%d \n", FX32_TO_GRID( regist.xpos ), FX32_TO_GRID( regist.zpos ), grid_x, grid_z );
     NAGI_Printf( "limit pos x=%d z=%d w=%d h=%d\n", limit_x, limit_z, size_x, size_z );
 
-    if( regist.xpos+GRID_TO_FX32(16) < GRID_TO_FX32(size_x)
-      && GRID_TO_FX32(16)-regist.zpos < GRID_TO_FX32(size_z))
+    if( 0 <= grid_z-FX32_TO_GRID(regist.zpos)
+        && grid_z-FX32_TO_GRID(regist.zpos) < limit_z)
     {
       regist.xpos += GRID_TO_FX32( grid_x );
       regist.zpos -= GRID_TO_FX32( grid_z );

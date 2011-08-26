@@ -184,6 +184,8 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
         u32 read_grid_x = 0;
         u32 read_grid_z = 0;
 
+        BOOL is_build = TRUE;
+
         if( i % 2 == 1 )
         {
           patch = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop, RESORT_BINARY_SHOP_PARAM_3DMD_L );
@@ -211,6 +213,7 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
           read_grid_z   = 32 - local_grid_z;
           size_z        = size_z - read_grid_z;
           local_grid_z  = 0;
+          is_build  = FALSE;  //0版の施設がマップをまたいでいるので描画しない
         }
 #if 0
         //建物を書き換え
@@ -230,7 +233,10 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
         FIELD_DATA_PATCH_OverWriteAttrEx( p_patch, p_attr, read_grid_x, read_grid_z, local_grid_x, local_grid_z, size_x, size_z );
 
         //3dmdを配置
-        build_count = FIELD_LAND_DATA_PATCH_AddBuildModelEx( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z, local_grid_x, local_grid_z, size_x, size_z );
+        if( is_build )
+        {
+          build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z );
+        }
 
         FIELD_DATA_PATCH_Delete( p_patch );
       }
