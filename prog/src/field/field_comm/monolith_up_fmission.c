@@ -101,7 +101,7 @@ const s16 mono_mes_tbl[] = {
   //
   msg_mono_fmission_015,-1,msg_mono_fmission_019,0,		// 制限時間(特別処理)
   msg_mono_fmission_016,-1,0,0,		// クリア目標
-  msg_mono_fmission_017,-1,0,0,		// 報酬
+  msg_mono_fmission_017,-1,msg_mono_fmission_020,0,		// 報酬
   msg_mono_fmission_016,-1,msg_mono_fmission_015,msg_mono_fmission_019,		// ハイスコア
 };
 
@@ -592,7 +592,11 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
     WORDSET_RegisterItemName( setup->wordset, 0, buf[0] );
     WORDSET_RegisterNumber(   setup->wordset, 1, buf[1], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-    str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*4] );
+    if(wk->ArcData[wk->Id].param.pay_bonus == FMISSION_PAY_BONUS_NONE){
+      str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*4] );
+    }else{
+      str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*4+2] );
+    }
     WORDSET_ExpandStr( setup->wordset, expbuf, str );
   }
   // ハイスコア(仮)

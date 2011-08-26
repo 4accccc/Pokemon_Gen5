@@ -197,12 +197,17 @@ enum{
 enum{
   FLG_FMISS_SECRET     = (1<<0),	// 隠しコマンド成功
   FLG_FMISS_LV_HIDE    = (1<<1),	// レベル非表示
+  FLG_FMISS_SECRET_NG  = (1<<2),    // 隠しコマンド入力不可
 };
 
 // フラグ(MONOLITH_INFO_PARAM.flag)
 enum{
   FLG_INFO_NEW         = (1<<0),    // NEWマークあり
 };
+
+// debug
+#define _DEBUG_STAR_
+//#undef  _DEBUG_STAR_
 
 //==============================================================================
 //  構造体定義
@@ -220,6 +225,7 @@ typedef struct{
   GAMEDATA* gdata;
   LINK_FESTIVAL*  fest_sys; 
   FMISSION_DATA_MAN*  fmd_man;
+  FMISSION_ARCDATA*   fmd_arc;   // 参照用
   GAME_COMM_SYS_PTR gcsp;
 
   u32 alloc_menubar_pos;
@@ -326,6 +332,9 @@ static void _CursorPos_PanelScreenChange(MONOLITH_FMSELECT_WORK *mfw, s32 cursor
 static void _CursorPos_PanelFocus(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos);
 static void _CursorPos_NotFocus(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos);
 //
+//
+static void fmission_init_data( MONOLITH_FMSELECT_WORK *mfw );
+//
 static void fmission_set_up_curpos( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_create_obj( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_exit_obj(   MONOLITH_FMSELECT_WORK *mfw );
@@ -335,23 +344,21 @@ static void fmission_set_seq( MONOLITH_FMSELECT_WORK *mfw, const s32 num, const 
 static void fmission_chk_newmark_disp( MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_chk_startmark_disp( MONOLITH_FMSELECT_WORK *mfw );
 //
-static void fmission_chk_secret( MONOLITH_FMSELECT_WORK *mfw );
-//
 static void fmission_create_bmpoam( MONOLITH_SETUP *setup, MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_exit_bmpoam(   MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_disp_bmpoam(   MONOLITH_SETUP *setup, MONOLITH_FMSELECT_WORK *mfw, const s32 mode );
 static void fmission_disp_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode, const BOOL bflg );
 static void fmission_chk_all_level( MONOLITH_FMSELECT_WORK *mfw );
 //
-static BOOL fmission_chk_open( MONOLITH_FMSELECT_WORK *mfw, const s32 id );
-//
-static void fmission_init_data( MONOLITH_FMSELECT_WORK *mfw );
+static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 id );
 //
 static void fmission_chk_savedata( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 count, const s32 id );
 static void fmission_clear_newflag( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 id );
 static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode );
 //
 static void fmission_chg_bgpal( MONOLITH_FMSELECT_WORK *mfw );
+//
+static void fmission_chk_secret( MONOLITH_FMSELECT_WORK *mfw );
 //
 static void fmission_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 
@@ -384,9 +391,9 @@ enum{
 // CLWKのテーブル
 // (x,y),seq,soft,bg,pal
 static const s16 clwk_header_tbl[] = {
-  140, 180, 16, 0x40, 1, 4,	// lv1
-  176, 180, 16, 0x40, 1, 0,	// lv2
-  212, 180, 16, 0x40, 1, 0,	// lv3
+  140, 181, 16, 0x40, 1, 4,	// lv1
+  176, 181, 16, 0x40, 1, 0,	// lv2
+  212, 181, 16, 0x40, 1, 0,	// lv3
   //
   16,   32, 15, 0x40, 3, 0,	// new00
   16,   32, 15, 0x40, 3, 0,	// new01
@@ -396,13 +403,13 @@ static const s16 clwk_header_tbl[] = {
   16,   32, 15, 0x40, 3, 0,	// new05
   16,   32, 15, 0x40, 3, 0,	// new06
   //
-  196+4,  32, 12, 0x40, 3, 0,	// star00
-  196+4,  32, 12, 0x40, 3, 0,	// star01
-  196+4,  32, 12, 0x40, 3, 0,	// star02
-  196+4,  32, 12, 0x40, 3, 0,	// star03
-  196+4,  32, 12, 0x40, 3, 0,	// star04
-  196+4,  32, 12, 0x40, 3, 0,	// star05
-  196+4,  32, 12, 0x40, 3, 0,	// star06
+  230,  32, 12, 0x40, 3, 0,	// star00
+  230,  32, 12, 0x40, 3, 0,	// star01
+  230,  32, 12, 0x40, 3, 0,	// star02
+  230,  32, 12, 0x40, 3, 0,	// star03
+  230,  32, 12, 0x40, 3, 0,	// star04
+  230,  32, 12, 0x40, 3, 0,	// star05
+  230,  32, 12, 0x40, 3, 0,	// star06
   //
   -1,-1,-1,-1,-1,-1,
 };
@@ -429,9 +436,9 @@ enum{
 // bmpoam用
 // (x,y,soft,bg)
 static const s16 bmpoam_header_tbl[] = {
-  130,176,0x30,1,
-  166,176,0x30,1,
-  202,176,0x30,1,
+  130,177,0x30,1,
+  166,177,0x30,1,
+  202,177,0x30,1,
   //
   -1, -1, -1, -1,
 };
@@ -601,7 +608,6 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
     SEQ_COMM_RESTART,
     SEQ_FINISH,
   };
-  BOOL bflg;
   
   MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_BG);
   MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_OBJ);
@@ -680,23 +686,19 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
       _ScrollAfterUpdate(appwk, mfw);
     }
 
-    bflg = TRUE;
     if(mfw->cursor_pos == _CURSOR_POS_NONE){
       appwk->common->power_select_no = GPOWER_ID_NULL;
       MonolithTool_PanelOBJ_SetEnable(&mfw->panel, FALSE);
-      bflg = FALSE;
+      // 非表示
+      mfw->Flag |= FLG_FMISS_LV_HIDE;
     }
     else{
       appwk->common->power_select_no = mfw->fess_mission_id[mfw->cursor_pos];
       MonolithTool_PanelOBJ_SetEnable(&mfw->panel, TRUE);
-      bflg = TRUE;
-    }
-    // test
-    if(bflg == TRUE){
+      // 通常表示
       mfw->Flag &= ~FLG_FMISS_LV_HIDE;
-    }else{
-      mfw->Flag |= FLG_FMISS_LV_HIDE;
     }
+    //
     // レベル表示
     fmission_chk_all_level( mfw );
     // パラメータの受け渡し用
@@ -801,18 +803,22 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
         && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH
         && MonolithTool_CancelIcon_FlashCheck(&mfw->cancel_icon) == FALSE)
     {
-//      u16 mission_no = mfw->decide_cursor_pos-1;
       u16 mission_no = mfw->fess_mission_id[mfw->decide_cursor_pos];
       mfw->decide_cursor_pos = _CURSOR_POS_NONE;
 
       if( mfw->order_end ){
         FEST_MISSION  mission;
         GAME_COMM_NO comm_no = GameCommSys_BootCheck( mfw->gcsp );
+        s16  level;
+        // レベルの設定
+        level = mfw->Level;
+        // 隠しコマンドはもれなくレベル4
+        if(mfw->Flag & FLG_FMISS_SECRET){
+          level = FMISSION_LEVEL_4;
+        }
         //ミッション開始
-//        IWASAWA_Printf("mission no %d->%d\n", mission_no,mission_no%4);
-//        FMISSION_DATA_GetMissionParam( mfw->fmd_man, mission_no%4, 0, &mission);
         IWASAWA_Printf("mission no %d->%d\n", mission_no,mission_no);
-        FMISSION_DATA_GetMissionParam( mfw->fmd_man, mission_no, 0, &mission);
+        FMISSION_DATA_GetMissionParam( mfw->fmd_man, mission_no, level, &mission);
         LINK_FESTIVAL_MissionStart( mfw->fest_sys, &mission, FALSE );
 
         // NEWフラグクリア
@@ -913,6 +919,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_End( GFL_PROC * proc, int * se
   _Setup_BGFrameExit();
   // font
   GFL_FONT_Delete( mfw->sfont );
+  GFL_HEAP_FreeMemory( mfw->fmd_arc );
   //DATA
   _Setup_DataExit( appwk, mfw );
   
@@ -1262,7 +1269,7 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSEL
   //
   for(i=0;i<FMISSION_ID_MAX;i++){
     // 判定(idは通し番号でよいはず => 違う場合は要修正)
-    bflg = fmission_chk_open( mfw, i );
+    bflg = fmission_chk_open( appwk, mfw, i );
     if(bflg == TRUE){
       // セーブデータチェック
       fmission_chk_savedata( appwk, mfw, use_count, i );
@@ -1971,12 +1978,46 @@ static s32 _GetTouchListNo(MONOLITH_FMSELECT_WORK *mfw, u32 tp_y)
   return list_no;
 }
 
+//=============================================================================================
+//=============================================================================================
+//==================================================================
+/**
+ * パラメータの初期化(念のため)
+ *
+ * @param   MONOLITH_FMSELECT_WORK *mfw
+ */
+//==================================================================
+static void fmission_init_data( MONOLITH_FMSELECT_WORK *mfw )
+{
+  s32 i;
+  
+  // 0クリアされているはずだが念のため
+  mfw->Flag      = 0;
+  mfw->Level     = 0;
+  mfw->SecretNum = 0;
+  //
+  for(i=0;i<FMISSION_ID_MAX+_DUMMY_PANEL_NUM;i++){
+    mfw->info_param[i].clear_level = 0;
+    mfw->info_param[i].flag        = 0;
+  }
+  // 小フォント
+  // ここでしか使わないようなので、ここで処理
+  mfw->sfont = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_MONOLITH );
+  // アーカイブ取得
+  mfw->fmd_arc = FMISSION_DATA_AllocArcAll( mfw->fmd_man, HEAPID_MONOLITH );
+  //
+  //---------------------
+  // ここで、隠しコマンド入力可かの判定を行う
+  // FLG_FMISS_SECRET_NG
+  //---------------------
+}
+
 //==================================================================
 /**
  * カーソル位置から上画面用のid,levelをセット
  *
- * @param   MONOLITH_APP_PARENT
- * @param   MONOLITH_FMSELECT_WORK
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_FMSELECT_WORK	*mfw
  */
 //==================================================================
 static void fmission_set_up_curpos( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
@@ -2000,7 +2041,7 @@ static void fmission_set_up_curpos( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELEC
 
 //==================================================================
 /**
- * objの初期化(レベル表示の下地obj)
+ * objの初期化
  *
  * @param   MONOLITH_APP_PARENT
  * @param   MONOLITH_FMSELECT_WORK
@@ -2038,9 +2079,9 @@ static void fmission_create_obj( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_W
 
 //==================================================================
 /**
- * objの破棄(レベル表示の下地obj)
+ * objの破棄
  *
- * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   MONOLITH_FMSELECT_WORK	*mfw
  */
 //==================================================================
 static void fmission_exit_obj( MONOLITH_FMSELECT_WORK *mfw )
@@ -2054,7 +2095,7 @@ static void fmission_exit_obj( MONOLITH_FMSELECT_WORK *mfw )
 
 //==================================================================
 /**
- * NEWマークの座標の更新
+ * 座標の修正(NEWマークで使用、スクロールと同期)
  *
  * @param   MONOLITH_FMSELECT_WORK *mfw
  * @param   const s32				clwk番号
@@ -2073,7 +2114,7 @@ static void fmission_set_pos( MONOLITH_FMSELECT_WORK *mfw, const s32 num, const 
 
 //==================================================================
 /**
- * clwkのon/off
+ * objのon/off
  *
  * @param   MONOLITH_FMSELECT_WORK *mfw
  * @param   const s32				clwk番号
@@ -2087,7 +2128,7 @@ static void fmission_disp_onoff( MONOLITH_FMSELECT_WORK *mfw, const s32 num, con
 
 //==================================================================
 /**
- * clwkのseq変更
+ * objのseq変更
  *
  * @param   MONOLITH_FMSELECT_WORK *mfw
  * @param   const s32				clwk番号
@@ -2096,7 +2137,7 @@ static void fmission_disp_onoff( MONOLITH_FMSELECT_WORK *mfw, const s32 num, con
 //==================================================================
 static void fmission_set_seq( MONOLITH_FMSELECT_WORK *mfw, const s32 num, const s32 seq )
 {
-  // 切り替え
+  // seq切り替え
   GFL_CLACT_WK_SetAnmSeq( mfw->clwk[num], seq );
   GFL_CLACT_WK_SetAutoAnmFlag( mfw->clwk[num], TRUE );
 }
@@ -2106,8 +2147,6 @@ static void fmission_set_seq( MONOLITH_FMSELECT_WORK *mfw, const s32 num, const 
  * newマークのチェック(on/off)
  *
  * @param   MONOLITH_FMSELECT_WORK *mfw
- * @param   const s32				clwk番号
- * @param   const BOOL				(TRUE:表示、FALSE:非表示)
  */
 //==================================================================
 static void fmission_chk_newmark_disp( MONOLITH_FMSELECT_WORK *mfw )
@@ -2134,7 +2173,6 @@ static void fmission_chk_newmark_disp( MONOLITH_FMSELECT_WORK *mfw )
  * 星マークチェック(on/off、シーケンス)
  *
  * @param   MONOLITH_FMSELECT_WORK *mfw
- * @param   const s32				clwk番号
  */
 //==================================================================
 static void fmission_chk_startmark_disp( MONOLITH_FMSELECT_WORK *mfw )
@@ -2147,7 +2185,7 @@ static void fmission_chk_startmark_disp( MONOLITH_FMSELECT_WORK *mfw )
   list_top_no = (mfw->list_y >> 8) / POWER_LIST_SPACE;
   //
   for(i=0;i<POWER_ITEM_DISP_NUM;i++){
-    // 1多いのでこれでよい
+    // 1始まり、としているのでこれでよいはず
     tmp = i+list_top_no;
     //
     if(mfw->info_param[tmp].clear_level == 0){
@@ -2170,57 +2208,10 @@ static void fmission_chk_startmark_disp( MONOLITH_FMSELECT_WORK *mfw )
 
 //==================================================================
 /**
- * 隠しコマンドチェック
- *
- * @param   MONOLITH_FMSELECT_WORK *mfw
- */
-//==================================================================
-static void fmission_chk_secret( MONOLITH_FMSELECT_WORK *mfw )
-{
-  u16	trg;
-  
-  // 済み
-  if(mfw->Flag & FLG_FMISS_SECRET){
-    return;
-  }
-  // タッチがあった=>クリア
-  if( GFL_UI_TP_GetTrg() ){
-    mfw->SecretNum = 0;
-    return;
-  }
-  
-  // 何らかの入力があった
-  if( GFL_UI_KEY_GetTrg() ){
-    // 該当となるキーを取得
-    trg = secret_cmd[mfw->SecretNum];
-    if(GFL_UI_KEY_GetTrg() & trg){
-      mfw->SecretNum++;
-      if(mfw->SecretNum >= SECRET_CMD_MAX){
-        mfw->Flag |= FLG_FMISS_SECRET;
-        OS_Printf("secret command ok\n");
-        PMSND_PlaySE( MONOLITH_SE_SECRET_COMMAND );
-        // パレットチェンジ
-        fmission_chg_bgpal( mfw );
-      }
-    }
-    // 違った場合
-    else{
-      mfw->SecretNum = 0;
-      // はじめのキーだった場合は開始とする
-      trg = secret_cmd[mfw->SecretNum];
-      if(GFL_UI_KEY_GetTrg() & trg){
-        mfw->SecretNum++;
-      }
-    }
-  }
-}
-
-//==================================================================
-/**
  * BMPOAMを作成(LV表示用)
  *
- * @param   MONOLITH_FMSELECT_WORK *mfw
  * @param   MONOLITH_SETUP *setup
+ * @param   MONOLITH_FMSELECT_WORK *mfw
  */
 //==================================================================
 static void fmission_create_bmpoam( MONOLITH_SETUP *setup, MONOLITH_FMSELECT_WORK *mfw )
@@ -2270,7 +2261,9 @@ static void fmission_exit_bmpoam( MONOLITH_FMSELECT_WORK *mfw )
 /**
  * BMPOAMに表示
  *
- * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   MONOLITH_SETUP			*setup
+ * @param   MONOLITH_FMSELECT_WORK	*mfw
+ * @param   const s32				(0-2)
  */
 //==================================================================
 static void fmission_disp_bmpoam( MONOLITH_SETUP *setup, MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
@@ -2304,6 +2297,7 @@ static void fmission_disp_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode, co
 {
   // 文字
   BmpOam_ActorSetDrawEnable( mfw->BmpOam_Fmiss[mode], bflg );
+  // 下地パネル
   fmission_disp_onoff( mfw, FMISS_CLWK_LV1+mode, bflg );
 }
 
@@ -2321,7 +2315,7 @@ static void fmission_chk_all_level( MONOLITH_FMSELECT_WORK *mfw )
   s32  num;
   BOOL bflg=TRUE;
   
-  // 全非表示
+  // 全非表示(非表示命令orレベル4の場合)
   if((mfw->Flag & FLG_FMISS_LV_HIDE)||(mfw->Flag & FLG_FMISS_SECRET)){
     for(i=0;i<3;i++){
       fmission_disp_level( mfw, i, FALSE );
@@ -2349,48 +2343,73 @@ static void fmission_chk_all_level( MONOLITH_FMSELECT_WORK *mfw )
  * @param   BOOL					(TRUE:開放、FALSE:まだ)
  */
 //==================================================================
-static BOOL fmission_chk_open( MONOLITH_FMSELECT_WORK *mfw, const s32 id )
+static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 id )
 {
-  BOOL	bflg=FALSE;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+  EVENTWORK *evwork  = GAMEDATA_GetEventWork( gamedata );
+  BOOL	bflg=TRUE;
+  s32   flg=0;
   
-  // 正しい判定方法をここに記述
-  if(id < 10){
-    bflg = TRUE;
+  //-------------------------------------------------------
+  // フェスチュートリアルが終了しているかどうか(まだらしい)
+  //-------------------------------------------------------
+  
+  
+  //---------------------------
+  // 開催条件を満たしているか
+  //---------------------------
+  flg = 0;
+  if( mfw->fmd_arc[id].common.host == FMISSION_HOST_FREE){
+    flg = 1;
   }
+  else if(mfw->fmd_arc[id].common.host == FMISSION_HOST_WHITE){
+    if(GET_VERSION() == VERSION_WHITE){
+      flg = 1;
+    }
+  }
+  else if(mfw->fmd_arc[id].common.host == FMISSION_HOST_BLACK){
+    if(GET_VERSION() == VERSION_BLACK){
+      flg = 1;
+    }
+  }
+  // 満たしてない
+  if(flg == 0){
+    return( FALSE );
+  }
+  
+  //--------------------------------------
+  // ミッションのオープンを満たしているか
+  //--------------------------------------
+  if(mfw->fmd_arc[id].param.open_flag_id != 0){
+    bflg = EVENTWORK_CheckEventFlag( evwork, mfw->fmd_arc[id].param.open_flag_id );
+    if(bflg == FALSE){
+      return( FALSE );
+    }
+  }
+  //--------------------------------------
+  // ミッションの参加条件を満たしているか
+  //--------------------------------------
+  if(mfw->fmd_arc[id].common.entry_flag_id != 0){
+    bflg = EVENTWORK_CheckEventFlag( evwork, mfw->fmd_arc[id].common.entry_flag_id );
+    if(bflg == FALSE){
+      return( FALSE );
+    }
+  }
+  //
+  // すべて満たしている
+  bflg = TRUE;
   //
   return( bflg );
 }
 
 //==================================================================
 /**
- * パラメータの初期化(念のため)
- *
- * @param   MONOLITH_FMSELECT_WORK *mfw
- */
-//==================================================================
-static void fmission_init_data( MONOLITH_FMSELECT_WORK *mfw )
-{
-  s32 i;
-  
-  // 0クリアされているはずだが念のため
-  mfw->Flag      = 0;
-  mfw->Level     = 0;
-  mfw->SecretNum = 0;
-  //
-  for(i=0;i<FMISSION_ID_MAX+_DUMMY_PANEL_NUM;i++){
-    mfw->info_param[i].clear_level = 0;
-    mfw->info_param[i].flag        = 0;
-  }
-  // 小フォント
-  // ここでしか使わないようなので、ここで処理
-  mfw->sfont = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_MONOLITH );
-}
-
-//==================================================================
-/**
  * セーブデータの取得
  *
- * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_FMSELECT_WORK	*mfw
+ * @param   const s32				(番号)
+ * @param   const s32				(id)
  */
 //==================================================================
 static void fmission_chk_savedata( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 count, const s32 id )
@@ -2410,7 +2429,7 @@ static void fmission_chk_savedata( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT
     mfw->info_param[count].flag &= ~FLG_INFO_NEW;
   }
   //
-#if 1	// debug
+#ifdef _DEBUG_STAR_	// debug
   if(count < 2){
     mfw->info_param[count].clear_level = 3;
   }else if(count < 5){
@@ -2425,7 +2444,9 @@ static void fmission_chk_savedata( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT
 /**
  * NEWフラグのクリア
  *
- * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_FMSELECT_WORK	*mfw
+ * @param   const s32				id
  */
 //==================================================================
 static void fmission_clear_newflag( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 id )
@@ -2442,7 +2463,8 @@ static void fmission_clear_newflag( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELEC
 /**
  * レベル切り替えチェック
  *
- * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   MONOLITH_FMSELECT_WORK	*mfw
+ * @param   const s32				(0:初期化、1:tp、2:trg)
  */
 //==================================================================
 static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
@@ -2525,7 +2547,7 @@ static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
 
 //==================================================================
 /**
- * レベル4になったのでBGのパレットを変更(変えたままでよい)
+ * BGのパレットを変更(レベル4になったため)
  *
  * @param   MONOLITH_FMSELECT_WORK *mfw
  */
@@ -2535,6 +2557,57 @@ static void fmission_chg_bgpal( MONOLITH_FMSELECT_WORK *mfw )
   // 書き換え(領域は単一のカラーになってしまうので注意)
   GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0, 32, 32, FMISS_LV4_COLOR );
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+}
+
+//==================================================================
+/**
+ * 隠しコマンドチェック
+ *
+ * @param   MONOLITH_FMSELECT_WORK *mfw
+ */
+//==================================================================
+static void fmission_chk_secret( MONOLITH_FMSELECT_WORK *mfw )
+{
+  u16	trg;
+  
+  // 入力不可
+  if(mfw->Flag & FLG_FMISS_SECRET_NG){
+    return;
+  }
+  // 済み
+  if(mfw->Flag & FLG_FMISS_SECRET){
+    return;
+  }
+  // タッチがあった=>クリア
+  if( GFL_UI_TP_GetTrg() ){
+    mfw->SecretNum = 0;
+    return;
+  }
+  
+  // 何らかの入力があった
+  if( GFL_UI_KEY_GetTrg() ){
+    // 該当となるキーを取得
+    trg = secret_cmd[mfw->SecretNum];
+    if(GFL_UI_KEY_GetTrg() & trg){
+      mfw->SecretNum++;
+      if(mfw->SecretNum >= SECRET_CMD_MAX){
+        mfw->Flag |= FLG_FMISS_SECRET;
+        OS_Printf("secret command ok\n");
+        PMSND_PlaySE( MONOLITH_SE_SECRET_COMMAND );
+        // パレットチェンジ
+        fmission_chg_bgpal( mfw );
+      }
+    }
+    // 違った場合
+    else{
+      mfw->SecretNum = 0;
+      // はじめのキーだった場合は開始とする
+      trg = secret_cmd[mfw->SecretNum];
+      if(GFL_UI_KEY_GetTrg() & trg){
+        mfw->SecretNum++;
+      }
+    }
+  }
 }
 
 //==================================================================

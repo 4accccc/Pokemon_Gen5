@@ -2998,4 +2998,38 @@
 				Time="2011-08-24T06:30:15" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_020"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ][Digit:3digits Idx="1" ]こ～</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-26T10:45:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-26T10:45:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ][Digit:3digits Idx="1" ]こ～</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-26T10:46:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-26T10:46:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-26T10:46:05" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
