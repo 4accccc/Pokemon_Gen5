@@ -61,8 +61,6 @@
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
-
-  int                 trans_cnt;      // テクスチャ転送した回数
 } PKWD_FIELD_TMP;
 
 
@@ -151,8 +149,7 @@ static void EXPOBJ_ObjMain( PKWD_FIELD_TMP *p_wk );
 
 // テクスチャ転送
 static void POSTER_TexTrans( PKWD_FIELD_TMP *p_wk, const TEX_INDEX tex_index );
-static void TexTransToGra( GFL_BMP_DATA *p_bmp,
-                           GFL_G3D_RES  *p_res,
+static void TexTransToGra( GFL_G3D_RES  *p_res,
                            const char   *tex_name,
                            const char   *plt_name,
                            const ARCDATID dat_id,
@@ -177,6 +174,7 @@ static void* GetPlttStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name)
 //--------------------------------------------------------------
 void PKWD_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
 {
+  int i;
 
   // 汎用ワーク確保
   PKWD_FIELD_TMP *p_wk = GMK_TMP_WK_AllocWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID,
@@ -184,11 +182,16 @@ void PKWD_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
 
   p_wk->exp_obj    = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->p_fieldmap = p_fieldmap;
-  p_wk->trans_cnt  = 0;
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
 
+  // 4枚の看板にテクスチャを転送する
+  for( i=0; i<POSTER_NUM; i++ )
+  {
+    // 看板にポスターのテクスチャを転送
+    POSTER_TexTrans( p_wk, TEX_INDEX_1 + i );
+  }
 }
 
 //--------------------------------------------------------------
@@ -220,16 +223,7 @@ void PKWD_FIELD_Move( FIELDMAP_WORK *p_fieldmap )
 {
   PKWD_FIELD_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
 
-  // 4枚を4フレームかけて貼る
-  if( p_wk->trans_cnt < POSTER_NUM )
-  {
-    // 看板にポスターのテクスチャを転送
-    POSTER_TexTrans( p_wk, TEX_INDEX_1 + p_wk->trans_cnt );
-
-    p_wk->trans_cnt++;
-  }
-
-  // EXPOBJアニメメイン
+   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
 }
 
@@ -313,12 +307,6 @@ static void POSTER_TexTrans( PKWD_FIELD_TMP *p_wk, const TEX_INDEX tex_index )
   GAMEDATA      *p_gdata = GAMESYSTEM_GetGameData( p_gsys );
 	POKEWOOD_SAVEDATA* pokewood_sv = GAMEDATA_GetPokewoodSavedata( p_gdata );
   u8            obj_idx = OBJ_POSTER_1;
-  GFL_BMP_DATA* img_bitmap; // テクスチャ転送用
-
-  //==========================================
-  // 転送準備
-  // ビットマップ作成
-  img_bitmap = GFL_BMP_Create(TEX_W, TEX_H, GFL_BMP_16_COLOR, heapID );
 
   // OBJのリソース情報を取得
   {
@@ -338,12 +326,8 @@ static void POSTER_TexTrans( PKWD_FIELD_TMP *p_wk, const TEX_INDEX tex_index )
     ICHI_Printf("看板のNO %d \n", dat_id );
 
     // テクスチャ転送
-    TexTransToGra( img_bitmap, p_res, tex_name[tex_index], plt_name[tex_index], dat_id, heapID );
+    TexTransToGra( p_res, tex_name[tex_index], plt_name[tex_index], dat_id, heapID );
   }
-
-  // 転送始末
-  GFL_BMP_Delete( img_bitmap );
-  //==========================================
 }
 
 
@@ -359,13 +343,13 @@ static void POSTER_TexTrans( PKWD_FIELD_TMP *p_wk, const TEX_INDEX tex_index )
  *	@param  HEAPID heapID         ヒープ
  */
 //-----------------------------------------------------------------------------
-static void TexTransToGra( GFL_BMP_DATA *p_bmp,
-                           GFL_G3D_RES  *p_res,
+static void TexTransToGra( GFL_G3D_RES  *p_res,
                            const char   *tex_name,
                            const char   *plt_name,
                            const ARCDATID dat_id,
                            HEAPID heapID )
 {
+  GFL_BMP_DATA        *bmp_data;
   NNSG2dCharacterData *chr;
   NNSG2dPaletteData   *plt;
   void *chr_buf;
@@ -415,52 +399,33 @@ static void TexTransToGra( GFL_BMP_DATA *p_bmp,
     ICHI_Printf("chr w = %d h = %d szByte = %d ", chr->W,chr->H,chr->szByte);
     ICHI_Printf("pixelFmt=%d maping=%d charFmt=%d \n", chr->pixelFmt,chr->mapingType,chr->characterFmt);
     ICHI_Printf("plt szByte = %d \n", plt->szByte);
-    ICHI_Printf("bmp w=%d h=%d size=%d \n", GFL_BMP_GetSizeX(p_bmp),GFL_BMP_GetSizeY(p_bmp), GFL_BMP_GetBmpDataSize(p_bmp));
     
-    // メモ
-    // キャラデータの幅は画像の幅と同じになってしまう。
-    // g2dcvrt の-crオプションのXとWは無視される仕様だから。
-    {
-      u8	*src;
-      u8  *dst;
-      int x, y;
+    bmp_data = GFL_BMP_CreateWithData( chr->pRawData, TEX_W, TEX_H, GFL_BMP_16_COLOR, heapID );
 
-      src = chr->pRawData;
-      dst = GFL_BMP_GetCharacterAdrs( p_bmp );
-      GFL_STD_MemClear32((void*)dst, cw*ch*0x20);
-
-      for (y=0; y<ch; y++){
-        for(x=0; x<cw; x++){
-          GFL_STD_MemCopy32((void*)(&src[(y*ncg_cw+x)*0x20]), (void*)(&dst[(y*cw+x)*0x20]), 0x20);
-        }
-      }
-    }
+    // フォーマットデータをＢＭＰデータに変換
+    GFL_BMP_DataConv_to_BMPformat( bmp_data, FALSE, heapID);
   }
 
-  // フォーマットデータをＢＭＰデータに変換
-  GFL_BMP_DataConv_to_BMPformat( p_bmp, FALSE, heapID);
   //転送
   {
-    BOOL rc;
-    u16*	src;
-		u32		dst;
-    src = (u16*)GFL_BMP_GetCharacterAdrs( p_bmp );
-		dst = tex_adr;
-    
-    ICHI_Printf("trans tex_addr %x\n", dst);
-    ICHI_Printf("trans src_addr %x\n", src);
-    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, cw*ch*0x20);
-    GF_ASSERT(rc);
-    src = plt->pRawData;
-		dst = pal_adr;
-    ICHI_Printf("trans pal_addr %x\n", dst);
-    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, 32);
-    GF_ASSERT(rc);
+    // VBlank転送ではなく、直転送に変更
+    // テクスチャ転送
+    GX_BeginLoadTex();
+    DC_FlushRange( chr->pRawData, cw*ch*0x20 );
+    GX_LoadTex( chr->pRawData, tex_adr, cw*ch*0x20 );
+    GX_EndLoadTex();
+
+    // パレットデータ転送
+    GX_BeginLoadTexPltt();
+    DC_FlushRange( plt->pRawData, 32 );
+    GX_LoadTexPltt( plt->pRawData, pal_adr, 32 );
+    GX_EndLoadTexPltt();
   }
 
   // 後始末
   GFL_HEAP_FreeMemory( chr_buf );
   GFL_HEAP_FreeMemory( pal_buf );
+  GFL_BMP_Delete( bmp_data );
 }
 
 static void* GetTexStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictTexData* pData)
