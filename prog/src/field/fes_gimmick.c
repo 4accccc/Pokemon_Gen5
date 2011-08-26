@@ -136,7 +136,8 @@ FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWor
   //MMDLSYS
   wk->mmdl_sys = FIELDMAP_GetMMdlSys( fieldWork );
   //自機のMMDLを取得しておく
-  wk->player_mmdl = FIELD_PLAYER_GetMMdl(FIELDMAP_GetFieldPlayer( fieldWork ));
+  wk->field_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  wk->player_mmdl = FIELD_PLAYER_GetMMdl( wk->field_player );
 
   wk->evdata = GAMEDATA_GetEventData( wk->gdata );
   wk->evwork = GAMEDATA_GetEventWork( wk->gdata );
@@ -270,6 +271,25 @@ GMEVENT* FES_GIMMICK_CheckPosEventRail( FES_GIMMICK* wk, const RAIL_LOCATION* cp
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  フェスミッションギミック との当たり判定
+ *
+ *  @param  wk
+ *  @param  cp_location  プレイヤー座標
+ */
+//----------------------------------------------------------------------
+BOOL FES_GIMMICK_CheckHitGridPos( FES_GIMMICK* wk, u16 gx, u16 gz, fx32 height )
+{
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return FALSE;
+  }
+  if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ){
+    return FES_GIMMICK_ITEM_CheckHitGridPos( wk, gx, gz, height );
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------
+/*
  *  @brief  フェスミッションギミック　フラグセット
  */
 //----------------------------------------------------------------------
@@ -322,7 +342,7 @@ u32 FES_GIMMICK_SUB_RndGet( GFL_STD_RandContext* rnd_c, u32 range, u32* p_tbl, i
 
 //======================================================================
 //======================================================================
-
+#if 0
 //----------------------------------------------------------------------
 /*
  *  @brief  ゾーンキー取得
@@ -414,6 +434,7 @@ static void itemball_MMdlSet( LINK_FESTIVAL* fest_sys, GFL_STD_RandContext* rnd_
   }
 }
 
+#endif
 
 //----------------------------------------------------------------------
 /*

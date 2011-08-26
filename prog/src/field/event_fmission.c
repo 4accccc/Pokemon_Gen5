@@ -28,6 +28,9 @@
 #include "field/field_msgbg.h"
 #include "field/field_fade.h"
 #include "field/fes_gimmick.h"
+#include "field_encount.h"      //FIELD_ENCOUNT_CheckEncount
+#include "effect_encount.h"
+
 #include "./event_fieldmap_control.h"
 #include "./event_fmission.h"
 #include "./event_subscreen.h"
@@ -381,8 +384,8 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
     FLDSYSWIN_STREAM_Delete( wk->winStream );
 #endif    
     if( !wk->succeed_f ){
-      GMEVENT* call_ev = EVENT_ChangeSubScreen( wk->gsys, wk->fieldmap, FIELD_SUBSCREEN_FMISSION_VIEW );
-      GMEVENT_CallEvent( event, call_ev );
+//      GMEVENT* call_ev = EVENT_ChangeSubScreen( wk->gsys, wk->fieldmap, FIELD_SUBSCREEN_FMISSION_VIEW );
+//      GMEVENT_CallEvent( event, call_ev );
       (*seq) = 6;
       break;
     }
@@ -398,6 +401,9 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
       break;
     }
 #endif
+    //エフェクトエンカウントを一度リセット
+    EFFECT_ENC_EffectDelete( FIELDMAP_GetEncount( wk->fieldmap ) );
+
     FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( wk->fieldmap ), FIELD_SUBSCREEN_FMISSION_VIEW );
     GMEVENT_CallEvent( event, EVENT_FieldClose( wk->gsys, wk->fieldmap ) );
     (*seq)++;
@@ -563,14 +569,30 @@ static GMEVENT_RESULT event_FMissionCheckMain(GMEVENT * event, int *  seq, void 
 //-----------------------------------------------------------------
 static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void * work)
 {
-  FMISSION_EVWORK* evwk = work;
+  FMISSION_EVWORK* wk = work;
 
   switch (*seq) {
   case 0:
-    evcall_MsgPrint( evwk->gsys, event, evwk->fmb, evwk->msgData, msg_fmission_retire+evwk->param );
+    evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_retire+wk->param );
     (*seq)++;
     break;
   case 1:
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( wk->gsys, wk->fieldmap, FIELD_FADE_WAIT ) );
+    (*seq)++;
+    break;
+  case 2:
+    LINK_FESTIVAL_MissionEnd( wk->fest_sys ); //ミッション終了
+    GMEVENT_CallEvent( event, EVENT_FieldClose( wk->gsys, wk->fieldmap ) );
+    (*seq)++;
+    break;
+  case 3:
+    GMEVENT_CallEvent( event, EVENT_FieldOpen( wk->gsys ) );
+    (*seq)++;
+    break;
+  case 4:
+    FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( wk->fieldmap ), FIELD_SUBSCREEN_NORMAL );
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( wk->gsys, wk->fieldmap, FIELD_FADE_WAIT ) );
+#if 0
     {
       FIELD_SUBSCREEN_MODE screen_mode = FIELD_SUBSCREEN_GetMode( FIELDMAP_GetFieldSubscreenWork( evwk->fieldmap ) );
 
@@ -581,10 +603,11 @@ static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void
         GMEVENT_CallEvent( event, call_ev );
       }
     }
+#endif
     (*seq)++;
     break;
   default:
-    sub_ReleaseFMissionWork( evwk );
+    sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

@@ -28,6 +28,7 @@ struct _FES_GIMMICK{
 
   FIELDMAP_WORK* fieldWork;
   MMDLSYS* mmdl_sys;
+  FIELD_PLAYER* field_player; 
   MMDL* player_mmdl;        ///<Ž©‹@‚ÌMMDL
   EVENTDATA_SYSTEM* evdata;
   EVENTWORK*  evwork;

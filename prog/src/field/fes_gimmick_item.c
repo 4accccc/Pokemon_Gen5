@@ -201,6 +201,49 @@ GMEVENT* FES_GIMMICK_ITEM_CheckEventForRail( FES_GIMMICK* sys_wk,  const RAIL_LO
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  フェス　キラキラエフェクトとの座標当たり判定
+ *
+ *  @retval NULL  イベント無し
+ *  @retval GMEVENT* POSを踏んだのでイベント発生
+ */
+//----------------------------------------------------------------------
+BOOL FES_GIMMICK_ITEM_CheckHitGridPos( FES_GIMMICK* sys_wk, u16 gx, u16 gz, fx32 height )
+{
+  int i;
+  VecFx32 vec;
+  FES_GIMMICK_ITEM_WORK* wk = (FES_GIMMICK_ITEM_WORK*)&sys_wk->wk_buf;
+  FLDMAP_BASESYS_TYPE ftype = FIELDMAP_GetBaseSystemType( sys_wk->fieldWork );
+  FES_GIMMICK_ITEM_FLAG* f_tbl = sub_FlagTableGet( wk, wk->zone_id );
+
+  for( i = 0;i < wk->point_max; i++)
+  {
+    POS_EVENT_DATA* pd = &wk->data[ wk->idx[i] ];
+
+    if( f_tbl->flag[i] ){
+      continue; //すでに取得済み
+    }
+    if( pd->pos_type == EVENTDATA_POSTYPE_GRID ){
+      EVENTDATA_GetPosEventCenterPos( pd, &vec);
+    }
+    else{
+      RAIL_LOCATION loc;
+      EVENTDATA_GetPosEventCenterRailLocation( pd, &loc );
+      FIELD_RAIL_MAN_GetLocationPosition( sys_wk->railman, &loc, &vec );
+    }
+
+    if( SIZE_GRID_FX32(vec.x) != gx ||
+        SIZE_GRID_FX32(vec.z) != gz ||
+        (vec.y-H_DIFF_COLLISION_FOR_GROUND) > height ||
+        (vec.y+H_DIFF_COLLISION_FOR_GROUND) < height ){
+      continue;
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------
+/*
  *  @brief  フェス　アイテムミッションギミック　ゾーン遷移時処理
  */
 //----------------------------------------------------------------------
@@ -228,7 +271,15 @@ static GMEVENT* sub_MakeEvent( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, u
   event = SCRIPT_SetEventScript( sys_wk->gsys, SCRID_FMISSION_ITEM_GET, NULL, HEAPID_FIELDMAP );
   sc = SCRIPT_GetScriptWorkFromEvent( event );
   SCRIPT_SetScriptWorkParam( sc, item, 0, 0, 0 );
-
+ 
+  /*
+   * GFBTS1967関連対処
+   * 8番道路の一本橋から落ちてすぐ、エフェクトエンカウントが起動した場合
+   * 自機の特殊落下中ステータスがクリアされないため、明示的にクリアする
+   */
+  if( FIELD_PLAYER_CheckOzeFallOut( sys_wk->field_player ) ){
+    FIELD_PLAYER_FinishOzeFallOut( sys_wk->field_player );
+  }
   return event;
 }
 
@@ -343,7 +394,7 @@ static BOOL sub_CheckHitAnotherEventForGrid( FES_GIMMICK* sys_wk, FES_GIMMICK_IT
   MMDL* mmdl;
   //動作モデルとの判定を取る
   mmdl = MMDLSYS_SearchGridPosEx( sys_wk->mmdl_sys,
-        SIZE_GRID_FX32(ev_pos->x), SIZE_GRID_FX32(ev_pos->z), ev_pos->y, H_DIFF_COLLISION_FOR_GROUND, FALSE );
+            SIZE_GRID_FX32(ev_pos->x), SIZE_GRID_FX32(ev_pos->z), ev_pos->y, H_DIFF_COLLISION_FOR_GROUND, FALSE );
   if( mmdl != NULL && mmdl != sys_wk->player_mmdl ){  //自機は除外する
     return TRUE;
   }

@@ -54,4 +54,5 @@ extern void FES_GIMMICK_ITEM_Delete( FES_GIMMICK* sys_wk );
 
 extern GMEVENT* FES_GIMMICK_ITEM_CheckEventForGrid( FES_GIMMICK* sys_wk, const VecFx32* cp_pos );
 extern GMEVENT* FES_GIMMICK_ITEM_CheckEventForRail( FES_GIMMICK* sys_wk,  const RAIL_LOCATION* cp_location );
+extern BOOL FES_GIMMICK_ITEM_CheckHitGridPos( FES_GIMMICK* sys_wk, u16 gx, u16 gz, fx32 height );
 

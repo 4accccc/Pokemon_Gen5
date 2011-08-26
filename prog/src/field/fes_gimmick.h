@@ -69,6 +69,15 @@ extern GMEVENT* FES_GIMMICK_CheckPosEventGrid( FES_GIMMICK* wk, const VecFx32* c
 //----------------------------------------------------------------------
 extern GMEVENT* FES_GIMMICK_CheckPosEventRail( FES_GIMMICK* wk, const RAIL_LOCATION* cp_location );
 
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック との当たり判定
+ *
+ *  @param  wk
+ *  @param  cp_location  プレイヤー座標
+ */
+//----------------------------------------------------------------------
+extern BOOL FES_GIMMICK_CheckHitGridPos( FES_GIMMICK* wk, u16 gx, u16 gz, fx32 height );
 
 //----------------------------------------------------------------------
 /*

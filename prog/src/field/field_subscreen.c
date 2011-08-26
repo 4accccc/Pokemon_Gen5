@@ -566,8 +566,10 @@ const BOOL FIELD_SUBSCREEN_CanChange( FIELD_SUBSCREEN_WORK* pWork )
 //----------------------------------------------------------------------------
 FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode)
 {
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork(pWork->fieldmap);
+  
   if(FIELD_SUBSCREEN_NORMAL==new_mode){
-    GAMEDATA* pGame = GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap));
+    GAMEDATA* pGame = GAMESYSTEM_GetGameData(gsys);
     u16 zone_id = FIELDMAP_GetZoneID(pWork->fieldmap);
     //遊覧船内 or バトルサブウェイ中では標準==NOGEARとなる
     if(ZONEDATA_IsPlBoat(zone_id) || ZONEDATA_IsSubway(zone_id))
@@ -577,6 +579,10 @@ FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIE
     //CギアOFFの場合はNOGEARになる
     if(!CGEAR_SV_GetCGearONOFF(CGEAR_SV_GetCGearSaveData(GAMEDATA_GetSaveControlWork(pGame)))){
       return FIELD_SUBSCREEN_NOGEAR;
+    }
+    //フェスミッション中はミッションログになる
+    if(LINK_FESTIVAL_IsMissionEntry( GAMESYSTEM_GetLinkFestivalWork( gsys ) )){
+      return FIELD_SUBSCREEN_FMISSION_VIEW;
     }
   }
   return new_mode;
@@ -595,7 +601,7 @@ FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_BeaconViewCheck( FIELD_SUBSCREEN_WORK* pWor
   GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork(pWork->fieldmap);
   LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
 
-  if(FEST_MISSION_IsEntry( LINK_FESTIVAL_GetMissionWork( fest_sys ))){
+  if(LINK_FESTIVAL_IsMissionEntry( fest_sys )){
     return FIELD_SUBSCREEN_FMISSION_VIEW;
   }
   return FIELD_SUBSCREEN_BEACON_VIEW;

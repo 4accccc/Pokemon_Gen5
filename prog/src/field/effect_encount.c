@@ -23,6 +23,7 @@
 #include "field_encount.h"
 #include "field_encount_local.h"
 #include "effect_encount.h"
+#include "fes_gimmick.h"
 
 #include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLD_EV_EFFECT_ENC_ITEM_GET
 
@@ -681,6 +682,11 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 
   attr->gy = SIZE_GRID_FX32( attr->height );
 
+  //フェスギミックとの当たり判定
+  if( FES_GIMMICK_CheckHitGridPos( FIELDMAP_GetFesGimmickSys( enc->fwork ), attr->gx, attr->gz, attr->height )){
+    IWASAWA_Printf("HitCancel FesGimmickHit\n");
+    return;
+  }
   //フィールドモデルの位置をチェック
   if( effect_CheckMMdlHit( enc, attr->gx, attr->gy, attr->gz, FALSE )){
     IWASAWA_Printf("HitCancel FieldModelHit\n");
