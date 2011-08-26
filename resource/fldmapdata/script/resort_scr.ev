@@ -242,7 +242,7 @@ sub_tourist_invitation:
 	_BALLOONWIN_CLOSE()
 
   //フェードアウト
-	_MAP_FADE_BLACK_OUT()
+	_MAP_FADE_BLACK_OUT_SLOW()
 	_MAP_FADE_END_CHECK()
 
   _RESORT_SET_WORD( RESORT_WORD_WANT_SHOP_GENRE, RESORT_WORD_PARAM_FRONT, 0, 0 )
@@ -279,7 +279,7 @@ sub_tourist_invitation:
   ENDSWITCH
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
-	_MAP_FADE_BLACK_IN()
+	_MAP_FADE_BLACK_IN_SLOW()
 	_MAP_FADE_END_CHECK()
 
   //施設メッセージ
