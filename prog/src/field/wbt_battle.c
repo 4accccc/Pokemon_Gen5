@@ -56,6 +56,139 @@ enum {
 };
 
 //============================================================================================
+//============================================================================================
+#ifdef  PM_DEBUG
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void DEBUG_PrintString( const STRBUF * strbuf )
+{
+  enum { UNI_MAX_LEN = 64 };
+  u16 unicode[UNI_MAX_LEN];
+  int i;
+  const STRCODE eom_code = GFL_STR_GetEOMCode();
+
+  GFL_STR_GetStringCode( strbuf, (STRCODE*)unicode, UNI_MAX_LEN );
+  for ( i = 0; i < UNI_MAX_LEN; i ++ )
+  {
+    if ( unicode[i] == eom_code )
+    {
+      unicode[i] = L'\0';
+      break;
+    }
+  }
+  unicode[UNI_MAX_LEN - 1] = L'\0';
+  OS_Printf("%s", unicode );
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void DEBUG_POKEPARAM_Dump( POKEMON_PARAM * pp, HEAPID tempHeapID )
+{
+  STRBUF * strbuf = GFL_STR_CreateBuffer( 32, tempHeapID );
+  u32 value;
+  int i;
+
+  OS_Printf("POKEMON_PARAM:%08x\n", (u32)pp);
+  value = PP_Get( pp, ID_PARA_monsno, NULL );
+  OS_Printf("monsno:%3d ",value );
+  value = PP_Get( pp, ID_PARA_form_no, NULL );
+  OS_Printf("formno:%2d ", value );
+  value = PP_Get( pp, ID_PARA_sex, NULL );
+  OS_Printf("sex:%d ", value );
+  value = PP_Get( pp, ID_PARA_seikaku, NULL );
+  OS_Printf("seikaku:%d ", value );
+  value = PP_Get( pp, ID_PARA_speabino, NULL );
+  OS_Printf("tokusei:%2d\n", value );
+
+  //OS_Printf("get_date(");
+  //value = PP_Get( pp, ID_PARA_get_year, NULL ); OS_Printf("%2d/", value );
+  //value = PP_Get( pp, ID_PARA_get_month, NULL ); OS_Printf("%2d/", value );
+  //value = PP_Get( pp, ID_PARA_get_day, NULL ); OS_Printf("%2d", value );
+  //OS_PutString(")\n");
+
+
+  //PP_Get( pp, ID_PARA_nickname, (void*)strbuf );
+  //OS_Printf("nickname:"); DEBUG_PrintString( strbuf );
+  //PP_Get( pp, ID_PARA_oyaname, (void*)strbuf );
+  //OS_Printf("oyaname:"); DEBUG_PrintString( strbuf ); OS_PutString("\n");
+
+  value = PP_Get( pp, ID_PARA_country_code, NULL );
+  OS_Printf("country_code:%3d ", value );
+  value = PP_Get( pp, ID_PARA_id_no, NULL );
+  OS_Printf("ID:%08x ", value );
+  value = PP_Get( pp, ID_PARA_personal_rnd, NULL );
+  OS_Printf("personal_rnd:%08x ", value );
+  value = PP_Get( pp, ID_PARA_power_rnd, NULL );
+  OS_Printf("power_rnd:%08x\n", value );
+
+  //パワー乱数
+  OS_Printf("POWER_RND(hp,pow,def,agi,speabi,spedef) = (");
+  value = PP_Get( pp, ID_PARA_hp_rnd, NULL ); OS_Printf("%3d,", value );
+  value = PP_Get( pp, ID_PARA_pow_rnd, NULL ); OS_Printf("%3d,", value );
+  value = PP_Get( pp, ID_PARA_def_rnd, NULL ); OS_Printf("%3d,", value );
+  value = PP_Get( pp, ID_PARA_agi_rnd, NULL ); OS_Printf("%3d,", value );
+  value = PP_Get( pp, ID_PARA_spepow_rnd, NULL ); OS_Printf("%3d,", value );
+  value = PP_Get( pp, ID_PARA_spedef_rnd, NULL ); OS_Printf("%3d", value );
+  OS_PutString(")\n");
+  //努力値
+  OS_Printf("EXP(hp,pow,def,agi,speabi,spedef) = (");
+  value = PP_Get( pp, ID_PARA_hp_exp, NULL ); OS_Printf("%3d,", value );
+  value = PP_Get( pp, ID_PARA_pow_exp, NULL ); OS_Printf("%3d,", value );
+  value = PP_Get( pp, ID_PARA_def_exp, NULL ); OS_Printf("%3d,", value );
+  value = PP_Get( pp, ID_PARA_agi_exp, NULL ); OS_Printf("%3d,", value );
+  value = PP_Get( pp, ID_PARA_spepow_exp, NULL ); OS_Printf("%3d,", value );
+  value = PP_Get( pp, ID_PARA_spedef_exp, NULL ); OS_Printf("%3d", value );
+  OS_PutString(")\n");
+
+  OS_Printf("hp:%3d ", value );
+  value = PP_Get( pp, ID_PARA_hp, NULL );
+  OS_Printf("pow:%3d ", value );
+  value = PP_Get( pp, ID_PARA_pow, NULL );
+  OS_Printf("def:%3d ", value );
+  value = PP_Get( pp, ID_PARA_def, NULL );
+  OS_Printf("agi:%3d ", value );
+  value = PP_Get( pp, ID_PARA_agi, NULL );
+  OS_Printf("spepow:%3d ", value );
+  value = PP_Get( pp, ID_PARA_spepow, NULL );
+  OS_Printf("spedef:%3d ", value );
+  value = PP_Get( pp, ID_PARA_spedef, NULL );
+  OS_PutString("\n");
+
+  value = PP_Get( pp, ID_PARA_level, NULL );
+  OS_Printf("Lv:%3d ", value );
+  value = PP_Get( pp, ID_PARA_item, NULL );
+  OS_Printf("item:%3d ", value );
+  OS_PutString("\n");
+
+  for ( i = 0; i < PTL_WAZA_MAX; i ++ )
+  {
+    value = PP_Get( pp, ID_PARA_waza1 + i, NULL );
+    OS_Printf("WAZA%d:%3d ", i+1,value );
+    value = PP_Get( pp, ID_PARA_pp1 + i, NULL );
+    OS_Printf("%2d/", value );
+    value = PP_Get( pp, ID_PARA_pp_max1 + i, NULL );
+    OS_Printf("%2d ", value );
+    value = PP_Get( pp, ID_PARA_pp_count1 + i, NULL );
+    OS_Printf("(+ %d)\n", value );
+  }
+  OS_Printf("\n");
+
+  GFL_STR_DeleteBuffer( strbuf );
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void DEBUG_POKEPARTY_dump( POKEPARTY * party, HEAPID tempHeapID )
+{
+  int i, max;
+  max = PokeParty_GetPokeCount(party);
+  OS_Printf("POKEPARTY(%d):%08x\n", max, (u32)party);
+  for ( i = 0; i < max; i ++ )
+  {
+    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, i );
+    DEBUG_POKEPARAM_Dump( pp, tempHeapID );
+  }
+}
+#endif
+//============================================================================================
 //
 //
 //  ダウンロード手持ちデータの設定処理
@@ -205,58 +338,44 @@ static u32 getWBTRivalTrainerID( GAMESYS_WORK * gsys )
 }
 
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-static const u8 pri2pow_table[5] = {
-  0x10, 0x12, 0x14, 0x1a, 0x1f
-};
-
-//-----------------------------------------------------------------------------
 /**
- * @param btpwd
- * @param wbt_tr
- * @param cnt
- * @param inHeapID
- * @todo  バトルサブウェイは４体しかポケモンを選択できない。
+ * @brief 対戦相手のROMトレーナーの手持ちポケモン選択処理
+ * @param[out]  btpwd       選択したポケモンデータを受け取るワークへのポインタ
+ * @param[in]   wbtcup      現在のトーナメント種別
+ * @param[in]   wbt_tr      対戦相手トレーナー
+ * @param[in]   poke_num    選択するポケモン数
+ * @param[in]   tempHeapID  テンポラリに使用するヒープ指定ID
  */
 //-----------------------------------------------------------------------------
 static void makeRomTrainerData(
     BSUBWAY_POKEMON * btpwd,
     WBTCUP wbtcup, const WBTTRAINER * wbt_tr,
-    u8 cnt, HEAPID inHeapID)
+    u8 poke_num, HEAPID tempHeapID )
 {
-  BSUBWAY_PARTNER_DATA * dummy_tr_data;
   BSUBWAY_TRAINER_ROM_DATA  *trd;
-  u8 pow_rnd;
-  u8 tr_pri   = WBTTRAINER_GetPriority(wbt_tr);
-  u8 tr_id    = WBTTRAINER_GetID(wbt_tr);
-  u32 base_arc_id  = WBTTOOL_GetRomArcID( wbtcup );
-  u32 id;
+  u8 pow_rnd      = WBTTRAINER_GetPowerRnd(wbt_tr);
+  u8 tr_id        = WBTTRAINER_GetID(wbt_tr);
+  u32 base_arc_id = WBTTOOL_GetRomArcID( wbtcup );
   GFL_STD_RandContext * rand_context = NULL;
   WBT_NGPMINFO * ng_info;
 
-  ng_info = NGINFO_Create( inHeapID );
+  ng_info = NGINFO_Create( tempHeapID  );
   
-  // パワー乱数を決定する
-  pow_rnd = pri2pow_table[ tr_pri - 1 ];
-  //id=(GetRand( rand_context )|(GetRand( rand_context )<<16));
-
-  //実際には使用しないがFBI_TOOL_AllocTrainerRomDataの呼び出しに必要
-  dummy_tr_data = GFL_HEAP_AllocMemoryLo( inHeapID, sizeof(BSUBWAY_PARTNER_DATA) );
-
-  if (WBTTRAINER_HasAce(wbt_tr) )
+  if ( WBTTRAINER_HasAce(wbt_tr) == TRUE )
   { //切り札ポケモンセット処理
     u16 index_no;
-    trd = FBI_TOOL_AllocTrainerRomData(dummy_tr_data,
-        base_arc_id + WBTBTD_ARCOFS_TR_ACE, tr_id, NARC_message_wbt_trname_dat, inHeapID);
+    //トレーナーROMデータ取得
+    trd = FBI_TOOL_GetTrainerRomData( base_arc_id + WBTBTD_ARCOFS_TR_ACE, tr_id, tempHeapID  );
     //切り札ポケモンは１体だけなので０番決めうちで取得
     index_no = trd->use_poke_table[0];
     FBI_TOOL_MakePokemonParam( btpwd,
-        base_arc_id + WBTBTD_ARCOFS_PM_ACE, index_no, tr_id, 0, pow_rnd, 0, FALSE, inHeapID );
+        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, index_no, tr_id, 0, pow_rnd, 0, FALSE, tempHeapID  );
+        //base_arc_id + WBTBTD_ARCOFS_PM_ACE, index_no, tr_id, 0, pow_rnd, 0, FALSE, tempHeapID  );
 
     WBT_NGINFO_AddNGMons( ng_info, btpwd->mons_no );
     WBT_NGINFO_AddNGItem( ng_info, btpwd->item_no );
     btpwd ++;
-    cnt --;
+    poke_num --;
     GFL_HEAP_FreeMemory( trd );
   }
 
@@ -264,32 +383,32 @@ static void makeRomTrainerData(
     int i;
     u16 index_array[ TEMOTI_POKEMAX ];
 
-    //トレーナーデータセット
-    trd = FBI_TOOL_AllocTrainerRomData(dummy_tr_data,
-        base_arc_id + WBTBTD_ARCOFS_TR_NORMAL, tr_id, NARC_message_wbt_trname_dat, inHeapID);
+    //トレーナーROMデータ取得
+    trd = FBI_TOOL_GetTrainerRomData( base_arc_id + WBTBTD_ARCOFS_TR_NORMAL, tr_id, tempHeapID  );
 
     TAMADA_Printf(" WBT TrData:arc_id=%d id=%d use_poke_cnt = %d\n", base_arc_id, tr_id, trd->use_poke_cnt );
     //ポケモンデータを選択
     GF_ASSERT( trd->use_poke_cnt < ROM_POKE_MAX );
     WBTSYS_ChooseBSubwayData( index_array, ng_info,
-        inHeapID, trd->use_poke_cnt, trd->use_poke_table,
-        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, cnt, NULL );
+        tempHeapID , trd->use_poke_cnt, trd->use_poke_table,
+        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, poke_num, NULL );
 
-    for(i = 0; i < cnt; i++)
+    for(i = 0; i < poke_num; i++)
     {
       u32 index_no = index_array[ i ];
       FBI_TOOL_MakePokemonParam( &(btpwd[i]),
-        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, index_no, tr_id, 0, pow_rnd, i, FALSE, inHeapID);
+        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, index_no, tr_id, 0, pow_rnd, i, FALSE, tempHeapID );
     }
 
     GFL_HEAP_FreeMemory( trd );
   }
-  GFL_HEAP_FreeMemory( dummy_tr_data );
 
   WBT_NGINFO_Delete( ng_info );
 }
 
 //------------------------------------------------------------------
+/**
+ */
 //------------------------------------------------------------------
 static void setRomPokeParty( POKEPARTY * party,
     const WBTTRAINER * wbt_tr, WBTCUP wbtcup, u8 num, HEAPID tempHeapID )
@@ -426,6 +545,10 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
     //bp->fieldSituation.bgType = ;
     //bp->fieldSituation.bgAttr = ;
   }
+#ifdef  PM_DEBUG
+  OS_PutString("WBT:dump Enemy Party:\n");
+  DEBUG_POKEPARTY_dump( bp->party[BTL_CLIENT_ENEMY1], wbtsys->heapID ); 
+#endif
   return bp;
 }
 

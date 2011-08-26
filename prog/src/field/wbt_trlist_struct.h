@@ -34,9 +34,10 @@ typedef struct {
   u8 entry_mixmaster:1;     ///<ミックスマスタートーナメント参加
   u8 pad:1;
 
-  u8 region_tournament_id;       ///<限定トーナメント種別
-  u8  type_tournament_id; ///<タイプトーナメント種別
-  u8  priority; ///<優先度
+  u8 region_tournament_id;      ///<限定トーナメント種別
+  u8  type_tournament_id;       ///<タイプトーナメント種別
+  u8  priority:3;               ///<優先度
+  u8  power_rnd:5;              ///<パワー乱数
   u8  ai_type; ///<AI
   u16 btl_bgm_id;         ///<戦闘BGM
   u16 win_bgm_id;         ///<勝利時BGM

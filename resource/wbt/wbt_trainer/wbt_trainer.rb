@@ -94,6 +94,7 @@ class COL
     REGION_ENTRY
     TYPE_ENTRY
     PRIORITY
+    POWER_RND
     AI
     BTL_BGM
     WIN_BGM
@@ -134,6 +135,7 @@ class WBT_TRDATA
     @region_entry = column[COL::REGION_ENTRY]
     @type_entry = column[COL::TYPE_ENTRY]
     @priority = column[COL::PRIORITY].to_i
+    @power_rnd = column[COL::POWER_RND]
     @ai = column[COL::AI]
     @btl_bgm = column[COL::BTL_BGM]
     @win_bgm = column[COL::WIN_BGM]
@@ -204,6 +206,7 @@ class WBT_TRDATA
     str += sprintf("\t\t%-5s, //限定トーナメント種別\n", $cup_table[@region_entry] )
     str += sprintf("\t\t%2s, //タイプトーナメント種別\n", type_def(@type_entry) )
     str += sprintf("\t\t%2d, //優先度\n", @priority )
+    str += sprintf("\t\t%2d, //パワー乱数\n",@power_rnd.to_i )
     str += sprintf("\t\t%2d, //AI\n", @ai.to_i )
     str += sprintf("\t\t%-40s, // BTL_BGM\n", @btl_bgm )
     str += sprintf("\t\t%-40s, // WIN_BGM\n", @win_bgm )

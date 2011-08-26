@@ -381,7 +381,6 @@ static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest , u16 
 static u16 GetRand( GFL_STD_RandContext *rand_context );
 static u8 GetPowerRnd(u16 tr_no);
 static void GetPokemonRomData( ARCID poke_arc_id,BSUBWAY_POKEMON_ROM_DATA *prd,int index);
-static void * GetTrainerRomData(ARCID tr_arcID, u16 tr_no, HEAPID heapID );
 
 static BOOL IsValidEasyTalk( const BSUBWAY_TRAINER *bsw_trainer);
 static BATTLE_SETUP_PARAM * MakeBattleParam( GAMESYS_WORK *p_gsys , const u16 play_mode ,BTL_FIELD_SITUATION *p_sit , const BOOL isAllocRecBuffer ,HEAPID heapID);
@@ -1300,14 +1299,15 @@ static void GetPokemonRomData(
 //--------------------------------------------------------------
 /**
  *  バトルサブウェイトレーナーロムデータの読み出し
- * @param tr_arcID  [in]トレーナーデータアーカイブID
- * @param tr_no  [in]トレーナーナンバー
- * @param heapID  [in]メモリ確保するためのヒープID
- * TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理
- * TOWER_AI_MULTI_ONLY 似た処理 frontier_tool.c Frontier_TrainerRomDataGet
+ * @param[in] tr_arcID  トレーナーデータアーカイブID
+ * @param[in] tr_no     トレーナーナンバー
+ * @param[in] heapID    メモリ確保するためのヒープID
+ * @return  BSUBWAY_TRAINER_ROM_DATA
+ * 
+ * 内部でAllocしたメモリを返すので、呼び出し側で責任を持って削除する必要がある
  */
 //--------------------------------------------------------------
-static void * GetTrainerRomData(ARCID tr_arcID, u16 tr_no, HEAPID heapID )
+void * FBI_TOOL_GetTrainerRomData(ARCID tr_arcID, u16 tr_no, HEAPID heapID )
 {
   tr_no += BSW_TR_ARCDATANO_ORG;
   OS_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
@@ -1444,7 +1444,7 @@ BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
       msg_trname_data_id , inHeapID );
   
   MI_CpuClear8(tr_data, sizeof(BSUBWAY_PARTNER_DATA));
-  trd = GetTrainerRomData( tr_arcID ,zero_org_tr_no, inHeapID);
+  trd = FBI_TOOL_GetTrainerRomData( tr_arcID ,zero_org_tr_no, inHeapID);
 
   //トレーナーIDをセット
   tr_data->bt_trd.player_id = zero_org_tr_no + BSW_TR_ARCDATANO_ORG; //1 origin
@@ -1631,7 +1631,7 @@ u16 FBI_TOOL_GetOBJCode(ARCID tr_arcID, u16 tr_no, HEAPID heapID )
 {
   BSUBWAY_TRAINER_ROM_DATA  *p_trd;
   u16 obj_code;
-  p_trd = GetTrainerRomData( tr_arcID ,tr_no, heapID);
+  p_trd = FBI_TOOL_GetTrainerRomData( tr_arcID ,tr_no, heapID);
   obj_code = FBI_TOOL_GetTrainerOBJCode(p_trd->tr_type);
   GFL_HEAP_FreeMemory( p_trd );
 
@@ -1653,7 +1653,7 @@ u16 FBI_TOOL_GetTrtype(ARCID tr_arcID, u16 tr_no, HEAPID heapID )
 {
   BSUBWAY_TRAINER_ROM_DATA  *p_trd;
 	u16 tr_type;
-  p_trd = GetTrainerRomData( tr_arcID ,tr_no, heapID);
+  p_trd = FBI_TOOL_GetTrainerRomData( tr_arcID ,tr_no, heapID);
   tr_type = p_trd->tr_type;
   GFL_HEAP_FreeMemory( p_trd );
 

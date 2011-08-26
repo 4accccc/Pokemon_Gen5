@@ -29,6 +29,8 @@ extern BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     BSUBWAY_PARTNER_DATA *ai_multi_data,
     const int inMemNum );
 
+extern void * FBI_TOOL_GetTrainerRomData( ARCID tr_arcID, u16 tr_no, HEAPID heapID );
+
 extern BOOL FBI_TOOL_MakeRomTrainerData(
     BSUBWAY_PARTNER_DATA *tr_data,
     u16 tr_no, int cnt,

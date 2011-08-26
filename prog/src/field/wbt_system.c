@@ -77,6 +77,7 @@ WBTSYS * WBTSYS_Create( HEAPID heapID )
   //POKEPARTY保存領域を作成
   wbtsys->my_party = PokeParty_AllocPartyWork( wbtsys->heapID );
   wbtsys->npc_party = PokeParty_AllocPartyWork( wbtsys->heapID );
+  wbtsys->rental_party = PokeParty_AllocPartyWork( wbtsys->heapID );
 
   //ROMトレーナーデータを読み込む
   wbtsys->rom_trdata = WBTTOOL_CreateRomTrainerData( wbtsys->heapID );
@@ -92,6 +93,7 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
 
   WBTTOOL_DeleteRomTrainerData( (void*)wbtsys->rom_trdata );
 
+  GFL_HEAP_FreeMemory( wbtsys->rental_party );
   GFL_HEAP_FreeMemory( wbtsys->my_party );
   GFL_HEAP_FreeMemory( wbtsys->npc_party );
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
@@ -335,6 +337,7 @@ static void WBTTRAINER_Init( WBTTRAINER * wbt_tr, HEAPID heapID )
   wbt_tr->pri = 1;
   wbt_tr->tr_id = 0;
   wbt_tr->poketype = POKETYPE_NORMAL;
+  wbt_tr->pow_rnd = 0;
   wbt_tr->mmdl_id = SWHERO;
   wbt_tr->btl_tr_type = TRTYPE_HERO;
   wbt_tr->name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
@@ -355,12 +358,14 @@ static void WBTTRAINER_Release( WBTTRAINER * wbt_tr )
  */
 //------------------------------------------------------------------
 static void WBTTRAINER_Set( WBTTRAINER * wbt_tr,
-    WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri, BOOL has_ace, u8 poketype, u16 mmdl_id, u16 btl_tr_type )
+    WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri, u8 pow_rnd,
+    BOOL has_ace, u8 poketype, u16 mmdl_id, u16 btl_tr_type )
 {
   wbt_tr->wbt_tr_type = type;
   wbt_tr->tr_id = tr_id;
   wbt_tr->sex = sex;
   wbt_tr->pri = pri;
+  wbt_tr->pow_rnd = pow_rnd;
   wbt_tr->has_ace = has_ace;
   wbt_tr->poketype = poketype;
   wbt_tr->mmdl_id = mmdl_id;
@@ -381,7 +386,7 @@ static void WBTTRAINER_SetRomTrainer(
   WBTTOOL_GetRomTrainerData( wbtsys->rom_trdata, tr_id, &tr_rom_data );
   has_ace = tr_rom_data.ace_poke_id != 0 ? TRUE: FALSE;
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_ROM,
-      tr_id, tr_rom_data.sex, tr_rom_data.priority, has_ace, tr_rom_data.type,
+      tr_id, tr_rom_data.sex, tr_rom_data.priority, tr_rom_data.power_rnd, has_ace, tr_rom_data.type,
       tr_rom_data.mmdl_id, tr_rom_data.tr_type );
   WBTTOOL_GetRomTrainerName( heapID, tr_id, wbt_tr->name );
 }
@@ -410,7 +415,7 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
     btl_tr_type = TRTYPE_HEROINE;
   }
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_PLAYER,
-      0, sex, pri, FALSE, POKETYPE_NORMAL, mmdl_id, btl_tr_type );
+      0, sex, pri, 0, FALSE, POKETYPE_NORMAL, mmdl_id, btl_tr_type );
   MyStatus_CopyNameString( mystat, wbt_tr->name );
 }
 
@@ -446,7 +451,7 @@ static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
   mmdl_id = FBI_TOOL_GetTrainerOBJCode( trtype );
   sex = TT_TrainerTypeSexGet( trtype );
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_DL, dl_tr_id, sex,
-      pri, FALSE, POKETYPE_NORMAL, mmdl_id, trtype );
+      pri, 0, FALSE, POKETYPE_NORMAL, mmdl_id, trtype );
 
   GFL_STR_SetStringCodeOrderLength( wbt_tr->name, dl_char->name, SAVELEN_TRAINER_NAME );
   GFL_STR_SetStringCodeOrderLength( wbt_tr->title, dl_char->title, WBTDL_TRAINER_TITLE_LEN );
@@ -458,6 +463,12 @@ static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
 u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr )
 {
   return wbt_tr->pri;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u8 WBTTRAINER_GetPowerRnd( const WBTTRAINER * wbt_tr )
+{
+  return wbt_tr->pow_rnd;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -510,6 +521,7 @@ void WBTTRAINER_DEBUG_dump( const WBTTRAINER * wbt_tr )
 {
   TAMADA_Printf("  wbt_tr_type(%d)tr_id(%03d)sex(%d)pri(%d)poketype(%2d)",
       wbt_tr->wbt_tr_type, wbt_tr->tr_id, wbt_tr->sex, wbt_tr->pri, wbt_tr->poketype );
+  TAMADA_Printf("powrnd(%d)has_ace(%d)", wbt_tr->pow_rnd, wbt_tr->has_ace);
   TAMADA_Printf("mmdl_id(%04x)btl_tr_type(%03d)\n",
        wbt_tr->mmdl_id, wbt_tr->btl_tr_type );
 }
@@ -880,13 +892,16 @@ void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_data )
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 使用する自分のPOKEPARTYを取得する
+ */
 //------------------------------------------------------------------
 static POKEPARTY * getUsePokeParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 {
   POKEPARTY * party;
   if ( wbtsys->wbtcup == WBTCUP_RENTAL || wbtsys->wbtcup == WBTCUP_RENTALMASTER )
   {
-    party = wbtsys->my_party;
+    party = wbtsys->rental_party;
   }
   else
   {
@@ -969,7 +984,6 @@ void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
   POKEMON_PARAM * entry_pp;
   u32 cnt, max;
 
-  //entry_party = wbtsys->my_party;
   entry_party = PokeParty_AllocPartyWork( GFL_HEAP_LOWID(wbtsys->heapID) );
   PokeParty_InitWork( entry_party );
   base_party = getUsePokeParty( wbtsys, gamedata );

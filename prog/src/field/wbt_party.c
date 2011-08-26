@@ -5,8 +5,6 @@
  * @author  tamada GAMEFREAK inc.
  * @date  2011.08.20
  *
- * wbt_system.cから戦闘呼び出しに関わる部分を切り離した。
- * WBT_GIMMICKのオーバーレイに配置されるため、会場内のみでしか呼べないので注意
  */
 //============================================================================================
 
@@ -372,12 +370,19 @@ void WBTSYS_ChooseBSubwayData( u16 * index_array, WBT_NGPMINFO * ng_info,
     u16 use_poke_cnt, const u16 * use_poke_table,
     ARCID arc_id, u8 num, GFL_STD_RandContext * rand )
 {
+  u64 start;
+  u64 end;
+  POKECANDIDATE * pcan;
+
+  start = OS_GetTick();
   //候補ポケモンのリストを作成
-  POKECANDIDATE * pcan = POKECANDIDATE_Create( tempHeapID, arc_id, use_poke_cnt, use_poke_table );
+  pcan = POKECANDIDATE_Create( tempHeapID, arc_id, use_poke_cnt, use_poke_table );
 
   choiceBSubwayData( index_array, pcan, num, ng_info, rand, tempHeapID );
 
   POKECANDIDATE_Delete( pcan );
+  end = OS_GetTick();
+  TAMADA_Printf("Time To Choose:%8ld\n", end - start );
 }
 
 //------------------------------------------------------------------
@@ -387,18 +392,31 @@ void WBTSYS_ChooseBSubwayData( u16 * index_array, WBT_NGPMINFO * ng_info,
 static void WBTSYS_SetupRentalParty(
     WBTSYS * wbtsys, POKEPARTY * party, u32 tr_id, u8 pow_rnd, u8 num, const u16 * ng_mons_tbl )
 {
-enum {
-  DUMMY_LEVEL_VALUE = 50, //後でレベル調整するので何でもよい
-};
-  HEAPID tempHeapID = GFL_HEAP_LOWID( wbtsys->heapID );
-
-  int index_s = 1;
-  int index_e = 208;//バッフロン
-  int m_index_s = 209;
-  int m_index_e = 908;  //ケッキング
-
+  enum {
+    DUMMY_LEVEL_VALUE = 50, //後でレベル調整するので何でもよい
+  };
+  int index_s, index_e;
   u16 index_array[ TEMOTI_POKEMAX ];
   int i;
+
+  HEAPID tempHeapID = GFL_HEAP_LOWID( wbtsys->heapID );
+
+
+  //選出する範囲を決める
+  switch ( wbtsys->wbtcup ) 
+  {
+  default:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case WBTCUP_RENTAL:
+    index_s = 1;
+    index_e = 208;//バッフロン
+    break;
+  case WBTCUP_RENTALMASTER:
+    index_s = 209;
+    index_e = 908;  //ケッキング
+    break;
+  }
 
   { //バトルサブウェイデータから抽選するのに必要なパラメータを生成
     u16 use_poke_cnt;
@@ -449,6 +467,8 @@ enum {
  * @brief レンタルトーナメント用手持ちポケモン生成
  * @param[in]   wbtsys
  *
+ * @todo  パワー乱数の値をどう決定するのか？
+ *
  *  ここから手持ちを選択するため、6体生成する
  */
 //------------------------------------------------------------------
@@ -456,8 +476,9 @@ void WBTSYS_SetupMyRentalParty( WBTSYS * wbtsys, const MYSTATUS * mystatus, u16 
 {
   u32 tr_id = GFUser_GetPublicRand( 0 );
     
-  WBTSYS_SetupRentalParty( wbtsys, wbtsys->my_party, tr_id, 0x10, TEMOTI_POKEMAX, NULL );
+  WBTSYS_SetupRentalParty( wbtsys, wbtsys->rental_party, tr_id, 0x10, TEMOTI_POKEMAX, NULL );
 
+  //「ようすをみる」で正常に表示がされるように各種パラメータを上書きする
   {
     int i;
     HEAPID tempHeapID = GFL_HEAP_LOWID( wbtsys->heapID );
@@ -472,7 +493,7 @@ void WBTSYS_SetupMyRentalParty( WBTSYS * wbtsys, const MYSTATUS * mystatus, u16 
     }
     for(i = 0; i < TEMOTI_POKEMAX; i++)
     {
-      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( wbtsys->my_party, i );
+      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( wbtsys->rental_party, i );
       //自分が捕まえたようなポケメモをセット
       POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_SET_CAPTURE,
           mystatus, place_id, tempHeapID );
@@ -485,9 +506,10 @@ void WBTSYS_SetupMyRentalParty( WBTSYS * wbtsys, const MYSTATUS * mystatus, u16 
 
 //------------------------------------------------------------------
 /**
- * @brief レンタルトーナメント用対戦相手手持ちポケモン生成
+ * @brief レンタルトーナメント用対戦相手ポケモン生成
  * @param[in]   wbtsys
  *
+ * @todo  パワー乱数の値をどう決定するのか？
  */
 //------------------------------------------------------------------
 void WBTSYS_SetupEnemyRentalParty( WBTSYS * wbtsys )

@@ -87,7 +87,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 #%.bin: %.c
 #wbt_trainer.bin: wbt_trainer.dat
-wbt_trainer.bin: $(DATATXT) $(WBT_DEPENDS)
+wbt_trainer.bin: $(DATATXT) $(WBT_DEPENDS) wbt_trainer.rb
 	@ruby wbt_trainer.rb $(DATATXT) > wbt_trainer.cdat
 	@echo "WBT trainer parameter convert"
 	@echo "//" > temp.c

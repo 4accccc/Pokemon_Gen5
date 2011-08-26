@@ -63,6 +63,7 @@ struct _WBTTRAINER{
   u8 has_ace:1;     ///<切り札ポケモンを持っているか？
   u8 poketype;      ///<手持ちパーティのポケモンタイプ
   u8 tr_id;         ///<トレーナーID（wbt_tr_typeにより意味が変わる）
+  u8 pow_rnd;       ///<パワー乱数（ロムトレーナーのみ）
   u16 mmdl_id;      ///<動作モデルコード
   u16 btl_tr_type;  ///<トレーナータイプ（tr_tool/trtype_def.h)
   STRBUF * name;    ///<名前
@@ -168,8 +169,10 @@ struct _WBT_SYSTEM {
     u16 pokelist_result_select; ///<ポケモンリスト戻り値
     u16 pokelist_return_mode; ///<ポケモンリスト選択結果
   
-    POKEPARTY * my_party;
-    POKEPARTY * npc_party;
+    POKEPARTY * my_party;       ///<参戦する自分の手持ち
+    POKEPARTY * npc_party;      ///<参戦する相手の手持ち
+    POKEPARTY * rental_party;   ///<レンタルするパーティ
+
   //戦闘呼び出し関連
   BATTLE_SETUP_PARAM *btl_setup_param;
   STRBUF * win_msg;     ///<バトル内での勝利時メッセージ
