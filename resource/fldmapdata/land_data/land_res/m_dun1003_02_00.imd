@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-24T22:51:16" source="m_dun1003_02_00.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-25T17:18:02" source="m_dun1003_02_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-24T22:51:16" source="m_dun1003_02_00.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-25T17:18:02" source="m_dun1003_02_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -699,7 +699,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="2"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3151,7 +3151,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface13" kind="mesh"
+	<node index="0" name="polySurface22" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
