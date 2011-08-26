@@ -14,6 +14,9 @@
 #define BGM_FADEOUT_FRAME (6)
 #define BGM_FADEIN_FRAME  (60)
 
+#define BGM_TAG_FADE_IN   (60)
+#define BGM_TAG_FADE_OUT  (30)
+
 //--------------------------------------------------------------
 /**
  * レポート呼び出し
@@ -669,5 +672,18 @@
   
   _POP_WORK   SCWK_PARAM1
   _POP_WORK   SCWK_PARAM0
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _TRAINER_BGM_TAG_SET タッグトレーナー2人目専用BGMセット
+ *    ※内部でBGMをPOPしています
+ *  @param tr_id トレーナーID
+ */
+//--------------------------------------------------------------
+  .macro _ASM_TRAINER_BGM_TAG_SET tr_id
+  _ASM_BGM_POP BGM_TAG_FADE_OUT,BGM_TAG_FADE_IN
+  _ASM_TRAINER_BGM_SET \tr_id
   .endm
 

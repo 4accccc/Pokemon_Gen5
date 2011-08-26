@@ -1,6 +1,6 @@
 //======================================================================
 // trainer.ev
-// ../../trdata/trno_def.hを元にコンバートしています
+// ../../../prog/include/tr_tool/trno_def.hを元にコンバートしています
 //  ●コンバート実行
 //    trainer(.bat)
 //  ●更新されるファイル
@@ -1415,7 +1415,7 @@ ev_TRID_RANGERW_29:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
-// ./scr_trainer/trainer_base.ev
+// scr_trainer/trainer_base.ev
 //----------------------------------------------------------------------
 
   DEFINE_LOCAL  LWK_TRAINERID
@@ -1813,7 +1813,8 @@ ev_trainer_type_tag:
   _BALLOONWIN_CLOSE()
 
   //視線曲セット
-  _TRAINER_BGM_SET( LWK_TRID_02 )
+  //※タッグで2人目専用です。（内部でBGMをPOPしています）
+  _TRAINER_BGM_TAG_SET( LWK_TRID_02 )
 
   _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_1 )        //トレーナー移動処理呼び出し
   _EYE_TRAINER_MOVE()                          //移動終了待ち
