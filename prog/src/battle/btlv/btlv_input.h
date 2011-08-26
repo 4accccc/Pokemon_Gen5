@@ -220,7 +220,7 @@ static inline BOOL BTLV_INPUT_CheckWazaInfoModeMask( int* hit_pos )
 
 extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                            PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
-                                           BtlMultiMode multiMode, int pokewood, HEAPID heapID );
+                                           BtlMultiMode multiMode, int pokewood, int audienceNum, HEAPID heapID );
 extern  BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd,
                                              GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
 extern  void              BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
@@ -239,4 +239,6 @@ extern  BOOL              BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw );
 extern  BOOL              BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int* select );
 extern  BOOL              BTLV_INPUT_CheckExecute( BTLV_INPUT_WORK* biw );
 extern  BTLV_INPUT_SCRTYPE  BTLV_INPUT_GetScrType( BTLV_INPUT_WORK* biw );
+extern  void              BTLV_INPUT_SetAudienceCondition( BTLV_INPUT_WORK *biw, const BOOL bflg, const s32 num, const s32 mode );
+extern  u32               BTLV_INPUT_GetAudienceBit( BTLV_INPUT_WORK *biw );
 

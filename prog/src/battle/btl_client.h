@@ -109,6 +109,8 @@ extern const BTL_PARTY* BTL_CLIENT_GetParty( const BTL_CLIENT* client );
 extern BtlWeather BTL_CLIENT_GetWeather( const BTL_CLIENT* client );
 extern BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client );
 extern u8 BTL_CLIENT_GetShooterEnergy( const BTL_CLIENT* client );
+extern int BTL_CLINET_GetAudienceNum( const BTL_CLIENT *client );
+
 
 extern const void* BTL_CLIENT_GetRecordData( BTL_CLIENT* wk, u32* size );
 extern void BTL_CLIENT_SetRecordPlayerMode( BTL_CLIENT* wk, BTL_RECREADER* recReader );

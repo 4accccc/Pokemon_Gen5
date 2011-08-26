@@ -51,6 +51,8 @@
 
 #include "debug/debug_hudson.h"
 
+#include "msg/msg_pw_director_oldman.h"
+
 enum {
   PRINT_FLG = FALSE,
 };
@@ -66,6 +68,8 @@ enum {
   EMPTY_POS_NONE = -1,
 
   CLIENT_FLDEFF_BITFLAG_SIZE = BTL_CALC_BITFLAG_BUFSIZE( BTL_FLDEFF_MAX ) + 1,
+
+  POKEWOOD_AUDIENCE_MAX = 22, //下画面観客の最大数
 };
 
 
@@ -87,6 +91,21 @@ enum {
   RECPLAY_TIMEOVER_NONE = 0,  ///< 検出なし
   RECPLAY_TIMEOVER_IDLE,      ///< 検出後、描画クライアントではないのでアイドル状態
   RECPLAY_TIMEOVER_QUIT,      ///< 検出後、描画クライアントなので終了リクエスト
+};
+
+/**
+ *  観客リアクションの定義
+ */
+enum {
+  POKEWOOD_AUDIENCE_NOMOVE,   ///< 無反応(座っている）
+  POKEWOOD_AUDIENCE_JOY,      ///< 喜び
+  POKEWOOD_AUDIENCE_CRY,      ///< 泣き
+  POKEWOOD_AUDIENCE_DOKIDOKI, ///< ドキドキ
+  POKEWOOD_AUDIENCE_LAUGH,    ///< 笑い
+  POKEWOOD_AUDIENCE_HATE,     ///< ？
+  POKEWOOD_AUDIENCE_SLEEP,    ///< 寝る
+  POKEWOOD_AUDIENCE_SURPRISE, ///< 驚き
+  POKEWOOD_AUDIENCE_CLAP,     ///< 拍手
 };
 
 /*--------------------------------------------------------------------------*/
@@ -143,8 +162,19 @@ typedef struct{
   u8  pokemon_count;    // ポケモン繰り出し回数
   u8  ending_no;        // エンディングNO
   u8  serif_count;      // 選択肢回数
+
+  int director_msg;     // 0の場合はランダム。選択肢の後は3分岐の番号が入る(GOOD,NORMAL,BAD)
+  
   int estimate;         // 最終評価数値
+  
 }POKEWOOD_ESTIMATE_WORK;
+
+typedef struct{
+  u16  account;                         // 席に座った人数
+  u16  etc;
+  u32  on_off;                          // 観客表示のON/OFFのbitデータ
+  u16  timer[POKEWOOD_AUDIENCE_MAX];    // 変更した観客意志表示の持続時間
+}POKEWOOD_AUDIENCE_WORK;
 
 typedef struct{
   u8   seq, next_seq; ///<  ポケウッドシーケンス管理用
@@ -161,6 +191,7 @@ typedef struct{
   STRBUF *choice_str[EVENT_REACTION_MAX]; ///< 選択肢文字列
 
   POKEWOOD_ESTIMATE_WORK Estimate;  ///< ポケウッド評価計算用ワーク
+  POKEWOOD_AUDIENCE_WORK Audience;  ///< 観客操作ワーク
 }POKEWOOD_SEQ_WORK;
 
 /*--------------------------------------------------------------------------*/
@@ -269,6 +300,7 @@ struct _BTL_CLIENT {
   BtlPokePos  myChangePokePos[ BTL_POSIDX_MAX ];
 
   POKEWOOD_SEQ_WORK pokewoodSeqWork;     ///< ポケウッド管理用ワーク
+  u8                commonWait;
 
   #ifdef PM_DEBUG
   const BTL_CLIENT* viewOldClient;
@@ -515,11 +547,12 @@ static void AICtrl_Init( void );
 static void AICtrl_Delegate( BTL_CLIENT* wk );
 static void aictrl_RestoreViewClient( BTL_CLIENT* wk );
 static BOOL AICtrl_IsMyFase( BTL_CLIENT* wk );
-static void AddStarPokePoint( POKEWOOD_SEQ_WORK *psw, const BTL_PARTY *party);
+static void AddStarPokePoint( BTL_CLIENT *wk, POKEWOOD_SEQ_WORK *psw, const BTL_PARTY *party);
 static void SetEndturnPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew );
 static void AddSerifPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew, int event_no, int select );
 static void SetEndingPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew, int ending_no );
-static int CalcPokewoodEstimate( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew );
+static int  CalcPokewoodEstimate( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew );
+static void AudienceFunc( BTL_CLIENT *wk );
 
 
 static int ChangeEventStageCondition( POKEWOOD_SENARIO *senario, BTL_CLIENT *wk );
@@ -629,13 +662,26 @@ BTL_CLIENT* BTL_CLIENT_Create(
     wk->AITrainerMsgCheckedFlag[ i ] = FALSE;
   }
 
-  if( (wk->myType == BTL_CLIENT_TYPE_UI)
-  &&  (BTL_MAIN_IsRecordEnable(wk->mainModule))
-  ){
+  // バトルレコーダーかポケウッドの処理
+  {
     int pokewood = BTL_MAIN_GetPokewoodMode(wk->mainModule);
-    wk->btlRec = BTL_REC_Create( heapID, pokewood );
-  }else{
-    wk->btlRec = NULL;
+
+    // 撮影バトルか？
+    if( (wk->myType == BTL_CLIENT_TYPE_UI)
+    &&  (BTL_MAIN_IsRecordEnable(wk->mainModule))
+    ){
+      wk->btlRec = BTL_REC_Create( heapID, pokewood );
+    }else{
+      wk->btlRec = NULL;
+    }
+    
+    // 上映か？
+    if(pokewood==BTL_POKEWOOD_SHOW){
+      BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
+      wk->pokewoodSeqWork.Audience.account = bsp->audience_num;
+      GF_ASSERT_MSG( bsp->audience_num, "上映なのに観客が0\n" );
+    }
+
   }
 
   #ifdef PM_DEBUG
@@ -1008,6 +1054,10 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
   case SEQ_QUIT:
     return TRUE;
   }
+
+  // ポケウッド上映用観客管理
+  AudienceFunc( wk );
+
   return FALSE;
 }
 /**
@@ -1263,7 +1313,6 @@ BOOL BTL_CLIENT_IsRecPlayBufOver( const BTL_CLIENT* wk )
 //------------------------------------------------------------------------------------------------------
 
 
-
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
@@ -1295,8 +1344,11 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
       {
         BTLV_RecPlayer_StartSkip( wk->viewCore, RecPlayer_GetNextTurn(&wk->recPlayer) );
       }
-      // スターポケモン登場得点を計上
-      AddStarPokePoint( &wk->pokewoodSeqWork, wk->myParty);
+
+      // 観客のON・OFF状態を取得
+      wk->pokewoodSeqWork.Audience.on_off = BTLV_CORE_GetGetAudienceBit( wk->viewCore );
+      // スターポケモン登場得点を計上(初期メンバー登場)
+      AddStarPokePoint( wk, &wk->pokewoodSeqWork, wk->myParty);
       
       return TRUE;
     }
@@ -1576,13 +1628,16 @@ static BOOL ClientSubProc_Call( BTL_CLIENT* wk )
 
 enum{
   SELECT_ACT_SEQ_START=0,
-  SELECT_ACT_SEQ_POKEWOOD_EVENT,  // 選択前イベント
-  SELECT_ACT_SEQ_POKEWOOD_VFX,    // 背景等特殊エフェクト
-  SELECT_ACT_SEQ_TURN_BAR_ANIME,  // ターン告知アニメ開始
+  SELECT_ACT_SEQ_POKEWOOD_EVENT,      // 選択前イベント
+  SELECT_ACT_SEQ_POKEWOOD_VFX,        // 背景等特殊エフェクト
+  SELECT_ACT_SEQ_TURN_BAR_ANIME,      // ターン告知アニメ開始
   SELECT_ACT_SEQ_TURN_BAR_ANIME_WAIT, // ターン告知アニメ終了待ち
-  SELECT_ACT_SEQ_SELECT_START,    // バトル選択開始
-  SELECT_ACT_SEQ_SELECT_WAIT,     // バトル選択待ち
-  SELECT_ACT_SEQ_POKEWOOD,        // 選択後ターン毎イベント
+  SELECT_ACT_SEQ_DIRECTOR_MSG,        // 監督メッセージ
+  SELECT_ACT_SEQ_DIRECTOR_MSG_WAIT,   // 監督メッセージ待ち
+  SELECT_ACT_SEQ_DIRECTOR_1SEC_WAIT,
+  SELECT_ACT_SEQ_SELECT_START,        // バトル選択開始
+  SELECT_ACT_SEQ_SELECT_WAIT,         // バトル選択待ち
+  SELECT_ACT_SEQ_POKEWOOD,            // 選択後ターン毎イベント
 };
 
 static BOOL SubSeq_POKEWOOD_Sequence( BTL_CLIENT *wk );
@@ -1595,6 +1650,58 @@ static int _get_player_client_seq(void)
   return playerClientSeq;
 }
 
+
+#define PW_DIRECTOR_RAND_MSG_MAX    (  6 )
+#define PW_DIRECTOR_1RANK_MSG_MAX   ( 13 )
+
+static const u8 rank_tbl[]={ 1,1,1,2,3 };
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	監督メッセージ取得
+ *
+ * @param   wk		
+ *
+ * @retval  int		
+ */
+//----------------------------------------------------------------------------------
+static int _get_director_msg( BTL_CLIENT *wk )
+{
+  int result,rank=0;
+  const BATTLE_SETUP_PARAM *bsp   = BTL_MAIN_GetBSPConst( wk->mainModule );
+  POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
+  
+  switch(wk->pokewoodSeqWork.Estimate.director_msg){
+  case 1: case 2: case 3:   //選択肢後メッセージ
+    result = (pw_director_msg_0_select_good+wk->pokewoodSeqWork.Estimate.director_msg-1)+PW_DIRECTOR_1RANK_MSG_MAX*rank;
+    wk->pokewoodSeqWork.Estimate.director_msg = 0; // クリア
+    break;
+  default:     // ランダムメッセージ
+    rank = bsp->player_star_rank;
+
+    // ターン超過していたら超過メッセージ
+    if(wk->clientTurnCount > senario->best_turn){
+      result = pw_director_0_delay + PW_DIRECTOR_1RANK_MSG_MAX*rank;
+    // 超過していなかったらランダムメッセージ
+    }else{
+      result = GFUser_GetPublicRand(PW_DIRECTOR_RAND_MSG_MAX) + PW_DIRECTOR_1RANK_MSG_MAX*rank;
+    }
+  }
+  return result;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	監督メッセージ予約
+ *
+ * @param   wk		
+ * @param   msgno		
+ */
+//----------------------------------------------------------------------------------
+static void _set_director_msg_reserve( BTL_CLIENT *wk, int msgno )
+{
+  wk->pokewoodSeqWork.Estimate.director_msg = msgno;
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -1671,9 +1778,28 @@ static BOOL UI_SelectActionPokewoodRec( BTL_CLIENT *wk, int *seq )
     break;
   case SELECT_ACT_SEQ_TURN_BAR_ANIME_WAIT:
     if( !BTLC_CORE_CheckRecTurnBarEnd( wk->viewCore )){
-      (*seq) = SELECT_ACT_SEQ_SELECT_START;
+      (*seq) = SELECT_ACT_SEQ_DIRECTOR_MSG;
     }
     
+    break;
+  case SELECT_ACT_SEQ_DIRECTOR_MSG:
+    {
+      int msgno = _get_director_msg( wk );
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_DIRECTOR, msgno );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+    }
+    (*seq) = SELECT_ACT_SEQ_DIRECTOR_MSG_WAIT;
+    break;
+  case SELECT_ACT_SEQ_DIRECTOR_MSG_WAIT:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      (*seq) = SELECT_ACT_SEQ_DIRECTOR_1SEC_WAIT;
+      wk->commonWait = 30;
+    }
+    break;
+  case SELECT_ACT_SEQ_DIRECTOR_1SEC_WAIT:
+    if(--wk->commonWait==0){
+      (*seq) = SELECT_ACT_SEQ_SELECT_START;
+    }
     break;
   case SELECT_ACT_SEQ_SELECT_START:         // さまざまな選択肢処理
     {
@@ -2293,7 +2419,6 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
       // 選択肢内容の反映と背景VFX起動チェック
       wk->pokewoodSeqWork.choice = _get_pokewood_choice( wk, &wk->pokewoodSeqWork ); 
       wk->pokewoodSeqWork.flagwork[0] = wk->pokewoodSeqWork.choice+1;
-      AddSerifPoint( wk, &wk->pokewoodSeqWork.Estimate, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
       _check_choice2vfx( senario, &wk->pokewoodSeqWork );
       wk->pokewoodSeqWork.seq++;
     }
@@ -2304,6 +2429,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
     POKEWOOD_CUTIN_Main( p_cutin );
     if( POKEWOOD_CUTIN_IsEnd( p_cutin ) )
     {
+      AddSerifPoint( wk, &wk->pokewoodSeqWork.Estimate, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
       wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_CUTIN_CLEANUP;
     }
     break;
@@ -2611,16 +2737,26 @@ static BOOL SubSeq_POKEWOOD_RecEnd_Sequence( BTL_CLIENT *wk )
   switch(wk->pokewoodSeqWork.seq){
   case PWEND_REC_SEQ_INIT:
     {
+      const BATTLE_SETUP_PARAM *bsp   = BTL_MAIN_GetBSPConst( wk->mainModule );
       POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
       BtlResult resultCode = expandServerResult( wk );
       if(resultCode==BTL_RESULT_WIN){     // 条件を達成
-        wk->pokewoodSeqWork.my_msg    = senario->situation_msg[0][2];
-        wk->pokewoodSeqWork.enemy_msg = senario->situation_msg[1][2];
+        wk->pokewoodSeqWork.my_msg = pw_director_0_GOODEND + PW_DIRECTOR_1RANK_MSG_MAX*rank_tbl[bsp->player_star_rank];
+//        wk->pokewoodSeqWork.my_msg    = senario->situation_msg[0][2];
+//        wk->pokewoodSeqWork.enemy_msg = senario->situation_msg[1][2];
         wk->clientTurnCount=100;
       }else{                              // 条件を未達成
-        wk->pokewoodSeqWork.my_msg    = senario->situation_msg[0][3];
-        wk->pokewoodSeqWork.enemy_msg = senario->situation_msg[1][3];
-        wk->clientTurnCount=101;
+        int event_no;
+        wk->clientTurnCount=101;  // 失敗イベント発動
+
+        event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount);
+        if(senario->event[event_no].point<0){
+          wk->pokewoodSeqWork.my_msg = pw_director_0_BADEND + PW_DIRECTOR_1RANK_MSG_MAX*rank_tbl[bsp->player_star_rank];
+        }else{
+          wk->pokewoodSeqWork.my_msg = pw_director_0_STRANGEEND + PW_DIRECTOR_1RANK_MSG_MAX*rank_tbl[bsp->player_star_rank];
+        }
+//        wk->pokewoodSeqWork.my_msg    = senario->situation_msg[0][3];
+//        wk->pokewoodSeqWork.enemy_msg = senario->situation_msg[1][3];
       }
     }
     wk->pokewoodSeqWork.seq =PWEND_REC_SEQ_CLAPPER_BOARD;
@@ -2639,14 +2775,14 @@ static BOOL SubSeq_POKEWOOD_RecEnd_Sequence( BTL_CLIENT *wk )
     break;
   case PWEND_REC_SEQ_MY_MSG:
     if(wk->pokewoodSeqWork.my_msg>=0){
-      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, wk->pokewoodSeqWork.my_msg);
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_DIRECTOR, wk->pokewoodSeqWork.my_msg);
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
-      _set_next_seq(&wk->pokewoodSeqWork, PWEND_REC_SEQ_MSG_WAIT, PWEND_REC_SEQ_ENEMY_MSG);
+      _set_next_seq(&wk->pokewoodSeqWork, PWEND_REC_SEQ_MSG_WAIT, PWEND_REC_SEQ_END);
     }else{
       wk->pokewoodSeqWork.seq = PWEND_REC_SEQ_ENEMY_MSG;
     }
     break;
-  case PWEND_REC_SEQ_ENEMY_MSG:
+  case PWEND_REC_SEQ_ENEMY_MSG:   //未使用
     if(wk->pokewoodSeqWork.enemy_msg>=0){
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, wk->pokewoodSeqWork.enemy_msg);
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
@@ -7441,7 +7577,7 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
       EnemyPokeHPBase_Update( wk );
       if(clientID==BTL_MAIN_GetPlayerClientID(wk->mainModule)){
         // スターポケモン登場得点を計上
-        AddStarPokePoint( &wk->pokewoodSeqWork, wk->myParty );
+        AddStarPokePoint( wk, &wk->pokewoodSeqWork, wk->myParty );
       }
       return TRUE;
     }
@@ -9937,6 +10073,12 @@ BtlWeather BTL_CLIENT_GetWeather( const BTL_CLIENT* client )
   return BTL_FIELDSIM_GetWeather( client->fldSim );
 }
 
+int BTL_CLINET_GetAudienceNum( const BTL_CLIENT *client )
+{
+  OS_TFPrintf(1,"*********************************** audience=%d\n",client->pokewoodSeqWork.Audience.account);
+  return client->pokewoodSeqWork.Audience.account;
+}
+
 //=============================================================================================
 /**
  * 現在、行動選択処理中のポケモン位置IDを取得
@@ -10391,18 +10533,58 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客の感情設定
+ *
+ * @param   viewCore		BTLV_CORE
+ * @param   psw		POKEWOOD_SEQ_WORK
+ * @param   type	POKEWOOD_AUDIENCE_JOYなど
+ */
+//----------------------------------------------------------------------------------
+static void _set_audience_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw, int type )
+{
+  int i;
+  for(i=0;i<POKEWOOD_AUDIENCE_MAX;i++){
+    if((psw->Audience.on_off>>i)&1){
+      BTLV_CORE_SetAudienceCondition( viewCore, TRUE, i, type );
+      psw->Audience.timer[i] = GFUser_GetPublicRand( 300 )+400;
+    }
+  }
 
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ランクが1以上なら観客を「喜び」に
+ *
+ * @param   wk		
+ * @param   psw		
+ * @param   rank		
+ */
+//----------------------------------------------------------------------------------
+static void _set_audience_star_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw, int rank )
+{
+  int i;
+
+  // ランクが１以上なら
+  if(rank==0){
+    return ;
+  }
+  _set_audience_reaction( viewCore, psw, POKEWOOD_AUDIENCE_JOY );
+}
 
 //----------------------------------------------------------------------------------
 /**
  * @brief	スターポケモン登場点数を計上
  *
+ * @param   BTL_CLIENT
  * @param   POKEWOOD_SEQ_WORK
  * @param   BTL_PARTY
  */
 //----------------------------------------------------------------------------------
 static const u8 starrank2point[]={ 0,1,5,10,15 };
-static void AddStarPokePoint( POKEWOOD_SEQ_WORK *psw, const BTL_PARTY *party)
+static void AddStarPokePoint( BTL_CLIENT *wk, POKEWOOD_SEQ_WORK *psw, const BTL_PARTY *party)
 {
   const BTL_POKEPARAM *bpp = BTL_PARTY_GetMemberDataConst( party, 0 );
   const POKEMON_PARAM *pp  = BPP_GetSrcData( bpp );
@@ -10415,6 +10597,10 @@ static void AddStarPokePoint( POKEWOOD_SEQ_WORK *psw, const BTL_PARTY *party)
   psw->Estimate.estimate += starrank2point[rank];
   
   psw->Estimate.pokemon_count++;
+  
+  // 観客リアクションも設定する
+  _set_audience_star_reaction( wk->viewCore, &wk->pokewoodSeqWork, rank );
+
   OS_TFPrintf(1,"monsno=%d, star=%d, 合計star=%d\n", monsno, star,psw->Estimate.estimate );
 
 }
@@ -10466,6 +10652,19 @@ static void SetEndturnPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew )
   OS_TFPrintf(1,"endturn=%d, endturn_point=%d\n", pew->endturn, pew->endturn_point );
 }
 
+
+//----------------------------------------------------------------------------------
+// イベント傾向と選択肢ポイントで決定される観客の感情テーブル
+//----------------------------------------------------------------------------------
+static const bias2select[][3]={
+  /*        プラス評価             マイナス評価                無評価       */
+  { POKEWOOD_AUDIENCE_CRY,      POKEWOOD_AUDIENCE_HATE,   POKEWOOD_AUDIENCE_NOMOVE },    // 感動
+  { POKEWOOD_AUDIENCE_DOKIDOKI, POKEWOOD_AUDIENCE_SLEEP,  POKEWOOD_AUDIENCE_NOMOVE },    // 恐怖
+  { POKEWOOD_AUDIENCE_LAUGH,    POKEWOOD_AUDIENCE_SLEEP,  POKEWOOD_AUDIENCE_NOMOVE },    // 楽しい
+  { POKEWOOD_AUDIENCE_LAUGH,    POKEWOOD_AUDIENCE_HATE,   POKEWOOD_AUDIENCE_NOMOVE },    // 痛快
+  { POKEWOOD_AUDIENCE_DOKIDOKI, POKEWOOD_AUDIENCE_SLEEP,  POKEWOOD_AUDIENCE_NOMOVE },    // シリアス
+};
+
 //----------------------------------------------------------------------------------
 /**
  * @brief	セリフ選択時のポイント追加
@@ -10479,9 +10678,26 @@ static void SetEndturnPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew )
 static void AddSerifPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew, int event_no, int select )
 {
   POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
+  int point  = senario->event[event_no].reaction[select].reaction_point;
+  int emotion = POKEWOOD_AUDIENCE_NOMOVE;
 
-  pew->serif_point += senario->event[event_no].reaction[select].reaction_point;
+  pew->serif_point += point;
   pew->serif_count++;
+
+  // セリフポイントで観客制御
+  if(point>0){
+    emotion = bias2select[senario->event[event_no].bias][0];
+    _set_director_msg_reserve( wk, 1 ); // 監督セリフセット:良い
+  }else if(point<0){
+    emotion = bias2select[senario->event[event_no].bias][1];
+    _set_director_msg_reserve( wk, 3 ); // 監督セリフセット:悪い
+  }else{  // point=0
+    emotion = bias2select[senario->event[event_no].bias][2];
+    _set_director_msg_reserve( wk, 2 ); // 監督セリフセット:普通
+  }
+  _set_audience_reaction( wk->viewCore, &wk->pokewoodSeqWork, emotion );
+  
+  
 
   OS_TFPrintf(1,"serif:select=%d, serif_point=%d\n", select, pew->serif_point );
 
@@ -10522,6 +10738,29 @@ static int CalcPokewoodEstimate( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew )
   OS_TFPrintf(1,"total pokewood estimate=%d\n", pew->estimate );
 
   return pew->estimate;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客動作管理メイン
+ *
+ * @param   wk		
+ *
+ *  怒り、喜びなどの設定したあとタイマーで元に戻します
+ */
+//----------------------------------------------------------------------------------
+static void AudienceFunc( BTL_CLIENT *wk )
+{
+  int i;
+  
+  for(i=0;i<POKEWOOD_AUDIENCE_MAX;i++){
+    if(wk->pokewoodSeqWork.Audience.timer[i]!=0){
+      wk->pokewoodSeqWork.Audience.timer[i]--;
+      if(wk->pokewoodSeqWork.Audience.timer[i]==0){
+        BTLV_CORE_SetAudienceCondition( wk->viewCore, TRUE, i, POKEWOOD_AUDIENCE_NOMOVE );
+      }
+    }
+  }
 }
 
 

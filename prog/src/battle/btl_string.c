@@ -84,6 +84,7 @@ typedef enum {
   MSGSRC_SUBWAY,
   MSGSRC_WBT,
   MSGSRC_POKEWOOD,
+  MSGSRC_DIRECTOR,
 
   MSGDATA_MAX,
 }MsgSrcID;
@@ -142,7 +143,16 @@ static void ms_wazaoboe_simple( STRBUF* dst, BtlStrID_WAZAOBOE strID, const int*
 static void ms_yesno_simple( STRBUF* dst, BtlStrID_WAZAOBOE strID, const int* args );
 
 
-
+//==========================================================================
+// 監督メッセージテーブル
+//==========================================================================
+static const u32 director_msg_tbl[]={
+	NARC_message_pw_director_oldman_dat,
+	NARC_message_pw_director_sunglasses_dat,
+	NARC_message_pw_director_middleman2_dat,
+	NARC_message_pw_director_gentleman_dat,
+	NARC_message_pw_director_adultw_dat,
+};
 
 //=============================================================================================
 /**
@@ -165,7 +175,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
     NARC_message_yesnomenu_dat,
     NARC_message_tower_trainer_dat,
     NARC_message_wbt_trmsg_dat,
-    // ポケウッドの分がMSGDATA_MAXから一つ足りません
+    // ポケウッドの分がMSGDATA_MAXから2つ足りません
   };
   int i;
   int pokewood = BTL_MAIN_GetPokewoodMode(mainModule);
@@ -182,7 +192,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
   SysWork.tmpBuf = GFL_STR_CreateBuffer( TMP_STRBUF_SIZE, heapID );
 
   // 指定のメッセージデータを読み込み
-  for(i=0; i<MSGDATA_MAX-1; i++)
+  for(i=0; i<MSGSRC_POKEWOOD; i++)
   {
     int msgid = msgDataID[i];
     if(pokewood==BTL_POKEWOOD_REC && msgid==NARC_message_btl_std_dat){  // POKEWOOD撮影の場合はbtl_pw_strに切り替える
@@ -193,16 +203,22 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
 
   // ポケウッド専用文字列を読み込む
   if(pokewood!=BTL_POKEWOOD_NONE){
-
+    POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( mainModule );
     const MYSTATUS*cp_mystatus = BTL_MAIN_GetPlayerStatus( mainModule );
     u8 sex_ofs = (MyStatus_GetMySex(cp_mystatus) == PM_MALE? 1: 0);
 
     OS_Printf("pokewood_senario sex=%d\n", sex_ofs);
 
     // ポケウッド用メッセージデータはシナリオＮＯで読みかえる
-    SysWork.msg[MSGDATA_MAX-1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+    SysWork.msg[MSGSRC_POKEWOOD] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                  NARC_message_pokewood_senario01_f_dat+BTL_MAIN_GetPokewoodSenarioNo(mainModule)*2+sex_ofs, 
                                  heapID );
+    if(pokewood==BTL_POKEWOOD_REC){
+      // ポケウッド監督メッセージデータはシナリオ毎の指定で変える
+      SysWork.msg[MSGSRC_DIRECTOR] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                                     director_msg_tbl[senario->director], heapID );
+      OS_Printf("director_no = %d\n",senario->director);
+    }
   }
 }
 
@@ -1147,6 +1163,22 @@ void BTL_STR_MakeString_Pokewood_Param( STRBUF *dst, int msgid )
 
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 
+}
+
+//=============================================================================================
+/**
+ * @brief	ポケウッド監督メッセージ文字列生成
+ *
+ * @param   dst		
+ * @param   msgid	
+ */
+//=============================================================================================
+void BTL_STR_MakeString_Director_Param( STRBUF *dst, int msgid )
+{
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_DIRECTOR], msgid, SysWork.tmpBuf );
+
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+  
 }
 
 //=============================================================================================

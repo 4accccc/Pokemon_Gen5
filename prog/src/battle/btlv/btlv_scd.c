@@ -128,6 +128,7 @@ struct _BTLV_SCD {
   u8                fForceQuitDoing : 1;
 
   u8                yesno_seq;
+  u8                audienceNum;   // ポケウッド上映時の観客数（他は0）
   int               yesno_result;
 
   BtlAction  selActionResult;
@@ -212,6 +213,8 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   wk->shooterEnergy = 0;
   wk->forceQuitSeq = 0;
   wk->fForceQuitDoing = FALSE;
+  wk->audienceNum = BTL_CLINET_GetAudienceNum( client );
+
 
   // ゲームデータにカーソルモードを保存しておくように変更した
   // よって、そのデータを取得して、cursor_flagに設定する ichiraku
@@ -247,6 +250,7 @@ void BTLV_SCD_Init( BTLV_SCD* wk )
                              BTLV_EFFECT_GetPfd(), wk->font, &wk->cursor_flag, wk->bagMode, 
                              BTL_MAIN_GetMultiMode(wk->mainModule),
                              BTL_MAIN_GetPokewoodMode( wk->mainModule ),
+                             wk->audienceNum,
                              wk->heapID );
 
   ///<obj
@@ -1600,3 +1604,35 @@ int BTLV_SCD_CheckRecPlayerInput( BTLV_SCD* wk )
   return BTLV_INPUT_CheckInput( wk->biw, &BattleRecorderTouchData, BattleRecorderKeyData );
 }
 
+
+//=============================================================================================
+//  ポケウッド
+//=============================================================================================
+//=============================================================================================
+/**
+ * @brief	【ポケウッド上映のみ動作】観客の状態変更
+ *
+ * @param   wk		BTLV_SCD
+ * @param   bflg	TRUE:観客表示 FALSE:観客非表示
+ * @param   num		指定ナンバー
+ * @param   mode	変更モード(
+ */
+//=============================================================================================
+void BTLV_SCD_SetAudienceCondition( BTLV_SCD *wk, const BOOL bflg, const s32 num, const s32 mode )
+{
+  BTLV_INPUT_SetAudienceCondition( wk->biw, bflg, num, mode );
+}
+
+//=============================================================================================
+/**
+ * @brief	観客ON/OFFフラグを返す(本体はbtlv_input.c)
+ *
+ * @param   biw		BTLV_INPUT_WORK
+ *
+ * @retval  u32		観客のON/OFF状態がbitで格納されたワーク
+ */
+//=============================================================================================
+u32 BTLV_SCD_GetAudienceBit( BTLV_SCD *wk )
+{
+  return BTLV_INPUT_GetAudienceBit( wk->biw );
+}

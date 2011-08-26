@@ -649,7 +649,9 @@ struct _BTLV_INPUT_WORK
   u16                   bag_pal[ 0x10 ];    //バッグボタンパレットを退避しておく
   BtlMultiMode          multiMode;          // 複数人数接続かどうか(BtlMultiModeを参照）
   u8                    pokewood;           // ポケウッドフラグ（0=なし, 1=撮影, 2=上映）
-  u8                    etc[2];
+  u8                    audienceNum;        // ポケウッド上映時の観客数
+  u8                    etc;                // 未使用
+  u32                   audienceBit;        // ２２席の「どこに」ポケウッド観客が座っているかbitで表現
 
   //ローテーション用POKEMON_PARAM
 #ifdef ROTATION_NEW_SYSTEM
@@ -782,7 +784,8 @@ typedef struct
 //============================================================================================
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                                PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
-                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood, HEAPID heapID );
+                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood,
+                                               int audienceNum, HEAPID heapID );
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work );
@@ -875,7 +878,6 @@ static  void  BTLV_INPUT_CreateAudienceObj( BTLV_INPUT_WORK *biw );
 static  void  BTLV_INPUT_DeleteAudienceObj( BTLV_INPUT_WORK* biw );
 //
 static  void  btlv_init_audience_disp( BTLV_INPUT_WORK *biw );
-static  void  btlv_set_audience( BTLV_INPUT_WORK *biw, const BOOL bflg, const s32 num, const s32 mode );
 static  void  debug_btlv_audience( BTLV_INPUT_WORK* biw );
 
 static  void  SePlayOpen( BTLV_INPUT_WORK* biw );
@@ -912,7 +914,7 @@ static  void  debug_timer_edit_check( BTLV_INPUT_WORK* biw );
 BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
   return BTLV_INPUT_InitCore( gameData, type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, 
-                              BBAG_MODE_NORMAL, FALSE, BTL_MULTIMODE_NONE, 0, heapID );
+                              BBAG_MODE_NORMAL, FALSE, BTL_MULTIMODE_NONE, 0, 0, heapID );
 }
 
 //============================================================================================
@@ -927,6 +929,8 @@ BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, P
  *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
  *  @param[in]  bagMdoe       バッグモード
  *  @param[in]  multiMode     マルチ対戦の状態を表す（BtlMultiMode=BTL_MULTIMODE_NONE,BTL_MULTIMODE_PP_AAなど）
+ *  @param[in]  pokewood      ポケウッドか？(battle.h参照）
+ *  @param[in]  audienceNum   ポケウッド上映の際の観客数（それ以外は常に0)
  *  @param[in]  heapID        ヒープID
  *
  *  @retval システム管理構造体のポインタ
@@ -934,10 +938,10 @@ BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, P
 //============================================================================================
 BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp, 
                                    PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode, 
-                                   BtlMultiMode multiMode, int pokewood, HEAPID heapID )
+                                   BtlMultiMode multiMode, int pokewood, int audienceNum, HEAPID heapID )
 {
   return BTLV_INPUT_InitCore( gameData, type, comp, pfd, font, cursor_flag, bagMode, TRUE, 
-                              multiMode, pokewood, heapID );
+                              multiMode, pokewood, audienceNum, heapID );
 }
 
 //============================================================================================
@@ -953,6 +957,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, Btl
  *  @param[in]  bagMdoe       バッグモード
  *  @param[in]  multiMode     マルチ対戦の状態を表す（BtlMultiModeはbattle.hに定義）
  *  @param[in]  pokewood      ポケウッドモードを表す（battle.hに定義）
+ *  @param[in]  audienceNum   ポケウッド上映時の観客数
  *  @param[in]  heapID        ヒープID
  *
  *  @retval システム管理構造体のポインタ
@@ -960,7 +965,8 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, Btl
 //============================================================================================
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                                PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
-                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood, HEAPID heapID )
+                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood, 
+                                               int audienceNum, HEAPID heapID )
 {
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
@@ -980,7 +986,8 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
   biw->old_cursor_pos = CURSOR_NOMOVE;
 
   biw->main_loop_tcb_flag = main_loop_tcb_flag;
-  biw->pokewood = pokewood;
+  biw->pokewood    = pokewood;
+  biw->audienceNum = audienceNum;
 
   //パレットフェード初期化
   biw->pfd = pfd;
@@ -1079,14 +1086,16 @@ static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
   INFOWIN_Update();
   //
   // debug
+#ifdef PM_DEBUG
   debug_btlv_audience( biw );
+#endif
 }
 
 //============================================================================================
 /**
  *  @brief  BG画面初期化
  *
- *  @param[in]  biw システム管理構造体のポインタ
+ *  @param[in]  biw         システム管理構造体のポインタ
  */
 //============================================================================================
 void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
@@ -3081,6 +3090,46 @@ static  void  BTLV_INPUT_DeleteAudienceObj( BTLV_INPUT_WORK* biw )
   GFL_CLGRP_PLTT_Release( biw->audience_plttID );
 }
 
+
+static int _get_audienceBit( u32 work, int index )
+{
+  return (work>>index)&1;
+}
+
+static void _set_audienceBit( u32 *work, int index )
+{
+  *work |= (1<<index);
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客人数を設定する
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
+static void set_audience_appear( BTLV_INPUT_WORK *biw )
+{
+  int count=0,no,i;
+  
+  while(count!=biw->audienceNum){
+    no = GFUser_GetPublicRand( BTLV_INPUT_AUDIENCE_MAX );
+    if(_get_audienceBit(biw->audienceBit, no)==0){
+      BTLV_INPUT_SetAudienceCondition( biw, TRUE, no, 0 );
+      _set_audienceBit( &biw->audienceBit, no );
+      count++;
+      OS_Printf("audience %d=on\n", _get_audienceBit(biw->audienceBit, no));
+    }
+  }
+
+  for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
+    if(_get_audienceBit(biw->audienceBit, i)==0){
+      BTLV_INPUT_SetAudienceCondition( biw, FALSE, i, 0 );
+      OS_Printf("audience %d=off\n", _get_audienceBit(biw->audienceBit, i));
+    }
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   観客の処理(初期化まとめ)
@@ -3098,6 +3147,9 @@ static void btlv_init_audience_disp( BTLV_INPUT_WORK *biw )
   }
   // OBJリソース転送・登録
   BTLV_INPUT_CreateAudienceObj( biw );
+  
+  // 観客表示・非表示設定
+  set_audience_appear( biw );
   
   // BG0非表示：操作パネル => 今回は表示(仮対応)
   // BG1表示：上書きして使用
@@ -3133,7 +3185,7 @@ static void btlv_init_audience_disp( BTLV_INPUT_WORK *biw )
  * @param	const s32		種類(AUDIENCE_SEQ_*)
  */
 //--------------------------------------------------------------
-static void btlv_set_audience( BTLV_INPUT_WORK *biw, const BOOL bflg, const s32 num, const s32 mode )
+void BTLV_INPUT_SetAudienceCondition( BTLV_INPUT_WORK *biw, const BOOL bflg, const s32 num, const s32 mode )
 {
   u8   col;
   s32  seq;
@@ -3158,6 +3210,21 @@ static void btlv_set_audience( BTLV_INPUT_WORK *biw, const BOOL bflg, const s32 
   GFL_CLACT_WK_SetPlttOffs( biw->audience_wk[ num ], col, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
+
+//=============================================================================================
+/**
+ * @brief	観客ON/OFFフラグを返す
+ *
+ * @param   biw		BTLV_INPUT_WORK
+ *
+ * @retval  u32		観客のON/OFF状態がbitで格納されたワーク
+ */
+//=============================================================================================
+u32 BTLV_INPUT_GetAudienceBit( BTLV_INPUT_WORK *biw )
+{
+  return biw->audienceBit;
+}
+
 //=============================================================================================
 //  観客の表示テスト
 //=============================================================================================
@@ -3179,7 +3246,7 @@ static void debug_btlv_audience( BTLV_INPUT_WORK* biw )
     for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
       bflg = TRUE;
       // セット
-      btlv_set_audience( biw, bflg, i, i%9 );
+      BTLV_INPUT_SetAudienceCondition( biw, bflg, i, i%9 );
     }
   }
   // 右
@@ -3190,7 +3257,7 @@ static void debug_btlv_audience( BTLV_INPUT_WORK* biw )
         bflg = FALSE;
       }
       // セット
-      btlv_set_audience( biw, bflg, i, i%9 );
+      BTLV_INPUT_SetAudienceCondition( biw, bflg, i, i%9 );
     }
   }
 }

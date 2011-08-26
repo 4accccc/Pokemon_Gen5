@@ -2311,6 +2311,9 @@ static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst )
   case BTL_STRTYPE_POKEWOOD_TURNTALK:
     BTL_STR_MakeString_Pokewood_Param( dst, param->strID );
     break;
+  case BTL_STRTYPE_POKEWOOD_DIRECTOR:
+    BTL_STR_MakeString_Director_Param( dst, param->strID );
+    break;
   default:
     GF_ASSERT(0);
     return;
@@ -3315,6 +3318,39 @@ BOOL BTLC_CORE_CheckRecTurnBarEnd( const BTLV_CORE *core )
     return BTLV_CLACT_CheckPokewoodTCBExcecute( BTLV_EFFECT_GetCLWK() );
   }
   return FALSE;
+}
+
+
+//=============================================================================================
+/**
+ * @brief	【ポケウッド上映のみ動作】観客の状態変更
+ *
+ * @param   wk		BTLV_CORE
+ * @param   bflg	TRUE:観客表示 FALSE:観客非表示
+ * @param   num		指定ナンバー
+ * @param   mode	変更モード(
+ */
+//=============================================================================================
+void BTLV_CORE_SetAudienceCondition( BTLV_CORE *wk, const BOOL bflg, const s32 num, const s32 mode )
+{
+  // ポケウッド上映意外は無視
+  if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW){
+    BTLV_SCD_SetAudienceCondition( wk->scrnD, bflg, num, mode );
+  }
+}
+
+//=============================================================================================
+/**
+ * @brief	観客ON/OFFフラグを返す(本体はbtlv_input.c)
+ *
+ * @param   biw		BTLV_CORE
+ *
+ * @retval  u32		観客のON/OFF状態がbitで格納されたワーク
+ */
+//=============================================================================================
+u32 BTLV_CORE_GetGetAudienceBit( BTLV_CORE *wk )
+{
+  return BTLV_SCD_GetAudienceBit( wk->scrnD );
 }
 
 #ifdef PM_DEBUG

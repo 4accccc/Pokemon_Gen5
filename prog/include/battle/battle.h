@@ -378,7 +378,7 @@ typedef struct {
   u8 pokewoodChoiceTbl[BTL_POKEWOOD_CHOICE_MAX];
   u8 pokewoodSuccessFlag; ///< ŽB‰e¬Œ÷ƒtƒ‰ƒO
   u8 audience_num;        ///< Œ€ê‚ÌŠÏ‹q”(max=22)
-  u8 dummy;  
+  u8 player_star_rank;    ///< Player Star Rank
 
   //“ïˆÕ“x’²®’l
   s8 difficulty_lv;

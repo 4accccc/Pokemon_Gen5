@@ -114,4 +114,9 @@ extern void BTLV_SCD_SetupRecPlayerMode( BTLV_SCD* wk, const BTLV_INPUT_BATTLE_R
 extern int BTLV_SCD_CheckRecPlayerInput( BTLV_SCD* wk );
 
 
+//=============================================================================================
+//  ポケウッド
+//=============================================================================================
+extern void BTLV_SCD_SetAudienceCondition( BTLV_SCD *wk, const BOOL bflg, const s32 num, const s32 mode );
+extern  u32 BTLV_SCD_GetAudienceBit( BTLV_SCD *wk );
 #endif

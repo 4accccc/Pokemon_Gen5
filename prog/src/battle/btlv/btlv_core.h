@@ -438,6 +438,13 @@ extern void BTLV_CORE_StartRecTurnBar( const BTLV_CORE* core, int turn_no );
 extern BOOL BTLC_CORE_CheckRecTurnBarEnd( const BTLV_CORE *core );
 
 
+//=============================================================================================
+// ポケウッド上映専用処理
+//=============================================================================================
+extern void BTLV_CORE_SetAudienceCondition( BTLV_CORE *wk, const BOOL bflg, const s32 num, const s32 mode );
+extern  u32 BTLV_CORE_GetGetAudienceBit( BTLV_CORE *wk );
+
+
 //-----------------------------------------------------------
 // 各種下請けから呼び出される関数
 

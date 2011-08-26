@@ -23,10 +23,11 @@ typedef enum {
   BTL_STRTYPE_YESNO,
   BTL_STRTYPE_SUBWAY_LOCALTRAINER,
   BTL_STRTYPE_POKEWOOD_TURNTALK,
+  BTL_STRTYPE_POKEWOOD_DIRECTOR,
 }BtlStrType;
 
 enum {
-  BTL_STR_ARG_MAX = 8,
+  BTL_STR_ARG_MAX = 9,
 };
 
 
@@ -143,3 +144,4 @@ extern void BTL_STR_MakeString_LvupInfo_Param( STRBUF* buf, u32 hp, u32 atk, u32
 //----------------------------------------------------------------------
 extern void BTL_STR_MakeString_Pokewood_Param( STRBUF *dst, int msgid );
 extern void BTL_STR_Register_PokewoodWord( void );
+extern void BTL_STR_MakeString_Director_Param( STRBUF *dst, int msgid );

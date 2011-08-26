@@ -302,6 +302,7 @@ static void dataMakeEncountTrainer( int senario_no, int PokewoodType, BSP_TRAINE
 
 }
 
+// スターランクで入る観客数[基本数,乱数範囲]   [5,5]は 5+rand()%5 の意味
 static const audience_tbl[][2]={ {5,5}, {7,6}, {10,9}, {16,7}, {22,1} };
 
 //-----------------------------------------------------------------------------
@@ -354,9 +355,12 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, F
   bsp->PokewoodMode = BTL_POKEWOOD_REC;
   bsp->pokewoodSenario = senario_no; //仮
 //  bsp->DebugFlagBit = 1<<BTL_DEBUGFLAG_SKIP_BTLIN;
+
+  // 観客数を設定
   {
     int star_rank = PokewoodStarPoint2StarRank(POKEWOOD_SAVEDATA_GetStarPoint(ps));
-    bsp->audience_num = audience_tbl[star_rank][0] + GFUser_GetPublicRand(audience_tbl[star_rank][1]);
+    bsp->audience_num     = audience_tbl[star_rank][0] + GFUser_GetPublicRand(audience_tbl[star_rank][1]);
+    bsp->player_star_rank = star_rank;
   }
   OS_Printf("create BSP pokewood senario = %d\n", bsp->pokewoodSenario);
 
@@ -406,11 +410,22 @@ static BATTLE_SETUP_PARAM * createPokewoodShowBattleParam(
 
 #include "msg/msg_pokewood_senario01_m.h"
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	トレーナータイプの文字列をbspをセットする
+ *
+ * @param   prew    
+ * @param   bsp     
+ * @param   no      
+ * @param   pw_type 
+ * @param   heapID  
+ */
+//----------------------------------------------------------------------------------
 static void setTrainerTypeName( PREW *prew, BATTLE_SETUP_PARAM *bsp, int no, int pw_type, HEAPID heapID )
 {
   int sex    = MyStatus_GetMySex( bsp->playerStatus[BTL_CLIENT_PLAYER] );
   u8 sex_ofs = (sex == PM_MALE? 1: 0);
-  int msgid  = NARC_message_pokewood_senario01_f_dat+no*2+sex_ofs;
+  int msgid  = NARC_message_pokewood_senario01_f_dat+(no+1)*2+sex_ofs;
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msgid, heapID );
 
 
@@ -688,9 +703,19 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
     break;
   // 事前アプリ実行
   case PW_SHOW_SEQ_TITLE_APP:
+#ifdef PM_DEBUG
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+      (*seq) = PW_SHOW_SEQ_CALL_BATTLE;
+    }else{
+      _init_pkwd_count_param( &prew->pkwd_count_param, pbew->bp );
+      GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_announce), &PkwdCountProcData, &prew->pkwd_count_param );
+      (*seq)++;
+    }
+#else
     _init_pkwd_count_param( &prew->pkwd_count_param, pbew->bp );
     GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_announce), &PkwdCountProcData, &prew->pkwd_count_param );
     (*seq)++;
+#endif
     break;
   // タイトルアプリ終了待ち
   case PW_SHOW_SEQ_TITLE_APP_END:
