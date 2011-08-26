@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/29 12:50:47
+#save date:2011/08/23 16:13:37
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d25r0401.wms
 #SECTION START:OBJ_EVENT
@@ -19,7 +19,319 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d25r0401.wms
 #hold event type:
 1
 #hold event number:
-0
+24
+#event number: 0
+#Bg Event Label
+D25R0401_BOOK1_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK1_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 104
+#event number: 1
+#Bg Event Label
+D25R0401_BOOK1_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK1_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 104
+#event number: 2
+#Bg Event Label
+D25R0401_BOOK1_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK1_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 104
+#event number: 3
+#Bg Event Label
+D25R0401_BOOK1_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK1_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 104
+#event number: 4
+#Bg Event Label
+D25R0401_BOOK2_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK2_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 104
+#event number: 5
+#Bg Event Label
+D25R0401_BOOK2_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK2_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 104
+#event number: 6
+#Bg Event Label
+D25R0401_BOOK2_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK2_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 104
+#event number: 7
+#Bg Event Label
+D25R0401_BOOK2_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK2_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 104
+#event number: 8
+#Bg Event Label
+D25R0401_BOOK3_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK3_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 104
+#event number: 9
+#Bg Event Label
+D25R0401_BOOK3_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK3_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 0 104
+#event number: 10
+#Bg Event Label
+D25R0401_BOOK3_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK3_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 104
+#event number: 11
+#Bg Event Label
+D25R0401_BOOK3_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK3_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 0 104
+#event number: 12
+#Bg Event Label
+D25R0401_BOOK4_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK4_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 56
+#event number: 13
+#Bg Event Label
+D25R0401_BOOK4_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK4_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 56
+#event number: 14
+#Bg Event Label
+D25R0401_BOOK4_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK4_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 56
+#event number: 15
+#Bg Event Label
+D25R0401_BOOK4_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK4_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 56
+#event number: 16
+#Bg Event Label
+D25R0401_BOOK5_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK5_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 56
+#event number: 17
+#Bg Event Label
+D25R0401_BOOK5_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK5_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 56
+#event number: 18
+#Bg Event Label
+D25R0401_BOOK5_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK5_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 56
+#event number: 19
+#Bg Event Label
+D25R0401_BOOK5_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK5_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 56
+#event number: 20
+#Bg Event Label
+D25R0401_BOOK6_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK6_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 56
+#event number: 21
+#Bg Event Label
+D25R0401_BOOK6_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK6_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 0 56
+#event number: 22
+#Bg Event Label
+D25R0401_BOOK6_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK6_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 56
+#event number: 23
+#Bg Event Label
+D25R0401_BOOK6_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D25R0401_BOOK6_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 0 56
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

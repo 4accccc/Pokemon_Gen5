@@ -13,6 +13,7 @@
 #ifndef ZONE_D25R0601_EVC_H
 #define ZONE_D25R0601_EVC_H
 
+#define D25R0601_GIRL2_01                  0
 
 #endif //ZONE_D25R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d25r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

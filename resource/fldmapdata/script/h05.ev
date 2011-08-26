@@ -12,7 +12,7 @@
   .include  "msg_h05.h"
   .include  "h05.h"
 
-  //@author fujimura_souichirou（橋マニアイベント）
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,10 +21,37 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_zone_h05
 _EVENT_DATA   ev_h05_middleman1_01
 _EVENT_DATA   ev_h05_man3_01
+_EVENT_DATA   ev_pos_h05_poke488_01
+_EVENT_DATA   ev_h05_poke488_01
 _EVENT_DATA_END
 
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+
+/**************************************************************/
+/*  ZONE_CHANGE_LABEL                                         */
+/**************************************************************/
+INIT_EVENT_START  ev_zone_h05
+
+  //クレセリアを呼び出した状態でゾーンチェンジした場合、再度POSイベントから
+  IF FLAG_OFF( FV_H05_POKE488 ) && $WK_SCENE_H05_POKE488 == 2 THEN
+
+    //==================================//
+    //クレセリア非表示
+    _FLAG_SET( FV_H05_POKE488 )
+    //POS再配置
+    $WK_SCENE_H05_POKE488 = 1
+    //==================================//
+
+  ENDIF
+
+INIT_EVENT_END
 
 /************************************************************/
 /*  コイキング購入                                          */
@@ -235,4 +262,171 @@ EVENT_START   ev_h05_man3_01
 
 EVENT_END
 
+/**************************************************************/
+/*  POS：クレセリア登場                                       */
+/**************************************************************/
+EVENT_START   ev_pos_h05_poke488_01
+
+  //システム：みかづきのはねが　かがやきだした！
+  _SYSWIN_MSG( msg_h05_poke1_01, POS_DOWN )
+
+  //「みかづきのはね」をかざす？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //==================================//
+    //クレセリア表示
+    _FLAG_RESET( FV_H05_POKE488 )
+    //POSイベント進行
+    $WK_SCENE_H05_POKE488 = 2
+    //==================================//
+
+    //アニメ：主人公手を掲げる【仮】アニメは仮です
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+    _OBJ_ANIME_WAIT()
+
+    _TIME_WAIT ( 30 )  //間
+
+    //クレセリア：るなーん
+    _VOICE_PLAY( MONSNO_488, 0 ) 
+    _PLAINWIN_MSG_UP( msg_h05_poke1_02 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _PLAINWIN_CLOSE()
+
+    //アニメ：主人公振り向き
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+    //クレセリア出現
+    _OBJ_ADD( H05_POKE488_01 )
+
+    //クレセリア登場座標にジャンプ
+    _OBJ_POS_CHANGE( H05_POKE488_01, 110, 2, 14, DIR_RIGHT )
+
+    //クレセリア停止座標まで移動
+    $LCW_POSX += 2
+    _OBJ_TRANS( H05_POKE488_01, LCW_POSX, 0, LCW_POSZ, 8*8 )
+
+    //クレセリア再配置（↑のコマンドだと接地しないので）
+    _OBJ_POS_CHANGE( H05_POKE488_01, LCW_POSX, 0, LCW_POSZ, DIR_LEFT )
+
+    //アニメ：クレセリア振り向き
+    _OBJ_ANIME( H05_POKE488_01, anm_common_turn_l )
+    _OBJ_ANIME_WAIT()
+
+    //アニメ：主人公振り向き
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+    _OBJ_ANIME_WAIT()
+
+    _TIME_WAIT( 16 )
+
+  ELSE    //いいえ
+
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  クレセリア：話しかけ（戦闘／倒した場合は殿堂入り後復帰）  */
+/**************************************************************/
+EVENT_START   ev_h05_poke488_01
+
+  _TALK_OBJ_START()
+
+  //クレセリア：るなーん
+  _VOICE_PLAY( MONSNO_488, 0 ) 
+  _GIZAPLAINWIN_MSG_POS( msg_h05_poke1_02, POS_DOWN )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  // Lv.70 クレセリア
+  _WILD_BTL_SET_LEGEND( MONSNO_488, 70 )
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //==================================//
+    //クレセリア非表示
+    _FLAG_SET( FV_H05_POKE488 )
+    //POSイベント進行
+    $WK_SCENE_H05_POKE488 = 3
+    //==================================//
+    _OBJ_DEL( H05_POKE488_01 )   //クレセリアを消す
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //クレセリアを捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+    //==================================//
+    //クレセリアを捕獲した
+    _FLAG_SET( FE_H05_POKE488_GET_01 )
+    //==================================//
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
+
+  ENDSWITCH
+
+  //クレセリアを捕獲できなかった場合の分岐
+  IF FLAG_OFF( FE_H05_POKE488_GET_01 ) THEN
+
+    //システム：クレセリアは
+    _SYSWIN_MSG( msg_h05_poke1_03, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：手を掲げる【仮】アイテムゲットと同じものを使用中
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_itemget
+  _ANIME_DATA AC_HERO_ITEMGET,1
+  _ANIME_DATA ACMD_END,0
 

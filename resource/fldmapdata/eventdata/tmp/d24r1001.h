@@ -9,6 +9,7 @@
 #ifndef ZONE_D24R1001_EVC_H
 #define ZONE_D24R1001_EVC_H
 
+#define D24R1001_POKE485_01                0
 
 #endif //ZONE_D24R1001_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d24r1001.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

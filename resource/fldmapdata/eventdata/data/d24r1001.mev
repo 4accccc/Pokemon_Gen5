@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/15 14:31:17
+#save date:2011/08/25 18:24:31
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d24r1001.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,38 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d24r1001.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+D24R1001_POKE485_01
+#OBJ CODE Number
+TPOKE_0528
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D24_POKE485
+#Event Script Name
+SCRID_D24R1001_POKE485_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 -16 56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -29,7 +60,24 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d24r1001.wms
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Pos Event Label
+POS_D24R1001_POKE485_01
+#Pos Script Name
+SCRID_POS_D24R1001_POKE485_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D24_POKE485
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -8
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

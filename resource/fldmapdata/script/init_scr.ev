@@ -250,6 +250,16 @@ init_flags:
   _FLAG_SET( FV_D10R0401_POKE_02 )
   _FLAG_SET( FV_D10R0401_POKE_03 )
 
+  //D24:リバースマウンテン
+  _FLAG_SET( FV_D24_POKE485 )  //ヒードラン
+
+  //D25:ストレンジャーハウス
+  _FLAG_SET( FV_D25_GIRL2_01 )  //幽霊少女
+
+  //H05:ワンダーブリッジ
+  _FLAG_SET( FV_H05_POKE488 )  //クレセリア
+
+
 }
 _RET
 
@@ -362,6 +372,18 @@ INIT_EVENT_START  ev_init_gameclear_script
   IF FLAG_OFF( FE_D01R0101_RATI2_GET_01 ) THEN
     //POSイベントリセット
     $WK_SCENE_D01R0101_RATI2 = 0
+  ENDIF
+
+  //ヒードラン未捕獲時の復活処理
+  IF FLAG_OFF( FE_D24_POKE485_GET_01 ) THEN    //【仮】「かざんのおきいし」入手フラグ待ち
+    //POSイベントリセット
+    $WK_SCENE_D24_POKE485 = 1
+  ENDIF
+
+  //クレセリア未捕獲時の復活処理
+  IF FLAG_OFF( FE_H05_POKE488_GET_01 ) THEN    //【仮】「みかづきのはね」入手フラグ待ち
+    //POSイベントリセット
+    $WK_SCENE_H05_POKE488 = 1
   ENDIF
 
 

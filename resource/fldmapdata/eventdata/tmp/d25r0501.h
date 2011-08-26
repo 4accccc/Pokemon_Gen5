@@ -9,6 +9,8 @@
 #ifndef ZONE_D25R0501_EVC_H
 #define ZONE_D25R0501_EVC_H
 
+#define D25R0501_ITEM_01                   0
+#define D25R0501_GIRL2_01                  1
 
 #endif //ZONE_D25R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d25r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
