@@ -56,6 +56,7 @@ class ColumnID
 	attr :cPLACENAMEFLAG, true
   attr :cPLACEICON, true
   attr :cDIFFICULTY, true
+  attr :cFES_PARAM, true
 	attr :cCOMMENT, true
 
 	def initialize( column )
@@ -122,6 +123,8 @@ class ColumnID
         @cPLACEICON = c_count
       when "DIFFICULTY"
         @cDIFFICULTY = c_count;
+      when "FES_PARAM"
+        @cFES_PARAM = c_count;
 			when "îıçl"
 				@cCOMMENT = c_count
 			end
@@ -347,6 +350,12 @@ class ZoneDataFile < OutputFile
       STDERR.puts "ìÔà’ìxÇÃîÕàÕÇ™Ç®Ç©ÇµÇ¢#{difficulty}"
       exit(1)
     end
+    
+    fes_param = column[@cl.cFES_PARAM]
+    if !( 0 <= fes_param.to_i && fes_param.to_i <= 3) then
+      STDERR.puts "FES_PARAMÇÃîÕàÕÇ™Ç®Ç©ÇµÇ¢(0-3)#{fes_param}"
+      exit(1)
+    end
 
 	@fp.puts <<DOCUMENT
 	{//ZONE_ID_#{id.upcase} = #{linecount}
@@ -362,6 +371,7 @@ class ZoneDataFile < OutputFile
 		#{bgm_autumn},
 		#{bgm_winter},
 		#{encount_id},
+		#{fes_param},
 		#{event_id},
     #{zone_group},
 		#{name},
