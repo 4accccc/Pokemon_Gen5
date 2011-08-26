@@ -31,6 +31,7 @@
 #include "field/zonedata.h"
 #include "field/research_team.h"
 #include "savedata/resonance_resort_sv.h"
+#include "net/network_define.h"
 
 #include "game_beacon_local.h"
 #include "debug/debug_flg.h"
@@ -179,7 +180,9 @@ void GAMEBEACON_Update(void)
     bsys->backup_hour = play_hour;
   }
 
-  if(bsys->gamedata != NULL){
+  //リゾートデータを設定するのは常時通信モードだけ
+  if(bsys->gamedata != NULL
+    && WB_NET_FIELDMOVE_SERVICEID == GFL_NET_GetGameServiceID() ){
     GAMEBEACON_Set_ResortData( bsys );
   }
   SendBeacon_Update(&bsys->send);
