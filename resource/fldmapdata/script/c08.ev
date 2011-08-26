@@ -578,8 +578,8 @@ EVENT_START   ev_pos_c08_ninja_01
   _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_03 , C08_NINJA_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
   
-  //【仮】トレーナー戦呼び出し
-  _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_NINJA_04, 0 )
     
   //結果チェック
   _CALL ev_battle_check
@@ -737,8 +737,8 @@ EVENT_START   ev_c08_swsage7_01
     _BALLOONWIN_OBJMSG( msg_c08_sage7_05 , C08_SWSAGE7_01 )
     _BALLOONWIN_CLOSE()
     
-    //【仮】トレーナー戦呼び出し
-    _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_SWSAGE3_03, 0 )
     
     //結果チェック
     _CALL ev_battle_check
@@ -797,8 +797,8 @@ EVENT_START   ev_c08_swplazmam_01
   
   _TALK_OBJ_START()
   
-  //【仮】既に戦ったかチェック
-  _TRAINER_FLAG_CHECK( TRID_TANPAN_19, SCWK_ANSWER )
+  //既に戦ったかチェック
+  _TRAINER_FLAG_CHECK( TRID_SWPLAZMAM_32, SCWK_ANSWER )
   
   //まだ勝利していない
   IF $SCWK_ANSWER ==  FALSE THEN
@@ -808,8 +808,8 @@ EVENT_START   ev_c08_swplazmam_01
     _AB_KEYWAIT_MARK()
     _BALLOONWIN_CLOSE()
     
-    //【仮】トレーナー戦呼び出し
-    _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_SWPLAZMAM_32, 0 )
     
     //結果チェック
     _CALL ev_battle_check
@@ -818,8 +818,8 @@ EVENT_START   ev_c08_swplazmam_01
     //プラズマ団進行状況にプラス1
      $WK_SCENE_C08_SWPLAZMA += 1
      
-    //【仮】トレーナーフラグセット
-    _TRAINER_FLAG_SET( TRID_TANPAN_19 )
+    //トレーナーフラグセット
+    _TRAINER_FLAG_SET( TRID_SWPLAZMAM_32 )
     
     //========================================/
     
@@ -834,7 +834,7 @@ EVENT_START   ev_c08_swplazmam_01
     
   ENDIF
       
-  //【仮】プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
+  //プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
   IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
     _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam1_03 , C08_SWPLAZMAM_01 )
     _LAST_KEYWAIT()
@@ -856,8 +856,8 @@ EVENT_START   ev_c08_swplazmam_02
   
   _TALK_OBJ_START()
   
-  //【仮】既に戦ったかチェック
-  _TRAINER_FLAG_CHECK( TRID_SCHOOLB_11, SCWK_ANSWER )
+  //既に戦ったかチェック
+  _TRAINER_FLAG_CHECK( TRID_SWPLAZMAM_33, SCWK_ANSWER )
   
   //まだ勝利していない
   IF $SCWK_ANSWER ==  FALSE THEN
@@ -867,8 +867,8 @@ EVENT_START   ev_c08_swplazmam_02
     _AB_KEYWAIT_MARK()
     _BALLOONWIN_CLOSE()
     
-    //【仮】トレーナー戦呼び出し
-    _TRAINER_BTL_SET( TRID_SCHOOLB_11, 0 )
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_SWPLAZMAM_33, 0 )
     
     //結果チェック
     _CALL ev_battle_check
@@ -877,8 +877,8 @@ EVENT_START   ev_c08_swplazmam_02
     //プラズマ団進行状況にプラス1
      $WK_SCENE_C08_SWPLAZMA += 1
      
-    //【仮】トレーナーフラグセット
-    _TRAINER_FLAG_SET( TRID_SCHOOLB_11 )
+    //トレーナーフラグセット
+    _TRAINER_FLAG_SET( TRID_SWPLAZMAM_33 )
     
     //========================================/
     
@@ -893,7 +893,7 @@ EVENT_START   ev_c08_swplazmam_02
     
   ENDIF
       
-  //【仮】プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
+  //プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
   IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
     _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam2_03 , C08_SWPLAZMAM_02 )
     _LAST_KEYWAIT()
@@ -915,8 +915,8 @@ EVENT_START   ev_c08_swplazmaw_01
 
   _TALK_OBJ_START()
 
-  //【仮】既に戦ったかチェック
-  _TRAINER_FLAG_CHECK( TRID_SCHOOLG_09, SCWK_ANSWER )
+  //既に戦ったかチェック
+  _TRAINER_FLAG_CHECK( TRID_SWPLAZMAW_11, SCWK_ANSWER )
   
   //まだ勝利していない
   IF $SCWK_ANSWER ==  FALSE THEN
@@ -926,8 +926,8 @@ EVENT_START   ev_c08_swplazmaw_01
     _AB_KEYWAIT_MARK()
     _BALLOONWIN_CLOSE()
     
-    //【仮】トレーナー戦呼び出し
-    _TRAINER_BTL_SET( TRID_SCHOOLG_09, 0 )
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_SWPLAZMAW_11, 0 )
     
     //結果チェック
     _CALL ev_battle_check
@@ -936,8 +936,8 @@ EVENT_START   ev_c08_swplazmaw_01
     //プラズマ団進行状況にプラス1
      $WK_SCENE_C08_SWPLAZMA += 1
      
-    //【仮】トレーナーフラグセット
-    _TRAINER_FLAG_SET( TRID_SCHOOLG_09 )
+    //トレーナーフラグセット
+    _TRAINER_FLAG_SET( TRID_SWPLAZMAW_11 )
     
     //========================================/
     
@@ -953,7 +953,7 @@ EVENT_START   ev_c08_swplazmaw_01
     
   ENDIF
       
-  //【仮】プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
+  //プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
   IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
     _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmaw1_03 , C08_SWPLAZMAW_01 )
     _LAST_KEYWAIT()

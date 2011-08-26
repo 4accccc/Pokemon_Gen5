@@ -262,8 +262,8 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
-  //【仮】トレーナー戦
-  _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+  //トレーナー戦
+  _TRAINER_BTL_SET( TRID_SWPLAZMAM_05, 0 )
   //結果チェック
   _CALL ev_battle_check
   
@@ -271,7 +271,7 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _OBJ_ANIME( D27R0101_SWPLAZMAM_01, anm_swplazma_backstep_l )
   _OBJ_ANIME_WAIT()
   
-  //プラズマ団：というわけで
+  //プラズマ団：つぎつぎ
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam1_03 , D27R0101_SWPLAZMAM_01 ,POS_DEFAULT )
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
@@ -287,8 +287,8 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
-  //【仮】トレーナー戦
-  _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+  //トレーナー戦
+  _TRAINER_BTL_SET( TRID_SWPLAZMAM_06, 0 )
   //結果チェック
   _CALL ev_battle_check
   
@@ -399,9 +399,17 @@ EVENT_START	ev_d27r0101_swrival_01
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
     _OBJ_ANIME_WAIT()
     
-    //【仮】トレーナー戦
-    _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-    //_TRAINER_MULTI_BTL_SET ( TRID_RIVAL_04 , TRID_HAKAIM1_01 , TRID_HAKAIM1_02 ) 
+    //トレーナー戦
+    IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+      //初期３匹で草タイプを選択
+      _TRAINER_MULTI_BTL_SET( TRID_SWRIVAL_07, TRID_SWPLAZMAM_09, TRID_SWPLAZMAM_10 ) 
+    ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+      //初期３匹で炎タイプを選択
+      _TRAINER_MULTI_BTL_SET( TRID_SWRIVAL_08, TRID_SWPLAZMAM_09, TRID_SWPLAZMAM_10 ) 
+    ELSE
+      //初期３匹で水タイプを選択・主人公は♀
+      _TRAINER_MULTI_BTL_SET( TRID_SWRIVAL_09, TRID_SWPLAZMAM_09, TRID_SWPLAZMAM_10 ) 
+    ENDIF
     
     //結果チェック
     _CALL ev_battle_check
@@ -492,9 +500,8 @@ EVENT_START	ev_d27r0101_swleader1_01
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
     _OBJ_ANIME_WAIT()
     
-    //【仮】トレーナー戦
-    _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
-    //_TRAINER_MULTI_BTL_SET ( TRID_RIVAL_04 , TRID_HAKAIM1_01 , TRID_HAKAIM1_02 ) 
+    //トレーナー戦
+    _TRAINER_MULTI_BTL_SET ( TRID_SWLEADER1_1_01 , TRID_SWPLAZMAM_07 , TRID_SWPLAZMAM_08 ) 
     
     //結果チェック
     _CALL ev_battle_check

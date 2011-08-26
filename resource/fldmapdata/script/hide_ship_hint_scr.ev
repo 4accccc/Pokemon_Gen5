@@ -64,14 +64,14 @@ EVENT_START ev_d27_hint_01
     IF $LCWK_VERSION == VERSION_B2 THEN
       _OBJ_ANIME( D27R1001_HINT_01, anm_common_gyoe )
       _OBJ_ANIME_WAIT()
-      //【仮】トレーナー曲再生
-      _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+      //トレーナー曲再生
+      _TRAINER_BGM_SET(  TRID_SWPLAZMAM_15 )
     //W2
     ELSE
       _OBJ_ANIME( D27R2101_HINT_01, anm_common_gyoe )
       _OBJ_ANIME_WAIT()
-      //【仮】トレーナー曲再生
-      _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+      //トレーナー曲再生
+      _TRAINER_BGM_SET(  TRID_SWPLAZMAM_22 )
     ENDIF
      
      //戦闘前メッセージ
@@ -81,12 +81,12 @@ EVENT_START ev_d27_hint_01
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAM_15, 0 )
      //W2
      ELSE
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAM_22, 0 )
      ENDIF
      
      //結果チェック
@@ -130,14 +130,14 @@ EVENT_START ev_d27_hint_02
      IF $LCWK_VERSION == VERSION_B2 THEN
        _OBJ_ANIME( D27R1001_HINT_02, anm_common_gyoe )
        _OBJ_ANIME_WAIT()
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_SWPLAZMAM_17 )
      //W2
      ELSE
        _OBJ_ANIME( D27R2201_HINT_02, anm_common_gyoe )
        _OBJ_ANIME_WAIT()
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_SWPLAZMAM_23 )
      ENDIF
     
      //戦闘前メッセージ
@@ -147,12 +147,12 @@ EVENT_START ev_d27_hint_02
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAM_17, 0 )
      //W2
      ELSE
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAM_23, 0 )
      ENDIF
      
      //結果チェック
@@ -196,14 +196,14 @@ EVENT_START ev_d27_hint_03
      IF $LCWK_VERSION == VERSION_B2 THEN
        _OBJ_ANIME( D27R1001_HINT_03, anm_common_gyoe )
        _OBJ_ANIME_WAIT()
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_SWPLAZMAM_19 )
      //W2
      ELSE
        _OBJ_ANIME( D27R1801_HINT_03, anm_common_gyoe )
        _OBJ_ANIME_WAIT()
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_SWPLAZMAM_24 )
      ENDIF
      
      //戦闘前メッセージ
@@ -213,12 +213,12 @@ EVENT_START ev_d27_hint_03
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAM_19, 0 )
      //W2
      ELSE
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAM_24, 0 )
      ENDIF
      
      //結果チェック
@@ -262,14 +262,14 @@ EVENT_START ev_d27_hint_04
      IF $LCWK_VERSION == VERSION_B2 THEN
        _OBJ_ANIME( D27R1001_HINT_04, anm_common_gyoe )
        _OBJ_ANIME_WAIT()
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_SWPLAZMAM_20 )
      //W2
      ELSE
        _OBJ_ANIME( D27R2101_HINT_04, anm_common_gyoe )
        _OBJ_ANIME_WAIT()
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_SWPLAZMAM_25 )
      ENDIF
     
      //戦闘前メッセージ
@@ -279,12 +279,12 @@ EVENT_START ev_d27_hint_04
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAM_20, 0 )
      //W2
      ELSE
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAM_25, 0 )
      ENDIF
      
      //結果チェック
@@ -341,14 +341,14 @@ EVENT_START ev_d27_hint_06
      IF $LCWK_VERSION == VERSION_B2 THEN
        _OBJ_ANIME( D27R1001_HINT_06, anm_common_gyoe )
        _OBJ_ANIME_WAIT()
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_SWPLAZMAW_04 )
      //W2
      ELSE
        _OBJ_ANIME( D27R1901_HINT_06, anm_common_gyoe )
        _OBJ_ANIME_WAIT()
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_SWPLAZMAW_06 )
      ENDIF
     
      //戦闘前メッセージ
@@ -358,12 +358,12 @@ EVENT_START ev_d27_hint_06
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAW_04, 0 )
      //W2
      ELSE
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAW_06, 0 )
      ENDIF
      
      //結果チェック
@@ -407,14 +407,14 @@ EVENT_START ev_d27_hint_07
      IF $LCWK_VERSION == VERSION_B2 THEN
        _OBJ_ANIME( D27R1001_HINT_07, anm_common_gyoe )
        _OBJ_ANIME_WAIT()
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_SWPLAZMAW_05 )
      //W2
      ELSE
        _OBJ_ANIME( D27R2201_HINT_07, anm_common_gyoe )
        _OBJ_ANIME_WAIT()
-       //【仮】トレーナー曲再生
-       _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+       //トレーナー曲再生
+       _TRAINER_BGM_SET(  TRID_SWPLAZMAW_07 )
      ENDIF
     
      //戦闘前メッセージ
@@ -424,12 +424,12 @@ EVENT_START ev_d27_hint_07
      
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAW_05, 0 )
      //W2
      ELSE
-       //【仮】トレーナー戦呼び出し
-       _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+       //トレーナー戦呼び出し
+       _TRAINER_BTL_SET( TRID_SWPLAZMAW_07, 0 )
      ENDIF
      
      //結果チェック

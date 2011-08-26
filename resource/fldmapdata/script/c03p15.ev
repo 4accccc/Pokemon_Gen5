@@ -176,8 +176,8 @@ EVENT_START   ev_c03p15_informationw_01
       _AB_KEYWAIT()
       _MSGWIN_CLOSE()
 
-      //トレーナー戦呼び出し【仮】トレーナー戦闘は仮です
-      _TRAINER_BTL_SET( TRID_TANPAN_20, 0 )
+      //トレーナー戦呼び出し
+      _TRAINER_BTL_SET( TRID_PILOT_1_04, 0 )
 
       //結果チェック
       _CALL ev_battle_check

@@ -14,6 +14,7 @@
   .include  "c04.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai //バトルサブウェイトレーナーデータ周り
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -49,7 +50,7 @@ _EVENT_DATA_END
 DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
-
+DEFINE_LOCAL  LCW_SEX
 
 /************************************************************/
 /*  ZONE_CHANGE_SCRIPT                                      */
@@ -294,8 +295,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c04_swplazmam_02
 
-  //既に戦ったかチェック【仮】トレーナーIDは仮です
-  _TRAINER_FLAG_CHECK( TRID_TANPAN_19, SCWK_ANSWER )
+  //既に戦ったかチェック
+  _TRAINER_FLAG_CHECK( TRID_SWPLAZMAM_03, SCWK_ANSWER )
 
     //まだ勝利していない
     IF $SCWK_ANSWER ==  FALSE THEN
@@ -337,8 +338,8 @@ EVENT_START   ev_c04_swplazmam_02
         _MSGWIN_CLOSE()
 
       ENDIF
-      //トレーナー戦呼び出し【仮】トレーナー戦闘は仮です
-      _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+      //トレーナー戦呼び出し
+      _TRAINER_BTL_SET( TRID_SWPLAZMAM_03, 0 )
 
       //結果チェック
       _CALL ev_battle_check
@@ -389,8 +390,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c04_swplazmaw_01
 
-  //既に戦ったかチェック【仮】トレーナーIDは仮です
-  _TRAINER_FLAG_CHECK( TRID_TANPAN_20, SCWK_ANSWER )
+  //既に戦ったかチェック
+  _TRAINER_FLAG_CHECK( TRID_SWPLAZMAM_04, SCWK_ANSWER )
 
     //まだ勝利していない
     IF $SCWK_ANSWER ==  FALSE THEN
@@ -419,8 +420,8 @@ EVENT_START   ev_c04_swplazmaw_01
         _MSGWIN_CLOSE()
 
       ENDIF
-      //トレーナー戦呼び出し【仮】トレーナー戦闘は仮です
-      _TRAINER_BTL_SET( TRID_TANPAN_20, 0 )
+      //トレーナー戦呼び出し
+      _TRAINER_BTL_SET( TRID_SWPLAZMAM_04, 0 )
 
       //結果チェック
       _CALL ev_battle_check
@@ -652,9 +653,29 @@ EVENT_START   ev_c04_swheroine_01
     //クダリ：ルールを　まもって
     _BALLOONWIN_OBJMSG_POS( msg_c04_tboss_02, C04_TBOSS_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
-
-    //トレーナー戦呼び出し【仮】トレーナー戦闘は仮です
-    _TRAINER_MULTI_BTL_SET( TRID_TANPAN_10, TRID_TANPAN_11, TRID_TANPAN_12 ) 
+  
+  _GET_MY_SEX( LCW_SEX )
+  
+  //マルチバトル
+  IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA && $LCW_SEX == PM_MALE THEN
+    //初期３匹で草タイプを選択・主人公は♂
+    _TRAINER_MULTI_BTL_SET( TRID_HEROINE_01, TRID_BCHAMP_01, TRID_BCHAMP2_01 ) 
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA && $LCW_SEX == PM_FEMALE THEN
+    //初期３匹で草タイプを選択・主人公は♀
+    _TRAINER_MULTI_BTL_SET( TRID_HERO_01, TRID_BCHAMP_01, TRID_BCHAMP2_01 ) 
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO  && $LCW_SEX == PM_MALE THEN
+    //初期３匹で炎タイプを選択・主人公は♂
+    _TRAINER_MULTI_BTL_SET( TRID_HEROINE_02, TRID_BCHAMP_01, TRID_BCHAMP2_01 ) 
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO  && $LCW_SEX == PM_FEMALE THEN
+    //初期３匹で炎タイプを選択・主人公は♀
+    _TRAINER_MULTI_BTL_SET( TRID_HERO_02, TRID_BCHAMP_01, TRID_BCHAMP2_01 ) 
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_MIZU  && $LCW_SEX == PM_MALE THEN
+    //初期３匹で水タイプを選択・主人公は♂
+    _TRAINER_MULTI_BTL_SET( TRID_HEROINE_03, TRID_BCHAMP_01, TRID_BCHAMP2_01 ) 
+  ELSE
+    //初期３匹で水タイプを選択・主人公は♀
+    _TRAINER_MULTI_BTL_SET( TRID_HERO_03, TRID_BCHAMP_01, TRID_BCHAMP2_01 ) 
+  ENDIF
 
     //結果チェック
     _CALL ev_battle_check

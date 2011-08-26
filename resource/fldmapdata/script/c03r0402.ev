@@ -13,6 +13,7 @@
   .include  "c03r0402.h"
 
   //@author fujimura_souichirou（移植作業）
+  //@author Mizuguchi_Mai（トレーナーデータ）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -163,11 +164,56 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c03r0402_man1_01
 
+  //【仮】クリア前のメッセージラベルが仮
+
   //クリア前の場合
   IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN	
 
-    //男性：ポケモンしょうぶで
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_01 )
+    //既に戦っているか？(１日フラグがＯＮの場合)
+    IF FLAG_ON( TMFLG_C03R0402_BATTLE ) THEN
+
+      //男性：また　あした　おいでよ
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
+
+    //まだ戦っていない場合
+    ELSE
+
+      _TALK_OBJ_START()
+
+      //男性：おっ　つよくなったね！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_02 )
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //男性：じゃあ　はじめるよー！
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_03 )
+        _MSGWIN_CLOSE()
+
+        _TRAINER_BTL_SET( TRID_VETERANM_1_09, 0 )
+
+        _CALL ev_battle_check
+
+        //男性：いろいろ　かんがえてるよね！
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //========================================//
+        //対戦済みにする（１日１回フラグ）
+        _FLAG_SET( TMFLG_C03R0402_BATTLE )
+        //========================================//
+
+      ELSE    //いいえ
+
+        //男性：いいえ　かー
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_05 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ENDIF
 
   //クリア後の場合
   ELSE
@@ -193,14 +239,9 @@ EVENT_START   ev_c03r0402_man1_01
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_03 )
         _MSGWIN_CLOSE()
 
-        _TRAINER_BTL_SET( TRID_VETERANM_1_08, 0 )   //【仮】モリモトさんのままです
+        _TRAINER_BTL_SET( TRID_VETERANM_1_08, 0 )
 
-        _TRAINER_LOSE_CHECK( SCWK_ANSWER )
-        IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-          _TRAINER_WIN()
-        ELSE
-          _TRAINER_LOSE()   //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-        ENDIF
+        _CALL ev_battle_check
 
         //男性：いろいろ　かんがえてるよね！
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
@@ -232,58 +273,120 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c03r0402_middleman2_01
 
-  //既に戦っているか？(１日フラグがＯＮの場合)
-  IF FLAG_ON( TMFLG_C03R0402_BATTLE_02 ) THEN
+  //【仮】クリア後のメッセージラベルが仮
+  
+  //クリア前の場合
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN	
 
-    //おじさん：くぅー！　いい　ポケモンだね！▼
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_03 )
-
-  //まだ戦っていない場合
-  ELSE
-
-    _TALK_OBJ_START()
-
-    //おじさん：おれ　カビゴン▼
-    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_01 )
-    _YES_NO_WIN( SCWK_ANSWER )
-
-    IF $SCWK_ANSWER == SCR_YES THEN   //はい
-
-      //おじさん：あの　くみあわせが　きまれば
-      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_02 )
-      _MSGWIN_CLOSE()
-
-      _TRAINER_BTL_SET( TRID_VETERANM_1_08, 0 )   //【仮】モリモトさんのままです
-
-      _TRAINER_LOSE_CHECK( SCWK_ANSWER )
-      IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-        _TRAINER_WIN()
-      ELSE
-        _TRAINER_LOSE()   //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-      ENDIF
+    //既に戦っているか？(１日フラグがＯＮの場合)
+    IF FLAG_ON( TMFLG_C03R0402_BATTLE_02 ) THEN
 
       //おじさん：くぅー！　いい　ポケモンだね！▼
-      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_03 )
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_03 )
 
-      //========================================//
-      //対戦済みにする（１日１回フラグ）
-      _FLAG_SET( TMFLG_C03R0402_BATTLE_02 )
-      //========================================//
+    //まだ戦っていない場合
+    ELSE
 
-    ELSE    //いいえ
+      _TALK_OBJ_START()
 
-      //おじさん：いいえ！？　そっかあ
-      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_04 )
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
+      //おじさん：おれ　カビゴン▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_01 )
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //おじさん：あの　くみあわせが　きまれば
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_02 )
+        _MSGWIN_CLOSE()
+
+        _TRAINER_BTL_SET( TRID_MOUNT_2_01, 0 ) 
+
+        _CALL ev_battle_check
+
+        //おじさん：くぅー！　いい　ポケモンだね！▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_03 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //========================================//
+        //対戦済みにする（１日１回フラグ）
+        _FLAG_SET( TMFLG_C03R0402_BATTLE_02 )
+        //========================================//
+
+      ELSE    //いいえ
+
+        //おじさん：いいえ！？　そっかあ
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
 
     ENDIF
 
+  //クリア後の場合
+  ELSE
+
+    //既に戦っているか？(１日フラグがＯＮの場合)
+    IF FLAG_ON( TMFLG_C03R0402_BATTLE_02 ) THEN
+
+      //おじさん：くぅー！　いい　ポケモンだね！▼
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_03 )
+
+    //まだ戦っていない場合
+    ELSE
+
+      _TALK_OBJ_START()
+
+      //おじさん：おれ　カビゴン▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_01 )
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //おじさん：あの　くみあわせが　きまれば
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_02 )
+        _MSGWIN_CLOSE()
+
+        _TRAINER_BTL_SET( TRID_MOUNT_2_02, 0 )
+
+        _CALL ev_battle_check
+        
+        //おじさん：くぅー！　いい　ポケモンだね！▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_03 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //========================================//
+        //対戦済みにする（１日１回フラグ）
+        _FLAG_SET( TMFLG_C03R0402_BATTLE_02 )
+        //========================================//
+
+      ELSE    //いいえ
+
+        //おじさん：いいえ！？　そっかあ
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ENDIF
+  
   ENDIF
 
 EVENT_END
+
+ev_battle_check:	
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+_RET
 
 /**************************************************************/
 /*  エリート♂：話しかけ                                      */

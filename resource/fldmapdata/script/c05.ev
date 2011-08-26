@@ -386,8 +386,8 @@ ev_c05_sage6_btl:
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
-  //【仮】戦闘処理（トレーナーIDが仮）
-  _TRAINER_BTL_SET( TRID_SWRIVAL_04, 0 )
+  //戦闘処理（トレーナーIDが仮）
+  _TRAINER_BTL_SET( TRID_SWSAGE2_01, 0 )
   
   //結果チェック
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -648,7 +648,7 @@ EVENT_START	ev_c05_badrider_01
 EVENT_END
 
 /**************************************************************/
-/*CALL：トリプルバトル（white)                                */
+/*CALL：ローテーションバトル（white)                                */
 /**************************************************************/
 ev_c08r0201_white_battle:
 {
@@ -675,9 +675,7 @@ ev_c08r0201_white_battle:
 			_BALLOONWIN_OBJMSG(msg_c05_badrider_05w,C05_BADRIDER_01)
 			_BALLOONWIN_CLOSE()
 			
-			//【仮】戦闘処理（トレーナーID待ち）
-			/*
-			_TRAINER_BTL_SET( TRID_BADRIDER_01_03, 0 )
+			_TRAINER_BTL_SET( TRID_BADRIDER_01_11, 0 )
 		
 			//結果チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -686,7 +684,6 @@ ev_c08r0201_white_battle:
 			ELSE
 				_TRAINER_LOSE()
 			ENDIF
-			*/
 			
 			_BALLOONWIN_OBJMSG(msg_c05_badrider_08w,C05_BADRIDER_01)
 			_LAST_KEYWAIT()
@@ -713,7 +710,7 @@ ev_c08r0201_white_battle:
 _RET
 
 /**************************************************************/
-/*CALL：ローテーションバトル（black)                                */
+/*CALL：トリプルバトル（black)                                */
 /**************************************************************/
 ev_c08r0201_black_battle:
 {
@@ -740,9 +737,8 @@ ev_c08r0201_black_battle:
 			_BALLOONWIN_OBJMSG(msg_c05_badrider_05b,C05_BADRIDER_01)
 			_BALLOONWIN_CLOSE()
 			
-			//【仮】戦闘処理（トレーナーID待ち）
-			/*
-			_TRAINER_BTL_SET( TRID_BADRIDER_01_07, 0 )
+			
+			_TRAINER_BTL_SET( TRID_BADRIDER_01_10, 0 )
 		
 			//結果チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -751,7 +747,7 @@ ev_c08r0201_black_battle:
 			ELSE
 				_TRAINER_LOSE()
 			ENDIF
-			*/
+			
 			
 			_BALLOONWIN_OBJMSG(msg_c05_badrider_08b,C05_BADRIDER_01)
 			_LAST_KEYWAIT()

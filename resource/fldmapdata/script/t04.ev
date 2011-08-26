@@ -283,16 +283,16 @@ EVENT_START		ev_pos_t04_swrival_01
   _BALLOONWIN_OBJMSG_POS( msg_t04_swrival_02,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
-  //【仮】（ラベルが仮）ライバル戦呼び出し　最初の３匹によって分岐
+  //ライバル戦呼び出し　最初の３匹によって分岐
   IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
     //初期３匹で草タイプを選択
-    _TRAINER_BTL_SET( TRID_SWRIVAL_04, 0 )
+    _TRAINER_BTL_SET( TRID_SWRIVAL_10, 0 )
   ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
     //初期３匹で炎タイプを選択
-    _TRAINER_BTL_SET( TRID_SWRIVAL_05, 0 )
+    _TRAINER_BTL_SET( TRID_SWRIVAL_11, 0 )
   ELSE
     //初期３匹で水タイプを選択
-    _TRAINER_BTL_SET( TRID_SWRIVAL_06, 0 )
+    _TRAINER_BTL_SET( TRID_SWRIVAL_12, 0 )
   ENDIF
   
   //結果チェック

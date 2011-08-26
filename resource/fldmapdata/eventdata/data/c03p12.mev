@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/06 19:18:22
+#save date:2011/08/26 18:27:32
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03p12.wms
 #SECTION START:OBJ_EVENT
@@ -16,7 +16,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c03p12.wms
 #ID name
 C03P12_INFORMATIONW_01
 #OBJ CODE Number
-INFORMATIONW
+PILOT
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
