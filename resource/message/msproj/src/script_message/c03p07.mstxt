@@ -760,10 +760,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベント開始前</Text>
+			<Text>ヒウン　かんこうあんない　でーす▼
+りょこうしゃのかた　むけに
+ヒウン　かんこうあんない　の▼
+イベントを　こちらの　さきの
+ふんすいまえで　かいさい　しています▽
+よろしければ　ごさんかください</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:06:55" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:20:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -771,10 +776,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベント開始前</Text>
+			<Text>ヒウン観光案内　でーす▼
+旅行者の方向けに
+ヒウン観光案内　の▼
+イベントを　こちらの　先の
+噴水前で　開催しています▽
+よろしければ　ご参加ください</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:07:43" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -807,10 +817,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナー戦前</Text>
+			<Text>わたくしは　ヒウンシティ
+かんこうあんないじょ　スタッフです▼
+こちらは　スリムストリート！
+ほそい　うらどおり　ですが▼
+めいてん　カフェいこい　があり
+しるひとぞしる　ヒウンめいしょ　です▼
+いがいな　めいてんが　ある
+ほそーい　ばしょの　せいかい　は▽
+こちら　スリムストリート　でした！▼
+さて　ヒウンかんこう　きねんに
+わたくしと　しょうぶを　どうぞ！▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:07:02" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:38:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -818,10 +838,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナー戦前</Text>
+			<Text>わたくしは　ヒウンシティ
+観光案内所　スタッフです▼
+こちらは　スリムストリート！
+細い　裏通り　ですが▼
+名店　カフェいこい　があり
+知る人ぞ知る　ヒウン名所です▼
+意外な　名店が　ある
+ほそーい　場所の　正解は▽
+こちら　スリムストリート　でした！▼
+さて　ヒウン観光　記念に
+わたくしと　勝負を　どうぞ！▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:07:44" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:39:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -854,10 +884,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナー戦後</Text>
+			<Text>ヒウンシティの　ちしきも
+ポケモンしょうぶの　ちしきも▽
+ばっちり　ですね！▼
+こちらは　きねんひん　です▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:07:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:22:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -865,10 +898,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナー戦後</Text>
+			<Text>ヒウンシティの　知識も
+ポケモン勝負の　知識も▽
+ばっちり　ですね！▼
+こちらは　記念品です▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:07:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:36:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -901,11 +937,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナー戦後
-イベントクリア前</Text>
+			<Text>[Name:TrainerName ]さんの
+ヒウン　めいしょめぐりは▽
+のこり　[Digit:1digit Idx="1" ]かしょ　ですね▼
+ひきつづき　ヒウンシティの
+まちなみを　おたのしみください</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:07:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:35:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -913,11 +952,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナー戦後
-イベントクリア前</Text>
+			<Text>[Name:TrainerName ]さんの
+ヒウン名所巡りは▽
+残り　[Digit:1digit Idx="1" ]ヶ所　ですね▼
+ひきつづき　ヒウンシティの
+街並みを　お楽しみください</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:07:54" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -926,10 +968,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>トレーナー戦後
-・イベントクリア前</Comment>
+・イベントクリア前
+・0＝主人公名
+・1＝個数</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T05:29:17" />
+				Time="2011-08-26T11:29:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -951,11 +995,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリア
-セントラルエリアで評価前</Text>
+			<Text>ヒウンめいしょめぐり　の
+すべての　ポイントを▽
+はっけん　しましたね！▼
+これで　あなたも　ヒウンマニア！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:07:28" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -963,11 +1009,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリア
-セントラルエリアで評価前</Text>
+			<Text>ヒウン名所巡り　の
+すべての　ポイントを▽
+発見しましたね！▼
+これで　あなたも　ヒウンマニア！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:08:01" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:36:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1001,11 +1049,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリア
-イベント全終了</Text>
+			<Text>こちらは　スリムストリート▼
+ほそい　うらどおりですが
+めいてん　カフェいこい　があり▽
+しるひとぞしる　ヒウンめいしょ　です</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:07:38" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:30:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1013,11 +1063,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリア
-イベント全終了</Text>
+			<Text>こちらは　スリムストリート▼
+ほそい　うらどおりですが
+めいてん　カフェいこい　があり▽
+しるひとぞしる　ヒウンめいしょ　です</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:08:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:34:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"

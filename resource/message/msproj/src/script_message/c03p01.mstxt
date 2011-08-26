@@ -797,10 +797,10 @@
 ヒントを　さしあげます▼
 げんざい　[Name:TrainerName ]さんの
 ヒウンめいしょめぐり　は▽
-のこり　[Digit:1digit Idx="1" ]こ　ですね</Text>
+のこり　[Digit:1digit Idx="1" ]かしょ　ですね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T03:00:20" />
+				Time="2011-08-26T11:29:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -812,10 +812,10 @@
 ヒントを　さしあげます▼
 現在　[Name:TrainerName ]さんの
 ヒウン名所巡り　は▽
-残り　[Digit:1digit Idx="1" ]こ　ですね</Text>
+残り　[Digit:1digit Idx="1" ]かしょ　ですね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T03:46:09" />
+				Time="2011-08-26T11:29:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -826,10 +826,10 @@
 			<Comment>♀
 ・２回目以降クリア前話しかけ
 ・0＝主人公名
-・1＝</Comment>
+・1＝個数</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T03:00:32" />
+				Time="2011-08-26T11:05:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -851,10 +851,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メニュー名1</Text>
+			<Text>ほそーい</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:19:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -862,10 +862,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メニュー名1</Text>
+			<Text>ほそーい</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:19:49" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -898,10 +898,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メニュー名2</Text>
+			<Text>モザイク</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:19:55" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -909,10 +909,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メニュー名2</Text>
+			<Text>モザイク</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:19:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -945,10 +945,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メニュー名3</Text>
+			<Text>ビジネスがい</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:02" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -956,10 +956,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メニュー名3</Text>
+			<Text>ビジネス街</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:04" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:04:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -992,10 +992,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メニュー名4</Text>
+			<Text>デートスポット</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1003,10 +1003,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メニュー名4</Text>
+			<Text>デートスポット</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1039,10 +1039,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メニュー名5</Text>
+			<Text>まずココ！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:19" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1050,10 +1050,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メニュー名5</Text>
+			<Text>まずココ！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:21" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1086,10 +1086,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒント1</Text>
+			<Text>いがいな　めいてんが　ある
+ほそーい　ばしょ▽
+さて　どこでしょう？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:05:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1097,10 +1099,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒント1</Text>
+			<Text>意外な　名店が　ある
+ほそーい　場所▽
+さて　どこでしょう？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:00" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1134,10 +1138,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒント2</Text>
+			<Text>モザイクの　かんばん
+むかいの　はとば▽
+さて　どこでしょう？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:04" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:10:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1145,10 +1151,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒント2</Text>
+			<Text>モザイクの　看板
+向かいの　波止場▽
+さて　どこでしょう？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:10:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1182,10 +1190,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒント3</Text>
+			<Text>はたらく　ひとばかりの　ビジネスがい
+ゲームがいしゃも　ありますね▽
+さて　どこでしょう？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:08:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1193,10 +1203,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒント3</Text>
+			<Text>働く人ばかりの　ビジネス街
+ゲーム会社も　ありますね▽
+さて　どこでしょう？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:11:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1230,10 +1242,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒント4</Text>
+			<Text>イッシュいちの　デートスポット！
+ヒウンの　やけいは　ムードまんてん▽
+さて　どこでしょう？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:15" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:09:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1241,10 +1255,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒント4</Text>
+			<Text>イッシュ１の　デートスポット！
+ヒウンの　夜景は　ムード満点▽
+さて　どこでしょう？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:11:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1278,10 +1294,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒント5</Text>
+			<Text>ヒウンシティに　はじめて　きた
+トレーナーは　まず　ココ！▽
+さて　どこでしょう？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:25" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1289,10 +1307,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒント5</Text>
+			<Text>ヒウンシティに　初めて　来た
+トレーナーは　まず　ココ！▽
+さて　どこでしょう？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:27" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:11:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1326,11 +1346,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントクリア後
-評価メッセージ</Text>
+			<Text>！！▼
+なんと　まさか　もしかして……▼
+すべての　ヒウンシティの
+めいしょを　はっけん　しましたか！▼
+コングラッチェレーション　ですー
+きねんに　こちらを　さしあげましょう▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:22:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:06:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1338,11 +1362,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントクリア後
-評価メッセージ</Text>
+			<Text>！！▼
+なんと　まさか　もしかして……▼
+すべての　ヒウンシティの
+名所を　発見しましたか！▼
+コングラッチェレーション　ですー
+記念に　こちらを　さしあげましょう▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:22:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:12:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1370,11 +1398,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントクリア後
-メッセージ</Text>
+			<Text>これで　あなたも　ヒウンマニア！
+われわれは　これからも▼
+ヒウンシティの　たようさ　たのしさを
+ひろめていきますー</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:22:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:05:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1382,11 +1412,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントクリア後
-メッセージ</Text>
+			<Text>これで　あなたも　ヒウンマニア！
+われわれは　これからも▼
+ヒウンシティの　多様さ　楽しさを
+ひろめていきますー</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:22:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-26T11:12:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
