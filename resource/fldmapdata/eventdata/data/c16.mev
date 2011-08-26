@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/25 13:05:22
+#save date:2011/08/26 13:13:00
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c16.wms
 #SECTION START:OBJ_EVENT
@@ -70,263 +70,8 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-18
+4
 #event number: 0
-#Door Event Label
-DOOR_ID_C16_C16R1501_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R1501
-#Next Door ID Name
-DOOR_ID_C16R1501_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-104 16 -552
-#size
-1 1
-#event number: 1
-#Door Event Label
-DOOR_ID_C16_C16R0901_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R0901
-#Next Door ID Name
-DOOR_ID_C16R0901_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 16 56
-#size
-1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_C16_C16R1001_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R1001
-#Next Door ID Name
-DOOR_ID_C16R1001_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 16 56
-#size
-1 1
-#event number: 3
-#Door Event Label
-DOOR_ID_C16_C16R1101_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R1101
-#Next Door ID Name
-DOOR_ID_C16R1101_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-136 16 56
-#size
-1 1
-#event number: 4
-#Door Event Label
-DOOR_ID_C16_C16R1201_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R1201
-#Next Door ID Name
-DOOR_ID_C16R1201_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-360 16 56
-#size
-1 1
-#event number: 5
-#Door Event Label
-DOOR_ID_C16_C16R1301_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R1301
-#Next Door ID Name
-DOOR_ID_C16R1301_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-472 16 56
-#size
-1 1
-#event number: 6
-#Door Event Label
-DOOR_ID_C16_C16R1401_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R1401
-#Next Door ID Name
-DOOR_ID_C16R1401_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-584 16 56
-#size
-1 1
-#event number: 7
-#Door Event Label
-DOOR_ID_C16_C16R0101_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R0101
-#Next Door ID Name
-DOOR_ID_C16R0101_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 16 -136
-#size
-1 1
-#event number: 8
-#Door Event Label
-DOOR_ID_C16_C16R0201_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R0201
-#Next Door ID Name
-DOOR_ID_C16R0201_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-136 16 -136
-#size
-1 1
-#event number: 9
-#Door Event Label
-DOOR_ID_C16_C16R0301_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R0301
-#Next Door ID Name
-DOOR_ID_C16R0301_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-360 16 -136
-#size
-1 1
-#event number: 10
-#Door Event Label
-DOOR_ID_C16_C16R0401_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R0401
-#Next Door ID Name
-DOOR_ID_C16R0401_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-520 16 -136
-#size
-1 1
-#event number: 11
-#Door Event Label
-DOOR_ID_C16_C16R0501_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R0501
-#Next Door ID Name
-DOOR_ID_C16R0501_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 16 -328
-#size
-1 1
-#event number: 12
-#Door Event Label
-DOOR_ID_C16_C16R0601_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R0601
-#Next Door ID Name
-DOOR_ID_C16R0601_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-136 16 -328
-#size
-1 1
-#event number: 13
-#Door Event Label
-DOOR_ID_C16_C16R0701_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R0701
-#Next Door ID Name
-DOOR_ID_C16R0701_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-360 16 -328
-#size
-1 1
-#event number: 14
-#Door Event Label
-DOOR_ID_C16_C16R0801_EXIT01
-#Next Zone ID Name
-ZONE_ID_C16R0801
-#Next Door ID Name
-DOOR_ID_C16R0801_C16_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-520 16 -328
-#size
-1 1
-#event number: 15
 #Door Event Label
 DOOR_ID_C16_R04_EXIT01
 #Next Zone ID Name
@@ -343,7 +88,7 @@ EVENTDATA_POSTYPE_GRID
 -72 0 -984
 #size
 9 1
-#event number: 16
+#event number: 1
 #Door Event Label
 DOOR_ID_C16_R04W_EXIT01
 #Next Zone ID Name
@@ -360,7 +105,7 @@ EVENTDATA_POSTYPE_GRID
 -72 0 -984
 #size
 9 1
-#event number: 17
+#event number: 2
 #Door Event Label
 DOOR_ID_C16_C04_EXIT01
 #Next Zone ID Name
@@ -377,5 +122,22 @@ EVENTDATA_POSTYPE_GRID
 -72 0 104
 #size
 9 1
+#event number: 3
+#Door Event Label
+DOOR_ID_C16_C16R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_C16R0101
+#Next Door ID Name
+DOOR_ID_C16R0101_C16_EXIT01
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -936
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
