@@ -87,7 +87,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたくしは　ヒウンシティ
-かんこうあんないじょ　スタッフです▼
+観光案内所　スタッフです▼
 こちらは　ヒウンストリート▼
 ビジネスがい　で　ゲームがいしゃ　の
 ゲームフリークが　あります▼
@@ -97,11 +97,11 @@
 ゲームがいしゃも　ある……の▼
 せいかい　は　こちら
 ヒウンストリート　でした▼
-さて　ヒウンかんこう　きねんに
-わたくしと　しょうぶを　どうぞ！▼</Text>
+さて　ヒウン観光　記念に
+わたくしと　勝負を　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-26T11:40:32" />
+				Time="2011-08-26T12:02:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -299,14 +299,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こちらは　プライムピア▼
-まぼろし　の　ポケモン
-ビクティニ　が　いたと　いわれる▼
-リバティガーデンとう　への
-ふねが　しゅっこう　しています</Text>
+			<Text>こちらは　ヒウンストリート▼
+ビジネスがい　で　ゲームがいしゃ　の
+ゲームフリークが　あります▼
+ゲームフリークには　ベテランの
+トレーナーが　まちかまえて　います！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-26T11:37:30" />
+				Time="2011-08-26T12:16:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -314,14 +314,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こちらは　プライムピア▼
-幻の　ポケモン
-ビクティニ　が　いたと　いわれる▼
-リバティガーデン島　への
-船が　出港しています</Text>
+			<Text>こちらは　ヒウンストリート▼
+ビジネス街で　ゲーム会社の
+ゲームフリークが　あります▼
+ゲームフリークには　ベテランの
+トレーナーが　待ち構えて　います！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-26T11:37:53" />
+				Time="2011-08-26T12:17:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"

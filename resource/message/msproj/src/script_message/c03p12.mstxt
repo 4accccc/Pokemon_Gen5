@@ -65,19 +65,18 @@
 			Language="JPN">
 			<Text>わたくしは　ヒウンシティ
 かんこうあんないじょ　スタッフです▼
-こちらは　プライムピア▼
-まぼろし　の　ポケモン
-ビクティニ　が　いたと　いわれる▼
-リバティガーデンとう　への
-ふねが　しゅっこう　しています▼
-モザイクの　かんばん
-むかいの　はとば……　の▽
-せいかいは　プライムピア　でした！▼
+こちらは　スリムストリート▼
+ほそい　うらどおり　ですが
+めいてん　カフェいこい　があり▽
+しるひとぞしる　ヒウンめいしょ　です▼
+いがいな　めいてんが　ある
+ほそーい　ばしょの　せいかい　は▽
+こちら　スリムストリート　でした！▼
 さて　ヒウンかんこう　きねんに
 わたくしと　しょうぶを　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-26T11:45:33" />
+				Time="2011-08-26T12:14:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -86,20 +85,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたくしは　ヒウンシティ
-かんこうあんないじょ　スタッフです▼
-こちらは　プライムピア▼
-まぼろし　の　ポケモン
-ビクティニ　が　いたと　いわれる▼
-リバティガーデンとう　への
-ふねが　しゅっこう　しています▼
-モザイクの　かんばん
-むかいの　はとば……　の▽
-せいかいは　プライムピア　でした！▼
-さて　ヒウンかんこう　きねんに
-わたくしと　しょうぶを　どうぞ！▼</Text>
+観光案内所　スタッフです▼
+こちらは　スリムストリート▼
+細い　裏通り　ですが
+名店　カフェ憩い　があり▽
+知る人ぞ知る　ヒウン名所　です▼
+意外な　名店が　ある
+ほそーい　場所の　正解は▽
+こちら　スリムストリート　でした！▼
+さて　ヒウン観光　記念に
+わたくしと　勝負を　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-26T11:45:36" />
+				Time="2011-08-26T12:14:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -295,14 +293,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こちらは　プライムピア▼
-まぼろし　の　ポケモン
-ビクティニ　が　いたと　いわれる▼
-リバティガーデンとう　への
-ふねが　しゅっこう　しています</Text>
+			<Text>こちらは　スリムストリート▼
+ほそい　うらどおりですが
+めいてん　カフェいこい　があり▽
+しるひとぞしる　ヒウンめいしょ　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-26T11:42:05" />
+				Time="2011-08-26T12:13:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -310,14 +307,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こちらは　プライムピア▼
-幻の　ポケモン
-ビクティニ　が　いたと　いわれる▼
-リバティガーデン島　への
-船が　出港しています</Text>
+			<Text>こちらは　スリムストリート▼
+細い　裏通り　ですが
+名店　カフェ憩い　があり▽
+知る人ぞ知る　ヒウン名所　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-26T11:42:05" />
+				Time="2011-08-26T12:14:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
