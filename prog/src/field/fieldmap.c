@@ -167,6 +167,9 @@
 extern u8 DEBUG_MAIN_UPDATE_TYPE;  ///<FIELDMAP TOP TAIL フレームチェック用 実態は、main.c
 #endif
 
+u32 DEBUG_PolygonListRamCount  = 0;
+u32 DEBUG_VertexListRamCount  = 0;
+
 
 static void DbgVramDumpCallBack(u32 addr, u32 szByte, void* pUserData);
 #endif  //PM_DEBUG
@@ -1362,6 +1365,11 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   // 描画にかかる micro second を表示
   // 1シンクに描画以外の処理もしているので、
   // 10000 micro second以内になっているのが理想です。
+#ifdef PM_DEBUG
+  DEBUG_PolygonListRamCount = G3X_GetPolygonListRamCount();
+  DEBUG_VertexListRamCount  = G3X_GetVtxListRamCount();
+#endif
+
 #ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
   debug_fieldmap_end_tick = OS_GetTick();
   debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
@@ -1372,8 +1380,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
     OS_TPrintf( "draw_tick:%d ", debug_fieldmap_end_tick );
     OS_TPrintf( "micro second:%d\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
     OS_TPrintf( "poly_vtx = %d, %d\n",
-        G3X_GetPolygonListRamCount(),
-        G3X_GetVtxListRamCount()
+        DEBUG_PolygonListRamCount,
+        DEBUG_VertexListRamCount
         );
     OS_TPrintf( "total poly_vtx = %d, %d\n",
         info->TotalPolygonNum,

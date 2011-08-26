@@ -130,6 +130,10 @@ static void DebugFieldMemPrint_Proc( FIELD_DEBUG_WORK *work );
 
 static void DbgDrawCallBackFunc( NNSG3dRenderObj *renderobj, void *work );
 
+
+extern u32 DEBUG_PolygonListRamCount;
+extern u32 DEBUG_VertexListRamCount;
+
 //======================================================================
 //	フィールドデバッグシステム
 //======================================================================
@@ -818,18 +822,28 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
   }
 
   {
+    DebugFont_ClearLine( work, 14 );
+    sprintf( str, "VTX_RAM REM:%d USE:%d",6144-DEBUG_VertexListRamCount, DEBUG_VertexListRamCount);
+		DebugFont_Print( work, 0,  14, str );
+
+    DebugFont_ClearLine( work, 15 );
+    sprintf( str, "POL_RAM REM:%d USE:%d",2048-DEBUG_PolygonListRamCount, DEBUG_PolygonListRamCount);
+		DebugFont_Print( work, 0,  15, str );
+  }
+
+  {
     u32 size = 0;
 
     NNS_GfdDumpLnkTexVramManagerEx( cb_DumpLnkVramManager,NULL,&size );
-    DebugFont_ClearLine( work, 14 );
+    DebugFont_ClearLine( work, 17 );
     sprintf( str, "TEXV REM:%d USE:%d",size, (128*3*1024)-size);
-		DebugFont_Print( work, 0, 14, str );
+		DebugFont_Print( work, 0, 17, str );
 	
     size = 0;
     NNS_GfdDumpLnkPlttVramManagerEx( cb_DumpLnkVramManager,&size );
-    DebugFont_ClearLine( work, 15 );
+    DebugFont_ClearLine( work, 18 );
     sprintf( str, "PLTV REM:%d USE:%d",size, (16*1024)-size);
-		DebugFont_Print( work, 0, 15, str );
+		DebugFont_Print( work, 0, 18, str );
   }
 }
 
