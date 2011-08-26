@@ -20310,10 +20310,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>わたしじゃ　とめられなかったわね
+どこまで　かちつづけるのかしら▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-26T02:17:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20321,10 +20322,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>わたしじゃ　止められなかったわね
+どこまで　勝ち続けるのかしら？▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-26T02:17:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22122,10 +22124,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>たかいところに　いるせいかしら？
+ふぅ……くるしい……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:41" />
+				User="swan_scenario:W00293"
+				Time="2011-08-25T10:49:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22133,10 +22136,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>高い所に　いるせいかしら？
+ふぅ……苦しい……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:25:47" />
+				User="swan_scenario:W00293"
+				Time="2011-08-25T10:49:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22690,10 +22694,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>……そうか……わたしは……
+たいせつなものを　みうしなって……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T10:30:59" />
+				Time="2011-08-25T10:47:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22701,10 +22706,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>……そうか……わたしは……
+大切なものを　見失って……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T10:30:59" />
+				Time="2011-08-25T10:48:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22772,11 +22778,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしじゃ　とめられなかったわね
-どこまで　かちつづけるのかしら▼</Text>
+			<Text>あいだけが　しはいする　せかい！
+ぜったいに　あきらめたりしないわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:25" />
+				Time="2011-08-26T02:27:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22784,11 +22790,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしじゃ　止められなかったわね
-どこまで　勝ち続けるのかしら？▼</Text>
+			<Text>愛だけが　支配する　世界！
+絶対に　あきらめたりしないわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:25" />
+				Time="2011-08-26T02:27:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24618,11 +24624,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たかいところに　いるせいかしら？
-ふぅ……くるしい……▼</Text>
+			<Text>えっ！　バンジロウさまと　ごかく！？
+いや……もしかしたら……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:25" />
+				Time="2011-08-25T10:52:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24630,11 +24636,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>高い所に　いるせいかしら？
-ふぅ……苦しい……▼</Text>
+			<Text>えっ！　バンジロウさまと　互角！？
+いや……もしかしたら……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:29:25" />
+				Time="2011-08-25T10:52:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

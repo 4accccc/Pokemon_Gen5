@@ -20692,10 +20692,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>ぼくはね　せかいで　いちばん
+ポケモンに　あいされてるんだ！▼
+けさも　いきなり　でんげきを　くらい
+かみつかれ　そのうえ　やかれたよ！▼
+じゃれてくるにも　ほどがあるよね！
+ふふっ　うらやましいだろ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-25T10:29:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -20703,10 +20708,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>ぼくはね　世界で　一番
+ポケモンに　愛されてるんだ！▼
+今朝も　いきなり　電撃をくらい
+かみつかれ　その上　焼かれたよ！▼
+じゃれてくるにも　ほどがあるよね！
+ふふっ　うらやましいだろ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-25T10:29:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -20758,10 +20768,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>あなたの　かいしんげきも
+ここで　おしまいね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-26T02:16:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -20769,10 +20780,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>あなたの　快進撃も
+ここで　おしまいね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-26T02:16:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -21335,10 +21347,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>￥ざいほうが　あるという　はなし</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-26T02:15:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -21346,10 +21358,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>￥ざいほうが　あるという　はなし</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-26T02:15:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22295,10 +22307,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>うっ……ぐぐぐ……
+ふぃー！▼
+なんか　さんそ　うすくないですかぁ？
+あたまが　くらくらしてくる……▼
+ふぅふぅ……それでも……
+しょうぶしますよっ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-25T10:48:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22306,10 +22323,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>うっ……ぐぐぐ……
+ふぃー！▼
+なんか　酸素　薄くないですかぁ？
+頭が　くらくらしてくる……▼
+ふぅふぅ……それでも……
+勝負しますよっ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-25T10:48:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22756,11 +22778,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さいきょうの　しょうごうを
+			<Text>とまれ！　さいきょうの　しょうごうを
 てにするのは　わたしだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:25:19" />
+				Time="2011-08-25T10:39:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22768,11 +22790,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>最強の称号を
+			<Text>とまれ！　最強の称号を
 手にするのは　わたしだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:25:19" />
+				Time="2011-08-25T10:38:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22791,15 +22813,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼくはね　せかいで　いちばん
-ポケモンに　あいされてるんだ！▼
-けさも　いきなり　でんげきを　くらい
-かみつかれ　そのうえ　やかれたよ！▼
-じゃれてくるにも　ほどがあるよね！
-ふふっ　うらやましいだろ！▼</Text>
+			<Text>おのれぇ！　バンジロウめぇ！！
+なぜ　あいつは　あんなに　つよい！▼
+さいきょうの　ポケモンたちを　つかう
+わたしが　なぜ　かてない！▼
+なぜだ　なぜだ　なぜだ！！
+なぁ！　おしえてくれよ！▼　</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:25:19" />
+				Time="2011-08-26T02:15:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22807,15 +22829,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼくはね　世界で　一番
-ポケモンに　愛されてるんだ！▼
-今朝も　いきなり　電撃をくらい
-かみつかれ　その上　焼かれたよ！▼
-じゃれてくるにも　ほどがあるよね！
-ふふっ　うらやましいだろ！▼</Text>
+			<Text>おのれぇ！　バンジロウめぇ！！
+なぜ　あいつは　あんなに　強い！▼
+最強の　ポケモンたちを　使う
+わたしが　なぜ　勝てない！▼
+なぜだ　なぜだ　なぜだ！！
+なぁ！　教えてくれよ！▼　</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:25:19" />
+				Time="2011-08-26T02:16:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22873,11 +22895,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたの　かいしんげきも
-ここで　おしまいね！▼</Text>
+			<Text>しろのじゅどうを　せいは　するのは
+あいに　みちた　わたしたちよ！▼
+このせかいを　だいすきクラブの
+ラブパワーで　ぬりかえる！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:25:19" />
+				Time="2011-08-26T02:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22885,11 +22909,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたの　快進撃も
-ここで　おしまいね！▼</Text>
+			<Text>白の樹洞を　制覇するのは
+愛に　満ちた　わたしたちよ！▼
+この世界を　だいすきクラブの
+ラブパワーで　塗り替える！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:25:19" />
+				Time="2011-08-26T02:24:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23025,10 +23051,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>バンジロウくんという
+いじげんの　つよさを　もつ▽
+トレーナーの　とうじょう！▼
+そして　あかしろボウシの　しんじんも
+ついに　ここまでやってきた　と！▼
+ふふっ！　たのしくなってきたわね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:28:50" />
+				Time="2011-08-26T02:12:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23036,10 +23067,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>バンジロウくんという
+異次元の　強さを　持つ▽
+トレーナーの　登場！▼
+そして　赤白ボウシの　新人も
+ついに　ここまでやってきた　と！▼
+ふふっ！　楽しくなってきたわね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:28:49" />
+				Time="2011-08-26T02:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23136,13 +23172,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おれは　このエリアで
+			<Text>じごくの　そこの　さいしんぶで
 ながいあいだ　いきのびてきた！▼
 おまえの　ような　しんいりには
 ぜったいに　まけん！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:25:19" />
+				Time="2011-08-26T02:13:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23150,13 +23186,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おれは　このエリアで
+			<Text>地獄の底の　最深部で
 長い間　生き延びてきた！▼
 おまえの　ような　新入りには
 絶対に　負けん！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:25:19" />
+				Time="2011-08-26T02:13:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -24583,15 +24619,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うっ……ぐぐぐ……
-ふぃー！▼
-なんか　さんそ　うすくないですかぁ？
-あたまが　くらくらしてくる……▼
-ふぅふぅ……それでも……
-しょうぶしますよっ！▼</Text>
+			<Text>バンジロウさまと　たたかいたければ
+バンジロウファンクラブ　かいちょうの▽
+わたしを　たおしていきなさい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:25:19" />
+				Time="2011-08-25T10:54:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -24599,15 +24632,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うっ……ぐぐぐ……
-ふぃー！▼
-なんか　酸素　薄くないですかぁ？
-頭が　くらくらしてくる……▼
-ふぅふぅ……それでも……
-勝負しますよっ！▼</Text>
+			<Text>バンジロウ様と　戦いたければ
+バンジロウファンクラブ会長の▽
+わたしを　倒していきなさい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:25:19" />
+				Time="2011-08-25T10:54:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
