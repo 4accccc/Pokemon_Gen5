@@ -81,18 +81,20 @@ struct _HABITAT_LIST_WK{
   GFL_TCB             *p_vtask;
   BOOL  is_zenkoku;
 
-//  BOOL  is_cursor_active;           // カーソルが選択状態かどうか
-//  s32   select_index;               // 選択中のポケモン
-//  s32   zone_data_cnt;              // データ数
-//  s32   list_size;                  // ポケモンリストに表示されている数
-//  s32   zone_data_index;            // リストのインデックス
-//  s32   season;                     // 表示中のの季節
-//  HABITAT_LIST_APPEAR land_type;  // 表示中のの場所タイプ
   WORDSET         *p_word_set;
   ZUKAN_SAVEDATA  *p_zkn_sv;
 
   SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ
   u32 list_key_state;         // リストキー状態
+
+  // アニメーション待ち用
+  u8  anm_seq_no;             // アニメーションシーケンス番号
+  u8  anm_clwk_id;            // アニメーション中のセルアクターワークID
+  u32 next_seq_id;
+  SEQ_CHANGE_PARAM next_seq_param; // シーケンス切替パラメータ
+
+  // ボタン点滅用
+  u8	button_cnt;					    // ボタンアニメ用カウンタ
 
 };
 

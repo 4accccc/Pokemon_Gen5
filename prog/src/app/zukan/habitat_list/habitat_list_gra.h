@@ -51,6 +51,8 @@ enum
   LIST_ICON_X_OFFSET   = 12,       // リストアイコンのXオフセット値
   LIST_ICON_Y_OFFSET   = 12,      // リストアイコンのYオフセット値
   LIST_ICON_SET_W      = 16,       // アイコンの幅
+  BLINK_PAL_NO_01      = 6,       // 点滅用パレット
+  BLINK_PAL_NO_02      = 7,       // 点滅用パレット
 };
 
 // OBJWK定義
@@ -84,9 +86,10 @@ enum
 // アニメーションシーケンス
 enum
 {
-  OBJ_ANM_SEQ_SCROLL_BUTTON   = 2,    // スクロールボタン
-  OBJ_ANM_SEQ_SCROLL_BAR      = 3,    // スクロールバー
-  OBJ_ANM_SEQ_SELECT_BUTTON   = 1,    // セレクトボタン
+  OBJ_ANM_SEQ_SCROLL_BUTTON       = 2,    // スクロールボタン
+  OBJ_ANM_SEQ_SCROLL_BAR          = 3,    // スクロールバー
+  OBJ_ANM_SEQ_SELECT_BUTTON       = 1,    // セレクトボタン
+  OBJ_ANM_SEQ_SELECT_BUTTON_NAM   = 5,    // セレクトボタン(アニメ)
   OBJ_ANM_SEQ_MODE_BUTTON     = 13,   // モード切替ボタン
   OBJ_ANM_SEQ_MODE_BUTTON_ANM = 14,   // モード切替ボタン（アニメ）
   OBJ_ANM_SEQ_MINIMAP     = 15, // ミニマップ
@@ -249,4 +252,11 @@ extern void HABITAT_LIST_GRA_DeleteList( HABITAT_LIST_GRA_WK* p_wk );
 extern u32 HABITAT_LIST_GRA_ListMain( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_GetScrollBarYPos( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_RecoverDrawFlag( HABITAT_LIST_GRA_WK *p_wk );
+extern u32 HABITAT_LIST_GRA_GetListPos( HABITAT_LIST_GRA_WK *p_wk );
+extern void HABITAT_LIST_GRA_ChageSelectItemPalette( HABITAT_LIST_GRA_WK *p_wk ,u8 pal );
+extern u32 HABITAT_LIST_GRA_GetScrollCount( HABITAT_LIST_GRA_WK *p_wk );
+extern void HABITAT_LIST_GRA_SetCursorPos( HABITAT_LIST_GRA_WK *p_wk ,u32 cursor_pos );
+extern ZUKANHABITAT_LIST_LISTDATA* HABITAT_LIST_GRA_GetListData(
+                                  HABITAT_LIST_GRA_WK *p_wk ,u32 list_index );
+extern void HABITAT_LIST_GRA_SetAnmSeq( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid ,u32 anm_seq );
 

@@ -1374,7 +1374,7 @@ void HABITAT_LIST_GRA_MakeList( HABITAT_LIST_GRA_WK* p_wk, u8 list_size,
   {
     ARCHANDLE * ah;
     ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_HABITAT_LIST );
-    FRAMELIST_LoadBlinkPalette( p_wk->p_lwk, ah, NARC_zukan_gra_list_list_bgd_NCLR, 6, 7 );
+    FRAMELIST_LoadBlinkPalette( p_wk->p_lwk, ah, NARC_zukan_gra_list_list_bgd_NCLR, BLINK_PAL_NO_01, BLINK_PAL_NO_02 );
     GFL_ARC_CloseDataHandle( ah );
   }
 
@@ -1734,5 +1734,102 @@ void HABITAT_LIST_GRA_RecoverDrawFlag( HABITAT_LIST_GRA_WK *p_wk )
       p_ic_s->draw_flag = FALSE;
     }
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リスト位置を取得する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u32 HABITAT_LIST_GRA_GetListPos( HABITAT_LIST_GRA_WK *p_wk )
+{
+  return FRAMELIST_GetListPos( p_wk->p_lwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールカウント取得する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u32 HABITAT_LIST_GRA_GetScrollCount( HABITAT_LIST_GRA_WK *p_wk )
+{
+  return FRAMELIST_GetScrollCount( p_wk->p_lwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソル位置を設定する
+ *
+ *	@param	*p_wk 
+ *	@param	cursor_pos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_LIST_GRA_SetCursorPos( HABITAT_LIST_GRA_WK *p_wk ,u32 cursor_pos )
+{
+  FRAMELIST_SetCursorPos( p_wk->p_lwk, cursor_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  選択項目のパレットを変える
+ *
+ *	@param	*p_wk 
+ *	@param	pal 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_LIST_GRA_ChageSelectItemPalette( HABITAT_LIST_GRA_WK *p_wk ,u8 pal )
+{
+  // パレットを変える
+  u32 cursor_pos = FRAMELIST_GetCursorPos( p_wk->p_lwk );
+  FRAMELIST_ChangePosPalette( p_wk->p_lwk,cursor_pos, pal );
+  GFL_BG_LoadScreenV_Req( BGM_FRAME_LIST );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief リストデータに関連付けされているデータを取得する
+ *
+ *	@param	*p_wk 
+ *	@param	list_index 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+ZUKANHABITAT_LIST_LISTDATA* HABITAT_LIST_GRA_GetListData(
+                                  HABITAT_LIST_GRA_WK *p_wk ,u32 list_index )
+{
+  return &p_wk->p_list_data[list_index];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションシーケンスを設定する
+ *
+ *	@param	*p_wk 
+ *	@param	clwkid 
+ *	@param	anm_seq 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_LIST_GRA_SetAnmSeq( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid ,u32 anm_seq )
+{
+  GFL_CLWK *p_clwk;
+  p_clwk= HABITAT_LIST_GRA_GetComClWk( p_wk ,clwkid);
+  GFL_CLACT_WK_SetAnmSeq( p_clwk, anm_seq );
+  GFL_CLACT_WK_SetAnmFrame( p_clwk ,0 );
+  GFL_CLACT_WK_SetAutoAnmFlag( p_clwk , TRUE );
 }
 
