@@ -4,6 +4,7 @@ g2dcvtr no_gear_f.ncl
 
 g2dcvtr c_gear01.nsc -bg
 g2dcvtr c_gear02.nsc -bg
+g2dcvtr c_gear03.nsc -bg
 g2dcvtr off_gear.nsc -bg
 g2dcvtr c_gear_m.ncl
 g2dcvtr c_gear_f.ncl

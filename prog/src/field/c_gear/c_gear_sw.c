@@ -779,23 +779,26 @@ enum
 //--------------------------------------------
 
 
-#define GEAR_MAIN_FRAME   (GFL_BG_FRAME2_S)
+#define GEAR_MAIN_FRAME   (GFL_BG_FRAME0_S)
 #define GEAR_DECAL_FRAME   (GFL_BG_FRAME1_S)
-#define GEAR_RING_FRAME   (GFL_BG_FRAME0_S)
+#define GEAR_RING_FRAME   (GFL_BG_FRAME2_S)
+#define GEAR_BASE_FRAME   (GFL_BG_FRAME3_S)
 
-#define GEAR_MAIN_FRAME_MSK (GX_BLEND_PLANEMASK_BG2)
+#define GEAR_MAIN_FRAME_MSK (GX_BLEND_PLANEMASK_BG0)
 #define GEAR_DECAL_FRAME_MSK (GX_BLEND_PLANEMASK_BG1)
-#define GEAR_RING_FRAME_MSK (GX_BLEND_PLANEMASK_BG0)
+#define GEAR_RING_FRAME_MSK (GX_BLEND_PLANEMASK_BG2)
+#define GEAR_BASE_FRAME_MSK (GX_BLEND_PLANEMASK_BG3)
 
 #define GEAR_MAIN_FRAME_PRI (0)
 #define GEAR_DECAL_FRAME_PRI (1)
 #define GEAR_RING_FRAME_PRI (2)
+#define GEAR_BASE_FRAME_PRI (3)
 
 #define CGEAR_CLACT_BG_PRI_NA  ( GEAR_DECAL_FRAME_PRI )  //ƒAƒ‹ƒtƒ@–³‚µ
 #define CGEAR_CLACT_BG_PRI     ( GEAR_RING_FRAME_PRI )
 
 #define ALPHA_TARGET_1ST  (GEAR_DECAL_FRAME_MSK)
-#define ALPHA_TARGET_2ND  (GEAR_RING_FRAME_MSK|GEAR_DECAL_FRAME_MSK|GX_BLEND_PLANEMASK_OBJ)
+#define ALPHA_TARGET_2ND  (GEAR_BASE_FRAME_MSK|GEAR_RING_FRAME_MSK|GEAR_DECAL_FRAME_MSK|GX_BLEND_PLANEMASK_OBJ)
 #define ALPHA_1ST (10)
 #define ALPHA_2ND (31-ALPHA_1ST)
 
@@ -2224,8 +2227,17 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 design_no, BOOL pal_
   GFL_ARCHDL_UTIL_TransVramScreen(
     pWork->handle, NARC_c_gear_sw_c_gear01_nscr, GEAR_MAIN_FRAME, 0, 
     0x800, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
+  if( pWork->power_flag ){
+    GFL_ARCHDL_UTIL_TransVramScreen(
+      pWork->handle, NARC_c_gear_sw_c_gear02_nscr, GEAR_RING_FRAME, 0, 
+      0x800, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
+  }else{
+    GFL_ARCHDL_UTIL_TransVramScreen(
+      pWork->handle, NARC_c_gear_sw_off_gear_nscr, GEAR_RING_FRAME, 0, 
+      0x800, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
+  }
   GFL_ARCHDL_UTIL_TransVramScreen(
-    pWork->handle, NARC_c_gear_sw_off_gear_nscr+pWork->power_flag, GEAR_RING_FRAME, 0, 
+    pWork->handle, NARC_c_gear_sw_c_gear03_nscr, GEAR_BASE_FRAME, 0, 
     0x800, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
 
 }
@@ -2304,10 +2316,25 @@ static void _createSubBg(C_GEAR_WORK* pWork)
     GFL_BG_SetVisible( i, VISIBLE_OFF );
   }
   {
+    int frame = GEAR_BASE_FRAME;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_SetPriority( frame, GEAR_BASE_FRAME_PRI );
+
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
     int frame = GEAR_RING_FRAME;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x04000, 0x2800,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -2322,7 +2349,7 @@ static void _createSubBg(C_GEAR_WORK* pWork)
     int frame = GEAR_MAIN_FRAME;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x04000, 0x2800,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -2337,7 +2364,7 @@ static void _createSubBg(C_GEAR_WORK* pWork)
     int frame = GEAR_DECAL_FRAME;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x04000, 0x2000,GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -3574,17 +3601,16 @@ static void _workEnd(C_GEAR_WORK* pWork)
 
   GFL_CLACT_USERREND_Delete( pWork->userRend );
   GFL_CLACT_UNIT_Delete( pWork->cellUnit );
-
-
-  GFL_BG_FreeBGControl(GEAR_RING_FRAME);
-  GFL_BG_FreeBGControl(GEAR_DECAL_FRAME);
-  GFL_BG_FreeBGControl(GEAR_MAIN_FRAME);
-
-
+  
+  GFL_BG_SetVisible( GEAR_BASE_FRAME, VISIBLE_OFF );
   GFL_BG_SetVisible( GEAR_RING_FRAME, VISIBLE_OFF );
   GFL_BG_SetVisible( GEAR_DECAL_FRAME, VISIBLE_OFF );
   GFL_BG_SetVisible( GEAR_MAIN_FRAME, VISIBLE_OFF );
 
+  GFL_BG_FreeBGControl(GEAR_DECAL_FRAME);
+  GFL_BG_FreeBGControl(GEAR_MAIN_FRAME);
+  GFL_BG_FreeBGControl(GEAR_RING_FRAME);
+  GFL_BG_FreeBGControl(GEAR_BASE_FRAME);
 }
 
 //----------------------------------------------------------------------------
