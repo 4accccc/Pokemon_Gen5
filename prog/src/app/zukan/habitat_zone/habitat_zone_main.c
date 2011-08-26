@@ -17,6 +17,14 @@
 #include "habitat_zone_main_def.h"  // 定数定義
 #include "field/zonedata.h"         // for ZONEDATA_GetPlaceNameID
 
+#include "../../../../../resource/fldmapdata/zonetable/zone_id.h"
+
+#if	PM_VERSION == VERSION_B2
+#include "../../../../../resource/zukan_data/zkn_area_b_zone_group.cdat"
+#else
+#include "../../../../../resource/zukan_data/zkn_area_w_zone_group.cdat"
+#endif
+
 //=============================================================================
 /**
  *					定数宣言
@@ -1012,7 +1020,8 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
 
   // ゾーンIDに対応した地名メッセージIDを取得
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
-  u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_id);
+  u16 place_id = ZONEDATA_GetPlaceNameID(
+                  zkn_area_zone_group[p_list_data->zone_group]);
   
   // 場所ごとにメッセージを切り替える
   if( p_wk->land_type == HABITAT_ZONE_APPEAR_LAND )
@@ -1153,8 +1162,9 @@ static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk )
 
   // ゾーンIDに対応した地名メッセージIDを取得
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
-  u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_id);
-  
+  u16 place_id = ZONEDATA_GetPlaceNameID(
+      zkn_area_zone_group[p_list_data->zone_group]);
+
   // ワードセットに登録
   WORDSET_RegisterPlaceName( p_wk->p_word_set, 0, place_id );
   
@@ -1691,8 +1701,8 @@ static void RefreshMapWin( HABITAT_ZONE_WK *p_wk )
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
 
   // マップ上の点滅アニメーションを表示
-  ONOUE_Printf("zone_id = %x\n",p_list_data->zone_id);
-  HABITAT_ZONE_GRA_SetMapBlink( &p_wk->gra_sys ,p_list_data->zone_id);
+  ONOUE_Printf("zone_group = %x\n",p_list_data->zone_group);
+  HABITAT_ZONE_GRA_SetMapBlink( &p_wk->gra_sys ,p_list_data->zone_group);
 
   // マップ名を上画面に書き込む
   DrawMapNameMsg( p_wk );

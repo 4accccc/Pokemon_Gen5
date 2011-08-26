@@ -28,6 +28,14 @@
 #include "font/font.naix"
 #include "townmap_gra.naix"
 
+#include "../../../../../resource/fldmapdata/zonetable/zone_id.h"
+
+#if	PM_VERSION == VERSION_B2
+#include "../../../../../resource/zukan_data/zkn_area_b_zone_group.cdat"
+#else
+#include "../../../../../resource/zukan_data/zkn_area_w_zone_group.cdat"
+#endif
+
 //ポケアイコン
 #include "pokeicon/pokeicon.h"
 
@@ -1498,17 +1506,17 @@ static void GRA_GetPokeIconPos( u8 index ,GFL_CLACTPOS *p_pos )
  *	@brief  マップ点滅処理
  *
  *	@param	*p_wk 
- *	@param	zone_id 
+ *	@param	zone_group 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void HABITAT_ZONE_GRA_SetMapBlink( HABITAT_ZONE_GRA_WK *p_wk ,u16 zone_id )
+void HABITAT_ZONE_GRA_SetMapBlink( HABITAT_ZONE_GRA_WK *p_wk ,u16 zone_group )
 {
   GFL_CLACTPOS pos;
 
-  u16 zone_group = TOWNMAP_UTIL_GetRootZoneID( p_wk->p_gdata, zone_id );
-  u16 dataIndex = TOWNMAP_DATA_SearchRootZoneID( p_wk->p_townmap_data ,zone_group );
+  u16 root_zone = TOWNMAP_UTIL_GetRootZoneID(p_wk->p_gdata, zkn_area_zone_group[zone_group] );
+  u16 dataIndex = TOWNMAP_DATA_SearchRootZoneID( p_wk->p_townmap_data ,root_zone );
 
   // アニメーションシーケンスの設定
   u16 anm_seq = TOWNMAP_DATA_GetParam( p_wk->p_townmap_data

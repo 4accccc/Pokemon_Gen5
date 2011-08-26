@@ -53,7 +53,7 @@ typedef struct {
 
 // ゾーンデータ
 typedef struct {
-  u16 zone_id;              // ゾーンID
+  u16 zone_group;              // ゾーングループ
   HABITAT_ZONE_POKE_DATA poke_data[ HABITAT_ZONE_POKE_LIST_MAX ]; // データリスト
 }HABITAT_ZONE_DATA;
 
