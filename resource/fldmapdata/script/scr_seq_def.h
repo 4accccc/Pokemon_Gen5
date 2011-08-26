@@ -13507,19 +13507,26 @@
  * @brief リゾート用　文字バッファへ登録
  * @param[in]  type何を登録するか「下記値を設定」
  * @param[in]  param typeへきて
- *  RESORT_WORD_PEOPLE…話しかけ中の人物名
+ *      RESORT_WORD_PEOPLE…話しかけ中の人物名
+ *      RESORT_PEOPLE_TYPE_TOURIST　…旅行者
+ *      RESORT_PEOPLE_TYPE_PROXY    …代理人
+ *      RESORT_PEOPLE_TYPE_SECRETARY…秘書
+ *      RESORT_PEOPLE_TYPE_RESIDENT …住民
  *
- * @param[in]  idx 何番の箇所へ登録するか
+ * *param[in] idx 上記の何番目の人か
+ *
+ * @param[in]  buff_idx 何番の箇所へ登録するか
  */
 //--------------------------------------------------------------
-#define _RESORT_SET_WORD( type, param, idx ) \
-    _ASM_RESORT_SET_WORD type, param, idx
+#define _RESORT_SET_WORD( type, param, idx, buff_idx ) \
+    _ASM_RESORT_SET_WORD type, param, idx, buff_idx
 
-  .macro _ASM_RESORT_SET_WORD type, param, idx
+  .macro _ASM_RESORT_SET_WORD type, param, idx, buff_idx
   .short EV_SEQ_RESORT_SET_WORD
   .short  \type
   .short  \param
   .short  \idx
+  .short  \buff_idx
   .endm
 
 //--------------------------------------------------------------
@@ -13531,7 +13538,6 @@
  *      RESORT_PEOPLE_TYPE_PROXY    …代理人
  *      RESORT_PEOPLE_TYPE_SECRETARY…秘書
  *      RESORT_PEOPLE_TYPE_RESIDENT …住民
- *      RESORT_PEOPLE_TYPE_VISITOR  …滞在者
  *
  *
  * @param[in]  idx 何番目のデータか（RESORT_DELTE_PEOPLE_MINEならみない）
@@ -13560,22 +13566,6 @@
   .short EV_SEQ_RESORT_CHECK_VISITOR
   .short \flag
   .short \msgID
-  .endm
-
-//--------------------------------------------------------------
-/**
- * @brief リゾート用　転職拡張版
- * @param[in]  param  転職するもの
- * @param[in]  id     いなくなる人
- */
-//--------------------------------------------------------------
-#define _RESORT_JOB_CHANGE_EX( param, id ) \
-      _ASM_RESORT_JOB_CHANGE_EX param, id
-
-  .macro _ASM_RESORT_JOB_CHANGE_EX param, id
-  .short EV_SEQ_RESORT_JOB_CHANGE_EX
-  .short \param
-  .short \id
   .endm
 
 //--------------------------------------------------------------

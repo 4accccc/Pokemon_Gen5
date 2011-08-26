@@ -353,18 +353,16 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
+  RESORT_ABSTRUCT_DATA *p_src = RESORT_PEOPLE_GetAbstructData( p_people );
 
   switch( param )
   {
   case RESORT_JOBCHANGE_RESIDENT:
-    {
-      //TODO
-      *p_ret_wk = RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
-    }
+    *p_ret_wk = RESORT_DATA_MANAGER_JobChange( p_data_manager, p_src, RESORT_DATA_TYPE_RESIDENT );
     break;
 
   case RESORT_JOBCHANGE_SECETARY:
-    RESORT_DATA_MANAGER_RecvToSecretary( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
+    *p_ret_wk = RESORT_DATA_MANAGER_JobChange( p_data_manager, p_src, RESORT_DATA_TYPE_SECRETARY );
     break;
   default:
     GF_ASSERT(0);
@@ -402,17 +400,6 @@ VMCMD_RESULT EvCmdResortKeepPeople( VMHANDLE *p_core, void *p_wk_adrs )
   return VMCMD_RESULT_CONTINUE;
 }
 
-static void Resort_Scrcmd_SetWord_ShopName( WORDSET *p_wordset, u16 bufID, RESORT_PEOPLE_ALL_DATA *p_all_people, RESORT_BINARY_SHOP *p_shop, u16 resident_idx, HEAPID heapID )
-{
-  RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, resident_idx );
-  STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( p_shop, p_resident, heapID );
-
-  u32 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
-
-  WORDSET_RegisterWord( p_wordset, bufID, p_str, sex, TRUE, PM_LANG );
-  GFL_STR_DeleteBuffer(p_str);
-}
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  単語登録
@@ -436,19 +423,17 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   u16 type  = VMGetU16(p_core);
   u16 param = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 idx   = VMGetU16(p_core);
+  u16 buff_idx   = VMGetU16(p_core);
 
 
   RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
 
   RESORT_CITY_DATA *p_city_data = RESORT_SYSTEM_GetCityData( p_sys );
-  RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
   RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
   RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity( p_sys );
-  RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
-  void *p_people_data = RESORT_PEOPLE_GetDataAdrs( p_people );
 
-  RESORT_RESIDENT_DATA *p_data;
+  RESORT_ABSTRUCT_DATA *p_data;
+  void *p_data_adrs;
 
   //話しかけた人
   switch( param )
@@ -457,12 +442,20 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
     p_data = NULL;
     break;
   case RESORT_WORD_PARAM_FRONT:
-    p_data = RESORT_PEOPLE_GetDataAdrs(p_people);
+    {
+      RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
+      RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
+      p_data = RESORT_PEOPLE_GetAbstructData( p_people );
+      p_data_adrs = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_data );
+    }
     break;
   default:
-    //どこかの住民
-    GF_ASSERT(param < RESORT_RESIDENT_DATA_NUM );
-    p_data = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,param);
+    {
+      RESORT_ABSTRUCT_MANAGER * p_man = RESORT_SYSTEM_GetAbstructManager( p_sys );
+      GF_ASSERT(param < RESORT_RESIDENT_DATA_NUM );
+      p_data = RESORT_ABSTRUCT_MANAGER_GetDataByPeopleIndex( p_man, param, idx );
+      p_data_adrs = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_data );
+    }
     break;
   }
 
@@ -470,37 +463,54 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   switch( type )
   {
   case RESORT_WORD_PEOPLE:
+    GF_ASSERT( p_data );
     {
       STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
       STRBUF *p_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
-      u32 sex = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
+      u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
 
-      RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_NAME, name );
+      RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_NAME, name );
       GFL_STR_SetStringCode( p_str, name );
 
-      WORDSET_RegisterWord( p_wordset, idx, p_str, sex, TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer(p_str);
     }
     break;
   case RESORT_WORD_SHOP:
+    GF_ASSERT( p_data );
+    GF_ASSERT( RESORT_ABSTRUCT_DATA_GetPeopleType(p_data) == RESORT_DATA_TYPE_RESIDENT );
     {
-      STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( p_shop, p_data, heapID );
-      u32 sex = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
+      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data_adrs );
+      u16 shopno = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
+      STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( p_shop, p_data, shopno, heapID );
+      u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
 
-      WORDSET_RegisterWord( p_wordset, idx, p_str, sex, TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
+      GFL_STR_DeleteBuffer(p_str);
+    }
+    break;
+  case RESORT_WORD_WANT_SHOP:
+    GF_ASSERT( p_data );
+    {
+      u16 shopno = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( p_shop, p_data, shopno, heapID );
+      u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
+
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
       GFL_STR_DeleteBuffer(p_str);
     }
     break;
   case RESORT_WORD_FREE_GREET:
+    GF_ASSERT( p_data );
     {
       STRCODE greet[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE];
       STRBUF *p_str = GFL_STR_CreateBuffer( GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
-      u32 sex = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
-      RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, greet );
+      u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
+      RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, greet );
       GFL_STR_SetStringCode( p_str, greet );
     
-      WORDSET_RegisterWord( p_wordset, idx, p_str, sex, TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer(p_str);
     }
@@ -514,33 +524,53 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
       RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_AUTHER_NAME, name );
 
       GFL_STR_SetStringCode( p_str, name );
-      WORDSET_RegisterWord( p_wordset, idx, p_str, sex, TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer(p_str);
     }
     break;
   case RESORT_WORD_FREE_PHRASE:
+    GF_ASSERT( p_data );
     {
       STRCODE phrase[RESORT_PHRASE_LEN+EOM_SIZE];
       STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_PHRASE_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
 
-      u32 sex = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
-      RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, phrase );
+      u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
+      RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, phrase );
 
       GFL_STR_SetStringCode( p_str, phrase );
     
-      WORDSET_RegisterWord( p_wordset, idx, p_str, sex, TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer(p_str);
     }
     break;
   case RESORT_WORD_SHOP_GENRE:
+    GF_ASSERT( p_data );
     {
-      u32 data = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data_adrs );
+      u16 shopno = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
+      const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_SHOP_GetData(p_shop, shopno );
+      u32 data = RESORT_BINARY_SHOP_DATA_GetData(cp_shop,RESORT_BINARY_SHOP_PARAM_TYPE);
+
       GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
       STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+data );
 
-      WORDSET_RegisterWord( p_wordset, idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
+      GFL_STR_DeleteBuffer(p_str);
+      GFL_MSG_Delete( p_msg );
+    }
+    break;
+  case RESORT_WORD_WANT_SHOP_GENRE:
+    GF_ASSERT( p_data );
+    {
+      u32 shopno = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_SHOP_GetData(p_shop, shopno);
+      u32 data = RESORT_BINARY_SHOP_DATA_GetData(cp_shop,RESORT_BINARY_SHOP_PARAM_TYPE);
+      GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
+      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+data );
+
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
       GFL_STR_DeleteBuffer(p_str);
       GFL_MSG_Delete( p_msg );
     }
@@ -552,35 +582,39 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
 
       RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_CITY_NAME, city );
       GFL_STR_SetStringCode( p_str, city );
-      WORDSET_RegisterWord( p_wordset, idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer(p_str);
     }
     break;
   case RESORT_WORD_SHOP_RESTEXP:
+    GF_ASSERT( p_data );
+    GF_ASSERT( RESORT_ABSTRUCT_DATA_GetPeopleType(p_data) == RESORT_DATA_TYPE_RESIDENT );
     {
-      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_data );
-      const RESORT_INSTITUTION_DATA *cp_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_data_adrs );
+      const RESORT_INSTITUTION_DATA *cp_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data_adrs );
       u16 next_exp = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_NEXT_EXP );
       u16 now_exp = RESORT_INSTITUTION_DATA_GetData( cp_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
 
       u32 num = (s32)next_exp - (s32)now_exp;
       num = MATH_IMax( num, 0 );
-      WORDSET_RegisterNumber( p_wordset, idx, num, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, buff_idx, num, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case RESORT_WORD_SHOP_LV:
+    GF_ASSERT( p_data );
+    GF_ASSERT( RESORT_ABSTRUCT_DATA_GetPeopleType(p_data) == RESORT_DATA_TYPE_RESIDENT );
     {
-      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_data );
-      const RESORT_INSTITUTION_DATA *cp_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_data_adrs );
+      const RESORT_INSTITUTION_DATA *cp_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data_adrs );
       u16 lv = RESORT_INSTITUTION_DATA_GetData( cp_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-      WORDSET_RegisterNumber( p_wordset, idx, lv+1, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, buff_idx, lv+1, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case RESORT_WORD_CITY_LV:
     {
       u32 lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
-      WORDSET_RegisterNumber( p_wordset, idx, lv+1, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, buff_idx, lv+1, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case RESORT_WORD_CITY_RANK:
@@ -590,7 +624,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
       u32 rank = RESORT_BINARY_CITY_GetData( p_city, city_idx, RESORT_BINARY_CITY_PARAM_RANK);
       GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
       STRBUF *p_str = GFL_MSG_CreateString( p_msg, rank );
-      WORDSET_RegisterWord( p_wordset, idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
       GFL_STR_DeleteBuffer(p_str);
       GFL_MSG_Delete( p_msg );
     }
@@ -604,12 +638,14 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
 
       u32 num = (s32)next_exp - (s32)now_exp;
       num = MATH_IMax( num, 0 );
-      WORDSET_RegisterNumber( p_wordset, idx, num, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, buff_idx, num, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case RESORT_WORD_SHOP_LABEL:
+    GF_ASSERT( p_data );
+    GF_ASSERT( RESORT_ABSTRUCT_DATA_GetPeopleType(p_data) == RESORT_DATA_TYPE_RESIDENT );
     {
-      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, (RESORT_RESIDENT_DATA *)p_people_data );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_data_adrs );
 
       u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
@@ -618,20 +654,19 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
       GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
       STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_shoplabel_00+shop_type );
 
-      GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
-
-      WORDSET_RegisterWord( p_wordset, idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
       GFL_STR_DeleteBuffer(p_str);
       GFL_MSG_Delete( p_msg );
     }
     break;
   case RESORT_WORD_COMM_TYPE:
+    GF_ASSERT( p_data );
     {
-      u32 data = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_COMM_ID, NULL );
+      u32 data = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_COMM_ID, NULL );
       GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
       STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_comm_type_00+data );
 
-      WORDSET_RegisterWord( p_wordset, idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
       GFL_STR_DeleteBuffer(p_str);
       GFL_MSG_Delete( p_msg );
     }
@@ -736,51 +771,6 @@ VMCMD_RESULT EvCmdResortCheckVisitor( VMHANDLE *p_core, void *p_wk_adrs )
   //TODO
   *p_ret_flag = FALSE;
 
-
-  return VMCMD_RESULT_CONTINUE;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  入れ替えて転職 //TODO まだ入れ替えを作ってない
- *
- *	@param	VMHANDLE *p_core 仮想マシンハンドル
- *	@param	*p_wk_adrs       スクリプトコマンドワーク
- *
- *	@return 終了コード
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdResortJobChangeEx( VMHANDLE *p_core, void *p_wk_adrs )
-{
-  SCRCMD_WORK *p_wk = p_wk_adrs;
-  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
-  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
-  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
-  
-  u16 param = VMGetU16(p_core);
-  u16 idx = VMGetU16(p_core);
-
-  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
-
-  RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
-
-  RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
-
-  switch( param )
-  {
-  case RESORT_JOBCHANGE_RESIDENT:
-    {
-      //TODO
-      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
-    }
-    break;
-
-  case RESORT_JOBCHANGE_SECETARY:
-    RESORT_DATA_MANAGER_RecvToSecretary( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
-    break;
-  default:
-    GF_ASSERT(0);
-  }
 
   return VMCMD_RESULT_CONTINUE;
 }

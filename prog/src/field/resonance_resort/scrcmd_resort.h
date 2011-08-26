@@ -29,7 +29,6 @@ extern VMCMD_RESULT EvCmdResortKeepPeople( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortCheckVisitor( VMHANDLE *p_core, void *p_wk_adrs );
-extern VMCMD_RESULT EvCmdResortJobChangeEx( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortMergeOff( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortNewInstatitutionEntrance( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortSearchReception( VMHANDLE *p_core, void *p_wk_adrs );

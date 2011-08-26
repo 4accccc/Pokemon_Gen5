@@ -207,36 +207,37 @@ void RESORT_MAP_GetResidentGridPos( u16 buffer_index, u16 shop_rank, u16 *p_x, u
   *p_z    = sc_resident_pos[buffer_index].z;
   *p_dir  = sc_resident_pos[buffer_index].dir;
 
-  if( shop_rank == 3 )
+  if( shop_rank == 2 )
   {
     if( *p_dir == DIR_RIGHT )
     {
-      (*p_x)--;
+      (*p_x)++;
     }
     else
     {
-      (*p_x)++;
+      (*p_x)--;
     }
   }
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  秘書タイプ
+ *	@brief  人物がいる場所
  *
- *	@param	u16 type  秘書タイプ
+ *	@param	u16 peopleID  人物
  *
- *	@return 場所ID
+ *	@return 場所
  */
 //-----------------------------------------------------------------------------
-RESORT_PLACEID RESORT_MAP_GetSecretaryPlace( u16 type )
+RESORT_PLACEID RESORT_MAP_GetPeoplePlace( u16 peopleID )
 {
-  static const RESORT_PLACEID sc_secretary_place[RESORT_SECRETARY_TYPE_MAX] =
+  static const RESORT_PLACEID sc_place[]  =
   {
-    RESORT_PLACEID_RECEPTION,//RESORT_SECRETARY_TYPE_WORK
-    RESORT_PLACEID_RECEPTION,//RESORT_SECRETARY_TYPE_MOVE
-    RESORT_PLACEID_RECEPTION,//RESORT_SECRETARY_TYPE_CENTER
-    RESORT_PLACEID_RECEPTION,//RESORT_SECRETARY_TYPE_PC
+    RESORT_PLACEID_FIELD,//RESORT_PEOPLE_TYPE_RESIDENT (0) //住民
+    RESORT_PLACEID_FIELD,//RESORT_PEOPLE_TYPE_PROXY (1) //代理人
+    RESORT_PLACEID_FIELD,//RESORT_PEOPLE_TYPE_TOURIST (2) //旅行者
+    RESORT_PLACEID_RECEPTION//RESORT_PEOPLE_TYPE_SECRETARY (3) //秘書
   };
+  GF_ASSERT( peopleID < NELEMS(sc_place) );
 
-  return sc_secretary_place[ type ];
+  return sc_place[ peopleID ];
 }

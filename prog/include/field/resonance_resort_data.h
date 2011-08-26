@@ -150,7 +150,7 @@ typedef enum
 #define RESORT_RECV_DATA_SIZE     (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND_DATA_SIZE*RESORT_EXTEND_TYPE_MAX+RESORT_INSTITUTION_DATA_SIZE+20)
 
 //リゾート用代理データの全サイズ
-#define RESORT_PROXY_DATA_SIZE    (RESORT_BASIC1_DATA_SIZE+RESORT_EXTEND6_DATA_SIZE+RESORT_EXTEND7_DATA_SIZE+12)
+#define RESORT_PROXY_DATA_SIZE    (RESORT_BASIC1_DATA_SIZE+RESORT_EXTEND6_DATA_SIZE+RESORT_EXTEND7_DATA_SIZE+16)
 
 //メダルビットのバイト数
 #define RESORT_RECV_MEDAL_BIT_BYTE (11)
@@ -480,7 +480,8 @@ typedef RESORT_RECV_DATA RESORT_RESIDENT_DATA;
 #define RESORT_RESIDENT_DATA_MergeRecv(x,y) RESORT_RECV_DATA_MergeRecv(x,y)
 #define RESORT_RESIDENT_DATA_MergeProxy(x,y,z) RESORT_RECV_DATA_MergeProxy(x,y,z)
 
-extern void RESORT_RESIDENT_DATA_SetRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID );
+extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID );
+extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, u16 peopleID, u16 placeID );
 extern RESORT_INSTITUTION_DATA * RESORT_RESIDENT_DATA_GetInstitution( RESORT_RESIDENT_DATA *p_wk );
 extern void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk );
 
@@ -513,7 +514,8 @@ extern BOOL RESORT_SECRETARY_DATA_MergeProxy( RESORT_SECRETARY_DATA *p_wk, const
 
 extern u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
 extern void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_DATA_PARAM param, u32 data );
-extern void RESORT_SECRETARY_DATA_SetRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type );
+extern void RESORT_SECRETARY_DATA_ConvertRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type );
+extern void RESORT_SECRETARY_DATA_ConvertProxy( RESORT_SECRETARY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, u16 peopleID, u16 placeID, u16 type );
 
 //=============================================================================
 /**

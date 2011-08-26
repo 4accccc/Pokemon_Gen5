@@ -53,19 +53,21 @@
 #define RESORT_ACTION_LEAVE           (0)
 //_RESORT_SET_WORD用
 #define RESORT_WORD_PEOPLE            (0)
-#define RESORT_WORD_SHOP              (1) //「フラワー○○」とか
+#define RESORT_WORD_SHOP              (1) //「フラワー○○」とか（現在のお店）
 #define RESORT_WORD_SHOP_LABEL        (2) //「売る」とか
 #define RESORT_WORD_FREE_GREET        (3)
 #define RESORT_WORD_FREE_NAME         (4)
 #define RESORT_WORD_COMM_TYPE         (5) //通信種別
 #define RESORT_WORD_FREE_PHRASE       (6)
-#define RESORT_WORD_SHOP_GENRE        (7) //「花屋」とか
+#define RESORT_WORD_SHOP_GENRE        (7) //「花屋」とか(現在のお店)
 #define RESORT_WORD_FREE_CITY         (8)
 #define RESORT_WORD_SHOP_RESTEXP      (9) //次のレベルまでの経験値
 #define RESORT_WORD_SHOP_LV           (10)
 #define RESORT_WORD_CITY_LV           (11)
 #define RESORT_WORD_CITY_RANK         (12)
 #define RESORT_WORD_CITY_RESTEXP      (13)
+#define RESORT_WORD_WANT_SHOP         (14) //「フラワー○○」とか（なりたいお店）
+#define RESORT_WORD_WANT_SHOP_GENRE   (15) //「花屋」とか（なりたいお店）
 
 #define RESORT_WORD_PARAM_FRONT       (0xFE)  //目の前の人
 #define RESORT_WORD_PARAM_NONE        (0xFF)

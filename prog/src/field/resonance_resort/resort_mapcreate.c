@@ -162,8 +162,8 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
     u16 grid_x = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_X );
     u16 grid_z = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
 
-    u16 size_x  = 5;
-    u16 size_origin_z = 5;
+    u16 size_x  = 6;
+    u16 size_origin_z = 7;
     u16 size_z  = size_origin_z;
 
     //住民が存在して、住民の施設がブロック内にある場合に配置モデルを3dmdを配置
@@ -175,17 +175,26 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
       if( !RESORT_RESIDENT_DATA_IsEmpty( cp_resident ) )
       {
         const RESORT_BINARY_SHOP_DATA *cp_binary_shop = RESORT_BINARY_SHOP_SearchDataByData( p_wk->p_shop_data, (RESORT_RESIDENT_DATA *)cp_resident );
-
-        u16 patch = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop, RESORT_BINARY_SHOP_PARAM_IN_3DMD );
-        u16 bmodel = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop, RESORT_BINARY_SHOP_PARAM_OUT_MODEL );
-
-        FIELD_DATA_PATCH* p_patch = FIELD_DATA_PATCH_Create( patch, GFL_HEAP_LOWID(heapID) );
+        u16 patch;
+        FIELD_DATA_PATCH* p_patch;
 
         // g3Dmapローカルのグリッド座標を求める
         u32 local_grid_x = grid_x % 32;
         u32 local_grid_z = grid_z % 32;
         u32 read_grid_x = 0;
         u32 read_grid_z = 0;
+
+        if( i % 2 == 1 )
+        {
+          patch = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop, RESORT_BINARY_SHOP_PARAM_3DMD_L );
+        }
+        else
+        {
+          patch = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop, RESORT_BINARY_SHOP_PARAM_3DMD_R );
+        }
+
+        p_patch = FIELD_DATA_PATCH_Create( patch, GFL_HEAP_LOWID(heapID) );
+
 
         if( map_index == (grid_z / 32) )
         {
@@ -203,7 +212,7 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
           size_z        = size_z - read_grid_z;
           local_grid_z  = 0;
         }
-
+#if 0
         //建物を書き換え
         //TODO
         {
@@ -214,6 +223,7 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
           }
           FIELD_DATA_PATCH_WriteBuildModelEx( p_patch, bmodel, 0, rotate );
         }
+#endif
 
         // アトリビュートのオーバーライト
         //NAGI_Printf( "rx%d rz%d lx%d lz%d sx%d sz%d \n", read_grid_x, read_grid_z, local_grid_x, local_grid_z, size_x, size_z );

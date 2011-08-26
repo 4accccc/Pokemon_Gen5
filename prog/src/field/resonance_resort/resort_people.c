@@ -444,7 +444,11 @@ RESORT_ABSTRUCT_DATA * RESORT_PEOPLE_GetAbstructData( RESORT_PEOPLE *p_wk )
 static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
 {
   u16 grid_x, grid_z, dir;
-  RESORT_MAP_GetResidentGridPos( RESORT_ABSTRUCT_DATA_GetBufferIndex(p_wk->p_abstruct_data), 0, &grid_x, &grid_z, &dir );
+
+  RESORT_INSTITUTION_DATA *p_insti = RESORT_PEOPLE_GetInstitution( p_wk );
+  u16 lv  = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_LV );
+
+  RESORT_MAP_GetResidentGridPos( RESORT_ABSTRUCT_DATA_GetBufferIndex(p_wk->p_abstruct_data), lv, &grid_x, &grid_z, &dir );
 
   p_header->dir = dir;
   MMDLHEADER_SetGridPos( p_header, grid_x, grid_z, 0 );

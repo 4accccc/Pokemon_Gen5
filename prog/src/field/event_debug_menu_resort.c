@@ -37,6 +37,7 @@
 #include "resonance_resort/resort_map.h"
 #include "resonance_resort/resort_shop.h"
 #include "resonance_resort/resort_binary.h"
+#include "resonance_resort/resort_shop.h"
 
 //--------------------------------------------------------------
 /// proto
@@ -70,11 +71,12 @@ static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
   { DEBUG_FIELD_RESORT_18, debugMenuCallProc_ChangeMap, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup1, GFL_OVERLAY_BLANK_ID },
+  /*
   { DEBUG_FIELD_RESORT_41, debugMenuCallProc_DesignerSetup2, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_42, debugMenuCallProc_DesignerSetup3, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup4, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_41, debugMenuCallProc_DesignerSetup5, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_42, debugMenuCallProc_DesignerSetup6, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_RESORT_42, debugMenuCallProc_DesignerSetup6, GFL_OVERLAY_BLANK_ID },*/
   { DEBUG_FIELD_RESORT_16, debugMenuCallProc_Input, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_01, debugMenuCallProc_SetRecv, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_05, debugMenuCallProc_AllRecv, GFL_OVERLAY_BLANK_ID},
@@ -507,7 +509,7 @@ static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk )
     if( RESORT_SECRETARY_DATA_IsEmpty( p_dst ) )
     {
         Debug_Resort_SetRecv( p_recv, p_wk->gdata );
-        RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 8+i, RESORT_MAP_GetSecretaryPlace( i ), i );
+        RESORT_SECRETARY_DATA_ConvertRecv( p_dst, p_recv, 8+i, RESORT_MAP_GetPeoplePlace( RESORT_PEOPLE_TYPE_SECRETARY ), i );
     }
   }
 
@@ -532,7 +534,7 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
 
       RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_WANT_JOB, 12 );
 
-      RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, 63-i, RESORT_PLACEID_FIELD );
+      RESORT_RESIDENT_DATA_ConvertRecv( p_dst, p_recv, 63-i, RESORT_PLACEID_FIELD );
     }
   }
 
@@ -601,8 +603,8 @@ static BOOL debugMenuCallProc_DesignerSetup1( DEBUG_MENU_EVENT_WORK *p_wk )
     {
       RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 12  );
+      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, 2 );
+      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, RESORT_SHOP_ID_CAFE_02  );
       RESORT_RESIDENT_DATA_JobChange( p_resident );
     }
   }

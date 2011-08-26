@@ -174,8 +174,8 @@ SHOP_COL_TYPE          = 2         #列：種類
 SHOP_COL_LV            = 3         #列：お店レベル
 SHOP_COL_NEXTEXP       = 4         #列：次の経験値
 SHOP_COL_NAME          = 5         #列：お店名
-SHOP_COL_OUT_MODEL     = 6         #列：外観
-SHOP_COL_IN_3DMD       = 7         #列：内装
+SHOP_COL_3DMD_L        = 6         #列：外観左
+SHOP_COL_3DMD_R        = 7         #列：外観右
 SHOP_COL_IN_TEX        = 8         #列：TEX
 SHOP_COL_LIST1         = 9         #列：リスト１
 SHOP_COL_LIST2         = 10         #列：リスト２
@@ -207,8 +207,8 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     lv      = csv.get( row, SHOP_COL_LV )
     nextexp = csv.get( row, SHOP_COL_NEXTEXP )
     name    = csv.get( row, SHOP_COL_NAME )
-    model   = csv.get( row, SHOP_COL_OUT_MODEL );
-    in3dmd  = csv.get( row, SHOP_COL_IN_3DMD );
+    l3dmd   = csv.get( row, SHOP_COL_3DMD_L );
+    r3dmd  = csv.get( row, SHOP_COL_3DMD_R );
     intex  = csv.get( row, SHOP_COL_IN_TEX );
 
     #データ書き込み
@@ -228,12 +228,12 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     end
 
     begin
-      data.write_u16( bmodeldata.search( "NARC_output_buildmodel_indoor_#{model}_nsbmd", "#{row}行ファイル" ) )
+      data.write_u16( patchdata.search( "LAND_DATA_PATCH_#{l3dmd}", "#{row}行ファイル" ) )
     rescue HeaderSearchError
       exit(1)
     end
     begin
-      data.write_u16( patchdata.search( "LAND_DATA_PATCH_#{in3dmd}", "#{row}行ファイル" ) )
+      data.write_u16( patchdata.search( "LAND_DATA_PATCH_#{r3dmd}", "#{row}行ファイル" ) )
     rescue HeaderSearchError
       exit(1)
     end

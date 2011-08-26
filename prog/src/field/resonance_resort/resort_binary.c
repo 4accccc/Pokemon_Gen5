@@ -337,11 +337,10 @@ const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchDataByData( const RESOR
 {
   RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
   u16 id = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
-  const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_GetStruct(cp_wk->p_shop, id);
 
   GF_ASSERT(id < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk));
 
-  return cp_shop;
+  return RESORT_BINARY_GetStruct(cp_wk->p_shop, id);
 }
 const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_GetData( const RESORT_BINARY_SHOP *cp_wk,u16 index)
 {

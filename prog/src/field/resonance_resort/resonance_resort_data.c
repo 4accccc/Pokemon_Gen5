@@ -1007,6 +1007,11 @@ struct _RESORT_PROXY_DATA
   u8    placeID;
   u8    peopleID;
   u8    comm_type;  //RESORT_COMM_TYPE
+
+  u8                  meet_year;  //TODOセットまだ
+  u8                  meet_month;
+  u8                  meet_day;
+  u8                  dummy;
 };
 
 SDK_COMPILER_ASSERT(sizeof(RESORT_PROXY_DATA)==RESORT_PROXY_DATA_SIZE);
@@ -1900,11 +1905,11 @@ BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk )
 
     if( cp_wk->basic2.special_deliverly )
     {
-      return (s64)(now-pre) < SPECIAL_DELIVALY;
+      return (s64)(now-pre) > SPECIAL_DELIVALY;
     }
     else
     {
-      return (s64)(now-pre) < sc_extend_num_time[extend_num];
+      return (s64)(now-pre) > sc_extend_num_time[extend_num];
     }
   }
 }
@@ -2188,6 +2193,7 @@ void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, const MYSTATUS *cp_
 
   p_wk->type = 1;  //TODO
   p_wk->comm_type = comm_type;
+  p_wk->want_job  = 0; //TODO
 
   RESORT_BASIC1_DATA_SetMyStatus( &p_wk->basic1, cp_status );
 
@@ -2290,7 +2296,7 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     {
       GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
       STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_introduction_00+cp_wk->basic1.trainerID%10 );
-      GFL_STR_GetStringCode( p_str, (STRCODE*)p_ret_adrs, RESORT_THANKS_LEN+EOM_SIZE );
+      GFL_STR_GetStringCode( p_str, (STRCODE*)p_ret_adrs, GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE );
       GFL_STR_DeleteBuffer( p_str );
       GFL_MSG_Delete( p_msg );
     }
@@ -3083,7 +3089,7 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetOverReserveData( RESORT_RECV_BUFF 
  *	@param  type RESORT_RESIDENT_TYPE_xxx タイプ
  */
 //-----------------------------------------------------------------------------
-void RESORT_RESIDENT_DATA_SetRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID )
+void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID )
 {
   //TODO 変換データ
   *p_wk   = *cp_recv;
@@ -3096,7 +3102,36 @@ void RESORT_RESIDENT_DATA_SetRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV
   RESORT_RESIDENT_DATA_SetData(p_wk,RESORT_DATA_PARAM_LOCK,FALSE);
 
   RESORT_RESIDENT_DATA_JobChange( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人データを住民データに設定
+ *
+ *	@param	RESORT_RESIDENT_DATA *p_wk  ワーク
+ *	@param	RESORT_PROXY_DATA *cp_proxy 受信データ
+ *	@param	peopleID  人物ID
+ *	@param	placeID   場所ID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, u16 peopleID, u16 placeID )
+{
+  RESORT_RESIDENT_DATA_InitInstance( p_wk );
+  //TODO 変換データ
+  p_wk->basic1  = cp_proxy->basic1;
+  p_wk->extend6 = cp_proxy->extend6;
+  p_wk->extend7 = cp_proxy->extend7;
 
+  p_wk->meet_year = cp_proxy->meet_year;
+  p_wk->meet_month = cp_proxy->meet_month;
+  p_wk->meet_day  = cp_proxy->meet_day;
+
+  //場所を設定
+  p_wk->peopleID  = peopleID;
+  p_wk->placeID   = placeID;
+
+  //ロックフラグ解除
+  RESORT_RESIDENT_DATA_SetData(p_wk,RESORT_DATA_PARAM_LOCK,FALSE);
+  RESORT_RESIDENT_DATA_JobChange( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -3160,7 +3195,7 @@ void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk )
     RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
     const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_wk );
 
-    p_wk->type      = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
+    p_wk->type      = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
 
     RESORT_BINARY_SHOP_Exit( p_shop );
   }
@@ -3459,18 +3494,47 @@ void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_DATA_PAR
  *	@param  type      RESORT_SECRETARY_TYPE_xxx
  */
 //-----------------------------------------------------------------------------
-void RESORT_SECRETARY_DATA_SetRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type )
+void RESORT_SECRETARY_DATA_ConvertRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type )
 {
   //TODO
   p_wk->basic1    = cp_recv->basic1;
-  p_wk->peopleID  = peopleID;
-  p_wk->placeID   = placeID;
-  p_wk->type      = type;
   p_wk->meet_year = cp_recv->meet_year;
   p_wk->meet_month = cp_recv->meet_month;
   p_wk->meet_day  = cp_recv->meet_day;
   p_wk->extend6   = cp_recv->extend6;
   p_wk->extend7   = cp_recv->extend7;
+
+
+  p_wk->type      = type;
+  p_wk->peopleID  = peopleID;
+  p_wk->placeID   = placeID;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人データからデータを設定
+ *
+ *	@param	RESORT_SECRETARY_DATA *p_wk ワーク
+ *	@param	RESORT_RROXY_DATA *cp_proxy 受信データ
+ *	@param	peopleID  人物ID
+ *	@param	placeID 場所
+ *	@param  type      RESORT_SECRETARY_TYPE_xxx
+ */
+//-----------------------------------------------------------------------------
+void RESORT_SECRETARY_DATA_ConvertProxy( RESORT_SECRETARY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, u16 peopleID, u16 placeID, u16 type )
+{
+  //TODO
+  p_wk->basic1    = cp_proxy->basic1;
+
+  p_wk->meet_year = cp_proxy->meet_year;
+  p_wk->meet_month = cp_proxy->meet_month;
+  p_wk->meet_day  = cp_proxy->meet_day;
+
+  p_wk->extend6   = cp_proxy->extend6;
+  p_wk->extend7   = cp_proxy->extend7;
+
+  p_wk->type      = type;
+  p_wk->peopleID  = peopleID;
+  p_wk->placeID   = placeID;
 }
 
 //=============================================================================
