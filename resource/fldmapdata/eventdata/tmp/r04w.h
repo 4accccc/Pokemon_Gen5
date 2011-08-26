@@ -15,6 +15,18 @@
 #ifndef ZONE_R04W_EVC_H
 #define ZONE_R04W_EVC_H
 
+#define TR_FISHING_13W                     0
+#define TR_FISHING_14W                     1
+#define TR_BREEDERW_04W                    2
+#define TR_BACKPACKERM_17                  3
+#define TR_PRINCE_08                       4
+#define TR_FUTAGO_06                       5
+#define TR_FUTAGO_06_2                     6
+#define TR_BACKPACKERW_14                  7
+#define TR_DAISUKIM_04                     8
+#define TR_DAISUKIW_03                     9
+#define TR_PRINCESS_08                    10
+#define TR_BACKPACKERM_18                 11
 
 #endif //ZONE_R04W_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04w.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
