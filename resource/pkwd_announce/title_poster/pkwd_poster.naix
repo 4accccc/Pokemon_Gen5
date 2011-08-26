@@ -1,0 +1,35 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pkwd_poster.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_PKWD_POSTER_NAIX_
+#define NARC_PKWD_POSTER_NAIX_
+
+enum {
+	NARC_pkwd_poster_pkwd_title01_poster_NCLR = 0,
+	NARC_pkwd_poster_pkwd_title01_poster_bin = 1,
+	NARC_pkwd_poster_pkwd_title02_poster_NCLR = 2,
+	NARC_pkwd_poster_pkwd_title02_poster_bin = 3,
+	NARC_pkwd_poster_pkwd_title03_poster_NCLR = 4,
+	NARC_pkwd_poster_pkwd_title03_poster_bin = 5,
+	NARC_pkwd_poster_pkwd_title04_poster_NCLR = 6,
+	NARC_pkwd_poster_pkwd_title04_poster_bin = 7,
+	NARC_pkwd_poster_pkwd_title05_poster_NCLR = 8,
+	NARC_pkwd_poster_pkwd_title05_poster_bin = 9,
+	NARC_pkwd_poster_pkwd_title06_poster_NCLR = 10,
+	NARC_pkwd_poster_pkwd_title06_poster_bin = 11,
+	NARC_pkwd_poster_pkwd_title07_poster_NCLR = 12,
+	NARC_pkwd_poster_pkwd_title07_poster_bin = 13,
+	NARC_pkwd_poster_pkwd_title08_poster_NCLR = 14,
+	NARC_pkwd_poster_pkwd_title08_poster_bin = 15,
+	NARC_pkwd_poster_pkwd_title09_poster_NCLR = 16,
+	NARC_pkwd_poster_pkwd_title09_poster_bin = 17
+};
+
+/* NARC_PKWD_POSTER_NAIX_ */
+#endif

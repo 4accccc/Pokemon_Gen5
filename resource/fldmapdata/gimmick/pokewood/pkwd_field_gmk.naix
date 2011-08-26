@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pkwd_field_gmk.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_PKWD_FIELD_GMK_NAIX_
+#define NARC_PKWD_FIELD_GMK_NAIX_
+
+enum {
+	NARC_pkwd_field_gmk_pokewood_poster_nsbmd = 0
+};
+
+/* NARC_PKWD_FIELD_GMK_NAIX_ */
+#endif
