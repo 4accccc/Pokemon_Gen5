@@ -35,6 +35,7 @@
 #include "field/field_subscreen.h"
 //
 #include "savedata/fmission_save.h"
+#include "font/font.naix"
 
 
 //==============================================================================
@@ -183,6 +184,15 @@ enum{
   FMISS_BMPOAM_MAX,
 };
 
+// いろいろ
+enum{
+  FMISS_LV4 = 3,                    // レベル4の値
+  //
+  FMISS_LV4_COLOR = 5,              // レベル4のBG色
+  //
+  FMISS_LV_OBJ_COLOR = 4,           // レベルのobj色
+};
+
 // フラグ(MONOLITH_FMSELECT_WORK.Flag)
 enum{
   FLG_FMISS_SECRET     = (1<<0),	// 隠しコマンド成功
@@ -192,8 +202,6 @@ enum{
 // フラグ(MONOLITH_INFO_PARAM.flag)
 enum{
   FLG_INFO_NEW         = (1<<0),    // NEWマークあり
-//  FLG_INFO_TIME        = (1<<1),    // 残り時間タイプ
-//  FLG_INFO_SCORE       = (1<<2),    // 数値
 };
 
 //==============================================================================
@@ -203,7 +211,6 @@ enum{
 typedef struct{
   u8    clear_level;         // クリアしたレベル
   u8    flag;                // NEWフラグなど
-//  u16   param;               // パラメータ
 } MONOLITH_INFO_PARAM;
 
 ///ミッション説明画面制御ワーク
@@ -223,6 +230,7 @@ typedef struct{
   GFL_CLWK *act_arrow_down;     ///<下矢印
   //
   GFL_CLWK *clwk[FMISS_CLWK_MAX];     ///<clwkまとめ
+  GFL_FONT *sfont;                    ///<フォント(小文字)
   
   GFL_BMP_DATA *bmp_fess_mission_name[FMISSION_ID_MAX + _DUMMY_PANEL_NUM];
   s16 fess_mission_id[FMISSION_ID_MAX + _DUMMY_PANEL_NUM];          ///< ミッションIDのバッファ
@@ -343,6 +351,8 @@ static void fmission_chk_savedata( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT
 static void fmission_clear_newflag( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 id );
 static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode );
 //
+static void fmission_chg_bgpal( MONOLITH_FMSELECT_WORK *mfw );
+//
 static void fmission_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 
 //==============================================================================
@@ -374,7 +384,7 @@ enum{
 // CLWKのテーブル
 // (x,y),seq,soft,bg,pal
 static const s16 clwk_header_tbl[] = {
-  140, 180, 16, 0x40, 1, 1,	// lv1
+  140, 180, 16, 0x40, 1, 4,	// lv1
   176, 180, 16, 0x40, 1, 0,	// lv2
   212, 180, 16, 0x40, 1, 0,	// lv3
   //
@@ -386,13 +396,13 @@ static const s16 clwk_header_tbl[] = {
   16,   32, 15, 0x40, 3, 0,	// new05
   16,   32, 15, 0x40, 3, 0,	// new06
   //
-  196,  32, 12, 0x40, 3, 0,	// star00
-  196,  32, 12, 0x40, 3, 0,	// star01
-  196,  32, 12, 0x40, 3, 0,	// star02
-  196,  32, 12, 0x40, 3, 0,	// star03
-  196,  32, 12, 0x40, 3, 0,	// star04
-  196,  32, 12, 0x40, 3, 0,	// star05
-  196,  32, 12, 0x40, 3, 0,	// star06
+  196+4,  32, 12, 0x40, 3, 0,	// star00
+  196+4,  32, 12, 0x40, 3, 0,	// star01
+  196+4,  32, 12, 0x40, 3, 0,	// star02
+  196+4,  32, 12, 0x40, 3, 0,	// star03
+  196+4,  32, 12, 0x40, 3, 0,	// star04
+  196+4,  32, 12, 0x40, 3, 0,	// star05
+  196+4,  32, 12, 0x40, 3, 0,	// star06
   //
   -1,-1,-1,-1,-1,-1,
 };
@@ -419,9 +429,9 @@ enum{
 // bmpoam用
 // (x,y,soft,bg)
 static const s16 bmpoam_header_tbl[] = {
-  128,172,0x30,1,
-  164,172,0x30,1,
-  200,172,0x30,1,
+  130,176,0x30,1,
+  166,176,0x30,1,
+  202,176,0x30,1,
   //
   -1, -1, -1, -1,
 };
@@ -901,6 +911,8 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_End( GFL_PROC * proc, int * se
   _Setup_BGGraphicUnload(mfw);
   _Setup_BmpWinDelete(mfw);
   _Setup_BGFrameExit();
+  // font
+  GFL_FONT_Delete( mfw->sfont );
   //DATA
   _Setup_DataExit( appwk, mfw );
   
@@ -1771,7 +1783,12 @@ static void _CursorPos_PanelFocus(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos)
 //--------------------------------------------------------------
 static void _CursorPos_NotFocus(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos)
 {
-  _CursorPos_PanelScreenChange(mfw, cursor_pos, COMMON_PALBG_PANEL);
+  // LV4の場合は色を変更する
+  if(mfw->Flag & FLG_FMISS_SECRET){
+    _CursorPos_PanelScreenChange(mfw, cursor_pos, FMISS_LV4_COLOR );
+  }else{
+    _CursorPos_PanelScreenChange(mfw, cursor_pos, COMMON_PALBG_PANEL);
+  }
 }
 
 //--------------------------------------------------------------
@@ -1973,7 +1990,11 @@ static void fmission_set_up_curpos( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELEC
     // fess_mission_idも0番にダミーが入っているのでこれでよいはず
     // 0番目はダミーが入っているので、これでよいはず
     appwk->common->fmission_id = mfw->fess_mission_id[mfw->cursor_pos];
-    appwk->common->fmission_level = mfw->Level;
+    if(mfw->Flag & FLG_FMISS_SECRET){
+      appwk->common->fmission_level = FMISS_LV4;
+    }else{
+      appwk->common->fmission_level = mfw->Level;
+    }
   }
 }
 
@@ -2178,10 +2199,18 @@ static void fmission_chk_secret( MONOLITH_FMSELECT_WORK *mfw )
         mfw->Flag |= FLG_FMISS_SECRET;
         OS_Printf("secret command ok\n");
         PMSND_PlaySE( MONOLITH_SE_SECRET_COMMAND );
+        // パレットチェンジ
+        fmission_chg_bgpal( mfw );
       }
     }
+    // 違った場合
     else{
       mfw->SecretNum = 0;
+      // はじめのキーだった場合は開始とする
+      trg = secret_cmd[mfw->SecretNum];
+      if(GFL_UI_KEY_GetTrg() & trg){
+        mfw->SecretNum++;
+      }
     }
   }
 }
@@ -2255,7 +2284,7 @@ static void fmission_disp_bmpoam( MONOLITH_SETUP *setup, MONOLITH_FMSELECT_WORK 
   strbuf = GFL_MSG_CreateString( setup->mm_monolith, msg_mono_fmission_018 );
   WORDSET_ExpandStr( setup->wordset, expbuf, strbuf );
   // queにしないとまずいかも..
-  PRINTSYS_PrintColor( mfw->BmpOam_Fmiss_bmp[mode], 0, 0, expbuf, setup->font_handle, PRINTSYS_LSB_Make(15,2,0));
+  PRINTSYS_PrintColor( mfw->BmpOam_Fmiss_bmp[mode], 0, 0, expbuf, mfw->sfont, PRINTSYS_LSB_Make(15,2,0));
   BmpOam_ActorBmpTrans( mfw->BmpOam_Fmiss[mode] );
   //
   GFL_STR_DeleteBuffer( strbuf );
@@ -2293,7 +2322,7 @@ static void fmission_chk_all_level( MONOLITH_FMSELECT_WORK *mfw )
   BOOL bflg=TRUE;
   
   // 全非表示
-  if(mfw->Flag & FLG_FMISS_LV_HIDE){
+  if((mfw->Flag & FLG_FMISS_LV_HIDE)||(mfw->Flag & FLG_FMISS_SECRET)){
     for(i=0;i<3;i++){
       fmission_disp_level( mfw, i, FALSE );
     }
@@ -2351,8 +2380,10 @@ static void fmission_init_data( MONOLITH_FMSELECT_WORK *mfw )
   for(i=0;i<FMISSION_ID_MAX+_DUMMY_PANEL_NUM;i++){
     mfw->info_param[i].clear_level = 0;
     mfw->info_param[i].flag        = 0;
-//    mfw->info_param[i].param       = 0;
   }
+  // 小フォント
+  // ここでしか使わないようなので、ここで処理
+  mfw->sfont = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_MONOLITH );
 }
 
 //==================================================================
@@ -2367,9 +2398,7 @@ static void fmission_chk_savedata( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
   SAVE_CONTROL_WORK *work = GAMEDATA_GetSaveControlWork( gamedata );
   FMISSION_SAVE *fsave = SAVEDATA_GetFMissionSave( work );
-//  FEST_MISSION  fmwk;
   BOOL bflg;
-//  u8   buf[2];
   //
   // クリアレベル
   mfw->info_param[count].clear_level = FMISSION_SAVE_GetMissionStatusClearLevel( fsave, id );
@@ -2380,20 +2409,6 @@ static void fmission_chk_savedata( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT
   }else{
     mfw->info_param[count].flag &= ~FLG_INFO_NEW;
   }
-#if 0
-  // 終了条件の判定
-  // FEST_MISSION取得
-  FMISSION_DATA_GetMissionParam( mfw->fmd_man, id, 0, &fmwk );
-  if(fmwk.end_type == FMISSION_ENDTYPE_TIME){
-    mfw->info_param[count].flag |= FLG_INFO_TIME;
-    mfw->info_param[count].param = FMISSION_SAVE_GetMissionStatusHighScoreNum( fsave, id );
-  }
-  else if(fmwk.end_type == FMISSION_ENDTYPE_SCORE){
-    mfw->info_param[count].flag |= FLG_INFO_SCORE;
-    FMISSION_SAVE_GetMissionStatusHighScoreTime( fsave, id, &buf[0], &buf[1] );
-    mfw->info_param[count].param = buf[0]*60+buf[1];	// 秒でセット
-  }
-#endif
   //
 #if 1	// debug
   if(count < 2){
@@ -2439,6 +2454,11 @@ static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
   s16  num;
   s16  old_pos = mfw->Level;
   
+  // SECRETになったら処理しない
+  if(mfw->Flag & FLG_FMISS_SECRET){
+    return;
+  }
+  
   // 念のため
   if(mfw->cursor_pos == _CURSOR_POS_NONE){
     return;
@@ -2462,12 +2482,18 @@ static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
     if((id >= 0)&&(id <= num)){
       mfw->Level = id;
       flg = 1;
+      // SE
+      PMSND_PlaySE( MONOLITH_SE_SELECT );
     }
   }
   // 入力時(key)
   else if(mode == 2){
     // 左
     if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
+      if(mfw->Level != 0){
+        // SE
+        PMSND_PlaySE( MONOLITH_SE_SELECT );
+      }
       mfw->Level--;
       if(mfw->Level < 0){
         mfw->Level = 0;
@@ -2476,6 +2502,10 @@ static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
     }
     // 右
     else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
+      if(mfw->Level != num){
+        // SE
+        PMSND_PlaySE( MONOLITH_SE_SELECT );
+      }
       mfw->Level++;
       if(mfw->Level >= num){
         mfw->Level = num;
@@ -2488,8 +2518,23 @@ static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
     // 旧は戻し
     GFL_CLACT_WK_SetPlttOffs( mfw->clwk[FMISS_CLWK_LV1+old_pos],   0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
     // 新を変更
-    GFL_CLACT_WK_SetPlttOffs( mfw->clwk[FMISS_CLWK_LV1+mfw->Level], 1, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+    // (色自体は1番と同じだが、1番は決定時にアニメとして使用されているため別とした)
+    GFL_CLACT_WK_SetPlttOffs( mfw->clwk[FMISS_CLWK_LV1+mfw->Level], FMISS_LV_OBJ_COLOR, CLWK_PLTTOFFS_MODE_PLTT_TOP );
   }
+}
+
+//==================================================================
+/**
+ * レベル4になったのでBGのパレットを変更(変えたままでよい)
+ *
+ * @param   MONOLITH_FMSELECT_WORK *mfw
+ */
+//==================================================================
+static void fmission_chg_bgpal( MONOLITH_FMSELECT_WORK *mfw )
+{
+  // 書き換え(領域は単一のカラーになってしまうので注意)
+  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0, 32, 32, FMISS_LV4_COLOR );
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
 }
 
 //==================================================================

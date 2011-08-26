@@ -89,20 +89,20 @@ const MONOLITH_CANVAS_DATA mono_canvas_tbl[] = {
   { 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 
-// 文字列、offset(-1はなし)
+// 文字列、offset(-1はなし),opt0,opt1
 const s16 mono_mes_tbl[] = {
-  msg_mono_fmission_010,4,		// ミッションせつめい
-  0,					-1,		// せつめい文(dummy)
+  msg_mono_fmission_010, 4,0,0,		// ミッションせつめい
+  0,					-1,0,0,		// せつめい文(dummy)
   //
-  msg_mono_fmission_011,0,		// 制限時間
-  msg_mono_fmission_012,0,		// クリア目標
-  msg_mono_fmission_013,0,		// 報酬
-  msg_mono_fmission_014,0,		// ハイスコア
+  msg_mono_fmission_011, 0,0,0,		// 制限時間
+  msg_mono_fmission_012, 0,0,0,		// クリア目標
+  msg_mono_fmission_013, 0,0,0,		// 報酬
+  msg_mono_fmission_014,-1,0,0,		// ハイスコア
   //
-  msg_mono_fmission_015,msg_mono_fmission_019,		// 制限時間(特別処理)
-  msg_mono_fmission_016,-1,		// クリア目標
-  msg_mono_fmission_017,-1,		// 報酬
-  msg_mono_fmission_016,msg_mono_fmission_015,		// ハイスコア
+  msg_mono_fmission_015,-1,msg_mono_fmission_019,0,		// 制限時間(特別処理)
+  msg_mono_fmission_016,-1,0,0,		// クリア目標
+  msg_mono_fmission_017,-1,0,0,		// 報酬
+  msg_mono_fmission_016,-1,msg_mono_fmission_015,msg_mono_fmission_019,		// ハイスコア
 };
 
 //==============================================================================
@@ -126,9 +126,13 @@ static void _Write_String( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MO
 static void fmission_init( MONOLITH_UP_WORK *wk );
 static void fmission_exit( MONOLITH_UP_WORK *wk );
 //
+static void fmission_title( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk );
 static void fmission_explain( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const s32 id, const s32 level );
 static void fmission_string(  MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const s32 id, const s32 level, const s32 mode );
 static void fmission_highscore( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk, const s32 id );
+//
+static void fmission_clear_string( MONOLITH_UP_WORK *wk, const s32 mode );
+static void fmission_clear_all( MONOLITH_UP_WORK *wk );
 
 //==============================================================================
 //  データ
@@ -223,9 +227,13 @@ static GFL_PROC_RESULT UpFMisssionProc_Main( GFL_PROC * proc, int * seq, void * 
 //    OS_Printf("id : %d -> %d(level :%d)\n",mpw->Id, appwk->common->fmission_id, appwk->common->fmission_level);
     mpw->Id    = appwk->common->fmission_id;
     mpw->Level = appwk->common->fmission_level;
-    // 該当なし
+    // 表示
     if(mpw->Id != 0xff){
       _Write_String( appwk, appwk->setup, mpw, 1 );
+    }
+    // (タイトルを除き)クリア
+    else{
+      fmission_clear_all( mpw );
     }
   }
   //
@@ -280,8 +288,11 @@ static GFL_PROC_RESULT UpFMisssionProc_End( GFL_PROC * proc, int * seq, void * p
 //--------------------------------------------------------------
 static void up_fmission_init( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk )
 {
-  wk->Id    = 0;   // test
+  wk->Id    = 0xff;
   wk->Level = 0;
+  //
+  appwk->common->fmission_id    = 0xff;
+  appwk->common->fmission_level = 0;
   
   //BG
   _Setup_BGFrameSetting();
@@ -291,8 +302,8 @@ static void up_fmission_init( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk )
   // フェスミッション初期化
   fmission_init( wk );
   
-  // 文字列表示
-  _Write_String( appwk, appwk->setup, wk, 0 );
+  // タイトル表示
+  fmission_title( appwk->setup, wk );
 }
 
 //--------------------------------------------------------------
@@ -418,16 +429,18 @@ static void _Write_String( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MO
   STRBUF	*str;
   
   // 初期化
-  if(mode == 0){
+//  if(mode == 0){
     // 固定のものはそのまま表示
     for(i=0;i<BMPWIN_MAX;i++){
-      if(mono_mes_tbl[i*2+1] != -1){
-        str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[i*2] );
-        PRINT_UTIL_Print(&wk->print_util[i], setup->printQue, 0, mono_mes_tbl[i*2+1], str, setup->font_handle);
-        GFL_STR_DeleteBuffer(str);
+      if(i != 0){
+        if(mono_mes_tbl[i*4+1] != -1){
+          str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[i*4] );
+          PRINT_UTIL_Print(&wk->print_util[i], setup->printQue, 0, mono_mes_tbl[i*4+1], str, setup->font_handle);
+          GFL_STR_DeleteBuffer(str);
+        }
       }
     }
-  }
+//  }
   // 説明文
   fmission_explain( setup, wk, wk->Id, wk->Level );
   
@@ -441,7 +454,6 @@ static void _Write_String( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MO
   fmission_string( setup, wk, wk->Id, wk->Level, BMPWIN_GAIN_R );
   //
   // ハイスコア
-//  fmission_string( setup, wk, wk->Id, wk->Level, BMPWIN_SCORE_R );
   fmission_highscore( appwk, wk, wk->Id );
 }
 
@@ -476,6 +488,23 @@ static void fmission_exit( MONOLITH_UP_WORK *wk )
   GFL_ARC_CloseDataHandle( wk->Handle );
   //
   GFL_HEAP_FreeMemory( wk->ArcData );
+}
+
+//--------------------------------------------------------------
+/**
+ * タイトル表示
+ *
+ * @param   setup
+ * @param   wk
+ */
+//--------------------------------------------------------------
+static void fmission_title( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk )
+{
+  STRBUF  *str;
+  
+  str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[BMPWIN_TITLE*4] );
+  PRINT_UTIL_Print(&wk->print_util[BMPWIN_TITLE], setup->printQue, 0, mono_mes_tbl[BMPWIN_TITLE*4+1], str, setup->font_handle );
+  GFL_STR_DeleteBuffer(str);
 }
 
 //--------------------------------------------------------------
@@ -537,9 +566,9 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
     WORDSET_RegisterNumber(setup->wordset, 1, buf[2], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
     if(buf[2] != 0){		// 通常
-      str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*2] );
+      str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*4] );
     }else{					// 秒がない
-      str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*2+1] );
+      str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*4+2] );
     }
     WORDSET_ExpandStr( setup->wordset, expbuf, str );
   }
@@ -550,7 +579,7 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
     //
     WORDSET_RegisterNumber(setup->wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-    str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*2] );
+    str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*4] );
     WORDSET_ExpandStr( setup->wordset, expbuf, str );
   }
   // 報酬
@@ -563,7 +592,7 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
     WORDSET_RegisterItemName( setup->wordset, 0, buf[0] );
     WORDSET_RegisterNumber(   setup->wordset, 1, buf[1], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-    str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*2] );
+    str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*4] );
     WORDSET_ExpandStr( setup->wordset, expbuf, str );
   }
   // ハイスコア(仮)
@@ -574,7 +603,7 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
     //
     WORDSET_RegisterNumber(setup->wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-    str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*2] );
+    str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*4] );
     WORDSET_ExpandStr( setup->wordset, expbuf, str );
 #endif
   }
@@ -601,6 +630,7 @@ static void fmission_highscore( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk
 {
   u8           buf[2];
   s32          flg=0;
+  s32          dflg=0;
   s32          num;
   s32          width;
   STRBUF       *str;
@@ -616,32 +646,91 @@ static void fmission_highscore( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk
     // 時間優先=>スコアを表示
     flg = 0;
     num = FMISSION_SAVE_GetMissionStatusHighScoreNum( fsave, id );
+    if(num == 0){
+      dflg = 1;
+    }
   }
   else if(fmwk.beacon.end_type == FMISSION_ENDTYPE_SCORE){
     // スコア優先 => 時間を表示
     flg = 1;
     FMISSION_SAVE_GetMissionStatusHighScoreTime( fsave, id, &buf[0], &buf[1] );
 //    num = (u16)buf[0]*60+buf[1];	// 秒でセット
+    if((buf[0] == 0)&&(buf[1] == 0)){
+      dflg = 1;
+    }
   }
   // 一旦クリア
+#if 1
+  fmission_clear_string( wk, BMPWIN_SCORE_L );
+  fmission_clear_string( wk, BMPWIN_SCORE_R );
+#else
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->print_util[BMPWIN_SCORE_L].win ), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->print_util[BMPWIN_SCORE_R].win ), 0 );
+  wk->print_util[BMPWIN_SCORE_L].transReq = TRUE;
+  wk->print_util[BMPWIN_SCORE_R].transReq = TRUE;
+#endif
   //
-  if(flg == 0){		// スコア
-    WORDSET_RegisterNumber(appwk->setup->wordset, 0, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-    str = GFL_MSG_CreateString( appwk->setup->mm_monolith, mono_mes_tbl[BMPWIN_SCORE_R*2] );
-  }else{			// 時間
-    WORDSET_RegisterNumber(appwk->setup->wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-    WORDSET_RegisterNumber(appwk->setup->wordset, 1, buf[1], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-    str = GFL_MSG_CreateString( appwk->setup->mm_monolith, mono_mes_tbl[BMPWIN_SCORE_R*2+1] );
+  if(dflg == 0){
+    str = GFL_MSG_CreateString( appwk->setup->mm_monolith, mono_mes_tbl[BMPWIN_SCORE_L*4] );
+    PRINT_UTIL_Print(&wk->print_util[BMPWIN_SCORE_L], appwk->setup->printQue, 0, 0, str, appwk->setup->font_handle);
+    GFL_STR_DeleteBuffer(str);
+    
+    if(flg == 0){		// スコア
+      WORDSET_RegisterNumber(appwk->setup->wordset, 0, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+      str = GFL_MSG_CreateString( appwk->setup->mm_monolith, mono_mes_tbl[BMPWIN_SCORE_R*4] );
+    }else{			// 時間
+      if(buf[1] == 0){     // 分のみ
+        WORDSET_RegisterNumber(appwk->setup->wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+        str = GFL_MSG_CreateString( appwk->setup->mm_monolith, mono_mes_tbl[BMPWIN_SCORE_R*4+3] );
+      }else{               // 秒こみ
+        WORDSET_RegisterNumber(appwk->setup->wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+        WORDSET_RegisterNumber(appwk->setup->wordset, 1, buf[1], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+        str = GFL_MSG_CreateString( appwk->setup->mm_monolith, mono_mes_tbl[BMPWIN_SCORE_R*4+2] );
+      }
+    }
+    expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
+    WORDSET_ExpandStr( appwk->setup->wordset, expbuf, str );
+    //
+    // ここまででexpbufにセットされているものとする
+    // 右そろえ
+    width = PRINTSYS_GetStrWidth( expbuf, appwk->setup->font_handle, 0 );
+    PRINT_UTIL_Print(&wk->print_util[BMPWIN_SCORE_R], appwk->setup->printQue, 120-width, 0, expbuf, appwk->setup->font_handle);
+    GFL_STR_DeleteBuffer(str);
+    GFL_STR_DeleteBuffer(expbuf);
   }
-  expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-  WORDSET_ExpandStr( appwk->setup->wordset, expbuf, str );
-  //
-  // ここまででexpbufにセットされているものとする
-  // 右そろえ
-  width = PRINTSYS_GetStrWidth( expbuf, appwk->setup->font_handle, 0 );
-  PRINT_UTIL_Print(&wk->print_util[BMPWIN_SCORE_R], appwk->setup->printQue, 120-width, 0, expbuf, appwk->setup->font_handle);
-  GFL_STR_DeleteBuffer(str);
-  GFL_STR_DeleteBuffer(expbuf);
+}
+
+//--------------------------------------------------------------
+/**
+ * 文字列クリア
+ *
+ * @param   MONOLITH_UP_WORK		
+ * @param   const s32				id
+ */
+//--------------------------------------------------------------
+static void fmission_clear_string( MONOLITH_UP_WORK *wk, const s32 mode )
+{
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->print_util[mode].win ), 0 );
+  wk->print_util[mode].transReq = TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 文字列クリア
+ *
+ * @param   MONOLITH_UP_WORK		
+ * @param   const s32				id
+ */
+//--------------------------------------------------------------
+static void fmission_clear_all( MONOLITH_UP_WORK *wk )
+{
+  s32  i;
+  
+  // タイトル以外は全部消す
+  for(i=0;i<BMPWIN_MAX;i++){
+    if(i != BMPWIN_TITLE){
+      fmission_clear_string( wk, i );
+    }
+  }
 }
 

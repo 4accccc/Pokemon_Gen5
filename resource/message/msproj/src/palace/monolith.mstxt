@@ -2935,10 +2935,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Lv：[Digit:1digit ]</Text>
+			<Text>L[Digit:1digit ]</Text>
 			<TextModifiedBy
 				User="tanaka_ryota:W00283"
-				Time="2011-08-24T06:28:17" />
+				Time="2011-08-26T04:35:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -2946,10 +2946,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Lv：[Digit:1digit ]</Text>
+			<Text>L[Digit:1digit ]</Text>
 			<TextModifiedBy
 				User="tanaka_ryota:W00283"
-				Time="2011-08-24T06:28:36" />
+				Time="2011-08-26T04:35:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
