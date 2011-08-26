@@ -13,7 +13,8 @@
   .include  "c09r0501.h"
   .include  "c09r0601_def.h"
 
-  //@author fujimura_souichirou
+  //@author fujimura_souichirou]
+  //@author Mizuguchi_Mai （トレーナーデータ差し替え）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -80,7 +81,7 @@ EVENT_START ev_pos_c09r0501_lighting_01
     _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_02, C09R0501_SWCHAMPION_01, POS_UP )
     _MSGWIN_CLOSE()
 
-    //トレーナー戦呼び出し  【仮】トレーナーIDは仮
+    //トレーナー戦呼び出し
     _TRAINER_BTL_SET( TRID_SWCHAMPION_01, 0 )
     //敗戦チェック
     _TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -97,7 +98,7 @@ EVENT_START ev_pos_c09r0501_lighting_01
     _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_03, C09R0501_SWCHAMPION_01, POS_UP )
     _MSGWIN_CLOSE()
 
-    //トレーナー戦呼び出し  【仮】トレーナーIDは仮
+    //トレーナー戦呼び出し
     _TRAINER_BTL_SET( TRID_SWCHAMPION_02, 0 )
     //敗戦チェック
     _TRAINER_LOSE_CHECK( SCWK_ANSWER )
