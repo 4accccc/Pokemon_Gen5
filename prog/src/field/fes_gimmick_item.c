@@ -31,6 +31,7 @@
 #include "field/fldeff_fes_kira.h"
 #include "field/eventdata_sxy.h"
 #include "field/field_rail.h"
+#include "field/zonedata.h"
 #include "./event_fieldmap_control.h"
 #include "./event_fmission.h"
 #include "./event_subscreen.h"
@@ -63,9 +64,11 @@ typedef struct _FES_ITEM_SET{
 
 //抽選数の下限と上限
 static const u8 DATA_LotTargetNum[][2] = {
-  { FES_GIMMICK_ITEM_POINT_TOWN_MIN, FES_GIMMICK_ITEM_POINT_TOWN_MAX }, 
-  { FES_GIMMICK_ITEM_POINT_FIELD_MIN, FES_GIMMICK_ITEM_POINT_FIELD_MAX }, 
+  { FES_GIMMICK_ITEM_POINT_LOW_MIN, FES_GIMMICK_ITEM_POINT_LOW_MAX }, 
+  { FES_GIMMICK_ITEM_POINT_MIDDLE_MIN, FES_GIMMICK_ITEM_POINT_MIDDLE_MAX }, 
+  { FES_GIMMICK_ITEM_POINT_HIGH_MIN, FES_GIMMICK_ITEM_POINT_HIGH_MAX }, 
 };
+#define LOT_TARGET_NUM_MAX  NELEMS(DATA_LotTargetNum)
 
 //抽選アイテムセットテーブル
 static const FES_ITEM_SET DATA_ItemSetTbl[FMISSION_ITEM_SET_MAX] = {
@@ -316,8 +319,17 @@ static BOOL sub_SetPosByLot( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, u16
 
   //抽選するポイント数を決定
   {
-    u8 min = DATA_LotTargetNum[1][0];
-    u8 max = DATA_LotTargetNum[1][1];
+    u8 min,max; 
+    u8 param = ZONEDATA_GetFesParam( wk->zone_id );
+    if( param == 0 ){
+      return FALSE; //ポイント抽選なし
+    }
+    if( param > LOT_TARGET_NUM_MAX ){
+      GF_ASSERT(0);
+      return FALSE; //パラメータが不正なので何もしない
+    }
+    min = DATA_LotTargetNum[--param][0];
+    max = DATA_LotTargetNum[param][1];
 
     wk->point_max = FES_GIMMICK_SUB_RndGet( rnd_c, (max-min)+1, NULL, 0 ) + min;
 
