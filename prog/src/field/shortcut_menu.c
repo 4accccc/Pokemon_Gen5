@@ -287,8 +287,8 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( GAMEDATA *p_gamedata, SHORTCUTMENU_MODE mo
 
     
 
-    p_wk->res[RESID_PLT]  = GFL_CLGRP_PLTT_Register( p_handle, 
-        NARC_fld_shortcut_menu_gra_obj_NCLR, CLSYS_DRAW_MAIN, PLT_OBJ_M *0x20, res_heapID );
+    p_wk->res[RESID_PLT]  = GFL_CLGRP_PLTT_RegisterEx( p_handle, 
+        NARC_fld_shortcut_menu_gra_obj_NCLR, CLSYS_DRAW_MAIN, PLT_OBJ_M *0x20, 0, 1,  res_heapID );
 
 
     p_wk->res[RESID_CHR]  = GFL_CLGRP_CGR_Register( p_handle,
