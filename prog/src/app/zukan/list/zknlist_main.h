@@ -23,6 +23,7 @@
 #include "zknlist_bmp_def.h"
 #include "zknlist_obj_def.h"
 
+#include "system/blink_palanm.h"
 
 
 //============================================================================================
@@ -59,6 +60,8 @@
 #define	SET_LIST_PARAM(p,m)	( ( p << LIST_INFO_SHIFT ) | m )							// リストパラメータ設定
 #define	GET_LIST_MONS(a)		( a & LIST_MONS_MASK )												// リストパラメータからポケモン番号を取得
 #define	GET_LIST_INFO(a)		( ( a & LIST_INFO_MASK ) >> LIST_INFO_SHIFT )	// リストパラメータから登録情報を取得
+
+#define	START_BUTTON_MOVE_W	( -32 )	// STARTボタンの移動幅
 
 // リスト画面ワーク
 typedef struct {
@@ -108,6 +111,9 @@ typedef struct {
 
 	u16	frameScrollCnt;			// 開始・終了時のスクロールカウンタ
 	s16	frameScrollVal;			// 開始・終了時のスクロール値
+  
+  BLINKPALANM_WORK  *blinkanm_wk; // 点滅用
+  BOOL bBlinkStop;
 
 }ZKNLISTMAIN_WORK;
 

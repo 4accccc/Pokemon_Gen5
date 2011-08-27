@@ -42,6 +42,7 @@ enum {
 	ZKNLIST_RET_MODE_CHANGE,	// 図鑑モードを切り替える
 	ZKNLIST_RET_INFO,					// 詳細画面へ
 	ZKNLIST_RET_SEARCH,				// 検索画面へ
+	ZKNLIST_RET_HABITAT_LIST,	// 生息地リストへ
 };
 
 

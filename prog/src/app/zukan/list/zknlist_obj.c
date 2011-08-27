@@ -49,6 +49,9 @@
 #define	SCROLL_BAR_UY	( 12 )
 #define	SCROLL_BAR_DY	( 156 )
 
+#define BLINKANM_PAL_NO ( 0x1 ) // 点滅させるパレット
+#define BLINKANM_SRC_PALNO_START ( 0x1 )  // 点滅色基準パレット(開始)
+#define BLINKANM_SRC_PALNO_END   ( 0x2 )  // 点滅色基準パレット(終了)
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -56,6 +59,8 @@
 static void InitClact(void);
 static void InitResource( ZKNLISTMAIN_WORK * wk );
 static void ExitResource( ZKNLISTMAIN_WORK * wk );
+static void InitBlinkAnm( ZKNLISTMAIN_WORK *wk );
+static void ExitBlinkAnm( ZKNLISTMAIN_WORK * wk );
 static void AddClact( ZKNLISTMAIN_WORK * wk );
 static void DelClactAll( ZKNLISTMAIN_WORK * wk );
 
@@ -81,6 +86,21 @@ static const ZKNCOMM_CLWK_DATA ClactParamTbl[] =
 	},
 	{	// Ａボタンマーク
 		{ 48, 48, ZKNLISTOBJ_ANM_TARGET, 10, 1 },
+		ZKNLISTOBJ_CHRRES_ZKNOBJ, ZKNLISTOBJ_PALRES_ZKNOBJ, ZKNLISTOBJ_CELRES_ZKNOBJ,
+		0, CLSYS_DRAW_MAIN
+	},
+	{	// モード切替ボタン1
+		{ 32, 110, ZKNLISTOBJ_ANM_MODE_BUTTON, 10, 1 },
+		ZKNLISTOBJ_CHRRES_ZKNOBJ, ZKNLISTOBJ_PALRES_ZKNOBJ, ZKNLISTOBJ_CELRES_ZKNOBJ,
+		0, CLSYS_DRAW_MAIN
+	},
+	{	// モード切替ボタン2
+		{ 32, 133, ZKNLISTOBJ_ANM_MODE_BUTTON, 10, 1 },
+		ZKNLISTOBJ_CHRRES_ZKNOBJ, ZKNLISTOBJ_PALRES_ZKNOBJ, ZKNLISTOBJ_CELRES_ZKNOBJ,
+		0, CLSYS_DRAW_MAIN
+	},
+	{	// モード切替ボタン3
+		{ 32, 156, ZKNLISTOBJ_ANM_MODE_BUTTON, 10, 1 },
 		ZKNLISTOBJ_CHRRES_ZKNOBJ, ZKNLISTOBJ_PALRES_ZKNOBJ, ZKNLISTOBJ_CELRES_ZKNOBJ,
 		0, CLSYS_DRAW_MAIN
 	},
@@ -110,12 +130,12 @@ static const ZKNCOMM_CLWK_DATA ClactParamTbl[] =
 		0, CLSYS_DRAW_MAIN
 	},
 	{	// セレクトボタン
-		{ 104, 180, ZKNLISTOBJ_ANM_SELECT, 0, 1 },
+		{ 36, 180, ZKNLISTOBJ_ANM_SELECT, 0, 1 },
 		ZKNLISTOBJ_CHRRES_ZKNOBJ, ZKNLISTOBJ_PALRES_ZKNOBJ, ZKNLISTOBJ_CELRES_ZKNOBJ,
 		0, CLSYS_DRAW_MAIN
 	},
 	{	// スタートボタン
-		{ 36, 180, ZKNLISTOBJ_ANM_START, 0, 1 },
+		{ 104, 180, ZKNLISTOBJ_ANM_START, 0, 1 },
 		ZKNLISTOBJ_CHRRES_ZKNOBJ, ZKNLISTOBJ_PALRES_ZKNOBJ, ZKNLISTOBJ_CELRES_ZKNOBJ,
 		0, CLSYS_DRAW_MAIN
 	},
@@ -149,6 +169,7 @@ void ZKNLISTOBJ_Init( ZKNLISTMAIN_WORK * wk )
 {
 	InitClact();
 	InitResource( wk );
+  InitBlinkAnm( wk );
 	AddClact( wk );
 	AddPokeIcon( wk );
 
@@ -167,6 +188,7 @@ void ZKNLISTOBJ_Init( ZKNLISTMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void ZKNLISTOBJ_Exit( ZKNLISTMAIN_WORK * wk )
 {
+  ExitBlinkAnm( wk );
 	DelClactAll( wk );
 	ExitResource( wk );
 	GFL_CLACT_SYS_Delete();
@@ -184,6 +206,12 @@ void ZKNLISTOBJ_Exit( ZKNLISTMAIN_WORK * wk )
 void ZKNLISTOBJ_AnmMain( ZKNLISTMAIN_WORK * wk )
 {
 	u32	i;
+
+  // カーソル点滅アニメーション
+    if( wk->bBlinkStop == FALSE )
+    {
+      BLINKPALANM_Main( wk->blinkanm_wk );
+    }
 
 	for( i=0; i<ZKNLISTOBJ_IDX_MAX; i++ ){
 		if( wk->clwk[i] == NULL ){ continue; }
@@ -208,6 +236,22 @@ void ZKNLISTOBJ_SetAnm( ZKNLISTMAIN_WORK * wk, u32 id, u32 anm )
 {
 	GFL_CLACT_WK_SetAnmFrame( wk->clwk[id], 0 );
 	GFL_CLACT_WK_SetAnmSeq( wk->clwk[id], anm );
+  GFL_CLACT_WK_StartAnm( wk->clwk[id] );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションの停止
+ *
+ *	@param	* wk    図鑑リストワーク
+ *	@param	id      OBJ ID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ZKNLISTOBJ_SetAnmStop( ZKNLISTMAIN_WORK * wk, u32 id )
+{
+	GFL_CLACT_WK_StopAnm( wk->clwk[id] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -513,6 +557,66 @@ static void InitResource( ZKNLISTMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  点滅アニメーション
+ *
+ *	@param	*wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void InitBlinkAnm( ZKNLISTMAIN_WORK *wk )
+{
+  ARCHANDLE * ah;
+
+  // 図鑑グラフィックアーカイブ
+  ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_LIST );
+	
+  // 点滅させるパレットの指定
+  wk->blinkanm_wk = BLINKPALANM_Create( BLINKANM_PAL_NO*16  ,
+        16 , BLINKPALANM_MODE_MAIN_OBJ, HEAPID_ZUKAN_LIST );
+
+  // パレットアニメデータの作成
+  BLINKPALANM_SetPalBufferArcHDL( wk->blinkanm_wk, ah,
+                    NARC_zukan_gra_list_list_objd_NCLR, 
+                    BLINKANM_SRC_PALNO_START*16, 
+                    BLINKANM_SRC_PALNO_END*16 );
+    
+  // アーカイブクローズ
+  GFL_ARC_CloseDataHandle( ah );
+	
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  点滅アニメ
+ *
+ *	@param	*wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ExitBlinkAnm( ZKNLISTMAIN_WORK *wk )
+{
+  BLINKPALANM_Exit( wk->blinkanm_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  点滅アニメーション停止フラグセット
+ *
+ *	@param	* wk  図鑑リストワーク
+ *	@param	flag  TRUE = 停止
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ZKNLISTOBJ_SetBlinkStopFlag( ZKNLISTMAIN_WORK * wk, BOOL flag )
+{
+  wk->bBlinkStop = flag;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief		リソース解放
@@ -555,6 +659,9 @@ static void ExitResource( ZKNLISTMAIN_WORK * wk )
 static void AddClact( ZKNLISTMAIN_WORK * wk )
 {
 	u32	i;
+  
+  BOOL is_zenkoku = ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata );
+  BOOL is_habitat = ZUKANSAVE_GetHabitatListFlag( wk->dat->savedata );
 
 	wk->clunit = GFL_CLACT_UNIT_Create( ZKNLISTOBJ_IDX_MAX, 0, HEAPID_ZUKAN_LIST );
 
@@ -581,20 +688,68 @@ static void AddClact( ZKNLISTMAIN_WORK * wk )
 	if( ZUKANSAVE_GetGraphicVersionUpFlag( wk->dat->savedata ) == FALSE ){
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TB_START, FALSE );
 	}
-	// 全国図鑑未取得時
-	if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == FALSE ){
+	// 生息地リスト未取得時
+	if( is_habitat == FALSE ){
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TB_SELECT, FALSE );
+		
+    // スタートボタンの位置をずらす
+    {
+      s16	nx, ny;
+      ZKNLISTOBJ_GetPos( wk, ZKNLISTOBJ_IDX_TB_START, &nx, &ny, CLSYS_DRAW_MAIN );
+      ZKNLISTOBJ_SetPos( wk, ZKNLISTOBJ_IDX_TB_START, nx + START_BUTTON_MOVE_W, ny, CLSYS_DRAW_MAIN );
+    }
 	}
+  
+  // モード切替ボタン
+	if( (is_zenkoku == FALSE) && (is_habitat == FALSE) )
+  {
+    // モード切替と全国図鑑なし
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_1, FALSE );
+    ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2, FALSE );
+    ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3, FALSE );
+  }
+  else if( (is_zenkoku == FALSE) && (is_habitat == TRUE) )
+  {
+    // 生息地だけ(地方図鑑を閲覧している)
+    ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_1, FALSE );
+    ZKNLISTOBJ_SetAnm( wk ,ZKNLISTOBJ_IDX_MODE_BUTTON_2,ZKNLISTOBJ_ANM_MODE_BUTTON_ANM);
+    ZKNLISTOBJ_SetAnmStop( wk ,ZKNLISTOBJ_IDX_MODE_BUTTON_2 );
+  }
+  else if( (is_zenkoku == TRUE) && (is_habitat == TRUE) )
+  {
+    // 全国図鑑、生息地リストを両方持っている
+    if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == FALSE ){
+      ZKNLISTOBJ_SetAnm( wk ,ZKNLISTOBJ_IDX_MODE_BUTTON_1,ZKNLISTOBJ_ANM_MODE_BUTTON_ANM);
+      ZKNLISTOBJ_SetAnmStop( wk ,ZKNLISTOBJ_IDX_MODE_BUTTON_1 );
+    }
+    else
+    {
+      ZKNLISTOBJ_SetAnm( wk ,ZKNLISTOBJ_IDX_MODE_BUTTON_2,ZKNLISTOBJ_ANM_MODE_BUTTON_ANM);
+      ZKNLISTOBJ_SetAnmStop( wk ,ZKNLISTOBJ_IDX_MODE_BUTTON_2 );
+    }
+  }
+  else if( (is_zenkoku == TRUE) && (is_habitat == FALSE) )
+  {
+    // 全国だけはありえない
+    GF_ASSERT(0);
+  }
+
 	// 検索時
 	if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TB_SELECT, FALSE );
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TB_Y_BUTTON, FALSE );
+    // モード切替ボタンなし
+    ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_1, FALSE );
+    ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2, FALSE );
+    ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3, FALSE );
+
 	}else {
 		// Ｙ登録
 		if( GAMEDATA_GetShortCut( wk->dat->gamedata, SHORTCUT_ID_ZUKAN_LIST ) == TRUE ){
 			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_ON );
 		}
 	}
+
 }
 
 //--------------------------------------------------------------------------------------------

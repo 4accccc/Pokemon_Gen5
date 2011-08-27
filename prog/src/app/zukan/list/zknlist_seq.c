@@ -318,14 +318,14 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 		ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON );
 		wk->buttonID = ZKNLISTOBJ_IDX_TB_RIGHT;
 		wk->subSeq = 0;
-		seq = MAINSEQ_PAGE_MOVE;
-		break;
+    seq = MAINSEQ_PAGE_MOVE;
+    break;
 
-	case FRAMELIST_RET_PAGE_UP_NONE:		// ページ数が足りなくて１ページ上にスクロールできなかった
-		return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON, MAINSEQ_MAIN );
+  case FRAMELIST_RET_PAGE_UP_NONE:		// ページ数が足りなくて１ページ上にスクロールできなかった
+    return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_ON, MAINSEQ_MAIN );
 
-	case FRAMELIST_RET_PAGE_DOWN_NONE:	// ページ数が足りなくて１ページ下にスクロールできなかった
-		return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON, MAINSEQ_MAIN );
+  case FRAMELIST_RET_PAGE_DOWN_NONE:	// ページ数が足りなくて１ページ下にスクロールできなかった
+    return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_ON, MAINSEQ_MAIN );
 
 	case FRAMELIST_RET_JUMP_TOP:		// リスト最上部へジャンプ
 	case FRAMELIST_RET_JUMP_BOTTOM:	// リスト最下部へジャンプ
@@ -381,16 +381,102 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 				SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
 				return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_START, ZKNLISTOBJ_ANM_START_ANM, MAINSEQ_END_SET );
 
-			case ZKNLISTUI_ID_SELECT:			// 09: セレクト
-				PMSND_PlaySE( ZKNLIST_SE_DECIDE );
-				if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){
-					ZUKANSAVE_SetZukanMode( wk->dat->savedata, FALSE );
-				}else{
-					ZUKANSAVE_SetZukanMode( wk->dat->savedata, TRUE );
-				}
-				wk->dat->retMode = ZKNLIST_RET_MODE_CHANGE;
-				SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
-				return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
+      case ZKNLISTUI_ID_SELECT:			// 09: セレクト
+        PMSND_PlaySE( ZKNLIST_SE_DECIDE );
+        // ボタン点灯状態を解除
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_1,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+
+        if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == FALSE ){
+          // 地方図鑑を閲覧中 
+          if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == TRUE )
+          {
+            // 全国図鑑へ
+            ZUKANSAVE_SetZukanMode( wk->dat->savedata, TRUE );
+            wk->dat->retMode = ZKNLIST_RET_MODE_CHANGE;
+            SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+            SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
+          }
+          else
+          {
+            // 生息地リストへ
+            wk->dat->retMode = ZKNLIST_RET_HABITAT_LIST;
+            SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+            SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
+          }
+        }else{
+          // 全国ずかんを閲覧中->生息地リストへ
+          wk->dat->retMode = ZKNLIST_RET_HABITAT_LIST;
+          SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+          SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
+        }
+        return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
+
+      case ZKNLISTUI_ID_MODE_BUTTON1:
+        PMSND_PlaySE( ZKNLIST_SE_DECIDE );
+        // ボタン点灯状態を解除
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_1,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+
+        // 地方図鑑へ
+        ZUKANSAVE_SetZukanMode( wk->dat->savedata, FALSE );
+        wk->dat->retMode = ZKNLIST_RET_MODE_CHANGE;
+        SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
+        return SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_1, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
+
+      case ZKNLISTUI_ID_MODE_BUTTON2:
+        PMSND_PlaySE( ZKNLIST_SE_DECIDE );
+        // ボタン点灯状態を解除
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_1,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+
+        // 全国図鑑を持っている場合は全国図鑑へ
+        if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == TRUE )
+        {
+          // 全国図鑑へ
+          ZUKANSAVE_SetZukanMode( wk->dat->savedata, TRUE );
+          wk->dat->retMode = ZKNLIST_RET_MODE_CHANGE;
+          SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+        }
+        else
+        {
+          // 全国図鑑を持っていない場合は、ここが呼ばれることはない
+          GF_ASSERT(0);
+          // 生息地リストへ
+          wk->dat->retMode = ZKNLIST_RET_HABITAT_LIST;
+          SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+        }
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
+        return SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
+
+      case ZKNLISTUI_ID_MODE_BUTTON3:
+        PMSND_PlaySE( ZKNLIST_SE_DECIDE );
+        // ボタン点灯状態を解除
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_1,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3,
+            ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
+
+        // 生息地リストへ
+        wk->dat->retMode = ZKNLIST_RET_HABITAT_LIST;
+        SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+        SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
+        return SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
 
 			case ZKNLISTUI_ID_Y:					// 10: Ｙ
 				PMSND_PlaySE( ZKNLIST_SE_Y );
@@ -544,6 +630,7 @@ static int MainSeq_ItemAnm( ZKNLISTMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_EndSet( ZKNLISTMAIN_WORK * wk )
 {
+  ZKNLISTOBJ_SetBlinkStopFlag( wk , TRUE );
 	ZKNLISTMAIN_SetPalFadeSeq( wk, 0, 16 );
 	ZKNLISTMAIN_SetFrameScrollParam( wk, ZKNCOMM_BAR_SPEED );
 	return MAINSEQ_RELEASE;

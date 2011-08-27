@@ -566,6 +566,9 @@ void ZUKANSAVE_Init( ZUKAN_SAVEDATA * zw )
 {
 	GFL_STD_MemClear( zw, sizeof(ZUKAN_SAVEDATA) );
   zw->zukan_magic = MAGIC_NUMBER;
+
+  // ゲーム開始時からバージョンアップしている
+  ZUKANSAVE_SetGraphicVersionUpFlag( zw );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -634,6 +637,36 @@ BOOL ZUKANSAVE_GetZenkokuZukanFlag( const ZUKAN_SAVEDATA * zw )
   return zw->zenkoku_flag;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生息地リストモードをセット
+ *
+ *	@param	* zw 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ZUKANSAVE_SetHabitatListFlag( ZUKAN_SAVEDATA * zw )
+{
+  zukan_incorrect(zw);
+  zw->habitat_flag = TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	生息地リストモードが開放済みかどうか？の問い合わせ
+ *
+ * @param		zw		図鑑セーブデータ
+ *
+ * @retval	"TRUE = 生息地リスト可"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL ZUKANSAVE_GetHabitatListFlag( const ZUKAN_SAVEDATA * zw )
+{
+  zukan_incorrect(zw);
+  return zw->habitat_flag;
+}
 
 //--------------------------------------------------------------------------------------------
 /**

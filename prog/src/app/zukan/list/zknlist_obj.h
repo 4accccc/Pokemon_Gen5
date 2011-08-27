@@ -24,6 +24,8 @@ enum {
 	ZKNLISTOBJ_ANM_START_ANM,
 	ZKNLISTOBJ_ANM_SELECT_ANM,
 	ZKNLISTOBJ_ANM_TARGET,
+	ZKNLISTOBJ_ANM_MODE_BUTTON      = 13,
+	ZKNLISTOBJ_ANM_MODE_BUTTON_ANM  = 14,
 };
 
 
@@ -76,6 +78,18 @@ extern void ZKNLISTOBJ_AnmMain( ZKNLISTMAIN_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern void ZKNLISTOBJ_SetAnm( ZKNLISTMAIN_WORK * wk, u32 id, u32 anm );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションの停止
+ *
+ *	@param	* wk    図鑑リストワーク
+ *	@param	id      OBJ ID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void ZKNLISTOBJ_SetAnmStop( ZKNLISTMAIN_WORK * wk, u32 id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -323,3 +337,16 @@ extern void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern void ZKNLISTOBJ_SetListPageArrowAnime( ZKNLISTMAIN_WORK * wk, BOOL anm );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  点滅アニメーション停止フラグセット
+ *
+ *	@param	* wk  図鑑リストワーク
+ *	@param	flag  TRUE = 停止
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void ZKNLISTOBJ_SetBlinkStopFlag( ZKNLISTMAIN_WORK * wk, BOOL flag );
+

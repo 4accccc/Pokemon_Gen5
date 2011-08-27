@@ -130,6 +130,7 @@ typedef enum {
   DEBUG_ZKNCMD_RANDOM,
   DEBUG_ZKNCMD_FORM_FULL,
   DEBUG_ZKNCMD_ZENKOKU_FLAG,
+  DEBUG_ZKNCMD_HABITAT_FLAG,
   DEBUG_ZKNCMD_VERSION_UP,
   DEBUG_ZKNCMD_LOCAL_GET_FULL,
   DEBUG_ZKNCMD_LOCAL_SEE_FULL,   //7
@@ -198,7 +199,8 @@ static const DEBUG_MENU_LIST ZukanMenuList[] =
   { DEBUG_FIELD_ZUKAN_09, (void*)DEBUG_ZKNCMD_RANDOM, GFL_OVERLAY_BLANK_ID },           // ランダムセット
   { DEBUG_FIELD_ZUKAN_03, (void*)DEBUG_ZKNCMD_FORM_FULL, GFL_OVERLAY_BLANK_ID },        // フォルムコンプ
   { DEBUG_FIELD_ZUKAN_12, (void*)DEBUG_ZKNCMD_LANGUAGE_FULL, GFL_OVERLAY_BLANK_ID },    // 言語コンプ
-  { DEBUG_FIELD_ZUKAN_05, (void*)DEBUG_ZKNCMD_ZENKOKU_FLAG, GFL_OVERLAY_BLANK_ID },     // 全国フラグ
+  { DEBUG_FIELD_ZUKAN_05, (void*)DEBUG_ZKNCMD_ZENKOKU_FLAG, GFL_OVERLAY_BLANK_ID },     // 全国フラグと生息地フラグ
+  { DEBUG_FIELD_ZUKAN_23, (void*)DEBUG_ZKNCMD_HABITAT_FLAG, GFL_OVERLAY_BLANK_ID },     // 生息地フラグ
   { DEBUG_FIELD_ZUKAN_06, (void*)DEBUG_ZKNCMD_VERSION_UP, GFL_OVERLAY_BLANK_ID },       // バージョンアップ
   { DEBUG_FIELD_ZUKAN_13, (void*)DEBUG_ZKNCMD_LOCAL_SEE_25, GFL_OVERLAY_BLANK_ID },     // 地方見た２５
   { DEBUG_FIELD_ZUKAN_14, (void*)DEBUG_ZKNCMD_LOCAL_SEE_60, GFL_OVERLAY_BLANK_ID },     // 地方見た６０
@@ -324,8 +326,14 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
-    case DEBUG_ZKNCMD_ZENKOKU_FLAG:     // 全国フラグ
+    case DEBUG_ZKNCMD_ZENKOKU_FLAG:     // 全国フラグ、生息地フラグ
+      ZUKANSAVE_SetHabitatListFlag( work->sv );
       ZUKANSAVE_SetZenkokuZukanFlag( work->sv );
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
+
+    case DEBUG_ZKNCMD_HABITAT_FLAG:     // 生息地フラグ
+      ZUKANSAVE_SetHabitatListFlag( work->sv );
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 

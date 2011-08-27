@@ -46,12 +46,43 @@ static const GFL_UI_TP_HITTBL TouchHitTbl[] =
 	{ 120, 143,  96, 127 },		// 06: ポケモンアイコン
 	{ 144, 167,  96, 127 },		// 07: ポケモンアイコン
 
-	{ 168, 191,   0,  71 },		// 08: スタート
-	{ 168, 191,  72, 135 },		// 09: セレクト
+	{ 168, 191,  72, 135 },		// 08: スタート
+	{ 168, 191,   0,  71 },		// 09: セレクト
 
 	{ TB_PY, TB_PY+TB_SY-1, TB_PX05, TB_PX05+TB_SX-1 },		// 10: Ｙ
 	{ TB_PY, TB_PY+TB_SY-1, TB_PX06, TB_PX06+TB_SX-1 },		// 11: Ｘ
 	{ TB_PY, TB_PY+TB_SY-1, TB_PX07, TB_PX07+TB_SX-1 },		// 12: 戻る
+	
+  { 104, 128,   0,  56 },		// 13: モード切替ボタン1
+  { 128, 152,   0,  56 },		// 14: モード切替ボタン2
+  { 152, 176,   0,  56 },		// 15: モード切替ボタン3
+
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
+// タッチ座標テーブル
+static const GFL_UI_TP_HITTBL TouchHitTblNoSelect[] =
+{
+	{   0,  95,   0,  95 },		// 00: ポケモン正面絵
+
+	{   0,  23,  96, 127 },		// 01: ポケモンアイコン
+	{  24,  47,  96, 127 },		// 02: ポケモンアイコン
+	{  48,  71,  96, 127 },		// 03: ポケモンアイコン
+	{  72,  95,  96, 127 },		// 04: ポケモンアイコン
+	{  96, 119,  96, 127 },		// 05: ポケモンアイコン
+	{ 120, 143,  96, 127 },		// 06: ポケモンアイコン
+	{ 144, 167,  96, 127 },		// 07: ポケモンアイコン
+
+	{ 168, 191,  72+START_BUTTON_MOVE_W, 135+START_BUTTON_MOVE_W },		// 08: スタート
+	{ 168, 191,   0,  71 },		// 09: セレクト
+
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX05, TB_PX05+TB_SX-1 },		// 10: Ｙ
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX06, TB_PX06+TB_SX-1 },		// 11: Ｘ
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX07, TB_PX07+TB_SX-1 },		// 12: 戻る
+	
+  { 104, 128,   0,  56 },		// 13: モード切替ボタン1
+  { 128, 152,   0,  56 },		// 14: モード切替ボタン2
+  { 152, 176,   0,  56 },		// 15: モード切替ボタン3
 
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
@@ -70,7 +101,15 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 {
 	int	ret;
 
-	ret = GFL_UI_TP_HitTrg( TouchHitTbl );
+  // SELECTがある時とない時で当たり判定を変える
+  if( ZUKANSAVE_GetHabitatListFlag( wk->dat->savedata ) == TRUE )
+  {
+    ret = GFL_UI_TP_HitTrg( TouchHitTbl );
+  }
+  else
+  {
+    ret = GFL_UI_TP_HitTrg( TouchHitTblNoSelect );
+  }
 
 	if( ret != GFL_UI_TP_HIT_NONE ){
 		// 検索
@@ -82,8 +121,8 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 		}
 		// モード切替
 		if( ret == ZKNLISTUI_ID_SELECT ){
-			// 全国図鑑未取得時
-			if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == FALSE ){
+			// 生息地リスト未取得
+			if( ZUKANSAVE_GetHabitatListFlag( wk->dat->savedata ) == FALSE ){
 				return GFL_UI_TP_HIT_NONE;
 			}
 			// 検索リスト時
@@ -102,7 +141,66 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 				FRAMELIST_SetCursorPosPaletteOff( wk->lwk );
 			}
 		}
-		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    // モード切替ボタン1
+    if( ret == ZKNLISTUI_ID_MODE_BUTTON1 ){
+      // 全国・生息地両方取得済みの時のみ機能する
+      if(!((ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == TRUE) &&
+            (ZUKANSAVE_GetHabitatListFlag( wk->dat->savedata ) == TRUE)) ){
+				return GFL_UI_TP_HIT_NONE;
+      }
+      // 検索リスト時
+      if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
+        return GFL_UI_TP_HIT_NONE;
+      }
+
+      // 地方から地方への切り替えは禁止
+      if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == FALSE ){
+        return GFL_UI_TP_HIT_NONE;
+      }
+      
+      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    }
+    // モード切替ボタン2
+    if( ret == ZKNLISTUI_ID_MODE_BUTTON2 ){
+      // 全国・生息地両方取得済みの時のみ機能する
+      if(!((ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == TRUE) &&
+            (ZUKANSAVE_GetHabitatListFlag( wk->dat->savedata ) == TRUE)) ){
+				return GFL_UI_TP_HIT_NONE;
+      }
+      // 検索リスト時
+      if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
+        return GFL_UI_TP_HIT_NONE;
+      }
+
+      // 全国から全国、地方から地方への切替は禁止
+      if(ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == TRUE )
+      {
+        if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){
+          return GFL_UI_TP_HIT_NONE;
+        }
+      }
+      else
+      {
+        if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == FALSE ){
+          return GFL_UI_TP_HIT_NONE;
+        }
+      }
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    }
+    // モード切替ボタン3
+    if( ret == ZKNLISTUI_ID_MODE_BUTTON3 ){
+      // 生息地取得時のみ機能する
+      if(ZUKANSAVE_GetHabitatListFlag( wk->dat->savedata ) == FALSE){
+				return GFL_UI_TP_HIT_NONE;
+      }
+      // 検索リスト時
+      if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
+        return GFL_UI_TP_HIT_NONE;
+      }
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    }
+
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 		return ret;
 	}
 
@@ -127,8 +225,8 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 
 	// モード切替
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-		// 全国図鑑未取得時
-		if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == FALSE ){
+		// 生息地リスト未取得
+		if( ZUKANSAVE_GetHabitatListFlag( wk->dat->savedata ) == FALSE ){
 			return GFL_UI_TP_HIT_NONE;
 		}
 		// 検索リスト時

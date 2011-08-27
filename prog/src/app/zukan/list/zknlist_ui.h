@@ -33,7 +33,11 @@ enum {
 	ZKNLISTUI_ID_X,					// 11: Ｘ
 	ZKNLISTUI_ID_RETURN,		// 12: 戻る
 
-	ZKNLISTUI_ID_CANCEL,		// 13: キャンセルボタン
+  ZKNLISTUI_ID_MODE_BUTTON1,					// 13: モード切替ボタン1
+  ZKNLISTUI_ID_MODE_BUTTON2,					// 14: モード切替ボタン2
+  ZKNLISTUI_ID_MODE_BUTTON3,					// 15: モード切替ボタン3
+
+	ZKNLISTUI_ID_CANCEL,		// 16: キャンセルボタン
 };
 
 

@@ -28,6 +28,7 @@
 #define FCOL_SP00WN		( PRINTSYS_LSB_Make(14,15,0) )	// フォントカラー：サブ００白抜
 #define FCOL_SP00BN		( PRINTSYS_LSB_Make(12,13,0) )	// フォントカラー：サブ００黒抜
 #define FCOL_SP15WN		( PRINTSYS_LSB_Make(15,2,0) )		// フォントカラー：サブ１５白抜
+#define FCOL_MP15WN		( PRINTSYS_LSB_Make(15,2,1) )	// フォントカラー：両用０１白抜
 
 // BMPWIN関連
 // ポケモン名
@@ -39,6 +40,25 @@
 #define	BMPWIN_NAME_SY			( 3 )
 #define	BMPWIN_NAME_M_PAL		( 1 )
 #define	BMPWIN_NAME_S_PAL		( 1 )
+// モード切替ボタン1
+#define	BMPWIN_BUTTON_M_FRM ( GFL_BG_FRAME0_M )
+#define	BMPWIN_BUTTON_1_PX			( 0 )
+#define	BMPWIN_BUTTON_1_PY			( 12 )
+#define	BMPWIN_BUTTON_1_SX			( 7 )
+#define	BMPWIN_BUTTON_1_SY			( 3 )
+#define	BMPWIN_BUTTON_1_PAL		  ( 15 )
+// モード切替ボタン2
+#define	BMPWIN_BUTTON_2_PX			( 0 )
+#define	BMPWIN_BUTTON_2_PY			( 15 )
+#define	BMPWIN_BUTTON_2_SX			( 7 )
+#define	BMPWIN_BUTTON_2_SY			( 3 )
+#define	BMPWIN_BUTTON_2_PAL		  ( 15 )
+// モード切替ボタン3
+#define	BMPWIN_BUTTON_3_PX			( 0 )
+#define	BMPWIN_BUTTON_3_PY			( 18 )
+#define	BMPWIN_BUTTON_3_SX			( 7 )
+#define	BMPWIN_BUTTON_3_SY			( 3 )
+#define	BMPWIN_BUTTON_3_PAL		  ( 15 )
 // タイトル
 #define	BMPWIN_TITLE_FRM		( GFL_BG_FRAME1_S )
 #define	BMPWIN_TITLE_PX			( 1 )
@@ -66,6 +86,7 @@
 //	プロトタイプ宣言
 //============================================================================================
 static void PutTitleStr( ZKNLISTMAIN_WORK * wk );
+static void PutModeButtonStr( ZKNLISTMAIN_WORK * wk );
 
 
 //============================================================================================
@@ -86,7 +107,19 @@ static const u8	BmpWinData[][6] =
 	{	// 捕まえた数
 		BMPWIN_GETNUM_FRM, BMPWIN_GETNUM_PX, BMPWIN_GETNUM_PY,
 		BMPWIN_GETNUM_SX, BMPWIN_GETNUM_SY, BMPWIN_GETNUM_PAL
-	}
+  },
+  {	// モード切替ボタン1
+    BMPWIN_BUTTON_M_FRM, BMPWIN_BUTTON_1_PX, BMPWIN_BUTTON_1_PY,
+    BMPWIN_BUTTON_1_SX, BMPWIN_BUTTON_1_SY, BMPWIN_BUTTON_1_PAL
+  },
+  {	// モード切替ボタン2
+    BMPWIN_BUTTON_M_FRM, BMPWIN_BUTTON_2_PX, BMPWIN_BUTTON_2_PY,
+    BMPWIN_BUTTON_2_SX, BMPWIN_BUTTON_2_SY, BMPWIN_BUTTON_2_PAL
+  },
+  {	// モード切替ボタン3
+    BMPWIN_BUTTON_M_FRM, BMPWIN_BUTTON_3_PX, BMPWIN_BUTTON_3_PY,
+    BMPWIN_BUTTON_3_SX, BMPWIN_BUTTON_3_SY, BMPWIN_BUTTON_3_PAL
+  },
 };
 
 
@@ -113,6 +146,7 @@ void ZKNLISTBMP_Init( ZKNLISTMAIN_WORK * wk )
 	}
 
 	PutTitleStr( wk );
+  PutModeButtonStr( wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -300,6 +334,42 @@ static void PutTitleStr( ZKNLISTMAIN_WORK * wk )
 		StrPrint( wk, ZKNLISTBMP_WINIDX_TITLE, str_title_00, 0, 4, FCOL_SP00WN, PRINTTOOL_MODE_LEFT );
 	}
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_TITLE] );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モード切替ボタン表示
+ *
+ *	@param	* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void PutModeButtonStr( ZKNLISTMAIN_WORK * wk )
+{
+  if( wk->dat->callMode == ZKNLIST_CALL_NORMAL ){
+    BOOL is_zenkoku = ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata );
+    BOOL is_habitat = ZUKANSAVE_GetHabitatListFlag( wk->dat->savedata );
+
+    if( (is_zenkoku == TRUE) && (is_habitat == TRUE) )
+    {
+      // 全国・生息地
+		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_1, str_mode_local, 0, 6, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
+		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_2, str_mode_zenkoku, 0, 6, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
+		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_3, str_mode_seisoku, 0, 4, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
+	    PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_MODE_BUTTON_1] );
+	    PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_MODE_BUTTON_2] );
+	    PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_MODE_BUTTON_3] );
+    }
+    else if( (is_zenkoku == FALSE) && (is_habitat == TRUE) )
+    {
+      // 生息地だけ
+		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_2, str_mode_local, 0, 6, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
+		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_3, str_mode_seisoku, 0, 4, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
+	    PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_MODE_BUTTON_2] );
+	    PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_MODE_BUTTON_3] );
+    }
+  }
 }
 
 //--------------------------------------------------------------------------------------------
