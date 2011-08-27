@@ -62,6 +62,7 @@ void POKETOOL_PokePara_to_RecPokePara( POKEMON_PARAM *pp, REC_POKEPARA *rec)
   rec->ppp_fast_mode = 0;//ppp->ppp_fast_mode;
   rec->fusei_tamago_flag = ppp->fusei_tamago_flag;
   rec->seikaku = ppp2->seikaku;
+  rec->n_poke_flag = ppp2->n_poke_flag;
 
   //ppp1
   rec->monsno = ppp1->monsno;

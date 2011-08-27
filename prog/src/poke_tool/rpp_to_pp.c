@@ -94,6 +94,7 @@ void POKETOOL_RecPokePara_to_PokePara( REC_POKEPARA *rec, POKEMON_PARAM *pp)
   ppp2->sex = rec->sex;
   ppp2->form_no = rec->form_no;
   ppp2->seikaku = rec->seikaku;
+  ppp2->n_poke_flag = rec->n_poke_flag;
   TAYA_Printf("RPPtoPP : line=%d\n", __LINE__);
 
   //ppp3
