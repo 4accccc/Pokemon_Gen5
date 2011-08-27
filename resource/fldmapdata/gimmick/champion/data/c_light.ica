@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-23T22:50:30" source="c_light002.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-27T21:54:31" source="c_light002.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,11 +11,11 @@
 <body>
 
 <node_anm_info
-	frame_size="81"
+	frame_size="66"
 	scaling_rule="standard"
 	magnify="1.000000"
-	tool_start_frame="0"
-	tool_end_frame="80"
+	tool_start_frame="65"
+	tool_end_frame="130"
 	interpolation="frame"
 	compress_node="merge" node_size="6 6"
 	frame_step_mode="1"
@@ -24,41 +24,36 @@
 	tolerance_translate="0.100000"
 />
 
-<node_scale_data size="244">
+<node_scale_data size="199">
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.100098 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 0.500000 0.500000 0.500000
+	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 1.199951 1.000000 1.000000
 	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
 	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
 	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
 	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
 	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
 	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.100098 1.000000 1.000000 1.000000
-	1.000000 1.000000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 1.500000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.500000 2.000000
-	2.500000 3.000000 3.500000 4.000000
+	1.000000 1.000000 1.000000 1.245850 1.491699 1.737305 1.983154 2.229004 2.474854 2.499756
+	2.524902 2.549805 2.574951 2.599854 2.624756 2.649902 2.674805 2.699951 2.724854 2.749756
+	2.774902 2.799805 2.824951 2.849854 2.874756 2.899902 2.924805 2.949951 2.974854 2.999756
+	3.024902 3.049805 3.074951 3.099854 3.124756 3.149902 3.174805 3.199951 3.224854 3.249756
+	3.274902 3.299805 3.324951 3.349854 3.374756 3.399902 3.424805 3.449951 3.474854 3.474854
+	3.474854 3.474854 3.474854 3.474854 3.474854 3.474854 3.474854 3.474854 3.474854
 </node_scale_data>
 
 <node_rotate_data size="1">
 	0.000000
 </node_rotate_data>
 
-<node_translate_data size="11">
+<node_translate_data size="12">
 	0.000000 97.000000 220.033691 -78.259277 92.000000 224.000000 -210.310059 -79.000000 -74.000000 8.000000
-	159.000000
+	190.069580 -26.000000
 </node_translate_data>
 
 <node_anm_array size="6">
@@ -74,9 +69,9 @@
 		<translate_z frame_step="1" data_size="1" data_head="0"/>
 	</node_anm>
 	<node_anm index="1">
-		<scale_x frame_step="1" data_size="81" data_head="1"/>
-		<scale_y frame_step="1" data_size="81" data_head="82"/>
-		<scale_z frame_step="1" data_size="81" data_head="1"/>
+		<scale_x frame_step="1" data_size="66" data_head="1"/>
+		<scale_y frame_step="1" data_size="66" data_head="67"/>
+		<scale_z frame_step="1" data_size="66" data_head="1"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
@@ -85,9 +80,9 @@
 		<translate_z frame_step="1" data_size="1" data_head="3"/>
 	</node_anm>
 	<node_anm index="2">
-		<scale_x frame_step="1" data_size="81" data_head="1"/>
-		<scale_y frame_step="1" data_size="81" data_head="82"/>
-		<scale_z frame_step="1" data_size="81" data_head="1"/>
+		<scale_x frame_step="1" data_size="66" data_head="1"/>
+		<scale_y frame_step="1" data_size="66" data_head="67"/>
+		<scale_z frame_step="1" data_size="66" data_head="1"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
@@ -96,9 +91,9 @@
 		<translate_z frame_step="1" data_size="1" data_head="6"/>
 	</node_anm>
 	<node_anm index="3">
-		<scale_x frame_step="1" data_size="81" data_head="1"/>
-		<scale_y frame_step="1" data_size="81" data_head="82"/>
-		<scale_z frame_step="1" data_size="81" data_head="1"/>
+		<scale_x frame_step="1" data_size="66" data_head="1"/>
+		<scale_y frame_step="1" data_size="66" data_head="67"/>
+		<scale_z frame_step="1" data_size="66" data_head="1"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
@@ -107,9 +102,9 @@
 		<translate_z frame_step="1" data_size="1" data_head="3"/>
 	</node_anm>
 	<node_anm index="4">
-		<scale_x frame_step="1" data_size="81" data_head="1"/>
-		<scale_y frame_step="1" data_size="81" data_head="82"/>
-		<scale_z frame_step="1" data_size="81" data_head="1"/>
+		<scale_x frame_step="1" data_size="66" data_head="1"/>
+		<scale_y frame_step="1" data_size="66" data_head="67"/>
+		<scale_z frame_step="1" data_size="66" data_head="1"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
@@ -118,15 +113,15 @@
 		<translate_z frame_step="1" data_size="1" data_head="6"/>
 	</node_anm>
 	<node_anm index="5">
-		<scale_x frame_step="1" data_size="81" data_head="163"/>
-		<scale_y frame_step="1" data_size="81" data_head="163"/>
-		<scale_z frame_step="1" data_size="81" data_head="163"/>
+		<scale_x frame_step="1" data_size="66" data_head="133"/>
+		<scale_y frame_step="1" data_size="66" data_head="133"/>
+		<scale_z frame_step="1" data_size="66" data_head="133"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="9"/>
 		<translate_y frame_step="1" data_size="1" data_head="10"/>
-		<translate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_z frame_step="1" data_size="1" data_head="11"/>
 	</node_anm>
 </node_anm_array>
 

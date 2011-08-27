@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-23T22:50:30" source="c_light002.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-27T21:54:31" source="c_light002.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,32 +11,29 @@
 <body>
 
 <mat_color_info
-	frame_size="81"
-	tool_start_frame="0"
-	tool_end_frame="80"
+	frame_size="66"
+	tool_start_frame="65"
+	tool_end_frame="130"
 	interpolation="frame"
 	compress_material="on" material_size="3 3"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="164">
+<mat_color_data size="134">
 	25 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 16 25 22
-	16 7 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
+	0 0 23 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 30 29 28
+	28 27 26 25 24 23 22 21 20 19
+	18 17 16 15 14 13 13 12 11 10
+	9 8 7 6 5 5 4 3 2 2
+	1 1 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31
 </mat_color_data>
 
@@ -54,7 +51,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="81" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="66" data_head="2"/>
 	</mat_color_anm>
 	<mat_color_anm index="1" material_name="in38_hikari02_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -69,7 +66,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="81" data_head="83"/>
+		<polygon_alpha frame_step="1" data_size="66" data_head="68"/>
 	</mat_color_anm>
 	<mat_color_anm index="2" material_name="in38_hikari02_2">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -84,7 +81,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="81" data_head="83"/>
+		<polygon_alpha frame_step="1" data_size="66" data_head="68"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
