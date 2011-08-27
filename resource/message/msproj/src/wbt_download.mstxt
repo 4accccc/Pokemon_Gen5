@@ -47,10 +47,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:WBTTournament ]トーナメント</Text>
+			<Text>[Name:WBTTournament ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:02:40" />
+				Time="2011-09-04T09:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -58,10 +58,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:WBTTournament ]トーナメント</Text>
+			<Text>[Name:WBTTournament ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:03:28" />
+				Time="2011-09-04T09:00:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -656,11 +656,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:WBTTournament ]トーナメントを
+			<Text>[Name:WBTTournament ]　を
 ほぞん　しますか？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-08-16T02:46:08" />
+				Time="2011-09-04T10:36:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -668,11 +668,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:WBTTournament ]トーナメントを
+			<Text>[Name:WBTTournament ]　トを
 保存しますか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-20T09:56:19" />
+				User="shimoyamada:W00184"
+				Time="2011-09-04T10:36:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1037,11 +1037,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:WBTTournament ]トーナメントを
+			<Text>[Name:WBTTournament ]　を
 けしても　いいですか？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-28T12:39:54" />
+				Time="2011-09-04T10:36:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1049,11 +1049,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:WBTTournament ]トーナメントを
+			<Text>[Name:WBTTournament ]　を
 消去しても　いいですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-20T09:55:42" />
+				User="shimoyamada:W00184"
+				Time="2011-09-04T10:36:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1140,11 +1140,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:WBTTournament ]トーナメントを
+			<Text>[Name:WBTTournament ]　を
 ほんとうに　けしても　いいですか？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-28T12:40:21" />
+				Time="2011-09-04T10:36:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1152,11 +1152,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:WBTTournament ]トーナメントを
+			<Text>[Name:WBTTournament ]　を
 本当に　消去しても　いいですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-20T09:55:33" />
+				User="shimoyamada:W00184"
+				Time="2011-09-04T10:36:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1618,11 +1618,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:WBTTournament ]トーナメントを
+			<Text>[Name:WBTTournament ]　を
 どうしますか？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:34:57" />
+				Time="2011-09-04T10:35:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1630,11 +1630,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:WBTTournament ]トーナメントを
+			<Text>[Name:WBTTournament ]　を
 どうしますか？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:35:11" />
+				Time="2011-09-04T10:35:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1756,11 +1756,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:WBTTournament ]トーナメントに
+			<Text>[Name:WBTTournament ]　に
 さんか　しますか？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:37:07" />
+				Time="2011-09-04T10:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1768,11 +1768,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:WBTTournament ]トーナメントに
+			<Text>[Name:WBTTournament ]　に
 参加　しますか？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:37:48" />
+				Time="2011-09-04T10:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
