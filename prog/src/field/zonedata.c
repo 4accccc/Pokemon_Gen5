@@ -1191,6 +1191,19 @@ u16 ZONEDATA_GetEncountDataID(u16 zone_id)
 
 //------------------------------------------------------------------
 /**
+ * @brief 指定ゾーンのフェスパラメータを取得
+ * @param  zone_id 判定するゾーンのID
+ */
+//------------------------------------------------------------------
+u8 ZONEDATA_GetFesParam(u16 zone_id)
+{
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return (zoneData->fes_param);
+}
+
+//------------------------------------------------------------------
+/**
  * @brief 指定ゾーンのイベントデータIDの取得
  * @param  zone_id 判定するゾーンのID
  * @return  イベントデータのアーカイブID
