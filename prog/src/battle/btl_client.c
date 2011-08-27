@@ -557,6 +557,7 @@ static void AudienceFunc( BTL_CLIENT *wk );
 
 static int ChangeEventStageCondition( POKEWOOD_SENARIO *senario, BTL_CLIENT *wk );
 static int _check_event_choice( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *seqWork, int turn );
+static void _set_audience_ending_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw );
 
 
 #ifdef BUGFIX_AF_GFBTS2028_101007
@@ -2111,9 +2112,16 @@ static void _check_ending( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, int event_
 {
   int event_type = senario->event[event_no].start_turn;
   
+  // 成功か失敗かでエンディングポイントを加算する
   if(event_type==POKEWOOD_EVENTNO_SUCCESS || event_type==POKEWOOD_EVENTNO_FAILED ){
     SetEndingPoint( wk, &wk->pokewoodSeqWork.Estimate, event_no );
+
+    // 上映中の場合は観客に動きを与える
+    if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_SHOW ){
+      _set_audience_ending_reaction( wk->viewCore, &wk->pokewoodSeqWork );
+    }
   }
+
 }
 
 
@@ -10552,6 +10560,84 @@ static void _set_audience_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw,
     }
   }
 
+}
+
+
+static const u8 audience_leave_tbl[][4]={
+  {  0,  9,   1,  3 },  /*  5～ 9人の場合、 1～ 3の離席 */
+  { 10, 13,   3,  3 },  /* 10～13人の場合、 3～ 5の離席 */
+  { 14, 17,   6,  3 },  /* 14～17人の場合、 6～ 8の離席 */
+  { 18, 21,  11,  4 },  /* 18～21人の場合、11～14の離席 */
+  { 22, 22,  20,  1 },  /* 22の場合、          20の離席 */
+};
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客人数を減らす
+ *
+ * @param   viewCore		  
+ * @param   psw		        
+ * @param   audience_num	現在の観客人数
+ */
+//----------------------------------------------------------------------------------
+static void _leave_audience( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw, int audience_num )
+{
+  s8  flag_tbl[POKEWOOD_AUDIENCE_MAX];
+  int count=0, i,index=0,leave_num, left=0;
+
+  // 着席している観客をテーブルに並べ直す
+  for(i=0;i<POKEWOOD_AUDIENCE_MAX;i++){
+    if((psw->Audience.on_off>>i)&1){
+      flag_tbl[count] = i;
+      count++;
+      OS_Printf("tbl[%d]=%d\n", count, i);
+    }
+  }
+
+  OS_Printf("audience_num=%d\n", audience_num);
+
+  // 観客の人数が何人かで切り替えるためのインデックス取得
+  for(i=0;i<5;i++){
+    if(audience_leave_tbl[i][0]<=audience_num && audience_leave_tbl[i][1]>=audience_num){
+      index = i;
+      OS_Printf("index=%d, audience_num=%d\n", index, audience_num);
+    }
+  }
+
+  // 観客を減らす
+  leave_num = GFUser_GetPublicRand( audience_leave_tbl[index][3] )+audience_leave_tbl[index][2];
+  OS_Printf("leave_num=%d\n", leave_num);
+  while(left!=leave_num){
+    i = GFUser_GetPublicRand( count );
+    if(flag_tbl[i]>=0){
+      BTLV_CORE_SetAudienceCondition( viewCore, FALSE, flag_tbl[i], 0 );  //表示OFF
+      psw->Audience.on_off ^= 1<<flag_tbl[i];
+      left++;
+      OS_Printf("delete=%d, left=%d\n", flag_tbl[i], left);
+      flag_tbl[i]=-1;
+    }
+  }
+
+}
+//----------------------------------------------------------------------------------
+/**
+ * @brief	エンディングイベント時の観客の挙動
+ *
+ * @param   viewCore		
+ * @param   psw		
+ */
+//----------------------------------------------------------------------------------
+static void _set_audience_ending_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw )
+{
+  // バッドエンド
+  if(psw->Estimate.ending_point<0){
+    _leave_audience( viewCore, psw, psw->Audience.account );          // 観客を減らす
+    _set_audience_reaction( viewCore, psw, POKEWOOD_AUDIENCE_HATE );  // 残った観客に「?」を表示
+  }else if( psw->Estimate.ending_point>15 ){
+  // ストレンジエンド
+    _set_audience_reaction( viewCore, psw, POKEWOOD_AUDIENCE_SURPRISE );  // 驚きマーク
+  }
 }
 
 //----------------------------------------------------------------------------------
