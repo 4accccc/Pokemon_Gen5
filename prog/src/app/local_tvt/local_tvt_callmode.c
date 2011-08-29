@@ -354,10 +354,10 @@ static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_perso
       param[0].charaType    = LTCT_SOUNDONLY;
       break;
     case LOCAL_TVT_SECRET_FACE_HIDE_M:
-      param[0].charaType    = LTCT_SECRET_M;
+      param[0].charaType    = LTCT_SECRET_M_MASK;
       break;
     case LOCAL_TVT_SECRET_FACE_HIDE_F:
-      param[0].charaType    = LTCT_SECRET_F;
+      param[0].charaType    = LTCT_SECRET_F_MASK;
       break;
     case LOCAL_TVT_SECRET_FACE_VISIBLE_M:
       param[0].charaType    = LTCT_SECRET_M;

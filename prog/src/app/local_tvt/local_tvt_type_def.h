@@ -24,6 +24,8 @@ typedef enum
   LTCT_SECRET_M,  //隠しキャラ男
   LTCT_SECRET_F,  //隠しキャラ女
   LTCT_SOUNDONLY, //音声のみ
+  LTCT_SECRET_M_MASK,  //隠しキャラ男　変装
+  LTCT_SECRET_F_MASK,  //隠しキャラ女　変装
 
   LTCT_PLAYER_F,  //主人公だった場合分岐させる
   

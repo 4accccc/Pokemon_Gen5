@@ -561,9 +561,11 @@ static void Ltvt_Debug_Draw_Character( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
     "ƒxƒ‹",
     "‚Í‚©‚¹",
     "ƒ}ƒ}",
-    "‚©‚­‚µ‚¨‚Æ‚±",
-    "‚©‚­‚µ‚¨‚ñ‚È",
+    "‚©‚­‚µ‚¨‚Æ‚±‚P",
+    "‚©‚­‚µ‚¨‚ñ‚È‚P",
     "‚¨‚ñ‚¹‚¢",
+    "‚©‚­‚µ‚¨‚Æ‚±‚Q",
+    "‚©‚­‚µ‚¨‚ñ‚È‚Q",
   };
   static const char * scp_label_sp = "‚È‚µ";
 
