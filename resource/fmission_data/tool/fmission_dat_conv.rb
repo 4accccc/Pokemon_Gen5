@@ -310,7 +310,7 @@ class CMission
     buf[1] = @param
     buf[2] = @item
     buf[3] = @open_flag_id 
-    print("mission_param = #{@param}, #{@item}, #{@ds_item}\n")
+    print("mission_param = #{@param}, #{@item}, #{@ds_item}, #{@open_flag_id}\n")
     fp.write( buf.pack("S4"))
 
     #(u16,u8,u8) * 4 レベルごとの制限時間と目標と報酬数
@@ -360,17 +360,18 @@ class CMission
     @pay_bonus = c_def_list.search( work[COLUMN_PAY_BONUS], "報酬ボーナスタイプ" )
     
     ev_flag = work[COLUMN_OPEN_FLAG]
-    if ev_flag.to_i == 0 then
+    if ev_flag == '0' then
       @open_flag_id = 0
     else
       @open_flag_id = c_evflag_list.searchID( ev_flag )
       if @open_flag_id == nil then
         print_err("オープン条件イベントフラグが不正です", ev_flag )
       end
+    print("open_flag = #{ev_flag}->#{@open_flag_id}\n")
     end
 
     ev_flag = work[COLUMN_ENTRY_FLAG]
-    if ev_flag.to_i == 0 then
+    if ev_flag == '0' then
       @entry_flag_id = 0
     else
       @entry_flag_id = c_evflag_list.searchID( ev_flag )
