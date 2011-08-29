@@ -203,6 +203,7 @@ enum{
 // フラグ(MONOLITH_INFO_PARAM.flag)
 enum{
   FLG_INFO_NEW         = (1<<0),    // NEWマークあり
+  FLG_INFO_NEW2        = (1<<1),    // NEWマーク、フラグoff待ち
 };
 
 // debug
@@ -2332,13 +2333,15 @@ static void fmission_chk_all_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELEC
     for(i=0;i<num;i++){
       fmission_disp_level( mfw, i, TRUE );
     }
-    // newを消す
+    // newを消す(毎フレームなので注意)
     if(mfw->info_param[mfw->cursor_pos].flag & FLG_INFO_NEW){
-      id = mfw->fess_mission_id[mfw->cursor_pos];
-      fmission_clear_newflag( appwk, mfw, id );
-      mfw->info_param[mfw->cursor_pos].flag &= ~FLG_INFO_NEW;
-      //
-      fmission_chk_newmark_disp( mfw );
+      // ここではフラグを落とすだけで表示はそのまま
+      // => 画面が切り替わったらNEWがoffとなっているはず
+      if(!(mfw->info_param[mfw->cursor_pos].flag & FLG_INFO_NEW2)){
+        id = mfw->fess_mission_id[mfw->cursor_pos];
+        fmission_clear_newflag( appwk, mfw, id );
+        mfw->info_param[mfw->cursor_pos].flag |= FLG_INFO_NEW2;
+      }
     }
   }
 }
