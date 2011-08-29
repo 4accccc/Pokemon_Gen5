@@ -167,7 +167,7 @@ struct _LOCAL_TVT_CHARA
 static const u8 charaResList[LTCT_MAX][3] = {
     { NARC_local_tvt_graphic_chara_player_m_NCLR , NARC_local_tvt_graphic_chara_player_m_1_NCGR , NARC_local_tvt_graphic_obj_player_m_NCLR },
     { NARC_local_tvt_graphic_chara_rival_NCLR    , NARC_local_tvt_graphic_chara_rival_1_NCGR    , NARC_local_tvt_graphic_obj_rival_NCLR },
-    { NARC_local_tvt_graphic_chara_rival_NCLR    , NARC_local_tvt_graphic_chara_rival_1_NCGR    , NARC_local_tvt_graphic_obj_rival_NCLR },
+    { NARC_local_tvt_graphic_chara_chelen_NCLR    , NARC_local_tvt_graphic_chara_chelen_1_NCGR    , NARC_local_tvt_graphic_obj_chelen_NCLR },
     { NARC_local_tvt_graphic_chara_support_NCLR  , NARC_local_tvt_graphic_chara_support_1_NCGR  , NARC_local_tvt_graphic_obj_support_NCLR },
     { NARC_local_tvt_graphic_chara_doctor_d_NCLR , NARC_local_tvt_graphic_chara_doctor_d_1_NCGR , NARC_local_tvt_graphic_obj_doctor_d_NCLR },
     { NARC_local_tvt_graphic_chara_mother_NCLR   , NARC_local_tvt_graphic_chara_mother_1_NCGR   , NARC_local_tvt_graphic_obj_mother_NCLR },
