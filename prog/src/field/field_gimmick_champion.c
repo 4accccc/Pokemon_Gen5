@@ -48,7 +48,7 @@
 #define MAP_HALF_SIZE     (256 << FX32_SHIFT )
 
 // 光アニメの最終フレームと仮定するフレーム
-#define LIGHT_LAST_FRAME  ( 73 * FX32_ONE )
+#define LIGHT_LAST_FRAME  ( 8 * FX32_ONE )
 
 #define TOP_CAMERA_ID     ( 43 )      // 頂上のカメラID camera_dataのエクセルのカメラ指定値
 
@@ -408,8 +408,28 @@ void CHAMPION_Move( FIELDMAP_WORK *p_fieldmap )
       MMDL_SetStatusLightAttrOFF( mmdl, FALSE );
       OS_Printf("アトリビュートライト有効\n");
     }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+    {
+      ANM_Play( p_wk->exp_obj, OBJ_RELIEF_1, 2, 0, TRUE );
+      ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, 2, 0, TRUE );
+      OS_Printf("レリーフIMAアニメ再生\n");
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+    {
+      ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_1, 2 );
+      ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_2, 2 );
+      OS_Printf("レリーフIMAアニメ停止\n");
+    }
+
+    {
+      int frame;
+      frame = FLD_EXP_OBJ_GetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 2 );
+      ICHI_Printf("anm frame %d \n", frame/FX32_ONE);
+    }
   }
 #endif
+
+  
 
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
