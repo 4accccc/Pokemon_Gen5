@@ -824,6 +824,10 @@
 #define		FORMNO_653_BLACK				( 2 )
 #define		FORMNO_653_MAX				( 3 )
 
+//ケルディオ
+#define		FORMNO_654_SWORD				( 0 )
+#define		FORMNO_654_MAX				( 1 )
+
 //メロエッタ
 #define		FORMNO_655_VOICE				( 0 )
 #define		FORMNO_655_STEP				( 1 )

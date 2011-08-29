@@ -832,6 +832,10 @@
 #define		FORMNO_KYUREMU_BLACK				( 2 )
 #define		FORMNO_KYUREMU_MAX				( 3 )
 
+//ケルディオ
+#define		FORMNO_KERUDHIO_SWORD				( 0 )
+#define		FORMNO_KERUDHIO_MAX				( 1 )
+
 //メロエッタ
 #define		FORMNO_MEROETTA_VOICE				( 0 )
 #define		FORMNO_MEROETTA_STEP				( 1 )
