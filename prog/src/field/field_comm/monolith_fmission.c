@@ -207,7 +207,7 @@ enum{
 
 // debug
 #define _DEBUG_STAR_
-//#undef  _DEBUG_STAR_
+#undef  _DEBUG_STAR_
 
 //==============================================================================
 //  構造体定義
@@ -348,7 +348,7 @@ static void fmission_create_bmpoam( MONOLITH_SETUP *setup, MONOLITH_FMSELECT_WOR
 static void fmission_exit_bmpoam(   MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_disp_bmpoam(   MONOLITH_SETUP *setup, MONOLITH_FMSELECT_WORK *mfw, const s32 mode );
 static void fmission_disp_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode, const BOOL bflg );
-static void fmission_chk_all_level( MONOLITH_FMSELECT_WORK *mfw );
+static void fmission_chk_all_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 //
 static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 id );
 //
@@ -700,7 +700,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
     }
     //
     // レベル表示
-    fmission_chk_all_level( mfw );
+    fmission_chk_all_level( appwk, mfw );
     // パラメータの受け渡し用
     fmission_set_up_curpos( appwk, mfw );
     // 隠しコマンド用
@@ -822,7 +822,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
         LINK_FESTIVAL_MissionStart( mfw->fest_sys, &mission, FALSE );
 
         // NEWフラグクリア
-        fmission_clear_newflag( appwk, mfw, mission_no );
+//        fmission_clear_newflag( appwk, mfw, mission_no );
 
 //        GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(appwk->parent->gsys), FIELD_SUBSCREEN_FMISSION_VIEW );
 
@@ -2308,11 +2308,12 @@ static void fmission_disp_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode, co
  * @param   MONOLITH_FMSELECT_WORK *mfw
  */
 //==================================================================
-static void fmission_chk_all_level( MONOLITH_FMSELECT_WORK *mfw )
+static void fmission_chk_all_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
 {
   s32  lv;
   s32  i;
   s32  num;
+  s32  id;
   BOOL bflg=TRUE;
   
   // 全非表示(非表示命令orレベル4の場合)
@@ -2330,6 +2331,14 @@ static void fmission_chk_all_level( MONOLITH_FMSELECT_WORK *mfw )
     }
     for(i=0;i<num;i++){
       fmission_disp_level( mfw, i, TRUE );
+    }
+    // newを消す
+    if(mfw->info_param[mfw->cursor_pos].flag & FLG_INFO_NEW){
+      id = mfw->fess_mission_id[mfw->cursor_pos];
+      fmission_clear_newflag( appwk, mfw, id );
+      mfw->info_param[mfw->cursor_pos].flag &= ~FLG_INFO_NEW;
+      //
+      fmission_chk_newmark_disp( mfw );
     }
   }
 }
@@ -2349,7 +2358,7 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
   EVENTWORK *evwork  = GAMEDATA_GetEventWork( gamedata );
   BOOL	bflg=TRUE;
   s32   flg=0;
-  
+  //
   //-------------------------------------------------------
   // フェスチュートリアルが終了しているかどうか(まだらしい)
   //-------------------------------------------------------

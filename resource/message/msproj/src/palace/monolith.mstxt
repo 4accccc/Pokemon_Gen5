@@ -3032,4 +3032,106 @@
 				Time="2011-08-26T10:46:05" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_021"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:4digits ]にん</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:24:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:24:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:4digits ]にん</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:24:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:24:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:24:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_022"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:4digits ]かい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:25:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:25:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:4digits ]かい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:26:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:26:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:25:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_fmission_023"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:4digits ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:26:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:26:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:4digits ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:26:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:26:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション選択画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-08-29T04:26:34" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
