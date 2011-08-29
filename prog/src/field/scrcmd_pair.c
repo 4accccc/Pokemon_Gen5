@@ -86,3 +86,24 @@ VMCMD_RESULT EvCmdPairTrainerParamFree( VMHANDLE * core, void *wk )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief 連れ歩きトレーナーID取得
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPairTrainerIdGet( VMHANDLE * core, void *wk )
+{
+	u16 *ret_wk	= SCRCMD_GetVMWork( core, wk );
+  
+  GAMEDATA* gdata = SCRCMD_WORK_GetGameData( wk );
+
+  if( PAIRSYS_CheckPairFlag( gdata ) == FALSE )
+  {
+    GF_ASSERT_MSG(0, "連れ歩いていません\n");
+  }
+
+  // トレーナーID取得
+  *ret_wk = PAIRSYS_GetPairTrainerID( gdata );
+
+  return VMCMD_RESULT_SUSPEND;
+}

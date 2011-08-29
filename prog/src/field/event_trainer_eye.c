@@ -137,6 +137,8 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap )
 {
   TRAINER_HITDATA hit0;
   GMEVENT *event = NULL;
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   
   if( treye_CheckEyeMeet(fieldMap,NULL,&hit0) == TRUE )
   {
@@ -146,7 +148,21 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap )
     
     if( btl_rule == BTL_RULE_SINGLE ) //シングル
     {
-      if( enable_member < 2 || //シングル戦チェック
+      // マルチ戦チェック (下の関数の内部で連れ歩きしているかのチェックもしている)
+      // ・ポケモンが１匹以上
+      // ・連れ歩いているかつトレーナー
+      // ・二人目の視線にあたっている
+      if( enable_member >= 1 &&
+          PAIRSYS_GetPairTrainerID( gdata ) != TRID_NULL &&
+          treye_CheckEyeMeet(fieldMap,hit0.mmdl,&hit1) == TRUE )
+      {
+        event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
+        hit0.move_type = SCR_EYE_TR_TYPE_MULTI;
+        SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
+        hit1.move_type = SCR_EYE_TR_TYPE_MULTI;
+        SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_1, &hit1 );
+      }
+      else if( enable_member < 2 || //シングル戦チェック
           treye_CheckEyeMeet(fieldMap,hit0.mmdl,&hit1) == FALSE )
       { //スクリプト用イベントデータセット シングル
         event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動

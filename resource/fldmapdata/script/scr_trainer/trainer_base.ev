@@ -269,12 +269,15 @@ EVENT_START ev_trainer_move_battle
   //トレーナータイプ取得(シングル、ダブル、タッグ)
   _EYE_TRAINER_MOVE_TYPE_GET( SCWK_ANSWER )
 
+
   IF $SCWK_ANSWER == SCR_EYE_TR_TYPE_SINGLE THEN 
     _CALL ev_trainer_type_single
   ELSIF $SCWK_ANSWER == SCR_EYE_TR_TYPE_DOUBLE THEN
     _CALL ev_trainer_type_double
   ELSIF $SCWK_ANSWER == SCR_EYE_TR_TYPE_TAG THEN
     _CALL ev_trainer_type_tag
+  ELSIF $SCWK_ANSWER == SCR_EYE_TR_TYPE_MULTI THEN
+    _CALL ev_trainer_type_multi
   ENDIF
 
   //特殊トレーナーの場合、戦闘後メッセージ
@@ -420,3 +423,65 @@ ev_trainer_type_tag:
   _RET
 }
 
+
+//--------------------------------------------------------------------
+//マルチ
+//--------------------------------------------------------------------
+ev_trainer_type_multi:
+{
+  DEFINE_LOCAL  LWK_TRID_PAIR
+  DEFINE_LOCAL  LWK_TRID_01
+  DEFINE_LOCAL  LWK_TRID_02
+  DEFINE_LOCAL  LWK_TR_OBJID
+
+  _PAIR_TRAINER_ID_GET( LWK_TRID_PAIR )
+  _EYE_TRAINER_ID_GET( SCR_EYE_TR_0, LWK_TRID_01 )
+  _EYE_TRAINER_ID_GET( SCR_EYE_TR_1, LWK_TRID_02 )
+
+  //視線曲セット
+  _TRAINER_BGM_SET( LWK_TRID_01 )
+
+  _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_0 )        //トレーナー移動処理呼び出し
+  _EYE_TRAINER_MOVE()                          //移動終了待ち
+
+  //移動終了後、会話へ
+  _EYE_TRAINER_OBJ_ID_GET( SCR_EYE_TR_0, LWK_TR_OBJID )
+  _TRAINER_MSG_SET( LWK_TRID_01, TRMSG_FIGHT_START, LWK_TR_OBJID )
+  _BALLOONWIN_CLOSE()
+
+  //視線曲セット
+  //※タッグで2人目専用です。（内部でBGMをPOPしています）
+  _TRAINER_BGM_TAG_SET( LWK_TRID_02 )
+
+  _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_1 )        //トレーナー移動処理呼び出し
+  _EYE_TRAINER_MOVE()                          //移動終了待ち
+
+  //移動終了後、会話へ
+  _EYE_TRAINER_OBJ_ID_GET( SCR_EYE_TR_1, LWK_TR_OBJID )
+  _TRAINER_MSG_SET( LWK_TRID_02, TRMSG_FIGHT_START, LWK_TR_OBJID )
+  _BALLOONWIN_CLOSE()
+
+  // マルチバトル
+  _TRAINER_MULTI_BTL_SET( LWK_TRID_PAIR, LWK_TRID_01, LWK_TRID_02 )
+
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    // 勝利
+
+    //全滅状態になり、パートナー一人で勝利した場合、プレイヤーの手持ちを回復させる
+		_GET_PARTY_POKE_COUNT( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+		IF $SCWK_TEMP0 == 0 THEN
+			_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+		ENDIF
+
+    _TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+
+  //トレーナーフラグセット
+  _TRAINER_FLAG_SET( LWK_TRID_01 )
+  _TRAINER_FLAG_SET( LWK_TRID_02 )
+
+  _RET
+}

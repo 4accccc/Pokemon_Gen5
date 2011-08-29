@@ -26,5 +26,13 @@ extern VMCMD_RESULT EvCmdPairTrainerParamSet( VMHANDLE * core, void *wk );
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdPairTrainerParamFree( VMHANDLE * core, void *wk );
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief 連れ歩きトレーナーID取得
+ */
+//-----------------------------------------------------------------------------
+extern VMCMD_RESULT EvCmdPairTrainerIdGet( VMHANDLE * core, void *wk );
+
+
 #endif //__H_SCRCMD_PAIR_H__
 

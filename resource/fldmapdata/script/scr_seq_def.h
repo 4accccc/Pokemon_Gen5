@@ -2081,6 +2081,25 @@
   .short  \move_code
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  @def  _PAIR_TRAINER_ID_GET
+ *  @brief  連れ歩き：トレーナーID取得
+ *  @param  ret_wk
+ *
+ *  @note
+ *  トレーナー視線スクリプトから呼ばれている。
+ *  通常スクリプトでの使用は禁止とする。
+ */
+//--------------------------------------------------------------
+#define _PAIR_TRAINER_ID_GET( ret_wk ) \
+    _ASM_PAIR_TRAINER_ID_GET  ret_wk
+
+  .macro  _ASM_PAIR_TRAINER_ID_GET ret_wk
+  .short  EV_SEQ_PAIR_TRAINER_ID_GET
+  .short  \ret_wk
+  .endm
+
 
 //======================================================================
 //  はい、いいえ　処理

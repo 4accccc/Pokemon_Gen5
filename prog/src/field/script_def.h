@@ -57,6 +57,7 @@
 #define SCR_EYE_TR_TYPE_SINGLE    (0) ///<単独動作
 #define SCR_EYE_TR_TYPE_DOUBLE    (1) ///<ダブル動作
 #define SCR_EYE_TR_TYPE_TAG       (2) ///<タッグ動作（ひとりずつ動く）
+#define SCR_EYE_TR_TYPE_MULTI     (3) ///<マルチ動作（ひとりずつ動く）
 
 //トレーナーの番号定義
 #define SCR_EYE_TR_0        (0)
