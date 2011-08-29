@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-26T16:05:26" source="m_dun1003_02_00.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-29T19:52:05" source="m_dun1003_02_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-26T16:05:26" source="m_dun1003_02_00.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-29T19:52:05" source="m_dun1003_02_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -3098,8 +3098,8 @@
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
 		volume_min="-4.000000 -0.062500 1.500000"
-		volume_max="-0.250000 -0.062500 4.000000"
-		volume_r="5.657227"
+		volume_max="-0.250000 -0.062500 3.500000"
+		volume_r="5.315430"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -3110,7 +3110,7 @@
 					<mtx idx="0"/>
 					<tex st="768.000000 -704.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-4.000000 -0.062500 4.000000"/>
+					<pos_s xyz="-4.000000 -0.062500 3.500000"/>
 					<tex st="1008.000000 -704.000000"/>
 					<pos_xy xy="-0.250000 -0.062500"/>
 					<tex st="1008.000000 -864.000000"/>
@@ -3151,7 +3151,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface22" kind="mesh"
+	<node index="0" name="polySurface29" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
