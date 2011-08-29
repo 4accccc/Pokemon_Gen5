@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="toyama" host="W00153" date="2011-08-29T13:21:12" source="pkwd_field02g_all.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="1001"
+	tool_start_frame="0"
+	tool_end_frame="1000"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="on" material_size="19 19"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+</body>
+
+</ita>
