@@ -273,43 +273,53 @@ typedef struct{
 
 static const ZUKAN_HYOUKA_TABLE LocalSeeTable[] = {
   {  14, msg_hyouka_i00 },
-  {  24, msg_hyouka_i01 },
-  {  39, msg_hyouka_i02 },
-  {  59, msg_hyouka_i03 },
-  {  89, msg_hyouka_i04 },
-  { 114, msg_hyouka_i05 },
-  { 134, msg_hyouka_i06 },
+  {  29, msg_hyouka_i01 },
+  {  44, msg_hyouka_i02 },
+  {  64, msg_hyouka_i03 },
+  {  84, msg_hyouka_i04 },
+  { 104, msg_hyouka_i05 },
+  { 124, msg_hyouka_i06 },
   { 144, msg_hyouka_i07 },
-  { 149, msg_hyouka_i08 },
-  {   0, msg_hyouka_i08 },  //Sentinel
+  { 164, msg_hyouka_i08 },
+  { 184, msg_hyouka_i09 },
+  { 204, msg_hyouka_i10 },
+  { 224, msg_hyouka_i11 },
+  { 239, msg_hyouka_i12 },
+  { 249, msg_hyouka_i13 },
+  {   0, msg_hyouka_i13 },  //Sentinel
 };
 
 static const ZUKAN_HYOUKA_TABLE LocalGetTable[] = {
-  {  29, msg_hyouka_i10 },
-  {  49, msg_hyouka_i11 },
-  {  69, msg_hyouka_i12 },
-  {  89, msg_hyouka_i13 },
-  { 104, msg_hyouka_i14 },
-  { 119, msg_hyouka_i15 },
-  { 134, msg_hyouka_i16 },
-  { 144, msg_hyouka_i17 },
-  { 149, msg_hyouka_i18 },
-  {   0, msg_hyouka_i18 },  //Sentinel
+  {  14, msg_hyouka_i15 },
+  {  29, msg_hyouka_i16 },
+  {  44, msg_hyouka_i17 },
+  {  64, msg_hyouka_i18 },
+  {  84, msg_hyouka_i19 },
+  { 104, msg_hyouka_i20 },
+  { 124, msg_hyouka_i21 },
+  { 144, msg_hyouka_i22 },
+  { 164, msg_hyouka_i23 },
+  { 184, msg_hyouka_i24 },
+  { 204, msg_hyouka_i25 },
+  { 224, msg_hyouka_i26 },
+  { 239, msg_hyouka_i27 },
+  { 249, msg_hyouka_i28 },
+  {   0, msg_hyouka_i28 },  //Sentinel
 };
 
 static const ZUKAN_HYOUKA_TABLE GlobalGetTable[] = {
-  {  39, msg_hyouka_z01 },
-  {  79, msg_hyouka_z02 },
-  { 119, msg_hyouka_z03 },
-  { 159, msg_hyouka_z04 },
-  { 199, msg_hyouka_z05 },
-  { 249, msg_hyouka_z06 },
-  { 299, msg_hyouka_z07 },
-  { 349, msg_hyouka_z08 },
-  { 399, msg_hyouka_z09 },
-  { 449, msg_hyouka_z10 },
-  { 499, msg_hyouka_z11 },
-  { 549, msg_hyouka_z12 },
+  {  49, msg_hyouka_z01 },
+  { 104, msg_hyouka_z02 },
+  { 164, msg_hyouka_z03 },
+  { 229, msg_hyouka_z04 },
+  { 289, msg_hyouka_z05 },
+  { 344, msg_hyouka_z06 },
+  { 394, msg_hyouka_z07 },
+  { 444, msg_hyouka_z08 },
+  { 494, msg_hyouka_z09 },
+  { 529, msg_hyouka_z10 },
+  { 559, msg_hyouka_z11 },
+  { 579, msg_hyouka_z12 },
   { 599, msg_hyouka_z13 },
   { 614, msg_hyouka_z14 },
   { 629, msg_hyouka_z15 },
@@ -363,7 +373,7 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
       //ちほうずかん（全国モード後）は「捕まえた数」
       count = ZUKANSAVE_GetLocalPokeGetCount( zw, heap_id );
       if ( ZUKANSAVE_CheckLocalGetComp( zw, heap_id ) == TRUE ) {
-        *ret_msgid = msg_hyouka_i19;
+        *ret_msgid = msg_hyouka_i29;
       } else {
         *ret_msgid = get_msgid( LocalGetTable, count );
       }
@@ -375,7 +385,7 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
       //ちほうずかん（全国モード前）は「見た数」
       count = ZUKANSAVE_GetLocalPokeSeeCount( zw, heap_id );
       if ( ZUKANSAVE_CheckLocalSeeComp( zw, heap_id ) == TRUE ) {
-        *ret_msgid = msg_hyouka_i09;
+        *ret_msgid = msg_hyouka_i14;
       } else {
         *ret_msgid = get_msgid( LocalSeeTable, count );
       }
