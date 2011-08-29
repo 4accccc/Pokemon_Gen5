@@ -6,11 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン
-かりメッセージ</Text>
+			<Text>チェレン『この　ゆうしょうで
+みえたことが　あるよ……▼
+だけど　それは　ほんの　いちぶ▼
+つよいとは　どういうことか……
+ポケモンとは　なにか……▽
+わからない　ことだらけだよ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:00:47" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:21:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -18,11 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン
-かりメッセージ</Text>
+			<Text>チェレン『この　優勝で
+みえたことが　あるよ……▼
+だけど　それは　ほんの一部▼
+強いとは　どういうことか……
+ポケモンとは　なにか……▽
+わからない　ことだらけだよ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:00:52" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:21:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -57,11 +65,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ
-かりメッセージ</Text>
+			<Text>ホミカ『アタシは　いつだって
+ゆうしょうを　ねらっているの！▼
+だから　こんかいも　あたりまえの
+けっかに　なっただけなの！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:00:56" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:25:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -69,11 +79,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ
-かりメッセージ</Text>
+			<Text>ホミカ『アタシは　いつだって
+優勝を　ねらっているの！▼
+だから　今回も　当たり前の
+結果に　なっただけなの！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:00:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:26:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -108,11 +120,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーティ
-かりメッセージ</Text>
+			<Text>アーティ『あー　そーだねー
+むしポケモンの　おかげ？　みたいな</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:30:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -120,11 +132,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーティ
-かりメッセージ</Text>
+			<Text>アーティ『あー　そーだねー
+むしポケモンの　おかげ？　みたいな</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:30:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -159,11 +171,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ
-かりメッセージ</Text>
+			<Text>カミツレ『ポケモンたちの
+がんばりに　こたえるため　そして▼
+はなやかな　スポットを
+あびて　もらいたくて……！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:33:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -171,11 +185,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ
-かりメッセージ</Text>
+			<Text>カミツレ『ポケモンたちの
+がんばりに　応えるため　そして▼
+華やかな　スポットを
+浴びて　もらいたくて……！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:33:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -210,11 +226,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヤーコン
-かりメッセージ</Text>
+			<Text>ヤーコン『オレさまが　ゆうしょう？▼
+それで　いいのかって？
+もっと　つよいやつが　いるだろ？▼
+そう　おもう　うでじまんは
+ホドモエに　くるんだな！！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:36:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -222,11 +241,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヤーコン
-かりメッセージ</Text>
+			<Text>ヤーコン『オレさまが　優勝？▼
+それで　いいのかって？
+もっと　強い奴が　いるだろ？▼
+そう　思う　腕自慢は
+ホドモエに　来るんだな！！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:21" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:43:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -261,11 +283,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フウロ
-かりメッセージ</Text>
+			<Text>フウロ『すごく　ちょうし　よくて
+あいての　うごきが　みえて……▼
+ううん！　すべて　よめて
+それで　かてたような　ものですね</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:25" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:41:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -273,11 +297,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フウロ
-かりメッセージ</Text>
+			<Text>フウロ『すごく　調子　よくて
+相手の　動きが　みえて……▼
+ううん！　すべて　読めて
+それで　勝てたような　ものですね</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:29" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:43:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -312,11 +338,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ
-かりメッセージ</Text>
+			<Text>シャガ『おいてなお！
+しょうりを　ほっする！▼
+それこそが　いきる　エネルギー！
+きのうの　じぶんを　こえる　ちから！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:33" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:44:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -324,11 +352,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャガ
-かりメッセージ</Text>
+			<Text>シャガ『老いてなお！
+勝利を　欲する！▼
+それこそが　生きる　エネルギー！
+昨日の　自分を　越える　力！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:35" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:43:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -363,11 +393,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シズイ
-かりメッセージ</Text>
+			<Text>シズイ『あらぶる　うみのように
+すべてを　ながしさったたい！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:39" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:41:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -375,11 +405,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シズイ
-かりメッセージ</Text>
+			<Text>シズイ『荒ぶる　海のように
+すべてを　流しさったたい！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:41" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:44:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -414,11 +444,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル
-かりメッセージ</Text>
+			<Text>ベル『ポケモンのことを
+ちょっとずつだけど　まなんで▼
+みんなの　いいところを　だせるよう
+かんがえた　けっかが▽
+こうなったのかな？　やったよお！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:45" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:17:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -426,11 +459,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル
-かりメッセージ</Text>
+			<Text>ベル『ポケモンのことを
+ちょっとずつだけど　学んで▼
+みんなの　いいところを　だせるよう
+考えた　結果が▽
+こうなったのかな？　やったよお！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:47" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:18:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -465,11 +501,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポッド
-かりメッセージ</Text>
+			<Text>ポッド『ゆうしょう　か！▼
+このまま　せかいいちの　ほのおつかい
+ポッド！　ってのも　いいかもな</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:50" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:24:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -477,11 +514,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポッド
-かりメッセージ</Text>
+			<Text>ポッド『優勝　か！▼
+このまま　世界一の　炎使い
+ポッド！　ってのも　いいかもな</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:52" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:24:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -516,11 +554,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コーン
-かりメッセージ</Text>
+			<Text>コーン『トーナメントの
+くみあわせに　たすけられた▽
+ぶぶんも　あるでしょう▼
+まだまだ　きたえつづけますよ</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:56" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:22:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -528,11 +568,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コーン
-かりメッセージ</Text>
+			<Text>コーン『トーナメントの
+組み合わせに　助けられた▽
+部分も　あるでしょう▼
+まだまだ　鍛え続けますよ</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:05:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:25:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -567,11 +609,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デント
-かりメッセージ</Text>
+			<Text>デント『とりあえず　ですけど
+くさポケモンたちの　デリシャスな▽
+みりょくを　ひきだせて　よかったです</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:02" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:24:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -579,11 +622,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デント
-かりメッセージ</Text>
+			<Text>デント『とりあえず　ですけど
+くさポケモンたちの　デリシャスな▽
+魅力を　ひきだせて　よかったです</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:25:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -618,11 +662,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アロエ
-かりメッセージ</Text>
+			<Text>アロエ『しぜんに　たたかえたね！
+いがいと　にぶって　いなかったよ</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:11:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -630,11 +674,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アロエ
-かりメッセージ</Text>
+			<Text>アロエ『自然に　戦えたね！
+意外と　鈍って　いなかったよ</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:11:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -669,11 +713,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチク
-かりメッセージ</Text>
+			<Text>ハチク『……この　しょうり
+みんなに　かんしゃする！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:09:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -681,11 +725,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチク
-かりメッセージ</Text>
+			<Text>ハチク『……この　勝利
+みんなに　感謝する！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:11:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -720,11 +764,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>グリーン
-かりメッセージ</Text>
+			<Text>グリーン『３かい　かてば
+おわり　だからな▼
+うんの　ようそも　あるし
+オレは　まだ　まんぞくしてないぜ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:10:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -732,11 +778,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グリーン
-かりメッセージ</Text>
+			<Text>グリーン『３回　勝てば
+終わり　だからな▼
+運の　要素も　あるし
+オレは　まだ　満足してないぜ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:19" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:12:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -771,11 +819,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ワタル
-かりメッセージ</Text>
+			<Text>ワタル『しっているだろう▼
+ドラゴンは　せいなる
+でんせつの　いきものだ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:15:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -783,11 +832,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ワタル
-かりメッセージ</Text>
+			<Text>ワタル『知っているだろう▼
+ドラゴンは　聖なる
+伝説の　生き物だ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:16:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -822,11 +872,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダイゴ
-かりメッセージ</Text>
+			<Text>ダイゴ『ふうん　ホドモエって
+エメラルドが　とれるんだ！？</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:14:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -834,11 +884,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダイゴ
-かりメッセージ</Text>
+			<Text>ダイゴ『ふうん　ホドモエって
+エメラルドが　採掘できるんだ！？</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:43" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:14:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -873,11 +923,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミクリ
-かりメッセージ</Text>
+			<Text>ミクリ『しょうりの　りゆう……
+それは……！▼
+みずの　イリュージョン！！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:47" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:17:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -885,11 +936,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミクリ
-かりメッセージ</Text>
+			<Text>ミクリ『勝利の　理由……
+それは……！▼
+みずの　イリュージョン！！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:48" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:18:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -924,11 +976,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シロナ
-かりメッセージ</Text>
+			<Text>シロナ『この　トーナメントでの
+ゆうしょうを　ほこりに　おもいます▼
+ですが　せかいには　まだまだ
+きょうごうが　いるはず……▼
+もっともっと　いろんな　ところで▽
+いろんな　ひと　いろんな　ポケモンに▽
+であっていきたいわね……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:52" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:17:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -936,11 +993,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シロナ
-かりメッセージ</Text>
+			<Text>シロナ『この　トーナメントでの
+優勝を　誇りに　おもいます▼
+ですが　世界には　まだまだ
+強豪が　いるはず……▼
+もっともっと　いろんな　ところで▽
+いろんな　人　いろんな　ポケモンに▽
+出会っていきたいわね……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:54" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:18:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -975,11 +1037,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデク
-かりメッセージ</Text>
+			<Text>アデク『さいしょの　パートナー
+メラルバ……　いや▽
+ウルガモスの　たましいは▼
+いまの　パートナーたちにも
+しっかりと　うけつがれている！▼
+そういう　いみで　これまでの
+であいに　しょうりを　ささげよう！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:06:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:20:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -987,11 +1054,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデク
-かりメッセージ</Text>
+			<Text>アデク『最初の　パートナー
+メラルバ……　いや▽
+ウルガモスの　魂は▼
+いまの　パートナーたちにも
+しっかりと　受け継がれている▼
+そういう意味で　これまでの
+出会いに　勝利を　奉げよう！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:07:00" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:20:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
