@@ -60,6 +60,9 @@ const ITEM_CI_NO ItemCutinNo[] = {
   {ITEM_HAITATUBUTU3, FLDCIID_GET2_12},
   {ITEM_DORAGONNOHONE, FLDCIID_GET2_13},
   {ITEM_MEDARUBOKKUSU, FLDCIID_GET2_05},   //仮追加2011.02.07
+  {ITEM_KYOKASYOU,    FLDCIID_GET2_05},     // @todo 仮追加
+  {ITEM_MARUIOMAMORI, FLDCIID_GET2_05},     // @todo 仮追加
+  {ITEM_HIKARUOMAMORI,FLDCIID_GET2_05},     // @todo 仮追加
 //※リバティチケットは配達員からなのでここにはなし
 };
 
