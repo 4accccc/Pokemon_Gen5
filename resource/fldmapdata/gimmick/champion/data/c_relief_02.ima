@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-23T19:12:14" source="m_champ01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-29T13:21:52" source="m_champ01_s004.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -62,7 +62,7 @@
 </mat_color_data>
 
 <mat_color_anm_array size="1">
-	<mat_color_anm index="0" material_name="in38_relief04">
+	<mat_color_anm index="0" material_name="in38_relief04_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
