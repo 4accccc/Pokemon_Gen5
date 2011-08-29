@@ -903,6 +903,7 @@ static void RESORT_CROWD_PEOPLE_WK_SetUp( RESORT_CROWD_PEOPLE_WK *p_wk, RESORT_P
 
   switch( RESORT_PEOPLE_GetPeopleData( p_wk->p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) )
   {
+  case RESORT_PEOPLE_TYPE_PROXY:
   case RESORT_PEOPLE_TYPE_TOURIST:
     p_wk->InitMove    = Resort_Crowd_People_Wk_InitKyoroKyoro;
     p_wk->UpdateMove  = Resort_Crowd_People_Wk_UpdateKyoroKyoro;
@@ -910,10 +911,12 @@ static void RESORT_CROWD_PEOPLE_WK_SetUp( RESORT_CROWD_PEOPLE_WK *p_wk, RESORT_P
   default:
     GF_ASSERT(0);
     /* fall though */
+#if 0
   case RESORT_PEOPLE_TYPE_PROXY:
     p_wk->InitMove    = NULL;
     p_wk->UpdateMove  = Resort_Crowd_People_Wk_UpdateStreat;
     break;
+#endif
   }
 }
 //----------------------------------------------------------------------------
@@ -2943,6 +2946,8 @@ static void Field_People_UpdateDataCallback( void *p_wk_adrs, void *p_data_adrs,
       RESORT_FIELD_PEOPLE_DeleteCrowd( p_wk, p_people );
       //完全に人を消す
       RESORT_PEOPLE_Delete( p_wk->p_people_sys, p_people );
+
+      RESORT_FIELD_Printf( "新規データで上書き\n" );
     }
     break;
   }

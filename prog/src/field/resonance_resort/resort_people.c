@@ -175,7 +175,6 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
       RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PLACE_ID, cp_param->placeID );
     }
   }
-
   return p_wk;
 }
 
@@ -311,17 +310,6 @@ static BOOL RESORT_PEOPLE_IsCompData( const RESORT_PEOPLE *cp_wk, const void *cp
 static BOOL RESORT_PEOPLE_IsCompAbstructData( const RESORT_PEOPLE *cp_wk, const RESORT_ABSTRUCT_DATA *cp_abstruct )
 {
   return cp_wk->p_abstruct_data == cp_abstruct;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データを初期化
- *
- *	@param	RESORT_PEOPLE *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void RESORT_PEOPLE_ClearData( RESORT_PEOPLE *p_wk )
-{
-  RESORT_ABSTRUCT_DATA_InitInstance( p_wk->p_abstruct_data );
 }
 
 //-------------------------------------
@@ -677,8 +665,7 @@ void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk )
 //-----------------------------------------------------------------------------
 static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param, u16 peopleID )
 {
-  int i = peopleID;
-  if( p_wk->p_people[i] == NULL )
+  if( p_wk->p_people[peopleID] == NULL )
   {
     RESORT_PEOPLE_INIT_PARAM init_param;
     GFL_STD_MemClear( &init_param, sizeof(RESORT_PEOPLE_INIT_PARAM) );
@@ -689,8 +676,9 @@ static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RES
     init_param.p_mmdlsys    = p_wk->param.p_mmdlsys;
 
     NAGI_Printf( "Add=%d\n",peopleID );
-    p_wk->p_people[i] = RESORT_PEOPLE_Init( p_wk->heapID, &init_param );
-    return p_wk->p_people[i];
+    p_wk->p_people[peopleID] = RESORT_PEOPLE_Init( p_wk->heapID, &init_param );
+    RESORT_DATA_MANAGER_Update( p_wk->param.p_data_manager );
+    return p_wk->p_people[peopleID];
   }
 
   GF_ASSERT_MSG(0,"peopleID=%d\n", peopleID);
@@ -714,10 +702,11 @@ RESORT_PEOPLE * RESORT_PEOPLE_SYS_AddNew( RESORT_PEOPLE_SYS *p_wk, const RESORT_
   //開いているところを検索して追加
   if( peopleID != RESORT_PEOPLE_ID_NULL  )
   {
-    RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_Add( p_wk, cp_param,  peopleID );
     NAGI_Printf( "AddNew=%d\n", peopleID );
-    RESORT_DATA_MANAGER_Update( p_wk->param.p_data_manager );
-    return p_people;
+    {
+      RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_Add( p_wk, cp_param,  peopleID );
+      return p_people;
+    }
   }
 
   GF_ASSERT(0);
@@ -741,6 +730,8 @@ void RESORT_PEOPLE_SYS_Remove( RESORT_PEOPLE_SYS *p_wk, RESORT_PEOPLE *p_people 
     {
       RESORT_PEOPLE_Exit( p_people );
       p_wk->p_people[i] = NULL;
+
+      NAGI_Printf( "Remove=%d\n", i );
       break;
     }
   }
@@ -762,6 +753,8 @@ void RESORT_PEOPLE_SYS_RemoveAll( RESORT_PEOPLE_SYS *p_wk )
     {
       RESORT_PEOPLE_Exit( p_people );
       p_wk->p_people[i] = NULL;
+
+      NAGI_Printf( "RemoveAll=%d\n", i );
     }
   }
 }
@@ -800,9 +793,6 @@ void RESORT_PEOPLE_Delete( RESORT_PEOPLE_SYS *p_wk, RESORT_PEOPLE *p_people )
 
   //モデルを消す
   MMDL_Delete( p_mmdl );
-
-  //データを消す
-  RESORT_PEOPLE_ClearData( p_people );
 
   //人物を消す
   RESORT_PEOPLE_SYS_Remove( p_wk, p_people );
