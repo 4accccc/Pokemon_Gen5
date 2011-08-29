@@ -2894,8 +2894,9 @@ static void _gearAllObjDrawEnable(C_GEAR_WORK* pWork,BOOL bFlg)
       continue;
     }
     if( i > ACT_COMMON_MAX ){
-      if( pWork->power_flag ){
+      if( pWork->power_flag || !bFlg ){
         GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], bFlg );
+        IWASAWA_Printf("NotCommon %d->%d",i,bFlg);
       }
     }else{
       GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], bFlg );
@@ -2926,7 +2927,6 @@ static void _gearStartUpAnimeStart(C_GEAR_WORK* pWork)
 
   // 全OAM　非表示
   _gearAllObjDrawEnable( pWork, FALSE );
-
 }
 
 //----------------------------------------------------------------------------
@@ -2999,7 +2999,7 @@ static BOOL _gearStartUpMainWakeUp(C_GEAR_WORK* pWork)
   switch(pWork->state_seq){
   case STARTUP_WAKEUP_SEQ_ANIME_START:
     pWork->eff_task_ct = 0;
-    {
+    { //電源On時のみリング演出
       int i;
 
       for( i = RING_NUM-1;i >= 0; i-- ){
@@ -3250,9 +3250,7 @@ static void _gearRingColorPalAnmCore(C_GEAR_WORK* pWork, u8 ring_id, u8 evy, u16
   int i;
   //リングベースの3色に適用
   SoftFadePfd( pWork->pfade_ptr, FADE_SUB_BG,
-      ring_id*RING_COLOR_SET_NUM+RING_COLOR_TRANS_POS_BG_START, RING_COLOR_SET_NUM, evy, color );
-//  PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_BG*RING_COLOR_SET_NUM],
-//      FADE_SUB_BG, ring_id*RING_COLOR_SET_NUM+RING_COLOR_TRANS_POS_BG_START, siz );
+      ring_id*RING_COLOR_SET_NUM+(RING_COLOR_TRANS_POS_BG_START+(1-pWork->power_flag)*16), RING_COLOR_SET_NUM, evy, color );
   
   //パネルリングカラー転送
   for( i = 0;i < CGEAR_PANEL_MAX;i++) {
@@ -3261,33 +3259,17 @@ static void _gearRingColorPalAnmCore(C_GEAR_WORK* pWork, u8 ring_id, u8 evy, u16
     } 
     SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
       RING_COLOR_TRANS_POS_OBJ_PANEL_START+(ring_id*16), RING_COLOR_SET_NUM, evy, color );
-//    _gearRingColorChangePanel( pWork, i, col_no );
   }
 
   //関連づいたOBJのリング色を転送
   switch( ring_id ){
-  case 1: //内から2番目
-
-    break;
   case 2: //内から3番目
-    /*
-    PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ*RING_COLOR_SET_NUM],
-      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R2_START1, siz );
-    PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ_D*RING_COLOR_SET_NUM],
-      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R2_START2, siz );
-    */
     SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
       RING_COLOR_TRANS_POS_OBJ_R2_START1, RING_COLOR_SET_NUM, evy, color );
     SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
       RING_COLOR_TRANS_POS_OBJ_R2_START2, RING_COLOR_SET_NUM, evy, color );
     break;
   case 4: //一番外側
-    /*
-    PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ*RING_COLOR_SET_NUM],
-      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R4_START1, siz );
-    PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ_D*RING_COLOR_SET_NUM],
-      FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R4_START2, siz );
-    */
     SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
       RING_COLOR_TRANS_POS_OBJ_R4_START1, RING_COLOR_SET_NUM, evy, color );
     SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
@@ -3307,18 +3289,22 @@ static void _gearRingObjVisibleSet(C_GEAR_WORK* pWork, u8 ring_id, BOOL visible_
   int i;
 
   //パネル表示制御
-  for( i = 0;i < CGEAR_PANEL_MAX;i++) {
-    if( ring_id == _gearPanelRingIDGet( pWork, i ) ){ //属しているリングが異なればスルー
-      _gearObjSetPanelVisible( pWork, i, visible_f );
-    } 
+  if( pWork->power_flag ){
+    for( i = 0;i < CGEAR_PANEL_MAX;i++) {
+      if( ring_id == _gearPanelRingIDGet( pWork, i ) ){ //属しているリングが異なればスルー
+        _gearObjSetPanelVisible( pWork, i, visible_f );
+      } 
+    }
   }
 
   //関連づいたOBJの表示制御
   switch( ring_id ){
   case 1: //内から2番目
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_CROSS], visible_f );
-    if( pWork->connect_flag ){ //一人も通信バッファにいない時は、CONNECT表示は強制Off
-      GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_CONNECT], visible_f );
+    if( pWork->power_flag ){
+      GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_CROSS], visible_f );
+      if( pWork->connect_flag ){ //一人も通信バッファにいない時は、CONNECT表示は強制Off
+        GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_CONNECT], visible_f );
+      }
     }
     break;
   case 2: //内から3番目
@@ -3327,6 +3313,9 @@ static void _gearRingObjVisibleSet(C_GEAR_WORK* pWork, u8 ring_id, BOOL visible_
   case 4: //一番外側
     for( i = ACT_R4_OBJ_START; i <= ACT_R4_OBJ_END; i++){
       if( i == ACT_LOGO ) continue; //ACT_LOGOのみr3 ちょっと仲間はずれ
+      if( !pWork->power_flag && i>ACT_COMMON_MAX ){
+        continue;
+      }
       GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], visible_f );
     }
     break;
@@ -3901,14 +3890,6 @@ static void _SLEEPGO_FUNC(void* pWk)
 
   //スリープ復帰時の初期描画状態を作っておく
   _gearStartUpAnimeStart(pWork);
-  // OAMをブラックアウトさせておく
-//  _PFadeSetBlack(pWork);
-
-  // 枠部分を表示
-//  _gearBootInitScreen( pWork ); // 1回表示するため。
-
-  //パレット転送
-//  if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
 
   pWork->GetOpenTrg=_CGEAR_SLEEP_START;
 }
