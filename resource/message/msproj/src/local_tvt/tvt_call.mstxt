@@ -351,6 +351,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_DOCTOR_02"
@@ -391,6 +398,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_DOCTOR_03"
@@ -431,6 +445,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_DOCTOR_04"
@@ -471,6 +492,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_DOCTOR_SHINKA_01"
@@ -513,6 +541,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_DOCTOR_SELECT_01"
@@ -553,6 +588,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_01"
@@ -753,6 +795,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_02"
@@ -793,6 +842,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_03"
@@ -833,6 +889,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_04"
@@ -873,6 +936,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_TYPE_01"
@@ -915,6 +985,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_TOKUSEI_01"
@@ -957,6 +1034,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_SELECT_01"
@@ -997,6 +1081,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_BELL_01"
@@ -2302,6 +2393,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_MOTHER_02"
@@ -2342,6 +2440,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_MOTHER_03"
@@ -2382,6 +2487,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_MOTHER_SELECT_01"
@@ -2422,6 +2534,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_SECRET_01"
@@ -2462,6 +2581,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_SECRET_02"
@@ -2502,6 +2628,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_SECRET_SELECT_01"
@@ -2609,12 +2742,26 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:22" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_DOCTOR_TALK_01"
@@ -2642,12 +2789,386 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:29:59" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_DOCTOR_TALK_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:34" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_DOCTOR_TALK_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_DOCTOR_TALK_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_DOCTOR_TALK_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:48:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_DOCTOR_TALK_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_DOCTOR_TALK_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_DOCTOR_TALK_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_DOCTOR_TALK_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_DOCTOR_TALK_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_DOCTOR_BYE_01"
@@ -2675,12 +3196,26 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:01" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_GREET_01"
@@ -2708,6 +3243,14 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:04" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2720,10 +3263,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つよくなってやるぜ！[Ctrl2:PageClear ]</Text>
+			<Text>かりメッセージ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:39:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2731,21 +3274,335 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>強くなってやるぜ！[Ctrl2:PageClear ]</Text>
+			<Text>仮メッセージ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_TALK_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_TALK_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_TALK_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_TALK_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_TALK_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_TALK_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_TALK_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_TALK_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_TALK_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:04:53" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -2774,6 +3631,14 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2786,11 +3651,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒウンシティは　すごい　とかいだぜ！
-おまえも　はやくこいよ！[Ctrl2:PageClear ]</Text>
+			<Text>かりメッセージ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2798,22 +3662,815 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウンシティは　すごい　都会だぜ！
-おまえも　早くこいよ！[Ctrl2:PageClear ]</Text>
+			<Text>仮メッセージ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:07" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T03:00:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:40:41" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -2842,12 +4499,26 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:14" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_TALK_01"
@@ -2877,12 +4548,386 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:16" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_CHELEN_TALK_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:50:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:50:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:50:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:50:59" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:50:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_CHELEN_TALK_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_CHELEN_TALK_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_CHELEN_TALK_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_CHELEN_TALK_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_CHELEN_TALK_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_CHELEN_TALK_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_CHELEN_TALK_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_CHELEN_TALK_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_BYE_01"
@@ -2910,12 +4955,26 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:16" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_BELL_GREET_01"
@@ -2942,6 +5001,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2976,12 +5042,351 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:23" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_BELL_TALK_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:13" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_BELL_TALK_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_BELL_TALK_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_BELL_TALK_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_BELL_TALK_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_BELL_TALK_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_BELL_TALK_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_BELL_TALK_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_BELL_TALK_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:05:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_BELL_BYE_01"
@@ -3008,6 +5413,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:23" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -3042,12 +5454,26 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:39" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_MOTHER_TALK_01"
@@ -3075,12 +5501,386 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:42" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_MOTHER_TALK_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:30" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_MOTHER_TALK_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_MOTHER_TALK_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_MOTHER_TALK_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_MOTHER_TALK_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_MOTHER_TALK_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_MOTHER_TALK_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_MOTHER_TALK_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_MOTHER_TALK_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_MOTHER_BYE_01"
@@ -3108,22 +5908,36 @@
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:30:42" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_SECRET_GREET_R_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>…なにかな？[Ctrl2:PageClear ]</Text>
+			<Text>……なにかな？[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:51:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3308,10 +6122,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>…ちょっと　いいかな？[Ctrl2:PageClear ]</Text>
+			<Text>……ちょっと　いいかな？[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:52:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3496,11 +6310,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>へぇ…
-[Name:Answer Idx="0" ]が　しゅみ　なんだ…[Ctrl2:PageClear ]</Text>
+			<Text>へぇ……
+[Name:Answer Idx="0" ]が　しゅみ　なんだ……[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:52:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3591,11 +6405,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>へぇ…
-[Name:Answer Idx="0" ]が　とくぎ　なんだ…[Ctrl2:PageClear ]</Text>
+			<Text>へぇ……
+[Name:Answer Idx="0" ]が　とくぎ　なんだ……[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:52:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6328,10 +9142,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>…さよなら[Ctrl2:PageClear ]</Text>
+			<Text>………さよなら[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:52:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6368,10 +9182,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>…もしもし？[Ctrl2:PageClear ]</Text>
+			<Text>……もしもし？▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T08:59:37" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:06:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6379,10 +9193,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もしもし！　いま　ひま？　１[Ctrl2:PageClear ]</Text>
+			<Text>……もしもし？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:19:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6416,10 +9230,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ！▼
-いまは　だいじょうぶ　だよ[Ctrl2:PageClear ]</Text>
+いまは　だいじょうぶ　だよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:19:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:08:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6427,10 +9241,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もしもし！　いま　ひま？　２[Ctrl2:PageClear ]</Text>
+			<Text>あっ！▼
+今は　大丈夫だよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:19:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6464,10 +9279,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ！▼
-いまは　だいじょうぶ　だよ[Ctrl2:PageClear ]</Text>
+いまは　だいじょうぶ　だよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:15:44" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:08:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6475,10 +9290,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もしもし！　いま　ひま？　３[Ctrl2:PageClear ]</Text>
+			<Text>あっ！▼
+今は　大丈夫だよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:19:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6512,10 +9328,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ！▼
-かおが　みれて　うれしい…　かな[Ctrl2:PageClear ]</Text>
+かおが　みれて　うれしい……　かな▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:15:25" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:08:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6523,10 +9339,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もしもし！　いま　ひま？　４[Ctrl2:PageClear ]</Text>
+			<Text>あっ！▼
+顔が　みれて　うれしい……　かな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6560,10 +9377,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もっ　もしもし？▼
-すこし　よろしいでしょうか？[Ctrl2:PageClear ]</Text>
+すこし　よろしいでしょうか▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:27:41" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:08:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6571,10 +9388,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！　どうしたの？　１[Ctrl2:PageClear ]</Text>
+			<Text>もっ　もしもし？▼
+少し　よろしいでしょうか▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:19:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6608,10 +9426,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もっ　もしもし？▼
-すこし　よろしいでしょうか？[Ctrl2:PageClear ]</Text>
+すこし　よろしいでしょうか▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:28:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:08:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6619,10 +9437,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！　どうしたの？　２[Ctrl2:PageClear ]</Text>
+			<Text>もっ　もしもし？▼
+少し　よろしいでしょうか▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6656,10 +9475,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もっ　もしもし？▼
-すこし　よろしいでしょうか？[Ctrl2:PageClear ]</Text>
+すこし　よろしいでしょうか▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:28:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:09:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6667,10 +9486,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！　どうしたの？　３[Ctrl2:PageClear ]</Text>
+			<Text>もっ　もしもし？▼
+少し　よろしいでしょうか▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6704,10 +9524,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もっ　もしもし？▼
-すこし　よろしいでしょうか？[Ctrl2:PageClear ]</Text>
+すこし　よろしいでしょうか？▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:28:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:09:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6715,10 +9535,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！　どうしたの？　４[Ctrl2:PageClear ]</Text>
+			<Text>もっ　もしもし？▼
+少し　よろしいでしょうか▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6754,17 +9575,18 @@
 			<Text>へぇ　[Name:TrainerName ]さんて
 おとこのこ　だったんですか？▼
 かおが　みえないのって
-けっこう　ふべんですね▼
-ちなみに…▼
-わたしは　おんなのこ　なんですよ▼
-……　……　……　……▼
+けっこう　ふべん　ですね▼
+ちなみに……▼
+わたしは　おんなのこ　ですよ▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:18:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6772,10 +9594,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0" ]が　しゅみ　なんですね！１[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+男の子　だったんですか？▼
+顔が　みえないのって
+けっこう　不便ですね▼
+ちなみに……▼
+わたしは　女の子　ですよ▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:20:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6812,16 +9645,17 @@
 おとこのこ　だったんですか？▼
 かおが　みえないのって
 けっこう　ふべんですね▼
-ちなみに…▼
-わたしは　おんなのこ　なんですよ▼
-……　……　……　……▼
+ちなみに……▼
+わたしは　おんなのこ　ですよ▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:18:45" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:13:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6829,10 +9663,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+男の子　だったんですか？▼
+顔が　みえないのって
+けっこう　不便ですね▼
+ちなみに……▼
+わたしは　女の子　ですよ▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:20:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6867,16 +9712,17 @@
 			Language="JPN">
 			<Text>へぇ　[Name:TrainerName ]さんて
 [Name:Hobby ]が　しゅみ　なんですか？▼
-なんだか　おもしろ　そうですね
+なんだか　おもしろそうですね
 こんど　わたしも　やってみようかな？▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:18:54" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:32:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6884,10 +9730,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0" ]が　とくぎ　なんですね！２[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+[Name:Hobby ]が　趣味なんですか？▼
+なんだか　おもしろそうですね
+今度　わたしも　やってみようかな？▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:32:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6922,16 +9777,17 @@
 			Language="JPN">
 			<Text>へぇ　[Name:TrainerName ]さんて
 そんな　しゅみを　もってるんですか？▼
-なんだか　おもしろ　そうですね
+なんだか　おもしろそうですね
 こんど　わたしも　やってみようかな？▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T09:19:01" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:32:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6939,10 +9795,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+そんな　趣味を　持ってるんですか？▼
+なんだか　おもしろそうですね
+今度　わたしも　やってみようかな？▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:32:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6980,14 +9845,15 @@
 すき　なんですか？▼
 かわいい　ポケモンが　おおくて
 いいですよね　[Name:Hobby ]タイプ▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T10:02:51" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6995,11 +9861,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0" ]が
-すきないろ　なんですね！３[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+[Name:Hobby ]タイプの　ポケモンが▽
+好きなんですか？▼
+可愛い　ポケモンが　多くて
+いいですよね　[Name:Hobby ]タイプ▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:32:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7037,14 +9912,15 @@
 すき　なんですか？▼
 かわいい　ポケモンが　おおくて
 いいですよね　そのタイプ▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T10:02:45" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7052,10 +9928,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　３[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+そういう　タイプの　ポケモンが▽
+好きなんですか？▼
+可愛い　ポケモンが　多くて
+いいですよね　そのタイプ▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7091,15 +9977,16 @@
 			<Text>へぇ　[Name:TrainerName ]さんて
 [Name:Hobby ]を　よく　きくんですか？▼
 おんがくって　いいですよね
-きいていると　たのしく　なります▼
-……　……　……　……▼
+きいていると　えがおに　なれます▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T10:11:32" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:31:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7107,11 +9994,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0" ]が
-すきなスポーツ　なんですね！４[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+[Name:Hobby ]を　よく　聴くんですか？▼
+音楽って　いいですよね
+聴いていると　笑顔に　なれます▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:31:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7148,15 +10043,16 @@
 そういう　おんがくを▽
 よく　きくんですか？▼
 おんがくって　いいですよね
-きいていると　たのしく　なります▼
-……　……　……　……▼
+きいていると　えがおに　なれます▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T10:12:28" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:31:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7164,10 +10060,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　４[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+そういう　音楽を▽
+よく　聴くんですか？▼
+音楽って　いいですよね
+聴いていると　笑顔に　なれます▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:31:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7206,14 +10112,15 @@
 わたしの　まわりでも
 [Name:Hobby ]　ポケモンが▽
 すきってひと　けっこう　おおいですね▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T12:14:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7221,11 +10128,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0" ]が
-すきなたべもの　なんですね！５[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+[Name:Hobby ]　ポケモンが▽
+好きなんですか？▼
+わたしの　周りでも
+[Name:Hobby ]　ポケモンが▽
+好きって人　けっこう　多いですね▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:26:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7264,14 +10181,15 @@
 わたしの　まわりでも
 そういう　ポケモンが▽
 すきってひと　けっこう　おおいですね▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T10:13:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7279,10 +10197,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　５[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+そういう　ポケモンが▽
+好きなんですか？▼
+わたしの　周りでも
+そういう　ポケモンが▽
+好きって人　けっこう　多いですね▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:26:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7319,14 +10248,15 @@
 おやすみの　すごしかたが▽
 [Name:Hobby ]　だなんて▽
 おどろき　ました▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T12:02:47" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7334,10 +10264,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0" ]が　にがて　なんですね！６[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんの
+お休みの　過ごし方が▽
+[Name:Hobby ]　だなんて▽
+驚きました▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7374,14 +10313,15 @@
 おやすみの　すごしかたが▽
 そんな　だなんて▽
 おどろき　ました▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T12:05:01" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7389,10 +10329,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　６[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんの
+お休みの　過ごし方が▽
+そんな　だなんて▽
+驚きました▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7430,14 +10379,15 @@
 よく　するんですか？▼
 きかいが　あったら　わたしとも
 [Name:Hobby ]して　くださいね▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T10:40:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7445,11 +10395,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0" ]が
-すきなばしょ　なんですね！７[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+ポケモンの　[Name:Hobby ]を▽
+よく　するんですか？▼
+機会が　あったら　わたしとも
+[Name:Hobby ]して　くださいね▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:24:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7488,14 +10447,15 @@
 とって　いるんですか？▼
 きかいが　あったら　わたしとも
 おねがい　しますね▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T11:02:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7503,10 +10463,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　７[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんは
+そんな風に　おともだちと▽
+ポケモンで　コミュニケーションを▽
+とって　いるんですか？▼
+機会が　あったら　わたしとも
+お願い　しますね▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:24:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7543,14 +10514,15 @@
 [Name:Hobby ]に　なりたいんですか？▼
 もくひょうが　あるって　ステキですね
 わたしも　がんばらないと…▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T09:37:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7558,11 +10530,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0" ]が　
-すきなポケモン　なんですね！８[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+[Name:Hobby ]に　なりたいんですか？▼
+目標が　あるって　ステキですね
+わたしも　がんばらないと…▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:24:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7599,14 +10579,15 @@
 そんな　ひとに　なりたいんですか？▼
 もくひょうが　あるって　ステキですね
 わたしも　がんばらないと…▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T09:37:44" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7614,10 +10595,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　８[Ctrl2:PageClear ]</Text>
+			<Text>へぇ　[Name:TrainerName ]さんて
+そんな人に　なりたいんですか？▼
+目標が　あるって　ステキですね
+わたしも　がんばらないと…▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:24:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7655,14 +10645,15 @@
 ジムバッジを　[Name:Hobby ]つも▽
 もっているんですか？▼
 すっごく　つよいんですね▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 あっ！▼
 せんぱいに　よばれちゃいました▼
 そろそろ　しごとに　もどりますね
-また　おはなし　しましょう[Ctrl2:PageClear ]</Text>
+また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-12T10:13:29" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:10:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7670,10 +10661,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　９[Ctrl2:PageClear ]</Text>
+			<Text>すごい！▼
+[Name:TrainerName ]さんて
+ジムバッジを　[Name:Hobby ]つも▽
+持っているんですか？▼
+すっごく　強いんですね▼
+……　……　……
+……　……　……▼
+あっ！▼
+先輩に　呼ばれちゃいました▼
+そろそろ　仕事に　もどりますね
+また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:24:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7706,24 +10707,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの…▼
+			<Text>あの……▼
 きょうは　しごとが　おやすみなので
 おあずかり　してもらっている▽
 ライブキャスターを▽
-うけとりに　いきたいん　ですけど…▼
+うけとりに　いきたいん　ですけど……▼
 [Name:TrainerName ]さんの　よていは
 あいて　いますか？▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 えっ　あいて　いるんですか？▼
-よかった…▼
+よかった……▼
 それでは　ライモンシティの
 かんらんしゃの　まえで▽
 まちあわせ　しましょう▼
 [Name:TrainerName ]さんと　おあい　できるのを
-たのしみに　していますね[Ctrl2:PageClear ]</Text>
+たのしみに　していますね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-11T10:10:06" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:33:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7731,10 +10733,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１０[Ctrl2:PageClear ]</Text>
+			<Text>あの……▼
+今日は　仕事が　お休みなので
+お預かり　してもらっている▽
+ライブキャスターを▽
+受け取りに　いきたいん　ですけど……▼
+[Name:TrainerName ]さんの　予定は
+空いて　いますか？▼
+……　……　……
+……　……　……▼
+えっ　空いて　いるんですか？▼
+よかった……▼
+それでは　ライモンシティの
+観覧車の　前で▽
+待ち合わせ　しましょう▼
+[Name:TrainerName ]さんと　お会いできるのを
+楽しみに　していますね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:37:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7767,24 +10784,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このまえは　ありがとう▼
+			<Text>このまえは　ありがとう！▼
 じっさいに　あってみたら
 としが　おなじ　くらい　だったから▽
 びっくり　しちゃった▼
 こえの　かんじ　だけだと
 わたしよりも　としうえ　なのかなって▽
-おもって　いたから…▼
+おもって　いたから……▼
 ライブキャスターで　はなす　ときも
 すこし　きんちょう　していたんだよ▼
 これからは　きんちょう　しないで
-はなせるのが　うれしい…　かな▼
-……　……　……　……
-……　……　……　……▼
-そろそろ　しごとに　もどりらなきゃ▼
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+はなせるのが　うれしい……　かな▼
+……　……　……
+……　……　……▼
+そろそろ　しごとに　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-08T14:01:02" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:38:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7792,10 +10809,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１１[Ctrl2:PageClear ]</Text>
+			<Text>この前は　ありがとう！▼
+実際に　会ってみたら
+年が　同じくらい　だったから▽
+びっくり　しちゃった▼
+声の　感じ　だけだと
+わたしよりも　年上なのかなって▽
+思っていたから……▼
+ライブキャスターで　話すときも
+少し　緊張していたんだよ▼
+これからは　緊張しないで
+話せるのが　うれしい……　かな▼
+……　……　……
+……　……　……▼
+そろそろ　仕事に　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:38:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7837,13 +10868,13 @@
 たべたいと　おもって　いるんだけど…▼
 いつも　ぎょうれつが　できていて
 ぜんぜん　かえないの▼
-……　……　……　……
-……　……　……　……▼
-そろそろ　しごとに　もどりらなきゃ▼
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+……　……　……
+……　……　……▼
+そろそろ　しごとに　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-12T10:54:32" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T02:56:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7851,10 +10882,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１２[Ctrl2:PageClear ]</Text>
+			<Text>わたし　料理が　趣味で▼
+美味しいものの　話を　きくと
+研究の　ために　わざわざ▽
+食べに　いったりも　するんだよ▼
+最近だと　ヒウンシティで
+評判の　ヒウンアイスを▽
+食べたいと　思っているんだけど…▼
+いつも　行列が　できていて
+ぜんぜん　買えないの▼
+……　……　……
+……　……　……▼
+そろそろ　仕事に　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:40:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7888,20 +10931,20 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたし　ノーマルタイプの
-ポケモンが　だいすき　なんだ▼
-そのこの　がんばり　しだいでは
+ポケモンが　だいすき　なんだ！▼
+そのコの　がんばり　しだいでは
 どんな　ポケモンにでも　なれる▽
 そんな　みりょくを　かんじるの▼
-それに…▼
+それに……▼
 かわいい　ポケモンも
 たくさん　たくさん　いるんだから▼
-……　……　……　……
-……　……　……　……▼
-そろそろ　しごとに　もどりらなきゃ▼
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+……　……　……
+……　……　……▼
+そろそろ　しごとに　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-12T10:53:56" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7909,10 +10952,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１３[Ctrl2:PageClear ]</Text>
+			<Text>わたし　ノーマルタイプの
+ポケモンが　大好きなんだ！▼
+そのコの　がんばり次第では
+どんな　ポケモンにでも　なれる▽
+そんな　魅力を　感じるの▼
+それに……▼
+可愛い　ポケモンも
+たくさん　たくさん　いるんだから▼
+……　……　……
+……　……　……▼
+そろそろ　仕事に　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:42:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7947,18 +11001,18 @@
 			Language="JPN">
 			<Text>わたし　おんがくって　だいすき▼
 よく　きくのは　ポップスかな？
-きいて　いると　たのしく　なるよね▼
+きいていると　えがおに　なるよね▼
 こうみえても　うたとか
 けっこう　じょうず　なんだよ▼
 きかいが　あったら
-ぜひ　きいて　ほしい…　かな▼
-……　……　……　……
-……　……　……　……▼
-そろそろ　しごとに　もどりらなきゃ▼
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+ぜひ　きいてほしい……　かな▼
+……　……　……
+……　……　……▼
+そろそろ　しごとに　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-09T06:04:55" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:42:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7966,10 +11020,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１４[Ctrl2:PageClear ]</Text>
+			<Text>わたし　音楽って　だいすき▼
+よく　聴くのは　ポップスかな？
+聴いていると　笑顔に　なるよね▼
+こうみえても　歌とか
+けっこう　上手なんだよ▼
+機会が　あったら
+ぜひ　聴いてほしい……　かな▼
+……　……　……
+……　……　……▼
+そろそろ　仕事に　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:42:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8007,20 +11071,20 @@
 さんかしたこと　ある？▼
 わたしも　いちどで　いいから
 かわいい　ポケモンを▽
-キュートに　ドレスアップさせて▽
-ポケモンミュージカルに▽
+キュートに　ドレスアップさせて▼
+ポケモンミュージカルに
 さんか　させて　みたいの▼
-おわったら　そのこも
-ファンレターとか　もらっちゃって▽
-きっと　つぎの　ぶたいへの▽
+おわったら　そのコも
+ファンレターとか　もらっちゃって▼
+きっと　つぎの　ぶたいへの
 はげみに　なったり　するんだよ▼　
-……　……　……　……
-……　……　……　……▼
-そろそろ　しごとに　もどりらなきゃ▼
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+……　……　……
+……　……　……▼
+そろそろ　しごとに　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-09T10:06:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:44:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8028,10 +11092,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１５[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName ]くんは
+ポケモンミュージカルに▽
+参加したこと　ある？▼
+わたしも　一度で　いいから
+可愛い　ポケモンを▽
+キュートに　ドレスアップさせて▼
+ポケモンミュージカルに
+参加させて　みたいの▼
+終わったら　そのコも
+ファンレターとか　もらっちゃって▼
+きっと　次の　舞台への
+励みに　なったり　するんだよ▼　
+……　……　……
+……　……　……▼
+そろそろ　仕事に　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:44:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8071,16 +11150,16 @@
 いい　きぶんてんかんに　なるんだよ▼
 ライブキャスターを　おとしたのも
 ライモンシティを▽
-さんぽしている　とき　だったから▽
-[Name:TrainerName ]くんに　であえたのは▽
+さんぽしている　とき　だったから▼
+[Name:TrainerName ]くんに　であえたのは
 さんぽの　おかげ　かもね▼
-……　……　……　……
-……　……　……　……▼
-そろそろ　しごとに　もどりらなきゃ▼
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+……　……　……
+……　……　……▼
+そろそろ　しごとに　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T08:06:21" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:15:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8088,10 +11167,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１６[Ctrl2:PageClear ]</Text>
+			<Text>わたし　お休みの　日は
+よく　散歩に　でかけるの▼
+周りの　景色を
+のんびり　みてまわる　だけでも▽
+いい　気分転換に　なるんだよ▼
+ライブキャスターを　落としたのも
+ライモンシティを▽
+散歩している　とき　だったから▼
+[Name:TrainerName ]くんに　出会えたのは
+散歩の　おかげ　かもね▼
+……　……　……
+……　……　……▼
+そろそろ　仕事に　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:45:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8131,14 +11223,14 @@
 そのばしょで　であった　ひとたちと▽
 きねんに　こうかんしたり　するんだよ▼
 いつか　[Name:TrainerName ]くんとも
-ポケモンを　こうかん　したい…　かな▼
-……　……　……　……
-……　……　……　……▼
-そろそろ　しごとに　もどりらなきゃ▼
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+ポケモンを　こうかん　したい……　かな▼
+……　……　……
+……　……　……▼
+そろそろ　しごとに　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-09T10:09:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:15:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8146,10 +11238,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１７[Ctrl2:PageClear ]</Text>
+			<Text>わたし　よく　人と
+ポケモンの　交換を　するの▼
+仕事で　いろんな　地方に
+行く　ことが　多いから▽
+その場所で　出会った　人たちと▽
+記念に　交換したり　するんだよ▼
+いつか　[Name:TrainerName ]くんとも
+ポケモンを　交換したい……　かな▼
+……　……　……
+……　……　……▼
+そろそろ　仕事に　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:46:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8186,18 +11289,18 @@
 もくひょう　なの▼
 みかけ　とかじゃ　なくて
 なかみが　かっこいいひと　だよ▼
-まだまだ　かっこわるいけど…▼
+まだまだ　かっこわるいけど……▼
 いまの　しごとを　がんばっていれば
 いつか　なれると　おもっているんだ▼
 だから　おうえん　してくれると
-うれしい…　かな▼
-……　……　……　……
-……　……　……　……▼
-そろそろ　しごとに　もどりらなきゃ▼
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+うれしい……　かな▼
+……　……　……
+……　……　……▼
+そろそろ　しごとに　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T08:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:15:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8205,10 +11308,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１８[Ctrl2:PageClear ]</Text>
+			<Text>わたし　かっこいい人に　なるのが
+目標なの▼
+みかけ　とかじゃ　なくて
+内面が　かっこいい人　だよ▼
+まだまだ　かっこわるいけど……▼
+今の　仕事を　がんばっていれば
+いつか　なれると　思っているんだ▼
+だから　応援してくれると
+うれしい……　かな▼
+……　……　……
+……　……　……▼
+そろそろ　仕事に　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:46:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8243,20 +11358,20 @@
 			Language="JPN">
 			<Text>このあいだ
 おとうとが　おとうさんと▽
-ポケモンバトルを　していたの▼
+ポケモンしょうぶを　していたの▼
 すごく　たのしそうに
-バトルを　していたんだよ▼
+しょうぶを　していたんだよ▼
 いっしょに　みていた　いもうとも
 うらやましく　なったのか▽
 じぶんも　ポケモンが　ほしいって▽
 なきだして　たいへん　だったんだから▼
-……　……　……　……
-……　……　……　……▼
-そろそろ　しごとに　もどりらなきゃ▼
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+……　……　……
+……　……　……▼
+そろそろ　しごとに　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-09T10:11:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:47:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8264,10 +11379,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　１９[Ctrl2:PageClear ]</Text>
+			<Text>このあいだ
+弟が　お父さんと▽
+ポケモン勝負を　していたの▼
+すごく　楽しそうに
+勝負を　していたんだよ▼
+一緒に　みていた　妹も
+うらやましく　なったのか▽
+自分も　ポケモンが　ほしいって▽
+泣きだして　大変だったんだから▼
+……　……　……
+……　……　……▼
+そろそろ　仕事に　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:47:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8303,20 +11430,19 @@
 			<Text>[Name:TrainerName ]くんと
 おはなしを　していると▽
 あっ　と　いうまに▽
-じかんが　たって　いるだよね▼
-よっぽど　たのしいと
-かんじて　いるのかな？▼
-あはは…▼
+じかんが　たっているんだよね▼
+たのしすぎるからかな？▼
+あはは……▼
 だからね　こらからも
 たくさん　れんらくを　くれると▽
-うれしい…　かな▼
-……　……　……　……
-……　……　……　……▼
-そろそろ　しごとに　もどりらなきゃ▼
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+うれしい……　かな▼
+……　……　……
+……　……　……▼
+そろそろ　しごとに　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T08:13:06" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:48:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8324,10 +11450,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２０[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName ]くんと
+お話を　していると▽
+あっ　と　いうまに▽
+時間が　経っているんだよね▼
+楽しすぎるからかな？▼
+あはは……▼
+だからね　こらからも
+たくさん　連絡を　くれると▽
+うれしい……　かな▼
+……　……　……
+……　……　……▼
+そろそろ　仕事に　もどらなきゃ▼
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:51:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8360,23 +11498,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの…▼
-そうだんが　あるんだけど…
+			<Text>あの……▼
+そうだんが　あるんだけど……
 きいて　もらえるかな？▼
 こい　いろの　くさむらって
 みたこと　ある？▼
-……　……　……　……
-……　……　……　……▼
-そっか…▼
+……　……　……
+……　……　……▼
+そっか……▼
 レベルの　たかい　ポケモンが
 とびだして　くるなんて▽
 やっぱり　あぶないんだね▼
-おとうと　たちに
+おとうとや　いもうとに
 ちゅういして　おかなきゃ▼
-ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T03:10:30" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:52:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8384,10 +11522,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２１[Ctrl2:PageClear ]</Text>
+			<Text>あの……▼
+相談が　あるんだけど……
+きいて　もらえるかな？▼
+濃い　色の　草むらって
+みたこと　ある？▼
+……　……　……
+……　……　……▼
+そっか……▼
+レベルの　高い　ポケモンが
+飛びだして　くるなんて▽
+やっぱり　危ないんだね▼
+弟や　妹に
+注意して　おかなきゃ▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8420,23 +11571,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの…▼
+			<Text>あの……▼
 そうだんが　あるんだけど…
 きいて　もらえるかな？▼
 こんど　いもうとに
 ポケモンを　プレゼント　しようと▽
-おもって　いるんだけど…▼
-……　……　……　……
-……　……　……　……▼
-そうだね…▼
+かんがえて　いるんだけど…▼
+……　……　……
+……　……　……▼
+そうだね……▼
 やっぱり　はじめての　ポケモンは
 ノーマルタイプが　いいのかな？▽
 こんど　いもうとと　いっしょに▽
 つかまえに　いって　みるね▼
-ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-12T10:16:59" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8444,10 +11595,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２２[Ctrl2:PageClear ]</Text>
+			<Text>あの……▼
+相談が　あるんだけど……
+きいて　もらえるかな？▼
+今度　妹に
+ポケモンを　プレゼント　しようと▽
+考えて　いるんだけど…▼
+……　……　……
+……　……　……▼
+そうだね……▼
+やっぱり　初めての　ポケモンは
+ノーマルタイプが　いいのかな？▽
+今度　妹と　一緒に▽
+捕まえに　いって　みるね▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8480,23 +11644,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの…▼
-そうだんが　あるんだけど…
+			<Text>あの……▼
+そうだんが　あるんだけど……
 きいて　もらえるかな？▼
-さっき　しごとで　ミス　しちゃって…▼
-……　……　……　……
-……　……　……　……▼
-うん…▼
+さっき　しごとで　ミスしちゃって…▼
+……　……　……
+……　……　……▼
+うん……▼
 [Name:TrainerName ]くんに
 はなしを　きいて　もらったら▽
 なんだか　すっきり　しちゃった▼
 おなじ　しっぱいを
 くりかえさない　ことが▽
-だいじ　なんだね▼
-ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+だいじ　だよね　やっぱ▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T07:10:29" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8504,10 +11668,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２３[Ctrl2:PageClear ]</Text>
+			<Text>あの……▼
+相談が　あるんだけど……
+きいて　もらえるかな？▼
+さっき　仕事で　ミスしちゃって…▼
+……　……　……
+……　……　……▼
+うん……▼
+[Name:TrainerName ]くんに
+話を　きいて　もらったら▽
+なんだか　すっきり　しちゃった▼
+同じ　失敗を
+繰り返さない　ことが▽
+大事　だよね　やっぱ▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:53:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8540,24 +11717,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの…▼
-そうだんが　あるんだけど…
+			<Text>あの……▼
+そうだんが　あるんだけど……
 きいて　もらえるかな？▼
 メダルラリーって　しってる？▼
-……　……　……　……
-……　……　……　……▼
+……　……　……
+……　……　……▼
 へぇー▼
-そんな　おんもしろ　そうな
+そんな　おもしろそうな
 イベント　だったんだね▼
 へんな　おじさんに
 いきなり　メダルを　わたされたから▽
-びっくり　しちゃったんだけど…▼
+びっくり　しちゃったんだけど……▼
 [Name:TrainerName ]くんが　あつめて　いるなら
-わたしも　あつめて　みようかな▼
-ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+わたしも　まねして　みようかな▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-17T10:18:43" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:54:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8565,10 +11742,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２４[Ctrl2:PageClear ]</Text>
+			<Text>あの……▼
+相談が　あるんだけど……
+きいて　もらえるかな？▼
+メダルラリーって　しってる？▼
+……　……　……
+……　……　……▼
+へぇー▼
+そんな　おもしろそうな
+イベント　だったんだね▼
+変な　おじさんに
+いきなり　メダルを　渡されたから▽
+びっくり　しちゃったんだけど……▼
+[Name:TrainerName ]くんが　集めているなら
+わたしも　真似して　みようかな▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:54:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8601,22 +11792,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの…▼
-そうだんが　あるんだけど…
+			<Text>あの……▼
+そうだんが　あるんだけど……
 きいて　もらえるかな？▼
 おとうとの　ハハコモリに
-かてないんだけど…▼
-……　……　……　……
-……　……　……　……▼
+かてないんだけど……▼
+……　……　……
+……　……　……▼
 なるほど！▼
 [Name:TrainerName ]くんに
 きいてみて　せいかい　だったね▼
 ほのおタイプの　ポケモンで
 ハハコモリと　たたかって　みるよ▼
-ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-12T10:17:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:16:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8624,10 +11815,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２５[Ctrl2:PageClear ]</Text>
+			<Text>あの……▼
+相談が　あるんだけど……
+きいて　もらえるかな？▼
+弟の　ハハコモリに
+勝てないんだけど……▼
+……　……　……
+……　……　……▼
+なるほど！▼
+[Name:TrainerName ]くんに
+きいてみて　正解だったね▼
+ほのおタイプの　ポケモンで
+ハハコモリと　戦って　みるよ▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:54:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8660,23 +11863,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの…▼
-そうだんが　あるんだけど…
+			<Text>あの……▼
+そうだんが　あるんだけど……
 きいて　もらえるかな？▼
 きのう　しごとの　ことで
-おとうさんと　ケンカ　しちゃって…▼
-……　……　……　……
-……　……　……　……▼
+おとうさんと　ケンカ　しちゃって……▼
+……　……　……
+……　……　……▼
 うん…▼
 [Name:TrainerName ]くんに
 はなしを　きいて　もらったら▽
 なんだか　すっきり　しちゃった▼
 すなおな　きもちで
 おとうさんに　あやまって　みるね▼
-ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T05:25:42" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8684,10 +11887,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２６[Ctrl2:PageClear ]</Text>
+			<Text>あの……▼
+相談が　あるんだけど……
+きいて　もらえるかな？▼
+昨日　仕事の　ことで
+お父さんと　ケンカ　しちゃって……▼
+……　……　……
+……　……　……▼
+うん…▼
+[Name:TrainerName ]くんに
+話を　きいて　もらったら▽
+なんだか　すっきり　しちゃった▼
+素直な　気持ちで
+おとうさんに　謝って　みるね▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:55:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8720,23 +11936,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの…▼
-そうだんが　あるんだけど…
+			<Text>あの……▼
+そうだんが　あるんだけど……
 きいて　もらえるかな？▼
 このあいだ　ダウジングマシンを
-もらったんだけど…▼
-……　……　……　……
-……　……　……　……▼
+もらったんだけど……▼
+……　……　……
+……　……　……▼
 そうなんだ…▼
 そんなに　いろいろな　ところで
 ダウジングマシンって▽
 はんのう　するんだね▼
 これからは　わたしも
 こまめに　チェック　してみるね▼
-ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-12T10:52:15" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:17:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8744,10 +11960,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２７[Ctrl2:PageClear ]</Text>
+			<Text>あの……▼
+相談が　あるんだけど……
+きいて　もらえるかな？▼
+このあいだ　ダウジングマシンを
+もらったんだけど……▼
+……　……　……
+……　……　……▼
+そうなんだ…▼
+そんなに　いろいろな　所で
+ダウジングマシンって▽
+反応するんだね▼
+これからは　わたしも
+こまめに　チェック　してみるね▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T05:58:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8780,24 +12009,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの…▼
-そうだんが　あるんだけど…
+			<Text>あの……▼
+そうだんが　あるんだけど……
 きいて　もらえるかな？▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 こっ▼
 この　ぼうしって
 わたしに　にあって　いるかな？▼
-……　……　……　……
-……　……　……　……▼
-あはは…▼
+……　……　……
+……　……　……▼
+あはは……▼
 [Name:TrainerName ]くんに
 きいてみて　よかったよ▼
 でも　そんなふうに　いわれると
 てれちゃう…　かな▼
-ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T08:43:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:17:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8805,10 +12035,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２８[Ctrl2:PageClear ]</Text>
+			<Text>あの……▼
+相談が　あるんだけど……
+きいて　もらえるかな？▼
+……　……　……
+……　……　……▼
+こっ▼
+この　帽子って
+わたしに　似合って　いるかな？▼
+……　……　……
+……　……　……▼
+あはは……▼
+[Name:TrainerName ]くんに
+きいてみて　よかったよ▼
+でも　そんな風に　いわれると
+照れちゃう…　かな▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T05:59:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8841,24 +12086,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの…▼
-そうだんが　あるんだけど…
+			<Text>あの……▼
+そうだんが　あるんだけど……
 きいて　もらえるかな？▼
 しごとばに　すごい　ひとが　いて
 そのひとには　まけたくない　なって…▼
-……　……　……　……
-……　……　……　……▼
-うん…▼
+……　……　……
+……　……　……▼
+うん……▼
 [Name:TrainerName ]くんに
 はなしを　きいて　もらったら▽
 きもちが　らくに　なったよ▼
 まけちゃ　いけないのは
 カレに　では　なくって▽
 じぶんじしんに　なんだよね▼
-ありがとう　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-17T10:19:27" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:17:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8866,10 +12111,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　２９[Ctrl2:PageClear ]</Text>
+			<Text>あの……▼
+相談が　あるんだけど……
+きいて　もらえるかな？▼
+仕事場に　すごい　人が　いて
+そのひとには　負けたくない　なって…▼
+……　……　……
+……　……　……▼
+うん……▼
+[Name:TrainerName ]くんに
+話を　きいて　もらったら▽
+気持ちが　楽に　なったよ▼
+負けちゃ　いけないのは
+カレに　では　なくって▽
+自分自身に　なんだよね▼
+ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T05:59:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8903,25 +12162,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ▼
-あの…▼
+あの……▼
 きょうは　しごとが　おやすみだから
 よかったら　じかに　あえないかな？▼
 さいきんは
 よく　そうだんに　のってもらっていて▽
 すごく　たすかって　いるから▽
-[Name:TrainerName ]くんに　じかに　あって▽
+[Name:TrainerName ]くんの　かおを　みて▽
 おれいを　いいたいんだ▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 えっ　ほんと？　あいてるの？▼
-…よかった▼
+……よかった▼
 じゃあ　ライモンシティの
 かんらんしゃの　まえで▽
 まちあわせで　いいかな？▼
 [Name:TrainerName ]くんと　あえるの
-すごく　たのしみ…　かな[Ctrl2:PageClear ]</Text>
+すごく　たのしみ……　かな▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T08:45:44" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:00:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8929,10 +12189,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　３０[Ctrl2:PageClear ]</Text>
+			<Text>あっ▼
+あの……▼
+きょうは　仕事が　お休みだから
+よかったら　じかに　会えないかな？▼
+さいきんは
+よく　相談に　のってもらっていて▽
+すごく　助かって　いるから▽
+[Name:TrainerName ]くんの　かおを　みて▽
+お礼を　いいたいんだ▼
+……　……　……
+……　……　……▼
+えっ　ほんと？　空いてるの？▼
+……よかった▼
+じゃあ　ライモンシティの
+観覧車の　前で▽
+待ち合わせで　いいかな？▼
+[Name:TrainerName ]くんと　会えるの
+すごく　楽しみ……　かな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T06:00:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9392,20 +12669,20 @@
 しごとの　あいま　だったんだけど
 おはなし　したかったから▽
 こえ　のみで　おうとうしちゃった▼
-あはは…▼
+あはは……▼
 ……　……　……　……
 ……　……　……　……▼
 しごとが　いそがしくて
-ヘトヘトだったん　だけど…▼
+ヘトヘトだったん　だけど……▼
 [Name:TrainerName ]くんの　こえを　きいたら
-げんきが　でてきた…　かな▼
+げんきが　でてきた……　かな▼
 あっ！▼
-もう　じかん　みたい▼
+もう　じかん　だぁ▼
 そろそろ　しごとに　もどらなきゃ
-またね　[Name:TrainerName ]くん[Ctrl2:PageClear ]</Text>
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T09:21:32" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:22:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9413,10 +12690,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　いいてんきですね　４０[Ctrl2:PageClear ]</Text>
+			<Text>ごめんね▼
+仕事の　合間だったんだけど
+お話したかったから▽
+声のみで　応答しちゃった▼
+あはは……▼
+……　……　……　……
+……　……　……　……▼
+仕事が　忙しくて
+ヘトヘトだったん　だけど……▼
+[Name:TrainerName ]くんの　声を　きいたら
+元気が　でてきた……　かな▼
+あっ！▼
+もう　時間だぁ▼
+そろそろ　仕事に　もどらなきゃ
+またね　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:22:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9872,10 +13163,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ！[Ctrl2:PageClear ]</Text>
+			<Text>あっ！▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-08-10T09:23:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:11:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9919,10 +13210,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デートしようよ[Ctrl2:PageClear ]</Text>
+			<Text>あそびましょうよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:11:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9966,10 +13257,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふきげんです[Ctrl2:PageClear ]</Text>
+			<Text>ふきげん　です▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:11:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10013,10 +13304,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>…さよなら[Ctrl2:PageClear ]</Text>
+			<Text>……さよなら▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T04:11:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

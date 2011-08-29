@@ -136,10 +136,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カノコタウンしゅっしんの　トレーナーが　サンヨウジムリーダー　コーン・ポッド・デントにしょうり！</Text>
+			<Text>◇ヒオウギシティしゅっしんの　トレーナーが　ヒオウギジムリーダー　チェレンにしょうり！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:05:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -147,10 +147,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇カノコタウン出身の　トレーナーが　サンヨウジムリーダー　コーン・ポッド・デントに勝利！</Text>
+			<Text>◇ヒオウギシティ出身の　トレーナーが　ヒオウギジムリーダー　チェレンに勝利！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:05:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -164,6 +164,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:06:19" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -184,10 +191,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カノコタウンしゅっしんの　トレーナーが　シッポウジムリーダー　アロエにしょうり！</Text>
+			<Text>◇ヒオウギシティしゅっしんの　トレーナーが　タチワキジムリーダー　ホミカにしょうり！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:05:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -195,10 +202,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇カノコタウン出身の　トレーナーが　シッポウジムリーダー　アロエに勝利！</Text>
+			<Text>◇ヒオウギシティ出身の　トレーナーが　タチワキジムリーダー　ホミカに勝利！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:05:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -212,6 +219,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:06:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -232,10 +246,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カノコタウンしゅっしんの　トレーナーが　ヒウンジムリーダー　アーティにしょうり！</Text>
+			<Text>◇ヒオウギシティしゅっしんの　トレーナーが　ヒウンジムリーダー　アーティにしょうり！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:04:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -243,10 +257,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇カノコタウン出身の　トレーナーが　ヒウンジムリーダー　アーティに勝利！</Text>
+			<Text>◇ヒオウギシティ出身の　トレーナーが　ヒウンジムリーダー　アーティに勝利！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -280,10 +294,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カノコタウンしゅっしんの　トレーナーが　ライモンジムリーダー　カミツレにしょうり！</Text>
+			<Text>◇ヒオウギシティしゅっしんの　トレーナーが　ライモンジムリーダー　カミツレにしょうり！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:04:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -291,10 +305,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇カノコタウン出身の　トレーナーが　ライモンジムリーダー　カミツレに勝利！</Text>
+			<Text>◇ヒオウギシティ出身の　トレーナーが　ライモンジムリーダー　カミツレに勝利！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:04:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -328,10 +342,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カノコタウンしゅっしんの　トレーナーが　ホドモエジムリーダー　ヤーコンにしょうり！</Text>
+			<Text>◇ヒオウギシティしゅっしんの　トレーナーが　ホドモエジムリーダー　ヤーコンにしょうり！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:04:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -339,10 +353,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇カノコタウン出身の　トレーナーが　ホドモエジムリーダー　ヤーコンに勝利！</Text>
+			<Text>◇ヒオウギシティ出身の　トレーナーが　ホドモエジムリーダー　ヤーコンに勝利！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:04:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -376,10 +390,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カノコタウンしゅっしんの　トレーナーが　フキヨセジムリーダー　フウロにしょうり！</Text>
+			<Text>◇ヒオウギシティしゅっしんの　トレーナーが　フキヨセジムリーダー　フウロにしょうり！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -387,10 +401,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇カノコタウン出身の　トレーナーが　フキヨセジムリーダー　フウロに勝利！</Text>
+			<Text>◇ヒオウギシティ出身の　トレーナーが　フキヨセジムリーダー　フウロに勝利！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:04:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -424,10 +438,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カノコタウンしゅっしんの　トレーナーが　セッカジムリーダー　ハチクにしょうり！</Text>
+			<Text>◇ヒオウギシティしゅっしんの　トレーナーが　ソウリュウジムリーダー　シャガにしょうり！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:05:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -435,10 +449,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇カノコタウン出身の　トレーナーが　セッカジムリーダー　ハチクに勝利！</Text>
+			<Text>◇ヒオウギシティ出身の　トレーナーが　ソウリュウジムリーダー　シャガに勝利！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:05:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -452,6 +466,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:06:22" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -472,10 +493,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カノコタウンしゅっしんの　トレーナーが　ソウリュウジムリーダー　アイリスにしょうり！！</Text>
+			<Text>◇ヒオウギシティしゅっしんの　トレーナーが　セイガイハジムリーダー　シズイにしょうり！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:05:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -483,10 +504,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇カノコタウン出身の　トレーナーが　ソウリュウジムリーダー　アイリスに勝利！</Text>
+			<Text>◇ヒオウギシティ出身の　トレーナーが　セイガイハジムリーダー　シズイに勝利！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:06:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -500,6 +521,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:06:22" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -520,10 +548,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カノコタウンしゅっしんの　トレーナーが　ソウリュウジムリーダー　シャガにしょうり！</Text>
+			<Text>◇ヒオウギシティしゅっしんの　トレーナーが　セイガイハジムリーダー　シズイにしょうり！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:06:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -531,10 +559,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇カノコタウン出身の　トレーナーが　ソウリュウジムリーダー　シャガに勝利！</Text>
+			<Text>◇ヒオウギシティ出身の　トレーナーが　セイガイハジムリーダー　シズイに勝利！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:06:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -548,6 +576,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:06:22" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -568,10 +603,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇「あいじょういっぱい！　すくすくそだつ！」３ばんどうろ　そだてや</Text>
+			<Text>◇「おまかせ　あんしん　ポケモンそだてて５０ねん！」３ばんどうろ　そだてや</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -579,10 +614,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇「愛情いっぱい！　すくすく育つ！」3番道路　育て屋</Text>
+			<Text>◇「お任せ　安心　ポケモン育てて５０年！」３ばんどうろ　そだてや</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -596,6 +631,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:26" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -616,10 +658,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇「なまえが　みちびく　すばらしいかんけい」ヒウンシティ　せいめいはんだんし</Text>
+			<Text>◇「なまえで　みえる　ポケモンのすべて！」ヒウンシティ　せいめいはんだんし</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -627,10 +669,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇「名前が　導く　素晴らしい関係」ヒウンシティ　姓名判断師</Text>
+			<Text>◇「名前で　みえる　ポケモンの全て！」ヒウンシティ　姓名判断師</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -644,6 +686,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:26" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -664,10 +713,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇「あのこは　なにをしているの？　よーし　ちょうさだ！」ヒウンシティ　すれちがいちょうさたい</Text>
+			<Text>◇「みんなのことを　しりたいな！　もっと　ちょうさだ！」ヒウンシティ　すれちがいちょうさたい</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -675,10 +724,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇「あの子は　何をしているの？　よーし調査だ！」ヒウンシティ　すれ違い調査隊</Text>
+			<Text>◇「みんなのことを　知りたいな！　もっと　調査だ！」ヒウンシティ　すれ違い調査隊</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -692,6 +741,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:26" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -712,10 +768,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇「はしってたたかえ！　でんしゃはとまらない！」ライモンシティ　バトルサブウェイ</Text>
+			<Text>◇「でんしゃにのって　たたかって！」ライモンシティ　バトルサブウェイ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -723,10 +779,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇「走って戦え！　電車は止まらない！」ライモンシティ　バトルサブウェイ</Text>
+			<Text>◇「電車に乗って　戦って！」ライモンシティ　バトルサブウェイ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -740,6 +796,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:26" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -760,10 +823,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇「スターへのかいだんが　ここからはじまる」ライモンシティ　ミュージカル</Text>
+			<Text>◇「スターへのかいだんを　かけのぼろう！」ライモンシティ　ミュージカル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -771,10 +834,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇「スターへの階段が　ここから始まる」ライモンシティ　ミュージカル</Text>
+			<Text>◇「スターへの階段を　駆け登ろう！」ライモンシティ　ミュージカル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -788,6 +851,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:09:26" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -808,10 +878,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇「なみかぜが　はこんでくれた　しなものを　あなたに」ホドモエマーケット</Text>
+			<Text>◇「つどえ　トレーナー！　めざすは　せかいいち！」ホドモエシティ　ワールドバトルトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:10:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -819,10 +889,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇「波風が　運んでくれた　品物を　あなたに」ホドモエマーケット</Text>
+			<Text>◇「集え　トレーナー！　目指すは　世界一！」ホドモエシティ　ワールドバトルトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:10:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -836,6 +906,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:10:13" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -856,10 +933,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇「イッシュさいだいの　ショッピングエリア　なんでもそろう！」ショッピングモール　アールナイン</Text>
+			<Text>◇「イッシュでいちばんの　しなぞろえ！　さがしものは　とうてんで！」ショッピングモール　アールナイン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:10:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -867,10 +944,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇「イッシュ最大の　ショッピングエリア　なんでもそろう！」ショッピングモール　R9</Text>
+			<Text>◇「イッシュで一番の　品揃え！　探し物は　当店で！」ショッピングモール　R9</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:10:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -884,6 +961,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:10:13" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -904,10 +988,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇サンヨウシティは　もりにかこまれ　すずやかな　かぜが　かおります</Text>
+			<Text>◇サンヨウシティは　もりと　ていえんに　かこまれた　しずかなまちです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:27:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -915,10 +999,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇サンヨウシティは　森に囲まれ　涼やかな風が薫ります</Text>
+			<Text>◇サンヨウシティは　森と庭園に囲まれた　静かな町です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:27:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -931,6 +1015,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:27:24" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1327,10 +1418,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇シッポウシティは　いしだたみとそうこが　とくちょうです</Text>
+			<Text>◇シッポウシティの　たてものは　ずっとむかしは　かもつそうこでした</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:28:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1338,10 +1429,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇シッポウシティは　石畳と倉庫が　特徴です</Text>
+			<Text>◇シッポウシティの建物は　ずっと昔は　貨物倉庫でした</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:28:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1354,6 +1445,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:28:35" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1609,10 +1707,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇げいじゅつに　みせられたひとがあつまる　まちです</Text>
+			<Text>◇カフェソーコで　げいじゅつかたちは　こうりゅうを　ふかめます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:34:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1620,10 +1718,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇芸術に　魅せられた人が集まる　街です</Text>
+			<Text>◇カフェソーコで　芸術家たちは　交流を深めます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:31:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1636,6 +1734,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:31:33" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1844,10 +1949,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇しげきあふれる ヒウンシティ なかでも ジムには おどろきの しかけが…？</Text>
+			<Text>◇ヒウンジムが　アーティの　しんさくアートによって　うまれかわりました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:32:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1855,10 +1960,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇刺激あふれるヒウンシティ　中でも　ジムにはおどろきの　仕掛けが…？</Text>
+			<Text>◇ヒウンジムが　アーティの新作アートによって　生まれ変わりました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:32:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1871,6 +1976,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:32:27" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1985,10 +2097,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ビルのかず　みせのかず　じんこうは　ヒウンシティが　イッシュちほういちです</Text>
+			<Text>◇ホドモエシティが　おおきくなった　いまでも　ヒウンシティが　イッシュちほういちの　だいとしです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:33:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1996,10 +2108,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ビルの数　店の数　人口は　ヒウンシティが　イッシュ地方一です</Text>
+			<Text>◇ホドモエシティが　大きくなった　いまでも　ヒウンシティが　イッシュ地方一の大都市です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:33:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2012,6 +2124,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:33:54" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2032,10 +2151,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒウンシティの　まちなみは　ひるとよるとで　まるでちがってみえます</Text>
+			<Text>◇さまざまな　くにの　ひとびとがうつりすみ　ヒウンシティは　へんかしつづけます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:35:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2043,10 +2162,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ヒウンシティの　街並みは　昼と夜とで　まるで違って見えます</Text>
+			<Text>◇さまざまな　国の　人々が移り住み　ヒウンシティは　変化し続けます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:35:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2059,6 +2178,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:35:59" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2126,10 +2252,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ひとと　ひとの　すれちがいについて　けんきゅうしている　ばしょが　あります</Text>
+			<Text>◇すれちがいけんきゅうじょは　いつも　たいいん　ぶそくです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:35:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2137,10 +2263,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇人と人の　すれ違いについて　研究している　場所があります</Text>
+			<Text>◇すれちがい研究所は　いつも　隊員不足です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:35:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2153,6 +2279,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:35:12" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2173,10 +2306,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ライモンシティでは　しげきとこうふんが　おおいため　バトルが　おおくなったと　いわれています</Text>
+			<Text>◇いつもギラギラ　ライモンシティには　しげきをもとめて　おおくのトレーナーが　あつまります</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2184,10 +2317,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ライモンシティでは　刺激と興奮が　多いため　バトルが多くなったと　いわれています</Text>
+			<Text>◇いつもギラギラ　ライモンシティには　刺激を求めて　多くのトレーナーが　集まります</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2200,6 +2333,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:36:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2267,10 +2407,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ねつれつなバトルずきが　てつどうずきだったため　バトルサブウェイが　できたといわれています</Text>
+			<Text>◇あついポケモンしょうぶを　ねんりょうに　バトルサブウェイは　しっそうしつづけています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:36:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2278,10 +2418,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇熱烈なバトル好きが　鉄道好きだったため　バトルサブウェイが　できたといわれています</Text>
+			<Text>◇熱いポケモン勝負を　燃料に　バトルサブウェイは　疾走し続けています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:36:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2294,6 +2434,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:36:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2549,10 +2696,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇いちどは　いってみたい　ごらくのまち　Ｎｏ．１　ライモンシティへ　ようこそ</Text>
+			<Text>◇なんどでも　きたくなる　ごらくのまち　ライモンシティへ　ようこそ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2560,10 +2707,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇一度は　行ってみたい　娯楽の街　Ｎｏ．１　ライモンシティへ　ようこそ</Text>
+			<Text>◇何度でも　来たくなる　娯楽の街　ライモンシティへ　ようこそ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2576,6 +2723,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:37:10" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2812,6 +2966,13 @@
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:42:45" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2878,10 +3039,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇みなとには　きょだいな　れいとうコンテナが　ならんでいます</Text>
+			<Text>◇ジムリーダーが　さいくつをつづけたため　ホドモエジムも　あらたに　つくりなおされました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:40:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2889,10 +3050,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇港には　巨大な　冷凍コンテナが　並んでいます</Text>
+			<Text>◇ジムリーダーが　採掘を続けたため　ホドモエジムも　新たに　造り直されました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2905,6 +3066,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:40:09" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2925,10 +3093,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇れいとうコンテナには　ポケモンがすみついています</Text>
+			<Text>◇こどもから　おとしよりまで　ワールドバトルトーナメントかんせんを　みんな　たのしみにしています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:40:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2936,10 +3104,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇冷凍コンテナには　ポケモンが住み着いています</Text>
+			<Text>◇子供から　おとしよりまで　ワールドバトルトーナメント観戦を　みんな　楽しみにしています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:40:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2952,6 +3120,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:39:27" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2972,10 +3147,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ホドモエシティは　みずべにりんせつする　みなとまちです</Text>
+			<Text>◇かずかずの　みつぼしホテルが　せかいじゅうから　おこしいただく　ひとびとを　おむかえします</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:38:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2983,10 +3158,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ホドモエシティは　水辺に隣接する　港町です</Text>
+			<Text>◇数々の三ツ星ホテルが　世界中から　お越しいただく人々を　お迎えします</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:38:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2999,6 +3174,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:38:09" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -9669,10 +9851,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ジム８クリア　かりメッセージ</Text>
+			<Text>◇ヒオウギシティしゅっしんの　トレーナーが　セイガイハジムリーダー　シズイにしょうり！！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:09:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9680,10 +9862,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ジム８クリア　仮メッセージ</Text>
+			<Text>◇ヒオウギシティ出身の　トレーナーが　セイガイハジムリーダー　シズイに勝利！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:09:53" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9698,6 +9880,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:10:53" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:43" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -9718,10 +9907,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒオウギシティ　かりメッセージ１</Text>
+			<Text>◇みはらしだいから　いちぼうできる　うつくしくつらなる　やまは　ひっけんです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:15:33" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:48:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9729,10 +9918,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ヒオウギシティ　仮メッセージ１</Text>
+			<Text>◇見晴台から　一望できる　美しく連なる山は　必見です</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:15:44" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:48:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9746,6 +9935,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:17:34" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -9766,10 +9962,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒオウギシティ　かりメッセージ２</Text>
+			<Text>◇ヒオウギの　トレーナーズスクールは　あたたかみのある　がっこうです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:18:04" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9777,10 +9973,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ヒオウギシティ　仮メッセージ２</Text>
+			<Text>◇ヒオウギの　トレーナーズスクールは　温かみのある　学校です</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:18:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9794,6 +9990,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:17:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -9814,10 +10017,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒオウギシティ　かりメッセージ３</Text>
+			<Text>◇はなばなが　さきみだれる　ヒオウギシティは　あまい　かおりに　つつまれています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:18:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:46:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9825,10 +10028,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ヒオウギシティ　仮メッセージ３</Text>
+			<Text>◇花々が咲き乱れる　ヒオウギシティは　甘い香りに　包まれています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:18:30" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9842,6 +10045,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:17:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -9862,10 +10072,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒオウギシティ　かりメッセージ４</Text>
+			<Text>◇１９ばんどうろを　ぬけると　とけいだいが　ゆうめいな　サンギタウンがあります</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:18:39" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9873,10 +10083,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ヒオウギシティ　仮メッセージ４</Text>
+			<Text>◇１９番道路を　抜けると　時計台が有名な　サンギタウンがあります</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:18:41" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9890,6 +10100,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:17:37" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -9910,10 +10127,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒオウギシティ　かりメッセージ５</Text>
+			<Text>◇やまのふもとに　ひろがる　ヒオウギシティは　なつでも　すずしく　かいてきです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:18:49" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9921,10 +10138,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ヒオウギシティ　仮メッセージ５</Text>
+			<Text>◇山のふもとに　広がる　ヒオウギシティは　夏でも　涼しく　快適です</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:18:51" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9938,6 +10155,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:17:41" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -9958,10 +10182,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒオウギシティ　かりメッセージ６</Text>
+			<Text>◇サンギタウンには　こどもたちに　ポケモンのすばらしさを　おしえる　てらこやが　あります</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:18:57" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:32:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9969,10 +10193,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ヒオウギシティ　仮メッセージ６</Text>
+			<Text>◇サンギタウンには　子供たちに　ポケモンのすばらしさを教える　寺小屋があります</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:19:00" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:32:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -9986,6 +10210,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:17:49" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10006,10 +10237,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒオウギシティ　かりメッセージ７</Text>
+			<Text>◇１９ばんどうろでは　スクールでまなんだことを　じっせんするトレーナーがいます</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:19:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10017,10 +10248,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ヒオウギシティ　仮メッセージ７</Text>
+			<Text>◇１９番道路では　スクールで学んだことを　実践するトレーナーがいます</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:19:06" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:35:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10034,6 +10265,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:17:46" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10054,10 +10292,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒオウギシティ　かりメッセージ８</Text>
+			<Text>◇サンギタウンのさきには　おおきな　ぼくじょうが　あり　いろいろなポケモンがいます</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:19:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:46:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10065,10 +10303,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ヒオウギシティ　仮メッセージ８</Text>
+			<Text>◇サンギタウンの先には　大きな牧場があり　いろいろな　ポケモンがいます</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:19:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10082,6 +10320,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:17:51" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10102,10 +10347,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒオウギシティ　かりメッセージ９</Text>
+			<Text>◇やまにかこまれているため　ヒオウギはとかいでありながら　のうぎょうもさかんです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:19:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:29:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10113,10 +10358,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ヒオウギシティ　仮メッセージ９</Text>
+			<Text>◇山に囲まれているため　ヒオウギは都会でありながら　農業も盛んです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:19:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:29:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10130,6 +10375,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:17:54" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10150,10 +10402,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇タチワキシティ　かりメッセージ１</Text>
+			<Text>◇タチワキジムは　ライブハウスです　その　おんがくに　タマシイを　ふるわせろ！　</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:21:06" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10161,10 +10413,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇タチワキシティ　仮メッセージ１</Text>
+			<Text>◇タチワキジムは　ライブハウスです　その音楽に　タマシイを　震わせろ！　</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:21:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:54:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10178,6 +10430,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:20:28" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10198,10 +10457,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇タチワキシティ　かりメッセージ２</Text>
+			<Text>◇コンビナートでは　いつでも　はたらくポケモン　だいぼしゅうです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:21:28" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10209,10 +10468,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇タチワキシティ　仮メッセージ２</Text>
+			<Text>◇コンビナートでは　いつでも　働くポケモン　大募集です</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:21:30" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10226,6 +10485,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:20:35" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:47" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10246,10 +10512,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇タチワキシティ　かりメッセージ３</Text>
+			<Text>◇ポケウッドでは　あらゆるえいがを　さつえいするため　スターをもとめています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:21:36" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:36:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10257,10 +10523,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇タチワキシティ　仮メッセージ３</Text>
+			<Text>◇ポケウッドでは　あらゆる映画を撮影するため　スターを求めています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:21:38" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:37:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10274,6 +10540,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:20:38" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:47" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10294,10 +10567,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇タチワキシティ　かりメッセージ４</Text>
+			<Text>◇タチワキシティから　ヒウンシティいきの　ていきせんが　しゅっこうしています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:21:45" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10305,10 +10578,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇タチワキシティ　仮メッセージ４</Text>
+			<Text>◇タチワキシティから　ヒウンシティ行きの　定期船が　出航しています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:21:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10322,6 +10595,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:20:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:47" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10342,10 +10622,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇タチワキシティ　かりメッセージ５</Text>
+			<Text>◇うんがを　いきかう　ふねは　タチワキシティにすむ　ひとびとの　じゅうような　こうつうしゅだんです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:21:52" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:05:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10353,10 +10633,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇タチワキシティ　仮メッセージ５</Text>
+			<Text>◇運河を　行きかう船は　タチワキシティに住む人々の　重要な　交通手段です</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:21:54" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:05:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10370,6 +10650,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:20:42" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:47" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10390,10 +10677,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇タチワキシティ　かりメッセージ６</Text>
+			<Text>◇タチワキシティは　こうじょうで　はたらく　ひとびとを　ちゅうしんに　はってんしました</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:22:18" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:30:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10401,10 +10688,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇タチワキシティ　仮メッセージ６</Text>
+			<Text>◇タチワキシティは　工場で働く人々を　中心に発展しました</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:22:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:30:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10418,6 +10705,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:20:45" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:47" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10438,10 +10732,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇タチワキシティ　かりメッセージ７</Text>
+			<Text>◇コンビナートで　はたらく　ひとびとは　しごとの　あいまに　ポケモンしょうぶを　たのしんでいます</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:22:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10449,10 +10743,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇タチワキシティ　仮メッセージ７</Text>
+			<Text>◇コンビナートで働く人々は　仕事の合間に　ポケモン勝負を楽しんでいます</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:22:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10466,6 +10760,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:20:48" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:47" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10486,10 +10787,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇タチワキシティ　かりメッセージ８</Text>
+			<Text>◇しごとでくたびれた　ひとたちを　コンビナートの　やけいがいやします</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:22:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:14:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10497,10 +10798,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇タチワキシティ　仮メッセージ８</Text>
+			<Text>◇仕事でくたびれた人たちを　コンビナートの　夜景が癒します</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:22:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:09:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10514,6 +10815,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:20:51" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:48" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10534,10 +10842,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇タチワキシティ　かりメッセージ９</Text>
+			<Text>◇まちの　ひがしにある　クレーンで　にもつの　あげおろしをします</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:22:30" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:10:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10545,10 +10853,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇タチワキシティ　仮メッセージ９</Text>
+			<Text>◇街の東にある　クレーンで　荷物の　あげおろしをします</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:22:32" />
+				User="matsumiya:W00224"
+				Time="2011-08-16T08:11:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -10562,6 +10870,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:20:56" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-16T07:45:48" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
