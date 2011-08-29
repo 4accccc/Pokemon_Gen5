@@ -16819,10 +16819,10 @@ static const ZONEDATA ZoneData[] = {
 		NARC_script_seq_c14_bin,
 		NARC_script_seq_sp_c14_bin,	//NARC_script_seq_sp_c14_bin,
 		NARC_script_message_c14_dat,
-		SEQ_BGM_C_01,
-		SEQ_BGM_C_01,
-		SEQ_BGM_C_01,
-		SEQ_BGM_C_01,
+		SEQ_BGM_SW_C_14,
+		SEQ_BGM_SW_C_14,
+		SEQ_BGM_SW_C_14,
+		SEQ_BGM_SW_C_14,
 		enc_dummy,
 		0,
 		NARC_eventdata_c14_bin,
@@ -21905,7 +21905,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D35R0101,
 		MAPNAME_D35,
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
-		WEATHER_NO_SUNNY,
+		WEATHER_NO_MIST,
     FALSE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
