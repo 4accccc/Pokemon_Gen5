@@ -19871,14 +19871,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あかしろ　ボウシの　トレーナー！▼
+			<Text>あかしろボウシの　トレーナー！▼
 さいきん　うりだしちゅうの
 しんじんとは　きみの　ことだな！▼
 つよくなりそうな　しんじんは
 いまの　うちに　つぶしておかないと！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T06:57:54" />
+				Time="2011-08-29T08:45:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -19886,14 +19886,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>赤白　ボウシの　トレーナー！▼
+			<Text>赤白ボウシの　トレーナー！▼
 最近　売り出し中の
 新人とは　きみの　ことだな！▼
 強くなりそうな　新人は
 いまの　うちに　つぶしておかないと！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T06:58:02" />
+				Time="2011-08-29T08:44:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -20103,13 +20103,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おお！　あなたさまが　おうわさの
-あかしろボウシの　トレーナーですか！▼
+			<Text>おお！　あなたさまが　おうわさに
+なっている　あのトレーナーですか！▼
 わかりました　ビップたいぐうで
 おあいてさせて　いただきます！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T08:24:29" />
+				Time="2011-08-29T08:45:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -20117,13 +20117,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おお！　あなた様が　おうわさの
-赤白ボウシの　トレーナーですか！▼
+			<Text>おお！　あなた様が　おうわさに
+なっている　あのトレーナーですか！▼
 わかりました　ビップ待遇で
 お相手させて　いただきます！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T08:25:03" />
+				Time="2011-08-29T08:45:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -20471,13 +20471,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あー！！　いたー！
-あかしろボウシの　トレーナー！▼
+赤白ボウシの　トレーナー！▼
 あなたを　倒せば　たっくさん
 賞金　もらえるんだってね！▽
 絶対に　逃がさないから！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T09:43:01" />
+				Time="2011-08-29T08:44:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -20973,12 +20973,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ずいぶんと　調子が　いいみたいね
-あかしろボウシの　トレーナー！▼
+赤白ボウシの　トレーナー！▼
 あなたは　一度　ざせつを
 味わったほうが　いいわね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-26T04:51:04" />
+				Time="2011-08-29T08:44:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -21878,10 +21878,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うちゅうの　こどうが　きこえる……
-そう……ちかくに　あるんだ……▼</Text>
+そう……ちかくに　あるんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-26T10:47:29" />
+				Time="2011-08-26T10:52:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -21890,10 +21890,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>宇宙の　鼓動が　聞こえる……
-そう……近くに　あるんだ……▼</Text>
+そう……近くに　あるんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-26T10:48:00" />
+				Time="2011-08-26T10:52:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -21912,10 +21912,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>ここでの　たたかいが　かんしされてる
+なんて　はなしが　あるけどさ……▽
+まっ　しかたないでしょ！▼
+ぼくみたいな　トレーナーの　しあいは
+だれもが　みたがるわけだからね！▽
+ふふっ！　かれいに　いくよっ！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T02:21:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -21923,10 +21928,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>ここでの　戦いが　監視されてる
+なんて　話が　あるけどさ……▽
+まっ　しかたないでしょ！▼
+僕みたいな　トレーナーの　試合は
+だれもが　見たがるわけだからね！▽
+ふふっ！　華麗に　行くよっ！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T02:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -21988,10 +21998,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>ちいさいころは　まずしかったけどさ
+トレーナーとして　なりあがってきたの！▼
+いまや　しょうきんで　すきなときに
+すきなものを　たべられるのよ！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T03:08:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -21999,10 +22012,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>小さいころは　貧しかったけどさ
+トレーナーとして　成り上がってきたの！▼
+いまや　賞金で　好きなときに
+好きなものを　食べられるのよ！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T03:09:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22021,10 +22037,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>こんなところまで　きたんだもん
+それなりの　かくごは　してるよね？▼
+ルールむよう！　なんでもありよ！
+すべてを　かけて　たたかいましょう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T03:34:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22032,10 +22051,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>こんなところまで　来たんだもん
+それなりの　覚悟は　してるよね？▼
+ルール無用！　なんでもありよ！
+全てを　かけて　戦いましょう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T03:35:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22054,10 +22076,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>データが　あつまれば　あつまるほど
+ぼくたちは　つよくなる！▼
+かがくしゃの　ぶんせきのうりょくは
+いずれ　トレーナーたちを　しのぐさ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T03:37:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22065,10 +22090,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>データが　集まれば　集まるほど
+僕たちは　強くなる！▼
+科学者の　分析能力は
+いずれ　トレーナーたちを　しのぐさ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T03:38:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22087,10 +22115,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>しんぽする　かがくの　ちからは
+たいきけんを　こえて　うちゅうへ！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T03:48:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22098,10 +22127,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>進歩する　科学の力は
+大気圏を　越えて　宇宙へ！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T03:47:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22120,10 +22150,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>うえでは　せかいの　トップレベル……▼
+いや　うちゅうレベルの　トレーナーが
+まちかまえているわ……▼
+はたして　あなたは　そこまで
+とびぬけることが　できるかしら？▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T04:01:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22131,10 +22165,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>上では　世界の　トップレベル……▼
+いや　宇宙レベルの　トレーナーが
+待ち構えているわ……▼
+はたして　あなたは　そこまで
+飛び抜けることが　できるかしら？▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T04:04:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22153,10 +22191,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>うーん……どんな　そだてかたをしたら
+あなたの　ポケモンみたいに▽
+めちゃくちゃ　つよくなるのかしらね▼
+ちょっと　おしえてよ？　だめ？
+きぎょうひみつ？　もうっ　ケチ！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T04:39:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22164,10 +22206,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>うーん……どんな　育て方をしたら
+あなたの　ポケモンみたいに▽
+めちゃくちゃ　強くなるのかしらね▼
+ちょっと　教えて？　だめ？
+企業秘密？　もうっ　ケチ！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T04:39:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22202,7 +22248,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わかるよ！
+			<Text>分かるよ！
 きみも　夢中なんだろ？▼
 トップトレーナーに　混じって
 戦い続ける　この　ぼくに！▼
@@ -22210,7 +22256,7 @@
 特別に　対戦してあげる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-26T02:43:41" />
+				Time="2011-08-29T06:10:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22229,10 +22275,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>さいじょうかいまで　いったら
+ぼくは　くろのまてんろうの▼
+こうりゃくぼんを　つくって
+おおもうけ　するんだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T06:31:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22240,10 +22289,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>最上階まで　行ったら
+ぼくは　黒の摩天楼の　攻略本を▽
+作って　大もうけ　するんだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T06:32:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22262,10 +22313,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>さいしょの　いっぴきで　じゅうぶん！
+きみは　ぼくには　かてない！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T06:51:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22273,10 +22325,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>最初の　一匹で　じゅうぶん！
+きみは　ぼくには　勝てない！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T06:52:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22295,12 +22348,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>￥こどもだけど　だいがくで
-べんきょうしている▼
-てんさいのはなし（かり）▼</Text>
+			<Text>ゆうめい　トレーナーズスクールで
+ポケモンしょうぶを　おしえてます！▼
+ただの　おんなのこだと　おもうと
+いたいめを　みますよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T07:42:41" />
+				Time="2011-08-29T06:59:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22308,12 +22362,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>￥こどもだけど　だいがくで
-べんきょうしている▼
-てんさいのはなし（かり）▼</Text>
+			<Text>有名トレーナーズスクールで
+ポケモン勝負を　教えてます！▼
+ただの　女の子だと　思うと
+痛い目を　みますよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T07:42:45" />
+				Time="2011-08-29T07:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22332,10 +22387,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>あかしろボウシの　トレーナーだ！
+えーい！　ともだちの　かたきー！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T08:19:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22343,10 +22399,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>赤白ボウシの　トレーナーだ！
+えーい！　友達の　かたきー！！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T08:44:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22365,10 +22422,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>くろのまてんろうを　せいはするまで
+わたしは　ぜったい　わらわない！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T08:28:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22376,10 +22434,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>黒の摩天楼を　制覇するまで
+わたしは　ぜったい　笑わない！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T08:28:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22519,10 +22578,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>バンジロウさまの　ポケモンしょうぶは
+やさしさ……はげしさ……しあわせ……
+すべてが　つまっているの！！▼
+また　バンジロウさまと　たたかえるよう
+つよくならなきゃ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T04:50:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22530,10 +22593,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>バンジロウさまとの　ポケモン勝負は
+優しさ……激しさ……幸せ……
+全てが　つまっているの！！▼
+また　バンジロウさまと　戦えるよう
+強くならなきゃ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T04:51:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22552,10 +22619,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>おれたち　かなり　うえまで　きたろ？
+そろそろ　うちゅうに　ついたのかな？▼
+なんだか　うちゅうっぽい　くうきが
+ただよっている　かんじが　しないか？▼
+よーし！　うちゅうファイトだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T02:55:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22563,10 +22634,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>なぁなぁ！　かなり　上まで　きたろ？
+そろそろ　宇宙に　ついたのかな？▼
+なんだか　宇宙っぽい　空気が
+ただよっている　感じが　しないか？▼
+よーし！　宇宙ファイトだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T02:54:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22585,10 +22660,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>こないだ　テレビに　でたんだけどさ
+ほんにんは　きてないってのに▼
+おれより　あつかいが　でかかった
+トレーナーが　いたんだ！▼
+あかしろボウシの　トレーナー！
+それは　おまえだ！　ゆるさん！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T08:40:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22596,10 +22676,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>こないだ　テレビに　出たんだけどさ
+本人は　来てないってのに▼
+おれより　扱いが　でかかった
+トレーナーが　いたんだ！▼
+赤白ボウシの　トレーナー！
+それは　おまえだ！　ゆるさん！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T08:40:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22618,10 +22703,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>おれは　むてき！　おれは　むてき！
+２ど　いったから　２ばい　むてきだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T08:49:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22629,10 +22715,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>おれは　無敵！　おれは　無敵！
+２度　いったから　２倍　無敵だ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T08:49:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22651,13 +22738,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さいじょうかいから　さいしょに
-まちを　みおろすのは　わたしよ！▼
-￥どんな　けしきなんだろうな
-というような　はなしにかえる（かり）▼</Text>
+			<Text>さいじょうかいから　みた
+まちの　けしきは　どんなふうに▽
+みえるんだろうね！▼
+うふふっ！　たのしみだな！
+さきに　いかせてもらうよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-26T02:58:42" />
+				Time="2011-08-29T08:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22665,13 +22753,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さいじょうかいから　さいしょに
-まちを　みおろすのは　わたしよ！▼
-￥どんな　けしきなんだろうな
-というような　はなしにかえる（かり）▼</Text>
+			<Text>最上階から　みた
+街の　景色は　どんなふうに▽
+みえるんだろうね！▼
+うふふっ！　楽しみだな！
+先に　行かせてもらうよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-26T02:58:42" />
+				Time="2011-08-29T08:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22690,10 +22779,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>わたしみたいな　アイドルトレーナーも
+まけてれば　すぐに　わすれられる！▼
+スポットライトを　あびつづけるには
+ずっと　かつしか　ないんだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T09:11:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22701,10 +22793,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>わたしみたいな　アイドルトレーナーも
+負けてれば　すぐに　忘れられる！▼
+スポットライトを　浴び続けるには
+ずっと　勝つしか　ないんだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T07:38:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22723,10 +22818,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>わたしの　めのまえに　はじめて
+あらわれた　あなた！▼
+あなたは　いま　うまれたの！
+ハッピーバースデー　トゥー　ユー！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:20" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T09:20:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22734,10 +22832,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>わたしの　目の前に　初めて
+現れた　あなた！▼
+あなたは　いま　産まれたの！
+ハッピーバースデー　トゥー　ユー！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:17:16" />
+				User="swan_scenario:W00293"
+				Time="2011-08-29T09:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22756,11 +22857,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>￥きみが　もっともバンジロウくんに
-ちかいトレーナーかというはなし（かり）▼</Text>
+			<Text>まけてもさ　ぜったいに　かてないと
+おもったことなんて　なかったんだ……▼
+だけど　バンジロウくんは　ちがったね
+かれには　ぜったいに　かてない……▼
+きみだって……きっとムリさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T09:39:34" />
+				Time="2011-08-29T09:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22768,11 +22872,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>￥きみが　もっともバンジロウくんに
-ちかいトレーナーかというはなし（かり）▼</Text>
+			<Text>負けてもさ　絶対に　勝てないと
+思ったことなんて　なかったんだ……▼
+だけど　バンジロウくんは　ちがったね
+彼には　まるで　勝てる気がしない▼
+きみだって……きっとムリさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-25T09:39:38" />
+				Time="2011-08-29T09:42:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22791,10 +22898,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>なんど　ちょうせんしても　どうしても
+このエリアを　クリアできないんだ……▼
+さすが　ベテランつぶしの　エリア９
+いままでとは　レベルが　ちがうな……▼
+……はっ　おまえも　かなりやりそうだ
+おてやわらかに　たのむぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-26T02:58:44" />
+				Time="2011-08-29T07:30:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22802,10 +22914,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>何回も　挑戦したけど　どうしても
+このエリアを　クリアできないんだ……▼
+さすが　ベテランつぶしの　エリア９
+いままでとは　レベルが　ちがうな……▼
+……はっ　おまえも　かなりやりそうだ
+お手柔らかに　頼むぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-26T02:58:44" />
+				Time="2011-08-29T07:30:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
