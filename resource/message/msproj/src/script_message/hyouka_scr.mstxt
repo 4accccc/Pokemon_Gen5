@@ -2035,13 +2035,16 @@
 			Language="JPN">
 			<Comment>図鑑評価後
 ・アイテムもらえるとき
+　アイテム入手処理
 ・イッシュ図鑑みるコンプ
 　→hakase2_06
 ・イッシュ図鑑捕獲コンプ
-　→hakase2_07</Comment>
+　→hakase2_07
+・全国捕獲フラグ（父親）
+　→hakase2_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T10:23:15" />
+				Time="2011-08-29T08:58:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2098,13 +2101,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>図鑑評価後
-・No381「みねうち」入手後
+			<Comment>図鑑評価後：イッシュ図鑑みるコンプ
+・No630「きょかしょう」入手後
 ・さらにもらえる場合は→hakase2_09
 　もらえない場合は→hakase2_10</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:01:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2133,11 +2136,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タマゴ関連のアイテム
-・道具説明▼</Text>
+			<Text>その　まるいおまもりが　あると
+なぜだか　そだてやさんで　タマゴが▽
+よく　みつかるように　なるの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T10:25:32" />
+				Time="2011-08-29T08:59:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2145,11 +2149,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タマゴ関連のアイテム
-・道具説明▼</Text>
+			<Text>その　まるいおまもりが　あると
+なぜだか　そだてやさんで　タマゴが▽
+よく　みつかるように　なるの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T10:25:35" />
+				Time="2011-08-29T08:59:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2157,13 +2162,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>図鑑評価後
-・No337「めざめるパワー」入手後
+			<Comment>図鑑評価後：イッシュ図鑑捕獲コンプ
+・No631「まるいおまもり」入手後
 ・さらにもらえる場合は→hakase2_09
 　もらえない場合は→hakase2_10</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:01:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2192,10 +2197,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>その　ひかるおまもりが　あると
+なぜだか　いろちがいの　ポケモンが▽
+よく　とびだしてくるように　なるの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T10:23:55" />
+				Time="2011-08-29T09:00:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2203,10 +2210,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>その　ひかるおまもりが　あると
+なぜだか　いろちがいの　ポケモンが▽
+よく　とびだしてくるように　なるの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T10:23:58" />
+				Time="2011-08-29T09:00:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2214,12 +2223,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>図鑑評価後
-・No344「まもる」入手後
-・続けてhakase2_09</Comment>
+			<Comment>図鑑評価後：全国捕獲フラグ（父親）
+・No632「ひかるおまもり」入手後
+・続けてhakase2_10</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:01:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2237,7 +2246,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2272,13 +2281,13 @@
 			Language="JPN">
 			<Comment>図鑑評価後
 ・さらにもらえる場合
-　見つけた数が６０匹
-　→hakase2_07　（No344「まもる」）
-　見つけた数が１１５匹
-　→hakase2_08　（No337「めざめるパワー」）</Comment>
+　イッシュ図鑑捕獲コンプ
+　→hakase2_07　（No631「まるいおまもり」）
+　全国図鑑捕獲コンプ
+　→hakase2_08　（No632「ひかるおまもり」）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T08:57:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3607,6 +3616,84 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_z18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……　……　……
+……　……　……▼
+こりゃ　たまげたな！
+すばらしすぎて　ことばを　うしなった▼
+おまえさん
+とんでもないことを　やりとげたぞ！▼
+ぜんこくずかんを　すべて
+うめつくすとは　トレーナーの　なかの▽
+トレーナーと　いえるだろう！▼
+おまえさんのような　すばらしい
+トレーナーと　であえて　うれしいね！▽
+こころから　かんしゃを　のべるよ！！▼
+そうだ！　プレゼントが　あるんだ
+むすめが　もっているから▽
+はなしかけて　もらっておくれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:09:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:08:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……　……　……
+……　……　……▼
+こりゃ　たまげたな！
+すばらしすぎて　言葉を　失った▼
+おまえさん
+とんでもないことを　やりとげたぞ！▼
+全国図鑑を　すべて
+埋め尽くすとは　トレーナーの　中の▽
+トレーナーと　いえるだろう！▼
+おまえさんのような　すばらしい
+トレーナーと　出会えて　うれしいね！▽
+心から　感謝を　述べるよ！！▼
+そうだ！　プレゼントが　あるんだ
+娘が　もっているから▽
+話しかけて　もらっておくれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:09:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:08:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：全国図鑑
+・捕まえた数が
+　634匹
+・初回からNo632「ひかるおまもり」入手まで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:09:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T09:08:09" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
