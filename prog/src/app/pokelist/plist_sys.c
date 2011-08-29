@@ -3021,6 +3021,7 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       work->plData->short_cut_check ^= 0x1;
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_CHECK] , ( APP_COMMON_BARICON_CHECK_OFF + work->plData->short_cut_check ) );
 
+      PMSND_PlaySystemSE( PLIST_SND_SHORTCUT );
       work->ktst = GFL_APP_KTST_KEY;
     }
   }
@@ -3191,6 +3192,7 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
       work->plData->short_cut_check ^= 0x1;
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_CHECK] , ( APP_COMMON_BARICON_CHECK_OFF + work->plData->short_cut_check ) );
 
+      PMSND_PlaySystemSE( PLIST_SND_SHORTCUT );
       work->ktst = GFL_APP_KTST_TOUCH;
     }
   }
