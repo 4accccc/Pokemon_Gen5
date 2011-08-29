@@ -355,14 +355,17 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
   RESORT_ABSTRUCT_DATA *p_src = RESORT_PEOPLE_GetAbstructData( p_people );
 
+  GF_ASSERT( p_people );
+  GF_ASSERT( p_src );
+
   switch( param )
   {
   case RESORT_JOBCHANGE_RESIDENT:
-    *p_ret_wk = RESORT_DATA_MANAGER_JobChange( p_data_manager, p_src, RESORT_DATA_TYPE_RESIDENT );
+    *p_ret_wk = RESORT_DATA_MANAGER_Convert( p_data_manager, p_src, RESORT_DATA_TYPE_RESIDENT );
     break;
 
   case RESORT_JOBCHANGE_SECETARY:
-    *p_ret_wk = RESORT_DATA_MANAGER_JobChange( p_data_manager, p_src, RESORT_DATA_TYPE_SECRETARY );
+    *p_ret_wk = RESORT_DATA_MANAGER_Convert( p_data_manager, p_src, RESORT_DATA_TYPE_SECRETARY );
     break;
   default:
     GF_ASSERT(0);
@@ -679,7 +682,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  人物を消す
+ *	@brief  人物を完全に消す  （）
  *
  *	@param	VMHANDLE *p_core 仮想マシンハンドル
  *	@param	*p_wk_adrs       スクリプトコマンドワーク
@@ -687,7 +690,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
  *	@return 終了コード
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs )
+VMCMD_RESULT EvCmdResortDeletePeople( VMHANDLE *p_core, void *p_wk_adrs )
 {
   SCRCMD_WORK *p_wk = p_wk_adrs;
   SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
@@ -735,12 +738,16 @@ VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs )
 
   if( p_people )
   {
+    RESORT_ABSTRUCT_DATA *p_abstruct  = RESORT_PEOPLE_GetAbstructData(p_people);
+
     //フィールドであるなら、群集に入っている場合があるので外す
     if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
     {
       RESORT_FIELD_DeleteCrowdPeople( p_field, p_people );
     }
     RESORT_PEOPLE_Delete( p_people_sys, p_people );
+
+    RESORT_ABSTRUCT_DATA_InitInstance( p_abstruct );
   }
 
   RESORT_DATA_MANAGER_Update( p_data_manager );

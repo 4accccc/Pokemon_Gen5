@@ -314,7 +314,7 @@ BOOL RESORT_DATA_MANAGER_IsJobChange( const RESORT_DATA_MANAGER *cp_wk, const RE
  *	@retval インデックス
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_DATA_MANAGER_JobChange( RESORT_DATA_MANAGER *p_wk, RESORT_ABSTRUCT_DATA *p_src, RESORT_DATA_TYPE dst_type )
+u32 RESORT_DATA_MANAGER_Convert( RESORT_DATA_MANAGER *p_wk, RESORT_ABSTRUCT_DATA *p_src, RESORT_DATA_TYPE dst_type )
 {
   u16 peopleID;
   RESORT_ABSTRUCT_DATA *p_dst_adrs;
