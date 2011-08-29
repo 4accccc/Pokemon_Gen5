@@ -69,6 +69,7 @@ typedef struct _ZUKAN_DETAIL_PARAM
   u16                  num;   // listの要素数
   u16                  no;    // listの何番目にあるポケモンを表示するか
   ZUKAN_DETAIL_RETURN  ret;                ///< [out]     次の指示
+  BOOL                 is_habitat_call;    ///< [in]      生息地モードでの呼び出し
 }
 ZUKAN_DETAIL_PARAM;
 

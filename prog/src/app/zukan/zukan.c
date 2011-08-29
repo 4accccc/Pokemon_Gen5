@@ -67,7 +67,8 @@ typedef struct {
 	int	mainSeq;			// メインシーケンス
 	int nextSeq;			// 次のシーケンス
 
-  ZUKAN_DETAIL_TYPE  detail_type;  // SEQ_INFO_CALLのときのみ使用
+  ZUKAN_DETAIL_TYPE   detail_type;    // SEQ_INFO_CALLのときのみ使用
+  BOOL                is_habitat_call;// 生息地リストからの呼び出し 
 
 	void * work;			// 各処理のワーク
 }ZUKAN_MAIN_WORK;
@@ -582,6 +583,8 @@ static int MainSeq_CallDetail( ZUKAN_MAIN_WORK * wk )
   detail->list     = wk->list;
   detail->num      = wk->listMax;
   detail->no       = 0;
+  detail->is_habitat_call = wk->is_habitat_call;
+
   {
     u16 i;
     for( i=0; i<detail->num; i++ )
@@ -636,8 +639,16 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
     break;
   case ZUKAN_DETAIL_RET_RETURN:
     {
-      wk->prm->retMode = ZUKAN_RET_NORMAL;
-      ret = SEQ_LIST_CALL;
+      if( wk->is_habitat_call == FALSE )
+      {
+        wk->prm->retMode = ZUKAN_RET_NORMAL;
+        ret = SEQ_LIST_CALL;
+      }
+      else
+      {
+        wk->prm->retMode = ZUKAN_RET_NORMAL;
+        ret = SEQ_HABITAT_ZONE_CALL;
+      }
     }
     break;
   }
@@ -850,13 +861,16 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
   case HABITAT_LIST_RET_EXIT:
     ret = SEQ_PROC_FINISH;
     wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+    wk->is_habitat_call = FALSE;
     break;
   case HABITAT_LIST_RET_RETURN:
     ret = SEQ_PROC_FINISH;
     wk->prm->retMode = ZUKAN_RET_NORMAL;
+    wk->is_habitat_call = FALSE;
     break;
   case HABITAT_LIST_RET_CALL_ZONE_INFO:
     ret = SEQ_HABITAT_ZONE_CALL;
+    wk->is_habitat_call = TRUE; // 生息地リストモードに切り替え
     break;
   case HABITAT_LIST_RET_ZENKOKU:
     {
@@ -866,6 +880,7 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
         FreeListData( wk );
         wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
       }
+      wk->is_habitat_call = FALSE;
       ret = SEQ_LIST_CALL;
     }
     break;
@@ -877,12 +892,14 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
         FreeListData( wk );
         wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
       }
+      wk->is_habitat_call = FALSE;
       ret = SEQ_LIST_CALL;
     }
     break;
   default:
     GF_ASSERT(0);
     ret = SEQ_PROC_FINISH;
+    wk->is_habitat_call = FALSE;
     wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
     break;
   }

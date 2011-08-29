@@ -168,6 +168,18 @@ static const GFL_CLACTPOS general_icon_const_pos_no_form[GENERAL_ICON_MAX] =
   {  24, ZKND_TBAR_ICON_Y       }, 
   {   0, ZKND_TBAR_ICON_Y       }, 
 };
+static const GFL_CLACTPOS general_icon_const_pos_no_map[GENERAL_ICON_MAX] =
+{
+  { 232, ZKND_TBAR_ICON_Y       }, 
+  { 208, ZKND_TBAR_ICON_Y       }, 
+  { 184, ZKND_TBAR_ICON_Y_CHECK }, 
+  { 136, ZKND_TBAR_ICON_Y       }, 
+  {  96, ZKND_TBAR_ICON_Y       }, 
+  {  96, ZKND_TBAR_ICON_Y       },
+  {  56, ZKND_TBAR_ICON_Y       }, 
+  {  24, ZKND_TBAR_ICON_Y       }, 
+  {   0, ZKND_TBAR_ICON_Y       }, 
+};
 // MAP
 static const ICON_CONST_SET map_icon_const_set[MAP_ICON_MAX] =
 {
@@ -209,7 +221,8 @@ struct _ZUKAN_DETAIL_TOUCHBAR_WORK
   HEAPID                        heap_id;
 
   // 引数
-  BOOL                          form_version;  // TRUEのときフォルムありバージョン
+  BOOL    form_version;   // TRUEのときフォルムありバージョン
+  BOOL    habitat_version;// TRUEのとき生息地リスト用バージョン（MAPなし）
 
   // ここで作成するもの
   // 状態
@@ -320,7 +333,7 @@ static void Zukan_Detail_Touchbar_MainForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
  *  @retval          
  */
 //------------------------------------------------------------------
-ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id, BOOL form_version )
+ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id, BOOL form_version ,BOOL habitat_version )
 {
   ZUKAN_DETAIL_TOUCHBAR_WORK*   work;
 
@@ -330,6 +343,7 @@ ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id, BOOL for
   // 初期化
   work->heap_id           = heap_id;
   work->form_version      = form_version;
+  work->habitat_version   = habitat_version;
   
   // 状態
   work->state = ZUKAN_DETAIL_TOUCHBAR_STATE_DISAPPEAR;
@@ -1102,6 +1116,26 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
     }
   }
 
+  // 生息地リストからの呼び出しかどうか
+  {
+    if( work->habitat_version == FALSE )
+    {
+      // このままでいい
+    }
+    else
+    {
+      u8 i;
+      for( i=0; i<GENERAL_ICON_MAX; i++ )
+      {
+        ZKND_TBAR_SetPos( work->tbwk, work->icon_set[i].cset->id, &general_icon_const_pos_no_map[i] );
+      }
+      // マップを非表示
+      ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUSTOM_MAP].cset->id, FALSE );
+      // ショートカットを非表示
+      ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CHECK].cset->id, FALSE );
+    }
+  }
+
   // 現在表示しているところのアイコンを無反応にしておく
   {
     u8 general_icon = Zukan_Detail_Touchbar_DispToGeneralIcon( work->disp ); 
@@ -1167,7 +1201,10 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
       break;
     case ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE:
       {
-        icon = GENERAL_ICON_CUSTOM_MAP;
+        if( ZKND_TBAR_GetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUSTOM_MAP].cset->id ) )
+          icon = GENERAL_ICON_CUSTOM_MAP;
+        else
+          icon = GENERAL_ICON_CUSTOM_INFO;
       }
       break;
     case ZUKAN_DETAIL_TOUCHBAR_DISP_FORM:
@@ -1183,7 +1220,10 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
     {
     case ZUKAN_DETAIL_TOUCHBAR_DISP_INFO:
       {
-        icon = GENERAL_ICON_CUSTOM_MAP;
+        if( ZKND_TBAR_GetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUSTOM_MAP].cset->id ) )
+          icon = GENERAL_ICON_CUSTOM_MAP;
+        else
+          icon = GENERAL_ICON_CUSTOM_VOICE;
       }
       break;
     case ZUKAN_DETAIL_TOUCHBAR_DISP_MAP:

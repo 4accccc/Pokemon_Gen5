@@ -250,7 +250,7 @@ static GFL_PROC_RESULT Zukan_Detail_ProcInit( GFL_PROC* proc, int* seq, void* pw
   {
     ZUKAN_SAVEDATA* zkn_sv       = GAMEDATA_GetZukanSave( param->gamedata );
     BOOL            form_version = ZUKANSAVE_GetGraphicVersionUpFlag( zkn_sv );
-    work->touchbar = ZUKAN_DETAIL_TOUCHBAR_Init( work->heap_id, form_version );
+    work->touchbar = ZUKAN_DETAIL_TOUCHBAR_Init( work->heap_id, form_version ,param->is_habitat_call );
   } 
   // タイトルバー
   work->headbar = ZUKAN_DETAIL_HEADBAR_Init( work->heap_id, work->font );
