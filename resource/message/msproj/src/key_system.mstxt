@@ -474,11 +474,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスターブラック・ホワイトと
+			<Text>ポケットモンスター　ブラック　か
+ポケットモンスター　ホワイト　と▽
 キーの　そうじゅしんが　できます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:20:36" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -486,16 +487,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスターブラック・ホワイトと
+			<Text>ポケットモンスター　ブラック　か
+ポケットモンスター　ホワイト　と▽
 キーの　送受信が　できます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:20:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:16:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:16:19" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_20"
@@ -559,10 +568,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>せきがいせんつうしんを　おこないます
-DSを　むかいあわせに　してください</Text>
+ＤＳを　むかいあわせに　してください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:52:06" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:16:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -571,10 +580,10 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>赤外線通信を　おこないます
-DSを　むかいあわせに　してください</Text>
+ＤＳを　向かい合わせに　してください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:52:13" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:12:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -782,11 +791,11 @@ DSを　むかいあわせに　してください</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レポートに　かきこんで　います
+			<Text>レポートに　かきこんでいます
 でんげんを　きらないで　ください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:55:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -794,11 +803,11 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レポートに　書き込んで　います
+			<Text>レポートに　書き込んでいます
 電源を　切らないで　ください</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:15:38" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:03:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -960,11 +969,11 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信相手　に
+			<Text>通信相手に
 しろのかんたんキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:25:53" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:03:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -988,11 +997,11 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信相手　に
+			<Text>通信相手に
 くろのむずかしいキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:26:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:03:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1016,11 +1025,11 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信相手　に
+			<Text>通信相手に
 ホワイトフォレストキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:14:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:03:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1044,11 +1053,11 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信相手　に
+			<Text>通信相手に
 ブラックシティキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:14:06" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:04:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1323,10 +1332,10 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レポートへの　書き込みが
-完了　いたしました▼</Text>
+完了いたしました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:08:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1451,10 +1460,10 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>しろのかんたんキーを　もらわないと
-このこうもくは　せんたくできません</Text>
+この　こうもくは　えらべません</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T08:21:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:17:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1462,11 +1471,11 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しろのかんたんキーを　貰わないと
+			<Text>しろのかんたんキーを　もらわないと
 この項目は　選択できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:05:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:04:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1479,10 +1488,10 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>くろのむずかしいキーを　もらわないと
-このこうもくは　せんたくできません</Text>
+この　こうもくは　えらべません</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T08:21:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:17:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1490,11 +1499,11 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろのむずかしいキーを　貰わないと
+			<Text>くろのむずかしいキーを　もらわないと
 この項目は　選択できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:05:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:04:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1507,10 +1516,10 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ホワイトフォレストキーを　もらわないと
-このこうもくは　せんたくできません</Text>
+この　こうもくは　えらべません</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T08:21:45" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:17:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1518,11 +1527,11 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトフォレストキーを　貰わないと
+			<Text>ホワイトフォレストキーを　もらわないと
 この項目は　選択できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:05:15" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:04:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1535,10 +1544,10 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ブラックシティキーを　もらわないと
-このこうもくは　せんたくできません</Text>
+この　こうもくは　えらべません</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T08:21:57" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:17:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1546,11 +1555,11 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラックシティキーを　貰わないと
+			<Text>ブラックシティキーを　もらわないと
 この項目は　選択できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:05:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:04:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1655,10 +1664,10 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>現在　その場所に　いるため
-設定を　変更　できません</Text>
+設定を　変更できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T05:00:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:18:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1748,11 +1757,12 @@ DSを　むかいあわせに　してください</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスター　ブラック２　ホワイト２と
+			<Text>ポケットモンスター　ブラック２か
+ポケットモンスター　ホワイト２と▽
 つうしんして　キーを　おくりあえます</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-07T07:45:30" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:18:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1760,27 +1770,36 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスター　ブラック２　ホワイト２と
-通信して　キーを　送りあうことが　できます</Text>
+			<Text>ポケットモンスター　ブラック２か
+ポケットモンスター　ホワイト２と▽
+通信して　キーを　送りあえます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:56:57" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:18:40" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_66"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスターブラック・ホワイト　と
+			<Text>ポケットモンスター　ブラック２か
+ポケットモンスター　ホワイト２と▽
 つうしんして　レポートを　うけつぎます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:58:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:18:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1788,16 +1807,24 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスターブラック・ホワイト　と
+			<Text>ポケットモンスター　ブラック２か
+ポケットモンスター　ホワイト２と▽
 通信して　レポートを　受け継ぎます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:58:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:18:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:18:40" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_67"
@@ -1884,10 +1911,10 @@ DSを　むかいあわせに　してください</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>WiFiで　うけつぐ</Text>
+			<Text>Ｗｉ－Ｆｉで　うけつぐ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-07T08:33:10" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:05:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1895,10 +1922,10 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>WiFiで　受け継ぐ</Text>
+			<Text>Ｗｉ－Ｆｉで　受け継ぐ</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:58:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:06:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1936,11 +1963,11 @@ DSを　むかいあわせに　してください</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２だいの　DSを　しようして
+			<Text>２だいの　ＤＳを　しようして
 ワイヤレスで　うけつぎます</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-07T08:34:33" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:13:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1948,11 +1975,11 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２だいの　DSを　使用して
+			<Text>２台の　ＤＳを　使用して
 ワイヤレスで　受け継ぎます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:58:53" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:13:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1964,11 +1991,12 @@ DSを　むかいあわせに　してください</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Wi-Fiけいゆ　で
-ポケモングローバルリンクから　うけつぎます</Text>
+			<Text>Ｗｉ－Ｆｉけいゆ　で
+ポケモングローバルリンクから▽
+うけつぎます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:59:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:19:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1976,16 +2004,24 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Wi-Fi経由　で
-ポケモングローバルリンクから　受け継ぎます</Text>
+			<Text>Ｗｉ－Ｆｉ経由　で
+ポケモングローバルリンクから▽
+受け継ぎます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:59:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:19:35" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_74"
@@ -2211,13 +2247,13 @@ DSを　むかいあわせに　してください</Text>
 			Language="JPN">
 			<Text>しろのかんたんキー　を
 てにいれました▼
-なんいど「かんたん」が　せんたく
-できるように　なりました▼
+なんいど「かんたん」が
+せんたく　できるように　なりました▼
 キーは　つうしんで　ひとと
 うけわたし　することが　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:43:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:07:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2226,14 +2262,14 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>しろのかんたんキー　を
-入手　しました▼
-難易度「かんたん」が　選択
-できるように　なりました▼
+入手しました▼
+難易度「かんたん」が
+選択できるように　なりました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:48:37" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:07:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2254,13 +2290,13 @@ DSを　むかいあわせに　してください</Text>
 			Language="JPN">
 			<Text>くろのむずかしいキー　を
 てにいれました▼
-なんいど「むずかしい」が　せんたく
-できるように　なりました▼
+なんいど「むずかしい」が
+せんたく　できるように　なりました▼
 キーは　つうしんで　ひとと
 うけわたし　することが　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:43:11" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:06:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2269,14 +2305,14 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>くろのむずかしいキー　を
-入手　しました▼
-難易度「むずかしい」が　選択
-できるように　なりました▼
+入手しました▼
+難易度「むずかしい」が
+選択できるように　なりました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:48:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:07:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2310,12 +2346,12 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホワイトフォレストキー　を
-入手　しました▼
+入手しました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:49:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2349,12 +2385,12 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ブラックシティキー　を
-入手　しました▼
+入手しました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:49:28" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:06:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2373,10 +2409,10 @@ DSを　むかいあわせに　してください</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバート　ＩＤ:[Digit:5digits Idx="0" ]</Text>
+			<Text>データコンバート　ＩＤ：[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-07T10:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:13:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2384,10 +2420,10 @@ DSを　むかいあわせに　してください</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバート　ＩＤ:[Digit:5digits Idx="0" ]</Text>
+			<Text>データコンバート　ＩＤ：[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-07T10:10:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:13:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2583,15 +2619,17 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もう１つのＤＳに　ポケットモンスターの
-ブラック・ホワイトの　ソフトを　セットし
+			<Text>もう　１つのＤＳに
+ポケットモンスター　ブラックか
+ポケットモンスター　ホワイトの
+ソフトを　セットし
 でんげんを　いれた　あとに
 『ＤＳダウンロードプレイ』から
 『データコンバート　ＩＤ：[Digit:5digits Idx="0" ]』を
 えらんでください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T07:50:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:20:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2599,15 +2637,17 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もう１つのＤＳに　ポケットモンスターの
-ブラック・ホワイトの　ソフトを　セットし
+			<Text>もう　１つのＤＳに
+ポケットモンスター　ブラックか
+ポケットモンスター　ホワイトの
+ソフトを　セットし
 電源を　入れた　あとに
 『ＤＳダウンロードプレイ』から
 『データコンバート　ＩＤ：[Digit:5digits Idx="0" ]』を
 選んでください</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:50:00" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:20:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2617,8 +2657,8 @@ DSシステムフォントなので
 			Language="JPN">
 			<Comment />
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T11:40:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:20:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2640,15 +2680,17 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もう１つのＤＳに　ポケットモンスターの
-ブラック・ホワイトの　ソフトを　セットし
+			<Text>もう　１つのＤＳに
+ポケットモンスター　ブラックか
+ポケットモンスター　ホワイトの
+ソフトを　セットし
 でんげんを　いれた　あとに
 『ＤＳダウンロードプレイ』から
 『データコンバート』を　
 えらんでください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T07:50:23" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:20:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2656,15 +2698,17 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もう１つのＤＳに　ポケットモンスターの
-ブラック・ホワイトの　ソフトを　セットし
+			<Text>もう　１つのＤＳに
+ポケットモンスター　ブラックか
+ポケットモンスター　ホワイトの
+ソフトを　セットし
 電源を　いれた　あとに
 『ＤＳダウンロードプレイ』から
 『データコンバート』を　
 選んでください</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:50:12" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:20:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2674,8 +2718,8 @@ DSシステムフォントなので
 			Language="JPN">
 			<Comment />
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T11:40:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:20:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2750,8 +2794,8 @@ DSシステムフォントなので
 せつぞくに　しっぱい　しました▼
 データコンバートを　しゅうりょうします▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:43:59" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:15:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2760,11 +2804,11 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もう１つの　ＤＳの
-接続に　失敗　しました▼
+接続に　失敗しました▼
 データコンバートを　終了します▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:50:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:15:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3019,10 +3063,10 @@ DSシステムフォントなので
 			Language="JPN_KANJI">
 			<Text>前回と　異なる　レポートを
 コンバートしようと　しています
-コンバートを　続行　しますか？</Text>
+コンバートを　続行しますか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:50:59" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3055,11 +3099,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバートを　キャンセルしました
+			<Text>データコンバートを
+キャンセル　しました▽
 しゅうりょう　します▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T07:13:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:20:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3067,11 +3112,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバートを　キャンセルしました
-終了　します▼</Text>
+			<Text>データコンバートを
+キャンセル　しました▽
+終了します▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:51:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:20:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3081,8 +3127,8 @@ DSシステムフォントなので
 			Language="JPN">
 			<Comment />
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:21:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3104,14 +3150,15 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスターブラック・ホワイトの
+			<Text>ポケットモンスター　ブラックか
+ポケットモンスター　ホワイトの
 「ゲームシンクせってい」で
 みることが　できる
-ゲームシンクIDコード　を
+ゲームシンクＩＤコード　を
 にゅうりょく　してください▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:55:23" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:21:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3119,14 +3166,15 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスターブラック・ホワイトの
+			<Text>ポケットモンスター　ブラックか
+ポケットモンスター　ホワイトの
 「ゲームシンク設定」で　
-見ることが　できる
-ゲームシンクIDコード　を
-入力　してください▼</Text>
+みることが　できる
+ゲームシンクＩＤコード　を
+入力して　ください▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:55:19" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:21:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3136,8 +3184,8 @@ DSシステムフォントなので
 			Language="JPN">
 			<Comment />
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:21:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3159,11 +3207,11 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲームシンクIDコード　が
+			<Text>ゲームシンクＩＤコード　が
 まちがって　いるようです</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:41:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:15:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3171,11 +3219,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲームシンクIDコード　が
-間違って　いるようです</Text>
+			<Text>ゲームシンクＩＤコード　が
+間違っているようです</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:41:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:15:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3208,14 +3256,15 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスターブラック・ホワイトの
+			<Text>ポケットモンスター　ブラックか
+ポケットモンスター　ホワイトで
 ゲームシンクを　おこない
 ポケモンを　ねむらせて　ください
 ねむらせた　あとに
 データコンバートすることが　できます</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-21T05:54:41" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:21:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3223,14 +3272,15 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスターブラック・ホワイトの
+			<Text>ポケットモンスター　ブラックか
+ポケットモンスター　ホワイトで
 ゲームシンクを　おこない
 ポケモンを　眠らせて　ください
 眠らせた　後に
 データコンバートすることが　できます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:55:45" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:21:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3240,8 +3290,8 @@ DSシステムフォントなので
 			Language="JPN">
 			<Comment />
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:21:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3263,11 +3313,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セーブデータを　ダウンロードしています
+			<Text>セーブデータを
+ダウンロードしています▽
 しばらく　おまちください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-21T05:55:27" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:21:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3275,11 +3326,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セーブデータを　ダウンロードしています
+			<Text>セーブデータを
+ダウンロードしています▽
 しばらく　お待ちください</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:55:59" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:21:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3289,8 +3341,8 @@ DSシステムフォントなので
 			Language="JPN">
 			<Comment />
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:22:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3312,11 +3364,11 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバートが　かんりょうしました
-せかいに　へんかが　おこった　ようです▼</Text>
+			<Text>データコンバート　かんりょう！
+せかいに　へんかが　おこったようです▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-26T11:25:15" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:09:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3324,11 +3376,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバートが　完了しました
-世界に　変化が　おこった　ようです▼</Text>
+			<Text>データコンバート　完了！
+世界に　変化が　おこったようです▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-26T11:25:28" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3362,13 +3414,15 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>レポートが　こわれてしまったため
-キーシステムを　つかうことが　できません▼
+キーシステムを▽
+つかうことが　できません▼
 さいしょから　はじめるを　おこない
-レポートに　かきこんでから▽
-さいど　キーシステムを　えらんで　ください▼</Text>
+レポートに　かきこんでから▼
+もういちど
+キーシステムを　えらんでください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-27T09:21:14" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:08:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3377,13 +3431,15 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レポートが　壊れてしまったため
-キーシステムを　使うことが　できません▼
+キーシステムを
+使うことが　できません▼
 最初から　始めるを　おこない
-レポートに　書きこんでから▽
-再度　キーシステムを　選んで　ください▼</Text>
+レポートに　書きこんでから▼
+再度
+キーシステムを　選んでください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-27T09:21:42" />
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
