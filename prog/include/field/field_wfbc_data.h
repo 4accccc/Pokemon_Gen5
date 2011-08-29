@@ -22,7 +22,6 @@ extern "C"{
 
 #include "gamesystem/gamedata_def.h"  //GAMEDATA
 #include "field/intrude_common.h"
-#include "field/field_wfbc_people_def.h"
 #include "field/fldmmdl.h"
 #include "field/intrude_common.h"
 
