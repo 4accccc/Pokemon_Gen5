@@ -77,6 +77,8 @@ static const s32 td_save_id_tbl[] = {
 //=============================================================================
 static BOOL td_load_init_data( T_DOWNLOAD_MAIN_WORK* wk, const s32 num );
 static void td_set_save_after( T_DOWNLOAD_MAIN_WORK * wk );
+//
+static BOOL td_chk_get_pokemon( T_DOWNLOAD_MAIN_WORK * wk, const s32 id );
 
 //=============================================================================
 /**
@@ -258,7 +260,11 @@ s32 TdSave_get_item_num( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, cons
 			for(j=0;j<8;j++){
 				// bitが立っていたらカウント
 				if(cadr[i] & (1<<j)){
-					k++;
+					// 持っているポケモンかどうかの判定
+					bflg = td_chk_get_pokemon( wk, i*8+j );
+					if(bflg == TRUE){
+						k++;
+					}
 				}
 			}
 		}
@@ -324,11 +330,15 @@ s32 TdSave_get_item_id( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, const
 			for(j=0;j<8;j++){
 				// bitが立っていたらカウント
 				if(cadr[i] & (1<<j)){
-					k++;
-					// 同じ数になった
-					// =>通し番号を返す
-					if(inum == k){
-						return( i*8+j );
+					// 持っているポケモンかどうかを調べる
+					bflg = td_chk_get_pokemon( wk, i*8+j );
+					if(bflg == TRUE){
+						k++;
+						// 同じ数になった
+						// =>通し番号を返す
+						if(inum == k){
+							return( i*8+j );
+						}
 					}
 				}
 			}
@@ -604,5 +614,25 @@ static void td_set_save_after( T_DOWNLOAD_MAIN_WORK * wk )
 	}
 	// 最大数をセット
 	wk->SaveMaxNum = cnt;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	持っているポケモンかどうか
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ * @param	const s32					id
+ *
+ * @return  BOOL						(TRUE:持っている、FALSE:なし)
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL td_chk_get_pokemon( T_DOWNLOAD_MAIN_WORK * wk, const s32 id )
+{
+	GAMEDATA*	gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
+	ZUKAN_SAVEDATA *zsave = GAMEDATA_GetZukanSave( gamedata );
+	BOOL	bflg;
+	//
+	bflg = ZUKANSAVE_GetPokeGetFlag( zsave, id );
+	return( bflg );
 }
 
