@@ -37,6 +37,9 @@
 #include "savedata/fmission_save.h"
 #include "font/font.naix"
 
+// フラグ
+#include "../../../../resource/fldmapdata/flagwork/flag_define.h"
+
 
 //==============================================================================
 //  定数定義
@@ -334,7 +337,7 @@ static void _CursorPos_PanelFocus(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos);
 static void _CursorPos_NotFocus(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos);
 //
 //
-static void fmission_init_data( MONOLITH_FMSELECT_WORK *mfw );
+static void fmission_init_data( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 //
 static void fmission_set_up_curpos( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_create_obj( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
@@ -454,7 +457,7 @@ static const s16 cursor_tbl[] = {
 };
 
 // タッチペン領域
-static const GFL_UI_TP_HITTBL td_rect_tbl[] = {
+static const GFL_UI_TP_HITTBL fmiss_rect_tbl[] = {
   { 172, 188, 128, 156, }, 			// LV1
   { 172, 188, 164, 192, }, 			// LV2
   { 172, 188, 200, 128, }, 			// LV3
@@ -462,6 +465,11 @@ static const GFL_UI_TP_HITTBL td_rect_tbl[] = {
   { GFL_UI_TP_HIT_END,0,0,0 }
 };
 
+// フラグ
+static const u16 fmiss_flag_tbl[] = {
+  SYS_FLAG_FES_TUTORIAL_CLEAR,		// チュートリアル用フラグ
+  SYS_FLAG_FES_TUTORIAL_CLEAR,		// LV4入力可能フラグ
+};
 
 //==============================================================================
 //
@@ -498,7 +506,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Init(GFL_PROC * proc, int * se
     //データ初期化
     _Setup_DataSetting( appwk, mfw );
     // 初期化
-    fmission_init_data( mfw );
+    fmission_init_data( appwk, mfw );
 
     //BG
     _Setup_BGFrameSetting();
@@ -1985,12 +1993,16 @@ static s32 _GetTouchListNo(MONOLITH_FMSELECT_WORK *mfw, u32 tp_y)
 /**
  * パラメータの初期化(念のため)
  *
+ * @param   MONOLITH_APP_PARENT    *appwk
  * @param   MONOLITH_FMSELECT_WORK *mfw
  */
 //==================================================================
-static void fmission_init_data( MONOLITH_FMSELECT_WORK *mfw )
+static void fmission_init_data( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
 {
-  s32 i;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+  EVENTWORK *evwork  = GAMEDATA_GetEventWork( gamedata );
+  s32 	i;
+  BOOL	bflg;
   
   // 0クリアされているはずだが念のため
   mfw->Flag      = 0;
@@ -2007,10 +2019,16 @@ static void fmission_init_data( MONOLITH_FMSELECT_WORK *mfw )
   // アーカイブ取得
   mfw->fmd_arc = FMISSION_DATA_AllocArcAll( mfw->fmd_man, HEAPID_MONOLITH );
   //
-  //---------------------
-  // ここで、隠しコマンド入力可かの判定を行う
-  // FLG_FMISS_SECRET_NG
-  //---------------------
+  //-------------------------
+  // 隠しコマンド入力可の判定
+  //-------------------------
+  mfw->Flag |= FLG_FMISS_SECRET_NG;
+  if(fmiss_flag_tbl[1] != 0){
+    bflg = EVENTWORK_CheckEventFlag( evwork, fmiss_flag_tbl[1] );
+    if(bflg == TRUE){
+      mfw->Flag &= ~FLG_FMISS_SECRET_NG;
+    }
+  }
 }
 
 //==================================================================
@@ -2362,10 +2380,23 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
   BOOL	bflg=TRUE;
   s32   flg=0;
   //
-  //-------------------------------------------------------
-  // フェスチュートリアルが終了しているかどうか(まだらしい)
-  //-------------------------------------------------------
-  
+  //--------------------------------------------
+  // フェスチュートリアルが終了しているかどうか
+  //--------------------------------------------
+  if(fmiss_flag_tbl[0] != 0){
+    bflg = EVENTWORK_CheckEventFlag( evwork, fmiss_flag_tbl[0] );
+    if(bflg == TRUE){
+      // チュートリアルクリア後は、(id=0)は非表示
+      if(id == 0){
+        return( FALSE );
+      }
+    }else{
+      // チュートリアルクリア前は、(id=0)のみ表示
+      if(id != 0){
+        return( FALSE );
+      }
+    }
+  }
   
   //---------------------------
   // 開催条件を満たしているか
@@ -2512,7 +2543,7 @@ static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
   }
   // 入力時(tp)
   else if(mode == 1){
-    id = GFL_UI_TP_HitTrg( td_rect_tbl );
+    id = GFL_UI_TP_HitTrg( fmiss_rect_tbl );
     if((id >= 0)&&(id <= num)){
       mfw->Level = id;
       flg = 1;
@@ -2638,10 +2669,16 @@ static void fmission_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *
 //      mfw->Level = 0;
 //    }
 //  }
-//  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
-//    // NEWフラグクリア
-//    fmission_clear_newflag( appwk, mfw, 3 );
-//  }
+
+#if 0  // test
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+    EVENTWORK *evwork  = GAMEDATA_GetEventWork( gamedata );
+    //
+    EVENTWORK_SetEventFlag( evwork, fmiss_flag_tbl[0] );
+  }
+#endif
+
 #endif
 }
 
