@@ -9345,4 +9345,30 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="ZKN_DETAIL_JUMP_ZONE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリアへとぶ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-29T08:07:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-29T08:07:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリアへ飛ぶ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-29T08:07:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-29T08:07:42" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
