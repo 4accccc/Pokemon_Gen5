@@ -1,11 +1,8 @@
 // output resource/fldmapdata/land_data_patch/conv.pl
 #pragma once
 
-#define LAND_DATA_PATCH_RESORT_INSTITUTION_ON ( 0 )
-#define LAND_DATA_PATCH_RESORT_DUMMY ( 1 )
-#define LAND_DATA_PATCH_RESORT_MARKET_00 ( 2 )
-#define LAND_DATA_PATCH_RESORT_MARKET_01 ( 3 )
-#define LAND_DATA_PATCH_RESORT_MARKET_02 ( 4 )
-#define LAND_DATA_PATCH_REOSRT_CAFE_03_R ( 5 )
-#define LAND_DATA_PATCH_REOSRT_CAFE_03_L ( 6 )
-#define LAND_DATA_PATCH_MAX ( 7 )
+#define LAND_DATA_PATCH_JA_CAFE_01_R ( 0 )
+#define LAND_DATA_PATCH_JA_CAFE_01_L ( 1 )
+#define LAND_DATA_PATCH_JA_CAFE_03_R ( 2 )
+#define LAND_DATA_PATCH_JA_CAFE_03_L ( 3 )
+#define LAND_DATA_PATCH_MAX ( 4 )
