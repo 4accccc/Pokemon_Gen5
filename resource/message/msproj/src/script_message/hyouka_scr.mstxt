@@ -3626,28 +3626,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hyouka_z18"
+		Label="msg_hyouka_hakase_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……
-……　……　……▼
-こりゃ　たまげたな！
-すばらしすぎて　ことばを　うしなった▼
-おまえさん
-とんでもないことを　やりとげたぞ！▼
-ぜんこくずかんを　すべて
-うめつくすとは　トレーナーの　なかの▽
-トレーナーと　いえるだろう！▼
-おまえさんのような　すばらしい
-トレーナーと　であえて　うれしいね！▽
-こころから　かんしゃを　のべるよ！！▼
-そうだ！　プレゼントが　あるんだ
+			<Text>そうだ！　プレゼントが　あるんだ
 むすめが　もっているから▽
 はなしかけて　もらっておくれ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T09:09:12" />
+				Time="2011-08-29T09:19:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3655,24 +3643,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……
-……　……　……▼
-こりゃ　たまげたな！
-すばらしすぎて　言葉を　失った▼
-おまえさん
-とんでもないことを　やりとげたぞ！▼
-全国図鑑を　すべて
-埋め尽くすとは　トレーナーの　中の▽
-トレーナーと　いえるだろう！▼
-おまえさんのような　すばらしい
-トレーナーと　出会えて　うれしいね！▽
-心から　感謝を　述べるよ！！▼
-そうだ！　プレゼントが　あるんだ
+			<Text>そうだ！　プレゼントが　あるんだ
 娘が　もっているから▽
 話しかけて　もらっておくれ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T09:09:24" />
+				Time="2011-08-29T09:19:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3697,7 +3673,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff00</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
