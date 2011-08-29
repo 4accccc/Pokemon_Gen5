@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-29T18:50:09" source="c12_sky.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-30T00:11:24" source="c12_sky.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-29T18:50:09" source="c12_sky.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-30T00:11:24" source="c12_sky.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -21,7 +21,7 @@
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="6 5"
-	compress_material="on" material_size="2 2"
+	compress_material="on" material_size="3 3"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -38,22 +38,22 @@
 		path="C:/home/swan_data3d/build_model/outdoor/c12_sky/tex/c12_sky.tga"
 	>
 		<bitmap size="128">
-			2b2b 2b2b 1e1e 1e1e 2121 2121 0000 0000
-			2b2b 2b2b 1e1e 1e1e 1b1b 1b1b 0000 0000
-			2b2b 2b2b 1f1f 1f1f 1c1c 1c1c 0101 0101
-			2d2d 2d2d 2020 2020 1a1a 1a1a 0202 0202
-			2d2d 2d2d 2323 2323 1818 1818 0303 0303
-			2e2e 2e2e 2624 2626 1616 1616 0404 0404
-			3030 3030 2727 2727 1515 1515 0505 0505
-			3433 3433 2828 2828 1313 1313 0909 0909
-			3535 3535 2929 2929 1212 1212 0d0d 0d0d
-			3737 3737 2c2c 2c2c 1010 1010 1111 1111
-			3838 3838 2f2f 2f2f 0e0e 0e0e 1414 1414
-			3939 3939 3131 3231 0f0f 0f0f 1717 1717
-			3a3a 3a3a 3636 3636 0c0c 0c0c 191d 1d1d
-			3e3e 3e3e 3b3b 3b3b 0a0a 0a0a 2222 2222
-			3f3f 3f3f 3c3c 3c3c 0708 060b 2525 2525
-			3f3f 3f3f 3d3d 3d3d 0808 0808 2a2a 2a2a
+			1b1b 1b1b 1b1b 1b1b 0303 0303 0000 0000
+			1b1b 1b1b 1b1b 1b1b 0505 0505 0000 0000
+			1b1b 1b1b 1c1c 1c1c 0606 0606 0101 0101
+			1b1b 1b1b 1d1d 1d1d 0808 0808 0202 0202
+			1b1b 1b1b 2121 2121 0a0a 0a0a 0404 0404
+			1b1b 1b1b 2522 2525 0b0b 0b0b 0707 0707
+			1b1b 1b1b 2626 2626 0d0d 0d0d 0909 0909
+			1b1b 1b1b 2727 2727 0f0f 0f0f 0c0c 0c0c
+			1b1b 1b1b 2828 2828 1111 1111 0e0e 0e0e
+			1b1b 1b1b 2a2a 2a2a 1414 1214 1010 1010
+			1b1b 1b1b 2b2b 2b2b 1515 1515 1313 1313
+			1b1b 1b1b 2c2c 2d2c 1717 1717 1616 1616
+			1b1b 1b1b 2e2e 2e2e 191e 1e19 181a 1a1a
+			1b1b 1b1b 2f2f 2f2f 2323 1f1f 2020 2020
+			1b1b 1b1b 3030 3030 2323 2323 2424 2424
+			1b1b 1b1b 3131 3131 2323 2323 2929 2929
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="pk_l_hoshi"
@@ -1092,22 +1092,21 @@
 </tex_image_array>
 
 <tex_palette_array size="2">
-	<tex_palette index="0" name="c12_sky_pl" color_size="64">
-		0c20 1040 1841 1c62 2482 2c83 327f 329e
-		329f 34a4 367e 369e 3a5e 3cc5 3e1c 3e3d
-		41fc 44e6 45db 49ba 4d07 4d9a 5179 5528
-		5558 5929 5938 5cf7 5d17 5d29 5d83 5da4
-		5da5 60f6 6149 61c5 61e6 654a 65e6 6607
-		6a08 6a29 6d6a 6e2a 6e4a 6e4b 6e6c 726b
-		726d 728b 728c 728d 728e 72ae 76ac 76cf
-		76d0 76f1 7711 7acd 7ace 7aee 7b12 7b33
+	<tex_palette index="0" name="c12_sky_pl" color_size="56">
+		0c20 1040 1841 1a7f 1c62 1e9f 229f 2482
+		26bf 2c83 2edf 32ff 34a4 3b1f 3cc5 3f3f
+		44e6 475f 4b7f 4d07 4f7f 539f 5528 57bf
+		5929 5bbf 5d29 5d83 5da4 5da5 5fbf 5fdf
+		6149 61c5 61e6 63df 654a 65e6 6607 6a08
+		6a29 6d6a 6e4a 726b 728b 728c 76ac 7acd
+		7ace 7aee 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="pk_l_hoshi_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="2">
+<material_array size="3">
 	<material index="0" name="c12_sky_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
@@ -1132,7 +1131,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="pk_l_hoshi_1"
+	<material index="1" name="c12_sky_2"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="3 3 3"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="2" name="pk_l_hoshi_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1491,7 +1514,7 @@
 		volume_max="1.624268 2.689209 -2.429688"
 		volume_r="5.965576"
 	>
-		<display index="0" material="1" polygon="1" priority="0"/>
+		<display index="0" material="2" polygon="1" priority="0"/>
 	</node>
 	<node index="3" name="sora" kind="mesh"
 		parent="0"
@@ -1531,7 +1554,7 @@
 		volume_max="2.328125 2.867188 0.440430"
 		volume_r="6.746094"
 	>
-		<display index="0" material="0" polygon="3" priority="0"/>
+		<display index="0" material="1" polygon="3" priority="0"/>
 	</node>
 </node_array>
 
