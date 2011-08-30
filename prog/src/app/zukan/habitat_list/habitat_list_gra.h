@@ -51,8 +51,8 @@ enum
   LIST_ICON_X_OFFSET   = 12,       // リストアイコンのXオフセット値
   LIST_ICON_Y_OFFSET   = 12,      // リストアイコンのYオフセット値
   LIST_ICON_SET_W      = 16,       // アイコンの幅
-  BLINK_PAL_NO_01      = 6,       // 点滅用パレット
-  BLINK_PAL_NO_02      = 7,       // 点滅用パレット
+  BLINK_PAL_NO_01      = 7,       // 点滅用パレット
+  BLINK_PAL_NO_02      = 8,       // 点滅用パレット
 };
 
 // OBJWK定義
