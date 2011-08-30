@@ -654,7 +654,7 @@ const u8 IconPalAtr[] = {
 	0x00,		// 644 : poke_icon_651_m
 	0x00,		// 645 : poke_icon_652_m
 	0x00,		// 646 : poke_icon_653_a_m
-	0x00,		// 647 : poke_icon_654_m
+	0x00,		// 647 : poke_icon_654_normal_m
 	0x11,		// 648 : poke_icon_655_voice_m
 	0x22,		// 649 : poke_icon_656_normal_m
 	0x00,		// 650 : poke_icon_000_m
@@ -742,9 +742,10 @@ const u8 IconPalAtr[] = {
 	0x11,		// 732 : poke_icon_527_winter_m
 	0x00,		// 733 : poke_icon_653_white_m
 	0x00,		// 734 : poke_icon_653_black_m
-	0x00,		// 735 : poke_icon_655_step_m
-	0x22,		// 736 : poke_icon_656_aqua_m
-	0x22,		// 737 : poke_icon_656_inazuma_m
-	0x22,		// 738 : poke_icon_656_blaze_m
-	0x22,		// 739 : poke_icon_656_freeze_m
+	0x00,		// 735 : poke_icon_654_sword_m
+	0x00,		// 736 : poke_icon_655_step_m
+	0x22,		// 737 : poke_icon_656_aqua_m
+	0x22,		// 738 : poke_icon_656_inazuma_m
+	0x22,		// 739 : poke_icon_656_blaze_m
+	0x22,		// 740 : poke_icon_656_freeze_m
 };
