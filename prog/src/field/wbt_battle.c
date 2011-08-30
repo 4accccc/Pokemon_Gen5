@@ -229,6 +229,7 @@ void WBTSYS_SetupMixParty( WBTSYS * wbtsys )
 //------------------------------------------------------------------
 void WBTSYS_MixInit( WBTSYS * wbtsys )
 {
+  PokeParty_Copy( wbtsys->sp_party, wbtsys->my_party );
   wbtsys->mix_pos[WBTMIX_TARGET_MINE1] = GFUser_GetPublicRand( WBTSYS_GetPartyMax(wbtsys) );
   wbtsys->mix_pos[WBTMIX_TARGET_MINE2] = 0xff;
   wbtsys->mix_pos[WBTMIX_TARGET_ENEMY1] = 0xff;
@@ -248,6 +249,7 @@ void WBTSYS_MixSetSelect( WBTSYS * wbtsys, WBTMIX_TARGET target, u8 select_pos )
   //GF_ASSERT( select_pos < WBTSYS_GetPartyMax(wbtsys) );
   GF_ASSERT( target < WBTMIX_TARGET_NUM );
   wbtsys->mix_pos[target] = select_pos;
+  TAMADA_Printf(" MIX SET(%d) = %d\n", target, select_pos );
 }
 
 //------------------------------------------------------------------
@@ -288,6 +290,118 @@ u8 WBTSYS_MixGetSelected( const WBTSYS * wbtsys, WBTMIX_TARGET target )
   return wbtsys->mix_pos[target];
 }
 
+
+//============================================================================================
+//
+//  ミックストーナメント用：手持ち表示ウィンドウ
+//
+//============================================================================================
+#include "msg/script/msg_wbt_hall.h" //msg_wbt_menu_monsname
+#include "scrcmd_work.h"
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+struct _WBT_MIXWIN{
+  SCRCMD_WORK * scrcmd_work;
+  WBTSYS * wbtsys;
+  FLDMSGWIN * fldmsgwin;
+
+  FLDMSGBG * msgbg;
+  GFL_MSGDATA * msgdata;
+  WORDSET * wordset;
+  STRBUF * msgbuf;
+  STRBUF * tmpbuf;
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+enum {
+  WMW_FONTX = 12,
+  WMW_FONTY = 12,
+
+  WMW_PX = 1,
+  WMW_PY = 7,
+  WMW_LINE_HEIGHT = WMW_FONTY + 2,
+  WMW_SX = 7,
+  WMW_SY = 12,
+
+  WMW_DOT_SX = WMW_FONTX * WMW_SX,
+  WMW_DOT_SY = WMW_LINE_HEIGHT * WMW_SY,
+
+  WMW_DOTPOSX = 0,
+};
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+WBT_MIXWIN * WBT_MIXWIN_Create( void * wk, WBTSYS * wbtsys )
+{
+  WBT_MIXWIN * wmw;
+  SCRCMD_WORK * work = wk;
+
+  SCRIPT_WORK * sc = SCRCMD_WORK_GetScriptWork( work );
+
+  wmw = GFL_HEAP_AllocClearMemory( SCRCMD_WORK_GetHeapID(work), sizeof(WBT_MIXWIN) );
+  wmw->scrcmd_work = work;
+  wmw->wbtsys = wbtsys;
+
+  wmw->msgbg = SCRCMD_WORK_GetFldMsgBG( work );
+  wmw->msgdata = SCRCMD_WORK_GetMsgData( work );
+  wmw->wordset = SCRIPT_GetWordSet( sc );
+  wmw->msgbuf = SCRIPT_GetMsgBuffer( sc );
+  wmw->tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
+  return wmw;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void WBT_MIXWIN_Draw( WBT_MIXWIN * wmw )
+{
+  POKEPARTY * my_party = WBTSYS_GetMyParty( wmw->wbtsys );
+
+  u16 dot_sy = WMW_LINE_HEIGHT * PokeParty_GetPokeCount( my_party );
+
+  wmw->fldmsgwin = FLDMSGWIN_Add( wmw->msgbg, wmw->msgdata,
+      WMW_PX, WMW_PY, MATH_ROUNDUP( WMW_DOT_SX, 8 ) / 8, MATH_ROUNDUP( dot_sy, 8 ) / 8 );
+
+  {
+    int max = WBTSYS_GetPartyMax( wmw->wbtsys );
+    int i;
+    u8 sel1, sel2;
+    sel1 = WBTSYS_MixGetSelected( wmw->wbtsys, WBTMIX_TARGET_MINE1 );
+    sel2 = WBTSYS_MixGetSelected( wmw->wbtsys, WBTMIX_TARGET_MINE2 );
+
+    for ( i = 0; i < max; i ++ )
+    {
+      u16 msg_id = msg_wbt_menu_monsname;
+      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( my_party, i );
+      if ( i == sel1 || i == sel2 )
+      {
+        msg_id = msg_wbt_menu_monsname_00;
+      }
+      GFL_MSG_GetString( wmw->msgdata, msg_id, wmw->tmpbuf );
+      WORDSET_RegisterPokeMonsName( wmw->wordset, 0, pp );
+      WORDSET_ExpandStr( wmw->wordset, wmw->msgbuf, wmw->tmpbuf );
+      FLDMSGWIN_PrintStrBuf( wmw->fldmsgwin,
+          WMW_DOTPOSX, WMW_LINE_HEIGHT * i, wmw->msgbuf );
+    }
+  }
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( FLDMSGWIN_GetBmpWin( wmw->fldmsgwin ) ) );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void WBT_MIXWIN_Erase( WBT_MIXWIN * wmw )
+{
+  FLDMSGWIN_ClearWindow( wmw->fldmsgwin );
+  FLDMSGWIN_Delete( wmw->fldmsgwin );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void WBT_MIXWIN_Delete( WBT_MIXWIN * wmw )
+{
+  GFL_HEAP_FreeMemory( wmw );
+}
 
 
 //============================================================================================

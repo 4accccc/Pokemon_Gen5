@@ -865,109 +865,37 @@ VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk )
 //
 //============================================================================================
 //--------------------------------------------------------------
-//--------------------------------------------------------------
-
-struct _WBTMIX_WINDOW_WORK{
-  SCRCMD_WORK * scrcmd_work;
-  WBTSYS * wbtsys;
-  FLDMSGWIN * fldmsgwin;
-};
-
-enum {
-  WWW_PX = 1,
-  WWW_PY = 7,
-  WWW_SX = 14,
-  WWW_SY = 12,
-};
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static WBTMIX_WINDOW_WORK * createWBTMixInfoWin( SCRCMD_WORK * work, WBTSYS * wbtsys )
-{
-  WBTMIX_WINDOW_WORK * www;
-
-  www = GFL_HEAP_AllocClearMemory( SCRCMD_WORK_GetHeapID(work), sizeof(WBTMIX_WINDOW_WORK) );
-  www->scrcmd_work = work;
-  www->wbtsys = wbtsys;
-  return www;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void drawWBTMixInfoWin( WBTMIX_WINDOW_WORK * www )
-{
-  SCRCMD_WORK * work = www->scrcmd_work;
-  FLDMSGBG * msgbg = SCRCMD_WORK_GetFldMsgBG( work );
-  GFL_MSGDATA * msgdata = SCRCMD_WORK_GetMsgData( work );
-  www->fldmsgwin = FLDMSGWIN_Add( msgbg, msgdata,
-      WWW_PX, WWW_PX, MATH_ROUNDUP( WWW_SX, 8 ) / 8, MATH_ROUNDUP( WWW_SY, 8 ) / 8 );
-
-  {
-    POKEPARTY * my_party = WBTSYS_GetMyParty( www->wbtsys );
-    int max = WBTSYS_GetPartyMax( www->wbtsys );
-    int i;
-    SCRIPT_WORK * sc = SCRCMD_WORK_GetScriptWork( www->scrcmd_work );
-    WORDSET *wordset = SCRIPT_GetWordSet( sc );
-    STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
-    STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
-    u8 sel1, sel2;
-    sel1 = WBTSYS_MixGetSelected( www->wbtsys, WBTMIX_TARGET_MINE1 );
-    sel2 = WBTSYS_MixGetSelected( www->wbtsys, WBTMIX_TARGET_MINE2 );
-
-    for ( i = 0; i < max; i ++ )
-    {
-      u16 msg_id = msg_wbt_menu_monsname;
-      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( my_party, i );
-      if ( i == sel1 || i == sel2 )
-      {
-        msg_id = msg_wbt_menu_monsname_00;
-      }
-      GFL_MSG_GetString( msgdata, msg_id, msgbuf );
-      WORDSET_RegisterPokeMonsName( wordset, 0, pp );
-      WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
-    }
-  }
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void eraseWBTMixInfoWin( WBTMIX_WINDOW_WORK * www )
-{
-  FLDMSGWIN_ClearWindow( www->fldmsgwin );
-  FLDMSGWIN_Delete( www->fldmsgwin );
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void deleteWBTMixInfoWin( WBTMIX_WINDOW_WORK * www )
-{
-  GFL_HEAP_FreeMemory( www );
-}
-
-//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTMixInfoWinOpen( VMHANDLE * core, void * wk )
 {
   WBTSYS * wbtsys = getWBTSys( wk );
-  WBTMIX_WINDOW_WORK * www;
-  www = createWBTMixInfoWin( wk, wbtsys );
-  WBTSYS_SetMixInfoWinPointer( wbtsys, www );
-  drawWBTMixInfoWin( www );
+  WBT_MIXWIN * wmw;
+  wmw = WBT_MIXWIN_Create( wk, wbtsys );
+  WBTSYS_SetMixInfoWinPointer( wbtsys, wmw );
+  WBT_MIXWIN_Draw( wmw );
 
   TAMADA_Printf("EvCmdWBTMixInfoWinOpen\n");
   return VMCMD_RESULT_CONTINUE;
 }
+
 //--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTMixInfoWinClose( VMHANDLE *core, void * wk )
 {
   WBTSYS * wbtsys = getWBTSys( wk );
-  WBTMIX_WINDOW_WORK * www = WBTSYS_GetMixInfoWinPointer( wbtsys );
-  eraseWBTMixInfoWin( www );
-  deleteWBTMixInfoWin( www );
+  WBT_MIXWIN * wmw = WBTSYS_GetMixInfoWinPointer( wbtsys );
+  WBT_MIXWIN_Erase( wmw );
+  WBT_MIXWIN_Delete( wmw );
   TAMADA_Printf("EvCmdWBTMixInfoWinClose\n");
   return VMCMD_RESULT_CONTINUE;
 }
+
 //============================================================================================
 //============================================================================================
 //--------------------------------------------------------------
@@ -1055,14 +983,14 @@ VMCMD_RESULT EvCmdWBTMixListStart( VMHANDLE * core, void * wk )
   int max = WBTSYS_GetPartyMax( wbtsys );
   POKEPARTY * npc_party = WBTSYS_GetEnemyParty( wbtsys );
   u8 sel1, sel2;
-  sel1 = WBTSYS_MixGetSelected( wbtsys, WBTMIX_TARGET_MINE1 );
-  sel2 = WBTSYS_MixGetSelected( wbtsys, WBTMIX_TARGET_MINE2 );
+  sel1 = WBTSYS_MixGetSelected( wbtsys, WBTMIX_TARGET_ENEMY1 );
+  sel2 = WBTSYS_MixGetSelected( wbtsys, WBTMIX_TARGET_ENEMY2 );
   for ( i = 0; i < max; i ++ )
   {
     u16 msg_id, value;
     msg_id = msg_wbt_menu_monsname;
     value = i;
-    if ( i == sel1 && i == sel2 )
+    if ( i == sel1 || i == sel2 )
     {
       msg_id = msg_wbt_menu_monsname_00;
       value = max;
@@ -1070,7 +998,7 @@ VMCMD_RESULT EvCmdWBTMixListStart( VMHANDLE * core, void * wk )
     wordset_pokename( wk, npc_party, i, 0 );
     SCRCMD_WORK_AddMenuList( work, msg_id, SCR_BMPMENU_EXMSG_NULL, value, msgbuf, tmpbuf );
   }
-  SCRCMD_WORK_AddMenuList( work, msg_wbt_menu_check, SCR_BMPMENU_EXMSG_NULL, max, msgbuf, tmpbuf );
+  //SCRCMD_WORK_AddMenuList( work, msg_wbt_menu_check, SCR_BMPMENU_EXMSG_NULL, max, msgbuf, tmpbuf );
   TAMADA_Printf("EvCmdWBTMixListStart\n");
   return VMCMD_RESULT_CONTINUE;
 }
@@ -1082,6 +1010,7 @@ VMCMD_RESULT EvCmdWBTMixListStart( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTMixSetupCheckMsg( VMHANDLE * core, void *wk)
 {
+#if 0
   WBTSYS * wbtsys = getWBTSys( wk );
   u16 msg_id;
   u8 poke_num;
@@ -1127,6 +1056,7 @@ VMCMD_RESULT EvCmdWBTMixSetupCheckMsg( VMHANDLE * core, void *wk)
     WORDSET_RegisterPlayerName( wordset, 0, myStatus );
   }
   TAMADA_Printf("EvCmdWBTMixSetupCheckMsg = %d\n", msg_id );
+#endif
   return VMCMD_RESULT_CONTINUE;
 }
 

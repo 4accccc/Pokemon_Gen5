@@ -175,7 +175,7 @@ struct _WBT_SYSTEM {
 
     u8 mix_pos[ WBTMIX_TARGET_NUM ];  ///<ミックストーナメントでの選択位置
 
-    WBTMIX_WINDOW_WORK * MixInfoWinWork;
+    WBT_MIXWIN * MixInfoWinWork;
   //戦闘呼び出し関連
   BATTLE_SETUP_PARAM *btl_setup_param;
   STRBUF * win_msg;     ///<バトル内での勝利時メッセージ

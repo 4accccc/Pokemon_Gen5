@@ -266,13 +266,13 @@ u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys )
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void WBTSYS_SetMixInfoWinPointer( WBTSYS * wbtsys, WBTMIX_WINDOW_WORK * www )
+void WBTSYS_SetMixInfoWinPointer( WBTSYS * wbtsys, WBT_MIXWIN * wmw )
 {
-  wbtsys->MixInfoWinWork = www;
+  wbtsys->MixInfoWinWork = wmw;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-WBTMIX_WINDOW_WORK * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys )
+WBT_MIXWIN * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys )
 {
   return wbtsys->MixInfoWinWork;
 }
@@ -1040,6 +1040,7 @@ void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
     PokeParty_Add( entry_party, entry_pp );
   }
   PokeParty_Copy( entry_party, wbtsys->my_party );
+  PokeParty_Copy( entry_party, wbtsys->sp_party );  //ƒRƒs[‚ğì¬
   GFL_HEAP_FreeMemory( entry_party );
   GFL_HEAP_FreeMemory( entry_pp );
 }

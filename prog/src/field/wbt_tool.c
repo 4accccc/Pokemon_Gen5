@@ -198,7 +198,7 @@ static const WBT_RULE_DATA WBTRuleData[] =
   },
   {// WBTRULE_ROTATION
     msg_wbtsys_rule_rotation,
-    6, BTL_RULE_ROTATION,
+    4, BTL_RULE_ROTATION,
   }
 };
 

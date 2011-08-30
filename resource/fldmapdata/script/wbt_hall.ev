@@ -1106,12 +1106,14 @@ _RET
 /**************************************************************/
 /*    WBT・ミックスでのポケモンを交換する流れ */
 /**************************************************************/
-ev_mix_pokemon:
 {
   DEFINE_LOCAL  LWK_LOOP
   DEFINE_LOCAL  LWK_PARTY_MAX
   DEFINE_LOCAL  LWK_SELECT_MONS
+  DEFINE_LOCAL  LWK_TARGET_M
+  DEFINE_LOCAL  LWK_TARGET_E
 
+ev_mix_pokemon:
   //ミックストーナメント用初期化処理
   _WBT_MIX_INIT()
 
@@ -1123,10 +1125,35 @@ ev_mix_pokemon:
   _TIME_WAIT( 30 )
   _MSGWIN_CLOSE()
 
-  _WBT_MIX_RANDOM_SELECT( SCR_WBT_MIX_TARGET_MINE1 )
+  $LWK_TARGET_M = SCR_WBT_MIX_TARGET_MINE1
+  $LWK_TARGET_E = SCR_WBT_MIX_TARGET_ENEMY1
+  _CALL sub_mix_pokemon
+
+  _WBT_GET_BATTLE_RULE( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_WBT_RULE_TRIPLE THEN
+    //「ミックス開始だ！」
+    _GIZAPLAINWIN_MSG_POS( msg_wbt_announce_25, POS_UP )
+    //歓声ＳＥ再生
+    _SE_PLAY( SEQ_SE_SW_WBT_01 )
+
+    _TIME_WAIT( 30 )
+    _MSGWIN_CLOSE()
+
+    $LWK_TARGET_M = SCR_WBT_MIX_TARGET_MINE2
+    $LWK_TARGET_E = SCR_WBT_MIX_TARGET_ENEMY2
+    _CALL sub_mix_pokemon
+
+  ENDIF
+  //ミックス用のパーティ生成
+  _WBT_SETUP_MIX_PARTY()
+  _RET
+
+
+sub_mix_pokemon:
+  _WBT_MIX_RANDOM_SELECT( LWK_TARGET_M )
   //「相手が選んだポケモンは～です」
   _WBT_SET_ENEMY_NAME( 0 )
-  _WBT_MIX_SELECTED_NAME( 1, SCR_WBT_MIX_TARGET_MINE1 )
+  _WBT_MIX_SELECTED_NAME( 1, LWK_TARGET_M )
   _PLAINWIN_MSG_UP( msg_wbt_announce_17 )
 
   $LWK_LOOP = TRUE
@@ -1145,22 +1172,20 @@ ev_mix_pokemon:
     _DEBUG_PRINT_WK( LWK_PARTY_MAX )
     IF $LWK_SELECT_MONS < $LWK_PARTY_MAX THEN
       //結果を保存
-      _WBT_MIX_SET_SELECT( SCR_WBT_MIX_TARGET_ENEMY1, LWK_SELECT_MONS )
+      _WBT_MIX_SET_SELECT( LWK_TARGET_E, LWK_SELECT_MONS )
       //「～で　よろしいですね？」
-      _WBT_MIX_SELECTED_NAME( 0, SCR_WBT_MIX_TARGET_ENEMY1 )
+      _WBT_MIX_SELECTED_NAME( 0, LWK_TARGET_E )
       _PLAINWIN_MSG_UP( msg_wbt_announce_19 )
       _YES_NO_WIN( SCWK_ANSWER )
       IF $SCWK_ANSWER == SCR_YES THEN
         $LWK_LOOP = FALSE
+      ELSE
+        //結果をクリア（最大数をセットする）
+        _WBT_MIX_SET_SELECT( LWK_TARGET_E, LWK_PARTY_MAX )
       ENDIF
     ELSE
-      //「相手が選んだポケモンは～です」
-      _WBT_SET_ENEMY_NAME( 0 )
-      _WBT_MIX_SELECTED_NAME( 1, SCR_WBT_MIX_TARGET_MINE1 )
-      _PLAINWIN_MSG_UP( msg_wbt_announce_17 )
-      //自分の手持ち説明
-      _WBT_MIX_SETUP_CHECK_MSG( SCWK_ANSWER )
-      _PLAINWIN_MSG_UP( SCWK_ANSWER )
+      //「そのポケモンはすでに選択済みです」
+      _PLAINWIN_MSG_UP( msg_wbt_announce_26 )
     ENDIF
 
   ENDWHILE
@@ -1172,9 +1197,9 @@ ev_mix_pokemon:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mix_in )
   _OBJ_ANIME_WAIT()
 
-  _WBT_MIX_SELECTED_NAME( 0, SCR_WBT_MIX_TARGET_MINE1 )
+  _WBT_MIX_SELECTED_NAME( 0, LWK_TARGET_M )
   _SUBWIN_MSG( msg_wbt_yell_mix_01, 3, 3, 1 )
-  _WBT_MIX_SELECTED_NAME( 0, SCR_WBT_MIX_TARGET_ENEMY1 )
+  _WBT_MIX_SELECTED_NAME( 0, LWK_TARGET_E )
   _SUBWIN_MSG( msg_wbt_yell_mix_01, 14, 14, 2 )
 
   _TIME_WAIT( 60 )
@@ -1188,16 +1213,14 @@ ev_mix_pokemon:
 
   //「～の～と　～の～を　こうかんしました」
   _PLAYER_NAME( 0 )
-  _WBT_MIX_SELECTED_NAME( 1, SCR_WBT_MIX_TARGET_MINE1 )
+  _WBT_MIX_SELECTED_NAME( 1, LWK_TARGET_M )
   _WBT_SET_ENEMY_NAME( 2 )
-  _WBT_MIX_SELECTED_NAME( 3, SCR_WBT_MIX_TARGET_ENEMY1 )
+  _WBT_MIX_SELECTED_NAME( 3, LWK_TARGET_E )
   _PLAINWIN_MSG_UP( msg_wbt_announce_24 )
   _MSGWIN_CLOSE()
+  _RET
 
-  //ミックス用のパーティ生成
-  _WBT_SETUP_MIX_PARTY()
 }
-_RET
 
 //--------------------------------------------------------------------
 //	ミックストーナメント　ミックス時一歩手前

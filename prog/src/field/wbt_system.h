@@ -39,7 +39,7 @@ typedef struct _WBT_MATCH_CONDITION WBT_MATCH_CONDITION;
 
 typedef struct _WBT_NGPMINFO WBT_NGPMINFO;
 
-typedef struct _WBTMIX_WINDOW_WORK WBTMIX_WINDOW_WORK;
+typedef struct _WBT_MIXWIN WBT_MIXWIN;
 //------------------------------------------------------------------
 /// ミックストーナメントでの選択結果の保存指定
 //------------------------------------------------------------------
@@ -98,8 +98,8 @@ extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
 extern void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work );
 extern u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys );
 
-extern void WBTSYS_SetMixInfoWinPointer( WBTSYS * wbtsys, WBTMIX_WINDOW_WORK * www );
-extern WBTMIX_WINDOW_WORK * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys );
+extern void WBTSYS_SetMixInfoWinPointer( WBTSYS * wbtsys, WBT_MIXWIN * www );
+extern WBT_MIXWIN * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys );
 
 //============================================================================================
 //============================================================================================
@@ -194,6 +194,11 @@ extern void WBTSYS_MixSetSelect( WBTSYS * wbtsys, WBTMIX_TARGET target, u8 selec
 extern void WBTSYS_MixSetRandomSelect( WBTSYS * wbtsys, WBTMIX_TARGET target );
 extern u8 WBTSYS_MixGetSelected( const WBTSYS * wbtsys, WBTMIX_TARGET target );
 extern void WBTSYS_SetupMixParty( WBTSYS * wbtsys );
+
+extern WBT_MIXWIN * WBT_MIXWIN_Create( void * wk, WBTSYS * wbtsys );
+extern void WBT_MIXWIN_Draw( WBT_MIXWIN * wmw );
+extern void WBT_MIXWIN_Erase( WBT_MIXWIN * wmw );
+extern void WBT_MIXWIN_Delete( WBT_MIXWIN * wmw );
 
 extern void WBTSYS_SetupEnemyParty( WBTSYS * wbtsys, GAMESYS_WORK * gsys, const WBTTRAINER * wbt_tr );
 extern BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys );
