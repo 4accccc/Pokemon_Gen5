@@ -7008,14 +7008,14 @@ N</Text>
 			<Text>ねぇ　[Name:TrainerName ]くん▼
 この　あいだ　しごとで
 べつの　ちほうに　いった　ときに▽
-[Name:PokemonName ]を　つかまえたんだけど…▽
+[Name:PokemonName Idx="1" ]を　つかまえたんだけど…▽
 [Name:TrainerName ]くんの　ポケモンと▽
 こうかんして　くれないかな？▼
 こうかん　してくれるのは
 どんな　ポケモンでも　いいよ</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-08-22T12:41:35" />
+				Time="2011-08-30T12:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7068,10 +7068,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ありがとう▼
-このこ　だいじに　そだてるね</Text>
+どのこと　こうかん　してくれるの？</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-08-22T09:22:50" />
+				Time="2011-08-30T12:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
