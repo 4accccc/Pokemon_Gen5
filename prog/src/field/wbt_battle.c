@@ -210,7 +210,7 @@ void WBTSYS_SetupMixParty( WBTSYS * wbtsys )
   POKETOOL_CopyPPtoPP( mine, copy_pp );
   POKETOOL_CopyPPtoPP( enemy, mine );
   POKETOOL_CopyPPtoPP( copy_pp, enemy );
-  if ( wbtsys->wbtcup == WBTCUP_MIXMASTER )
+  if ( wbtsys->rule == WBTRULE_TRIPLE )
   {
     mine = PokeParty_GetMemberPointer( wbtsys->my_party, wbtsys->mix_pos[WBTMIX_TARGET_MINE2] );
     enemy = PokeParty_GetMemberPointer( wbtsys->npc_party, wbtsys->mix_pos[WBTMIX_TARGET_ENEMY2] );
@@ -245,7 +245,7 @@ void WBTSYS_MixInit( WBTSYS * wbtsys )
 //------------------------------------------------------------------
 void WBTSYS_MixSetSelect( WBTSYS * wbtsys, WBTMIX_TARGET target, u8 select_pos )
 {
-  GF_ASSERT( select_pos < WBTSYS_GetPartyMax(wbtsys) );
+  //GF_ASSERT( select_pos < WBTSYS_GetPartyMax(wbtsys) );
   GF_ASSERT( target < WBTMIX_TARGET_NUM );
   wbtsys->mix_pos[target] = select_pos;
 }
@@ -643,9 +643,9 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
   }
   else
   {
-    //仮：定義の追加が必要
-    //bp->fieldSituation.bgType = ;
-    //bp->fieldSituation.bgAttr = ;
+    //
+    bp->fieldSituation.bgType = BATTLE_BG_TYPE_WBT;
+    bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_E_INDOOR;
   }
 #ifdef  PM_DEBUG
   OS_PutString("WBT:dump Enemy Party:\n");
