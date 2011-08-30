@@ -185,13 +185,14 @@ sub_wheel_trade:
 {
   DEFINE_LOCAL msg_id
   DEFINE_LOCAL fld_trade_poke_no
+  DEFINE_LOCAL trade_monsno   // 交換でもらうポケモンナンバー
 
   // 性別でメッセージ変更
   _GET_MY_SEX( SCWK_ANSWER )
   IF $SCWK_ANSWER == PM_MALE THEN
-    $msg_id = msg_wheel_swidol_m_05
-  ELSE
     $msg_id = msg_wheel_swidol_w_05
+  ELSE
+    $msg_id = msg_wheel_swidol_m_05
   ENDIF
 
   // 交換ポケモンNO
@@ -206,12 +207,13 @@ sub_wheel_trade:
   // 交換回数を足す
   $fld_trade_poke_no += $WK_OTHER_LCC_TRADE_CNT
 
+  // 交換でもらうポケモンナンバー取得
+  _FIELD_POKE_GET_TRADE_MONSNO( trade_monsno, fld_trade_poke_no  )
+
   // 交換でもらうポケモン名をタグにセット
-  {
-    DEFINE_LOCAL trade_monsno   // 交換でもらうポケモンナンバー
-    _FIELD_POKE_GET_TRADE_MONSNO( trade_monsno, fld_trade_poke_no  )
-    _MONS_NAME( 0, trade_monsno )
-  }
+  _MONS_NAME( 1, trade_monsno )
+  // プレイヤー名をタグにセット
+  _PLAYER_NAME( 0 )
 
   // 交換要求メッセージ
   _BALLOONWIN_TALKOBJ_MSG( msg_id )
@@ -239,6 +241,11 @@ sub_wheel_trade:
       //  ダメタマゴと合体キュレムを交換不可にしている
       IF $lwk_trade_check != FLD_TRADE_DISABLE_AMUSEMENT THEN
 
+        // 交換でもらうポケモン名をタグにセット
+        _MONS_NAME( 1, trade_monsno )
+        // プレイヤー名をタグにセット
+        _PLAYER_NAME( 0 )
+
         // 交換成立メッセージ
         $msg_id += 1
         _BALLOONWIN_TALKOBJ_MSG( msg_id )
@@ -264,6 +271,11 @@ sub_wheel_trade:
   // いいえ
   ELSE
   ENDIF
+
+  // 交換でもらうポケモン名をタグにセット
+  _MONS_NAME( 1, trade_monsno )
+  // プレイヤー名をタグにセット
+  _PLAYER_NAME( 0 )
 
   // 交換不成立メッセージ
   $msg_id += 2
