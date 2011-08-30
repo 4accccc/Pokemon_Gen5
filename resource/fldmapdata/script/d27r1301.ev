@@ -159,9 +159,6 @@ EVENT_START	ev_scene_d27r1301_plazmam_01
   
   //元プラズマ団員：ああ！
   _BALLOONWIN_OBJMSG_POS( msg_d27r1301_swplazmam1_02_03 , D27R1301_SWPLAZMAM_01 ,POS_DEFAULT )
-  
-  //元プラズマ団員：それにしても……
-  _BALLOONWIN_OBJMSG_POS( msg_d27r1301_swplazmam1_02_04 , D27R1301_SWPLAZMAM_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //=====================================
