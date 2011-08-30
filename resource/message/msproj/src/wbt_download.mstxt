@@ -82,10 +82,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バトルルール：</Text>
+			<Text>たいせん[System:Color name="0" ]ルール：[/System:Color]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:03:50" />
+				Time="2011-09-07T11:53:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -93,10 +93,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バトルルール：</Text>
+			<Text>対戦[System:Color name="0" ]ルール：[/System:Color]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:04:00" />
+				Time="2011-09-07T11:54:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -257,10 +257,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トーナメントないよう：</Text>
+			<Text>[System:Color name="0" ]トーナメントないよう：[/System:Color]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:07:31" />
+				Time="2011-09-07T04:28:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -268,10 +268,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トーナメント内容：</Text>
+			<Text>[System:Color name="0" ]トーナメント内容：[/System:Color]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:07:40" />
+				Time="2011-09-07T04:28:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
