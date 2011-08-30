@@ -82,10 +82,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせん[System:Color name="0" ]ルール：[/System:Color]</Text>
+			<Text>バトル[System:Color name="0" ]ルール：[/System:Color]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-07T11:53:53" />
+				Time="2011-09-07T18:00:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -93,10 +93,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦[System:Color name="0" ]ルール：[/System:Color]</Text>
+			<Text>バトル[System:Color name="0" ]ルール：[/System:Color]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-07T11:54:10" />
+				Time="2011-09-07T18:00:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -117,10 +117,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シングル</Text>
+			<Text>シングルバトル</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:04:37" />
+				Time="2011-09-07T16:54:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -128,10 +128,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シングル</Text>
+			<Text>シングルバトル</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:05:35" />
+				Time="2011-09-07T16:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -152,10 +152,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダブル</Text>
+			<Text>ダブルバトル</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:04:46" />
+				Time="2011-09-07T16:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -163,10 +163,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダブル</Text>
+			<Text>ダブルバトル</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:05:35" />
+				Time="2011-09-07T16:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -187,10 +187,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トリプル</Text>
+			<Text>トリプルバトル</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:04:55" />
+				Time="2011-09-07T16:54:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -198,10 +198,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トリプル</Text>
+			<Text>トリプルバトル</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:05:35" />
+				Time="2011-09-07T16:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -222,10 +222,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ローテーション</Text>
+			<Text>ローテーションバトル</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:05:11" />
+				Time="2011-09-07T16:54:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -233,10 +233,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ローテーション</Text>
+			<Text>ローテーションバトル</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:05:35" />
+				Time="2011-09-07T16:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
