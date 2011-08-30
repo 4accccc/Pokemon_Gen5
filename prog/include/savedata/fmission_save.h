@@ -20,6 +20,15 @@ typedef struct _FMISSION_SAVE FMISSION_SAVE;
 #define FMISSION_SAVE_ENTRY_NUM_MAX (0xFFFFFFFF)
 #define FMISSION_SAVE_CLEAR_NUM_MAX (0xFFFFFFFF)
 
+typedef enum{
+  FMISSION_SV_EXP_WHITE, ///<ホワイトLv経験値
+  FMISSION_SV_EXP_BLACK, ///<ブラックLv経験値
+  FMISSION_SV_EXP_IDX_MAX,
+}FMISSION_SV_EXP_IDX;
+
+#define FMISSION_SV_HILINK_LEVEL_EXP_MAX  (1000)  //経験値max値
+#define FMISSION_SV_HILINK_LEVEL_EXP_STEP (100)   //経験値いくつごとにレベルアップさせるかの閾値
+
 //---------------------------------------------------------------------------
 /**
  * @brief	ワークのサイズ取得
@@ -152,9 +161,11 @@ extern void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST
 /**
  * @brief ミッションステータス ハイスコア(数値)をアップデートする	
  * @param	work		ワークへのポインタ
+ * @param id      ミッションID
+ * @param rest_time_frame 残り時間(フレーム単位)
  */
 //---------------------------------------------------------------------------
-extern void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_time );
+extern void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_frame );
 
 //---------------------------------------------------------------------------
 /**
@@ -206,5 +217,21 @@ extern void FMISSION_SAVE_SetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSI
  */
 //---------------------------------------------------------------------------
 extern void FMISSION_SAVE_ResetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID id );
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッション　ハイリンクレベル経験値取得	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+extern u16 FMISSION_SAVE_GetHilinkLevelExp( FMISSION_SAVE* sv, FMISSION_SV_EXP_IDX version_idx );
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッション　ハイリンクレベル経験値セット	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+extern void FMISSION_SAVE_SetHilinkLevelExp( FMISSION_SAVE* sv, FMISSION_SV_EXP_IDX version_idx, u16 value );
 
 

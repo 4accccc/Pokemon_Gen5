@@ -112,5 +112,5 @@ struct _FEST_MISSION{
 
 #define FMISSION_GOAL_NULL  (0x3FFF)  //ミッション目標無効値
 #define FMISSION_SCORE_MAX  (999)     //ミッションスコア最大値
-#define FMISSION_LIFE_MAX   (0x3FFFF) //ミッションライフMax
+#define FMISSION_LIFE_MAX   (((59*60)+59)*60) //ミッションライフMax(59分59秒)
 

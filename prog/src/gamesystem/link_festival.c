@@ -21,10 +21,14 @@
 
 #include "gamesystem/link_festival.h"
 #include "gamesystem/link_festival_local.h"
+#include "savedata/fmission_save.h"
+
+#define HILINK_LEVEL_EXP_MAX  (1000)  //ハイリンク経験値のストックMax
 
 //==============================================================================
 //  構造体定義
 //==============================================================================
+static BOOL linkfes_IsMissionClear( LINK_FESTIVAL* wk, u32* score );
 static void lnkfes_BeaconSend( LINK_FESTIVAL* wk );
 static void log_ClearAll( LINK_FESTIVAL* wk );
 static void log_LastMissionLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
@@ -362,20 +366,102 @@ u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk )
  *
  */
 //---------------------------------------------------------
-BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score, u32* item_num )
+static BOOL linkfes_IsMissionClear( LINK_FESTIVAL* wk, u32* score )
 {
   *score = 0;
-  *item_num = 0;
   *score = LINK_FESTIVAL_GetNowScore( wk );
 
   if( *score >= wk->m_beacon->goal){
 //    OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ達成 %d/%d\n",*score,wk->mission.target );
-    *item_num = *score; //wk->mission.item_num;
     return TRUE;
   }
 //  OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ未達成 %d/%d\n",*score,wk->mission.target );
   return FALSE;
 }
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ミッション結果を取得＆レコードをセーブに反映
+ *
+ * @param u32* スコアを取得するu32のワークポインタ
+ * @param u32* 取得するアイテム数を返すu32のワークポインタ
+ * @retval  TRUE    ミッション成功
+ * @retval  FALSE   ミッション失敗
+ *
+ *  ミッション達成回数などをインクリメントするので複数回呼び出さないこと
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl )
+{
+  BOOL ret;
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData( wk->gsys ) );
+  FMISSION_SAVE* f_save = SAVEDATA_GetFMissionSave( save );
+
+  MI_CpuClear32( pl, sizeof(LINKFEST_MISSION_RESULT));
+
+  if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
+    return;
+  }
+  pl->clear_f = linkfes_IsMissionClear( wk, &pl->score );
+
+  if( wk->m_beacon->end_type == FMISSION_ENDTYPE_TIME ){
+    //時間依存型の場合、失敗でもハイスコアを更新する
+    FMISSION_SAVE_UpdateMissionStatusHighScoreNum( f_save, wk->m_beacon->m_id, pl->score );
+  }
+  if( !pl->clear_f ){
+    return; //ミッション失敗
+  }
+  FMISSION_SAVE_IncMissionClearNum( f_save ); //ミッション達成回数インクリメント
+
+  //スコア依存型のハイスコアは成功時のみしか更新されないのでここで
+  if( wk->m_beacon->end_type == FMISSION_ENDTYPE_SCORE ){
+    FMISSION_SAVE_UpdateMissionStatusHighScoreTime( f_save, wk->m_beacon->m_id, wk->m_beacon->life );
+  }
+
+  //ご褒美
+  {
+    BOOL sp_bonus = FALSE;
+    pl->item = wk->m_beacon->item;
+
+    pl->item_num = wk->m_beacon->pay;
+   switch( wk->m_beacon->pay_bonus ){
+    case FMISSION_PAY_BONUS_TIME: //タイムボーナス
+      { //(トータルスコア-目標値)/人数*ミッションレベル
+        u32 score = (pl->score-wk->m_beacon->goal)/(wk->log_num+1);
+        pl->item_num += score*(wk->m_beacon->m_level+1);
+      }
+      //スペシャル報酬 level3ミッション以上&&スコアが目標値の倍以上なら
+      sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (pl->score >= (wk->m_beacon->goal*2)));
+     break;
+    case FMISSION_PAY_BONUS_SCORE: //スコアボーナス
+      { //(残り時間frame/600)*ミッションレベル
+        u32 frame = wk->m_beacon->life/600;
+        pl->item_num += frame*(wk->m_beacon->m_level+1);
+      }
+      //スペシャル報酬 level3ミッション以上&&残り時間が制限時間より長ければ
+//      sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (wk->m_beacon->life >= (wk->m_arc->)));
+      break;
+    }
+    if( sp_bonus ){
+      pl->sp_item = wk->m_beacon->sp_item;
+      pl->sp_item_num = wk->m_beacon->sp_pay;
+    }
+  }
+
+  //ハイリンクの経験値
+  {
+    u8 level;
+    u32 exp = FMISSION_SAVE_GetHilinkLevelExp( f_save, wk->m_beacon->version_f );
+    exp += pl->score;
+    if( exp > FMISSION_SV_HILINK_LEVEL_EXP_MAX ){
+      exp = FMISSION_SV_HILINK_LEVEL_EXP_MAX; //上限超えていたら、上限で切り捨て
+    }
+    pl->hilink_level_up = exp/FMISSION_SV_HILINK_LEVEL_EXP_STEP;
+    //余りの経験値をセーブに書き戻し
+    FMISSION_SAVE_SetHilinkLevelExp( f_save, wk->m_beacon->version_f, exp%FMISSION_SV_HILINK_LEVEL_EXP_STEP );
+  }
+}
+
 
 //---------------------------------------------------------
 /*
@@ -387,13 +473,13 @@ BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score, u32* item_nu
 //---------------------------------------------------------
 BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
 {
-  u32 score,item_num;
+  u32 score;
   BOOL ret;
 
   if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
     return FALSE;
   }
-  ret = LINK_FESTIVAL_GetMissionResult( wk, &score, &item_num );
+  ret = linkfes_IsMissionClear( wk, &score );
 
   //スコアクリア型の終了チェック
   if(ret && (wk->m_beacon->end_type == FMISSION_ENDTYPE_SCORE)){

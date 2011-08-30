@@ -76,7 +76,7 @@ FMISSION_DATA_MAN*  FMISSION_DATA_Init( HEAPID heapID )
 
   man->data_h = GFL_ARC_OpenDataHandle( ARCID_FMISSION_DATA, heapID );
   man->msg = GFL_MSG_Create(
-		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_fest_mission_dat, heapID );
+		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_fest_mission_dat, heapID );
  
   return man;
 }

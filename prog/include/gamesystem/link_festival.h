@@ -25,8 +25,8 @@
  */
 #define FMISSION_FLAG_AREA_LEN  (36)
 
-#define LINKFEST_LOG_MAX  (100) //フェスタミッションログMax
-#define LINKFEST_LOG_END  (LINKFEST_LOG_MAX-1) //フェスタミッションログEndIndex
+#define LINKFEST_LOG_MAX  (99) //フェスミッションログMax(自分含めて100がmax)
+#define LINKFEST_LOG_END  (LINKFEST_LOG_MAX-1) //フェスミッションログEndIndex
 
 #define LINKFEST_FRAME2SEC(frame) ((frame/60)+((frame%60)!=0))
 #define LINKFEST_SEC2FRAME(sec) (sec*60)
@@ -42,7 +42,7 @@ typedef enum{
 
 typedef struct _LINK_FESTIVAL LINK_FESTIVAL;
 
-//フェスタログデータ構造体
+//フェスログデータ構造体
 typedef struct _LINKFEST_LOG{
   union{  //8byteのログ領域
     struct{ //スコアログ
@@ -59,7 +59,7 @@ typedef struct _LINKFEST_LOG{
   };
 }LINKFEST_LOG;
 
-//フェスタログ受け渡し構造体
+//フェスログ受け渡し構造体
 typedef struct _LINKFEST_LOG_PARAM{
   FEST_MISSION_ID  m_id; ///<ミッションID
   u32 key;  ///<ミッションマジックキー
@@ -68,7 +68,16 @@ typedef struct _LINKFEST_LOG_PARAM{
 }LINKFEST_LOG_PARAM;
 
 
-
+//フェスミッション結果取得用構造体
+typedef struct _LINKFEST_MISSION_RESULT{
+  u8    clear_f;  //TRUEならクリアした
+  u8    hilink_level_up;  //ハイリンクのレベルアップ値(0ならレベルアップ無し)
+  u32   score;    //スコア
+  u16   item;     //ご褒美アイテム
+  u16   item_num; //ご褒美アイテムの数
+  u16   sp_item;  //特別ボーナスアイテム(0なら特別ボーナス無し)
+  u16   sp_item_num;  //特別ボーナスアイテムの数(0なら特別ボーナス無し)
+}LINKFEST_MISSION_RESULT;
 
 //---------------------------------------------------------
 /*
@@ -239,15 +248,17 @@ extern u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*
- * @brief リンクフェスティバル　ログ解析してスコアとミッション成功・失敗を判定
+ * @brief リンクフェスティバル　ミッション結果を取得＆レコードをセーブに反映
  *
  * @param u32* スコアを取得するu32のワークポインタ
  * @param u32* 取得するアイテム数を返すu32のワークポインタ
  * @retval  TRUE    ミッション成功
  * @retval  FALSE   ミッション失敗
+ *
+ *  ミッション達成回数などをインクリメントするので複数回呼び出さないこと
  */
 //---------------------------------------------------------
-extern BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score, u32* item_num );
+extern void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl );
 
 //---------------------------------------------------------
 /*

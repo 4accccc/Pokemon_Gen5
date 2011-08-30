@@ -7,6 +7,8 @@
  */
 //============================================================================================
 #include <gflib.h>
+#include "gamesystem/link_festival.h"
+#include "gamesystem/fest_mission_local.h"
 #include "savedata/save_tbl.h"
 #include "savedata/fmission_save.h"
 #include "fmission_save_local.h"
@@ -217,16 +219,25 @@ void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSIO
 /**
  * @brief ミッションステータス ハイスコア(数値)をアップデートする	
  * @param	work		ワークへのポインタ
+ * @param id      ミッションID
+ * @param rest_time_frame 残り時間(フレーム単位)
  */
 //---------------------------------------------------------------------------
-void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_time )
+void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_frame )
 {
+  u32 sec;
   if( id >= FMISSION_ID_MAX ){
     GF_ASSERT(0);
     return;
   }
-  if( new_time < sv->high_score[id] ){
-    sv->high_score[id] = new_time;
+  if( rest_time_frame > FMISSION_LIFE_MAX ){
+    rest_time_frame = FMISSION_LIFE_MAX;
+  }
+  //フレームを秒変換
+  sec = rest_time_frame/60+((rest_time_frame%60)!=0); //余りは+1sec
+
+  if( sec > sv->high_score[id] ){
+    sv->high_score[id] = sec;
   }
 }
 
@@ -321,4 +332,33 @@ void FMISSION_SAVE_ResetMissionStatusNewFlag( FMISSION_SAVE* sv, FEST_MISSION_ID
   sv->status[id].new_f = FALSE;
 }
 
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッション　ハイリンクレベル経験値取得	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+u16 FMISSION_SAVE_GetHilinkLevelExp( FMISSION_SAVE* sv, FMISSION_SV_EXP_IDX version_idx )
+{
+  if( version_idx >= FMISSION_SV_EXP_IDX_MAX ){
+    GF_ASSERT(0);
+    return 0;
+  }
+  return sv->exp[version_idx];
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッション　ハイリンクレベル経験値セット	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+void FMISSION_SAVE_SetHilinkLevelExp( FMISSION_SAVE* sv, FMISSION_SV_EXP_IDX version_idx, u16 value )
+{
+  if( version_idx >= FMISSION_SV_EXP_IDX_MAX || value >= FMISSION_SV_HILINK_LEVEL_EXP_STEP ){
+    GF_ASSERT_MSG(0,"%d->%d\n",version_idx,value);
+    return;
+  }
+  sv->exp[version_idx] = value;
+}
 

@@ -146,19 +146,18 @@ void BVC_PrintQueLimmitUpSet( PRINT_QUE *printQue, BOOL flag )
 BVC_TMENU_WORK* BVCTMenu_Init( u8 frame, u8 plt, GFL_FONT *fontHandle, PRINT_QUE *printQue, HEAPID heapID )
 {
   int i;
-  GFL_MSGDATA* msg;
 
   BVC_TMENU_WORK* wk = GFL_HEAP_AllocClearMemory(heapID, sizeof(BVC_TMENU_WORK));
 
   wk->heapID = heapID;
-	
-  msg = GFL_MSG_Create(
-		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_beacon_view_common_dat, GFL_HEAP_LOWID(heapID) );
-
+  
   wk->menuRes = APP_TASKMENU_RES_Create( frame, plt, fontHandle, printQue, heapID );
+	
+  wk->msg = GFL_MSG_Create(
+		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_beacon_view_common_dat, heapID );
 
   for( i = 0; i < TMENU_STR_MAX;i++){
-    wk->str[i] = GFL_MSG_CreateString( msg, msg_bvc_tmenu_01+i ); //メニューに表示する文字列
+    wk->str[i] = GFL_MSG_CreateString( wk->msg, msg_bvc_tmenu_01+i ); //メニューに表示する文字列
   
   }
   //アイテム初期化
@@ -168,7 +167,6 @@ BVC_TMENU_WORK* BVCTMenu_Init( u8 frame, u8 plt, GFL_FONT *fontHandle, PRINT_QUE
     wk->tmenu[i].item.type     = APP_TASKMENU_WIN_TYPE_NORMAL; //戻るマークの表示
     wk->tmenu[i].work = NULL;
   }
-  GFL_MSG_Delete( msg );
  
   return wk;
 }
@@ -190,6 +188,7 @@ void BVCTMenu_Release( BVC_TMENU_WORK* wk )
   for( i = 0;i < TMENU_STR_MAX;i++){
     GFL_STR_DeleteBuffer( wk->str[i] );
   }
+  GFL_MSG_Delete( wk->msg );
   APP_TASKMENU_RES_Delete( wk->menuRes );
   
   GFL_HEAP_FreeMemory( wk );

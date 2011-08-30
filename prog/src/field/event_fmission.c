@@ -104,9 +104,7 @@ typedef struct _FMISSION_EVWORK{
   FEST_MISSION mission;
   FMISSION_DATA_MAN* fm_data_man;
 
-  BOOL  result;
-  u32   res_score;
-  u32   res_item_num;
+  LINKFEST_MISSION_RESULT result;
   int   param;
 
   STRBUF* s_buf;
@@ -173,7 +171,8 @@ GMEVENT* EVENT_FMissionEnd( GAMESYS_WORK * gsys, void* work )
     FEST_MISSION* fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
     wk->mission = *fmwk;
 
-    wk->result = LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &wk->res_score, &wk->res_item_num );
+    //ミッションの結果取得とレコードセーブ
+    LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &wk->result );
   }
   return event;
 }
@@ -436,7 +435,7 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
 
   switch (*seq) {
   case 0:
-    if( wk->result && beacon->life > 0 ){ //クリアでミッション終了した場合
+    if( wk->result.clear_f && beacon->life > 0 ){ //クリアでミッション終了した場合
       evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_clear );
     }else{  //タイムアップの場合
       evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_timeup );
@@ -449,7 +448,7 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
     FLDSYSWIN_ClearWindow( wk->win );
     sub_FMissionEndParamDraw( wk );
 
-    if( wk->result ){
+    if( wk->result.clear_f ){
       GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_CLEAR ));
     }else{
       GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_FAILED ));
@@ -496,7 +495,7 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
       break;
     }
 #endif
-    if( wk->result ){ //クリアしていればアイテム入手イベントコール
+    if( wk->result.clear_f ){ //クリアしていればアイテム入手イベントコール
       (*seq)++;
     }else{
       (*seq) = 0xFF;  //終了
@@ -513,8 +512,8 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
       SCRIPT_WORK* sc = SCRIPT_GetScriptWorkFromEvent( sc_event );
 
       num = max-now;
-      if( num >= wk->res_item_num ){
-        num = wk->res_item_num;  
+      if( num >= wk->result.item_num ){
+        num = wk->result.item_num;  
       }
       SCRIPT_SetScriptWorkParam( sc, beacon->item, num, 0, 0 );
       GMEVENT_CallEvent( event, sc_event );
@@ -621,7 +620,7 @@ static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void
 static void sub_FMissionParamWordExpand( FMISSION_EVWORK* wk )
 {
   FMISSION_DATA_WordsetParamAll( wk->wset, &wk->mission );
-  WORDSET_RegisterNumber( wk->wset, 7, wk->res_score, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 7, wk->result.score, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }
 
 //-----------------------------------------------------------------
@@ -685,7 +684,7 @@ static void sub_FMissionEndParamDraw( FMISSION_EVWORK* wk )
   GFL_MSG_GetString( wk->msgData, msg_fmission_end_title, wk->s_buf );
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
   
-  GFL_MSG_GetString( wk->msgData, msg_fmission_failed+wk->result, wk->s_buf );
+  GFL_MSG_GetString( wk->msgData, msg_fmission_failed+wk->result.clear_f, wk->s_buf );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
   GFL_MSG_GetString( wk->msgData, msg_fmission_score, wk->s_buf );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 3 );

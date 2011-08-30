@@ -136,6 +136,7 @@ typedef struct {
 typedef struct _BVC_TMENU_WORK{
   HEAPID  heapID;
   APP_TASKMENU_RES* menuRes;
+  GFL_MSGDATA*  msg;
 
   u8  c_id;   //現在のメニューID
   u8  c_max;  //現在のメニューの項目数max

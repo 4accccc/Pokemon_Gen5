@@ -22,7 +22,7 @@ struct _FMISSION_SAVE{
   u32 open_num;   ///<フェスミッション開催回数
   u32 entry_num;  ///<フェスミッション参加回数
   u32 clear_num;  ///<フェスミッション達成回数
-  u16 exp[2];     ///<経験値white&black
+  u16 exp[FMISSION_SV_EXP_IDX_MAX];     ///<経験値white&black
 };
 
 
