@@ -1776,10 +1776,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざかぞくの　いえ</Text>
+			<Text>わざマシンコレクター</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:37:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1787,10 +1787,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざ家族の家</Text>
+			<Text>わざマシンコレクター</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:37:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3028,11 +3028,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-リゾートデザート　Ｗ</Text>
+			<Text>かんこうきゃくに　にんきだが
+リゾートとよぶには　きびしい　さばく</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:48:30" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3040,11 +3040,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-リゾートデザート　Ｗ</Text>
+			<Text>観光客に　人気の　スポットだが
+リゾートと呼ぶには　厳しい　砂漠</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:48:48" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3078,11 +3078,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-こだいのしろ　Ｗ</Text>
+			<Text>かつて　えいがを　ほこるも　いつしか
+すなにうもれた　おおむかしの　いせき</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:50:30" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:44:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3090,11 +3090,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-古代の城　Ｗ</Text>
+			<Text>かつて　栄華を　誇るも　いつしか
+砂に埋もれた　大昔の　遺跡</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:50:33" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:44:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3128,11 +3128,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-ＷＢＴ</Text>
+			<Text>うでじまんの　トレーナーたちが
+トーナメントで　きそいあう</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T06:16:27" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:35:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3140,11 +3140,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ＷＢＴ</Text>
+			<Text>腕自慢の　トレーナーたちが
+トーナメントで　競い合う</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T06:16:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:35:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3324,11 +3324,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>けいしゃで　トレーナーを　はばむ
+			<Text>わかれみちで　トレーナーを　はばむ
 ポケモンリーグ　さいごの　かんもん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:36:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3336,11 +3336,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>傾斜で　トレーナーを　はばむ
+			<Text>分岐で　トレーナーを　はばむ
 ポケモンリーグ　最後の　関門</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:36:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3348,10 +3348,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>チャンピオンロード</Comment>
+			<Comment>チャンピオンロード
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:36:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3814,11 +3815,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さほど　いりくんでも　いないのに
-まようと　いわれる　ふしぎなもり</Text>
+			<Text>しばらく　まえまでは　なにもなにのに
+まよう　ばしょとして　しられていた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:39:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3826,11 +3827,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さほど　入り組んでもいないのに
-迷うと　いわれている　不思議な森</Text>
+			<Text>しばらく前までは　なにもなにのに
+迷う　場所として　知られていた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:39:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3839,10 +3840,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>まよいのもり
-※swanで修正</Comment>
+※swanで修正
+※さほど　いりくんでも　いないのに
+まようと　いわれる　ふしぎなもり</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T04:13:59" />
+				Time="2011-08-30T06:39:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4011,11 +4014,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-４ばんどうろ　Ｗ</Text>
+			<Text>いせきが　はっくつされて
+かいはつこうじは　ちゅうしされた</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:12:51" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:40:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4023,11 +4026,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-４番道路　Ｗ</Text>
+			<Text>遺跡が　発掘されて
+開発工事は　中止された</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:12:55" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:40:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4036,10 +4039,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>４ばんどうろ
-ホワイト</Comment>
+ホワイト
+※swanで新規</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:12:36" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:40:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5138,11 +5142,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-ヒオウギシティ</Text>
+			<Text>イッシュを　みわたせるほど　たかい
+やまの　すそのに　ひろがる　まち</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:41:30" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:05:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5150,11 +5154,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ヒオウギシティ</Text>
+			<Text>イッシュを　みわたせるほど　高い
+山の　すそ野に　ひろがる　街</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:41:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:05:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5332,11 +5336,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-タチワキシティ</Text>
+			<Text>くもと　けむりに　おおわれがち　だが
+まちにくらす　ひとびとは　かっぱつ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:43:34" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:59:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5344,11 +5348,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-タチワキシティ</Text>
+			<Text>雲と　煙に　覆われがち　だが
+街に暮らす　人々は　活発</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:43:40" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:59:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5384,8 +5388,8 @@
 			Language="JPN">
 			<Text>タチワキシティジム</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:44:20" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:59:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5395,8 +5399,8 @@
 			Language="JPN_KANJI">
 			<Text>タチワキシティジム</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:44:21" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:00:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5478,11 +5482,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-セイガイハシティ</Text>
+			<Text>なみまに　うかぶ　たてものが
+しまのように　みえる　リゾートシティ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:45:02" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5490,11 +5494,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-セイガイハシティ</Text>
+			<Text>波間に　浮かぶ　建物が
+島のように　みえる　リゾートシティ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:45:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:53:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5624,11 +5628,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-ポケウッド</Text>
+			<Text>せいしき　めいしょうは
+ポケウッドムービースタジオ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:46:27" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5636,11 +5640,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ポケウッド</Text>
+			<Text>正式名称は
+ポケウッドムービースタジオ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:46:27" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:49:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5674,11 +5678,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-ジョインアベニュー</Text>
+			<Text>ひとと　こうりゅうする　ほどに
+はってん　していく　おおどおり</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:25:01" />
+				Time="2011-08-30T08:08:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5686,11 +5690,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ジョインアベニュー</Text>
+			<Text>人と　交流する　ほどに
+発展していく　大通り</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:25:05" />
+				Time="2011-08-30T08:08:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5724,11 +5728,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-サンギタウン</Text>
+			<Text>まちの　はじまりを　つげる
+とけいだいが　シンボル</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:37:19" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:07:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5736,11 +5740,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-サンギタウン</Text>
+			<Text>町の　始まりを　告げる
+時計台が　シンボル</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:37:26" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:07:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5822,11 +5826,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-ヤマジタウン</Text>
+			<Text>かざんちかくの　つちを　つかって
+つくる　とうきや　じきが　じまん</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:38:30" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:10:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5834,11 +5838,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ヤマジタウン</Text>
+			<Text>火山近くの　土を　使って
+つくる　陶器や　磁器が　自慢</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:38:35" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6016,11 +6020,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-リゾートデザート　Ｂ</Text>
+			<Text>かんこうきゃくに　にんきだが
+リゾートとよぶには　きびしい　さばく</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:47:29" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6028,11 +6032,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-リゾートデザート　Ｂ</Text>
+			<Text>観光客に　人気の　スポットだが
+リゾートと呼ぶには　厳しい　砂漠</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:47:29" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T08:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6067,11 +6071,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-こだいのしろ　Ｂ</Text>
+			<Text>かつて　えいがを　ほこるも　いつしか
+すなにうもれた　おおむかしの　いせき</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:50:19" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:44:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6079,11 +6083,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-古代の城　Ｂ</Text>
+			<Text>かつて　栄華を　誇るも　いつしか
+砂に埋もれた　大昔の　遺跡</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:50:19" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:44:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6118,11 +6122,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-ヒウンげすいどう</Text>
+			<Text>でいりぐちの　かなごうしが　はずされ
+ものずきな　トレーナーが　うろつく</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:26:56" />
+				Time="2011-08-30T08:18:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6130,11 +6134,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ヒウン下水道</Text>
+			<Text>出入り口の　金格子が　外され
+物好きな　トレーナーが　うろつく</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:27:01" />
+				Time="2011-08-30T08:18:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6168,11 +6172,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-サンギぼくじょう</Text>
+			<Text>ポケモンと　ひとが　あつまるうちに
+いつしか　ぼくじょうに　なった</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:27:05" />
+				Time="2011-08-30T08:14:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6180,11 +6184,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-サンギ牧場</Text>
+			<Text>ポケモンと　人が　集まるうちに
+いつしか　牧場に　なった</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:27:09" />
+				Time="2011-08-30T08:14:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6218,11 +6222,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-タチワキコンビナート</Text>
+			<Text>ポケモンが　はたらきやすいように
+せっけい　されている　コンビナート</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:27:20" />
+				Time="2011-08-30T08:20:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6230,11 +6234,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-タチワキコンビナート</Text>
+			<Text>ポケモンが　働きやすいように
+設計されている　コンビナート</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:27:25" />
+				Time="2011-08-30T08:20:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6268,11 +6272,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-リバースマウンテンＷ</Text>
+			<Text>おおむかしに　おおきな　ふんかをした
+きろくが　のこっている　かざん</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:27:32" />
+				Time="2011-08-30T08:27:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6280,11 +6284,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-リバースマウンテンＷ</Text>
+			<Text>大昔に　大きな　噴火をした
+記録が　残っている　火山</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:27:43" />
+				Time="2011-08-30T08:27:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6319,11 +6323,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-リバースマウンテンＢ</Text>
+			<Text>さいきんも　ふんかを　くりかえし
+ニュースに　なっている　かざん</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:27:37" />
+				Time="2011-08-30T08:28:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6331,11 +6335,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-リバースマウンテンＢ</Text>
+			<Text>最近も　噴火を　繰り返し
+ニュースに　なっている　火山</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:27:40" />
+				Time="2011-08-30T08:28:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6370,11 +6374,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-ストレンジャーハウス</Text>
+			<Text>かなしい　じけんが　あったといわれ
+だれも　よせつけない　とされる　いえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:32:55" />
+				Time="2011-08-30T07:38:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6382,11 +6386,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ストレンジャーハウス</Text>
+			<Text>悲しい　事件が　あったといわれ
+だれも　寄せつけない　とされる　家</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:32:59" />
+				Time="2011-08-30T07:38:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6420,11 +6424,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-チャンピオンロード</Text>
+			<Text>わかれみちで　トレーナーを　はばむ
+ポケモンリーグ　さいごの　かんもん</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:33:06" />
+				Time="2011-08-30T07:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6432,11 +6436,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-チャンピオンロード</Text>
+			<Text>分岐で　トレーナーを　はばむ
+ポケモンリーグ　最後の　関門</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:33:10" />
+				Time="2011-08-30T07:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6470,11 +6474,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-プラズマフリゲート</Text>
+			<Text>イッシュちほうの　かくちで　みられる
+なぞの　くろい　はんせん</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:33:20" />
+				Time="2011-08-30T07:32:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6482,11 +6486,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-プラズマフリゲート</Text>
+			<Text>イッシュ地方の　各地で　みられる
+なぞの　黒い　帆船</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:33:25" />
+				Time="2011-08-30T07:33:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6520,11 +6524,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-こだいのぬけみち</Text>
+			<Text>さいきん　はっけん　された
+こだいのしろの　ぬけみち</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:33:36" />
+				Time="2011-08-30T07:32:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6532,11 +6536,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-古代の抜け道</Text>
+			<Text>最近　発見された
+古代の城の　抜け道</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:33:42" />
+				Time="2011-08-30T07:32:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6570,11 +6574,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-ヤーコンロード</Text>
+			<Text>さいくつを　つづけた　ヤーコンにより
+かいつうした　ネジやま　までの　みち</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:33:52" />
+				Time="2011-08-30T07:26:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6582,11 +6586,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ヤーコンロード</Text>
+			<Text>採掘を　続けた　ヤーコンにより
+開通した　ネジ山までの　道</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:33:57" />
+				Time="2011-08-30T07:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6620,11 +6624,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-Ｎのしろ</Text>
+			<Text>かつて　プラズマだんの　アジトとして
+いちどだけ　そのすがたを　みせた……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:57:59" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:24:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6632,11 +6636,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-Ｎの城</Text>
+			<Text>かつて　プラズマ団の　アジトとして
+一度だけ　その姿を　みせた……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:57:59" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:25:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6670,11 +6674,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-うみべのどうけつ</Text>
+			<Text>かぜ　なみ　そして　ポケモンによって
+とおりぬけ　できるようになった　いわ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:34:30" />
+				Time="2011-08-30T07:23:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6682,11 +6686,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-海辺の同穴</Text>
+			<Text>風　波　そして　ポケモンによって
+通り抜け　できるようになった　岩</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:34:42" />
+				Time="2011-08-30T07:23:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6720,11 +6724,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-こころのくうどう</Text>
+			<Text>ほらあなの　おくふかくは
+シンオウちほうに　つながる　という</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:34:55" />
+				Time="2011-08-30T07:19:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6732,11 +6736,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-心の空洞</Text>
+			<Text>洞穴の　奥深くは
+シンオウ地方に　つながる　という</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:35:05" />
+				Time="2011-08-30T07:20:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6770,11 +6774,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-４ばんどうろ　Ｂ</Text>
+			<Text>すなち　だった　どうろも　ビルが
+たちならぶ　ばしょに　うまれかわった</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:13:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:53:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6782,11 +6786,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-４番道路　Ｂ</Text>
+			<Text>砂地だった　道路も　ビルが
+建ち並ぶ　場所に　生まれ変わった</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:13:07" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6821,11 +6825,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-１９ばんどうろ</Text>
+			<Text>やまの　ふもとに　できた
+ゆるやかな　とおりみち</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:13:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:07:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6833,11 +6837,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-１９番道路</Text>
+			<Text>山の　ふもとに　できた
+ゆるやかな　通り道</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:13:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:07:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6871,11 +6875,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-２０ばんどうろ</Text>
+			<Text>あきに　なると　おちばが　つもり
+じめんの　ようすが　わからなくなる</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:14:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:06:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6883,11 +6887,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-２０番道路</Text>
+			<Text>秋になると　落ち葉が　積もり
+地面の　様子が　わからなくなる</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:14:17" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:06:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6921,11 +6925,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-２１ばんすいどう</Text>
+			<Text>いわが　おおく　およぎづらいが
+かえって　すいえいじまんが　つどう</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:14:29" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:05:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6933,11 +6937,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-２１番道路</Text>
+			<Text>岩が　多く　泳ぎづらいが
+かえって　水泳自慢が　集う</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:14:29" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:06:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6971,11 +6975,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-２２ばんどうろ</Text>
+			<Text>きふくや　だんさが　おおいため
+しぜんのめいろに　なっている</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:16:21" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:16:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6983,11 +6987,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-２２番道路</Text>
+			<Text>起伏や　段差が　多いため
+自然の迷路に　なっている</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:16:21" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:17:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7021,11 +7025,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-２３ばんどうろ</Text>
+			<Text>ぜっぺきに　あっとう　されながら
+すすむしかない　やまあいの　みち</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:16:32" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:19:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7033,11 +7037,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-２３番道路</Text>
+			<Text>絶壁に　圧倒されながら
+進むしかない　山間の　道</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:16:32" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T07:19:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7071,11 +7075,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-マリンチューブ</Text>
+			<Text>さいせんたんの　ぎじゅつりょくが
+そそぎこまれている　かいていトンネル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:35:21" />
+				Time="2011-08-30T06:59:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7083,11 +7087,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-マリンチューブ</Text>
+			<Text>最先端の　技術力が
+注ぎこまれている　海底トンネル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:35:27" />
+				Time="2011-08-30T06:59:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
