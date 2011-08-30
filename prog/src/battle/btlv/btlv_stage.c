@@ -137,6 +137,9 @@ static void _set_Stage3DPos( BTLV_STAGE_WORK *bsw, int index, fx32 scale )
   
 }
 
+
+
+#define BTLV_STAGE_ANIME_TYPE_NUM ( 3 )   // ica,ita,imaデータ読み込むテーブルの個数
 //============================================================================================
 /**
  *  システム初期化
@@ -210,12 +213,12 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
     bsw->anm_count   = 1;
     bsw->stage_count = 1; // ローテーションはお盆アニメリソースは１つでよい
 
-    bsw->stage_anm_resource[ 0 ] = GFL_HEAP_AllocMemory( bsw->heapID, 4 );
+    bsw->stage_anm_resource[ 0 ] = GFL_HEAP_AllocClearMemory( bsw->heapID, 4*BTLV_STAGE_ANIME_TYPE_NUM );
     bsw->stage_anm_resource[ 0 ][ 0 ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, NARC_battgra_wb_batt_st_vs3_nsbca );
 
     for( i = 0 ; i < BTLV_STAGE_MAX ; i++ )
     { 
-      bsw->stage_anm[ i ] = GFL_HEAP_AllocMemory( bsw->heapID, 4 );
+      bsw->stage_anm[ i ] = GFL_HEAP_AllocClearMemory( bsw->heapID, 4*BTLV_STAGE_ANIME_TYPE_NUM );
       bsw->stage_anm_work[ i ] = GFL_HEAP_AllocClearMemory( bsw->heapID, sizeof( BTLV_STAGE_ANM_WORK ) );
 
       bsw->stage_anm[ i ][ 0 ] = GFL_G3D_ANIME_Create( bsw->stage_render[ i ], bsw->stage_anm_resource[ 0 ][ 0 ], BTLV_STAGE_ANM_MAX ); 
@@ -229,34 +232,36 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
   else if( bsw->anm_count )   
   { 
     // アニメが存在している場合はテーブルからindexを取得し登録する
-    int i, j;
+    int i, j, n=0;
 
     bsw->stage_count = BTLV_STAGE_MAX; // 自分と敵で別々のアニメリソースを読み込むので２
     for(i=0;i<BTLV_STAGE_MAX;i++){
-      bsw->stage_anm_resource[i]  = GFL_HEAP_AllocMemory( bsw->heapID, 4 * bsw->anm_count );
+      bsw->stage_anm_resource[i]  = GFL_HEAP_AllocClearMemory( bsw->heapID, 4 * BTLV_STAGE_ANIME_TYPE_NUM );
     }
 
     // アニメ登録用のポインタテーブルを確保
     for( i = 0 ; i < BTLV_STAGE_MAX ; i++ )
     { 
-      bsw->stage_anm[ i ]           = GFL_HEAP_AllocMemory( bsw->heapID, 4 * bsw->anm_count );
-      bsw->stage_anm_work[ i ]      = GFL_HEAP_AllocClearMemory( bsw->heapID, sizeof( BTLV_STAGE_ANM_WORK ) * bsw->anm_count );
+      bsw->stage_anm[ i ]           = GFL_HEAP_AllocClearMemory( bsw->heapID, 4 * BTLV_STAGE_ANIME_TYPE_NUM );
+      bsw->stage_anm_work[ i ]      = GFL_HEAP_AllocClearMemory( bsw->heapID, sizeof( BTLV_STAGE_ANM_WORK ) * BTLV_STAGE_ANIME_TYPE_NUM );
     }
     // アニメーション読み込み
-    for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
+    for( i = BATT_BG_TBL_FILE_NSBCA ; i <= BATT_BG_TBL_FILE_NSBMA; i++ )
     { 
-      OS_Printf("i=%d, resouce_id=~%d,\n", i,bbtst[ index ].file[ i ][ season*2 ]);
+      OS_Printf("i=%d, resouce_id=%d,\n", i,bbtst[ index ].file[ i ][ season*2 ]);
       if( bbtst[ index ].file[ i ][ season*2 ] != BATT_BG_TBL_NO_FILE )
       { 
         for( j = 0 ; j < BTLV_STAGE_MAX ; j++ )
         { 
-          bsw->stage_anm_resource[ j ][ i-1 ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ i ][ season*2+j ] );
+          bsw->stage_anm_resource[ j ][ n ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ i ][ season*2+j ] );
           //ANIME生成
-          bsw->stage_anm[ j ][ i-1 ] = GFL_G3D_ANIME_Create( bsw->stage_render[ j ], bsw->stage_anm_resource[ j ][ i-1 ], BTLV_STAGE_ANM_MAX ); 
-          bsw->stage_anm_work[ j ][ i-1 ].anm_type = BTLV_STAGE_ANM_TYPE_LOOP;
+          bsw->stage_anm[ j ][ n ] = GFL_G3D_ANIME_Create( bsw->stage_render[ j ], bsw->stage_anm_resource[ j ][ n ], BTLV_STAGE_ANM_MAX ); 
+          bsw->stage_anm_work[ j ][ n ].anm_type = BTLV_STAGE_ANM_TYPE_LOOP;
         }
+        n++;
       }
     }
+    GF_ASSERT( n==bsw->anm_count);
 
     // 読み込み済みアニメのG3D連結。アニメ起動
     for( j = 0 ; j < BTLV_STAGE_MAX ; j++ )
@@ -282,11 +287,11 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
     NNSG3dResTex*         pTex = NNS_G3dGetTex( header ); 
     u32                   size = (u32)pTex->plttInfo.sizePltt << 3;
 
-    bsw->epfw.g3DRES     = GFL_HEAP_AllocMemory( bsw->heapID, 4 );
-    bsw->epfw.pData_dst  = GFL_HEAP_AllocMemory( bsw->heapID, 4 );
+    bsw->epfw.g3DRES     = GFL_HEAP_AllocClearMemory( bsw->heapID, 4 );
+    bsw->epfw.pData_dst  = GFL_HEAP_AllocClearMemory( bsw->heapID, 4 );
     
     bsw->epfw.g3DRES[ 0 ]     = bsw->stage_resource_mine;
-    bsw->epfw.pData_dst[ 0 ]  = GFL_HEAP_AllocMemory( bsw->heapID, size );
+    bsw->epfw.pData_dst[ 0 ]  = GFL_HEAP_AllocClearMemory( bsw->heapID, size );
     bsw->epfw.pal_fade_flag   = 0;
     bsw->epfw.pal_fade_count  = 1;
   }
@@ -337,16 +342,20 @@ void  BTLV_STAGE_Exit( BTLV_STAGE_WORK* bsw )
   if( bsw->anm_count )
   { 
     // 登録アニメリソース分解放
-    for( i = 0 ; i < bsw->anm_count ; i++ )
+    for( i = 0 ; i < BTLV_STAGE_ANIME_TYPE_NUM ; i++ )
     { 
       // 自分・敵分のアニメワーク解放
       for( j = 0 ; j < BTLV_STAGE_MAX ; j++ )
       { 
-        GFL_G3D_ANIME_Delete( bsw->stage_anm[ j ][ i ] );
+        if(bsw->stage_anm[ j ][ i ]!=NULL){
+          GFL_G3D_ANIME_Delete( bsw->stage_anm[ j ][ i ] );
+        }
       }
       // 読み込み分に応じて解放
       for( j = 0; j < bsw->stage_count; j++){
-        GFL_G3D_DeleteResource( bsw->stage_anm_resource[ j ][ i ] );
+        if(bsw->stage_anm_resource[ j ][ i ]!=NULL){
+          GFL_G3D_DeleteResource( bsw->stage_anm_resource[ j ][ i ] );
+        }
       }
 
     }
