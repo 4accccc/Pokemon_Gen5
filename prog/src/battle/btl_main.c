@@ -6371,7 +6371,7 @@ static void _print_pokewood_event_data(POKEWOOD_SENARIO *senario, int event)
     OS_Printf("%d,", senario->event[event].stage_cast[i]);
   }
   OS_Printf("\n");
-  for(i=0;i<4;i++){
+  for(i=0;i<5;i++){
     OS_Printf(" reaction=%d:msg=%d, e_msg=%d, waza=%d, vfx=%d point=%d\n",
                   i,
                   senario->event[event].reaction[i].my_message,
@@ -6405,6 +6405,7 @@ static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
   OS_Printf("battle_field=%d\n", senario->battle_field);
 
   OS_Printf("trainer_type=0:%d,  1:%d,  2:%d,  3:%d\n", senario->trtype[0],senario->trtype[1],senario->trtype[2],senario->trtype[3]);
+  OS_Printf("my_type=0:%d,  1:%d\n", senario->mytype[0],senario->mytype[1] );
 
   OS_Printf("bg_change0: turn=%d, change_no=%d\n", senario->bg_change[0][0], senario->bg_change[0][1]  );
   OS_Printf("bg_change1: turn=%d, change_no=%d\n", senario->bg_change[1][0], senario->bg_change[1][1]  );

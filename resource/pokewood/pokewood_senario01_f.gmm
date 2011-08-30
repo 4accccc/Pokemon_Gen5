@@ -777,6 +777,26 @@
 		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまいね……</language>
 	</row>
+	<row id="pw_event4_enemy_0">
+		<language name="JPN" width="256">なぜUFOに　じしんが…
+そんなはずは…▼
+まさか！　そのために　どうぐを
+いれかえたの！？</language>
+		<language name="JPN_KANJI" width="256">なぜUFOに　じしんが…
+そんなはずは…▼
+まさか！　そのために　どうぐを
+いれかえたの！？</language>
+	</row>
+	<row id="pw_event4_hero_1">
+		<language name="JPN" width="256">そうよ！　だから　くろいてっきゅうを
+わたしたのよ！</language>
+		<language name="JPN_KANJI" width="256">そうよ！　だから　くろいてっきゅうを
+わたしたのよ！</language>
+	</row>
+	<row id="pw_event4_enemy_1">
+		<language name="JPN" width="256">そんな…　そんな…</language>
+		<language name="JPN_KANJI" width="256">そんな…　そんな…</language>
+	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

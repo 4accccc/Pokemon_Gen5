@@ -953,8 +953,8 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
 
   const struct _POKEWOOD_REC_CONV_DATA *p_setup_data = &sc_rec_to_show_data[ bsp->pokewoodSenario ];
 
+#if 0
   GF_ASSERT(bsp->pokewoodSenario < NELEMS(sc_rec_to_show_data) );
-
 
   //敵トレーナーの設定
   {
@@ -1000,6 +1000,7 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
       }
     }
   }
+#endif
 
   //敵ポケモンの設定
   //置換するものがあったら変える

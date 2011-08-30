@@ -52,7 +52,7 @@ PWS_A_NONE_B_TRAINER    =(PWS_B_TRAINER|PWS_A_NONE)    # 0x12 自分側いない敵側ト
 PWS_A_NONE_B_NONE       =(PWS_B_NONE|PWS_A_NONE)       # 0x22 両方いない
 
 
-$bg_hash       = {"チェンジ０"=>0, "チェンジ１"=>1, "チェンジ２"=>2, "チェンジ３"=>3,}
+$bg_hash       = {"チェンジ０"=>0, "チェンジ１"=>1, "チェンジ２"=>2, "チェンジ３"=>3,"チェンジ４"=>4,}
 $waza_ret_hash = { "技１"=>0, "技２"=>1, "技３"=>2, "技４"=>3 }
 $itemok_hash   = {"使用可"=>0, "使用不可"=>1}
 $sex_hash      = {"♂"=>0, "♀"=>1, "なし"=>2 }
@@ -78,8 +78,11 @@ $director_hash = { "OLDMAN1"=>0, "SUNGLASSES"=>1, "MIDDLEMAN2"=>3 ,"GENTLEMAN,AD
 
 $bias_hash     = { "傾向：感動"=>0, "傾向：恐怖"=>1, "傾向：楽しい"=>2, "傾向：痛快"=>3, "傾向：シリアス"=>4 }
 
-$field_hash    = { "ビル屋上Ａ"=>0, "ビル屋上Ｂ"=>1, "研究施設"=>2, "都会・雑踏"=>3, "一般家屋室内"=>4,
-                   "遊園地"=>6, "波止場"=>7, "砂浜"=>8, "魔法の世界"=>9, "湖畔"=>10,  "墓地"=>11, "未来都市"=>12,}
+$field_hash    = { "ビル屋上Ａ"=>21,  "遊園地Ａ"=>22, "都会・雑踏"=>23, "未来都市"=>24, "砂浜"=>25,
+                   "波止場"=>26, "ビル屋上Ｂ"=>27, "魔法の世界"=>28, "墓地"=>29, "研究施設"=>30,
+                   "一般家屋室内"=>31, "湖畔"=>32, "宇宙"=>33, "遊園地Ｂ"=>34, }
+$situ_hash     = { "指定ポケモン瀕死→"=>0, "指定の技を使用→"=>1}
+
 #----------------------------------------------------
 # ポケモンデータクラス
 #----------------------------------------------------
@@ -112,6 +115,8 @@ class EVENT_DATA
   def initialize( type )
     @start_turn     = -1
     @flag_provision = -1
+    @situ_provision = -1
+    @situ_provision_data = -1
     @bias           = -1
     @event_point    = -1
     @talk_msg       = Array.new( EVENT_TALK_MAX*2 ).fill(-1)
@@ -121,7 +126,7 @@ class EVENT_DATA
       @reaction_data[i] = Array.new( EVENT_REACTION_ARRAY ).fill(-1)
     }
   end
-  attr_accessor :start_turn, :talk_msg, :reaction_data, :stage_cast, :flag_provision, :bias, :event_point
+  attr_accessor :start_turn, :talk_msg, :reaction_data, :stage_cast, :flag_provision, :bias, :event_point, :situ_provision, :situ_provision_data
 
   #イベント時メッセージ取得
   def set_event_msg( index, msg )
@@ -149,6 +154,8 @@ class EVENT_DATA
     array = Array.new
     array << @start_turn
     array << @flag_provision
+    array << @situ_provision
+    array << @situ_provision_data
     array << @bias
     array << event_point
     array = array+@talk_msg+@stage_cast
@@ -304,6 +311,20 @@ class POKEWOOD_SENARIO
     #イベント発動条件取得
     if data[start][5]!=EVENT_NO_PROVISION then
       @event[index].flag_provision = data[start][5].to_i
+    end
+
+    #イベント条件取得２
+    if data[start][6].to_s!="" then
+      @event[index].situ_provision      = hash2no( $situ_hash, data[start][6] )
+      if @event[index].situ_provision==0 then
+        @event[index].situ_provision_data = hash2no( $monsno_hash, data[start][7] )
+      elsif @event[index].situ_provision==1 then
+        @event[index].situ_provision_data = hash2no( $wazano_hash, data[start][7] )
+      end
+      if @event[index].situ_provision_data==-1 then
+        printf( "イベント%dの条件指定に正しいポケモン名か技名が入っていません 条件=%s, 指定=%s\n", index, data[start][6], data[start][7] )
+        exit(1)
+      end
     end
     
     #イベント会話

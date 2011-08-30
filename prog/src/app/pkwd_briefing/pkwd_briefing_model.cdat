@@ -286,6 +286,190 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
     g3Dutil_objTbl10,           //オブジェクト設定テーブル
     NELEMS(g3Dutil_objTbl10),   //オブジェクト数
   },
+
+  { // ポケウッド１
+    g3Dutil_resTbl1,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl1),   //リソース数
+    g3Dutil_objTbl1,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl1),   //オブジェクト数
+  },
+  { // ポケウッド2
+    g3Dutil_resTbl2,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl2),   //リソース数
+    g3Dutil_objTbl2,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl2),   //オブジェクト数
+  },
+  { // ポケウッド3
+    g3Dutil_resTbl3,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl3),   //リソース数
+    g3Dutil_objTbl3,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl3),   //オブジェクト数
+  },
+  { // ポケウッド4
+    g3Dutil_resTbl4,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl4),   //リソース数
+    g3Dutil_objTbl4,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl4),   //オブジェクト数
+  },
+  { // ポケウッド5
+    g3Dutil_resTbl5,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl5),   //リソース数
+    g3Dutil_objTbl5,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl5),   //オブジェクト数
+  },
+  { // ポケウッド6
+    g3Dutil_resTbl6,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl6),   //リソース数
+    g3Dutil_objTbl6,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl6),   //オブジェクト数
+  },
+  { // ポケウッド7
+    g3Dutil_resTbl7,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl7),   //リソース数
+    g3Dutil_objTbl7,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl7),   //オブジェクト数
+  },
+  { // ポケウッド8
+    g3Dutil_resTbl8,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl8),   //リソース数
+    g3Dutil_objTbl8,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl8),   //オブジェクト数
+  },
+  { // ポケウッド9
+    g3Dutil_resTbl9,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl9),   //リソース数
+    g3Dutil_objTbl9,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl9),   //オブジェクト数
+  },
+  { // ポケウッド10
+    g3Dutil_resTbl10,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl10),   //リソース数
+    g3Dutil_objTbl10,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl10),   //オブジェクト数
+  },
+
+  { // ポケウッド１
+    g3Dutil_resTbl1,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl1),   //リソース数
+    g3Dutil_objTbl1,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl1),   //オブジェクト数
+  },
+  { // ポケウッド2
+    g3Dutil_resTbl2,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl2),   //リソース数
+    g3Dutil_objTbl2,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl2),   //オブジェクト数
+  },
+  { // ポケウッド3
+    g3Dutil_resTbl3,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl3),   //リソース数
+    g3Dutil_objTbl3,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl3),   //オブジェクト数
+  },
+  { // ポケウッド4
+    g3Dutil_resTbl4,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl4),   //リソース数
+    g3Dutil_objTbl4,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl4),   //オブジェクト数
+  },
+  { // ポケウッド5
+    g3Dutil_resTbl5,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl5),   //リソース数
+    g3Dutil_objTbl5,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl5),   //オブジェクト数
+  },
+  { // ポケウッド6
+    g3Dutil_resTbl6,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl6),   //リソース数
+    g3Dutil_objTbl6,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl6),   //オブジェクト数
+  },
+  { // ポケウッド7
+    g3Dutil_resTbl7,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl7),   //リソース数
+    g3Dutil_objTbl7,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl7),   //オブジェクト数
+  },
+  { // ポケウッド8
+    g3Dutil_resTbl8,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl8),   //リソース数
+    g3Dutil_objTbl8,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl8),   //オブジェクト数
+  },
+  { // ポケウッド9
+    g3Dutil_resTbl9,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl9),   //リソース数
+    g3Dutil_objTbl9,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl9),   //オブジェクト数
+  },
+  { // ポケウッド10
+    g3Dutil_resTbl10,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl10),   //リソース数
+    g3Dutil_objTbl10,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl10),   //オブジェクト数
+  },
+
+  { // ポケウッド１
+    g3Dutil_resTbl1,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl1),   //リソース数
+    g3Dutil_objTbl1,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl1),   //オブジェクト数
+  },
+  { // ポケウッド2
+    g3Dutil_resTbl2,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl2),   //リソース数
+    g3Dutil_objTbl2,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl2),   //オブジェクト数
+  },
+  { // ポケウッド3
+    g3Dutil_resTbl3,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl3),   //リソース数
+    g3Dutil_objTbl3,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl3),   //オブジェクト数
+  },
+  { // ポケウッド4
+    g3Dutil_resTbl4,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl4),   //リソース数
+    g3Dutil_objTbl4,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl4),   //オブジェクト数
+  },
+  { // ポケウッド5
+    g3Dutil_resTbl5,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl5),   //リソース数
+    g3Dutil_objTbl5,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl5),   //オブジェクト数
+  },
+  { // ポケウッド6
+    g3Dutil_resTbl6,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl6),   //リソース数
+    g3Dutil_objTbl6,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl6),   //オブジェクト数
+  },
+  { // ポケウッド7
+    g3Dutil_resTbl7,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl7),   //リソース数
+    g3Dutil_objTbl7,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl7),   //オブジェクト数
+  },
+  { // ポケウッド8
+    g3Dutil_resTbl8,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl8),   //リソース数
+    g3Dutil_objTbl8,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl8),   //オブジェクト数
+  },
+  { // ポケウッド9
+    g3Dutil_resTbl9,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl9),   //リソース数
+    g3Dutil_objTbl9,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl9),   //オブジェクト数
+  },
+  { // ポケウッド10
+    g3Dutil_resTbl10,           //リソーステーブル
+    NELEMS(g3Dutil_resTbl10),   //リソース数
+    g3Dutil_objTbl10,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl10),   //オブジェクト数
+  },
+
 };
 
 
@@ -293,6 +477,39 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
 
 // リソーステーブル数とアニメOBJ数をテーブルにしたもの
 static const int  resource_count_tbl[][2]={
+  { NELEMS(g3Dutil_resTbl1),   NELEMS(g3Dutil_objTbl1)  },  // ポケウッド1
+  { NELEMS(g3Dutil_resTbl2),   NELEMS(g3Dutil_objTbl2)  },  // ポケウッド2
+  { NELEMS(g3Dutil_resTbl3),   NELEMS(g3Dutil_objTbl3)  },  // ポケウッド3
+  { NELEMS(g3Dutil_resTbl4),   NELEMS(g3Dutil_objTbl4)  },  // ポケウッド4
+  { NELEMS(g3Dutil_resTbl5),   NELEMS(g3Dutil_objTbl5)  },  // ポケウッド5
+  { NELEMS(g3Dutil_resTbl6),   NELEMS(g3Dutil_objTbl6)  },  // ポケウッド6
+  { NELEMS(g3Dutil_resTbl7),   NELEMS(g3Dutil_objTbl7)  },  // ポケウッド7
+  { NELEMS(g3Dutil_resTbl8),   NELEMS(g3Dutil_objTbl8)  },  // ポケウッド8
+  { NELEMS(g3Dutil_resTbl9),   NELEMS(g3Dutil_objTbl9)  },  // ポケウッド9
+  { NELEMS(g3Dutil_resTbl10),  NELEMS(g3Dutil_objTbl10) },  // ポケウッド10
+
+  { NELEMS(g3Dutil_resTbl1),   NELEMS(g3Dutil_objTbl1)  },  // ポケウッド1
+  { NELEMS(g3Dutil_resTbl2),   NELEMS(g3Dutil_objTbl2)  },  // ポケウッド2
+  { NELEMS(g3Dutil_resTbl3),   NELEMS(g3Dutil_objTbl3)  },  // ポケウッド3
+  { NELEMS(g3Dutil_resTbl4),   NELEMS(g3Dutil_objTbl4)  },  // ポケウッド4
+  { NELEMS(g3Dutil_resTbl5),   NELEMS(g3Dutil_objTbl5)  },  // ポケウッド5
+  { NELEMS(g3Dutil_resTbl6),   NELEMS(g3Dutil_objTbl6)  },  // ポケウッド6
+  { NELEMS(g3Dutil_resTbl7),   NELEMS(g3Dutil_objTbl7)  },  // ポケウッド7
+  { NELEMS(g3Dutil_resTbl8),   NELEMS(g3Dutil_objTbl8)  },  // ポケウッド8
+  { NELEMS(g3Dutil_resTbl9),   NELEMS(g3Dutil_objTbl9)  },  // ポケウッド9
+  { NELEMS(g3Dutil_resTbl10),  NELEMS(g3Dutil_objTbl10) },  // ポケウッド10
+
+  { NELEMS(g3Dutil_resTbl1),   NELEMS(g3Dutil_objTbl1)  },  // ポケウッド1
+  { NELEMS(g3Dutil_resTbl2),   NELEMS(g3Dutil_objTbl2)  },  // ポケウッド2
+  { NELEMS(g3Dutil_resTbl3),   NELEMS(g3Dutil_objTbl3)  },  // ポケウッド3
+  { NELEMS(g3Dutil_resTbl4),   NELEMS(g3Dutil_objTbl4)  },  // ポケウッド4
+  { NELEMS(g3Dutil_resTbl5),   NELEMS(g3Dutil_objTbl5)  },  // ポケウッド5
+  { NELEMS(g3Dutil_resTbl6),   NELEMS(g3Dutil_objTbl6)  },  // ポケウッド6
+  { NELEMS(g3Dutil_resTbl7),   NELEMS(g3Dutil_objTbl7)  },  // ポケウッド7
+  { NELEMS(g3Dutil_resTbl8),   NELEMS(g3Dutil_objTbl8)  },  // ポケウッド8
+  { NELEMS(g3Dutil_resTbl9),   NELEMS(g3Dutil_objTbl9)  },  // ポケウッド9
+  { NELEMS(g3Dutil_resTbl10),  NELEMS(g3Dutil_objTbl10) },  // ポケウッド10
+
   { NELEMS(g3Dutil_resTbl1),   NELEMS(g3Dutil_objTbl1)  },  // ポケウッド1
   { NELEMS(g3Dutil_resTbl2),   NELEMS(g3Dutil_objTbl2)  },  // ポケウッド2
   { NELEMS(g3Dutil_resTbl3),   NELEMS(g3Dutil_objTbl3)  },  // ポケウッド3

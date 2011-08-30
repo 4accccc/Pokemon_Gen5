@@ -106,10 +106,10 @@ static void _debug_dump(BATT_BG_TBL_BG_TABLE *tbl)
  * @param[in] season  季節INDEX
  * @param[in] heapID  ヒープID
  * @param[in] pokewood ポケウッドフラグ(battle.h参照)
- * @param[in] pokewoodsenario ポケウッドシナリオNO
+ * @param[in] pokewood_field ポケウッドの背景指定ＮＯ
  */
 //============================================================================================
-BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID, int pokewood, int pokewoodsenario )
+BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID, int pokewood, int pokewood_field )
 {
   BTLV_FIELD_WORK *bfw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_FIELD_WORK ) );
   BOOL  ret;
@@ -120,10 +120,10 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID,
   if(pokewood==BTL_POKEWOOD_REC){
     index = 20;
   }else if(pokewood==BTL_POKEWOOD_SHOW){
-    if(pokewoodsenario==0){
+    if(pokewood_field==0){
       index = 21;
     }else{
-      index = 22;
+      index = pokewood_field;
     }
   }
 

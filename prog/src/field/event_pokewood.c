@@ -282,12 +282,30 @@ void POKEWOOD_EVENT_setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HE
  * @param   heapID		    HEAPID
  */
 //----------------------------------------------------------------------------------
-static void dataMakeEncountTrainer( int senario_no, int PokewoodType, BSP_TRAINER_DATA* data, HEAPID heapID )
+static void dataMakeEncountTrainer( int senario_no, int PokewoodType, BSP_TRAINER_DATA* data, const MYSTATUS *my, HEAPID heapID )
 {
-  
+  POKEWOOD_SENARIO *senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, senario_no, GetHeapLowID(heapID));
+  int sex = MyStatus_GetMySex(my);
+
   data->tr_id   = TRID_NULL;
-  data->tr_type = trainerData[senario_no][BTL_POKEWOOD_REC-PokewoodType];
   data->ai_bit  = 0;
+
+  //=====================================================================
+  // 敵トレーナーの設定
+  //=====================================================================
+
+  // 撮影と上映、自分が男か女かで敵トレーナーの見た目が変わる
+  if(PokewoodType==BTL_POKEWOOD_REC){
+    data->tr_type = senario->trtype[sex*2];
+  }else if(PokewoodType==BTL_POKEWOOD_SHOW){
+    data->tr_type = senario->trtype[sex*2+1];
+  }
+
+  OS_Printf("===================================================================\n");
+  OS_Printf("enemy tr_type = %d\n", data->tr_type);
+  OS_Printf("===================================================================\n");
+
+  // トレーナー名を格納
   {
     GFL_MSGDATA* man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pokewood_name_dat, heapID );
     if(PokewoodType==BTL_POKEWOOD_SHOW){
@@ -299,6 +317,27 @@ static void dataMakeEncountTrainer( int senario_no, int PokewoodType, BSP_TRAINE
   }
   PMSDAT_Clear( &data->win_word );
   PMSDAT_Clear( &data->lose_word );
+
+  GFL_HEAP_FreeMemory( senario );
+}
+
+
+static void dataMakeMyTrainer( int senario_no, BSP_TRAINER_DATA *data, const MYSTATUS *my, HEAPID heapID )
+{
+  POKEWOOD_SENARIO *senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, senario_no, GetHeapLowID(heapID));
+  int sex = MyStatus_GetMySex(my);
+
+  //=====================================================================
+  // 自分トレーナーの設定
+  //=====================================================================
+  data->tr_id  = 1;
+  data->ai_bit = 0;
+  if(sex==PM_MALE){
+    data->tr_type = senario->mytype[1];
+  }else if(sex==PM_FEMALE){
+    data->tr_type = senario->mytype[1]+1;
+  }
+  GFL_HEAP_FreeMemory( senario );
 
 }
 
@@ -331,7 +370,7 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, F
     BTL_SETUP_AllocRecBuffer( bsp, heapID );
   }
 //  TT_EncountTrainerPersonalDataMake( tr_id, bsp->tr_data[BTL_CLIENT_ENEMY1], heapID );
-  dataMakeEncountTrainer( senario_no, BTL_POKEWOOD_REC, bsp->tr_data[BTL_CLIENT_ENEMY1], heapID);
+  dataMakeEncountTrainer( senario_no, BTL_POKEWOOD_REC, bsp->tr_data[BTL_CLIENT_ENEMY1], mystatus, heapID);
 //  setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, enemyData[senario_no], enemyDataNum[senario_no] );
   setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, senario_no, 1 );
 
@@ -524,7 +563,12 @@ static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work
     OS_Printf(" load pokewood player sex=%d\n ", MyStatus_GetMySex(psew->bsp->playerStatus[0]));
     BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
     // BATTLE_SETUP_PARAMを上映用のトレーナーデータに書き換える
-    dataMakeEncountTrainer( psew->bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, psew->bsp->tr_data[BTL_CLIENT_ENEMY1], psew->heapID );
+    dataMakeEncountTrainer( psew->bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, psew->bsp->tr_data[BTL_CLIENT_ENEMY1], 
+                            psew->bsp->playerStatus[0], psew->heapID );
+    psew->bsp->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( psew->heapID );
+    dataMakeMyTrainer( psew->bsp->pokewoodSenario, psew->bsp->tr_data[BTL_CLIENT_PLAYER], psew->bsp->playerStatus[0], psew->heapID );
+    psew->bsp->tr_data[BTL_CLIENT_ENEMY1]->tr_id   = 1;
+
     POKEWOOD_REC_ConvertRecToShow( psew->bsp, psew->heapID );
     BattleRec_StoreSetupParam( psew->bsp );
     psew->saveSeq0 = 0;

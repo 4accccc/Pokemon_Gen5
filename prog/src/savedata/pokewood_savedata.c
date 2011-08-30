@@ -60,6 +60,12 @@ void POKEWOOD_SAVEDATA_Init( POKEWOOD_SAVEDATA * sv )
   POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 1 ); // ハチクマン
   POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 2 ); 
 
+  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 33 ); /// 素材確認用シナリオオープン
+  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 34 ); 
+  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 35 ); 
+  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 36 ); 
+  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 37 ); 
+
 }
 
 //--------------------------------------------------------------------------------------------

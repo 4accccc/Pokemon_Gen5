@@ -35,6 +35,10 @@
 #define PWS_B_TRAINER ( PWS_A_TRAINER<<4 )  ///< BBお盆の上にトレーナー
 #define PWS_B_NONE    ( PWS_A_NONE<<4 )     ///< BBお盆の上に何もない
 
+// 条件指定
+#define PROVISION_TYPE_WAZA       ( 1 )
+#define PROVISION_TYPE_DEAD_POKE  ( 0 )
+
 
 // シナリオデータから指定されるお盆状態(AAとBBが同時に指定されている）
 enum{
@@ -87,6 +91,8 @@ typedef struct{
 typedef struct {
   s16 start_turn;         ///< イベント開始ターン
   s16 flag_provision;     ///< 分岐条件値（ポケウッド内で保持するワークとの比較に使用する値）
+  s16 situ_provision;     ///< 分岐条件指定（特定の相手のを倒す、特定の技の選択）
+  s16 situ_provision_data;///< 分岐条件用データ(ポケモン指定、技指定）
   s16 bias;               ///< イベント傾向
   s16 point;              ///< エンディング時のポイント
   s16 talk_msg[2][EVENT_TALK_TURN_MAX];                      ///< メッセージIDが自分７つ、相手７つまで格納。

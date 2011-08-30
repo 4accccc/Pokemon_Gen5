@@ -186,7 +186,10 @@ typedef struct{
   int  vfx;           ///<  背景チェンジ指定用ワーク
   s8   flagwork[EVENT_DATA_MAX];   ///<  フラグ管理用配列
   int  my_msg, enemy_msg; ///< 撮影終了時のメッセージラベル取得用
+  u16  now_waza;          ///< 現在のターンに選んだ技（ターン切り替え後消滅）
+  u16  now_dead_poke;     ///< 現在ターンに瀕死になった相手ポケモン（ターン切り替え後消滅）
 
+  u32  event_spend;   ///< 起動済みのイベントをbit単位で立てる（２重起動防止）
   int  stage_cond;    ///< お盆の上の状態（ポケモン・トレーナー・無人など,pokewood_senario.hに記述）
   STRBUF *choice_str[EVENT_REACTION_MAX]; ///< 選択肢文字列
 
@@ -558,6 +561,7 @@ static void AudienceFunc( BTL_CLIENT *wk );
 static int ChangeEventStageCondition( POKEWOOD_SENARIO *senario, BTL_CLIENT *wk );
 static int _check_event_choice( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *seqWork, int turn );
 static void _set_audience_ending_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw );
+static void _clear_pokewood_event_provision( POKEWOOD_SEQ_WORK *psw );
 
 
 #ifdef BUGFIX_AF_GFBTS2028_101007
@@ -862,6 +866,13 @@ BOOL BTL_CLIENT_IsChapterSkipMode( const BTL_CLIENT* wk )
   return (wk->mainProc == ClientMain_ChapterSkip);
 }
 
+
+//=============================================================================================
+/**
+ * プレイヤーが選択した技を取得する（一人用でクライアントがプレイヤーしか想定していない）
+ * @retval  int 技NO
+ */
+//=============================================================================================
 int BTL_CLIENT_GetSelectWaza( const BTL_CLIENT* wk )
 {
   return wk->actionParam[ 0 ].fight.waza;
@@ -1764,6 +1775,7 @@ static BOOL UI_SelectActionPokewoodRec( BTL_CLIENT *wk, int *seq )
       (*seq)++;
     }else{
       (*seq)=SELECT_ACT_SEQ_TURN_BAR_ANIME;
+       _clear_pokewood_event_provision( &wk->pokewoodSeqWork ); // ポケウッドイベント条件判定用のワークをクリア
     }
     break;
   case SELECT_ACT_SEQ_POKEWOOD_EVENT:
@@ -1821,7 +1833,7 @@ static BOOL UI_SelectActionPokewoodRec( BTL_CLIENT *wk, int *seq )
       #ifdef PM_DEBUG
       AICtrl_Delegate( wk );
       #endif
-      
+      wk->pokewoodSeqWork.now_waza = BTL_CLIENT_GetSelectWaza( wk );
       return TRUE;
     }
     break;
@@ -1991,6 +2003,33 @@ static int _check_pokewood_event( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *
       }
     }
   }
+
+  // フラグ指定とターン指定がなかった場合は特定ポケモン瀕死イベントチェック
+  if(event_no<0){
+    OS_Printf(" now_dead=%d\n ", seqWork->now_dead_poke);
+    for(i=0;i<EVENT_DATA_MAX;i++){
+      if(senario->event[i].situ_provision==PROVISION_TYPE_DEAD_POKE){
+        if(senario->event[i].situ_provision_data == seqWork->now_dead_poke 
+        && ((seqWork->event_spend>>i)&1)==0){
+          event_no = i;
+        }
+      }
+    }
+  }
+
+  // 瀕死ポケモン条件でも入らなかったら技指定イベントチェック
+  if(event_no<0){
+    OS_Printf(" now_waza=%d\n ", seqWork->now_waza);
+    for(i=0;i<EVENT_DATA_MAX;i++){
+      if(senario->event[i].situ_provision==PROVISION_TYPE_WAZA){
+        if(senario->event[i].situ_provision_data == seqWork->now_waza 
+        && ((seqWork->event_spend>>i)&1)==0){
+          event_no = i;
+        }
+      }
+    }
+  }
+
   return event_no;
 }
 
@@ -2124,6 +2163,18 @@ static void _check_ending( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, int event_
 
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ポケウッドイベント条件用ワークのクリア
+ *
+ * @param   psw		
+ */
+//----------------------------------------------------------------------------------
+static void _clear_pokewood_event_provision( POKEWOOD_SEQ_WORK *psw )
+{
+  psw->now_waza      = 0;    // イベント条件判定用のワークをクリア
+  psw->now_dead_poke = 0;
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -2394,6 +2445,14 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
     break;
   // 終了
   case POKEWOOD_EVENT_SEQ_END:
+
+    // 発動済みのイベントを起動不能にする
+    if(wk->pokewoodSeqWork.event_no>=0){
+      wk->pokewoodSeqWork.event_spend |= 1<<wk->pokewoodSeqWork.event_no;
+    }
+    // イベント条件判定用のワークをクリア
+    _clear_pokewood_event_provision( &wk->pokewoodSeqWork ); 
+
     return TRUE;
     break;
   // 技エフェクト待ち
@@ -2750,8 +2809,6 @@ static BOOL SubSeq_POKEWOOD_RecEnd_Sequence( BTL_CLIENT *wk )
       BtlResult resultCode = expandServerResult( wk );
       if(resultCode==BTL_RESULT_WIN){     // 条件を達成
         wk->pokewoodSeqWork.my_msg = pw_director_0_GOODEND + PW_DIRECTOR_1RANK_MSG_MAX*rank_tbl[bsp->player_star_rank];
-//        wk->pokewoodSeqWork.my_msg    = senario->situation_msg[0][2];
-//        wk->pokewoodSeqWork.enemy_msg = senario->situation_msg[1][2];
         wk->clientTurnCount=100;
       }else{                              // 条件を未達成
         int event_no;
@@ -2763,8 +2820,6 @@ static BOOL SubSeq_POKEWOOD_RecEnd_Sequence( BTL_CLIENT *wk )
         }else{
           wk->pokewoodSeqWork.my_msg = pw_director_0_STRANGEEND + PW_DIRECTOR_1RANK_MSG_MAX*rank_tbl[bsp->player_star_rank];
         }
-//        wk->pokewoodSeqWork.my_msg    = senario->situation_msg[0][3];
-//        wk->pokewoodSeqWork.enemy_msg = senario->situation_msg[1][3];
       }
     }
     wk->pokewoodSeqWork.seq =PWEND_REC_SEQ_CLAPPER_BOARD;
@@ -2905,6 +2960,12 @@ static BOOL SubProc_REC_SelectActionSub( BTL_CLIENT* wk, int* seq, BOOL flag )
         BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct, wk->myID, numAction);
         if( act->gen.cmd  == BTL_ACTION_FIGHT ){
           BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Fight, act->fight.waza);
+//          OS_Printf("rec command waza=%d, targetpos = %d\n", act->fight.waza, act->fight.targetPos);
+
+          // 録画再生時に技を入れるのは意味がないのだが、上映時の判定用に格納する
+          if(act->fight.targetPos>=6){
+            wk->actionParam[ 0 ].fight.waza = act->fight.waza;
+          }
         }
         if( act->gen.cmd  == BTL_ACTION_CHANGE ){
           BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Change, act->change.memberIdx);
@@ -2913,6 +2974,7 @@ static BOOL SubProc_REC_SelectActionSub( BTL_CLIENT* wk, int* seq, BOOL flag )
           BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Move );
         }
 //        return TRUE;
+
         (*seq) = SUBSEQ_REC_S_POKEWOOD_CHECK;
       }
     }
@@ -2966,6 +3028,7 @@ static BOOL SubProc_REC_SelectActionSub( BTL_CLIENT* wk, int* seq, BOOL flag )
   // ポケウッドリアクション会話
   case SUBSEQ_REC_S_POKEWOOD_REACTION:
     if(SubSeq_POKEWOOD_Sequence( wk )){
+      wk->pokewoodSeqWork.now_waza = BTL_CLIENT_GetSelectWaza( wk );
       return TRUE;
     }
     break;
@@ -8000,6 +8063,13 @@ static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
     {
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
       BTLV_StartDeadAct( wk->viewCore, pos );
+
+      // 瀕死になったポケモン(敵のみ）を取得する
+      {
+        const BTL_POKEPARAM *bpp = BTL_POKECON_GetPokeParamConst( wk->pokeCon, args[0] );
+        wk->pokewoodSeqWork.now_dead_poke = BPP_GetMonsNo( bpp );
+        OS_Printf("dead=%d, pos=%d, monsno=%d\n", args[0], pos,wk->pokewoodSeqWork.now_dead_poke );
+      }
       (*seq)++;
     }
     break;
@@ -8298,6 +8368,13 @@ static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args )
     {
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
       BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
+
+      // 瀕死になったポケモン(敵のみ）を取得する
+      {
+        const BTL_POKEPARAM *bpp = BTL_POKECON_GetPokeParamConst( wk->pokeCon, args[0] );
+        wk->pokewoodSeqWork.now_dead_poke = BPP_GetMonsNo( bpp );
+        OS_Printf("dead=%d, pos=%d, monsno=%d\n", args[0], pos,wk->pokewoodSeqWork.now_dead_poke );
+      }
       (*seq)++;
     }
     break;

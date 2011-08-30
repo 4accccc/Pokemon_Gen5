@@ -94,7 +94,7 @@ struct _BTLV_EFFECT_SETUP_PARAM
   const BTLV_SCU*         scu;
   const BTL_MAIN_MODULE*  mainModule;
   u16   pokewood;
-  u16   pokewoodsenario;
+  u16   pokewood_field;
 };
 
 struct _BTLV_EFFECT_WORK
@@ -217,8 +217,10 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, BtlCompetito
   besp->scu         = scu;
   besp->mainModule  = mainModule;
   besp->pokewood        = BTL_MAIN_GetPokewoodMode( mainModule );
-  besp->pokewoodsenario = BTL_MAIN_GetPokewoodSenarioNo( mainModule );
-
+  if( besp->pokewood!=BTL_POKEWOOD_NONE ){
+    POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario(mainModule);
+    besp->pokewood_field     = senario->battle_field;
+  }
   for( i = 0 ; i < 4 ; i++ )
   {
     besp->tr_type[ i ] = tr_type[ i ];
@@ -330,12 +332,12 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
                                                 bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ]);
       bew->bfw  = BTLV_FIELD_Init( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ),
                                    bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ], season, heapID,
-                                   besp->pokewood, besp->pokewoodsenario );
+                                   besp->pokewood, besp->pokewood_field );
     }
     else
     {
       bew->bfw  = BTLV_FIELD_Init( FALSE, bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ], season, heapID,
-                                   besp->pokewood, besp->pokewoodsenario );
+                                   besp->pokewood, besp->pokewood_field );
     }
 
     //ƒ‰ƒCƒgİ’è
