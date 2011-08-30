@@ -833,8 +833,9 @@
 #define		FORMNO_KYUREMU_MAX				( 3 )
 
 //ケルディオ
-#define		FORMNO_KERUDHIO_SWORD				( 0 )
-#define		FORMNO_KERUDHIO_MAX				( 1 )
+#define		FORMNO_KERUDHIO_NORMAL				( 0 )
+#define		FORMNO_KERUDHIO_SWORD				( 1 )
+#define		FORMNO_KERUDHIO_MAX				( 2 )
 
 //メロエッタ
 #define		FORMNO_MEROETTA_VOICE				( 0 )
@@ -855,7 +856,7 @@
 #define		FORMNO_TAMAGO_MAX				( 2 )
 
 //フォルム違いトータル
-#define OTHER_FORM_MAX  ( 62 )
+#define OTHER_FORM_MAX  ( 63 )
 
 //イッシュ図鑑トータル
 #define ZUKANNO_ISSHU_END  ( 253 )
