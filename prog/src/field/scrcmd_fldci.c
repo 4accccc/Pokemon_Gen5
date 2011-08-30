@@ -63,6 +63,12 @@ const ITEM_CI_NO ItemCutinNo[] = {
   {ITEM_KYOKASYOU,    FLDCIID_GET2_05},     // @todo 仮追加
   {ITEM_MARUIOMAMORI, FLDCIID_GET2_05},     // @todo 仮追加
   {ITEM_HIKARUOMAMORI,FLDCIID_GET2_05},     // @todo 仮追加
+  
+  {ITEM_PURAZUMAKAADO,FLDCIID_GET2_05},     // @todo 仮追加
+  {ITEM_YOGORETAHANKATI,FLDCIID_GET2_05},     // @todo 仮追加
+  {ITEM_AKUROMAMASIIN,FLDCIID_GET2_05},     // @todo 仮追加
+  {ITEM_IDENSINOKUSABI,FLDCIID_GET2_05},     // @todo 仮追加
+  {ITEM_IDENSINOKUSABI_1,FLDCIID_GET2_05},     // @todo 仮追加
 //※リバティチケットは配達員からなのでここにはなし
 };
 
