@@ -961,7 +961,7 @@ struct _RESORT_RECV_DATA
   u8                  meet_hour;
   u8                  meet_min;       //8
   u8                  commID;   //通信識別ID
-  u8                  merge     :1;
+  u8                  jobchange_day     :1; //転職一日一回ビット
   u8                  padding1  :5;
   u8                  day_flag  :1;
   u8                  keep_flag :1;
@@ -1514,6 +1514,8 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return cp_wk->keep_flag;
   case RESORT_DATA_PARAM_DAY_FLAG:
     return cp_wk->day_flag;
+  case RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG:
+    return cp_wk->jobchange_day;
   case RESORT_DATA_PARAM_TYPE:
     return cp_wk->type;
   case RESORT_DATA_PARAM_EXTEND_BIT:
@@ -1751,6 +1753,9 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     break;
   case RESORT_DATA_PARAM_DAY_FLAG:
     p_wk->day_flag = data;
+    break;
+  case RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG:
+    p_wk->jobchange_day = data;
     break;
   case RESORT_DATA_PARAM_TYPE:
     p_wk->type = data;
@@ -3092,7 +3097,10 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetOverReserveData( RESORT_RECV_BUFF 
 void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID )
 {
   //TODO 変換データ
-  *p_wk   = *cp_recv;
+  if( p_wk != cp_recv )
+  {
+    *p_wk   = *cp_recv;
+  }
 
   //場所を設定
   p_wk->peopleID  = peopleID;
@@ -3145,6 +3153,8 @@ static void Resort_Recv_Data_SetWantJob( RESORT_RECV_DATA *p_wk )
 {
   int shopID  = RESORT_RESIDENT_DATA_GetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, NULL );
   RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution(p_wk);
+
+  RESORT_INSTITUTION_DATA_InitInstance( p_institution );
   RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
 }
 //----------------------------------------------------------------------------
@@ -3827,6 +3837,7 @@ void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
     {
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_DAY_FLAG, FALSE );
+      RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG, FALSE );
 
       for( j = RESORT_INSTITUTION_DATA_BIT_SHOP_START; j < RESORT_INSTITUTION_DATA_BIT_SHOP_END; j++ )
       {

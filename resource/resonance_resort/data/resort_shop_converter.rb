@@ -176,7 +176,6 @@ SHOP_COL_NEXTEXP       = 4         #列：次の経験値
 SHOP_COL_NAME          = 5         #列：お店名
 SHOP_COL_3DMD_L        = 6         #列：外観左
 SHOP_COL_3DMD_R        = 7         #列：外観右
-SHOP_COL_IN_TEX        = 8         #列：TEX
 SHOP_COL_LIST1         = 9         #列：リスト１
 SHOP_COL_LIST2         = 10         #列：リスト２
 SHOP_COL_LIST3         = 11         #列：リスト３
@@ -198,6 +197,9 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
   patchdata = HeaderDataArray.new
   patchdata.load( patch )
 
+  #タイプ別最大LVチェック配列
+  lv_max_array  = Array.new(1)
+
   for row in SHOP_ROW_START...csv.row_length-1
 
     #データ取得
@@ -209,7 +211,6 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     name    = csv.get( row, SHOP_COL_NAME )
     l3dmd   = csv.get( row, SHOP_COL_3DMD_L );
     r3dmd  = csv.get( row, SHOP_COL_3DMD_R );
-    intex  = csv.get( row, SHOP_COL_IN_TEX );
 
     #データ書き込み
     data.write_u16( h_define[shop] )
@@ -217,6 +218,11 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     data.write_u16( lv )
     data.write_u16( nextexp )
 
+    #タイプ別最大LV
+    index = h_define[shop] * (type.to_i+1)
+    if lv_max_array[index] == nil || lv_max_array[index]  < lv
+      lv_max_array[index]  = lv
+    end
 
     #ヘッダに書きこみ
     header.write( "#define RESORT_SHOP_ID_#{tag} (#{row-SHOP_ROW_START})\n" )
@@ -237,7 +243,6 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     rescue HeaderSearchError
       exit(1)
     end
-    data.write_u16( intex )
 
     for i in SHOP_COL_LIST_START...SHOP_COL_LIST_END+1
       list   = csv.get( row, i )
@@ -252,6 +257,20 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
       end
     end
   end
+
+    header.write( "#define RESORT_SHOP_ID_MAX (#{row-SHOP_ROW_START+1})\n" )
+
+  #ヘッダに書きこみ
+  lv_max_array.each {|num|
+    if lv_max_array[0] != num 
+      puts "最大LVが#{num}の場所があります。"
+      exit(1)
+    end
+  }
+  p lv_max_array
+
+  header.write( "#define RESORT_SHOP_LVMAX (#{lv_max_array[0]})\n" )
+
 end
 
 #=============================================================================

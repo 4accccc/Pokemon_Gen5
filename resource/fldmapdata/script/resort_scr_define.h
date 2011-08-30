@@ -18,8 +18,9 @@
 //èZñØÇÃï™äÚ
 #define SEQ_RESIDENT_INSTITUTION  (0)
 #define SEQ_RESIDENT_DOING        (1)
-#define SEQ_RESIDENT_TROUBLE      (2)
+#define SEQ_RESIDENT_CHECKEXP     (2)
 #define SEQ_RESIDENT_BYE          (3)
+#define SEQ_RESIDENT_JOBCHANGE    (4)
 
 //îÈèëÇÃï™äÚ
 #define SEQ_SECRETARY_WORK_GOSSIP       (0)
@@ -55,6 +56,11 @@
 #define SEQ_MOUTHCOMM_HEAR        (0)
 #define SEQ_MOUTHCOMM_ANSWER      (1)
 #define SEQ_MOUTHCOMM_CANCEL      (2)
+
+//ç≈ãﬂÇ«Ç§ÅHÇÃï™äÚ
+#define SEQ_RECENT_RECORD         (0)
+#define SEQ_RECENT_MEDAL          (1)
+#define SEQ_RECENT_BYE            (2)
 
 //ê‡ñæÇ∑ÇÈêl
 #define SEQ_INFOMATION_Q00        (0)

@@ -13607,18 +13607,6 @@
 
 //--------------------------------------------------------------
 /**
- * @brief リゾート用　データを更新させない　迎賓館でのみ使用可能
- */
-//--------------------------------------------------------------
-#define _RESORT_KEEP_WAIT() \
-    _ASM_RESORT_KEEP_WAIT
-
-  .macro _ASM_RESORT_KEEP_WAIT
-  .short EV_SEQ_RESORT_KEEP_PEOPLE
-  .endm
-
-//--------------------------------------------------------------
-/**
  * @brief リゾート用　文字バッファへ登録
  * @param[in]  type何を登録するか「下記値を設定」
  * @param[in]  param typeへきて
@@ -13667,21 +13655,6 @@
   .short  \idx
   .endm
 
-//--------------------------------------------------------------
-/**
- * @brief リゾート用　滞在者が入るかチェック
- * @param[out]  flag TRUEで入った　FALSEで入っていない
- * @param[out]  msgID flagがTRUEの場合、誰が入ったか
- */
-//--------------------------------------------------------------
-#define _RESORT_CHECK_VISITOR( flag, msgID ) \
-      _ASM_RESORT_CHECK_VISITOR flag, msgID
-
-  .macro _ASM_RESORT_CHECK_VISITOR flag, msgID
-  .short EV_SEQ_RESORT_CHECK_VISITOR
-  .short \flag
-  .short \msgID
-  .endm
 
 //--------------------------------------------------------------
 /**
@@ -13721,36 +13694,6 @@
 
   .macro _ASM_RESORT_MERGE_OFF
   .short EV_SEQ_RESORT_MERGE_OFF
-  .endm
-
-//--------------------------------------------------------------
-/**
- * @brief リゾート用　新規施設の入り口を取得
- * @param[out]  x       Xグリッド座標
- * @param[out]  y       Yグリッド座標
- */
-//--------------------------------------------------------------
-#define _RESORT_NEW_INSTATITUTION_ENTRANCE( x, y ) \
-    _ASM_RESORT_NEW_INSTATITUTION_ENTRANCE x, y
-
-  .macro _ASM_RESORT_NEW_INSTATITUTION_ENTRANCE x, y
-  .short EV_SEQ_RESORT_NEW_INSTATITUTION_ENTRANCE
-  .short \x
-  .short \y
-  .endm
-
-//--------------------------------------------------------------
-/**
- * @brief リゾート用　迎賓館でタイプをジャンプさせる（迎賓館専用）
- * @param[in]   param どのタイプをサーチしたいか
- */
-//--------------------------------------------------------------
-#define _RESORT_SEARCH_RECEPTION( param ) \
-    _ASM_RESORT_SEARCH_RECEPTION param
-
-  .macro _ASM_RESORT_SEARCH_RECEPTION param
-  .short EV_SEQ_RESORT_SEARCH_RECEPTION
-  .short \param
   .endm
 
 //--------------------------------------------------------------
@@ -13946,34 +13889,6 @@
 
   .macro _ASM_RESORT_END_ITEM
   .short EV_SEQ_RESORT_END_ITEM
-  .endm
-
-//--------------------------------------------------------------
-/**
- * @brief リゾート用  ブレンドブライトネス
- */
-//--------------------------------------------------------------
-#define _RESORT_BLEND_BRIGHTNESS( now, next, sync ) \
-    _ASM_RESORT_BLEND_BRIGHTNESS now, next, sync
-
-  .macro _ASM_RESORT_BLEND_BRIGHTNESS now, next, sync
-  .short EV_SEQ_RESORT_BLEND_BRIGHTNESS
-  .short \now
-  .short \next
-  .short \sync
-  .endm
-
-//--------------------------------------------------------------
-/**
- * @brief リゾート用  メッセージにアルファを適用するかどうか
- */
-//--------------------------------------------------------------
-#define _RESORT_USE_MSG_ALPHA( is_use ) \
-      _ASM_RESORT_USE_MSG_ALPHA is_use
-  
-  .macro _ASM_RESORT_USE_MSG_ALPHA is_use
-  .short EV_SEQ_RESORT_USE_MSGALPHA
-  .short \is_use
   .endm
 
 //--------------------------------------------------------------

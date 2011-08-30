@@ -26,7 +26,11 @@
 #define RESORT_GET_PARAM_IS_EVENT           (7)
 #define RESORT_GET_PARAM_TYPE               (8)
 #define RESORT_GET_PARAM_DAY_FLAG           (9)
-#define RESORT_GET_PARAM_IS_INSTITUTION_FULL   (10)
+#define RESORT_GET_PARAM_IS_INSTITUTION_FULL  (10)
+#define RESORT_GET_PARAM_SHOPKIND             (11)
+#define RESORT_GET_PARAM_HAS_RECORD         (12)
+#define RESORT_GET_PARAM_HAS_MEDAL          (13)
+#define RESORT_GET_PARAM_NUM_RECORD         (15)
 
 //_RESORT_SET_MY_DATA, _RESORT_GET_MY_DATA用
 #define RESORT_MY_PARAM_GOSSIP_00          (0)
@@ -99,11 +103,17 @@
 #define RESORT_MSGID_05             (5)
 
   //特殊MSG
-#define RESORT_MSGID_RECENT         (10)  //最近MSG
+#define RESORT_MSGID_RECENT         (10)  //できごと文
 #define RESORT_MSGID_WHERETOGO      (11)  //どこへ行きたいか
 #define RESORT_MSGID_APPEAL         (12)  //アピール文
 #define RESORT_MSGID_SHOP_INFO      (13)  //お店情報
 #define RESORT_MSGID_GOSSIP         (14)  //噂（特殊NPCの話)
+
+
+#define RESORT_MSGID_MEDAL_HAVE     (15)  //メダル自慢
+#define RESORT_MSGID_MEDAL_NONE     (16)  //メダルないよ
+#define RESORT_MSGID_RECORD_NEXT    (17)  //出来事まだあるよ
+#define RESORT_MSGID_RECORD_NONE    (18)  //出来事なし
 
   //旅行者
 #define RESORT_TOURIST_GREET_MSGID  (RESORT_MSGID_00)

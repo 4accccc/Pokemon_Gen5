@@ -317,13 +317,24 @@ BOOL RESORT_DATA_MANAGER_IsJobChange( const RESORT_DATA_MANAGER *cp_wk, const RE
 u32 RESORT_DATA_MANAGER_Convert( RESORT_DATA_MANAGER *p_wk, RESORT_ABSTRUCT_DATA *p_src, RESORT_DATA_TYPE dst_type )
 {
   u16 peopleID;
-  RESORT_ABSTRUCT_DATA *p_dst_adrs;
+  RESORT_ABSTRUCT_DATA *p_dst_adrs = NULL;
   RESORT_PLACEID  placeID = RESORT_MAP_GetPeoplePlace(RESORT_ABSTRUCT_DATA_GetPeopleType(p_src));
   RESORT_DATA_TYPE src_type = RESORT_ABSTRUCT_DATA_GetPeopleType(p_src);
 
-  GF_ASSERT( src_type != dst_type);
+  if( src_type == dst_type )
+  {
+    //ìØÇ∂èÍçáÇÕèZêlÇæÇØÇÃÇÕÇ∏
+    RESORT_RESIDENT_DATA *p_src_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_src );
 
-  if( RESORT_DATA_MANAGER_CheckConvert( p_wk, RESORT_DATA_TYPE_ToBufferType(dst_type), placeID, &peopleID, &p_dst_adrs ) )
+    GF_ASSERT( src_type == RESORT_DATA_TYPE_RESIDENT );
+
+    peopleID  = RESORT_RECV_DATA_GetData( p_src_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+
+    RESORT_RESIDENT_DATA_ConvertRecv( p_src_data, p_src_data, peopleID, placeID );
+
+    return RESORT_ABSTRUCT_DATA_GetBufferIndex( p_src );
+  }
+  else if( RESORT_DATA_MANAGER_CheckConvert( p_wk, RESORT_DATA_TYPE_ToBufferType(dst_type), placeID, &peopleID, &p_dst_adrs ) )
   {
     enum
     {

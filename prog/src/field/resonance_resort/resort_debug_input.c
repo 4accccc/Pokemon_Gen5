@@ -1,7 +1,7 @@
 //======================================================================
 /**
- * @file    debug_wifi_match.c
- * @brief   サケ操作デバッグ
+ * @file    resort_debug_input.c
+ * @brief   デバッグ入力
  * @author  Toru=Nagihashi    tayaさん、saitoさんのソースを参考に作成
  * @data    10/06/13
  */
@@ -29,7 +29,7 @@
 
 #include "savedata/resonance_resort_sv.h"
 #include "resort_debug_input.h"
-
+#include "resort_shop.h"
 
 #define PROC_HEAP_SIZE  (0x40000)
 #define PRINT_FRAME (GFL_BG_FRAME1_M)
@@ -142,6 +142,7 @@ typedef enum {
 
   //住民準基本データ
   EDITBOX_ID_SUB_SPECIAL,
+  EDITBOX_ID_SUB_WANTJOB,
 
   //住民内部データ
   EDITBOX_ID_RESI_PRESENT_ID,
@@ -661,6 +662,10 @@ static const STR_PARAM StrParamsResidentBasicSub[] =
   {STR_TYPE_SWITCH, RESORT_DATA_26,  16*8+STR_POS_X, STR_LINE1_POS_Y,
     16*8+5*8,STR_LINE1_POS_Y,2*8,TOUCH_H,
     YESNO_00,2,EDITBOX_ID_SUB_SPECIAL },
+  //なりたい施設
+  {STR_TYPE_NUM, RESORT_DATA_25,  STR_POS_X, STR_LINE1_POS_Y,
+    6*8,STR_LINE1_POS_Y,4*8,TOUCH_H,
+    RESORT_SHOP_ID_MAX,0,EDITBOX_ID_SUB_WANTJOB },
   //住民生成データ
   {STR_TYPE_CAPTION, RESORT_DATA_31,  STR_POS_X, STR_LINE5_POS_Y,
     0,0,0,0,
@@ -712,11 +717,11 @@ static const STR_PARAM StrParamsResidentBasicSub[] =
   //施設ID
   {STR_TYPE_NUM, RESORT_DATA_43,  STR_POS_X, STR_LINE9_POS_Y,
     4*8,STR_LINE9_POS_Y,4*8,TOUCH_H,
-    255,0,EDITBOX_ID_RESI_INSTITUTION_ID },
+    RESORT_SHOP_ID_MAX,0,EDITBOX_ID_RESI_INSTITUTION_ID },
   //レベル
   {STR_TYPE_NUM, RESORT_DATA_38,  8*8+STR_POS_X, STR_LINE9_POS_Y,
     8*8+4*8,STR_LINE9_POS_Y,4*8,TOUCH_H,
-    6,0,EDITBOX_ID_RESI_LV },
+    RESORT_SHOP_LVMAX,0,EDITBOX_ID_RESI_LV },
   //経験値
   {STR_TYPE_NUM, RESORT_DATA_39,  16*8+STR_POS_X, STR_LINE9_POS_Y,
     16*8+4*8,STR_LINE9_POS_Y,4*8,TOUCH_H,
@@ -2565,6 +2570,7 @@ static const struct
   { EDITBOX_ID_BASIC_PLAY_HOUR, RESORT_DATA_PARAM_PLAY_HOUR },
   { EDITBOX_ID_BASIC_PLAY_MIN,  RESORT_DATA_PARAM_PLAY_MIN },
   { EDITBOX_ID_SUB_SPECIAL,     RESORT_DATA_PARAM_SPECIAL            },
+  { EDITBOX_ID_SUB_WANTJOB,     RESORT_DATA_PARAM_WANT_JOB            },
   { EDITBOX_ID_RESI_PRESENT_ID,   RESORT_DATA_PARAM_PRESENT_ID  },
   { EDITBOX_ID_RESI_PRESENT_NUM,  RESORT_DATA_PARAM_PRESENT_NUM },
   { EDITBOX_ID_RESI_MEET_YEAR,    RESORT_DATA_PARAM_MEET_YEAR   },

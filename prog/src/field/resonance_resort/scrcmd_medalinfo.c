@@ -92,7 +92,10 @@ VMCMD_RESULT EvCmdCallMedalInfo( VMHANDLE *core, void *wk )
   //é©ï™ÇÃÇ©ÇÁÉÅÉ_ÉãèÓïÒÇéÊìæ
   {
     RESORT_PEOPLE *p_people = Resort_ScrcmdMedalInfo_GetFrontPeople( p_fieldmap );
-    RESORT_DATE date = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, NULL );
+    RESORT_DATE date;
+
+    GF_ASSERT( p_people );
+    date = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, NULL );
 
     RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_NAME, name );
     medal_id = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID, NULL );
@@ -101,7 +104,7 @@ VMCMD_RESULT EvCmdCallMedalInfo( VMHANDLE *core, void *wk )
     get_day   = RESORT_DATE_GET_DAY(date);
     medal_cnt = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
     box_rank  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT1_MEDAL_BOX_RANK, NULL );
-
+    GF_ASSERT( medal_id < MDLID_MAX );
   }
 
   // ñºëOÇÃê›íË
@@ -170,7 +173,6 @@ static RESORT_PEOPLE * Resort_ScrcmdMedalInfo_GetFrontPeople( FIELDMAP_WORK *p_f
 {
   RESORT_PEOPLE_SYS *p_people_sys = NULL;
   {
-
     if(GMK_TMP_CheckAssignID( p_fieldmap, RESORT_RECEPTION_ASSIGN_ID ) )
     {
       p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_fieldmap );

@@ -17839,7 +17839,7 @@ static const ZONEDATA ZoneData[] = {
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
-		15,        // camera id
+		44,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		TRUE,
@@ -17851,9 +17851,9 @@ static const ZONEDATA ZoneData[] = {
 		MATRIX_ID_RESONANCE02, // camera_area
 		15,   // padding > placeicon
     0,
-		5,
+		15,
 		0,
-		4,
+		77,
 	},
 	{//ZONE_ID_C16R0101 = 496
 		RSC_GRID_NOSCROLL,
