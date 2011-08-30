@@ -2020,7 +2020,7 @@ static FIELD_TASK_RETVAL ChampTaskFunc( void* wk )
       {
         ICHI_Printf("champ1 アニメ終了\n");
         // 元の非表示
-        FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX_EFFECT, OBJ_EFFECT, TRUE );
+        //FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX_EFFECT, OBJ_EFFECT, TRUE );
         // 表示
         FLD_EXP_OBJ_SetVanish( exp_obj, EXPOBJ_UNIT_IDX_EFFECT, OBJ_CHAMP, FALSE );
         // アニメ再生
