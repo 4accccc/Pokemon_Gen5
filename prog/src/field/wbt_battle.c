@@ -187,6 +187,45 @@ static void DEBUG_POKEPARTY_dump( POKEPARTY * party, HEAPID tempHeapID )
     DEBUG_POKEPARAM_Dump( pp, tempHeapID );
   }
 }
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void DEBUG_WBTDL_POKEMON_dump( const WBTDL_POKEMON * dl_poke )
+{
+  int i;
+  OS_Printf("WBT DL POKEMON:\n");
+  OS_Printf("monsno=%03d ", dl_poke->monsno);
+  OS_Printf("itemno=%03d ", dl_poke->item_no );
+  OS_Printf("rare(%d) tokusei=%2d\n", dl_poke->rare_flag, dl_poke->tokusei);
+  OS_Printf("form=%d sex=%d ball_id=%d\n", dl_poke->form_no, dl_poke->sex, dl_poke->ball_id );
+  OS_Printf("level=%3d friendly=%3d seikaku=%2d\n",
+      dl_poke->level, dl_poke->friend_rate, dl_poke->seikaku );
+  OS_Printf("hp_exp(%d) pow_exp(%d) def_exp(%d) agi_exp(%d) spepow_exp(%d) spedef_exp(%d)\n",
+      dl_poke->hp_exp, dl_poke->pow_exp, dl_poke->def_exp,
+      dl_poke->agi_exp, dl_poke->spepow_exp, dl_poke->spedef_exp);
+  OS_Printf("hp_rnd(%d) pow_rnd(%d) def_rnd(%d) agi_rnd(%d) spepow_rnd(%d) spedef_rnd(%d)\n",
+      dl_poke->hp_rnd, dl_poke->pow_rnd, dl_poke->def_rnd,
+      dl_poke->agi_rnd, dl_poke->spepow_rnd, dl_poke->spedef_rnd);
+
+
+  OS_Printf("WAZA1:%3d pp(%d)\n", dl_poke->waza_id[0], dl_poke->pp_count1 );
+  OS_Printf("WAZA2:%3d pp(%d)\n", dl_poke->waza_id[1], dl_poke->pp_count2 );
+  OS_Printf("WAZA3:%3d pp(%d)\n", dl_poke->waza_id[2], dl_poke->pp_count3 );
+  OS_Printf("WAZA4:%3d pp(%d)\n", dl_poke->waza_id[3], dl_poke->pp_count4 );
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void DEBUG_WBTDL_CHARACTER_dump( const WBTDL_CHARACTER * dl_char )
+{
+  OS_Printf("WBT DL CHARACTER:\n");
+  OS_Printf("trtype_id=%d\n", dl_char->trtype_id );
+  OS_Printf("msg_before_id(%2d) msg_after_win_id(%2d) msg_after_lose_id(%2d)\n",
+      dl_char->msg_before_id, dl_char->msg_after_win_id, dl_char->msg_after_lose_id );
+  OS_Printf("msg_win_id(%2d) msg_lose_id(%2d) msg_announce_id(%2d)\n",
+      dl_char->msg_win_id, dl_char->msg_lose_id, dl_char->msg_announce_id );
+  OS_Printf("lang_id(%2d) ai_bit(%d)\n", dl_char->lang_id, dl_char->ai_bit );
+
+}
 #endif
 
 //============================================================================================
@@ -434,6 +473,8 @@ static void setDLPokemon( POKEMON_PARAM * pp, const WBTDL_POKEMON * dl_poke, HEA
 
   PP_Clear( pp );
 
+  DEBUG_WBTDL_POKEMON_dump( dl_poke );
+  
   personal_rnd = ( dl_poke->rare_flag == TRUE ? PTL_SETUP_RND_RARE : PTL_SETUP_RND_AUTO );
   PP_SetupEx( pp, dl_poke->monsno, dl_poke->level, PTL_SETUP_ID_AUTO,
       (dl_poke->pow_rnd & 0x3FFFFFFF), personal_rnd );
@@ -510,7 +551,7 @@ static void setDLPokeParty( POKEPARTY * party,
     const WBTDL_POKEMON * dl_poke = WBTDL_DATA_GetPokemon( wbtdl_data, dl_tr_id, i );
     if ( checkDLPokemon( dl_poke ) )
     {
-      setDLPokemon( entry_pp, &dl_poke[i], tempHeapID );
+      setDLPokemon( entry_pp, dl_poke, tempHeapID );
       PokeParty_Add( party, entry_pp );
     }
     else
@@ -1048,6 +1089,7 @@ void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf )
     u16 preset_id = 1;
     const STRCODE * freeword = NULL;
     const WBTDL_CHARACTER * dl_char = WBTDL_DATA_GetCharacter( &wbtsys->wbtdl_data, dl_tr_id );
+    DEBUG_WBTDL_CHARACTER_dump( dl_char );
     switch ( type )
     {
     case WBT_TRMSG_1ST_FIGHT_START:
