@@ -82,7 +82,7 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
     msg_wbtsys_title_04,
     WBTWIN_COUNT_MAX,   //ダミー
     WBTRECEPT_1, WBTREG_DOWNLOAD,
-    WBTBTDATA_3,
+    WBTBTDATA_3,        //ダミー
     { 0, 0, 0, 0 },
   },
 
@@ -90,21 +90,21 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
     msg_wbtsys_title_05,
     WBTWIN_COUNT_HODOMOE,
     WBTRECEPT_1, WBTREG_ALL,
-    WBTBTDATA_3,
+    WBTBTDATA_1,
     { 1, 1, 2, 2 },
   },
   {//WBTCUP_ISSYU,       //イッシュリーダーズトーナメント 
     msg_wbtsys_title_06,
     WBTWIN_COUNT_ISSYU,
     WBTRECEPT_2, WBTREG_ALL,
-    WBTBTDATA_3,
+    WBTBTDATA_2,
     { 1, 1, 2, 2 },
   },
   {//WBTCUP_KANTO,       //カントーリーダーズトーナメント 
     msg_wbtsys_title_07,
     WBTWIN_COUNT_KANTO,
     WBTRECEPT_2, WBTREG_SUBWAY,
-    WBTBTDATA_3,
+    WBTBTDATA_2,
     { 2, 2, 3, 3 },
   },
   {//WBTCUP_JOUTO,       //ジョウトリーダーズトーナメント 
@@ -163,14 +163,14 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
     WBTBTDATA_3,
     { 2, 2, 3, 3 },
   },
-  {//WBTCUP_MIX,         //シャッフルトーナメント
+  {//WBTCUP_MIX,                //ミックストーナメント
     msg_wbtsys_title_14,
     WBTWIN_COUNT_SHUFFLE,
     WBTRECEPT_1, WBTREG_SUBWAY,
     WBTBTDATA_1,
     { 1, 1, 2, 2 },
   },
-  {//WBTCUP_MIXMASTER,         //シャッフルマスタートーナメント
+  {//WBTCUP_MIXMASTER,         //ミックスマスタートーナメント
     msg_wbtsys_title_15,
     WBTWIN_COUNT_SHUFFLEMASTER,
     WBTRECEPT_2, WBTREG_SUBWAY,
