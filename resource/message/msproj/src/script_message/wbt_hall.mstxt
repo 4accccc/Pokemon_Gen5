@@ -4104,7 +4104,8 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_announce_19">
+		Label="msg_wbt_announce_19"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonName ]で
@@ -4146,7 +4147,8 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_announce_20">
+		Label="msg_wbt_announce_20"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]の　てもち　ポケモンは▼
@@ -4192,7 +4194,8 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_announce_21">
+		Label="msg_wbt_announce_21"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]の　てもち　ポケモンは▼
@@ -4238,7 +4241,8 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_announce_22">
+		Label="msg_wbt_announce_22"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]の　てもち　ポケモンは
@@ -4282,7 +4286,8 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_announce_23">
+		Label="msg_wbt_announce_23"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　ミックス　かいし！▼</Text>
@@ -4322,7 +4327,8 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_announce_24">
+		Label="msg_wbt_announce_24"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]の[Name:PokemonName Idx="1" ]と
@@ -4366,7 +4372,8 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_announce_25">
+		Label="msg_wbt_announce_25"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　つづけて
@@ -4408,7 +4415,51 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_menu_monsname">
+		Label="msg_wbt_announce_26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そのポケモンは
+すでに　えらんでいます▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-30T04:42:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-26T12:46:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そのポケモンは
+すでに　えらんでいます▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-30T04:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-26T12:46:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミックストーナメント用
+</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-08-26T12:48:00" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_monsname"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonName ]</Text>
@@ -4449,13 +4500,14 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_menu_monsname_00">
+		Label="msg_wbt_menu_monsname_00"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]</Text>
+			<Text>[Ctrl1:Color Letter="4" Back="2" ][Name:PokemonName ][Ctrl1:ColorReset ]</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
-				Time="2011-08-26T12:55:18" />
+				Time="2011-08-30T04:28:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -4463,10 +4515,10 @@ msg_wbt_announce_07へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]</Text>
+			<Text>[Ctrl1:Color Letter="4" Back="2" ][Name:PokemonName ][Ctrl1:ColorReset ]</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
-				Time="2011-08-26T12:55:23" />
+				Time="2011-08-30T04:28:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -4490,7 +4542,8 @@ msg_wbt_announce_07へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_menu_check">
+		Label="msg_wbt_menu_check"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくにん</Text>
@@ -4534,10 +4587,10 @@ msg_wbt_announce_07へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]</Text>
+			<Text>[Name:PokemonName ]！</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
-				Time="2011-08-29T04:00:54" />
+				Time="2011-08-30T06:53:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4545,10 +4598,10 @@ msg_wbt_announce_07へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]</Text>
+			<Text>[Name:PokemonName ]！</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
-				Time="2011-08-29T04:00:55" />
+				Time="2011-08-30T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
