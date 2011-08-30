@@ -3584,6 +3584,38 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_debug_mizu_25">
+		<LanguageCell
+			Language="JPN">
+			<Text>C12 トロフィー表示・非表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T10:06:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T10:06:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>C12 トロフィー表示・非表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T10:07:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T10:07:06" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_debug_masafumi_14_01"
 		Style="Large">
 		<LanguageCell

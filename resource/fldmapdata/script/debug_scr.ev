@@ -301,6 +301,7 @@ EVENT_START   ev_debug_mizuguchi
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_22, 21 )	//W21・W21アジト船表示（タラップなし）
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_23, 22 )	//W21・W21アジト船表示（タラップあり）
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_24, 23 )	//W21・W21アジト船非表示
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_25, 24 )	//W21・W21アジト船非表示
 		//メニュー表示
 		_BMPMENU_START()
 	
@@ -597,6 +598,19 @@ EVENT_START   ev_debug_mizuguchi
       //マップ遷移
       _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
     
+    ELSIF $SCWK_TEMP2 == 24 THEN
+    
+      //主人公部屋トロフィー表示非表示
+      IF FLAG_ON(FV_C12R0101_TRORHY1_01) THEN
+        _FLAG_RESET( FV_C12R0101_TRORHY1_01 )
+        _FLAG_RESET( FV_C12R0101_TRORHY2_01 )
+        _FLAG_RESET( FV_C12R0101_TRORHY3_01 )
+      ELSE
+        _FLAG_SET( FV_C12R0101_TRORHY1_01 )
+        _FLAG_SET( FV_C12R0101_TRORHY2_01 )
+        _FLAG_SET( FV_C12R0101_TRORHY3_01 )
+      ENDIF
+      
     ELSE
 			//C04R0101でんきジム実験
 			$WK_SCENE_C04GYM0101_SHOWEND = 1

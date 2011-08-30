@@ -72,6 +72,11 @@ INIT_EVENT_START ev_init_c12r0101
   
   ENDIF
 */
+
+  IF $WK_SCENE_C12R0101 == 1 THEN
+    _OBJ_POS_CHANGE( C12R0101_SWMAMA_01, 4, 0, 5, DIR_DOWN )
+  ENDIF
+
 INIT_EVENT_END
 
 /************************************************************/
@@ -95,7 +100,7 @@ EVENT_START ev_pos_c12r0101_startevents
   _MSGWIN_CLOSE()
   
   //アニメ：ママ隣接
-  _OBJ_ANIME_AUTO( C12R0101_SWMAMA_01, 8, 11, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( C12R0101_SWMAMA_01, 9, 8, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
   //メッセージ：アララギはかせって
@@ -144,7 +149,7 @@ EVENT_START ev_pos_c12r0101_startevents
   _MSGWIN_CLOSE()
   
   //アニメ：通れるように移動
-  _OBJ_ANIME_AUTO( C12R0101_SWMAMA_01, 6, 10, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( C12R0101_SWMAMA_01, 8, 7, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C12R0101_SWMAMA_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
