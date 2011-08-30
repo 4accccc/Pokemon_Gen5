@@ -37,16 +37,24 @@ extern VMCMD_RESULT EvCmdWBTGetReward( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetTrainerFlag( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetLobbyTrainerID( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetLobbyMMdlCode( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGetPartyMax( VMHANDLE * core, void * wk );
 
 extern VMCMD_RESULT EvCmdWBTGetDownLoadCount( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetDownLoadName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetDLData( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk );
 
-extern VMCMD_RESULT EvCmdWBTSetupRentalParty( VMHANDLE * core, void * wk );
-extern VMCMD_RESULT EvCmdWBTDecideEnemyMixChoice( VMHANDLE * core, void * wk );
-extern VMCMD_RESULT EvCmdWBTSelectMixPokemon( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTMixInfoWinClose( VMHANDLE *core, void * wk );
+extern VMCMD_RESULT EvCmdWBTMixInfoWinOpen( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTMixInit( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTMixSetSelect( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTMixRandomSelect( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTMixGetSelectedName( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTMixListStart( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTMixSetupCheckMsg( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetupMixParty( VMHANDLE * core, void * wk );
+
+extern VMCMD_RESULT EvCmdWBTSetupRentalParty( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetupEnemyParty( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetEnemyMMdlCode( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk );

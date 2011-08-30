@@ -188,6 +188,108 @@ static void DEBUG_POKEPARTY_dump( POKEPARTY * party, HEAPID tempHeapID )
   }
 }
 #endif
+
+//============================================================================================
+//
+//  ミックストーナメント用処理
+//
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief ミックス処理
+ */
+//------------------------------------------------------------------
+void WBTSYS_SetupMixParty( WBTSYS * wbtsys )
+{
+  POKEMON_PARAM * mine;
+  POKEMON_PARAM * enemy;
+  POKEMON_PARAM * copy_pp = GFL_HEAP_AllocMemoryLo( wbtsys->heapID, POKETOOL_GetWorkSize() );
+
+  mine = PokeParty_GetMemberPointer( wbtsys->my_party, wbtsys->mix_pos[WBTMIX_TARGET_MINE1] );
+  enemy = PokeParty_GetMemberPointer( wbtsys->npc_party, wbtsys->mix_pos[WBTMIX_TARGET_ENEMY1] );
+  POKETOOL_CopyPPtoPP( mine, copy_pp );
+  POKETOOL_CopyPPtoPP( enemy, mine );
+  POKETOOL_CopyPPtoPP( copy_pp, enemy );
+  if ( wbtsys->wbtcup == WBTCUP_MIXMASTER )
+  {
+    mine = PokeParty_GetMemberPointer( wbtsys->my_party, wbtsys->mix_pos[WBTMIX_TARGET_MINE2] );
+    enemy = PokeParty_GetMemberPointer( wbtsys->npc_party, wbtsys->mix_pos[WBTMIX_TARGET_ENEMY2] );
+    POKETOOL_CopyPPtoPP( mine, copy_pp );
+    POKETOOL_CopyPPtoPP( enemy, mine );
+    POKETOOL_CopyPPtoPP( copy_pp, enemy );
+  }
+
+  GFL_HEAP_FreeMemory( copy_pp );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief  ミックス用パラメータの初期化
+ */
+//------------------------------------------------------------------
+void WBTSYS_MixInit( WBTSYS * wbtsys )
+{
+  wbtsys->mix_pos[WBTMIX_TARGET_MINE1] = GFUser_GetPublicRand( WBTSYS_GetPartyMax(wbtsys) );
+  wbtsys->mix_pos[WBTMIX_TARGET_MINE2] = 0xff;
+  wbtsys->mix_pos[WBTMIX_TARGET_ENEMY1] = 0xff;
+  wbtsys->mix_pos[WBTMIX_TARGET_ENEMY2] = 0xff;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief ミックスでの選択をセット
+ * @param[in]   wbtsys
+ * @param[in]   target
+ * @param[in]   select_pos
+ */
+//------------------------------------------------------------------
+void WBTSYS_MixSetSelect( WBTSYS * wbtsys, WBTMIX_TARGET target, u8 select_pos )
+{
+  GF_ASSERT( select_pos < WBTSYS_GetPartyMax(wbtsys) );
+  GF_ASSERT( target < WBTMIX_TARGET_NUM );
+  wbtsys->mix_pos[target] = select_pos;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_MixSetRandomSelect( WBTSYS * wbtsys, WBTMIX_TARGET target )
+{
+  u8 select_pos;
+  u8 max = WBTSYS_GetPartyMax(wbtsys);
+  switch ( target )
+  {
+  case WBTMIX_TARGET_MINE1:
+  case WBTMIX_TARGET_ENEMY1:
+    select_pos = GFUser_GetPublicRand( max );
+    break;
+  case WBTMIX_TARGET_MINE2:
+    select_pos = GFUser_GetPublicRand( max - 1 );
+    if ( select_pos >= wbtsys->mix_pos[WBTMIX_TARGET_MINE1] )
+    {
+      select_pos += 1;
+    }
+    break;
+  case WBTMIX_TARGET_ENEMY2:
+    select_pos = GFUser_GetPublicRand( max - 1 );
+    if ( select_pos >= wbtsys->mix_pos[WBTMIX_TARGET_ENEMY1] )
+    {
+      select_pos += 1;
+    }
+    break;
+  }
+  WBTSYS_MixSetSelect( wbtsys, target, select_pos );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u8 WBTSYS_MixGetSelected( const WBTSYS * wbtsys, WBTMIX_TARGET target )
+{
+  GF_ASSERT( target < WBTMIX_TARGET_NUM );
+  return wbtsys->mix_pos[target];
+}
+
+
+
 //============================================================================================
 //
 //

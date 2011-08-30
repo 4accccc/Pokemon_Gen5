@@ -38,6 +38,20 @@ typedef struct _WBTRESULT WBTRESULT;
 typedef struct _WBT_MATCH_CONDITION WBT_MATCH_CONDITION;
 
 typedef struct _WBT_NGPMINFO WBT_NGPMINFO;
+
+typedef struct _WBTMIX_WINDOW_WORK WBTMIX_WINDOW_WORK;
+//------------------------------------------------------------------
+/// ミックストーナメントでの選択結果の保存指定
+//------------------------------------------------------------------
+typedef enum {
+  WBTMIX_TARGET_MINE1 = 0,  ///<自分手持ちからの選択その１（＝相手の選択）
+  WBTMIX_TARGET_MINE2,      ///<自分手持ちからの選択その２（＝相手の選択）
+  WBTMIX_TARGET_ENEMY1,     ///<相手手持ちからの選択その１（＝自分の選択）
+  WBTMIX_TARGET_ENEMY2,     ///<相手手持ちからの選択その２（＝自分の選択）
+
+  WBTMIX_TARGET_NUM,
+}WBTMIX_TARGET;
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -68,6 +82,9 @@ extern void WBTSYS_SetStage( WBTSYS * wbtsys, WBTSTAGE stage );
 extern WBTSTAGE WBTSYS_GetStage( const WBTSYS * wbtsys );
 
 extern u64 WBTSYS_GetRandomSeed( const WBTSYS * wbtsys );
+
+extern POKEPARTY * WBTSYS_GetMyParty( WBTSYS * wbtsys );
+extern POKEPARTY * WBTSYS_GetEnemyParty( WBTSYS * wbtsys );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys );
@@ -80,6 +97,10 @@ extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
 
 extern void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work );
 extern u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys );
+
+extern void WBTSYS_SetMixInfoWinPointer( WBTSYS * wbtsys, WBTMIX_WINDOW_WORK * www );
+extern WBTMIX_WINDOW_WORK * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys );
+
 //============================================================================================
 //============================================================================================
 #ifdef  PM_DEBUG
@@ -167,6 +188,12 @@ extern u8 WBTSYS_GetOpponentSex( const WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentMMdlObjCode( const WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentTrainerType( const WBTSYS * wbtsys );
 extern void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm );
+
+extern void WBTSYS_MixInit( WBTSYS * wbtsys );
+extern void WBTSYS_MixSetSelect( WBTSYS * wbtsys, WBTMIX_TARGET target, u8 select_pos );
+extern void WBTSYS_MixSetRandomSelect( WBTSYS * wbtsys, WBTMIX_TARGET target );
+extern u8 WBTSYS_MixGetSelected( const WBTSYS * wbtsys, WBTMIX_TARGET target );
+extern void WBTSYS_SetupMixParty( WBTSYS * wbtsys );
 
 extern void WBTSYS_SetupEnemyParty( WBTSYS * wbtsys, GAMESYS_WORK * gsys, const WBTTRAINER * wbt_tr );
 extern BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys );

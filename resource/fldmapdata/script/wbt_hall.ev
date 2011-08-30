@@ -353,6 +353,14 @@ _DISP_FADE_END_CHECK()
 _OBJ_ANIME_WAIT()
 _CAMERA_WAIT_MOVE()
 
+//対戦相手の手持ち生成処理
+_WBT_SETUP_ENEMY_PARTY()
+
+//ミックスバトルの場合は交換処理へ
+IF $LWK_CUP == SCR_WBT_CUP_MIX || $LWK_CUP == SCR_WBT_CUP_MIXMASTER THEN
+  _CALL ev_mix_pokemon
+ENDIF
+
 //１回戦の対戦者名を格納する
 _WBT_SET_ENEMY_NAME( 0 )
 
@@ -377,14 +385,6 @@ _SE_STOP()
 _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
 _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_r )
 _OBJ_ANIME_WAIT()
-
-//対戦相手の手持ち生成処理
-_WBT_SETUP_ENEMY_PARTY()
-
-//ミックスバトルの場合は交換処理へ
-IF $LWK_CUP == SCR_WBT_CUP_MIX || $LWK_CUP == SCR_WBT_CUP_MIXMASTER THEN
-  _CALL ev_mix_pokemon
-ENDIF
 
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( LWK_WIN_OR_LOSE )
@@ -580,6 +580,14 @@ _CALL ev_rnd_yell_msg_2nd
 _OBJ_ANIME_WAIT()
 _CAMERA_WAIT_MOVE()
 
+//対戦相手の手持ち生成処理
+_WBT_SETUP_ENEMY_PARTY()
+
+//ミックスバトルの場合は交換処理へ
+IF $LWK_CUP == SCR_WBT_CUP_MIX || $LWK_CUP == SCR_WBT_CUP_MIXMASTER THEN
+  _CALL ev_mix_pokemon
+ENDIF
+
 //２回戦の対戦者名を格納する
 _WBT_SET_ENEMY_NAME( 0 )
 
@@ -606,14 +614,6 @@ _SE_STOP()
 _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
 _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_r )
 _OBJ_ANIME_WAIT()
-
-//対戦相手の手持ち生成処理
-_WBT_SETUP_ENEMY_PARTY()
-
-//ミックスバトルの場合は交換処理へ
-IF $LWK_CUP == SCR_WBT_CUP_MIX || $LWK_CUP == SCR_WBT_CUP_MIXMASTER THEN
-  _CALL ev_mix_pokemon
-ENDIF
 
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( LWK_WIN_OR_LOSE )
@@ -879,6 +879,14 @@ _WBT_GMK_EXPLOSION( SCR_WBT_VS1_L )
 
 _TIME_WAIT( 60 )
 
+//対戦相手の手持ち生成処理
+_WBT_SETUP_ENEMY_PARTY()
+
+//ミックスバトルの場合は交換処理へ
+IF $LWK_CUP == SCR_WBT_CUP_MIX || $LWK_CUP == SCR_WBT_CUP_MIXMASTER THEN
+  _CALL ev_mix_pokemon
+ENDIF
+
 //決勝戦の対戦者名を格納する
 _WBT_SET_ENEMY_NAME( 0 )
 
@@ -906,14 +914,6 @@ _TIME_WAIT( 40 )
 _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
 _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_r )
 _OBJ_ANIME_WAIT()
-
-//対戦相手の手持ち生成処理
-_WBT_SETUP_ENEMY_PARTY()
-
-//ミックスバトルの場合は交換処理へ
-IF $LWK_CUP == SCR_WBT_CUP_MIX || $LWK_CUP == SCR_WBT_CUP_MIXMASTER THEN
-  _CALL ev_mix_pokemon
-ENDIF
 
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( LWK_WIN_OR_LOSE )
@@ -1107,7 +1107,121 @@ _RET
 /*    WBT・ミックスでのポケモンを交換する流れ */
 /**************************************************************/
 ev_mix_pokemon:
-  _RET
+{
+  DEFINE_LOCAL  LWK_LOOP
+  DEFINE_LOCAL  LWK_PARTY_MAX
+  DEFINE_LOCAL  LWK_SELECT_MONS
+
+  //ミックストーナメント用初期化処理
+  _WBT_MIX_INIT()
+
+  //「ミックス開始だ！」
+  _GIZAPLAINWIN_MSG_POS( msg_wbt_announce_16, POS_UP )
+  //歓声ＳＥ再生
+  _SE_PLAY( SEQ_SE_SW_WBT_01 )
+
+  _TIME_WAIT( 30 )
+  _MSGWIN_CLOSE()
+
+  _WBT_MIX_RANDOM_SELECT( SCR_WBT_MIX_TARGET_MINE1 )
+  //「相手が選んだポケモンは～です」
+  _WBT_SET_ENEMY_NAME( 0 )
+  _WBT_MIX_SELECTED_NAME( 1, SCR_WBT_MIX_TARGET_MINE1 )
+  _PLAINWIN_MSG_UP( msg_wbt_announce_17 )
+
+  $LWK_LOOP = TRUE
+  WHILE $LWK_LOOP == TRUE
+    _WBT_MIX_INFO_WIN_OPEN()
+    //「選んでください」
+    _PLAINWIN_MSG_UP( msg_wbt_announce_18 )
+    //選択肢表示
+    _BMPMENU_INIT_RIGHT( MENU_X3, MENU_Y3, 0, 0, LWK_SELECT_MONS )
+    _WBT_MIX_LIST_START()
+    _BMPMENU_START()
+    _WBT_MIX_INFO_WIN_CLOSE()
+
+    _WBT_GET_PARTY_MAX( LWK_PARTY_MAX )
+    _DEBUG_PRINT_WK( LWK_SELECT_MONS )
+    _DEBUG_PRINT_WK( LWK_PARTY_MAX )
+    IF $LWK_SELECT_MONS < $LWK_PARTY_MAX THEN
+      //結果を保存
+      _WBT_MIX_SET_SELECT( SCR_WBT_MIX_TARGET_ENEMY1, LWK_SELECT_MONS )
+      //「～で　よろしいですね？」
+      _WBT_MIX_SELECTED_NAME( 0, SCR_WBT_MIX_TARGET_ENEMY1 )
+      _PLAINWIN_MSG_UP( msg_wbt_announce_19 )
+      _YES_NO_WIN( SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_YES THEN
+        $LWK_LOOP = FALSE
+      ENDIF
+    ELSE
+      //「相手が選んだポケモンは～です」
+      _WBT_SET_ENEMY_NAME( 0 )
+      _WBT_MIX_SELECTED_NAME( 1, SCR_WBT_MIX_TARGET_MINE1 )
+      _PLAINWIN_MSG_UP( msg_wbt_announce_17 )
+      //自分の手持ち説明
+      _WBT_MIX_SETUP_CHECK_MSG( SCWK_ANSWER )
+      _PLAINWIN_MSG_UP( SCWK_ANSWER )
+    ENDIF
+
+  ENDWHILE
+
+  //「それではミックス開始！」
+  _PLAINWIN_MSG_UP( msg_wbt_announce_23 )
+  _MSGWIN_CLOSE()
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_mix_in )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mix_in )
+  _OBJ_ANIME_WAIT()
+
+  _WBT_MIX_SELECTED_NAME( 0, SCR_WBT_MIX_TARGET_MINE1 )
+  _SUBWIN_MSG( msg_wbt_yell_mix_01, 3, 3, 1 )
+  _WBT_MIX_SELECTED_NAME( 0, SCR_WBT_MIX_TARGET_ENEMY1 )
+  _SUBWIN_MSG( msg_wbt_yell_mix_01, 14, 14, 2 )
+
+  _TIME_WAIT( 60 )
+
+  _SUBWIN_CLOSE( 1 )
+  _SUBWIN_CLOSE( 2 )
+
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_mix_out )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mix_out )
+  _OBJ_ANIME_WAIT()
+
+  //「～の～と　～の～を　こうかんしました」
+  _PLAYER_NAME( 0 )
+  _WBT_MIX_SELECTED_NAME( 1, SCR_WBT_MIX_TARGET_MINE1 )
+  _WBT_SET_ENEMY_NAME( 2 )
+  _WBT_MIX_SELECTED_NAME( 3, SCR_WBT_MIX_TARGET_ENEMY1 )
+  _PLAINWIN_MSG_UP( msg_wbt_announce_24 )
+  _MSGWIN_CLOSE()
+
+  //ミックス用のパーティ生成
+  _WBT_SETUP_MIX_PARTY()
+}
+_RET
+
+//--------------------------------------------------------------------
+//	ミックストーナメント　ミックス時一歩手前
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_mix_in
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_enemy_mix_in
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_mix_out
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_enemy_mix_out
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*    WBT・特別メッセージ */

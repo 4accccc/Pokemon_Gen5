@@ -171,8 +171,11 @@ struct _WBT_SYSTEM {
   
     POKEPARTY * my_party;       ///<参戦する自分の手持ち
     POKEPARTY * npc_party;      ///<参戦する相手の手持ち
-    POKEPARTY * rental_party;   ///<レンタルするパーティ
+    POKEPARTY * sp_party;       ///<特殊トーナメント用手持ち
 
+    u8 mix_pos[ WBTMIX_TARGET_NUM ];  ///<ミックストーナメントでの選択位置
+
+    WBTMIX_WINDOW_WORK * MixInfoWinWork;
   //戦闘呼び出し関連
   BATTLE_SETUP_PARAM *btl_setup_param;
   STRBUF * win_msg;     ///<バトル内での勝利時メッセージ

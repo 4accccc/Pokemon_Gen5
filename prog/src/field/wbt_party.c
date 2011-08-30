@@ -477,7 +477,7 @@ void WBTSYS_SetupMyRentalParty( WBTSYS * wbtsys, const MYSTATUS * mystatus, u16 
 {
   u32 tr_id = GFUser_GetPublicRand( 0 );
     
-  WBTSYS_SetupRentalParty( wbtsys, wbtsys->rental_party, tr_id, 0x10, TEMOTI_POKEMAX, NULL );
+  WBTSYS_SetupRentalParty( wbtsys, wbtsys->sp_party, tr_id, 0x10, TEMOTI_POKEMAX, NULL );
 
   //「ようすをみる」で正常に表示がされるように各種パラメータを上書きする
   {
@@ -494,7 +494,7 @@ void WBTSYS_SetupMyRentalParty( WBTSYS * wbtsys, const MYSTATUS * mystatus, u16 
     }
     for(i = 0; i < TEMOTI_POKEMAX; i++)
     {
-      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( wbtsys->rental_party, i );
+      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( wbtsys->sp_party, i );
       //自分が捕まえたようなポケメモをセット
       POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_SET_CAPTURE,
           mystatus, place_id, tempHeapID );
@@ -528,9 +528,6 @@ void WBTSYS_SetupEnemyRentalParty( WBTSYS * wbtsys )
   }
   WBTSYS_SetupRentalParty( wbtsys, wbtsys->npc_party, 12345, 0x10, num, ng_mons_table );
 }
-
-
-
 
 
 

@@ -77,7 +77,7 @@ WBTSYS * WBTSYS_Create( HEAPID heapID )
   //POKEPARTY保存領域を作成
   wbtsys->my_party = PokeParty_AllocPartyWork( wbtsys->heapID );
   wbtsys->npc_party = PokeParty_AllocPartyWork( wbtsys->heapID );
-  wbtsys->rental_party = PokeParty_AllocPartyWork( wbtsys->heapID );
+  wbtsys->sp_party = PokeParty_AllocPartyWork( wbtsys->heapID );
 
   //ROMトレーナーデータを読み込む
   wbtsys->rom_trdata = WBTTOOL_CreateRomTrainerData( wbtsys->heapID );
@@ -93,7 +93,7 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
 
   WBTTOOL_DeleteRomTrainerData( (void*)wbtsys->rom_trdata );
 
-  GFL_HEAP_FreeMemory( wbtsys->rental_party );
+  GFL_HEAP_FreeMemory( wbtsys->sp_party );
   GFL_HEAP_FreeMemory( wbtsys->my_party );
   GFL_HEAP_FreeMemory( wbtsys->npc_party );
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
@@ -264,7 +264,18 @@ u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys )
   GF_ASSERT( wbtsys->scr_answer_work );
   return wbtsys->scr_answer_work;
 }
-
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_SetMixInfoWinPointer( WBTSYS * wbtsys, WBTMIX_WINDOW_WORK * www )
+{
+  wbtsys->MixInfoWinWork = www;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+WBTMIX_WINDOW_WORK * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys )
+{
+  return wbtsys->MixInfoWinWork;
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -321,6 +332,21 @@ void WBTSYS_GetTournamentName( const WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * st
     WBTTOOL_GetTournamentName( wbtcup, strbuf );
   }
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+POKEPARTY * WBTSYS_GetMyParty( WBTSYS * wbtsys )
+{
+  return wbtsys->my_party;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+POKEPARTY * WBTSYS_GetEnemyParty( WBTSYS * wbtsys )
+{
+  return wbtsys->npc_party;
+}
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -901,7 +927,7 @@ static POKEPARTY * getUsePokeParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
   POKEPARTY * party;
   if ( wbtsys->wbtcup == WBTCUP_RENTAL || wbtsys->wbtcup == WBTCUP_RENTALMASTER )
   {
-    party = wbtsys->rental_party;
+    party = wbtsys->sp_party;
   }
   else
   {

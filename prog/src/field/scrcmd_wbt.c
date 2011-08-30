@@ -47,6 +47,7 @@
 #include "arc/message.naix" //NARC_message_wbt_trmsg_dat
 
 #include "msg/script/msg_wbt_lobby.h" //msg_wbt_info_ng_
+#include "msg/script/msg_wbt_hall.h" //msg_wbt_menu_monsname
 
 #include "scrcmd_fld_battle.h"  //BtlPartySelectCheck
 
@@ -56,6 +57,7 @@
 #include "savedata/save_tbl.h"  //GMDATA_ID_BSUBWAY_SCOREDATA
 #include "field/zonedata.h" //ZONEDATA_GetPlaceNameID
 
+#include "scrcmd_menuwin.h" //EvCmdBmpMenuStart
 //============================================================================================
 //============================================================================================
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_NULL == WBTCUP_NULL );
@@ -100,6 +102,11 @@ SDK_COMPILER_ASSERT( WBT_TRMSG_ANNOUNCE == SCR_WBT_TRMSG_ANNOUNCE );
 SDK_COMPILER_ASSERT( BTL_RESULT_LOSE == SCR_WBT_BATTLE_RESULT_LOSE );
 SDK_COMPILER_ASSERT( BTL_RESULT_WIN == SCR_WBT_BATTLE_RESULT_WIN );
 SDK_COMPILER_ASSERT( BTL_RESULT_DRAW == SCR_WBT_BATTLE_RESULT_DRAW );
+
+SDK_COMPILER_ASSERT( WBTMIX_TARGET_MINE1 == SCR_WBT_MIX_TARGET_MINE1 );
+SDK_COMPILER_ASSERT( WBTMIX_TARGET_MINE2 == SCR_WBT_MIX_TARGET_MINE2 );
+SDK_COMPILER_ASSERT( WBTMIX_TARGET_ENEMY1 == SCR_WBT_MIX_TARGET_ENEMY1 );
+SDK_COMPILER_ASSERT( WBTMIX_TARGET_ENEMY2 == SCR_WBT_MIX_TARGET_ENEMY2 );
 
 //============================================================================================
 //============================================================================================
@@ -189,6 +196,17 @@ static u16 calcTotalVictory( SCRCMD_WORK * work, WBTCUP wbtcup, PokeType poketyp
     }
   }
   return count;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void wordset_pokename( void * wk, POKEPARTY * party, u8 poke_pos, u8 idx )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset = SCRIPT_GetWordSet( sc );
+  POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, poke_pos );
+  WORDSET_RegisterPokeMonsName( wordset, idx, pp );
 }
 //============================================================================================
 //============================================================================================
@@ -743,6 +761,21 @@ VMCMD_RESULT EvCmdWBTGetLobbyTrainerID( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：手持ち最大数を取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetPartyMax( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  *ret_wk = WBTSYS_GetPartyMax( wbtsys );
+  TAMADA_Printf("EvCmdWBTGetPartyMax=%d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //============================================================================================
 //============================================================================================
 //--------------------------------------------------------------
@@ -832,6 +865,288 @@ VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk )
 //
 //============================================================================================
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+
+struct _WBTMIX_WINDOW_WORK{
+  SCRCMD_WORK * scrcmd_work;
+  WBTSYS * wbtsys;
+  FLDMSGWIN * fldmsgwin;
+};
+
+enum {
+  WWW_PX = 1,
+  WWW_PY = 7,
+  WWW_SX = 14,
+  WWW_SY = 12,
+};
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static WBTMIX_WINDOW_WORK * createWBTMixInfoWin( SCRCMD_WORK * work, WBTSYS * wbtsys )
+{
+  WBTMIX_WINDOW_WORK * www;
+
+  www = GFL_HEAP_AllocClearMemory( SCRCMD_WORK_GetHeapID(work), sizeof(WBTMIX_WINDOW_WORK) );
+  www->scrcmd_work = work;
+  www->wbtsys = wbtsys;
+  return www;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void drawWBTMixInfoWin( WBTMIX_WINDOW_WORK * www )
+{
+  SCRCMD_WORK * work = www->scrcmd_work;
+  FLDMSGBG * msgbg = SCRCMD_WORK_GetFldMsgBG( work );
+  GFL_MSGDATA * msgdata = SCRCMD_WORK_GetMsgData( work );
+  www->fldmsgwin = FLDMSGWIN_Add( msgbg, msgdata,
+      WWW_PX, WWW_PX, MATH_ROUNDUP( WWW_SX, 8 ) / 8, MATH_ROUNDUP( WWW_SY, 8 ) / 8 );
+
+  {
+    POKEPARTY * my_party = WBTSYS_GetMyParty( www->wbtsys );
+    int max = WBTSYS_GetPartyMax( www->wbtsys );
+    int i;
+    SCRIPT_WORK * sc = SCRCMD_WORK_GetScriptWork( www->scrcmd_work );
+    WORDSET *wordset = SCRIPT_GetWordSet( sc );
+    STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
+    STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
+    u8 sel1, sel2;
+    sel1 = WBTSYS_MixGetSelected( www->wbtsys, WBTMIX_TARGET_MINE1 );
+    sel2 = WBTSYS_MixGetSelected( www->wbtsys, WBTMIX_TARGET_MINE2 );
+
+    for ( i = 0; i < max; i ++ )
+    {
+      u16 msg_id = msg_wbt_menu_monsname;
+      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( my_party, i );
+      if ( i == sel1 || i == sel2 )
+      {
+        msg_id = msg_wbt_menu_monsname_00;
+      }
+      GFL_MSG_GetString( msgdata, msg_id, msgbuf );
+      WORDSET_RegisterPokeMonsName( wordset, 0, pp );
+      WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
+    }
+  }
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void eraseWBTMixInfoWin( WBTMIX_WINDOW_WORK * www )
+{
+  FLDMSGWIN_ClearWindow( www->fldmsgwin );
+  FLDMSGWIN_Delete( www->fldmsgwin );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void deleteWBTMixInfoWin( WBTMIX_WINDOW_WORK * www )
+{
+  GFL_HEAP_FreeMemory( www );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTMixInfoWinOpen( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  WBTMIX_WINDOW_WORK * www;
+  www = createWBTMixInfoWin( wk, wbtsys );
+  WBTSYS_SetMixInfoWinPointer( wbtsys, www );
+  drawWBTMixInfoWin( www );
+
+  TAMADA_Printf("EvCmdWBTMixInfoWinOpen\n");
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTMixInfoWinClose( VMHANDLE *core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  WBTMIX_WINDOW_WORK * www = WBTSYS_GetMixInfoWinPointer( wbtsys );
+  eraseWBTMixInfoWin( www );
+  deleteWBTMixInfoWin( www );
+  TAMADA_Printf("EvCmdWBTMixInfoWinClose\n");
+  return VMCMD_RESULT_CONTINUE;
+}
+//============================================================================================
+//============================================================================================
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ミックストーナメント用の手持ち生成
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTMixInit( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  WBTSYS_MixInit( wbtsys );
+  TAMADA_Printf("EvCmdWBTMixInit\n");
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ミックスのランダム選択
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTMixRandomSelect( VMHANDLE *core, void *wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  u16 target = SCRCMD_GetVMWorkValue( core, wk );
+  WBTSYS_MixSetRandomSelect( wbtsys, target );
+  TAMADA_Printf("EvCmdWBTMixRandomSelect(%d) = %d\n", target, WBTSYS_MixGetSelected(wbtsys,target) );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ミックスの選択位置セット
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTMixSetSelect( VMHANDLE *core, void *wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  u16 target = SCRCMD_GetVMWorkValue( core, wk );
+  u16 select = SCRCMD_GetVMWorkValue( core, wk );
+  WBTSYS_MixSetSelect( wbtsys, target, select );
+  TAMADA_Printf("EvCmdWBTMixSetSelect(%d,%d)\n", target, select );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ミックスの選択ポケモン取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTMixGetSelectedName( VMHANDLE *core, void *wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  u8 idx = VMGetU8( core );
+  u16 target = SCRCMD_GetVMWorkValue( core, wk );
+  u8 selected;
+  POKEPARTY * party;
+
+  selected = WBTSYS_MixGetSelected( wbtsys, target );
+  if ( target == WBTMIX_TARGET_MINE1 || target == WBTMIX_TARGET_MINE2 )
+  {
+    party = WBTSYS_GetMyParty( wbtsys );
+  }
+  else
+  {
+    party = WBTSYS_GetEnemyParty( wbtsys );
+  }
+  wordset_pokename( wk, party, selected, idx );
+  TAMADA_Printf("EvCmdWBTMixGetSelectedName(%d,%d)\n", idx, target );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ミックスの選択リスト生成、呼び出し
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTMixListStart( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  STRBUF *msgbuf  = SCRIPT_GetMsgBuffer( sc );
+  STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
+  int i;
+  int max = WBTSYS_GetPartyMax( wbtsys );
+  POKEPARTY * npc_party = WBTSYS_GetEnemyParty( wbtsys );
+  u8 sel1, sel2;
+  sel1 = WBTSYS_MixGetSelected( wbtsys, WBTMIX_TARGET_MINE1 );
+  sel2 = WBTSYS_MixGetSelected( wbtsys, WBTMIX_TARGET_MINE2 );
+  for ( i = 0; i < max; i ++ )
+  {
+    u16 msg_id, value;
+    msg_id = msg_wbt_menu_monsname;
+    value = i;
+    if ( i == sel1 && i == sel2 )
+    {
+      msg_id = msg_wbt_menu_monsname_00;
+      value = max;
+    }
+    wordset_pokename( wk, npc_party, i, 0 );
+    SCRCMD_WORK_AddMenuList( work, msg_id, SCR_BMPMENU_EXMSG_NULL, value, msgbuf, tmpbuf );
+  }
+  SCRCMD_WORK_AddMenuList( work, msg_wbt_menu_check, SCR_BMPMENU_EXMSG_NULL, max, msgbuf, tmpbuf );
+  TAMADA_Printf("EvCmdWBTMixListStart\n");
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ミックストーナメントでの「かくにん」用メッセージ生成
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTMixSetupCheckMsg( VMHANDLE * core, void *wk)
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  u16 msg_id;
+  u8 poke_num;
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  switch ( WBTSYS_GetRule( wbtsys ) )
+  {
+  default:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case WBTRULE_SINGLE:
+    msg_id = msg_wbt_announce_22;
+  case WBTRULE_DOUBLE:
+    msg_id = msg_wbt_announce_21;
+  case WBTRULE_TRIPLE:
+    msg_id = msg_wbt_announce_20;
+  case WBTRULE_ROTATION:
+    msg_id = msg_wbt_announce_21;
+  }
+  poke_num = WBTSYS_GetPartyMax( wbtsys );
+
+  {
+    int i;
+    u8 sel1 = WBTSYS_MixGetSelected( wbtsys, WBTMIX_TARGET_ENEMY1 );
+    u8 sel2 = WBTSYS_MixGetSelected( wbtsys, WBTMIX_TARGET_ENEMY2 );
+    POKEPARTY * my_party = WBTSYS_GetMyParty( wbtsys );
+    for ( i = 0; i < poke_num; i ++ )
+    {
+      //if (sel1 != i && sel2 != i )
+      {
+        wordset_pokename( wk, my_party, i, i + 1 );
+      }
+    }
+  }
+  *ret_wk = msg_id;
+
+  { //バッファ０は主人公名
+    SCRCMD_WORK*    work = wk;
+    SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+    WORDSET*     wordset = SCRIPT_GetWordSet( sc );
+    GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
+    const MYSTATUS * myStatus = GAMEDATA_GetMyStatus( gamedata );
+    WORDSET_RegisterPlayerName( wordset, 0, myStatus );
+  }
+  TAMADA_Printf("EvCmdWBTMixSetupCheckMsg = %d\n", msg_id );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ミックストーナメント用の手持ち生成
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSetupMixParty( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  WBTSYS_SetupMixParty( wbtsys );
+  TAMADA_Printf("EvCmdWBTSetupMixParty\n");
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//============================================================================================
+//============================================================================================
+//--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：レンタルトーナメント用の手持ち生成
  */
@@ -844,50 +1159,10 @@ VMCMD_RESULT EvCmdWBTSetupRentalParty( VMHANDLE * core, void * wk )
   u16 place_id = ZONEDATA_GetPlaceNameID( SCRCMD_WORK_GetZoneID( wk ) );
 
   WBTSYS_SetupMyRentalParty( wbtsys, myStatus, place_id );
-  /* 仮：コマンドを用意しただけ */
   TAMADA_Printf("EvCmdWBTSetupRentalParty\n");
   return VMCMD_RESULT_CONTINUE;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief スクリプトコマンド：レンタルトーナメント用の手持ち生成
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTDecideEnemyMixChoice( VMHANDLE * core, void * wk )
-{
-  /* 仮：コマンドを用意しただけ */
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = 0;
-  TAMADA_Printf("EvCmdWBTDecideEnemyMixChoice = %d\n", *ret_wk );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief スクリプトコマンド：レンタルトーナメント用の手持ち生成
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTSelectMixPokemon( VMHANDLE * core, void * wk )
-{
-  /* 仮：コマンドを用意しただけ */
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = 0;
-  TAMADA_Printf("EvCmdWBTSelectMixPokemon = %d\n", *ret_wk );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief スクリプトコマンド：レンタルトーナメント用の手持ち生成
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTSetupMixParty( VMHANDLE * core, void * wk )
-{
-  /* 仮：コマンドを用意しただけ */
-  TAMADA_Printf("EvCmdWBTSetupMixParty\n");
-  return VMCMD_RESULT_CONTINUE;
-}
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：対戦相手の手持ちデータ生成

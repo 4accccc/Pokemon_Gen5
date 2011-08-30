@@ -712,6 +712,12 @@
 #define SCR_WBT_DL_RESULT_CANCEL      (0xff)  ///<ダウンロードアプリの結果：キャンセル
 #define SCR_WBT_DL_RESULT_X_CANCEL    (0xfe)  ///<ダウンロードアプリの結果：Xボタンで終了
 
+#define SCR_WBT_MIX_TARGET_MINE1      (0)     ///<ミックス選択：自分手持ち１（＝相手の選択）
+#define SCR_WBT_MIX_TARGET_MINE2      (1)     ///<ミックス選択：自分手持ち２（＝相手の選択）
+#define SCR_WBT_MIX_TARGET_ENEMY1     (2)     ///<ミックス選択：相手手持ち１（＝自分の選択）
+#define SCR_WBT_MIX_TARGET_ENEMY2     (3)     ///<ミックス選択：相手手持ち２（＝自分の選択）
+
+
 #define SCR_WBT_EFFECT_POS_L          (0) ///<左 エフェクト位置
 #define SCR_WBT_EFFECT_POS_R          (1) ///<右 エフェクト位置
 

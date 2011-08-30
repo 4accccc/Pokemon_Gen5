@@ -13032,6 +13032,20 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief WBT:参加ポケモン最大数を取得
+ * @param[out]    ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_PARTY_MAX( ret_wk ) \
+      _ASM_WBT_GET_PARTY_MAX ret_wk
+
+      .macro  _ASM_WBT_GET_PARTY_MAX ret_wk
+      .short  EV_SEQ_WBT_GET_PARTY_MAX
+      .short  \ret_wk
+      .endm
+
+//--------------------------------------------------------------
+/**
  * @brief WBT:ダウンロードデータをセット
  * @param[in] num ダウンロードデータの番号指定
  */
@@ -13102,6 +13116,127 @@
     .short  \ret_wk
     .endm
 
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:ミックストーナメント初期化処理
+ *
+ * この中で最初の相手によるポケモン選択は行われる
+ */
+//--------------------------------------------------------------
+#define _WBT_MIX_INIT()  \
+    _ASM_WBT_MIX_INIT
+
+    .macro  _ASM_WBT_MIX_INIT
+    .short  EV_SEQ_WBT_MIX_INIT
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：ミックストーナメント：ランダム選択
+ * @param[in]   target
+ */
+//--------------------------------------------------------------
+#define _WBT_MIX_RANDOM_SELECT( target ) \
+    _ASM_WBT_MIX_RANDOM_SELECT target
+    .macro  _ASM_WBT_MIX_RANDOM_SELECT target
+    .short  EV_SEQ_WBT_MIX_RANDOM_SELECT
+    .short  \target
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief
+ */
+//--------------------------------------------------------------
+#define _WBT_MIX_INFO_WIN_OPEN() \
+    _ASM_WBT_MIX_INFO_WIN_OPEN
+
+    .macro  _ASM_WBT_MIX_INFO_WIN_OPEN
+    .short  EV_SEQ_WBT_MIX_INFO_WIN_OPEN
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief
+ */
+//--------------------------------------------------------------
+#define _WBT_MIX_INFO_WIN_CLOSE() \
+    _ASM_WBT_MIX_INFO_WIN_CLOSE
+    .macro  _ASM_WBT_MIX_INFO_WIN_CLOSE
+    .short  EV_SEQ_WBT_MIX_INFO_WIN_CLOSE
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：ミックストーナメント：選択をシステムに伝達
+ * @param[in]   target
+ * @param[in]   pos
+ */
+//--------------------------------------------------------------
+#define _WBT_MIX_SET_SELECT( target, pos ) \
+    _ASM_WBT_MIX_SET_SELECT target, pos
+    .macro  _ASM_WBT_MIX_SET_SELECT target, pos
+    .short  EV_SEQ_WBT_MIX_SET_SELECT
+    .short  \target
+    .short  \pos
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:
+ * @param[in]   idx
+ * @param[in]   target
+ */
+//--------------------------------------------------------------
+#define _WBT_MIX_SELECTED_NAME( idx, target )  \
+    _ASM_WBT_MIX_SELECTED_NAME idx, target
+
+    .macro  _ASM_WBT_MIX_SELECTED_NAME idx, target
+    .short  EV_SEQ_WBT_MIX_SELECTED_NAME
+    .byte   \idx
+    .short   \target
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:ミックストーナメント：ポケモン選択開始
+ */
+//--------------------------------------------------------------
+#define _WBT_MIX_LIST_START( ) \
+    _ASM_WBT_MIX_LIST_START
+    .macro  _ASM_WBT_MIX_LIST_START
+    .short  EV_SEQ_WBT_MIX_LIST_START
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：ミックストーナメント：確認メッセージの生成
+ * @param[out]  msg_id    表示するメッセージID
+ */
+//--------------------------------------------------------------
+#define _WBT_MIX_SETUP_CHECK_MSG( msg_id ) \
+    _ASM_WBT_MIX_SETUP_CHECK_MSG msg_id
+
+    .macro  _ASM_WBT_MIX_SETUP_CHECK_MSG msg_id
+    .short  EV_SEQ_WBT_MIX_SETUP_CHECK_MSG
+    .short  \msg_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：ミックス用の手持ち生成
+ * 
+ * _WBT_MIX_SET_SELECTの結果を反映する
+ */
+//--------------------------------------------------------------
+#define _WBT_SETUP_MIX_PARTY() \
+    _ASM_WBT_SETUP_MIX_PARTY
+    .macro  _ASM_WBT_SETUP_MIX_PARTY
+    .short  EV_SEQ_WBT_SETUP_MIX_PARTY
+    .endm
+
+
 //--------------------------------------------------------------
 /**
  * @brief WBT：レンタル用の手持ち生成
@@ -13111,45 +13246,6 @@
     _ASM_WBT_SETUP_RENTAL_PARTY
     .macro  _ASM_WBT_SETUP_RENTAL_PARTY
     .short  EV_SEQ_WBT_SETUP_RENTAL_PARTY
-    .endm
-
-//--------------------------------------------------------------
-/**
- * @brief WBT：ミックストーナメント：相手の選択処理
- * @param[out]  ret_wk  相手が選んだ自分側のポケモン種族No.
- */
-//--------------------------------------------------------------
-#define _WBT_DECIDE_ENEMY_MIX_CHOICE( ret_wk ) \
-    _ASM_WBT_DECIDE_ENEMY_MIX_CHOICE ret_wk
-    .macro  _ASM_WBT_DECIDE_ENEMY_MIX_CHOICE ret_wk
-    .short  EV_SEQ_WBT_DECIDE_ENEMY_MIX_CHOICE
-    .short  \ret_wk
-    .endm
-
-//--------------------------------------------------------------
-/**
- * @brief WBT：ミックストーナメント：自分の選択
- * @param[out]  ret_wk  選んだポケモンの種族No.、０の場合は確認
- */
-//--------------------------------------------------------------
-#define _WBT_SELECT_MIX_POKEMON( ret_wk ) \
-    _ASM_WBT_SELECT_MIX_POKEMON ret_wk
-    .macro  _ASM_WBT_SELECT_MIX_POKEMON
-    .short  EV_SEQ_WBT_SELECT_MIX_POKEMON
-    .short  \ret_wk
-    .endm
-
-//--------------------------------------------------------------
-/**
- * @brief WBT：ミックス用の手持ち生成
- * 
- * _WBT_SELECT_MIX_POKEMONの結果を反映する
- */
-//--------------------------------------------------------------
-#define _WBT_SETUP_MIX_PARTY() \
-    _ASM_WBT_SETUP_MIX_PARTY
-    .macro  _ASM_WBT_SETUP_MIX_PARTY
-    .short  EV_SEQ_WBT_SETUP_MIX_PARTY
     .endm
 
 //--------------------------------------------------------------
