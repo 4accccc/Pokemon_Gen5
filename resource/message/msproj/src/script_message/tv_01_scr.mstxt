@@ -390,14 +390,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジングル『ドゥワー　はっけんっ！
+			<Text>かりメッセージ▼
+ジングル『ドゥワー　はっけんっ！
 ジム！　リーダー！▼
 ページ『はーい！
 まちで　みかけた　ジムリーダーの▽
 うわさを　あつめる　コーナーだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:20:52" />
+				Time="2011-08-30T06:07:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -405,14 +406,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジングル『ドゥワー　発見っ！
+			<Text>仮メッセージ▼
+ジングル『ドゥワー　発見っ！
 ジム！　リーダー！▼
 ページ『はーい！
 街で　みかけた　ジムリーダーの▽
 うわさを　集める　コーナーだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:20:59" />
+				Time="2011-08-30T06:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -447,14 +449,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジングル『ドゥワー　はっけんっ！
+			<Text>かりメッセージ▼
+ジングル『ドゥワー　はっけんっ！
 ジム！　リーダー！▼
 ページ『はーい！
 まちで　みかけた　ジムリーダーの▽
 うわさを　あつめる　コーナーだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:21:01" />
+				Time="2011-08-30T06:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -462,14 +465,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジングル『ドゥワー　発見っ！
+			<Text>仮メッセージ▼
+ジングル『ドゥワー　発見っ！
 ジム！　リーダー！▼
 ページ『はーい！
 街で　みかけた　ジムリーダーの▽
 うわさを　集める　コーナーだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:21:01" />
+				Time="2011-08-30T06:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1176,10 +1180,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】アイドル通常番組♂ 1</Text>
+			<Text>かりメッセージ
+アイドル♂▼
+しかい『うたう　ポケドル　ショー！▼
+きょうは　なんと……！▼
+いま　うりだし　ちゅうの　アイドル
+●●●ちゃんが　きてくれましたー！▼
+●●●『みんな　げんきー！▼
+しかい『それでは　さっそく
+うたって　もらいましょう！▼
+きょくは……▼
+ふたりの　スカイアローブリッジ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T10:46:46" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:08:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1187,10 +1203,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】アイドル通常番組♂</Text>
+			<Text>仮メッセージ
+アイドル♂▼
+司会『歌う　ポケドル　ショー！▼
+今日は　なんと……！▼
+今　売り出し中の　アイドル
+●●●ちゃんが　来てくれましたー！▼
+●●●『みんな　元気ー！▼
+司会『それでは　さっそく
+歌って　もらいましょう！▼
+曲は……▼
+ふたりの　スカイアローブリッジ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T11:52:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:08:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1224,10 +1252,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】アイドル通常番組♂ 2</Text>
+			<Text>かりメッセージ
+アイドル♂▼
+しかい『うたう　ポケドル　ショー！▼
+きょうは　なんと……！▼
+いま　うりだし　ちゅうの　アイドル
+●●●ちゃんが　きてくれましたー！▼
+●●●『きょうは　ありがとー！▼
+しかい『それでは　さっそく
+うたって　もらいましょう！▼
+きょくは……▼
+ハートスイーツ　ください▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T10:46:50" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1235,10 +1275,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】アイドル通常番組♂</Text>
+			<Text>仮メッセージ
+アイドル♂▼
+司会『歌う　ポケドル　ショー！▼
+今日は　なんと……！▼
+今　売り出し中の　アイドル
+●●●ちゃんが　来てくれましたー！▼
+●●●『きょうは　ありがとー！▼
+司会『それでは　さっそく
+歌って　もらいましょう！▼
+曲は……▼
+ハートスイーツ　ください▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T11:52:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:08:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1272,10 +1324,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】アイドル通常番組♂ 3</Text>
+			<Text>かりメッセージ
+アイドル♂▼
+しかい『うたう　ポケドル　ショー！▼
+きょうは　なんと……！▼
+いま　うりだし　ちゅうの　アイドル
+●●●ちゃんが　きてくれましたー！▼
+●●●『よろしく　おねがいしまーす！▼
+しかい『それでは　さっそく
+うたって　もらいましょう！▼
+きょくは……▼
+ライブキャスター　ラブ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T10:46:52" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:08:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1283,10 +1347,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】アイドル通常番組♂</Text>
+			<Text>仮メッセージ
+アイドル♂▼
+司会『歌う　ポケドル　ショー！▼
+今日は　なんと……！▼
+今　売り出し中の　アイドル
+●●●ちゃんが　来てくれましたー！▼
+●●●『よろしく　お願いしまーす！▼
+司会『それでは　さっそく
+歌って　もらいましょう！▼
+曲は……▼
+ライブキャスター　ラブ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T11:52:05" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T06:08:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4090,14 +4166,12 @@
 実に　平等な　技です▼
 日常での　効果的な
 使い方と　いたしましてはね▼
-お友達や　カップルと
-冬の　雪山で　ついつい▽
+お友達と　冬の　雪山で
 迷子に　なってしまうこと▽
 って　ございますでしょ？▽
 こういった　場合ですね▼
 すかさず　この技を　使いますと
-それまでの　ふたりの　仲を▽
-改めて　問われる　という▽
+ふたりの　仲を　問いただす　という▽
 効果を　発揮いたしますね▼
 アナウンサー『なるほど……
 勉強に　なりましたね▼
@@ -4105,7 +4179,7 @@
 お会いしましょう　さようなら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:21:47" />
+				Time="2011-08-30T06:15:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
