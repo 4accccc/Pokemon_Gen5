@@ -110,9 +110,10 @@ typedef struct {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef enum {
-  WBTDL_MATCH_TRAINER_RANDOM = 0,  ///<ランダム（ROMデータから）
-  WBTDL_MATCH_TRAINER_DATA,        ///<DLデータ指定
-  WBTDL_MATCH_TRAINER_ROM,         ///<ROMデータ指定
+  WBTDL_MATCH_TRAINER_RND = 0,    ///<ランダム（ROMデータから）
+  WBTDL_MATCH_TRAINER_RND_DMY,    ///<ランダム（ROMデータから、戦えない）
+  WBTDL_MATCH_TRAINER_DATA,       ///<DLデータ指定
+  WBTDL_MATCH_TRAINER_ROM,        ///<ROMデータ指定
 }WBTDL_MATCH_TRAINER;
 
 typedef struct {

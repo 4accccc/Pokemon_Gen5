@@ -841,6 +841,7 @@ const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys )
     waza_no = wbtsys->wbtdl_data.wbtdl_rule.veto_waza_no;
   }
   REGULATIONEX_Init( &wbtsys->wbtreg.ex_reg, poketype, waza_no );
+  WBTSYS_DEBUG_PrintRegulationEx( &wbtsys->wbtreg.ex_reg );
   return &wbtsys->wbtreg.ex_reg;
 }
 
@@ -852,6 +853,14 @@ u8 WBTSYS_GetPartyMax( WBTSYS * wbtsys )
 }
 
 #ifdef PM_DEBUG
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_DEBUG_PrintRegulationEx( const REGULATIONEX * reg_ex )
+{
+  OS_TPrintf("REGULATIONEX:");
+  OS_TPrintf("poketype = %2d, waza_no = %3d\n", reg_ex->poketype, reg_ex->waza_no );
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void WBTSYS_DEBUG_PrintRegulation( const REGULATION * cp_data )

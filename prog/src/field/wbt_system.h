@@ -107,6 +107,7 @@ extern WBT_MIXWIN * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys );
 extern void WBTTRAINER_DEBUG_dump( const WBTTRAINER * wbt_tr );
 extern void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys );
 extern void WBTSYS_DEBUG_PrintRegulation( const REGULATION * cp_data );
+extern void WBTSYS_DEBUG_PrintRegulationEx( const REGULATIONEX * reg_ex );
 #endif
 //------------------------------------------------------------------
 //------------------------------------------------------------------

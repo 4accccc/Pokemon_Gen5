@@ -303,7 +303,8 @@ static void makeEntryTable( MAKE_ENTRY_WORK * mew, const WBTSAVE * wbtsave )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static void entryDownloadTournament( const WBTDL_MATCH * wbtdl_match, u16 * tr_list )
+static void entryDownloadTournament(
+    const WBTDL_MATCH * wbtdl_match, MAKE_ENTRY_WORK * mew, u16 * tr_list )
 {
   int index = 0;
 
@@ -311,14 +312,16 @@ static void entryDownloadTournament( const WBTDL_MATCH * wbtdl_match, u16 * tr_l
   tr_list[ index ++ ] = WBT_TRCODE_PLAYER;
   for ( ; index < WBT_TRAINER_NUM; index ++ )
   {
-    const WBTDL_MATCH * match = &wbtdl_match[ index - 1 ];
+    int rom_index = index - 1;
+    const WBTDL_MATCH * match = &wbtdl_match[ rom_index ];
     OS_Printf( "WBTDL MATCH type=%d,pri=%d,id=%d\n",match->type, match->pri, match->id );
     switch ( match->type )
     {
     default:
       GF_ASSERT( 0 );
       /* FALL THROUGH */
-    case WBTDL_MATCH_TRAINER_RANDOM:
+    case WBTDL_MATCH_TRAINER_RND:
+    case WBTDL_MATCH_TRAINER_RND_DMY:
       //‰¼FŽÀÛ‚Íí‚í‚È‚¢ƒ‚ƒu‚ª‚ ‚½‚é‚Í‚¸
       tr_list[ index ] = 72 + GFUser_GetPublicRand0( 10 );
       break;
@@ -326,7 +329,7 @@ static void entryDownloadTournament( const WBTDL_MATCH * wbtdl_match, u16 * tr_l
       tr_list[ index ] = match->id;
       break;
     case WBTDL_MATCH_TRAINER_DATA:
-      tr_list[ index ] = WBT_TRCODE_DL1 + match->id;
+      tr_list[ index ] = WBT_TRCODE_DL1 + rom_index;  //match->id;
       break;
     }
   }
@@ -569,7 +572,7 @@ void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond
     entryRentalMasterTournament( mew, tr_list );
     break;
   case WBTCUP_DOWNLOAD:
-    entryDownloadTournament( cond->wbtdl_match, tr_list );
+    entryDownloadTournament( cond->wbtdl_match, mew, tr_list );
     break;
   }
 
