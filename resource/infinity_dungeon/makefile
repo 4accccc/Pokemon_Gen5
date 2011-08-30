@@ -62,13 +62,12 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .bin
 
 #パーソナルデータ生成
-do-build: out_end narc
+do-build: out_end $(POKEMON_DATA) $(TRAINER_DATA)
 
 out_end : $(TDM_FILE) $(PDM_FILE)
 	ruby ../../tools/btl_subway/bts_trainer_arr.rb ../../tools/btl_subway/trainer.txt > ../../tools/btl_subway/bts_tr_arr.rb
 	ruby ../../tools/btl_subway/btl_subway_conv.rb pd_list.txt $(TDM_FILE) ../../resource/message/template.gmm $(HEAD_STR)
 
-narc:
 $(POKEMON_DATA): $(PDFILES)
 	nnsarc -c -l -n $(POKEMON_DATA) $(HEAD_STR)pd_*.bin
 
