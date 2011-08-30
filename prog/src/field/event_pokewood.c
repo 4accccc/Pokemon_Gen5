@@ -302,7 +302,7 @@ static void dataMakeEncountTrainer( int senario_no, int PokewoodType, BSP_TRAINE
   }
 
   OS_Printf("===================================================================\n");
-  OS_Printf("enemy tr_type = %d\n", data->tr_type);
+  OS_Printf("senario_no = %d enemy tr_type = %d\n", senario_no, data->tr_type);
   OS_Printf("===================================================================\n");
 
   // トレーナー名を格納
@@ -464,8 +464,9 @@ static void setTrainerTypeName( PREW *prew, BATTLE_SETUP_PARAM *bsp, int no, int
 {
   int sex    = MyStatus_GetMySex( bsp->playerStatus[BTL_CLIENT_PLAYER] );
   u8 sex_ofs = (sex == PM_MALE? 1: 0);
-  int msgid  = NARC_message_pokewood_senario01_f_dat+(no+1)*2+sex_ofs;
+  int msgid  = NARC_message_pokewood_senario01_f_dat+no*2+sex_ofs;
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msgid, heapID );
+  OS_Printf("senario_no=%d, sex_ofs=%d, msgid=%d\n", no, sex_ofs, msgid);
 
 
   if(pw_type==BTL_POKEWOOD_REC){
@@ -478,13 +479,6 @@ static void setTrainerTypeName( PREW *prew, BATTLE_SETUP_PARAM *bsp, int no, int
   GFL_MSG_Delete(msg);
 
 }
-// BGMのテーブル（TODO:外部化）
-static const showBgmTable[][2]={
-  { SEQ_BGM_EYE_09,     SEQ_BGM_E_LAST, },
-  { SEQ_BGM_E_HANDSOME, SEQ_BGM_WIN2,   },
-};
-
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BATTLE_SETUP_PARAM * createPokewoodBSP(
@@ -503,10 +497,16 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
     setTrainerTypeName( prew, bsp, prew->SenarioNo, BTL_POKEWOOD_REC, heapID );
     break;
   case BTL_POKEWOOD_SHOW:
-    bsp = createPokewoodShowBattleParam( gsys, fieldmap, heapID, prew->rec_id, prew->SenarioNo );
-    bsp->musicDefault = showBgmTable[bsp->pokewoodSenario][0];
-    bsp->musicWin     = showBgmTable[bsp->pokewoodSenario][1];
-    setTrainerTypeName( prew, bsp, prew->SenarioNo, BTL_POKEWOOD_SHOW, heapID );
+    // 録画データ読み込み、BGM設定、敵トレーナータイプ名設定
+    {
+      POKEWOOD_SENARIO *senario;
+      bsp = createPokewoodShowBattleParam( gsys, fieldmap, heapID, prew->rec_id, prew->SenarioNo );
+      senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, bsp->pokewoodSenario, GetHeapLowID(heapID));
+      bsp->musicDefault = senario->battle_bgm;
+      bsp->musicWin     = senario->win_bgm;
+      setTrainerTypeName( prew, bsp, bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, heapID );
+      GFL_HEAP_FreeMemory( senario );
+    }
     break;
   }
   bsp->badgeCount   = 8; //無理やりいうことをきかせる

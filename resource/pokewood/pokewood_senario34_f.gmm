@@ -579,9 +579,33 @@
 		<language name="JPN" width="256">失敗エンディングです</language>
 		<language name="JPN_KANJI" width="256">失敗エンディングです</language>
 	</row>
+	<row id="pw_event4_enemy_0">
+		<language name="JPN" width="256">しっぱいだね</language>
+		<language name="JPN_KANJI" width="256">しっぱいだね</language>
+	</row>
+	<row id="pw_event4_hero_1">
+		<language name="JPN" width="256">あーあ</language>
+		<language name="JPN_KANJI" width="256">あーあ</language>
+	</row>
+	<row id="pw_event4_enemy_1">
+		<language name="JPN" width="256">がっかり</language>
+		<language name="JPN_KANJI" width="256">がっかり</language>
+	</row>
+	<row id="pw_event5_hero_0">
+		<language name="JPN" width="256">せいこう！</language>
+		<language name="JPN_KANJI" width="256">せいこう！</language>
+	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">成功エンディングです</language>
 		<language name="JPN_KANJI" width="256">成功エンディングです</language>
+	</row>
+	<row id="pw_event5_hero_1">
+		<language name="JPN" width="256">やったわ！</language>
+		<language name="JPN_KANJI" width="256">やったわ！</language>
+	</row>
+	<row id="pw_event5_enemy_1">
+		<language name="JPN" width="256">わーい</language>
+		<language name="JPN_KANJI" width="256">わーい</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

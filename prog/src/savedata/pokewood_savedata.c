@@ -65,6 +65,7 @@ void POKEWOOD_SAVEDATA_Init( POKEWOOD_SAVEDATA * sv )
   POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 35 ); 
   POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 36 ); 
   POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 37 ); 
+  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 38 ); 
 
 }
 
