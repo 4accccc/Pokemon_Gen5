@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-30T00:11:24" source="c12_sky.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-30T14:20:30" source="c12_sky.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-30T00:11:24" source="c12_sky.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-30T14:20:30" source="c12_sky.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -38,22 +38,22 @@
 		path="C:/home/swan_data3d/build_model/outdoor/c12_sky/tex/c12_sky.tga"
 	>
 		<bitmap size="128">
-			1b1b 1b1b 1b1b 1b1b 0303 0303 0000 0000
-			1b1b 1b1b 1b1b 1b1b 0505 0505 0000 0000
-			1b1b 1b1b 1c1c 1c1c 0606 0606 0101 0101
-			1b1b 1b1b 1d1d 1d1d 0808 0808 0202 0202
-			1b1b 1b1b 2121 2121 0a0a 0a0a 0404 0404
-			1b1b 1b1b 2522 2525 0b0b 0b0b 0707 0707
-			1b1b 1b1b 2626 2626 0d0d 0d0d 0909 0909
-			1b1b 1b1b 2727 2727 0f0f 0f0f 0c0c 0c0c
-			1b1b 1b1b 2828 2828 1111 1111 0e0e 0e0e
-			1b1b 1b1b 2a2a 2a2a 1414 1214 1010 1010
-			1b1b 1b1b 2b2b 2b2b 1515 1515 1313 1313
-			1b1b 1b1b 2c2c 2d2c 1717 1717 1616 1616
-			1b1b 1b1b 2e2e 2e2e 191e 1e19 181a 1a1a
-			1b1b 1b1b 2f2f 2f2f 2323 1f1f 2020 2020
-			1b1b 1b1b 3030 3030 2323 2323 2424 2424
-			1b1b 1b1b 3131 3131 2323 2323 2929 2929
+			1717 1717 1717 1717 0000 0000 0303 0303
+			1717 1717 1717 1717 0000 0000 0303 0303
+			1717 1717 1818 1818 0101 0101 0404 0404
+			1717 1717 1919 1919 0202 0202 0606 0606
+			1717 1717 1c1c 1c1c 0505 0505 0707 0707
+			1717 1717 201d 2020 0808 0808 0909 0909
+			1717 1717 2121 2121 0b0b 0b0b 0a0a 0a0a
+			1717 1717 2222 2222 0d0d 0d0d 0c0c 0c0c
+			1717 1717 2323 2323 1010 1010 0e0e 0e0e
+			1717 1717 2525 2525 1212 1212 0f0f 0f0f
+			1717 1717 2626 2626 151a 1515 1111 1111
+			1717 1717 2727 2827 1e1e 1e1e 1313 1313
+			1717 1717 2929 2929 1e1e 1e1e 1416 1616
+			1717 1717 2a2a 2a2a 1515 1515 1b1b 1b1b
+			1717 1717 2b2b 2b2b 1212 1212 1f1f 1f1f
+			1717 1717 2c2c 2c2c 1010 1010 2424 2424
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="pk_l_hoshi"
@@ -1092,14 +1092,13 @@
 </tex_image_array>
 
 <tex_palette_array size="2">
-	<tex_palette index="0" name="c12_sky_pl" color_size="56">
-		0c20 1040 1841 1a7f 1c62 1e9f 229f 2482
-		26bf 2c83 2edf 32ff 34a4 3b1f 3cc5 3f3f
-		44e6 475f 4b7f 4d07 4f7f 539f 5528 57bf
-		5929 5bbf 5d29 5d83 5da4 5da5 5fbf 5fdf
-		6149 61c5 61e6 63df 654a 65e6 6607 6a08
-		6a29 6d6a 6e4a 726b 728b 728c 76ac 7acd
-		7ace 7aee 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="0" name="c12_sky_pl" color_size="48">
+		0158 017b 0a1d 0c20 1040 125f 1841 1c62
+		22bf 2482 2c83 2eff 34a4 3b1f 3cc5 44e6
+		475f 4d07 539f 5528 5929 5bdf 5d29 5d83
+		5da4 5da5 5fdf 6149 61c5 61e6 63df 654a
+		65e6 6607 6a08 6a29 6d6a 6e4a 726b 728b
+		728c 76ac 7acd 7ace 7aee 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="pk_l_hoshi_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
