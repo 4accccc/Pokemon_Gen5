@@ -1407,50 +1407,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>マーケット役割説明</Comment>
+			<Comment>くじ役割
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="mes_shop_09_04_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモンを　うつくしく　きれいに！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモンを　うつくしく　きれいに！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>くじ役割説明</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T04:57:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1661,46 +1622,6 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="mes_shop_09_04_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>きれいな　もの　うります。</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>きれいな　もの　うります。</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>宝石役割説明</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
 		Label="mes_shop_09_04_09"
 		Style="Large">
 		<LanguageCell
@@ -1781,86 +1702,6 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="mes_shop_09_04_11"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ジムもどき</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ジムもどき</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ジム役割説明</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="mes_shop_09_04_12"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>じゆう　きままに　くらしています。</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>じゆう　きままに　くらしています。</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>家役割説明</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
 		Label="mes_shop_09_06"
 		Style="Large">
 		<LanguageCell
@@ -1901,13 +1742,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]　を
-こうたい　しました▼
-[Name:TrainerName Idx="0" ]さんは
-しばらく　コンドミニアムで▽
-ゆっくり　するそうです▼</Text>
+こうたい　しました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T04:58:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1916,13 +1754,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]　を
-こうたい　しました▼
-[Name:TrainerName Idx="0" ]さんは
-しばらく　コンドミニアムで▽
-ゆっくり　するそうです▼</Text>
+こうたい　しました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T04:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2117,11 +1952,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さんは
-コンドミニアムへ　いきました▽
-あとで　あいさつへ　いきましょう▼</Text>
+かえって　いきました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T04:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2130,11 +1964,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さんは
-コンドミニアムへ　いきました▽
-あとで　あいさつへ　いきましょう▼</Text>
+かえって　いきました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T04:58:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2142,10 +1975,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>0：施設名でなくトレーナー名に変更</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T04:58:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">

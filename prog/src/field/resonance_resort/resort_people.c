@@ -494,7 +494,7 @@ static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header
 {
   u16 grid_x, grid_z, dir;
   u16 kind = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TYPE, NULL );
-  RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID_RECEPTION, RESORT_PEOPLE_TYPE_SECRETARY, kind, p_wk->peopleID, &grid_x, &grid_z, &dir );
+  RESORT_MAP_GetSecretaryGridPos( kind, &grid_x, &grid_z, &dir );
   p_header->dir = dir;
   MMDLHEADER_SetGridPos( p_header, grid_x, grid_z, 0 );
 }

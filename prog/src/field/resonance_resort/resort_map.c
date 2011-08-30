@@ -221,6 +221,57 @@ void RESORT_MAP_GetResidentGridPos( u16 buffer_index, u16 shop_rank, u16 *p_x, u
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  秘書の位置
+ *
+ *	@param	u16 kind  秘書の種類
+ *	@param	*p_x    X座標
+ *	@param	*p_z    Z座標
+ *	@param	*p_dir  向き
+ */
+//-----------------------------------------------------------------------------
+void RESORT_MAP_GetSecretaryGridPos( u16 kind, u16 *p_x, u16 *p_z, u16 *p_dir )
+{
+  static const struct
+  {
+    u16 x;
+    u16 z;
+    u32 dir;
+  }sc_secretary_pos[]  =
+  {
+    //設定
+    {
+      13,
+      5,
+      DIR_DOWN,
+    },
+    //移動
+    {
+      11,
+      3,
+      DIR_DOWN,
+    },
+    //ポケセン
+    {
+      11,
+      11,
+      DIR_DOWN,
+    },
+    //パソコン
+    {
+      13,
+      7,
+      DIR_UP,
+    },
+  };
+
+  GF_ASSERT( kind < NELEMS(sc_secretary_pos) );
+
+  *p_x    = sc_secretary_pos[kind].x;
+  *p_z    = sc_secretary_pos[kind].z;
+  *p_dir  = sc_secretary_pos[kind].dir;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  人物がいる場所
  *
  *	@param	u16 peopleID  人物

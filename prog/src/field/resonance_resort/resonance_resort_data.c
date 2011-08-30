@@ -426,6 +426,12 @@ static BOOL RESORT_BASIC1_DATA_IsValid( const RESORT_BASIC1_DATA *cp_wk )
     RESORT_VALID_ASSERT( "基本データ１：見た目が不正です\n" );
     return FALSE;
   }
+  //国地域
+  if( !WIFI_COUNTRY_CheckNG( cp_wk->nation, cp_wk->area, cp_wk->language) )
+  {
+    RESORT_VALID_ASSERT( "基本データ１：国、地域が不正です\n" );
+    return FALSE;
+  }
 
   return TRUE;
 }
@@ -954,22 +960,23 @@ struct _RESORT_RECV_DATA
   RESORT_EXTEND6_DATA extend6;
   RESORT_EXTEND7_DATA extend7;
   u16                 presentID;
-  u8                  present_num;
+  u8                  dummy10;
   u8                  meet_year;         //4
   u8                  meet_month;
   u8                  meet_day;
   u8                  meet_hour;
   u8                  meet_min;       //8
   u8                  commID;   //通信識別ID
-  u8                  jobchange_day     :1; //転職一日一回ビット
-  u8                  padding1  :5;
+  u8                  jobchange_day:1; //転職一日一回ビット
+  u8                  replace_lock:1;   //置き換え不可ビット
+  u8                  padding1  :4;
   u8                  day_flag  :1;
   u8                  keep_flag :1;
   u8                  want_spot;
   RESORT_INSTITUTION_DATA institution;
   u32                 kosei;  //TODO　個性？  //16
   u32                 extend_flag:9;  //20
-  u32                 lock      :1;
+  u32                 lock      :1; //受信（マージ・置き換え不可ビット）
   u32                 update    :3; //RESORT_RECV_DATA_UPDATEの値 
   u32                 peopleID  :8;
   u32                 placeID   :7;
@@ -1487,13 +1494,13 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
   //準基本データ
   case RESORT_DATA_PARAM_SPECIAL:
     return cp_wk->basic2.special_deliverly;
+  case RESORT_DATA_PARAM_CITYLV:
+    return cp_wk->basic2.city_lv;
   case RESORT_DATA_PARAM_WANT_JOB:
     return cp_wk->basic2.want_job;
   //生成データ
   case RESORT_DATA_PARAM_PRESENT_ID:
     return cp_wk->presentID;
-  case RESORT_DATA_PARAM_PRESENT_NUM:
-    return cp_wk->present_num;
   case RESORT_DATA_PARAM_MEET_YEAR:
     return cp_wk->meet_year;
   case RESORT_DATA_PARAM_MEET_MONTH:
@@ -1516,10 +1523,25 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return cp_wk->day_flag;
   case RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG:
     return cp_wk->jobchange_day;
+  case RESORT_DATA_PARAM_REPLACE_LOCK:
+    return cp_wk->replace_lock;
   case RESORT_DATA_PARAM_TYPE:
     return cp_wk->type;
   case RESORT_DATA_PARAM_EXTEND_BIT:
     return cp_wk->extend_flag;
+  case RESORT_DATA_PARAM_EXTEND_NUM:
+    {
+      int extend_num  = 0;
+      int i;
+      for( i = 0; i < RESORT_EXTEND_TYPE_MAX; i++ )
+      {
+        if( cp_wk->extend_flag & 1<<i )
+        {
+          extend_num++;
+        }
+      }
+      return extend_num;
+    }
   case RESORT_DATA_PARAM_KOSEI:
     return cp_wk->kosei;
   //拡張データ1
@@ -1626,7 +1648,7 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, (STRCODE *)p_ret_adrs );
     return 0;
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d",param);
     return 0;
   }
 }
@@ -1709,12 +1731,12 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_SPECIAL:
     p_wk->basic2.special_deliverly = data;
     break;
+  case RESORT_DATA_PARAM_CITYLV:
+    p_wk->basic2.city_lv  = data;
+    break;
   //生成データ
   case RESORT_DATA_PARAM_PRESENT_ID:
     p_wk->presentID = data;
-    break;
-  case RESORT_DATA_PARAM_PRESENT_NUM:
-    p_wk->present_num = data;
     break;
   case RESORT_DATA_PARAM_MEET_YEAR:
     p_wk->meet_year = data;
@@ -1756,6 +1778,9 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     break;
   case RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG:
     p_wk->jobchange_day = data;
+    break;
+  case RESORT_DATA_PARAM_REPLACE_LOCK:
+    p_wk->replace_lock  = data;
     break;
   case RESORT_DATA_PARAM_TYPE:
     p_wk->type = data;
@@ -1865,6 +1890,11 @@ BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk )
   s64 now;
   s64 pre;
 
+  if( cp_wk->replace_lock )
+  {
+    return FALSE;
+  }
+
   //現在秒を取る
   {
     RTCDate date;
@@ -1897,15 +1927,7 @@ BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk )
       1*60,3*60,4*60,5*60,7*60,8*60,1440*60
     };
 
-    int extend_num  = 0;
-    int i;
-    for( i = 0; i < RESORT_EXTEND_TYPE_MAX; i++ )
-    {
-      if( cp_wk->extend_flag & 1<<i )
-      {
-        extend_num++;
-      }
-    }
+    int extend_num  = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_EXTEND_NUM, NULL );
     GF_ASSERT( extend_num < NELEMS(sc_extend_num_time) );
 
     if( cp_wk->basic2.special_deliverly )
@@ -2306,8 +2328,6 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
       GFL_MSG_Delete( p_msg );
     }
     return 0;
-  case RESORT_DATA_PARAM_PRESENT_NUM:
-    return 1; //TODO
   default:
     GF_ASSERT_MSG(0,"未対応%d\n",param);
     return 0;
@@ -3443,8 +3463,6 @@ u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DA
     return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex ); 
   case RESORT_DATA_PARAM_PRESENT_ID:
     return 10; //TODO;
-  case RESORT_DATA_PARAM_PRESENT_NUM:
-    return 1; //TODO
   case RESORT_DATA_PARAM_MEET_YEAR:
     return cp_wk->meet_year;
   case RESORT_DATA_PARAM_MEET_MONTH:
@@ -3506,6 +3524,8 @@ void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_DATA_PAR
 //-----------------------------------------------------------------------------
 void RESORT_SECRETARY_DATA_ConvertRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type )
 {
+  RESORT_SECRETARY_DATA_InitInstance( p_wk );
+
   //TODO
   p_wk->basic1    = cp_recv->basic1;
   p_wk->meet_year = cp_recv->meet_year;
@@ -3943,6 +3963,7 @@ void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
   p_wk->city_name[0] = GFL_STR_GetEOMCode();
   p_wk->my_name[0]  = GFL_STR_GetEOMCode();
   p_wk->rnd_seed    = GFUser_GetPublicRand(0);
+  p_wk->lv          = 1;
 
   {
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, GFL_HEAP_LOWID(HEAPID_SAVE) );

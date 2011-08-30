@@ -3755,7 +3755,7 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
       if( ZONEDATA_IsResonanceResort( zoneID ) )
       {
         RECORD * p_rec  = SaveData_GetRecord( p_sv );
-        u32 city_lv = 1 + RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+        u32 city_lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
         u32 come_cnt = RECORD_Get( p_rec, RECID_RESORT_GUID_CNT ) + RECORD_Get( p_rec, RECID_RESORT_SHOP_MAKE_CNT );
         u32 now_cnt = RESORT_RECV_BUFF_GetCnt( p_buff ) 
                     + RESORT_PROXY_BUFF_GetCnt( p_proxy );

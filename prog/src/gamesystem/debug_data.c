@@ -467,6 +467,18 @@ static void DEBUG_QuestionnaireParam( GAMEDATA *gamedata )
 
   GAMEBEACON_SendDataUpdate_Questionnaire(answork);
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  お金やバトルポイントのセット処理
+ *
+ *	@param	GAMEDATA *gamedata ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_Point( GAMEDATA *gamedata )
+{
+  MISC *p_misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork( gamedata ) );
+  MISC_SetGold(p_misc, MY_GOLD_MAX);
+}
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -477,6 +489,7 @@ void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
   DEBUG_MyPokeAdd( gamedata, heapID );
   DEBUG_IntrudeParam( gamedata, heapID );
   DEBUG_QuestionnaireParam( gamedata );
+  DEBUG_Point( gamedata );
 }
 
 

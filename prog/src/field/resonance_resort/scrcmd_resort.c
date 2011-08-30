@@ -132,6 +132,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
 
   RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+  RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_sys );
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
@@ -165,9 +166,6 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_GET_PARAM_PRESENT_ID:
     *p_ret_wk = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PRESENT_ID, NULL );
-    break;
-  case RESORT_GET_PARAM_PRESENT_NUM:
-    *p_ret_wk = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PRESENT_NUM, NULL );
     break;
   case RESORT_GET_PARAM_PRESENT_IS_ITEM:
     *p_ret_wk = (RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PRESENT_ID, NULL ) != RESORT_PEOPLE_PRECENT_ID_BP );
@@ -233,6 +231,26 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       *p_ret_wk = is_extend && (medal != MDLID_MAX);
     }
     break;
+
+  case RESORT_GET_PARAM_CHECK_SCOUT:
+    {
+      u32 city_lv = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_CITYLV, NULL );
+      u32 my_city_lv  = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+      if( city_lv == 0 )
+      {
+        *p_ret_wk = RESORT_CHECK_SCOUT_REFUSE;
+      }
+      else if( city_lv < my_city_lv )
+      {
+        *p_ret_wk = RESORT_CHECK_SCOUT_YES;
+      }
+      else
+      {
+        *p_ret_wk = RESORT_CHECK_SCOUT_NO;
+      }
+    }
+    break;
+
   default:
     GF_ASSERT(0);
   }
@@ -259,6 +277,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
+  u16 people_type = RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE );
   void *p_people_data = RESORT_PEOPLE_GetDataAdrs( p_people );
   const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
   WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
@@ -290,6 +309,8 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     }
     break;
   case RESORT_MSGID_WHERETOGO:
+    GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST
+        || people_type == RESORT_PEOPLE_TYPE_PROXY );
     {
       u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, NULL );
 
@@ -402,6 +423,62 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_MSGID_RECORD_NONE:
     *p_ret_wk = resort_history_00;  //TODO
+    break;
+  case RESORT_TOURIST_GREET_MSGID:  //TODO
+    GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST );
+    {
+      RESORT_COMM_TYPE  comm  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_COMM_ID, NULL );
+      u32 num  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXTEND_NUM, NULL );
+      if( comm == RESORT_COMM_TYPE_BEACON )
+      {
+        GF_ASSERT( num > 0 );
+        *p_ret_wk = resort_tourist_greet_07_m + num - 1; //TODO
+      }
+      else if( comm == RESORT_COMM_TYPE_NULL )
+      {
+        //ファンかチュートリアル
+        *p_ret_wk = 0;  //TODO
+      }
+      else
+      {
+        *p_ret_wk = resort_tourist_greet_00_m + comm - RESORT_COMM_TYPE_START;  //TODO
+      }
+    }
+    break;
+  case RESORT_TOURIST_CITY_MSGID: //TODO
+    GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST );
+    {
+      u32 nation  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_NATION, NULL );
+      u32 area  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_AREA, NULL );
+
+      if( nation > 0 && area > 0 )
+      {
+        WORDSET_RegisterCountryName( p_wordset, 1, nation );
+        WORDSET_RegisterLocalPlaceName( p_wordset, 2, nation, area );
+        *p_ret_wk = resort_tourist_citymsg_02_m; //TODO
+      }
+      else if( nation > 0 )
+      {
+        WORDSET_RegisterCountryName( p_wordset, 1, nation );
+        *p_ret_wk = resort_tourist_citymsg_03_m; //TODO
+      }
+      else
+      {
+        *p_ret_wk = resort_tourist_citymsg_01_m; //TODO
+      }
+    }
+    break;
+  case RESORT_TOURIST_SCOUT_YES_MSGID:
+    *p_ret_wk = resort_tourist_scout_01_m; //TODO
+    break;
+  case RESORT_TOURIST_SCOUT_THANKS_MSGID:
+    *p_ret_wk = resort_tourist_scout_02_m; //TODO
+    break;
+  case RESORT_TOURIST_SCOUT_NO_MSGID:
+    *p_ret_wk = resort_tourist_scout_03_m; //TODO
+    break;
+  case RESORT_TOURIST_SCOUT_REFUSE_MSGID:
+    *p_ret_wk = resort_tourist_scout_04_m; //TODO
     break;
   default:
     *p_ret_wk = RESORT_PEOPLE_GetMsgID( p_people, param );
@@ -674,7 +751,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_WORD_CITY_LV:
     {
       u32 lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
-      WORDSET_RegisterNumber( p_wordset, buff_idx, lv+1, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, buff_idx, lv, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case RESORT_WORD_CITY_RANK:
@@ -1427,7 +1504,6 @@ VMCMD_RESULT EvCmdResortEndItem( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
   RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_PRESENT_ID, 0 );
-  RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_PRESENT_NUM, 0 );
 
   return VMCMD_RESULT_CONTINUE;
 }

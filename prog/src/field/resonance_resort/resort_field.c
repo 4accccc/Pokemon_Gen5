@@ -1059,6 +1059,7 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
   }
 
   RESORT_PEOPLE_SetVisible( p_wk->p_people, TRUE );
+  RESORT_PEOPLE_SetData( p_wk->p_people, RESORT_DATA_PARAM_REPLACE_LOCK, TRUE );
 
   if( p_wk->InitMove )
   {
@@ -1328,6 +1329,7 @@ static void Resort_Crowd_People_Wk_UpdateStreat( RESORT_CROWD_PEOPLE_WK *p_wk, M
           p_wk->is_walk = FALSE;
           p_wk->seq = SEQ_WAIT;
           RESORT_PEOPLE_SetVisible( p_wk->p_people, FALSE );
+          RESORT_PEOPLE_SetData( p_wk->p_people, RESORT_DATA_PARAM_REPLACE_LOCK, FALSE );
         }
         else
         {
@@ -1461,6 +1463,7 @@ static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_w
           p_wk->is_walk = FALSE;
           p_wk->seq = SEQ_WAIT;
           RESORT_PEOPLE_SetVisible( p_wk->p_people, FALSE );
+          RESORT_PEOPLE_SetData( p_wk->p_people, RESORT_DATA_PARAM_REPLACE_LOCK, FALSE );
         }
         else
         {
