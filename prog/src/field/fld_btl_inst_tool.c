@@ -1582,7 +1582,7 @@ BOOL FBI_TOOL_SetBSWayPokemonParam(
   }
   for(i=0;i<set_count;i++){
     set_rnd_no[i] = FBI_TOOL_MakePokemonParam(&(pwd[i]),
-      ARCID_BSW_PD,set_index_no[i],id,0,pow_rnd,i,ret,heapID);
+      poke_arc_id,set_index_no[i],id,0,pow_rnd,i,ret,heapID);
   }
   if(poke == NULL){
     return ret;
