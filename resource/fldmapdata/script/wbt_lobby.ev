@@ -891,6 +891,11 @@ ev_wbt_get_reward:
 
 
 ev_wbt_unlock_tournament:
+  IF $LWK_WBT_SELECT_TOURNAMENT == SCR_WBT_CUP_DOWNLOAD THEN
+    //仮：ダウンロードの場合は何もしない
+    _RET
+  ENDIF
+
   //WBT関連のメダル達成チェック
 
   //タイプトーナメント全部の達成チェック
@@ -1075,7 +1080,10 @@ EVENT_START ev_wbt_entry_checker
       _CALL ev_victory_checker
 
     CASE msg_wbt_pc_menu_02 THEN
-      _CALL ev_downloader
+      _REPORT_EVENT_CALL( SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_REPORT_OK THEN
+        _CALL ev_downloader
+      ENDIF
 
     DEFAULT
       _PLAYER_NAME( 0 )
