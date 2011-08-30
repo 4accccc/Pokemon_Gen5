@@ -236,6 +236,11 @@ EVENT_START   ev_reserve_d05r0101_tutorial_02
   //ホミカ、ヤーコン退場
   _OBJ_DEL( D05R0101_SWLEADER2_01 )
   _OBJ_DEL( D05R0101_SWLEADER5_01 )
+  
+  //マップ差し替え:D05アジト船出現
+  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
+  //マップ差し替え:C03P15アジト船非表示
+  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, FALSE, FALSE )
 
   //========================================//
   //ホミカ、ヤーコン非表示

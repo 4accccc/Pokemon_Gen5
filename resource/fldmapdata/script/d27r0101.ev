@@ -445,6 +445,9 @@ EVENT_START	ev_d27r0101_swrival_01
     _FLAG_SET( FV_D05_SWBOSS_01 )
     //========================================//
     
+    //マップ差し替え:D05アジト船非表示
+    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, FALSE , FALSE )
+    
     //予約スクリプト
     _RESERVE_SCRIPT( SCRID_RESERVE_D05_SWPLAZMA_AF_01 )
     //D05マップチェンジ

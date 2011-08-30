@@ -172,8 +172,8 @@ EVENT_START   ev_pos_r22_poke5_01
 
   ENDIF
 
-  //アイテム「イワパレスをどかせる何か」入手  【仮】アイテムは仮（マスターボール）
-  _ITEM_EVENT_NOWAIT( ITEM_MASUTAABOORU, 1 )
+  //アイテム「アクロママシーン」入手 
+  _ITEM_EVENT_NOWAIT( ITEM_AKUROMAMASIIN, 1 )
 
   //アクロマ：なにかの　やくに　たつでしょう！▼
   _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_06, R22_SWBOSS_01, POS_DEFAULT )
@@ -186,6 +186,10 @@ EVENT_START   ev_pos_r22_poke5_01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( R22_SWBOSS_01 )
+  
+  //W21アジト船表示（タラップなし）
+  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE , TRUE )
+  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
 
   //==================================//
   //POS無効

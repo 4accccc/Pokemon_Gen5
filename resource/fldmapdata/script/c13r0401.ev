@@ -132,6 +132,9 @@ _TALK_OBJ_START()
 
 		//スワンライバルのOBJを削除する
 		_OBJ_DEL( C13R0401_SWRIVAL_01 )
+		
+		//マップ差し替え：C03P15アジト船出現
+    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
 
 		//マップチェンジ
 		_MAP_CHANGE( ZONE_ID_C03P15, 12, 10, DIR_LEFT )

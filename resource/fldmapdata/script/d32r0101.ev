@@ -206,9 +206,6 @@ ev_vs_d32r0101_poke50_01:
       _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
     ENDIF
 
-    //かばんの中からアイテム「？？？」を削除
-    //
-
     //メッセージ：こわれてしまった……
     _SYSWIN_MSG( msg_d32r0101_poke50_04, POS_DOWN )
     _LAST_KEYWAIT()
