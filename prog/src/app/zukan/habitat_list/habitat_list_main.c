@@ -48,7 +48,6 @@ static void MAINSEQ_ItemBlink( HABITAT_LIST_WK *p_wk );
 static void MAINSEQ_AnimWait( HABITAT_LIST_WK *p_wk );
 
 // 文字描画 ---------------------------------
-static PRINTSYS_LSB GetMsgFontColor( void );
 static void DrawTitleMsg( HABITAT_LIST_WK *p_wk );
 static void DrawButtonMsg( HABITAT_LIST_WK *p_wk );
 
@@ -537,7 +536,21 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
   case HABITATLIST_UI_BUTTON_SELECT:
     {
       SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
-      CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_NAM,
+      HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+          MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
+
+      // モードによって光らせるボタンを分岐
+      if( p_wk->is_zenkoku == TRUE )
+      {
+        HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+            MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
+      }
+      else
+      {
+        HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+            MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
+      }
+      CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_ANM,
           MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
       ONOUE_Printf("SELECTタッチ\n");
     }
@@ -570,7 +583,11 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       if( p_wk->is_zenkoku == TRUE )
       {
         SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
-        CallCellAnm( p_wk ,MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
+        HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+            MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
+        HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+            MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
+        CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_ANM,
             MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
         ONOUE_Printf("モード切替1タッチ\n");
       }
@@ -587,7 +604,11 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       {
         SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
       }
-      CallCellAnm( p_wk ,MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
+      HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+          MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
+      HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+          MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
+      CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_ANM,
           MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
       ONOUE_Printf("モード切替2タッチ\n");
     }
@@ -625,7 +646,20 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       else if( trg & PAD_BUTTON_SELECT )
       {
         SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
-        CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_NAM,
+        // モードによって光らせるボタンを変える
+        if( p_wk->is_zenkoku == TRUE )
+        {
+          HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+              MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
+        }
+        else
+        {
+          HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+              MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
+        }
+        HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+                        MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
+        CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_ANM,
             MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE );
         ONOUE_Printf("SELECTボタン\n");
       }
@@ -729,8 +763,7 @@ void HABITAT_LIST_SetListKeyState( HABITAT_LIST_WK *p_wk ,u32 key_state )
 static void DrawTitleMsg( HABITAT_LIST_WK *p_wk )
 {
   STRBUF       *str;
-  PRINTSYS_LSB  font_color = GetMsgFontColor();
-
+  
   // メッセージの書き込み
   str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_list_title );
 
@@ -738,7 +771,7 @@ static void DrawTitleMsg( HABITAT_LIST_WK *p_wk )
   HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_TITLE_WIN ,str ,&p_wk->gra_sys ,
       TITLE_MSG_POS_X , TITLE_MSG_POS_Y,
       TITLE_MSG_W,TITLE_MSG_H,
-      font_color );
+      SBG_TITLE_FONT_COL );
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -823,20 +856,6 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk )
     p_clwk= HABITAT_LIST_GRA_GetComClWk( &p_wk->gra_sys ,MODE_BUTTON_01_CLWKID);
     GFL_CLACT_WK_SetDrawEnable( p_clwk, FALSE );
   }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  フォントカラーを取得する
- *
- *	@param	
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static PRINTSYS_LSB GetMsgFontColor( void )
-{
-  return PRINTSYS_LSB_Make(1,2,3);
 }
 
 //----------------------------------------------------------------------------

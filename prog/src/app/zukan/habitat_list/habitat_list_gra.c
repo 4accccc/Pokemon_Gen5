@@ -128,7 +128,7 @@ static const FRAMELIST_HEADER	sc_list_header = {
 
 	{ 24, 12, 8, 6, 4, 3 },		// スクロール速度 [0] = 最速
 
-	8,							// 選択項目のパレット
+	6,							// 選択項目のパレット
 
 	8,							// スクロールバーのＹサイズ
 
@@ -817,7 +817,7 @@ static void GRA_LoadObjGraphic( HABITAT_LIST_GRA_WK *p_wk )
   p_wk->p_clwk_common_obj[MODE_BUTTON_01_CLWKID] = UI_EASY_CLWK_CreateCLWK( 
       &p_wk->clres_common_obj, p_wk->p_clunit, 
       MODE_BUTTON_01_POS_X,MODE_BUTTON_01_POS_Y,
-      OBJ_ANM_SEQ_MODE_BUTTON_ANM, HEAPID_ZUKAN_HABITAT_LIST );
+      OBJ_ANM_SEQ_MODE_BUTTON, HEAPID_ZUKAN_HABITAT_LIST );
   GFL_CLACT_WK_SetDrawEnable( 
               p_wk->p_clwk_common_obj[MODE_BUTTON_01_CLWKID], TRUE );
   GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[MODE_BUTTON_01_CLWKID] ,2 ); // ボタンより下
@@ -825,7 +825,7 @@ static void GRA_LoadObjGraphic( HABITAT_LIST_GRA_WK *p_wk )
   p_wk->p_clwk_common_obj[MODE_BUTTON_02_CLWKID] = UI_EASY_CLWK_CreateCLWK( 
       &p_wk->clres_common_obj, p_wk->p_clunit, 
       MODE_BUTTON_02_POS_X,MODE_BUTTON_02_POS_Y,
-      OBJ_ANM_SEQ_MODE_BUTTON_ANM, HEAPID_ZUKAN_HABITAT_LIST );
+      OBJ_ANM_SEQ_MODE_BUTTON, HEAPID_ZUKAN_HABITAT_LIST );
   GFL_CLACT_WK_SetDrawEnable( 
               p_wk->p_clwk_common_obj[MODE_BUTTON_02_CLWKID], TRUE );
   GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[MODE_BUTTON_02_CLWKID] ,2 ); // ボタンより下

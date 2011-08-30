@@ -89,7 +89,7 @@ enum
   OBJ_ANM_SEQ_SCROLL_BUTTON       = 2,    // スクロールボタン
   OBJ_ANM_SEQ_SCROLL_BAR          = 3,    // スクロールバー
   OBJ_ANM_SEQ_SELECT_BUTTON       = 1,    // セレクトボタン
-  OBJ_ANM_SEQ_SELECT_BUTTON_NAM   = 5,    // セレクトボタン(アニメ)
+  OBJ_ANM_SEQ_SELECT_BUTTON_ANM   = 5,    // セレクトボタン(アニメ)
   OBJ_ANM_SEQ_MODE_BUTTON     = 13,   // モード切替ボタン
   OBJ_ANM_SEQ_MODE_BUTTON_ANM = 14,   // モード切替ボタン（アニメ）
   OBJ_ANM_SEQ_MINIMAP     = 15, // ミニマップ

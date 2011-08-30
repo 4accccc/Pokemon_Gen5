@@ -23,7 +23,8 @@
 /// フォント色
 //=====================================
 
-#define MBG_BUTTON_FONT_COL PRINTSYS_LSB_Make(1,2,3)
+#define MBG_BUTTON_FONT_COL PRINTSYS_LSB_Make(15,2,1)
+#define SBG_TITLE_FONT_COL PRINTSYS_LSB_Make(15,2,1)
 
 
 //-------------------------------------
