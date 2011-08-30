@@ -21,6 +21,8 @@
 #include "habitat_zone/habitat_zone.h"
 #include "habitat_list/habitat_list.h"
 
+#include "poke_tool/monsnum_def.h"  // for MONSNO_数字
+
 
 //============================================================================================
 //	定数定義
@@ -637,6 +639,11 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
       ret = SEQ_PROC_FINISH;
     }
     break;
+  case ZUKAN_DETAIL_RET_CALL_HABITAT:
+    {
+      ret = SEQ_HABITAT_ZONE_CALL;
+    }
+    break;
   case ZUKAN_DETAIL_RET_RETURN:
     {
       if( wk->is_habitat_call == FALSE )
@@ -691,12 +698,12 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
     {
       s32 n;
       zone_info->p_zone_list_data[ i ].zone_group = i+2;
-      for( n = 0; n < HABITAT_ZONE_POKE_LIST_MAX -2 ; n ++ )
+      for( n = 0; n < HABITAT_ZONE_POKE_LIST_MAX - 14 ; n ++ )
       {
           // 捕獲コンプリート
           HABITAT_ZONE_POKE_DATA *p_poke_data;
           p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
-          p_poke_data->monsno = n + 1 + i*20;
+          p_poke_data->monsno = MONSNO_629;
           p_poke_data->is_appear[0][0] = TRUE;
           p_poke_data->status = HABITAT_ZONE_STATUS_GET;
       }
@@ -705,7 +712,7 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
       {
         HABITAT_ZONE_POKE_DATA *p_poke_data;
         p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
-        p_poke_data->monsno = n + 1 + i*20;
+        p_poke_data->monsno = MONSNO_629;
         p_poke_data->is_appear[0][HABITAT_ZONE_APPEAR_WATERSIDE] = TRUE;
         p_poke_data->status = HABITAT_ZONE_STATUS_LOOK;
         n++;
@@ -714,7 +721,7 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
       {
         HABITAT_ZONE_POKE_DATA *p_poke_data;
         p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
-        p_poke_data->monsno = n + 1 + i*20;
+        p_poke_data->monsno = MONSNO_629;
         p_poke_data->is_appear[PMSEASON_AUTUMN][HABITAT_ZONE_APPEAR_FISHING]=TRUE;
         p_poke_data->status = HABITAT_ZONE_STATUS_UNKNOWN;
       }
@@ -745,21 +752,25 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
   case HABITAT_ZONE_RET_EXIT:		// 図鑑終了
     wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
     ret = SEQ_PROC_FINISH;
+    wk->is_habitat_call = FALSE;
     break;
 
   case HABITAT_ZONE_RET_RETURN:
     ret = SEQ_HABITAT_ZONE_LIST_CALL;
+    wk->is_habitat_call = FALSE;
     break;
 
   case HABITAT_ZONE_RET_INFO:
     ret = SEQ_INFO_CALL;
     wk->detail_type = ZUKAN_DETAIL_TYPE_INFO;
+    wk->is_habitat_call = TRUE; // 生息地リストモードに切り替え
     break;
 
   default:
     GF_ASSERT(0);
     wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
     ret = SEQ_PROC_FINISH;
+    wk->is_habitat_call = FALSE;
     break;
   }
 		
@@ -861,16 +872,13 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
   case HABITAT_LIST_RET_EXIT:
     ret = SEQ_PROC_FINISH;
     wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
-    wk->is_habitat_call = FALSE;
     break;
   case HABITAT_LIST_RET_RETURN:
     ret = SEQ_PROC_FINISH;
     wk->prm->retMode = ZUKAN_RET_NORMAL;
-    wk->is_habitat_call = FALSE;
     break;
   case HABITAT_LIST_RET_CALL_ZONE_INFO:
     ret = SEQ_HABITAT_ZONE_CALL;
-    wk->is_habitat_call = TRUE; // 生息地リストモードに切り替え
     break;
   case HABITAT_LIST_RET_ZENKOKU:
     {
@@ -880,7 +888,6 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
         FreeListData( wk );
         wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
       }
-      wk->is_habitat_call = FALSE;
       ret = SEQ_LIST_CALL;
     }
     break;
@@ -892,14 +899,12 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
         FreeListData( wk );
         wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
       }
-      wk->is_habitat_call = FALSE;
       ret = SEQ_LIST_CALL;
     }
     break;
   default:
     GF_ASSERT(0);
     ret = SEQ_PROC_FINISH;
-    wk->is_habitat_call = FALSE;
     wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
     break;
   }

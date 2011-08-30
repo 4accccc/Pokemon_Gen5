@@ -276,6 +276,7 @@ enum
   TEXT_PLACENAME,
   TEXT_SEASON,
   TEXT_UNKNOWN,
+  TEXT_AREA_JUMP,
   TEXT_MAX
 };
 
@@ -337,6 +338,10 @@ SCROLL_STATE;
 #define SEASON_R_ARROW_ANMSEQ_NORMAL (2)
 #define SEASON_R_ARROW_ANMSEQ_SELECT (3)
 
+#define AREA_JUMP_ANMSEQ_NORMAL (6)
+#define AREA_JUMP_ANMSEQ_DISABLE (7)
+#define AREA_JUMP_ANMSEQ_SELECT (8)
+
 #define SEASON_L_ARROW_POS_X  (0*8)
 #define SEASON_L_ARROW_POS_Y  (0)
 #define SEASON_L_ARROW_SIZE_X (3*8)
@@ -393,6 +398,7 @@ enum
   OBJ_SEASON_L,
   OBJ_SEASON_R,
   OBJ_UNKNOWN,
+//  OBJ_AREA_JUMP,
   OBJ_ZUKAN_END,
 
   OBJ_TM_START          = OBJ_ZUKAN_END,      // OBJ_TM_START<= <OBJ_TM_END
@@ -531,7 +537,7 @@ HIDE_SPOT;
 //-------------------------------------
 /// PROC ワーク
 //=====================================
-typedef struct
+struct _ZUKAN_DETAIL_MAP_WORK
 {
   // 他のところから借用するもの
   GFL_CLUNIT*                 clunit;
@@ -619,8 +625,7 @@ typedef struct
   BOOL                        change_poke_by_cur_u_d_change_poke_finish;  // ポケモンの変更が完了していたらTRUE
   BOOL                        change_poke_by_cur_u_d_cur_u_d_finish;      // タッチバーの上下アイコンのアニメが完了していたらTRUE
 #endif
-}
-ZUKAN_DETAIL_MAP_WORK;
+};
 
 
 //=============================================================================
@@ -732,6 +737,9 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
 static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARCHANDLE* handle );
 static void Zukan_Detail_Map_AreaDataUnload( AREA_DATA* area_data );
 
+// 分布図から生息地リスト（ゾーン詳細画面）を呼び出せるかを調べる
+static BOOL CheckCanSelectNowZone( ZUKAN_DETAIL_MAP_WORK* work );
+
 // 何度も出てくる処理
 static void Zukan_Detail_Map_UtilPrintSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_UtilDrawSeasonArea( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -790,6 +798,9 @@ void             ZUKAN_DETAIL_MAP_InitParam(
                             HEAPID                    heap_id )
 {
   param->heap_id = heap_id;
+  
+  // ゾーン選択初期化
+  param->select_zone_group = HABITAT_NO_CALL_ID;
 }
 
 
@@ -1464,6 +1475,7 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
     case ZKNDTL_SCMD_CUR_U:
     case ZKNDTL_SCMD_CHECK:
     case ZKNDTL_SCMD_MAP_RETURN:
+    case ZKNDTL_SCMD_MAP_RET_HABITAT:
       {
         work->input_enable = FALSE;
       }
@@ -1639,6 +1651,14 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
     case ZKNDTL_CMD_MAP_RETURN:
       {
         Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_SELECT_TO_TOP );
+      }
+      break;
+    case ZKNDTL_SCMD_MAP_RET_HABITAT:
+      {
+        //Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_SELECT_TO_TOP );
+        work->end_cmd = END_CMD_OUTSIDE;
+        //b_valid_cmd = TRUE;
+//        Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_SELECT_TO_TOP );
       }
       break;
     default:
@@ -1882,6 +1902,7 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
       SEASON_L_ARROW_ANMSEQ_NORMAL,
       SEASON_R_ARROW_ANMSEQ_NORMAL,
       0,
+      //AREA_JUMP_ANMSEQ_NORMAL,
 
       // OBJ_TM_
       4,
@@ -1895,6 +1916,7 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
       BG_FRAME_PRI_M_ROOT,
       BG_FRAME_PRI_M_ROOT,
       BG_FRAME_PRI_M_ROOT,
+      //0,
 
       // OBJ_TM_
       BG_FRAME_PRI_M_TEXT,
@@ -1908,6 +1930,7 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
       1,
       0,
       3,
+//      0,
 
       // OBJ_TM_
       0,
@@ -1953,8 +1976,15 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
       for( i=OBJ_ZUKAN_START; i<OBJ_ZUKAN_END; i++ )
         GFL_CLACT_WK_SetPos( work->obj_clwk[i], &pos, CLSYS_DEFREND_MAIN );
     }
-  }
 
+//    // 個別設定(エリアへ飛ぶボタン)
+//    {
+//      GFL_CLACTPOS pos;
+//      pos.x = 120;
+//      pos.y = 176;
+//      GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_AREA_JUMP], &pos, CLSYS_DEFREND_MAIN );
+//    }
+  }
   work->push_button = OBJ_PUSH_BUTTON_NONE;
 }
 static void Zukan_Detail_Map_ObjExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
@@ -2153,6 +2183,7 @@ static void Zukan_Detail_Map_MsgTextInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
     { BG_FRAME_S_TEXT,  9, 25, 16,  2, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_F },
     { BG_FRAME_M_TEXT,  2,  0, 15,  2, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_F },
     { BG_FRAME_M_TEXT,  8, 10, 16,  2, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_F },
+    { BG_FRAME_M_TEXT,  8, 200, 16,  2, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_F },
   };
 
   u8 i;
@@ -2901,6 +2932,7 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
 
           ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );  // タッチバーが有効のままなので、無効にしておく。
                                                                         // ここからの状態遷移の最後STATE_SELECTになるときに、SetTypeで有効になる。
+
         }
       }
     }
@@ -3081,6 +3113,7 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
     u8            select_data_idx_prev  = work->select_data_idx;
     GFL_CLACTPOS  pos;
     int           key_cont;
+    int           key_trg;
     BOOL          user_move             = FALSE;  // ユーザの上下左右の入力による移動があるならTRUE
     BOOL          pull_move             = FALSE;  // 吸い込みによる移動があるならTRUE
 	  GFL_CLACTPOS  pull_pos;
@@ -3090,7 +3123,7 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
 
     // 移動前の位置
     GFL_CLACT_WK_GetPos( work->obj_clwk[OBJ_CURSOR], &pos, CLSYS_DEFREND_MAIN );
-
+   
     // 移動後の位置
     // ユーザの上下左右の入力による移動
     key_cont = GFL_UI_KEY_GetCont();  // キー入力中から変更なしなのでGFL_UI_SetTouchOrKeyは呼ばなくていい
@@ -3204,6 +3237,25 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         }
       }
     }
+
+    // 選択処理
+    {
+      GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+      ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
+      if( ZUKANSAVE_GetHabitatListFlag( zkn_sv ) == TRUE )
+      {
+        key_trg = GFL_UI_KEY_GetTrg();
+
+        if( key_trg & PAD_BUTTON_A )
+        {
+          if( CheckCanSelectNowZone( work ) )
+          {
+            param->select_zone_group = 5;
+            PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          }
+        }
+      }
+    }
   }
   // タッチ入力で選択操作
   else
@@ -3224,6 +3276,43 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
       }
     }
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在選択中のゾーンにポケモンが生息しているかを調べる
+ *
+ *	@param	work 
+ *
+ *	@retval TRUEの時選択可能
+ */
+//-----------------------------------------------------------------------------
+static BOOL CheckCanSelectNowZone( ZUKAN_DETAIL_MAP_WORK* work )
+{
+  // 今の季節の生息地が判明しているとき
+  if( work->habitat == HABITAT_KNOWN )
+  {
+    if( work->select_data_idx != DATA_IDX_NONE )
+    {
+      // 選択判定(1年中同じ時は春のデータしか見ない)
+      u8 season_id;
+      u8 zkn_area_idx = work->townmap_data_idx_to_zkn_area_idx[work->select_data_idx];
+      if( work->appear_rule == APPEAR_RULE_YEAR )
+      {
+        season_id =PMSEASON_SPRING;
+      }
+      else
+      {
+        season_id = work->season_id;
+      }
+      if( work->area_data->season_data[season_id].place_bitflag[zkn_area_idx] )
+      {
+        ONOUE_Printf("選択\n");
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
 }
 
 //-------------------------------------
@@ -3377,6 +3466,10 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
       {
         // タッチバー
         ZUKAN_DETAIL_TOUCHBAR_SetVisibleAll( touchbar, FALSE );
+
+//        // 選択ボタン表示
+//        GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_AREA_JUMP], TRUE );
+//        ONOUE_Printf("選択ボタン表示\n");
       }
     }
     break;
@@ -3475,6 +3568,14 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
       {
         // タッチバー
         ZUKAN_DETAIL_TOUCHBAR_SetVisibleAll( touchbar, FALSE );
+        
+//        // 選択ボタン表示
+//        GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_AREA_JUMP], FALSE );
+//        ONOUE_Printf("選択ボタン非表示\n");
+         
+//        ZUKAN_DETAIL_TOUCHBAR_SetDispOfGeneral(
+//            touchbar,
+//            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
       }
     }
     break;
@@ -4552,5 +4653,19 @@ static void Zukan_Detail_Map_AlphaSubExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
 
   // 一部分フェードの設定を元に戻す
   ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_s );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生息地リストコマンド呼出監視
+ *
+ *	@param	work 
+ *
+ *	@retval 呼び出しなし => HABITAT_NO_CALL_ID
+ */
+//-----------------------------------------------------------------------------
+u16 Zukan_Detail_Map_CheckHabitatInfoCall( ZUKAN_DETAIL_MAP_PARAM* work )
+{
+  return work->select_zone_group;
 }
 

@@ -39,6 +39,7 @@ ZUKAN_DETAIL_TYPE;
 
 typedef enum
 {
+  ZUKAN_DETAIL_RET_CALL_HABITAT,    // 生息地リスト呼び出し
   ZUKAN_DETAIL_RET_CLOSE,    // ×ボタン
   ZUKAN_DETAIL_RET_RETURN,   // ←┘ボタン
 }
@@ -70,6 +71,7 @@ typedef struct _ZUKAN_DETAIL_PARAM
   u16                  no;    // listの何番目にあるポケモンを表示するか
   ZUKAN_DETAIL_RETURN  ret;                ///< [out]     次の指示
   BOOL                 is_habitat_call;    ///< [in]      生息地モードでの呼び出し
+  u16                  zone_group;         ///< [out]     選択されたゾーングループ
 }
 ZUKAN_DETAIL_PARAM;
 

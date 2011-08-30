@@ -20,6 +20,7 @@
 // オーバーレイ
 FS_EXTERN_OVERLAY(zukan_detail);
 
+#define HABITAT_NO_CALL_ID  (0xFF)
 
 //=============================================================================
 /**
@@ -40,6 +41,7 @@ extern const ZKNDTL_PROC_DATA    ZUKAN_DETAIL_MAP_ProcData;
 typedef struct _ZUKAN_DETAIL_MAP_PARAM
 {
   HEAPID heap_id;
+  u16 select_zone_group;
 }
 ZUKAN_DETAIL_MAP_PARAM;
 
@@ -49,10 +51,14 @@ ZUKAN_DETAIL_MAP_PARAM;
 *  関数のプロトタイプ宣言
 */
 //=============================================================================
+
+typedef struct _ZUKAN_DETAIL_MAP_WORK ZUKAN_DETAIL_MAP_WORK;
+
 //-------------------------------------
 /// パラメータを設定する
 //=====================================
 extern void         ZUKAN_DETAIL_MAP_InitParam(
                             ZUKAN_DETAIL_MAP_PARAM*  param,
                             HEAPID                   heap_id );
+extern u16 Zukan_Detail_Map_CheckHabitatInfoCall( ZUKAN_DETAIL_MAP_PARAM* work );
 

@@ -227,9 +227,7 @@ struct _ZUKAN_DETAIL_TOUCHBAR_WORK
   // ここで作成するもの
   // 状態
   ZUKAN_DETAIL_TOUCHBAR_STATE   state;
-  ZUKAN_DETAIL_TOUCHBAR_TYPE    prev_type;
   ZUKAN_DETAIL_TOUCHBAR_TYPE    type;
-  ZUKAN_DETAIL_TOUCHBAR_DISP    prev_disp;
   ZUKAN_DETAIL_TOUCHBAR_DISP    disp;
   ZUKAN_DETAIL_TOUCHBAR_DISP    curr_icon_disp_general;
   ZUKAN_DETAIL_TOUCHBAR_SPEED   speed;
@@ -347,9 +345,7 @@ ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id, BOOL for
   
   // 状態
   work->state = ZUKAN_DETAIL_TOUCHBAR_STATE_DISAPPEAR;
-  work->prev_type              = ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL;
   work->type                   = ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL;
-  work->prev_disp              = ZUKAN_DETAIL_TOUCHBAR_DISP_MAP;      // work->disp以外なら初期化できちんとなる
   work->disp                   = ZUKAN_DETAIL_TOUCHBAR_DISP_INFO;
   work->curr_icon_disp_general = work->disp;                          // work->dispできちんと初期化
   work->speed = ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE;
@@ -513,17 +509,18 @@ void ZUKAN_DETAIL_TOUCHBAR_SetType(
                    ZUKAN_DETAIL_TOUCHBAR_DISP  disp,
                    BOOL                        is_cur_u_d )
 {
-  work->prev_type = work->type;
+
+  // 現在のリソースを削除
+  Zukan_Detail_Touchbar_Delete( work );
+
   work->type = type;
-  work->prev_disp = work->disp;
   work->disp = disp;
   work->is_cur_u_d = is_cur_u_d;
-
-  Zukan_Detail_Touchbar_Delete( work );
 
   // curr_icon_disp_generalを変更
   work->curr_icon_disp_general = work->disp;
   
+  // 新たなリソースを作成
   Zukan_Detail_Touchbar_Create( work );
 }
 
@@ -610,7 +607,7 @@ ZKNDTL_COMMAND ZUKAN_DETAIL_TOUCHBAR_GetTrg( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
         {
           if( icon_id == work->icon_set[i].cset->id )
           {
-            cmd = work->icon_set[i].cset->cmd;;
+            cmd = work->icon_set[i].cset->cmd;
             break;
           }
         }
@@ -709,7 +706,6 @@ void ZUKAN_DETAIL_TOUCHBAR_SetDispOfGeneral(
     BOOL                       use_temp = FALSE;
     ZUKAN_DETAIL_TOUCHBAR_DISP temp;
    
-    work->prev_disp = work->disp;
     work->disp = disp;
 
     // curr_icon_disp_generalを変えなくていいとき
@@ -914,11 +910,16 @@ static void Zukan_Detail_Touchbar_Create( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
   {
   case ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL:
     {
+      ONOUE_Printf("ジェネラル作成\n");
       Zukan_Detail_Touchbar_CreateGeneral( work );
-    }
+      ONOUE_Printf("work->general_ncl %x\n",work->general_ncl);
+      ONOUE_Printf("work->general_ncg %x\n",work->general_ncg);
+      ONOUE_Printf("work->general_nce %x\n",work->general_nce);
+      }
     break;
   case ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP:
     {
+      ONOUE_Printf("マップ作成\n");
       Zukan_Detail_Touchbar_CreateMap( work );
     }
     break;
@@ -934,15 +935,17 @@ static void Zukan_Detail_Touchbar_Create( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 }
 static void Zukan_Detail_Touchbar_Delete( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
-  switch( work->prev_type )
+  switch( work->type )
   {
   case ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL:
     {
+      ONOUE_Printf("ジェネラル開放\n");
       Zukan_Detail_Touchbar_DeleteGeneral( work );
     }
     break;
   case ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP:
     {
+      ONOUE_Printf("マップ開放\n");
       Zukan_Detail_Touchbar_DeleteMap( work );
     }
     break;
@@ -1167,6 +1170,9 @@ static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
     
     // リソース破棄
     {	
+      ONOUE_Printf("work->general_ncl %x\n",work->general_ncl);
+      ONOUE_Printf("work->general_ncg %x\n",work->general_ncg);
+      ONOUE_Printf("work->general_nce %x\n",work->general_nce);
       GFL_CLGRP_PLTT_Release( work->general_ncl );
       GFL_CLGRP_CGR_Release( work->general_ncg );
       GFL_CLGRP_CELLANIM_Release( work->general_nce );
@@ -1347,6 +1353,7 @@ static void Zukan_Detail_Touchbar_AnimeInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* 
 }
 static void Zukan_Detail_Touchbar_AnimeExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
+  // アクティブでないときに終了した場合は、パレットを戻さない
   u8 icon = GENERAL_ICON_MAX;
   GFL_CLWK* clwk;
   switch( work->curr_icon_disp_general )
@@ -1637,6 +1644,9 @@ static void Zukan_Detail_Touchbar_DeleteMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 
     // リソース破棄
     {	
+      ONOUE_Printf("work->map_ncl %x\n",work->map_ncl);
+      ONOUE_Printf("work->map_ncg %x\n",work->map_ncg);
+      ONOUE_Printf("work->map_nce %x\n",work->map_nce);
       GFL_CLGRP_PLTT_Release( work->map_ncl );
       GFL_CLGRP_CGR_Release( work->map_ncg );
       GFL_CLGRP_CELLANIM_Release( work->map_nce );

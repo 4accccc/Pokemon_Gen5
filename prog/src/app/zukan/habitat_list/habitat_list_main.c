@@ -729,7 +729,7 @@ void HABITAT_LIST_SetListKeyState( HABITAT_LIST_WK *p_wk ,u32 key_state )
 static void DrawTitleMsg( HABITAT_LIST_WK *p_wk )
 {
   STRBUF       *str;
-  PRINTSYS_LSB  font_colro = GetMsgFontColor();
+  PRINTSYS_LSB  font_color = GetMsgFontColor();
 
   // メッセージの書き込み
   str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_list_title );
@@ -738,7 +738,7 @@ static void DrawTitleMsg( HABITAT_LIST_WK *p_wk )
   HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_TITLE_WIN ,str ,&p_wk->gra_sys ,
       TITLE_MSG_POS_X , TITLE_MSG_POS_Y,
       TITLE_MSG_W,TITLE_MSG_H,
-      font_colro );
+      font_color );
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -756,7 +756,6 @@ static void DrawTitleMsg( HABITAT_LIST_WK *p_wk )
 static void DrawButtonMsg( HABITAT_LIST_WK *p_wk )
 {
   STRBUF       *str;
-  PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
   // 生息地ボタン（常に一番下）
   {
@@ -767,7 +766,7 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk )
     HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
         BUTTON_03_POS_X , BUTTON_03_POS_Y,
         BUTTON_03_MSG_W,BUTTON_03_MSG_H,
-        font_colro );
+        MBG_BUTTON_FONT_COL );
 
     // バッファーの消去 
     GFL_STR_DeleteBuffer( str );
@@ -784,7 +783,7 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk )
       HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
           BUTTON_01_POS_X , BUTTON_01_POS_Y,
           BUTTON_01_MSG_W,BUTTON_01_MSG_H,
-          font_colro );
+          MBG_BUTTON_FONT_COL );
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
@@ -798,7 +797,7 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk )
       HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
           BUTTON_02_POS_X , BUTTON_02_POS_Y,
           BUTTON_02_MSG_W,BUTTON_02_MSG_H,
-          font_colro );
+          MBG_BUTTON_FONT_COL );
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
@@ -815,7 +814,7 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk )
     HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
         BUTTON_02_POS_X , BUTTON_02_POS_Y,
         BUTTON_02_MSG_W,BUTTON_02_MSG_H,
-        font_colro );
+        MBG_BUTTON_FONT_COL );
 
     // バッファーの消去 
     GFL_STR_DeleteBuffer( str );
