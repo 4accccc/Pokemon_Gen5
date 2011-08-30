@@ -43,6 +43,7 @@ struct _RESORT_PEOPLE
   u16   peopleID;
   BOOL  is_talk;
   MMDLSYS * p_mmdlsys;
+  MMDL    * p_mmdl;
   RESORT_ABSTRUCT_DATA *p_abstruct_data;
   const RESORT_BINARY_PEOPLE_DATA *cp_binary;
   const RESORT_PEOPLE_FUNCTION *cp_function;
@@ -151,8 +152,9 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
   //もし自分のMMDLがなかったら作成
   //（メニュー・セーブ復帰など存在することがありえる）
   {
-    MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
-    if( p_mmdl == NULL )
+    p_wk->p_mmdl = MMDLSYS_SearchOBJID( p_wk->p_mmdlsys, RESORT_PEOPLE_PEOPLEID_TO_MMDLID( p_wk->peopleID ) );
+      
+    if( p_wk->p_mmdl == NULL )
     {
       MMDL_HEADER header = sc_default_header;
 
@@ -168,7 +170,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
       p_wk->cp_function->SetupMmdHeader( p_wk, &header );
 
       //MMDL作成
-      MMDLSYS_AddMMdl( cp_param->p_mmdlsys, &header, RESORT_MAP_PlaceIDToZoneID(cp_param->placeID) );
+      p_wk->p_mmdl  = MMDLSYS_AddMMdl( cp_param->p_mmdlsys, &header, RESORT_MAP_PlaceIDToZoneID(cp_param->placeID) );
 
       //作成した場合は、データとMMDLをひもづけるため、データにPEOPLEIDとPLACEIDを設定
       RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PEOPLE_ID, cp_param->peopleID );
@@ -402,7 +404,7 @@ u32 RESORT_PEOPLE_GetMsgID( const RESORT_PEOPLE *cp_wk, u32 index )
 //-----------------------------------------------------------------------------
 MMDL * RESORT_PEOPLE_GetMmdl( const RESORT_PEOPLE *cp_wk )
 {
-  return MMDLSYS_SearchOBJID( cp_wk->p_mmdlsys, RESORT_PEOPLE_PEOPLEID_TO_MMDLID( cp_wk->peopleID ) ); 
+  return cp_wk->p_mmdl; 
 }
 //----------------------------------------------------------------------------
 /**

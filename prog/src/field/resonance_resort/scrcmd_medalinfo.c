@@ -49,8 +49,8 @@
 static void MedalInfoEndCallback( void* p_work );
 
 //scrcmd_resort.cのソースを使う
-extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys );
-static RESORT_PEOPLE * Resort_ScrcmdMedalInfo_GetFrontPeople( FIELDMAP_WORK *p_fieldmap );
+extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_SYS *p_people_sys );
+static RESORT_PEOPLE * Resort_ScrcmdMedalInfo_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, SCRCMD_WORK *p_scrcmd );
 
 //-------------------------------------
 ///	
@@ -91,7 +91,7 @@ VMCMD_RESULT EvCmdCallMedalInfo( VMHANDLE *core, void *wk )
 
   //自分のからメダル情報を取得
   {
-    RESORT_PEOPLE *p_people = Resort_ScrcmdMedalInfo_GetFrontPeople( p_fieldmap );
+    RESORT_PEOPLE *p_people = Resort_ScrcmdMedalInfo_GetFrontPeople( p_fieldmap, p_work );
     RESORT_DATE date;
 
     GF_ASSERT( p_people );
@@ -169,7 +169,7 @@ static void MedalInfoEndCallback( void* p_work )
  *	@return 目の前の人物を取得
  */
 //-----------------------------------------------------------------------------
-static RESORT_PEOPLE * Resort_ScrcmdMedalInfo_GetFrontPeople( FIELDMAP_WORK *p_fieldmap )
+static RESORT_PEOPLE * Resort_ScrcmdMedalInfo_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, SCRCMD_WORK *p_scrcmd )
 {
   RESORT_PEOPLE_SYS *p_people_sys = NULL;
   {
@@ -184,5 +184,5 @@ static RESORT_PEOPLE * Resort_ScrcmdMedalInfo_GetFrontPeople( FIELDMAP_WORK *p_f
     GF_ASSERT( p_people_sys != NULL );
   }
 
-  return Resort_Scrcmd_GetFrontPeople( p_fieldmap, p_people_sys );
+  return Resort_Scrcmd_GetFrontPeople( p_scrcmd, p_people_sys );
 }

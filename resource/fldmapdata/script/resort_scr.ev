@@ -322,6 +322,7 @@ _RET
 //==============================================================
 sub_recent_doing:
 {
+  DEFINE_LOCAL LWK_RECENT
   DEFINE_LOCAL LWK_CNT
   DEFINE_LOCAL LWK_MAX
 
@@ -349,7 +350,9 @@ sub_recent_doing:
 
       IF $LWK_RET == TRUE && $LWK_MAX > 0 THEN
         WHILE $LWK_CNT < $LWK_MAX
-          _RESORT_GET_MSGID( RESORT_MSGID_RECENT, LWK_MSGID )
+          $LWK_RECENT = $LWK_CNT
+          $LWK_RECENT += RESORT_MSGID_RECENT_00
+          _RESORT_GET_MSGID( LWK_RECENT, LWK_MSGID )
       	  _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
           $LWK_CNT += 1
 
@@ -371,6 +374,7 @@ sub_recent_doing:
         _RESORT_GET_MSGID( RESORT_MSGID_MEDAL_HAVE, LWK_MSGID )
       	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
 	      _BALLOONWIN_CLOSE()
+
         _RESORT_CALL_MEDALINFO()
       ELSE
         _RESORT_GET_MSGID( RESORT_MSGID_MEDAL_NONE, LWK_MSGID )

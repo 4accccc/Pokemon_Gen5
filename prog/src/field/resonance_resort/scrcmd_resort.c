@@ -252,14 +252,16 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
 extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
 {
   SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
-  u16 param     = VMGetU16( p_core );
+  u16 param     = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
   void *p_people_data = RESORT_PEOPLE_GetDataAdrs( p_people );
-  const u16 heapID = FIELDMAP_GetHeapID( p_field );
+  const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
+  WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
 
 
   RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
@@ -270,8 +272,22 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
 
   switch( param )
   {
-  case RESORT_MSGID_RECENT:
-    *p_ret_wk = resort_history_00 + GFUser_GetPublicRand(67); //TODO
+  case RESORT_MSGID_RECENT_00:
+  case RESORT_MSGID_RECENT_01:
+  case RESORT_MSGID_RECENT_02:
+  case RESORT_MSGID_RECENT_03:
+    {
+      u32 idx = RESORT_MSGID_RECENT_00 - param;
+      u32 msg = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT5_RECORD_00+idx, NULL );
+      RESORT_DATE date = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+idx, NULL );
+      
+      //”NŒŽ“ú‚ð“o˜^
+      WORDSET_RegisterNumber( p_wordset, 0, RESORT_DATE_GET_YEAR(date), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, 1, RESORT_DATE_GET_MONTH(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, 2, RESORT_DATE_GET_DAY(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+      *p_ret_wk = resort_history_00 + msg;
+    }
     break;
   case RESORT_MSGID_WHERETOGO:
     {
@@ -463,7 +479,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
 
   WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
-  const u16 heapID = FIELDMAP_GetHeapID( p_field );
+  const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
   u16 type  = VMGetU16(p_core);
   u16 param = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 idx   = SCRCMD_GetVMWorkValue(p_core, p_wk );
@@ -1161,7 +1177,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity( p_sys );
 
   WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
-  const u16 heapID = FIELDMAP_GetHeapID( p_field );
+  const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
 
   u16 idx = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 *ret_grade_msg = SCRCMD_GetVMWork( p_core, p_wk );
@@ -1523,7 +1539,7 @@ VMCMD_RESULT EvCmdResortGetMouthComm( VMHANDLE *p_core, void *p_wk_adrs )
   int i;
   int resident_cnt = 0;
   int gossip;
-  const u16 heapID = FIELDMAP_GetHeapID( p_field );
+  const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
 
   *p_ret_wk = 0;
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
@@ -1622,7 +1638,7 @@ VMCMD_RESULT EvCmdResortSetWordMouthCommAnswer( VMHANDLE *p_core, void *p_wk_adr
   u16 answer_idx	= SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 bufID      = VMGetU16( p_core );
   WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
-  const u16 heapID = FIELDMAP_GetHeapID( p_field );
+  const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
   RESORT_NPC_SYS *p_nps_sys = Resort_Scrcmd_GetNpcSys( p_field );
 
   GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
@@ -1713,7 +1729,7 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
     //‚»‚Ìl•¨‚ð’PŒê“o˜^
     WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
     STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
-    const u16 heapID = FIELDMAP_GetHeapID( p_field );
+    const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
     STRBUF *p_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
     u32 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
     RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_NAME, name );

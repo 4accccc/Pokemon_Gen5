@@ -103,17 +103,18 @@
 #define RESORT_MSGID_05             (5)
 
   //特殊MSG
-#define RESORT_MSGID_RECENT         (10)  //できごと文
-#define RESORT_MSGID_WHERETOGO      (11)  //どこへ行きたいか
-#define RESORT_MSGID_APPEAL         (12)  //アピール文
-#define RESORT_MSGID_SHOP_INFO      (13)  //お店情報
-#define RESORT_MSGID_GOSSIP         (14)  //噂（特殊NPCの話)
-
-
-#define RESORT_MSGID_MEDAL_HAVE     (15)  //メダル自慢
-#define RESORT_MSGID_MEDAL_NONE     (16)  //メダルないよ
-#define RESORT_MSGID_RECORD_NEXT    (17)  //出来事まだあるよ
-#define RESORT_MSGID_RECORD_NONE    (18)  //出来事なし
+#define RESORT_MSGID_RECENT_00      (10)  //できごと文
+#define RESORT_MSGID_RECENT_01      (11)  //できごと文
+#define RESORT_MSGID_RECENT_02      (12)  //できごと文
+#define RESORT_MSGID_RECENT_03      (13)  //できごと文
+#define RESORT_MSGID_WHERETOGO      (14)  //どこへ行きたいか
+#define RESORT_MSGID_APPEAL         (15)  //アピール文
+#define RESORT_MSGID_SHOP_INFO      (16)  //お店情報
+#define RESORT_MSGID_GOSSIP         (17)  //噂（特殊NPCの話)
+#define RESORT_MSGID_MEDAL_HAVE     (18)  //メダル自慢
+#define RESORT_MSGID_MEDAL_NONE     (19)  //メダルないよ
+#define RESORT_MSGID_RECORD_NEXT    (20)  //出来事まだあるよ
+#define RESORT_MSGID_RECORD_NONE    (21)  //出来事なし
 
   //旅行者
 #define RESORT_TOURIST_GREET_MSGID  (RESORT_MSGID_00)
