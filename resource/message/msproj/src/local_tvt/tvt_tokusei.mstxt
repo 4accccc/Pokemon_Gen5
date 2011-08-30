@@ -295,14 +295,14 @@
 この　とくせいの　ポケモンが
 せんとうしている　さいちゅうは▽
 じばくや　だいばくはつの　わざを▽
-つかうことが　できなく　なるんだ▼
+つかうことが　できなくなるんだ▼
 それと……▼
 ゆうばくの　とくせいも
 こうかが　はつどう　しなくなるから▽
 おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:52" />
+				Time="2011-08-30T11:27:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -314,14 +314,14 @@
 この特性の　ポケモンが
 戦闘している　最中は▽
 じばくや　だいばくはつの　技を▽
-使うことが　できなく　なるんだ▼
+使うことが　できなくなるんだ▼
 それと……▼
 ゆうばくの　特性も
 効果が　発動しなくなるから▽
 おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:54" />
+				Time="2011-08-30T11:27:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1577,12 +1577,12 @@
 この　とくせいは
 でんきタイプの　わざを▽
 ひきつける　こうかも　もっているんだ▼
-シングルせんとうでは　いみがないけど
+１ｖｓ１では　いみがないけど
 ダブルや　トリプルの　せんとうでは▽
 やくにたつと　おもうよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:29:24" />
+				Time="2011-08-30T11:29:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1602,12 +1602,12 @@
 この特性は
 でんきタイプの　技を▽
 ひきつける　効果も　持っているんだ▼
-シングル戦闘では　意味がないけど
+１ｖｓ１では　意味がないけど
 ダブルや　トリプルの　戦闘では▽
 役に立つと　思うよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:29:19" />
+				Time="2011-08-30T11:28:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1984,10 +1984,10 @@
 			Language="JPN">
 			<Text>せいしんりょく　か……▼
 この　とくせいの　ポケモンは
-ひるむ　ことが　ないんだ▼</Text>
+ひるむことが　ないんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T09:10:36" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T11:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1997,10 +1997,10 @@
 			Language="JPN_KANJI">
 			<Text>せいしんりょく　か……▼
 この特性の　ポケモンは
-ひるむ　ことが　ないんだ▼</Text>
+ひるむことが　ないんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-30T11:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2349,16 +2349,16 @@
 			Language="JPN_KANJI">
 			<Text>プレッシャー　か……▼
 この特性の　ポケモンは
-あいてが　つかった　わざの▽
+相手が　使った　技の▽
 パワーポイントを▽
-おおく　へらすことが　できるんだ▼
+多く　減らすことが　できるんだ▼
 あと……▼
-手持ちの　せんとうに　いると
-レベルの　たかい　ポケモンと▽
-であいやすくなる　こうかもあるね▼</Text>
+手持ちの　先頭に　いると
+レベルの　高い　ポケモンと▽
+であいやすくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-30T11:30:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2555,12 +2555,12 @@
 この特性の　ポケモンは
 野生の　ポケモンとの　戦闘から▽
 必ず　逃げられるんだ▼
-あいてを　逃げられないようにする
+相手を　逃げられないようにする
 技や　特性の　効果も▽
 無視して　逃げることが　できるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:34:55" />
+				Time="2011-08-30T11:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2842,11 +2842,11 @@
 おぼえておくと　いいよ▼
 あと……▼
 手持ちの　先頭に　いると
-レベルのたかい　ポケモンと▽
+レベルの高い　ポケモンと▽
 であいやすくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:37:03" />
+				Time="2011-08-30T11:30:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3280,11 +3280,11 @@
 状態異常に　なると▽
 防御が　あがるんだ▼
 こんらんや　メロメロでは
-こうかは　はつどう　しないから▽
-ちゅうい　すること▼</Text>
+効果は　発動しないから▽
+注意すること▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-30T11:30:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3332,17 +3332,17 @@
 			Language="JPN_KANJI">
 			<Text>ヘドロえき　か……▼
 この特性の　ポケモンは
-ダメージを　あたえた　あいてから▽
-体力を　すいとる　わざで▽
-ダメージを　うけた　場合に▽
-体力を　かいふく　させず▽
-ぎゃくに　ダメージを　あたえるんだ▼
+ダメージを　与えた　相手から▽
+体力を　すいとる　技で▽
+ダメージを　受けた　場合に▽
+体力を　回復させず▽
+逆に　ダメージを　与えるんだ▼
 でも……▼
-攻撃の　ダメージは　うけるので
-ちゅうい　すること▼</Text>
+攻撃の　ダメージは　受けるので
+注意すること▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-30T11:31:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4906,15 +4906,15 @@
 この特性の　ポケモンは
 状態異常に　なると▽
 すばやさが　あがるんだ▼
-マヒの　すばやさ　はんげんも
-むこうに　なるんだよ▼
+マヒの　すばやさ　半減も
+無効に　なるんだよ▼
 あと……▼
-手持ちの　せんとうに　いると
+手持ちの　先頭に　いると
 野生の　ポケモンと▽
-であいにくくなる　こうかもあるね▼</Text>
+であいにくくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-30T11:32:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6017,10 +6017,10 @@
 			<Text>ゆきふらし　か……▼
 この特性の　ポケモンは
 戦闘に　でるだけで▽
-てんきを　あられに　してしまえるんだ▼</Text>
+天候を　あられに　してしまえるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-30T11:33:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6117,12 +6117,12 @@
 			Language="JPN_KANJI">
 			<Text>おみとおし　か……▼
 この特性の　ポケモンは
-あいてが　道具を　持っていると▽
+相手が　道具を　持っていると▽
 なにを　持っているかを▽
 教えて　くれるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:03:11" />
+				Time="2011-08-30T11:33:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7398,11 +7398,11 @@
 			Language="JPN_KANJI">
 			<Text>はとむね　か……▼
 この特性の　ポケモンは
-あいてから　防御の　能力を▽
+相手から　防御の　能力を▽
 さげられる　ことが　ないんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-30T11:33:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7784,11 +7784,11 @@
 			Language="JPN">
 			<Text>じしんかじょう　か……▼
 この　とくせいの　ポケモンは
-あいてを　たおした　ときに▽
+あいてを　たおしたときに▽
 こうげきの　のうりょくが　あるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T06:06:09" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T11:34:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7798,11 +7798,11 @@
 			Language="JPN_KANJI">
 			<Text>じしんかじょう　か……▼
 この特性の　ポケモンは
-あいてを　たおした　ときに▽
+相手を　たおしたときに▽
 攻撃の　能力が　あるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-30T11:34:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8139,12 +8139,12 @@
 			Language="JPN_KANJI">
 			<Text>てつのトゲ　か……▼
 この特性の　ポケモンは
-直接攻撃　された　ときに▽
-攻撃　してきた　あいてにも▽
+直接攻撃された　ときに▽
+攻撃してきた　相手にも▽
 ダメージを　あたえるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-30T11:34:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8179,12 +8179,12 @@
 エスパータイプが　ついか　されるんだ▼
 さらに！▼
 こうげきと　すばやさの
-のうりょくが　へる　かわりに▽
+のうりょくが　さがる　かわりに▽
 ぼうぎょ　とくこう　とくぼうの▽
 のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T11:18:43" />
+				User="matsumiya:W00224"
+				Time="2011-08-30T11:37:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8201,12 +8201,12 @@
 エスパータイプが　追加されるんだ▼
 さらに！▼
 攻撃と　すばやさの
-能力が　減るかわりに▽
+能力が　さがるかわりに▽
 防御　特攻　特防の▽
 能力が　あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:15:18" />
+				Time="2011-08-30T11:37:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
