@@ -19,10 +19,10 @@ typedef struct _FMISSION_STATUS{
 struct _FMISSION_SAVE{
   u16 high_score[FMISSION_STATUS_MAX]; ///<ハイスコア(14bit)
   FMISSION_STATUS status[FMISSION_STATUS_MAX];
-  u32 open_num;   ///<フェスミッション開催回数
-  u32 entry_num;  ///<フェスミッション参加回数
-  u32 clear_num;  ///<フェスミッション達成回数
-  u16 exp[FMISSION_SV_EXP_IDX_MAX];     ///<経験値white&black
+  u16 open_num;   ///<フェスミッション開催回数
+  u16 entry_num;  ///<フェスミッション参加回数
+  u16 clear_num;  ///<フェスミッション達成回数
+  u8 exp[FMISSION_SV_EXP_IDX_MAX];     ///<経験値white&black
 };
 
 

@@ -34,6 +34,7 @@
 #include "./event_fieldmap_control.h"
 #include "./event_fmission.h"
 #include "./event_subscreen.h"
+#include "savedata/fmission_save.h"
 
 #include "sound/pm_sndsys.h"
 #include "sound/swan_sound_data.sadl"
@@ -352,8 +353,14 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
 
   switch (*seq) {
   case 0:
-    if( wk->succeed_f ){
-      LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
+    {
+      FMISSION_SAVE* f_save = SAVEDATA_GetFMissionSave( GAMEDATA_GetSaveControlWork( wk->gdata ) );
+      if( wk->succeed_f ){  //他者ミッションに参加
+        LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
+        FMISSION_SAVE_IncMissionEntryNum( f_save );
+      }else{  //自分で開催
+        FMISSION_SAVE_IncMissionOpenNum( f_save );
+      }
     }
     wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
     FLDSYSWIN_ClearWindow( wk->win );
