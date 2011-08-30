@@ -3360,6 +3360,230 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_debug_mizu_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>C03P15 船表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:39:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:39:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>C03P15 船表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:39:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:39:56" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_mizu_19">
+		<LanguageCell
+			Language="JPN">
+			<Text>C03P15 船非表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:39:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>C03P15 船非表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:03" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_mizu_20">
+		<LanguageCell
+			Language="JPN">
+			<Text>D05 船表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>D05 船表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_mizu_21">
+		<LanguageCell
+			Language="JPN">
+			<Text>D05 船非表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>D05 船非表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:21" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_mizu_22">
+		<LanguageCell
+			Language="JPN">
+			<Text>W21 船表示（タラップなし）</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:54:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>W21 船表示（タラップなし）</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:54:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:38" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_mizu_23">
+		<LanguageCell
+			Language="JPN">
+			<Text>W21 船表示（タラップあり）</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:54:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>W21 船表示（タラップあり）</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:54:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:54:11" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_mizu_24">
+		<LanguageCell
+			Language="JPN">
+			<Text>W21 船非表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>W21 船非表示</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-08-30T06:40:49" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_debug_masafumi_14_01"
 		Style="Large">
 		<LanguageCell

@@ -294,6 +294,13 @@ EVENT_START   ev_debug_mizuguchi
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_15, 14 )	//D10・船なし接続
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_16, 15 )	//D10・イベント起動
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_17, 16 )	//D10・キュレム手前
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_18, 17 )	//C03P15・船あり
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_19, 18 )	//C03P15・船なし
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_20, 19 )	//D05・船あり
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_21, 20 )	//D05・船なし
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_22, 21 )	//W21・W21アジト船表示（タラップなし）
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_23, 22 )	//W21・W21アジト船表示（タラップあり）
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_24, 23 )	//W21・W21アジト船非表示
 		//メニュー表示
 		_BMPMENU_START()
 	
@@ -544,6 +551,52 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
       //マップ遷移
       _MAP_CHANGE( ZONE_ID_D10R0301, 62, 23, DIR_UP )
+    
+    ELSIF $SCWK_TEMP2 == 17 THEN
+      //C03P15アジト船出現
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_C03P15, 20, 8, DIR_RIGHT)
+    
+    ELSIF $SCWK_TEMP2 == 18 THEN
+      //C03P15アジト船非表示
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, FALSE, FALSE )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_C03P15, 20, 8, DIR_RIGHT)
+    
+    ELSIF $SCWK_TEMP2 == 19 THEN
+      //D05アジト船出現
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D05, 197, 493, DIR_RIGHT )
+      
+    ELSIF $SCWK_TEMP2 == 20 THEN
+      //D05アジト船非表示
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, FALSE, FALSE )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D05, 197, 493, DIR_RIGHT )
+    
+    ELSIF $SCWK_TEMP2 == 21 THEN
+      //W21アジト船表示（タラップなし）
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE , TRUE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
+      
+    ELSIF $SCWK_TEMP2 == 22 THEN
+      //W21アジト船表示（タラップあり）
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, TRUE , TRUE )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
+    
+    ELSIF $SCWK_TEMP2 == 23 THEN
+      //W21アジト船非表示
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
+    
     ELSE
 			//C04R0101でんきジム実験
 			$WK_SCENE_C04GYM0101_SHOWEND = 1
