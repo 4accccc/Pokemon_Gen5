@@ -224,6 +224,7 @@ class WBT_POKEMON_SINGLE
       # ƒZƒbƒg
       @nick_name = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+4)
     end
+    @nick_name = NKF.nkf("-w16L0", @nick_name)
     #
     if(@local_debug == 1)
       p sprintf("%s :%s", $poke_str[13], @nick_name )
