@@ -194,6 +194,12 @@ static void DEBUG_WBTDL_POKEMON_dump( const WBTDL_POKEMON * dl_poke )
 {
   int i;
   OS_Printf("WBT DL POKEMON:\n");
+  OS_Printf("nickname");
+  for ( i = 0; i < NELEMS(dl_poke->nickname); i ++ )
+  {
+    OS_Printf("%04x ", dl_poke->nickname[i]);
+  }
+  OS_PutString("\n");
   OS_Printf("monsno=%03d ", dl_poke->monsno);
   OS_Printf("itemno=%03d ", dl_poke->item_no );
   OS_Printf("rare(%d) tokusei=%2d\n", dl_poke->rare_flag, dl_poke->tokusei);
