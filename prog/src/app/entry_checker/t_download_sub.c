@@ -2099,6 +2099,21 @@ void TdCmn_calc_framelist( T_DOWNLOAD_MAIN_WORK * wk )
 		wk->AllCurPos[T_DOWNLOAD_LIST_CURRENT]      = FRAMELIST_GetListPos(  wk->frame_list_work );		// 通しカーソル位置
 		wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT]     = FRAMELIST_GetCursorPos(wk->frame_list_work );		// 画面上の位置
 		wk->ListScrollPos[T_DOWNLOAD_LIST_CURRENT]  = FRAMELIST_GetScrollCount(wk->frame_list_work );	// スクロール位置
+		//
+		// 初期化の時に、表示しているフレーム数
+		// putFrameMaxMain(frame_list.c)を設定している
+		//
+		// 通常の使い方(上を空けない)場合は、
+		// 基本8になるはずなので特に問題はない(例：図鑑)
+		// 上を空ける場合は、
+		// 初期化時に状況によっては変化する可能性がある
+		// (pos、scrollなど)そのため
+		// 操作手順によっては表示箇所がずれることがある
+		//
+		// ただし、他でも使用している箇所であり、
+		// また、これで完全に直るのかがわからないため、
+		// 外部から値をセットする方法で様子を見る
+		FRAMELIST_SetFrameMax( wk->frame_list_work, 7 );
 	}
 }
 

@@ -2296,3 +2296,20 @@ void FRAMELIST_SetCursorPosPaletteOff( FRAMELIST_WORK * wk )
 {
 	ChangeCursorPosPalette( wk, PALCHG_NONE, wk->listPos );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		値のセット
+ *
+ * @param		wk					ワーク
+ * @param		const s32			(値:通常7)
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void FRAMELIST_SetFrameMax( FRAMELIST_WORK * wk, const s32 num )
+{
+	// 他への影響を考えて別関数としておく
+	wk->putFrameMaxMain = num;
+}
+

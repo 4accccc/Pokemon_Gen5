@@ -361,3 +361,8 @@ extern void FRAMELIST_SetCursorPosPalette( FRAMELIST_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_SetCursorPosPaletteOff( FRAMELIST_WORK * wk );
+
+
+// 値のセット
+extern void FRAMELIST_SetFrameMax( FRAMELIST_WORK * wk, const s32 num );
+

@@ -2506,6 +2506,7 @@ static s32 wr_is_main_framelist( WIN_RECORD_MAIN_WORK * wk, const u32 mode )
 	}
 	// ƒŠƒXƒgˆÚ“®
 	if(flg == 1){
+		FRAMELIST_SetFrameMax( wk->frame_list_work, 7 );
 	}
 	// Œˆ’è
 	else if(flg == 2){
