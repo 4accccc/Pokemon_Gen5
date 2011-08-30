@@ -253,11 +253,15 @@ EVENT_START	ev_pos_w21_swrival_01
     //========================================//
      $WK_SCENE_D27R0101_SECONDW_01 = 0
      $WK_SCENE_D27R0101_SECONDB_01 = 1
+     $WK_SCENE_D27R1301_PLAZMAM_01 = 1
+     $WK_SCENE_D27R1001_PLAZMAM_01 = 1
      //========================================//
   ELSE
     //========================================//
      $WK_SCENE_D27R0101_SECONDW_01 = 1
      $WK_SCENE_D27R0101_SECONDB_01 = 0
+     $WK_SCENE_D27R1301_PLAZMAM_01 = 1
+     $WK_SCENE_D27R1001_PLAZMAM_01 = 1
      //========================================//
   ENDIF
   

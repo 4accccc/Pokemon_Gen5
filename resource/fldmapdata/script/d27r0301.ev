@@ -39,7 +39,6 @@ DEFINE_LOCAL  LCW_POSZ
 /*					“ÁŽêÚ‘±				*/
 /************************************************************/
 EVENT_START	ev_pos_d27r0301_warp_01
-
   
   //ROM‚Ìƒo[ƒWƒ‡ƒ“‚ðŽæ“¾
   _GET_ROM_VERSION( LCWK_VERSION )
