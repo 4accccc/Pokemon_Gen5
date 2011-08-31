@@ -37,6 +37,8 @@
 #include "encount_data_ex.cdat"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
+#define RARE_POKE_CHANGE  (2)   // 「ひかるおまもり」を所持していた場合のレア抽選回数
+
 //======================================================================
 //  struct
 //======================================================================
@@ -419,7 +421,35 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
   personal = POKE_PERSONAL_OpenHandle( poke->monsNo, poke->form, HEAPID_PROC );
 
   { //個体乱数セット
+    MYITEM_PTR myitem = GAMEDATA_GetMyItem( efp->gdata );
+    BOOL rare_item = MYITEM_CheckItem( myitem, ITEM_HIKARUOMAMORI, 1, HEAPID_PROC );
+    u8 i;
+
     u32 p_rnd = eps_EncPokeCalcPersonalRand( efp, personal, poke );
+
+    // 「ひかるおまもり」所持チェック
+    //  かつ 既にレアでない
+    if( rare_item == TRUE && POKETOOL_CheckRare( efp->myID, p_rnd ) == FALSE )
+    {
+      ICHI_Printf("「ひかるおまもり」レア抽選\n");
+      // 持っていたら、+２回レア抽選する
+      for( i=0; i<RARE_POKE_CHANGE; i++ )
+      {
+        p_rnd = eps_EncPokeCalcPersonalRand( efp, personal, poke );
+
+        // レアになった
+        if( POKETOOL_CheckRare( efp->myID, p_rnd ) )
+        {
+          break;
+        }
+      }
+    }
+#ifdef PM_DEBUG
+    if( POKETOOL_CheckRare( efp->myID, p_rnd ) )
+    {
+      OS_Printf("レアポケモン！\n");
+    }
+#endif
 
     PP_SetupEx( pp, poke->monsNo, poke->level, efp->myID, PTL_SETUP_POW_AUTO, p_rnd );
   }

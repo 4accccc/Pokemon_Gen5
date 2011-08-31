@@ -412,7 +412,7 @@ static void DebugSodateya_AutoTest( EVENT_WORK* work )
 {
   enum
   {
-    DEBUG_SODATEYA_AUTO_TEST_DETAIL_FLAG  = 1,  //ここの真偽で詳細情報を載せるかどうか
+    DEBUG_SODATEYA_AUTO_TEST_DETAIL_FLAG  = 0,  //ここの真偽で詳細情報を載せるかどうか
     DEBUG_SODATEYA_AUTO_TEST_TEST_NUM = 100,    //何回テストするか
   };
 
@@ -451,6 +451,7 @@ static void DebugSodateya_AutoTest( EVENT_WORK* work )
     u32 total_tokusei[3] = {0};
     u32 total_tokusei_num[3] = {0};
     u32 total_seikaku[PTL_SEIKAKU_MAX] = {0};
+    u32 total_rare = 0;
 
     //指定回数テストを行う
     for( i = 0; i < DEBUG_SODATEYA_AUTO_TEST_TEST_NUM; i++ )
@@ -493,6 +494,8 @@ static void DebugSodateya_AutoTest( EVENT_WORK* work )
           OS_Printf( "すばやさ:%d\n", PP_Get( pp, ID_PARA_agi_rnd, NULL ) );
           OS_Printf( "とくこう:%d\n", PP_Get( pp, ID_PARA_spepow_rnd, NULL ) );
           OS_Printf( "とくぼう:%d\n", PP_Get( pp, ID_PARA_spedef_rnd, NULL ) );
+          OS_Printf( "とくぼう:%d\n", PP_Get( pp, ID_PARA_spedef_rnd, NULL ) );
+          OS_Printf( "レ　　ア:%d\n", PP_CheckRare( pp ) );
         }
 
         //統計情報チェック
@@ -524,6 +527,11 @@ static void DebugSodateya_AutoTest( EVENT_WORK* work )
             {
               GF_ASSERT_MSG( total_tokusei_num[ PP_GetTokuseiIndex( pp ) ] == PP_Get( pp, ID_PARA_speabino, NULL ), "違う特性！特性index[%d]前の特性[%d]今の特性[%d]\n", PP_GetTokuseiIndex( pp ), total_tokusei_num[ PP_GetTokuseiIndex( pp ) ], PP_Get( pp, ID_PARA_speabino, NULL ) );
             }
+          }
+
+          if( PP_CheckRare(pp) )
+          {
+            total_rare++;
           }
         }
       }
@@ -591,6 +599,7 @@ static void DebugSodateya_AutoTest( EVENT_WORK* work )
       {
         OS_Printf( "%s[%d]:%d％\n", scp_tokusei_label[i], total_tokusei_num[i], total_tokusei[i] * 100 / DEBUG_SODATEYA_AUTO_TEST_TEST_NUM );
       }
+      OS_Printf( "・レア:%d％\n", total_rare );
       OS_Printf( "・性格\n" );
       for( i = 0; i < PTL_SEIKAKU_MAX; i++ )
       {

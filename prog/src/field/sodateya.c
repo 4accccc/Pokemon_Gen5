@@ -22,6 +22,7 @@
 #include "poke_tool/poke_personal.h"
 #include "poke_tool/poke_memo.h"
 #include "waza_tool/wazano_def.h" // for WAZANO_xxxx 
+#include "item/itemsym.h"
 
 #include "fieldmap.h"
 #include "pokemon_egg.h" 
@@ -50,6 +51,11 @@
 #define LOVE_LV_BAD    (20)  // 「それほど よくないがなぁ」
 #define LOVE_LV_WORST   (0)  // 「ちがう ポケモンたちと あそんでおるがなぁ」
 
+// 相性(タマゴができる確率[%])
+// ※「まるいおまもり」を所持していた場合
+#define LOVE_LV_GOOD_EX   (88)    // 4.375% → 5.5%
+#define LOVE_LV_NORMAL_EX (80)    // 3.125% → 5%
+#define LOVE_LV_BAD_EX    (40)    // 1.25%  → 2.5%
 
 //========================================================================================
 // ■育て屋さんワーク
@@ -484,6 +490,7 @@ u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya )
 {
   const POKEMON_PARAM* poke1;
   const POKEMON_PARAM* poke2;
+  u8 love_level;
 
   // 飼育ポケモンが2体いない場合
   if( SODATEYA_WORK_GetPokemonNum( sodateya->work ) < 2 )
@@ -497,7 +504,29 @@ u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya )
   poke2 = SODATEYA_WORK_GetPokemon( sodateya->work, 1 );
 
   // 相性を返す
-  return LoveCheck( poke1, poke2 );
+  love_level = LoveCheck( poke1, poke2 );
+
+  // 「まるいおまもり」を持っていたら確立が上がる
+  {
+    GAMESYS_WORK  *gsys  = FIELDMAP_GetGameSysWork( sodateya->fieldmap );
+    GAMEDATA      *gdata = GAMESYSTEM_GetGameData( gsys );
+    MYITEM_PTR    myitem = GAMEDATA_GetMyItem( gdata );
+
+    if( MYITEM_CheckItem( myitem, ITEM_MARUIOMAMORI, 1, sodateya->heapID ) )
+    {
+      // 所持しているので確立上がる
+      switch( love_level ){
+      case LOVE_LV_GOOD:  love_level = LOVE_LV_GOOD_EX;   break;
+      case LOVE_LV_NORMAL:love_level = LOVE_LV_NORMAL_EX; break;
+      case LOVE_LV_BAD:   love_level = LOVE_LV_BAD_EX;    break;
+      case LOVE_LV_WORST: /*変化なし*/  break;
+      default: GF_ASSERT(0);
+      }
+    }
+  }
+  ICHI_Printf("タマゴ発見確立 %d\n", love_level);
+
+  return love_level;
 }
 
 //----------------------------------------------------------------------------------------
@@ -893,8 +922,10 @@ static BOOL LayEggCheck( SODATEYA* sodateya )
     // 2体預けていたら産卵判定
     if( 2 <= SODATEYA_WORK_GetPokemonNum( sodateya->work ) )
     { 
+      u8  love_level = SODATEYA_GetLoveLevel( sodateya ); 
+
       // 乱数 < 相性 ==> 産卵
-      if( GFUser_GetPublicRand0(16*100) < SODATEYA_GetLoveLevel(sodateya) ) 
+      if( GFUser_GetPublicRand0(16*100) < love_level ) 
       {
         return TRUE; 
       }
@@ -945,7 +976,7 @@ static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg )
 
   // タマゴを作成
   POKEMON_EGG_Create( 
-      sodateya->heapID, mystatus, POKE_MEMO_PERSON_SODATEYA, father, mother, egg );
+      gsys, sodateya->heapID, mystatus, POKE_MEMO_PERSON_SODATEYA, father, mother, egg );
 }
 
 

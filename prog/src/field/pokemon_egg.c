@@ -7,6 +7,7 @@
  */
 ////////////////////////////////////////////////////////////////////////////////////////// 
 #include <gflib.h> 
+#include "gamesystem/gamesystem.h"
 #include "gamesystem/game_data.h"
 #include "savedata/mystatus.h"
 #include "system/gfl_use.h"
@@ -29,6 +30,7 @@
 #define DEBUG_PRINT_ON      // デバッグ出力スイッチ
 #define PRINT_TARGET    (2) // デバッグ出力先
 #define RARE_EGG_CHANCE (5) // レアタマゴ抽選回数
+#define RARE_EGG_CHANGE_EX (2)  // 「ひかるおまもり」を所持していた場合の抽選回数
 
 // 両親ポケモン
 typedef struct {
@@ -87,7 +89,7 @@ static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_
 static void EggCordinate_AbilityRnd_deirve_from_parent( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_ID( const MYSTATUS* mystatus, EGG_PARAM* egg ); // ID
 static void EggCordinate_PersonalRnd_at_random( const PARENT* parent, EGG_PARAM* egg ); // 個性乱数
-static void EggCordinate_PersonalRnd_for_rare( const PARENT* parent, EGG_PARAM* egg );
+static void EggCordinate_PersonalRnd_for_rare( const PARENT* parent, EGG_PARAM* egg, const BOOL rare_item );
 static void EggCordinate_Waza_default( EGG_PARAM* egg ); // デフォルト技セット
 static void EggCordinate_Waza_egg( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id ); // タマゴ技セット
 static void EggCordinate_Waza_parent( const PARENT* parent, EGG_PARAM* egg ); // 継承技 ( 両親 ) セット
@@ -112,6 +114,7 @@ static POKEMON_PARAM* CreateDebugEgg( GAMEDATA* gameData, HEAPID heapID, u32 mon
 /**
  * @brief タマゴを作成する
  *
+ * @param gsys     ゲームシステム
  * @param heap_id  使用するヒープID
  * @param mystatus タマゴの所有者
  * @param memo     トレーナーメモの記載
@@ -121,9 +124,13 @@ static POKEMON_PARAM* CreateDebugEgg( GAMEDATA* gameData, HEAPID heapID, u32 mon
  */
 //---------------------------------------------------------------------------------------- 
 void POKEMON_EGG_Create( 
-    HEAPID heap_id, const MYSTATUS* mystatus, int memo, 
+    GAMESYS_WORK* gsys, HEAPID heap_id, const MYSTATUS* mystatus, int memo, 
     const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2, POKEMON_PARAM* egg )
 {
+  GAMEDATA    *gdata = GAMESYSTEM_GetGameData( gsys );
+  MYITEM_PTR  myitem = GAMEDATA_GetMyItem( gdata );
+  // 「ひかるおまもり」所持チェック
+  BOOL        rare_item= MYITEM_CheckItem( myitem, ITEM_HIKARUOMAMORI, 1, heap_id );
   PARENT parent;
   EGG_PARAM egg_param;
 
@@ -154,7 +161,7 @@ void POKEMON_EGG_Create(
   EggCordinate_AbilityRnd_deirve_from_parent( &parent, &egg_param );
   EggCordinate_ID( mystatus, &egg_param ); // ID
   EggCordinate_PersonalRnd_at_random( &parent, &egg_param ); // 個性乱数
-  EggCordinate_PersonalRnd_for_rare( &parent, &egg_param ); 
+  EggCordinate_PersonalRnd_for_rare( &parent, &egg_param, rare_item ); 
   EggCordinate_Waza_default( &egg_param ); // 技 ( デフォルト ) 
   EggCordinate_Waza_egg( &parent, &egg_param, heap_id ); // 技 ( タマゴ技 )
   EggCordinate_Waza_parent( &parent, &egg_param ); // 技 ( 両親共通の技 ) 
@@ -794,20 +801,36 @@ static void EggCordinate_PersonalRnd_at_random( const PARENT* parent, EGG_PARAM*
  * @brief タマゴの個性乱数を決定する ( レア抽選 )
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_PersonalRnd_for_rare( const PARENT* parent, EGG_PARAM* egg )
+static void EggCordinate_PersonalRnd_for_rare( const PARENT* parent, EGG_PARAM* egg, const BOOL rare_item )
 {
   int i;
   u32 father_country = PP_Get( parent->father, ID_PARA_country_code, NULL );
   u32 mother_country = PP_Get( parent->mother, ID_PARA_country_code, NULL );
 
-  // 親同士の国コードが同じ
-  if( father_country == mother_country ) { 
-    return; 
-  } 
   // すでにレア
   if( POKETOOL_CheckRare( egg->id_no, egg->personal_rnd ) ) { 
     return; 
   }
+
+  // 「ひかるおまもり」を持っている場合は+2回抽選を行う
+  if( rare_item == TRUE )
+  {
+    ICHI_Printf("「ひかるおまもり」レア抽選\n");
+    for( i=0; i<RARE_EGG_CHANGE_EX; i++ )
+    {
+      EggCordinate_PersonalRnd_at_random( parent, egg );
+
+      // レアになった
+      if( POKETOOL_CheckRare( egg->id_no, egg->personal_rnd ) ) { 
+        return; 
+      }
+    }
+  }
+
+  // 親同士の国コードが同じ
+  if( father_country == mother_country ) { 
+    return; 
+  } 
 
   // 抽選
   for( i=0; i<RARE_EGG_CHANCE; i++ )
@@ -819,6 +842,7 @@ static void EggCordinate_PersonalRnd_for_rare( const PARENT* parent, EGG_PARAM* 
       return; 
     }
   }
+  
 }
 
 //---------------------------------------------------------------------------------------- 

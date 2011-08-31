@@ -12,6 +12,7 @@
 /**
  * @brief タマゴを作成する
  *
+ * @param gsys     ゲームシステム
  * @param heap_id  使用するヒープID
  * @param mystatus タマゴの所有者
  * @param memo     トレーナーメモの記載
@@ -21,7 +22,7 @@
  */
 //---------------------------------------------------------------------------------------- 
 extern void POKEMON_EGG_Create( 
-    HEAPID heap_id, const MYSTATUS* mystatus, int memo, 
+    GAMESYS_WORK* gsys, HEAPID heap_id, const MYSTATUS* mystatus, int memo, 
     const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2, POKEMON_PARAM* egg );
 
 
