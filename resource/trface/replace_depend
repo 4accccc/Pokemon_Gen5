@@ -2167,3 +2167,14 @@ cnv_tmp/trwb_scientistw_1.NCLR : ./../../../swan_doc/trgra/trwb_scientistw.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
 	cp cnv_tmp/trwb_scientistw.NCLR cnv_tmp/trwb_scientistw_1.NCLR 
 
+cnv_tmp/trwb_pilot_1.NCGR : ./../../../swan_doc/trgra/trwb_pilot.ncg 
+	@g2dcvtr $< -bg -cr/0_28_32_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_pilot.NCGR cnv_tmp/trwb_pilot_1.NCGR 
+
+cnv_tmp/trwb_pilot_1_LZ.bin : cnv_tmp/trwb_pilot_1.NCGR 
+	ntrcomp -l 2 cnv_tmp/trwb_pilot_1.NCGR
+
+cnv_tmp/trwb_pilot_1.NCLR : ./../../../swan_doc/trgra/trwb_pilot.ncl 
+	@g2dcvtr $< -bg -o/cnv_tmp
+	cp cnv_tmp/trwb_pilot.NCLR cnv_tmp/trwb_pilot_1.NCLR 
+

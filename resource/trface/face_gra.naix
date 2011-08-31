@@ -472,7 +472,9 @@ enum {
 	NARC_face_gra_trwb_battleg_1_LZ_bin = 458,
 	NARC_face_gra_trwb_battleg_1_NCLR = 459,
 	NARC_face_gra_trwb_scientistw_1_LZ_bin = 460,
-	NARC_face_gra_trwb_scientistw_1_NCLR = 461
+	NARC_face_gra_trwb_scientistw_1_NCLR = 461,
+	NARC_face_gra_trwb_pilot_1_LZ_bin = 462,
+	NARC_face_gra_trwb_pilot_1_NCLR = 463
 };
 
 /* NARC_FACE_GRA_NAIX_ */

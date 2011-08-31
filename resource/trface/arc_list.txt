@@ -460,4 +460,6 @@
 "cnv_tmp/trwb_battleg_1.NCLR"
 "cnv_tmp/trwb_scientistw_1_LZ.bin"
 "cnv_tmp/trwb_scientistw_1.NCLR"
+"cnv_tmp/trwb_pilot_1_LZ.bin"
+"cnv_tmp/trwb_pilot_1.NCLR"
 
