@@ -111,6 +111,8 @@ static void DEBUG_POKEPARAM_Dump( POKEMON_PARAM * pp, HEAPID tempHeapID )
   //PP_Get( pp, ID_PARA_oyaname, (void*)strbuf );
   //OS_Printf("oyaname:"); DEBUG_PrintString( strbuf ); OS_PutString("\n");
 
+  value = PP_CheckRare( pp );
+  OS_Printf("rare=%d ", value );
   value = PP_Get( pp, ID_PARA_country_code, NULL );
   OS_Printf("country_code:%3d ", value );
   value = PP_Get( pp, ID_PARA_id_no, NULL );
@@ -202,7 +204,7 @@ static void DEBUG_WBTDL_POKEMON_dump( const WBTDL_POKEMON * dl_poke )
   OS_PutString("\n");
   OS_Printf("monsno=%03d ", dl_poke->monsno);
   OS_Printf("itemno=%03d ", dl_poke->item_no );
-  OS_Printf("rare(%d) tokusei=%2d\n", dl_poke->rare_flag, dl_poke->tokusei);
+  OS_Printf("rare(%d:%d) tokusei=%2d\n", dl_poke->rare_flag, dl_poke->pad1, dl_poke->tokusei);
   OS_Printf("form=%d sex=%d ball_id=%d\n", dl_poke->form_no, dl_poke->sex, dl_poke->ball_id );
   OS_Printf("level=%3d friendly=%3d seikaku=%2d\n",
       dl_poke->level, dl_poke->friend_rate, dl_poke->seikaku );
@@ -476,13 +478,15 @@ static void setDLPokemon( POKEMON_PARAM * pp, const WBTDL_POKEMON * dl_poke, HEA
 {
   int i;
   u64 personal_rnd;
+  u32 trainer_id;
 
   PP_Clear( pp );
 
   DEBUG_WBTDL_POKEMON_dump( dl_poke );
   
   personal_rnd = ( dl_poke->rare_flag == TRUE ? PTL_SETUP_RND_RARE : PTL_SETUP_RND_AUTO );
-  PP_SetupEx( pp, dl_poke->monsno, dl_poke->level, PTL_SETUP_ID_AUTO,
+  trainer_id = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+  PP_SetupEx( pp, dl_poke->monsno, dl_poke->level, trainer_id,
       (dl_poke->pow_rnd & 0x3FFFFFFF), personal_rnd );
 
   //form_no
