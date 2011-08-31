@@ -386,6 +386,7 @@ class WBT_RULE
     end
     #
     num = @conv.get_cell(1, REG_UP_START_COL+24, REG_UP_START_ROW).to_i;
+    @bgm_flag = num;
     #
     if(@local_debug == 1)
       p sprintf("%d :%s", num, $rule_error_str[5])

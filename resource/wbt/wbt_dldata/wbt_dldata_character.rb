@@ -76,13 +76,13 @@ class WBT_CHARACTER_SINGLE
     WBTDL_MSG_LEN.times{|i|
       @msg_before[i] = 0;
     }
-    @msg_win = [];
+    @msg_after_win = [];
     WBTDL_MSG_LEN.times{|i|
-      @msg_win[i] = 0;
+      @msg_after_win[i] = 0;
     }
-    @msg_lose = [];
+    @msg_after_lose = [];
     WBTDL_MSG_LEN.times{|i|
-      @msg_lose[i] = 0;
+      @msg_after_lose[i] = 0;
     }
     @msg_announce = [];
     WBTDL_MSG_LEN.times{|i|
@@ -224,7 +224,7 @@ class WBT_CHARACTER_SINGLE
     
     # 変換
     str = @conv.get_cell(4, TRAINER_START_COL+24+@local_language, TRAINER_START_ROW+@char_id )
-    @msg_win = NKF.nkf("-w16L0", str)
+    @msg_after_win = NKF.nkf("-w16L0", str)
     
     # セット(コードの変換注意)
     if(@local_debug == 1)
@@ -246,7 +246,7 @@ class WBT_CHARACTER_SINGLE
     
     # 変換
     str = @conv.get_cell(4, TRAINER_START_COL+34+@local_language, TRAINER_START_ROW+@char_id )
-    @msg_win = NKF.nkf("-w16L0", str)
+    @msg_after_lose = NKF.nkf("-w16L0", str)
     
     # セット(コードの変換注意)
     if(@local_debug == 1)
@@ -295,17 +295,17 @@ class WBT_CHARACTER_SINGLE
   end
   
   #--------------------
-  # 戦闘後、勝ちメッセージID
+  # 戦闘後、勝ちメッセージID()
   #--------------------
   def chk_after_win_mes_id()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+20, TRAINER_START_ROW+@char_id ),
-                                      TRAINER_START_COL+20, $trainer_str[7] )
+    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+23, TRAINER_START_ROW+@char_id ),
+                                      TRAINER_START_COL+23, $trainer_str[7] )
     if(ret == -1)
       trainer_exit();
     end
     # セット
-    @msg_after_win_id = @conv.get_cell(4, TRAINER_START_COL+20, TRAINER_START_ROW+@char_id).to_i;
+    @msg_after_win_id = @conv.get_cell(4, TRAINER_START_COL+23, TRAINER_START_ROW+@char_id).to_i;
     if(@local_debug == 1)
       p sprintf("%s :%d", $trainer_str[7],@msg_after_win_id)
     end
@@ -316,13 +316,13 @@ class WBT_CHARACTER_SINGLE
   #--------------------
   def chk_after_lose_mes_id()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+21, TRAINER_START_ROW+@char_id ),
-                                      TRAINER_START_COL+21, $trainer_str[8] )
+    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+33, TRAINER_START_ROW+@char_id ),
+                                      TRAINER_START_COL+33, $trainer_str[8] )
     if(ret == -1)
       trainer_exit();
     end
     # セット
-    @msg_after_lose_id = @conv.get_cell(4, TRAINER_START_COL+21, TRAINER_START_ROW+@char_id).to_i;
+    @msg_after_lose_id = @conv.get_cell(4, TRAINER_START_COL+33, TRAINER_START_ROW+@char_id).to_i;
     if(@local_debug == 1)
       p sprintf("%s :%d", $trainer_str[8],@msg_after_lose_id)
     end
@@ -333,13 +333,13 @@ class WBT_CHARACTER_SINGLE
   #--------------------
   def chk_win_mes_id()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+23, TRAINER_START_ROW+@char_id ),
-                                      TRAINER_START_COL+23, $trainer_str[9] )
+    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+20, TRAINER_START_ROW+@char_id ),
+                                      TRAINER_START_COL+20, $trainer_str[9] )
     if(ret == -1)
       trainer_exit();
     end
     # セット
-    @msg_win_id = @conv.get_cell(4, TRAINER_START_COL+23, TRAINER_START_ROW+@char_id).to_i;
+    @msg_win_id = @conv.get_cell(4, TRAINER_START_COL+20, TRAINER_START_ROW+@char_id).to_i;
     if(@local_debug == 1)
       p sprintf("%s :%d", $trainer_str[9],@msg_win_id)
     end
@@ -350,13 +350,13 @@ class WBT_CHARACTER_SINGLE
   #--------------------
   def chk_lose_mes_id()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+33, TRAINER_START_ROW+@char_id ),
-                                      TRAINER_START_COL+33, $trainer_str[10] )
+    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+21, TRAINER_START_ROW+@char_id ),
+                                      TRAINER_START_COL+21, $trainer_str[10] )
     if(ret == -1)
       trainer_exit();
     end
     # セット
-    @msg_lose_id = @conv.get_cell(4, TRAINER_START_COL+33, TRAINER_START_ROW+@char_id).to_i;
+    @msg_lose_id = @conv.get_cell(4, TRAINER_START_COL+21, TRAINER_START_ROW+@char_id).to_i;
     if(@local_debug == 1)
       p sprintf("%s :%d", $trainer_str[10],@msg_lose_id)
     end
@@ -447,17 +447,20 @@ class WBT_CHARACTER_SINGLE
         num = 1;
     end
     
-    # トレーナータイプ指定からトレーナータイプを取得
-    str = @conv.get_cell(5, TYPE_START_COL+num-1, TYPE_START_ROW)
-    str = $trtype_header + str
-    #
-    id = hash2no( $trtype_id_hash, str );
-    if(id == -1)
-      # 該当する性別がない=>エラー
-      print_error( str, 0 );
-    else
-      @type_id = id;
-    end
+    # 番号をそのままセット
+    # 変換はプログラム側で対応
+    @type_id = num;
+#    # トレーナータイプ指定からトレーナータイプを取得
+#    str = @conv.get_cell(5, TYPE_START_COL+num-1, TYPE_START_ROW)
+#    str = $trtype_header + str
+#    #
+#    id = hash2no( $trtype_id_hash, str );
+#    if(id == -1)
+#      # 該当する性別がない=>エラー
+#      print_error( str, 0 );
+#    else
+#      @type_id = id;
+#    end
     #
     if(@local_debug == 1)
       p sprintf("%s :%d", $trainer_str[14],@type_id)
@@ -484,9 +487,9 @@ class WBT_CHARACTER_SINGLE
     # 戦闘前メッセージ
     array << str2pack( @msg_before, WBTDL_MSG_LEN );
     # 戦闘勝ちメッセージ
-    array << str2pack( @msg_win, WBTDL_MSG_LEN );
+    array << str2pack( @msg_after_win, WBTDL_MSG_LEN );
     # 戦闘負けメッセージ
-    array << str2pack( @msg_lose, WBTDL_MSG_LEN );
+    array << str2pack( @msg_after_lose, WBTDL_MSG_LEN );
     # 決勝前メッセージ
     array << str2pack( @msg_announce, WBTDL_MSG_LEN );
     #
