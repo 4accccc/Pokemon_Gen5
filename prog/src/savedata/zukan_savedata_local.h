@@ -41,8 +41,9 @@ enum {
 	FORM_MAX_BASURAO = 2,					// バスラオ ※新規
 	/* BW時合計: 72 */
 	
-  FORM_MAX_KYUREMU = 3,					// キュレム ※スワン新規
-	/* スワン合計: 75 */
+  FORM_MAX_KYUREMU  = 3,					// キュレム ※スワン新規
+  FORM_MAX_KERUDHIO = 2,					// ケルディオ ※スワン新規
+	/* スワン合計: 77 */
 
 	FORM_ARRAY_LEN = 10,		///< フォルムフラグ配列の大きさ 10 * 8 = 80まで大丈夫
 
