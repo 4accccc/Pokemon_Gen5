@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/30 21:08:48
+#save date:2011/08/31 11:51:54
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c12r0101.wms
 #SECTION START:OBJ_EVENT
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 16 216
+-72 16 248
 #event number: 6
 #type
 1
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 16 216
+-56 16 248
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -249,7 +249,7 @@ SCRID_BG_C12R0101_PC_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 216
+8 0 200
 #event number: 1
 #Bg Event Label
 BG_C12R0101_BED_01
@@ -262,7 +262,7 @@ SCRID_BG_C12R0101_BED_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 168
+-56 0 184
 #event number: 2
 #Bg Event Label
 BG_C12R0101_BED_02
@@ -288,7 +288,7 @@ SCRID_BG_C12R0101_WII_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 200
+-136 0 216
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

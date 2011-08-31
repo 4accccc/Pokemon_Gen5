@@ -829,7 +829,7 @@ EVENT_START	ev_scene_d27r0101_secondbtl_01
   IF $LCWK_VERSION == VERSION_B2 THEN
     
     //上方向に退場
-    _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM1_02_01 , 12, 21, FORCE_TYPE_NPC, 4, DIR_LR)
+    _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM1_02_01 , 14, 21, FORCE_TYPE_NPC, 4, DIR_LR)
     _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM1_02_02 , 13, 21, FORCE_TYPE_NPC, 4, DIR_LR)
     
     //========================================//
@@ -841,8 +841,8 @@ EVENT_START	ev_scene_d27r0101_secondbtl_01
   ELSE
   
     //下方向に退場
-    _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM1_02_01 , 12, 38, FORCE_TYPE_NPC, 4, DIR_LR)
-    _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM1_02_02 , 13, 38, FORCE_TYPE_NPC, 4, DIR_LR)
+    _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM1_02_01 , 13, 38, FORCE_TYPE_NPC, 4, DIR_LR)
+    _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM1_02_02 , 14, 38, FORCE_TYPE_NPC, 4, DIR_LR)
   
     //========================================//
     //搭乗2回目ハッチ前POSを有効に
@@ -867,8 +867,6 @@ EVENT_START	ev_scene_d27r0101_secondbtl_01
   
   //ライバル隣接
   _OBJ_ANIME_AUTO( D27R0101_SWRIVAL_01 , 12, 31, FORCE_TYPE_NPC, 8, DIR_UD)
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
   //アニメ：ライバル・主人公船首楼前へ
@@ -955,16 +953,12 @@ EVENT_START	ev_pos_d27r0101_second_w_01
     //ドア前にライバルを移動
     _OBJ_POS_CHANGE(D27R0101_SWRIVAL_01,18,0,14,DIR_DOWN)
     
-    //アニメ：ライバル出てくる
-    _OBJ_ANIME( D27R0101_SWRIVAL_01 , anm_walk_d )
-    _OBJ_ANIME_WAIT()
-    
     //ライバル：おい！こっちだ！
     _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_02_04 , D27R0101_SWRIVAL_01 ,POS_DEFAULT )
     _MSGWIN_CLOSE()
     
     //アニメ：ライバル上を向く
-    _OBJ_ANIME( D27R0101_SWRIVAL_01 , anm_walk_u )
+    _OBJ_ANIME( D27R0101_SWRIVAL_01 , anm_staystep_u )
     _OBJ_ANIME_WAIT()
   
   //ハッチ前
@@ -1031,7 +1025,7 @@ _ANIME_LABEL	anm_player_to_r1201_01
 //	ライバル：船首楼内へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_to_r1201_01
-	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,5
 	_ANIME_DATA	AC_WALK_U_8F,30
 	_ANIME_DATA	AC_WALK_L_8F,4
 	_ANIME_DATA	AC_WALK_U_8F,1
