@@ -40,6 +40,70 @@
 
 #define BUFLEN_LOGACT_WORDSET_TMP (10+EOM_SIZE)
 
+typedef enum{
+  LOG_WORDSET_NULL,
+  LOG_WORDSET_ITEM,
+  LOG_WORDSET_PLACENAME,
+  LOG_WORDSET_WAZA,
+  LOG_WORDSET_FREEWORD,
+  LOG_WORDSET_POKE_NICKNAME,
+  LOG_WORDSET_GPOWER,
+  LOG_WORDSET_MONSNAME,
+}LOG_WORDSET_TYPE;
+
+static const u8 DATA_LogWordsetTypeTbl[] = {
+  LOG_WORDSET_NULL,  //NULL = 0,          ///<NULL
+  LOG_WORDSET_NULL,  //OPEN = 1,          ///<開催
+  LOG_WORDSET_NULL,  //NEW_ENTRY = 2,     ///<新規参加
+  LOG_WORDSET_PLACENAME,  //MAP_CHANGE = 3,    ///<マップチェンジ
+  //With Param
+  LOG_WORDSET_MONSNAME,  //POKE_ENCOUNT = 4,  ///<[ポケモン名]とエンカウントした
+  LOG_WORDSET_MONSNAME,  //POKE_WIN = 5,      ///<[ポケモン名]を倒した
+  LOG_WORDSET_MONSNAME,  //POKE_CAPTURE = 6,  ///<[ポケモン名]を捕まえた
+  LOG_WORDSET_MONSNAME,  //POKE_ESCAPE = 7,   ///<[ポケモン名]に逃げられたor逃げた
+  LOG_WORDSET_NULL,  //TR_ENCOUNT = 8,    ///<トレーナー戦開始
+  LOG_WORDSET_NULL,  //TR_WIN = 9,        ///<トレーナー戦勝利
+  LOG_WORDSET_NULL,  //GAMEOVER = 10,      ///<全滅した
+  LOG_WORDSET_ITEM,  //ITEM_USE = 11,     ///<[アイテム名]を使用した
+  LOG_WORDSET_ITEM,  //ITEM_GET = 12,     ///<[アイテム名]を手に入れた
+  LOG_WORDSET_WAZA,  //FIELD_SKILL = 13,  ///<[フィールド技]を使った
+  LOG_WORDSET_NULL,  //SHOPING = 14,      ///<買い物中
+  LOG_WORDSET_NULL,  //GPOWER = 15,       ///<デルパワーを使った
+  LOG_WORDSET_NULL,  //FERRIS_WHEEL = 16, ///<観覧車に乗った
+  LOG_WORDSET_NULL,  //WATCH_SIGNBOARD = 17,    ///<看板を調べている
+  LOG_WORDSET_NULL,  //SODATEYA_EGG = 18,       ///<タマゴを受け取った
+
+  LOG_WORDSET_MONSNAME,  //EFF_ENC_WIN = 19,         ///<[ポケモン名]を倒した(揺れ草)
+  LOG_WORDSET_MONSNAME,  //EFF_ENC_CAPTURE = 20,     ///<[ポケモン名]を捕まえた(揺れ草)
+  LOG_WORDSET_ITEM,  //KIRA_ITEM_GET = 21,       ///<[アイテム名]を見つけた(エフェクトアイテム)
+
+  LOG_WORDSET_NULL,  //TOWER_OF_HEAVEN = 22,       ///<鐘を鳴らした
+  LOG_WORDSET_ITEM,  //FEATHER_GET = 23,           ///<[アイテム名]を見つけた(羽)
+  LOG_WORDSET_ITEM,  //JEWEL_GET = 24,             ///<[アイテム名]を見つけた(ジュエル)
+  LOG_WORDSET_MONSNAME,  //EGG_HATCH = 25,             ///<[ポケモン名]が生まれた
+  LOG_WORDSET_MONSNAME,  //FISHING_ENCOUNT = 26,       ///<[ポケモン名]を釣り上げた
+  LOG_WORDSET_MONSNAME,  //ANIMAL_TRAIL_ENCOUNT = 27,  ///<[ポケモン名]を見つけた(獣道)
+  LOG_WORDSET_MONSNAME,  //MUSHROOM_WIN = 28,          ///<[ポケモン名]を倒した(キノコエンカウント)
+  LOG_WORDSET_MONSNAME,  //MUSHROOM_CAPTURE = 29,      ///<[ポケモン名]を捕まえた(キノコエンカウント)
+
+  LOG_WORDSET_NULL,  //HELP_CHILD = 30,         ///<まいごを助けた
+  LOG_WORDSET_ITEM,  //HAND_A_PRESENT = 31,     ///<[アイテム名]を渡した
+  LOG_WORDSET_NULL,  //ELITE_TR_WIN = 32,       ///<エリートトレーナーを倒した
+  LOG_WORDSET_NULL,  //ITEM_TRADE = 33,         ///<道具交換成功
+  LOG_WORDSET_ITEM,  //ITEM_BUY = 34,           ///<[アイテム名]を買った
+  LOG_WORDSET_NULL,  //QUIZ_CLEAR = 35,         ///<クイズに正解した
+  LOG_WORDSET_NULL,  //RPS_WIN = 36,            ///<じゃんけんに買った
+  LOG_WORDSET_ITEM,  //GET_A_PRESENT = 37,      ///<[アイテム名]をもらった
+  LOG_WORDSET_NULL,  //RUN_OUT_OF_MONEY = 38,   ///<お金が足りない
+  LOG_WORDSET_NULL,  //RPS_LOSE = 39,           ///<じゃんけんに負けた
+
+  //Haven't MissionParam
+  LOG_WORDSET_POKE_NICKNAME,  //POKE_DOWN = 40,        ///<[ポケモンニックネーム]が瀕死
+  LOG_WORDSET_POKE_NICKNAME,  //POKE_HP_LITTLE = 41,   ///<[ポケモンニックネーム]のHPが少ない
+  LOG_WORDSET_POKE_NICKNAME,  //POKE_PP_LITTLE = 42,   ///<[ポケモンニックネーム]のPPが少ない
+  LOG_WORDSET_FREEWORD,       //FREEWORD = 43,         ///<一言メッセージ
+};
+
 //------------------------------------------------------------------
 /**
  * ログテーブルにエントリーしているログ数を取得
@@ -340,35 +404,30 @@ void FMISSION_LOG_ActionWordset( FMISSION_LOG* p_log,  WORDSET* wset, HEAPID tmp
   if( s_buf == NULL ){
     return;
   }
-  switch( p_log->action ){
-  case FMISSION_LOG_ACT_ITEM_USE:
-  case FMISSION_LOG_ACT_ITEM_GET:
+  switch( DATA_LogWordsetTypeTbl[p_log->action] ){
+  case LOG_WORDSET_ITEM:
     WORDSET_RegisterItemName( wset, 0, p_log->param );
     break;
-  case FMISSION_LOG_ACT_MAP_CHANGE:
+  case LOG_WORDSET_PLACENAME:
     WORDSET_RegisterPlaceName( wset, 0, ZONEDATA_GetPlaceNameID(p_log->param) );
     break;
-  case FMISSION_LOG_ACT_FREEWORD:
+  case LOG_WORDSET_WAZA:
+    WORDSET_RegisterWazaName( wset, 0, p_log->param );
+    break;
+  case LOG_WORDSET_FREEWORD:
     FMISSION_LOG_GetFreeWord( p_log, s_buf );
     WORDSET_RegisterWord( wset, 0, s_buf, p_log->sex, TRUE, PM_LANG);
     break;
-  case FMISSION_LOG_ACT_POKE_DOWN:
+  case LOG_WORDSET_POKE_NICKNAME:
     FMISSION_LOG_GetPokeNickname( p_log, s_buf );
     WORDSET_RegisterWord( wset, 0, s_buf, p_log->sex, TRUE, PM_LANG);
     break;
-  case FMISSION_LOG_ACT_GPOWER:
+  case LOG_WORDSET_GPOWER:
     FMISSION_LOG_GetName( p_log, s_buf );
     WORDSET_RegisterWord( wset, 0, s_buf, p_log->sex, TRUE, PM_LANG);
     WORDSET_RegisterGPowerName( wset, 1, p_log->param );
     break;
-  case FMISSION_LOG_ACT_POKE_ENCOUNT:  ///<ポケモンとエンカウントした
-  case FMISSION_LOG_ACT_POKE_WIN:      ///<ポケモンを倒した
-  case FMISSION_LOG_ACT_POKE_CAPTURE:  ///<ポケモンを捕まえた
-  case FMISSION_LOG_ACT_POKE_ESCAPE:   ///<ポケモンに逃げられたor逃げた
-  case FMISSION_LOG_ACT_EFF_ENC_WIN:      ///<ポケモンを倒した
-  case FMISSION_LOG_ACT_EFF_ENC_CAPTURE:  ///<ポケモンを捕まえた
-  case FMISSION_LOG_ACT_MUSHROOM_WIN:      ///<ポケモンを倒した
-  case FMISSION_LOG_ACT_MUSHROOM_CAPTURE:  ///<ポケモンを捕まえた
+  case LOG_WORDSET_MONSNAME:
     WORDSET_RegisterPokeMonsNameNo( wset, 0, p_log->param );
     break;
   default:
