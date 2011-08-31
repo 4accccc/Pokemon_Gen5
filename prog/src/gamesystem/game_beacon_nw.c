@@ -1221,10 +1221,10 @@ void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count)
 //==================================================================
 void GAMEBEACON_Set_FMissionEventClear( u16 ev_id )
 {
-  FM_CHECK_SCORE_RET ret = GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EVENT_CLEAR, ev_id );
+  FM_CHECK_SCORE_RET ret = GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TOWER_OF_HEAVEN, ev_id );
 
   if( ret == FM_CHECK_SCORE_SUCCESS_UP ){ //スコアアップした時のみ送信
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR, ev_id );
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TOWER_OF_HEAVEN, ev_id );
   }
 }
 
@@ -1238,8 +1238,8 @@ void GAMEBEACON_Set_FMissionEventClear( u16 ev_id )
 //==================================================================
 void GAMEBEACON_Set_FMissionItemGet( u16 item_no )
 {
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_ITEM_GET, item_no ) ){
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_ITEM_GET, item_no );
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_KIRA_ITEM_GET, item_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_KIRA_ITEM_GET, item_no );
   }
 }
 

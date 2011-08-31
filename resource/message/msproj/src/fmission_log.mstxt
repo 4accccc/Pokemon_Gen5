@@ -971,10 +971,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さんか　しました！</Text>
+			<Text>かいさい　しました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:46:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -982,10 +982,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>参加しました！</Text>
+			<Text>開催しました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -997,6 +997,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1018,10 +1025,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Place Idx="0" ]に　います</Text>
+			<Text>さんか　しました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1029,10 +1036,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place Idx="0" ]に　います</Text>
+			<Text>参加しました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1042,8 +1049,15 @@
 			Language="JPN">
 			<Comment>ログ用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:05" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1065,10 +1079,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0" ]と　せんとうちゅう！</Text>
+			<Text>[Name:Place Idx="0" ]に　いどう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1076,10 +1090,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0" ]と　戦闘中！</Text>
+			<Text>[Name:Place Idx="0" ]に移動！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1091,6 +1105,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1112,10 +1133,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0" ]を　たおした！</Text>
+			<Text>[Name:PokemonName Idx="0" ]と　せんとうちゅう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1123,10 +1144,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0" ]を　倒した！</Text>
+			<Text>[Name:PokemonName Idx="0" ]と　戦闘中！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1138,6 +1159,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1159,10 +1187,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0" ]を　つかまえた！</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　たおした！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1170,10 +1198,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0" ]を　つかまえた！</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　倒した！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1185,6 +1213,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1206,10 +1241,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0" ]を　にがした</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　つかまえた！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1217,10 +1252,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0" ]を　逃がした</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　捕まえた！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1232,6 +1267,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1253,10 +1295,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーと　せんとうちゅう！</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　にがした</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1264,10 +1306,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナーと　戦闘中！</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　逃がした</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:05:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1279,6 +1321,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1300,10 +1349,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぜんめつした！</Text>
+			<Text>トレーナーと　せんとうちゅう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1311,10 +1360,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>全滅した！</Text>
+			<Text>トレーナーと　戦闘中！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:05:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1326,6 +1375,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1347,10 +1403,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0" ]を　つかった</Text>
+			<Text>トレーナーを　たおした！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:49:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1358,10 +1414,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0" ]を　使った</Text>
+			<Text>トレーナーを　倒した！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:05:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1373,6 +1429,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1394,10 +1457,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルパワーを　つかった！</Text>
+			<Text>ぜんめつした！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:49:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1405,10 +1468,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルパワーを　使った！</Text>
+			<Text>全滅した！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:05:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1420,6 +1483,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1441,10 +1511,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントクリア！</Text>
+			<Text>[Name:Item Idx="0" ]を　つかった</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:50:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1452,10 +1522,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントクリア！</Text>
+			<Text>[Name:Item Idx="0" ]を　使った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:05:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1467,6 +1537,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1488,10 +1565,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0" ]を　みつけた</Text>
+			<Text>[Name:Item Idx="0" ]を　ひろった！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:50:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1499,10 +1576,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0" ]を　見つけた</Text>
+			<Text>[Name:Item Idx="0" ]を　拾った！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:05:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1514,6 +1591,13 @@
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1535,10 +1619,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0" ]</Text>
+			<Text>[Name:Move ]を　つかった</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:51:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1546,10 +1630,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0" ]</Text>
+			<Text>[Name:Move ]を　使った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:05:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1557,11 +1641,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ログ用 一言メッセージ
- 全言語で max8文字</Comment>
+			<Comment>ログ用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:28" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1583,10 +1673,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]が　ひんし！</Text>
+			<Text>かいものちゅう……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1594,10 +1684,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]が　ひんし！</Text>
+			<Text>買い物中……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:05:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1607,8 +1697,15 @@
 			Language="JPN">
 			<Comment>ログ用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:35" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1626,7 +1723,1181 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_log_pop01"
+		Label="msg_fmission_log_act15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルパワーを　つかった！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:52:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルパワーを　使った！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:05:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:48:28" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かんらんしゃに　のった！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:53:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:53:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>観覧車に　乗った！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:06:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:31" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かんばんを　しらべています</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:53:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:53:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>看板を　調べています</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:06:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:31" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タマゴを　うけとった！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:54:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:53:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タマゴを　受け取った！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:06:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:31" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]を　たおした！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:54:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]を　倒した！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用
+揺れ草戦闘</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:30" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]を　つかまえた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:54:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]を　捕まえた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用
+揺れ草戦闘</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:30" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]を　みつけた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:54:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]を　見つけた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用
+タマゲタケ戦闘</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かねを　ならした！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:55:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>鐘を　鳴らした！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用
+タマゲタケ戦闘</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]を　たおした！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:55:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]を　倒した！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用
+タマゲタケ戦闘</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用
+ハネ入手</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]を　つかまえた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:55:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]を　捕まえた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用
+タマゲタケ戦闘</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用
+ジュエル入手</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]を　みつけた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:56:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]を　見つけた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用
+ハネ入手</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]を　みつけた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:57:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]を　見つけた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用
+ジュエル入手</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]が　うまれた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:57:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]が　うまれた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用
+けものみち戦闘</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act28"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]を　つりあげた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:58:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]を　釣りあげた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用
+揺れ草戦闘</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act29"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]を　みつけた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:58:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]を　見つけた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用
+けものみち戦闘</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T14:10:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用
+揺れ草戦闘</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:19:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act30"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まいごを　たすけてあげた！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:58:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:58:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>迷子を　助けてあげた！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:07:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:16" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act31"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]を　わたした</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:00:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:59:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]を　渡した</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:07:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act32"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリートトレーナーを　たおした</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:00:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:00:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリートトレーナーを　倒した</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:07:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act33"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうぐこうかん　せいこう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:00:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:00:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>道具交換に　成功！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:07:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act34"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]を　かった！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:00:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:00:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]を　買った！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:07:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act35"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クイズに　せいかいした！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:18:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:00:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クイズに　正解した！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:18:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act36"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃんけんに　かった！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:18:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:01:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃんけんに　勝った！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:18:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act37"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]を　もらった！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:18:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:01:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]を　もらった！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:18:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act38"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おかねが　たりない！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:18:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:01:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お金が　足りない！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:18:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act39"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃんけんに　まけた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:18:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:01:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃんけんに　負けた！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-08-30T13:18:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act40"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname ]が　ひんしです</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:02:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:01:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname ]が　瀕死です</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:08:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname ]のHPが　すくない！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:02:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:02:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname ]のHPが　少ない！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:08:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act42"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname ]のPPが　すくない！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:02:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:02:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname ]のPPが　少ない！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:08:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:03:25" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act43"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PMS Idx="0" ]</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:51:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:51:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PMS Idx="0" ]</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ログ用（フリーワード）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T12:51:59" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用（フリーワード）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-30T13:04:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_pop01_"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1677,7 +2948,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_log_pop01_01"
+		Label="msg_fmission_log_pop01_01_"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1717,7 +2988,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_log_pop01_02"
+		Label="msg_fmission_log_pop01_02_"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1757,7 +3028,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_log_pop02"
+		Label="msg_fmission_log_pop02_"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">

@@ -1441,7 +1441,7 @@ void GAMEBEACON_SendDataUpdate_PushMedal( MedalID push_medal )
 //==================================================================
 void GAMEBEACON_Set_PokemonGet( u16 monsno )
 {
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_CAPTURE, monsno ) ){
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EFF_ENC_CAPTURE, monsno ) ){
     GAMEBEACON_Set_FMissionWildPokemonGet( monsno );
     return;
   }
@@ -1522,7 +1522,7 @@ void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno)
 {
   //チェックはGAMEBEACON_Set_PokemonGet()で事前に行っているので、ここではやらなくていい
-  GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE, monsno );
+  GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_EFF_ENC_CAPTURE, monsno );
 }
 
 #if 0
@@ -1550,8 +1550,8 @@ void BEACONINFO_Set_FMissionWildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 //==================================================================
 void GAMEBEACON_Set_FMissionWildPokemonKnockOut(u16 monsno)
 {
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_WIN, monsno ) ){
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_WIN, monsno );
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EFF_ENC_WIN, monsno ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_EFF_ENC_WIN, monsno );
   }
 }
 

@@ -365,6 +365,10 @@ void FMISSION_LOG_ActionWordset( FMISSION_LOG* p_log,  WORDSET* wset, HEAPID tmp
   case FMISSION_LOG_ACT_POKE_WIN:      ///<ポケモンを倒した
   case FMISSION_LOG_ACT_POKE_CAPTURE:  ///<ポケモンを捕まえた
   case FMISSION_LOG_ACT_POKE_ESCAPE:   ///<ポケモンに逃げられたor逃げた
+  case FMISSION_LOG_ACT_EFF_ENC_WIN:      ///<ポケモンを倒した
+  case FMISSION_LOG_ACT_EFF_ENC_CAPTURE:  ///<ポケモンを捕まえた
+  case FMISSION_LOG_ACT_MUSHROOM_WIN:      ///<ポケモンを倒した
+  case FMISSION_LOG_ACT_MUSHROOM_CAPTURE:  ///<ポケモンを捕まえた
     WORDSET_RegisterPokeMonsNameNo( wset, 0, p_log->param );
     break;
   default:

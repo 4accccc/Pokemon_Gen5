@@ -121,28 +121,60 @@ typedef enum{
   //スワンで追加されたビーコン
   GAMEBEACON_ACTION_FMISSION,                     ///<フェスミッション受信                  51
 
-  GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT,        ///<フェスミッション 野生ポケモンエンカウント   52
-  GAMEBEACON_ACTION_FMISSION_POKE_WIN,            ///<フェスミッション 野生ポケモン倒した   53
-  GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE,        ///<フェスミッション 野生ポケモン捕まえた 54
-  GAMEBEACON_ACTION_FMISSION_POKE_ESCAPE,         ///<フェスミッション 野生ポケモン逃げた&逃げられた 55
-  GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT,          ///<フェスミッション トレーナーエンカウント 56
-  GAMEBEACON_ACTION_FMISSION_GAMEOVER,            ///<フェスミッション ゲームオーバー 57
-  GAMEBEACON_ACTION_FMISSION_ITEM_USE,            ///<フェスミッション アイテム使用   　 　58
-  GAMEBEACON_ACTION_FMISSION_GPOWER,              ///<フェスミッション デルパワー使用    　59
-  GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR,         ///<フェスミッション イベントクリア    　60
-  GAMEBEACON_ACTION_FMISSION_ITEM_GET,            ///<フェスミッション ミッションアイテム取得    　61
-  
-  GAMEBEACON_ACTION_FMISSION_FREEWORD,            ///<フェスミッション 一言メッセージ受信   62
-  GAMEBEACON_ACTION_FMISSION_POKE_DOWN,           ///<フェスミッション 先頭ポケモンが瀕死   63 
+  GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT,  ///<フェスミッション [ポケモン名]とエンカウントした
+  GAMEBEACON_ACTION_FMISSION_POKE_WIN,      ///<フェスミッション [ポケモン名]を倒した
+  GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE,  ///<フェスミッション [ポケモン名]を捕まえた
+  GAMEBEACON_ACTION_FMISSION_POKE_ESCAPE,   ///<フェスミッション [ポケモン名]に逃げられたor逃げた
+  GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT,    ///<フェスミッション トレーナー戦開始
+  GAMEBEACON_ACTION_FMISSION_TR_WIN,        ///<フェスミッション トレーナー戦勝利
+  GAMEBEACON_ACTION_FMISSION_GAMEOVER,      ///<フェスミッション 全滅した
+  GAMEBEACON_ACTION_FMISSION_ITEM_USE,     ///<フェスミッション [アイテム名]を使用した
+  GAMEBEACON_ACTION_FMISSION_ITEM_GET,     ///<フェスミッション [アイテム名]を手に入れた
+  GAMEBEACON_ACTION_FMISSION_FIELD_SKILL,  ///<フェスミッション [フィールド技]を使った
+  GAMEBEACON_ACTION_FMISSION_SHOPING,      ///<フェスミッション 買い物中
+  GAMEBEACON_ACTION_FMISSION_GPOWER,       ///<フェスミッション デルパワーを使った
+  GAMEBEACON_ACTION_FMISSION_FERRIS_WHEEL, ///<フェスミッション 観覧車に乗った
+  GAMEBEACON_ACTION_FMISSION_WATCH_SIGNBOARD,    ///<フェスミッション 看板を調べている
+  GAMEBEACON_ACTION_FMISSION_SODATEYA_EGG,       ///<フェスミッション タマゴを受け取った
+
+  GAMEBEACON_ACTION_FMISSION_EFF_ENC_WIN,         ///<フェスミッション [ポケモン名]を倒した(揺れ草)
+  GAMEBEACON_ACTION_FMISSION_EFF_ENC_CAPTURE,     ///<フェスミッション [ポケモン名]を捕まえた(揺れ草)
+  GAMEBEACON_ACTION_FMISSION_KIRA_ITEM_GET,       ///<フェスミッション [アイテム名]を見つけた(エフェクトアイテム)
+
+  GAMEBEACON_ACTION_FMISSION_TOWER_OF_HEAVEN,       ///<フェスミッション 鐘を鳴らした
+  GAMEBEACON_ACTION_FMISSION_FEATHER_GET,           ///<フェスミッション [アイテム名]を見つけた(羽)
+  GAMEBEACON_ACTION_FMISSION_JEWEL_GET,             ///<フェスミッション [アイテム名]を見つけた(ジュエル)
+  GAMEBEACON_ACTION_FMISSION_EGG_HATCH,             ///<フェスミッション [ポケモン名]が生まれた
+  GAMEBEACON_ACTION_FMISSION_FISHING_ENCOUNT,       ///<フェスミッション [ポケモン名]を釣り上げた
+  GAMEBEACON_ACTION_FMISSION_ANIMAL_TRAIL_ENCOUNT,  ///<フェスミッション [ポケモン名]を見つけた(獣道)
+  GAMEBEACON_ACTION_FMISSION_MUSHROOM_WIN,          ///<フェスミッション [ポケモン名]を倒した(キノコエンカウント)
+  GAMEBEACON_ACTION_FMISSION_MUSHROOM_CAPTURE,      ///<フェスミッション [ポケモン名]を捕まえた(キノコエンカウント)
+
+  GAMEBEACON_ACTION_FMISSION_HELP_CHILD,         ///<フェスミッション まいごを助けた
+  GAMEBEACON_ACTION_FMISSION_HAND_A_PRESENT,     ///<フェスミッション [アイテム名]を渡した
+  GAMEBEACON_ACTION_FMISSION_ELITE_TR_WIN,       ///<フェスミッション エリートトレーナーを倒した
+  GAMEBEACON_ACTION_FMISSION_ITEM_TRADE,         ///<フェスミッション 道具交換成功
+  GAMEBEACON_ACTION_FMISSION_ITEM_BUY,           ///<フェスミッション [アイテム名]を買った
+  GAMEBEACON_ACTION_FMISSION_QUIZ_CLEAR,         ///<フェスミッション クイズに正解した
+  GAMEBEACON_ACTION_FMISSION_RPS_WIN,            ///<フェスミッション じゃんけんに買った
+  GAMEBEACON_ACTION_FMISSION_GET_A_PRESENT,      ///<フェスミッション [アイテム名]をもらった
+  GAMEBEACON_ACTION_FMISSION_RUN_OUT_OF_MONEY,   ///<フェスミッション お金が足りない
+  GAMEBEACON_ACTION_FMISSION_RPS_LOSE,           ///<フェスミッション じゃんけんに負けた
+
+  //Haven't MissionParam
+  GAMEBEACON_ACTION_FMISSION_POKE_DOWN,        ///<フェスミッション [ポケモンニックネーム]が瀕死
+  GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE,   ///<フェスミッション [ポケモンニックネーム]のHPが少ない
+  GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE,   ///<フェスミッション [ポケモンニックネーム]のPPが少ない
+  GAMEBEACON_ACTION_FMISSION_FREEWORD,         ///<フェスミッション 一言メッセージ
 
   GAMEBEACON_ACTION_MAX,
 }GAMEBEACON_ACTION;
 
 #define GAMEBEACON_ACTION_FEST_BEACON_START ( GAMEBEACON_ACTION_FMISSION )
-#define GAMEBEACON_ACTION_FEST_BEACON_END   ( GAMEBEACON_ACTION_FMISSION_POKE_DOWN )
+#define GAMEBEACON_ACTION_FEST_BEACON_END   ( GAMEBEACON_ACTION_FMISSION_FREEWORD )
 #define GAMEBEACON_ACTION_FEST_BEACON_NUM   ( (GAMEBEACON_FEST_BEACON_END-GAMEBEACON_ACTION_FEST_BEACON_START)+1)
 #define GAMEBEACON_ACTION_FEST_BEACON_WP_START ( GAMEBEACON_ACTION_FMISSION ) //ミッションパラメータ持ち
-#define GAMEBEACON_ACTION_FEST_BEACON_WP_END ( GAMEBEACON_ACTION_FMISSION_FREEWORD-1 )  //ミッションパラメータ持ち
+#define GAMEBEACON_ACTION_FEST_BEACON_WP_END ( GAMEBEACON_ACTION_FMISSION_POKE_DOWN-1 )  //ミッションパラメータ持ち
 
 //==============================================================================
 //  型定義

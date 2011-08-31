@@ -180,8 +180,29 @@ BOOL FEST_MISSION_IsEntry( const FEST_MISSION* fmwk )
 BOOL FEST_MISSION_IsScoreUp( FEST_MISSION* fmwk, FMISSION_LOG_ACTION action, u16 value )
 {
   const MISSION_SCORE_CALC_PARAM* prm = &DATA_ScoreCalcParamTbl[ fmwk->arc.m_type ];
-  if( (prm->log_act_f & (1<<action)) == FALSE ){
-    return FALSE;
+
+  switch( fmwk->arc.m_type ){
+  case FMISSION_TYPE_POKEBTL:
+    if( action != FMISSION_LOG_ACT_EFF_ENC_WIN && 
+        action != FMISSION_LOG_ACT_EFF_ENC_CAPTURE ){
+      return FALSE;
+    }
+    break;
+  case FMISSION_TYPE_EVENT:
+    if( (action-FMISSION_LOG_ACT_TOWER_OF_HEAVEN) != fmwk->beacon.base_param ){
+      return FALSE;
+    }
+    break;
+  case FMISSION_TYPE_ITEM:
+    if( action != FMISSION_LOG_ACT_KIRA_ITEM_GET ){
+      return FALSE;
+    }
+    break;
+  case FMISSION_TYPE_NPC:
+    if( (action-FMISSION_LOG_ACT_HELP_CHILD) != fmwk->beacon.base_param ){
+      return FALSE;
+    }
+    break;
   }
   return prm->func(fmwk,value );
 }
