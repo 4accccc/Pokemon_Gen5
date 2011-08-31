@@ -1114,11 +1114,11 @@ void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf )
       break;
     case WBT_TRMSG_PLAYER_WIN:
       preset_id = dl_char->msg_after_win_id;
-      freeword  = dl_char->msg_win;
+      freeword  = dl_char->msg_after_win;
       break;
     case WBT_TRMSG_PLAYER_LOSE:
       preset_id = dl_char->msg_after_lose_id;
-      freeword  = dl_char->msg_lose;
+      freeword  = dl_char->msg_after_lose;
       break;
     case WBT_TRMSG_ANNOUNCE:
       preset_id = dl_char->msg_announce_id;

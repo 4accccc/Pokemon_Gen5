@@ -150,8 +150,8 @@ typedef struct {
   STRCODE name[ SAVELEN_TRAINER_NAME ];
   STRCODE title[ WBTDL_TRAINER_TITLE_LEN ];
   STRCODE msg_before[ WBTDL_MSG_LEN ];   ///<対戦前MSG
-  STRCODE msg_win[ WBTDL_MSG_LEN ];      ///<相手の負けMSG
-  STRCODE msg_lose[ WBTDL_MSG_LEN ];     ///<相手の勝ちMSG
+  STRCODE msg_after_win[ WBTDL_MSG_LEN ];      ///<相手の負けMSG
+  STRCODE msg_after_lose[ WBTDL_MSG_LEN ];     ///<相手の勝ちMSG
   STRCODE msg_announce[ WBTDL_MSG_LEN ]; ///<決勝戦　前口上
   u8 trtype_id;            ///<トレーナータイプ指定ID（1～、「WBT配信データフォーマット案::トレーナタイプ指定」参照）
   u8  msg_before_id;      ///<対戦前MSGのID
