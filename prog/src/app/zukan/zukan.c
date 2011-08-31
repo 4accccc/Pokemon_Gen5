@@ -194,30 +194,6 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 	}else{
 		wk->mainSeq = SEQ_SEARCH_CALL;
 	}
-	
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
-  {
-    wk->mainSeq = SEQ_HABITAT_ZONE_CALL;
-  }
-//#ifdef DEBUG_ONLY_FOR_onoue_masayuki
-//  else
-//  {
-//    // Bを押しているときは通常通り、図鑑を起動する
-//    if( !(GFL_UI_KEY_GetCont() & PAD_BUTTON_B) )
-//    {
-//      wk->mainSeq = SEQ_HABITAT_ZONE_LIST_CALL;
-//    }
-//  }
-//#else
-//  else
-//  {
-//    // Bを押しているときは生息地リスト画面を呼び出す
-//    if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_B) )
-//    {
-//      wk->mainSeq = SEQ_HABITAT_ZONE_LIST_CALL;
-//    }
-//  }
-//#endif
 
 	return GFL_PROC_RES_FINISH;
 }
