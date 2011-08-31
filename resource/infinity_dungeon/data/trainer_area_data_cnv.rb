@@ -111,22 +111,24 @@ data_csv.each_with_index { |item,index|
   index_max = index + 1
   out_file.printf "},\n"
 
-  if item[VERSION_COLUMN_INDEX] == B2_ONLY then
-    # トレーナーでータ数をチェック
-    (item[START_AREA_COLUMN_INDEX].to_i-1).upto( item[END_AREA_COLUMN_INDEX].to_i-1  ){|i|
-      lv1_tr_cnt_b[i] += 1
-    }
-  elsif item[VERSION_COLUMN_INDEX] == W2_ONLY then
-    # トレーナーでータ数をチェック
-    (item[START_AREA_COLUMN_INDEX].to_i-1).upto( item[END_AREA_COLUMN_INDEX].to_i-1  ){|i|
-      lv1_tr_cnt_w[i] += 1
-    }
-  elsif item[VERSION_COLUMN_INDEX] == WW2_BOTH then
-    # トレーナーでータ数をチェック
-    (item[START_AREA_COLUMN_INDEX].to_i-1).upto( item[END_AREA_COLUMN_INDEX].to_i-1  ){|i|
-      lv1_tr_cnt_w[i] += 1
-      lv1_tr_cnt_b[i] += 1
-    }
+  if item[SETLV_COLUMN_INDEX] == "◎"  then
+    if item[VERSION_COLUMN_INDEX] == B2_ONLY then
+      # トレーナーでータ数をチェック
+      (item[START_AREA_COLUMN_INDEX].to_i-1).upto( item[END_AREA_COLUMN_INDEX].to_i-1  ){|i|
+        lv1_tr_cnt_b[i] += 1
+      }
+    elsif item[VERSION_COLUMN_INDEX] == W2_ONLY then
+      # トレーナーでータ数をチェック
+      (item[START_AREA_COLUMN_INDEX].to_i-1).upto( item[END_AREA_COLUMN_INDEX].to_i-1  ){|i|
+        lv1_tr_cnt_w[i] += 1
+      }
+    elsif item[VERSION_COLUMN_INDEX] == WW2_BOTH then
+      # トレーナーでータ数をチェック
+      (item[START_AREA_COLUMN_INDEX].to_i-1).upto( item[END_AREA_COLUMN_INDEX].to_i-1  ){|i|
+        lv1_tr_cnt_w[i] += 1
+        lv1_tr_cnt_b[i] += 1
+      }
+    end
   end
 
 }
@@ -136,11 +138,13 @@ out_file.printf "#define INF_TR_AREA_DATA_MAX (%d)\n"%index_max
 
 # 最大数チェック
 lv1_tr_cnt_w.each_with_index{|data,i|
+  puts "Wエリア%d:%d"%[i,data]
   if data < 32 then
     raise "エリア%s（ホワイト）：出現率100%%[◎]が設定されているものが少なすぎます(%d/32)\n"%[i+1,data]
   end
 }
 lv1_tr_cnt_b.each_with_index{|data,i|
+  puts "Bエリア%d:%d"%[i,data]
   if data < 32 then
     raise "エリア%s（ブラック）：出現率100%%[◎]が設定されているものが少なすぎます(%d/32)\n"%[i+1,data]
   end
