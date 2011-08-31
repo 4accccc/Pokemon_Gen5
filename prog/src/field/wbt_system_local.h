@@ -100,6 +100,7 @@ struct _WBT_MATCH_CONDITION{
 /// ポケモン抽選処理でのNGポケモン情報
 //--------------------------------------------------------------
 struct _WBT_NGPMINFO{
+  BOOL disableMonsCheck;
   u16 ng_mons_max;
   u16 ng_item_max;
   u16 * ng_mons_no;

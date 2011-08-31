@@ -626,7 +626,7 @@ static void makeRomTrainerData(
   GFL_STD_RandContext * rand_context = NULL;
   WBT_NGPMINFO * ng_info;
 
-  ng_info = NGINFO_Create( tempHeapID  );
+  ng_info = NGINFO_Create( tempHeapID, wbtcup );
   
   if ( WBTTRAINER_HasAce(wbt_tr) == TRUE )
   { //切り札ポケモンセット処理

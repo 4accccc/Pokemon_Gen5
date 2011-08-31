@@ -86,10 +86,15 @@ static u16 GetRand( GFL_STD_RandContext *rand_context )
 //============================================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-WBT_NGPMINFO * NGINFO_Create( HEAPID heapID )
+WBT_NGPMINFO * NGINFO_Create( HEAPID heapID, WBTCUP wbtcup )
 {
   WBT_NGPMINFO * ng_info;
   ng_info = GFL_HEAP_AllocClearMemory( heapID, sizeof(WBT_NGPMINFO) );
+  ng_info->disableMonsCheck = FALSE;
+  if ( wbtcup != WBTCUP_RENTAL && WBTTOOL_GetRegulationID( wbtcup ) == WBTREG_ALL )
+  { //レンタルを除くなんでもルールの場合はポケモンNo.をチェックしない
+    ng_info->disableMonsCheck = TRUE;
+  }
   ng_info->ng_mons_max = NG_POKE_MAX;
   ng_info->ng_item_max = NG_ITEM_MAX;
   ng_info->ng_mons_no = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16) * NG_POKE_MAX );
@@ -146,9 +151,12 @@ static BOOL WBT_NGINFO_Check( const WBT_NGPMINFO * ng_info, u16 mons_no, u16 ite
   //データ無し→チェックOKする
   if ( ng_info == NULL ) return TRUE;
 
-  for ( i = 0; i < ng_info->ng_mons_max; i ++ )
+  if ( ng_info->disableMonsCheck == FALSE )
   {
-    if ( mons_no != 0 && mons_no == ng_info->ng_mons_no[i] ) return TRUE;
+    for ( i = 0; i < ng_info->ng_mons_max; i ++ )
+    {
+      if ( mons_no != 0 && mons_no == ng_info->ng_mons_no[i] ) return TRUE;
+    }
   }
   for ( i = 0; i < ng_info->ng_item_max; i ++ )
   {
@@ -432,7 +440,7 @@ static void WBTSYS_SetupRentalParty(
       use_poke_table[i] = index_s + i;
     }
 
-    ng_info = NGINFO_Create( tempHeapID );
+    ng_info = NGINFO_Create( tempHeapID, wbtsys->wbtcup );
     if ( ng_mons_tbl )
     { //NGテーブルがある場合は、そこからNGのポケモンナンバーを登録する
       for ( i = 0; i < num; i ++ )

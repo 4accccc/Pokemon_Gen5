@@ -176,7 +176,7 @@ extern void WBTSYS_ChooseBSubwayData( u16 * index_array, WBT_NGPMINFO * ng_info,
 extern void WBTSYS_SetupMyRentalParty( WBTSYS * wbtsys, const MYSTATUS * mystatus, u16 place_id );
 extern void WBTSYS_SetupEnemyRentalParty( WBTSYS * wbtsys );
 
-extern WBT_NGPMINFO * NGINFO_Create( HEAPID heapID );
+extern WBT_NGPMINFO * NGINFO_Create( HEAPID heapID, WBTCUP wbtcup );
 extern void WBT_NGINFO_Delete( WBT_NGPMINFO * ng_info );
 extern void WBT_NGINFO_AddNGItem( WBT_NGPMINFO * ng_info, u16 item_no );
 extern void WBT_NGINFO_AddNGMons( WBT_NGPMINFO * ng_info, u16 mons_no );
