@@ -74,9 +74,9 @@ LINK_FESTIVAL* LINK_FESTIVAL_Create( HEAPID heapID, GAMESYS_WORK* gsys )
 //---------------------------------------------------------
 void LINK_FESTIVAL_Delete( LINK_FESTIVAL* wk )
 {
-  MI_CpuClear32(wk,sizeof(LINK_FESTIVAL));
-  
   GFL_HEAP_FreeMemory( wk->p_arc_data );  //ミッションデータアーカイブ開放
+  
+  MI_CpuClear32(wk,sizeof(LINK_FESTIVAL));
   GFL_HEAP_FreeMemory( wk );
 }
 
