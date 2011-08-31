@@ -166,7 +166,7 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
   {//WBTCUP_MIX,                //ミックストーナメント
     msg_wbtsys_title_14,
     WBTWIN_COUNT_SHUFFLE,
-    WBTRECEPT_1, WBTREG_SUBWAY,
+    WBTRECEPT_1, WBTREG_ALL,
     WBTBTDATA_1,
     { 1, 1, 2, 2 },
   },
