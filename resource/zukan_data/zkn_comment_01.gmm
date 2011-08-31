@@ -6853,6 +6853,15 @@
 仮メッセージ</language>
 	</row>
 
+	<row id="ZKN_COMMENT_01_647_001">
+		<language name="JPN">ひづめから　みずを　ふきだすことで
+すいめんを　すべるように　いどう。
+とくいの　あしわざで　たたかう。</language>
+		<language name="JPN_KANJI">ひづめから　水を　吹き出すことで
+水面を　滑るように　移動。
+得意の　足技で　戦う。</language>
+	</row>
+
 	<row id="ZKN_COMMENT_01_648_001">
 		<language name="JPN">とくしゅな　はっせいほうで　うたう
 メロディは　きいた　ものの
