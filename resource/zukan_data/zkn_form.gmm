@@ -3581,8 +3581,8 @@
 	</row>
 
 	<row id="ZKN_FORM_647_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">ノーマル</language>
+		<language name="JPN_KANJI">ノーマル</language>
 	</row>
 
 	<row id="ZKN_FORM_648_000">
