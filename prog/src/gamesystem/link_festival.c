@@ -186,21 +186,21 @@ void LINK_FESTIVAL_GetMissionArcCommonData( LINK_FESTIVAL* wk, u8 m_id, FMISSION
  * アップデートは無効のまま(時間カウントが始まらない)ので注意！
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission, BOOL succeed_f )
+void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m_src, BOOL succeed_f )
 {
   //ログ領域クリア
   log_ClearAll( wk );
   FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
   FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
 
-  FEST_MISSION_Start( &wk->mission, mission, succeed_f );
+  FEST_MISSION_Start( &wk->mission, m_src, succeed_f );
   wk->live_f = FALSE;
 
   //ハイリンク接続禁止フラグOn
   GameCommSys_SetPalaceNotConnectFlagForFMission(GAMESYSTEM_GetGameCommSysPtr(wk->gsys), TRUE );
 
   //最後のミッションを覚えておく
-  log_LastMissionLogStore( wk, mission );
+  log_LastMissionLogStore( wk, &wk->mission );
 }
 
 //---------------------------------------------------------
@@ -615,6 +615,10 @@ BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_BEACON* beacon
 {
   int i;
   LINKFEST_LOG* log;
+
+  IWASAWA_Printf("MissionIsEgnore last( %d,%08x,%d) now(%d,%08x,%d)",
+    wk->last.mission.m_id,wk->last.mission.key, wk->last.mission.base_param,
+    beacon->m_id, beacon->key, beacon->base_param );
 
   //最後のミッションと同一か？
   if( wk->last.mission.m_id != FMISSION_ID_NULL &&
