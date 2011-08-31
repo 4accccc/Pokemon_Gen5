@@ -68,7 +68,7 @@ enum{
 };
 
 enum{
-	TRAINER_PTN_MAX	= ( 56 ),		// Å‘å(ŠÖ”‚©‚çŽæ“¾‚¾‚ë‚¤)
+	TRAINER_PTN_MAX	= ( 81 ),		// Å‘å(ŠÖ”‚©‚çŽæ“¾‚¾‚ë‚¤)
 	//
 	DWBT_WIN_OFF_X	= (  1 ),		// offx
 	DWBT_WIN_OFF_Y	= ( 16 ),		// offx
