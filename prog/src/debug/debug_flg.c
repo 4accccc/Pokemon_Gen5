@@ -13,6 +13,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "field/zonedata.h"
 
 #include "debug/debug_flg.h"
 #include "debug/debugwin_sys.h"
@@ -54,6 +55,9 @@ static const char * const dispName[DEBUG_FLG_MAX] =
 #include "debug/debug_flg.cdat"
 };
 #undef DEBUG_FLG_DEF
+
+SDK_COMPILER_ASSERT( DEBUG_FLG_ReverseVersion == 5 );
+
 
 static u8 debugFlgArr[DEBUG_FLG_ARR_NUM];
 static u8 debugFlgPage;
@@ -121,6 +125,25 @@ const BOOL DEBUG_FLG_GetFlg( const u16 flgIdx )
     return FALSE;
   }
 }
+
+// フラグを変更したときの処理
+static void DEBUG_FLG_FlgChange( int flgIdx )
+{
+
+  // バージョン変更したとき
+  if( flgIdx == 5 ) // =ReverseVersion
+  {
+    if ( GET_VERSION() == VERSION_B2 )
+    {
+      ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_R04_R04W_ID, FALSE );
+    }
+    else
+    {
+      ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_R04_R04W_ID, TRUE );
+    }
+  }
+}
+
 
 //--------------------------------------------------------------
 //	デバッググループに登録・解除
@@ -199,16 +222,19 @@ static void DEBWIN_Update_Flg( void* userWork , DEBUGWIN_ITEM* item )
   {
     DEBUG_FLG_FlgFlip( idx );
     DEBUGWIN_RefreshScreen();
+    DEBUG_FLG_FlgChange( idx );
   }
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
   {
     DEBUG_FLG_FlgOn( idx );
     DEBUGWIN_RefreshScreen();
+    DEBUG_FLG_FlgChange( idx );
   }
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
   {
     DEBUG_FLG_FlgOff( idx );
     DEBUGWIN_RefreshScreen();
+    DEBUG_FLG_FlgChange( idx );
   }
 }
 
