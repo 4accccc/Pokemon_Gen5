@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-05-28T13:09:09" source="in35_texset.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-08-31T19:36:18"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,14 +22,14 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="35 35"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="5" xyz="-0.250000 0.000000 -0.250000" whd="4.000000 0.000000 2.500000"/>
 
-<tex_image_array size="35">
+<tex_image_array size="37">
 	<tex_image index="0" name="gate_ct"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
@@ -1365,9 +1365,48 @@
 			5561 5555 5555 6555 6661 6666 6666 6666
 		</bitmap>
 	</tex_image>
+	<tex_image index="35" name="kage_out"
+		width="8" height="8" original_width="8" original_height="8"
+		format="a3i5"
+		palette_name="kage_out_pl"
+		path="C:/home/swan_data3d/field/out00/chip/tex/kage_out.tga"
+	>
+		<bitmap size="32">
+			2020 2020 2020 2020 4020 4040 4040 2040
+			4020 4040 4040 2040 4020 4040 4040 2040
+			4020 4040 4040 2040 4020 4040 4040 2040
+			4020 4040 4040 2040 2020 2020 2020 2020
+		</bitmap>
+	</tex_image>
+	<tex_image index="36" name="nagaisu"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="nagaisu_pl"
+		path="C:/home/swan_data3d/field/out00/chip/tex/nagaisu.tga"
+	>
+		<bitmap size="128">
+			4442 4444 4444 2444 4442 4444 4444 2444
+			4442 4444 4444 2444 6663 6666 6666 3666
+			5551 5555 5555 1555 7771 7777 7777 1777
+			7771 7777 7777 1777 5551 5555 5555 1555
+			5551 5555 5555 1555 7771 7777 7777 1777
+			7771 7777 7777 1777 5551 5555 5555 1555
+			6662 6666 6666 2666 4442 4444 4444 2444
+			4442 4444 4444 2444 6662 6666 6666 2666
+			4442 4444 4444 2444 4442 4444 4444 2444
+			6662 6666 6666 2666 4442 4444 4444 2444
+			4442 4444 4444 2444 6662 6666 6666 2666
+			5552 5555 5555 2555 5553 5555 5555 3555
+			7771 7777 7777 1777 1111 1111 1111 1111
+			1111 1111 1111 1111 8811 8888 8888 1188
+			0011 0000 0000 1100 0011 0000 0000 1100
+			0011 0000 0000 1100 0011 0000 0000 1100
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="35">
+<tex_palette_array size="37">
 	<tex_palette index="0" name="gate_ct_pl" color_size="8">
 		4231 4eb5 51a5 56f7 5f39 7667 76ca 770d
 	</tex_palette>
@@ -1487,6 +1526,13 @@
 	</tex_palette>
 	<tex_palette index="34" name="in35_yuka05_pl" color_size="8">
 		7fff 3612 3def 39ce 35ad 318c 2d6b 7fff
+	</tex_palette>
+	<tex_palette index="35" name="kage_out_pl" color_size="8">
+		1461 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="36" name="nagaisu_pl" color_size="16">
+		7c1f 49e8 6acb 5a6a 531a 3e97 46d9 3a55
+		294a 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -3344,6 +3390,165 @@
 
 <output_info vertex_size="140" polygon_size="35"
 	triangle_size="0" quad_size="35"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="37">
+		<ex_tex_image index="0" disp_pos="-2040.000000 300.000000"/>
+		<ex_tex_image index="1" disp_pos="-1920.000000 300.000000"/>
+		<ex_tex_image index="2" disp_pos="-1800.000000 300.000000"/>
+		<ex_tex_image index="3" disp_pos="-1680.000000 300.000000"/>
+		<ex_tex_image index="4" disp_pos="-1560.000000 300.000000"/>
+		<ex_tex_image index="5" disp_pos="-1440.000000 300.000000"/>
+		<ex_tex_image index="6" disp_pos="-1320.000000 300.000000"/>
+		<ex_tex_image index="7" disp_pos="-1200.000000 300.000000"/>
+		<ex_tex_image index="8" disp_pos="-1080.000000 300.000000"/>
+		<ex_tex_image index="9" disp_pos="-960.000000 300.000000"/>
+		<ex_tex_image index="10" disp_pos="-840.000000 300.000000"/>
+		<ex_tex_image index="11" disp_pos="-720.000000 300.000000"/>
+		<ex_tex_image index="12" disp_pos="-600.000000 300.000000"/>
+		<ex_tex_image index="13" disp_pos="-480.000000 300.000000"/>
+		<ex_tex_image index="14" disp_pos="-360.000000 300.000000"/>
+		<ex_tex_image index="15" disp_pos="-240.000000 300.000000"/>
+		<ex_tex_image index="16" disp_pos="-120.000000 300.000000"/>
+		<ex_tex_image index="17" disp_pos="0.000000 300.000000"/>
+		<ex_tex_image index="18" disp_pos="120.000000 300.000000"/>
+		<ex_tex_image index="19" disp_pos="240.000000 300.000000"/>
+		<ex_tex_image index="20" disp_pos="360.000000 300.000000"/>
+		<ex_tex_image index="21" disp_pos="480.000000 300.000000"/>
+		<ex_tex_image index="22" disp_pos="600.000000 300.000000"/>
+		<ex_tex_image index="23" disp_pos="720.000000 300.000000"/>
+		<ex_tex_image index="24" disp_pos="840.000000 300.000000"/>
+		<ex_tex_image index="25" disp_pos="960.000000 300.000000"/>
+		<ex_tex_image index="26" disp_pos="1080.000000 300.000000"/>
+		<ex_tex_image index="27" disp_pos="1200.000000 300.000000"/>
+		<ex_tex_image index="28" disp_pos="1320.000000 300.000000"/>
+		<ex_tex_image index="29" disp_pos="1440.000000 300.000000"/>
+		<ex_tex_image index="30" disp_pos="1560.000000 300.000000"/>
+		<ex_tex_image index="31" disp_pos="1680.000000 300.000000"/>
+		<ex_tex_image index="32" disp_pos="1920.000000 300.000000"/>
+		<ex_tex_image index="33" disp_pos="1800.000000 300.000000"/>
+		<ex_tex_image index="34" disp_pos="2040.000000 300.000000"/>
+		<ex_tex_image index="35" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="36" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="37">
+		<ex_tex_palette index="0" disp_pos="-2040.000000 360.000000"/>
+		<ex_tex_palette index="1" disp_pos="-1920.000000 360.000000"/>
+		<ex_tex_palette index="2" disp_pos="-1800.000000 360.000000"/>
+		<ex_tex_palette index="3" disp_pos="-1680.000000 360.000000"/>
+		<ex_tex_palette index="4" disp_pos="-1560.000000 360.000000"/>
+		<ex_tex_palette index="5" disp_pos="-1440.000000 360.000000"/>
+		<ex_tex_palette index="6" disp_pos="-1320.000000 360.000000"/>
+		<ex_tex_palette index="7" disp_pos="-1200.000000 360.000000"/>
+		<ex_tex_palette index="8" disp_pos="-1080.000000 360.000000"/>
+		<ex_tex_palette index="9" disp_pos="-960.000000 360.000000"/>
+		<ex_tex_palette index="10" disp_pos="-840.000000 360.000000"/>
+		<ex_tex_palette index="11" disp_pos="-720.000000 360.000000"/>
+		<ex_tex_palette index="12" disp_pos="-600.000000 360.000000"/>
+		<ex_tex_palette index="13" disp_pos="-480.000000 360.000000"/>
+		<ex_tex_palette index="14" disp_pos="-240.000000 360.000000"/>
+		<ex_tex_palette index="15" disp_pos="-360.000000 360.000000"/>
+		<ex_tex_palette index="16" disp_pos="0.000000 360.000000"/>
+		<ex_tex_palette index="17" disp_pos="-120.000000 360.000000"/>
+		<ex_tex_palette index="18" disp_pos="120.000000 360.000000"/>
+		<ex_tex_palette index="19" disp_pos="240.000000 360.000000"/>
+		<ex_tex_palette index="20" disp_pos="360.000000 360.000000"/>
+		<ex_tex_palette index="21" disp_pos="480.000000 360.000000"/>
+		<ex_tex_palette index="22" disp_pos="600.000000 360.000000"/>
+		<ex_tex_palette index="23" disp_pos="720.000000 360.000000"/>
+		<ex_tex_palette index="24" disp_pos="840.000000 360.000000"/>
+		<ex_tex_palette index="25" disp_pos="960.000000 360.000000"/>
+		<ex_tex_palette index="26" disp_pos="1080.000000 360.000000"/>
+		<ex_tex_palette index="27" disp_pos="1200.000000 360.000000"/>
+		<ex_tex_palette index="28" disp_pos="1320.000000 360.000000"/>
+		<ex_tex_palette index="29" disp_pos="1440.000000 360.000000"/>
+		<ex_tex_palette index="30" disp_pos="1560.000000 360.000000"/>
+		<ex_tex_palette index="31" disp_pos="1680.000000 360.000000"/>
+		<ex_tex_palette index="32" disp_pos="1920.000000 360.000000"/>
+		<ex_tex_palette index="33" disp_pos="1800.000000 360.000000"/>
+		<ex_tex_palette index="34" disp_pos="2040.000000 360.000000"/>
+		<ex_tex_palette index="35" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="36" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="35">
+		<ex_material index="0" disp_pos="-2040.000000 240.000000"/>
+		<ex_material index="1" disp_pos="-1920.000000 240.000000"/>
+		<ex_material index="2" disp_pos="-1800.000000 240.000000"/>
+		<ex_material index="3" disp_pos="-1680.000000 240.000000"/>
+		<ex_material index="4" disp_pos="-1560.000000 240.000000"/>
+		<ex_material index="5" disp_pos="-1440.000000 240.000000"/>
+		<ex_material index="6" disp_pos="-1320.000000 240.000000"/>
+		<ex_material index="7" disp_pos="-1200.000000 240.000000"/>
+		<ex_material index="8" disp_pos="-1080.000000 240.000000"/>
+		<ex_material index="9" disp_pos="-960.000000 240.000000"/>
+		<ex_material index="10" disp_pos="-840.000000 240.000000"/>
+		<ex_material index="11" disp_pos="-720.000000 240.000000"/>
+		<ex_material index="12" disp_pos="-600.000000 240.000000"/>
+		<ex_material index="13" disp_pos="-480.000000 240.000000"/>
+		<ex_material index="14" disp_pos="-360.000000 240.000000"/>
+		<ex_material index="15" disp_pos="-240.000000 240.000000"/>
+		<ex_material index="16" disp_pos="-120.000000 240.000000"/>
+		<ex_material index="17" disp_pos="0.000000 240.000000"/>
+		<ex_material index="18" disp_pos="120.000000 240.000000"/>
+		<ex_material index="19" disp_pos="240.000000 240.000000"/>
+		<ex_material index="20" disp_pos="360.000000 240.000000"/>
+		<ex_material index="21" disp_pos="480.000000 240.000000"/>
+		<ex_material index="22" disp_pos="600.000000 240.000000"/>
+		<ex_material index="23" disp_pos="720.000000 240.000000"/>
+		<ex_material index="24" disp_pos="840.000000 240.000000"/>
+		<ex_material index="25" disp_pos="960.000000 240.000000"/>
+		<ex_material index="26" disp_pos="1080.000000 240.000000"/>
+		<ex_material index="27" disp_pos="1200.000000 240.000000"/>
+		<ex_material index="28" disp_pos="1320.000000 240.000000"/>
+		<ex_material index="29" disp_pos="1440.000000 240.000000"/>
+		<ex_material index="30" disp_pos="1560.000000 240.000000"/>
+		<ex_material index="31" disp_pos="1680.000000 240.000000"/>
+		<ex_material index="32" disp_pos="1800.000000 240.000000"/>
+		<ex_material index="33" disp_pos="1920.000000 240.000000"/>
+		<ex_material index="34" disp_pos="2040.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="35">
+		<ex_polygon index="0" disp_pos="2040.000000 180.000000"/>
+		<ex_polygon index="1" disp_pos="-2040.000000 180.000000"/>
+		<ex_polygon index="2" disp_pos="-1920.000000 180.000000"/>
+		<ex_polygon index="3" disp_pos="-1800.000000 180.000000"/>
+		<ex_polygon index="4" disp_pos="-1680.000000 180.000000"/>
+		<ex_polygon index="5" disp_pos="-1560.000000 180.000000"/>
+		<ex_polygon index="6" disp_pos="-1440.000000 180.000000"/>
+		<ex_polygon index="7" disp_pos="-1320.000000 180.000000"/>
+		<ex_polygon index="8" disp_pos="-1200.000000 180.000000"/>
+		<ex_polygon index="9" disp_pos="-1080.000000 180.000000"/>
+		<ex_polygon index="10" disp_pos="-960.000000 180.000000"/>
+		<ex_polygon index="11" disp_pos="-840.000000 180.000000"/>
+		<ex_polygon index="12" disp_pos="-720.000000 180.000000"/>
+		<ex_polygon index="13" disp_pos="-600.000000 180.000000"/>
+		<ex_polygon index="14" disp_pos="-480.000000 180.000000"/>
+		<ex_polygon index="15" disp_pos="-240.000000 180.000000"/>
+		<ex_polygon index="16" disp_pos="-360.000000 180.000000"/>
+		<ex_polygon index="17" disp_pos="-120.000000 180.000000"/>
+		<ex_polygon index="18" disp_pos="0.000000 180.000000"/>
+		<ex_polygon index="19" disp_pos="120.000000 180.000000"/>
+		<ex_polygon index="20" disp_pos="240.000000 180.000000"/>
+		<ex_polygon index="21" disp_pos="360.000000 180.000000"/>
+		<ex_polygon index="22" disp_pos="480.000000 180.000000"/>
+		<ex_polygon index="23" disp_pos="600.000000 180.000000"/>
+		<ex_polygon index="24" disp_pos="720.000000 180.000000"/>
+		<ex_polygon index="25" disp_pos="840.000000 180.000000"/>
+		<ex_polygon index="26" disp_pos="960.000000 180.000000"/>
+		<ex_polygon index="27" disp_pos="1080.000000 180.000000"/>
+		<ex_polygon index="28" disp_pos="1200.000000 180.000000"/>
+		<ex_polygon index="29" disp_pos="1320.000000 180.000000"/>
+		<ex_polygon index="30" disp_pos="1440.000000 180.000000"/>
+		<ex_polygon index="31" disp_pos="1560.000000 180.000000"/>
+		<ex_polygon index="32" disp_pos="1680.000000 180.000000"/>
+		<ex_polygon index="33" disp_pos="1920.000000 180.000000"/>
+		<ex_polygon index="34" disp_pos="1800.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
