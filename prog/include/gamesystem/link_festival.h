@@ -71,10 +71,12 @@ typedef struct _LINKFEST_LOG_PARAM{
 //フェスミッション結果取得用構造体
 typedef struct _LINKFEST_MISSION_RESULT{
   u8    clear_f;  //TRUEならクリアした
+  u8    hilink_version;   //<ハイリンクレベルのアップしたバージョン FMISSION_VERSION
   u8    hilink_level_up;  //ハイリンクのレベルアップ値(0ならレベルアップ無し)
   u32   score;    //スコア
   u16   item;     //ご褒美アイテム
   u16   item_num; //ご褒美アイテムの数
+  u16   bonus_num;  //ご褒美アイテムのボーナス数
   u16   sp_item;  //特別ボーナスアイテム(0なら特別ボーナス無し)
   u16   sp_item_num;  //特別ボーナスアイテムの数(0なら特別ボーナス無し)
 }LINKFEST_MISSION_RESULT;
@@ -250,15 +252,14 @@ extern u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk );
 /*
  * @brief リンクフェスティバル　ミッション結果を取得＆レコードをセーブに反映
  *
- * @param u32* スコアを取得するu32のワークポインタ
- * @param u32* 取得するアイテム数を返すu32のワークポインタ
- * @retval  TRUE    ミッション成功
- * @retval  FALSE   ミッション失敗
+ * @param fest_sys  LINK_FESTIVAL*
+ * @param pl  LINKFEST_MISSION_RESULT構造体型へのポインタ
+ * @param mission_time_sec  秒単位のミッション制限時間(FMISSION_ARC_PARAM->m_timeを渡してください)
  *
  *  ミッション達成回数などをインクリメントするので複数回呼び出さないこと
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl );
+extern void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, u16 mission_time_sec );
 
 //---------------------------------------------------------
 /*

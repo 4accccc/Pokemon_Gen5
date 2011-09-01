@@ -383,15 +383,14 @@ static BOOL linkfes_IsMissionClear( LINK_FESTIVAL* wk, u32* score )
 /*
  * @brief リンクフェスティバル　ミッション結果を取得＆レコードをセーブに反映
  *
- * @param u32* スコアを取得するu32のワークポインタ
- * @param u32* 取得するアイテム数を返すu32のワークポインタ
- * @retval  TRUE    ミッション成功
- * @retval  FALSE   ミッション失敗
+ * @param fest_sys  LINK_FESTIVAL*
+ * @param pl  LINKFEST_MISSION_RESULT構造体型へのポインタ
+ * @param mission_time_sec  秒単位のミッション制限時間(FMISSION_ARC_PARAM->m_timeを渡してください)
  *
  *  ミッション達成回数などをインクリメントするので複数回呼び出さないこと
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl )
+void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, u16 mission_time_sec )
 {
   BOOL ret;
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData( wk->gsys ) );
@@ -431,7 +430,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     case FMISSION_PAY_BONUS_TIME: //タイムボーナス
       { //(トータルスコア-目標値)/人数*ミッションレベル
         u32 score = (pl->score-wk->m_beacon->goal)/(wk->log_num+1);
-        pl->item_num += score*(wk->m_beacon->m_level+1);
+        pl->bonus_num += score*(wk->m_beacon->m_level+1);
       }
       //スペシャル報酬 level3ミッション以上&&スコアが目標値の倍以上なら
       sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (pl->score >= (wk->m_beacon->goal*2)));
@@ -439,10 +438,10 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     case FMISSION_PAY_BONUS_SCORE: //スコアボーナス
       { //(残り時間frame/600)*ミッションレベル
         u32 frame = wk->m_beacon->life/600;
-        pl->item_num += frame*(wk->m_beacon->m_level+1);
+        pl->bonus_num += frame*(wk->m_beacon->m_level+1);
       }
       //スペシャル報酬 level3ミッション以上&&残り時間が制限時間より長ければ
-//      sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (wk->m_beacon->life >= (wk->m_arc->)));
+      sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (LINKFEST_FRAME2SEC(wk->m_beacon->life) >= (mission_time_sec)));
       break;
     }
     if( sp_bonus ){
@@ -454,14 +453,24 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   //ハイリンクの経験値
   {
     u8 level;
+    OCCUPY_INFO* occupy_sv = GAMEDATA_GetMyOccupyInfo( GAMESYSTEM_GetGameData( wk->gsys ) );
     u32 exp = FMISSION_SAVE_GetHilinkLevelExp( f_save, wk->m_beacon->version_f );
+
     exp += pl->score;
     if( exp > FMISSION_SV_HILINK_LEVEL_EXP_MAX ){
       exp = FMISSION_SV_HILINK_LEVEL_EXP_MAX; //上限超えていたら、上限で切り捨て
     }
-    pl->hilink_level_up = exp/FMISSION_SV_HILINK_LEVEL_EXP_STEP;
+    level = exp/FMISSION_SV_HILINK_LEVEL_EXP_STEP;
     //余りの経験値をセーブに書き戻し
     FMISSION_SAVE_SetHilinkLevelExp( f_save, wk->m_beacon->version_f, exp%FMISSION_SV_HILINK_LEVEL_EXP_STEP );
+  
+    //パレスレベルを上げる
+    pl->hilink_version = wk->m_beacon->version_f;
+    if( wk->m_beacon->version_f == FMISSION_VERSION_WHITE ){
+      pl->hilink_level_up = OccupyInfo_LevelUpWhite( occupy_sv, level );
+    }else{
+      pl->hilink_level_up = OccupyInfo_LevelUpBlack( occupy_sv, level );
+    }
   }
 }
 

@@ -27,14 +27,14 @@ struct _FEST_BEACON{
   u32  life:18;          ///<ミッションの残り時間(frame)
   u32  my_score:14;      ///<マイスコア(max9999)
 
-  u32  m_id:7;           ///<ミッションNo(127)
-  u32  m_level:3;        ///<ミッションレベル(0-3)
-  u32  end_type:1;       ///<ミッション終了条件タイプ
+  u32  m_id:7;           ///<ミッションNo(127) FEST_MISSION_ID
+  u32  m_level:3;        ///<ミッションレベル(0-3) FMISSION_LEVEL
+  u32  end_type:1;       ///<ミッション終了条件タイプ FMISSION_END_TYPE
   u32  pay:7;            ///<報酬の基礎値(127)
   u32  goal:14;          ///<達成目標(max9999)
 
-  u32  pay_bonus:2;      ///<報酬の計算式タイプ(0-2)
-  u32  time_bonus:4;     ///<スコアアップ時のタイムボーナス
+  u32  pay_bonus:2;      ///<報酬の計算式タイプ(0-2) FMISSION_END_TYPE
+  u32  time_bonus:4;     ///<スコアアップ時のタイムボーナス FMISSION_TBONUS
   u32  item:10;          ///<報酬のアイテムNo(1023)
   u32  sp_item:10;       ///<スペシャル報酬のアイテムNo(1023)
   u32  sp_pay:6;         ///<スペシャル報酬の基礎値(max50)

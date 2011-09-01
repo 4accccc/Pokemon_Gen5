@@ -54,7 +54,7 @@ typedef struct _FMISSION_ARC_PARAM{
   u8  end_type:4;       ///<クリアタイプ FMISSION_END_TYPE
   u8  location:4;       ///<範囲 FMISSION_LOCATION
   u8  time_bonus;     ///<ボーナスタイム FMISSION_TBONUS
-  u8  pay_bonus;      ///<報酬計算式タイプ FMISSION_PAY_BONUS
+  u8  pay_bonus;      ///<報酬計算式タイプ FMISSION_END_TYPE
   u8  sp_pay;         ///<ダブルスコアのスペシャルボーナス数
 
   u16 sp_item;        ///<ダブルスコアのスペシャルボーナスアイテム

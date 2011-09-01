@@ -173,7 +173,7 @@ GMEVENT* EVENT_FMissionEnd( GAMESYS_WORK * gsys, void* work )
     wk->mission = *fmwk;
 
     //ミッションの結果取得とレコードセーブ
-    LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &wk->result );
+    LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &wk->result, 0 );
   }
   return event;
 }

@@ -108,16 +108,20 @@ u16 OccupyInfo_GetBlackLevel(const OCCUPY_INFO *occupy)
  *
  * @param   occupy		
  * @param   add_level		レベル加算値
+ * @retrun  実際に上がったレベル
  */
 //==================================================================
-void OccupyInfo_LevelUpWhite(OCCUPY_INFO *occupy, int add_level)
+int OccupyInfo_LevelUpWhite(OCCUPY_INFO *occupy, int add_level)
 {
+  int old = occupy->white_level;
+  
   if(occupy->white_level + add_level > OCCUPY_LEVEL_MAX){
     occupy->white_level = OCCUPY_LEVEL_MAX;
   }
   else{
     occupy->white_level += add_level;
   }
+  return (occupy->white_level-old);
 }
 
 //==================================================================
@@ -126,16 +130,21 @@ void OccupyInfo_LevelUpWhite(OCCUPY_INFO *occupy, int add_level)
  *
  * @param   occupy		
  * @param   add_level		レベル加算値
+ *
+ * @retrun  実際に上がったレベル
  */
 //==================================================================
-void OccupyInfo_LevelUpBlack(OCCUPY_INFO *occupy, int add_level)
+int OccupyInfo_LevelUpBlack(OCCUPY_INFO *occupy, int add_level)
 {
+  int old = occupy->black_level;
+
   if(occupy->black_level + add_level > OCCUPY_LEVEL_MAX){
     occupy->black_level = OCCUPY_LEVEL_MAX;
   }
   else{
     occupy->black_level += add_level;
   }
+  return (occupy->black_level-old);
 }
 
 //==============================================================================

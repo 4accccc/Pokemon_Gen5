@@ -54,6 +54,8 @@ typedef struct {
   FMISSION_APP_MODE mode;
 } EVENT_FMISSION_APP_WORK;
 
+extern void sub_AppCallWorkInit( FMISSION_APP_PARAM* prm, GAMESYS_WORK * gsys, GAMEDATA* gdata, FMISSION_APP_MODE mode );
+
 //============================================================================================
 //
 //    サブイベント
@@ -86,10 +88,7 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     (*seq)++;
     //break throw
   case _CALL_FMISSION_APP:
-    MI_CpuClear8(&faw->prm,sizeof(FMISSION_APP_PARAM));
-    faw->prm.gsys = faw->gsys;
-    faw->prm.gdata = faw->gdata;
-    faw->prm.mode = faw->mode;
+    sub_AppCallWorkInit( &faw->prm, faw->gsys, faw->gdata, faw->mode );
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(fmission_app), &FMissionAppProcData, &faw->prm);
     (*seq)++;
     break;
@@ -156,4 +155,21 @@ GMEVENT* EVENT_FMissionApp(GAMESYS_WORK * gsys, void* work )
   return event;
 }
 
+//------------------------------------------------------------------
+/*
+ *  @param  gsys
+ *  @param  FMISSION_APP_MODE*
+ */
+//------------------------------------------------------------------
+void sub_AppCallWorkInit( FMISSION_APP_PARAM* prm, GAMESYS_WORK * gsys, GAMEDATA* gdata, FMISSION_APP_MODE mode )
+{
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork(gdata);
 
+  MI_CpuClear8(prm,sizeof(FMISSION_APP_PARAM));
+  prm->gsys = gsys;
+  prm->gdata = gdata;
+  prm->mode = mode;
+ 
+  prm->fmwk = (const FEST_MISSION*)LINK_FESTIVAL_GetMissionWork( GAMESYSTEM_GetLinkFestivalWork( gsys ) );
+  prm->fmission_sv = SAVEDATA_GetFMissionSave(save);
+}

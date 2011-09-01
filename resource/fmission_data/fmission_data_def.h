@@ -62,6 +62,15 @@ typedef enum{
 }FMISSION_END_TYPE;
 
 //=========================================
+///フェスの開催バージョンフラグ
+//=========================================
+typedef enum{
+  FMISSION_VERSION_WHITE,  ///<ホワイト
+  FMISSION_VERSION_BLACK,  ///<ブラック限定
+  FMISSION_VERSION_MAX,  ///<
+}FMISSION_VERSION;
+
+//=========================================
 ///開催制限タイプ
 //=========================================
 typedef enum{

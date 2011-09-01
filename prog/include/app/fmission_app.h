@@ -13,6 +13,8 @@
 
 //system
 #include "gamesystem/gamesystem.h"
+#include "gamesystem/link_festival.h"
+#include "savedata/fmission_save.h"
 
 //=============================================================================
 /**
@@ -46,4 +48,10 @@ typedef struct
 	GAMESYS_WORK* gsys;	//[in]ゲームシステム
   GAMEDATA*     gdata;
   FMISSION_APP_MODE mode;
+
+  LINK_FESTIVAL* fest_sys;  ///<ハイリンクフェス　管理ワーク
+  const FEST_MISSION* fmwk; ///<現在のミッションデータ
+
+  FMISSION_SAVE*  fmission_sv;  ///<フェスセーブデータポインタ
+
 }FMISSION_APP_PARAM;
