@@ -266,10 +266,10 @@ void RESORT_MAPCREATE_EventDataOverWrite( RESORT_MAPCREATE *p_wk, EVENTDATA_SYST
     const RESORT_RESIDENT_DATA *cp_resident = RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk->cp_people_all, i);
     if( RESORT_RESIDENT_DATA_IsEmpty( cp_resident ) )
     {
-      //u16 doorID = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_DOOR_ID );
+      u16 bgID = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_BOARD_ID );
 
-      //‹ó‚È‚ç{İ‚ª‚È‚¢ƒhƒA‚ª‚È‚¢
-      //EVENTDATA_SYS_DelConnectEventIdx( p_evdata, doorID );
+      //‹ó‚È‚ç{İ‚ª‚È‚¢ŠÅ”Â‚ª‚È‚¢
+      EVENTDATA_MoveBGData( p_evdata, bgID, 0, 0, 0 );
     }
   }
 }

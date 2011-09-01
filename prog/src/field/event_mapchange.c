@@ -102,6 +102,7 @@ FS_EXTERN_OVERLAY(debug_data);
 #include "savedata/resonance_resort_sv.h"
 #include "resonance_resort/resort_map.h"
 #include "resonance_resort/resort_binary.h"
+#include "resonance_resort/resort_mapcreate.h"
 
 #include "map_replace.h"  //MAPREPLACE_GetFlag
 
@@ -120,7 +121,7 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req );
 static void MAPCHG_releaseMMdl( GAMEDATA * gamedata );
 
-static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id );
+static void MAPCHG_SetUpResort( GAMEDATA * gamedata, FIELDMAP_WORK *p_fieldmap, EVENTDATA_SYSTEM *p_ev, u16 zone_id );
 
 
 static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, u16 zone_id );
@@ -2990,7 +2991,7 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
  *	@param	zone_id ゾーンID
  */
 //-----------------------------------------------------------------------------
-static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
+static void MAPCHG_SetUpResort( GAMEDATA * gamedata, FIELDMAP_WORK *p_fieldmap, EVENTDATA_SYSTEM *p_ev, u16 zone_id )
 { 
   OS_TPrintf( "ZONEID=%d\n", zone_id );
 
@@ -3010,6 +3011,12 @@ static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
       RESORT_CITY_DATA *p_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
       u16 tex = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_TEX, NULL );
       GAMEDATA_SetAreaOfs( gamedata, tex );
+    }
+
+    //看板を除去
+    {
+      RESORT_MAPCREATE *p_map = FLDMAPPER_GetResortWork( FIELDMAP_GetFieldG3Dmapper(p_fieldmap) );
+      RESORT_MAPCREATE_EventDataOverWrite( p_map, p_ev );
     }
   }
   else
@@ -3133,7 +3140,7 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
   MAPCHG_setupFieldSkillMapEff( gamedata, zone_id );
 
   //レゾナンスリゾートの設定
-  MAPCHG_SetUpResort( gamedata, zone_id );
+  MAPCHG_SetUpResort( gamedata, fieldmap, evdata, zone_id );
 
   //仮：イベントによるエリアデータ切り替え
   ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08B_ID, FALSE );

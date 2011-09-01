@@ -2171,7 +2171,7 @@ VMCMD_RESULT EvCmdBGWinMsg( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  u16 msg_id = VMGetU16( core );
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 type = VMGetU16( core );
   
   {

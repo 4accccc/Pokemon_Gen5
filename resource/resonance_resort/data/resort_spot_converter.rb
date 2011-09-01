@@ -98,7 +98,6 @@ def convertAppeal( csv, data, msg_h, header )
     end
     data.write_u16( $define_hash[group] )
     data.write_u16( baseexp )
-    data.write_u16( 0 ) #DUMMY
 
     for col in 0...SPOT_COL_DATA_MAX
       type  = csv.get( row, SPOT_COL_TYPE + col*5 )
@@ -120,6 +119,7 @@ def convertAppeal( csv, data, msg_h, header )
       rescue HeaderSearchError
         exit(1)
       end
+      data.write_u16( 0 )
     end
   end
 

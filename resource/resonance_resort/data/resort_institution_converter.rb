@@ -55,14 +55,13 @@ INS_COL_START       = 0         #列開始位置
 INS_COL_NUMBER      = INS_COL_START     #列:番号
 INS_COL_GRID_X      = 1         #列：グリッドX
 INS_COL_GRID_Z      = 2         #列：グリッドZ
-INS_COL_DIR         = 3         #列：向き
+INS_COL_BG_ID       = 3         #列：BGID
 
 def  convertInstitution( csv, data, eventHeader )
- 
-  dir_hash = {
-    "←"=>0,
-    "→"=>32767,
-  }
+
+  #データの作成
+  evdata = HeaderDataArray.new
+  evdata.load( eventHeader )
 
   for row in INS_ROW_START...csv.row_length-1
     
@@ -70,13 +69,18 @@ def  convertInstitution( csv, data, eventHeader )
     number  = csv.get( row, INS_COL_NUMBER )
     grid_x  = csv.get( row, INS_COL_GRID_X )
     grid_z  = csv.get( row, INS_COL_GRID_Z )
-    dir     = csv.get( row, INS_COL_DIR )
+    bgID    = csv.get( row, INS_COL_BG_ID )
 
     #データ書き込み    
     data.write_u16( number )
     data.write_u16( grid_x )
     data.write_u16( grid_z )
-    data.write_u16( dir_hash[dir] )
+
+    begin
+      data.write_u16( evdata.search( "#{bgID}", "#{row}行の#{eventHeader}" ) )
+    rescue HeaderSearchError
+      exit(1)
+    end
   end
 end
 

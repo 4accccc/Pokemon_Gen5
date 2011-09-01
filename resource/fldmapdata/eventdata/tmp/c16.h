@@ -19,5 +19,13 @@
 #ifndef ZONE_C16_EVB_H
 #define ZONE_C16_EVB_H
 
+#define BGID_RESORT_BOARD_01              0
+#define BGID_RESORT_BOARD_02              1
+#define BGID_RESORT_BOARD_03              2
+#define BGID_RESORT_BOARD_04              3
+#define BGID_RESORT_BOARD_05              4
+#define BGID_RESORT_BOARD_06              5
+#define BGID_RESORT_BOARD_07              6
+#define BGID_RESORT_BOARD_08              7
 
 #endif //ZONE_C16_EVB_H

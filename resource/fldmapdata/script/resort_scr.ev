@@ -33,6 +33,7 @@ _EVENT_DATA    ev_resort_secretary_pc
 _EVENT_DATA    ev_resort_npc_mouthcomm
 _EVENT_DATA    ev_resort_npc_offreco
 _EVENT_DATA    ev_resort_infomation
+_EVENT_DATA    ev_resort_board
 _EVENT_DATA_END
 
 //DEFINE_LOCALの数が多いので、グローバルにおいて使い回しています。
@@ -1846,5 +1847,40 @@ EVENT_START ev_resort_infomation
     ENDSWITCH
   ENDWHILE
   _BALLOONWIN_CLOSE()
+}
+EVENT_END
+
+
+/**************************************************************/
+/*            看板                                       */
+/**************************************************************/
+EVENT_START ev_resort_board
+{
+  DEFINE_LOCAL LWK_X
+  DEFINE_LOCAL LWK_Z
+  _PLAYER_POS_GET( LWK_X, LWK_Z )
+
+  $LWK_INDEX  = 0
+  IF $LWK_Z >= 60 && $LWK_Z <= 66 THEN
+    $LWK_INDEX  = 0
+  ELSIF $LWK_Z >= 53 && $LWK_Z <= 59 THEN
+    $LWK_INDEX  = 1
+  ELSIF $LWK_Z >= 46 && $LWK_Z <= 52 THEN
+    $LWK_INDEX  = 2
+  ELSIF $LWK_Z >= 39 && $LWK_Z <= 45 THEN
+    $LWK_INDEX  = 3
+  ELSIF $LWK_Z >= 32 && $LWK_Z <= 38 THEN
+    $LWK_INDEX  = 4
+  ELSIF $LWK_Z >= 25 && $LWK_Z <= 31 THEN
+    $LWK_INDEX  = 5
+  ELSIF $LWK_Z >= 18 && $LWK_Z <= 24 THEN
+    $LWK_INDEX  = 6
+  ELSIF $LWK_Z >= 11 && $LWK_Z <= 17 THEN
+    $LWK_INDEX  = 7
+  ENDIF
+
+  $LWK_INDEX  += RESORT_MSGID_BOARD_00
+  _RESORT_GET_MSGID( LWK_INDEX, LWK_MSGID )
+  _EASY_BGWIN_MSG( LWK_MSGID, TYPE_POST )
 }
 EVENT_END

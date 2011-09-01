@@ -111,6 +111,15 @@
 #define RESORT_MSGID_MEDAL_NONE     (9)  //ƒƒ_ƒ‹‚È‚¢‚æ
 #define RESORT_MSGID_RECORD_NEXT    (10)  //o—ˆŽ–‚Ü‚¾‚ ‚é‚æ
 #define RESORT_MSGID_RECORD_NONE    (11)  //o—ˆŽ–‚È‚µ
+//ŠÅ”Â
+#define RESORT_MSGID_BOARD_00       (12)  //ŠÅ”Â‚O”Ô–Ú‚ÌŽ{Ý
+#define RESORT_MSGID_BOARD_01       (13)  //ŠÅ”Â‚O”Ô–Ú‚ÌŽ{Ý
+#define RESORT_MSGID_BOARD_02       (14)  //ŠÅ”Â‚O”Ô–Ú‚ÌŽ{Ý
+#define RESORT_MSGID_BOARD_03       (15)  //ŠÅ”Â‚O”Ô–Ú‚ÌŽ{Ý
+#define RESORT_MSGID_BOARD_04       (16)  //ŠÅ”Â‚O”Ô–Ú‚ÌŽ{Ý
+#define RESORT_MSGID_BOARD_05       (17)  //ŠÅ”Â‚O”Ô–Ú‚ÌŽ{Ý
+#define RESORT_MSGID_BOARD_06       (18)  //ŠÅ”Â‚O”Ô–Ú‚ÌŽ{Ý
+#define RESORT_MSGID_BOARD_07       (19)  //ŠÅ”Â‚O”Ô–Ú‚ÌŽ{Ý
   //—·sŽÒ
 #define RESORT_TOURIST_GREET_MSGID        (50)  //ˆ¥ŽA
 #define RESORT_TOURIST_CITY_MSGID         (51)  //ŠX‹»–¡
@@ -189,3 +198,6 @@
 #define RESORT_SET_SPOT_CITY_NONE             (0)
 #define RESORT_SET_SPOT_CITY_LVUP             (1)
 #define RESORT_SET_SPOT_CITY_LVMAX            (2)
+
+//_RESORT_GET_INSTITUTION_DATA—p
+#define RESORT_INSTITUTION_SHOPTYPE            (0)
