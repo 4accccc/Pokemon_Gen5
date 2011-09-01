@@ -5031,37 +5031,6 @@
 あたくし　マネーを　使いますわよ！</language>
 	</row>
 
-	<row id="TRID_PRINCESS_10_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">ショーも　おおづめ　だけど
-カミツレさまと　おなじ　ステージに▽
-たつ　しかくが　あるか▽
-わたくしが　チェックしてあげる！▼</language>
-		<language name="JPN_KANJI" width="216">ショーも　大詰めだけど
-カミツレさまと　同じ　ステージに▽
-立つ　資格が　あるか▽
-わたくしが　チェックしてあげる！▼</language>
-	</row>
-
-	<row id="TRID_PRINCESS_10_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">その　つよさと　うつくしさ……！▼
-カミツレさまの　ステージに
-たっても　いいんじゃない？</language>
-		<language name="JPN_KANJI" width="216">その　強さと　美しさ……！▼
-カミツレさまの　ステージに
-たっても　いいんじゃない？</language>
-	</row>
-
-	<row id="TRID_PRINCESS_10_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">あなたと　カミツレさまで　みせた
-きらびやかな　ポケモンしょうぶ▼
-おもわず　みとれちゃったじゃない！
-とても　ステキな　ショーだったわよ！</language>
-		<language name="JPN_KANJI" width="216">あなたと　カミツレさまで　みせた
-きらびやかな　ポケモン勝負▼
-おもわず　みとれちゃったじゃない！
-とても　ステキな　ショーだったわよ！</language>
-	</row>
-
 	<row id="TRID_JUGGLING_10_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">どうだい？　この　ポケモンジム▼
 なんというか　ちょっと　ありえない
@@ -14645,6 +14614,20 @@
 おしえようと　してたのだ……</language>
 		<language name="JPN_KANJI" width="216">おれさまは　なにを
 教えようと　してたのだ……</language>
+	</row>
+
+	<row id="TRID_PRINCE_10_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ジェジェジェジェジェジェッ！
+ジェット　コースター！</language>
+		<language name="JPN_KANJI" width="216">ジェジェジェジェジェジェッ！
+ジェット　コースター！</language>
+	</row>
+
+	<row id="TRID_PRINCESS_10_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">なんてこと！　しょうりを
+もぎとらえてしまうだなんて！！</language>
+		<language name="JPN_KANJI" width="216">なんてこと！　勝利を
+もぎとらえてしまうだなんて！！</language>
 	</row>
 
 	<flowchart-group-list>
