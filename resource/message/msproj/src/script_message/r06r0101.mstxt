@@ -2360,11 +2360,11 @@
 			Language="JPN_KANJI">
 			<Text>続いて　注意報です！▼
 かみなり　と　ぼうふう　が
-かならず　命中　しますので▽
+かならず　命中しますので▽
 お気をつけ　ください！</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-01T04:08:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-01T07:25:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2675,15 +2675,15 @@
 こおり　状態に　ならず▼
 すでに　こおっている　ポケモンの
 こおりが　とける　現象が▽
-報告　されています！▼
+報告されています！▼
 なお　ポワルンという　ポケモンは
 ひざしが　強いと▽
 姿が　変わり▽
 ほのおタイプに　なることでも▽
 知られております</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-01T04:20:22" />
+				User="matsumiya:W00224"
+				Time="2011-09-01T07:26:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -2797,11 +2797,11 @@
 わずか　１ターンで▽
 放つことが　できます！▼
 また　かみなり　と　ぼうふう　は
-命中　しづらく　なりますので▽
+命中しづらく　なりますので▽
 お気をつけ　ください！</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-01T04:25:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-01T07:26:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3328,11 +3328,11 @@
 ラッキーアイテムは　つめたいいわ！▼
 ちなみに　雪が降ると
 静かに　なるのは▼
-小さな　こおりのつぶが　音を
-吸収　するからなのです！</Text>
+小さな　氷の　粒が　音を
+吸収する　からなのです！</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-01T04:39:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-01T07:27:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4067,14 +4067,14 @@
 何度も　今くらいの　時期に
 どこかの　町で▼
 みられる　という　話を
-聞いたことが　あります▼
+きいたことが　あります▼
 ああ……　わたくしも
 ステキな　かたと　一緒に▼
 ダイヤモンドダストを
 みてみたい　ですわ！　うふふ！</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-01T06:30:43" />
+				User="matsumiya:W00224"
+				Time="2011-09-01T07:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
