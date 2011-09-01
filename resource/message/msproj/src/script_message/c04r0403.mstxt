@@ -211,4 +211,92 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c04r0403_poke30a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わおん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:29:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:29:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わおん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:29:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・合わせて鳴き声再生
+　ボールボーイっぽく動いている
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:29:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE30
+ポケモン・ヨーテリー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:28:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0403_poke30b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きゃん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:29:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:29:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きゃん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:29:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・合わせて鳴き声再生
+　ボールボーイっぽく動いている
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:29:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE30
+ポケモン・ヨーテリー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T09:28:45" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>
