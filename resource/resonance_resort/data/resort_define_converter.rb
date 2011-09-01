@@ -75,6 +75,7 @@ def convertDefine( csv, header, hash, hashNumber )
   hashSpotType      = Hash.new()
   hashGrade         = Hash.new()
   hashOffreco       = Hash.new()
+  hashWhereGroup    = Hash.new()
 
   #日本語→タグと日本語→値のハッシュを作成
   for row in DEFINE_ROW_START...csv.row_length-1
@@ -111,6 +112,8 @@ def convertDefine( csv, header, hash, hashNumber )
         hashGrade.store( japStr, engStr )
       when DEFINE_COL_OFFRECO_TYPE
         hashOffreco.store( japStr, engStr )
+      when DEFINE_COL_WANTOGOGROUP
+        hashWhereGroup.store( japStr, engStr )
       end
 
       col+=2
@@ -179,6 +182,14 @@ def convertDefine( csv, header, hash, hashNumber )
     header.write( "#define RESORT_OFFRECO_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
   }
   header.write( "#define RESORT_OFFRECO_TYPE_MAX (#{hashOffreco.size}) //最大\n" )
+
+
+  header.write( "//行きたいお店グループ\n" )
+  hashWhereGroup.each{ |k,v|
+    header.write( "#define RESORT_APPEAL_LV_#{v} (#{hashNumber[k]}) //#{k}\n" )
+  }
+  header.write( "#define RESORT_APPEAL_LV_MAX (#{hashWhereGroup.size}) //最大\n" )
+
 
   #定義をruby用ハッシュテーブルに書き込み
   hash.write( "$define_hash = {\n" )

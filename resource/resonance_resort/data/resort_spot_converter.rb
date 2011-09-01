@@ -3,7 +3,7 @@
 #
 #
 #	@file		resort_spot_converter.rb
-#	@brief  レゾナンスリゾート　アピールデータコンバータ  （アピールタブのコンバート）
+#	@brief  レゾナンスリゾート　アピールデータコンバータ  （いきたいお店タブのコンバート）
 #	@author	Toru=Nagihashi
 #	@data		2011.02.17
 #
@@ -55,17 +55,18 @@ end
 #=====================================
 SPOT_ROW_START    = 1     #行開始位置
 SPOT_COL_START    = 1     #列開始位置
-SPOT_COL_MSG_00   = SPOT_COL_START     #列:メッセージ
-SPOT_COL_GROUP    = 2     #列：グループ
-SPOT_COL_BASEEXP  = 3     #列：ベース経験値
-SPOT_COL_TYPE     = 4     #列：タイプ
-SPOT_COL_DATA     = 5     #列：データ
-SPOT_COL_EXP      = 6     #列：経験値
-SPOT_COL_EFF_MSG  = 7     #列：msgid
+SPOT_COL_TAG      = SPOT_COL_START     #列：タグ
+SPOT_COL_MSG_00   = 2     #列:メッセージ
+SPOT_COL_GROUP    = 3     #列：グループ
+SPOT_COL_BASEEXP  = 4     #列：ベース経験値
+SPOT_COL_TYPE     = 5     #列：タイプ
+SPOT_COL_DATA     = 6     #列：データ
+SPOT_COL_EXP      = 7     #列：経験値
+SPOT_COL_EFF_MSG  = 8     #列：msgid
 
 SPOT_COL_DATA_MAX = 6     #タイプ、データ、経験値が何回あるか
 
-def convertAppeal( csv, data, msg_h )
+def convertAppeal( csv, data, msg_h, header )
   
   #データの作成
   msgdata = HeaderDataArray.new
@@ -73,9 +74,14 @@ def convertAppeal( csv, data, msg_h )
 
   for row in SPOT_ROW_START...csv.row_length-1
     
+    tag = csv.get( row, SPOT_COL_TAG )
     msg  = csv.get( row, SPOT_COL_MSG_00 )
     baseexp  = csv.get( row, SPOT_COL_BASEEXP )
     group  = csv.get( row, SPOT_COL_GROUP )
+
+
+    #ヘッダに書きこみ
+    header.write( "#define RESORT_SPOT_ID_#{tag} (#{row-SPOT_ROW_START})\n" )
 
     begin
       data.write_u16( msgdata.search( "#{msg}", "#{row}行の#{msg_h}" ) )
@@ -102,6 +108,9 @@ def convertAppeal( csv, data, msg_h )
       end
     end
   end
+
+  #ヘッダに書きこみ
+  header.write( "#define RESORT_SPOT_ID_MAX (#{row-SPOT_ROW_START+1})\n" )
 end
 
 #=============================================================================
@@ -124,11 +133,19 @@ begin
   #data作成
   data    = BinaryBuilder.new
 
+  #ヘッダ作成
+  header      = TextBuilder.new
+  header.write_header( "#{OUTPUTNAME}.h", 
+                    "#レゾナンスリゾートアピールIDの定義情報です",
+                    "Toru=Nagihashi" )
+
   #コンバート
-  convertAppeal( csv, data, MSG_HEADER )
+  convertAppeal( csv, data, MSG_HEADER, header )
 
   #date書き込み
   data.genelate( "#{OUTPUTNAME}.dat" )
 
+  #ヘッダ書き込み
+  header.genelate( "#{OUTPUTNAME}.h" )
 end
 

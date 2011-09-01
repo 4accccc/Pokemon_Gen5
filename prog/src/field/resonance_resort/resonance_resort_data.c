@@ -93,6 +93,8 @@ static inline RESORT_GET_TrainerView( u8 view, u8 sex )
   }
 }
 
+static u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range );
+
 //-------------------------------------
 ///	リゾートデータグローバル参照
 //=====================================
@@ -959,7 +961,7 @@ struct _RESORT_RECV_DATA
   RESORT_EXTEND5_DATA extend5;
   RESORT_EXTEND6_DATA extend6;
   RESORT_EXTEND7_DATA extend7;
-  u16                 presentID;
+  u16                 present_bit;
   u8                  dummy10;
   u8                  meet_year;         //4
   u8                  meet_month;
@@ -969,6 +971,7 @@ struct _RESORT_RECV_DATA
   u8                  commID;   //通信識別ID
   u8                  jobchange_day:1; //転職一日一回ビット
   u8                  replace_lock:1;   //置き換え不可ビット
+  u8                  init_flag:1;   //初期化フラグ（初期化をABSTRUCT_MANAGER_InitにおこないROMアクセスをビーコン設定時に行わせないための処理）
   u8                  padding1  :4;
   u8                  day_flag  :1;
   u8                  keep_flag :1;
@@ -981,6 +984,7 @@ struct _RESORT_RECV_DATA
   u32                 peopleID  :8;
   u32                 placeID   :7;
   u32                 type     :4;  //自分がなんのタイプRESORT_RESIDENT_TYPE_xxx
+  u32                 rnd_seed;     //乱数シード
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_RECV_DATA) == RESORT_RECV_DATA_SIZE );
 
@@ -1007,7 +1011,7 @@ struct _RESORT_PROXY_DATA
   u8    id;
   u8    celevID;
   u8    type;
-  u8    presentID;
+  u8    present_bit;
   u16   pokemon;
   u16   goto_shop;
   u8    want_job;
@@ -1019,6 +1023,7 @@ struct _RESORT_PROXY_DATA
   u8                  meet_month;
   u8                  meet_day;
   u8                  dummy;
+  u32                 rnd_seed;     //乱数シード
 };
 
 SDK_COMPILER_ASSERT(sizeof(RESORT_PROXY_DATA)==RESORT_PROXY_DATA_SIZE);
@@ -1072,14 +1077,17 @@ void RESORT_RECV_DATA_Exit( RESORT_RECV_DATA *p_wk )
 //-----------------------------------------------------------------------------
 void RESORT_RECV_DATA_SetMyData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  OS_TPrintf( "SetMyData1\n" );
   RESORT_BASIC1_DATA_SetMyData( &p_wk->basic1, cp_gamedata );
+  OS_TPrintf( "SetMyData2\n" );
   RESORT_BASIC2_DATA_SetMyData( &p_wk->basic2, cp_gamedata );
-
+  OS_TPrintf( "SetMyData3\n" );
   {
     int i;
     u8  *p_extend_adrs  = (u8*)&p_wk->extend1;
     for( i = 0; i < RESORT_EXTEND_TYPE_MAX; i++ )
     {
+      OS_TPrintf( "SetExtend%d\n",i );
       sc_ResortExtendData_SetMyData[i]( (void*)p_extend_adrs, cp_gamedata );
       p_extend_adrs += RESORT_EXTEND_DATA_SIZE;
     }
@@ -1198,6 +1206,9 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk )
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_MEET_HOUR, time.hour );
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_MEET_MIN, time.minute );
   }
+
+  //乱数
+  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_RND_SEED, GFUser_GetPublicRand(GFL_STD_RAND_MAX) );
 
   Resort_Recv_Data_SetWantJob( p_wk );
 }
@@ -1472,7 +1483,7 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
   case RESORT_DATA_PARAM_EVENT_FLAG:
     return 0; //TODO
   case RESORT_DATA_PARAM_WANT_SPOT:
-    return cp_wk->want_spot + resort_go_00;
+    return cp_wk->want_spot;
   case RESORT_DATA_PARAM_NATION:
     return cp_wk->basic1.nation;
   case RESORT_DATA_PARAM_AREA:
@@ -1499,8 +1510,8 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
   case RESORT_DATA_PARAM_WANT_JOB:
     return cp_wk->basic2.want_job;
   //生成データ
-  case RESORT_DATA_PARAM_PRESENT_ID:
-    return cp_wk->presentID;
+  case RESORT_DATA_PARAM_PRESENT_BIT:
+    return cp_wk->present_bit;
   case RESORT_DATA_PARAM_MEET_YEAR:
     return cp_wk->meet_year;
   case RESORT_DATA_PARAM_MEET_MONTH:
@@ -1542,8 +1553,12 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
       }
       return extend_num;
     }
+  case RESORT_DATA_PARAM_INIT_FLAG:
+    return cp_wk->init_flag;
   case RESORT_DATA_PARAM_KOSEI:
     return cp_wk->kosei;
+  case RESORT_DATA_PARAM_RND_SEED:
+    return cp_wk->rnd_seed;
   //拡張データ1
   case RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID:
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
@@ -1672,7 +1687,7 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     p_wk->placeID   = data;
     break;
   case RESORT_DATA_PARAM_WANT_SPOT:
-    p_wk->want_spot = data - resort_go_00;
+    p_wk->want_spot = data;
     break;
   case RESORT_DATA_PARAM_NATION:
     p_wk->basic1.nation = data;
@@ -1735,8 +1750,8 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     p_wk->basic2.city_lv  = data;
     break;
   //生成データ
-  case RESORT_DATA_PARAM_PRESENT_ID:
-    p_wk->presentID = data;
+  case RESORT_DATA_PARAM_PRESENT_BIT:
+    p_wk->present_bit = data;
     break;
   case RESORT_DATA_PARAM_MEET_YEAR:
     p_wk->meet_year = data;
@@ -1788,8 +1803,14 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_EXTEND_BIT:
     p_wk->extend_flag = data;
     break;
+  case RESORT_DATA_PARAM_INIT_FLAG:
+    p_wk->init_flag = data;
+    break;
   case RESORT_DATA_PARAM_KOSEI:
     p_wk->kosei = data;
+    break;
+  case RESORT_DATA_PARAM_RND_SEED:
+    p_wk->rnd_seed  = data;
     break;
   case RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
@@ -1939,6 +1960,21 @@ BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk )
       return (s64)(now-pre) > sc_extend_num_time[extend_num];
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  旅行者の乱数取得
+ *
+ *	@param	const RESORT_RECV_DATA *cp_wk ワーク
+ *	@param	id  乱数使用ID
+ *
+ *	@return 乱数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_RECV_DATA_GetRnd( const RESORT_RECV_DATA *cp_wk, RESORT_RND_ID id, u32 range )
+{
+  u32 seed = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_RND_SEED, NULL );
+  return RESORT_DATA_GetRnd( seed, id, range );
 }
 //=============================================================================
 /**
@@ -2227,6 +2263,10 @@ void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, const MYSTATUS *cp_
   //ポケモン
   p_wk->pokemon = pokemon;
 
+
+  //乱数
+  p_wk->rnd_seed = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+
   //TODO
   //生成？
 }
@@ -2266,8 +2306,10 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
       p_str[PERSON_NAME_SIZE] = GFL_STR_GetEOMCode();
     }
     return 0;
-  case RESORT_DATA_PARAM_PRESENT_ID:
-    return cp_wk->presentID;
+  case RESORT_DATA_PARAM_PRESENT_BIT:
+    return cp_wk->present_bit;
+  case RESORT_DATA_PARAM_RND_SEED:
+    return cp_wk->rnd_seed;
   case RESORT_DATA_PARAM_TYPE:
     return cp_wk->type;
   case RESORT_DATA_PARAM_COMM_ID:
@@ -2394,6 +2436,21 @@ BOOL RESORT_PROXY_DATA_AddProxy( RESORT_PROXY_DATA *p_wk, const RESORT_PROXY_DAT
   GF_ASSERT( RESORT_PROXY_DATA_IsEmpty(p_wk) );
   *p_wk = *cp_proxy;
   return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人用の乱数取得
+ *
+ *	@param	const RESORT_PROXY_DATA *cp_wk ワーク
+ *	@param	id  乱数使用ID
+ *
+ *	@return 乱数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_PROXY_DATA_GetRnd( const RESORT_PROXY_DATA *cp_wk, RESORT_RND_ID id, u32 range )
+{
+  u32 seed = RESORT_PROXY_DATA_GetData( cp_wk, RESORT_DATA_PARAM_RND_SEED, NULL );
+  return RESORT_DATA_GetRnd( seed, id, range );
 }
 //=============================================================================
 /**
@@ -3249,9 +3306,10 @@ struct _RESORT_SECRETARY_DATA
   u8    meet_year;
   u8    meet_month;
   u8    meet_day;
-  u8    dummy2;
+  u8    present_bit;
   RESORT_EXTEND6_DATA extend6;
   RESORT_EXTEND7_DATA extend7;
+  u32   rnd_seed;
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_SECRETARY_DATA) == RESORT_SECRETARY_DATA_SIZE );
 
@@ -3461,8 +3519,10 @@ u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DA
     return cp_wk->basic1.sex;
   case RESORT_DATA_PARAM_TRAINERVIEW:
     return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex ); 
-  case RESORT_DATA_PARAM_PRESENT_ID:
-    return 10; //TODO;
+  case RESORT_DATA_PARAM_PRESENT_BIT:
+    return cp_wk->present_bit;
+  case RESORT_DATA_PARAM_RND_SEED:
+    return cp_wk->rnd_seed;
   case RESORT_DATA_PARAM_MEET_YEAR:
     return cp_wk->meet_year;
   case RESORT_DATA_PARAM_MEET_MONTH:
@@ -3504,6 +3564,12 @@ void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_DATA_PAR
   case RESORT_DATA_PARAM_MEET_DAY:
     p_wk->meet_day = data;
     break;
+  case RESORT_DATA_PARAM_PRESENT_BIT:
+    p_wk->present_bit = data;
+    break;
+  case RESORT_DATA_PARAM_RND_SEED:
+    p_wk->rnd_seed  = data;
+    break;
   case RESORT_DATA_PARAM_LOCK:
     //なにもしない
     break;
@@ -3538,6 +3604,8 @@ void RESORT_SECRETARY_DATA_ConvertRecv( RESORT_SECRETARY_DATA *p_wk, const RESOR
   p_wk->type      = type;
   p_wk->peopleID  = peopleID;
   p_wk->placeID   = placeID;
+
+  p_wk->rnd_seed = p_wk->rnd_seed;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3565,6 +3633,24 @@ void RESORT_SECRETARY_DATA_ConvertProxy( RESORT_SECRETARY_DATA *p_wk, const RESO
   p_wk->type      = type;
   p_wk->peopleID  = peopleID;
   p_wk->placeID   = placeID;
+
+
+  p_wk->rnd_seed = p_wk->rnd_seed;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秘書の乱数を取得
+ *
+ *	@param	const RESORT_SECRETARY_DATA *cp_wk  ワーク
+ *	@param	id  ID
+ *
+ *	@return 乱数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_SECRETARY_DATA_GetRnd( const RESORT_SECRETARY_DATA *cp_wk, RESORT_RND_ID id, u32 range )
+{
+  u32 seed = RESORT_SECRETARY_DATA_GetData( cp_wk, RESORT_DATA_PARAM_RND_SEED, NULL );
+  return RESORT_DATA_GetRnd( seed, id, range );
 }
 
 //=============================================================================
@@ -3858,6 +3944,7 @@ void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_DAY_FLAG, FALSE );
       RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG, FALSE );
+      RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_RND_SEED, GFUser_GetPublicRand(GFL_STD_RAND_MAX) );
 
       for( j = RESORT_INSTITUTION_DATA_BIT_SHOP_START; j < RESORT_INSTITUTION_DATA_BIT_SHOP_END; j++ )
       {
@@ -4108,61 +4195,6 @@ BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainer
   return FALSE;
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief  乱数を取得
- *
- *	@param	const RESORT_CITY_DATA *cp_wk　ワーク
- *	@param	ofs オフセット
- *	@param	max   最大
- *
- *	@return 乱数
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_DATA_GetRnd( u32 ofs, u32 max )
-{
-  u32 num;
-  u32 general_seed;
-  u8 seed_array[8];
-  u64 *p_seed;
-  GFL_STD_RandContext rnd;
-
-  general_seed= RESORT_CITY_DATA_GetData(sp_city_data,RESORT_CITY_DATA_PARAM_RND_SEED,NULL);
-
-  seed_array[0]  = ofs & 0xFF;
-  seed_array[1]  = general_seed & 0xFF;
-  seed_array[2]  = (ofs >> 8) & 0xFF;
-  seed_array[3]  = (general_seed >> 8 ) & 0xFF;
-  seed_array[4]  = (ofs >> 16) & 0xFF;
-  seed_array[5]  = (general_seed >> 16 ) & 0xFF;
-  seed_array[6]  = (ofs >> 24) & 0xFF;
-  seed_array[7]  = (general_seed >> 24 ) & 0xFF;
-
-  p_seed  = (u64*)seed_array;
-
-  GFL_STD_RandInit( &rnd, (*p_seed) );
-  num = GFL_STD_Rand( &rnd, max );
-  RESORT_Printf( "rnd[%d]max[%d]seed_l[%x]seed_h[%x]ofs[%d]grnd[%x]\n",num,max,(u32)((*p_seed)&0xFFFFFFFF),(u32)(((*p_seed)>>32)&0xFFFFFFFF),ofs,general_seed);
-  return num;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  旅行者用乱数取得
- *
- *	@param	RESORT_RECV_DATA *p_data  旅行者
- *	@param	u32 max   最大
- *
- *	@return 乱数
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_DATA_GetRndRecv( RESORT_RECV_DATA *p_wk, u32 max )
-{
-  u32 id = RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_TRAINER_ID,NULL );
-  NAGI_Printf( "ID=%d\n", id );
-  return RESORT_DATA_GetRnd( id, max );
-}
-
 //=============================================================================
 /**
  *  データ初期化
@@ -4173,6 +4205,34 @@ void RESORT_DATA_Boot( const SAVE_CONTROL_WORK* ctrl )
   RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( (SAVE_CONTROL_WORK*)ctrl );
   RESORT_CITY_DATA * p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
   sp_city_data = p_city;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  各人物の固有乱数を取得
+ *
+ *	@param	u32 seed  シード
+ *	@param	id        乱数使用ID
+ *
+ *	@return 乱数
+ */
+//-----------------------------------------------------------------------------
+static u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range )
+{
+  GFL_STD_RandContext context;
+  GFL_STD_RandInit( &context, seed );
+
+  {
+    int i;
+    u32 rnd = 0;
+    for( i = 0; i <= id; i++ )
+    {
+      rnd = GFL_STD_Rand( &context, range );
+    }
+    return rnd;
+  }
 }
 
 //=============================================================================

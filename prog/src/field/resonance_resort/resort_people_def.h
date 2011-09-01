@@ -85,3 +85,8 @@
 #define RESORT_OFFRECO_TYPE_TEST3 (2) //テスト３
 #define RESORT_OFFRECO_TYPE_ALL_BIT_OFF (3) //全ビットOFF
 #define RESORT_OFFRECO_TYPE_MAX (4) //最大
+//行きたいお店グループ
+#define RESORT_APPEAL_LV_MIDDLE (1) //中
+#define RESORT_APPEAL_LV_LOW (0) //弱
+#define RESORT_APPEAL_LV_HIGH (2) //強
+#define RESORT_APPEAL_LV_MAX (3) //最大

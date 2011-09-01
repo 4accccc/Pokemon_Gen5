@@ -55,6 +55,14 @@ extern void RESORT_ABSTRUCT_DATA_Exit( RESORT_ABSTRUCT_DATA *p_wk );
 
 extern void RESORT_ABSTRUCT_DATA_Setup( RESORT_ABSTRUCT_DATA *p_wk, void *p_data_adrs, RESORT_DATA_TYPE type, u32 index );
 extern void RESORT_ABSTRUCT_DATA_InitInstance( RESORT_ABSTRUCT_DATA *p_wk );
+
+typedef struct
+{
+  const RESORT_BINARY_CITY *cp_city_data;
+  const RESORT_BINARY_SPOT *cp_spot_data;
+  const RESORT_BINARY_PRESENT *cp_present_data;
+  const RESORT_CITY_DATA *cp_city;
+}RESORT_ABSTRUCT_DATA_INIT;
 extern BOOL RESORT_ABSTRUCT_DATA_IsEmpty( const RESORT_ABSTRUCT_DATA *cp_wk );
 extern u32 RESORT_ABSTRUCT_DATA_GetData( const RESORT_ABSTRUCT_DATA *cp_wk, int param, void *p_ret_adrs );
 extern void RESORT_ABSTRUCT_DATA_SetData( RESORT_ABSTRUCT_DATA *p_wk, int param, u32 data );
@@ -63,6 +71,11 @@ extern void * RESORT_ABSTRUCT_DATA_GetDataAdrs( RESORT_ABSTRUCT_DATA *p_wk );
 extern RESORT_DATA_TYPE RESORT_ABSTRUCT_DATA_GetPeopleType( const RESORT_ABSTRUCT_DATA *cp_wk );
 extern RESORT_DATA_BUFFER_TYPE RESORT_ABSTRUCT_DATA_GetBufferType( const RESORT_ABSTRUCT_DATA *cp_wk );
 extern u32 RESORT_ABSTRUCT_DATA_GetBufferIndex( const RESORT_ABSTRUCT_DATA *cp_wk );
+extern u32 RESORT_ABSTRUCT_DATA_GetRnd( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_RND_ID id, u32 range );
+
+extern u32 RESORT_ABSTRUCT_DATA_DrawLotsWhereToGo( const RESORT_ABSTRUCT_DATA *cp_wk, const RESORT_BINARY_SPOT *cp_spot_data, const RESORT_BINARY_CITY *cp_city_data, const RESORT_CITY_DATA *cp_city );
+
+extern u32 RESORT_ABSTRUCT_DATA_DrawLotsPresentItem( const RESORT_ABSTRUCT_DATA *cp_wk, const RESORT_BINARY_PRESENT *cp_present_data, const RESORT_BINARY_CITY *cp_city_data, const RESORT_CITY_DATA *cp_city );
 
 //=============================================================================
 /**
@@ -104,7 +117,7 @@ extern RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_MANAGER_GetDataByPeopleIndex( RESO
 extern RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_MANAGER_GetEmptyData( RESORT_ABSTRUCT_MANAGER * p_wk,RESORT_DATA_BUFFER_TYPE type );
 
 //ÉfÅ[É^ã§í èàóù
-void RESORT_ABSTRUCT_MANAGER_CheckProfWord( RESORT_ABSTRUCT_MANAGER *p_wk, HEAPID heapID );
+extern void RESORT_ABSTRUCT_DATA_ModifyProfWord( RESORT_ABSTRUCT_DATA *p_wk, HEAPID heapID );
 
 //=============================================================================
 /**

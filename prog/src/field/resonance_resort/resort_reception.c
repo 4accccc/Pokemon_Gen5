@@ -17,6 +17,7 @@
 #include "savedata/gimmickwork.h"
 #include "../gmk_tmp_wk.h"
 #include "arc/fieldmap/zone_id.h" //for ZONE_ID_
+#include "system/prof_word.h"
 
 //script
 #include "../script.h"     //for SCRIPT_CallScript
@@ -85,6 +86,8 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
   //汎用ワーク確保
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID, heapID, sizeof(RESORT_RECEPTION_WORK));
 
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(prof_word) );
+
   NAGI_Printf( "迎賓館setup\n" );
 
   //リゾートシステム作成
@@ -111,7 +114,7 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
     param.p_data_manager = RESORT_SYSTEM_GetDataManager( p_wk->p_sys );
     param.p_abstruct  = RESORT_SYSTEM_GetAbstructManager( p_wk->p_sys );
     param.max     = RECEPTION_PEOPLE_MAX;
-    param.placeID  = RESORT_MAP_ZoneIDToPlaceID( FIELDMAP_GetZoneID(p_fieldmap) );
+    param.placeID  = RESORT_PLACEID_RECEPTION;
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
     RESORT_PEOPLE_SYS_AddAll( p_wk->p_people_sys );
   }
@@ -128,6 +131,8 @@ void RESORT_RECEPTION_End( FIELDMAP_WORK *p_fieldmap )
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
   RESORT_PEOPLE_SYS_Exit( p_wk->p_people_sys );
   RESORT_SYSTEM_Exit( p_wk->p_sys );
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(prof_word) );
 
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);

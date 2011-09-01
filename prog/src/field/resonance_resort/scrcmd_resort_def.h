@@ -20,7 +20,6 @@
 #define RESORT_GET_PARAM_IS_SECREARY_FULL   (1)
 #define RESORT_GET_PARAM_MERGE_FLAG         (2)
 #define RESORT_GET_PARAM_PRESENT_ID         (3)
-#define RESORT_GET_PARAM_PRESENT_IS_ITEM    (5)
 #define RESORT_GET_PARAM_IS_INSTITUTION_EMPTY   (6)
 #define RESORT_GET_PARAM_IS_EVENT           (7)
 #define RESORT_GET_PARAM_TYPE               (8)
@@ -193,3 +192,13 @@
 
 //_RESORT_GET_SERVICE_DATA—p
 #define RESORT_SERVICE_DATA_EFFECT            (0)
+
+//_RESORT_SET_SPOT—p
+#define RESORT_SET_SPOT_SHOP_NONE             (0)
+#define RESORT_SET_SPOT_SHOP_LVUP             (1)
+#define RESORT_SET_SPOT_SHOP_CHANGE           (2)
+#define RESORT_SET_SPOT_SHOP_LVMAX            (3)
+
+#define RESORT_SET_SPOT_CITY_NONE             (0)
+#define RESORT_SET_SPOT_CITY_LVUP             (1)
+#define RESORT_SET_SPOT_CITY_LVMAX            (2)

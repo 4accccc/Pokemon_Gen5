@@ -147,10 +147,10 @@ typedef enum
 #define RESORT_THANKS_LEN         (8)
 
 //リゾート用全受信データの全サイズ
-#define RESORT_RECV_DATA_SIZE     (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND_DATA_SIZE*RESORT_EXTEND_TYPE_MAX+RESORT_INSTITUTION_DATA_SIZE+20)
+#define RESORT_RECV_DATA_SIZE     (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND_DATA_SIZE*RESORT_EXTEND_TYPE_MAX+RESORT_INSTITUTION_DATA_SIZE+24)
 
 //リゾート用代理データの全サイズ
-#define RESORT_PROXY_DATA_SIZE    (RESORT_BASIC1_DATA_SIZE+RESORT_EXTEND6_DATA_SIZE+RESORT_EXTEND7_DATA_SIZE+16)
+#define RESORT_PROXY_DATA_SIZE    (RESORT_BASIC1_DATA_SIZE+RESORT_EXTEND6_DATA_SIZE+RESORT_EXTEND7_DATA_SIZE+20)
 
 //メダルビットのバイト数
 #define RESORT_RECV_MEDAL_BIT_BYTE (11)
@@ -182,6 +182,7 @@ typedef enum
   RESORT_DATA_PARAM_NAME,          //p_ret_adrsから取得
   RESORT_DATA_PARAM_INTRODUCTION, //p_ret_adrsから取得
   RESORT_DATA_PARAM_WANT_SPOT,
+  RESORT_DATA_PARAM_RND_SEED,
 
   //以下RECVとRESIDENT版にある
   //基本データ
@@ -199,7 +200,7 @@ typedef enum
   RESORT_DATA_PARAM_SPECIAL,
   RESORT_DATA_PARAM_WANT_JOB,//なりたい職業（施設ID)
   //生成データ
-  RESORT_DATA_PARAM_PRESENT_ID,
+  RESORT_DATA_PARAM_PRESENT_BIT,
   RESORT_DATA_PARAM_MEET_YEAR,
   RESORT_DATA_PARAM_MEET_MONTH,
   RESORT_DATA_PARAM_MEET_DAY,
@@ -217,6 +218,7 @@ typedef enum
   RESORT_DATA_PARAM_KOSEI,
   RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG,
   RESORT_DATA_PARAM_REPLACE_LOCK,
+  RESORT_DATA_PARAM_INIT_FLAG,  //TODO いらない？
   //拡張データ1
   RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID,
   RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE,
@@ -315,6 +317,25 @@ typedef enum
 } RESORT_RECORD_ID;
 
 //-------------------------------------
+///	乱数使用ID
+//=====================================
+typedef enum
+{
+  RESORT_RND_ID_ITEM_GET,
+  RESORT_RND_ID_ITEM_KIND,
+  RESORT_RND_ID_WHERESPOT_LV,
+  RESORT_RND_ID_WHERESPOT_KIND,
+  RESORT_RND_ID_SHOP_LIST_00,
+  RESORT_RND_ID_SHOP_LIST_01,
+  RESORT_RND_ID_SHOP_LIST_02,
+  RESORT_RND_ID_SHOP_LIST_03,
+  RESORT_RND_ID_SHOP_LIST_04,
+  RESORT_RND_ID_SHOP_LIST_05,
+  RESORT_RND_ID_MAX
+} RESORT_RND_ID;
+
+
+//-------------------------------------
 ///	１…リゾート用全受信データ
 //=====================================
 typedef struct _RESORT_RECV_DATA RESORT_RECV_DATA;
@@ -352,6 +373,7 @@ extern BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk );
 extern u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
 extern void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, u32 data );
 extern BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk );
+extern u32 RESORT_RECV_DATA_GetRnd( const RESORT_RECV_DATA *cp_wk, RESORT_RND_ID id, u32 range );
 
 //-------------------------------------
 ///	２…リゾート用ビーコンパックデータの外部公開
@@ -380,6 +402,8 @@ extern u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DAT
 extern void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_DATA_PARAM param, u32 data );
 extern BOOL RESORT_PROXY_DATA_MergeProxy( RESORT_PROXY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy );
 extern BOOL RESORT_PROXY_DATA_AddProxy( RESORT_PROXY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy );
+
+extern u32 RESORT_PROXY_DATA_GetRnd( const RESORT_PROXY_DATA *cp_wk, RESORT_RND_ID id, u32 range );
 
 //=============================================================================
 /**
@@ -501,7 +525,7 @@ extern void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk );
  *  秘書データ
  */
 //=============================================================================
-#define RESORT_SECRETARY_DATA_SIZE  (RESORT_BASIC1_DATA_SIZE+RESORT_EXTEND6_DATA_SIZE+RESORT_EXTEND7_DATA_SIZE+8)
+#define RESORT_SECRETARY_DATA_SIZE  (RESORT_BASIC1_DATA_SIZE+RESORT_EXTEND6_DATA_SIZE+RESORT_EXTEND7_DATA_SIZE+12)
 
 //-------------------------------------
 ///	秘書データ
@@ -527,6 +551,8 @@ extern u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RE
 extern void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_DATA_PARAM param, u32 data );
 extern void RESORT_SECRETARY_DATA_ConvertRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type );
 extern void RESORT_SECRETARY_DATA_ConvertProxy( RESORT_SECRETARY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, u16 peopleID, u16 placeID, u16 type );
+
+extern u32 RESORT_SECRETARY_DATA_GetRnd( const RESORT_SECRETARY_DATA *cp_wk, RESORT_RND_ID id, u32 range );
 
 //=============================================================================
 /**
@@ -633,9 +659,6 @@ extern void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_P
 extern void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk );
 extern void RESORT_CITY_DATA_AddTrainerID( RESORT_CITY_DATA *p_wk, u32 trainerID );
 extern BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainerID );
-
-extern u32 RESORT_DATA_GetRnd( u32 ofs, u32 max );
-extern u32 RESORT_DATA_GetRndRecv( RESORT_RECV_DATA *p_wk, u32 max );
 
 //=============================================================================
 /**

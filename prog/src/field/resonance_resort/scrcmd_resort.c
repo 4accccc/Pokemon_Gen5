@@ -16,6 +16,7 @@
 #include "../scrcmd.h"
 #include "../gmk_tmp_wk.h"
 #include "../event_name_input.h"
+#include "src/field/ev_time.h"
 
 //アーカイブ
 #include "msg/script/msg_resort_scr.h"
@@ -73,6 +74,20 @@ VMCMD_RESULT EvCmdResortTalkStart( VMHANDLE *p_core, void *p_wk_adrs )
 
   //話し中フラグON
   RESORT_PEOPLE_SetTalkFlag( p_people, TRUE );
+
+  //ペナルティモードならばお店購入フラグを強制的に立てる
+  if( EVTIME_IsPenaltyMode( GAMESYSTEM_GetGameData(p_gamesys) ) )
+  {
+    if( RESORT_PEOPLE_GetPeopleData(p_people,RESORT_PEOPLE_DATA_PARAM_TYPE) == RESORT_PEOPLE_TYPE_RESIDENT )
+    {
+      RESORT_INSTITUTION_DATA *p_institution = RESORT_PEOPLE_GetInstitution( p_people );
+      int i;
+      for( i = RESORT_INSTITUTION_DATA_BIT_SHOP_START; i < RESORT_INSTITUTION_DATA_BIT_SHOP_END; i++ )
+      {
+        RESORT_INSTITUTION_DATA_SetBit( p_institution, i, TRUE );
+      }
+    }
+  }
 
   //フィールドで群集なら停止させる
   if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
@@ -137,6 +152,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
+  RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
 
   switch( param )
   {
@@ -165,10 +181,19 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
     }
     break;
   case RESORT_GET_PARAM_PRESENT_ID:
-    *p_ret_wk = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PRESENT_ID, NULL );
-    break;
-  case RESORT_GET_PARAM_PRESENT_IS_ITEM:
-    *p_ret_wk = (RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PRESENT_ID, NULL ) != RESORT_PEOPLE_PRECENT_ID_BP );
+    {
+      u32 bit = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PRESENT_BIT, NULL );
+      if( bit == FALSE )
+      {
+        *p_ret_wk = RESORT_ABSTRUCT_DATA_DrawLotsPresentItem( p_abstruct, RESORT_SYSTEM_GetBinaryPresent( p_sys ), RESORT_SYSTEM_GetBinaryCity( p_sys ), p_city );
+
+        RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_PRESENT_BIT, TRUE );
+      }
+      else
+      {
+        *p_ret_wk = 0;
+      }
+    }
     break;
   case RESORT_GET_PARAM_IS_INSTITUTION_EMPTY:
     *p_ret_wk = (RESORT_PEOPLE_ALL_DATA_GetResidentCount( p_all_people ) == 0);
@@ -278,7 +303,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
   u16 people_type = RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE );
-  void *p_people_data = RESORT_PEOPLE_GetDataAdrs( p_people );
+  RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
   const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
   WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
 
@@ -312,78 +337,13 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST
         || people_type == RESORT_PEOPLE_TYPE_PROXY );
     {
-      u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, NULL );
-
-      if( data <= resort_go_00 )
+      u32 spot = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, NULL );
+      if( spot == 0 )
       {
-        int i;
-        //街レベルから弱中強グループをランダム選出
-        {
-          SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(p_gamesys) );
-          RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
-          RESORT_CITY_DATA *p_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
-          u32 lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL);
-
-          u32 index;
-          u32 rnd;
-          index = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
-
-          rnd = GFUser_GetPublicRand(100);
-          for( i = 0; i < 3; i++ )
-          {
-            u16 percent = RESORT_BINARY_CITY_GetData( p_city, index, RESORT_BINARY_CITY_PARAM_GROUP_00+i );
-            if( percent > rnd )
-            {
-              break;
-            }
-            else
-            {
-              rnd -= percent;
-            }
-          }
-          GF_ASSERT( i < 3 );
-          i %= 3;
-          NAGI_Printf( "group%d idx%d lv%d\n", i, index, lv );
-        }
-
-        //選ばれたグループから行きたいお店メッセージをランダム選出
-        //グループ内になんこ有るのか探索
-        {
-          int rnd;
-          int j;
-          int cnt = 0;
-          for( j = 0; j < RESORT_BINARY_SPOT_GetMax(p_spot); j++ )
-          {
-            u16 group = RESORT_BINARY_SPOT_GetData( p_spot, j, RESORT_BINARY_SPOT_PARAM_GROUP );
-            if( group == i )
-            {
-              cnt++;
-            }
-          }
-
-          GF_ASSERT( cnt != 0 );
-
-          rnd = GFUser_GetPublicRand(cnt);
-
-          cnt = 0;
-          for( j = 0; j < RESORT_BINARY_SPOT_GetMax(p_spot); j++ )
-          {
-            u16 group = RESORT_BINARY_SPOT_GetData( p_spot, j, RESORT_BINARY_SPOT_PARAM_GROUP );
-            if( group == i )
-            {
-              if( cnt == rnd )
-              {
-                data = RESORT_BINARY_SPOT_GetData( p_spot, j, RESORT_BINARY_SPOT_PARAM_MSG_00 );
-                RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, data );
-                break;
-              }
-              cnt++;
-            }
-          }
-        }
+        spot = RESORT_ABSTRUCT_DATA_DrawLotsWhereToGo( p_abstruct, p_spot, p_city, RESORT_SYSTEM_GetCityData(p_sys) );
+        RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, spot );
       }
-      GF_ASSERT( data != 0 );
-      *p_ret_wk = data;
+      *p_ret_wk = RESORT_BINARY_SPOT_GetData( p_spot, spot, RESORT_BINARY_SPOT_PARAM_MSG_00 );
     }
     break;
   case RESORT_MSGID_APPEAL:
@@ -937,9 +897,9 @@ VMCMD_RESULT EvCmdResortLot( VMHANDLE *p_core, void *p_wk_adrs )
 
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
-  void *p_data_adrs = RESORT_PEOPLE_GetDataAdrs( p_people );
+  RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
 
-  *p_ret_wk = RESORT_DATA_GetRndRecv( p_data_adrs, 11 );
+  *p_ret_wk = RESORT_ABSTRUCT_DATA_GetRnd( p_abstruct, RESORT_RND_ID_SHOP_LIST_00, 11 );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -1262,7 +1222,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *ret_lvup = SCRCMD_GetVMWork( p_core, p_wk );
   u16 *ret_city_lvup = SCRCMD_GetVMWork( p_core, p_wk );
 
-  u32 spot_msg = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, NULL );
+  u32 index = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, NULL );
 
 
   RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, idx );
@@ -1273,25 +1233,17 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   u32 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
   u32 exp;
   int i;
-  u32 index;
 
   //何も起こらないときのメッセージ
   *ret_grade_msg  = resort_sys_08;
-  *ret_lvup       = FALSE;
-  *ret_city_lvup  = FALSE;
+  *ret_lvup       = RESORT_SET_SPOT_SHOP_NONE;
+  *ret_city_lvup  = RESORT_SET_SPOT_CITY_NONE;
 
-  if( !RESORT_BINARY_SPOT_SearchIndex( p_spot, spot_msg, &index ) )
-  {
-    //なかった
-    GF_ASSERT(0);
-    return VMCMD_RESULT_CONTINUE;
-  }
   *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_EFF_MSG );
 
-  //TODO
   if( lv >= RESORT_SHOP_LVMAX )
   {
-    //すでに最大だ！
+    *ret_lvup = RESORT_SET_SPOT_SHOP_LVMAX;
     return VMCMD_RESULT_CONTINUE;
   }
 
@@ -1309,7 +1261,6 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
     switch( type )
     {
     case RESORT_SPOT_TYPE_SHOPTYPE:
-      //TODO
       if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL ) == data )
       {
         is_good = TRUE;
@@ -1361,17 +1312,24 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
       next_exp = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NEXT_EXP );
       if( exp + add_exp >= next_exp )
       {
+        const RESORT_BINARY_SHOP_DATA *cp_new_shop_data;
         u32 shopID;
         lv++;
         exp = 0;
-        *ret_lvup = TRUE;
+        *ret_lvup = RESORT_SET_SPOT_SHOP_LVUP;
         RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, lv );
 
         //レベルアップしたら施設IDを変更
         shopID = RESORT_BINARY_SHOP_SearchShopID( p_shop, p_resident );
         RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
+        cp_new_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
 
         WORDSET_RegisterNumber( p_wordset, 6, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+        if( RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) != RESORT_BINARY_SHOP_DATA_GetData( cp_new_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) )
+        {
+          *ret_lvup = RESORT_SET_SPOT_SHOP_CHANGE;
+        }
       }
       else
       {
@@ -1387,23 +1345,31 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
       lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
       exp = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, NULL );
 
-      WORDSET_RegisterNumber( p_wordset, 7, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-
-      city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
-      next_exp = RESORT_BINARY_CITY_GetData( p_city, city_idx, RESORT_BINARY_CITY_PARAM_EXP );
-      if( exp + add_exp >= next_exp )
+      if( lv < RESORT_BINARY_CITY_GetCityLvMax( p_city ) )
       {
-        lv++;
-        exp = 0;
-        *ret_city_lvup = TRUE;
-        WORDSET_RegisterNumber( p_wordset, 8, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+        WORDSET_RegisterNumber( p_wordset, 7, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+        city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
+        next_exp = RESORT_BINARY_CITY_GetData( p_city, city_idx, RESORT_BINARY_CITY_PARAM_EXP );
+        if( exp + add_exp >= next_exp )
+        {
+          lv++;
+          exp = 0;
+          *ret_city_lvup = RESORT_SET_SPOT_CITY_LVUP;
+          WORDSET_RegisterNumber( p_wordset, 8, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        }
+        else
+        {
+          exp += add_exp;
+        }
+        RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, lv );
+        RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, exp );
       }
       else
       {
-        exp += add_exp;
+        *ret_city_lvup = RESORT_SET_SPOT_CITY_LVMAX;
       }
-      RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, lv );
-      RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, exp );
     }
 
     if( is_good )
@@ -1503,7 +1469,7 @@ VMCMD_RESULT EvCmdResortEndItem( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
-  RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_PRESENT_ID, 0 );
+  RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_PRESENT_BIT, TRUE );
 
   return VMCMD_RESULT_CONTINUE;
 }

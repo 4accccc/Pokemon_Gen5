@@ -17,7 +17,7 @@
 #include "savedata/gimmickwork.h"
 #include "../gmk_tmp_wk.h"
 #include "arc/fieldmap/zone_id.h" //for ZONE_ID_
-
+#include "system/prof_word.h"
 //script
 #include "../script.h"     //for SCRIPT_CallScript
 
@@ -173,6 +173,8 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
   //汎用ワーク確保
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID, heapID, sizeof(RESORT_FIELD_WORK));
 
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(prof_word) );
+
   //リゾートシステム作成
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
@@ -226,6 +228,8 @@ void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap )
   RESORT_NPC_SYS_Exit( p_wk->p_npc_sys );
   RESORT_FIELD_PEOPLE_Exit( p_wk->p_people_sys );
   RESORT_SYSTEM_Exit( p_wk->p_sys );
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(prof_word) );
 
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);

@@ -77,7 +77,6 @@ ev_resort:
 /**************************************************************/
 EVENT_START ev_resort_tourist
 {
-  DEFINE_LOCAL LWK_PRESENT_IS_ITEM
   DEFINE_LOCAL LWK_PRESENT_ID
 
 	_TALK_OBJ_START()
@@ -99,7 +98,6 @@ EVENT_START ev_resort_tourist
 	_BALLOONWIN_CLOSE()
 
   //アイテム取得イベント
-  _RESORT_GET_DATA( RESORT_GET_PARAM_PRESENT_IS_ITEM, LWK_PRESENT_IS_ITEM )
   _RESORT_GET_DATA( RESORT_GET_PARAM_PRESENT_ID, LWK_PRESENT_ID )
 
   IF $LWK_PRESENT_ID != 0 THEN
@@ -110,6 +108,8 @@ EVENT_START ev_resort_tourist
     //アイテムをもらった！
   	_ITEM_EVENT_KEYWAIT( LWK_PRESENT_ID, 1 )
     _RESORT_END_ITEM()
+
+    _ADD_RECORD( RECID_RESORT_PRESENT_CNT, 1 )
   ENDIF
 
   //訪問してきました
@@ -223,6 +223,9 @@ sub_tourist_invitation:
     //一人消す
     _RESORT_DELETE_PEOPLE( RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX )
   ENDIF
+
+  //案内招待カウント
+   _ADD_RECORD( RECID_RESORT_SHOP_MAKE_CNT, 1 )
 
   //喜び文を表示
   _RESORT_GET_MSGID( RESORT_TOURIST_JOY_MSGID, LWK_MSGID )
@@ -423,6 +426,8 @@ sub_tourist_spot:
 
   IF $LWK_LIST_RET_TYPE == RESORT_LIST_CANCEL THEN
   ELSE
+    //案内カウント
+    _ADD_RECORD( RECID_RESORT_GUID_CNT, 1 )
 
     //いってきます
     _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
@@ -446,27 +451,7 @@ sub_tourist_spot:
 	  //カメラ切り替え
 		_CAMERA_START()		//カメラ操作開始
 		_CAMERA_PURGE()		//カメラのバインドを解く
-	
-	  SWITCH $LWK_INDEX
-	  CASE 0 THEN
-		  _CAMERA_MOVE( 37,48896,888832,1564672,389120,4128768,1 )
-	  CASE 1 THEN
-		  _CAMERA_MOVE( 165,15872,888832,458752,348160,3751930,1 )
-	  CASE 2 THEN
-		  _CAMERA_MOVE( 1061,48896,888832,1601536,315392,3227648,1 )
-	  CASE 3 THEN
-		  _CAMERA_MOVE( 805,16384,888832,753664,335872,2830336,1 )
-	  CASE 4 THEN
-		  _CAMERA_MOVE( 677,48768,888832,1179648,286720,2269184,1 )
-	  CASE 5 THEN
-		  _CAMERA_MOVE( 933,17152,888832,667648,344064,1921024,1 )
-	  CASE 6 THEN
-		  _CAMERA_MOVE( 165,49152,888832,1613824,294912,1363968,1 )
-	  CASE 7 THEN
-		  _CAMERA_MOVE( 64805,16640,888832,671744,311296,966656,1 )
-	  ENDSWITCH
-		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	
+    _CALL sub_setspot_camera
     _BLACK_IN()
     _DISP_FADE_END_CHECK()
 
@@ -482,24 +467,59 @@ sub_tourist_spot:
       _SYSWIN_MSG( LWK_MSGID2, POS_DOWN )
       //満足した
       _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
-      //施設の経験値アップ
-      _SYSWIN_MSG( resort_sys_16, POS_DOWN )
 
-      //施設レベルアップ
-      IF $LWK_RET == TRUE THEN
-        _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 0 )
-        _SYSWIN_MSG( resort_sys_13, POS_DOWN )
+
+      //LVMAXの分岐
+      IF $LWK_RET != RESORT_SET_SPOT_SHOP_LVMAX THEN
+
+        //施設の経験値アップ
+        _SYSWIN_MSG( resort_sys_16, POS_DOWN )
+
+        //施設レベルアップ
+        SWITCH $LWK_RET
+        CASE RESORT_SET_SPOT_SHOP_LVUP THEN
+          _SYSWIN_MSG( resort_sys_13, POS_DOWN )
+
+        CASE RESORT_SET_SPOT_SHOP_CHANGE THEN
+          _SYSWIN_MSG( resort_sys_13, POS_DOWN )
+
+          _SYSWIN_CLOSE()
+          //変化した店を見せるためにフィールド開き直し
+          //フェードアウト
+	        _MAP_FADE_BLACK_OUT_SLOW()
+	        _MAP_FADE_END_CHECK()
+	        _FIELD_CLOSE()
+	        _FIELD_OPEN()
+		      _CAMERA_START()		//カメラ操作開始
+		      _CAMERA_PURGE()		//カメラのバインドを解く
+          _CALL sub_setspot_camera
+	        _MAP_FADE_BLACK_IN_SLOW()
+	        _MAP_FADE_END_CHECK()
+
+          _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 0 )
+          //○○から○○になった！
+          _SYSWIN_MSG( resort_sys_20, POS_DOWN )
+        ENDSWITCH
       ENDIF
+
+
+      _SYSWIN_CLOSE()
+      //フェードアウト
+	    _BLACK_OUT()
+	    _DISP_FADE_END_CHECK()
+	    _CAMERA_MOVE( 2853,0,262144,1015808,155648,4632576,1 )
+ 	    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+      _BLACK_IN()
+      _DISP_FADE_END_CHECK()
 
       //街の経験値アップ
       _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
       _SYSWIN_MSG( resort_sys_17, POS_DOWN )
       //街レベルアップ
-      IF $LWK_RET2 == TRUE THEN
+      IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP THEN
         _RESORT_SET_WORD( RESORT_WORD_CITY_RANK, RESORT_WORD_PARAM_NONE, 0, 2 )
         _SYSWIN_MSG( resort_sys_18, POS_DOWN )
       ENDIF
-
     ENDIF
 
     _SYSWIN_CLOSE()
@@ -522,6 +542,33 @@ sub_tourist_spot:
     //選択肢終了
     $LWK_MENU_LOOP = FALSE
   ENDIF
+}
+_RET
+
+//==============================================================
+//サブルーチン：案内用カメラセット
+//==============================================================
+sub_setspot_camera:
+{
+	  SWITCH $LWK_LIST_RET_IDX
+	  CASE 0 THEN
+		  _CAMERA_MOVE( 37,48896,888832,1564672,389120,4128768,1 )
+	  CASE 1 THEN
+		  _CAMERA_MOVE( 165,15872,888832,458752,348160,3751930,1 )
+	  CASE 2 THEN
+		  _CAMERA_MOVE( 1061,48896,888832,1601536,315392,3227648,1 )
+	  CASE 3 THEN
+		  _CAMERA_MOVE( 805,16384,888832,753664,335872,2830336,1 )
+	  CASE 4 THEN
+		  _CAMERA_MOVE( 677,48768,888832,1179648,286720,2269184,1 )
+	  CASE 5 THEN
+		  _CAMERA_MOVE( 933,17152,888832,667648,344064,1921024,1 )
+	  CASE 6 THEN
+		  _CAMERA_MOVE( 165,49152,888832,1613824,294912,1363968,1 )
+	  CASE 7 THEN
+		  _CAMERA_MOVE( 64805,16640,888832,671744,311296,966656,1 )
+	  ENDSWITCH
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 }
 _RET
 
@@ -550,7 +597,6 @@ _RET
 /**************************************************************/
 EVENT_START ev_resort_proxy
 {
-  DEFINE_LOCAL LWK_PRESENT_IS_ITEM
   DEFINE_LOCAL LWK_PRESENT_ID
 
 	_TALK_OBJ_START()
@@ -566,7 +612,6 @@ EVENT_START ev_resort_proxy
 	_BALLOONWIN_CLOSE()
 
   //アイテム取得イベント
-  _RESORT_GET_DATA( RESORT_GET_PARAM_PRESENT_IS_ITEM, LWK_PRESENT_IS_ITEM )
   _RESORT_GET_DATA( RESORT_GET_PARAM_PRESENT_ID, LWK_PRESENT_ID )
 
   IF $LWK_PRESENT_ID != 0 THEN

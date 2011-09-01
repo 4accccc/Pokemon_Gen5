@@ -258,7 +258,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     end
   end
 
-    header.write( "#define RESORT_SHOP_ID_MAX (#{row-SHOP_ROW_START+1})\n" )
+  header.write( "#define RESORT_SHOP_ID_MAX (#{row-SHOP_ROW_START+1})\n" )
 
   #ƒwƒbƒ_‚É‘‚«‚±‚İ
   lv_max_array.each {|num|

@@ -236,6 +236,20 @@ u32 RESORT_BINARY_CITY_GetIndexByCityLv( const RESORT_BINARY_CITY *cp_wk, u32 lv
   GF_ASSERT(0);
   return 0;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街の最大レベル
+ *
+ *	@param	const RESORT_BINARY_CITY *cp_wk   街データ
+ *
+ *	@return 最大LV
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_BINARY_CITY_GetCityLvMax( const RESORT_BINARY_CITY *cp_wk )
+{
+  u32 max = RESORT_BINARY_CITY_GetMax( cp_wk );
+  return RESORT_BINARY_CITY_GetData(cp_wk,max-1,RESORT_BINARY_CITY_PARAM_LV_HIGH );
+}
 
 //=============================================================================
 /**
