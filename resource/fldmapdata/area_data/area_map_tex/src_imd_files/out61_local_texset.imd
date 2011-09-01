@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg01" host="W00300" date="2011-08-30T11:51:03" source="out61_local_texset.mb"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-08-31T21:07:01" source="out61_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg01" host="W00300" date="2011-08-30T11:51:03" source="out61_local_texset.mb"/>
+<original_create user="swan_3dcg01" host="W00300" date="2011-08-31T21:07:01" source="out61_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -378,16 +378,14 @@
 	</tex_image>
 	<tex_image index="11" name="c15_futi01"
 		width="16" height="8" original_width="16" original_height="8"
-		format="palette16"
+		format="palette4"
 		color0_mode="color"
 		palette_name="c15_futi01_pl"
 		path="C:/home/swan_data3d/field/out61/chip/tex/c15_futi01.tga"
 	>
-		<bitmap size="32">
-			3333 3333 3333 3333 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			3333 3333 3333 3333 2222 2222 2222 2222
-			1111 1111 1111 1111 4444 4444 4444 4444
+		<bitmap size="16">
+			aaaa aaaa 0000 0000 5555 5555 5555 5555
+			5555 5555 5555 5555 0000 0000 aaaa aaaa
 		</bitmap>
 	</tex_image>
 	<tex_image index="12" name="c15_gate_01"
@@ -871,8 +869,8 @@
 		path="C:/home/swan_data3d/field/out61/chip/tex/c15_light02.tga"
 	>
 		<bitmap size="16">
-			1111 1111 1111 1111 1111 1111 0000 0000
-			4444 4444 3333 3333 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 3333 3333
+			4444 4444 1111 1111 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="22" name="c15_line01"
@@ -1700,8 +1698,8 @@
 		7c0f 747e 5455 4821 7c84 7ba3 56a2 0fc3
 		0a62 0bde 0ad6 2dcf 0c7e 0854 6f7b 7fff
 	</tex_palette>
-	<tex_palette index="11" name="c15_futi01_pl" color_size="8">
-		56f7 4274 3e32 4eb6 52d7 7fff 7fff 7fff
+	<tex_palette index="11" name="c15_futi01_pl" color_size="4">
+		56f7 5f39 4eb6 7fff
 	</tex_palette>
 	<tex_palette index="12" name="c15_gate_01_pl" color_size="16">
 		63ff 539d 3f1a 3f1b 273f 539f 1ade 3255
@@ -1737,7 +1735,7 @@
 		1f1f 1259 16bd 1119 153d 1d7f 4210 7fff
 	</tex_palette>
 	<tex_palette index="21" name="c15_light02_pl" color_size="8">
-		67ff 73ff 2719 2a53 53bf 7fff 7fff 7fff
+		2719 2a53 67df 5bbf 4f9f 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="22" name="c15_line01_pl" color_size="8">
 		03e0 233a 2af8 2e95 2e53 7fff 7fff 7fff
