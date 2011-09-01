@@ -1407,11 +1407,6 @@ DEP_TEXSET_IMD_OUTDOOR033 = \
 	$(SRCDIR)/door01.imd \
 	$(SRCDIR)/c0101.imd \
 	$(SRCDIR)/thouse_01.imd \
-	$(SRCDIR)/tt_house01.imd \
-	$(SRCDIR)/tt_train01.imd \
-	$(SRCDIR)/tt_train02.imd \
-	$(SRCDIR)/tt_table01.imd \
-	$(SRCDIR)/tt_train03.imd \
 	$(SRCDIR)/cart_01.imd \
 	$(SRCDIR)/sign01.imd \
 	$(SRCDIR)/sign02.imd \
@@ -1422,14 +1417,6 @@ DEP_TEXSET_IMD_OUTDOOR033 = \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
 	$(SRCDIR)/outwarp03.imd \
-	$(SRCDIR)/tt_train04.imd \
-	$(SRCDIR)/tt_train05.imd \
-	$(SRCDIR)/tt_train06.imd \
-	$(SRCDIR)/tt_train07.imd \
-	$(SRCDIR)/tt_train08.imd \
-	$(SRCDIR)/tt_train09.imd \
-	$(SRCDIR)/tt_train10.imd \
-	$(SRCDIR)/tt_train11.imd \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
@@ -1453,6 +1440,11 @@ DEP_TEXSET_IMD_OUTDOOR034 = \
 	$(SRCDIR)/door01.imd \
 	$(SRCDIR)/c0101.imd \
 	$(SRCDIR)/thouse_01.imd \
+	$(SRCDIR)/tt_house01.imd \
+	$(SRCDIR)/tt_train01.imd \
+	$(SRCDIR)/tt_train02.imd \
+	$(SRCDIR)/tt_table01.imd \
+	$(SRCDIR)/tt_train03.imd \
 	$(SRCDIR)/cart_01.imd \
 	$(SRCDIR)/sign01.imd \
 	$(SRCDIR)/sign02.imd \
@@ -1463,6 +1455,14 @@ DEP_TEXSET_IMD_OUTDOOR034 = \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
 	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/tt_train04.imd \
+	$(SRCDIR)/tt_train05.imd \
+	$(SRCDIR)/tt_train06.imd \
+	$(SRCDIR)/tt_train07.imd \
+	$(SRCDIR)/tt_train08.imd \
+	$(SRCDIR)/tt_train09.imd \
+	$(SRCDIR)/tt_train10.imd \
+	$(SRCDIR)/tt_train11.imd \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
@@ -2551,7 +2551,8 @@ DEP_TEXSET_IMD_OUTDOOR061 = \
 	$(SRCDIR)/c15_wood_01.imd \
 	$(SRCDIR)/c15_whouse_01.imd \
 	$(SRCDIR)/c15_trailer_01.imd \
-	$(SRCDIR)/c15_obj_01.imd
+	$(SRCDIR)/c15_obj_01.imd \
+	$(SRCDIR)/c15_gate_02.imd
 
 texset/outdoor061.imd: $(DEP_TEXSET_IMD_OUTDOOR061) texset/tmp/outdoor061.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor061.list
