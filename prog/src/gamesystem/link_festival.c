@@ -413,6 +413,9 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   }
   FMISSION_SAVE_IncMissionClearNum( f_save ); //ミッション達成回数インクリメント
 
+  //ミッションレベルアップ
+  FMISSION_SAVE_SetMissionStatusClearLevel( f_save, wk->m_beacon->m_id, wk->m_beacon->m_level );
+
   //スコア依存型のハイスコアは成功時のみしか更新されないのでここで
   if( wk->m_beacon->end_type == FMISSION_ENDTYPE_SCORE ){
     FMISSION_SAVE_UpdateMissionStatusHighScoreTime( f_save, wk->m_beacon->m_id, wk->m_beacon->life );
