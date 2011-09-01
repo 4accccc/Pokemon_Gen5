@@ -1558,8 +1558,6 @@ static void Resort_Crowd_People_Wk_InitInterest( RESORT_CROWD_PEOPLE_WK *p_wk, c
       const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( cp_shop, want_job );
       GF_ASSERT( want_job < RESORT_BINARY_SHOP_DATA_GetMax(cp_shop) );
       want_shop_type  = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
-
-      want_shop_type = RESORT_RESIDENT_TYPE_MARKET;
     }
 
     {
