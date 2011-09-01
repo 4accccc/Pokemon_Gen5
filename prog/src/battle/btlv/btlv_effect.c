@@ -198,6 +198,26 @@ static  void  camera_work_check( void );
 void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
 #endif
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ポケウッドモード取得
+ *       （overlay_BTTTLEが無い時に呼び出すとハングするので、NULL時は呼ばない）
+ *
+ * @param   mainModule		
+ *
+ * @retval  int		
+ */
+//----------------------------------------------------------------------------------
+static int BTLV_EFFECT_GetPokewoodMode( const BTL_MAIN_MODULE *mainModule )
+{
+  if( mainModule!=NULL ){
+    return BTLV_EFFECT_GetPokewoodMode( mainModule );
+  }
+  
+  return BTL_POKEWOOD_NONE;
+}
+
+
 //============================================================================================
 /**
  * @brief システム初期化用のセットアップパラメータ生成
@@ -216,7 +236,7 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, BtlCompetito
   besp->multi       = multi;
   besp->scu         = scu;
   besp->mainModule  = mainModule;
-  besp->pokewood        = BTL_MAIN_GetPokewoodMode( mainModule );
+  besp->pokewood    = BTLV_EFFECT_GetPokewoodMode( mainModule );
   if( besp->pokewood!=BTL_POKEWOOD_NONE ){
     POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario(mainModule);
     besp->pokewood_field     = senario->battle_field;
@@ -307,7 +327,8 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_OBJ, 0x1e0, heapID );
 
   bew->bmw  = BTLV_MCSS_Init( besp->rule, bew->tcb_sys, heapID );
-  if(BTL_MAIN_GetPokewoodMode(besp->mainModule)==BTL_POKEWOOD_SHOW){
+
+  if(BTLV_EFFECT_GetPokewoodMode(besp->mainModule)==BTL_POKEWOOD_SHOW){
     BTLV_MCSS_SetGlobalShadowEnable( bew->bmw, FALSE );
   }else{
     BTLV_MCSS_SetGlobalShadowEnable( bew->bmw, TRUE );
@@ -358,13 +379,13 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   }
 
   bew->bcw  = BTLV_CAMERA_Init( bew->tcb_sys, heapID );
-  bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID, BTL_MAIN_GetPokewoodMode(bew->besp.mainModule) );
+  bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID, BTLV_EFFECT_GetPokewoodMode(bew->besp.mainModule) );
   bew->bgw  = BTLV_GAUGE_Init( fontHandle, besp->pokewood, heapID );
   bew->btw  = BTLV_TIMER_Init( heapID );
   bew->bbw  = BTLV_BG_Init( bew->tcb_sys, heapID );
   
   // ポケウッド撮影時メーターの初期状態
-  if(BTL_MAIN_GetPokewoodMode(bew->besp.mainModule)==BTL_POKEWOOD_REC){
+  if(BTLV_EFFECT_GetPokewoodMode(bew->besp.mainModule)==BTL_POKEWOOD_REC){
     POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario((BTL_MAIN_MODULE*)bew->besp.mainModule);
     BTLV_CLACT_SetRecMeterAnime( bew->bclw, senario->turn_max, 0 );
   }
