@@ -66,4 +66,104 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d25r0601_picture_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょうぞうがが　かかっていたあとに
+なにか　もじのような　ものが……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:20:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:12:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>肖像画が　かかっていたあとに
+なにか　文字のような　ものが……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:20:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:12:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝3～4、GRIDZ＝15</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:12:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>絵画</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d25r0301_picture_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひっかききずの　むこうに
+べつの　えが　かかれている……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:27:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:26:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひっかき傷の　向こうに
+別の　絵が　描かれている……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:27:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:26:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝28～29、GRIDZ＝19</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:26:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>絵画</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:26:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

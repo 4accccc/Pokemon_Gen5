@@ -66,4 +66,102 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d25r0301_picture_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょうぞうがが　ずれおちている……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:21:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:20:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>肖像画が　ズレ落ちている……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:22:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:20:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝3～4、GRIDZ＝15</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:20:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>絵画</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:20:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d25r0301_picture_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いつのまにか
+えが　さかさまに　なっている……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:25:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:25:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いつのまにか
+絵が　さかさまに　なっている……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:26:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:25:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝28～29、GRIDZ＝19</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:25:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>絵画</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:25:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

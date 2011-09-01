@@ -2,14 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_d25r0101_picture_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>いつ　かかれたかも
+さだか　ではない　しょうぞうが……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T05:31:48" />
+				Time="2011-09-01T10:19:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>いつ　描かれたかも
+定かではない　肖像画……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T05:31:48" />
+				Time="2011-09-01T10:19:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +30,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>BGメッセージ
+・GRIDX＝3～4、GRIDZ＝15</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T05:31:48" />
+				Time="2011-09-01T09:42:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>絵画</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T05:31:48" />
+				Time="2011-09-01T09:42:28" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -49,7 +52,57 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d25r0101_picture_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よくみると　むすうの
+ひっかききずが　ある……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:24:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:23:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よくみると　無数の
+ひっかき傷が　ある……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:25:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:23:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝28～29、GRIDZ＝19</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:23:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>絵画</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:23:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

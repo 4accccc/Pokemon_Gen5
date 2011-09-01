@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とおく　シンオウちほう　に
+			<Text>遠く　シンオウ地方に
 クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+みかづきの　ように　輝く
+はねは　悪い　夢を　消すなり</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -68,12 +68,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>とおく　シンオウちほう　に
-クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+ダークライと　いう　ポケモンあり▼
+じぶんを　まもるため　まわりに
+わるい　ゆめを　みせるなり</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -81,13 +81,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とおく　シンオウちほう　に
-クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+			<Text>遠く　シンオウ地方に
+ダークライと　いう　ポケモンあり▼
+自分を　守るため　周りに
+悪い　夢を　みせるなり</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -121,13 +121,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とおく　シンオウちほう　に
-クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+			<Text>スリープという　ポケモンあり▼
+ねむらせては　ユメを　たべるが
+わるい　ユメばかり　たべてると▽
+おなかを　こわすことが　あるらしい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -135,13 +135,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とおく　シンオウちほう　に
-クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+			<Text>スリープという　ポケモンあり▼
+ねむらせては　ユメを　たべるが
+悪い　ユメばかり　食べてると▽
+おなかを　こわすことが　あるらしい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -175,13 +175,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とおく　シンオウちほう　に
-クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+			<Text>スリーパーという　ポケモンあり▼
+ふりこのようなものを　もちあるき
+こどもに　さいみんじゅつを　かけて▽
+どこかへ　つれさる　じけんが　あった</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -189,13 +189,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とおく　シンオウちほう　に
-クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+			<Text>スリーパーという　ポケモンあり▼
+ふりこのようなものを　持ち歩き
+こどもに　さいみんじゅつを　かけて▽
+どこかへ　連れ去る　事件が　あった</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -229,13 +229,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とおく　シンオウちほう　に
-クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+			<Text>ポケモンのわざ　ゆめくい▼
+ねている　あいての　ゆめを
+たべて　こうげきする▼
+ダメージの　はんぶん
+ＨＰを　かいふくする</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -243,13 +244,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とおく　シンオウちほう　に
-クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+			<Text>ポケモンの技　ゆめくい▼
+ねている　相手の　ゆめを
+食べて　攻撃する▼
+ダメージの　半分　ＨＰを　回復する</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -283,13 +284,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とおく　シンオウちほう　に
-クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+			<Text>ポケモンのとくせい　よちむ▼
+あいてが　もっている
+わざを　ひとつ　よみとれる▼
+いりょくの　たかい　わざを
+ゆうせんして　よみとる</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -297,13 +299,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とおく　シンオウちほう　に
-クレセリアと　いう　ポケモンあり▼
-みかづきの　ように　かがやく
-はねは　わるい　ゆめを　けすなり</Text>
+			<Text>ポケモンの特性　よちむ▼
+相手が　持っている
+技を　ひとつ　読み取れる▼
+威力の　高い　技を
+優先して　読み取る</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T07:01:00" />
+				Time="2011-09-01T10:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -323,6 +326,56 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-17T06:41:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d25r0401_book7_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たかい　たな　いっぱいに
+がいこくの　ほんが　おさめられている</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:09:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:09:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>高い棚　一杯に
+外国の　本が　収納されている</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:09:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:09:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝3～29、GRIDZ＝6</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:09:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>本棚</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T10:09:01" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
