@@ -726,7 +726,11 @@
 #define	TRID_KARATE_25   ( 713 ) 
 #define	TRID_KARATE_26   ( 714 ) 
 #define	TRID_DOCTOR_10   ( 715 ) 
-#define TRID_MAX  ( 716 )
+#define	TRID_MOUNT_30   ( 716 ) 
+#define	TRID_MOUNT_31   ( 717 ) 
+#define	TRID_ELITEM_44   ( 718 ) 
+#define	TRID_ELITEW_43   ( 719 ) 
+#define TRID_MAX  ( 720 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
