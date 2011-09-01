@@ -1466,13 +1466,13 @@
 	</row>
 
 	<row id="veteranw_3_03">
-		<language name="JPN" width="216">ナバウル</language>
-		<language name="JPN_KANJI" width="216">ナバウル</language>
+		<language name="JPN" width="216">ナディア</language>
+		<language name="JPN_KANJI" width="216">ナディア</language>
 	</row>
 
 	<row id="veteranm_4_03">
-		<language name="JPN" width="216">ナディア</language>
-		<language name="JPN_KANJI" width="216">ナディア</language>
+		<language name="JPN" width="216">ナバウル</language>
+		<language name="JPN_KANJI" width="216">ナバウル</language>
 	</row>
 
 	<row id="elitem_2_01">
@@ -2581,13 +2581,13 @@
 	</row>
 
 	<row id="veteranw_09">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">アサヒ</language>
+		<language name="JPN_KANJI" width="216">アサヒ</language>
 	</row>
 
 	<row id="veteranm_12">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">シグレ</language>
+		<language name="JPN_KANJI" width="216">シグレ</language>
 	</row>
 
 	<row id="backpackerm_24">
@@ -3921,6 +3921,106 @@
 	</row>
 
 	<row id="rangerw_29">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="childcare_10">
+		<language name="JPN" width="216">ふつう</language>
+		<language name="JPN_KANJI" width="216">ふつう</language>
+	</row>
+
+	<row id="gentle_09">
+		<language name="JPN" width="216">おかねもち</language>
+		<language name="JPN_KANJI" width="216">おかねもち</language>
+	</row>
+
+	<row id="backpackerm_29">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="backpackerm_30">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="backpackerw_24">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="backpackerw_25">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="rangerm_30">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="rangerw_30">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="espm_15">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="espw_14">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="nurse_03">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="doctor_08">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="doctor_09">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="nurse_04">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="mount_29">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="battleg_23">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="battleg_24">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="karate_25">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="karate_26">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="doctor_10">
 		<language name="JPN" width="216">●</language>
 		<language name="JPN_KANJI" width="216">●</language>
 	</row>

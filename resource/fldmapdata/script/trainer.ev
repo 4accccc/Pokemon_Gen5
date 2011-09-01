@@ -1,6 +1,6 @@
 //======================================================================
 // trainer.ev
-// ../../../prog/include/tr_tool/trno_def.hを元にコンバートしています
+// ../../trdata/trno_def.hを元にコンバートしています
 //  ●コンバート実行
 //    trainer(.bat)
 //  ●更新されるファイル
@@ -711,6 +711,26 @@ _EVENT_DATA ev_TRID_BACKPACKERW_23
 _EVENT_DATA ev_TRID_VETERANM_21
 _EVENT_DATA ev_TRID_RANGERM_29
 _EVENT_DATA ev_TRID_RANGERW_29
+_EVENT_DATA ev_TRID_CHILDCARE_10
+_EVENT_DATA ev_TRID_GENTLE_09
+_EVENT_DATA ev_TRID_BACKPACKERM_29
+_EVENT_DATA ev_TRID_BACKPACKERM_30
+_EVENT_DATA ev_TRID_BACKPACKERW_24
+_EVENT_DATA ev_TRID_BACKPACKERW_25
+_EVENT_DATA ev_TRID_RANGERM_30
+_EVENT_DATA ev_TRID_RANGERW_30
+_EVENT_DATA ev_TRID_ESPM_15
+_EVENT_DATA ev_TRID_ESPW_14
+_EVENT_DATA ev_TRID_NURSE_03
+_EVENT_DATA ev_TRID_DOCTOR_08
+_EVENT_DATA ev_TRID_DOCTOR_09
+_EVENT_DATA ev_TRID_NURSE_04
+_EVENT_DATA ev_TRID_MOUNT_29
+_EVENT_DATA ev_TRID_BATTLEG_23
+_EVENT_DATA ev_TRID_BATTLEG_24
+_EVENT_DATA ev_TRID_KARATE_25
+_EVENT_DATA ev_TRID_KARATE_26
+_EVENT_DATA ev_TRID_DOCTOR_10
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1412,10 +1432,30 @@ ev_TRID_BACKPACKERW_23:
 ev_TRID_VETERANM_21:
 ev_TRID_RANGERM_29:
 ev_TRID_RANGERW_29:
+ev_TRID_CHILDCARE_10:
+ev_TRID_GENTLE_09:
+ev_TRID_BACKPACKERM_29:
+ev_TRID_BACKPACKERM_30:
+ev_TRID_BACKPACKERW_24:
+ev_TRID_BACKPACKERW_25:
+ev_TRID_RANGERM_30:
+ev_TRID_RANGERW_30:
+ev_TRID_ESPM_15:
+ev_TRID_ESPW_14:
+ev_TRID_NURSE_03:
+ev_TRID_DOCTOR_08:
+ev_TRID_DOCTOR_09:
+ev_TRID_NURSE_04:
+ev_TRID_MOUNT_29:
+ev_TRID_BATTLEG_23:
+ev_TRID_BATTLEG_24:
+ev_TRID_KARATE_25:
+ev_TRID_KARATE_26:
+ev_TRID_DOCTOR_10:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
-// scr_trainer/trainer_base.ev
+// ./scr_trainer/trainer_base.ev
 //----------------------------------------------------------------------
 
   DEFINE_LOCAL  LWK_TRAINERID
