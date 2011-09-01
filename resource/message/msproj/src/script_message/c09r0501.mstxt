@@ -29,14 +29,17 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・posイベント（GRIDX＝、GRIDZ＝）
-　椅子から降りて待機、その語の話しかけは
+・posイベント（GRIDX＝15～17、GRIDZ＝43）
+　椅子から降りて待機
+・主人公、一歩前に移動し
+　フリームーブ状態に
+・その後の話しかけは
 　初回→swchampion_02
 　2回目以降→swchampion_03
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T06:25:54" />
+				Time="2011-09-01T06:36:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -65,10 +68,10 @@
 おたがい　わかりあえるもの！▼
 じゃあ　いくよ▼
 ポケモンリーグ　チャンピオン
-アイリス！　あなたに　かちます！！</Text>
+アイリス！　あなたに　かちます！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T06:37:02" />
+				Time="2011-09-01T06:37:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -89,10 +92,10 @@
 お互い　わかりあえるもの！▼
 じゃあ　いくよ▼
 ポケモンリーグ　チャンピオン
-アイリス！　あなたに　勝ちます！！</Text>
+アイリス！　あなたに　勝ちます！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T06:38:01" />
+				Time="2011-09-01T06:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -131,10 +134,10 @@
 もっともっと　つよくなれるし
 おたがい　わかりあえるもの！▼
 では！　ポケモンリーグ　チャンピオン
-アイリス！　あなたに　かちます！！</Text>
+アイリス！　あなたに　かちます！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T06:24:02" />
+				Time="2011-09-01T06:37:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -151,10 +154,10 @@
 もっともっと　強くなれるし
 お互い　わかりあえるもの！▼
 では！　ポケモンリーグ　チャンピオン
-アイリス！　あなたに　勝ちます！！</Text>
+アイリス！　あなたに　勝ちます！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T06:41:58" />
+				Time="2011-09-01T06:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -243,6 +246,52 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-24T10:18:30" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0501_swchampion_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ええー！
+どこ　いくの！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:38:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:38:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ええー！
+どこ　行くの！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:38:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:38:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ストッパー処理
+・posイベント（GRIDX＝15～17、GRIDZ＝43）
+　メッセージ表示後、一歩上に移動</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:39:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWCHAMPION
+チャンピオン・アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:38:07" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
