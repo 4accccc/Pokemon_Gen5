@@ -150,15 +150,23 @@ sub_wheel_talk_swan:
   _DEMO_FADEIN_BLACK_CALL()
 	_END_EVENT_BGM()  //BGM戻す
 
-  // LCC隠しキャラなら
-  IF $WK_OTHER_AMUSEMENT_PARTNER == SCR_AMUSEMENT_PARTNER_LCC THEN
-    _GET_ZENKOKU_ZUKAN_FLAG( SCWK_ANSWER )
-    // 全国図鑑を持っている
-    IF $SCWK_ANSWER == TRUE THEN
-      // 交換
-      _CALL sub_wheel_trade
+
+  {
+    DEFINE_LOCAL lwk_date
+
+    // デートが何回目か
+    _PERSON_STATE_CHECK_SECRET_DATE( lwk_date )
+
+    // LCC隠しキャラなら
+    IF $WK_OTHER_AMUSEMENT_PARTNER == SCR_AMUSEMENT_PARTNER_LCC THEN
+      _GET_ZENKOKU_ZUKAN_FLAG( SCWK_ANSWER )
+      // 全国図鑑を持っている かつ デートが2回目以降
+      IF $SCWK_ANSWER == TRUE && $lwk_date == 2 THEN
+        // 交換
+        _CALL sub_wheel_trade
+      ENDIF
     ENDIF
-  ENDIF
+  }
 
   // お別れメッセージ
   _WHEEL_NPC_MSG( msg_wheel_rival_02, lwk_npc_id, lwk_2nd_f )  
@@ -260,6 +268,10 @@ sub_wheel_trade:
         IF $WK_OTHER_LCC_TRADE_CNT >= 12 THEN
            $WK_OTHER_LCC_TRADE_CNT = 0
         ENDIF
+
+        // 交換完了フラグを設定
+        _PERSON_STATE_SET_TRADE_FLAG()
+
 			  //==================================//
 
         // ここで終了
