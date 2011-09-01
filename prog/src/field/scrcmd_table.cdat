@@ -1084,6 +1084,9 @@
   // アイテム関連
   DEF_CMD( EvCmdUseSprayContinue, EV_SEQ_USE_SPRAY_CONTINUE )
 
+  // 人物状態
+  DEF_CMD( EvCmdPersonState_SetTradeFlag, EV_SEQ_PERSON_SET_TRADE_FLAG )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

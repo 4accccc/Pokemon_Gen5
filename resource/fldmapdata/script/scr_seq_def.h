@@ -12464,6 +12464,19 @@
   .short EV_SEQ_PERSON_SET_SECRET_DATE_END
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 隠しキャラとの交換を行った
+ */
+//--------------------------------------------------------------
+#define _PERSON_STATE_SET_TRADE_FLAG() \
+    _ASM_PERSON_STATE_SET_TRADE_FLAG
+
+  .macro _ASM_PERSON_STATE_SET_TRADE_FLAG
+  .short EV_SEQ_PERSON_SET_TRADE_FLAG
+  .endm
+
+
 //======================================================================
 //
 //  メダルイベント関連

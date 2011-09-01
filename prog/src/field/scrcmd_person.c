@@ -162,8 +162,27 @@ VMCMD_RESULT EvCmdPersonState_SetDateEnd( VMHANDLE *p_vm, void *p_wk_adrs )
   GAMEDATA      *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
   PERSON_STATE  *p_person_state  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
 
-  PERSON_STATE_SetSeasonDateFlag( p_person_state, TRUE );
+  PERSON_STATE_SetDateEndFlag( p_person_state, TRUE );
   PERSON_STATE_ClearSecretDateEvent( p_person_state );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief 隠しキャラとの交換をおこなった
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPersonState_SetTradeFlag( VMHANDLE *p_vm, void *p_wk_adrs )
+{
+  SCRCMD_WORK   *p_wk = p_wk_adrs;
+  GAMESYS_WORK  *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
+  PERSON_STATE  *p_person_state  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
+
+  PERSON_STATE_SetTradeFlag( p_person_state, TRUE );
 
   return VMCMD_RESULT_CONTINUE;
 }

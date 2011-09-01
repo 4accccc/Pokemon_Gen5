@@ -34,3 +34,4 @@ extern VMCMD_RESULT EvCmdPersonState_SetLTvtCall( VMHANDLE *p_vm, void *p_wk_adr
 extern VMCMD_RESULT EvCmdPersonState_CheckSecretCalled( VMHANDLE *p_vm, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdPersonState_GetDateType( VMHANDLE *p_vm, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdPersonState_SetDateEnd( VMHANDLE *p_vm, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdPersonState_SetTradeFlag( VMHANDLE *p_vm, void *p_wk_adrs );
