@@ -352,7 +352,7 @@ extern RESORT_BINARY_SHOP * RESORT_BINARY_SHOP_Init( HEAPID heapID );
 extern void RESORT_BINARY_SHOP_Exit( RESORT_BINARY_SHOP *p_wk );
 
 
-extern u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, const RESORT_RESIDENT_DATA *cp_data );
+extern u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, u16 kind, u16 lv, u16 type );
 extern const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchDataByData( const RESORT_BINARY_SHOP *cp_wk, RESORT_RESIDENT_DATA *p_data );
 extern const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_GetData( const RESORT_BINARY_SHOP *cp_wk,u16 index);
 extern u32 RESORT_BINARY_SHOP_DATA_GetMax( const RESORT_BINARY_SHOP *cp_wk );

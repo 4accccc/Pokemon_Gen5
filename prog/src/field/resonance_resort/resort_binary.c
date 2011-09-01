@@ -329,13 +329,23 @@ void RESORT_BINARY_SHOP_Exit( RESORT_BINARY_SHOP *p_wk )
  *	@returnÅ@å¬ï ÇÃìXèÓïÒ
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, const RESORT_RESIDENT_DATA *cp_data )
+u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, u16 kind, u16 lv, u16 type )
 {
-  RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( (RESORT_RESIDENT_DATA *)cp_data ); 
-  int i  = RESORT_RESIDENT_DATA_GetData( cp_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+  int i;
+  for( i = 0; i < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk); i ++ )
+  {
+    const RESORT_BINARY_SHOP_DATA *cp_data = RESORT_BINARY_GetStruct(cp_wk->p_shop, i);
+    if( RESORT_BINARY_SHOP_DATA_GetData( cp_data, RESORT_BINARY_SHOP_PARAM_SHOP ) == kind 
+        && RESORT_BINARY_SHOP_DATA_GetData( cp_data, RESORT_BINARY_SHOP_PARAM_TYPE ) == type
+        && RESORT_BINARY_SHOP_DATA_GetData( cp_data, RESORT_BINARY_SHOP_PARAM_LV ) == lv
+        )
+    {
+      return i;
+    }
+  }
 
-  GF_ASSERT( i < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk) );
-  return i;
+  GF_ASSERT_MSG(0,"kind%dlv%dtype%d\n",kind,lv,type);
+  return 0;
 }
 //----------------------------------------------------------------------------
 /**

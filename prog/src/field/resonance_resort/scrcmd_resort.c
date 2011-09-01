@@ -1231,6 +1231,8 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   u32 next_exp;
 
   u32 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
+  u32 kind = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
+  u32 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
   u32 exp;
   int i;
 
@@ -1320,7 +1322,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
         RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, lv );
 
         //レベルアップしたら施設IDを変更
-        shopID = RESORT_BINARY_SHOP_SearchShopID( p_shop, p_resident );
+        shopID = RESORT_BINARY_SHOP_SearchShopID( p_shop, kind, lv, shop_type );
         RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
         cp_new_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
 
