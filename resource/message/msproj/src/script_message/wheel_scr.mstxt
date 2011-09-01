@@ -6577,14 +6577,14 @@ N</Text>
 [Name:TrainerName ]くんの　おかげだと　おもう▼
 できれば　これからも
 はなし　あいてに　なってくれると▽
-うれしい…　かな▼
+うれしい……　かな▼
 ……　……　……　……▼
 じゃあ　そろそろ　かえるね…▼
 きょうは　すごく　たのしかったよ
 またね　[Name:TrainerName ]くん！</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-01T08:03:08" />
+				Time="2011-09-01T12:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6641,7 +6641,7 @@ N</Text>
 			<Text>あっ　[Name:TrainerName ]くん▼
 あはは…▼
 まちどうしくって　いそいできちゃった▼
-あえて　うれしい…　かな▼
+あえて　うれしい……　かな▼
 ねぇ　よかったら
 また　かんらんしゃに　のらない？▼
 わたし　この　かんらんしゃの　こと
@@ -6653,7 +6653,7 @@ N</Text>
 さっそく　のろうよ　[Name:TrainerName ]くん！▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-01T08:45:55" />
+				Time="2011-09-01T12:28:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6715,12 +6715,12 @@ N</Text>
 あはは…▼
 これで　しごとも　がんばれるよ▼
 よかったら　また
-さそって　ほしい…　かな▼
+さそって　ほしい……　かな▼
 じゃあ　そろそろ　かえるね…▼
 またね　[Name:TrainerName ]くん！</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-08-22T09:44:31" />
+				Time="2011-09-01T12:28:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7064,11 +7064,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう▼
+			<Text>ありがとう
 [Name:PokemonName Idx="1" ]も　うれしそうだよ▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-01T08:29:40" />
+				Time="2011-09-01T12:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
