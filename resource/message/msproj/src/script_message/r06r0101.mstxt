@@ -2129,8 +2129,8 @@
 ポケモンを　繰りだすことで
 雨が　降りはじめるでしょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-18T04:05:31" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T06:22:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2184,18 +2184,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あめが　ふりつづいている　ときは
-みずタイプの　わざの　いりょくが▽
+			<Text>雨が　降り続いている　ときは
+みずタイプの　技の　威力が▽
 ５０パーセント　アップするでしょう！▼
-そして　ほのおタイプの　わざと
-ソーラービームの　いりょくは▽
+そして　ほのおタイプの　技と
+ソーラービームの　威力は▽
 ５０パーセント　ダウンします！▼
 さらに　ウェザーボールの　タイプが
-みずに　かわり　いりょくは▽
+みずに　変わり　威力は▽
 １００パーセント　アップするでしょう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2246,13 +2246,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なお　ポワルンという　ポケモンは
-あめが　ふりつづいていると▽
-すがたが　かわり▽
+雨が　降り続いていると▽
+姿が　変わり▽
 みずタイプに　なることでも▽
-しられて　おります</Text>
+知られて　おります</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-18T04:06:16" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:04:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2302,14 +2302,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そらが　よどみますので
+			<Text>空が　よどみますので
 あさのひざし　こうごうせい▽
-つきのひかり　で　たいりょくが▽
-かいふくする　りょうが▽
-すくなく　なります！</Text>
+つきのひかり　で　体力が▽
+回復する　量が▽
+少なく　なります！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:06:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2358,13 +2358,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つづいて　ちゅういほうです！▼
+			<Text>続いて　注意報です！▼
 かみなり　と　ぼうふう　が
-かならず　めいちゅう　しますので▽
-おきをつけ　ください！</Text>
+かならず　命中　しますので▽
+お気をつけ　ください！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:08:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2418,14 +2418,14 @@
 			Language="JPN_KANJI">
 			<Text>なお　すいすい　あめうけざら
 かんそうはだ　てんきや　など▼
-あめが　ふりつづいていると
-こうかを　はっきする▽
-とくせいが　ございますので▼
+雨が　降り続いていると
+効果を　発揮する▽
+特性が　ございますので▼
 ポケモンの　ステータスを
 チェックして　くださいませ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:10:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2477,16 +2477,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そんな　あめの　ひの
+			<Text>そんな　雨の　日の
 ラッキーアイテムは　しめったいわ！▼
 ちなみに　わたくしを　はじめとする
-パラソルおねえさん　は▼
-あめが　ふっていると
-みずを　えた　バスラオのように▽
-とっても　げんきに　なるのです！　</Text>
+パラソルお姉さん　は▼
+雨が　降っていると
+水を　得た　バスラオのように▽
+とっても　元気に　なるのです！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:13:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2537,17 +2537,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゴホン……！▼
-「にほんばれ」の　わざを　つかったり
-「ひでり」の　とくせいを　もつ▼
-ポケモンを　くりだすことで
-ひざしが　つよくなるでしょう</Text>
+「にほんばれ」の　技を　使ったり
+「ひでり」の　特性を　持つ▼
+ポケモンを　繰りだすことで
+ひざしが　強くなるでしょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T06:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T06:12:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2600,25 +2600,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひざしが　つよい　ときは
-ほのおタイプの　わざの　いりょくが▽
+			<Text>ひざしが　強い　ときは
+ほのおタイプの　技の　威力が▽
 ５０パーセント　アップするでしょう！▼
-そして　みずタイプの　わざの
-いりょくが　５０パーセント▽
+そして　みずタイプの　技の
+威力が　５０パーセント▽
 ダウンします！▼
 さらに　ウェザーボールの　タイプが
-ほのおに　かわり　いりょくは▽
+ほのおに　変わり　威力は▽
 １００パーセント　アップするでしょう！▼
-また　せいちょう　を　つかったときの
-のうりょくの　じょうしょうりつが▽
+また　せいちょう　を　使ったときの
+能力の　上昇率が▽
 ２００パーセントと　なります！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:18:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:29:26" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T06:12:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2670,24 +2670,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひざしが　つよい　ため
+			<Text>ひざしが　強い　ため
 ポケモンが▽
-こおり　じょうたいに　ならず▼
+こおり　状態に　ならず▼
 すでに　こおっている　ポケモンの
-こおりが　とける　げんしょうが▽
-ほうこく　されています！▼
+こおりが　とける　現象が▽
+報告　されています！▼
 なお　ポワルンという　ポケモンは
-ひざしが　つよいと▽
-すがたが　かわり▽
+ひざしが　強いと▽
+姿が　変わり▽
 ほのおタイプに　なることでも▽
-しられております</Text>
+知られております</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:20:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T06:12:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2733,14 +2733,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そらが　すみますので
+			<Text>空が　すみますので
 あさのひざし　こうごうせい▽
-つきのひかり　で　たいりょくが▽
-かいふくする　りょうが▽
-おおきく　なります！</Text>
+つきのひかり　で　体力が▽
+回復する　量が▽
+大きく　なります！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:24:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2792,16 +2792,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つづいて　ちゅういほうです！▼
+			<Text>続いて　注意報です！▼
 ソーラービームを
 わずか　１ターンで▽
-はなつことが　できます！▼
+放つことが　できます！▼
 また　かみなり　と　ぼうふう　は
-めいちゅう　しづらく　なりますので▽
-おきをつけ　ください！</Text>
+命中　しづらく　なりますので▽
+お気をつけ　ください！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:25:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2855,18 +2855,18 @@
 			Language="JPN_KANJI">
 			<Text>なお　ようりょくそ　しゅうかく
 サンパワー　てんきや　など▼
-ひざしが　つよいと
-こうかを　はっきする▽
-とくせいが　ございますので▼
+ひざしが　強いと
+効果を　発揮する▽
+特性が　ございますので▼
 ポケモンの　ステータスを
 チェックして　くださいませ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:26:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T06:12:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2913,15 +2913,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そんな　はれの　ひの
+			<Text>そんな　晴れの　日の
 ラッキーアイテムは　あついいわ！▼
-ちなみに　はれわたる
-きもちよい　てんきでも▼
-しがいせんは　ふりそそぐので
-おはだの　ケアは　わすれずに！</Text>
+ちなみに　晴れわたる
+気持ちよい　天気でも▼
+紫外線は　降りそそぐので
+おはだの　ケアは　忘れずに！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:29:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2972,13 +2972,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゴホン……！▼
-「あられ」の　わざを　つかったり
-「ゆきふらし」の　とくせいを　もつ▼
-ポケモンを　くりだすことで
-あられが　ふりはじめるでしょう</Text>
+「あられ」の　技を　使ったり
+「ゆきふらし」の　特性を　持つ▼
+ポケモンを　繰りだすことで
+あられが　降りはじめるでしょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T06:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3032,18 +3032,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あられが　ふりつづいている　ときは
-こおりタイプ　いがいの▽
-ポケモンは　ターンの　おわりに▽
-ダメージを　うけてしまいます！▼
-また　ソーラービームの　いりょくが▽
+			<Text>あられが　降り続いている　ときは
+こおりタイプ　以外の▽
+ポケモンは　ターンの　終わりに▽
+ダメージを　受けてしまいます！▼
+また　ソーラービームの　威力が▽
 ５０パーセント　ダウンします！▼
 さらに　ウェザーボールの　タイプが
-こおりに　かわり　いりょくは▽
+こおりに　変わり　威力は▽
 １００パーセント　アップするでしょう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:33:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3094,13 +3094,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なお　ポワルンという　ポケモンは
-あられが　ふりつづいていると▽
-すがたが　かわり▽
+あられが　降り続いていると▽
+姿が　変わり▽
 こおりタイプに　なることでも▽
-しられております</Text>
+知られております</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:33:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3150,14 +3150,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そらが　よどみますので
+			<Text>空が　よどみますので
 あさのひざし　こうごうせい▽
-つきのひかり　で　たいりょくが▽
-かいふくする　りょうが▽
-すくなく　なります！</Text>
+つきのひかり　で　体力が▽
+回復する　量が▽
+少なく　なります！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:34:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3206,13 +3206,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つづいて　ちゅういほうです！▼
+			<Text>続いて　注意報です！▼
 ふぶき　が　かならず
-めいちゅう　しますので▽
-おきをつけ　ください！</Text>
+命中　しますので▽
+お気をつけ　ください！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:36:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3266,14 +3266,14 @@
 			Language="JPN_KANJI">
 			<Text>なお　アイスボディ　ゆきがくれ
 てんきや　など▼
-あられが　ふりつづいていると
-こうかを　はっきする▽
-とくせいが　ございますので▼
+あられが　降り続いていると
+効果を　発揮する▽
+特性が　ございますので▼
 ポケモンの　ステータスを
 チェックして　くださいませ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:37:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3324,15 +3324,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そんな　あられの　ひの
+			<Text>そんな　あられの　日の
 ラッキーアイテムは　つめたいいわ！▼
-ちなみに　ゆきがふると
-しずかに　なるのは▼
-ちいさな　こおりのつぶが　おとを
-きゅうしゅう　するからなのです！</Text>
+ちなみに　雪が降ると
+静かに　なるのは▼
+小さな　こおりのつぶが　音を
+吸収　するからなのです！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:39:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3383,13 +3383,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゴホン……！▼
-「すなあらし」の　わざを　つかったり
-「すなおこし」の　とくせいを　もつ▽
-ポケモンを　くりだすことで▼
-すなあらしが　ふきはじめるでしょう</Text>
+「すなあらし」の　技を　使ったり
+「すなおこし」の　特性を　持つ▽
+ポケモンを　繰りだすことで▼
+すなあらしが　吹きはじめるでしょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T06:20:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3443,18 +3443,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すなあらしが　ふいている　ときは
-いわ　じめん　はがねタイプ　いがいの▽
-ポケモンは　ターンの　おわりに▽
-ダメージを　うけてしまいます！▼
-また　ソーラービームの　いりょくが
+			<Text>すなあらしが　吹いている　ときは
+いわ　じめん　はがねタイプ　以外の▽
+ポケモンは　ターンの　終わりに▽
+ダメージを　受けてしまいます！▼
+また　ソーラービームの　威力が
 ５０パーセント　ダウンします！▼
 さらに　ウェザーボールの　タイプが
-いわに　かわり　いりょくは▽
+いわに　変わり　威力は▽
 １００パーセント　アップするでしょう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:41:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3511,17 +3511,17 @@
 			Language="JPN_KANJI">
 			<Text>すなあらしの　とき
 いわタイプの　ポケモンの▼
-とくぼうが　５０パーセント
-アップする　げんしょうが▽
-ほうこく　されています！▼
+特防が　５０パーセント
+アップする　現象が▽
+報告　されています！▼
 なお　ポワルンという　ポケモンは
-てんきが　かわると▽
-すがたが　かわりますが▼
+天気が　かわると▽
+姿が　変わりますが▼
 すなあらしには
-えいきょうを　うけないようです</Text>
+影響を　受けないようです</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:48:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3571,14 +3571,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そらが　よどみますので
+			<Text>空が　よどみますので
 あさのひざし　こうごうせい▽
-つきのひかり　で　たいりょくが▽
-かいふくする　りょうが▽
-すくなく　なります！</Text>
+つきのひかり　で　体力が▽
+回復する　量が▽
+少なく　なります！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:49:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3681,14 +3681,14 @@
 			Language="JPN_KANJI">
 			<Text>なお　すなかき　すながくれ
 すなのちから　てんきや　など▼
-すなあらしが　ふきあれていると
-こうかを　はっきする▽
-とくせいが　ございますので▼
+すなあらしが　吹き荒れていると
+効果を　発揮する▽
+特性が　ございますので▼
 ポケモンの　ステータスを
 チェックして　くださいませ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:50:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3739,15 +3739,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そんな　すなあらしの　ひの
+			<Text>そんな　すなあらしの　日の
 ラッキーアイテムは　さらさらいわ！▼
 ちなみに　わたくし
-かぜにふかれ　まいあがり▼
-ながれゆく　すなのように　じゆうな
-じんせいに　あこがれて　おります！</Text>
+風に吹かれ　まいあがり▼
+流れゆく　砂のように　自由な
+人生に　あこがれて　おります！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:51:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3797,14 +3797,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたくしの　ポケモン　てんきよほう
+			<Text>わたくしの　ポケモン　天気予報
 いかがでしたか？▼
-ほかの　よほうが　ききたいときは
-べつの　わざや　とくせいを　もった▽
-ポケモンを　つれてきて　くださいね！</Text>
+ほかの　予報が　聞きたいときは
+別の　技や　特性を　持った▽
+ポケモンを　連れてきて　くださいね！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:53:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3858,16 +3858,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あらあら　あなたの　ポケモン
-てんきを　かえる　わざや▽
-とくせいを　もっていないのですね▼
-もし　てんきを　かえる　わざや
-とくせいを　もつ　ポケモンが　いたら▼
+天気を　変える　技や▽
+特性を　持っていないのですね▼
+もし　天気を　変える　技や
+特性を　持つ　ポケモンが　いたら▼
 わたくしの　オハコ！▼
-ポケモン　てんきよほうを
-おきかせして　さしあげますね</Text>
+ポケモン　天気予報を
+お聞かせして　差しあげますね</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:55:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3923,20 +3923,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたに　おとどけ
-ポケモン　てんきよほう！▼
-……と　いきたいところ　ですけど
+			<Text>あなたに　お届け
+ポケモン　天気予報！▼
+……と　行きたいところ　ですけど
 あらあら　あなたの　[Name:PokemonName ]▽
 まさかの　「[Name:Ability Idx="2" ]」　ですね！▼
-うーん　こまりましたわ……▼
-てんきの　こうかを
-すべて　うちけしてしまう▽
-「[Name:Ability Idx="2" ]」が　あいてでは▼
-ポケモン　てんきよほうも
-おてあげ　ですわ！　うふふ！</Text>
+うーん　困りましたわ……▼
+天気の　効果を
+すべて　打ち消してしまう▽
+「[Name:Ability Idx="2" ]」が　相手では▼
+ポケモン　天気予報も
+お手上げ　ですわ！　うふふ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:57:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3990,18 +3990,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　なにか
-とくべつな　ひ　でしたっけ？▼
+			<Text>今日は　何か
+特別な　日　でしたっけ？▼
 なんだか　わたくし
-きりが　はれた　みたいに▽
-さわやかな　きぶんなんです！▼
-わたしの　こころと　おなじように
-どこかの　そらも▼
-はれやかで　あることを
-ねがいますわ……</Text>
+きりが　晴れた　みたいに▽
+さわやかな　気分なんです！▼
+わたしの　心と　同じように
+どこかの　空も▼
+晴れやかで　あることを
+願いますわ……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T04:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4061,20 +4061,20 @@
 			Language="JPN_KANJI">
 			<Text>ところで　ダイヤモンドダストを
 ごぞんじ　ですか？▼
-そらから　こおりの　けっしょうが
-かがやきながら　ふりそそぐ▽
-げんそうてきな　げんしょうです！▼
-なんでも　いまくらいの　じきに
-どこかの　まちで▼
-みられる　という　はなしを
-きいたことが　あります▼
+空から　こおりの　結晶が
+輝きながら　降りそそぐ▽
+幻想的な　現象です！▼
+何度も　今くらいの　時期に
+どこかの　町で▼
+みられる　という　話を
+聞いたことが　あります▼
 ああ……　わたくしも
-ステキな　かたと　いっしょに▼
+ステキな　かたと　一緒に▼
 ダイヤモンドダストを
 みてみたい　ですわ！　うふふ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:37:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-01T06:30:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
