@@ -463,7 +463,12 @@
 ドリブル失敗！</language>
 	</row>
 
-	<row id="TRID_BASKET_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_01_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_01_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">まけても　いいわけ　しないぜ！▼
 そんなヒマが　あったら
 うまくなるために　できることを▽
@@ -488,7 +493,12 @@
 ああ　スポーツマンで　よかった！</language>
 	</row>
 
-	<row id="TRID_BASKET_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">バスケットボール　サイズの
 モンスターボールが　ほしいね！▼
 だって　でっかいほうが　なかの
@@ -513,7 +523,12 @@
 		<language name="JPN_KANJI" width="216">パワーが　たりなかったのか…</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">さいきょうを　めざして　まいにち
 ポケモンと　トレーニングしているよ！</language>
 		<language name="JPN_KANJI" width="216">最強を　目指して　毎日
@@ -534,7 +549,12 @@
 うろたえませんわ</language>
 	</row>
 
-	<row id="TRID_TENNIS_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_01_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_01_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">アタクシ　レディですから
 く　くやしがったり　しませんわ！</language>
 		<language name="JPN_KANJI" width="216">アタクシ　レディですから
@@ -557,7 +577,12 @@
 いい　トレーニングになったわ……</language>
 	</row>
 
-	<row id="TRID_TENNIS_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">あんたと　ワタシは　であったばかり
 ラブゲームからの　スタートね！</language>
 		<language name="JPN_KANJI" width="216">あんたと　ワタシは　出会ったばかり
@@ -576,7 +601,12 @@
 		<language name="JPN_KANJI" width="216">しまった……</language>
 	</row>
 
-	<row id="TRID_BASEBALL_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_01_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_01_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">きみ　なかなか　つよいね
 リトルリーグよりは　うえだよ！</language>
 		<language name="JPN_KANJI" width="216">きみ　なかなか　強いね
@@ -601,7 +631,12 @@
 上には　上が　いるものだ</language>
 	</row>
 
-	<row id="TRID_BASEBALL_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">やくそく　しよう！▼
 この　はいぼくを　かてに　オレは
 もっと　すごい　プレイヤーになる！</language>
@@ -979,7 +1014,12 @@
 クラッシュスル　ハズナノーニ……</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ハゲシイ　ゲームデ　ケガ　シマシタ
 ナウ　リハビリチュウ　ナノデース</language>
 		<language name="JPN_KANJI" width="216">激シイ　ゲームデ　ケガ　シマシタ
@@ -1046,7 +1086,12 @@
 ガッツなら　足りてるのにな！</language>
 	</row>
 
-	<row id="TRID_SOCCER_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_01_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_01_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">まだまだ　オレも　ポケモンも
 れんしゅうが　たりないな……▽
 レベルで　いえば　５ってとこか……</language>
@@ -1071,7 +1116,12 @@
 なんと　すごい　トレーナーだ！</language>
 	</row>
 
-	<row id="TRID_SOCCER_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ポケモンとの　チームプレイは
 サッカーに　いままでに　ない▽
 おもしろさを　もたらしてくれたぜ</language>
@@ -1543,7 +1593,12 @@
 		<language name="JPN_KANJI" width="216">しかと　見届けたっ！</language>
 	</row>
 
-	<row id="TRID_ARTIST_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_ARTIST_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_ARTIST_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">いやー　ぜんりょくをだす　いきものは
 いつだって　うつくしいよね</language>
 		<language name="JPN_KANJI" width="216">いやー　全力をだす　生き物は
@@ -1670,7 +1725,12 @@
 わたしの　身を　こがす！</language>
 	</row>
 
-	<row id="TRID_BATTLEG_09_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BATTLEG_09_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BATTLEG_09_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ハートが　バーニング！
 あつい　しょうぶを　ありがとう！▼
 つぎは　スポーツかんせんで
@@ -1697,7 +1757,12 @@
 これが　大事なんだ</language>
 	</row>
 
-	<row id="TRID_BREEDERM_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BREEDERM_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BREEDERM_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">かって　わかること　より
 まけて　わかることが　おおいの！▽
 スポーツも　おなじだと　おもうなー</language>
@@ -1720,7 +1785,12 @@
 ポケモンも　すごいのね！</language>
 	</row>
 
-	<row id="TRID_BREEDERW_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BREEDERW_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BREEDERW_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ポケモンには　ほんとに　いろんな
 そだてかたが　あるのよねー　</language>
 		<language name="JPN_KANJI" width="216">ポケモンには　ほんとに　いろんな
@@ -1739,7 +1809,12 @@
 まじめに　働いてりゃ　よかった</language>
 	</row>
 
-	<row id="TRID_BUSINESS1_07_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BUSINESS1_07_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_07_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">うまく　いきぬき　するのも
 しごとの　うちなんだぜ！</language>
 		<language name="JPN_KANJI" width="216">うまく　息抜き　するのも
@@ -1760,7 +1835,12 @@
 ここで　何を　しているんだ</language>
 	</row>
 
-	<row id="TRID_BUSINESS2_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BUSINESS2_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BUSINESS2_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">オフの　ひの　スポーツせんしゅ　など
 やすみの　ひの　オッサンと　かわらん</language>
 		<language name="JPN_KANJI" width="216">オフの　日の　スポーツ選手など
@@ -1817,7 +1897,12 @@
 受けとめ　きれなかったかあ</language>
 	</row>
 
-	<row id="TRID_CLEANING_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_CLEANING_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_CLEANING_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">おじさん　もとは　サッカーせんしゅ
 ポジションは　スイーパー▼
 いまの　おしごとも　あるいみ
@@ -1844,7 +1929,12 @@
 これまた　すごいなー！</language>
 	</row>
 
-	<row id="TRID_DAISUKIM_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_DAISUKIM_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_DAISUKIM_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">じぶんの　ポケモンも　がんばって
 あんなふうに　そだてるぞー</language>
 		<language name="JPN_KANJI" width="216">自分の　ポケモンも　頑張って
@@ -1871,7 +1961,12 @@
 興奮　覚めやらないわ！</language>
 	</row>
 
-	<row id="TRID_DAISUKIW_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_DAISUKIW_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_DAISUKIW_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">スポーツを　たのしむ
 ポケモンちゃんが　みられるのは▽
 ライモンシティ　だけ！</language>
@@ -1892,7 +1987,12 @@
 		<language name="JPN_KANJI" width="216">そんな　きみに　アッサリ　負けるっ！</language>
 	</row>
 
-	<row id="TRID_DANCER_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_DANCER_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_DANCER_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">しあい　みてると
 テンション　あがっちゃって！▽
 もう　じっとなんか　してらんねえっ！</language>
@@ -2019,7 +2119,12 @@
 次の　ゴールは　あっちの　チーム！</language>
 	</row>
 
-	<row id="TRID_ESPM_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_ESPM_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_ESPM_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">オレの　ちょうのうりょく
 ボールが　ゴールが　きまる▽
 すんぜんにしか　はたらかないよ</language>
@@ -2044,7 +2149,12 @@
 まさか　今までのは　偶然……？</language>
 	</row>
 
-	<row id="TRID_ESPW_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_ESPW_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_ESPW_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">おうえんは　きもちが　だいじよね！
 しんじれば　かちそうなきが　するもの！</language>
 		<language name="JPN_KANJI" width="216">応援は　気持ちが　大事よね！
@@ -2065,7 +2175,12 @@
 やるのが　楽しいよね▼</language>
 	</row>
 
-	<row id="TRID_FISHING_04_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FISHING_04_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FISHING_04_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">しずかな　しぜんも　すきだが
 こういう　にぎやかなとこも　すきだな</language>
 		<language name="JPN_KANJI" width="216">静かな　自然も　好きだが
@@ -2124,7 +2239,12 @@
 かっこいいぜ　あこがれるよー</language>
 	</row>
 
-	<row id="TRID_HEADS_03_TRMSG_FIGHT_AFTER">
+	<row id="TRID_HEADS_03_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_HEADS_03_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">もー　オレ　なんで　カメラとか
 サインしきし　もってきてないのー</language>
 		<language name="JPN_KANJI" width="216">もー　オレ　なんで　カメラとか
@@ -2147,7 +2267,12 @@
 １０個の　ボールを　キャッチ！</language>
 	</row>
 
-	<row id="TRID_JUGGLING_07_TRMSG_FIGHT_AFTER">
+	<row id="TRID_JUGGLING_07_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_JUGGLING_07_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">テクニックは　ついたが
 その　いかしかたが　わからん！▽
 やはり　じっせん　あるのみ！</language>
@@ -2174,7 +2299,12 @@
 空手家の　何が　悪いんスか</language>
 	</row>
 
-	<row id="TRID_KARATE_09_TRMSG_FIGHT_AFTER">
+	<row id="TRID_KARATE_09_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_KARATE_09_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">オンボロ　どうじょうで　あたりからは
 オスや　ウスの　かけごえ　のみ……▽
 こんなことなら　スポーツせんしゅに▽
@@ -2199,7 +2329,12 @@
 もう　さいん　あげないもん！</language>
 	</row>
 
-	<row id="TRID_KINDERGARTENM_03_TRMSG_FIGHT_AFTER">
+	<row id="TRID_KINDERGARTENM_03_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_KINDERGARTENM_03_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ぷろに　なったときの　さいん
 れんしゅう　しておこっと！</language>
 		<language name="JPN_KANJI" width="216">ぷろに　なったときの　さいん
@@ -2218,7 +2353,12 @@
 		<language name="JPN_KANJI" width="216">うえーん　パパーっ</language>
 	</row>
 
-	<row id="TRID_KINDERGARTENW_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_KINDERGARTENW_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_KINDERGARTENW_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">……やっぱり　なかない
 パパと　やくそくしたもん</language>
 		<language name="JPN_KANJI" width="216">……やっぱり　なかない
@@ -2307,7 +2447,12 @@
 おまえは　わかっているな！</language>
 	</row>
 
-	<row id="TRID_MOUNT_08_TRMSG_FIGHT_AFTER">
+	<row id="TRID_MOUNT_08_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_MOUNT_08_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ばっちり　じゅんびを　することだ
 じゅんびぶそくだと　なにも　できんぞ！</language>
 		<language name="JPN_KANJI" width="216">ばっちり　準備を　することだ
@@ -2326,7 +2471,12 @@
 		<language name="JPN_KANJI" width="216">敗北者の　オレを　みるな！</language>
 	</row>
 
-	<row id="TRID_MUSICIAN_02_TRMSG_FIGHT_AFTER">
+	<row id="TRID_MUSICIAN_02_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_MUSICIAN_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">だれの　サイン　もらいにきたの？
 オレのは　いらない？</language>
 		<language name="JPN_KANJI" width="216">だれの　サイン　もらいにきたの？
@@ -2377,7 +2527,12 @@
 スポーツ選手なんか　目じゃないし</language>
 	</row>
 
-	<row id="TRID_OL_05_TRMSG_FIGHT_AFTER">
+	<row id="TRID_OL_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_OL_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">アタシの　ダーリンは　せいそういん！
 この　おっきな　マウンド　ぜんぶを▽
 まいにちひとりで　そうじしてるんだ▽
@@ -2406,7 +2561,12 @@
 雨は　降らないのよね</language>
 	</row>
 
-	<row id="TRID_PARASOL_05_TRMSG_FIGHT_AFTER">
+	<row id="TRID_PARASOL_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_PARASOL_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">スタジアムに　やねが　あると
 いつでも　しあいが　できちゃうわね！</language>
 		<language name="JPN_KANJI" width="216">スタジアムに　屋根が　あると
@@ -2427,7 +2587,12 @@
 ワシの　弟子に　なれい！</language>
 	</row>
 
-	<row id="TRID_PILOT_03_TRMSG_FIGHT_AFTER">
+	<row id="TRID_PILOT_03_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_PILOT_03_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">じんせい　いちどは　とんだらんかい！
 とんで　とんで　とびまくって　みい！</language>
 		<language name="JPN_KANJI" width="216">人生　一度は　飛んだらんかい！
@@ -2452,7 +2617,12 @@
 選手が　遠いっ！</language>
 	</row>
 
-	<row id="TRID_PRINCE_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_PRINCE_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_PRINCE_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">しあいは　よくみえたけど　せんしゅが
 こめつぶ　みたいに　みえたよ</language>
 		<language name="JPN_KANJI" width="216">試合は　よく見えたけど　選手が
@@ -2477,7 +2647,12 @@
 ごめんなさい　あの人……</language>
 	</row>
 
-	<row id="TRID_PRINCESS_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_PRINCESS_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_PRINCESS_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">よくよく　かんがえたら
 おうえん　する　ひとが　おおいほうが▽
 あの　ひとも　およろこびに　なるわね▼
@@ -2502,7 +2677,12 @@
 		<language name="JPN_KANJI" width="216">いい汗　かいたな！</language>
 	</row>
 
-	<row id="TRID_RANGERM_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RANGERM_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_RANGERM_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ドームも　いいけど▼
 やっぱ　だいしぜんの　なかで
 スポーツ　したいよな</language>
@@ -2525,7 +2705,12 @@
 アナタも　グーッドね！</language>
 	</row>
 
-	<row id="TRID_RANGERW_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RANGERW_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_RANGERW_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">アンタ　レンジャーに　なりなさいよ！
 ハードに　しごいて　きたえてあげる！</language>
 		<language name="JPN_KANJI" width="216">アンタ　レンジャーに　なりなさいよ！
@@ -2546,7 +2731,12 @@
 息抜きに　ならない……！</language>
 	</row>
 
-	<row id="TRID_SCHOOLB_05_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SCHOOLB_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">たまに　こうして　あそびにくると
 かえって　べんきょうが　はかどるんだ！</language>
 		<language name="JPN_KANJI" width="216">たまに　こうして　遊びにくると
@@ -2569,7 +2759,12 @@
 なるのは　おぼつかないかな？</language>
 	</row>
 
-	<row id="TRID_SCHOOLG_05_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SCHOOLG_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SCHOOLG_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">しょうらい　なにに　なるか
 いろいろ　みて　かんがえないと！</language>
 		<language name="JPN_KANJI" width="216">将来　なにに　なるか
@@ -2810,7 +3005,12 @@
 最高の　勝負！</language>
 	</row>
 
-	<row id="TRID_WORKER1_07_TRMSG_FIGHT_AFTER">
+	<row id="TRID_WORKER1_07_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_WORKER1_07_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">よーし　もっと　もっと
 グラウンドを　せいび　するぜ！</language>
 		<language name="JPN_KANJI" width="216">よーし　もっと　もっと
@@ -2829,7 +3029,12 @@
 		<language name="JPN_KANJI" width="216">古傷に　ズキズキ　来やがる……</language>
 	</row>
 
-	<row id="TRID_WORKER2_17_TRMSG_FIGHT_AFTER">
+	<row id="TRID_WORKER2_17_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_17_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">オッサン　こうみえてな　むかしは
 スポーツの　せんしゅ　だったんだぜ</language>
 		<language name="JPN_KANJI" width="216">オッサン　こう見えてな　昔は
@@ -2848,7 +3053,12 @@
 ごめん！　ソーリー！</language>
 	</row>
 
-	<row id="TRID_POLICE_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_POLICE_01_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_POLICE_01_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">この　あたりで
 ポイントが　とられたと　きいて▽
 かけつけたんだが……</language>
@@ -2871,7 +3081,12 @@
 とっても　強引な　お方……</language>
 	</row>
 
-	<row id="TRID_MAID_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_MAID_01_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_MAID_01_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">まあ　ちょっと　ごういんな　くらいが
 わたしは　このみですけど　ウフフ……</language>
 		<language name="JPN_KANJI" width="216">まあ　ちょっと　強引な　くらいが
@@ -2892,7 +3107,12 @@
 存分に　教えられたよ！</language>
 	</row>
 
-	<row id="TRID_RAIL_01_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RAIL_01_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_RAIL_01_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">バトルサブウェイで
 いまから　しごと　なんだけど▽
 どこに　あるんだろうか？</language>
@@ -3858,7 +4078,12 @@
 		<language name="JPN_KANJI" width="216">し　しまった</language>
 	</row>
 
-	<row id="TRID_BASEBALL_04_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_04_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_04_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">きみの　つよさ！
 かなりの　ヒットだね！</language>
 		<language name="JPN_KANJI" width="216">きみの　強さ！
@@ -3883,7 +4108,12 @@
 たりないというのか……！</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_04_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_04_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_04_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ぬぬぬ……　トレーニングの
 りょうを　もっと　ふやすか……！</language>
 		<language name="JPN_KANJI" width="216">ぬぬぬ……　トレーニングの
@@ -3906,7 +4136,12 @@
 ガッツなら　負けないのに！</language>
 	</row>
 
-	<row id="TRID_SOCCER_04_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_04_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_04_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">まだまだ　オレも　ポケモンも
 れんしゅうが　たりないな……▽
 レベルで　いえば　１０ってとこか……</language>
@@ -3927,7 +4162,12 @@
 		<language name="JPN_KANJI" width="216">しまったーっ！</language>
 	</row>
 
-	<row id="TRID_BASEBALL_05_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">きみの　つよさに
 スリーアウト！</language>
 		<language name="JPN_KANJI" width="216">きみの　強さに
@@ -3950,7 +4190,12 @@
 たりないと　いうのか……！</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_05_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">トレーニングの　ほうほうを
 かえてみるかな……</language>
 		<language name="JPN_KANJI" width="216">トレーニングの　方法を
@@ -3973,7 +4218,12 @@
 ガッツだけなら　持て余してるのに！</language>
 	</row>
 
-	<row id="TRID_SOCCER_05_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">まだまだ　オレも　ポケモンも
 れんしゅうが　たりないな……▽
 レベルで　いえば　２０ってとこか……</language>
@@ -3994,7 +4244,12 @@
 		<language name="JPN_KANJI" width="216">し……　しまった！</language>
 	</row>
 
-	<row id="TRID_BASEBALL_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">きみの　つよさは
 ホームランきゅう！</language>
 		<language name="JPN_KANJI" width="216">きみの　強さは
@@ -4017,7 +4272,12 @@
 だめなのか……！？</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">アメフトも　ポケモンも
 パワーと　テクニックが　ひつようだな</language>
 		<language name="JPN_KANJI" width="216">アメフトも　ポケモンも
@@ -4040,7 +4300,12 @@
 ガッツなら　最強なのに！</language>
 	</row>
 
-	<row id="TRID_SOCCER_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">まだまだ　オレも　ポケモンも
 れんしゅうが　たりないな……▽
 レベルで　いえば　５０ってとこか……</language>
@@ -4065,7 +4330,12 @@
 		<language name="JPN_KANJI" width="216">ゲームセット！</language>
 	</row>
 
-	<row id="TRID_BASEBALL_07_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_07_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_07_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">さて　れんしゅう　れんしゅう！▼
 なんでも　うまくなるには
 くりかえし　れんしゅうが　いちばん！▼
@@ -4092,7 +4362,12 @@
 ガードスル　ハズナノーニ……</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_07_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_07_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_07_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">リハビリガ　オワッタノデ
 モウトックン　ナノデース</language>
 		<language name="JPN_KANJI" width="216">リハビリガ　終ワッタノデ
@@ -4115,7 +4390,12 @@
 君は　グレートだねえ！</language>
 	</row>
 
-	<row id="TRID_SOCCER_07_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_07_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_07_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">つよい　ポケモン……　つまり
 エースを　ちゅうしんに　した▽
 チームも　よしあしが　あるもんだな</language>
@@ -4138,7 +4418,12 @@
 キャッチする　人間が　いるとは！</language>
 	</row>
 
-	<row id="TRID_BASEBALL_03_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_03_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_03_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ワシの　たまは　はやすぎて　のお
 うたれんのは　いいんじゃけど▼
 ポケモンいがいには　なかなか
@@ -4161,7 +4446,12 @@
 		<language name="JPN_KANJI" width="216">むきーっ！</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_03_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_03_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_03_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">むきむき　なんだ　これは！
 フトってる　わけじゃねえ</language>
 		<language name="JPN_KANJI" width="216">むきむき　なんだ　これは！
@@ -4182,7 +4472,12 @@
 まだ　練習中です……</language>
 	</row>
 
-	<row id="TRID_SOCCER_03_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_03_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_03_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ポケモンの　あつかいも
 もっと　れんしゅうしなきゃなぁ</language>
 		<language name="JPN_KANJI" width="216">ポケモンの　扱いも
@@ -4207,7 +4502,12 @@
 パス失敗！</language>
 	</row>
 
-	<row id="TRID_BASKET_04_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_04_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_04_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">うまくなるためなら　なんでもする！
 じぶんに　まんぞくしたら　おわりだ！</language>
 		<language name="JPN_KANJI" width="216">うまくなるためなら　なんでもする！
@@ -4228,7 +4528,12 @@
 うろたえません　ことよ</language>
 	</row>
 
-	<row id="TRID_TENNIS_04_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_04_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_04_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">あ　アタクシ　レディですから
 く　くやしがったり　しないですわ</language>
 		<language name="JPN_KANJI" width="216">あ　アタクシ　レディですから
@@ -4253,7 +4558,12 @@
 ポジショニング失敗！</language>
 	</row>
 
-	<row id="TRID_BASKET_05_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ミスした　りゆうを　かんがえ
 なおしていけば　ミスはへる▼
 あわせて　オレの　いいところを
@@ -4276,7 +4586,12 @@
 		<language name="JPN_KANJI" width="216">わあああ！　なんですのよー！</language>
 	</row>
 
-	<row id="TRID_TENNIS_05_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">はっ……　レディ　なのに
 とりみだして　しまいました……</language>
 		<language name="JPN_KANJI" width="216">はっ……　レディ　なのに
@@ -4301,7 +4616,12 @@
 とめられてしまった！！</language>
 	</row>
 
-	<row id="TRID_BASKET_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">しあいは　あきらめない！
 げんかいは　きめない！▼
 オレの　うまくなりたい　きもちは
@@ -4326,7 +4646,12 @@
 手加減なさいよ　アナタ！！</language>
 	</row>
 
-	<row id="TRID_TENNIS_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_06_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ア　アタクシ　レディですから
 ぐすん……▽
 いさぎよく　まけを　みとめますわ……</language>
@@ -4349,7 +4674,12 @@
 ああ　スポーツマンで　よかった！</language>
 	</row>
 
-	<row id="TRID_BASKET_07_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_07_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_07_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">しょうぶの　あとには
 フロに　はいれよ！▼
 メシ　くった　あとには
@@ -4376,7 +4706,12 @@
 いい　トレーニングになったわ……</language>
 	</row>
 
-	<row id="TRID_TENNIS_07_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_07_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_07_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">あんたと　ワタシは　であった　ばかり
 ラブゲームからの　スタートね！</language>
 		<language name="JPN_KANJI" width="216">あんたと　ワタシは　出会った　ばかり
@@ -4399,7 +4734,12 @@
 戦うのは　ポケモンだった……</language>
 	</row>
 
-	<row id="TRID_BASKET_03_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_03_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_03_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">オレたちは　いつも　ここで
 ポケモンたちを　まじえて▽
 バスケを　プレイしてるぜ！</language>
@@ -4424,7 +4764,12 @@
 モーレツね！</language>
 	</row>
 
-	<row id="TRID_TENNIS_03_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_03_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_03_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">ポケモンに　きょうれつな　サーブを
 うってもらって　れんしゅう　してるの</language>
 		<language name="JPN_KANJI" width="216">ポケモンに　強烈な　サーブを
@@ -7265,7 +7610,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_08_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_08_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_08_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7284,11 +7634,16 @@
 		<language name="JPN_KANJI" width="216">がっしり！</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_09_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">がっしり　してるんだ！
-ぽっちゃり　してるんじゃねーよ！</language>
-		<language name="JPN_KANJI" width="216">がっしり　してるんだ！
-ぽっちゃり　してるんじゃねーよ！</language>
+	<row id="TRID_FOOTBALL_09_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_09_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
+		<language name="JPN" width="216">せんとうご
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後
+テストメッセージ</language>
 	</row>
 
 	<row id="TRID_FOOTBALL_10_TRMSG_FIGHT_START">
@@ -7305,7 +7660,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_10_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_10_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_10_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7326,7 +7686,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_11_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_11_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_11_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7347,7 +7712,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_FOOTBALL_12_TRMSG_FIGHT_AFTER">
+	<row id="TRID_FOOTBALL_12_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_12_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7368,7 +7738,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BASEBALL_08_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_08_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_08_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7389,7 +7764,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BASEBALL_09_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_09_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_09_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7410,7 +7790,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BASEBALL_10_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_10_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_10_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7431,7 +7816,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BASEBALL_11_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_11_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_11_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7452,7 +7842,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BASEBALL_12_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASEBALL_12_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_12_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7473,7 +7868,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_SOCCER_08_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_08_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_08_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7494,7 +7894,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_SOCCER_09_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_09_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_09_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7515,7 +7920,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_SOCCER_10_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_10_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_10_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7536,7 +7946,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_SOCCER_11_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_11_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_11_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7557,7 +7972,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_SOCCER_12_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SOCCER_12_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_12_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7578,7 +7998,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BASKET_08_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_08_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_08_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7599,7 +8024,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BASKET_09_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_09_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_09_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7620,7 +8050,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BASKET_10_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_10_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_10_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7641,7 +8076,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BASKET_11_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_11_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_11_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7662,7 +8102,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BASKET_12_TRMSG_FIGHT_AFTER">
+	<row id="TRID_BASKET_12_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BASKET_12_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7683,7 +8128,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_TENNIS_08_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_08_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_08_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7704,7 +8154,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_TENNIS_09_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_09_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_09_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7725,7 +8180,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_TENNIS_10_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_10_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_10_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7746,7 +8206,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_TENNIS_11_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_11_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_11_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
@@ -7767,7 +8232,12 @@
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_TENNIS_12_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TENNIS_12_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">かりメッセージ▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_12_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
