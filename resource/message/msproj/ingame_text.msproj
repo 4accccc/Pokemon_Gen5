@@ -1953,6 +1953,8 @@
 			<ContentItem
 				Name="fldmapmenu.mstxt" />
 			<ContentItem
+				Name="fmission_app.mstxt" />
+			<ContentItem
 				Name="fmission_log.mstxt" />
 			<ContentItem
 				Name="gameclear.mstxt" />
