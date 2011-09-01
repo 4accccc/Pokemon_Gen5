@@ -631,13 +631,15 @@
 			Language="JPN">
 			<Comment>♂
 ・posイベント
-　座標未定
-・ギザウインで
+　GIRIDX＝32、GRIDZ＝62でスタート
+　ライバル、主人公を押して
+　GIRIDX＝29、GRIDZ＝62まで移動
+・ギザウインでメッセージ表示
 ・続けてswplazmam1_01
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T11:43:15" />
+				Time="2011-09-01T09:03:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2386,10 +2388,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・画面上からメッセージ
 ・続けてswchampion_17</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:25:30" />
+				Time="2011-09-01T09:06:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2510,10 +2513,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・GRIDX＝35、GRIDZ＝54辺りから
+　登場
 ・続けてswchampion_18</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:25:35" />
+				Time="2011-09-01T09:06:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
