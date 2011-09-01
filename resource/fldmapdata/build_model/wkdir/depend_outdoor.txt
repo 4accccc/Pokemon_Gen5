@@ -448,4 +448,6 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/cr_obj_01.nsbmd \
 	$(RESDIR)/c03_ship_03_04.nsbmd \
 	$(RESDIR)/bigicicle_03.nsbmd \
+	$(RESDIR)/h06_light01.nsbmd \
+	$(RESDIR)/h06_light02.nsbmd \
 

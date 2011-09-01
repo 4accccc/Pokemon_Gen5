@@ -447,3 +447,5 @@
 "nsbmdfiles/cr_obj_01.nsbmd"
 "nsbmdfiles/c03_ship_03_04.nsbmd"
 "nsbmdfiles/bigicicle_03.nsbmd"
+"nsbmdfiles/h06_light01.nsbmd"
+"nsbmdfiles/h06_light02.nsbmd"
