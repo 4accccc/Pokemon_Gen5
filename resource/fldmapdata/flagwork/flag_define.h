@@ -717,6 +717,8 @@
 #define FV_D25R0501_ITEM_01                799 /* 0x031f ストレンジャーハウス：どうぐ（モンスターボール） */
 #define FV_D24_POKE485                     800 /* 0x0320 リバースマウンテン：ヒードラン */
 #define FV_D26R0101_BOSS                   801 /* 0x0321 チャンピオンロード：Ｎ */
+#define FV_R04_POKE_567_633_01             802 /* 0x0322 4番道路：バルジーナ（ウォーグル） */
+#define FV_D20_POKE_536_01                 803 /* 0x0323 サザナミ湾：ブルンゲル */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2353,6 +2355,8 @@
 #define TMFLG_R04_PARA_CHECK_01           2771 /* 0x0ad3 4番道路民家：パラメータチェックイベント起動 */
 #define TMFLG_R04_PARA_CLEAR_01           2772 /* 0x0ad4 4番道路民家：パラメータチェックイベントクリア */
 #define TMFLG_AMUSEMENT_NPC               2773 /* 0x0ad5 ライモン遊園地：観覧車NPCキャラ会話フラグ */
+#define TMFLG_R04_POKE_567_633_MEET       2774 /* 0x0ad6 4番道路：１週間に１回出現するバルジーナ（ウォーグル）に出会った */
+#define TMFLG_D20_POKE_536_MEET           2775 /* 0x0ad7 海底神殿海上：１週間に１回出現するブルンゲルに出会った */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 
