@@ -12,6 +12,7 @@
 
 #include "gamesystem/game_data.h"
 #include "field/map_matrix.h"
+#include "field/zonedata.h"
 
 #include "arc/fieldmap/map_replace.naix"
 #include "arc/fieldmap/map_replace.h"
@@ -380,6 +381,9 @@ static void MapMatrix_SetData(
       for (i = 0; i < pMat->table_size; i++)
       {
         pZoneTbl[i] = pResTbl[i];
+
+        // ZONEIDÇ∑ÇËë÷Ç¶
+        pZoneTbl[i] = ZONEDATA_ControlZoneID( pZoneTbl[i] );
       }
     }
 	}else{ //É]Å[ÉìIDéwíËñ≥Çµ

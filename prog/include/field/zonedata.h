@@ -121,6 +121,11 @@ extern const char * ZONEDATA_GetAllZoneName(HEAPID heapID);
 extern u16 ZONEDATA_GetZoneIDMax(void);
 
 //------------------------------------------------------------------
+//	ゾーンIDの差し替え
+//------------------------------------------------------------------
+extern u16 ZONEDATA_ControlZoneID( const u16 zone_id );
+
+//------------------------------------------------------------------
 //	マトリックス指定の取得
 //------------------------------------------------------------------
 extern u16 ZONEDATA_GetMatrixID(u16 zone_id);
