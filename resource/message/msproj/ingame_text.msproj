@@ -1317,6 +1317,8 @@
 				<ContentItem
 					Name="dream_postman.mstxt" />
 				<ContentItem
+					Name="dungeon_combi_scr.mstxt" />
+				<ContentItem
 					Name="egg_event.mstxt" />
 				<ContentItem
 					Name="elevator.mstxt" />
