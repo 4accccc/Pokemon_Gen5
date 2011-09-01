@@ -98,55 +98,42 @@
 #define RESORT_LIST_SORT_INSTATITUTION  (1)
 
 //_RESORT_GET_MSGID用
-  //エクセルのMSG
-#define RESORT_MSGID_00             (0)
-#define RESORT_MSGID_01             (1)
-#define RESORT_MSGID_02             (2)
-#define RESORT_MSGID_03             (3)
-#define RESORT_MSGID_04             (4)
-#define RESORT_MSGID_05             (5)
-
   //特殊MSG
-#define RESORT_MSGID_RECENT_00      (10)  //できごと文
-#define RESORT_MSGID_RECENT_01      (11)  //できごと文
-#define RESORT_MSGID_RECENT_02      (12)  //できごと文
-#define RESORT_MSGID_RECENT_03      (13)  //できごと文
-#define RESORT_MSGID_WHERETOGO      (14)  //どこへ行きたいか
-#define RESORT_MSGID_APPEAL         (15)  //アピール文
-#define RESORT_MSGID_SHOP_INFO      (16)  //お店情報
-#define RESORT_MSGID_GOSSIP         (17)  //噂（特殊NPCの話)
-#define RESORT_MSGID_MEDAL_HAVE     (18)  //メダル自慢
-#define RESORT_MSGID_MEDAL_NONE     (19)  //メダルないよ
-#define RESORT_MSGID_RECORD_NEXT    (20)  //出来事まだあるよ
-#define RESORT_MSGID_RECORD_NONE    (21)  //出来事なし
-
+#define RESORT_MSGID_RECENT_00      (0)  //できごと文
+#define RESORT_MSGID_RECENT_01      (1)  //できごと文
+#define RESORT_MSGID_RECENT_02      (2)  //できごと文
+#define RESORT_MSGID_RECENT_03      (3)  //できごと文
+#define RESORT_MSGID_WHERETOGO      (4)  //どこへ行きたいか
+#define RESORT_MSGID_APPEAL         (5)  //アピール文
+#define RESORT_MSGID_SHOP_INFO      (6)  //お店情報
+#define RESORT_MSGID_GOSSIP         (7)  //噂（特殊NPCの話)
+#define RESORT_MSGID_MEDAL_HAVE     (8)  //メダル自慢
+#define RESORT_MSGID_MEDAL_NONE     (9)  //メダルないよ
+#define RESORT_MSGID_RECORD_NEXT    (10)  //出来事まだあるよ
+#define RESORT_MSGID_RECORD_NONE    (11)  //出来事なし
   //旅行者
-#define RESORT_TOURIST_GREET_MSGID  (22)
-#define RESORT_TOURIST_CITY_MSGID   (23)
-#define RESORT_TOURIST_SCOUT_YES_MSGID    (24)
-#define RESORT_TOURIST_SCOUT_THANKS_MSGID (25)
-#define RESORT_TOURIST_SCOUT_NO_MSGID     (26)
-#define RESORT_TOURIST_SCOUT_REFUSE_MSGID (27)
-#define RESORT_TOURIST_ITEM_MSGID   (RESORT_MSGID_02)
-#define RESORT_TOURIST_BYE_MSGID    (RESORT_MSGID_01)
-#define RESORT_TOURIST_JOY_MSGID    (RESORT_MSGID_03)
-#define RESORT_TOURIST_WAIT_MSGID   (RESORT_MSGID_04)
-
-  //代理人
-#define RESORT_PROXY_GREET_MSGID  (RESORT_MSGID_00)
-#define RESORT_PROXY_ITEM_MSGID   (RESORT_MSGID_01)
-
+#define RESORT_TOURIST_GREET_MSGID        (50)  //挨拶
+#define RESORT_TOURIST_CITY_MSGID         (51)  //街興味
+#define RESORT_TOURIST_SCOUT_YES_MSGID    (52)  //スカウトはい
+#define RESORT_TOURIST_SCOUT_THANKS_MSGID (53)  //スカウトありがとう
+#define RESORT_TOURIST_SCOUT_NO_MSGID     (54)  //スカウトいいえ
+#define RESORT_TOURIST_SCOUT_REFUSE_MSGID (55)  //スカウト興味なし
+#define RESORT_TOURIST_SPOT_GOING         (56)  //いってきます
+#define RESORT_TOURIST_ITEM_MSGID         (57) //アイテムわたし
+#define RESORT_TOURIST_BYE_MSGID          (58) //またね
+#define RESORT_TOURIST_JOY_MSGID          (59) //招待喜び
   //住人
-#define RESORT_RESIDENT_GREET_MSGID           (RESORT_MSGID_00)
-#define RESORT_RESIDENT_BYE_MSGID             (RESORT_MSGID_01)
-#define RESORT_RESIDENT_CHANGE_MSGID          (RESORT_MSGID_02)
-#define RESORT_RESIDENT_CHANGE_CONFIM_MSGID   (RESORT_MSGID_03)
-#define RESORT_RESIDENT_CHANGE_OK_MSGID       (RESORT_MSGID_04)
-#define RESORT_RESIDENT_CHANGE_NG_MSGID       (RESORT_MSGID_05)
-
+#define RESORT_RESIDENT_GREET_MSGID           (80)  //挨拶
+#define RESORT_RESIDENT_BYE_MSGID             (81)  //またね
+#define RESORT_RESIDENT_CHANGE_MSGID          (82)  //転職したい
+#define RESORT_RESIDENT_CHANGE_CONFIM_MSGID   (83)  //転職確認
+#define RESORT_RESIDENT_CHANGE_OK_MSGID       (84)  //転職OKがんばります
+#define RESORT_RESIDENT_CHANGE_NG_MSGID       (85)  //転職NGこのままやります
+#define RESORT_RESIDENT_LV_MSGID              (86)  //お店LV
   //秘書
-#define RESORT_SECRETARY_GREET_MSGID          (0)
-#define RESORT_SECRETARY_BYE_MSGID            (1)
+#define RESORT_SECRETARY_GREET_MSGID          (100) //挨拶
+#define RESORT_SECRETARY_BYE_MSGID            (101) //またね
+#define RESORT_SECRETARY_CITYLV_MSGID         (102) //まちレベル
 
 //_RESORT_SEARCH_RECEPTION用
 #define RESORT_SEARCH_PROXY_GTS               (0)

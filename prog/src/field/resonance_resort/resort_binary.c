@@ -137,22 +137,6 @@ u16 RESORT_BINARY_PEOPLE_DATA_GetScrID( const RESORT_BINARY_PEOPLE_DATA *cp_wk )
 {
   return cp_wk->param[ RESORT_BINARY_PEOPLE_PARAM_SCRID ];
 }
-
-//----------------------------------------------------------------------------
-/**
- *	@brief　メッセージIDを取得
- *
- *	@param	const RESORT_BINARY_PEOPLE_DATA *cp_wk　ワーク
- *	@param	param 引数
- *
- *	@return　メッセージID
- */
-//-----------------------------------------------------------------------------
-u16 RESORT_BINARY_PEOPLE_DATA_GetMsgID( const RESORT_BINARY_PEOPLE_DATA *cp_wk, u16 param )
-{
-  u16 index = RESORT_BINARY_PEOPLE_PARAM_MSGID_00 + param;
-  return cp_wk->param[ index ];
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  人物タイプと種類からバイナリ取得
@@ -183,31 +167,6 @@ const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_
 
   GF_ASSERT_MSG(0, "people_type%d kind%d sex%d\n", people_type, kind, sex);
   return NULL;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief　データ取得（メッセージから）
- *
- *	@param	const RESORT_BINARY_SPOT *cp_wk ワーク
- *	@param	msg メッセージ
- *	@param	p_index インデックス
- *
- *	@return   TRUE …あった FALSE …なかった
- */
-//-----------------------------------------------------------------------------
-BOOL RESORT_BINARY_SPOT_SearchIndex( const RESORT_BINARY_SPOT *cp_wk, u32 msg, u32 *p_index )
-{
-  for( (*p_index) = 0; (*p_index) < RESORT_BINARY_SPOT_GetMax(cp_wk); (*p_index)++ )
-  {
-    NAGI_Printf( "data %d msg %d \n", RESORT_BINARY_SPOT_GetData(cp_wk, *p_index, RESORT_BINARY_SPOT_PARAM_MSG_00), msg );
-    if( RESORT_BINARY_SPOT_GetData(cp_wk, *p_index, RESORT_BINARY_SPOT_PARAM_MSG_00) == msg )
-    {
-      return TRUE;
-    }
-  }
-
-  return FALSE;
 }
 
 //----------------------------------------------------------------------------

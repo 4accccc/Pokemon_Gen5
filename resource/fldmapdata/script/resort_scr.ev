@@ -24,7 +24,6 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_resort
 _EVENT_DATA    ev_resort_tourist
-_EVENT_DATA    ev_resort_proxy
 _EVENT_DATA    ev_resort_resident
 _EVENT_DATA    ev_resort_secretary_work
 _EVENT_DATA    ev_resort_secretary_space
@@ -368,6 +367,8 @@ sub_recent_doing:
         WHILE $LWK_CNT < $LWK_MAX
           $LWK_RECENT = $LWK_CNT
           $LWK_RECENT += RESORT_MSGID_RECENT_00
+
+          _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 1 )
           _RESORT_GET_MSGID( LWK_RECENT, LWK_MSGID )
       	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DEFAULT )
           $LWK_CNT += 1
@@ -432,7 +433,9 @@ sub_tourist_spot:
     //いってきます
     _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
     _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_WORD_PARAM_FRONT, 0, 1 )
-	  _BALLOONWIN_OBJMSG_POS( resort_resident_spot_warp_00, LWK_OBJID, POS_DEFAULT )
+
+    _RESORT_GET_MSGID( RESORT_TOURIST_SPOT_GOING, LWK_MSGID )
+	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DEFAULT )
 	  _BALLOONWIN_CLOSE()
 
     //フェードアウト
@@ -447,6 +450,9 @@ sub_tourist_spot:
 
     //内部で経験値などをWORDSET
     _RESORT_SET_SPOT( LWK_LIST_RET_IDX, LWK_MSGID, LWK_MSGID2, LWK_RET, LWK_RET2 )
+
+    //黒いうちにけす
+    _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MINE, 0 )
 
 	  //カメラ切り替え
 		_CAMERA_START()		//カメラ操作開始
@@ -486,14 +492,14 @@ sub_tourist_spot:
           _SYSWIN_CLOSE()
           //変化した店を見せるためにフィールド開き直し
           //フェードアウト
-	        _MAP_FADE_BLACK_OUT_SLOW()
+	        _MAP_FADE_WHITE_OUT_SLOW()
 	        _MAP_FADE_END_CHECK()
 	        _FIELD_CLOSE()
 	        _FIELD_OPEN()
 		      _CAMERA_START()		//カメラ操作開始
 		      _CAMERA_PURGE()		//カメラのバインドを解く
           _CALL sub_setspot_camera
-	        _MAP_FADE_BLACK_IN_SLOW()
+	        _MAP_FADE_WHITE_IN_SLOW()
 	        _MAP_FADE_END_CHECK()
 
           _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 0 )
@@ -523,8 +529,6 @@ sub_tourist_spot:
     ENDIF
 
     _SYSWIN_CLOSE()
-  
-    _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MINE, 0 )
 
     //フェードアウト
 	  _BLACK_OUT()
@@ -590,54 +594,6 @@ sub_tourist_bye:
   $LWK_MENU_LOOP = FALSE
 }
 _RET
-
-
-/**************************************************************/
-/*            代理人用スクリプト                              */
-/**************************************************************/
-EVENT_START ev_resort_proxy
-{
-  DEFINE_LOCAL LWK_PRESENT_ID
-
-	_TALK_OBJ_START()
-  _RESORT_TALK_START()
-
-  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
-
-  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
-
-  //挨拶文
-  _RESORT_GET_MSGID( RESORT_PROXY_GREET_MSGID, LWK_MSGID )
-	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DEFAULT )
-	_BALLOONWIN_CLOSE()
-
-  //アイテム取得イベント
-  _RESORT_GET_DATA( RESORT_GET_PARAM_PRESENT_ID, LWK_PRESENT_ID )
-
-  IF $LWK_PRESENT_ID != 0 THEN
-    _RESORT_GET_MSGID( RESORT_PROXY_ITEM_MSGID, LWK_MSGID )
-	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DEFAULT )
-	  _BALLOONWIN_CLOSE()
-
-    //もしアイテムならば
-    //アイテムをもらった！
-  	_ITEM_EVENT_KEYWAIT( LWK_PRESENT_ID, 1 )
-
-    _RESORT_END_ITEM()
-  ENDIF
-
-  //飛んで去っていく
-  _OBJ_WARP_OUT( LWK_OBJID )
-
-  //去るのを待つ
-  _TIME_WAIT( 30 )
-
-  //この人は消える
-  _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MINE, 0 )
-
-  _RESORT_TALK_END()
-}
-EVENT_END
 
 /**************************************************************/
 /*            住人用スクリプト                                */
@@ -708,7 +664,9 @@ sub_resident_institution:
       _RESORT_SET_WORD( RESORT_WORD_SHOP_RESTEXP, RESORT_WORD_PARAM_FRONT, 0, 0 )
       _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_WORD_PARAM_FRONT, 0, 1 )
       _RESORT_SET_WORD( RESORT_WORD_SHOP_LV, RESORT_WORD_PARAM_FRONT, 0, 2 )
-	    _BALLOONWIN_OBJMSG_POS( resort_sys_14, LWK_OBJID, POS_DEFAULT )
+
+      _RESORT_GET_MSGID( RESORT_RESIDENT_LV_MSGID, LWK_MSGID )
+	    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DEFAULT )
 	    _BALLOONWIN_CLOSE()
 
     CASE SEQ_RESIDENT_JOBCHANGE THEN  //転職させる
@@ -1250,7 +1208,9 @@ EVENT_START    ev_resort_secretary_work
       _RESORT_SET_WORD( RESORT_WORD_CITY_LV, RESORT_WORD_PARAM_NONE, 0, 0 )
       _RESORT_SET_WORD( RESORT_WORD_CITY_RESTEXP, RESORT_WORD_PARAM_NONE, 0, 1 )
       _RESORT_SET_WORD( RESORT_WORD_CITY_RANK, RESORT_WORD_PARAM_NONE, 0, 2 )
-	    _BALLOONWIN_OBJMSG_POS( resort_secretary_talk_00, LWK_OBJID, POS_DEFAULT )
+
+      _RESORT_GET_MSGID( RESORT_SECRETARY_CITYLV_MSGID, LWK_MSGID )
+	    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DEFAULT )
 
       //_RESORT_GET_MSGID( RESORT_MSGID_GOSSIP, LWK_MSGID )
 	    //_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DEFAULT )

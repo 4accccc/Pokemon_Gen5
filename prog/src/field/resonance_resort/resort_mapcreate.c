@@ -246,3 +246,31 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
 
   return build_count;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief イベントデータの上書きを行う
+ *
+ *	@param	RESORT_MAPCREATE *p_wk  ワーク
+ *	@param	p_evdata                イベントデータ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_MAPCREATE_EventDataOverWrite( RESORT_MAPCREATE *p_wk, EVENTDATA_SYSTEM* p_evdata )
+{
+  int i;
+
+  //住人の数だけ配置を行う
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    const RESORT_RESIDENT_DATA *cp_resident = RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk->cp_people_all, i);
+    if( RESORT_RESIDENT_DATA_IsEmpty( cp_resident ) )
+    {
+      //u16 doorID = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_DOOR_ID );
+
+      //空なら施設がない＝ドアがない
+      //EVENTDATA_SYS_DelConnectEventIdx( p_evdata, doorID );
+    }
+  }
+}
+

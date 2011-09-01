@@ -63,8 +63,6 @@ PEOPLE_COL_PERSON_TYPE   = PEOPLE_COL_START #列：人物タイプ
 PEOPLE_COL_KIND          = 1         #列：種類
 PEOPLE_COL_SEX           = 2         #列：性別
 PEOPLE_COL_SCRID         = 3         #列：SCRID
-PEOPLE_COL_MSGID_START   = 4         #列：MSGID開始
-PEOPLE_COL_MSGID_END     = 9        #列：MSGID終了
 PEOPLE_COL_END           = 10        #列最後
 def convertPeople( csv, data, hashNumber, gmm, script )
 
@@ -95,20 +93,6 @@ def convertPeople( csv, data, hashNumber, gmm, script )
       exit(1)
     end
 
-    for i in PEOPLE_COL_MSGID_START...PEOPLE_COL_MSGID_END+1
-      msg   = csv.get( row, i )
-      if msg == nil
-        data.write_u16(0);
-        next;
-      end
-
-      #MSGTAGから値への変換
-      begin
-        data.write_u16( msgdata.search( "#{msg}", "#{row}行のgmm" ) )
-      rescue HeaderSearchError
-        exit(1)
-      end
-    end
   end
 end
 

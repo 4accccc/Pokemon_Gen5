@@ -82,7 +82,8 @@ SERVICE_COL_MONEY       = 4         #列：値段
 SERVICE_COL_KIND        = 5         #列：サービス種類
 SERVICE_COL_PARAM_1     = 6         #列：サービス種類ごとの効果１
 SERVICE_COL_PARAM_2     = 7         #列：サービス種類ごとの効果２
-SERVICE_COL_EFFECT      = 8         #列：演出メッセージ
+SERVICE_COL_EFFECT_M      = 8         #列：演出メッセージ男
+SERVICE_COL_EFFECT_F      = 9         #列：演出メッセージ女
 def  convertService( csv, data, h_define, h_item, gmm, h_service )
   
   #データの作成
@@ -100,7 +101,8 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service )
     kind    = csv.get( row, SERVICE_COL_KIND );
     param1  = csv.get( row, SERVICE_COL_PARAM_1 )
     param2  = csv.get( row, SERVICE_COL_PARAM_2 )
-    eff     = csv.get( row, SERVICE_COL_EFFECT )
+    eff_m   = csv.get( row, SERVICE_COL_EFFECT_M )
+    eff_f   = csv.get( row, SERVICE_COL_EFFECT_M )
 
     #タグを保存
     h_service.store( tag, row-SERVICE_ROW_START )
@@ -149,11 +151,20 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service )
       end
     end
 
-    if eff == nil
+    if eff_m == nil
       data.write_u16( 0 )
     else
       begin
-        data.write_u16( msgdata.search( "#{eff}", "#{row}行のgmm" ) )
+        data.write_u16( msgdata.search( "#{eff_m}", "#{row}行のgmm" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end 
+    end
+    if eff_f == nil
+      data.write_u16( 0 )
+    else
+      begin
+        data.write_u16( msgdata.search( "#{eff_f}", "#{row}行のgmm" ) )
       rescue HeaderSearchError
         exit(1)
       end 

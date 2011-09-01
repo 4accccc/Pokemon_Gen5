@@ -44,7 +44,6 @@ extern void RESORT_PEOPLE_SetVisible( RESORT_PEOPLE *p_wk, BOOL is_visible );
 extern void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_DATA_PARAM param, u32 data );
 extern u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
 extern u32 RESORT_PEOPLE_GetPeopleData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_DATA_PARAM param );
-extern u32 RESORT_PEOPLE_GetMsgID( const RESORT_PEOPLE *cp_wk, u32 index );
 extern MMDL * RESORT_PEOPLE_GetMmdl( const RESORT_PEOPLE *cp_wk );
 extern void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk );
 extern RESORT_ABSTRUCT_DATA * RESORT_PEOPLE_GetAbstructData( RESORT_PEOPLE *p_wk );

@@ -1104,6 +1104,516 @@ PDW♂</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_tourist_greet_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ランダムマッチ　で
+たたかったこと　おぼえている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ランダムマッチ　で
+たたかったこと　おぼえている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_01_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+GTSネゴで　こうかんしたこと
+おぼえている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+GTSネゴで　こうかんしたこと
+おぼえている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_02_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ユニオンルームでは
+おせわになったね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ユニオンルームでは
+おせわになったね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_03_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ＩＲでは
+おせわになったね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ＩＲでは
+おせわになったね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_04_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ハイリンクで　であったこと
+おぼえている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ハイリンクで　であったこと
+おぼえている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_05_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+GTSで　こうかんしたこと
+おぼえている？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+GTSで　こうかんしたこと
+おぼえている？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_06_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+きみの　ゆめしまに
+[Name:PokemonName Idx="1" ]　のあしあとが▽
+あること　しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+きみの　ゆめしまに
+[Name:PokemonName Idx="1" ]　のあしあとが▽
+あること　しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_07_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+１かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+１かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_08_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+２かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+２かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_09_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+３かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+３かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_10_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+４かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+４かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_11_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+５かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+５かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_12_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+６かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+６かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_13_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ものすごく　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ものすごく　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_14_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ハイリンクフェスで　であったこと
+おぼえている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ハイリンクフェスで　であったこと
+おぼえている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_15_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+わたし　[Name:TrainerName Idx="1" ]の
+だいファン　なんです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+わたし　[Name:TrainerName Idx="1" ]の
+だいファン　なんです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_16_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ここは　あたらしい　まちですか？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ここは　あたらしい　まちですか？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="resort_tourist_citymsg_01_m"
 		Style="Large">
 		<LanguageCell
@@ -1290,7 +1800,97 @@ PDW♂</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_tourist_joy_00"
+		Label="resort_tourist_citymsg_01_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortTown ]が　きになって
+あそびに　きました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:53:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:53:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortTown ]が　きになって
+あそびに　きました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:54:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:54:42" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_citymsg_02_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortTown ]が　きになって
+[Name:Location Idx="1" ]の▽
+[Name:Area Idx="2" ]から▽
+あそびに　きました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:53:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:53:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortTown ]が　きになって
+[Name:Location Idx="1" ]の▽
+[Name:Area Idx="2" ]から▽
+あそびに　きました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:54:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:54:42" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_citymsg_03_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortTown ]が　きになって
+[Name:Location Idx="1" ]から▽
+あそびに　きました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:53:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:53:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortTown ]が　きになって
+[Name:Location Idx="1" ]から▽
+あそびに　きました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:54:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:54:42" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_joy_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1348,7 +1948,65 @@ PDW♂</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_tourist_bye_00"
+		Label="resort_tourist_joy_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『ありがとう！
+[Name:ResortGreet Idx="1" ]！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『ありがとう！
+[Name:ResortGreet Idx="1" ]！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>旅行者施設喜び
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T07:49:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：クチグセ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_bye_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1388,11 +2046,11 @@ PDW♂</Comment>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="resort_tourist_wait_00"
+		Label="resort_tourist_bye_00_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい　まってます▼</Text>
+			<Text>またね！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1403,7 +2061,7 @@ PDW♂</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい　待ってます▼</Text>
+			<Text>またね！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1414,7 +2072,7 @@ PDW♂</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>旅行者待ち</Comment>
+			<Comment>旅行者さよなら</Comment>
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1428,7 +2086,47 @@ PDW♂</Comment>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="resort_tourist_item_00"
+		Label="resort_tourist_item_00_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>これ　おみやげ　です▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>これ　おみやげ　です▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>旅行者おみやげ♂</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T07:49:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_item_00_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1638,121 +2336,119 @@ PDW♂</Comment>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="resort_proxy_greet_gts"
+		Label="resort_tourist_scout_01_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
-GTSの　ごりよう　ありがとうございます！</Text>
+			<Text>こんな　すてきな　まちなら
+がんばります▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:15" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
-GTSの　ごりよう　ありがとうございます！</Text>
+			<Text>こんな　すてきな　まちなら
+がんばります▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:17" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>代理人GTS</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>0：代理名</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_proxy_greet_mystery"
+		Label="resort_tourist_scout_02_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
-ふしぎな　おくりものの　ごりよう▽
-ありがとうございます▼</Text>
+			<Text>[Name:TrainerName ]『ありがとう！
+[Name:ResortGreet Idx="1" ]！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:15" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
-不思議な　贈り物の　ご利用▽
-ありがとうございます▼</Text>
+			<Text>[Name:TrainerName ]『ありがとう！
+[Name:ResortGreet Idx="1" ]！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:17" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>代理人不思議</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>0：代理名</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_resident_greet_00"
+		Label="resort_tourist_scout_03_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もっと　みりょくてきな
+まちに　なったら　かんがえるよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もっと　みりょくてきな
+まちに　なったら　かんがえるよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_scout_04_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>う～ん
+ちょっと　きょうみが　ないんだよね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>う～ん
+ちょっと　きょうみが　ないんだよね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:55:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_greet_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1803,7 +2499,58 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_resident_bye_00"
+		Label="resort_resident_greet_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]！
+[Name:ResortMayor Idx="1" ]！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]！
+[Name:ResortMayor Idx="1" ]！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：店主名
+1：市長名
+2：クチグセ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_bye_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1856,7 +2603,60 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_resident_change_00"
+		Label="resort_resident_bye_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！▼
+ありがとうございました！
+[Name:ResortMayor Idx="0" ]！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！▼
+ありがとうございました！
+[Name:ResortMayor Idx="0" ]！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：市長名
+1：店主名
+2：クチグセ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_change_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1907,7 +2707,58 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_resident_change_con_00"
+		Label="resort_resident_change_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんど　[Name:ResortShop Idx="0" ]を
+やりたいと　おもっているんです▼
+かえても　いいですか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今度　[Name:ResortShop Idx="0" ]を
+やりたいと　思っているんです▼
+変えても　いいですか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：施設名</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_change_con_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1942,7 +2793,42 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="resort_resident_change_ok_00"
+		Label="resort_resident_change_con_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんとうに　おみせを
+かえるのは　だめですか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本当に　お店を
+変えるのは　だめですか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_change_ok_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1977,7 +2863,42 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="resort_resident_change_no_00"
+		Label="resort_resident_change_ok_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やったー！
+がんばります</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やったー！
+がんばります</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_change_no_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -2012,7 +2933,42 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="resort_resident_spot_warp_00"
+		Label="resort_resident_change_no_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わかりました
+このまま　がんばります</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わかりました
+このまま　がんばります</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_spot_go_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -2060,12 +3016,11 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_visitor_greet_00"
+		Label="resort_resident_spot_go_00_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]『いごこちは　さいこうです
-[Name:ResortMayor Idx="1" ]！</Text>
+			<Text>[Name:TrainerName Idx="0" ]『いってきますー！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -2076,8 +3031,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]『居心地は　最高です
-[Name:ResortMayor Idx="1" ]！</Text>
+			<Text>[Name:TrainerName Idx="0" ]『いってきますー！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -2086,6 +3040,14 @@ GTSの　ごりよう　ありがとうございます！</Text>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2095,22 +3057,26 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ffff00</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_visitor_bye_00"
+		Label="resort_resident_lv_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>また　きてください！
-[Name:ResortMayor Idx="0" ]</Text>
+			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
+げんざい　[Digit:2digits Idx="2" ]　です▼
+つぎの　レベルに　なるには
+にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
+どんどん　『[Name:ResortShop Idx="1" ]』を
+おすすめして　ください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T06:08:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2118,16 +3084,28 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また　きてください！
-[Name:ResortMayor Idx="0" ]</Text>
+			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
+げんざい　[Digit:2digits Idx="2" ]　です▼
+つぎの　レベルに　なるには
+にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
+どんどん　『[Name:ResortShop Idx="1" ]』を
+おすすめして　ください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T06:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2137,14 +3115,72 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ffff00</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_secretary_greet_00"
+		Label="resort_resident_lv_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
+げんざい　[Digit:2digits Idx="2" ]　です▼
+つぎの　レベルに　なるには
+にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
+どんどん　『[Name:ResortShop Idx="1" ]』を
+おすすめして　ください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T06:08:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
+げんざい　[Digit:2digits Idx="2" ]　です▼
+つぎの　レベルに　なるには
+にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
+どんどん　『[Name:ResortShop Idx="1" ]』を
+おすすめして　ください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T06:08:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_secretary_greet_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -2191,7 +3227,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="resort_secretary_greet_01"
+		Label="resort_secretary_greet_00_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -2238,148 +3274,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="resort_secretary_greet_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
-わたしの　ポケモンで▽
-おすきな　ばしょに　おつれします▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
-わたしの　ポケモンで▽
-おすきな　ばしょに　おつれします▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>0：秘書名
-1：秘書クチグセ
-2：市長名
-</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="resort_secretary_greet_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
-[Name:ResortMayor Idx="2" ]！
-ポケモンを　かいふく　いたします！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
-[Name:ResortMayor Idx="2" ]！
-ポケモンを　かいふく　いたします！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>0：秘書名
-1：秘書クチグセ
-2：市長名
-</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="resort_secretary_greet_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]▼
-[Name:ResortMayor Idx="2" ]！
-パソコンを　ごりようしますか？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]▼
-[Name:ResortMayor Idx="2" ]！
-パソコンを　ごりようしますか？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>0：秘書名
-1：秘書クチグセ
-2：市長名
-</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="resort_secretary_bye_00"
+		Label="resort_secretary_bye_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -2421,7 +3316,88 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="resort_secretary_talk_00"
+		Label="resort_secretary_bye_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かしこまりました
+[Name:ResortMayor Idx="0" ]！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かしこまりました
+[Name:ResortMayor Idx="0" ]！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：市長名</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="resort_secretary_talk_00_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>げんざい　レベル　[Digit:2digits Idx="0" ]
+『[Name:ResortGreet Idx="2" ]』です▼
+つぎの　レベルまで
+にんきは　あと[Digit:4digits Idx="1" ]ひつようです▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>げんざい　レベル　[Digit:2digits Idx="0" ]
+『[Name:ResortGreet Idx="2" ]』です▼
+つぎの　レベルまで
+にんきは　あと[Digit:4digits Idx="1" ]ひつようです▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="resort_secretary_talk_00_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -5167,15 +6143,10 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
-げんざい　[Digit:2digits Idx="2" ]　です▼
-つぎの　レベルに　なるには
-にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
-どんどん　『[Name:ResortShop Idx="1" ]』を
-おすすめして　ください▼</Text>
+			<Text>　</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T06:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5183,20 +6154,23 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
-げんざい　[Digit:2digits Idx="2" ]　です▼
-つぎの　レベルに　なるには
-にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
-どんどん　『[Name:ResortShop Idx="1" ]』を
-おすすめして　ください▼</Text>
+			<Text>　</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T06:09:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>未使用
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T06:09:48" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：レベル数
@@ -7747,7 +8721,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_shopinfo_00"
+		Label="resort_shopinfo_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -7796,7 +8770,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_shopinfo_01"
+		Label="resort_shopinfo_01_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -7845,7 +8819,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_shopinfo_03"
+		Label="resort_shopinfo_03_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -7894,7 +8868,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_shopinfo_04"
+		Label="resort_shopinfo_04_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -7943,7 +8917,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_shopinfo_05"
+		Label="resort_shopinfo_05_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -7992,7 +8966,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_shopinfo_06"
+		Label="resort_shopinfo_06_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -8041,7 +9015,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_shopinfo_08"
+		Label="resort_shopinfo_08_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -8090,7 +9064,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_shopinfo_09"
+		Label="resort_shopinfo_09_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -8129,6 +9103,342 @@ GTSの　ごりよう　ありがとうございます！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_shopinfo_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたるもはっけ　あたらぬもはっけ
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたるもはっけ　あたらぬもはっけ
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:15" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモンくじ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_shopinfo_01_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたのポケモンを　よりうつくしく！
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたのポケモンを　よりうつくしく！
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>美容室</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_shopinfo_03_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほしいものが　なんでも　そろう
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほしいものが　なんでも　そろう
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>マーケット</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_shopinfo_04_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しぜんの　めぐみの　きのみはんばい
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しぜんの　めぐみの　きのみはんばい
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:25" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>花屋</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_shopinfo_05_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンとなら　どこでも　がんばります
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンとなら　どこでも　がんばります
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:28" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>道場</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_shopinfo_06_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいじょう　いっぱい　タマゴあずかり
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あいじょう　いっぱい　タマゴあずかり
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:31" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>保育所</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_shopinfo_08_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとそれぞれの　ほりだしもの
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひとそれぞれの　ほりだしもの
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:35" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>古道具屋</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_shopinfo_09_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みつぼしの　あじを　ていきょうします
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みつぼしの　あじを　ていきょうします
+『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:39" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>レストラン</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:43:39" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -13737,7 +15047,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_00"
+		Label="resort_history_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -13791,17 +15101,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_01"
+		Label="resort_history_01_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ぜんこくずかんを▽
 かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13810,358 +15120,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ぜんこくずかんを▽
 かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>履歴
-0：クチグセ
-1：観光客名
-2：年
-3：月
-4：日</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8080ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="resort_history_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-メダルを　てにいれました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-メダルを　てにいれました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>履歴
-0：クチグセ
-1：観光客名
-2：年
-3：月
-4：日</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8080ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="resort_history_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-めずらしい　メダルを▽
-てにいれました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-めずらしい　メダルを▽
-てにいれました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>履歴
-0：クチグセ
-1：観光客名
-2：年
-3：月
-4：日</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8080ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="resort_history_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ものすごく　めずらしい　メダルを▽
-てにいれました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ものすごく　めずらしい　メダルを▽
-てにいれました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>履歴
-0：クチグセ
-1：観光客名
-2：年
-3：月
-4：日</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8080ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="resort_history_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-バトルサブウェイで▽
-７れんしょう　しました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-バトルサブウェイで▽
-７れんしょう　しました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>履歴
-0：クチグセ
-1：観光客名
-2：年
-3：月
-4：日</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8080ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="resort_history_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-バトルサブウェイで▽
-サブウェイマスターを　たおしました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-バトルサブウェイで▽
-サブウェイマスターを　たおしました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>履歴
-0：クチグセ
-1：観光客名
-2：年
-3：月
-4：日</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8080ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="resort_history_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-サブウェイの　スーパートレインで▽
-サブウェイマスターを　たおしました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-サブウェイの　スーパートレインで▽
-サブウェイマスターを　たおしました▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14195,17 +15159,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_08"
+		Label="resort_history_02_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケウッドで▽
-えいがを　さつえいしました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14214,12 +15178,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケウッドで▽
-えいがを　さつえいしました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14253,17 +15217,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_09"
+		Label="resort_history_03_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち
-ポケウッドで　さつえいした　えいがを▽
-ポケデミーしょうを　とりました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14272,12 +15236,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち
-ポケウッドで　さつえいした　えいがを▽
-ポケデミーしょうを　とりました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14311,17 +15275,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_10"
+		Label="resort_history_04_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　にに
-ポケモンミュージカルに▽
-さんか　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14330,12 +15294,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケモンミュージカルに▽
-さんか　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14369,16 +15333,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_11"
+		Label="resort_history_05_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ハイリンクで　しんにゅう　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14387,11 +15352,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ハイリンクで　しんにゅう　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14425,16 +15391,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_12"
+		Label="resort_history_06_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ハイリンクで　しんにゅう　されました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14443,11 +15410,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ハイリンクで　しんにゅう　されました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14481,16 +15449,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_13"
+		Label="resort_history_07_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-タマゴを　ふかさせました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14499,11 +15468,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-タマゴを　ふかさせました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14537,16 +15507,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_14"
+		Label="resort_history_08_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケモンの　レベルを　あげました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14555,11 +15526,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケモンの　レベルを　あげました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14593,17 +15565,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_15"
+		Label="resort_history_09_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-マックスアップで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14612,12 +15584,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-マックスアップで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14651,17 +15623,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_16"
+		Label="resort_history_10_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-キトサンで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14670,12 +15642,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-キトサンで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14709,17 +15681,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_17"
+		Label="resort_history_11_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-マックスアップで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14728,12 +15700,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-マックスアップで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14767,17 +15739,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_18"
+		Label="resort_history_12_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-キトサンで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14786,12 +15758,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-キトサンで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14825,17 +15797,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_19"
+		Label="resort_history_13_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-マックスアップで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14844,12 +15816,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-マックスアップで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14883,17 +15855,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_20"
+		Label="resort_history_14_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-キトサンで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14902,12 +15874,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-キトサンで　ポケモンを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14941,16 +15913,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_21"
+		Label="resort_history_15_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-テレビを　みました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14959,11 +15932,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-テレビを　みました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14997,16 +15971,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_22"
+		Label="resort_history_16_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ごみばこの　なかを　しらべました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15015,11 +15990,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ごみばこの　なかを　しらべました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15053,18 +16029,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_23"
+		Label="resort_history_17_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-なんと……▼
-いろちがい　ポケモンを
-つかまえました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15073,13 +16048,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-なんと……▼
-いろちがい　ポケモンを
-つかまえました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15113,17 +16087,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_24"
+		Label="resort_history_18_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケモンに　ニックネームを▽
-つけました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15132,12 +16106,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケモンに　ニックネームを▽
-つけました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15171,17 +16145,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_25"
+		Label="resort_history_19_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ボックスの　トレイに▽
-なまえを　つけました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15190,12 +16164,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ボックスの　トレイに▽
-なまえを　つけました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15229,17 +16203,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_26"
+		Label="resort_history_20_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-１つの　ボックスを▽
-タマゴで　いっぱいに　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15248,12 +16222,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-１つの　ボックスを▽
-タマゴで　いっぱいに　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15287,16 +16261,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_27"
+		Label="resort_history_21_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケモンを　つりあげました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15305,11 +16280,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケモンを　つりあげました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15343,16 +16319,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_28"
+		Label="resort_history_22_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-タマゴを　もらいました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15361,11 +16338,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-タマゴを　もらいました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15399,16 +16377,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_29"
+		Label="resort_history_23_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-かくしアイテムを　みつけました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15417,11 +16396,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-かくしアイテムを　みつけました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15455,16 +16435,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_30"
+		Label="resort_history_24_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-かせきを　ふくげん　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15473,11 +16454,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-かせきを　ふくげん　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15511,18 +16493,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_31"
+		Label="resort_history_25_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-なんと……！▼
-キュレムと　レシラムを
-がったい　させました！▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15531,13 +16512,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-なんと……！▼
-キュレムと　レシラムを
-がったい　させました！▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15571,18 +16551,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_32"
+		Label="resort_history_26_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-なんと……！▼
-キュレムと　ゼクロムを
-がったい　させました！▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15591,13 +16570,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-なんと……！▼
-キュレムと　ゼクロムを
-がったい　させました！▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15631,16 +16609,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_33"
+		Label="resort_history_27_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ぐるぐるこうかんを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15649,11 +16628,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ぐるぐるこうかんを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15687,16 +16667,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_34"
+		Label="resort_history_28_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-おえかきをを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15705,11 +16686,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-おえかきをを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15743,16 +16725,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_35"
+		Label="resort_history_29_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-つうしんたいせんを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15761,11 +16744,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-つうしんたいせんを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15799,16 +16783,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_36"
+		Label="resort_history_30_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-でんこうけいじばんを　みました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15817,11 +16802,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-でんこうけいじばんを　みました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15855,16 +16841,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_37"
+		Label="resort_history_00_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-あいしょうしんだんを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15873,11 +16860,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-あいしょうしんだんを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15911,16 +16899,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_38"
+		Label="resort_history_01_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ともだちコードこうかんを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15929,11 +16918,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ともだちコードこうかんを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15967,16 +16957,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_39"
+		Label="resort_history_02_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ふしぎなおくりものを　もらいました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15985,11 +16976,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ふしぎなおくりものを　もらいました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16023,16 +17015,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_40"
+		Label="resort_history_03_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-かんらんしゃで　デート　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16041,11 +17034,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-かんらんしゃで　デート　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16079,17 +17073,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_41"
+		Label="resort_history_04_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ランダムマッチで▽
-シングルバトルを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16098,12 +17092,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ランダムマッチで▽
-シングルバトルを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16137,17 +17131,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_42"
+		Label="resort_history_05_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ランダムマッチで▽
-ダブルバトルを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16156,12 +17150,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ランダムマッチで▽
-ダブルバトルを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16195,17 +17189,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_43"
+		Label="resort_history_06_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ランダムマッチで▽
-トリプルバトルを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16214,12 +17208,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ランダムマッチで▽
-トリプルバトルを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16253,17 +17247,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_44"
+		Label="resort_history_07_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ランダムマッチで▽
-ローテーションバトルを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16272,12 +17266,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ランダムマッチで▽
-ローテーションバトルを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16311,17 +17305,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_45"
+		Label="resort_history_08_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ランダムマッチで▽
-シューターバトルを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16330,12 +17324,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ランダムマッチで▽
-シューターバトルを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16369,17 +17363,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_46"
+		Label="resort_history_09_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-メダルボックスを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16388,12 +17382,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-メダルボックスを▽
-パワーアップ　させました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16427,17 +17421,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_47"
+		Label="resort_history_10_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンに▽
-ちょうせん　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16446,12 +17440,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンに▽
-ちょうせん　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16485,17 +17479,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_48"
+		Label="resort_history_11_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンの　１０Ｆに▽
-とうたつ　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16504,12 +17498,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンの　１０Ｆに▽
-とうたつ　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16543,17 +17537,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_49"
+		Label="resort_history_12_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンの　２０Ｆに▽
-とうたつ　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16562,12 +17556,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンの　２０Ｆに▽
-とうたつ　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16601,17 +17595,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_50"
+		Label="resort_history_13_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンの　３０Ｆに▽
-とうたつ　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16620,12 +17614,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンの　３０Ｆに▽
-とうたつ　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16659,17 +17653,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_51"
+		Label="resort_history_14_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンの　４０Ｆに▽
-とうたつ　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16678,12 +17672,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンの　４０Ｆに▽
-とうたつ　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16717,17 +17711,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_52"
+		Label="resort_history_15_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンの　５０Ｆに▽
-とうたつ　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16736,12 +17730,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-むげんダンジョンの　５０Ｆに▽
-とうたつ　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16775,16 +17769,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_53"
+		Label="resort_history_16_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ＷＢＴに　ちょうせん　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16793,11 +17788,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ＷＢＴに　ちょうせん　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16831,17 +17827,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_54"
+		Label="resort_history_17_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ＷＢＴの　ノーマル　トーナメントで▽
-ゆうしょう　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16850,12 +17846,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ＷＢＴの　ノーマル　トーナメントで▽
-ゆうしょう　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16889,17 +17885,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_55"
+		Label="resort_history_18_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ＷＢＴの　チャンピオン・トーナメントで▽
-ゆうしょう　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16908,12 +17904,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ＷＢＴの　チャンピオン・トーナメントで▽
-ゆうしょう　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16947,17 +17943,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_56"
+		Label="resort_history_19_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-レゾナンスリゾートで▽
-スポットの　レベルを　あげました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16966,12 +17962,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-レゾナンスリゾートで▽
-スポットの　レベルを　あげました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17005,17 +18001,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_57"
+		Label="resort_history_20_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-レゾナンスリゾートで▽
-リゾートの　レベルを　あげました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17024,12 +18020,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-レゾナンスリゾートで▽
-リゾートの　レベルを　あげました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17063,17 +18059,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_58"
+		Label="resort_history_21_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ライブキャスターで▽
-ふうせんわりゲームを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17082,12 +18078,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ライブキャスターで▽
-ふうせんわりゲームを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17121,17 +18117,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_59"
+		Label="resort_history_22_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ライブキャスターで▽
-ふうせんわりゲームを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17140,12 +18136,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ライブキャスターで▽
-ふうせんわりゲームを　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17179,17 +18175,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_60"
+		Label="resort_history_23_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-トライアルハウスに▽
-ちょうせん　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17198,12 +18194,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-トライアルハウスに▽
-ちょうせん　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17237,17 +18233,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_61"
+		Label="resort_history_24_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ジャッジに　ポケモンを▽
-みてもらいました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17256,12 +18252,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ジャッジに　ポケモンを▽
-みてもらいました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17295,17 +18291,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_62"
+		Label="resort_history_25_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-メールを　かいて▽
-ポケモンに　もたせました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17314,12 +18310,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-メールを　かいて▽
-ポケモンに　もたせました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17353,17 +18349,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_63"
+		Label="resort_history_26_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ゆめとくせいを　もった▽
-ポケモンを　つかまえました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17372,12 +18368,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ゆめとくせいを　もった▽
-ポケモンを　つかまえました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17411,17 +18407,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_64"
+		Label="resort_history_27_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケガイダンスの▽
-ミッションを　クリアしました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17430,12 +18426,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ポケガイダンスの▽
-ミッションを　クリアしました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17469,17 +18465,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_65"
+		Label="resort_history_28_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-キーシステムで▽
-すごいこと　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17488,12 +18484,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-キーシステムで▽
-すごいこと　しました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17527,17 +18523,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_66"
+		Label="resort_history_29_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ライブキャスターで▽
-かいわを　たのしみました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17546,12 +18542,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-ライブキャスターで▽
-かいわを　たのしみました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17585,16 +18581,17 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_history_67"
+		Label="resort_history_30_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-Ｗｉ－Ｆｉクラブで　あそびました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17603,11 +18600,12 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
-２０１１ねん　４がつ３０にち　に
-Ｗｉ－Ｆｉクラブで　あそびました▼</Text>
+２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
+ぜんこくずかんを▽
+かんせい　させました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17693,7 +18691,111 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_history_msg_01_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まだまだ　あります▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T02:47:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まだまだ　あります▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T02:47:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_history_mdl_01_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ごらんください！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T02:48:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ごらんください！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T02:48:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_history_mdl_01_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -17799,7 +18901,61 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_appeal_00"
+		Label="resort_history_mdl_02_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じまんできる　メダルが
+ないです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T02:48:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じまんできる　メダルが
+ないです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T02:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_appeal_00_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -17852,7 +19008,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_appeal_01"
+		Label="resort_appeal_01_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -17905,7 +19061,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_appeal_03"
+		Label="resort_appeal_03_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -17958,7 +19114,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_appeal_04"
+		Label="resort_appeal_04_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -18011,7 +19167,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_appeal_05"
+		Label="resort_appeal_05_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -18064,7 +19220,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_appeal_06"
+		Label="resort_appeal_06_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -18117,7 +19273,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_appeal_08"
+		Label="resort_appeal_08_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -18170,7 +19326,7 @@ GTSの　ごりよう　ありがとうございます！</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_appeal_09"
+		Label="resort_appeal_09_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -18215,6 +19371,376 @@ GTSの　ごりよう　ありがとうございます！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_appeal_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+みんなを
+ドキドキ　ワクワクさせたいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+みんなを
+ドキドキ　ワクワクさせたいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:48" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アピール　ポケモンくじ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:48" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_appeal_01_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+いろいろな　ポケモンを
+きれいに　したいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+いろいろな　ポケモンを
+きれいに　したいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:55" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>美容室</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_appeal_03_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+いいものを　いっぱい　あつめて
+みんなを　おどろかせたいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+いいものを　いっぱい　あつめて
+みんなを　おどろかせたいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:02" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>マーケット</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_appeal_04_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+きれいな　はなで
+みんなを　いやしたいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+きれいな　はなで
+みんなを　いやしたいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:07" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>花屋</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_appeal_05_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+いろんな　ポケモンを　きたえて
+きたえて　つよく　したいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+いろんな　ポケモンを　きたえて
+きたえて　つよく　したいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:14" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>道場</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_appeal_06_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+ポケモンの　タマゴを
+かえす　しごとが　いたいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+ポケモンの　タマゴを
+かえす　しごとが　いたいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:19" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>保育所</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_appeal_08_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+こだわりの　どうぐを　そろえて
+みんなを　おどろかせたいな！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+こだわりの　どうぐを　そろえて
+みんなを　おどろかせたいな！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:24" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>古道具屋</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_appeal_09_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+ポケモンの　ために
+おいしい　ごはんを　つくって▽
+ポケモンを　しあわせにしたいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もしも　この　まちで
+くらすことが　できたら……▼
+ポケモンの　ために
+おいしい　ごはんを　つくって▽
+ポケモンを　しあわせにしたいな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:29" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>レストラン</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:29" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

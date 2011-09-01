@@ -282,6 +282,12 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+static u32 SexGetMsgID( u32 sex, u32 male, u32 female )
+{
+  return sex == PM_MALE ? male: female;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  メッセージ番号を取得
@@ -302,6 +308,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
+  const u32 sex = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_SEX, NULL );
   u16 people_type = RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE );
   RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
   const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
@@ -327,10 +334,10 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
       
       //年月日を登録
       WORDSET_RegisterNumber( p_wordset, 0, RESORT_DATE_GET_YEAR(date), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-      WORDSET_RegisterNumber( p_wordset, 1, RESORT_DATE_GET_MONTH(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-      WORDSET_RegisterNumber( p_wordset, 2, RESORT_DATE_GET_DAY(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, 2, RESORT_DATE_GET_MONTH(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, 4, RESORT_DATE_GET_DAY(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 
-      *p_ret_wk = resort_history_00 + msg;
+      *p_ret_wk = SexGetMsgID( sex, resort_history_00_m, resort_history_00_f ) + msg;
     }
     break;
   case RESORT_MSGID_WHERETOGO:
@@ -343,7 +350,15 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
         spot = RESORT_ABSTRUCT_DATA_DrawLotsWhereToGo( p_abstruct, p_spot, p_city, RESORT_SYSTEM_GetCityData(p_sys) );
         RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, spot );
       }
-      *p_ret_wk = RESORT_BINARY_SPOT_GetData( p_spot, spot, RESORT_BINARY_SPOT_PARAM_MSG_00 );
+      GF_ASSERT( spot > 0 );
+      if( sex == PM_MALE )
+      {
+        *p_ret_wk = RESORT_BINARY_SPOT_GetData( p_spot, spot, RESORT_BINARY_SPOT_PARAM_MSG_M );
+      }
+      else
+      {
+        *p_ret_wk = RESORT_BINARY_SPOT_GetData( p_spot, spot, RESORT_BINARY_SPOT_PARAM_MSG_F );
+      }
     }
     break;
   case RESORT_MSGID_APPEAL:
@@ -353,7 +368,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
 
       u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
-      *p_ret_wk = shop_type + resort_appeal_00;
+      *p_ret_wk = shop_type + SexGetMsgID( sex, resort_appeal_00_m, resort_appeal_00_f );
     }
     break;
   case RESORT_MSGID_SHOP_INFO:
@@ -365,47 +380,50 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
       u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
       GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
-
-      *p_ret_wk = shop_type + resort_shopinfo_00;
+      
+      *p_ret_wk = shop_type + SexGetMsgID( sex, resort_shopinfo_00_m, resort_shopinfo_00_f );
     }
     break;
   case RESORT_MSGID_GOSSIP:
     *p_ret_wk = 0; //TODO
     break;
   case RESORT_MSGID_MEDAL_HAVE:
-    *p_ret_wk = resort_history_mdl_01_m;  //TODO
+    *p_ret_wk = SexGetMsgID( sex, resort_history_mdl_01_m, resort_history_mdl_01_f );
     break;
   case RESORT_MSGID_MEDAL_NONE:
-    *p_ret_wk = resort_history_mdl_02_m;  //TODO
+    *p_ret_wk = SexGetMsgID( sex, resort_history_mdl_02_m, resort_history_mdl_02_f );
     break;
   case RESORT_MSGID_RECORD_NEXT:
-    *p_ret_wk = resort_history_msg_01_m;  //TODO
+    *p_ret_wk = SexGetMsgID( sex, resort_history_msg_01_m, resort_history_msg_01_f );
     break;
   case RESORT_MSGID_RECORD_NONE:
-    *p_ret_wk = resort_history_00;  //TODO
+    *p_ret_wk = SexGetMsgID( sex, resort_history_00_m, resort_history_00_f );
     break;
-  case RESORT_TOURIST_GREET_MSGID:  //TODO
+  case RESORT_TOURIST_GREET_MSGID:
     GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST );
     {
       RESORT_COMM_TYPE  comm  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_COMM_ID, NULL );
       u32 num  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXTEND_NUM, NULL );
       if( comm == RESORT_COMM_TYPE_BEACON )
       {
+        u32 msg_start = SexGetMsgID( sex, resort_tourist_greet_07_m, resort_tourist_greet_07_f );
         GF_ASSERT( num > 0 );
-        *p_ret_wk = resort_tourist_greet_07_m + num - 1; //TODO
+        *p_ret_wk = msg_start + num - 1;
+
       }
       else if( comm == RESORT_COMM_TYPE_NULL )
       {
         //ファンかチュートリアル
-        *p_ret_wk = 0;  //TODO
+        GF_ASSERT(0);
       }
       else
       {
-        *p_ret_wk = resort_tourist_greet_00_m + comm - RESORT_COMM_TYPE_START;  //TODO
+        u32 msg_start = SexGetMsgID( sex, resort_tourist_greet_00_m, resort_tourist_greet_00_f );
+        *p_ret_wk = msg_start + comm - RESORT_COMM_TYPE_START;
       }
     }
     break;
-  case RESORT_TOURIST_CITY_MSGID: //TODO
+  case RESORT_TOURIST_CITY_MSGID:
     GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST );
     {
       u32 nation  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_NATION, NULL );
@@ -415,33 +433,73 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
       {
         WORDSET_RegisterCountryName( p_wordset, 1, nation );
         WORDSET_RegisterLocalPlaceName( p_wordset, 2, nation, area );
-        *p_ret_wk = resort_tourist_citymsg_02_m; //TODO
+        *p_ret_wk = SexGetMsgID( sex, resort_tourist_citymsg_02_m, resort_tourist_citymsg_02_m );
       }
       else if( nation > 0 )
       {
         WORDSET_RegisterCountryName( p_wordset, 1, nation );
-        *p_ret_wk = resort_tourist_citymsg_03_m; //TODO
+        *p_ret_wk = SexGetMsgID( sex, resort_tourist_citymsg_03_m, resort_tourist_citymsg_03_f );
       }
       else
       {
-        *p_ret_wk = resort_tourist_citymsg_01_m; //TODO
+        *p_ret_wk = SexGetMsgID( sex, resort_tourist_citymsg_01_m, resort_tourist_citymsg_01_f );
       }
     }
     break;
   case RESORT_TOURIST_SCOUT_YES_MSGID:
-    *p_ret_wk = resort_tourist_scout_01_m; //TODO
+    *p_ret_wk = SexGetMsgID( sex, resort_tourist_scout_01_m, resort_tourist_scout_01_f );
     break;
   case RESORT_TOURIST_SCOUT_THANKS_MSGID:
-    *p_ret_wk = resort_tourist_scout_02_m; //TODO
+    *p_ret_wk = SexGetMsgID( sex, resort_tourist_scout_02_m, resort_tourist_scout_02_f );
     break;
   case RESORT_TOURIST_SCOUT_NO_MSGID:
-    *p_ret_wk = resort_tourist_scout_03_m; //TODO
+    *p_ret_wk = SexGetMsgID( sex, resort_tourist_scout_03_m, resort_tourist_scout_03_f );
     break;
   case RESORT_TOURIST_SCOUT_REFUSE_MSGID:
-    *p_ret_wk = resort_tourist_scout_04_m; //TODO
+    *p_ret_wk = SexGetMsgID( sex, resort_tourist_scout_04_m, resort_tourist_scout_04_f );
     break;
-  default:
-    *p_ret_wk = RESORT_PEOPLE_GetMsgID( p_people, param );
+  case RESORT_TOURIST_SPOT_GOING:
+    *p_ret_wk = SexGetMsgID( sex, resort_resident_spot_go_00_m, resort_resident_spot_go_00_f );
+    break;
+  case RESORT_TOURIST_ITEM_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_tourist_item_00_m, resort_tourist_item_00_f );
+    break;
+  case RESORT_TOURIST_BYE_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_tourist_bye_00_m, resort_tourist_bye_00_f );
+    break;
+  case RESORT_TOURIST_JOY_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_tourist_joy_00_m, resort_tourist_joy_00_f );
+    break;
+  case RESORT_RESIDENT_GREET_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_resident_greet_00_m, resort_resident_greet_00_f );
+    break;
+  case RESORT_RESIDENT_BYE_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_resident_bye_00_m, resort_resident_bye_00_f );
+    break;
+  case RESORT_RESIDENT_CHANGE_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_resident_change_00_m, resort_resident_change_00_f );
+    break;
+  case RESORT_RESIDENT_CHANGE_CONFIM_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_resident_change_con_00_m, resort_resident_change_con_00_f );
+    break;
+  case RESORT_RESIDENT_CHANGE_OK_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_resident_change_ok_00_m, resort_resident_change_ok_00_f );
+    break;
+  case RESORT_RESIDENT_CHANGE_NG_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_resident_change_no_00_m, resort_resident_change_no_00_f );
+    break;
+  case RESORT_SECRETARY_GREET_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_greet_00_m, resort_secretary_greet_00_f );
+    break;
+  case RESORT_SECRETARY_BYE_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_bye_00_m, resort_secretary_bye_00_f );
+    break;
+  case RESORT_SECRETARY_CITYLV_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_00_m, resort_secretary_talk_00_f );
+    break;
+  case RESORT_RESIDENT_LV_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_resident_lv_00_m, resort_resident_lv_00_f );
+    break;
   }
 
 
@@ -1241,7 +1299,14 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   *ret_lvup       = RESORT_SET_SPOT_SHOP_NONE;
   *ret_city_lvup  = RESORT_SET_SPOT_CITY_NONE;
 
-  *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_EFF_MSG );
+  if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL) == PM_MALE )
+  {
+    *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_EFF_MSG_M );
+  }
+  else
+  {
+    *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_EFF_MSG_F );
+  }
 
   if( lv >= RESORT_SHOP_LVMAX )
   {
@@ -1263,7 +1328,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
     switch( type )
     {
     case RESORT_SPOT_TYPE_SHOPTYPE:
-      if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL ) == data )
+      if( shop_type == data )
       {
         is_good = TRUE;
       }
@@ -1849,7 +1914,15 @@ VMCMD_RESULT EvCmdResortGetServiceData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_SERVICE_DATA_EFFECT:
     {
       const RESORT_BINARY_SERVICE_DATA *cp_service_data = RESORT_BINARY_SHOP_DATA_GetList( p_shop, cp_shop_data, service_idx);
-      *p_ret_wk = RESORT_BINARY_SERVICE_DATA_GetData( cp_service_data, RESORT_BINARY_SERVICE_PARAM_EFFECT );
+
+      if( RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_SEX, NULL ) == PM_MALE )
+      {
+        *p_ret_wk = RESORT_BINARY_SERVICE_DATA_GetData( cp_service_data, RESORT_BINARY_SERVICE_PARAM_EFFMSG_M );
+      }
+      else
+      {
+        *p_ret_wk = RESORT_BINARY_SERVICE_DATA_GetData( cp_service_data, RESORT_BINARY_SERVICE_PARAM_EFFMSG_F );
+      }
     }
     break;
   default:

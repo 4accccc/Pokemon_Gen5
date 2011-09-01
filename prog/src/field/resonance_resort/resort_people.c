@@ -385,20 +385,6 @@ u32 RESORT_PEOPLE_GetPeopleData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_DATA_
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ番号を取得
- *
- *	@param	const RESORT_PEOPLE *cp_wkワーク
- *	@param	index インデックス 
- *
- *	@return MSGID
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_PEOPLE_GetMsgID( const RESORT_PEOPLE *cp_wk, u32 index )
-{
-  return RESORT_BINARY_PEOPLE_DATA_GetMsgID( cp_wk->cp_binary, index );
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  MMDLを取得
  *
  *	@param	RESORT_PEOPLE *p_wk ワーク
