@@ -7,10 +7,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギ『おや！
-わざわざ　きてくれたのね！</Text>
+わざわざ　きてくれたのね！▼
+ヒオウギシティから
+カノコタウンって　いがいと▽
+きょりが　あるでしょ？▼
+で　スカイアローブリッジを　わたって
+いろんな　ポケモンに　あえたの？▼
+という　わけで……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:16" />
+				Time="2011-09-01T10:54:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +25,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『おや！
-わざわざ　きてくれたのね！</Text>
+わざわざ　きてくれたのね！▼
+ヒオウギシティから
+カノコタウンって　意外と▽
+距離が　あるでしょ？▼
+で　スカイアローブリッジを　渡って
+いろんな　ポケモンに　会えたの？▼
+という　わけで……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:19" />
+				Time="2011-09-01T10:54:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,10 +43,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・初回イベント</Comment>
+・初回イベント
+・続けて図鑑評価
+　hyouka_scr.mstxtの
+　msg_hyouka_hakase2_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:39:56" />
+				Time="2011-09-01T10:54:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -77,10 +92,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『ハーイ！　
-さいきんの　ちょうしは　どう？▼</Text>
+最近の　調子は　どう？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:11" />
+				Time="2011-09-01T10:52:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -91,10 +106,11 @@
 			<Comment>♀
 ・２回目以降
 ・続けて図鑑評価
-　hyouka_scr.gmmに</Comment>
+　hyouka_scr.mstxtの
+　msg_hyouka_hakase2_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:41:26" />
+				Time="2011-09-01T10:55:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -124,10 +140,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『これを　どうぞ！▼</Text>
+			<Text>きょかしょうが　あれば
+フキヨセシティから　ひこうきで▽
+しぜんほごくに　いけるわよ！▼
+どんな　ばしょかは
+ついてからの　おたのしみね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:05" />
+				Time="2011-09-01T10:53:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -135,10 +155,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『これを　どうぞ！▼</Text>
+			<Text>きょかしょうが　あれば
+フキヨセシティから　飛行機で▽
+自然保護区に　行けるわよ！▼
+どんな　場所かは
+着いてからの　お楽しみね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:11" />
+				Time="2011-09-01T10:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -147,12 +171,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・イッシュ図鑑みたコンプ
-・アイテム入手処理
-　No630「きょかしょう」</Comment>
+・図鑑評価後
+　No630「きょかしょう」を持っているとき
+・１回のみ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:48:42" />
+				Time="2011-09-01T10:47:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -182,11 +206,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『それはね
-・説明</Text>
+			<Text>まるいおまもりを　もっていると
+どうしてだか　そだてやさんで▽
+ポケモンの　タマゴが　いつもより▽
+はっけん　されやすくなるのよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:49:00" />
+				Time="2011-09-01T10:50:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -194,11 +220,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『それはね
-・説明</Text>
+			<Text>まるいおまもりを　持っていると
+どうしてだか　育て屋さんで▽
+ポケモンの　タマゴが　いつもより▽
+発見されやすくなるのよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:11" />
+				Time="2011-09-01T10:53:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -207,10 +235,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・No630「きょかしょう」入手後</Comment>
+・図鑑評価後
+　No631「まるいおまもり」を持っているとき
+・１回のみ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:49:19" />
+				Time="2011-09-01T10:49:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -240,10 +270,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『これを　どうぞ！▼</Text>
+			<Text>ひかるおまもりを　もっていると
+どうしてだか　くさむらなどから▽
+ひかる　ポケモンが　いつもより▽
+おおく　とびだしてくるのよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:08" />
+				Time="2011-09-01T10:51:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -251,10 +284,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『これを　どうぞ！▼</Text>
+			<Text>ひかるおまもりを　持っていると
+どうしてだか　蔵むらなどから▽
+ひかる　ポケモンが　いつもより▽
+多く　飛びだしてくるのよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:11" />
+				Time="2011-09-01T10:53:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -263,12 +299,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・イッシュ図鑑つかまえたコンプ
-・アイテム入手処理
-　No631「まるいおまもり」</Comment>
+・図鑑評価後
+　No632「ひかるおまもり」を持っているとき
+・１回のみ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:49:06" />
+				Time="2011-09-01T10:49:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -298,11 +334,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『それはね
-・説明</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:49:20" />
+				Time="2011-09-01T10:45:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -310,11 +345,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『それはね
-・説明</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:11" />
+				Time="2011-09-01T10:45:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -322,11 +356,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・No631「まるいおまもり」入手後</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:49:16" />
+				Time="2011-09-01T10:51:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -345,7 +378,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -356,10 +389,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『これを　どうぞ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:08" />
+				Time="2011-09-01T10:45:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -367,10 +400,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『これを　どうぞ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:11" />
+				Time="2011-09-01T10:45:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -378,13 +411,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・全国図鑑つかまえたコンプ
-・アイテム入手処理
-　No632「ひかるおまもり」</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:49:22" />
+				Time="2011-09-01T10:51:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -403,7 +433,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -414,11 +444,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『それはね
-・説明</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:49:37" />
+				Time="2011-09-01T10:45:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -426,11 +455,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『それはね
-・説明</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:50:11" />
+				Time="2011-09-01T10:45:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -438,11 +466,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・No632「ひかるおまもり」入手後</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:49:36" />
+				Time="2011-09-01T10:51:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -461,7 +488,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -839,11 +866,12 @@
 			<Comment>♂
 ・ここでの初回会話
 ・続けて図鑑評価
-　hyouka_scr.gmmに
+　hyouka_scr.mstxtの
+　msg_hyouka_hakase_01
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:35:07" />
+				Time="2011-09-01T10:55:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -898,10 +926,12 @@
 			<Comment>♂
 ・２回目以降の会話
 ・続けて図鑑評価
-　hyouka_scr.gmmに</Comment>
+　hyouka_scr.mstxtの
+　msg_hyouka_hakase_01
+・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:33:54" />
+				Time="2011-09-01T10:55:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
