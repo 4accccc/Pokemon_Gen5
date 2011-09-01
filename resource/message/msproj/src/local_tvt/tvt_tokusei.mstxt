@@ -39,7 +39,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あくしゅう　か……▼
+			<Text>あくしゅう　ね……▼
 この　とくせいの　ポケモンは
 わざで　ダメージを　あたえたときに▽
 あいてを　ひるませることが　ある▼
@@ -53,11 +53,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あくしゅう　か……▼
+			<Text>あくしゅう　ね……▼
 この特性の　ポケモンは
 技で　ダメージを　与えたときに▽
 相手を　ひるませることが　ある▼
@@ -71,7 +71,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:25" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -93,31 +93,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あめふらし　か……▼
+			<Text>あめふらし　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　でるだけで▽
-てんきを　あめに　してしまえるんだ▼</Text>
+てんきを　あめに　するんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:48" />
+				Time="2011-08-31T06:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あめふらし　か……▼
+			<Text>あめふらし　ね……▼
 この特性の　ポケモンは
 戦闘に　でるだけで▽
-天候を　あめに　してしまえるんだ▼</Text>
+天候を　あめに　するんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:54" />
+				Time="2011-08-31T06:29:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -139,7 +139,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かそく　か……▼
+			<Text>かそく　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　でていると　まいターン▽
 すばやさの　のうりょくが　あがるんだ▼</Text>
@@ -149,11 +149,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かそく　か……▼
+			<Text>かそく　ね……▼
 この特性の　ポケモンは
 戦闘に　でていると　毎ターン▽
 すばやさの　能力が　あがるんだ▼</Text>
@@ -163,7 +163,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -185,37 +185,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カブトアーマー　か……▼
+			<Text>カブトアーマー　ね……▼
 この　とくせいの　ポケモンは
 あいての　こうげきが▽
-きゅうしょに　あたらなく　なるんだ▼
+きゅうしょに　あたらなくなる▼
 かならず　きゅうしょに　あたる
 わざ　なんかも　あったりするけど▽
 この　とくせいには　こうかがないよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T07:56:23" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:29:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カブトアーマー　か……▼
+			<Text>カブトアーマー　ね……▼
 この特性の　ポケモンは
 相手の　攻撃が▽
-急所に　当たらなく　なるんだ▼
+急所に　当たらなくなる▼
 必ず　急所に　当たる
 技なんかも　あったりするけど▽
 この特性には　効果がないよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:11" />
+				Time="2011-08-31T06:29:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -237,39 +237,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>がんじょう　か……▼
+			<Text>がんじょう　ね……▼
 この　とくせいの　ポケモンは
 いちげきで　ひんしにされる　わざの▽
 こうかを　うけないんだ▼
-さらに！▼
-たいりょくが　まんたんだと
+さらに　たいりょくが　まんたんだと
 ひんしになる　ダメージを　うけても▽
 たいりょくが　ギリギリで　のこるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T07:56:54" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:29:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>がんじょう　か……▼
+			<Text>がんじょう　ね……▼
 この特性の　ポケモンは
 一撃で　ひんしにされる　技の▽
 効果を　受けないんだ▼
-さらに！▼
-体力が　まんたんだと
+さらに　体力が　まんたんだと
 ひんしになる　ダメージを　受けても▽
 体力が　ギリギリで　残るんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:44" />
+				Time="2011-08-31T06:29:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -291,7 +289,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しめりけ　か……▼
+			<Text>しめりけ　ね……▼
 この　とくせいの　ポケモンが
 せんとうしている　さいちゅうは▽
 じばくや　だいばくはつの　わざを▽
@@ -306,11 +304,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しめりけ　か……▼
+			<Text>しめりけ　ね……▼
 この特性の　ポケモンが
 戦闘している　最中は▽
 じばくや　だいばくはつの　技を▽
@@ -325,7 +323,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -347,7 +345,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゅうなん　か……▼
+			<Text>じゅうなん　ね……▼
 この　とくせいの　ポケモンは
 せんとうで　マヒに　ならないよ▼</Text>
 			<TextModifiedBy
@@ -356,11 +354,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゅうなん　か……▼
+			<Text>じゅうなん　ね……▼
 この特性の　ポケモンは
 戦闘で　マヒに　ならないよ▼</Text>
 			<TextModifiedBy
@@ -369,7 +367,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -391,7 +389,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すながくれ　か……▼
+			<Text>すながくれ　ね……▼
 この　とくせいの　ポケモンは
 てんきが　すなあらしの　ばあい▽
 かいひりつが　ばいに　なるんだ▼
@@ -409,11 +407,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すながくれ　か……▼
+			<Text>すながくれ　ね……▼
 この特性の　ポケモンは
 天候が　すなあらしの　場合▽
 回避率が　倍に　なるんだ▼
@@ -431,7 +429,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -453,7 +451,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいでんき　か……▼
+			<Text>せいでんき　ね……▼
 この　とくせいの　ポケモンは
 ちょくせつこうげき　された　ときに▽
 こうげき　してきた　あいてを▽
@@ -468,11 +466,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいでんき　か……▼
+			<Text>せいでんき　ね……▼
 この特性の　ポケモンは
 直接攻撃された　ときに▽
 攻撃してきた　相手を▽
@@ -487,7 +485,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -509,7 +507,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちくでん　か……▼
+			<Text>ちくでん　ね……▼
 この　とくせいの　ポケモンは
 でんきタイプの　わざの　ダメージを▽
 むこうに　してしまえるんだ▼
@@ -521,11 +519,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちくでん　か……▼
+			<Text>ちくでん　ね……▼
 この特性の　ポケモンは
 でんきタイプの　技の　ダメージを▽
 無効に　してしまえるんだ▼
@@ -537,7 +535,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -559,7 +557,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょすい　か……▼
+			<Text>ちょすい　ね……▼
 この　とくせいの　ポケモンは
 みずタイプの　わざの　ダメージを▽
 むこうに　してしまえるんだ▼
@@ -571,11 +569,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょすい　か……▼
+			<Text>ちょすい　ね……▼
 この特性の　ポケモンは
 みずタイプの　技の　ダメージを▽
 無効に　してしまえるんだ▼
@@ -587,7 +585,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -609,7 +607,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どんかん　か……▼
+			<Text>どんかん　ね……▼
 この　とくせいの　ポケモンは
 せんとうで　メロメロに　ならないんだ▼</Text>
 			<TextModifiedBy
@@ -618,11 +616,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どんかん　か……▼
+			<Text>どんかん　ね……▼
 この特性の　ポケモンは
 戦闘で　メロメロに　ならないんだ▼</Text>
 			<TextModifiedBy
@@ -631,7 +629,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -653,7 +651,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーてんき　か……▼
+			<Text>ノーてんき　ね……▼
 この　とくせいの　ポケモンが
 せんとう　している　さいちゅうは▽
 てんきの　こうかが　なくなるんだ▼
@@ -667,11 +665,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ノーてんき　か……▼
+			<Text>ノーてんき　ね……▼
 この特性の　ポケモンが
 戦闘している　最中は▽
 天候の　効果が　なくなるんだ▼
@@ -685,7 +683,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -701,13 +699,20 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="TOKUSEI_STR_014"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふくがん　か……▼
+			<Text>ふくがん　ね……▼
 この　とくせいの　ポケモンは
 わざの　めいちゅうりつが　あがるんだ▼
 あと……▼
@@ -720,11 +725,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふくがん　か……▼
+			<Text>ふくがん　ね……▼
 この特性の　ポケモンは
 技の　命中率が　あがるんだ▼
 あと……▼
@@ -737,7 +742,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -759,7 +764,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふみん　か……▼
+			<Text>ふみん　ね……▼
 この　とくせいの　ポケモンは
 せんとうで　ねむりに　ならないんだ▼
 じぶんでも　ねむれなくなるから
@@ -770,11 +775,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふみん　か……▼
+			<Text>ふみん　ね……▼
 この特性の　ポケモンは
 戦闘で　ねむりに　ならないんだ▼
 自分でも　ねむれなくなるから
@@ -785,7 +790,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -807,35 +812,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>へんしょく　か……▼
+			<Text>へんしょく　ね……▼
 この　とくせいの　ポケモンは
-あいてから　わざを　うけると▽
-じぶんの　タイプが▽
+あいてから　わざを　うけると▼
+じぶんの　タイプが
 うけた　わざの　タイプと▽
 おなじに　へんか　するんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:09:44" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:31:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>へんしょく　か……▼
+			<Text>へんしょく　ね……▼
 この特性の　ポケモンは
-相手から　技を　受けると▽
-自分の　タイプが▽
+相手から　技を　受けると▼
+自分の　タイプが
 受けた　技の　タイプと▽
 同じに　変化するんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:20:49" />
+				Time="2011-08-31T06:30:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -857,7 +862,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>めんえき　か……▼
+			<Text>めんえき　ね……▼
 この　とくせいの　ポケモンは
 せんとうで　どくに　ならないんだ▼</Text>
 			<TextModifiedBy
@@ -866,11 +871,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>めんえき　か……▼
+			<Text>めんえき　ね……▼
 この特性の　ポケモンは
 戦闘で　どくに　ならないんだ▼</Text>
 			<TextModifiedBy
@@ -879,7 +884,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -901,7 +906,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もらいび　か……▼
+			<Text>もらいび　ね……▼
 この　とくせいの　ポケモンは
 ほのおタイプの　わざを　うけても▽
 むこうに　してしまえるんだ▼
@@ -914,11 +919,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もらいび　か……▼
+			<Text>もらいび　ね……▼
 この特性の　ポケモンは
 ほのおタイプの　技を　受けても▽
 無効に　してしまえるんだ▼
@@ -931,7 +936,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -953,7 +958,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>りんぷん　か……▼
+			<Text>りんぷん　ね……▼
 この　とくせいの　ポケモンは
 あいての　わざによる▽
 ついかこうかを　うけないんだ▼</Text>
@@ -963,11 +968,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>りんぷん　か……▼
+			<Text>りんぷん　ね……▼
 この特性の　ポケモンは
 相手の　技による▽
 追加効果を　受けないんだ▼</Text>
@@ -977,7 +982,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -999,7 +1004,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マイペース　か……▼
+			<Text>マイペース　ね……▼
 この　とくせいの　ポケモンは
 せんとうで　こんらん　しないんだ▼</Text>
 			<TextModifiedBy
@@ -1008,11 +1013,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マイペース　か……▼
+			<Text>マイペース　ね……▼
 この特性の　ポケモンは
 戦闘で　こんらん　しないんだ▼</Text>
 			<TextModifiedBy
@@ -1021,7 +1026,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1043,7 +1048,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きゅうばん　か……▼
+			<Text>きゅうばん　ね……▼
 この　とくせいの　ポケモンは
 あいてを　ふきとばす　わざを▽
 むこうに　できるんだ▼
@@ -1057,11 +1062,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きゅうばん　か……▼
+			<Text>きゅうばん　ね……▼
 この特性の　ポケモンは
 相手を　ふきとばす　技を▽
 無効に　できるんだ▼
@@ -1075,7 +1080,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1097,7 +1102,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いかく　か……▼
+			<Text>いかく　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　でたときに▽
 あいての　ポケモンの▽
@@ -1112,11 +1117,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いかく　か……▼
+			<Text>いかく　ね……▼
 この特性の　ポケモンは
 戦闘に　でたときに▽
 相手の　ポケモンの▽
@@ -1131,7 +1136,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1153,7 +1158,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かげふみ　か……▼
+			<Text>かげふみ　ね……▼
 この　とくせいの　ポケモンは
 あいての　ポケモンを▽
 にげられなく　してしまうんだ▼
@@ -1166,11 +1171,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かげふみ　か……▼
+			<Text>かげふみ　ね……▼
 この特性の　ポケモンは
 相手の　ポケモンを▽
 逃げられなく　してしまうんだ▼
@@ -1183,7 +1188,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1205,33 +1210,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さめはだ　か……▼
+			<Text>さめはだ　ね……▼
 この　とくせいの　ポケモンは
-ちょくせつこうげき　された　ときに▽
-こうげき　してきた　あいてにも▽
+ちょくせつこうげき　された　ときに▼
+こうげき　してきた　あいてにも
 ダメージを　あたえるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:16:56" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さめはだ　か……▼
+			<Text>さめはだ　ね……▼
 この特性の　ポケモンは
-直接攻撃された　ときに▽
-攻撃してきた　相手にも▽
+直接攻撃された　ときに▼
+攻撃してきた　相手にも
 ダメージを　与えるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:23:37" />
+				Time="2011-08-31T06:16:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1253,7 +1258,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふしぎなまもり　か……▼
+			<Text>ふしぎなまもり　ね……▼
 この　とくせいの　ポケモンは
 こうかばつぐん　になる▽
 タイプの　わざ　いがい　では▽
@@ -1268,11 +1273,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふしぎなまもり　か……▼
+			<Text>ふしぎなまもり　ね……▼
 この特性の　ポケモンは
 こうかばつぐん　になる▽
 タイプの　技以外では▽
@@ -1287,7 +1292,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1309,7 +1314,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふゆう　か……▼
+			<Text>ふゆう　ね……▼
 この　とくせいの　ポケモンは
 じめんタイプの　わざを　うけないんだ▼</Text>
 			<TextModifiedBy
@@ -1318,11 +1323,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふゆう　か……▼
+			<Text>ふゆう　ね……▼
 この特性の　ポケモンは
 じめんタイプの　技を　受けないんだ▼</Text>
 			<TextModifiedBy
@@ -1331,7 +1336,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1353,35 +1358,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほうし　か……▼
+			<Text>ほうし　ね……▼
 この　とくせいの　ポケモンは
-ちょくせつこうげき　された　ときに▽
-こうげき　してきた　あいてを▽
+ちょくせつこうげき　された　ときに▼
+こうげき　してきた　あいてを
 どく　マヒ　ねむりの▽
 どれかに　してしまうことが　あるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:28:31" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:17:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうし　か……▼
+			<Text>ほうし　ね……▼
 この特性の　ポケモンは
-直接攻撃された　ときに▽
-攻撃してきた　相手を▽
+直接攻撃された　ときに▼
+攻撃してきた　相手を
 どく　マヒ　ねむりの▽
 どれかに　してしまうことが　あるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:27:09" />
+				Time="2011-08-31T06:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:26:46" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1403,7 +1408,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シンクロ　か……▼
+			<Text>シンクロ　ね……▼
 この　とくせいの　ポケモンは
 どく　マヒ　やけどに　されると▽
 あいても　おなじに　してしまうんだ▼
@@ -1417,11 +1422,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シンクロ　か……▼
+			<Text>シンクロ　ね……▼
 この特性の　ポケモンは
 どく　マヒ　やけどに　されると▽
 相手も　同じに　してしまうんだ▼
@@ -1435,7 +1440,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1457,7 +1462,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアボディ　か……▼
+			<Text>クリアボディ　ね……▼
 この　とくせいの　ポケモンは
 あいての　わざや　とくせいでは▽
 のうりょくが　さがらないんだ▼
@@ -1472,11 +1477,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアボディ　か……▼
+			<Text>クリアボディ　ね……▼
 この特性の　ポケモンは
 相手の　技や　特性では▽
 能力が　さがらないんだ▼
@@ -1491,7 +1496,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1513,37 +1518,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しぜんかいふく　か……▼
+			<Text>しぜんかいふく　ね……▼
 この　とくせいの　ポケモンは
 せんとうから　ひっこむと▽
 じょうたいいじょうが　なおるんだ▼
-せんとうが　おわった　ときも
+せんとうが　おわったときも
 じょうたいいじょうが　なおるから▽
 おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-22T12:11:56" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:17:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しぜんかいふく　か……▼
+			<Text>しぜんかいふく　ね……▼
 この特性の　ポケモンは
 戦闘から　ひっこむと▽
 状態異常が　治るんだ▼
-戦闘が　終わった　ときも
+戦闘が　終わったときも
 状態異常が　治るから▽
 おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:28:12" />
+				Time="2011-08-31T06:17:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:27:48" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1565,7 +1570,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひらいしん　か……▼
+			<Text>ひらいしん　ね……▼
 この　とくせいの　ポケモンは
 でんきタイプの　わざを　うけても▽
 むこうに　できるんだ▼
@@ -1586,11 +1591,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひらいしん　か……▼
+			<Text>ひらいしん　ね……▼
 この特性の　ポケモンは
 でんきタイプの　技を　受けても▽
 無効に　できるんだ▼
@@ -1611,7 +1616,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1633,7 +1638,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てんのめぐみ　か……▼
+			<Text>てんのめぐみ　ね……▼
 この　とくせいの　ポケモンは
 こうげきわざの　ついかこうかが▽
 でやすく　なるんだ▼</Text>
@@ -1643,11 +1648,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>てんのめぐみ　か……▼
+			<Text>てんのめぐみ　ね……▼
 この特性の　ポケモンは
 攻撃技の　追加効果が▽
 でやすく　なるんだ▼</Text>
@@ -1657,7 +1662,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1679,7 +1684,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すいすい　か……▼
+			<Text>すいすい　ね……▼
 この　とくせいの　ポケモンは
 てんきが　あめの　ばあい▽
 すばやさが　ばいに　なるんだ▼</Text>
@@ -1689,11 +1694,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すいすい　か……▼
+			<Text>すいすい　ね……▼
 この特性の　ポケモンは
 天候が　あめの　場合▽
 すばやさが　倍に　なるんだ▼</Text>
@@ -1703,7 +1708,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1725,7 +1730,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようりょくそ　か……▼
+			<Text>ようりょくそ　ね……▼
 この　とくせいの　ポケモンは
 てんきが　ひざしがつよいの　ばあい▽
 すばやさが　ばいに　なるんだ▼</Text>
@@ -1735,11 +1740,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようりょくそ　か……▼
+			<Text>ようりょくそ　ね……▼
 この特性の　ポケモンは
 天候が　ひざしがつよいの　場合▽
 すばやさが　倍に　なるんだ▼</Text>
@@ -1749,7 +1754,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1771,43 +1776,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はっこう　か……▼
+			<Text>はっこう　ね……▼
 この　とくせいの　ポケモンは
 てもちの　せんとうに　いると▽
 やせいの　ポケモンと▽
 であいやすくなる　なるんだ▼
-えっ？▼
-せんとうでの　こうかは　なにかって？▼
-…………　…………　…………▼
-ざんねんながら
-まだ　はんめいして　ないんだよね▼</Text>
+ちなみに……▼
+せんとうでの　こうかは
+まだ　はんめいして　ないんだよね……▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T09:03:52" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:34:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はっこう　か……▼
+			<Text>はっこう　ね……▼
 この特性の　ポケモンは
 手持ちの　戦闘に　いると▽
 野生の　ポケモンと▽
 であいやすくなる　なるんだ▼
-えっ？▼
-戦闘での　効果は　なにかって？▼
-…………　…………　…………▼
-残念ながら
-まだ　判明して　ないんだよね▼</Text>
+ちなみに……▼
+戦闘での　効果は
+まだ　判明して　ないんだよね……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:30:20" />
+				Time="2011-08-31T06:34:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1825,7 +1826,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1836,7 +1837,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレース　か……▼
+			<Text>トレース　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　でたときに　とくせいが▽
 あいてと　おなじに　へんか　するんだ▼
@@ -1850,11 +1851,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレース　か……▼
+			<Text>トレース　ね……▼
 この特性の　ポケモンは
 戦闘に　でたときに　特性が▽
 相手と　同じに　変化するんだ▼
@@ -1868,7 +1869,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1890,7 +1891,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちからもち　か……▼
+			<Text>ちからもち　ね……▼
 この　とくせいの　ポケモンは
 こうげきが　ばいに　なるんだ▼</Text>
 			<TextModifiedBy
@@ -1899,11 +1900,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちからもち　か……▼
+			<Text>ちからもち　ね……▼
 この特性の　ポケモンは
 攻撃が　倍に　なるんだ▼</Text>
 			<TextModifiedBy
@@ -1912,7 +1913,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1934,33 +1935,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どくのトゲ　か……▼
+			<Text>どくのトゲ　ね……▼
 この　とくせいの　ポケモンは
-ちょくせつこうげき　された　ときに▽
-こうげき　してきた　あいてを▽
+ちょくせつこうげき　された　ときに▼
+こうげき　してきた　あいてを
 どくに　してしまうことが　あるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T09:10:16" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:18:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どくのトゲ　か……▼
+			<Text>どくのトゲ　ね……▼
 この特性の　ポケモンは
-直接攻撃された　ときに▽
-攻撃してきた　相手を▽
+直接攻撃された　ときに▼
+攻撃してきた　相手を
 どくに　してしまうことが　あるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:31:24" />
+				Time="2011-08-31T06:17:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:26:46" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1982,7 +1983,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいしんりょく　か……▼
+			<Text>せいしんりょく　ね……▼
 この　とくせいの　ポケモンは
 ひるむことが　ないんだ▼</Text>
 			<TextModifiedBy
@@ -1991,11 +1992,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいしんりょく　か……▼
+			<Text>せいしんりょく　ね……▼
 この特性の　ポケモンは
 ひるむことが　ないんだ▼</Text>
 			<TextModifiedBy
@@ -2004,7 +2005,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2026,7 +2027,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マグマのよろい　か……▼
+			<Text>マグマのよろい　ね……▼
 この　とくせいの　ポケモンは
 こおりに　なることが　ないんだ▼
 あと……▼
@@ -2038,11 +2039,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マグマのよろい　か……▼
+			<Text>マグマのよろい　ね……▼
 この特性の　ポケモンは
 こおりに　なることが　ないんだ▼
 あと……▼
@@ -2054,7 +2055,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2076,7 +2077,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みずのベール　か……▼
+			<Text>みずのベール　ね……▼
 この　とくせいの　ポケモンは
 やけどに　なることが　ないんだ▼</Text>
 			<TextModifiedBy
@@ -2085,11 +2086,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みずのベール　か……▼
+			<Text>みずのベール　ね……▼
 この特性の　ポケモンは
 やけどに　なることが　ないんだ▼</Text>
 			<TextModifiedBy
@@ -2098,7 +2099,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2120,11 +2121,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じりょく　か……▼
+			<Text>じりょく　ね……▼
 この　とくせいの　ポケモンは
 はがねタイプの　ポケモンを▽
 にげられなく　してしまうんだ▼
-いれかえも　できなく　なるんだけど……▼
+いれかえも　できなく　なるけどね……▼
 わざの　こうかでの　いれかえは
 できるので　おぼえておくといいよ▼
 あと……▼
@@ -2132,20 +2133,20 @@
 はがねタイプの　ポケモンと▽
 であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-25T05:59:53" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:36:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じりょく　か……▼
+			<Text>じりょく　ね……▼
 この特性の　ポケモンは
 はがねタイプの　ポケモンを▽
 逃げられなく　してしまうんだ▼
-入れ換えも　できなく　なるんだけど……▼
+入れ換えも　できなく　なるけどね……▼
 技の　効果での　入れ換えは
 できるので　おぼえておくといいよ▼
 あと……▼
@@ -2154,11 +2155,11 @@
 であいやすくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:31:58" />
+				Time="2011-08-31T06:36:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2180,7 +2181,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうおん　か……▼
+			<Text>ぼうおん　ね……▼
 この　とくせいの　ポケモンは
 おとで　こうげきする　わざを▽
 むこうに　してしまえるんだ▼
@@ -2194,11 +2195,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうおん　か……▼
+			<Text>ぼうおん　ね……▼
 この特性の　ポケモンは
 音で　攻撃する　技を▽
 無効に　してしまえるんだ▼
@@ -2212,7 +2213,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2234,33 +2235,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あめうけざら　か……▼
+			<Text>あめうけざら　ね……▼
 この　とくせいの　ポケモンは
-てんきが　あめの　ばあい▽
-まいターン　すこしずつ▽
+てんきが　あめの　ばあい▼
+まいターン　すこしずつ
 たいりょくが　かいふく　していくんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T09:16:58" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:19:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あめうけざら　か……▼
+			<Text>あめうけざら　ね……▼
 この特性の　ポケモンは
-天候が　あめの　場合▽
-毎ターン　すこしずつ▽
+天候が　あめの　場合▼
+毎ターン　すこしずつ
 体力が　回復していくんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:33:37" />
+				Time="2011-08-31T06:19:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2282,7 +2283,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すなおこし　か……▼
+			<Text>すなおこし　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　でるだけで　てんきを▽
 すなあらしに　してしまえるんだ▼</Text>
@@ -2292,11 +2293,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すなおこし　か……▼
+			<Text>すなおこし　ね……▼
 この特性の　ポケモンは
 戦闘に　でるだけで　天候を▽
 すなあらしに　してしまえるんだ▼</Text>
@@ -2306,7 +2307,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2328,7 +2329,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレッシャー　か……▼
+			<Text>プレッシャー　ね……▼
 この　とくせいの　ポケモンは
 あいてが　つかった　わざの▽
 パワーポイントを▽
@@ -2343,11 +2344,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレッシャー　か……▼
+			<Text>プレッシャー　ね……▼
 この特性の　ポケモンは
 相手が　使った　技の▽
 パワーポイントを▽
@@ -2362,7 +2363,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2384,7 +2385,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あついしぼう　か……▼
+			<Text>あついしぼう　ね……▼
 この　とくせいの　ポケモンは
 ほのおと　こおりタイプの▽
 わざの　いりょくを▽
@@ -2395,11 +2396,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あついしぼう　か……▼
+			<Text>あついしぼう　ね……▼
 この特性の　ポケモンは
 ほのおと　こおりタイプの▽
 技の　威力を▽
@@ -2410,7 +2411,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2432,7 +2433,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はやおき　か……▼
+			<Text>はやおき　ね……▼
 この　とくせいの　ポケモンは
 ねむってしまった　ときに▽
 ふつうよりも　はやく▽
@@ -2443,11 +2444,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はやおき　か……▼
+			<Text>はやおき　ね……▼
 この特性の　ポケモンは
 ねむってしまった　ときに▽
 普通よりも　はやく▽
@@ -2458,7 +2459,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2480,39 +2481,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのおのからだ　か……▼
+			<Text>ほのおのからだ　ね……▼
 この　とくせいの　ポケモンは
-ちょくせつこうげき　された　ときに▽
-こうげき　してきた　あいてを▽
+ちょくせつこうげき　された　ときに▼
+こうげき　してきた　あいてを
 やけど　させることが　あるんだ▼
 あと……▼
 てもちに　いると　タマゴが
 かえりやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T09:20:03" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:20:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほのおのからだ　か……▼
+			<Text>ほのおのからだ　ね……▼
 この特性の　ポケモンは
-直接攻撃された　ときに▽
-攻撃してきた　相手を▽
+直接攻撃された　ときに▼
+攻撃してきた　相手を
 やけど　させることが　あるんだ▼
 あと……▼
 手持ちに　いると　タマゴが
 かえりやすくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:34:34" />
+				Time="2011-08-31T06:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:26:46" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2534,7 +2535,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にげあし　か……▼
+			<Text>にげあし　ね……▼
 この　とくせいの　ポケモンは
 やせいの　ポケモンとの　せんとうから▽
 かならず　にげられるんだ▼
@@ -2547,11 +2548,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>にげあし　か……▼
+			<Text>にげあし　ね……▼
 この特性の　ポケモンは
 野生の　ポケモンとの　戦闘から▽
 必ず　逃げられるんだ▼
@@ -2564,7 +2565,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2586,7 +2587,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>するどいめ　か……▼
+			<Text>するどいめ　ね……▼
 この　とくせいの　ポケモンは
 せんとうで　めいちゅうりつを▽
 さげられる　ことが　ないんだ▼
@@ -2600,11 +2601,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>するどいめ　か……▼
+			<Text>するどいめ　ね……▼
 この特性の　ポケモンは
 戦闘で　命中率を▽
 さげられる　ことが　ないんだ▼
@@ -2618,7 +2619,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:35:15" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2640,7 +2641,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいりきバサミ　か……▼
+			<Text>かいりきバサミ　ね……▼
 この　とくせいの　ポケモンは
 せんとうで　こうげきを▽
 さげられる　ことが　ないんだ▼</Text>
@@ -2650,11 +2651,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいりきバサミ　か……▼
+			<Text>かいりきバサミ　ね……▼
 この特性の　ポケモンは
 戦闘で　攻撃を▽
 さげられる　ことが　ないんだ▼</Text>
@@ -2664,7 +2665,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2686,7 +2687,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ものひろい　か……▼
+			<Text>ものひろい　ね……▼
 この　とくせいの　ポケモンは
 あいてが　つかった　きのみを▽
 そのターンの　おわりに　ひろってきて▽
@@ -2709,11 +2710,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ものひろい　か……▼
+			<Text>ものひろい　ね……▼
 この特性の　ポケモンは
 相手が　使った　きのみを▽
 そのターンの　終わりに　ひろってきて▽
@@ -2736,7 +2737,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2758,7 +2759,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なまけ　か……▼
+			<Text>なまけ　ね……▼
 この　とくせいの　ポケモンは
 ２ターンに　１かいしか▽
 こうどう　することが　できないんだ▼
@@ -2771,11 +2772,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なまけ　か……▼
+			<Text>なまけ　ね……▼
 この特性の　ポケモンは
 ２ターンに　１回しか▽
 行動することが　できないんだ▼
@@ -2788,7 +2789,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2810,7 +2811,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はりきり　か……▼
+			<Text>はりきり　ね……▼
 この　とくせいの　ポケモンは
 こうげきが　あがる　かわりに▽
 めいちゅうりつが　さがるんだ▼
@@ -2828,11 +2829,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はりきり　か……▼
+			<Text>はりきり　ね……▼
 この特性の　ポケモンは
 攻撃が　あがる　かわりに▽
 命中率が　さがるんだ▼
@@ -2850,7 +2851,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:35:15" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2872,7 +2873,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メロメロボディ　か……▼
+			<Text>メロメロボディ　ね……▼
 この　とくせいの　ポケモンは
 ちょくせつこうげき　された　ときに▽
 こうげき　してきた　あいてを▽
@@ -2887,11 +2888,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メロメロボディ　か……▼
+			<Text>メロメロボディ　ね……▼
 この特性の　ポケモンは
 直接攻撃された　ときに▽
 攻撃してきた　相手を▽
@@ -2906,7 +2907,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:26:46" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2928,7 +2929,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラス　か……▼
+			<Text>プラス　ね……▼
 この　とくせいの　ポケモンは
 プラスか　マイナスの▽
 とくせいを　もった　ポケモンと▽
@@ -2944,11 +2945,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラス　か……▼
+			<Text>プラス　ね……▼
 この特性の　ポケモンは
 プラスか　マイナスの▽
 特性を　持った　ポケモンと▽
@@ -2964,7 +2965,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2986,11 +2987,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マイナス　か……▼
+			<Text>マイナス　ね……▼
 この　とくせいの　ポケモンは
 マイナスか　プラスの▽
-とくせいを　もった　ポケモンと▽
-いっしょに　せんとうへ　さんかさせると▽
+とくせいを　もった　ポケモンと▼
+いっしょに　せんとうへ　さんかさせると
 とくこうが　あがるんだ▼
 １ｖｓ１では　いみがないけど
 ダブルや　トリプルの　せんとうでは▽
@@ -2998,19 +2999,19 @@
 すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:38:46" />
+				Time="2011-08-31T05:01:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マイナス　か……▼
+			<Text>マイナス　ね……▼
 この特性の　ポケモンは
 マイナスか　プラスの▽
-特性を　持った　ポケモンと▽
-一緒に　戦闘へ　参加させると▽
+特性を　持った　ポケモンと▼
+一緒に　戦闘へ　参加させると
 特攻が　あがるんだ▼
 １ｖｓ１では　意味がないけど
 ダブルや　トリプルの　戦闘では▽
@@ -3018,11 +3019,11 @@
 すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:39:19" />
+				Time="2011-08-31T05:01:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3044,7 +3045,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てんきや　か……▼
+			<Text>てんきや　ね……▼
 この　とくせいの　ポワルンは
 てんきで　タイプが　へんかするんだ▼
 ひざしがつよいと　ほのおタイプ
@@ -3057,11 +3058,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>てんきや　か……▼
+			<Text>てんきや　ね……▼
 この特性の　ポワルンは
 天候で　タイプが　変化するんだ▼
 ひざしがつよいと　ほのおタイプ
@@ -3074,7 +3075,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3096,7 +3097,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねんちゃく　か……▼
+			<Text>ねんちゃく　ね……▼
 この　とくせいの　ポケモンは
 もっている　どうぐを▽
 うばわれる　ことが　ないんだ▼
@@ -3110,11 +3111,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねんちゃく　か……▼
+			<Text>ねんちゃく　ね……▼
 この特性の　ポケモンは
 持っている　道具を▽
 奪われることが　ないんだ▼
@@ -3128,7 +3129,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3150,7 +3151,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だっぴ　か……▼
+			<Text>だっぴ　ね……▼
 この　とくせいの　ポケモンは
 せんとうちゅうに　じょうたいいじょうを▽
 かいふく　することが　あるんだ▼</Text>
@@ -3160,11 +3161,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だっぴ　か……▼
+			<Text>だっぴ　ね……▼
 この特性の　ポケモンは
 戦闘中に　状態異常を▽
 回復することが　あるんだ▼</Text>
@@ -3174,7 +3175,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:27:48" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3196,7 +3197,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんじょう　か……▼
+			<Text>こんじょう　ね……▼
 この　とくせいの　ポケモンは
 じょうたいいじょうに　なると▽
 こうげきが　あがるんだ▼
@@ -3214,11 +3215,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんじょう　か……▼
+			<Text>こんじょう　ね……▼
 この特性の　ポケモンは
 状態異常に　なると▽
 攻撃が　あがるんだ▼
@@ -3236,7 +3237,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:27:48" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3258,7 +3259,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふしぎなうろこ　か……▼
+			<Text>ふしぎなうろこ　ね……▼
 この　とくせいの　ポケモンは
 じょうたいいじょうに　なると▽
 ぼうぎょが　あがるんだ▼
@@ -3271,11 +3272,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふしぎなうろこ　か……▼
+			<Text>ふしぎなうろこ　ね……▼
 この特性の　ポケモンは
 状態異常に　なると▽
 防御が　あがるんだ▼
@@ -3288,7 +3289,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3310,43 +3311,43 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘドロえき　か……▼
+			<Text>ヘドロえき　ね……▼
 この　とくせいの　ポケモンは
-ダメージを　あたえた　あいてから▽
-たいりょくを　すいとる　わざで▽
-ダメージを　うけた　ばあいに▽
-たいりょくを　かいふく　させず▽
+ダメージを　あたえた　あいてから▼
+たいりょくを　すいとる　わざで
+ダメージを　うけた　ばあいに▼
+たいりょくを　かいふく　させず
 ぎゃくに　ダメージを　あたえるんだ▼
 でも……▼
 こうげきの　ダメージは　うけるので
 ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T10:00:41" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T05:17:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘドロえき　か……▼
+			<Text>ヘドロえき　ね……▼
 この特性の　ポケモンは
-ダメージを　与えた　相手から▽
-体力を　すいとる　技で▽
-ダメージを　受けた　場合に▽
-体力を　回復させず▽
+ダメージを　与えた　相手から▼
+体力を　すいとる　技で
+ダメージを　受けた　場合に▼
+体力を　回復させず
 逆に　ダメージを　与えるんだ▼
 でも……▼
 攻撃の　ダメージは　受けるので
 注意すること▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:31:27" />
+				Time="2011-08-31T05:17:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3368,7 +3369,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しんりょく　か……▼
+			<Text>しんりょく　ね……▼
 この　とくせいの　ポケモンは
 たいりょくが　へって　ピンチになると▼
 くさタイプの
@@ -3380,11 +3381,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しんりょく　か……▼
+			<Text>しんりょく　ね……▼
 この特性の　ポケモンは
 体力が　減って　ピンチになると▼
 くさタイプの
@@ -3396,7 +3397,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3418,7 +3419,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もうか　か……▼
+			<Text>もうか　ね……▼
 この　とくせいの　ポケモンは
 たいりょくが　へって　ピンチになると▼
 ほのおタイプの
@@ -3430,11 +3431,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もうか　か……▼
+			<Text>もうか　ね……▼
 この特性の　ポケモンは
 体力が　減って　ピンチになると▼
 ほのおタイプの
@@ -3446,7 +3447,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3468,7 +3469,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきりゅう　か……▼
+			<Text>げきりゅう　ね……▼
 この　とくせいの　ポケモンは
 たいりょくが　へって　ピンチになると▼
 みずタイプの
@@ -3480,11 +3481,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げきりゅう　か……▼
+			<Text>げきりゅう　ね……▼
 この特性の　ポケモンは
 体力が　減って　ピンチになると▼
 みずタイプの
@@ -3496,7 +3497,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3518,7 +3519,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むしのしらせ　か……▼
+			<Text>むしのしらせ　ね……▼
 この　とくせいの　ポケモンは
 たいりょくが　へって　ピンチになると▼
 むしタイプの
@@ -3530,11 +3531,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>むしのしらせ　か……▼
+			<Text>むしのしらせ　ね……▼
 この特性の　ポケモンは
 体力が　減って　ピンチになると▼
 むしタイプの
@@ -3546,7 +3547,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3568,7 +3569,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いしあたま　か……▼
+			<Text>いしあたま　ね……▼
 この　とくせいの　ポケモンは
 はんどうを　うける　わざを　だしても▽
 はんどうを　うけないんだ▼</Text>
@@ -3578,11 +3579,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いしあたま　か……▼
+			<Text>いしあたま　ね……▼
 この特性の　ポケモンは
 反動を　受ける　技を　だしても▽
 反動を　受けないんだ▼</Text>
@@ -3592,7 +3593,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3614,33 +3615,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひでり　か……▼
+			<Text>ひでり　ね……▼
 この　とくせいの　ポケモンは
-せんとうに　でるだけで▽
-てんきを　ひざしがつよいに▽
+せんとうに　でるだけで▼
+てんきを　ひざしがつよいに
 へんか　させるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:45:17" />
+				Time="2011-08-31T05:18:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひでり　か……▼
+			<Text>ひでり　ね……▼
 この特性の　ポケモンは
-戦闘に　でるだけで▽
-天候を　ひざしがつよいに▽
+戦闘に　でるだけで▼
+天候を　ひざしがつよいに
 変化させるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:45:08" />
+				Time="2011-08-31T05:18:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3662,12 +3663,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありじごく　か……▼
+			<Text>ありじごく　ね……▼
 この　とくせいの　ポケモンは
 ひこうタイプや　とくせいが　ふゆうの▽
 ポケモン　いがいを▽
 にげられなく　してしまうんだ▼
-いれかえも　できなく　なるんだけど……▼
+いれかえも　できなく　なるけどね……▼
 わざの　こうかでの　いれかえは
 できるので　おぼえておくといいよ▼
 あと……▼
@@ -3675,21 +3676,21 @@
 やせいの　ポケモンと▽
 であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-25T12:15:42" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:37:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:17" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありじごく　か……▼
+			<Text>ありじごく　ね……▼
 この特性の　ポケモンは
 ひこうタイプや　特性が　ふゆうの▽
 ポケモン以外を▽
 逃げられなく　してしまうんだ▼
-入れ換えも　できなくなるんだけど……▼
+入れ換えも　できなく　なるけどね……▼
 技の　効果での　入れ換えは
 できるので　おぼえておくといいよ▼
 あと……▼
@@ -3698,11 +3699,11 @@
 であいやすくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:45:49" />
+				Time="2011-08-31T06:38:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3724,7 +3725,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やるき　か……▼
+			<Text>やるき　ね……▼
 この　とくせいの　ポケモンは
 せんとうで　ねむりに　ならないんだ▼
 あと……▼
@@ -3737,11 +3738,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やるき　か……▼
+			<Text>やるき　ね……▼
 この特性の　ポケモンは
 戦闘で　ねむりに　ならないんだ▼
 あと……▼
@@ -3754,7 +3755,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3776,7 +3777,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろいけむり　か……▼
+			<Text>しろいけむり　ね……▼
 この　とくせいの　ポケモンは
 あいての　わざや　とくせいでは▽
 のうりょくが　さがらないんだ▼
@@ -3795,11 +3796,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しろいけむり　か……▼
+			<Text>しろいけむり　ね……▼
 この特性の　ポケモンは
 相手の　技や　特性では▽
 能力が　さがらないんだ▼
@@ -3818,7 +3819,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3840,7 +3841,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヨガパワー　か……▼
+			<Text>ヨガパワー　ね……▼
 この　とくせいの　ポケモンは
 こうげきが　ばいに　なるんだ▼</Text>
 			<TextModifiedBy
@@ -3849,11 +3850,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヨガパワー　か……▼
+			<Text>ヨガパワー　ね……▼
 この特性の　ポケモンは
 攻撃が　倍に　なるんだ▼</Text>
 			<TextModifiedBy
@@ -3862,7 +3863,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3884,7 +3885,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シェルアーマー　か……▼
+			<Text>シェルアーマー　ね……▼
 この　とくせいの　ポケモンは
 あいての　こうげきが▽
 きゅうしょに　あたらなく　なるんだ▼
@@ -3897,11 +3898,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シェルアーマー　か……▼
+			<Text>シェルアーマー　ね……▼
 この特性の　ポケモンは
 相手の　攻撃が▽
 急所に　当たらなくなるんだ▼
@@ -3914,7 +3915,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:46:53" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3936,7 +3937,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エアロック　か……▼
+			<Text>エアロック　ね……▼
 この　とくせいの　ポケモンが
 せんとう　している　さいちゅうは▽
 てんきの　こうかが　なくなるんだ▼
@@ -3950,11 +3951,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エアロック　か……▼
+			<Text>エアロック　ね……▼
 この特性の　ポケモンが
 戦闘している　最中は▽
 天候の　効果が　なくなるんだ▼
@@ -3968,7 +3969,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3990,7 +3991,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちどりあし　か……▼
+			<Text>ちどりあし　ね……▼
 この　とくせいの　ポケモンは
 こんらん　すると▽
 かいひりつが　あがるんだ▼</Text>
@@ -4000,11 +4001,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちどりあし　か……▼
+			<Text>ちどりあし　ね……▼
 この特性の　ポケモンは
 こんらん　すると▽
 回避率が　あがるんだ▼</Text>
@@ -4014,7 +4015,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4036,7 +4037,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんきエンジン　か……▼
+			<Text>でんきエンジン　ね……▼
 この　とくせいの　ポケモンは
 でんきタイプの　わざを　うけると▽
 すばやさの　のうりょくが　あがるんだ▼</Text>
@@ -4046,11 +4047,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>でんきエンジン　か……▼
+			<Text>でんきエンジン　ね……▼
 この特性の　ポケモンは
 でんきタイプの　技を　受けると▽
 すばやさの　能力が　あがるんだ▼</Text>
@@ -4060,7 +4061,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4082,7 +4083,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とうそうしん　か……▼
+			<Text>とうそうしん　ね……▼
 この　とくせいの　ポケモンは
 せいべつが　おなじ　あいてには▽
 わざの　いりょくが　あがるんだ▼</Text>
@@ -4092,11 +4093,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とうそうしん　か……▼
+			<Text>とうそうしん　ね……▼
 この特性の　ポケモンは
 性別が　同じ　相手には▽
 技の　威力が　あがるんだ▼</Text>
@@ -4106,7 +4107,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4128,7 +4129,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふくつのこころ　か……▼
+			<Text>ふくつのこころ　ね……▼
 この　とくせいの　ポケモンは
 ひるまされると▽
 すばやさの　のうりょくが　あがるんだ▼</Text>
@@ -4138,11 +4139,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふくつのこころ　か……▼
+			<Text>ふくつのこころ　ね……▼
 この特性の　ポケモンは
 ひるまされると▽
 すばやさの　能力が　あがるんだ▼</Text>
@@ -4152,7 +4153,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4174,7 +4175,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆきがくれ　か……▼
+			<Text>ゆきがくれ　ね……▼
 この　とくせいの　ポケモンは
 てんきが　あられの　とき▽
 かいひりつが　あがるんだ▼
@@ -4189,11 +4190,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆきがくれ　か……▼
+			<Text>ゆきがくれ　ね……▼
 この特性の　ポケモンは
 天候が　あられの　とき▽
 回避率が　あがるんだ▼
@@ -4208,7 +4209,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4230,7 +4231,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くいしんぼう　か……▼
+			<Text>くいしんぼう　ね……▼
 この　とくせいの　ポケモンは
 たいりょくの　へりが　すくなくても▽
 たいりょく　かいふくの　きのみを▽
@@ -4241,22 +4242,22 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くいしんぼう　か……▼
+			<Text>くいしんぼう　ね……▼
 この特性の　ポケモンは
 体力の　減りが　少なくても▽
 体力　回復の　きのみを▽
-使って　くれるんだ▼</Text>
+使ってくれるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:49:01" />
+				Time="2011-08-31T06:38:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4278,7 +4279,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いかりのつぼ　か……▼
+			<Text>いかりのつぼ　ね……▼
 この　とくせいの　ポケモンは
 こうげきを　きゅうしょに　あてられると▽
 こうげきの　のうりょくが▽
@@ -4289,11 +4290,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いかりのつぼ　か……▼
+			<Text>いかりのつぼ　ね……▼
 この特性の　ポケモンは
 攻撃を　急所に　当てられると▽
 攻撃の　能力が▽
@@ -4304,7 +4305,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:46:53" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4326,7 +4327,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かるわざ　か……▼
+			<Text>かるわざ　ね……▼
 この　とくせいの　ポケモンは
 もっていた　どうぐが　なくなると▽
 すばやさが　ばいに　なるんだ▼
@@ -4339,11 +4340,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かるわざ　か……▼
+			<Text>かるわざ　ね……▼
 この特性の　ポケモンは
 持っていた　道具が　なくなると▽
 すばやさが　倍に　なるんだ▼
@@ -4356,7 +4357,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4378,7 +4379,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいねつ　か……▼
+			<Text>たいねつ　ね……▼
 この　とくせいの　ポケモンは
 ほのおタイプの　わざで▽
 うける　ダメージを▽
@@ -4392,25 +4393,25 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいねつ　か……▼
+			<Text>たいねつ　ね……▼
 この特性の　ポケモンは
 ほのおタイプの　技で▽
-うける　ダメージを▽
+受ける　ダメージを▽
 半分に　することが　できるんだ▼
 やけどの　ダメージも
 半分に　なるから▽
 おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:50:51" />
+				Time="2011-08-31T05:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:50:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4432,7 +4433,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たんじゅん　か……▼
+			<Text>たんじゅん　ね……▼
 この　とくせいの　ポケモンは
 のうりょくへんかの　こうかが▽
 ばいに　なるんだ▼
@@ -4445,11 +4446,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たんじゅん　か……▼
+			<Text>たんじゅん　ね……▼
 この特性の　ポケモンは
 能力変化の　効果が▽
 倍に　なるんだ▼
@@ -4462,7 +4463,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4484,7 +4485,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんそうはだ　か……▼
+			<Text>かんそうはだ　ね……▼
 この　とくせいの　ポケモンは
 みずタイプの　わざを　うけたときや▽
 てんきが　あめの　ばあい▽
@@ -4499,11 +4500,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんそうはだ　か……▼
+			<Text>かんそうはだ　ね……▼
 この特性の　ポケモンは
 みずタイプの　技を　受けたときや▽
 天候が　あめの　場合▽
@@ -4518,7 +4519,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4540,37 +4541,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダウンロード　か……▼
+			<Text>ダウンロード　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　でたときに　あいての▽
-ぼうぎょと　とくぼうを　くらべて▽
-ぼうぎょが　ひくければ　こうげきの▽
+ぼうぎょと　とくぼうを　くらべて▼
+ぼうぎょが　ひくければ　こうげきの
 とくぼうが　ひくければ　とくこうの▽
 どちらかの　のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:50" />
+				Time="2011-08-31T05:19:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダウンロード　か……▼
+			<Text>ダウンロード　ね……▼
 この特性の　ポケモンは
 戦闘に　でたときに　相手の▽
-防御と　特防を　比べて▽
-防御が　低ければ　攻撃の▽
+防御と　特防を　比べて▼
+防御が　低ければ　攻撃の
 特防が　低ければ　特攻の▽
 どちらかの　能力が　あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:53:21" />
+				Time="2011-08-31T05:19:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4592,7 +4593,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てつのこぶし　か……▼
+			<Text>てつのこぶし　ね……▼
 この　とくせいの　ポケモンが
 パンチで　こうげきした　ばあい▽
 わざの　いりょくが　あがるんだ▼</Text>
@@ -4602,11 +4603,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>てつのこぶし　か……▼
+			<Text>てつのこぶし　ね……▼
 この特性の　ポケモンが
 パンチで　攻撃した　場合▽
 技の　威力が　あがるんだ▼</Text>
@@ -4616,7 +4617,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4638,7 +4639,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポイズンヒール　か……▼
+			<Text>ポイズンヒール　ね……▼
 この　とくせいの　ポケモンは
 どくを　うけると▽
 まいターン　すこしずつ▽
@@ -4649,11 +4650,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポイズンヒール　か……▼
+			<Text>ポイズンヒール　ね……▼
 この特性の　ポケモンは
 どくを　受けると▽
 毎ターン　すこしずつ▽
@@ -4664,7 +4665,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4686,7 +4687,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てきおうりょく　か……▼
+			<Text>てきおうりょく　ね……▼
 この　とくせいの　ポケモンは
 じぶんと　おなじ　タイプのわざを▽
 だしたときの　あがる　ダメージが▽
@@ -4697,11 +4698,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>てきおうりょく　か……▼
+			<Text>てきおうりょく　ね……▼
 この特性の　ポケモンは
 自分と　同じ　タイプの技を▽
 だしたときの　あがる　ダメージが▽
@@ -4712,7 +4713,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4734,7 +4735,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スキルリンク　か……▼
+			<Text>スキルリンク　ね……▼
 この　とくせいの　ポケモンが
 れんぞくわざを　くりだすと▽
 わざの　でる　かいすうが▽
@@ -4745,11 +4746,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スキルリンク　か……▼
+			<Text>スキルリンク　ね……▼
 この特性の　ポケモンが
 連続技を　くりだすと▽
 技の　でる　回数が▽
@@ -4760,7 +4761,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4782,7 +4783,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うるおいボディ　か……▼
+			<Text>うるおいボディ　ね……▼
 この　とくせいの　ポケモンは
 てんきが　あめの　ばあい▽
 まいターン　じょうたいいじょうが▽
@@ -4793,11 +4794,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うるおいボディ　か……▼
+			<Text>うるおいボディ　ね……▼
 この特性の　ポケモンは
 天候が　あめの　場合▽
 毎ターン　状態異常が▽
@@ -4808,7 +4809,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4830,7 +4831,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サンパワー　か……▼
+			<Text>サンパワー　ね……▼
 この　とくせいの　ポケモンは
 てんきが　ひざしがつよいの　ばあい▽
 とくこうが　あがるんだけど……▼
@@ -4843,11 +4844,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サンパワー　か……▼
+			<Text>サンパワー　ね……▼
 この特性の　ポケモンは
 天候が　ひざしがつよいの　場合▽
 特攻が　あがるんだけど……▼
@@ -4860,7 +4861,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4882,7 +4883,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はやあし　か……▼
+			<Text>はやあし　ね……▼
 この　とくせいの　ポケモンは
 じょうたいいじょうに　なると▽
 すばやさが　あがるんだ▼
@@ -4898,11 +4899,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はやあし　か……▼
+			<Text>はやあし　ね……▼
 この特性の　ポケモンは
 状態異常に　なると▽
 すばやさが　あがるんだ▼
@@ -4918,7 +4919,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:27:48" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4940,7 +4941,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマルスキン　か……▼
+			<Text>ノーマルスキン　ね……▼
 この　とくせいの　ポケモンは
 だす　わざの　すべてが▽
 ノーマルタイプに　へんか　するんだ▼</Text>
@@ -4950,11 +4951,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ノーマルスキン　か……▼
+			<Text>ノーマルスキン　ね……▼
 この特性の　ポケモンは
 だす　技の　すべてが▽
 ノーマルタイプに　変化するんだ▼</Text>
@@ -4964,7 +4965,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4986,7 +4987,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スナイパー　か……▼
+			<Text>スナイパー　ね……▼
 この　とくせいの　ポケモンは
 こうげきを　きゅうしょに▽
 あてたときの　ダメージが▽
@@ -4997,11 +4998,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スナイパー　か……▼
+			<Text>スナイパー　ね……▼
 この特性の　ポケモンは
 攻撃を　急所に▽
 当てたときの　ダメージが▽
@@ -5012,7 +5013,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:46:53" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5034,7 +5035,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マジックガード　か……▼
+			<Text>マジックガード　ね……▼
 この　とくせいの　ポケモンは
 あいての　こうげき　いがいでは▽
 ダメージを　うけないんだ▼</Text>
@@ -5044,11 +5045,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マジックガード　か……▼
+			<Text>マジックガード　ね……▼
 この特性の　ポケモンは
 相手の　攻撃以外では▽
 ダメージを　受けないんだ▼</Text>
@@ -5058,7 +5059,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5080,7 +5081,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーガード　か……▼
+			<Text>ノーガード　ね……▼
 この　とくせいの　ポケモンが
 せんとうに　でている　ばあい▽
 おたがいの　こうげきが▽
@@ -5095,11 +5096,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ノーガード　か……▼
+			<Text>ノーガード　ね……▼
 この特性の　ポケモンが
 戦闘に　でている　場合▽
 お互いの　攻撃が▽
@@ -5114,7 +5115,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5136,7 +5137,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あとだし　か……▼
+			<Text>あとだし　ね……▼
 この　とくせいの　ポケモンは
 すばやさに　かんけいなく▽
 かならず　こうこうに　なるんだ▼</Text>
@@ -5146,11 +5147,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あとだし　か……▼
+			<Text>あとだし　ね……▼
 この特性の　ポケモンは
 すばやさに　関係なく▽
 かならず　後攻に　なるんだ▼</Text>
@@ -5160,7 +5161,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5182,39 +5183,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テクニシャン　か……▼
+			<Text>テクニシャン　ね……▼
 この　とくせいの　ポケモンは
 よわい　わざの　いりょくを▽
-あげる　ことが　できるんだ▼
+あげることが　できるんだ▼
 ほかの　こうかで
 わざの　いりょくが　あがっていると▽
 こうかが　はつどう　しなくなるから▽
 ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-26T08:35:39" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:41:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テクニシャン　か……▼
+			<Text>テクニシャン　ね……▼
 この特性の　ポケモンは
 弱い　技の　威力を▽
-あげる　ことが　できるんだ▼
+あげることが　できるんだ▼
 他の　効果で
 技の　威力が　あがっていると▽
 効果が　発動しなくなるから▽
 注意すること▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:56:54" />
+				Time="2011-08-31T06:41:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5236,7 +5237,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リーフガード　か……▼
+			<Text>リーフガード　ね……▼
 この　とくせいの　ポケモンは
 てんきが　ひざしがつよいの　ばあい▽
 じょうたいいじょうに　ならないんだ▼</Text>
@@ -5246,21 +5247,21 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リーフガード　か……▼
+			<Text>リーフガード　ね……▼
 この特性の　ポケモンは
-てんきが　ひざしがつよいの　場合▽
+天候が　ひざしがつよいの　場合▽
 状態異常に　ならないんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-31T06:41:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5282,7 +5283,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぶきよう　か……▼
+			<Text>ぶきよう　ね……▼
 この　とくせいの　ポケモンが
 もっている　どうぐは▽
 こうかを　はつどう　しなくなるんだ▼</Text>
@@ -5292,11 +5293,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぶきよう　か……▼
+			<Text>ぶきよう　ね……▼
 この特性の　ポケモンが
 持っている　道具は▽
 効果を　発動しなくなるんだ▼</Text>
@@ -5306,7 +5307,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5328,7 +5329,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かたやぶり　か……▼
+			<Text>かたやぶり　ね……▼
 この　とくせいの　ポケモンは
 あいての　とくせいを　むこうにして▽
 こうげき　することが　できるんだ▼</Text>
@@ -5338,11 +5339,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かたやぶり　か……▼
+			<Text>かたやぶり　ね……▼
 この特性の　ポケモンは
 相手の　特性を　無効にして▽
 攻撃することが　できるんだ▼</Text>
@@ -5352,7 +5353,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:27" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5374,7 +5375,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょううん　か……▼
+			<Text>きょううん　ね……▼
 この　とくせいの　ポケモンは
 わざが　きゅうしょに▽
 あたりやすく　なるんだ▼</Text>
@@ -5384,11 +5385,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょううん　か……▼
+			<Text>きょううん　ね……▼
 この特性の　ポケモンは
 技が　急所に▽
 当たりやすく　なるんだ▼</Text>
@@ -5398,7 +5399,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:46:53" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5420,7 +5421,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうばく　か……▼
+			<Text>ゆうばく　ね……▼
 この　とくせいの　ポケモンは
 ちょくせつこうげき　された　ときに▽
 ひんしに　なると▽
@@ -5431,11 +5432,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆうばく　か……▼
+			<Text>ゆうばく　ね……▼
 この特性の　ポケモンは
 直接攻撃された　ときに▽
 ひんしに　なると▽
@@ -5446,7 +5447,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:26:46" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5468,10 +5469,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きけんよち　か……▼
+			<Text>きけんよち　ね……▼
 この　とくせいの　ポケモンは
-あいてが　じぶんに　たいして▽
-こうかばつぐんの　わざを▽
+あいてが　じぶんに　たいして▼
+こうかばつぐんの　わざを
 もっている　ばあい▽
 みぶるいして　おしえて　くれるんだ▼
 いちげきで　あいてを
@@ -5481,19 +5482,19 @@
 おしえて　くれるから▽
 おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T10:15:43" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:42:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きけんよち　か……▼
+			<Text>きけんよち　ね……▼
 この特性の　ポケモンは
-相手が　自分に　対して▽
-こうかばつぐんの　技を▽
+相手が　自分に　対して▼
+こうかばつぐんの　技を
 持っている　場合▽
 みぶるいして　教えてくれるんだ▼
 一撃で　相手を
@@ -5504,11 +5505,11 @@
 おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:58:41" />
+				Time="2011-08-31T06:42:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5530,7 +5531,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よちむ　か……▼
+			<Text>よちむ　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　さんか　したときに▽
 あいてが　おぼえている　わざを▽
@@ -5545,11 +5546,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よちむ　か……▼
+			<Text>よちむ　ね……▼
 この特性の　ポケモンは
 戦闘に　参加したときに▽
 相手が　おぼえている　技を▽
@@ -5564,7 +5565,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5586,7 +5587,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てんねん　か……▼
+			<Text>てんねん　ね……▼
 この　とくせいの　ポケモンは
 のうりょくへんかを　むし　して▽
 たたかう　ことが　できるんだ▼
@@ -5600,11 +5601,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>てんねん　か……▼
+			<Text>てんねん　ね……▼
 この特性の　ポケモンは
 能力変化を　無視して▽
 戦うことが　できるんだ▼
@@ -5618,7 +5619,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5640,7 +5641,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いろめがね　か……▼
+			<Text>いろめがね　ね……▼
 この　とくせいの　ポケモンは
 こうかはいまひとつの　ときに▽
 あたえる　ダメージが　ばいになるんだ▼</Text>
@@ -5650,11 +5651,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いろめがね　か……▼
+			<Text>いろめがね　ね……▼
 この特性の　ポケモンは
 こうかはいまひとつの　ときに▽
 与える　ダメージが　倍になるんだ▼</Text>
@@ -5664,7 +5665,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5686,7 +5687,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フィルター　か……▼
+			<Text>フィルター　ね……▼
 この　とくせいの　ポケモンは
 あいてから　うける
 こうかばつぐんの　ダメージを▽
@@ -5697,11 +5698,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フィルター　か……▼
+			<Text>フィルター　ね……▼
 この特性の　ポケモンは
 相手から　受ける
 こうかばつぐんの　ダメージを▽
@@ -5712,7 +5713,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5734,39 +5735,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スロースタート　か……▼
+			<Text>スロースタート　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　でて　５ターンの　あいだ▽
 こうげきと　すばやさが
-はんぶんまで　さがって　しまうんだ▼
+はんぶんまで　さがってしまうんだ▼
 いかに　５ターン　たえるか！▼
 それが　この　とくせいで
 しょうりする　ポイント　だろうね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-26T09:56:45" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:42:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スロースタート　か……▼
+			<Text>スロースタート　ね……▼
 この特性の　ポケモンは
 戦闘に　でて　５ターンの　あいだ▽
 攻撃と　すばやさが
-半分まで　さがって　しまうんだ▼
+半分まで　さがってしまうんだ▼
 いかに　５ターン　耐えるか！▼
 それが　この特性で
 勝利する　ポイント　だろうね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:00:10" />
+				Time="2011-08-31T06:42:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:50:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5788,7 +5789,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きもったま　か……▼
+			<Text>きもったま　ね……▼
 この　とくせいの　ポケモンは
 ゴーストタイプの　ポケモンに▽
 ノーマルタイプの　わざを▽
@@ -5799,11 +5800,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きもったま　か……▼
+			<Text>きもったま　ね……▼
 この特性の　ポケモンは
 ゴーストタイプの　ポケモンに▽
 ノーマルタイプの　技を▽
@@ -5814,7 +5815,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5836,7 +5837,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よびみず　か……▼
+			<Text>よびみず　ね……▼
 この　とくせいの　ポケモンは
 みずタイプの　わざを　うけても▽
 むこうに　できるんだ▼
@@ -5857,11 +5858,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よびみず　か……▼
+			<Text>よびみず　ね……▼
 この特性の　ポケモンは
 みずタイプの　技を　受けても▽
 無効に　できるんだ▼
@@ -5882,7 +5883,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5904,7 +5905,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイスボディ　か……▼
+			<Text>アイスボディ　ね……▼
 この　とくせいの　ポケモンは
 てんきが　あられの　ばあい▽
 まいターン　すこしずつ▽
@@ -5915,11 +5916,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイスボディ　か……▼
+			<Text>アイスボディ　ね……▼
 この特性の　ポケモンは
 天候が　あられの　場合▽
 毎ターン　すこしずつ▽
@@ -5930,7 +5931,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5952,7 +5953,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハードロック　か……▼
+			<Text>ハードロック　ね……▼
 この　とくせいの　ポケモンは
 あいてから　うける
 こうかばつぐんの　ダメージを▽
@@ -5963,11 +5964,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハードロック　か……▼
+			<Text>ハードロック　ね……▼
 この特性の　ポケモンは
 相手から　受ける
 こうかばつぐんの　ダメージを▽
@@ -5978,7 +5979,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6000,7 +6001,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆきふらし　か……▼
+			<Text>ゆきふらし　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　でるだけで▽
 てんきを　あられに　してしまえるんだ▼</Text>
@@ -6010,11 +6011,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆきふらし　か……▼
+			<Text>ゆきふらし　ね……▼
 この特性の　ポケモンは
 戦闘に　でるだけで▽
 天候を　あられに　してしまえるんだ▼</Text>
@@ -6024,7 +6025,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6046,7 +6047,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みつあつめ　か……▼
+			<Text>みつあつめ　ね……▼
 この　とくせいの　ポケモンは
 せんとうが　おわった　ときに▽
 たまに　あまいミツを▽
@@ -6060,11 +6061,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みつあつめ　か……▼
+			<Text>みつあつめ　ね……▼
 この特性の　ポケモンは
 戦闘が　終わったときに▽
 たまに　あまいミツを▽
@@ -6078,7 +6079,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6100,7 +6101,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おみとおし　か……▼
+			<Text>おみとおし　ね……▼
 この　とくせいの　ポケモンは
 あいてが　どうぐを　もっていると▽
 なにを　もっているかを▽
@@ -6111,11 +6112,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おみとおし　か……▼
+			<Text>おみとおし　ね……▼
 この特性の　ポケモンは
 相手が　道具を　持っていると▽
 なにを　持っているかを▽
@@ -6126,7 +6127,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6148,7 +6149,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すてみ　か……▼
+			<Text>すてみ　ね……▼
 この　とくせいの　ポケモンが
 はんどうを　うける　わざで▽
 こうげきした　ばあい▽
@@ -6162,11 +6163,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すてみ　か……▼
+			<Text>すてみ　ね……▼
 この特性の　ポケモンが
 反動を　受ける　技で▽
 攻撃した　場合▽
@@ -6180,7 +6181,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6202,7 +6203,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マルチタイプ　か……▼
+			<Text>マルチタイプ　ね……▼
 この　とくせいの　アルセウスは
 なまえに　プレートと　ついている▽
 どうぐを　もっていると▽
@@ -6214,23 +6215,23 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マルチタイプ　か……▼
+			<Text>マルチタイプ　ね……▼
 この特性の　アルセウスは
-なまえに　プレートと　ついている▽
+名前に　プレートと　ついている▽
 道具を　持っていると▽
 それぞれの　プレートに　対応した▽
 タイプに　変化するんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:03:55" />
+				Time="2011-08-31T06:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6252,35 +6253,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フラワーギフト　か……▼
+			<Text>フラワーギフト　ね……▼
 この　とくせいの　チェリムは
-てんきが　ひざしがつよいの　ばあい▽
-すがたが　へんかして▽
+てんきが　ひざしがつよいの　ばあい▼
+すがたが　へんかして
 こうげきと　とくぼうの　のうりょくが▽
 あがるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T10:21:48" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:45:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フラワーギフト　か……▼
+			<Text>フラワーギフト　ね……▼
 この特性の　チェリムは
-天候が　ひざしがつよいの　場合▽
-姿が　変化して▽
+天候が　ひざしがつよいの　場合▼
+姿が　変化して
 攻撃と　特防の　能力が▽
 あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:05:00" />
+				Time="2011-08-31T06:45:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:04:16" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6302,7 +6303,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナイトメア　か……▼
+			<Text>ナイトメア　ね……▼
 この　とくせいの　ポケモンは
 まいターン　ねむっている▽
 あいての　たいりょくを　へらすんだ▼</Text>
@@ -6312,11 +6313,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナイトメア　か……▼
+			<Text>ナイトメア　ね……▼
 この特性の　ポケモンは
 毎ターン　ねむっている▽
 相手の　体力を　減らすんだ▼</Text>
@@ -6326,7 +6327,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6348,37 +6349,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わるいてぐせ　か……▼
+			<Text>わるいてぐせ　ね……▼
 この　とくせいの　ポケモンは
 ちょくせつこうげき　した　ときに▽
 あいての　どうぐを　うばうんだ▼
 まぁ……▼
-もちものを　もっていない　ことが
+もちものを　もっていないことが
 じょうけん　なんだけどね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T10:24:57" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:45:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わるいてぐせ　か……▼
+			<Text>わるいてぐせ　ね……▼
 この特性の　ポケモンは
-直接攻撃　した　ときに▽
+直接攻撃した　ときに▽
 相手の　道具を　奪うんだ▼
 まぁ……▼
-道具を　持っていない　ことが
+道具を　持っていないことが
 条件なんだけどね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:05:26" />
+				Time="2011-08-31T06:45:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:04:42" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6400,31 +6401,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちからずく　か……▼
+			<Text>ちからずく　ね……▼
 この　とくせいの　ポケモンは
 わざの　いりょくが　あがる　かわりに▽
-ついかこうかが　でなく　なるんだ▼</Text>
+ついかこうかが　でなくなるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-26T11:40:08" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:45:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちからずく　か……▼
+			<Text>ちからずく　ね……▼
 この特性の　ポケモンは
 技の　威力が　あがる　かわりに▽
-追加効果が　でなく　なるんだ▼</Text>
+追加効果が　でなくなるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:05:38" />
+				Time="2011-08-31T06:45:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6446,33 +6447,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あまのじゃく　か……▼
+			<Text>あまのじゃく　ね……▼
 この　とくせいの　ポケモンは
-のうりょくへんかが　さかさまで▽
-あがったら　さがって▽
-さがったら　あがるんだ▼</Text>
+のうりょくへんかが　さかさま　なんだ▼
+あがったら　さがって
+さがったら　あがるんだよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-26T12:32:32" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:46:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あまのじゃく　か……▼
+			<Text>あまのじゃく　ね……▼
 この特性の　ポケモンは
-能力変化が　さかさまで▽
-あがったら　さがって▽
-さがったら　あがるんだ▼</Text>
+能力変化が　さかさま　なんだ▼
+あがったら　さがって
+さがったら　あがるんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2011-08-31T06:46:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:04:16" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6494,7 +6495,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きんちょうかん　か……▼
+			<Text>きんちょうかん　ね……▼
 この　とくせいの　ポケモンは
 せんとうちゅうに　あいてが▽
 きのみを　つかえなく　してしまうんだ▼</Text>
@@ -6504,11 +6505,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きんちょうかん　か……▼
+			<Text>きんちょうかん　ね……▼
 この特性の　ポケモンは
 戦闘中に　相手が▽
 きのみを　使えなく　してしまうんだ▼</Text>
@@ -6518,7 +6519,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6540,7 +6541,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まけんき　か……▼
+			<Text>まけんき　ね……▼
 この　とくせいの　ポケモンは
 あいてに　のうりょくを　さげられると▽
 こうげきの　のうりょくが▽
@@ -6554,11 +6555,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まけんき　か……▼
+			<Text>まけんき　ね……▼
 この特性の　ポケモンは
 相手に　能力を　さげられると▽
 攻撃の　能力が▽
@@ -6572,7 +6573,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6594,7 +6595,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よわき　か……▼
+			<Text>よわき　ね……▼
 この　とくせいの　ポケモンは
 たいりょくが　はんぶんいかに　なると▽
 こうげきと　とくこうが　さがるんだ▼
@@ -6607,11 +6608,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よわき　か……▼
+			<Text>よわき　ね……▼
 この特性の　ポケモンは
 体力が　半分以下に　なると▽
 攻撃と　特攻が　さがるんだ▼
@@ -6624,7 +6625,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:50:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6646,7 +6647,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>のろわれボディ　か……▼
+			<Text>のろわれボディ　ね……▼
 この　とくせいの　ポケモンは
 あいてから　こうげきを　うけると▽
 こうげき　してきた　わざを▽
@@ -6658,11 +6659,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>のろわれボディ　か……▼
+			<Text>のろわれボディ　ね……▼
 この特性の　ポケモンは
 相手から　攻撃を　受けると▽
 攻撃してきた　技を▽
@@ -6674,7 +6675,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6696,7 +6697,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いやしのこころ　か……▼
+			<Text>いやしのこころ　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　さんか　している▽
 みかたの　じょうたいいじょうを▽
@@ -6711,11 +6712,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いやしのこころ　か……▼
+			<Text>いやしのこころ　ね……▼
 この特性の　ポケモンは
 戦闘に　参加している▽
 味方の　状態異常を▽
@@ -6730,7 +6731,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:27:48" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6752,7 +6753,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フレンドガード　か……▼
+			<Text>フレンドガード　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　さんか　している▽
 みかたへの　ダメージを▽
@@ -6767,11 +6768,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フレンドガード　か……▼
+			<Text>フレンドガード　ね……▼
 この特性の　ポケモンは
 戦闘に　参加している▽
 味方への　ダメージを▽
@@ -6786,7 +6787,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6808,33 +6809,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くだけるよろい　か……▼
+			<Text>くだけるよろい　ね……▼
 この　とくせいの　ポケモンは
-ぶつりこうげきを　うけると▽
-ぼうぎょの　のうりょくが　さがって▽
+ぶつりこうげきを　うけると▼
+ぼうぎょの　のうりょくが　さがって
 すばやさの　のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T02:52:57" />
+				User="matsumiya:W00224"
+				Time="2011-08-31T06:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くだけるよろい　か……▼
+			<Text>くだけるよろい　ね……▼
 この特性の　ポケモンは
-物理攻撃を　受けると▽
-防御の　能力が　さがって▽
+物理攻撃を　受けると▼
+防御の　能力が　さがって
 すばやさの　能力が　あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:08:32" />
+				Time="2011-08-31T06:47:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6856,7 +6857,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘヴィメタル　か……▼
+			<Text>ヘヴィメタル　ね……▼
 この　とくせいの　ポケモンは
 じぶんの　おもさが▽
 ばいに　なるんだ▼</Text>
@@ -6866,11 +6867,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘヴィメタル　か……▼
+			<Text>ヘヴィメタル　ね……▼
 この特性の　ポケモンは
 自分の　重さが▽
 倍に　なるんだ▼</Text>
@@ -6880,7 +6881,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6902,7 +6903,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライトメタル　か……▼
+			<Text>ライトメタル　ね……▼
 この　とくせいの　ポケモンは
 じぶんの　おもさが▽
 はんぶんに　なるんだ▼</Text>
@@ -6912,11 +6913,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライトメタル　か……▼
+			<Text>ライトメタル　ね……▼
 この特性の　ポケモンは
 自分の　重さが▽
 半分に　なるんだ▼</Text>
@@ -6926,7 +6927,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:50:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6948,7 +6949,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マルチスケイル　か……▼
+			<Text>マルチスケイル　ね……▼
 この　とくせいの　ポケモンは
 たいりょくが　まんたんの　ばあい▽
 うける　ダメージが　へるんだ▼
@@ -6961,11 +6962,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マルチスケイル　か……▼
+			<Text>マルチスケイル　ね……▼
 この特性の　ポケモンは
 体力が　まんたんの　場合▽
 受ける　ダメージが　減るんだ▼
@@ -6978,7 +6979,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7000,7 +7001,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どくぼうそう　か……▼
+			<Text>どくぼうそう　ね……▼
 この　とくせいの　ポケモンは
 どくに　なると▽
 こうげきが　あがるんだ▼</Text>
@@ -7010,11 +7011,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どくぼうそう　か……▼
+			<Text>どくぼうそう　ね……▼
 この特性の　ポケモンは
 どくに　なると▽
 攻撃が　あがるんだ▼</Text>
@@ -7024,7 +7025,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7046,7 +7047,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねつぼうそう　か……▼
+			<Text>ねつぼうそう　ね……▼
 この　とくせいの　ポケモンは
 やけどに　なると▽
 とくこうが　あがるんだ▼</Text>
@@ -7056,11 +7057,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねつぼうそう　か……▼
+			<Text>ねつぼうそう　ね……▼
 この特性の　ポケモンは
 やけどに　なると▽
 特攻が　あがるんだ▼</Text>
@@ -7070,7 +7071,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7092,7 +7093,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しゅうかく　か……▼
+			<Text>しゅうかく　ね……▼
 この　とくせいの　ポケモンは
 じぶんが　つかった　きのみを▽
 ふっかつ　させることが　あるんだ▼
@@ -7105,11 +7106,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しゅうかく　か……▼
+			<Text>しゅうかく　ね……▼
 この特性の　ポケモンは
 自分が　使った　きのみを▽
 復活させることが　あるんだ▼
@@ -7122,7 +7123,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7144,7 +7145,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テレパシー　か……▼
+			<Text>テレパシー　ね……▼
 この　とくせいの　ポケモンは
 みかたの　こうどうを　よみとって▽
 どうしうちを　おこらなく　させるんだ▼
@@ -7157,11 +7158,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テレパシー　か……▼
+			<Text>テレパシー　ね……▼
 この特性の　ポケモンは
 味方の　行動を　読み取って▽
 同士討ちを　おこらなく　させるんだ▼
@@ -7174,7 +7175,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7196,7 +7197,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ムラっけ　か……▼
+			<Text>ムラっけ　ね……▼
 この　とくせいの　ポケモンは
 ターンの　おわりに▽
 のうりょくの　１つが　ぐーんとあがり▽
@@ -7207,11 +7208,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ムラっけ　か……▼
+			<Text>ムラっけ　ね……▼
 この特性の　ポケモンは
 ターンの　終わりに▽
 能力の　１つが　ぐーんとあがり▽
@@ -7222,7 +7223,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7244,7 +7245,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうじん　か……▼
+			<Text>ぼうじん　ね……▼
 この　とくせいの　ポケモンは
 てんきの　ダメージを　うけないんだ▼</Text>
 			<TextModifiedBy
@@ -7253,11 +7254,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうじん　か……▼
+			<Text>ぼうじん　ね……▼
 この特性の　ポケモンは
 天候の　ダメージを　受けないんだ▼</Text>
 			<TextModifiedBy
@@ -7266,7 +7267,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7288,7 +7289,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どくしゅ　か……▼
+			<Text>どくしゅ　ね……▼
 この　とくせいの　ポケモンは
 ちょくせつこうげき　した　ときに▽
 あいてを　どくにすることが　あるんだ▼</Text>
@@ -7298,11 +7299,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どくしゅ　か……▼
+			<Text>どくしゅ　ね……▼
 この特性の　ポケモンは
 直接攻撃した　ときに▽
 相手を　どくにすることが　あるんだ▼</Text>
@@ -7312,7 +7313,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:26:46" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7334,7 +7335,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さいせいりょく　か……▼
+			<Text>さいせいりょく　ね……▼
 この　とくせいの　ポケモンは
 せんとうから　ひっこむと▽
 すこし　だけど　たいりょくが▽
@@ -7345,11 +7346,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さいせいりょく　か……▼
+			<Text>さいせいりょく　ね……▼
 この特性の　ポケモンは
 戦闘から　ひっこむと▽
 すこし　だけど　体力が▽
@@ -7360,7 +7361,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:16:45" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7382,7 +7383,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はとむね　か……▼
+			<Text>はとむね　ね……▼
 この　とくせいの　ポケモンは
 あいてから　ぼうぎょの　のうりょくを▽
 さげられる　ことが　ないんだ▼</Text>
@@ -7392,11 +7393,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はとむね　か……▼
+			<Text>はとむね　ね……▼
 この特性の　ポケモンは
 相手から　防御の　能力を▽
 さげられる　ことが　ないんだ▼</Text>
@@ -7406,7 +7407,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7428,7 +7429,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すなかき　か……▼
+			<Text>すなかき　ね……▼
 この　とくせいの　ポケモンは
 てんきが　すなあらしの　ばあい▽
 すばやさが　ばいに　なるんだ▼
@@ -7441,11 +7442,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すなかき　か……▼
+			<Text>すなかき　ね……▼
 この特性の　ポケモンは
 天候が　すなあらしの　場合▽
 すばやさが　倍に　なるんだ▼
@@ -7458,7 +7459,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7480,7 +7481,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミラクルスキン　か……▼
+			<Text>ミラクルスキン　ね……▼
 この　とくせいの　ポケモンは
 へんかわざに　たいして　のみ▽
 かいひりつが　ばいに　なるんだ▼
@@ -7493,11 +7494,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミラクルスキン　か……▼
+			<Text>ミラクルスキン　ね……▼
 この特性の　ポケモンは
 変化技に　対してのみ▽
 回避率が　倍に　なるんだ▼
@@ -7510,7 +7511,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:04:16" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7532,7 +7533,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アナライズ　か……▼
+			<Text>アナライズ　ね……▼
 この　とくせいの　ポケモンは
 いちばん　さいごに　こうげき　すると▽
 わざの　いりょくが　あがるんだ▼</Text>
@@ -7542,11 +7543,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アナライズ　か……▼
+			<Text>アナライズ　ね……▼
 この特性の　ポケモンは
 一番　最後に　攻撃すると▽
 技の　威力が　あがるんだ▼</Text>
@@ -7556,7 +7557,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7578,7 +7579,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イリュージョン　か……▼
+			<Text>イリュージョン　ね……▼
 この　とくせいの　ポケモンは
 てもちで　いちばん　さいごの▽
 ポケモンの　すがたに　ばけて▽
@@ -7592,11 +7593,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イリュージョン　か……▼
+			<Text>イリュージョン　ね……▼
 この特性の　ポケモンは
 手持ちで　一番　最後の▽
 ポケモンの　姿に　化けて▽
@@ -7610,7 +7611,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:34" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7632,7 +7633,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かわりもの　か……▼
+			<Text>かわりもの　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　でたときに▽
 あいての　ポケモンと▽
@@ -7647,11 +7648,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:15:24" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かわりもの　か……▼
+			<Text>かわりもの　ね……▼
 この特性の　ポケモンは
 戦闘に　でたときに▽
 相手の　ポケモンと▽
@@ -7666,7 +7667,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:06" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7688,7 +7689,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すりぬけ　か……▼
+			<Text>すりぬけ　ね……▼
 この　とくせいの　ポケモンは
 あいてが　だした　カベの　こうかを▽
 むし　して　こうげきを　だせるんだ▼</Text>
@@ -7698,11 +7699,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すりぬけ　か……▼
+			<Text>すりぬけ　ね……▼
 この特性の　ポケモンは
 相手が　だした　カベの　効果を▽
 無視して　攻撃を　だせるんだ▼</Text>
@@ -7712,7 +7713,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:14:43" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7734,7 +7735,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミイラ　か……▼
+			<Text>ミイラ　ね……▼
 この　とくせいの　ポケモンは
 ちょくせつこうげきを　されたときに▽
 あいての　とくせいを▽
@@ -7745,11 +7746,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミイラ　か……▼
+			<Text>ミイラ　ね……▼
 この特性の　ポケモンは
 直接攻撃を　されたときに▽
 相手の　特性を▽
@@ -7760,7 +7761,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:26:46" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7782,7 +7783,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じしんかじょう　か……▼
+			<Text>じしんかじょう　ね……▼
 この　とくせいの　ポケモンは
 あいてを　たおしたときに▽
 こうげきの　のうりょくが　あるんだ▼</Text>
@@ -7792,11 +7793,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じしんかじょう　か……▼
+			<Text>じしんかじょう　ね……▼
 この特性の　ポケモンは
 相手を　たおしたときに▽
 攻撃の　能力が　あるんだ▼</Text>
@@ -7806,7 +7807,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7828,7 +7829,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいぎのこころ　か……▼
+			<Text>せいぎのこころ　ね……▼
 この　とくせいの　ポケモンは
 あくタイプの　こうげきを　うけると▽
 こうげきの　のうりょくが　あるんだ▼</Text>
@@ -7838,11 +7839,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいぎのこころ　か……▼
+			<Text>せいぎのこころ　ね……▼
 この特性の　ポケモンは
 あくタイプの　攻撃を　受けると▽
 攻撃の　能力が　あるんだ▼</Text>
@@ -7852,7 +7853,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7874,7 +7875,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>びびり　か……▼
+			<Text>びびり　ね……▼
 この　とくせいの　ポケモンは
 ゴーストタイプや　むしタイプ▽
 あくタイプの　こうげきを　うけると▽
@@ -7885,11 +7886,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>びびり　か……▼
+			<Text>びびり　ね……▼
 この特性の　ポケモンは
 ゴーストタイプや　むしタイプ▽
 あくタイプの　攻撃を　受けると▽
@@ -7900,7 +7901,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7922,7 +7923,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マジックミラー　か……▼
+			<Text>マジックミラー　ね……▼
 この　とくせいの　ポケモンは
 あいての　つかった　へんかわざを▽
 あいてへ　そのまま　はねかえすんだ▼
@@ -7935,11 +7936,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マジックミラー　か……▼
+			<Text>マジックミラー　ね……▼
 この特性の　ポケモンは
 相手の　使った　変化技を▽
 相手へ　そのまま　はねかえすんだ▼
@@ -7952,7 +7953,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:04:16" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7974,7 +7975,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうしょく　か……▼
+			<Text>そうしょく　ね……▼
 この　とくせいの　ポケモンは
 くさタイプの　わざを　うけると▽
 こうげきの　のうりょくが　あがるんだ▼
@@ -7987,11 +7988,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうしょく　か……▼
+			<Text>そうしょく　ね……▼
 この特性の　ポケモンは
 くさタイプの　技を　受けると▽
 攻撃の　能力が　あがるんだ▼
@@ -8004,7 +8005,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:56" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8026,7 +8027,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたずらごころ　か……▼
+			<Text>いたずらごころ　ね……▼
 この　とくせいの　ポケモンは
 へんかわざを　せんせい　して▽
 だすことが　できるんだ▼</Text>
@@ -8036,11 +8037,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いたずらごころ　か……▼
+			<Text>いたずらごころ　ね……▼
 この特性の　ポケモンは
 変化技を　先制して▽
 だすことが　できるんだ▼</Text>
@@ -8050,7 +8051,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:04:16" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8072,7 +8073,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すなのちから　か……▼
+			<Text>すなのちから　ね……▼
 この　とくせいの　ポケモンは
 てんきが　すなあらしの　ばあい▽
 じめんタイプや　いわタイプ▽
@@ -8084,11 +8085,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すなのちから　か……▼
+			<Text>すなのちから　ね……▼
 この特性の　ポケモンは
 天候が　すなあらしの　場合▽
 じめんタイプや　いわタイプ▽
@@ -8100,7 +8101,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:52:35" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8122,7 +8123,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てつのトゲ　か……▼
+			<Text>てつのトゲ　ね……▼
 この　とくせいの　ポケモンは
 ちょくせつこうげき　された　ときに▽
 こうげき　してきた　あいてにも▽
@@ -8133,11 +8134,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>てつのトゲ　か……▼
+			<Text>てつのトゲ　ね……▼
 この特性の　ポケモンは
 直接攻撃された　ときに▽
 攻撃してきた　相手にも▽
@@ -8148,7 +8149,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:26:46" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8170,7 +8171,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダルマモード　か……▼
+			<Text>ダルマモード　ね……▼
 この　とくせいの　ヒヒダルマは
 たいりょくが　はんぶんいかに　なると▽
 ダルマモードに　へんか　するんだ▼
@@ -8188,11 +8189,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダルマモード　か……▼
+			<Text>ダルマモード　ね……▼
 この特性の　ヒヒダルマは
 体力が　半分以下に　なると▽
 ダルマモードに　変化　するんだ▼
@@ -8201,16 +8202,16 @@
 エスパータイプが　追加されるんだ▼
 さらに！▼
 攻撃と　すばやさの
-能力が　さがるかわりに▽
+能力が　さがる　かわりに▽
 防御　特攻　特防の▽
 能力が　あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:37:12" />
+				Time="2011-08-31T05:47:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:04:16" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8232,7 +8233,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうりのほし　か……▼
+			<Text>しょうりのほし　ね……▼
 この　とくせいの　ポケモンは
 じぶんと　みかたの　ポケモンの▽
 わざの　めいちゅうりつを　あげるんだ▼</Text>
@@ -8242,11 +8243,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょうりのほし　か……▼
+			<Text>しょうりのほし　ね……▼
 この特性の　ポケモンは
 自分と　味方の　ポケモンの▽
 技の　命中率を　あげるんだ▼</Text>
@@ -8256,7 +8257,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:13:41" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8278,7 +8279,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ターボブレイズ　か……▼
+			<Text>ターボブレイズ　ね……▼
 この　とくせいの　ポケモンは
 あいての　とくせいを　むこうにして▽
 こうげき　することが　できるんだ▼</Text>
@@ -8288,11 +8289,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ターボブレイズ　か……▼
+			<Text>ターボブレイズ　ね……▼
 この特性の　ポケモンは
 相手の　特性を　無効にして▽
 攻撃することが　できるんだ▼</Text>
@@ -8302,7 +8303,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:27" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8324,7 +8325,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テラボルテージ　か……▼
+			<Text>テラボルテージ　ね……▼
 この　とくせいの　ポケモンは
 あいての　とくせいを　むこうにして▽
 こうげき　することが　できるんだ▼</Text>
@@ -8334,11 +8335,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:11:18" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テラボルテージ　か……▼
+			<Text>テラボルテージ　ね……▼
 この特性の　ポケモンは
 相手の　特性を　無効にして▽
 攻撃することが　できるんだ▼</Text>
@@ -8348,7 +8349,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:25:27" />
+				Time="2011-08-31T06:31:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
