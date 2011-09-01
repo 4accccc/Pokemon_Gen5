@@ -15,7 +15,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_NORMAL, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -44,7 +44,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_DOKU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -73,7 +73,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_MUSHI, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -102,7 +102,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_DENKI, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -131,7 +131,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_JIMEN, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -160,7 +160,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_HIKOU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -189,7 +189,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_DRAGON, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -218,7 +218,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_MIZU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -247,7 +247,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RIVAL                        , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -276,7 +276,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_HONOO, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -305,7 +305,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_MIZU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -334,7 +334,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_KUSA, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -363,7 +363,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_NORMAL, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -392,7 +392,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_ISSYU, //限定トーナメント種別
 		POKETYPE_KOORI, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -421,7 +421,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		16, //パワー乱数
+		30, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RG_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -450,7 +450,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		16, //パワー乱数
+		30, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -479,7 +479,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		16, //パワー乱数
+		30, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -508,7 +508,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		16, //パワー乱数
+		30, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -537,7 +537,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		16, //パワー乱数
+		30, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_DP_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -566,7 +566,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		16, //パワー乱数
+		30, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_CHAMP                        , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -595,7 +595,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_KANTO, //限定トーナメント種別
 		POKETYPE_IWA, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -624,7 +624,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_KANTO, //限定トーナメント種別
 		POKETYPE_MIZU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -653,7 +653,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_KANTO, //限定トーナメント種別
 		POKETYPE_DENKI, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -682,7 +682,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_KANTO, //限定トーナメント種別
 		POKETYPE_KUSA, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -711,7 +711,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_KANTO, //限定トーナメント種別
 		POKETYPE_ESPER, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -740,7 +740,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_KANTO, //限定トーナメント種別
 		POKETYPE_HONOO, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -769,7 +769,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_KANTO, //限定トーナメント種別
 		POKETYPE_JIMEN, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -798,7 +798,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_JOUTO, //限定トーナメント種別
 		POKETYPE_HIKOU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -827,7 +827,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_JOUTO, //限定トーナメント種別
 		POKETYPE_MUSHI, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -856,7 +856,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_JOUTO, //限定トーナメント種別
 		POKETYPE_NORMAL, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -885,7 +885,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_JOUTO, //限定トーナメント種別
 		POKETYPE_GHOST, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -914,7 +914,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_JOUTO, //限定トーナメント種別
 		POKETYPE_KAKUTOU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -943,7 +943,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_JOUTO, //限定トーナメント種別
 		POKETYPE_HAGANE, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -972,7 +972,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_JOUTO, //限定トーナメント種別
 		POKETYPE_KOORI, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1001,7 +1001,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_JOUTO, //限定トーナメント種別
 		POKETYPE_DRAGON, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1030,7 +1030,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_JOUTO, //限定トーナメント種別
 		POKETYPE_DOKU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1059,7 +1059,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_HOUEN, //限定トーナメント種別
 		POKETYPE_IWA, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1088,7 +1088,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_HOUEN, //限定トーナメント種別
 		POKETYPE_KAKUTOU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1117,7 +1117,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_HOUEN, //限定トーナメント種別
 		POKETYPE_DENKI, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1146,7 +1146,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_HOUEN, //限定トーナメント種別
 		POKETYPE_HONOO, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1175,7 +1175,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_HOUEN, //限定トーナメント種別
 		POKETYPE_NORMAL, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1204,7 +1204,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_HOUEN, //限定トーナメント種別
 		POKETYPE_HIKOU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1233,7 +1233,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_HOUEN, //限定トーナメント種別
 		POKETYPE_ESPER, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1262,7 +1262,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_HOUEN, //限定トーナメント種別
 		POKETYPE_ESPER, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1291,7 +1291,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_HOUEN, //限定トーナメント種別
 		POKETYPE_MIZU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1320,7 +1320,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_SINOU, //限定トーナメント種別
 		POKETYPE_IWA, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1349,7 +1349,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_SINOU, //限定トーナメント種別
 		POKETYPE_KUSA, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1378,7 +1378,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_SINOU, //限定トーナメント種別
 		POKETYPE_GHOST, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1407,7 +1407,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_SINOU, //限定トーナメント種別
 		POKETYPE_KAKUTOU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1436,7 +1436,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_SINOU, //限定トーナメント種別
 		POKETYPE_MIZU, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1465,7 +1465,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_SINOU, //限定トーナメント種別
 		POKETYPE_HAGANE, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1494,7 +1494,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_SINOU, //限定トーナメント種別
 		POKETYPE_KOORI, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1523,7 +1523,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_SINOU, //限定トーナメント種別
 		POKETYPE_DENKI, //タイプトーナメント種別
 		 3, //優先度
-		16, //パワー乱数
+		20, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1552,7 +1552,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_DOKU, //タイプトーナメント種別
 		 2, //優先度
-		12, //パワー乱数
+		16, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1581,7 +1581,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_JIMEN, //タイプトーナメント種別
 		 2, //優先度
-		12, //パワー乱数
+		16, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1610,7 +1610,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_ESPER, //タイプトーナメント種別
 		 2, //優先度
-		12, //パワー乱数
+		16, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1639,7 +1639,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MUSHI, //タイプトーナメント種別
 		 2, //優先度
-		12, //パワー乱数
+		16, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1668,7 +1668,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_GHOST, //タイプトーナメント種別
 		 2, //優先度
-		12, //パワー乱数
+		16, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1697,7 +1697,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_DRAGON, //タイプトーナメント種別
 		 2, //優先度
-		12, //パワー乱数
+		16, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1726,7 +1726,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_HAGANE, //タイプトーナメント種別
 		 2, //優先度
-		12, //パワー乱数
+		16, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1755,7 +1755,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_AKU, //タイプトーナメント種別
 		 2, //優先度
-		12, //パワー乱数
+		16, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1784,7 +1784,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_AKU, //タイプトーナメント種別
 		 2, //優先度
-		12, //パワー乱数
+		16, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1813,7 +1813,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_AKU, //タイプトーナメント種別
 		 2, //優先度
-		12, //パワー乱数
+		16, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1842,7 +1842,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		16, //パワー乱数
+		30, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_WBT                          , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1871,7 +1871,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		16, //パワー乱数
+		30, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_WBT                          , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1987,7 +1987,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 5, //優先度
-		12, //パワー乱数
+		31, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_WBT                          , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -2016,7 +2016,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		12, //パワー乱数
+		31, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_WBT                          , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -2045,7 +2045,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 3, //優先度
-		12, //パワー乱数
+		31, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_WBT                          , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -2074,7 +2074,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 3, //優先度
-		12, //パワー乱数
+		31, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_WBT                          , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -2870,7 +2870,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //099 ナナオ
+	{ //099 チヒロ
 		POKETYPE_MAX, //オールマイティ
 		PM_FEMALE, //女
 		RANGERW         ,// 動作モデル指定
@@ -3131,7 +3131,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //108 ナパー
+	{ //108 ケイスケ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
 		BACKPACKERM     ,// 動作モデル指定
