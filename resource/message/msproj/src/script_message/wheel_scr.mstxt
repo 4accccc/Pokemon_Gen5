@@ -6495,12 +6495,10 @@ N</Text>
 きて　くれたんだね▼
 ……　……　……　……▼
 えっ？▼
-べっ▼
-べつに　まって　ないよ…
+べっ べつに　まって　ないよ！
 わたしも　いま　きた　ところだから…▼
 あはは…▼
-よっ▼
-よかったら
+ねぇ　よかったら
 かんらんしゃに　のらない？▼
 ライモンシティの　かんらんしゃは
 ながめが　きれいな　ことで▽
@@ -6514,10 +6512,10 @@ N</Text>
 ふたりのり　せんよう　らしいから▽
 ずっと　がまん　していたんだよ▼
 うれしくって　ドキドキしてきちゃった
-さっそく　のろうよ　[Name:TrainerName ]くん</Text>
+さっそく　のろうよ　[Name:TrainerName ]くん！▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-08-22T09:54:07" />
+				Time="2011-09-01T08:46:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6576,9 +6574,9 @@ N</Text>
 [Name:TrainerName ]くんには
 ほんとうに　かんしゃ　しているの▼
 いまの　しごとを　がんばれるのも
-[Name:TrainerName ]くんの　おかげだとおもう▼
+[Name:TrainerName ]くんの　おかげだと　おもう▼
 できれば　これからも
-はなしあいてに　なってくれると▽
+はなし　あいてに　なってくれると▽
 うれしい…　かな▼
 ……　……　……　……▼
 じゃあ　そろそろ　かえるね…▼
@@ -6586,7 +6584,7 @@ N</Text>
 またね　[Name:TrainerName ]くん！</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-08-22T09:01:41" />
+				Time="2011-09-01T08:03:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6644,8 +6642,7 @@ N</Text>
 あはは…▼
 まちどうしくって　いそいできちゃった▼
 あえて　うれしい…　かな▼
-ねぇ▼
-よかったら
+ねぇ　よかったら
 また　かんらんしゃに　のらない？▼
 わたし　この　かんらんしゃの　こと
 きにいっちゃった　みたい▼
@@ -6653,10 +6650,10 @@ N</Text>
 えっ　いいの？▼
 …よかった▼
 なんでだろ　ドキドキしてきちゃった
-さっそく　のろうよ　[Name:TrainerName ]くん</Text>
+さっそく　のろうよ　[Name:TrainerName ]くん！▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-08-22T11:25:32" />
+				Time="2011-09-01T08:45:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7012,10 +7009,10 @@ N</Text>
 [Name:TrainerName ]くんの　ポケモンと▽
 こうかんして　くれないかな？▼
 こうかん　してくれるのは
-どんな　ポケモンでも　いいよ</Text>
+どんな　ポケモンでも　いいよ▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-08-30T12:58:02" />
+				Time="2011-09-01T08:29:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7068,10 +7065,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ありがとう▼
-どのこと　こうかん　してくれるの？</Text>
+[Name:PokemonName Idx="1" ]も　うれしそうだよ▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-08-30T12:59:53" />
+				Time="2011-09-01T08:29:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7125,10 +7122,10 @@ N</Text>
 			Language="JPN">
 			<Text>ざんねん…▼
 また　きかいが　あったら
-こうかん　してね…</Text>
+こうかん　してね…▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-08-22T11:26:03" />
+				Time="2011-09-01T08:29:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
