@@ -26356,6 +26356,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>毒モブトレーナー
+研究員♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T05:00:11" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -26404,6 +26412,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>毒モブトレーナー
+研究員♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T05:00:13" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -26454,6 +26470,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>毒モブトレーナー
+研究員♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T05:00:13" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -26502,6 +26526,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>毒モブトレーナー
+研究員♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T05:00:13" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -26552,6 +26584,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>毒モブトレーナー
+研究員♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T05:00:13" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -26600,6 +26640,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>毒モブトレーナー
+研究員♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T05:00:13" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -26650,6 +26698,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>毒モブトレーナー
+研究員♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T05:00:13" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -26698,6 +26754,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>毒モブトレーナー
+研究員♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T05:00:13" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -26748,6 +26812,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>地面モブトレーナー
+山男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:23" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -26796,6 +26868,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>地面モブトレーナー
+山男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -26846,6 +26926,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>地面モブトレーナー
+山男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -26894,6 +26982,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>地面モブトレーナー
+山男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -26944,6 +27040,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>地面モブトレーナー
+山男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -26992,6 +27096,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>地面モブトレーナー
+山男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -27042,6 +27154,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>地面モブトレーナー
+山男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -27090,6 +27210,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>地面モブトレーナー
+山男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -27140,6 +27268,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>エスパーモブトレーナー
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:42" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -27188,6 +27324,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>エスパーモブトレーナー
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:44" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -27238,6 +27382,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>エスパーモブトレーナー
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:44" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -27286,6 +27438,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>エスパーモブトレーナー
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:44" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -27336,6 +27496,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>エスパーモブトレーナー
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:44" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -27384,6 +27552,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>エスパーモブトレーナー
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:44" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -27434,6 +27610,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>エスパーモブトレーナー
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:44" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -27482,6 +27666,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>エスパーモブトレーナー
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:44" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -27532,6 +27724,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>虫モブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:56" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -27580,6 +27780,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>虫モブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:58" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -27630,6 +27838,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>虫モブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:58" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -27678,6 +27894,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>虫モブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:58" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -27728,6 +27952,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>虫モブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:58" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -27776,6 +28008,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>虫モブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:58" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -27826,6 +28066,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>虫モブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:58" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -27874,6 +28122,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>虫モブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:46:58" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -27924,6 +28180,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ゴーストモブトレーナー
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:09" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -27972,6 +28236,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ゴーストモブトレーナー
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:11" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -28022,6 +28294,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ゴーストモブトレーナー
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:11" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -28070,6 +28350,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ゴーストモブトレーナー
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:11" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -28120,6 +28408,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ゴーストモブトレーナー
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:11" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -28168,6 +28464,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ゴーストモブトレーナー
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:11" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -28218,6 +28522,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ゴーストモブトレーナー
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:11" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -28266,6 +28578,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ゴーストモブトレーナー
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:11" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -28316,6 +28636,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ドラゴンモブトレーナー
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -28364,6 +28692,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ドラゴンモブトレーナー
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -28414,6 +28750,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ドラゴンモブトレーナー
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -28462,6 +28806,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ドラゴンモブトレーナー
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -28512,6 +28864,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ドラゴンモブトレーナー
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -28560,6 +28920,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ドラゴンモブトレーナー
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -28610,6 +28978,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ドラゴンモブトレーナー
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -28658,6 +29034,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ドラゴンモブトレーナー
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -28708,6 +29092,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>はがねモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:38" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -28756,6 +29148,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>はがねモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:40" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -28806,6 +29206,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>はがねモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:40" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -28854,6 +29262,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>はがねモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:40" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -28904,6 +29320,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>はがねモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:40" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -28952,6 +29376,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>はがねモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:40" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29002,6 +29434,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>はがねモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:40" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -29050,6 +29490,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>はがねモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:40" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29100,6 +29548,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:52" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -29148,6 +29604,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:53" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29198,6 +29662,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:53" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -29246,6 +29718,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:53" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29296,6 +29776,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:53" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -29344,6 +29832,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:53" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29394,6 +29890,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:53" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -29442,6 +29946,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:47:53" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29492,6 +30004,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:03" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -29540,6 +30060,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:05" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29590,6 +30118,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:05" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -29638,6 +30174,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:05" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29688,6 +30232,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:05" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -29736,6 +30288,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:05" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29786,6 +30346,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:05" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -29834,6 +30402,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:05" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29884,6 +30460,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:14" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -29932,6 +30516,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:16" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -29982,6 +30574,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:16" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -30030,6 +30630,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:16" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -30080,6 +30688,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:16" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -30128,6 +30744,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:16" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -30178,6 +30802,14 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:16" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -30226,6 +30858,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>あくモブトレーナー
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:16" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -30276,6 +30916,13 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>男主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:24" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -30324,6 +30971,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>男主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:26" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -30374,6 +31028,13 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>男主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -30422,6 +31083,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>男主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:26" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -30472,6 +31140,13 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>男主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -30520,6 +31195,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>男主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:26" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -30570,6 +31252,13 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>男主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -30618,6 +31307,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>男主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:26" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -30668,6 +31364,13 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>女主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -30716,6 +31419,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>女主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -30766,6 +31476,13 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>女主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -30814,6 +31531,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>女主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -30864,6 +31588,13 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>女主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -30912,6 +31643,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>女主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -30962,6 +31700,13 @@
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>女主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31010,6 +31755,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>女主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -31060,6 +31812,14 @@
 				Time="2011-07-07T05:26:29" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+スワンライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:45" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31068,7 +31828,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31109,6 +31869,14 @@
 				Time="2011-07-07T05:26:29" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+スワンライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:47" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31117,7 +31885,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31158,6 +31926,14 @@
 				Time="2011-07-07T05:26:29" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+スワンライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:47" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31166,7 +31942,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31207,6 +31983,14 @@
 				Time="2011-07-07T05:26:29" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+スワンライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:47" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31215,7 +31999,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31256,6 +32040,14 @@
 				Time="2011-07-07T05:26:29" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+スワンライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:47" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31264,7 +32056,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31305,6 +32097,14 @@
 				Time="2011-07-07T05:26:29" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+スワンライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:47" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31313,7 +32113,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31354,6 +32154,14 @@
 				Time="2011-07-07T05:26:29" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+スワンライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:47" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31362,7 +32170,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31403,6 +32211,14 @@
 				Time="2011-07-07T05:26:29" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+スワンライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:47" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31411,7 +32227,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31451,6 +32267,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-07T05:27:39" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>イベント
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:56" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -31501,6 +32325,14 @@
 				Time="2011-07-07T05:27:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:58" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31549,6 +32381,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-07T05:27:39" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>イベント
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:58" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -31599,6 +32439,14 @@
 				Time="2011-07-07T05:27:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:58" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31647,6 +32495,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-07T05:27:39" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>イベント
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:58" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -31697,6 +32553,14 @@
 				Time="2011-07-07T05:27:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:58" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31745,6 +32609,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-07T05:27:39" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>イベント
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:58" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -31795,6 +32667,14 @@
 				Time="2011-07-07T05:27:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:48:58" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31844,6 +32724,14 @@
 				Time="2011-07-07T05:28:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31852,7 +32740,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31893,6 +32781,14 @@
 				Time="2011-07-07T05:28:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:08" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31901,7 +32797,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31942,6 +32838,14 @@
 				Time="2011-07-07T05:28:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:08" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31950,7 +32854,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31991,6 +32895,14 @@
 				Time="2011-07-07T05:28:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:08" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -31999,7 +32911,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32040,6 +32952,14 @@
 				Time="2011-07-07T05:28:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:08" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32048,7 +32968,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32089,6 +33009,14 @@
 				Time="2011-07-07T05:28:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:08" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32097,7 +33025,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32138,6 +33066,14 @@
 				Time="2011-07-07T05:28:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:08" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32146,7 +33082,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32187,6 +33123,14 @@
 				Time="2011-07-07T05:28:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>イベント
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:08" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32195,7 +33139,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32235,6 +33179,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:36:24" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ１
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:52" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -32285,6 +33237,14 @@
 				Time="2011-07-22T09:36:24" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32333,6 +33293,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:36:24" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ１
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:55" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -32383,6 +33351,14 @@
 				Time="2011-07-22T09:36:24" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32431,6 +33407,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:36:24" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ１
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:55" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -32481,6 +33465,14 @@
 				Time="2011-07-22T09:36:24" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32529,6 +33521,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:36:24" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ１
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:55" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -32579,6 +33579,14 @@
 				Time="2011-07-22T09:36:24" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１
+エリートトレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:49:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32628,6 +33636,14 @@
 				Time="2011-07-22T09:46:03" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ２
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:29" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32636,7 +33652,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32677,6 +33693,14 @@
 				Time="2011-07-22T09:46:03" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ２
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:31" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32685,7 +33709,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32726,6 +33750,14 @@
 				Time="2011-07-22T09:46:03" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ２
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:31" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32734,7 +33766,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32775,6 +33807,14 @@
 				Time="2011-07-22T09:46:03" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ２
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:31" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32783,7 +33823,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32824,6 +33864,14 @@
 				Time="2011-07-22T09:46:03" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ２
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:31" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32832,7 +33880,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32873,6 +33921,14 @@
 				Time="2011-07-22T09:46:03" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ２
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:31" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32881,7 +33937,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32922,6 +33978,14 @@
 				Time="2011-07-22T09:46:03" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ２
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:31" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32930,7 +33994,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32971,6 +34035,14 @@
 				Time="2011-07-22T09:46:03" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ２
+エリートトレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:31" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -32979,7 +34051,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -33019,6 +34091,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:47:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ３
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:40" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -33069,6 +34149,14 @@
 				Time="2011-07-22T09:47:40" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ３
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:42" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33117,6 +34205,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:47:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ３
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:42" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -33167,6 +34263,14 @@
 				Time="2011-07-22T09:47:40" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ３
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:42" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33215,6 +34319,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:47:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ３
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:42" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -33265,6 +34377,14 @@
 				Time="2011-07-22T09:47:40" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ３
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:42" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33313,6 +34433,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:47:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ３
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:42" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -33363,6 +34491,14 @@
 				Time="2011-07-22T09:47:40" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ３
+ベテラントレーナー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:42" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33412,6 +34548,14 @@
 				Time="2011-07-22T09:49:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ４
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:52" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33420,7 +34564,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -33461,6 +34605,14 @@
 				Time="2011-07-22T09:49:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ４
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33469,7 +34621,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -33510,6 +34662,14 @@
 				Time="2011-07-22T09:49:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ４
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33518,7 +34678,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -33559,6 +34719,14 @@
 				Time="2011-07-22T09:49:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ４
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33567,7 +34735,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -33608,6 +34776,14 @@
 				Time="2011-07-22T09:49:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ４
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33616,7 +34792,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -33657,6 +34833,14 @@
 				Time="2011-07-22T09:49:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ４
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33665,7 +34849,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -33706,6 +34890,14 @@
 				Time="2011-07-22T09:49:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ４
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33714,7 +34906,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -33755,6 +34947,14 @@
 				Time="2011-07-22T09:49:39" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ４
+ベテラントレーナー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:50:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33763,7 +34963,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -33803,6 +35003,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:53:37" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ５
+からておう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:02" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -33853,6 +35061,14 @@
 				Time="2011-07-22T09:53:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ５
+からておう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:04" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33901,6 +35117,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:53:37" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ５
+からておう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:04" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -33951,6 +35175,14 @@
 				Time="2011-07-22T09:53:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ５
+からておう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:04" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -33999,6 +35231,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:53:37" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ５
+からておう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:04" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -34049,6 +35289,14 @@
 				Time="2011-07-22T09:53:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ５
+からておう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:04" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34097,6 +35345,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T09:53:37" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ５
+からておう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:04" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -34147,6 +35403,14 @@
 				Time="2011-07-22T09:53:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ５
+からておう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:04" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34196,6 +35460,14 @@
 				Time="2011-07-22T09:55:13" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ６
+バトルガール</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:11" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34204,7 +35476,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -34245,6 +35517,14 @@
 				Time="2011-07-22T09:55:13" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ６
+バトルガール</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:15" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34253,7 +35533,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -34294,6 +35574,14 @@
 				Time="2011-07-22T09:55:13" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ６
+バトルガール</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:15" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34302,7 +35590,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -34343,6 +35631,14 @@
 				Time="2011-07-22T09:55:13" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ６
+バトルガール</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:15" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34351,7 +35647,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -34392,6 +35688,14 @@
 				Time="2011-07-22T09:55:13" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ６
+バトルガール</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:15" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34400,7 +35704,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -34441,6 +35745,14 @@
 				Time="2011-07-22T09:55:13" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ６
+バトルガール</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:15" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34449,7 +35761,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -34490,6 +35802,14 @@
 				Time="2011-07-22T09:55:13" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ６
+バトルガール</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:15" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34498,7 +35818,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -34539,6 +35859,14 @@
 				Time="2011-07-22T09:55:13" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ６
+バトルガール</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:15" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34547,7 +35875,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -34587,6 +35915,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T10:13:21" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ７
+けんきゅういん♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:22" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -34637,6 +35973,14 @@
 				Time="2011-07-22T10:13:21" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ７
+けんきゅういん♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:24" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34685,6 +36029,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T10:13:21" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ７
+けんきゅういん♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:24" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -34735,6 +36087,14 @@
 				Time="2011-07-22T10:13:21" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ７
+けんきゅういん♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:24" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34783,6 +36143,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T10:13:21" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ７
+けんきゅういん♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:24" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -34833,6 +36201,14 @@
 				Time="2011-07-22T10:13:21" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ７
+けんきゅういん♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:24" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34881,6 +36257,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T10:13:21" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ７
+けんきゅういん♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:24" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -34931,6 +36315,14 @@
 				Time="2011-07-22T10:13:21" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ７
+けんきゅういん♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:24" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34980,6 +36372,14 @@
 				Time="2011-07-22T10:14:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ８
+けんきゅういん♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:35" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -34988,7 +36388,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35029,6 +36429,14 @@
 				Time="2011-07-22T10:14:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ８
+けんきゅういん♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:41" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35037,7 +36445,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35078,6 +36486,14 @@
 				Time="2011-07-22T10:14:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ８
+けんきゅういん♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:41" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35086,7 +36502,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35127,6 +36543,14 @@
 				Time="2011-07-22T10:14:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ８
+けんきゅういん♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:41" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35135,7 +36559,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35176,6 +36600,14 @@
 				Time="2011-07-22T10:14:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ８
+けんきゅういん♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:41" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35184,7 +36616,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35225,6 +36657,14 @@
 				Time="2011-07-22T10:14:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ８
+けんきゅういん♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:41" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35233,7 +36673,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35274,6 +36714,14 @@
 				Time="2011-07-22T10:14:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ８
+けんきゅういん♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:41" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35282,7 +36730,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35323,6 +36771,14 @@
 				Time="2011-07-22T10:14:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ８
+けんきゅういん♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:51:41" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35331,7 +36787,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35371,6 +36827,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ９
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:53" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -35421,6 +36885,14 @@
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ９
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35469,6 +36941,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ９
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:55" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -35519,6 +36999,14 @@
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ９
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35567,6 +37055,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ９
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:55" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -35617,6 +37113,14 @@
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ９
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35665,6 +37169,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モブ９
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:55" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -35715,6 +37227,14 @@
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ９
+サイキッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:55" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35764,6 +37284,14 @@
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１０
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:44" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35772,7 +37300,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35813,6 +37341,14 @@
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１０
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:46" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35821,7 +37357,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35862,6 +37398,14 @@
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１０
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:46" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35870,7 +37414,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35911,6 +37455,14 @@
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１０
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:46" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35919,7 +37471,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -35960,6 +37512,14 @@
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１０
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:46" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -35968,7 +37528,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36009,6 +37569,14 @@
 				Time="2011-07-22T10:18:56" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１０
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:46" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36017,7 +37585,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36058,6 +37626,14 @@
 				Time="2011-07-22T10:18:57" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１０
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:46" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36066,7 +37642,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36107,6 +37683,14 @@
 				Time="2011-07-22T10:18:57" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>モブ１０
+サイキッカー♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:46" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36115,7 +37699,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36155,6 +37739,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T12:42:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ１
+優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -36205,6 +37797,14 @@
 				Time="2011-07-22T12:42:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ１
+優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:36" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36253,6 +37853,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T12:42:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ１
+優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:36" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -36303,6 +37911,14 @@
 				Time="2011-07-22T12:42:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ１
+優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:36" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36351,6 +37967,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T12:42:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ１
+優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:36" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -36401,6 +38025,14 @@
 				Time="2011-07-22T12:42:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ１
+優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:36" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36449,6 +38081,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T12:42:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ１
+優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:36" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -36499,6 +38139,14 @@
 				Time="2011-07-22T12:42:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ１
+優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:36" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36548,6 +38196,14 @@
 				Time="2011-07-22T12:43:53" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ２
+準優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:24" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36556,7 +38212,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36597,6 +38253,14 @@
 				Time="2011-07-22T12:43:53" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ２
+準優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36605,7 +38269,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36646,6 +38310,14 @@
 				Time="2011-07-22T12:43:53" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ２
+準優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36654,7 +38326,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36695,6 +38367,14 @@
 				Time="2011-07-22T12:43:53" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ２
+準優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36703,7 +38383,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36744,6 +38424,14 @@
 				Time="2011-07-22T12:43:53" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ２
+準優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36752,7 +38440,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36793,6 +38481,14 @@
 				Time="2011-07-22T12:43:53" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ２
+準優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36801,7 +38497,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36842,6 +38538,14 @@
 				Time="2011-07-22T12:43:53" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ２
+準優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36850,7 +38554,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36891,6 +38595,14 @@
 				Time="2011-07-22T12:43:53" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ２
+準優勝者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -36899,7 +38611,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -36939,6 +38651,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T12:43:58" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ３
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:16" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -36989,6 +38709,14 @@
 				Time="2011-07-22T12:43:58" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ３
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:18" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37037,6 +38765,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T12:43:58" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ３
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:18" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -37087,6 +38823,14 @@
 				Time="2011-07-22T12:43:58" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ３
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:18" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37135,6 +38879,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T12:43:58" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ３
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:18" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -37185,6 +38937,14 @@
 				Time="2011-07-22T12:43:58" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ３
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:18" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37233,6 +38993,14 @@
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-22T12:43:58" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ３
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:18" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -37283,6 +39051,14 @@
 				Time="2011-07-22T12:43:58" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ３
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:18" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37332,6 +39108,14 @@
 				Time="2011-07-22T12:44:02" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ４
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:05" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37340,7 +39124,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37381,6 +39165,14 @@
 				Time="2011-07-22T12:44:02" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ４
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:07" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37389,7 +39181,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37430,6 +39222,14 @@
 				Time="2011-07-22T12:44:02" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ４
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:07" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37438,7 +39238,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37479,6 +39279,14 @@
 				Time="2011-07-22T12:44:02" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ４
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:07" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37487,7 +39295,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37528,6 +39336,14 @@
 				Time="2011-07-22T12:44:02" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ４
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:07" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37536,7 +39352,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37577,6 +39393,14 @@
 				Time="2011-07-22T12:44:02" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ４
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:07" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37585,7 +39409,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37626,6 +39450,14 @@
 				Time="2011-07-22T12:44:02" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ４
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:07" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37634,7 +39466,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37675,6 +39507,14 @@
 				Time="2011-07-22T12:44:02" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>ＷＣＳ４
+ベスト４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-01T06:52:07" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -37683,7 +39523,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
