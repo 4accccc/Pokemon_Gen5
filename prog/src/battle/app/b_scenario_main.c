@@ -2709,11 +2709,13 @@ static void bs_disp_cursor( BSCENARIO_WORK * wk, const s32 mode, const s32 num )
 static void bs_set_init_page( BSCENARIO_WORK * wk )
 {
 	// ’Pƒ‚ÉŒvZ
-	wk->PageNum = wk->dat->page_num/2;
+//	wk->PageNum = wk->dat->page_num/2;
+	wk->PageNum = (wk->dat->page_num-1)/2;	// 1‚Í‚¶‚Ü‚è‚ç‚µ‚¢
 	//
 	// ‚±‚±‚Ü‚Å‚Åwk->ScenarioMax‚ÌŒvZ‚ğ‚µ‚Ä‚¨‚­‚±‚Æ
-	if((wk->PageNum < 0)||(wk->PageNum >= wk->ScenarioMax)){
-		OS_Printf("page error : %d -> %d\n",wk->dat->page_num, wk->PageNum);
+//	if((wk->PageNum < 0)||(wk->PageNum >= wk->ScenarioMax)){
+	if((wk->PageNum < 0)||(wk->dat->page_num > wk->ScenarioMax)){
+		OS_Printf("page error : %d -> %d(%d)\n",wk->dat->page_num, wk->PageNum, wk->ScenarioMax);
 		wk->PageNum = 0;
 	}
 }

@@ -2333,10 +2333,13 @@ static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 	}
 	//
 #ifdef PM_DEBUG
-	// テスト
+
+#if 0 // テスト
 	if(wk->Mode == MODE_LV3){
 		bflg = TRUE;
 	}
+#endif
+
 #endif
 	
 	//

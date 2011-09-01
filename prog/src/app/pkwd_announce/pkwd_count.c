@@ -870,9 +870,13 @@ static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 		case STEP_LV2:
 			tmp = pwc_main_timer( wk, TIMER_WAIT2 );
 			if(tmp == 0){
-				// フェードアウト
-				pwc_set_pal_fade( wk, PKWD_FADE_OUT );
-				wk->Step = STEP_LV2+10;
+				// フェードアウト待ち(skip対応)
+				bflg = pwc_is_pal_fade( wk );
+				if( bflg == FALSE){
+					// フェードアウト
+					pwc_set_pal_fade( wk, PKWD_FADE_OUT );
+					wk->Step = STEP_LV2+10;
+				}
 			}
 			break;
 		//

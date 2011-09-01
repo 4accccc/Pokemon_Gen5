@@ -1736,6 +1736,9 @@ static void wbt_init_obj( WBTLIST_MAIN_WORK* wk )
 	//
 	// パレット(すぐ取得でも大丈夫なようだ)
 	wbt_get_obj_paladr( wk, WBT_TRAINER_MAX, PLTID_OBJ_MAPMODEL, CLSYS_DRAW_MAIN );
+	
+	// 通信アイコンセット(下画面)
+	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->heapID );
 }
 
 //-----------------------------------------------------------------------------
