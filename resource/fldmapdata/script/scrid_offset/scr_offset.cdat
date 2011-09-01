@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2011 08/19 (Fri) 18:09
+ * @date  2011 09/01 (Thu) 12:10
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -21,6 +21,13 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       NARC_debug_message_debug_scr_dat
     },
 #endif //PM_DEBUG
+    {//サブイベント：ダンジョンコンビ用スクリプト
+      ID_DUNGEON_CONBI_SCR_OFFSET,    //(10850),
+      ID_DUNGEON_CONBI_SCR_OFFSET_END,//(10859),
+      NARC_script_seq_dungeon_combi_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
+      NARC_script_message_dungeon_combi_scr_dat
+    },
     {//アジト船パスワードのヒント用スクリプト
       ID_HIDE_SHIP_HINT_SCR_OFFSET,   //(10835),
       ID_HIDE_SHIP_HINT_SCR_OFFSET_END,//(10849),

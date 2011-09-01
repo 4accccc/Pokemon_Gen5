@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2011 08/19 (Fri) 18:09
+ * @date  2011 09/01 (Thu) 12:10
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -186,6 +186,9 @@
 
 #define ID_HIDE_SHIP_HINT_SCR_OFFSET     (10835) //アジト船パスワードのヒント用スクリプト
 #define ID_HIDE_SHIP_HINT_SCR_OFFSET_END (10849)
+
+#define ID_DUNGEON_CONBI_SCR_OFFSET      (10850) //サブイベント：ダンジョンコンビ用スクリプト
+#define ID_DUNGEON_CONBI_SCR_OFFSET_END  (10859)
 
 #define ID_DEBUG_SCR_OFFSET              (12010) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12209)

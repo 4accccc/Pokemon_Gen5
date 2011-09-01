@@ -93,12 +93,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_debug_tamada
 {
-  _SUBWIN_MSG( msg_debug_masafumi_15, 10, 10, 1 )
+    _GOTO_GAMECLEAR_DEMO( 0 )
+  //_SUBWIN_MSG( msg_debug_masafumi_15, 10, 10, 1 )
   //_GET_CGEAR_STATUS( SCWK_ANSWER )
   //_DEBUG_PRINT_WK( SCWK_ANSWER )
   //_AB_KEYWAIT()
   //_SET_CGEAR_OFF()
-  _MAP_CHANGE( ZONE_ID_T01, 787, 742, DIR_DOWN )
+  //_MAP_CHANGE( ZONE_ID_T01, 787, 742, DIR_DOWN )
   //_AB_KEYWAIT()
 }
   //_BGM_FADEOUT( 0, 30 )
