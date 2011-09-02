@@ -6,14 +6,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　ノーマル</Text>
+			<Text>ノーマル　タイプか……▼
+かくとう　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:32:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -46,14 +50,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　かくとう</Text>
+			<Text>ノーマル　かくとう　タイプか……▼
+かくとう　ひこう　エスパー　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -86,14 +94,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　ひこう</Text>
+			<Text>ノーマル　ひこう　タイプか……▼
+いわ　でんき　こおり　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:39:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -126,14 +138,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　どく</Text>
+			<Text>ノーマル　どく　タイプか……▼
+じめん　エスパー　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:32:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -166,14 +182,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　じめん</Text>
+			<Text>ノーマル　じめん　タイプか……▼
+かくとう　みず　くさ
+こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -206,14 +227,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　いわ</Text>
+			<Text>ノーマル　いわ　タイプか……▼
+じめん　はがね　みず
+くさ　かくとう　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -246,14 +272,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　むし</Text>
+			<Text>ノーマル　むし　タイプか……▼
+ひこう　いわ　ほのお　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -286,14 +316,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　ゴースト</Text>
+			<Text>ノーマル　ゴースト　タイプか……▼
+あく　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:39:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -326,14 +360,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　はがね</Text>
+			<Text>ノーマル　はがね　タイプか……▼
+じめん　ほのお　かくとう　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:49:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -366,14 +404,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　ほのお</Text>
+			<Text>ノーマル　ほのお　タイプか……▼
+かくとう　じめん　いわ
+みず　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -406,14 +449,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　みず</Text>
+			<Text>ノーマル　みず　タイプか……▼
+かくとう　くさ　でんき　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:39:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -446,14 +493,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　くさ</Text>
+			<Text>ノーマル　くさ　タイプか……▼
+かくとう　ひこう　どく
+むし　ほのお　こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -486,14 +538,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　でんき</Text>
+			<Text>ノーマル　でんき　タイプか……▼
+かくとう　じめん　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:39:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -526,14 +582,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　エスパー</Text>
+			<Text>ノーマル　エスパー　タイプか……▼
+むし　あく　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:38:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -566,14 +626,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　こおり</Text>
+			<Text>ノーマル　こおり　タイプか……▼
+いわ　はがね　ほのお
+かくとう　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -606,14 +671,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　ドラゴン</Text>
+			<Text>ノーマル　ドラゴン　タイプか……▼
+かくとう　こおり　ドラゴン　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:38:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -646,14 +715,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル　あく</Text>
+			<Text>ノーマル　あく　タイプか……▼
+むし　かくとう　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:38:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -686,14 +759,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　かくとう</Text>
+			<Text>かくとう　タイプか……▼
+ひこう　エスパー　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:38:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -726,14 +803,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　ひこう</Text>
+			<Text>かくとう　ひこう　タイプか……▼
+ひこう　でんき　エスパー
+こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -766,14 +848,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　どく</Text>
+			<Text>かくとう　どく　タイプか……▼
+ひこう　じめん　エスパー　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:49:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -806,14 +892,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　じめん</Text>
+			<Text>かくとう　じめん　タイプか……▼
+ひこう　みず　くさ
+エスパー　こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -846,14 +937,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　いわ</Text>
+			<Text>かくとう　いわ　タイプか……▼
+かくとう　じめん　はがね
+みず　くさ　エスパー　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -886,14 +982,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　むし</Text>
+			<Text>かくとう　むし　タイプか……▼
+ほのお　エスパー　ひこう　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:49:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -926,14 +1026,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　ゴースト</Text>
+			<Text>かくとう　ゴースト　タイプか……▼
+ひこう　ゴースト　エスパー　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:49:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -966,14 +1070,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　はがね</Text>
+			<Text>かくとう　はがね　タイプか……▼
+かくとう　じめん　ほのお　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:49:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1006,14 +1114,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　ほのお</Text>
+			<Text>かくとう　ほのお　タイプか……▼
+ひこう　じめん　みず
+エスパー　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1046,14 +1159,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　みず</Text>
+			<Text>かくとう　みず　タイプか……▼
+ひこう　くさ　でんき
+エスパー　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1086,14 +1204,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　くさ</Text>
+			<Text>かくとう　くさ　タイプか……▼
+どく　ほのお　エスパー
+こおり　ひこう　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1126,14 +1249,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　でんき</Text>
+			<Text>かくとう　でんき　タイプか……▼
+じめん　エスパー　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:38:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1166,14 +1293,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　エスパー</Text>
+			<Text>かくとう　エスパー　タイプか……▼
+ひこう　ゴースト　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:38:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1206,14 +1337,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　こおり</Text>
+			<Text>かくとう　こおり　タイプか……▼
+かくとう　ひこう　はがね
+ほのお　エスパー　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1246,14 +1382,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　ドラゴン</Text>
+			<Text>かくとう　ドラゴン　タイプか……▼
+ひこう　エスパー　こおり
+ドラゴン　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1286,14 +1427,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくとう　あく</Text>
+			<Text>かくとう　あく　タイプか……▼
+かくとう　ひこう　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1326,14 +1471,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　ひこう</Text>
+			<Text>ひこう　タイプか……▼
+いわ　でんき　こおり　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:48:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1366,14 +1515,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　どく</Text>
+			<Text>ひこう　どく　タイプか……▼
+いわ　でんき　エスパー
+こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1406,14 +1560,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　じめん</Text>
+			<Text>ひこう　じめん　タイプか……▼
+みず　こおり　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:37:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1446,14 +1604,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　いわ</Text>
+			<Text>ひこう　いわ　タイプか……▼
+いわ　はがね　みず
+でんき　こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1486,14 +1649,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　むし</Text>
+			<Text>ひこう　むし　タイプか……▼
+ひこう　ほのお　でんき
+こおり　いわ　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1526,14 +1694,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　ゴースト</Text>
+			<Text>ひこう　ゴースト　タイプか……▼
+いわ　ゴースト　でんき
+こおり　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1566,14 +1739,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　はがね</Text>
+			<Text>ひこう　はがね　タイプか……▼
+ほのお　でんき　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:37:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1606,14 +1783,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　ほのお</Text>
+			<Text>ひこう　ほのお　タイプか……▼
+みず　でんき　いわ　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:37:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1646,14 +1827,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　みず</Text>
+			<Text>ひこう　みず　タイプか……▼
+いわ　でんき　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1686,14 +1871,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　くさ</Text>
+			<Text>ひこう　くさ　タイプか……▼
+ひこう　どく　いわ
+ほのお　こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1726,14 +1916,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　でんき</Text>
+			<Text>ひこう　でんき　タイプか……▼
+いわ　こおり　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:37:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1766,14 +1960,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　エスパー</Text>
+			<Text>ひこう　エスパー　タイプか……▼
+いわ　ゴースト　でんき
+こおり　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1806,14 +2005,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　こおり</Text>
+			<Text>ひこう　こおり　タイプか……▼
+はがね　ほのお　でんき
+いわ　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1846,14 +2050,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　ドラゴン</Text>
+			<Text>ひこう　ドラゴン　タイプか……▼
+いわ　ドラゴン　こおり　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1886,14 +2094,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひこう　あく</Text>
+			<Text>ひこう　あく　タイプか……▼
+いわ　でんき　こおり　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:48:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1926,14 +2138,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　どく</Text>
+			<Text>どく　タイプか……▼
+じめん　エスパー　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:36:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1966,14 +2182,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　じめん</Text>
+			<Text>どく　じめん　タイプか……▼
+じめん　みず　エスパー
+こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2006,14 +2227,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　いわ</Text>
+			<Text>どく　いわ　タイプか……▼
+はがね　みず　エスパー
+じめん　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2046,14 +2272,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　むし</Text>
+			<Text>どく　むし　タイプか……▼
+ひこう　いわ　ほのお
+エスパー　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2086,14 +2317,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　ゴースト</Text>
+			<Text>どく　ゴースト　タイプか……▼
+じめん　ゴースト　エスパー
+あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2126,14 +2362,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　はがね</Text>
+			<Text>どく　はがね　タイプか……▼
+ほのお　じめん　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:36:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2166,14 +2406,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　ほのお</Text>
+			<Text>どく　ほのお　タイプか……▼
+いわ　みず　エスパー
+じめん　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2206,14 +2451,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　みず</Text>
+			<Text>どく　みず　タイプか……▼
+じめん　でんき　エスパー　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:36:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2246,31 +2495,26 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　くさ　タイプか…▼
-ほのお　こおり
-ひこう　エスパー　タイプの▽
+			<Text>どく　くさ　タイプか……▼
+ひこう　ほのお　エスパー
+こおり　タイプの▽
 こうげきに　よわいね▼
-このタイプの　ポケモンと
-たたかうときは　ちゅういすること▼</Text>
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どく　くさ　タイプか…▼
-ほのお　こおり
-ひこう　エスパー　タイプの▽
-攻撃に　弱いね▼
-このタイプの　ポケモンと
-戦う時は　注意すること▼</Text>
+			<Text>どく　くさ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:52:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2296,14 +2540,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　でんき</Text>
+			<Text>どく　でんき　タイプか……▼
+エスパー　じめん　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:36:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2336,14 +2584,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　エスパー</Text>
+			<Text>どく　エスパー　タイプか……▼
+じめん　ゴースト　あく　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:36:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2376,14 +2628,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　こおり</Text>
+			<Text>どく　こおり　タイプか……▼
+じめん　いわ　はがね
+ほのお　エスパー　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2416,14 +2673,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　ドラゴン</Text>
+			<Text>どく　ドラゴン　タイプか……▼
+じめん　エスパー　こおり
+ドラゴン　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2456,14 +2718,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どく　あく</Text>
+			<Text>どく　あく　タイプか……▼
+じめん　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:35:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2496,14 +2762,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　じめん</Text>
+			<Text>じめん　タイプか……▼
+みず　くさ　こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:35:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2536,14 +2806,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　いわ</Text>
+			<Text>じめん　いわ　タイプか……▼
+かくとう　じめん　はがね
+こおり　みず　くさ　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2576,14 +2851,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　むし</Text>
+			<Text>じめん　むし　タイプか……▼
+ひこう　みず　ほのお
+こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2616,14 +2896,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　ゴースト</Text>
+			<Text>じめん　ゴースト　タイプか……▼
+ゴースト　みず　くさ
+こおり　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2656,14 +2941,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　はがね</Text>
+			<Text>じめん　はがね　タイプか……▼
+かくとう　じめん　みず
+ほのお　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2696,14 +2986,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　ほのお</Text>
+			<Text>じめん　ほのお　タイプか……▼
+じめん　みず　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:35:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2736,14 +3030,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　みず</Text>
+			<Text>じめん　みず　タイプか……▼
+くさ　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:34:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2776,14 +3074,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　くさ</Text>
+			<Text>じめん　くさ　タイプか……▼
+ひこう　むし　ほのお
+こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2816,14 +3119,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　でんき</Text>
+			<Text>じめん　でんき　タイプか……▼
+じめん　みず　くさ
+こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2856,14 +3164,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　エスパー</Text>
+			<Text>じめん　エスパー　タイプか……▼
+むし　ゴースト　みず
+くさ　こおり　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2896,14 +3209,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　こおり</Text>
+			<Text>じめん　こおり　タイプか……▼
+かくとう　はがね　みず
+ほのお　くさ　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2936,14 +3254,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　ドラゴン</Text>
+			<Text>じめん　ドラゴン　タイプか……▼
+ドラゴン　こおり　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:33:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2976,14 +3298,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめん　あく</Text>
+			<Text>じめん　あく　タイプか……▼
+かくとう　むし　みず
+くさ　こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3016,14 +3343,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　いわ</Text>
+			<Text>いわ　タイプか……▼
+かくとう　じめん　はがね
+みず　くさ　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:30:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3056,14 +3388,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　むし</Text>
+			<Text>いわ　むし　タイプか……▼
+いわ　はがね　みず　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:40:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3096,14 +3432,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　ゴースト</Text>
+			<Text>いわ　ゴースト　タイプか……▼
+じめん　ゴースト　はがね
+みず　くさ　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3136,14 +3477,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　はがね</Text>
+			<Text>いわ　はがね　タイプか……▼
+みず　かくとう　じめん　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:40:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3176,14 +3521,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　ほのお</Text>
+			<Text>いわ　ほのお　タイプか……▼
+かくとう　いわ　じめん
+みず　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:33:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3216,14 +3566,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　みず</Text>
+			<Text>いわ　みず　タイプか……▼
+かくとう　じめん　でんき
+くさ　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3256,14 +3611,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　くさ</Text>
+			<Text>いわ　くさ　タイプか……▼
+かくとう　むし　はがね
+こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3296,14 +3656,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　でんき</Text>
+			<Text>いわ　でんき　タイプか……▼
+かくとう　みず　くさ
+じめん　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3336,14 +3701,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　エスパー</Text>
+			<Text>いわ　エスパー　タイプか……▼
+じめん　むし　ゴースト
+はがね　みず　くさ　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3376,14 +3746,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　こおり</Text>
+			<Text>いわ　こおり　タイプか……▼
+じめん　いわ　みず
+くさ　かくとう　はがね　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3416,14 +3791,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　ドラゴン</Text>
+			<Text>いわ　ドラゴン　タイプか……▼
+かくとう　じめん　はがね
+こおり　ドラゴン　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3456,14 +3836,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわ　あく</Text>
+			<Text>いわ　あく　タイプか……▼
+じめん　むし　はがね
+みず　くさ　かくとう　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3496,14 +3881,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　むし</Text>
+			<Text>むし　タイプか……▼
+ひこう　いわ　ほのお　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:47:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3536,14 +3925,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　ゴースト</Text>
+			<Text>むし　ゴースト　タイプか……▼
+ひこう　いわ　ゴースト
+ほのお　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3576,14 +3970,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　はがね</Text>
+			<Text>むし　はがね　タイプか……▼
+ほのお　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:32:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3616,14 +4014,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　ほのお</Text>
+			<Text>むし　ほのお　タイプか……▼
+ひこう　みず　いわ　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3656,14 +4058,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　みず</Text>
+			<Text>むし　みず　タイプか……▼
+ひこう　いわ　でんき　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3696,14 +4102,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　くさ</Text>
+			<Text>むし　くさ　タイプか……▼
+どく　いわ　むし
+こおり　ひこう　ほのお　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3736,14 +4147,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　でんき</Text>
+			<Text>むし　でんき　タイプか……▼
+いわ　ほのお　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:32:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3776,14 +4191,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　エスパー</Text>
+			<Text>むし　エスパー　タイプか……▼
+ひこう　いわ　むし
+ゴースト　ほのお　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3816,14 +4236,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　こおり</Text>
+			<Text>むし　こおり　タイプか……▼
+ひこう　はがね　いわ
+ほのお　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3856,14 +4281,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　ドラゴン</Text>
+			<Text>むし　ドラゴン　タイプか……▼
+ひこう　いわ　こおり
+ドラゴン　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3896,14 +4326,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むし　あく</Text>
+			<Text>むし　あく　タイプか……▼
+ひこう　いわ　むし
+ほのお　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3936,14 +4371,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴースト　ゴースト</Text>
+			<Text>ゴースト　タイプか……▼
+ゴースト　あく　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:32:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3976,14 +4415,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴースト　はがね</Text>
+			<Text>ゴースト　はがね　タイプか……▼
+じめん　ほのお　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:31:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4016,14 +4459,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴースト　ほのお</Text>
+			<Text>ゴースト　ほのお　タイプか……▼
+じめん　いわ　ゴースト
+みず　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4056,14 +4504,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴースト　みず</Text>
+			<Text>ゴースト　みず　タイプか……▼
+ゴースト　くさ　でんき
+あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4096,14 +4549,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴースト　くさ</Text>
+			<Text>ゴースト　くさ　タイプか……▼
+ひこう　ゴースト　ほのお
+こおり　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4136,14 +4594,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴースト　でんき</Text>
+			<Text>ゴースト　でんき　タイプか……▼
+じめん　ゴースト　あく　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:47:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4176,14 +4638,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴースト　エスパー</Text>
+			<Text>ゴースト　エスパー　タイプか……▼
+ゴースト　あく　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:31:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4216,14 +4682,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴースト　こおり</Text>
+			<Text>ゴースト　こおり　タイプか……▼
+いわ　ゴースト　はがね
+ほのお　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4256,14 +4727,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴースト　ドラゴン</Text>
+			<Text>ゴースト　ドラゴン　タイプか……▼
+ゴースト　こおり　ドラゴン
+あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4296,10 +4772,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴースト　あく</Text>
+			<Text>ゴースト　あく　タイプか……▼
+じゃくてんのない
+めずらしい　タイプだね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:41:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4336,14 +4814,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがね　はがね</Text>
+			<Text>はがね　タイプか……▼
+かくとう　じめん　ほのお　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:47:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4376,14 +4858,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがね　ほのお</Text>
+			<Text>はがね　ほのお　タイプか……▼
+かくとう　みず　じめん　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:46:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4416,14 +4902,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがね　みず</Text>
+			<Text>はがね　みず　タイプか……▼
+かくとう　じめん　でんき　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:46:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4456,14 +4946,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがね　くさ</Text>
+			<Text>はがね　くさ　タイプか……▼
+かくとう　ほのお　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:31:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4496,14 +4990,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがね　でんき</Text>
+			<Text>はがね　でんき　タイプか……▼
+かくとう　ほのお　じめん　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:46:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4536,14 +5034,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがね　エスパー</Text>
+			<Text>はがね　エスパー　タイプか……▼
+じめん　ほのお　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:31:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4576,14 +5078,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがね　こおり</Text>
+			<Text>はがね　こおり　タイプか……▼
+じめん　かくとう　ほのお　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:46:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4616,14 +5122,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがね　ドラゴン</Text>
+			<Text>はがね　ドラゴン　タイプか……▼
+かくとう　じめん　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:31:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4656,14 +5166,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがね　あく</Text>
+			<Text>はがね　あく　タイプか……▼
+じめん　ほのお　かくとう　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:46:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4696,14 +5210,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのお　ほのお</Text>
+			<Text>ほのお　　タイプか……▼
+じめん　いわ　みず　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:43:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4736,14 +5254,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのお　みず</Text>
+			<Text>ほのお　みず　タイプか……▼
+じめん　いわ　でんき　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:43:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4776,14 +5298,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのお　くさ</Text>
+			<Text>ほのお　くさ　タイプか……▼
+ひこう　どく　いわ　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:43:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4816,14 +5342,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのお　でんき</Text>
+			<Text>ほのお　でんき　タイプか……▼
+いわ　みず　じめん　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:43:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4856,14 +5386,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのお　エスパー</Text>
+			<Text>ほのお　エスパー　タイプか……▼
+じめん　いわ　ゴースト
+みず　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4896,14 +5431,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのお　こおり</Text>
+			<Text>ほのお　こおり　タイプか……▼
+かくとう　じめん　みず
+いわ　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4936,14 +5476,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのお　ドラゴン</Text>
+			<Text>ほのお　ドラゴン　タイプか……▼
+じめん　いわ　ドラゴン　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:43:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4976,14 +5520,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのお　あく</Text>
+			<Text>ほのお　あく　タイプか……▼
+かくとう　じめん　いわ　
+みず　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5016,29 +5565,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みず　タイプか…▼
-でんき　くさ　タイプの
+			<Text>みず　タイプか……▼
+くさ　でんき　タイプの
 こうげきに　よわいね▼
-このタイプの　ポケモンと
-たたかうときは　ちゅういすること▼</Text>
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:31:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みず　タイプか…▼
-でんき　くさ　タイプの
-攻撃に　弱いね▼
-このタイプの　ポケモンと
-戦う時は　注意すること▼</Text>
+			<Text>みず　みず</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:52:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5064,14 +5609,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みず　くさ</Text>
+			<Text>みず　くさ　タイプか……▼
+ひこう　どく　むし　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:43:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5104,14 +5653,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みず　でんき</Text>
+			<Text>みず　でんき　タイプか……▼
+じめん　くさ　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:31:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5144,14 +5697,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みず　エスパー</Text>
+			<Text>みず　エスパー　タイプか……▼
+むし　ゴースト　くさ
+でんき　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5184,14 +5742,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みず　こおり</Text>
+			<Text>みず　こおり　タイプか……▼
+かくとう　いわ　くさ
+でんき　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5224,14 +5787,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みず　ドラゴン</Text>
+			<Text>みず　ドラゴン　タイプか……▼
+ドラゴン　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:31:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5264,14 +5831,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みず　あく</Text>
+			<Text>みず　あく　タイプか……▼
+かくとう　むし　くさ
+でんき　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5304,14 +5876,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くさ　くさ</Text>
+			<Text>くさ　タイプか……▼
+ひこう　どく　むし
+ほのお　こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:29:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5344,14 +5921,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くさ　でんき</Text>
+			<Text>くさ　でんき　タイプか……▼
+どく　むし　ほのお
+こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5384,14 +5966,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くさ　エスパー</Text>
+			<Text>くさ　エスパー　タイプか……▼
+ひこう　どく　ゴースト
+ほのお　こおり　あく　むし　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5424,31 +6011,26 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くさ　こおり　タイプか…▼
-ほのお　かくとう　どく　ひこう
-むし　いわ　はがね　タイプの▽
+			<Text>くさ　こおり　タイプか……▼
+かくとう　ひこう　どく
+いわ　むし　はがね　ほのお　タイプの▽
 こうげきに　よわいね▼
-このタイプの　ポケモンと
-たたかうときは　ちゅういすること▼</Text>
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くさ　こおり　タイプか…▼
-ほのお　かくとう　どく　ひこう
-むし　いわ　はがね　タイプの▽
-攻撃に　弱いね▼
-このタイプの　ポケモンと
-戦う時は　注意すること▼</Text>
+			<Text>くさ　こおり</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:52:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5474,14 +6056,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くさ　ドラゴン</Text>
+			<Text>くさ　ドラゴン　タイプか……▼
+ひこう　どく　むし
+ドラゴン　こおり　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5514,14 +6101,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くさ　あく</Text>
+			<Text>くさ　あく　タイプか……▼
+かくとう　ひこう　どく
+ほのお　こおり　むし　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5554,14 +6146,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんき　でんき</Text>
+			<Text>でんき　タイプか……▼
+じめん　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:30:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5594,14 +6190,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんき　エスパー</Text>
+			<Text>でんき　エスパー　タイプか……▼
+じめん　むし　ゴースト
+あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5634,14 +6235,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんき　こおり</Text>
+			<Text>でんき　こおり　タイプか……▼
+かくとう　じめん　いわ
+ほのお　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5674,14 +6280,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんき　ドラゴン</Text>
+			<Text>でんき　ドラゴン　タイプか……▼
+じめん　こおり　ドラゴン　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:42:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5714,14 +6324,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんき　あく</Text>
+			<Text>でんき　あく　タイプか……▼
+かくとう　じめん　むし　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:42:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5754,29 +6368,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エスパー　タイプか…▼
+			<Text>エスパー　タイプか……▼
 むし　ゴースト　あく　タイプの
 こうげきに　よわいね▼
-このタイプの　ポケモンと
-たたかうときは　ちゅういすること▼</Text>
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:42:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エスパー　タイプか…▼
-むし　ゴースト　あく　タイプの
-攻撃に　弱いね▼
-このタイプの　ポケモンと
-戦う時は　注意すること▼</Text>
+			<Text>エスパー　エスパー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:52:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5802,14 +6412,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エスパー　こおり</Text>
+			<Text>エスパー　こおり　タイプか……▼
+いわ　むし　ゴースト
+はがね　ほのお　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5842,14 +6457,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エスパー　ドラゴン</Text>
+			<Text>エスパー　ドラゴン　タイプか……▼
+むし　ゴースト　こおり
+ドラゴン　あく　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5882,14 +6502,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エスパー　あく</Text>
+			<Text>エスパー　あく　タイプか……▼
+むし　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:30:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5922,14 +6546,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こおり　こおり</Text>
+			<Text>こおり　タイプか……▼
+かくとう　いわ　はがね
+ほのお　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:28:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5962,14 +6591,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こおり　ドラゴン</Text>
+			<Text>こおり　ドラゴン　タイプか……▼
+かくとう　いわ　はがね
+ドラゴン　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -6002,14 +6636,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こおり　あく</Text>
+			<Text>こおり　あく　タイプか……▼
+いわ　むし　はがね
+ほのお　かくとう　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -6042,29 +6681,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドラゴン　タイプか…▼
+			<Text>ドラゴン　タイプか……▼
 こおり　ドラゴン　タイプの
 こうげきに　よわいね▼
-このタイプの　ポケモンと
-たたかうときは　ちゅういすること▼</Text>
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:30:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドラゴン　タイプか…▼
-こおり　ドラゴン　タイプの
-攻撃に　弱いね▼
-このタイプの　ポケモンと
-戦う時は　注意すること▼</Text>
+			<Text>ドラゴン　ドラゴン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6090,14 +6725,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドラゴン　あく</Text>
+			<Text>ドラゴン　あく　タイプか……▼
+かくとう　むし　こおり
+ドラゴン　タイプの▽
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T03:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -6130,14 +6770,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あく　あく</Text>
+			<Text>あく　タイプか……▼
+かくとう　むし　タイプの
+こうげきに　よわいね▼
+この　タイプの　ポケモンと　
+たたかうときは　ちゅういすること</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:30:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-02T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
