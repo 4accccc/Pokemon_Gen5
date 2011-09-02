@@ -735,6 +735,9 @@ _EVENT_DATA ev_TRID_MOUNT_30
 _EVENT_DATA ev_TRID_MOUNT_31
 _EVENT_DATA ev_TRID_ELITEM_44
 _EVENT_DATA ev_TRID_ELITEW_43
+_EVENT_DATA ev_TRID_SWRIVAL_16
+_EVENT_DATA ev_TRID_SWRIVAL_17
+_EVENT_DATA ev_TRID_SWRIVAL_18
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1460,6 +1463,9 @@ ev_TRID_MOUNT_30:
 ev_TRID_MOUNT_31:
 ev_TRID_ELITEM_44:
 ev_TRID_ELITEW_43:
+ev_TRID_SWRIVAL_16:
+ev_TRID_SWRIVAL_17:
+ev_TRID_SWRIVAL_18:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
