@@ -52,6 +52,7 @@
 #include "field_gimmick_hide_ship_bow.h"
 #include "gym_old_elec.h"
 #include "field_gimmick_pkwd_field.h"
+#include "field_gimmick_h06.h"
 
 FS_EXTERN_OVERLAY(field_gym_insect);
 FS_EXTERN_OVERLAY(field_gym_elec);
@@ -92,6 +93,7 @@ FS_EXTERN_OVERLAY(field_gimmick_champion);
 FS_EXTERN_OVERLAY(field_gimmick_hide_ship_bow);
 FS_EXTERN_OVERLAY(field_gym_old_elec);
 FS_EXTERN_OVERLAY(pkwd_field_gimmick);
+FS_EXTERN_OVERLAY(field_gimmick_h06);
 
 
 #include "field_gimmick_table.cdat"

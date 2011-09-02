@@ -312,5 +312,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     PKWD_FIELD_End,    // ポケウッド フィールド
     PKWD_FIELD_Move,   // ポケウッド フィールド
   },
+  {
+    FS_OVERLAY_ID(field_gimmick_h06),
+    H06_GIMMICK_Setup,  // マリンチューブ
+    H06_GIMMICK_End,    // マリンチューブ
+    H06_GIMMICK_Move,   // マリンチューブ
+  },
 };
 
