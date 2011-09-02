@@ -394,11 +394,11 @@
 #define FE_C04R1101_TRBTL2                 378 /* 0x017a 旧電気ジムのコースタートレーナーの対戦済みチェックフラグ（２台目） */
 #define FE_H05_POKE488_GET_01              379 /* 0x017b ワンダーブリッジ：クレセリア捕獲フラグ */
 #define FE_D24_POKE485_GET_01              380 /* 0x017c リバースマウンテン：ヒードラン捕獲フラグ */
-		/* not used   381(0x017d) */
-		/* not used   382(0x017e) */
-		/* not used   383(0x017f) */
-		/* not used   384(0x0180) */
-		/* not used   385(0x0181) */
+#define FE_C01PC0101_ITEMGET_01            381 /* 0x017d サンヨウシティ：アイテム入手フラグ */
+#define FE_C03R0501_ITEMGET_01             382 /* 0x017e ヒウンシティ：アイテム入手フラグ */
+#define FE_R06R0301_ITEMGET_01             383 /* 0x017f 6番道路：アイテム入手フラグ */
+#define FE_R11R0201_ITEMGET_01             384 /* 0x0180 11番道路：アイテム入手フラグ */
+#define FE_R16R0101_ITEMGET_01             385 /* 0x0181 16番道路：アイテム入手フラグ */
 		/* not used   386(0x0182) */
 		/* not used   387(0x0183) */
 		/* not used   388(0x0184) */
@@ -719,6 +719,7 @@
 #define FV_D26R0101_BOSS                   801 /* 0x0321 チャンピオンロード：Ｎ */
 #define FV_R04_POKE_567_633_01             802 /* 0x0322 4番道路：バルジーナ（ウォーグル） */
 #define FV_D20_POKE_536_01                 803 /* 0x0323 サザナミ湾：ブルンゲル */
+#define FV_R14R0101_MAN3_01                804 /* 0x0324 14番道路：ストッパー */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
