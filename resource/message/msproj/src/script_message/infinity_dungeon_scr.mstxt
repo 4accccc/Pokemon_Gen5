@@ -15271,4 +15271,476 @@ Cギアを　見てごらん▼
 				Time="2011-08-14T08:27:56" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_mob_w_01_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　ちからだけじゃ　かてないわ
+たたかわないことも　さくせんよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T01:49:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　力だけじゃ　勝てないわ
+戦わないことも　作戦よ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T01:49:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＡ（ホワイト）
+エリア1～5クリアまで</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:01:38" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_w_01_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリア6？
+そんな　エリアまで　あるのね▼
+わたしも　がんばって　
+さきの　エリアを　めざすわ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T01:51:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリア6？
+そんな　エリアまで　あるのね▼
+わたしも　がんばって　
+先の　エリアを　目指すわ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T01:51:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＡ（ホワイト）
+エリア5クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:01:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_w_01_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリアを　せいはしたの？
+すごいわ！！▼
+みかけによらず　あなた　つよいのね
+こんど　てあわせしてね！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T01:58:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリアを　制覇したの？
+すごいわ！！▼
+みかけによらず　あなた　強いのね
+今度　手合わせしてね！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T01:58:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＡ（ホワイト）
+エリア10クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:01:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_w_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゅどうの　さいかそうって
+どうなって　いるんだろうね？</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:07:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>樹洞の　最下層って
+どうなって　いるんだろうね？</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:07:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＢ（ホワイト）
+エリア1～5クリアまで</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:01:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_w_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やっと　エリア3まで
+いくことが　できたよ▼
+え？　エリア6！？
+これいじょう　いけるかな　……▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:14:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やっと　エリア3まで
+行くことが　できたよ▼
+え？　エリア6！？
+これ以上　行けるかな　……▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:14:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＢ（ホワイト）
+エリア5クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:01:51" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_w_02_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よし！　エリア6まで
+クリアできたぞ！▼
+え？　エリアを　せいはした？
+すごいよ！　キミ！▼
+さいかそうは　……
+いや！　じぶんで　いくよ▼
+じぶんの　このめで
+さいかそうを　みるんだ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:22:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よし！　エリア6まで
+クリアできたぞ！▼
+え？　エリアを　制覇した？
+すごいよ！　キミ！▼
+最下層は　……
+いや！　自分で　行くよ▼
+自分の　この目で
+最下層を　見るんだ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:23:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＢ（ホワイト）
+エリア10クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:01:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_b_01_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　しせつは　ひじょうに
+きょうみぶかいわ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:25:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　施設は　非常に
+興味深いわ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:26:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＡ（ブラック）
+エリア1～5クリアまで</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:25:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_b_01_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリア6？
+このさきは　どんな　ばしょなのかしら▼
+けんきゅしゃとして
+きょうみは　つきないわ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:29:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリア6？
+この先は　どんな　場所なのかしら▼
+研究者として
+興味は　尽きないわ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:29:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＡ（ブラック）
+エリア5クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:25:49" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_b_01_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなた　さいじょうかいまで
+いけたのね！▼
+エリア10　……
+どんな　ばしょなのかしら
+わたしも　ぜったいに　いくわよ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:31:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなた　最上階まで
+行けたのね！▼
+エリア10　……
+どんな　場所なのかしら
+わたしも　絶対に　行くわよ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:31:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＡ（ブラック）
+エリア10クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:25:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_b_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このビルには　つよいちからを
+かんじるよ▼
+ううう　ふるえが　とまらない　……</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T04:08:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>このビルには　強い力を　感じるよ
+ううう　振るえが　止まらない　……</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T04:08:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＢ（ブラック）
+エリア1～5クリアまで</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:25:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_b_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ますます　ビルからの　ちからが
+つよくなってるよ▼
+ううう　だめだ！
+とりはだが　とまらない　……</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T04:10:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ますます　ビルからの　力が　強くなってるよ▼
+ううう　だめだ！
+鳥肌が　止まらない　……</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T04:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＢ（ブラック）
+エリア5クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:26:03" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mob_b_02_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>え？　ぜんエリアを　せいはした？▼
+そうか！　このふるえの　げんいんは
+つよいちからを　もつ　キミだったんだ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T04:12:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>え？　全エリアを　制覇した？▼
+そうか！　この震えの　原因は
+強い力を　持つ　キミだったんだ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T04:12:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T10:06:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＢ（ブラック）
+エリア10クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-02T02:26:09" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

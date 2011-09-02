@@ -10,6 +10,8 @@
 #define ZONE_D31R0201_EVC_H
 
 #define D31R0201_INFORMATIONW_00           0
+#define D31R0201_ASSISTANTW_00             1
+#define D31R0201_ESPM_00                   2
 
 #endif //ZONE_D31R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d31r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

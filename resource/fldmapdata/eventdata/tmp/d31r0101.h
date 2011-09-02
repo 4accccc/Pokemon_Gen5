@@ -10,6 +10,8 @@
 #define ZONE_D31R0101_EVC_H
 
 #define D31R0101_WORKMAN2_00               0
+#define D31R0101_FIGHTERW_00               1
+#define D31R0101_MOUNTMAN_00               2
 
 #endif //ZONE_D31R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d31r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
