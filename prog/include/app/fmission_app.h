@@ -30,8 +30,10 @@ extern const GFL_PROC_DATA FMissionAppProcData;
 //=============================================================================
 
 typedef enum{
-  FMISSION_APP_MODE_INFO,
-  FMISSION_APP_MODE_RESULT,
+  FMISSION_APP_MODE_INFO,		// 詳細画面
+  FMISSION_APP_MODE_RESULT,		// 評価画面
+  //
+  FMISSION_APP_MODE_MAX,
 }FMISSION_APP_MODE;
 
 //=============================================================================
@@ -45,9 +47,10 @@ typedef enum{
 //=====================================
 typedef struct
 {	
-	GAMESYS_WORK* gsys;	//[in]ゲームシステム
-  GAMEDATA*     gdata;
-  FMISSION_APP_MODE mode;
+	GAMESYS_WORK*		gsys;	//[in]ゲームシステム
+	GAMEDATA*			gdata;
+	//
+	FMISSION_APP_MODE	mode;	// 画面切り替え
 
   LINK_FESTIVAL* fest_sys;  ///<ハイリンクフェス　管理ワーク
   const FEST_MISSION* fmwk; ///<現在のミッションデータ
@@ -55,3 +58,4 @@ typedef struct
   FMISSION_SAVE*  fmission_sv;  ///<フェスセーブデータポインタ
 
 }FMISSION_APP_PARAM;
+

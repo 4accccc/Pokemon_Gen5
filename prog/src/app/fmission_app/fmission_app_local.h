@@ -10,59 +10,16 @@
 
 #pragma once
 
-// 簡易会話表示システム
-#include "system/pms_draw.h"
-
-//テクスチャをOAMに転送
-#include "system/nsbtx_to_clwk.h"
-
 //FONT
 #include "print/gf_font.h"
 #include "font/font.naix"
 
 //PRINT_QUE
 #include "print/printsys.h"
-
 #include "print/wordset.h"
-
-//INFOWIN
-#include "infowin/infowin.h"
 
 //描画設定
 #include "fmission_app_gra.h"
-
-//簡易CLWK読み込み＆開放ユーティリティー
-#include "ui/ui_easy_clwk.h"
-
-//マップモデルのnsbtx
-#include "fieldmap/fldmmdl_mdlres.naix"
-
-//タッチバー
-#include "ui/touchbar.h"
-
-//ポケパラ、ポケモンNO
-#include "poke_tool/poke_tool.h"
-#include "poke_tool/monsno_def.h"
-
-//ポケアイコン
-#include "pokeicon/pokeicon.h"
-
-//MCSS
-#include "system/mcss.h"
-#include "system/mcss_tool.h"
-
-//タスクメニュー
-#include "app/app_taskmenu.h"
-
-//どうぐアイコン
-#include "item/item.h"
-#include "item_icon.naix"
-
-//ポケモンBG,OBJ読みこみ
-#include "system/poke2dgra.h"
-
-//アプリ共通素材
-#include "app/app_menu_common.h"
 
 // サウンド
 #include "sound/pm_sndsys.h"
@@ -76,103 +33,188 @@
 #include "fmission_app_def.h"
 
 //=============================================================================
-// 下記defineをコメントアウトすると、機能を取り除けます
+/**
+ *								定数定義
+ */
 //=============================================================================
-//#define FMISSION_INFOWIN
-#define FMISSION_TOUCHBAR
-//#define FMISSION_MCSS
-//#define FMISSION_TASKMENU
-//#define FMISSION_POKE_ICON     // ポケアイコン(ポケアイコン用アイテムアイコン込み)
-////#define FMISSION_POKE2D				// ポケモンBG,OBJ読みこみ
-//#define FMISSION_PMSDRAW       // 簡易会話表示
+// いろいろ
+enum{
+	FMA_MSG_MAXNUM    	= 2,		// msg最大数
+	FMA_CANVAS_MAXNUM 	= 30,		// canvas最大数
+	FMA_OBJ_MAXNUM		= 20,		// obj最大数
+};
+
+// フラグ
+enum{
+	FLG_FMA_UPDATE		= (1<<0),	// 更新
+};
+
+//------------------
+// canvasのid(詳細)
+//------------------
+enum{
+	// 上画面
+	FMAI_CANVAS_UP_TITLE		= 0,
+	//
+	FMAI_CANVAS_UP_TIME_L,
+	FMAI_CANVAS_UP_JOIN_L,
+	FMAI_CANVAS_UP_CLEAR_L,
+	FMAI_CANVAS_UP_SCORE_L,
+	FMAI_CANVAS_UP_GAIN_L,
+	//
+	FMAI_CANVAS_UP_JOIN_R,
+	FMAI_CANVAS_UP_SCORE_R,
+	FMAI_CANVAS_UP_GAIN_R,
+	//
+	// 下画面
+	FMAI_CANVAS_DOWN_MYSCORE_L,
+	FMAI_CANVAS_DOWN_RANK_L,
+	FMAI_CANVAS_DOWN_TOPSCORE_L,
+	FMAI_CANVAS_DOWN_NAME_L,
+	FMAI_CANVAS_DOWN_HIGH_L,
+	FMAI_CANVAS_DOWN_EXPLAIN_L,
+	//
+	FMAI_CANVAS_DOWN_MYSCORE_R,
+	FMAI_CANVAS_DOWN_RANK_R,
+	FMAI_CANVAS_DOWN_TOPSCORE_R,
+	FMAI_CANVAS_DOWN_HIGH_R,
+	//
+	// スクロール
+	FMAI_CANVAS_UP_SCROLL_00,
+	FMAI_CANVAS_UP_SCROLL_01,
+};
+
+//------------------
+// canvasのid(評価)
+//------------------
+enum{
+	// 上画面
+	FMAR_CANVAS_UP_TITLE		= 0,
+	//
+	FMAR_CANVAS_UP_JOIN_L,
+	FMAR_CANVAS_UP_CLEAR_L,
+	FMAR_CANVAS_UP_SCORE_L,
+	FMAR_CANVAS_UP_TIME_L,
+	//
+	FMAR_CANVAS_UP_JOIN_R,
+	FMAR_CANVAS_UP_SCORE_R,
+	//
+	// 下画面
+	FMAR_CANVAS_DOWN_MYSCORE_L,
+	FMAR_CANVAS_DOWN_RANK_L,
+	FMAR_CANVAS_DOWN_TOPSCORE_L,
+	FMAR_CANVAS_DOWN_NAME_L,
+	FMAR_CANVAS_DOWN_GAIN_L,
+	FMAR_CANVAS_DOWN_BONUS_L,
+	FMAR_CANVAS_DOWN_DOUBLE_L,
+	//
+	FMAR_CANVAS_DOWN_MYSCORE_R,
+	FMAR_CANVAS_DOWN_RANK_R,
+	FMAR_CANVAS_DOWN_TOPSCORE_R,
+	FMAR_CANVAS_DOWN_GAIN_R,
+	FMAR_CANVAS_DOWN_BONUS_R,
+	FMAR_CANVAS_DOWN_DOUBLE_R,
+};
+
+//-----------------------------
+// objのres
+//-----------------------------
+enum{
+	// 通常
+	FMA_RESID_OBJ_PLT = 0,		// パレット
+	FMA_RESID_OBJ_CHR,			// キャラ
+	FMA_RESID_OBJ_CEL,			// セルアニメ
+	//
+	FMA_RESID_OBJ_MAX,
+};
+
+//----------
+// clwork
+//----------
+enum{
+	FMA_CLWKMODE_NORMAL = 0,	// 通常
+	FMA_CLWKMODE_CMN,			// 共通
+};
+
+//-------------------
+// clwkのid(詳細画面)
+//-------------------
+enum{
+	FMAI_CLWK_ICON_00 = 0,		// 時間アイコン
+	FMAI_CLWK_ICON_01,			// 人数アイコン
+	FMAI_CLWK_STAR,				// 星マーク
+	FMAI_CLWK_TIME_00,			// 時間(5つ分)
+	FMAI_CLWK_TIME_01,			// 時間
+	FMAI_CLWK_TIME_02,			// 時間
+	FMAI_CLWK_TIME_03,			// 時間
+	FMAI_CLWK_TIME_04,			// 時間
+	FMAI_CLWK_SCORE_00,			// スコア(4つ分)
+	FMAI_CLWK_SCORE_01,			// スコア
+	FMAI_CLWK_SCORE_02,			// スコア
+	FMAI_CLWK_SCORE_03,			// スコア
+};
+
+//-------------------
+// clwkのid(評価画面)
+//-------------------
+enum{
+	FMAR_CLWK_ICON_01 = 0,		// 人数アイコン
+	FMAR_CLWK_STAR,				// 星マーク
+	FMAR_CLWK_TIME_00,			// 時間(5つ分)
+	FMAR_CLWK_TIME_01,			// 時間
+	FMAR_CLWK_TIME_02,			// 時間
+	FMAR_CLWK_TIME_03,			// 時間
+	FMAR_CLWK_TIME_04,			// 時間
+	FMAR_CLWK_SCORE_00,			// スコア(4つ分)
+	FMAR_CLWK_SCORE_01,			// スコア
+	FMAR_CLWK_SCORE_02,			// スコア
+	FMAR_CLWK_SCORE_03,			// スコア
+	FMAR_CLWK_RECORD_00,		// レコード
+	FMAR_CLWK_RECORD_01,		// レコード
+};
 
 //=============================================================================
 /**
  *								構造体定義
  */
 //=============================================================================
-//--------------------------------------------------------------
-///	BG管理ワーク
-//==============================================================
-typedef struct 
+//-------------------------------------
+/// OBJ管理ワーク
+//-------------------------------------
+typedef struct
 {
-	int dummy;
-} FMISSION_APP_BGWK;
-
-
-#ifdef FMISSION_PMSDRAW
-#define FMISSION_PMSDRAW_NUM (3) ///< 簡易会話の個数
-#endif // FMISSION_PMSDRAW 
+	u32			res[FMA_RESID_OBJ_MAX]; 			// リソース
+	// 共通
+//	GFL_CLWK	*cmn_clwk[T_DOWNLOAD_CMN_OBJ_MAXNUM];	// CLWK(common)
+	// 通常
+	GFL_CLWK	*clwk[FMA_OBJ_MAXNUM];				// CLWK
+} FMISSION_APP_OBJ_WORK;
 
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
 typedef struct 
 {
-  HEAPID heapID;
-
-  int                     seq;  //サブシーケンスNo
-
-	FMISSION_APP_BGWK				wk_bg;
-
+	HEAPID					heapID;
+	// OBJ
+	FMISSION_APP_OBJ_WORK	wk_obj;
 	//描画設定
-	FMISSION_APP_GRAWK	*graphic;
-
-#ifdef FMISSION_TOUCHBAR
-	//タッチバー
-	TOUCHBAR_WORK							*touchbar;
-	//以下カスタムボタン使用する場合のサンプルリソース
-	u32												ncg_btn;
-	u32												ncl_btn;
-	u32												nce_btn;
-#endif //FMISSION_TOUCHBAR
-
-#ifdef FMISSION_MCSS
-	//MCSS
-	MCSS_SYS_WORK							*mcss_sys;
-	MCSS_WORK									*mcss_wk;
-#endif //FMISSION_MCSS
-
-	//フォント
-	GFL_FONT									*font;
-
-	//プリントキュー
-	PRINT_QUE									*print_que;
-	GFL_MSGDATA								*msg;
-
-#ifdef FMISSION_TASKMENU
-	//タスクメニュー
-	APP_TASKMENU_RES					*menu_res;
-	APP_TASKMENU_WORK					*menu;
-#endif //FMISSION_TASKMENU
-
-#ifdef FMISSION_POKE_ICON
-  // ポケアイコン
-  UI_EASY_CLWK_RES      clres_poke_icon;
-  GFL_CLWK                  *clwk_poke_icon;
-  // ポケアイコン用アイテムアイコン
-  UI_EASY_CLWK_RES      clres_poke_item;
-  GFL_CLWK                  *clwk_poke_item;
-#endif //FMISSION_POKE_ICON
-
-#ifdef FMISSION_POKE2D
-	u32												ncg_poke2d;
-	u32												ncl_poke2d;
-	u32												nce_poke2d;
-	GFL_CLWK									*clwk_poke2d;
-#endif //FMISSION_POKE2D
-
-#ifdef	FMISSION_PRINT_TOOL
-	//プリントユーティリティ
-	PRINT_UTIL								print_util;
-	u32												seq;
-#endif	//FMISSION_PRINT_TOOL
-
-#ifdef FMISSION_PMSDRAW
-  GFL_BMPWIN*               pms_win[ FMISSION_PMSDRAW_NUM ];
-  PMS_DRAW_WORK*            pms_draw;
-#endif //FMISSION_PMSDRAW
-
+	FMISSION_APP_GRAWK		*graphic;
+	//
+	GFL_FONT				*font;							// フォント
+	PRINT_QUE				*print_que;						// プリントキュー
+	GFL_MSGDATA				*MsgData[FMA_MSG_MAXNUM];		// メッセージ
+	PRINT_UTIL				PrintUtil[FMA_CANVAS_MAXNUM];	// 文字表示用
+	//
+	FMISSION_APP_PARAM 		*Param;				// 参照用として保存	
+	//
+	//
+	s32						Step;				// 処理の流れ
+	s32						Mode;				// モード(詳細、評価)
+	u32						Flag;				// フラグ
+	//
+	s32						BgOffX;				// オフセット
+	//
+	s16						*EmptyBuffer;		// 座標用のバッファ(必ず破棄すること)
 } FMISSION_APP_WORK;
-
 

@@ -12,14 +12,19 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "system/wipe.h"
+
+#include "print/printsys.h"
+#include "ui/print_tool.h"
+
 #include "fmission_app_local.h"
 #include "fmission_app_sub.h"
 
-//@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
-#include "msg/msg_mictest.h"  // GMM
-#include "fmission_app.naix"		//
-#include "townmap_gra.naix"		//
+
+#include "fmission_app.naix"
+
+#include "msg/msg_fmission_app.h"
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -28,6 +33,16 @@ FS_EXTERN_OVERLAY(ui_common);
  *								定数定義
  */
 //=============================================================================
+// 段階
+enum{
+	STEP_INIT	= 0,				// 初期化
+	STEP_LV1 	= 100,
+	STEP_LV2 	= 200,
+	STEP_LV3 	= 300,
+	STEP_LV4 	= 400,
+	//
+	STEP_END	= 10000,
+};
 
 //=============================================================================
 /**
@@ -40,7 +55,28 @@ FS_EXTERN_OVERLAY(ui_common);
  *							データ定義
  */
 //=============================================================================
-
+static const s16 fmai_mes_tbl[] = {
+	msg_fmission_str_00,		// のこりじかん
+	msg_fmission_str_01,		// さんかにんずう
+	msg_fmission_str_02,		// クリア目標
+	msg_fmission_str_03,		// トータルスコア
+	msg_fmission_str_04,		// ほうしゅう
+	msg_fmission_str_07,		// マイスコア
+	msg_fmission_str_08,		// 順位
+	msg_fmission_str_09,		// トップスコア
+	msg_fmission_str_10,		// ハイスコア
+	msg_fmission_str_13,		// クリアタイム
+	msg_fmission_str_14,		// スコアボーナス
+	msg_fmission_str_15,		// ダブルスコア
+	//
+	//
+	msg_fmission_str_05,		// ○にん
+	msg_fmission_str_06,		// ひき
+	msg_fmission_str_16,		// どうぐめい○こ
+	msg_fmission_str_11,		// ○ひき
+	msg_fmission_str_12,		// ○にんちゅう○ばんめ
+	msg_fmission_str_17,		// ＋○こ
+};
 
 //=============================================================================
 /**
@@ -53,84 +89,25 @@ FS_EXTERN_OVERLAY(ui_common);
 static GFL_PROC_RESULT FMissionAppProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 static GFL_PROC_RESULT FMissionAppProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 static GFL_PROC_RESULT FMissionAppProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
+//
+static void fma_init( FMISSION_APP_WORK* wk );
+static void fma_main( FMISSION_APP_WORK* wk );
+static void fma_down( FMISSION_APP_WORK* wk );
+static void fma_exit( FMISSION_APP_WORK* wk );
+static void fma_print_que( FMISSION_APP_WORK* wk );
+//
+static void fma_scroll_bg( FMISSION_APP_WORK* wk );
+//
+static void fma_key_info(   FMISSION_APP_WORK* wk );
+static void fma_update_info( FMISSION_APP_WORK* wk );
+static void fma_update_up_info( FMISSION_APP_WORK* wk );
+static void fma_update_down_info( FMISSION_APP_WORK* wk );
 
-static int seq_Main( FMISSION_APP_WORK* wk );
-static int seq_InitialDraw( FMISSION_APP_WORK* wk );
-static int seq_FadeIn( FMISSION_APP_WORK* wk );
-static int seq_FadeOut( FMISSION_APP_WORK* wk );
-
-//-------------------------------------
-///	汎用処理ユーティリティ
-//=====================================
-static void FMissionApp_BG_LoadResource( FMISSION_APP_BGWK* wk, HEAPID heapID );
-
-#ifdef FMISSION_INFOWIN
-//-------------------------------------
-///	INFOWIN
-//=====================================
-static void FMissionApp_INFOWIN_Init( GAMESYS_WORK *gsys, HEAPID heapID );
-static void FMissionApp_INFOWIN_Exit( void );
-static void FMissionApp_INFOWIN_Main( void );
-#endif //FMISSION_INFOWIN
-
-#ifdef FMISSION_TOUCHBAR
-//-------------------------------------
-///	タッチバー
-//=====================================
-static TOUCHBAR_WORK * FMissionApp_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID );
-static void FMissionApp_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar );
-static void FMissionApp_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
-#endif //FMISSION_TOUCHBAR
-
-#ifdef FMISSION_MCSS
-//-------------------------------------
-///	MCSS
-//=====================================
-static MCSS_SYS_WORK * FMissionApp_MCSS_Init( u16 wk_max, HEAPID heapID );
-static void FMissionApp_MCSS_Exit( MCSS_SYS_WORK * mcss );
-static void FMissionApp_MCSS_Draw( MCSS_SYS_WORK * mcss );
-static MCSS_WORK * FMissionApp_MCSS_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos );
-static void FMissionApp_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk );
-#endif //FMISSION_MCSS
-
-#ifdef FMISSION_TASKMENU
-//-------------------------------------
-///	リストシステムはい、いいえ
-//=====================================
-static APP_TASKMENU_WORK * FMissionApp_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID );
-static void FMissionApp_TASKMENU_Exit( APP_TASKMENU_WORK *menu );
-static void FMissionApp_TASKMENU_Main( APP_TASKMENU_WORK *menu );
-#endif //FMISSION_TASKMENU
-
-#ifdef FMISSION_POKE_ICON
-//-------------------------------------
-///	ポケアイコン
-//=====================================
-static void FMissionApp_POKE_ICON_CreateCLWK( FMISSION_APP_WORK* wk, u32 mons, u32 form_no, u32 sex, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID );
-static void FMissionApp_POKE_ICON_DeleteCLWK( FMISSION_APP_WORK* wk );
-#endif //FMISSION_POKE_ICON
-
-#ifdef FMISSION_POKE2D
-//-------------------------------------
-///	ポケモンOBJ,BG読みこみ
-//=====================================
-static void FMissionApp_POKE2D_LoadResourceBG( FMISSION_APP_WORK *wk, HEAPID heapID );
-static void FMissionApp_POKE2D_UnLoadResourceBG( FMISSION_APP_WORK *wk );
-static void FMissionApp_POKE2D_LoadResourceOBJ( FMISSION_APP_WORK *wk, HEAPID heapID );
-static void FMissionApp_POKE2D_UnLoadResourceOBJ( FMISSION_APP_WORK *wk );
-static void FMissionApp_POKE2D_CreateCLWK( FMISSION_APP_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
-static void FMissionApp_POKE2D_DeleteCLWK( FMISSION_APP_WORK *wk );
-#endif //FMISSION_POKE2D
-
-#ifdef FMISSION_PMSDRAW
-//-------------------------------------
-///	簡易会話表示
-//=====================================
-static void FMissionApp_PMSDRAW_Init( FMISSION_APP_WORK* wk );
-static void FMissionApp_PMSDRAW_Exit( FMISSION_APP_WORK* wk );
-static void FMissionApp_PMSDRAW_Proc( FMISSION_APP_WORK* wk );
-#endif // FMISSION_PMSDRAW
-
+//
+static void fma_key_result( FMISSION_APP_WORK* wk );
+static void fma_update_result( FMISSION_APP_WORK* wk );
+static void fma_update_up_result( FMISSION_APP_WORK* wk );
+static void fma_update_down_result( FMISSION_APP_WORK* wk );
 
 //=============================================================================
 /**
@@ -143,6 +120,13 @@ const GFL_PROC_DATA FMissionAppProcData =
 	FMissionAppProc_Main,
 	FMissionAppProc_Exit,
 };
+
+// Mainのテーブル
+static void (*(fma_main_func_tbl[]))(FMISSION_APP_WORK*) = {
+	fma_key_info,		// 詳細
+	fma_key_result,		// 評価
+};
+
 //=============================================================================
 /**
  *								PROC
@@ -162,101 +146,54 @@ const GFL_PROC_DATA FMissionAppProcData =
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT FMissionAppProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
-	FMISSION_APP_WORK *wk;
-	FMISSION_APP_PARAM *param;
-
+	FMISSION_APP_WORK	*wk;
+	FMISSION_APP_PARAM	*param;
+	
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 	
 	//引数取得
 	param	= pwk;
-
+	
 	//ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UI_DEBUG, FMISSION_HEAP_SIZE );
-  wk = GFL_PROC_AllocWork( proc, sizeof(FMISSION_APP_WORK), HEAPID_UI_DEBUG );
-  GFL_STD_MemClear( wk, sizeof(FMISSION_APP_WORK) );
-
-  // 初期化
-  wk->heapID = HEAPID_UI_DEBUG;
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FMISSION_APP, FMISSION_HEAP_SIZE );
+	wk = GFL_PROC_AllocWork( proc, sizeof(FMISSION_APP_WORK), HEAPID_FMISSION_APP );
+	GFL_STD_MemClear( wk, sizeof(FMISSION_APP_WORK) );
+	
+	// 初期化
+	wk->heapID = HEAPID_FMISSION_APP;
+	
+	wk->Param = param;
 	
 	//描画設定初期化
 	wk->graphic	= FMISSION_APP_GRA_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
-
+	
 	//フォント作成
-	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-
+	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+	
 	//メッセージ
-	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-			NARC_message_mictest_dat, wk->heapID );
-
+	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_fmission_app_dat, wk->heapID );
+	wk->MsgData[1] = 0;
+	
 	//PRINT_QUE作成
-	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
-
-	//BGリソース読み込み
-	FMissionApp_BG_LoadResource( &wk->wk_bg, wk->heapID );
-
-#ifdef FMISSION_INFOWIN
-	//INFOWINの初期化
-	FMissionApp_INFOWIN_Init( param->gsys, wk->heapID );
-#endif //FMISSION_INFOWIN
-
-#ifdef FMISSION_TOUCHBAR
-	//タッチバーの初期化
-	{	
-		GFL_CLUNIT	*clunit	= FMISSION_APP_GRA_GetClunit( wk->graphic );
-		wk->touchbar	= FMissionApp_TOUCHBAR_Init( clunit, wk->heapID );
-	}
-#endif //FMISSION_TOUCHBAR
-
-#ifdef FMISSION_MCSS
-	//MCSS初期化&ワーク作成
-	wk->mcss_sys	= FMissionApp_MCSS_Init( 1, wk->heapID );
-	{
-		POKEMON_PARAM	*pp;  
-		VecFx32 pos	= { 0, -FX32_ONE*10, 0	};
-
-		pp	= PP_Create( MONSNO_HUSIGIBANA, 0, 0, wk->heapID );
-		wk->mcss_wk		= FMissionApp_MCSS_CreateWkPP( wk->mcss_sys, pp, &pos );
-		GFL_HEAP_FreeMemory( pp );
-	}
-#endif //FMISSION_MCSS
-
-#ifdef FMISSION_TASKMENU
-	//TASKMENUリソース読み込み＆初期化
-	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_BAR_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
-	wk->menu			= FMissionApp_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
-#endif //FMISSION_TASKMENU
-
-#ifdef FMISSION_POKE_ICON
-  // ポケアイコンの読み込み
-  {
-		GFL_CLUNIT	*clunit	= FMISSION_APP_GRA_GetClunit( wk->graphic );
-    FMissionApp_POKE_ICON_CreateCLWK( wk, MONSNO_HUSIGIDANE, 0, 0, FALSE, clunit, wk->heapID );
-  }
-#endif //FMISSION_POKE_ICON
-
-#ifdef FMISSION_POKE2D
-	//ポケモンOBJ,BG読みこみ
-	FMissionApp_POKE2D_LoadResourceBG( wk, wk->heapID );
-	{	
-		GFL_CLUNIT *clunit = FMISSION_APP_GRA_GetClunit( wk->graphic );
-		FMissionApp_POKE2D_LoadResourceOBJ( wk, wk->heapID );
-		FMissionApp_POKE2D_CreateCLWK( wk, clunit, wk->heapID );
-	}
-#endif //FMISSION_POKE2D
-
-#ifdef FMISSION_PMSDRAW  
-  FMissionApp_PMSDRAW_Init( wk );
-#endif //FMISSION_PMSDRAW
-
-#if 0
-	//@todo	フェードシーケンスがないので
-	GX_SetMasterBrightness(0);
-	GXS_SetMasterBrightness(0);
-#endif
-  return GFL_PROC_RES_FINISH;
+	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
+	
+	//----------------
+	// 処理を記述
+	//----------------
+	fma_init( wk );
+	
+	// フェスミッションと同じ
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 15, 15);
+	G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 15, 15);
+	
+	// ワイプ
+	WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+					WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+	//
+	return GFL_PROC_RES_FINISH;
 }
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  PROC 終了処理
@@ -271,68 +208,46 @@ static GFL_PROC_RESULT FMissionAppProc_Init( GFL_PROC *proc, int *seq, void *pwk
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT FMissionAppProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
+	s32		i;
 	FMISSION_APP_WORK* wk = mywk;
-
-#ifdef FMISSION_POKE2D
-	FMissionApp_POKE2D_DeleteCLWK( wk );
-	FMissionApp_POKE2D_UnLoadResourceOBJ( wk );
-	FMissionApp_POKE2D_UnLoadResourceBG( wk );
-#endif //FMISSION_POKE2D
-
-#ifdef FMISSION_POKE_ICON
-   FMissionApp_POKE_ICON_DeleteCLWK( wk );
-#endif //FMISSION_POKE_ICON
-
-#ifdef FMISSION_TASKMENU
-	//TASKMENUシステム＆リソース破棄
-	FMissionApp_TASKMENU_Exit( wk->menu );
-	APP_TASKMENU_RES_Delete( wk->menu_res );	
-#endif //FMISSION_TASKMENU
-
-#ifdef FMISSION_MCSS
-	//MCSS破棄
-	FMissionApp_MCSS_DeleteWk( wk->mcss_sys, wk->mcss_wk );
-	FMissionApp_MCSS_Exit( wk->mcss_sys );
-#endif //FMISSION_MCSS
-
-#ifdef FMISSION_TOUCHBAR
-	//タッチバー
-	FMissionApp_TOUCHBAR_Exit( wk->touchbar );
-#endif //FMISSION_TOUCHBAR
-
-#ifdef FMISSION_INFOWIN
-	//INFWIN
-	FMissionApp_INFOWIN_Exit();
-#endif //FMISSION_INFOWIN
-
-#ifdef FMISSION_PMSDRAW
-  FMissionApp_PMSDRAW_Exit( wk );
-#endif //FMISSION_PMSDRAW
-
+	
+	//--------------
+	// 破棄
+	//--------------
+	fma_exit( wk );
+	
+	// emptyのバッファクリア
+	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
+	
 	//メッセージ破棄
-	GFL_MSG_Delete( wk->msg );
-
+	for(i=0;i<FMA_MSG_MAXNUM;i++){
+		if(wk->MsgData[i]){
+			GFL_MSG_Delete( wk->MsgData[i] );
+			wk->MsgData[i] = 0;
+		}
+	}
+	
 	//PRINT_QUE
 	PRINTSYS_QUE_Delete( wk->print_que );
-
+	
 	//FONT
 	GFL_FONT_Delete( wk->font );
-
+	
 	//描画設定破棄
 	FMISSION_APP_GRA_Exit( wk->graphic );
-
+	
 	//PROC用メモリ解放
-  {
-    HEAPID heapID = wk->heapID;
-    GFL_PROC_FreeWork( proc );
-    GFL_HEAP_DeleteHeap( heapID );
-  }
-
+	{
+		HEAPID heapID = wk->heapID;
+		GFL_PROC_FreeWork( proc );
+		GFL_HEAP_DeleteHeap( heapID );
+	}
 	//オーバーレイ破棄
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
-
-  return GFL_PROC_RES_FINISH;
+	//
+	return GFL_PROC_RES_FINISH;
 }
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  PROC 主処理
@@ -348,891 +263,614 @@ static GFL_PROC_RESULT FMissionAppProc_Exit( GFL_PROC *proc, int *seq, void *pwk
 static GFL_PROC_RESULT FMissionAppProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	FMISSION_APP_WORK* wk = mywk;
-
-  switch(*seq){
-  case SEQ_INI_DRAW:
-    *seq = seq_InitialDraw( wk );
-    break;
-  case SEQ_FADEIN:
-    *seq = seq_FadeIn( wk );
-    break;
-  case SEQ_MAIN:
-    *seq = seq_Main( wk );
-    break;
-  case SEQ_FADEOUT:
-    *seq = seq_FadeOut( wk );
-    break;
-  case SEQ_EXIT:
-    return GFL_PROC_RES_FINISH;
-  }
-
-#ifdef FMISSION_TOUCHBAR
-	//タッチバーメイン処理
-	FMissionApp_TOUCHBAR_Main( wk->touchbar );
-#endif //FMISSION_TOUCHBAR
-
-#ifdef FMISSION_INFOWIN
-	//INFWINメイン処理
-	FMissionApp_INFOWIN_Main();
-#endif //FMISSION_INFOWIN
-
-#ifdef FMISSION_TASKMENU
-	//タスクメニューメイン処理
-	FMissionApp_TASKMENU_Main( wk->menu );
-#endif //FMISSION_TASKMENU
-
+	
+	switch ( *seq )
+	{
+		case 0:
+			if (WIPE_SYS_EndCheck())
+			{
+				(*seq) ++;
+			}
+			break;
+		case 1:
+			// 終了判定
+			if(wk->Step == STEP_END){
+				(*seq) ++;
+			}
+			break;
+		case 2:
+			WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+							WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+			(*seq) ++;
+			break;
+		//
+		// ここで最終終了待ちをしているようだ
+		case 3:
+			if (WIPE_SYS_EndCheck())
+			{
+				return GFL_PROC_RES_FINISH;
+			}
+			break;
+		default:
+			break;
+	}
+	//
+	//----------------
+	// 処理を追加
+	//----------------
+	fma_main( wk );
+	
 	//PRINT_QUE
-	PRINTSYS_QUE_Main( wk->print_que );
-
-#ifdef FMISSION_PMSDRAW
-  FMissionApp_PMSDRAW_Proc( wk );
-#endif //FMISSION_PMSDRAW
-
+	fma_print_que( wk );
+	
 	//2D描画
 	FMISSION_APP_GRA_2D_Draw( wk->graphic );
-
+	
 	//3D描画
 	FMISSION_APP_GRA_3D_StartDraw( wk->graphic );
-
-#ifdef FMISSION_MCSS
-	FMissionApp_MCSS_Draw( wk->mcss_sys );
-#endif //FMISSION_MCSS
 	FMISSION_APP_GRA_3D_EndDraw( wk->graphic );
-
-  return GFL_PROC_RES_CONTINUE;
-}
-//=============================================================================
-/**
- *								static関数
- */
-//=============================================================================
-
-/*
- *  @brief  メイン
- */
-static int seq_Main( FMISSION_APP_WORK* wk )
-{
-  return FMissionApp_InputCheck( wk );
-}
-
-/*
- *  @brief  初期描画
- */
-static int seq_InitialDraw( FMISSION_APP_WORK* wk )
-{
-  switch( wk->seq ){
-  case 0:
-    //初期描画
-    //FMissionApp_InitialDraw( wk );
-    wk->seq++;
-    break;
-  case 1:
-    if( PRINTSYS_QUE_IsFinished( wk->print_que ) ){	
-      wk->seq = 0;
-			return SEQ_FADEIN;
-		}
-    break;
-  }
-  return SEQ_INI_DRAW; 
-}
-
-/*
- *  @brief  フェードイン
- */
-static int seq_FadeIn( FMISSION_APP_WORK* wk )
-{
-  switch( wk->seq ){
-  case 0:
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
-    wk->seq++;
-    break;
-  case 1:
-    if( !GFL_FADE_CheckFade() ){	
-      wk->seq = 0;
-			return SEQ_MAIN;
-		}
-    break;
-  }
-  return SEQ_FADEIN; 
-}
-
-/*
- *  @brief  フェードアウト
- */
-static int seq_FadeOut( FMISSION_APP_WORK* wk )
-{
-  switch( wk->seq ){
-  case 0:
-    if( TOUCHBAR_GetTrg( wk->touchbar ) != TOUCHBAR_ICON_RETURN ){  //戻るボタンのアニメを待つ
-      break;
-    }
-
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-    wk->seq++;
-    break;
-  case 1:
-    if( !GFL_FADE_CheckFade() ){	
-      wk->seq = 0;
-      return SEQ_EXIT; 
-		}
-    break;
-  }
-  return SEQ_FADEOUT; 
-}
-
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  BG管理モジュール リソース読み込み
- *
- *	@param	FMISSION_APP_BGWK* wk BG管理ワーク
- *	@param	heapID  ヒープID 
- *
- *	@retval none
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_BG_LoadResource( FMISSION_APP_BGWK* wk, HEAPID heapID )
-{
-  enum
-  {
-    RES_ARC = ARCID_FMISSION_APP,
-
-    RES_PAL_S_SIZE = 0x200,
-    RES_PAL_M_SIZE = 0x200,
-
-    RES_PAL_S_ID = NARC_fmission_app_fmapp_bgu_nclr,
-    RES_CHR_S_ID = NARC_fmission_app_fmapp_bgu_lz_ncgr,
-    RES_SCR_S_ID = NARC_fmission_app_fmapp_bgu03_lz_nscr,
-
-    RES_PAL_M_ID = NARC_fmission_app_fmapp_bgd_nclr,
-    RES_CHR_M_ID = NARC_fmission_app_fmapp_bgd_lz_ncgr,
-    RES_SCR_M_ID = NARC_fmission_app_fmapp_bgd03_lz_nscr,
-
-  };
-
-	ARCHANDLE	*handle;
-
-	handle	= GFL_ARC_OpenDataHandle( RES_ARC, heapID );
-
-	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, RES_PAL_M_ID, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, RES_PAL_M_SIZE, heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, RES_PAL_S_ID, PALTYPE_SUB_BG,  PLTID_BG_BACK_S, RES_PAL_S_SIZE, heapID );
 	
-  //	----- SUB -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, RES_CHR_S_ID, BG_FRAME_BACK_S, 0, 0, TRUE, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(      handle, RES_SCR_S_ID,	BG_FRAME_BACK_S, 0, 0, TRUE, heapID );	
-
-	//	----- MAIN -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, RES_CHR_M_ID, BG_FRAME_BACK_M, 0, 0, TRUE, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(      handle, RES_SCR_M_ID, BG_FRAME_BACK_M, 0, 0, TRUE, heapID );		
-
-	GFL_ARC_CloseDataHandle( handle );
+	return GFL_PROC_RES_CONTINUE;
 }
 
-
-
-
-
-#ifdef FMISSION_INFOWIN
-//=============================================================================
-/**
- *		INFOWIN
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	INFOWIN初期化
- *
- *	@param	GAMESYS_WORK *gsys	ゲームシステム
- *	@param	heapID		ヒープID
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_INFOWIN_Init( GAMESYS_WORK *gsys, HEAPID heapID )
-{	
-  GAMEDATA *gamedata;
-  
-  GF_ASSERT( gsys );
-
-  gamedata = GAMESYSTEM_GetGameData(gsys);
-	INFOWIN_Init( BG_FRAME_BAR_M, PLTID_BG_INFOWIN_M, gamedata, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	INFOWIN破棄
- *
- *	@param	void 
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_INFOWIN_Exit( void )
-{	
-	INFOWIN_Exit();
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	INFWINメイン処理
- *
- *	@param	void 
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_INFOWIN_Main( void )
-{	
-	INFOWIN_Update();
-}
-#endif //FMISSION_INFOWIN
-
-#ifdef FMISSION_TOUCHBAR
-//=============================================================================
-/**
- *	TOUCHBAR
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR初期化
- *
- *	@param	GFL_CLUNIT *clunit	CLUNIT
- *	@param	heapID							ヒープID
- *
- *	@return	TOUCHBAR_WORK
- */
-//-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * FMissionApp_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-	//アイコンの設定
-	//数分作る
-	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
-	{	
-		{	
-			TOUCHBAR_ICON_RETURN,
-			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-		},
-	};
-
-	//設定構造体
-	//さきほどの窓情報＋リソース情報をいれる
-	TOUCHBAR_SETUP	touchbar_setup;
-	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
-	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
-	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
-	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
-	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
-	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
-
-	return TOUCHBAR_Init( &touchbar_setup, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR破棄
- *
- *	@param	TOUCHBAR_WORK	*touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar )
-{	
-	TOUCHBAR_Exit( touchbar );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBARメイン処理
- *
- *	@param	TOUCHBAR_WORK	*touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar )
-{	
-	TOUCHBAR_Main( touchbar );
-}
-#endif //FMISSION_TOUCHBAR
-
-#ifdef FMISSION_MCSS
-//=============================================================================
-/**
- *		MCSS
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	MCSS初期化
- *
- *	@param	u16 wk_max		MCSSのワーク作成最大数
- *	@param	heapID				ヒープID
- *
- *	@return	MCSS_SYS
- */
-//-----------------------------------------------------------------------------
-static MCSS_SYS_WORK * FMissionApp_MCSS_Init( u16 wk_max, HEAPID heapID )
-{	
-	MCSS_SYS_WORK *mcss;
-	mcss = MCSS_Init( wk_max , heapID );
-	MCSS_SetTextureTransAdrs( mcss, 0 );
-	MCSS_SetOrthoMode( mcss );
-	return mcss;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	MCSS破棄
- *
- *	@param	MCSS_SYS_WORK * mcss	MCSS＿SYS
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_MCSS_Exit( MCSS_SYS_WORK * mcss )
-{	
-	MCSS_Exit(mcss);
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	MCSS描画
- *
- *	@param	MCSS_SYS_WORK * mcss MCSS＿SYS
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_MCSS_Draw( MCSS_SYS_WORK * mcss )
-{	
-	MCSS_Main( mcss );
-	MCSS_Draw( mcss );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	MCSSワーク作成
- *
- *	@param	MCSS_SYS_WORK * mcss	MCSS_SYS
- *	@param	*ppp					ポケモンパーソナルパラメータ
- *	@param	VecFx32 *pos	位置
- *
- *	@return	MCSS_WK
- */
-//-----------------------------------------------------------------------------
-static MCSS_WORK * FMissionApp_MCSS_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos )
-{	
-	MCSS_WORK *poke;
-	MCSS_ADD_WORK addWork;
-
-	VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
-
-	MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );
-	poke = MCSS_Add( mcss, pos->x, pos->y , pos->z, &addWork );
-	MCSS_SetScale( poke , &scale );
-	return poke;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	MCSSワーク破棄
- *
- *	@param	MCSS_SYS_WORK * mcss	MCSS_SYS
- *	@param	*wk										ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk )
-{	
-	MCSS_SetVanishFlag( wk );
-	MCSS_Del(mcss,wk);
-}
-#endif //FMISSION_MCSS
-
-#ifdef FMISSION_TASKMENU
-//----------------------------------------------------------------------------
-/**
- *	@brief	TASKMENUの初期化
- *
- *	@param	menu_res	リソース
- */
-//-----------------------------------------------------------------------------
-static APP_TASKMENU_WORK * FMissionApp_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID )
-{	
-	int i;
-	APP_TASKMENU_INITWORK	init;
-	APP_TASKMENU_ITEMWORK	item[3];
-	APP_TASKMENU_WORK			*menu;	
-
-	//窓の設定
-	for( i = 0; i < NELEMS(item); i++ )
-	{	
-		item[i].str	= GFL_MSG_CreateString( msg, 0 );	//文字列
-		item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;	//文字色
-		item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL;	//窓の種類
-	}
-
-	//初期化
-	init.heapId		= heapID;
-	init.itemNum	= NELEMS(item);
-	init.itemWork = item;
-	init.posType	= ATPT_RIGHT_DOWN;
-	init.charPosX	= 32;
-	init.charPosY = 21;
-	init.w				= APP_TASKMENU_PLATE_WIDTH;
-	init.h				= APP_TASKMENU_PLATE_HEIGHT;
-
-	menu	= APP_TASKMENU_OpenMenu( &init, menu_res );
-
-	//文字列解放
-	for( i = 0; i < NELEMS(item); i++ )
-	{	
-		GFL_STR_DeleteBuffer( item[i].str );
-	}
-
-	return menu;
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TASKMENUの破棄
- *
- *	@param	APP_TASKMENU_WORK *menu	ワーク
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_TASKMENU_Exit( APP_TASKMENU_WORK *menu )
-{	
-	APP_TASKMENU_CloseMenu( menu );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TASKMENUのメイン処理
- *
- *	@param	APP_TASKMENU_WORK *menu	ワーク
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_TASKMENU_Main( APP_TASKMENU_WORK *menu )
-{	
-	APP_TASKMENU_UpdateMenu( menu );
-}
-#endif //FMISSION_TASKMENU
-
-#ifdef FMISSION_POKE_ICON
-//=============================================================================
-/**
- *	POKE_ICON
- */
-//=============================================================================
-
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ポケアイコン 生成
- *
- *	@param	FMISSION_APP_WORK *wk ワーク
- *	@param	unit  ユニット
- *	@param	heapID  ヒープID  
- *
- *	@retval none
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_POKE_ICON_CreateCLWK( FMISSION_APP_WORK* wk, u32 mons, u32 form_no, u32 sex, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID )
-{
-  // ポケアイコン本体
-  {
-    UI_EASY_CLWK_RES_PARAM prm;
-
-    prm.draw_type = CLSYS_DRAW_MAIN;
-    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCLR;
-    prm.arc_id    = ARCID_POKEICON;
-    prm.pltt_id   = POKEICON_GetPalArcIndex();
-  //  prm.ncg_id    = POKEICON_GetCgxArcIndex(ppp);
-    prm.ncg_id    = POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, sex, egg );
-    prm.cell_id   = POKEICON_GetCellArcIndex(); 
-    prm.anm_id    = POKEICON_GetAnmArcIndex();
-    prm.pltt_line = PLTID_OBJ_POKEICON_M;
-    prm.pltt_src_ofs  = 0;
-    prm.pltt_src_num = 3;
-    
-    UI_EASY_CLWK_LoadResource( &wk->clres_poke_icon, &prm, unit, heapID );
-
-    // アニメシーケンスで指定( 0=瀕死, 1=HP最大, 2=HP緑, 3=HP黄, 4=HP赤, 5=状態異常 )
-    wk->clwk_poke_icon = UI_EASY_CLWK_CreateCLWK( &wk->clres_poke_icon, unit, 48, 32, 1, heapID );
-
-    // 上にアイテムアイコンを描画するので優先度を下げておく
-    GFL_CLACT_WK_SetSoftPri( wk->clwk_poke_icon, 1 );
-
-    // オートアニメ ON
-    GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_poke_icon, TRUE );
-
-    {
-      u8 pal_num = POKEICON_GetPalNum( mons, form_no, sex, egg );
-      GFL_CLACT_WK_SetPlttOffs( wk->clwk_poke_icon, pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
-    }
-  }
-
-  // ポケアイコン用アイテムアイコン
-  {
-    UI_EASY_CLWK_RES_PARAM prm;
-
-    prm.draw_type = CLSYS_DRAW_MAIN;
-    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
-    prm.arc_id    = APP_COMMON_GetArcId();
-    prm.pltt_id   = APP_COMMON_GetPokeItemIconPltArcIdx();
-    prm.ncg_id    = APP_COMMON_GetPokeItemIconCharArcIdx();
-    prm.cell_id   = APP_COMMON_GetPokeItemIconCellArcIdx( APP_COMMON_MAPPING_128K );
-    prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
-    prm.pltt_line = PLTID_OBJ_POKEITEM_M;
-    prm.pltt_src_ofs  = 0;
-    prm.pltt_src_num = 1;
-    
-    UI_EASY_CLWK_LoadResource( &wk->clres_poke_item, &prm, unit, heapID );
-
-    // アニメシーケンスで指定( 0=どうぐ, 1=メール )
-    // ※位置調整はとりあえずの値です。
-    wk->clwk_poke_item = UI_EASY_CLWK_CreateCLWK( &wk->clres_poke_item, unit, 48+1*8+4, 32+4, 0, heapID );
-  }
-
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  ポケアイコン 破棄
- *
- *	@param	FMISSION_APP_WORK *wk ワーク
- *
- *	@retval none
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_POKE_ICON_DeleteCLWK( FMISSION_APP_WORK* wk )
-{ 
-	//CLWK破棄
-	GFL_CLACT_WK_Remove( wk->clwk_poke_icon );
-  //リソース開放
-  UI_EASY_CLWK_UnLoadResource( &wk->clres_poke_icon );
-	
-  //CLWK破棄
-	GFL_CLACT_WK_Remove( wk->clwk_poke_item );
-  //リソース開放
-  UI_EASY_CLWK_UnLoadResource( &wk->clres_poke_item );
-}
-
-#endif //FMISSION_POKE_ICON
-
-#ifdef FMISSION_POKE2D
-//=============================================================================
-/**
- *	ポケモンOBJ,BG読みこみ
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	ポケモンBG読みこみ
- *
- *	@param	FMISSION_APP_WORK *wk	ワーク
- *	@param	heapID										ヒープID
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_POKE2D_LoadResourceBG( FMISSION_APP_WORK *wk, HEAPID heapID )
-{	
-
-	POKEMON_PASO_PARAM	*ppp;
-	
-	//PPP作成
-	ppp	= (POKEMON_PASO_PARAM	*)PP_Create( MONSNO_KAMEKKUSU, 0, 0, heapID );
-
-	//1キャラ目に空白キャラいれて
-	GFL_BG_FillCharacter( BG_FRAME_POKE_M, 0, 1,  0 );
-
-	//ポケモンの絵を転送
-	//1は↑で1キャラ作成したので。
-	POKE2DGRA_BG_TransResourcePPP( ppp, POKEGRA_DIR_FRONT, BG_FRAME_POKE_M,
-			1, PLTID_BG_POKE_M, heapID );
-
-	//スクリーンに書き込んで転送
-	POKE2DGRA_BG_WriteScreen( BG_FRAME_POKE_M, 1, PLTID_BG_POKE_M, 32/2-12/2+12, 24/2-12/2 );
-	GFL_BG_LoadScreenReq( BG_FRAME_POKE_M );
-
-	//PPP破棄
-	GFL_HEAP_FreeMemory( ppp );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	ポケモンBG破棄
- *
- *	@param	FMISSION_APP_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_POKE2D_UnLoadResourceBG( FMISSION_APP_WORK *wk )
-{		
-	GFL_BG_FillCharacterRelease( BG_FRAME_POKE_M, 1, 0 );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	リソース読みこみ
- *
- *	@param	FMISSION_APP_WORK *wk	ワーク
- *	@param	heapID										ヒープID
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_POKE2D_LoadResourceOBJ( FMISSION_APP_WORK *wk, HEAPID heapID )
-{	
-	POKEMON_PASO_PARAM	*ppp;
-	ARCHANDLE						*handle;
-
-	//PPP作成
-	ppp	= (POKEMON_PASO_PARAM	*)PP_Create( MONSNO_RIZAADON, 0, 0, heapID );
-
-	//ハンドル
-	handle	= POKE2DGRA_OpenHandle( heapID );
-	//リソース読みこみ
-	wk->ncg_poke2d	= POKE2DGRA_OBJ_CGR_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, heapID );
-	wk->ncl_poke2d	= POKE2DGRA_OBJ_PLTT_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT ,CLSYS_DRAW_MAIN,  PLTID_OBJ_POKE_M*0x20,  heapID );
-	wk->nce_poke2d	= POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
-	GFL_ARC_CloseDataHandle( handle );
-
-	//PP破棄
-	GFL_HEAP_FreeMemory( ppp );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	リソース破棄
- *
- *	@param	FMISSION_APP_WORK *wk ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_POKE2D_UnLoadResourceOBJ( FMISSION_APP_WORK *wk )
-{	
-	//リソース破棄
-	GFL_CLGRP_PLTT_Release( wk->ncl_poke2d );
-	GFL_CLGRP_CGR_Release( wk->ncg_poke2d );
-	GFL_CLGRP_CELLANIM_Release( wk->nce_poke2d );
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	CLWK作成
- *
- *	@param	FMISSION_APP_WORK *wk	ワーク
- *	@param	*clunit	ユニット
- *	@param	heapID	ヒープID
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_POKE2D_CreateCLWK( FMISSION_APP_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-	GFL_CLWK_DATA	cldata;
-		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		cldata.pos_x	= 38;
-		cldata.pos_y	= 80;
-		wk->clwk_poke2d	= GFL_CLACT_WK_Create( clunit, 
-				wk->ncg_poke2d,
-				wk->ncl_poke2d,
-				wk->nce_poke2d,
-				&cldata, 
-				CLSYS_DEFREND_MAIN, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	CLWK破棄
- *
- *	@param	FMISSION_APP_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void FMissionApp_POKE2D_DeleteCLWK( FMISSION_APP_WORK *wk )
-{	
-	GFL_CLACT_WK_Remove( wk->clwk_poke2d );
-}
-#endif //FMISSION_POKE2D
-
-#ifdef	FMISSION_PRINT_TOOL
-//=============================================================================
-/**
- *	PRINT_TOOL
- */
-//=============================================================================
-/*
-		・「HP ??/??」を表示するサンプルです
-		・BMPWINのサイズは 20 x 2 です
-		・現在のHP = 618, 最大HP = 999 とします
-		・サンプルメインが FALSE を返すと終了です
-*/
-
-// サンプルメイン
-static BOOL PrintTool_MainFunc( FMISSION_APP_WORK * wk )
-{
-	switch( wk->seq ){
-	case 0:
-		PrintTool_AddBmpWin( wk );			// BMPWIN作成
-		PrintTool_PrintHP( wk );				// ＨＰ表示
-		PrintTool_ScreenTrans( wk );		// スクリーン転送
-		wk->seq = 1;
-		break;
-
-	case 1:
-		// プリント終了待ち
-		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
-			wk->seq = 2;
-		}
-		break;
-
-	case 2:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			PrintTool_DelBmpWin( wk );		// BMPWIN削除
-			return FALSE;
-		}
-	}
-
-	PRINT_UTIL_Trans( &wk->print_util, wk->que );
-	return TRUE;
-}
-
-// BMPWIN作成
-static void PrintTool_AddBmpWin( FMISSION_APP_WORK * wk )
-{
-	wk->print_util.win = GFL_BMPWIN_Create(
-													GFL_BG_FRAME0_M,					// ＢＧフレーム
-													1, 1,											// 表示座標
-													20, 2,										// 表示サイズ
-													15,												// パレット
-													GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
-}
-
-// BMPWIN削除
-static void PrintTool_DelBmpWin( FMISSION_APP_WORK * wk )
-{
-		GFL_BMPWIN_Delete( wk->print_util.win );
-}
-
-// BMPWINスクリーン転送
-static void PrintTool_ScreenTrans( FMISSION_APP_WORK * wk )
-{
-	GFL_BMPWIN_MakeScreen( wk->print_util.win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->print_util.win) );
-}
-
-// ＨＰ表示
-static void PrintTool_PrintHP( FMISSION_APP_WORK * wk )
-{
-	STRBUF * strbuf;
-
-	// BMPWIN内の座標(32,0)を基準に右詰めで「ＨＰ」と表示
-	PRINTTOOL_Print(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				32, 0,									// 表示基準座標
-				strbuf,									// 文字列（すでに「ＨＰ」が展開されているものとする）
-				wk->font,								// フォント
-				PRINTTOOL_MODE_RIGHT );	// 右詰
-
-	// BMPWIN内の座標(100,0)を「／」の中心にしてＨＰを表示 ( hp / mhp )
-	PRINTTOOL_PrintFraction(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				wk->font,								// フォント
-				100, 0,									// 表示基準座標
-				618,										// hp
-				999,										// mhp
-				wk->heapID );						// ヒープＩＤ
-}
-#endif	//FMISSION_PRINT_TOOL
-
-#ifdef FMISSION_PMSDRAW
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  簡易会話表示 初期化処理
+ *	@brief  初期化(init)
  *
  *	@param	FMISSION_APP_WORK* wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void FMissionApp_PMSDRAW_Init( FMISSION_APP_WORK* wk )
+static void fma_init( FMISSION_APP_WORK* wk )
 {
-	GFL_CLUNIT	*clunit;
-  
-  clunit = FMISSION_APP_GRA_GetClunit( wk->graphic );
-
-  wk->pms_draw  = PMS_DRAW_Init( clunit, CLSYS_DRAW_SUB, wk->print_que, wk->font, 
-      PLTID_OBJ_PMS_DRAW, FMISSION_PMSDRAW_NUM ,wk->heapID );
-  
-  {
-    int i;
-    PMS_DATA pms;
-
-    // PMS表示用BMPWIN生成
-    for( i=0; i<FMISSION_PMSDRAW_NUM; i++ )
-    {
-      wk->pms_win[i] = GFL_BMPWIN_Create(
-          BG_FRAME_TEXT_S,					// ＢＧフレーム
-          2+4*i, 0 + 6 * i,					  	// 表示座標(キャラ単位)
-          28, 4,    							  // 表示サイズ
-          15,												// パレット
-          GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
-    }
-    
-    // 1個目 通常+空欄表示
-    PMSDAT_SetDebug( &pms );
-    PMSDAT_SetWord( &pms, 1, PMS_WORD_NULL );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[0], &pms ,0 );
-
-    // 2個目 デコメ
-    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_HERO );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[1], &pms ,1 );
-    
-    // 3個目 デコメ二個表示
-    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_TANKS );
-    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_LOVE );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[2], &pms ,2 );
-    
-    // 1の要素を2にコピー(移動表現などにご使用ください。)
-    PMS_DRAW_Copy( wk->pms_draw, 1, 2 );
-  }
+	s32		i;
+	
+	// 明示的に初期化
+	wk->Step	= STEP_INIT;
+	wk->Mode	= wk->Param->mode;		// これで分岐
+	wk->Flag	= 0;
+	wk->BgOffX	= 0;
+	//
+	for(i=0;i<FMA_CANVAS_MAXNUM;i++){
+		wk->PrintUtil[i].win = 0;
+	}
+	for(i=0;i<FMA_OBJ_MAXNUM;i++){
+		wk->wk_obj.clwk[i] = 0;
+	}
+	// empty用バッファ取得(必ず破棄すること)
+	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_FMISSION_APP, NARC_fmission_app_fmission_app_pos_tblbin, wk->heapID );
+	
+	// データ読み込み(bg+obj+canvas)
+	FmaCmn_data_init( wk, wk->Mode );
+	//
+	wk->Flag |= FLG_FMA_UPDATE;
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  簡易会話表示 後処理
+ *	@brief  処理(main)
  *
  *	@param	FMISSION_APP_WORK* wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void FMissionApp_PMSDRAW_Exit( FMISSION_APP_WORK* wk )
+static void fma_main( FMISSION_APP_WORK* wk )
 {
-  PMS_DRAW_Exit( wk->pms_draw );
-  {
-    int i;
-    for( i=0; i<FMISSION_PMSDRAW_NUM; i++ )
-    {
-      GFL_BMPWIN_Delete( wk->pms_win[i] );
-    }
-  }
+	fma_down( wk );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  簡易会話表示 主処理
+ *	@brief  処理の流れ(main)(下画面)
  *
  *	@param	FMISSION_APP_WORK* wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void FMissionApp_PMSDRAW_Proc( FMISSION_APP_WORK* wk )
+static void fma_down( FMISSION_APP_WORK* wk )
 {
-#if 1
-  // SELECTでクリア
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-  {
-    int i;
-    for( i=0; i<FMISSION_PMSDRAW_NUM; i++ )
-    {
-      PMS_DRAW_Clear( wk->pms_draw, i, TRUE );
-    }
-  }
-  // STARTでランダム挿入（二重登録するとアサート）
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
-  {
-    int i;
-    for( i=0; i<FMISSION_PMSDRAW_NUM; i++ )
-    {
-      PMS_DATA pms;
-      PMSDAT_SetDebugRandom( &pms );
-      PMSDAT_SetDeco( &pms, 0, GFUser_GetPublicRand(10)+1 );
-      PMS_DRAW_Print( wk->pms_draw, wk->pms_win[i], &pms ,i );
-    }
-  }
-#endif
-
-  PMS_DRAW_Main( wk->pms_draw );
+	// 念のため
+	if((wk->Mode < 0)||(wk->Mode >= FMISSION_APP_MODE_MAX)){
+		OS_Printf("mode error\n");
+		return;
+	}
+	// 分岐
+	fma_main_func_tbl[wk->Mode]( wk );
 }
 
-#endif // FMISSION_PMSDRAW
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  破棄
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_exit( FMISSION_APP_WORK* wk )
+{
+	// データ破棄
+	FmaCmn_data_exit( wk );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  破棄
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_print_que( FMISSION_APP_WORK* wk )
+{
+	s32		i;
+	
+	// Queの処理
+	PRINTSYS_QUE_Main( wk->print_que );
+	//
+	for(i=0;i<FMA_CANVAS_MAXNUM;i++){
+		if(wk->PrintUtil[i].win){
+			PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  スクロール
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_scroll_bg( FMISSION_APP_WORK* wk )
+{
+	s32		off;
+	
+	off = wk->BgOffX>>8;
+	GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, off );
+	//
+	wk->BgOffX += 0x80;
+	if(wk->BgOffX >= 0x20000){
+		wk->BgOffX -= 0x20000;
+	}
+}
+
+//------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  キー入力処理(Info)
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_key_info( FMISSION_APP_WORK* wk )
+{
+	s32		i;
+	s32		tmp;
+	u32		ret;
+	BOOL	bflg;
+	
+	// 処理
+	switch(wk->Step)
+	{
+		// 初期化
+		case STEP_INIT:
+			wk->Step = STEP_LV1;
+//			break;
+		//
+		// 本体
+		case STEP_LV1:
+			fma_update_info( wk );
+			break;
+		//
+		// END
+		case STEP_END:
+			break;
+		//
+		default:
+			break;
+	}
+	// BGスクロール
+	fma_scroll_bg( wk );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  情報表示(まとめ)
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_update_info( FMISSION_APP_WORK* wk )
+{
+	s32		flg=0;
+	
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		wk->Step = STEP_END;
+	}
+	// 更新
+	if((flg == 1)||(wk->Flag & FLG_FMA_UPDATE)){
+		fma_update_up_info( wk );
+		fma_update_down_info( wk );
+		wk->Flag &= ~FLG_FMA_UPDATE;
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  情報表示(上)(要整理)
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_update_up_info( FMISSION_APP_WORK* wk )
+{
+	STRBUF	*strbuf;
+	
+	// タイトル
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[0] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_TITLE, 0, 4, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	//----------
+	// 左側
+	//----------
+	// 残り時間
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[0] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_TIME_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 参加人数
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[1] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_JOIN_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// クリア目標
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[2] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_CLEAR_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// トータル
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[3] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_SCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 報酬
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[4] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_GAIN_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	
+	//----------
+	// 右側
+	//----------
+	// 参加人数
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[12] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_JOIN_R,  48, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// トータル
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[13] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_SCORE_R, 48, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 報酬
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[14] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_GAIN_R, 128, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	
+	// 残り時間
+	FmaCmn_disp_time( wk, FMA_CLWKMODE_NORMAL, FMAI_CLWK_TIME_00, 5, 26 );
+	// トータルスコア
+	FmaCmn_disp_number( wk, FMA_CLWKMODE_NORMAL, FMAI_CLWK_SCORE_00, 976, 4, 0 );
+	
+	//----------
+	// スクロール
+	//----------
+	// 00
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[6] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_SCROLL_00, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 01
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[7] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_UP_SCROLL_01, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  情報表示(下)(要整理)
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_update_down_info( FMISSION_APP_WORK* wk )
+{
+	STRBUF		*strbuf;
+	
+	//----------
+	// 左側
+	//----------
+	// マイスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[5] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_MYSCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 順位
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[6] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_RANK_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// トップスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[7] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_TOPSCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 名前
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[4] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_NAME_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// ハイスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[8] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_HIGH_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 説明文
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[6] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_EXPLAIN_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	
+	//----------
+	// 右側
+	//----------
+	// マイスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[15] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_MYSCORE_R, 64, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 順位
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[16] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_RANK_R, 152, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// トップスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[15] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_TOPSCORE_R, 64, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// ハイスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[15] );
+	FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_HIGH_R, 64, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+}
+
+//------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  キー入力処理(Result)
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_key_result( FMISSION_APP_WORK* wk )
+{
+	s32		i;
+	s32		tmp;
+	u32		ret;
+	BOOL	bflg;
+	
+	// 処理
+	switch(wk->Step)
+	{
+		// 初期化
+		case STEP_INIT:
+			wk->Step = STEP_LV1;
+//			break;
+		//
+		// 本体
+		case STEP_LV1:
+			fma_update_result( wk );
+			break;
+		//
+		// END
+		case STEP_END:
+			break;
+		//
+		default:
+			break;
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  情報表示(Result)(まとめ)
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_update_result( FMISSION_APP_WORK* wk )
+{
+	s32		flg=0;
+	
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		wk->Step = STEP_END;
+	}
+	// 更新
+	if((flg == 1)||(wk->Flag & FLG_FMA_UPDATE)){
+		fma_update_up_result( wk );
+		fma_update_down_result( wk );
+		wk->Flag &= ~FLG_FMA_UPDATE;
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  情報表示(上)(要整理)
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_update_up_result( FMISSION_APP_WORK* wk )
+{
+	STRBUF	*strbuf;
+	
+	// タイトル
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[0] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_UP_TITLE, 0, 4, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	//----------
+	// 左側
+	//----------
+	// 参加人数
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[1] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_UP_JOIN_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// クリア目標
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[2] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_UP_CLEAR_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// トータル
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[3] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_UP_SCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// クリアタイム
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[9] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_UP_TIME_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	
+	//----------
+	// 右側
+	//----------
+	// 参加人数
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[12] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_UP_JOIN_R,  48, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// トータル
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[13] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_UP_SCORE_R, 48, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	
+	// トータルスコア
+	FmaCmn_disp_number( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_SCORE_00, 35, 4, 0 );
+	// クリア時間
+	FmaCmn_disp_time( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_TIME_00, 0, 8 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  情報表示(下)(要整理)
+ *
+ *	@param	FMISSION_APP_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_update_down_result( FMISSION_APP_WORK* wk )
+{
+	STRBUF		*strbuf;
+	
+	//----------
+	// 左側
+	//----------
+	// マイスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[5] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_MYSCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 順位
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[6] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_RANK_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// トップスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[7] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_TOPSCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 名前
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[4] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_NAME_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 報酬
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[4] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_GAIN_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// スコアボーナス
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[10] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_BONUS_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// ダブルスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[11] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_DOUBLE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	
+	//----------
+	// 右側
+	//----------
+	// マイスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[15] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_MYSCORE_R, 64, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 順位
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[16] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_RANK_R, 152, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// トップスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[15] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_TOPSCORE_R, 64, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 報酬
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[14] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_GAIN_R, 128, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// スコアボーナス
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[17] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_BONUS_R, 48, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// ダブルスコア
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[14] );
+	FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_DOUBLE_R, 128, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
+	GFL_STR_DeleteBuffer( strbuf );
+}
 
