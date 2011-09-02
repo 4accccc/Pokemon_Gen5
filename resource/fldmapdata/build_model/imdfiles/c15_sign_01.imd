@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg01" host="W00300" date="2011-09-01T14:13:22" source="c15_sign_01.mb"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-09-01T17:49:43" source="c15_sign_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg01" host="W00300" date="2011-09-01T14:13:22" source="c15_sign_01.mb"/>
+<original_create user="swan_3dcg01" host="W00300" date="2011-09-01T17:49:43" source="c15_sign_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -418,13 +418,13 @@
 			0707 0707 0707 0707 0707 0707 0707 0707
 			0707 0707 0707 0707 0707 0707 0707 0707
 			0707 0707 0707 0707 0d0d 0d0d 0d0d 0d0d
-			1515 0d15 0d15 0d0d 1e16 1e16 1e1e 1e1e
-			1e1e 1e26 2626 261e 2c2c 2c2c 2c2c 2c2c
-			3434 3434 3c3c 3434 4b4b 4b4b 4b4b 4b4b
-			5b5b 5b53 5b5b 5b5b 6b6b 6b6b 6b6b 6b6b
-			7a7a 7a7a 7a7a 7a7a 9292 9292 9292 8a92
-			a1a1 a1a1 a1a1 a1a1 b9b1 b1b1 b1b9 b1b1
-			b090 c8c8 c0c0 90b0 6838 d8b8 b8d0 3868
+			0d0d 0d0d 0d0d 0d0d 1616 1616 1616 1616
+			1e1e 1e1e 1e1e 1e1e 2c2c 2c2c 2c2c 2c2c
+			3c3c 3c3c 3c3c 3c3c 4b4b 4b4b 4b4b 4b4b
+			5b5b 5b5b 5b5b 5b5b 6b6b 6b6b 6b6b 6b6b
+			7a7a 7a7a 7a7a 7a7a 9292 9292 9292 9292
+			a1a1 a1a1 a1a1 a1a1 b1b1 b1b1 b1b1 b1b1
+			b090 c8c8 c8c8 90b0 6838 d8b8 b8d8 3868
 		</bitmap>
 	</tex_image>
 	<tex_image index="5" name="h_kage"
