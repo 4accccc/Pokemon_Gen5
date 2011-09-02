@@ -10,9 +10,9 @@
 #ifndef ZONE_D08R0701_EVC_H
 #define ZONE_D08R0701_EVC_H
 
-#define FLD_ITEM_230                       0
+#define FLD_ITEM_234                       0
 #define FLD_ITEM_231                       1
-#define FLD_ITEM_234                       2
+#define FLD_ITEM_230                       2
 
 #endif //ZONE_D08R0701_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d08r0701.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
