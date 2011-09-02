@@ -42,7 +42,7 @@
   DEF_CMD( EvCmdResortCallInputAutherName, EV_SEQ_RESORT_INPUT_AUTHERNAME )
   DEF_CMD( EvCmdResortCallInputAutherPhrase, EV_SEQ_RESORT_INPUT_AUTHERPHRASE )
   DEF_CMD( EvCmdResortEndItem, EV_SEQ_RESORT_END_ITEM )
-  NO_CMD()
+  DEF_CMD( EvCmdResortCallInputAutherThanks, EV_SEQ_RESORT_INPUT_AUTHERTHANKS )
   NO_CMD()
   DEF_CMD( EvCmdResortGetNpcData, EV_SEQ_RESORT_GET_NPC_DATA )
   DEF_CMD( EvCmdResortSetMyData, EV_SEQ_RESORT_SET_MY_DATA )

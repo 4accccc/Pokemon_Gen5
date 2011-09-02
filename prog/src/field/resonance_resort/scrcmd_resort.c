@@ -688,6 +688,18 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_SECRETARY_CITYLV_MSGID:
     *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_00_m, resort_secretary_talk_00_f );
     break;
+  case RESORT_SECRETARY_SECSORT_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_04_m, resort_secretary_talk_04_f );
+    break;
+  case RESORT_SECRETARY_SHOPSORT_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_05_m, resort_secretary_talk_05_f );
+    break;
+  case RESORT_SECRETARY_NEON_OK_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_07_m, resort_secretary_talk_07_f );
+    break;
+  case RESORT_SECRETARY_NEON_SEL_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_06_m, resort_secretary_talk_06_f );
+    break;
   case RESORT_SECRETARY_SEL_GREET_MSGID:
     *p_ret_wk = SexGetMsgID( sex, resort_secretary_greet_01_m, resort_secretary_greet_01_m );
     break;
@@ -1715,6 +1727,28 @@ VMCMD_RESULT EvCmdResortCallInputAutherPhrase( VMHANDLE *p_core, void *p_wk_adrs
 
   return VMCMD_RESULT_SUSPEND;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分の感謝を登録
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortCallInputAutherThanks( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK*      work = p_wk_adrs;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  GMEVENT* event = EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_THANKS, gsys, NULL );
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -2155,6 +2189,7 @@ VMCMD_RESULT EvCmdResortSetMyData( VMHANDLE *p_core, void *p_wk_adrs )
   RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
   RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
+  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
   switch( param )
   {
 	case RESORT_MY_PARAM_GOSSIP_00:
@@ -2192,6 +2227,9 @@ VMCMD_RESULT EvCmdResortSetMyData( VMHANDLE *p_core, void *p_wk_adrs )
       GF_ASSERT( data < NELEMS(sc_shop_id) );
       RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_WANT_JOB, sc_shop_id[data] );
     }
+    break;
+  case RESORT_MY_PARAM_TEX:
+    RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_TEX, data );
     break;
   default:
     GF_ASSERT(0);

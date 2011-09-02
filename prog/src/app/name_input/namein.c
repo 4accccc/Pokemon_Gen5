@@ -331,7 +331,12 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
     //セーブデータ受け取り
     if( p_param->p_misc )
     { 
-      mode    = MISC_GetNameInMode( p_param->p_misc, p_param->mode );
+      NAMEIN_MODE namein_mode = p_param->mode;
+      if( namein_mode == NAMEIN_FREE_RESORT_THANKS )
+      {
+        namein_mode = NAMEIN_FREE_RESORT_PHRASE;
+      }
+      mode    = MISC_GetNameInMode( p_param->p_misc, namein_mode );
     }
   }
   
@@ -4685,6 +4690,8 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
     /* fallthrough  */
   case NAMEIN_FREE_RESORT_PHRASE:
     /* fallthrough  */
+  case NAMEIN_FREE_RESORT_THANKS:
+    /* fallthrough  */
   case NAMEIN_FREE_WORD:
     /* fallthrough */
   case NAMEIN_GREETING_WORD:
@@ -5528,8 +5535,15 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     if( p_wk->p_param->p_misc )
     { 
       NAMEIN_INPUTTYPE input_type;
+      NAMEIN_MODE namein_mode = p_wk->p_param->mode;
+      if( namein_mode == NAMEIN_FREE_RESORT_THANKS )
+      {
+        namein_mode = NAMEIN_FREE_RESORT_PHRASE;
+      }
+
       input_type  = KEYBOARD_GetInputType( &p_wk->keyboard );
-      MISC_SetNameInMode( p_wk->p_param->p_misc, p_wk->p_param->mode, input_type );
+
+      MISC_SetNameInMode( p_wk->p_param->p_misc, namein_mode, input_type );
     }
   }
 

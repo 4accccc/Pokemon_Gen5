@@ -47,6 +47,7 @@ typedef enum
   NAMEIN_FREE_PASSWORD,       // アジト船パスワード入力
   NAMEIN_GAMESYNC_ID_CODE,   //ゲームシンクIDコード入力
 
+  NAMEIN_FREE_RESORT_THANKS,  //リゾート口癖  param1 自分の性別
 
 	NAMEIN_MAX,
 }NAMEIN_MODE;

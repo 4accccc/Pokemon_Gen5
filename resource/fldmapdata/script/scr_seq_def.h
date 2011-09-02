@@ -13882,7 +13882,7 @@
 
 //--------------------------------------------------------------
 /**
- * @brief リゾート用　街名を入力するPROCを呼ぶ
+ * @brief リゾート用　口癖を入力するPROCを呼ぶ
  */
 //--------------------------------------------------------------
 #define _RESORT_INPUT_AUTHERPHRASE() \
@@ -13890,6 +13890,18 @@
 
   .macro _ASM_RESORT_INPUT_AUTHERPHRASE
   .short EV_SEQ_RESORT_INPUT_AUTHERPHRASE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　感謝を入力するPROCを呼ぶ
+ */
+//--------------------------------------------------------------
+#define _RESORT_INPUT_AUTHERTHANKS() \
+      _ASM_RESORT_INPUT_AUTHERTHANKS
+
+  .macro _ASM_RESORT_INPUT_AUTHERTHANKS
+  .short EV_SEQ_RESORT_INPUT_AUTHERTHANKS
   .endm
   
 //--------------------------------------------------------------

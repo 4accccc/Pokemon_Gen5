@@ -3576,6 +3576,9 @@ void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_DATA_PAR
   case RESORT_DATA_PARAM_LOCK:
     //‚È‚É‚à‚µ‚È‚¢
     break;
+  case RESORT_DATA_PARAM_TYPE:
+    p_wk->type = data;
+    break;
   default:
     GF_ASSERT(0);
   }

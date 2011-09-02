@@ -213,6 +213,9 @@ typedef struct _SHOP_BUY_APP_WORK{
   u16 insert_cursor;
   BOOL is_change;
 
+  u16 origin_tbl[ RESORT_RESIDENT_DATA_NUM ];
+  u16 sort_tbl[ RESORT_RESIDENT_DATA_NUM ];
+
 } SHOP_BUY_APP_WORK;
 
 // ショップ買う起動時構造体
@@ -343,6 +346,9 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.p_shop    = RESORT_SYSTEM_GetBinaryShop( resort_sys );
   sbw->wk.p_all_people = RESORT_SYSTEM_GetPeopleAllData( resort_sys );
   sbw->wk.p_abstruct_man  = RESORT_SYSTEM_GetAbstructManager( resort_sys );
+
+
+  *sbw->wk.ret_service_type = FALSE;
 
   // スクリプトからのパラメータで分岐
   // ここで関数分岐等も行い、実際の処理に分岐を挟まないようにしている
@@ -1383,23 +1389,9 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
 
   case SHOPSORT_SEQ_END:
 
-    //終了時に選んだ物を取得
-    if( wk->cp_select )
-    {
-      *wk->ret_service_type = wk->cp_select->serviceID;
-      *wk->ret_service_param   = 0;
-      *wk->ret_service_idx = wk->cp_select->id;
-      *wk->ret_price = wk->cp_select->price;
-    }
-    else
-    {
-      *wk->ret_service_type = RESORT_LIST_CANCEL;
-      *wk->ret_service_param   = 0;
-      *wk->ret_service_idx = 0;
-      *wk->ret_price = 0;
-    }
-
     wk->List_Decide( wk, type, id );
+
+    *wk->ret_service_type = ( GFL_STD_MemComp( wk->sort_tbl,wk->origin_tbl,sizeof(u16)*RESORT_RESIDENT_DATA_NUM ) != 0 ) ;
 
     bmpwin_list_exit(wk);   // BMPLIST解放
     obj_del( wk );          // OBJ削除
@@ -1521,6 +1513,9 @@ static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id )
   {
     RESORT_SECRETARY_DATA *p_secretary = RESORT_PEOPLE_ALL_DATA_GetSecretary( wk->p_all_people, i );
 
+    wk->origin_tbl[i] = i;
+    wk->sort_tbl[i] = i;
+
     if( !RESORT_SECRETARY_DATA_IsEmpty(p_secretary) )
     {
       // 商品ラインナップテーブルにIDと値段を登録
@@ -1602,6 +1597,9 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
   for(i=0;i<RESORT_RESIDENT_DATA_NUM;i++)
   {
     RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( wk->p_all_people, i );
+
+    wk->origin_tbl[i] = i;
+    wk->sort_tbl[i] = i;
 
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
     {
@@ -3021,19 +3019,28 @@ static void SecretaryList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id )
       RESORT_SECRETARY_DATA *p_a = RESORT_PEOPLE_ALL_DATA_GetSecretary( wk->p_all_people, wk->lineup[i].id );
       RESORT_PLACEID a_placeID = RESORT_SECRETARY_DATA_GetData( p_a, RESORT_DATA_PARAM_PLACE_ID, NULL );
       u16 a_peopleID = RESORT_SECRETARY_DATA_GetData( p_a, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      u16 a_type =  RESORT_SECRETARY_DATA_GetData( p_a, RESORT_DATA_PARAM_TYPE, NULL );
       RESORT_SECRETARY_DATA *p_b = RESORT_PEOPLE_ALL_DATA_GetSecretary( wk->p_all_people, i );
       RESORT_PLACEID b_placeID = RESORT_SECRETARY_DATA_GetData( p_b, RESORT_DATA_PARAM_PLACE_ID, NULL );
       u16 b_peopleID = RESORT_SECRETARY_DATA_GetData( p_b, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      u16 b_type =  RESORT_SECRETARY_DATA_GetData( p_b, RESORT_DATA_PARAM_TYPE, NULL );
 
       RESORT_SECRETARY_DATA_SetData(p_a, RESORT_DATA_PARAM_PEOPLE_ID, b_peopleID );
       RESORT_SECRETARY_DATA_SetData(p_a, RESORT_DATA_PARAM_PLACE_ID, b_placeID );
+      RESORT_SECRETARY_DATA_SetData(p_a, RESORT_DATA_PARAM_TYPE, b_type );
       RESORT_SECRETARY_DATA_SetData(p_b, RESORT_DATA_PARAM_PEOPLE_ID, a_peopleID );
       RESORT_SECRETARY_DATA_SetData(p_b, RESORT_DATA_PARAM_PLACE_ID, a_placeID );
+      RESORT_SECRETARY_DATA_SetData(p_b, RESORT_DATA_PARAM_TYPE, a_type );
 
       GFL_STD_MemCopy( p_a, temp, RESORT_SECRETARY_DATA_SIZE );
       GFL_STD_MemCopy( p_b, p_a, RESORT_SECRETARY_DATA_SIZE );
       GFL_STD_MemCopy( temp, p_b, RESORT_SECRETARY_DATA_SIZE );
 
+      {
+        u16 temp_idx  = wk->sort_tbl[ i ];
+        wk->sort_tbl[ i ] = wk->sort_tbl[ wk->lineup[i].id ];
+        wk->sort_tbl[ wk->lineup[i].id ]  = temp_idx;
+      }
 
       temp_num = wk->lineup[ wk->lineup[i].id ].id;
       wk->lineup[ wk->lineup[i].id ].id  = wk->lineup[i].id;
@@ -3092,6 +3099,11 @@ static void InstitutionList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id )
       GFL_STD_MemCopy( p_b, p_a, RESORT_RESIDENT_DATA_SIZE );
       GFL_STD_MemCopy( temp, p_b, RESORT_RESIDENT_DATA_SIZE );
 
+      {
+        u16 temp_idx  = wk->sort_tbl[ i ];
+        wk->sort_tbl[ i ] = wk->sort_tbl[ wk->lineup[i].id ];
+        wk->sort_tbl[ wk->lineup[i].id ]  = temp_idx;
+      }
 
       temp_num = wk->lineup[ wk->lineup[i].id ].id;
       wk->lineup[ wk->lineup[i].id ].id  = wk->lineup[i].id;

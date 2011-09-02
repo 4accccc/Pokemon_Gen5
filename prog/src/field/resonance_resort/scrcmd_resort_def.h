@@ -62,6 +62,7 @@
 #define RESORT_MY_PARAM_GOSSIP_14          (14)
 #define RESORT_MY_PARAM_GOSSIP_15          (15)
 #define RESORT_MY_PARAM_WANT_JOB           (16)
+#define RESORT_MY_PARAM_TEX                (17)
 
 //_RESORT_JOB_CHANGE用
 #define RESORT_JOBCHANGE_RESIDENT           (0)
@@ -153,6 +154,10 @@
 #define RESORT_SECRETARY_GREET_MSGID          (100) //挨拶
 #define RESORT_SECRETARY_BYE_MSGID            (101) //またね
 #define RESORT_SECRETARY_CITYLV_MSGID         (102) //まちレベル
+#define RESORT_SECRETARY_SECSORT_MSGID        (103) //秘書交換
+#define RESORT_SECRETARY_SHOPSORT_MSGID       (104) //お店交換
+#define RESORT_SECRETARY_NEON_OK_MSGID        (105) //ネオン変更
+#define RESORT_SECRETARY_NEON_SEL_MSGID       (106) //ネオン選択
 
 #define RESORT_SECRETARY_SEL_GREET_MSGID      (110) //挨拶
 #define RESORT_SECRETARY_SEL_BYE_MSGID        (111) //またね
