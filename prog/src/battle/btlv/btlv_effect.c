@@ -211,7 +211,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
 static int BTLV_EFFECT_GetPokewoodMode( const BTL_MAIN_MODULE *mainModule )
 {
   if( mainModule!=NULL ){
-    return BTLV_EFFECT_GetPokewoodMode( mainModule );
+    return BTL_MAIN_GetPokewoodMode( mainModule );
   }
   
   return BTL_POKEWOOD_NONE;
