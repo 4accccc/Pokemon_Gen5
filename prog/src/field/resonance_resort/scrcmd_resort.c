@@ -17,6 +17,7 @@
 #include "../gmk_tmp_wk.h"
 #include "../event_name_input.h"
 #include "src/field/ev_time.h"
+#include "savedata/medalbox.h"
 
 //アーカイブ
 #include "msg/script/msg_resort_scr.h"
@@ -128,6 +129,20 @@ VMCMD_RESULT EvCmdResortTalkEnd( VMHANDLE *p_core, void *p_wk_adrs )
   }
   return VMCMD_RESULT_CONTINUE;
 }
+
+static BOOL CheckMedalID( MEDALBOX *p_mdl, const MedalID medal_tbl[], u32 tbl_len )
+{
+  int i;
+  for( i = 0; i < tbl_len; i++ )
+  {
+    if( MEDALBOX_GetMedalState( p_mdl, medal_tbl[i] ) == MEDAL_STATE_TITLE_GET )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  データ取得
@@ -153,6 +168,9 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
   RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
+  MEDALBOX *p_mdl = SaveData_GetMedalBox( GAMEDATA_GetSaveControlWork(p_gamedata) );
 
   switch( param )
   {
@@ -275,7 +293,174 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       }
     }
     break;
-
+  case RESORT_GET_PARAM_SELECT_LOT:
+    {
+      static const MedalID sc_lot_medal_tbl[] =
+      {
+        MDLID_VENDOR_ATARI,
+        MDLID_NPOKE,
+        MDLID_IROCHIGAI,
+        MDLID_POKERUS,
+      };
+      BOOL is_mdl = CheckMedalID( p_mdl, sc_lot_medal_tbl, NELEMS(sc_lot_medal_tbl) );
+      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
+      *p_ret_wk = is_mdl || (id==1);
+    }
+    break;
+  case RESORT_GET_PARAM_SELECT_PARLOR:
+    if( GET_VERSION() == VERSION_W2 )
+    {
+      u32 lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+      *p_ret_wk = (lv>=20);
+    }
+    else
+    {
+      *p_ret_wk = FALSE;
+    }
+    break;
+  case RESORT_GET_PARAM_SELECT_FLORIST:
+    {
+      static const MedalID sc_flor_medal_tbl[] =
+      {
+				MDLID_MORI_CAPTURE_LV1,
+				MDLID_MORI_CAPTURE_LV2,
+				MDLID_MORI_CAPTURE_LV3,
+				MDLID_MORI_CAPTURE_MAX,
+				MDLID_MUSICALWIN_MAX,
+				MDLID_MUSICALGOODS,
+				MDLID_MUSICAL_TOTAL_POINT,
+				MDLID_GAMESYNC,
+      };
+      BOOL is_mdl = CheckMedalID( p_mdl, sc_flor_medal_tbl, NELEMS(sc_flor_medal_tbl) );
+      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
+      *p_ret_wk = is_mdl || (id==4) || (id==9);
+    }
+    break;
+  case RESORT_GET_PARAM_SELECT_MARKET:
+    {
+      static const MedalID sc_mar_medal_tbl[] =
+      {
+				MDLID_SHOPPING_CNT_LV1,
+				MDLID_SHOPPING_MONEY_LV1,
+				MDLID_PREMIUM_BALL_LV1,
+      };
+      BOOL is_mdl = CheckMedalID( p_mdl, sc_mar_medal_tbl, NELEMS(sc_mar_medal_tbl) );
+      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
+      *p_ret_wk = is_mdl || (id==3) || (id==8);
+    }
+    break;
+  case RESORT_GET_PARAM_SELECT_EXERCICE:
+    {
+      static const MedalID sc_exer_medal_tbl[] =
+      {
+				MDLID_ALL_BATTLE_LV4,
+				MDLID_COMM_BATTLE_LV4,
+				MDLID_SUBWAY_SINGLE_LV1,
+				MDLID_SUBWAY_DOUBLE_LV1,
+				MDLID_SUBWAY_MULTI_LV1,
+				MDLID_SUBWAY_CHALLENGE_LV1,
+				MDLID_SUBWAY_CHALLENGE_LV4,
+				MDLID_TRIALHOUSE_LV4,
+				MDLID_WIN_BP_LV1,
+				MDLID_DAYMAX_EXP_LV1,
+				MDLID_SAISEN_LV1,
+				MDLID_WBT_HODOMOE,
+				MDLID_WBT_RENTAL,
+				MDLID_WBT_MIX,
+				MDLID_WBT_ISSHU,
+				MDLID_WBT_KANTO,
+				MDLID_WBT_JOUTO,
+				MDLID_WBT_HOUEN,
+				MDLID_WBT_SHINNOU,
+				MDLID_WBT_LEADER,
+				MDLID_WBT_CHAMPION,
+				MDLID_WBT_RENTAL_MASTER,
+				MDLID_WBT_MIX_MASTER,
+				MDLID_WBT_TYPE_ALL,
+				MDLID_MUGEN_AREA_B_LV1,
+				MDLID_MUGEN_AREA_B_LV2,
+				MDLID_MUGEN_AREA_W_LV1,
+				MDLID_MUGEN_AREA_W_LV2,
+				MDLID_MUGEN_WIN_LV1,
+				MDLID_MUGEN_WIN_LV2,
+				MDLID_MUGEN_WIN_LV3,
+				MDLID_MUGEN_WIN_LV4,
+				MDLID_MUGEN_ALL_WIN_LV1,
+				MDLID_MUGEN_ALL_WIN_LV2,
+				MDLID_MUGEN_BOSS_ONLY_LV1,
+				MDLID_MUGEN_BOSS_ONLY_LV2,
+				MDLID_MUGEN_SPEEDY_LV1,
+				MDLID_MUGEN_SPEEDY_LV2,
+				MDLID_BATTLE_COMPLETE,
+				MDLID_CHAMPION_NORMAL,
+				MDLID_CHAMPION_HONOO,
+				MDLID_CHAMPION_MIZU,
+				MDLID_CHAMPION_DENKI,
+				MDLID_CHAMPION_KUSA,
+				MDLID_CHAMPION_KOORI,
+				MDLID_CHAMPION_KAKUTOU,
+				MDLID_CHAMPION_DOKU,
+				MDLID_CHAMPION_JIMEN,
+				MDLID_CHAMPION_HIKOU,
+				MDLID_CHAMPION_ESPER,
+				MDLID_CHAMPION_MUSHI,
+				MDLID_CHAMPION_IWA,
+				MDLID_CHAMPION_GHOST,
+				MDLID_CHAMPION_DRAGON,
+				MDLID_CHAMPION_AKU,
+				MDLID_CHAMPION_HAGANE,
+				MDLID_LONELY_CHAMPION,
+      };
+      BOOL is_mdl = CheckMedalID( p_mdl, sc_exer_medal_tbl, NELEMS(sc_exer_medal_tbl) );
+      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
+      *p_ret_wk = is_mdl || (id==2) || (id==7);
+    }
+    break;
+  case RESORT_GET_PARAM_SELECT_NURSERY:
+    {
+      static const MedalID sc_nur_medal_tbl[] =
+      {
+				MDLID_TAMAGO_LV2,
+				MDLID_TAMAGO_LV3,
+				MDLID_TAMAGO_MAX,
+				MDLID_EVOLUTION_LV1,
+				MDLID_EVOLUTION_LV2,
+				MDLID_EVOLUTION_LV3,
+				MDLID_EVOLUTION_MAX,
+				MDLID_SODATEYA_CNT_LV1,
+      };
+      BOOL is_mdl = CheckMedalID( p_mdl, sc_nur_medal_tbl, NELEMS(sc_nur_medal_tbl) );
+      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
+      *p_ret_wk = is_mdl || (id==5);
+    }
+    break;
+  case RESORT_GET_PARAM_SELECT_ANTIQUE:
+    {
+      static const MedalID sc_ant_medal_tbl[] =
+      {
+				MDLID_GOMIBAKO_LV1,
+				MDLID_DOWSING_LV1,
+				MDLID_BILLBOARD_COUNT_LV1,
+				MDLID_BILLBOARD_BACK,
+				MDLID_FOSSILE_LV1,
+				MDLID_KEMONOMICHI,
+      };
+      BOOL is_mdl = CheckMedalID( p_mdl, sc_ant_medal_tbl, NELEMS(sc_ant_medal_tbl) );
+      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
+      *p_ret_wk = is_mdl || (id==0) || (id==6);
+    }
+    break;
+  case RESORT_GET_PARAM_SELECT_CAFE:
+    if( GET_VERSION() == VERSION_B2 )
+    {
+      u32 lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+      *p_ret_wk = (lv>=20);
+    }
+    else
+    {
+      *p_ret_wk = FALSE;
+    }
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -502,6 +687,21 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_SECRETARY_CITYLV_MSGID:
     *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_00_m, resort_secretary_talk_00_f );
+    break;
+  case RESORT_SECRETARY_SEL_GREET_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_greet_01_m, resort_secretary_greet_01_m );
+    break;
+  case RESORT_SECRETARY_SEL_BYE_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_bye_01_m, resort_secretary_bye_01_f );
+    break;
+  case RESORT_SECRETARY_SEL_SELECT:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_03_m, resort_secretary_talk_03_f );
+    break;
+  case RESORT_SECRETARY_SEL_ONE:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_01_m, resort_secretary_talk_01_f );
+    break;
+  case RESORT_SECRETARY_SEL_MANY:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_02_m, resort_secretary_talk_02_f );
     break;
   case RESORT_RESIDENT_LV_MSGID:
     *p_ret_wk = SexGetMsgID( sex, resort_resident_lv_00_m, resort_resident_lv_00_f );
@@ -752,6 +952,24 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
     GF_ASSERT( p_data );
     {
       u32 shopno = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_SHOP_GetData(p_shop, shopno);
+      u32 data = RESORT_BINARY_SHOP_DATA_GetData(cp_shop,RESORT_BINARY_SHOP_PARAM_SHOP);
+      GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
+      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+data );
+
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
+      GFL_STR_DeleteBuffer(p_str);
+      GFL_MSG_Delete( p_msg );
+    }
+    break;
+  case RESORT_WORD_OWNER_SHOP_GENRE:
+    {
+      RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
+      RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
+
+      MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_gamesys) );
+      u32 shopno = RESORT_OWNER_DATA_GetWantJob( p_owner, p_mystatus );
+
       const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_SHOP_GetData(p_shop, shopno);
       u32 data = RESORT_BINARY_SHOP_DATA_GetData(cp_shop,RESORT_BINARY_SHOP_PARAM_SHOP);
       GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
@@ -1958,6 +2176,23 @@ VMCMD_RESULT EvCmdResortSetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     param = param - RESORT_MY_PARAM_GOSSIP_00;
     RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT4_GOSSIP_00+param, data );
     break;
+  case RESORT_MY_PARAM_WANT_JOB:
+    {
+      static const u16 sc_shop_id[]  =
+      {
+        RESORT_SHOP_ID_LOT_00,//RESORT_RESIDENT_TYPE_LOT
+        RESORT_SHOP_ID_PARLOR_00,//RESORT_RESIDENT_TYPE_PARLOR
+        RESORT_SHOP_ID_MARKET_00,//RESORT_RESIDENT_TYPE_MARKET
+        RESORT_SHOP_ID_FLORIST_00,//RESORT_RESIDENT_TYPE_FLORIST
+        RESORT_SHOP_ID_EXERCICE_00,//RESORT_RESIDENT_TYPE_EXERCICE
+        RESORT_SHOP_ID_NURSERY_00,//RESORT_RESIDENT_TYPE_NURSERY
+        RESORT_SHOP_ID_ANTIQUE_00,//RESORT_RESIDENT_TYPE_ANTIQUE
+        RESORT_SHOP_ID_CAFE_00,//RESORT_RESIDENT_TYPE_CAFE
+      };
+      GF_ASSERT( data < NELEMS(sc_shop_id) );
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_WANT_JOB, sc_shop_id[data] );
+    }
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -2007,6 +2242,9 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
 	case RESORT_MY_PARAM_GOSSIP_15:
     param = param - RESORT_MY_PARAM_GOSSIP_00;
     *p_ret_wk = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT4_GOSSIP_00+param, NULL );
+    break;
+  case RESORT_MY_PARAM_WANT_JOB:
+    *p_ret_wk = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_WANT_JOB, NULL );
     break;
   default:
     GF_ASSERT(0);

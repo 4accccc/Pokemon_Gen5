@@ -35,6 +35,7 @@
 
 //mine 
 #include "field/resonance_resort/resort_map.h"
+#include "field/resonance_resort/resort_shop.h"
 
 //外部公開
 #include "field/resonance_resort_data.h"
@@ -553,12 +554,14 @@ static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDA
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
     RESONANCE_RESORT_SV *p_reso = RESONANCE_RESORT_SV_GetWork( p_sv );
     RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_reso );
-    p_wk->city_lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
-  }
-
-  {
+    RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_reso );
+    RESORT_RECV_DATA *p_own = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
+  
     MYSTATUS *p_mystatus  = GAMEDATA_GetMyStatus((GAMEDATA*)cp_gamedata);
-    p_wk->want_job = 0; //TODO
+
+    p_wk->city_lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+    p_wk->want_job = RESORT_OWNER_DATA_GetWantJob( p_own, p_mystatus );
+ 
   }
 }
 
@@ -3725,6 +3728,9 @@ void RESORT_PEOPLE_ALL_DATA_InitInstance( RESORT_PEOPLE_ALL_DATA *p_wk )
   }
 
   RESORT_RESIDENT_DATA_InitInstance(&p_wk->owner );
+  {
+    RESORT_RESIDENT_DATA_GetData( &p_wk->owner, RESORT_DATA_PARAM_WANT_JOB, RESORT_SHOP_ID_NULL );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -3966,6 +3972,47 @@ void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
 RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL_DATA *p_wk )
 {
   return &p_wk->owner;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤーのお気に入り店を取得
+ *
+ *	@param	const RESORT_RECV_DATA *cp_wk ワーク
+ *
+ *	@return お気に入り店
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS *cp_mystatus )
+{
+  u16 want_job = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_WANT_JOB, NULL );
+
+  if( want_job == RESORT_SHOP_ID_NULL )
+  {
+    switch( MyStatus_GetID_Low(cp_mystatus) % 10 )
+    {
+    default:
+      GF_ASSERT(0);
+    case 1:
+      return RESORT_SHOP_ID_LOT_00;
+    case 2:
+    case 7:
+      return RESORT_SHOP_ID_EXERCICE_00;
+    case 3:
+    case 8:
+      return RESORT_SHOP_ID_MARKET_00;
+    case 4:
+    case 9:
+      return RESORT_SHOP_ID_FLORIST_00;
+    case 5:
+      return RESORT_SHOP_ID_NURSERY_00;
+    case 0:
+    case 6:
+      return RESORT_SHOP_ID_ANTIQUE_00;
+    }
+  }
+    
+  return want_job;
 }
 
 //=============================================================================

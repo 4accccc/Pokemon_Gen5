@@ -30,6 +30,14 @@
 #define RESORT_GET_PARAM_HAS_MEDAL          (13)
 #define RESORT_GET_PARAM_NUM_RECORD         (15)
 #define RESORT_GET_PARAM_CHECK_SCOUT        (16)
+#define RESORT_GET_PARAM_SELECT_LOT         (17)
+#define RESORT_GET_PARAM_SELECT_PARLOR      (18)
+#define RESORT_GET_PARAM_SELECT_FLORIST     (19)
+#define RESORT_GET_PARAM_SELECT_MARKET      (20)
+#define RESORT_GET_PARAM_SELECT_EXERCICE    (21)
+#define RESORT_GET_PARAM_SELECT_NURSERY     (22)
+#define RESORT_GET_PARAM_SELECT_ANTIQUE     (23)
+#define RESORT_GET_PARAM_SELECT_CAFE        (24)
 
 //RESORT_GET_PARAM_CHECK_SCOUTの戻り値
 #define RESORT_CHECK_SCOUT_YES          (0) //いいよ
@@ -53,6 +61,7 @@
 #define RESORT_MY_PARAM_GOSSIP_13          (13)
 #define RESORT_MY_PARAM_GOSSIP_14          (14)
 #define RESORT_MY_PARAM_GOSSIP_15          (15)
+#define RESORT_MY_PARAM_WANT_JOB           (16)
 
 //_RESORT_JOB_CHANGE用
 #define RESORT_JOBCHANGE_RESIDENT           (0)
@@ -76,6 +85,7 @@
 #define RESORT_WORD_CITY_RESTEXP      (13)
 #define RESORT_WORD_WANT_SHOP         (14) //「フラワー○○」とか（なりたいお店）
 #define RESORT_WORD_WANT_SHOP_GENRE   (15) //「花屋」とか（なりたいお店）
+#define RESORT_WORD_OWNER_SHOP_GENRE  (16) //「花屋」とか（プレイヤーの得意なお店）
 
 #define RESORT_WORD_PARAM_FRONT       (0xFE)  //目の前の人
 #define RESORT_WORD_PARAM_NONE        (0xFF)
@@ -143,6 +153,12 @@
 #define RESORT_SECRETARY_GREET_MSGID          (100) //挨拶
 #define RESORT_SECRETARY_BYE_MSGID            (101) //またね
 #define RESORT_SECRETARY_CITYLV_MSGID         (102) //まちレベル
+
+#define RESORT_SECRETARY_SEL_GREET_MSGID      (110) //挨拶
+#define RESORT_SECRETARY_SEL_BYE_MSGID        (111) //またね
+#define RESORT_SECRETARY_SEL_SELECT           (112) //なにがしたいですか？
+#define RESORT_SECRETARY_SEL_ONE              (113) //１つだけ
+#define RESORT_SECRETARY_SEL_MANY             (114) //複数
 
 //_RESORT_SEARCH_RECEPTION用
 #define RESORT_SEARCH_PROXY_GTS               (0)
