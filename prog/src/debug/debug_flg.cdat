@@ -37,4 +37,5 @@ DEBUG_FLG_DEF( FakeNetConnect, "Fake Net Mode" )
 //Page3
 DEBUG_FLG_DEF( LTvtSecretNotRnd, "LC Rnd Off" )
 DEBUG_FLG_DEF( DisableMapDraw,   "Disable Map Draw" )
+DEBUG_FLG_DEF( DebugCameraStop,   "Debug Camera Stop" )
 

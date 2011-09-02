@@ -465,7 +465,7 @@ sub_tourist_spot:
     //～が　おすすめしたみせに　やってきた！
     _SYSWIN_MSG( resort_sys_15, POS_DOWN )
 
-    //満足したかどうか
+    //満足したかどうか TODO
     IF $LWK_MSGID == resort_sys_08 THEN
       //満足しなかった
       _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
@@ -524,6 +524,7 @@ sub_tourist_spot:
       _SYSWIN_MSG( resort_sys_17, POS_DOWN )
       //街レベルアップ
       IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP THEN
+        _RESORT_START_EFFECT( RESORT_EFFECT_CONFETTI )
         _RESORT_SET_WORD( RESORT_WORD_CITY_RANK, RESORT_WORD_PARAM_NONE, 0, 2 )
         _SYSWIN_MSG( resort_sys_18, POS_DOWN )
       ENDIF
@@ -534,6 +535,8 @@ sub_tourist_spot:
     //フェードアウト
 	  _BLACK_OUT()
 	  _DISP_FADE_END_CHECK()
+
+    _RESORT_END_EFFECT( RESORT_EFFECT_CONFETTI )
 
 	  //自機にカメラを戻す
 	  _CAMERA_DEF_MOVE (1) 

@@ -14019,6 +14019,45 @@
   .short EV_SEQ_RESORT_CALL_MEDALINFO
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  演出開始
+ */
+//--------------------------------------------------------------
+#define _RESORT_START_EFFECT( id ) \
+      _ASM_RESORT_START_EFFECT id
+
+  .macro _ASM_RESORT_START_EFFECT id
+  .short EV_SEQ_RESORT_START_EFFECT
+  .short \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  演出待ち
+ */
+//--------------------------------------------------------------
+#define _RESORT_WAIT_EFFECT( id, ret_wk ) \
+      _ASM_RESORT_WAIT_EFFECT id, ret_wk
+
+  .macro _ASM_RESORT_WAIT_EFFECT id, ret_wk
+  .short EV_SEQ_RESORT_WAIT_EFFECT
+  .short \id
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  演出終了
+ */
+//--------------------------------------------------------------
+#define _RESORT_END_EFFECT( id ) \
+      _ASM_RESORT_END_EFFECT id
+
+  .macro _ASM_RESORT_END_EFFECT id
+  .short EV_SEQ_RESORT_END_EFFECT
+  .short \id
+  .endm
 
 //======================================================================
 //

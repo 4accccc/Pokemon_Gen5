@@ -52,6 +52,7 @@
 #include "test/performance.h"
 #include "event_debug_menu_mmdl_list.h"
 #include  "msg/debug/msg_d_tomoya.h"
+#include "include/debug/debug_flg.h"
 
 //ŠO•”ŒöŠJ
 #include "event_debug_menu_ov_field.h"
@@ -242,6 +243,11 @@ static GMEVENT_RESULT debugMenuControlLinerCamera(
 
   DEBUG_CTL_LINERCAMERA_WORK *work = wk;
   FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
+
+  if( DEBUG_FLG_GetFlg( DEBUG_FLG_DebugCameraStop ) )
+  {
+    return GMEVENT_RES_CONTINUE;
+  }
 
   if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
   {

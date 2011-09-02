@@ -49,3 +49,6 @@ extern VMCMD_RESULT EvCmdResortGetMouthComm( VMHANDLE *p_core, void *p_wk_adrs )
 extern VMCMD_RESULT EvCmdResortSetWordMouthCommAnswer( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortGetServiceData( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortStartEffect( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortWaitEffect( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortEndEffect( VMHANDLE *p_core, void *p_wk_adrs );

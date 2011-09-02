@@ -302,6 +302,24 @@ void FLD_EXP_OBJ_SetVanish(FLD_EXP_OBJ_CNT_PTR ptr,
 
 //--------------------------------------------------------------------------------------------
 /**
+ *  表示状態を取得
+ *
+ * @param   ptr               モジュールポインタ
+ * @param   inUnitIdx         ユニットインデックス
+ * @param   inObjIdx          ユニット内ＯＢＪインデックス
+ *
+ * @return	TRUEで非表示
+ */
+//--------------------------------------------------------------------------------------------
+BOOL FLD_EXP_OBJ_GetVanish( const FLD_EXP_OBJ_CNT_PTR ptr,
+                            const u16 inUnitIdx,
+                            const u16 inObjIdx)
+{
+  return ptr->Unit[inUnitIdx].ExpObjStatus[inObjIdx].Vanish;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  *  ユニットOBJポインタ取得
  *
  * @param   ptr               モジュールポインタ

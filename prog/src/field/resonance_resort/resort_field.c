@@ -22,6 +22,8 @@
 #include "../script.h"     //for SCRIPT_CallScript
 
 //archive
+#include "arc/arc_def.h"
+#include "arc/fieldmap/wbt_gmk.naix"
 
 //SE
 #include "sound/pm_sndsys.h"
@@ -42,6 +44,7 @@
 
 #ifdef PM_DEBUG
 #define DEBUG_RESORT_FIELD_PRINT_ON
+//#define DEBUG_EFFECT_MOVE
 #endif
 
 #if defined(DEBUG_RESORT_FIELD_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada) )
@@ -138,6 +141,30 @@ static void RESORT_FIELD_PEOPLE_StopCrowd( RESORT_FIELD_PEOPLE *p_wk, RESORT_PEO
 
 //=============================================================================
 /**
+ *          ギミック演出管理
+ */
+//=============================================================================
+//-------------------------------------
+///	ギミック演出ワーク
+//=====================================
+typedef struct _RESORT_FIELD_EFFECT RESORT_FIELD_EFFECT;
+
+static RESORT_FIELD_EFFECT * RESORT_FIELD_EFFECT_Init( HEAPID heapID, FLD_EXP_OBJ_CNT_PTR p_exp_obj );
+static void RESORT_FIELD_EFFECT_Exit( RESORT_FIELD_EFFECT *p_wk );
+static void RESORT_FIELD_EFFECT_Main( RESORT_FIELD_EFFECT *p_wk );
+
+typedef enum
+{
+  RESORT_FIELD_EFFECT_ID_CONFETTI,
+  RESORT_FIELD_EFFECT_ID_MAX
+}RESORT_FIELD_EFFECT_ID;
+static void RESORT_FIELD_EFFECT_Start( RESORT_FIELD_EFFECT *p_wk, RESORT_FIELD_EFFECT_ID id );
+static BOOL RESORT_FIELD_EFFECT_IsStop( const RESORT_FIELD_EFFECT *cp_wk, RESORT_FIELD_EFFECT_ID id );
+static void RESORT_FIELD_EFFECT_Stop( RESORT_FIELD_EFFECT *p_wk, RESORT_FIELD_EFFECT_ID id );
+
+
+//=============================================================================
+/**
  *				構造体
 */
 //=============================================================================
@@ -150,6 +177,7 @@ typedef struct
   RESORT_NPC_SYS      *p_npc_sys;
   RESORT_SYSTEM       *p_sys;
   RESORT_CROWD_NOISE  *p_noise;
+  RESORT_FIELD_EFFECT *p_effect;
 } RESORT_FIELD_WORK;
 
 //=============================================================================
@@ -211,6 +239,12 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     p_wk->p_noise = RESORT_CROWD_NOISE_Init( heapID, FIELDMAP_GetFldMsgBG(p_fieldmap), RESORT_SYSTEM_GetAbstructManager( p_wk->p_sys ) );
   }
 
+  //演出
+  {
+    FLD_EXP_OBJ_CNT_PTR p_exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+    p_wk->p_effect = RESORT_FIELD_EFFECT_Init( heapID, p_exp_obj );
+  }
+
   RESORT_FIELD_Printf( "レゾナンスsetup\n" );
 }
 //----------------------------------------------------------------------------
@@ -224,6 +258,7 @@ void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
 
+  RESORT_FIELD_EFFECT_Exit( p_wk->p_effect );
   RESORT_CROWD_NOISE_Exit( p_wk->p_noise );
   RESORT_NPC_SYS_Exit( p_wk->p_npc_sys );
   RESORT_FIELD_PEOPLE_Exit( p_wk->p_people_sys );
@@ -248,6 +283,7 @@ void RESORT_FIELD_Move( FIELDMAP_WORK *p_fieldmap )
   RESORT_FIELD_PEOPLE_Main( p_wk->p_people_sys, FIELDMAP_GetFieldPlayer(p_fieldmap) );
   RESORT_NPC_SYS_Main( p_wk->p_npc_sys );
   RESORT_CROWD_NOISE_Main( p_wk->p_noise, p_fieldmap );
+  RESORT_FIELD_EFFECT_Main( p_wk->p_effect );
 }
 
 //----------------------------------------------------------------------------
@@ -317,6 +353,50 @@ void RESORT_FIELD_StopCrowdPeople( FIELDMAP_WORK *p_fieldmap, void* p_people )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
   RESORT_FIELD_PEOPLE_StopCrowd( p_wk->p_people_sys, p_people );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出開始
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
+ *	@param	id  演出ID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_FIELD_StartEffect( FIELDMAP_WORK *p_fieldmap, u32 id )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  RESORT_FIELD_EFFECT_Start( p_wk->p_effect, id );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出待ち
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
+ *	@param	id  演出ID
+ *
+ *	@retval TRUE終了  FLASEまだ
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_FIELD_WaitEffect( FIELDMAP_WORK *p_fieldmap, u32 id )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  return RESORT_FIELD_EFFECT_IsStop( p_wk->p_effect, id );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出終了
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
+ *	@param	id  演出ID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_FIELD_EndEffect( FIELDMAP_WORK *p_fieldmap, u32 id )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  RESORT_FIELD_EFFECT_Stop( p_wk->p_effect, id );
 }
 
 //=============================================================================
@@ -2970,4 +3050,364 @@ static void Field_People_UpdateDataCallback( void *p_wk_adrs, void *p_data_adrs,
     p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );
     RESORT_CROWD_PEOPLE_Add( p_wk->p_crowd, p_people );
   }
+}
+
+//=============================================================================
+/**
+ *          ギミック演出管理
+ */
+//=============================================================================
+enum
+{
+  RESORT_FIELD_EFFECT_UNIT,
+};
+//-------------------------------------
+///	ギミック演出関数
+//=====================================
+typedef struct
+{
+  void (*Start)( RESORT_FIELD_EFFECT *p_wk );
+  BOOL (*Update)( RESORT_FIELD_EFFECT *p_wk );
+  void (*Stop)( RESORT_FIELD_EFFECT *p_wk );
+}RESORT_FIELD_EFFECT_FUNC;
+
+//-------------------------------------
+///	ギミック演出ワーク
+//=====================================
+struct _RESORT_FIELD_EFFECT
+{
+  FLD_EXP_OBJ_CNT_PTR p_exp_obj;
+  const RESORT_FIELD_EFFECT_FUNC  *cp_func[RESORT_FIELD_EFFECT_ID_MAX];
+};
+
+
+enum
+{
+  MODEL_RESID_WIN_A_IMD,
+  MODEL_RESID_WIN_A_ICA,
+  MODEL_RESID_WIN_A_ITA,
+  MODEL_RESID_WIN_B_IMD,
+  MODEL_RESID_WIN_B_ICA,
+  MODEL_RESID_WIN_B_ITA,
+};
+
+static const GFL_G3D_UTIL_RES sc_res_table[] = 
+{
+  // 優勝 エフェクト
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_a_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_a_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_a_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_b_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_b_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_b_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+};
+static const GFL_G3D_UTIL_ANM sc_win_a_anm_table[] =
+{
+  { MODEL_RESID_WIN_A_ICA, 0 }, // ICA
+  { MODEL_RESID_WIN_A_ITA, 0 }, // ITA
+};
+static const GFL_G3D_UTIL_ANM sc_win_b_anm_table[] =
+{
+  { MODEL_RESID_WIN_B_ICA, 0 }, // ICA
+  { MODEL_RESID_WIN_B_ITA, 0 }, // ITA
+};
+
+enum
+{
+  MODEL_OBJ_CONFETTI_START,
+  MODEL_OBJ_CONFETTI_LOOP,
+};
+static const GFL_G3D_UTIL_OBJ sc_obj_table[] =
+{
+  //MODEL_OBJ_CONFETTI_START
+  {
+    MODEL_RESID_WIN_A_IMD,         // モデルリソースID
+    0,                            // モデルデータID(リソース内部INDEX)
+    MODEL_RESID_WIN_A_IMD,         // テクスチャリソースID
+    sc_win_a_anm_table,           // アニメテーブル(複数指定のため)
+    NELEMS(sc_win_a_anm_table),    // アニメリソース数
+  },
+  //MODEL_OBJ_CONFETTI_LOOP
+  {
+    MODEL_RESID_WIN_B_IMD,         // モデルリソースID
+    0,                            // モデルデータID(リソース内部INDEX)
+    MODEL_RESID_WIN_B_IMD,         // テクスチャリソースID
+    sc_win_b_anm_table,           // アニメテーブル(複数指定のため)
+    NELEMS(sc_win_b_anm_table),   // アニメリソース数
+  },
+};
+
+static const GFL_G3D_UTIL_SETUP sc_util_setup = 
+{
+  sc_res_table,				    //リソーステーブル
+	NELEMS(sc_res_table),		//リソース数
+	sc_obj_table,				    //オブジェクト設定テーブル
+	NELEMS(sc_obj_table),		//オブジェクト数
+};
+
+static void Resort_Field_Effect_StartConfetti( RESORT_FIELD_EFFECT *p_wk );
+static BOOL Resort_Field_Effect_UpdateConfetti( RESORT_FIELD_EFFECT *p_wk );
+static void Resort_Field_Effect_StopConfetti( RESORT_FIELD_EFFECT *p_wk );
+
+static const RESORT_FIELD_EFFECT_FUNC sc_effect_func[]  =
+{
+  //RESORT_FIELD_EFFECT_ID_CONFETTI
+  {
+    Resort_Field_Effect_StartConfetti,
+    Resort_Field_Effect_UpdateConfetti,
+    Resort_Field_Effect_StopConfetti,
+  },
+};
+
+SDK_COMPILER_ASSERT( NELEMS(sc_effect_func) == RESORT_FIELD_EFFECT_ID_MAX );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出ワーク作成
+ *
+ *	@param	HEAPID heapID ヒープID
+ *	@param	p_exp_obj     拡張OBJ
+ *
+ *	@return 演出ワーク
+ */
+//-----------------------------------------------------------------------------
+static RESORT_FIELD_EFFECT * RESORT_FIELD_EFFECT_Init( HEAPID heapID, FLD_EXP_OBJ_CNT_PTR p_exp_obj )
+{
+  RESORT_FIELD_EFFECT *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_FIELD_EFFECT) );
+  p_wk->p_exp_obj = p_exp_obj;
+
+  FLD_EXP_OBJ_AddUnit( p_wk->p_exp_obj, &sc_util_setup, RESORT_FIELD_EFFECT_UNIT );
+
+#ifdef DEBUG_EFFECT_MOVE
+  RESORT_FIELD_EFFECT_Start( p_wk, RESORT_FIELD_EFFECT_ID_CONFETTI );
+#endif
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出ワーク破棄
+ *
+ *	@param	RESORT_FIELD_EFFECT *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_FIELD_EFFECT_Exit( RESORT_FIELD_EFFECT *p_wk )
+{
+#ifdef DEBUG_EFFECT_MOVE
+  RESORT_FIELD_EFFECT_Stop( p_wk, RESORT_FIELD_EFFECT_ID_CONFETTI );
+#endif
+
+  FLD_EXP_OBJ_DelUnit( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT );
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出ワークメイン処理
+ *
+ *	@param	RESORT_FIELD_EFFECT *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_FIELD_EFFECT_Main( RESORT_FIELD_EFFECT *p_wk )
+{
+  FLD_EXP_OBJ_PlayAnime( p_wk->p_exp_obj );
+
+  {
+    int i;
+
+    for( i = 0; i < RESORT_FIELD_EFFECT_ID_MAX; i++ )
+    {
+      if( p_wk->cp_func[i] )
+      {
+        if( p_wk->cp_func[i]->Update( p_wk ) )
+        {
+          p_wk->cp_func[i] = NULL;
+        }
+      }
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出開始
+ *
+ *	@param	RESORT_FIELD_EFFECT *p_wk ワーク
+ *	@param	id  開始する演出ID
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_FIELD_EFFECT_Start( RESORT_FIELD_EFFECT *p_wk, RESORT_FIELD_EFFECT_ID id )
+{
+  p_wk->cp_func[ id ] = &sc_effect_func[ id ];
+  p_wk->cp_func[ id ]->Start( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出終了チェック
+ *
+ *	@param	const RESORT_FIELD_EFFECT *cp_wk  ワーク
+ *	@param	id  チェックする演出ID
+ *
+ *	@return TRUE終了  FALSEまだ
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_FIELD_EFFECT_IsStop( const RESORT_FIELD_EFFECT *cp_wk, RESORT_FIELD_EFFECT_ID id )
+{
+  return cp_wk->cp_func[id] == NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出強制終了
+ *
+ *	@param	RESORT_FIELD_EFFECT *p_wk ワーク
+ *	@param	id  終了する演出ID
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_FIELD_EFFECT_Stop( RESORT_FIELD_EFFECT *p_wk, RESORT_FIELD_EFFECT_ID id )
+{
+  if( p_wk->cp_func[id] )
+  {
+    p_wk->cp_func[id]->Stop( p_wk );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  紙吹雪開始
+ *
+ *	@param	RESORT_FIELD_EFFECT *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Field_Effect_StartConfetti( RESORT_FIELD_EFFECT *p_wk )
+{
+  {
+    GFL_G3D_OBJSTATUS *p_start_st =FLD_EXP_OBJ_GetUnitObjStatus( p_wk->p_exp_obj,
+                            RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START );
+    GFL_G3D_OBJSTATUS *p_loop_st =FLD_EXP_OBJ_GetUnitObjStatus( p_wk->p_exp_obj,
+                            RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP );
+
+    p_start_st->trans.x = FX32_CONST(127);
+    p_start_st->trans.z = FX32_CONST(997);
+    p_loop_st->trans.x = FX32_CONST(127);
+    p_loop_st->trans.z = FX32_CONST(997);
+  }
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START, FALSE );
+  FLD_EXP_OBJ_SetVanish( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP, TRUE );
+
+  //アニメ再生
+  {
+    int i;
+    for( i=0; i<NELEMS(sc_win_a_anm_table); i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR p_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START, i );
+      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START, i, 0 );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START, i, TRUE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( p_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( p_anm, FALSE );  // アニメ再生設定
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  紙吹雪メイン
+ *
+ *	@param	RESORT_FIELD_EFFECT *p_wk   ワーク
+ *
+ *	@return TRUE  終了  FALSEまだ
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Field_Effect_UpdateConfetti( RESORT_FIELD_EFFECT *p_wk )
+{
+  EXP_OBJ_ANM_CNT_PTR p_start_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START, 0 );
+
+  //開始アニメが表示中だったらチェック
+  if( FLD_EXP_OBJ_GetVanish( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START ) == FALSE )
+  {
+    // アニメ終了したら、ループ用に切り替え
+    if( FLD_EXP_OBJ_ChkAnmEnd( p_start_anm ) == TRUE )
+    {
+      int i;
+      // 開始エフェクトは消す
+      FLD_EXP_OBJ_SetVanish( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START, TRUE );
+
+      // ループエフェクトは表示
+      FLD_EXP_OBJ_SetVanish( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP, FALSE );
+      // ループエフェクトアニメ設定
+      for( i=0; i<NELEMS(sc_win_b_anm_table); i++ )
+      {
+        EXP_OBJ_ANM_CNT_PTR p_loop_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP, i );
+        FLD_EXP_OBJ_SetObjAnmFrm( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP, i, 0 );
+        FLD_EXP_OBJ_ValidCntAnm( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP, i, TRUE );
+
+        FLD_EXP_OBJ_ChgAnmLoopFlg( p_loop_anm, TRUE );  // ループ再生設定
+        FLD_EXP_OBJ_ChgAnmStopFlg( p_loop_anm, FALSE );  // アニメ再生設定
+      }
+    }
+  }
+
+
+#ifdef DEBUG_EFFECT_MOVE
+  if( GFL_UI_KEY_GetCont( ) & PAD_BUTTON_L )
+  {
+    GFL_G3D_OBJSTATUS *p_start_st =FLD_EXP_OBJ_GetUnitObjStatus( p_wk->p_exp_obj,
+                            RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START );
+    GFL_G3D_OBJSTATUS *p_loop_st =FLD_EXP_OBJ_GetUnitObjStatus( p_wk->p_exp_obj,
+                            RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP );
+
+    if( GFL_UI_KEY_GetCont( ) & PAD_KEY_UP )
+    {
+      p_start_st->trans.z -= FX32_ONE;
+      p_loop_st->trans.z -= FX32_ONE;
+    }
+    else if( GFL_UI_KEY_GetCont( ) & PAD_KEY_DOWN )
+    {
+      p_start_st->trans.z += FX32_ONE;
+      p_loop_st->trans.z += FX32_ONE;
+    }
+    else if( GFL_UI_KEY_GetCont( ) & PAD_KEY_LEFT )
+    {
+      p_start_st->trans.x -= FX32_ONE;
+      p_loop_st->trans.x -= FX32_ONE;
+    }
+    else if( GFL_UI_KEY_GetCont( ) & PAD_KEY_RIGHT )
+    {
+      p_start_st->trans.x += FX32_ONE;
+      p_loop_st->trans.x += FX32_ONE;
+    }
+
+    OS_TPrintf( "start X%d Z%d\n", FX_Whole(p_start_st->trans.x), FX_Whole( p_start_st->trans.z ) );
+    OS_TPrintf( "loop X%d Z%d\n", FX_Whole( p_loop_st->trans.x ), FX_Whole( p_loop_st->trans.z ) );
+  }
+#endif
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  紙吹雪終了
+ *
+ *	@param	RESORT_FIELD_EFFECT *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Field_Effect_StopConfetti( RESORT_FIELD_EFFECT *p_wk )
+{
+  int i;
+  FLD_EXP_OBJ_SetVanish( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START, TRUE );
+  FLD_EXP_OBJ_SetVanish( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP, TRUE );
+
+  for( i=0; i<NELEMS(sc_win_a_anm_table); i++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR p_loop_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START, i );
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START, i, FALSE );
+    FLD_EXP_OBJ_ChgAnmStopFlg( p_loop_anm, TRUE );
+  }
+  for( i=0; i<NELEMS(sc_win_b_anm_table); i++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR p_loop_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP, i );
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP, i, FALSE );
+    FLD_EXP_OBJ_ChgAnmStopFlg( p_loop_anm, TRUE );
+  }
+
+  p_wk->cp_func[RESORT_FIELD_EFFECT_ID_CONFETTI] = NULL;
 }

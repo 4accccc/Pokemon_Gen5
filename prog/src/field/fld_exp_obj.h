@@ -31,6 +31,9 @@ extern void FLD_EXP_OBJ_SetCulling
           (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx, const BOOL inCullingFlg);
 extern void FLD_EXP_OBJ_SetVanish
           (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx, const BOOL inVanish);
+
+extern BOOL FLD_EXP_OBJ_GetVanish( const FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx);
+
 extern GFL_G3D_OBJ *FLD_EXP_OBJ_GetUnitObj
           (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx);
 extern void FLD_EXP_OBJ_SetUnitAddFrame(FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const fx32 count);

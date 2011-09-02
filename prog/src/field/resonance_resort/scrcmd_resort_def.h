@@ -201,3 +201,6 @@
 
 //_RESORT_GET_INSTITUTION_DATA—p
 #define RESORT_INSTITUTION_SHOPTYPE            (0)
+
+//_RESORT_xxxx_EFFECT—p
+#define RESORT_EFFECT_CONFETTI                (0)

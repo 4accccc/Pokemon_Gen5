@@ -52,6 +52,9 @@
   DEF_CMD( EvCmdResortGetServiceData, EV_SEQ_RESORT_GET_SERVICE_DATA )
   DEF_CMD( EvCmdResortGetOffreco, EV_SEQ_RESORT_GET_OFFRECO )
   DEF_CMD( EvCmdCallMedalInfo, EV_SEQ_RESORT_CALL_MEDALINFO )
+  DEF_CMD( EvCmdResortStartEffect, EV_SEQ_RESORT_START_EFFECT )
+  DEF_CMD( EvCmdResortWaitEffect, EV_SEQ_RESORT_WAIT_EFFECT )
+  DEF_CMD( EvCmdResortEndEffect, EV_SEQ_RESORT_END_EFFECT )
 
   END_CMD
   //スクリプトコマンドテーブル終了

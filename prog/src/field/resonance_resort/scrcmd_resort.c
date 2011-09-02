@@ -2017,6 +2017,85 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  演出開始
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 結果コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortStartEffect( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+
+  u16 id   = SCRCMD_GetVMWorkValue(p_core, p_wk );
+
+  GF_ASSERT( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) );
+
+  RESORT_FIELD_StartEffect( p_field, id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出待ち
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 結果コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortWaitEffect( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+
+  u16 id   = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  GF_ASSERT( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) );
+
+
+  *p_ret_wk = RESORT_FIELD_WaitEffect( p_field, id );
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出終了
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 結果コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortEndEffect( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+
+  u16 id   = SCRCMD_GetVMWorkValue(p_core, p_wk );
+
+  GF_ASSERT( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) );
+
+  RESORT_FIELD_EndEffect( p_field, id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  システムを取得
  *
  *	@param	FIELDMAP_WORK *p_field   フィールド
