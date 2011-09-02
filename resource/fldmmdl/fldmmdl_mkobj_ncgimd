@@ -843,6 +843,11 @@
 	@echo convert ncg_imd poke22
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke22.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
+#poke23.imd
+./mmdl_res/poke23.imd: ./mmdl_nchara/poke23.ncg ./mmdl_nchara/poke23.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke23
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke23.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
 #trophy1.imd
 ./mmdl_res/trophy1.imd: ./mmdl_nchara/trophy1.ncg ./mmdl_nchara/trophy1.ncl ./mmdl_dmy/t4x4x1.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_onecell.csv
 	@echo convert ncg_imd trophy1
