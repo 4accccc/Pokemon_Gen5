@@ -1099,6 +1099,8 @@
 				<ContentItem
 					Name="d10r0401.mstxt" />
 				<ContentItem
+					Name="d10r0501.mstxt" />
+				<ContentItem
 					Name="d11r0101.mstxt" />
 				<ContentItem
 					Name="d11r0201.mstxt" />
@@ -1361,6 +1363,8 @@
 				<ContentItem
 					Name="h04r0701.mstxt" />
 				<ContentItem
+					Name="h04r0801.mstxt" />
+				<ContentItem
 					Name="h05.mstxt" />
 				<ContentItem
 					Name="h06.mstxt" />
@@ -1420,6 +1424,8 @@
 					Name="oldc01r0501.mstxt" />
 				<ContentItem
 					Name="oldc02gym0202.mstxt" />
+				<ContentItem
+					Name="oldc05r0501.mstxt" />
 				<ContentItem
 					Name="oldc08r0101.mstxt" />
 				<ContentItem
@@ -2010,6 +2016,8 @@
 				Name="mailview.mstxt" />
 			<ContentItem
 				Name="manual.mstxt" />
+			<ContentItem
+				Name="marine_tube.mstxt" />
 			<ContentItem
 				Name="mb_child_dataconv.mstxt" />
 			<ContentItem
