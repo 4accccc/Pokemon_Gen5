@@ -19,6 +19,11 @@
 #include "savedata/wifihistory.h"
 #include "fieldmap/zone_id.h"
 #include "app/townmap_data_sys.h"
+#include "field/animal_trail.h"
+#include "field/animal_trail_data.h"
+
+#include "../resource/fldmapdata/flagwork/work_define.h"
+#include "field/script_def.h"
 
 //=============================================================================
 /**
@@ -45,6 +50,7 @@
  *	        ZONEID_C01が返ってきます）
  *	        -> タウンマップでもゾーングループを使うようになったので
  *	        ゾーングループが返ってきます。100407
+ *	        ユニオン、アジト船、けもの道については個別の分岐があります。110902
  *
  *	@param	const GAMEDATA *cp_gamedata ゲームデータ  (エスケープロケーション取得用)
  *	@param  now_zoneID
@@ -54,22 +60,42 @@
 //-----------------------------------------------------------------------------
 u16 TOWNMAP_UTIL_GetRootZoneID( const GAMEDATA* cp_gamedata, u16 now_zoneID )
 {
-
-
-  ZONEID zoneID;
-  PLAYER_WORK *p_player;
-
-  zoneID  = ZONEDATA_GetGroupID( now_zoneID );
+  ZONEID zoneID = ZONEDATA_GetGroupID( now_zoneID );
 
   if( zoneID == ZONE_ID_UNION )
   {
     return ZONEDATA_GetGroupID( GAMEDATA_GetSpecialLocation( cp_gamedata )->zone_id );
   }
+  else if( zoneID == ZONE_ID_D27R0101 )
+  {
+    //アジト船だったら
+    EVENTWORK *p_ev = GAMEDATA_GetEventWork((GAMEDATA *)cp_gamedata);
+    u16 *p_value = EVENTWORK_GetEventWorkAdrs( p_ev, WK_SYS_HIDE_SHIP_PLACE );
+    switch( *p_value )
+    {
+    default:
+      GF_ASSERT(0);
+    case SCR_HIDE_SHIP_PLACE_C05:
+      return ZONE_ID_C05;
+    case SCR_HIDE_SHIP_PLACE_W21:
+      return ZONE_ID_W21;
+    case SCR_HIDE_SHIP_PLACE_D10:
+      return ZONE_ID_D10;
+    case SCR_HIDE_SHIP_PLACE_W17:
+      return ZONE_ID_W17;
+    }
+  }
+  else if( zoneID == ANIMAL_TRAIL_ZONE_ID )
+  {
+    ETC_SAVE_WORK *p_etc = SaveData_GetEtc( GAMEDATA_GetSaveControlWork((GAMEDATA *)cp_gamedata) );
+    u8 trailID = ANIMAL_TRAIL_SAVE_GetNowAnimalTrailID( p_etc );
+    zoneID = ANIMAL_TRAIL_DATA_GetExitData( trailID, ANIMAL_TRAIL_DATA_PARAM_ZONEID );
+
+    return ZONEDATA_GetGroupID( zoneID );
+  }
   else
   {
-    u32 ret;
-
-    ret  =  TOWNMAP_REPLACE_DATA_GetReplace( zoneID );
+    u32 ret  =  TOWNMAP_REPLACE_DATA_GetReplace( zoneID );
     if( ret != TOWNMAP_DATA_ERROR )
     { 
       zoneID  = ret;

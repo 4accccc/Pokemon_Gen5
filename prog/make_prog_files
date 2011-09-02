@@ -510,7 +510,9 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         gamesystem/fest_mission_data.c \
         field/scrcmd_keysystem.c \
         field/scrcmd_dataconvert.c \
-        field/scrcmd_walk_count.c
+        field/scrcmd_walk_count.c \
+        field/animal_trail_data.c
+
 
 ###########################################################
 # アンチWIFIプログラム 並列化イベントグループ

@@ -38,7 +38,7 @@
 #define WARP_POS_X  (15)
 #define WARP_POS_Z  (27)
 
-#include "../../../resource/animal_trail/animal_trail_pos_data.cdat"  // 帰る先データ
+#include "animal_trail_data.h"
 
 //=============================================================================
 /**
@@ -555,9 +555,15 @@ static GMEVENT_RESULT MapExitEvent( GMEVENT *event, int *seq, void *wk )
     {
       // マップ移動
       VecFx32 warp_pos;       // 遷移先でのマップ位置
-      SetGridPos( &warp_pos ,sc_exit_data[p_wk->trail_id].gx ,sc_exit_data[p_wk->trail_id].gy ,sc_exit_data[p_wk->trail_id].gz);
+
+      ZONEID zoneID = ANIMAL_TRAIL_DATA_GetExitData( p_wk->trail_id, ANIMAL_TRAIL_DATA_PARAM_ZONEID );
+      s32 x = ANIMAL_TRAIL_DATA_GetExitData( p_wk->trail_id, ANIMAL_TRAIL_DATA_PARAM_X );
+      s32 y = ANIMAL_TRAIL_DATA_GetExitData( p_wk->trail_id, ANIMAL_TRAIL_DATA_PARAM_Y );
+      s32 z = ANIMAL_TRAIL_DATA_GetExitData( p_wk->trail_id, ANIMAL_TRAIL_DATA_PARAM_Z );
+
+      SetGridPos( &warp_pos, x, y, z);
       GMEVENT_CallEvent(event,
-          EVENT_ChangeMapPosNoFade(p_wk->p_gsys, p_wk->p_field_work,sc_exit_data[p_wk->trail_id].zone_id ,&warp_pos,DIR_DOWN));
+          EVENT_ChangeMapPosNoFade(p_wk->p_gsys, p_wk->p_field_work,zoneID,&warp_pos,DIR_DOWN));
       (*seq)++;
       break;
     }
