@@ -66,6 +66,14 @@ typedef struct _LINKFEST_LOG_TOP_SCORE{
   u16 tr_id;    ///<トレーナーID
 }LINKFEST_LOG_TOP_SCORE;
 
+//ミッションの状態を取得するデータ構造体
+typedef struct _LINFEST_MISSION_STATUS{
+  u8  entry_num;  ///<参加者数
+  u8  my_ranking;       ///<自分のスコアの順位
+  u16 my_score;         ///<自分のスコア
+  u16 total_score;      ///<現在のスコア
+}LINKFEST_MISSION_STATUS;
+
 //フェスログ受け渡し構造体
 typedef struct _LINKFEST_LOG_PARAM{
   FEST_MISSION_ID  m_id; ///<ミッションID
@@ -122,6 +130,23 @@ extern BOOL LINK_FESTIVAL_IsMissionEntry( LINK_FESTIVAL* wk );
  */
 //---------------------------------------------------------
 extern FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッション残り時間を返す
+ *
+ * @retval  残り時間：秒単位
+ */
+//---------------------------------------------------------
+extern u16 LINK_FESTIVAL_GetMissionLife( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションの現在の状態を返す
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_GetMissionStatus( LINK_FESTIVAL* wk, LINKFEST_MISSION_STATUS* sp  );
+
 
 //---------------------------------------------------------
 /*

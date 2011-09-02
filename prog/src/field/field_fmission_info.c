@@ -481,7 +481,7 @@ static void panel_NumberDraw( FIELD_FMISSION_INFO* wk, int num, int keta, u8 act
 //--------------------------------------------------------------
 static void panel_TimeUpdate( FIELD_FMISSION_INFO* wk, BOOL force_f )
 {
-  int sec = wk->fmwk->beacon.life/60;
+  int sec = LINK_FESTIVAL_GetMissionLife( wk->fest_sys );
   int min = sec/60;
 
   if( sec == wk->old_sec && !force_f ){

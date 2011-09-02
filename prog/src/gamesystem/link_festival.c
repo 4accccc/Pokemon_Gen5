@@ -135,6 +135,74 @@ FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル ミッション残り時間を返す
+ *
+ * @retval  残り時間：秒単位
+ */
+//---------------------------------------------------------
+u16 LINK_FESTIVAL_GetMissionLife( LINK_FESTIVAL* wk )
+{
+  return LINKFEST_FRAME2SEC( wk->m_beacon->life );
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションの現在の状態を返す
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_GetMissionStatus( LINK_FESTIVAL* wk, LINKFEST_MISSION_STATUS* sp  )
+{
+  int i,j,h,t;
+  u8  idx[LINKFEST_LOG_MAX];
+
+  MI_CpuClear8( sp, sizeof(LINKFEST_MISSION_STATUS) );
+
+  sp->entry_num = wk->log_num+1;  //自分も含めるので+1
+  sp->my_score = wk->m_beacon->my_score;
+  sp->total_score = LINK_FESTIVAL_GetNowScore( wk );
+ 
+  //自分のスコアのランキングを取得
+  for( i = 0;i < wk->log_num; i++ ){
+    idx[i] = i; 
+  }
+
+  //シェルソート(9と3はシェルソートアルゴリズムのリテラル)
+  {
+    for( h = 1; h < (wk->log_num/9); h = h*3+1)
+      ; //hを変化させたいだけなので、特にメイン処理はない
+
+    for( ; h > 0; h/=3 ){
+      for(i = h; i<wk->log_num; i++){
+        j = i;
+        while(j >= h && wk->log[ idx[j-h] ].score.value < wk->log[ idx[j] ].score.value ){
+          t = idx[j];
+          idx[j] = idx[j-h];
+          idx[j-h] = t;
+          j -= h;
+        }
+      }
+    }
+  }
+#ifdef PM_DEBUG
+  for( i = 0;i < wk->log_num;i++){
+    IWASAWA_Printf("SSort%d idx:%d-> %d\n",i,idx[i],wk->log[idx[i]].score.value);
+  }
+#endif
+  if( sp->my_score >= wk->log[0].score.value ){
+    sp->my_ranking = 1; //1位
+  }else if( sp->my_score <= wk->log[ wk->log_num-1].score.value ){
+    sp->my_ranking = sp->entry_num; //最下位
+  }
+  for( i = 0; i < wk->log_num;i++){
+    if( sp->my_score >= wk->log[ idx[i] ].score.value ){
+      sp->my_ranking = i+1;
+      break;
+    }
+  }
+}
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル ミッションログスタックテーブルポインタ取得
  */
 //---------------------------------------------------------
@@ -244,7 +312,7 @@ void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 void LINK_FESTIVAL_MissionReadyTimerSet( LINK_FESTIVAL* wk, u32 timer )
 {
-  wk->ready_timer = timer*60;  //sec2frame
+  wk->ready_timer = LINKFEST_SEC2FRAME(timer);  //sec2frame
 }
 
 //---------------------------------------------------------
