@@ -1,3 +1,845 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_dungeon_a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やあ　オレ　ダンって　いうんだ▼
+いきなりだが　ここで
+あったのも　なにかの　えん▽
+アンタに　おねがいが　あるんだぜ！▼
+オレ　ダンには　ジョンっていう
+あいぼうが　いるんだが▼
+そいつに　ひごろの
+かんしゃの　きもちを▽
+つたえたくてな……▼
+でも　じぶんの　くちで
+いうのは　はずかしいだろ？▼
+だから　アンタに　おねがいするぜ！
+「おまえ　さいこうの▽
+あいぼう　だぜ！」▽
+って　ジョンに　つたえてくれ！▼
+アイツの　いばしょは　しらないが
+「ちかすいの　わきあがる▽
+ほらあなが　ぜっこうの▽
+あなばスポット　だぜ！」▼
+とか　いっていたから
+そういう　ところに　いそうだな▽
+じゃあ　たのんだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:15:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:15:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:15:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BACKPACKERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:15:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よう！　はじめまして
+オレは　ジョンだ　よろしくな！▼
+なに？　　あいぼうの
+ダンから　オレに　でんごん？▼
+オレが　さいこうの
+あいぼう　だって！？▼
+アイツ……
+なに　いってやがるんだ▼
+なあ　アンタ　オレからも
+でんごんを　たのまれてくれ▼
+ダンの　ヤツに
+「おまえこそ　さいこうの▽
+あいぼう　だぜ！」▽
+って　つたえてくれ！▼
+それと　これは
+そのへんで　ひろったものだが▽
+たずねてきてくれた　おれいだ▽
+うけとってくれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:16:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:16:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:15:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BACKPACKERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:15:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_a_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダン「やあ　あんたに　あうのも
+これで　【４桁】かいめ　だな▼
+なに？　ジョンのヤツから
+でんごん？▼
+やっぱり　おれが　さいこうの
+あいぼう　だって？▼
+まったく　ジョンめ……
+よし！　じゃあ　おれからも▽
+「かえすがえすも　おまえが▽
+さいこうの　あいぼう　だぜ！」▽
+……と　でんごん　たのんだぜ！▼
+それと　これは
+おれいだ　うけとってくれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:16:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:16:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BACKPACKERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:19:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_b_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジョン「おう！　あんたのかおを
+みるのも　【４桁】かいめか▼
+ほう　ダンのヤツから
+また　でんごんか▼
+かえすがえすも　おれが
+さいこうの　あいぼう　だって？▼
+ダンのヤツ……
+だったら　おれも▽
+「やっぱり　おまえが▽
+さいこうの　あいぼう　だぜ！」▽
+……よし　でんごん　たのんだぜ！▼
+それと　これは
+おれいだ　うけとってくれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:16:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:16:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BACKPACKERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:19:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+さばくの　まんなかで
+たいこの　ロマンを▽
+おいもとめる！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+古代の城
+（砂漠側）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:47" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+すなに　うもれた　いせきで
+しょぎょう　むじょうの▽
+きょうちに　いたる！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+古代の城
+（地下道側）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+ビリっと　しびれる
+でんきと　じりょくに▽
+だいしぜんの
+ふしぎを　かんじる！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+電気石の洞穴</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:01" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+よい　こうせきが　とれる
+こうざんには▽
+だいちの　パワーが▽
+あふれている！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+ネジ山</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:03" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+ふるい　いいつたえの　のこる
+きょだいな　あなに▽
+こころが　ゆさぶられる！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+ジャイアントホール</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:06" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+かつて　かこうだった
+きゅうかざんの　みずうみを▽
+ながめて　いやされたい！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:20:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+リバースマウンテン
+黒</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:09" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+あかあかと　はげしく
+にえたぎる　マグマを　みて▽
+あつくなりたい！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+リバースマウンテン
+白</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:12" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+げすいどうから　つづく
+しずかな　ふるい　ぬけみちで▽
+リラックス　したい！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+古代の抜け道</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:15" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+トロッコが　あるような
+こうどうで　ピクニックだ！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+ヤーコンロード</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:19" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+かいすいの　かがれこむ
+ほらあなに　いって▽
+とこなつきぶんを　エンジョイだ！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+海辺の洞穴</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:23" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+ちかすいの　わきあがる
+ほらあなが　ぜっこうの
+あなばスポット　だぜ！
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+地下水脈の穴</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:26" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+でんせつの　けはいが　ただよう
+ほらあなに　いって▽
+オレも　でんせつになる！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+フキヨセの洞穴</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:29" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_dungeon_hint_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいぼうの　いばしょ？
+そういえば　アイツ……▼
+つよさを　もとめる　トレーナーが
+つどう　しゅぎょうの　ばで▽
+おのれを　きたえる！▽
+とか　いっていたなあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:21:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:17:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒントメッセージ
+修行の岩屋</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T12:18:35" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
