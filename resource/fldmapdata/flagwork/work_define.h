@@ -77,7 +77,7 @@
 #define WK_SYS_SCENE_COMM                16449 /* 0x4041 通信部屋から出てくる時の処理用シーン制御ワーク */
 		/* not used 16450(0x4042) */
 #define WK_SYS_PAIR_ID                   16451 /* 0x4043 連れ歩きペアID */
-		/* not used 16452(0x4044) */
+#define WK_SYS_HIDE_SHIP_PLACE           16452 /* 0x4044 アジト船の位置をタウンマップに通知するためのワーク SCR_HIDE_SHIP_PLACE_C05 (0) ///&lt; ホドモエ SCR_HIDE_SHIP_PLACE_W21 (1) ///&lt; ２１番水道 SCR_HIDE_SHIP_PLACE_D10 (2) ///&lt; ジャイアントホール SCR_HIDE_SHIP_PLACE_W17 (3) ///&lt; P2ラボにいるとき */
 		/* not used 16453(0x4045) */
 		/* not used 16454(0x4046) */
 		/* not used 16455(0x4047) */

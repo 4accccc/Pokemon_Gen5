@@ -807,3 +807,12 @@
 #define SCR_INFDUNGEON_PARAM_WIN_TRAINER_COUNT  (4) ///<無限ダンジョン：ダンジョン内のトレーナー人数
 #define SCR_INFDUNGEON_PARAM_CHECK_UP_ROOMTYPE_BOSS (5) ///<無限ダンジョン：上の部屋がボス部屋かどうか
 
+//--------------------------------------------------------------
+//  アジト船の位置をタウンマップに通知するための定義
+//--------------------------------------------------------------
+#define SCR_HIDE_SHIP_PLACE_C05         (0)   ///< ホドモエ
+#define SCR_HIDE_SHIP_PLACE_W21         (1)   ///< ２１番水道
+#define SCR_HIDE_SHIP_PLACE_D10         (2)   ///< ジャイアントホール
+#define SCR_HIDE_SHIP_PLACE_W17         (3)   ///< P2ラボにいるとき
+
+
