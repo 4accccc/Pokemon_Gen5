@@ -607,6 +607,22 @@
 		<language name="JPN" width="256">わーい</language>
 		<language name="JPN_KANJI" width="256">わーい</language>
 	</row>
+	<row id="pw_event5_hero_2">
+		<language name="JPN" width="256">成功です。▼
+せいこうだよ▼
+サクセスってやつ▼
+うん　それそれ</language>
+		<language name="JPN_KANJI" width="256">成功です。▼
+せいこうだよ▼
+サクセスってやつ▼
+うん　それそれ</language>
+	</row>
+	<row id="pw_event5_enemy_2">
+		<language name="JPN" width="256">トライアンフだね！▼
+わーわー</language>
+		<language name="JPN_KANJI" width="256">トライアンフだね！▼
+わーわー</language>
+	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

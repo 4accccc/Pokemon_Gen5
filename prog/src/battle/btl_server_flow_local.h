@@ -427,6 +427,7 @@ struct _BTL_SVFLOW_WORK {
 
   u8          flowFlags[ FLOWFLG_BYTE_MAX ];
   u8          handlerTmpWork[ EVENT_HANDLER_TMP_WORK_SIZE ];
+  int         pokewoodResult; // ポケウッドのシナリオ条件判定結果
 };
 
 

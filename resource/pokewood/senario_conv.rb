@@ -81,7 +81,16 @@ $bias_hash     = { "ŒXŒüFŠ´“®"=>0, "ŒXŒüF‹°•|"=>1, "ŒXŒüFŠy‚µ‚¢"=>2, "ŒXŒüF’
 $field_hash    = { "ƒrƒ‹‰®ã‚`"=>21,  "—V‰€’n‚`"=>22, "“s‰ïEG“¥"=>23, "–¢—ˆ“ss"=>24, "»•l"=>25,
                    "”g~ê"=>26, "ƒrƒ‹‰®ã‚a"=>27, "–‚–@‚Ì¢ŠE"=>28, "•æ’n"=>29, "Œ¤‹†{İ"=>30,
                    "ˆê”Ê‰Æ‰®º“à"=>31, "ŒÎ”È"=>32, "‰F’ˆ"=>33, "—V‰€’n‚a"=>34, }
-$situ_hash     = { "w’èƒ|ƒPƒ‚ƒ“•m€¨"=>0, "w’è‚Ì‹Z‚ğg—p¨"=>1}
+$situ_hash     = { "w’èƒ|ƒPƒ‚ƒ“•m€¨"=>0, "w’è‚Ì‹Z‚ğg—p¨"=>1,
+                    "ƒ^[ƒ“’´‰ß"=>2,
+                    "©•ª‚ª‘S–Å"=>3,
+                    "‘Šè‚ğ‚P•C“|‚µ‚½"=>4,
+                    "‘Šè‚ğ‘S–Å‚³‚¹‚½"=>5,
+                    "w’èŠOƒ|ƒPƒ‚ƒ“‚ª•m€"=>6,
+                    "w’è‚Ìƒ|ƒPƒ‚ƒ“‚ª•m€"=>7,
+                    "“G‚ğ“|‚¹‚È‚¢ƒ^[ƒ“‚ª‘¶İ"=>8,
+                    "w’èƒ|ƒPƒ‚ƒ“•m€‚¾‚ªw’è‚Ì‹Z–¢g—p"=>9,
+                  }
 
 #----------------------------------------------------
 # ƒ|ƒPƒ‚ƒ“ƒf[ƒ^ƒNƒ‰ƒX
@@ -321,7 +330,8 @@ class POKEWOOD_SENARIO
       elsif @event[index].situ_provision==1 then
         @event[index].situ_provision_data = hash2no( $wazano_hash, data[start][7] )
       end
-      if @event[index].situ_provision_data==-1 then
+      if (@event[index].situ_provision==0 && @event[index].situ_provision_data==-1) ||
+         (@event[index].situ_provision==1 && @event[index].situ_provision_data==-1) then
         printf( "ƒCƒxƒ“ƒg%d‚ÌğŒw’è‚É³‚µ‚¢ƒ|ƒPƒ‚ƒ“–¼‚©‹Z–¼‚ª“ü‚Á‚Ä‚¢‚Ü‚¹‚ñ ğŒ=%s, w’è=%s\n", index, data[start][6], data[start][7] )
         exit(1)
       end

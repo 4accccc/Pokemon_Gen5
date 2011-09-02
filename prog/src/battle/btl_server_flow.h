@@ -957,6 +957,12 @@ extern void BTL_SVF_HANDEX_Pop( BTL_SVFLOW_WORK* wk, void* handExWork );
 extern u8 BTL_SVFTOOL_ExpandPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );
 
 
+/*====================================================================================================*/
+/*                                                                                                    */
+/*  ポケウッド用                                                                                      */
+/*                                                                                                    */
+/*====================================================================================================*/
+extern int BTL_SVFSUB_GetPokewoodFailReason( BTL_SVFLOW_WORK* wk );
 
 
 #endif

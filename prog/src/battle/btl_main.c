@@ -3962,6 +3962,23 @@ int BTL_MAIN_GetPokewoodSenarioNo( const BTL_MAIN_MODULE* wk )
   return 0;
 }
 
+//=============================================================================================
+/**
+ * @brief	ポケウッド敗北理由を取得する
+ *
+ * @param   wk		
+ *
+ * @retval  int		敗北理由（btl_server_flow_def.hに記述）
+ */
+//=============================================================================================
+int BTL_MAIN_GetPokewoodFailReason( const BTL_MAIN_MODULE *wk )
+{
+  if(wk!=NULL){
+    BTL_SVFLOW_WORK* svf = BTL_SERVER_GetFlowWork( wk->server );
+    return BTL_SVFSUB_GetPokewoodFailReason( svf );
+  }
+  return 0;
+}
 
 //=============================================================================================
 /**
@@ -6359,8 +6376,10 @@ static void _print_pokewood_event_data(POKEWOOD_SENARIO *senario, int event)
 {
   int i;
   
-  OS_Printf("EventData:start_turn=%d, provision=%d\n", 
-            senario->event[event].start_turn, senario->event[event].flag_provision);
+  OS_Printf("EventData:start_turn=%d, provision=%d, situation=%d, data=%d\n", 
+            senario->event[event].start_turn, senario->event[event].flag_provision,
+                                              senario->event[event].situ_provision,
+                                              senario->event[event].situ_provision_data);
   OS_Printf("event_msg=");
   for(i=0;i<EVENT_TALK_TURN_MAX*2;i++){
     OS_Printf("%d,", senario->event[event].talk_msg[0][i]);

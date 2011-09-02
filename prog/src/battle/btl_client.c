@@ -1771,6 +1771,7 @@ static BOOL UI_SelectActionPokewoodRec( BTL_CLIENT *wk, int *seq )
   case SELECT_ACT_SEQ_START:
     wk->pokewoodSeqWork.seq=0;
     // ポケウッドイベント起動チェック
+
     if(_check_event_choice( BTL_MAIN_GetPokewoodSenario(wk->mainModule), &wk->pokewoodSeqWork, wk->clientTurnCount) ){
       (*seq)++;
     }else{
@@ -1984,7 +1985,7 @@ static BOOL SubSeq_POKEWOOD_Sequence( BTL_CLIENT *wk )
  * @retval  int		    0以上:該当したイベントNO -1:存在していない
  */
 //----------------------------------------------------------------------------------
-static int _check_pokewood_event( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *seqWork, int turn )
+static int _check_pokewood_event( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *seqWork, int turn, int fail_reason )
 {
   int i,event_no=-1;
   for(i=0;i<EVENT_DATA_MAX;i++){
@@ -1992,8 +1993,9 @@ static int _check_pokewood_event( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *
               i, senario->event[i].start_turn, seqWork->flagwork[0], senario->event[i].flag_provision);
 
     // フラグ指定がなければターンチェックだけで発動
-    if(senario->event[i].flag_provision==-1){
+    if(senario->event[i].flag_provision==-1 && senario->event[i].situ_provision==-1){
       if(senario->event[i].start_turn==turn){
+        
         event_no = i;
       }
     }else{
@@ -2003,6 +2005,16 @@ static int _check_pokewood_event( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *
       }
     }
   }
+
+  // 失敗エンディングの検索中の場合は失敗要因もサーチする
+  if(turn==POKEWOOD_EVENTNO_FAILED){
+    for(i=0;i<EVENT_DATA_MAX;i++){
+      if(senario->event[i].situ_provision==fail_reason){
+        event_no = i;
+      }
+    }
+  }
+
 
   // フラグ指定とターン指定がなかった場合は特定ポケモン瀕死イベントチェック
   if(event_no<0){
@@ -2030,6 +2042,8 @@ static int _check_pokewood_event( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *
     }
   }
 
+
+
   return event_no;
 }
 
@@ -2047,7 +2061,7 @@ static int _check_event_choice( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *se
 {
   int event_no;
   
-  event_no = _check_pokewood_event( senario, seqWork, turn );
+  event_no = _check_pokewood_event( senario, seqWork, turn, 0 );
   //イベントが無い
   if(event_no<0){   
     return FALSE;
@@ -2150,7 +2164,7 @@ static void _check_pokewood_success( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, 
 static void _check_ending( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, int event_no )
 {
   int event_type = senario->event[event_no].start_turn;
-  
+
   // 成功か失敗かでエンディングポイントを加算する
   if(event_type==POKEWOOD_EVENTNO_SUCCESS || event_type==POKEWOOD_EVENTNO_FAILED ){
     SetEndingPoint( wk, &wk->pokewoodSeqWork.Estimate, event_no );
@@ -2285,7 +2299,9 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   // イベントスタート
   case POKEWOOD_EVENT_SEQ_START:
     // このターンにイベントが存在しているかチェック
-    wk->pokewoodSeqWork.event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount);
+    wk->pokewoodSeqWork.event_no = _check_pokewood_event(
+                                      senario, &wk->pokewoodSeqWork, 
+                                      wk->clientTurnCount, BTL_MAIN_GetPokewoodFailReason(wk->mainModule));
     _check_ending( wk, senario, wk->pokewoodSeqWork.event_no );
     _check_pokewood_success( wk, senario, wk->pokewoodSeqWork.event_no );
     BTL_STR_Register_PokewoodWord();  //WORDSET登録
@@ -2732,7 +2748,7 @@ static BOOL SubSeq_POKEWOOD_Vfx_Effect( BTL_CLIENT *wk )
     // イベントでのVFX指定が無い場合ははターンから取得してくる
     {
       int vfx_turn=-1;
-      OS_Printf("vfxチェック\n");
+      OS_Printf("vfxチェック vfx=%d, turn=%d\n",wk->pokewoodSeqWork.vfx, wk->clientTurnCount);
       if(wk->pokewoodSeqWork.vfx<0){
         vfx_turn = _check_pokewood_vfx( senario, wk->clientTurnCount );
         if(vfx_turn>=0){
@@ -2814,7 +2830,8 @@ static BOOL SubSeq_POKEWOOD_RecEnd_Sequence( BTL_CLIENT *wk )
         int event_no;
         wk->clientTurnCount=101;  // 失敗イベント発動
 
-        event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount);
+        event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount,
+                                         BTL_MAIN_GetPokewoodFailReason(wk->mainModule));
         if(senario->event[event_no].point<0){
           wk->pokewoodSeqWork.my_msg = pw_director_0_BADEND + PW_DIRECTOR_1RANK_MSG_MAX*rank_tbl[bsp->player_star_rank];
         }else{
@@ -6830,6 +6847,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
       if(resultCode==BTL_RESULT_WIN){ // 勝利ENDか？
         wk->pokewoodSeqWork.seq = 0;
         wk->clientTurnCount=100;
+        BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
         (*seq) = SEQ_POKEWOOD_END_EVENT;
       }else{  // 敗北END
         wk->pokewoodSeqWork.seq = 0;
@@ -6969,7 +6987,8 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
   case SEQ_POKEWOOD_REC_END_MSG:
     if(SubSeq_POKEWOOD_RecEnd_Sequence(wk)){
       POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
-      int event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount);
+      int event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount,
+                                           BTL_MAIN_GetPokewoodFailReason(wk->mainModule));
       _check_ending( wk, senario, event_no );
       _check_pokewood_success( wk, senario, event_no );
       // 最終評価値を決定する

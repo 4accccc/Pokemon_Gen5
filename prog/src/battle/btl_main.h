@@ -336,8 +336,10 @@ extern void BTL_MAIN_NotifyChapterSkipEnd( BTL_MAIN_MODULE* wk );
 
 #include "btl_server_flow_def.h"
 extern BTL_SVFLOW_WORK* BTL_MAIN_GetSVFWorkForAI( const BTL_MAIN_MODULE* wk );
+extern int BTL_MAIN_GetPokewoodFailReason( const BTL_MAIN_MODULE *wk );
+
+extern void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no );
+extern void POKEWOOD_Exit( BTL_MAIN_MODULE* wk );
 
 #endif
 
-void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no );
-void POKEWOOD_Exit( BTL_MAIN_MODULE* wk );

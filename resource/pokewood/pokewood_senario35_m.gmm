@@ -585,9 +585,27 @@
 		<language name="JPN" width="256">失敗エンディングです</language>
 		<language name="JPN_KANJI" width="256">失敗エンディングです</language>
 	</row>
+	<row id="pw_event2_hero_0">
+		<language name="JPN" width="256">イエス！▼
+ジャスティス！▼
+ウイン！▼
+ガッチャ！▼
+かったー</language>
+		<language name="JPN_KANJI" width="256">イエス！▼
+ジャスティス！▼
+ウイン！▼
+ガッチャ！▼
+かったー</language>
+	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">成功エンディングです</language>
-		<language name="JPN_KANJI" width="256">成功エンディングです</language>
+		<language name="JPN" width="256">ルーズ▼
+ルーザー▼
+ルーゼスト！▼
+くやしー</language>
+		<language name="JPN_KANJI" width="256">ルーズ▼
+ルーザー▼
+ルーゼスト！▼
+くやしー</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
