@@ -48,6 +48,9 @@ LINK_FESTIVAL* LINK_FESTIVAL_Create( HEAPID heapID, GAMESYS_WORK* gsys )
 {
   LINK_FESTIVAL* wk;
   wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(LINK_FESTIVAL) );
+  
+  wk->gsys = gsys;
+  wk->gdata = GAMESYSTEM_GetGameData( wk->gsys );
 
   //ミッションアーカイブ常駐データ取得
   wk->p_arc_data = FMISSION_DATA_AllocArcCommonAllDirect( heapID );
@@ -55,15 +58,16 @@ LINK_FESTIVAL* LINK_FESTIVAL_Create( HEAPID heapID, GAMESYS_WORK* gsys )
   FEST_MISSION_Clear( &wk->mission );
   wk->m_beacon = &wk->mission.beacon;
   wk->m_arc = &wk->mission.arc;
+  
+  wk->top_score = LINKFEST_LOG_TOP_SCORE_Create( heapID );
 
   //スコアログ領域クリア
   log_ClearAll( wk );
   //ミッションログ領域クリア
   FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
   FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
-
+  
   wk->beacon_wait = 10*60;
-  wk->gsys = gsys;
   return wk;
 }
 
@@ -74,6 +78,7 @@ LINK_FESTIVAL* LINK_FESTIVAL_Create( HEAPID heapID, GAMESYS_WORK* gsys )
 //---------------------------------------------------------
 void LINK_FESTIVAL_Delete( LINK_FESTIVAL* wk )
 {
+  LINKFEST_LOG_TOP_SCORE_Delete( wk->top_score );
   GFL_HEAP_FreeMemory( wk->p_arc_data );  //ミッションデータアーカイブ開放
   
   MI_CpuClear32(wk,sizeof(LINK_FESTIVAL));
@@ -92,7 +97,7 @@ void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk )
   if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
     return;
   }
-  if( wk->live_f && GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(wk->gsys)) == FALSE ){  //表フィールドにいる間だけ更新
+  if( wk->live_f && GAMEDATA_GetIntrudeReverseArea( wk->gdata ) == FALSE ){  //表フィールドにいる間だけ更新
     u32 score;
     FEST_MISSION_Update( &wk->mission );
 
@@ -393,7 +398,7 @@ static BOOL linkfes_IsMissionClear( LINK_FESTIVAL* wk, u32* score )
 void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, u16 mission_time_sec )
 {
   BOOL ret;
-  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData( wk->gsys ) );
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( wk->gdata );
   FMISSION_SAVE* f_save = SAVEDATA_GetFMissionSave( save );
 
   MI_CpuClear32( pl, sizeof(LINKFEST_MISSION_RESULT));
@@ -453,7 +458,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   //ハイリンクの経験値
   {
     u8 level;
-    OCCUPY_INFO* occupy_sv = GAMEDATA_GetMyOccupyInfo( GAMESYSTEM_GetGameData( wk->gsys ) );
+    OCCUPY_INFO* occupy_sv = GAMEDATA_GetMyOccupyInfo( wk->gdata );
     u32 exp = FMISSION_SAVE_GetHilinkLevelExp( f_save, wk->m_beacon->version_f );
 
     exp += pl->score;
@@ -657,6 +662,62 @@ BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_BEACON* beacon
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル トップスコアアップデート
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_TopScoreUpdate( LINK_FESTIVAL* wk, u16 tr_id, u16 score, STRBUF* name )
+{
+  LINKFEST_LOG_TOP_SCORE* tsp = wk->top_score;
+
+  if( name != NULL ){ //プレイヤー
+    MYSTATUS* my = GAMEDATA_GetMyStatus( wk->gdata );
+
+    if( tsp->score > wk->m_beacon->my_score ){
+      return;
+    }
+    tsp->score = wk->m_beacon->my_score;
+    tsp->tr_id = MyStatus_GetID( my )&0xFFFF;
+    MyStatus_CopyNameString( my, tsp->name );
+  }else{
+    if( tsp->score > score ){
+      return; //未更新
+    }
+    tsp->score = score;
+    tsp->tr_id = tr_id; 
+    GFL_STR_CopyBuffer( tsp->name, name );
+  }
+  wk->top_score_update_f = TRUE;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル トップスコアアップデートチェック
+ *
+ * トップスコアが更新されたかどうかチェック
+ */
+//---------------------------------------------------------
+BOOL LINK_FESTIVAL_TopScoreIsUpdate( LINK_FESTIVAL* wk )
+{
+  return wk->top_score_update_f;
+}
+
+//---------------------------------------------------------
+/*
+ *  @brief リンクフェスティバル トップスコアを取得
+ *
+ *  @param  LINKFEST_LOG_TOP_SCORE構造体型ワークポインタ(LINKFEST_LOG_TOP_SCORE_Createで生成してください)
+ *
+ *  この関数を呼び出すと、アップデートチェック用フラグが落ちるので注意してください
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_TopScoreGet( LINK_FESTIVAL* wk, LINKFEST_LOG_TOP_SCORE* tsp )
+{
+  *tsp = *wk->top_score;
+  wk->top_score_update_f = FALSE;
+}
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル　ログ構造体クリア
  */
 //---------------------------------------------------------
@@ -675,6 +736,33 @@ void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* log_prm )
   MI_CpuClear8( log_prm, sizeof(LINKFEST_LOG_PARAM) );
   LINKFEST_LOG_Clear( &log_prm->prm );
 }
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル トップスコア格納ワーク生成
+ *
+ * LINKFEST_LOT_TOP_SCORE_Delete()で開放してください
+ */
+//---------------------------------------------------------
+LINKFEST_LOG_TOP_SCORE* LINKFEST_LOG_TOP_SCORE_Create( HEAPID heapID )
+{
+  LINKFEST_LOG_TOP_SCORE* tsp = GFL_HEAP_AllocClearMemory( heapID, sizeof(LINKFEST_LOG_TOP_SCORE) );
+  tsp->name = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, heapID ); //<人名格納領域を初期化
+
+  return tsp;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル トップスコア格納ワーク開放
+ */
+//---------------------------------------------------------
+void LINKFEST_LOG_TOP_SCORE_Delete( LINKFEST_LOG_TOP_SCORE* tsp )
+{
+  GFL_STR_DeleteBuffer( tsp->name );
+  MI_CpuClear8( tsp, sizeof(LINKFEST_LOG_TOP_SCORE));
+}
+
 
 //=========================================================================
 //サブルーチン
@@ -696,12 +784,29 @@ static void lnkfes_BeaconSend( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル トップスコア格納領域クリア
+ */
+//---------------------------------------------------------
+static void topscore_Clear( LINK_FESTIVAL* wk, LINKFEST_LOG_TOP_SCORE* tsp )
+{
+  MYSTATUS* my = GAMEDATA_GetMyStatus( wk->gdata );
+  //プレイヤー名で初期化しておく
+  MyStatus_CopyNameString( my, tsp->name );
+
+  tsp->tr_id = MyStatus_GetID(my)&0xFFFF;
+  tsp->score = 0;
+}
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル　ログクリア
  */
 //---------------------------------------------------------
 static void log_ClearAll( LINK_FESTIVAL* wk )
 {
   int i;
+
+  topscore_Clear( wk, wk->top_score );
 
   for(i = 0;i < LINKFEST_LOG_MAX;i++){
     LINKFEST_LOG_Clear( &wk->log[i]);
@@ -716,6 +821,7 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   MI_CpuClear8( wk->m_flag, sizeof(u8)*FMISSION_FLAG_AREA_LEN);
 
   wk->ready_timer = 0;
+  wk->top_score_update_f = FALSE;
 }
 
 //---------------------------------------------------------
@@ -775,4 +881,5 @@ static BOOL log_mission_IsSame( LINKFEST_LOG* log, const FEST_BEACON* beacon )
   }
   return TRUE;
 }
+
 

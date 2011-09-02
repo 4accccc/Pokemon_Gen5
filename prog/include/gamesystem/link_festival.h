@@ -59,6 +59,13 @@ typedef struct _LINKFEST_LOG{
   };
 }LINKFEST_LOG;
 
+//トップスコア保存用構造体
+typedef struct _LINKFEST_LOG_TOP_SCORE{
+  STRBUF* name; ///<人物名格納バッファ
+  u16 score;    ///<スコア
+  u16 tr_id;    ///<トレーナーID
+}LINKFEST_LOG_TOP_SCORE;
+
 //フェスログ受け渡し構造体
 typedef struct _LINKFEST_LOG_PARAM{
   FEST_MISSION_ID  m_id; ///<ミッションID
@@ -314,6 +321,35 @@ extern BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_BEACON*
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル トップスコアアップデート
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_TopScoreUpdate( LINK_FESTIVAL* wk, u16 tr_id, u16 score, STRBUF* name );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル トップスコアアップデートチェック
+ *
+ * トップスコアが更新されたかどうかチェック
+ */
+//---------------------------------------------------------
+extern BOOL LINK_FESTIVAL_TopScoreIsUpdate( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ *  @brief リンクフェスティバル トップスコアを取得
+ *
+ *  @param  LINKFEST_LOG_TOP_SCORE構造体型ワークポインタ(LINKFEST_LOG_TOP_SCORE_Createで生成してください)
+ *
+ *  この関数を呼び出すと、アップデートチェック用フラグが落ちるので注意してください
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_TopScoreGet( LINK_FESTIVAL* wk, LINKFEST_LOG_TOP_SCORE* tsp );
+
+
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル　ログ構造体クリア
  */
 //---------------------------------------------------------
@@ -325,6 +361,20 @@ extern void LINKFEST_LOG_Clear( LINKFEST_LOG* log );
  */
 //---------------------------------------------------------
 extern void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* prm );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル トップスコア格納ワーク生成
+ */
+//---------------------------------------------------------
+extern LINKFEST_LOG_TOP_SCORE* LINKFEST_LOG_TOP_SCORE_Create( HEAPID heapID );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル トップスコア格納ワーク開放
+ */
+//---------------------------------------------------------
+extern void LINKFEST_LOG_TOP_SCORE_Delete( LINKFEST_LOG_TOP_SCORE* tsp );
 
 
 //====================================================

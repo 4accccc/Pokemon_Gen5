@@ -19,22 +19,24 @@
 ///リンクフェスティバル　管理領域
 struct _LINK_FESTIVAL{
   GAMESYS_WORK* gsys;
-
-  u8  live_f;         ///<ミッションアップデートの有効無効フラグ
-  u16 ready_timer;    ///<ミッション開始前タイマー
+  GAMEDATA* gdata;
   
-  u32 beacon_wait;  ///フェスビーコン送信制御frame
-  u32 beacon_timer; //frame
+  u8  live_f:1;             ///<ミッションアップデートの有効無効フラグ
+  u8  top_score_update_f:1; ///<トップスコアアップデートフラグ
+  
+  u8  log_num;  //スコアログ登録数
+  u8  log_idx;  //スコアログリング参照トップindex
+  
+  u16 beacon_wait;  ///フェスビーコン送信制御frame
+  u16 beacon_timer; //frame
+  
+  u16 ready_timer;    ///<ミッション開始前タイマー
   
   u16 finfo_score;  //フィールドで表示しているスコア
   u16 finfo_bonus;  //フィールドで表示しているタイムボーナス
 
   u16 tmap_root;    //現在のルートゾーンID
   u16 now_score;    //現在のスコア
-
-  u16 log_num;  //スコアログ登録数
-  u16 log_idx;  //スコアログリング参照トップindex
-  
 
   //ミッションアーカイブ常駐データ
   FMISSION_ARC_COMMON*  p_arc_data;
@@ -51,6 +53,7 @@ struct _LINK_FESTIVAL{
   //スコアログ
   LINKFEST_LOG  log[LINKFEST_LOG_MAX];
   LINKFEST_LOG  last;  //最後のミッションログ
+  LINKFEST_LOG_TOP_SCORE*  top_score;  //トップスコア保存用データ構造体
 
   struct  _FMISSION_LOG_TBL mlog_view_tbl;   //ミッションログ表示バッファ
   struct  _FMISSION_LOG_TBL mlog_stack_tbl;  //ミッションログスタックバッファ
