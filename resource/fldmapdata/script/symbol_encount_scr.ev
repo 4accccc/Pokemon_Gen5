@@ -98,13 +98,13 @@ ev_symbol_pokemon_main:
   IF $SCWK_ANSWER == SCR_YES THEN
     _SYMBOL_POKE_BATTLE( SCWK_TARGET_OBJID, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
+        // レコードを加算：ハイリンクでポケモンを捕まえた回数
+        _ADD_RECORD( RECID_HILINK_POKE_GET, 1 )
         _SYMBOL_POKE_GET( SCWK_TARGET_OBJID )
         _OBJ_DEL( SCWK_TARGET_OBJID )
         _WILD_WIN() //フィールド復帰
         //マップに入り直す
         _SYMBOL_MAP_WARP( DIR_NOT )
-        // レコードを加算：ハイリンクでポケモンを捕まえた回数
-        _ADD_RECORD( RECID_HILINK_POKE_GET_FLAG, 1 )
 ELSE
         _WILD_WIN() //フィールド復帰
     ENDIF
