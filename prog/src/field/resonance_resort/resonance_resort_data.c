@@ -4026,7 +4026,6 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
 //-------------------------------------
 ///	íËêî
 //=====================================
-#define RESORT_CITY_NAME_BUFF_MAX  (20)
 #define RESORT_MY_NAME_BUFF_MAX  (20)
 
 //-------------------------------------

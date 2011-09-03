@@ -225,3 +225,37 @@
 
 //_RESORT_xxxx_EFFECT用
 #define RESORT_EFFECT_CONFETTI                (0)
+
+//リゾート用レコードID
+#define  RESORT_RECORD_ID_NONE        ( 0)//なにもない
+#define  RESORT_RECORD_ID_DENDOU      ( 1)//殿堂入りした
+#define  RESORT_RECORD_ID_SUBWAY      ( 2)//サブウェイに参加した
+#define  RESORT_RECORD_ID_POKEWOOD    ( 3)//ポケウッドで映画を撮った
+#define  RESORT_RECORD_ID_TRIALHOUSE  ( 4)//トライアルハウスに参加した
+#define  RESORT_RECORD_ID_MUSICAL     ( 5)//ミュージカルをした
+#define  RESORT_RECORD_ID_HILINK      ( 6)//ハイリンクをした
+#define  RESORT_RECORD_ID_HILINKFES   ( 7)//ハイリンクフェスをした
+#define  RESORT_RECORD_ID_EGG         ( 8)//たまごを孵化した
+#define  RESORT_RECORD_ID_POKE_LVUP   ( 9)//ポケモンのレベルを上げた
+#define  RESORT_RECORD_ID_TV          (10)//テレビをみた
+#define  RESORT_RECORD_ID_DUSTBOX     (11)//ゴミ箱を漁った
+#define  RESORT_RECORD_ID_POKE_NAME   (12)//ポケモンにニックネームをつけた
+#define  RESORT_RECORD_ID_FISHING     (13)//ポケモンを釣り上げた
+#define  RESORT_RECORD_ID_HIDE_ITEM   (14)//隠しアイテムを見つけた
+#define  RESORT_RECORD_ID_FOSSIL      (15)//化石を復元した
+#define  RESORT_RECORD_ID_UNION       (16)//ユニオンルームへ行った
+#define  RESORT_RECORD_ID_GTS         (17)//GTSをした
+#define  RESORT_RECORD_ID_GTSNEGO     (18)//GTSネゴをした
+#define  RESORT_RECORD_ID_VIDEO       (19)//バトルビデオをみた
+#define  RESORT_RECORD_ID_RNDMATCH    (20)//ランダムマッチをした
+#define  RESORT_RECORD_ID_WHEEL       (21)//観覧車に乗った
+#define  RESORT_RECORD_ID_INFINITYD   (22)//無限ダンジョンをした
+#define  RESORT_RECORD_ID_WBT         (23)//WBTへ参加した
+#define  RESORT_RECORD_ID_JA          (24)//JAへ行った
+#define  RESORT_RECORD_ID_TVT_GAME    (25)//ライブキャスターミニゲームをした
+#define  RESORT_RECORD_ID_WIFICLUB    (26)//WIFIクラブへ行った
+#define  RESORT_RECORD_ID_ANIMALTRAIL (27)//けもの道へ行った
+#define  RESORT_RECORD_ID_GAMESYNC    (28)//ゲームシンクをした
+#define  RESORT_RECORD_ID_MYSTERYGIFT (29)//ふしぎなおくりものを貰った
+#define  RESORT_RECORD_ID_IR          (30)//IRをした
+#define  RESORT_RECORD_ID_MAX         (31)//最大数

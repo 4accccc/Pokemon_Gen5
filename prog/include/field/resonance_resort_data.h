@@ -307,16 +307,6 @@ typedef enum
 } RESORT_RECV_DATA_UPDATE;
 
 //-------------------------------------
-///	出来事ID
-//=====================================
-typedef enum
-{
-  RESORT_RECORD_ID_NONE,  //なにもない
-  //TODO
-  RESORT_RECORD_ID_MAX
-} RESORT_RECORD_ID;
-
-//-------------------------------------
 ///	乱数使用ID
 //=====================================
 typedef enum
@@ -612,7 +602,7 @@ extern u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MY
 //-------------------------------------
 ///	定数
 //=====================================
-//実際の文字列数    EOMなし
+//言語依存の文字列数    EOM含まない
 #if PM_LANG == LANG_JAPAN
 #define RESORT_CITY_NAME_LEN  (10)
 #define RESORT_MY_NAME_LEN    (10)
@@ -620,6 +610,9 @@ extern u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MY
 #define RESORT_CITY_NAME_LEN  (20)
 #define RESORT_MY_NAME_LEN    (20)
 #endif
+
+//バッファの文字列  EOM含まない
+#define RESORT_CITY_NAME_BUFF_MAX  (20)
 
 //施設データ数
 #define RESORT_INSTITUTION_DATA_NUM (8)
