@@ -48,9 +48,9 @@ typedef enum
 typedef enum
 {
   LTVT_SECREAT_TALK_NONE,
-  LTVT_SECREAT_TALK_WORDSET_QUES, //アンケート単語登録
-  LTVT_SECREAT_TALK_RING_OFF,     //すぐ切る
-  LTVT_SECREAT_TALK_DAILY_RND,     //日常会話ランダム
+  LTVT_SECREAT_TALK_QANSWER,
+  LTVT_SECREAT_TALK_RING_OFF,       //すぐ切る
+  LTVT_SECREAT_TALK_DAILY_RND,      //日常会話ランダム
 } LTVT_SECREAT_TALK;
 
 //-------------------------------------

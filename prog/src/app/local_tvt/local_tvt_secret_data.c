@@ -31,7 +31,7 @@ static const struct
 {
   { LOCAL_TVT_SECRET_PHASE_1_START, //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_1_END,   //フェーズ範囲終了
-    LTVT_SECREAT_TALK_WORDSET_QUES, //会話プログラム処理
+    LTVT_SECREAT_TALK_NONE, //会話プログラム処理
     LTVT_SECREAT_FACE_SOUND,        //顔
     PERSON_STATE_SECRET_DATE_NONE,         //デートにさそうか
     FALSE,                          //プレイヤーがかけられるか
@@ -146,7 +146,6 @@ u32 LTVT_SECREAT_DATA_SearchIndex( LTVT_SECREAT_PHASE phase )
   GF_ASSERT_MSG( 0,"%d\n",phase);
   return 0;
 }
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  会話プログラム処理IDを取得

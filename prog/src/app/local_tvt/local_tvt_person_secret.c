@@ -12,6 +12,7 @@
 #include <gflib.h>
 
 //システム
+#include "system/main.h"
 #include "system/gfl_use.h"
 #include "sound/pm_sndsys.h"
 #include "gamesystem/game_data.h"
@@ -22,6 +23,9 @@
 
 //アーカイブ
 #include "arc_def.h"
+#include "message.naix"
+#include "msg/msg_typename.h"
+#include "../resource/fldmapdata/flagwork/work_define.h"
 
 //自分のモジュール
 #include "local_tvt_local_def.h"
@@ -86,8 +90,12 @@ static PERSON_STATE_SECRET_DATE Local_Tvt_Secret_GetDateEvent( const LOCAL_TVT_C
 
 static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message );
 
-static u32 Local_Tvt_Secret_WordSetQues_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message, u32 state );
+static void Local_Tvt_Secret_SetWord( const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message, u32 state, BOOL answerID );
+
+static u32 Local_Tvt_Secret_Qanswer_GetTalkMsgID( const LOCAL_TVT_CALLDATA *cp_data, u32 state, BOOL is_answer );
 static u32 Local_Tvt_Secret_DailyRnd_GetTalkMsgID( const LOCAL_TVT_CALLDATA *cp_data, u32 state );
+
+static void Local_Tvt_Secret_Qanswer_Check( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, u8 state, u32 *p_answerID, BOOL *p_is_answer, BOOL *p_is_limit );
 
 //----------------------------------------------------------------------------
 /**
@@ -549,17 +557,21 @@ static PERSON_STATE_SECRET_DATE Local_Tvt_Secret_GetDateEvent( const LOCAL_TVT_C
 //-----------------------------------------------------------------------------
 static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message )
 {
-  u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_data );
+  BOOL is_answer;
+  BOOL is_limit;
+  u32 answerID;
 
+  u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_data );
   u16 state = LOCAL_TVT_CALLDATA_GetState( cp_data, LOCAL_TVT_PERSON_SECRET );
   u32 index = LTVT_SECREAT_DATA_SearchIndex( state );
   LTVT_SECREAT_TALK talk = LTVT_SECREAT_DATA_GetTalkProg( index );
   PERSON_STATE_SECRET_DATE date = Local_Tvt_Secret_GetDateEvent( cp_data );
 
-  GAMEDATA *p_gamedata = LOCAL_TVT_CALLDATA_GetGameData( cp_data );
+  //アンケートチェック
+  Local_Tvt_Secret_Qanswer_Check( cp_quest, state, &answerID, &is_answer, &is_limit );
 
-  //名前を単語登録
-  LOCAL_TVT_MESSAGE_RegisterPlayerName( p_message, p_gamedata );
+  //単語登録
+  Local_Tvt_Secret_SetWord( cp_data, p_message, state, answerID );
 
   //デートのときの会話
   switch( date )
@@ -568,18 +580,24 @@ static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_qu
     return CALL_SECRET_TALK_SP_00;
   }
 
-
   //デートじゃないときの会話
   switch( talk )
   {
-  case LTVT_SECREAT_TALK_WORDSET_QUES: //アンケート単語登録
-    return Local_Tvt_Secret_WordSetQues_GetTalkMsgID( cp_quest, cp_data, p_message, state );
   default:
     GF_ASSERT(0);
-  case LTVT_SECREAT_TALK_RING_OFF:     //すぐ切る
+  case LTVT_SECREAT_TALK_RING_OFF:
   case LTVT_SECREAT_TALK_NONE:
     return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
 
+  case LTVT_SECREAT_TALK_QANSWER:
+    if( is_limit )
+    {
+      return Local_Tvt_Secret_Qanswer_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET, is_answer );
+    }
+    else
+    {
+      return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
+    }
 
   case LTVT_SECREAT_TALK_DAILY_RND:     //日常会話ランダム
     return Local_Tvt_Secret_DailyRnd_GetTalkMsgID( cp_data, state );
@@ -589,59 +607,75 @@ static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_qu
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  アンケート単語登録
+ *	@brief  単語登録
  *
  *	@param	const QUESTIONNAIRE_ANSWER_WORK *cp_quest アンケート
  *	@param	LOCAL_TVT_CALLDATA *cp_data データ
  *	@param	*p_message  メッセージ
  *	@param	state   状態
- *
- *	@return
+ *	@param  答えID
  */
 //-----------------------------------------------------------------------------
-static u32 Local_Tvt_Secret_WordSetQues_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message, u32 state )
+static void Local_Tvt_Secret_SetWord( const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message, u32 state, BOOL answerID )
 {
+  GAMEDATA *p_gamedata = LOCAL_TVT_CALLDATA_GetGameData( cp_data );
+
+  //名前を単語登録
+  LOCAL_TVT_MESSAGE_RegisterPlayerName( p_message, p_gamedata );
+
   //１段階目は最初の８つはプレイヤーのアンケートに答える
   if( state < 8 )
   {
-    static const int sc_quest_tbl[] =
-    {
-      QUESTION_ID_SEX,
-      QUESTION_ID_HOBBY,
-      QUESTION_ID_POKEMON_TYPE,
-      QUESTION_ID_MUSIC,
-      QUESTION_ID_FAVORITE_POKEMON,
-      QUESTION_ID_DAY_OFF,
-      QUESTION_ID_FUN,
-      QUESTION_ID_PERSON,
-    };
-    u32 ansIdx  = QuestionnaireAnswer_ReadBit( cp_quest, sc_quest_tbl[state] );
-    GF_ASSERT( state < NELEMS(sc_quest_tbl) );
-    if( ansIdx == 0 )
-    {
-      //答えていなければ、１こ次に聞いてない時用の会話があるので次のメッセージIDにする
-      u16 msgID = LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
-      return ++msgID;
-    }
-    else
-    {
-      u32 answerID  = QIDATA_Get_AnswerID( sc_quest_tbl[state], ansIdx-1 );
-      LOCAL_TVT_MESSAGE_RegisterQuestionnaire( p_message, 1, answerID );
-      return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
-    }
+    LOCAL_TVT_MESSAGE_RegisterQuestionnaire( p_message, 1, answerID );
   }
   else if( state == 8 )
   {
     //バッジの数を聞く
     u32 badge = LOCAL_TVT_CALLDATA_GetBadgeCnt( cp_data );
     LOCAL_TVT_MESSAGE_RegisterNumber( p_message, badge, 1, 1 );
-    return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
   }
-  else
+  else if( state == 21 )
   {
-    return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
+    static const u32 sc_type_msgID[]  =
+    {
+      TYPENAME_012,//くさ
+      TYPENAME_010,//ほのお
+      TYPENAME_011,//みず
+    };
+
+    EVENTWORK *p_ev = GAMEDATA_GetEventWork(p_gamedata);
+    const u16 *cp_evwk = EVENTWORK_GetEventWorkAdrs( p_ev, WK_SYS_FIRST_POKETYPE );
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_typename_dat, GFL_HEAP_LOWID( HEAPID_LOCAL_TVT ) );
+    LOCAL_TVT_MESSAGE_RegisterWord( p_message, p_msg, sc_type_msgID[ *cp_evwk ], 1 );
+    GFL_MSG_Delete( p_msg );
   }
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アンケートメッセージ
+ *
+ *	@param	const QUESTIONNAIRE_ANSWER_WORK *cp_quest アンケート
+ *	@param	LOCAL_TVT_CALLDATA *cp_data データ
+ *	@param	state 状態
+ *
+ *	@return メッセージ
+ */
+//-----------------------------------------------------------------------------
+static u32 Local_Tvt_Secret_Qanswer_GetTalkMsgID( const LOCAL_TVT_CALLDATA *cp_data, u32 state, BOOL is_answer )
+{
+  u16 msgID = LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
+
+  if( is_answer )
+  {
+    //答えていなければ、１こ次に聞いてない時用の会話があるので次のメッセージIDにする
+    ++msgID;
+  }
+
+  return msgID;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  日常ランダムメッセージ
@@ -661,5 +695,51 @@ static u32 Local_Tvt_Secret_DailyRnd_GetTalkMsgID( const LOCAL_TVT_CALLDATA *cp_
   else
   {
     return CALL_SECRET_TALK_41 + GFUser_GetPublicRand( 9 );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アンケートをチェック
+ *
+ *	@param	const QUESTIONNAIRE_ANSWER_WORK *cp_quest アンケート
+ *	@param	state 状態
+ *	@param	*p_answerID   答えID
+ *	@param	*p_is_answer  アンケートに答えているか
+ *	@param	*p_is_limit   状態がアンケート範囲内か
+ */
+//-----------------------------------------------------------------------------
+static void Local_Tvt_Secret_Qanswer_Check( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, u8 state, u32 *p_answerID, BOOL *p_is_answer, BOOL *p_is_limit )
+{
+  static const int sc_quest_tbl[] =
+  {
+    QUESTION_ID_SEX,
+    QUESTION_ID_HOBBY,
+    QUESTION_ID_POKEMON_TYPE,
+    QUESTION_ID_MUSIC,
+    QUESTION_ID_FAVORITE_POKEMON,
+    QUESTION_ID_DAY_OFF,
+    QUESTION_ID_FUN,
+    QUESTION_ID_PERSON,
+  };
+
+  if( state >= 8 )
+  {
+    *p_is_limit = FALSE;
+    return;
+  }
+  else
+  {
+    u32 ansIdx  = QuestionnaireAnswer_ReadBit( cp_quest, sc_quest_tbl[state] );
+    *p_is_limit = TRUE;
+    if( ansIdx == 0 )
+    {
+      *p_is_answer  = FALSE;
+    }
+    else
+    {
+      *p_answerID   = QIDATA_Get_AnswerID( sc_quest_tbl[state], ansIdx-1 );
+      *p_is_answer  = TRUE;
+    }
   }
 }
