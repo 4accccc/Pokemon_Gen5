@@ -36,6 +36,7 @@
 //mine 
 #include "field/resonance_resort/resort_map.h"
 #include "field/resonance_resort/resort_shop.h"
+#include "field/resonance_resort/scrcmd_resort_def.h"
 
 //外部公開
 #include "field/resonance_resort_data.h"
@@ -94,12 +95,42 @@ static inline RESORT_GET_TrainerView( u8 view, u8 sex )
   }
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  RTC構造体からリゾート用日時への変換
+ *
+ *	@param	const RTCDate *cp_date  RTC構造体
+ *
+ *	@return リゾート用日時
+ */
+//-----------------------------------------------------------------------------
+RESORT_DATE RESORT_DATA_RtcToDate( const RTCDate *cp_date )
+{
+  return RESORT_DATE_SET( cp_date->year, cp_date->month, cp_date->day );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾート用日時からRTC構造体への変換
+ *
+ *	@param	RESORT_DATE date  リゾート用日時
+ *	@param	*p_date RTC構造体
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_DateToRtc( RESORT_DATE date, RTCDate *p_date )
+{
+  p_date->year  = RESORT_DATE_GET_YEAR( date );
+  p_date->month = RESORT_DATE_GET_MONTH( date );
+  p_date->day   = RESORT_DATE_GET_DAY( date );
+}
+
 static u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range );
 
 //-------------------------------------
 ///	リゾートデータグローバル参照
 //=====================================
 static RESORT_CITY_DATA *sp_city_data = NULL;
+static RESORT_PEOPLE_ALL_DATA *sp_people_all_data = NULL;
 
 //=============================================================================
 /**
@@ -4018,6 +4049,107 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
   return want_job;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾート用レコードID  を追加
+ *
+ *	@param	u32 record_id 
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RECORD_AddID( u32 record_id )
+{
+  enum
+  {
+    RESORT_DATA_RECORD_CNT  = RESORT_DATA_PARAM_EXT5_RECORD_03 - RESORT_DATA_PARAM_EXT5_RECORD_00 + 1,
+  };
+
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( sp_people_all_data );
+
+  int i , j;
+  u32 record_temp;
+  RESORT_DATE temp_date;
+  RTCDate date;
+  RESORT_DATE resort_date;
+
+  GFL_RTC_GetDate( &date );
+
+  resort_date = RESORT_DATE_SET( date.year, date.month, date.day );
+
+  //重複チェック
+  for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
+  {
+    u32 record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
+    if( record_id == record )
+    {
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, resort_date );
+      goto RESORT_RECORD_ADD_ID_SORT;
+    }
+  }
+  //空きチェック
+  for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
+  {
+    u32 record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
+    if( RESORT_RECORD_ID_NONE == record )
+    {
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, record_id );
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, resort_date );
+      goto RESORT_RECORD_ADD_ID_SORT;
+    }
+  }
+  //空きチェック
+  for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
+  {
+    u32 next_id = i + 1;
+    if( next_id < RESORT_DATA_RECORD_CNT )
+    {
+      u32 next_record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+next_id, NULL );
+      RESORT_DATE next_date = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+next_id, NULL );
+
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, next_record );
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, next_date );
+    }
+  }
+  //後尾にいれる
+  RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+RESORT_DATA_RECORD_CNT-1, record_id );
+  RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+RESORT_DATA_RECORD_CNT-1, resort_date );
+
+RESORT_RECORD_ADD_ID_SORT:
+  //ソート
+  for( i = 0; i < RESORT_DATA_RECORD_CNT-1; i++ )
+  {
+    for( j = RESORT_DATA_RECORD_CNT-1; j > i; j-- )
+    {
+      u32 record1 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+j-1, NULL );
+      RESORT_DATE r_date1 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+j-1, NULL );
+      RTCDate date1;
+      s32 days1;
+      u32 record2 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+j, NULL );
+      RESORT_DATE r_date2 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+j, NULL );
+      RTCDate date2;
+      s32 days2;
+
+      RESORT_DATA_DateToRtc( r_date1, &date1 );
+      RESORT_DATA_DateToRtc( r_date2, &date2 );
+
+      days1 = RTC_ConvertDateToDay( &date1 );
+      days2 = RTC_ConvertDateToDay( &date2 );
+
+      days1 = (record1 == RESORT_RECORD_ID_NONE)? 0: days1;
+      days2 = (record2 == RESORT_RECORD_ID_NONE)? 0: days2;
+
+      if( days1 > days2 )
+      {
+        //1
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+j-1, record2 );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+j-1, r_date2 );
+        //2
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+j, record1 );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+j, r_date1 );
+      }
+    }
+  }
+}
+
 //=============================================================================
 /**
  *	リゾート街データ
@@ -4252,8 +4384,8 @@ BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainer
 void RESORT_DATA_Boot( const SAVE_CONTROL_WORK* ctrl )
 {
   RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( (SAVE_CONTROL_WORK*)ctrl );
-  RESORT_CITY_DATA * p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
-  sp_city_data = p_city;
+  sp_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+  sp_people_all_data  = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
 }
 
 

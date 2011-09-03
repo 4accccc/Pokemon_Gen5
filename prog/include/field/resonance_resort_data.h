@@ -169,6 +169,9 @@ typedef u16 RESORT_DATE;
 #define RESORT_DATE_GET_DAY( x )    ((x)&5)
 #define RESORT_DATE_SET( y,m,d)     ((y&7)<<9|(m&4)<<5|(d&5))
 
+extern RESORT_DATE RESORT_DATA_RtcToDate( const RTCDate *cp_date );
+extern void RESORT_DATA_DateToRtc( RESORT_DATE date, RTCDate *p_date );
+
 //-------------------------------------
 ///	リゾート用データの取得引数
 //=====================================
@@ -594,6 +597,9 @@ extern void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk );
 extern RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL_DATA *p_wk );
 
 extern u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS *cp_mystatus );
+
+extern void RESORT_RECORD_AddID( u32 record_id );
+
 //=============================================================================
 /**
  *	リゾート街データ
