@@ -121,7 +121,7 @@ static void LOCAL_TVT_BG_VBlankFunc(GFL_TCB *tcb, void *wk_adrs );
  *	@param	const GAMEDATA *p_gamedata   ゲームデータ
  */
 //-----------------------------------------------------------------------------
-LOCAL_TVT_BG * LOCAL_TVT_BG_Load( GAMEDATA *p_gamedata, HEAPID heapID )
+LOCAL_TVT_BG * LOCAL_TVT_BG_Load( GAMEDATA *p_gamedata, HEAPID heapID, LOCAL_TVT_COLOR color )
 {
  LOCAL_TVT_BG *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_BG ) ); 
 
@@ -129,7 +129,11 @@ LOCAL_TVT_BG * LOCAL_TVT_BG_Load( GAMEDATA *p_gamedata, HEAPID heapID )
     MYSTATUS *myStatus = GAMEDATA_GetMyStatus( p_gamedata );
     ARCHANDLE *ctvtArcHandle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA, heapID );
 
-    if( MyStatus_GetMySex( myStatus ) == PM_MALE )
+    BOOL is_male = (MyStatus_GetMySex( myStatus ) == PM_MALE);
+
+    is_male ^= color;
+
+    if( is_male )
     {
       GFL_ARCHDL_UTIL_TransVramPalette( ctvtArcHandle , NARC_comm_tvt_tv_t_tuuwa_bg2_NCLR , 
           PALTYPE_SUB_BG , 0*32 , 32*3 , heapID );

@@ -50,7 +50,6 @@ SDK_COMPILER_ASSERT( LOCAL_TVT_PERSON_MAX <= PERSON_STATE_MAX );
  *					プロトタイプ宣言
 */
 //=============================================================================
-static s32 Person_State_GetSecretDiffDay( const PERSON_STATE *cp_wk, const RTCDate *cp_date );
 //----------------------------------------------------------------------------
 /**
  *	@brief  人物状態ワークサイズ取得
@@ -159,13 +158,11 @@ BOOL PERSON_STATE_GetLocalTvtCall( const PERSON_STATE *cp_wk, u16 person )
  *
  *	@param	PERSON_STATE *p_wk  ワーク
  *	@param  date                デートタイプ
- *	@param	const RTCDate *cp_date  デートの日
  */
 //-----------------------------------------------------------------------------
-void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, PERSON_STATE_SECRET_DATE date, const RTCDate *cp_date )
+void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, PERSON_STATE_SECRET_DATE date )
 {
   p_wk->secret_date_event  = date;
-  p_wk->secret_date = GFDATE_RTCDate2GFDate( cp_date );
 }
 //----------------------------------------------------------------------------
 /**
@@ -177,50 +174,6 @@ void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, PERSON_STATE_SECRET_DA
 void PERSON_STATE_ClearSecretDateEvent( PERSON_STATE *p_wk )
 {
   p_wk->secret_date_event  = PERSON_STATE_SECRET_DATE_NONE;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  今日がデートの日時かチェック
- *
- *	@param	const PERSON_STATE *cp_wk ワーク
- *	@param	RTCDate *cp_date          日時
- *
- *	@return TRUEならば今日がデートの日  FALSEならば違う
- */
-//-----------------------------------------------------------------------------
-BOOL PERSON_STATE_CheckSecretDataEventToday( const PERSON_STATE *cp_wk, const RTCDate *cp_date )
-{
-  if( cp_wk->secret_date_event != PERSON_STATE_SECRET_DATE_NONE)
-  {
-    if( Person_State_GetSecretDiffDay( cp_wk, cp_date ) )
-    {
-      return TRUE;
-    }
-  }
-
-  return FALSE;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  デートの日時を過ぎたかチェック
- *
- *	@param	const PERSON_STATE *cp_wk ワーク
- *	@param	RTCDate *cp_date          日時
- *
- *	@return TRUEならば過ぎてしまった  FALSEならば違う
- */
-//-----------------------------------------------------------------------------
-BOOL PERSON_STATE_CheckSecretDataEventLater( const PERSON_STATE *cp_wk, const RTCDate *cp_date )
-{
-  if( cp_wk->secret_date_event !=  PERSON_STATE_SECRET_DATE_NONE)
-  {
-    if( Person_State_GetSecretDiffDay( cp_wk, cp_date ) > 0 )
-    {
-      return TRUE;
-    }
-  }
-
-  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -236,75 +189,27 @@ extern PERSON_STATE_SECRET_DATE PERSON_STATE_GetSecretDateEvent( const PERSON_ST
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  隠しキャラの不機嫌フラグ設定
+ *	@brief  隠しキャラの１日１回デートフラグ設定
  *
  *	@param	PERSON_STATE *p_wk  ワーク
- *	@param	enable              TRUEで不機嫌,　FALSEで正常
+ *	@param	enable              TRUEですでにデートした,　FALSEでまだデートしていない
  */
 //-----------------------------------------------------------------------------
-void PERSON_STATE_SetSecretDispleased( PERSON_STATE *p_wk, BOOL enable )
+void PERSON_STATE_SetSecretOnceDateFlag( PERSON_STATE *p_wk, BOOL enable )
 {
-  p_wk->is_secret_displeased  = enable;
+  p_wk->is_secret_once_date = enable;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  隠しキャラの不機嫌フラグ取得
+ *	@brief  隠しキャラの１日１回デートフラグ取得
  *
  *	@param	PERSON_STATE *p_wk  ワーク
- *	@retval TRUEで不機嫌,　FALSEで正常
+ *	@retval	enable              TRUEですでにデートした,　FALSEでまだデートしていない
  */
 //-----------------------------------------------------------------------------
-BOOL PERSON_STATE_GetSecretDispleased( const PERSON_STATE *cp_wk )
+BOOL PERSON_STATE_GetSecretOnceDateFlag( const PERSON_STATE *cp_wk )
 {
-  return cp_wk->is_secret_displeased;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  隠しキャラの１日１回電話フラグ設定
- *
- *	@param	PERSON_STATE *p_wk  ワーク
- *	@param	enable              TRUEですでに電話した,　FALSEでまだ電話していない
- */
-//-----------------------------------------------------------------------------
-void PERSON_STATE_SetSecretOnceDayCallFlag( PERSON_STATE *p_wk, BOOL enable )
-{
-  p_wk->is_secret_once_day_call = enable;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  隠しキャラの１日１回電話フラグ取得
- *
- *	@param	PERSON_STATE *p_wk  ワーク
- *	@retval TRUEですでに電話した,　FALSEでまだ電話していない
- */
-//-----------------------------------------------------------------------------
-BOOL PERSON_STATE_GetSecretOnceDayCallFlag( const PERSON_STATE *cp_wk )
-{
-  return cp_wk->is_secret_once_day_call;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  隠しキャラの１季節１回デートフラグを設定
- *
- *	@param	PERSON_STATE *p_wk  ワーク
- *	@param	enable  TRUEでデートした  FALSEでデートしていない
- */
-//-----------------------------------------------------------------------------
-void PERSON_STATE_SetSeasonDateFlag( PERSON_STATE *p_wk, BOOL enable )
-{
-  p_wk->is_season_date  = enable;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  隠しキャラの１季節１回デートフラグを設定
- *
- *	@param	PERSON_STATE *p_wk  ワーク
- *	@retval	TRUEでデートした  FALSEでデートしていない
- */
-//-----------------------------------------------------------------------------
-BOOL PERSON_STATE_GetSeasonDateFlag( const PERSON_STATE *cp_wk )
-{
-  return cp_wk->is_season_date;
+  return cp_wk->is_secret_once_date;
 }
 //----------------------------------------------------------------------------
 /**
@@ -384,39 +289,30 @@ BOOL PERSON_STATE_GetDateEndFlag( const PERSON_STATE *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  約束の期日チェック
+ *	@brief  呼び出し可能場所フラグ設定
  *
  *	@param	PERSON_STATE *p_wk  ワーク
- *	@param  cp_date             日
- *
- *	@return 0で当日 正の数で過ぎた  負の数で前
+ *	@param	place 場所
+ *	@param	enable  TRUE  呼び出した  FALSE呼び出していない
  */
 //-----------------------------------------------------------------------------
-static s32 Person_State_GetSecretDiffDay( const PERSON_STATE *cp_wk, const RTCDate *cp_date )
+void PERSON_STATE_SetCallPlaceFlag( PERSON_STATE *p_wk, PERSON_STATE_SECRET_CALLPLACE place, BOOL enable )
 {
-  //約束した日を保存しているので、
-  //約束した日の次の日が今日ならばデートの日
-  RTCDate date;
-  int now_days;
-  int promise_days;
-
-  GFDATE_GFDate2RTCDate( cp_wk->secret_date, &date );
-  now_days      = GFL_RTC_GetDaysOffset( cp_date );
-  promise_days  = GFL_RTC_GetDaysOffset( &date );
-
-  return now_days - (promise_days+1);
+  GF_ASSERT( place < PERSON_STATE_SECRET_CALLPLACE_MAX );
+  p_wk->call_place[ place / 8 ] |= (place % 8);
 }
-#ifdef PM_DEBUG
 //----------------------------------------------------------------------------
 /**
- *	@brief  デバッグ用  デート日付取得
+ *	@brief  呼び出し可能場所フラグ取得
  *
- *	@param	const PERSON_STATE *cp_wk ワーク
- *	@param	*p_date   日付
+ *	@param	PERSON_STATE *p_wk  ワーク
+ *	@param	place 場所
+ *
+ *	@return TRUE呼び出している  FALSE呼び出していない
  */
 //-----------------------------------------------------------------------------
-void DEBUG_PERSON_STATE_GetDate( const PERSON_STATE *cp_wk, RTCDate *p_date )
+BOOL PERSON_STATE_GetCallPlaceFlag( const PERSON_STATE *cp_wk, PERSON_STATE_SECRET_CALLPLACE place )
 {
-  GFDATE_GFDate2RTCDate( cp_wk->secret_date, p_date );
+  GF_ASSERT( place < PERSON_STATE_SECRET_CALLPLACE_MAX );
+  return cp_wk->call_place[ place / 8 ] & (place % 8) != 0;
 }
-#endif //PM_DEBUG

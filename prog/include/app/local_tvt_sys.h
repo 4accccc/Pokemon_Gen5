@@ -36,8 +36,14 @@ typedef enum
 {
   LOCAL_TVT_MODE_SCRIPT,          //スクリプト制御モード
   LOCAL_TVT_MODE_APP,             //アプリケーションモード
-  LOCAL_TVT_MODE_APP_SECRET_CALL, //隠しキャラ呼び出しモード
+  LOCAL_TVT_MODE_APP_SECRET_CALL,  //隠しキャラ呼び出しモード・通常
 }LOCAL_TVT_MODE;
+
+typedef enum
+{
+  LOCAL_TVT_COLOR_NORMAL,   ///<ライブキャスターの色通常色
+  LOCAL_TVT_COLOR_REVERSE,  ///<ライブキャスターの色反転
+}LOCAL_TVT_COLOR;
 
 //======================================================================
 //	typedef struct
@@ -46,6 +52,7 @@ typedef enum
 typedef struct
 {
   LOCAL_TVT_MODE  mode;     //アプリ起動モード
+  LOCAL_TVT_COLOR color;    //色
   u16             scriptId; //スクリプト制御モード時につかうスクリプト番号
   GAMEDATA        *gameData;//ゲームデータ
 }LOCAL_TVT_INIT_WORK;

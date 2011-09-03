@@ -152,7 +152,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   }
 
   //‹¤’ÊBG“Çž‚Ý
-  work->bg  = LOCAL_TVT_BG_Load( initWork->gameData, work->heapId );
+  work->bg  = LOCAL_TVT_BG_Load( initWork->gameData, work->heapId, work->initWork->color );
 
   //ƒ‚[ƒh‰Šú‰»
   work->InitMode( work );

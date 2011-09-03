@@ -12,6 +12,7 @@
 #include "gamesystem/game_data.h"
 #include "local_tvt_message.h"
 #include "local_tvt_type_def.h"
+#include "app/local_tvt_sys.h"
 //=============================================================================
 /**
  *					É^ÉCÉÄÉ]Å[Éì
@@ -26,7 +27,7 @@ extern LOCAL_TVT_TIME_ZONE LOCAL_TVT_UTIL_GetTimeZone( const GAMEDATA *cp_gameda
 //=============================================================================
 typedef struct _LOCAL_TVT_BG LOCAL_TVT_BG;
 
-extern LOCAL_TVT_BG * LOCAL_TVT_BG_Load( GAMEDATA *p_gamedata, HEAPID heapID );
+extern LOCAL_TVT_BG * LOCAL_TVT_BG_Load( GAMEDATA *p_gamedata, HEAPID heapID, LOCAL_TVT_COLOR color );
 extern void LOCAL_TVT_BG_UnLoad( LOCAL_TVT_BG *p_wk );
 
 //=============================================================================

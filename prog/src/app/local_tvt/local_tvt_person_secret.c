@@ -27,6 +27,7 @@
 #include "local_tvt_local_def.h"
 #include "local_tvt_graphic.h"
 #include "local_tvt_util.h"
+#include "local_tvt_secret_data.h"
 
 //外部公開
 #include "local_tvt_person_secret.h"
@@ -36,42 +37,6 @@
  *					定数宣言
 */
 //=============================================================================
-//隠しキャラの状態定義
-typedef enum
-{
-  LOCAL_TVT_SECRET_PHASE_1, //音声のみの会話　個人情報を聞く
-  LOCAL_TVT_SECRET_PHASE_2, //顔の表示ONの会話 個人情報を教えてくれる
-  LOCAL_TVT_SECRET_PHASE_3, //顔の表示ONの会話 仕事の悩み相談
-  LOCAL_TVT_SECRET_PHASE_4, //顔の表示ONの会話 日常会話（ランダム）
-  LOCAL_TVT_SECRET_PHASE_MAX,
-}LOCAL_TVT_SECRET_PHASE;
-
-//状態の範囲 Local_Tvt_Secret_GetPhaseに追加すること
-typedef enum
-{
-  LOCAL_TVT_SECRET_PHASE_RANGE_1_START  = 0,  
-  LOCAL_TVT_SECRET_PHASE_RANGE_1_END    = 9,
-  LOCAL_TVT_SECRET_PHASE_RANGE_2_START  = 10,   
-  LOCAL_TVT_SECRET_PHASE_RANGE_2_END    = 19, 
-  LOCAL_TVT_SECRET_PHASE_RANGE_3_START  = 20,   
-  LOCAL_TVT_SECRET_PHASE_RANGE_3_END    = 29, 
-  LOCAL_TVT_SECRET_PHASE_RANGE_4_START  = 30,   
-  LOCAL_TVT_SECRET_PHASE_RANGE_4_END    = 49, 
-
-  LOCAL_TVT_SECRET_PHASE_RANGE_MAX  = LOCAL_TVT_SECRET_PHASE_RANGE_4_END,
-}LOCAL_TVT_SECRET_PHASE_RANGE;
-
-//特殊イベント Local_Tvt_Secret_GetNowEventに追加すること
-typedef enum
-{
-  LOCAL_TVT_SECRET_EVENT_NONE             = 0,
-  LOCAL_TVT_SECRET_EVENT_PHASE1_DATE      = LOCAL_TVT_SECRET_PHASE_RANGE_1_END, //状態１のデート
-  LOCAL_TVT_SECRET_EVENT_PHASE3_DATE      = LOCAL_TVT_SECRET_PHASE_RANGE_3_END, //状態３のデート
-  LOCAL_TVT_SECRET_EVENT_PHASE4_SOUNDONLY = 39, //状態４の音声電話
-  LOCAL_TVT_SECRET_EVENT_PHASE4_FACE      = LOCAL_TVT_SECRET_PHASE_RANGE_4_END, //状態４の素顔電話
-  LOCAL_TVT_SECRET_EVENT_PHASE4_DATE      = 0xFF, //状態４の定期デート
-
-}LOCAL_TVT_SECRET_EVENT;
 
 //女性の場合メッセージIDに足す数
 #define SECRET_MSGID_FEMALE_ADD   (CALL_SECRET_GREET_FR_01-CALL_SECRET_GREET_R_01)
@@ -111,13 +76,15 @@ static void LOCAL_TVT_SECRET_Exit( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
 static BOOL LOCAL_TVT_SECRET_Greeting( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
 static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
 static BOOL LOCAL_TVT_SECRET_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
-static BOOL LOCAL_TVT_SECRET_Displeased( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
+static BOOL LOCAL_TVT_SECRET_TrueFace( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
 
 //隠しキャラのデータ取得
-static LOCAL_TVT_SECRET_PHASE Local_Tvt_Secret_GetPhase( const LOCAL_TVT_CALLDATA *cp_data );
-static LOCAL_TVT_SECRET_EVENT Local_Tvt_Secret_GetNowEvent( const LOCAL_TVT_CALLDATA *cp_data );
+static PERSON_STATE_SECRET_DATE Local_Tvt_Secret_GetDateEvent( const LOCAL_TVT_CALLDATA *cp_data );
 
 static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message );
+
+static u32 Local_Tvt_Secret_WordSetQues_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message, u32 state );
+static u32 Local_Tvt_Secret_DailyRnd_GetTalkMsgID( const LOCAL_TVT_CALLDATA *cp_data, u32 state );
 
 //----------------------------------------------------------------------------
 /**
@@ -134,20 +101,27 @@ void LOCAL_TVT_SECRET_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
   p_person->p_wk_adrs     = LOCAL_TVT_SECRET_Init( p_gamedata, mode, heapID );
   p_person->ExitFunction  = LOCAL_TVT_SECRET_Exit;
 
-  if( LOCAL_TVT_CALLDATA_GetSecretDispleased( cp_data ) )
   {
-    p_person->greetingFunction  = LOCAL_TVT_SECRET_Displeased;
-  }
-  else
-  {
-    p_person->greetingFunction  = LOCAL_TVT_SECRET_Greeting;
-    p_person->selectFunction[0] = LOCAL_TVT_SECRET_Talk;
-    p_person->list_msgID[0]     = CALL_SECRET_01;
-    p_person->selectFunction[1] = LOCAL_TVT_SECRET_Farewell;
-    p_person->list_msgID[1]     = CALL_SECRET_02;
-    p_person->list_num          = 2;
-    p_person->list_start_msgID  = CALL_SECRET_SELECT_01;
-    p_person->cp_list_msg_data  = cp_msg;
+    u16 state = LOCAL_TVT_CALLDATA_GetState( cp_data, LOCAL_TVT_PERSON_SECRET );
+    u32 index = LTVT_SECREAT_DATA_SearchIndex( state );
+    LTVT_SECREAT_TALK talk = LTVT_SECREAT_DATA_GetTalkProg( index );
+
+    if( LTVT_SECREAT_TALK_RING_OFF == talk )
+    {
+      p_person->greetingFunction  = LOCAL_TVT_SECRET_TrueFace;
+
+    }
+    else
+    {
+      p_person->greetingFunction  = LOCAL_TVT_SECRET_Greeting;
+      p_person->selectFunction[0] = LOCAL_TVT_SECRET_Talk;
+      p_person->list_msgID[0]     = CALL_SECRET_01;
+      p_person->selectFunction[1] = LOCAL_TVT_SECRET_Farewell;
+      p_person->list_msgID[1]     = CALL_SECRET_02;
+      p_person->list_num          = 2;
+      p_person->list_start_msgID  = LOCAL_TVT_CALLDATA_GetSpecialMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
+      p_person->cp_list_msg_data  = cp_msg;
+    }
   }
 }
 //----------------------------------------------------------------------------
@@ -162,41 +136,33 @@ void LOCAL_TVT_SECRET_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
 LOCAL_TVT_SECRET_FACE LOCAL_TVT_SECRET_GetFace( const LOCAL_TVT_CALLDATA *cp_data )
 {
   u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_data );
-  LOCAL_TVT_SECRET_PHASE phase  = Local_Tvt_Secret_GetPhase( cp_data );
-  LOCAL_TVT_SECRET_EVENT event  = Local_Tvt_Secret_GetNowEvent( cp_data );
+  u16 state = LOCAL_TVT_CALLDATA_GetState( cp_data, LOCAL_TVT_PERSON_SECRET );
+  u32 index = LTVT_SECREAT_DATA_SearchIndex( state );
+  LTVT_SECREAT_FACE face = LTVT_SECREAT_DATA_GetFace( index );
 
-  if( phase == LOCAL_TVT_SECRET_PHASE_1 )
+  switch( face )
   {
-    //１段階目は音声のみ
-    return LOCAL_TVT_SECRET_FACE_INVISIBLE;
-  }
-
-  switch( event )
-  {
-  case LOCAL_TVT_SECRET_EVENT_PHASE4_SOUNDONLY:
-    //音声会話
-    return LOCAL_TVT_SECRET_FACE_INVISIBLE;
-
-  case LOCAL_TVT_SECRET_EVENT_PHASE4_FACE:
-    //素顔で会話
-    if( sex == PTL_SEX_MALE )
-    {
-      return LOCAL_TVT_SECRET_FACE_VISIBLE_M;
-    }
-    else
-    {
-      return LOCAL_TVT_SECRET_FACE_VISIBLE_F;
-    }
-
   default:
-    //顔を隠しつつ会話
-    if( sex == PTL_SEX_MALE )
+    GF_ASSERT(0);
+  case LTVT_SECREAT_FACE_SOUND:
+    return LOCAL_TVT_SECRET_FACE_INVISIBLE;
+  case LTVT_SECREAT_FACE_MASK:
+    if( sex == PM_MALE )
     {
       return LOCAL_TVT_SECRET_FACE_HIDE_M;
     }
     else
     {
       return LOCAL_TVT_SECRET_FACE_HIDE_F;
+    }
+  case LTVT_SECREAT_FACE_TRUE:
+    if( sex == PM_MALE )
+    {
+      return LOCAL_TVT_SECRET_FACE_VISIBLE_M;
+    }
+    else
+    {
+      return LOCAL_TVT_SECRET_FACE_VISIBLE_F;
     }
   }
 }
@@ -336,6 +302,9 @@ static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
       u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_param->p_data );
       u32 msgID;
 
+      //デート終了してたら初期化
+      LOCAL_TVT_CALLDATA_ResetSecretDate( cp_param->p_data );
+
       if( p_wk->is_talk == FALSE )
       {
         //何回も変わらないように最初の１回だけ受け取る
@@ -425,27 +394,23 @@ static BOOL LOCAL_TVT_SECRET_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOC
     //話しかけた場合は状態変更
     if( p_wk->is_talk )
     {
+      u16 state = LOCAL_TVT_CALLDATA_GetState( cp_param->p_data, LOCAL_TVT_PERSON_SECRET );
+      u32 index = LTVT_SECREAT_DATA_SearchIndex( state );
+      LTVT_SECREAT_FACE face = LTVT_SECREAT_DATA_GetFace( index );
+
+      PERSON_STATE_SECRET_DATE  date = Local_Tvt_Secret_GetDateEvent( cp_param->p_data );
+
       //約束をしたならば、フラグを立てる
+      if( date != PERSON_STATE_SECRET_DATE_NONE )
       {
-        LOCAL_TVT_SECRET_EVENT  event = Local_Tvt_Secret_GetNowEvent( cp_param->p_data );
-        switch( event )
-        {
-        case LOCAL_TVT_SECRET_EVENT_PHASE1_DATE:
-          LOCAL_TVT_CALLDATA_SetSecretDateEvent( cp_param->p_data, PERSON_STATE_SECRET_DATE_FIRST );
-          break;
-        case LOCAL_TVT_SECRET_EVENT_PHASE3_DATE:
-        case LOCAL_TVT_SECRET_EVENT_PHASE4_DATE:
-          LOCAL_TVT_CALLDATA_SetSecretDateEvent( cp_param->p_data, PERSON_STATE_SECRET_DATE_REGULAR );
-          break;
-        }
+        LOCAL_TVT_CALLDATA_SetSecretDateEvent( cp_param->p_data, date );
+        //１日１回デートON
+        LOCAL_TVT_CALLDATA_SetSecretOnceDate( cp_param->p_data );
       }
 
       //話しかけたので好感度アップ
       LOCAL_TVT_CALLDATA_AddState( cp_param->p_data, LOCAL_TVT_PERSON_SECRET, LOCAL_TVT_SECRET_PHASE_RANGE_MAX );
     }
-
-    //１日１回会話ON
-    LOCAL_TVT_CALLDATA_SetSecretOnceCall( cp_param->p_data );
 
     //終了
     LOCAL_TVT_PERSON_End( p_person );
@@ -459,7 +424,7 @@ static BOOL LOCAL_TVT_SECRET_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOC
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  不機嫌なとき
+ *	@brief  素顔ですぐきる
  *
  *	@param	LOCAL_TVT_PERSON_SYS *p_person  人物システム
  *	@param const LOCAL_TVT_PERSON_SYS_PARAM *cp_param 引数
@@ -468,7 +433,7 @@ static BOOL LOCAL_TVT_SECRET_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOC
  *	@return TRUEで終了  FALSEで継続
  */ 
 //-----------------------------------------------------------------------------
-static BOOL LOCAL_TVT_SECRET_Displeased( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs )
+static BOOL LOCAL_TVT_SECRET_TrueFace( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs )
 {
   enum
   {
@@ -485,7 +450,7 @@ static BOOL LOCAL_TVT_SECRET_Displeased( LOCAL_TVT_PERSON_SYS *p_person, const L
     {
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
       u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_param->p_data );
-      u16 msgID = CALL_SECRET_TALK_SP_01;
+      u32 msgID = LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_param->p_data, LOCAL_TVT_PERSON_SECRET );
 
       //女性の場合は会話番号を足す
       if( sex == PTL_SEX_FEMALE )
@@ -506,11 +471,9 @@ static BOOL LOCAL_TVT_SECRET_Displeased( LOCAL_TVT_PERSON_SYS *p_person, const L
 
   case SEQ_END:
     p_wk->seq = 0;
-    //１日１回会話ON
-    LOCAL_TVT_CALLDATA_SetSecretOnceCall( cp_param->p_data );
 
-    //不機嫌が治った！
-    LOCAL_TVT_CALLDATA_SetSecretDispleased( cp_param->p_data, FALSE );
+    //話しかけたので好感度アップ
+    LOCAL_TVT_CALLDATA_AddState( cp_param->p_data, LOCAL_TVT_PERSON_SECRET, LOCAL_TVT_SECRET_PHASE_RANGE_MAX );
 
     //終了
     LOCAL_TVT_PERSON_End( p_person );
@@ -525,90 +488,26 @@ static BOOL LOCAL_TVT_SECRET_Displeased( LOCAL_TVT_PERSON_SYS *p_person, const L
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  仲良し段階を取得
- *
- *	@param	const LOCAL_TVT_CALLDATA *cp_data データ
- *
- *	@return フェーズ  ０～３段階
- */
-//-----------------------------------------------------------------------------
-static LOCAL_TVT_SECRET_PHASE Local_Tvt_Secret_GetPhase( const LOCAL_TVT_CALLDATA *cp_data )
-{
-  u16 state = LOCAL_TVT_CALLDATA_GetState( cp_data, LOCAL_TVT_PERSON_SECRET );
-
-  if( LOCAL_TVT_SECRET_PHASE_RANGE_1_START <= state 
-      && state <= LOCAL_TVT_SECRET_PHASE_RANGE_1_END )
-  {
-    return LOCAL_TVT_SECRET_PHASE_1; //１段階
-  }
-  else if( LOCAL_TVT_SECRET_PHASE_RANGE_2_START <= state 
-      && state <= LOCAL_TVT_SECRET_PHASE_RANGE_2_END )
-  {
-    return LOCAL_TVT_SECRET_PHASE_2;  //２段階目
-  }
-  else if( LOCAL_TVT_SECRET_PHASE_RANGE_3_START <= state 
-      && state <= LOCAL_TVT_SECRET_PHASE_RANGE_3_END )
-  {
-    return LOCAL_TVT_SECRET_PHASE_3;  //３段階目
-  }
-  else if( LOCAL_TVT_SECRET_PHASE_RANGE_4_START <= state 
-      && state <= LOCAL_TVT_SECRET_PHASE_RANGE_4_END )
-  {
-    return LOCAL_TVT_SECRET_PHASE_4;  //４段階目
-  }
-  else
-  {
-    GF_ASSERT(0);
-    return LOCAL_TVT_SECRET_PHASE_1; //念のため
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  現在のイベントを取得
+ *	@brief  現在のフラグ等を見て、デートイベントが発生する
  *
  *	@param	const LOCAL_TVT_CALLDATA *cp_data データ
  *
  *	@return 現在のイベント
  */
 //-----------------------------------------------------------------------------
-static LOCAL_TVT_SECRET_EVENT Local_Tvt_Secret_GetNowEvent( const LOCAL_TVT_CALLDATA *cp_data )
+static PERSON_STATE_SECRET_DATE Local_Tvt_Secret_GetDateEvent( const LOCAL_TVT_CALLDATA *cp_data )
 {
-  static const LOCAL_TVT_SECRET_EVENT sc_event_tbl[]  =
-  {
-    LOCAL_TVT_SECRET_EVENT_PHASE1_DATE,
-    LOCAL_TVT_SECRET_EVENT_PHASE3_DATE,
-    LOCAL_TVT_SECRET_EVENT_PHASE4_SOUNDONLY,
-    LOCAL_TVT_SECRET_EVENT_PHASE4_FACE,
-  };
   u16 state = LOCAL_TVT_CALLDATA_GetState( cp_data, LOCAL_TVT_PERSON_SECRET );
-  int i;
+  u32 index = LTVT_SECREAT_DATA_SearchIndex( state );
+  PERSON_STATE_SECRET_DATE date = LTVT_SECREAT_DATA_GetDate( index );
 
-  //段階によるイベントを調査
-  for( i = 0; i < NELEMS(sc_event_tbl); i++ )
+  //１日１回デートフラグがたっていたらデートはなし！
+  if( LOCAL_TVT_CALLDATA_GetSecretOnceDate( cp_data ) )
   {
-    if( sc_event_tbl[i] == state )
-    {
-      return sc_event_tbl[i];
-    }
+    date = PERSON_STATE_SECRET_DATE_NONE;
   }
 
-  //定期デートが可能か
-  //条件
-  //・４段階目
-  //・機嫌が悪くない
-  //・１季節に１回
-  {
-    LOCAL_TVT_SECRET_PHASE phase  = Local_Tvt_Secret_GetPhase( cp_data );
-    BOOL is_season  = LOCAL_TVT_CALLDATA_GetSecretSeasonDate( cp_data );
-    BOOL is_disp    = LOCAL_TVT_CALLDATA_GetSecretDispleased( cp_data );
-    if( phase == LOCAL_TVT_SECRET_PHASE_4 && !is_season && !is_disp )
-    {
-      return LOCAL_TVT_SECRET_EVENT_PHASE4_DATE;
-    }
-  }
-
-  //何も無い
-  return LOCAL_TVT_SECRET_EVENT_NONE;
+  return date;
 }
 //----------------------------------------------------------------------------
 /**
@@ -623,71 +522,116 @@ static LOCAL_TVT_SECRET_EVENT Local_Tvt_Secret_GetNowEvent( const LOCAL_TVT_CALL
 static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message )
 {
   u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_data );
-  LOCAL_TVT_SECRET_PHASE phase  = Local_Tvt_Secret_GetPhase( cp_data );
-  LOCAL_TVT_SECRET_EVENT event  = Local_Tvt_Secret_GetNowEvent( cp_data );
-  u16 state = LOCAL_TVT_CALLDATA_GetState( cp_data, LOCAL_TVT_PERSON_SECRET );
 
-  //特殊イベントによって会話が変わる
-  if( event == LOCAL_TVT_SECRET_EVENT_PHASE4_DATE )
+  u16 state = LOCAL_TVT_CALLDATA_GetState( cp_data, LOCAL_TVT_PERSON_SECRET );
+  u32 index = LTVT_SECREAT_DATA_SearchIndex( state );
+  LTVT_SECREAT_TALK talk = LTVT_SECREAT_DATA_GetTalkProg( index );
+  PERSON_STATE_SECRET_DATE date = Local_Tvt_Secret_GetDateEvent( cp_data );
+
+  GAMEDATA *p_gamedata = LOCAL_TVT_CALLDATA_GetGameData( cp_data );
+
+  //名前を単語登録
+  LOCAL_TVT_MESSAGE_RegisterPlayerName( p_message, p_gamedata );
+
+  //デートのときの会話
+  switch( date )
   {
+  case PERSON_STATE_SECRET_DATE_REGULAR:   //定期デート
     return CALL_SECRET_TALK_SP_00;
   }
 
-  //段階によって会話内容が違う
-  switch( phase )
+
+  //デートじゃないときの会話
+  switch( talk )
   {
-  case LOCAL_TVT_SECRET_PHASE_1:
-    //１段階目は最初の８つはプレイヤーのアンケートに答える
-    if( state < 8 )
-    {
-      static const int sc_quest_tbl[] =
-      {
-        QUESTION_ID_HOBBY,
-        QUESTION_ID_MAGIC,
-        QUESTION_ID_WORK_HARD,
-        QUESTION_ID_GAME,
-        QUESTION_ID_DREAM_OR_REAL,
-        QUESTION_ID_RICH,
-        QUESTION_ID_PLACE,
-        QUESTION_ID_FAVORITE_POKEMON,
-      };
-      u32 ansIdx  = QuestionnaireAnswer_ReadBit( cp_quest, sc_quest_tbl[state] );
-      GF_ASSERT( state < NELEMS(sc_quest_tbl) );
-      if( ansIdx == 0 )
-      {
-        //答えていなければ、１こ次に聞いてない時用の会話があるので次のメッセージIDにする
-        u16 msgID = LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
-        return ++msgID;
-      }
-      else
-      {
-        u32 answerID  = QIDATA_Get_AnswerID( sc_quest_tbl[state], ansIdx-1 );
-        LOCAL_TVT_MESSAGE_RegisterQuestionnaire( p_message, 0, answerID );
-        return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
-      }
-    }
-    else
-    {
-      return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
-    }
-
-  case LOCAL_TVT_SECRET_PHASE_2:
-  case LOCAL_TVT_SECRET_PHASE_3:
-    return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
-
-  case LOCAL_TVT_SECRET_PHASE_4:
-    //第４段階のときは会話はランダム
-    if( GFUser_GetPublicRand( 1 ) )
-    {
-      return CALL_SECRET_TALK_31 + GFUser_GetPublicRand( 9 );
-    }
-    else
-    {
-      return CALL_SECRET_TALK_41 + GFUser_GetPublicRand( 9 );
-    }
-    break;
+  case LTVT_SECREAT_TALK_WORDSET_QUES: //アンケート単語登録
+    return Local_Tvt_Secret_WordSetQues_GetTalkMsgID( cp_quest, cp_data, p_message, state );
   default:
     GF_ASSERT(0);
-    return CALL_SECRET_TALK_01;
+  case LTVT_SECREAT_TALK_RING_OFF:     //すぐ切る
+  case LTVT_SECREAT_TALK_NONE:
+    return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
+
+
+  case LTVT_SECREAT_TALK_DAILY_RND:     //日常会話ランダム
+    return Local_Tvt_Secret_DailyRnd_GetTalkMsgID( cp_data, state );
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アンケート単語登録
+ *
+ *	@param	const QUESTIONNAIRE_ANSWER_WORK *cp_quest アンケート
+ *	@param	LOCAL_TVT_CALLDATA *cp_data データ
+ *	@param	*p_message  メッセージ
+ *	@param	state   状態
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static u32 Local_Tvt_Secret_WordSetQues_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message, u32 state )
+{
+  //１段階目は最初の８つはプレイヤーのアンケートに答える
+  if( state < 8 )
+  {
+    static const int sc_quest_tbl[] =
+    {
+      QUESTION_ID_SEX,
+      QUESTION_ID_HOBBY,
+      QUESTION_ID_POKEMON_TYPE,
+      QUESTION_ID_MUSIC,
+      QUESTION_ID_FAVORITE_POKEMON,
+      QUESTION_ID_DAY_OFF,
+      QUESTION_ID_FUN,
+      QUESTION_ID_PERSON,
+    };
+    u32 ansIdx  = QuestionnaireAnswer_ReadBit( cp_quest, sc_quest_tbl[state] );
+    GF_ASSERT( state < NELEMS(sc_quest_tbl) );
+    if( ansIdx == 0 )
+    {
+      //答えていなければ、１こ次に聞いてない時用の会話があるので次のメッセージIDにする
+      u16 msgID = LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
+      return ++msgID;
+    }
+    else
+    {
+      u32 answerID  = QIDATA_Get_AnswerID( sc_quest_tbl[state], ansIdx-1 );
+      LOCAL_TVT_MESSAGE_RegisterQuestionnaire( p_message, 1, answerID );
+      return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
+    }
+  }
+  else if( state == 8 )
+  {
+    //バッジの数を聞く
+    u32 badge = LOCAL_TVT_CALLDATA_GetBadgeCnt( cp_data );
+    LOCAL_TVT_MESSAGE_RegisterNumber( p_message, badge, 1, 1 );
+    return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
+  }
+  else
+  {
+    return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  日常ランダムメッセージ
+ *
+ *	@param	const LOCAL_TVT_CALLDATA *cp_data データ
+ *	@param	state   状態
+ *
+ *	@return メッセージ
+ */
+//-----------------------------------------------------------------------------
+static u32 Local_Tvt_Secret_DailyRnd_GetTalkMsgID( const LOCAL_TVT_CALLDATA *cp_data, u32 state )
+{
+  if( GFUser_GetPublicRand( 2 ) )
+  {
+    return CALL_SECRET_TALK_31 + GFUser_GetPublicRand( 9 );
+  }
+  else
+  {
+    return CALL_SECRET_TALK_41 + GFUser_GetPublicRand( 9 );
   }
 }

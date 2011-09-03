@@ -51,6 +51,7 @@
 #include "app/name_input.h"
 #include "app/dendou_pc.h"
 #include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
+#include "savedata/person_state.h"
 
 #include "app/townmap.h"
 
@@ -370,6 +371,7 @@ VMCMD_RESULT EvCmdCallTVTDemo( VMHANDLE *core, void *wk )
   u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
   LOCAL_TVT_INIT_WORK * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(LOCAL_TVT_INIT_WORK) );
   param->mode     = LOCAL_TVT_MODE_SCRIPT;
+  param->color    = LOCAL_TVT_COLOR_NORMAL;
   param->scriptId = demo_id;
   param->gameData = SCRCMD_WORK_GetGameData( work );
 
@@ -397,13 +399,23 @@ VMCMD_RESULT EvCmdCallTVTSecret( VMHANDLE *core, void *wk )
   GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
+  GAMEDATA      *gamedata = GAMESYSTEM_GetGameData( gsys );
+  PERSON_STATE  *person_state  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(gamedata) );
+
+  u16 color = SCRCMD_GetVMWorkValue( core, wk );
+  u16 place = SCRCMD_GetVMWorkValue( core, wk );
+
   LOCAL_TVT_INIT_WORK * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(LOCAL_TVT_INIT_WORK) );
   param->mode     = LOCAL_TVT_MODE_APP_SECRET_CALL;
+  param->color    = color;
   param->gameData = SCRCMD_WORK_GetGameData( work );
 
   event = EVENT_FieldSubProcNoFade_Callback( gsys, fieldmap,
 		                               FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, param,
                                    CallBackFunc_FreeMemory, param );
+
+  PERSON_STATE_SetCallPlaceFlag( person_state, place, TRUE );
+
   SCRIPT_CallEvent( script, event );
 
   return VMCMD_RESULT_SUSPEND;

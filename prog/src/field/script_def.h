@@ -816,3 +816,32 @@
 #define SCR_HIDE_SHIP_PLACE_W17         (3)   ///< P2ラボにいるとき
 
 
+//--------------------------------------------------------------
+//  ローカルライブキャスター
+//--------------------------------------------------------------
+#define SCR_LTVT_CALLTVT_MODE_NORMAL    (0)   ///<  通常のライブキャスター
+#define SCR_LTVT_CALLTVT_MODE_REVERSE   (1)   ///<  色反転ライブキャスター
+
+#define SCR_LTVT_CALLTVT_PLACE_C04      (0)   ///<C04での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_C05      (1)   ///<C05での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_C06      (2)   ///<C06での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_T03      (3)   ///<T03での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_T04      (4)   ///<T04での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_T07      (5)   ///<T07での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_R05      (6)   ///<R05での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_R06      (7)   ///<R06での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_R07      (8)   ///<R07での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_R09      (9)   ///<R09での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_R11      (10)   ///<R11での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_R12      (11)   ///<R12での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_R13      (12)   ///<R13での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_R14      (13)   ///<R14での呼び出し
+#define SCR_LTVT_CALLTVT_PLACE_R16      (14)   ///<R16での呼び出し
+
+//--------------------------------------------------------------
+//  隠しキャラ
+//--------------------------------------------------------------
+#define SCR_PERSON_SECRET_DATE_NONE     (0)   ///<デートがない
+#define SCR_PERSON_SECRET_DATE_FIRST    (1)   ///<初回デート
+#define SCR_PERSON_SECRET_DATE_REGULAR  (2)   ///<定期デートがない
+#define SCR_PERSON_SECRET_DATE_GIVE     (3)   ///<落し物受け渡しがない

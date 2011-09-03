@@ -358,31 +358,33 @@ static const DEBUG_NUMINPUT_PARAM DNI_LivecasterStateSec = {
 static const DEBUG_NUMINPUT_PARAM DNI_LivecasterCall = { 
   0, 1, DebugGetLivecasterCall, DebugSetLivecasterCall, 
 };
-static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDispleased = { 
-  0, 1, DebugGetLivecasterSecretDispleased, DebugSetLivecasterSecretDispleased, 
-};
-static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretSeason = { 
-  0, 1, DebugGetLivecasterSecretSeason, DebugSetLivecasterSecretSeason, 
-};
 static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretOnceCall = { 
   0, 1, DebugGetLivecasterSecretOnceCall, DebugSetLivecasterSecretOnceCall 
 };
 static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDateType = { 
-  0, 2, DebugGetLivecasterSecretDateType, DebugSetLivecasterSecretDateType, 
-};
-static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDateYear = { 
-  00, 99, DebugGetLivecasterSecretDateYear, DebugSetLivecasterSecretDateYear, 
-};
-static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDateMonth = { 
-  0, 12, DebugGetLivecasterSecretDateMonth, DebugSetLivecasterSecretDateMonth, 
-};
-static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDateDay = { 
-  0, 31, DebugGetLivecasterSecretDateDay, DebugSetLivecasterSecretDateDay,
+  0, PERSON_STATE_SECRET_DATE_MAX-1, DebugGetLivecasterSecretDateType, DebugSetLivecasterSecretDateType, 
 };
 static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretNotRnd  =
 {
   0,  1, DebugGetLivecasterSecretNotRnd, DebugSetLivecasterSecretNotRnd,
 };
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDateEnd =
+{
+  0, 1, DebugGetLtvt_GetDateEnd, DebugLtvt_SetDateEnd,
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretTradeFlag =
+{
+  0, 1, DebugGetLtvt_GetTradeFlag, DebugLtvt_SetTradeFlag,
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretTradeMonsno =
+{
+  0, MONSNO_656, DebugGetLtvt_GetTradeMosno, DebugLtvt_SetTradeMosno,
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretDateZoneID =
+{
+  0, ZONE_ID_MAX, DebugGetLtvt_GetCallZoneID, DebugGetLtvt_SetCallZoneID,
+};
+
 static const DEBUG_NUMINPUT_LIST DNI_Livecaster[] = { 
   //gmm_id, param, dni_param
   { dni_ltvt_01, LOCAL_TVT_PERSON_DOCTOR, &DNI_LivecasterStateDoc }, //博士状態
@@ -397,13 +399,12 @@ static const DEBUG_NUMINPUT_LIST DNI_Livecaster[] = {
   { dni_ltvt_10, LOCAL_TVT_PERSON_BELL, &DNI_LivecasterCall }, //ベル電話
   { dni_ltvt_11, LOCAL_TVT_PERSON_MOTHER, &DNI_LivecasterCall }, //ママ電話
   { dni_ltvt_12, LOCAL_TVT_PERSON_SECRET, &DNI_LivecasterCall }, //隠し電話
-  { dni_ltvt_13, 0, &DNI_LivecasterSecretDispleased }, //隠し不機嫌
-  { dni_ltvt_14, 0, &DNI_LivecasterSecretSeason }, //隠し１ヶ月１回デート
   { dni_ltvt_15, 0, &DNI_LivecasterSecretOnceCall }, //隠し１日１回電話
   { dni_ltvt_16, 0, &DNI_LivecasterSecretDateType }, //隠しデートタイプ
-  { dni_ltvt_17, 0, &DNI_LivecasterSecretDateYear }, //隠しデート年
-  { dni_ltvt_18, 0, &DNI_LivecasterSecretDateMonth }, //隠しデート月
-  { dni_ltvt_19, 0, &DNI_LivecasterSecretDateDay }, //隠しデート日
+  { dni_ltvt_17, 0, &DNI_LivecasterSecretDateEnd    },//隠しデート終了フラグ
+  { dni_ltvt_18, 0, &DNI_LivecasterSecretTradeFlag  },//隠しトレードON
+  { dni_ltvt_19, 0, &DNI_LivecasterSecretTradeMonsno },//隠しトレードしてポケモン
+  { dni_ltvt_14, 0, &DNI_LivecasterSecretDateZoneID },//隠し電話可能ゾーンID
   { dni_ltvt_20, 0, &DNI_LivecasterSecretNotRnd }, //隠し乱数なし
 };
 

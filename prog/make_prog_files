@@ -2277,6 +2277,7 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
     app/local_tvt/local_tvt_person_chelen.c \
     app/local_tvt/local_tvt_person_rival.c \
     app/local_tvt/local_tvt_person_secret.c \
+    app/local_tvt/local_tvt_secret_data.c \
     app/local_tvt/local_tvt_debug.c
 
 # WIFIバトルマッチングフロー周り＋WIFネット部分

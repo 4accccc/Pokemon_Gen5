@@ -231,6 +231,7 @@ sub_wheel_trade:
   // はい
   IF $SCWK_ANSWER == 0 THEN
     DEFINE_LOCAL lwk_select   // 選択ポケモン
+    DEFINE_LOCAL select_monso   // 選択ポケモン種族名
     DEFINE_LOCAL lwk_result   // キャンセルしたか
 
     _BALLOONWIN_CLOSE()
@@ -259,6 +260,9 @@ sub_wheel_trade:
         _BALLOONWIN_TALKOBJ_MSG( msg_id )
         _BALLOONWIN_CLOSE()
 
+        //選んだポケモンの種族ナンバーを取得
+        _GET_PARTY_POKE_PARAM( select_monso, lwk_select, SCR_POKEPARA_MONSNO )
+
         // 交換処理
         _FIELD_POKE_TRADE( fld_trade_poke_no, lwk_select )
 
@@ -270,7 +274,7 @@ sub_wheel_trade:
         ENDIF
 
         // 交換完了フラグを設定
-        _PERSON_STATE_SET_TRADE_FLAG()
+        _PERSON_STATE_SET_TRADE( select_monso )
 
 			  //==================================//
 

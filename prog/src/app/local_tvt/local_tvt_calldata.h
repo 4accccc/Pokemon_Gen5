@@ -49,6 +49,9 @@ extern BOOL LOCAL_TVT_CALLDATA_IsSelect( const LOCAL_TVT_CALLDATA *cp_wk, u16 pe
 
 extern LOCAL_TVT_BACK LOCAL_TVT_CALLDATA_GetBackByZoneID( const LOCAL_TVT_CALLDATA *cp_wk, ZONEID zoneID );
 extern LOCAL_TVT_WEATHER LOCAL_TVT_CALLDATA_GetWeatherByZoneID( const LOCAL_TVT_CALLDATA *cp_wk, ZONEID zoneID );
+extern u32 LOCAL_TVT_CALLDATA_GetBadgeCnt( const LOCAL_TVT_CALLDATA *cp_wk );
+
+extern GAMEDATA * LOCAL_TVT_CALLDATA_GetGameData( const LOCAL_TVT_CALLDATA *cp_wk );
 
 //
 extern u16 LOCAL_TVT_CALLDATA_GetState( const LOCAL_TVT_CALLDATA *cp_wk, u16 person );
@@ -56,8 +59,8 @@ extern void LOCAL_TVT_CALLDATA_AddState( LOCAL_TVT_CALLDATA *p_wk, u16 person, u
 
 //âBÇµÉLÉÉÉâÇÃèÛë‘éÊìæ
 extern u32 LOCAL_TVT_CALLDATA_GetSecretSex( const LOCAL_TVT_CALLDATA *cp_wk );
-extern BOOL LOCAL_TVT_CALLDATA_GetSecretDispleased( const LOCAL_TVT_CALLDATA *cp_wk );
-extern void LOCAL_TVT_CALLDATA_SetSecretDispleased( LOCAL_TVT_CALLDATA *p_wk, BOOL enable );
 extern void LOCAL_TVT_CALLDATA_SetSecretDateEvent( LOCAL_TVT_CALLDATA *p_wk, PERSON_STATE_SECRET_DATE type );
-extern BOOL LOCAL_TVT_CALLDATA_GetSecretSeasonDate( const LOCAL_TVT_CALLDATA *cp_wk );
-extern void LOCAL_TVT_CALLDATA_SetSecretOnceCall( LOCAL_TVT_CALLDATA *p_wk );
+extern void LOCAL_TVT_CALLDATA_SetSecretOnceDate( LOCAL_TVT_CALLDATA *p_wk );
+extern BOOL LOCAL_TVT_CALLDATA_GetSecretOnceDate( const LOCAL_TVT_CALLDATA *cp_wk );
+
+extern void LOCAL_TVT_CALLDATA_ResetSecretDate( LOCAL_TVT_CALLDATA *p_wk );

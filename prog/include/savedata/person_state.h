@@ -32,7 +32,29 @@ typedef enum
   PERSON_STATE_SECRET_DATE_NONE,      //なし
   PERSON_STATE_SECRET_DATE_FIRST,     //最初のデート
   PERSON_STATE_SECRET_DATE_REGULAR,   //定期デート
+  PERSON_STATE_SECRET_DATE_GIVE,      //受け渡し
+  PERSON_STATE_SECRET_DATE_MAX
 }PERSON_STATE_SECRET_DATE;
+
+typedef enum
+{
+  PERSON_STATE_SECRET_CALLPLACE_C04,
+  PERSON_STATE_SECRET_CALLPLACE_C05,
+  PERSON_STATE_SECRET_CALLPLACE_C06,
+  PERSON_STATE_SECRET_CALLPLACE_T03,
+  PERSON_STATE_SECRET_CALLPLACE_T04,
+  PERSON_STATE_SECRET_CALLPLACE_T07,
+  PERSON_STATE_SECRET_CALLPLACE_R05,
+  PERSON_STATE_SECRET_CALLPLACE_R06,
+  PERSON_STATE_SECRET_CALLPLACE_R07,
+  PERSON_STATE_SECRET_CALLPLACE_R09,
+  PERSON_STATE_SECRET_CALLPLACE_R11,
+  PERSON_STATE_SECRET_CALLPLACE_R12,
+  PERSON_STATE_SECRET_CALLPLACE_R13,
+  PERSON_STATE_SECRET_CALLPLACE_R14,
+  PERSON_STATE_SECRET_CALLPLACE_R16,
+  PERSON_STATE_SECRET_CALLPLACE_MAX,
+}PERSON_STATE_SECRET_CALLPLACE;
 
 //=============================================================================
 /**
@@ -52,14 +74,13 @@ struct _PERSON_STATE
   u8  state[PERSON_STATE_MAX];
   u8  is_ltvt[PERSON_STATE_MAX];
   u8  secret_date_event;   //デートイベント状態→ONのときはサブイベント発生まち、電話できない PERSON_STATE_SECRET_DATEの値
-  u8  is_secret_once_day_call:1;//１日１回電話フラグ
-  u8  is_season_date:1;         //１季節に１回のデートフラグ
-  u8  is_secret_displeased:1;   //不機嫌かどうか
+  u8  is_secret_once_date:1;  //１日１回デート
   u8  is_trade:1;               //交換フラグ
   u8  is_date_end:1;            //デート終了フラグ
-  u8  dummy:3;
+  u8  dummy:5;
   u16 trade_monsno;           //交換ポケモン種別
-  GFDATE  secret_date;        //デートの日
+  u8  call_place[ PERSON_STATE_SECRET_CALLPLACE_MAX/8 ]; 
+  u16 dummy2;
 };
 
 #define PERSON_STATE_WORK_SIZE  (24)
@@ -86,20 +107,12 @@ extern BOOL PERSON_STATE_GetLocalTvtCall( const PERSON_STATE *cp_wk, u16 person 
 
 
 //ローカルライブキャスター隠しキャラ
-extern void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, PERSON_STATE_SECRET_DATE date, const RTCDate *cp_date );
+extern void PERSON_STATE_SetSecretDateEvent( PERSON_STATE *p_wk, PERSON_STATE_SECRET_DATE date );
 extern void PERSON_STATE_ClearSecretDateEvent( PERSON_STATE *p_wk );
-extern BOOL PERSON_STATE_CheckSecretDataEventToday( const PERSON_STATE *cp_wk, const RTCDate *cp_date );
-extern BOOL PERSON_STATE_CheckSecretDataEventLater( const PERSON_STATE *cp_wk, const RTCDate *cp_date );
 extern PERSON_STATE_SECRET_DATE PERSON_STATE_GetSecretDateEvent( const PERSON_STATE *cp_wk );
 
-extern void PERSON_STATE_SetSecretDispleased( PERSON_STATE *p_wk, BOOL enable );
-extern BOOL PERSON_STATE_GetSecretDispleased( const PERSON_STATE *cp_wk );
-
-extern void PERSON_STATE_SetSecretOnceDayCallFlag( PERSON_STATE *p_wk, BOOL enable );
-extern BOOL PERSON_STATE_GetSecretOnceDayCallFlag( const PERSON_STATE *cp_wk );
-
-extern void PERSON_STATE_SetSeasonDateFlag( PERSON_STATE *p_wk, BOOL enable );
-extern BOOL PERSON_STATE_GetSeasonDateFlag( const PERSON_STATE *cp_wk );
+extern void PERSON_STATE_SetSecretOnceDateFlag( PERSON_STATE *p_wk, BOOL enable );
+extern BOOL PERSON_STATE_GetSecretOnceDateFlag( const PERSON_STATE *cp_wk );
 
 extern void PERSON_STATE_SetTradeFlag( PERSON_STATE *p_wk, BOOL enable );
 extern BOOL PERSON_STATE_GetTradeFlag( const PERSON_STATE *cp_wk );
@@ -110,6 +123,5 @@ extern u16 PERSON_STATE_GetTradeMonsno( const PERSON_STATE *cp_wk );
 extern void PERSON_STATE_SetDateEndFlag( PERSON_STATE *p_wk, BOOL enable );
 extern BOOL PERSON_STATE_GetDateEndFlag( const PERSON_STATE *cp_wk );
 
-#ifdef PM_DEBUG
-extern void DEBUG_PERSON_STATE_GetDate( const PERSON_STATE *cp_wk, RTCDate *p_date );
-#endif //PM_DEBUG
+extern void PERSON_STATE_SetCallPlaceFlag( PERSON_STATE *p_wk, PERSON_STATE_SECRET_CALLPLACE place, BOOL enable );
+extern BOOL PERSON_STATE_GetCallPlaceFlag( const PERSON_STATE *cp_wk, PERSON_STATE_SECRET_CALLPLACE place );

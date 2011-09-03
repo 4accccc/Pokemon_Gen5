@@ -63,6 +63,7 @@
 #include "savedata/medalbox.h"  // MDLID_MAX
 #include "field/wbt.h"  //WBTSYS
 #include "field/pokewood.h"
+#include "fieldmap/zone_id.h"
 
 //============================================================================================
 //============================================================================================
@@ -148,7 +149,7 @@ struct _GAMEDATA{
   PAIR_SYSTEM_WORK* pairSystem; ///<連れ歩きシステムワーク
   u32 scriptCommandOverlayID; ///<フィールドスクリプトコマンド用オーバーレイID
 
-  BOOL  is_livecaster_secret_call;  ///<隠しキャラに電話できるかどうかフラグ
+  u32   ltvt_secret_call_zoneID;  ///<隠しキャラに電話できる場所のゾーンIDのの
   u32   goout_effect_room_count;    ///<室外演出部屋内カウンタ
   u8    goout_effect_flag;
   u8    top_medal_id;  ///< メダルボックスを開いた時に最初に表示されるメダルID
@@ -311,6 +312,10 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   // 最初に表示されるメダルをなしに設定
   gd->top_medal_id = MDLID_MAX;
+
+  // ライブキャスター隠しキャラ用ゾーンIDを設定
+  GAMEDATA_SetLiveCasterSecretCallZoneID( gd );
+
   return gd;
 }
 
@@ -2185,28 +2190,46 @@ void GAMEDATA_SetFieldScriptCommandOverlayID( GAMEDATA *gamedata, u32 scrCmdID )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  ライブキャスターの隠しキャラに電話をかけてよいのかのフラグを設定
+ *	@brief  ライブキャスターの隠しキャラに電話をかけられるゾーンIDを設定
  *
  *	@param	GAMEDATA *gamedata  ゲームデータ
- *	@param  電話かけてよいかのフラグ
  */
 //-----------------------------------------------------------------------------
-void GAMEDATA_SetLiveCasterSecretCallFlag( GAMEDATA *gamedata, BOOL is_call )
+void GAMEDATA_SetLiveCasterSecretCallZoneID( GAMEDATA *gamedata )
 {
-  gamedata->is_livecaster_secret_call = is_call;
+  static const u32 sc_enable_zoneID[] =
+  {
+    ZONE_ID_C04,
+    ZONE_ID_C05,
+    ZONE_ID_C06,
+    ZONE_ID_T03,
+    ZONE_ID_T04,
+    ZONE_ID_T07,
+    ZONE_ID_R05,
+    ZONE_ID_R06,
+    ZONE_ID_R07,
+    ZONE_ID_R09,
+    ZONE_ID_R11,
+    ZONE_ID_R12,
+    ZONE_ID_R13,
+    ZONE_ID_R14,
+    ZONE_ID_R16,
+  };
+  
+  gamedata->ltvt_secret_call_zoneID = sc_enable_zoneID[ GFUser_GetPublicRand(NELEMS(sc_enable_zoneID))];
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  ライブキャスターの隠しキャラに電話をかけてよいのかのフラグを取得
+ *	@brief  ライブキャスターの隠しキャラに電話をかけられるゾーンIDを取得
  *
  *	@param	const GAMEDATA *gamedata  ゲームデータ
  *
- *	@return 電話かけてよいかのフラグ
+ *	@return ライブキャスターの隠しキャラに電話をかけられるゾーンID
  */
 //-----------------------------------------------------------------------------
-BOOL GAMEDATA_GetLiveCasterSecretCallFlag( const GAMEDATA *gamedata )
+u32 GAMEDATA_GetLiveCasterSecretCallZoneID( const GAMEDATA *gamedata )
 {
-  return gamedata->is_livecaster_secret_call;
+  return gamedata->ltvt_secret_call_zoneID;
 }
 //----------------------------------------------------------------------------
 /**

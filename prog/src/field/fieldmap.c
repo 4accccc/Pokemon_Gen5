@@ -499,8 +499,6 @@ static BOOL zonedata_GetShadowUse( u16 zone_id );
 
 static BOOL zonedata_IsEnvSE( u16 zone_id );
 static BOOL zonedata_IsSepiaMap( u16 zone_id );
-static void setupLiveCaster( GAMEDATA *gdata, u32 zone_id );
-
 
 //data
 static const GFL_DISP_VRAM fldmapdata_dispVram;
@@ -1011,9 +1009,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       fieldWork->sodateya = SODATEYA_Create( fieldWork->heapID, fieldWork, work );
     }
 
-    //ライブキャスターのセットアップ
-    setupLiveCaster( gdata, fieldWork->map_id );
-    
     // scenearea
     {
       zoneChangeScene( fieldWork, fieldWork->map_id );
@@ -4276,33 +4271,4 @@ static BOOL zonedata_IsSepiaMap( u16 zone_id )
   if ( zone_id == ZONE_ID_OLDC02GYM0202 ) return TRUE;
   if ( zone_id == ZONE_ID_OLDC05R0501 ) return TRUE;
   return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ライブキャスター用情報をセットアップする
- *
- *	@param	GAMEDATA *gdata ゲームデータ
- *	@param	zone_id         ゾーンID
- */
-//-----------------------------------------------------------------------------
-static void setupLiveCaster( GAMEDATA *gdata, u32 zone_id )
-{
-  //2%の確率で電話をかけることができる。
-  {
-    u32 rnd = GFUser_GetPublicRand0(100);
-    BOOL is_call  = rnd < 2? TRUE: FALSE;
-    GAMEDATA_SetLiveCasterSecretCallFlag( gdata, is_call );
-  }
-
-  //季節が変化していたら、デート可能にする
-  {
-    u16 prev, next;
-    if( PMSEASON_GetNextSeason( gdata, &prev, &next ) )
-    {
-      PERSON_STATE *p_sv  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(gdata) );
-      PERSON_STATE_SetSeasonDateFlag( p_sv, FALSE );
-    } 
-  }
-
 }

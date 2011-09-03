@@ -934,7 +934,7 @@
   //人物状態
   DEF_CMD( EvCmdPersonState_SetState, EV_SEQ_PERSON_STATE_SET )
   DEF_CMD( EvCmdPersonState_SetLTvtCall, EV_SEQ_PERSON_TVT_CALL_SET )
-  DEF_CMD( EvCmdPersonState_CheckSecretCalled, EV_SEQ_PERSON_CHECK_SECRET )
+  DEF_CMD( EvCmdPersonState_CheckSecretCallEnd, EV_SEQ_PERSON_CHECK_SECRET_END )
   DEF_CMD( EvCmdCallTVTSecret, EV_SEQ_CALL_TVT_SECRET )
   DEF_CMD( EvCmdPersonState_GetDateType, EV_SEQ_PERSON_CHECK_SECRET_DATE )
   DEF_CMD( EvCmdPersonState_SetDateEnd, EV_SEQ_PERSON_SET_SECRET_DATE_END )
@@ -1085,7 +1085,7 @@
   DEF_CMD( EvCmdUseSprayContinue, EV_SEQ_USE_SPRAY_CONTINUE )
 
   // 人物状態
-  DEF_CMD( EvCmdPersonState_SetTradeFlag, EV_SEQ_PERSON_SET_TRADE_FLAG )
+  DEF_CMD( EvCmdPersonState_SetTrade, EV_SEQ_PERSON_SET_TRADE_FLAG )
 
   END_CMD
   //スクリプトコマンドテーブル終了

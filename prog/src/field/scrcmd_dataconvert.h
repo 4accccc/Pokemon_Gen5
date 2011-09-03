@@ -34,7 +34,9 @@
 #define DATACONV_FLAG_BADGE_08          (15)
 
 //include/multiboot/wb_save_convert.h‚ÌWB_SAVE_CONV_WORK‚Ì‡”Ô‚Æ‘Î‰
-#define DATACONV_N_BATTLE_RAIMON        ( 0)
+#define DATACONV_WORK_FIRST_POKETYPE         ( 0)
+#define DATACONV_WORK_N_BATTLE_RAIMON        ( 1)
+#define DATACONV_WORK_FURNITURE_SHOP         ( 2)
 
 
 //include/savedata/data_convert_save.h‚ÌDATA_CONVERT_OWNER‚Ì‡”Ô‚Æ‘Î‰

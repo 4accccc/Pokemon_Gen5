@@ -894,23 +894,22 @@ extern u32 GAMEDATA_GetFieldScriptCommandOverlayID( const GAMEDATA *gamedata );
 extern void GAMEDATA_SetFieldScriptCommandOverlayID( GAMEDATA *gamedata, u32 scrCmdID );
 //----------------------------------------------------------------------------
 /**
- *	@brief  ライブキャスターの隠しキャラに電話をかけてよいのかのフラグを設定
+ *	@brief  ライブキャスターの隠しキャラに電話をかけられるゾーンIDを設定
  *
  *	@param	GAMEDATA *gamedata  ゲームデータ
- *	@param  電話かけてよいかのフラグ
  */
 //-----------------------------------------------------------------------------
-extern void GAMEDATA_SetLiveCasterSecretCallFlag( GAMEDATA *gamedata, BOOL is_call );
+extern void GAMEDATA_SetLiveCasterSecretCallZoneID( GAMEDATA *gamedata );
 //----------------------------------------------------------------------------
 /**
- *	@brief  ライブキャスターの隠しキャラに電話をかけてよいのかのフラグを取得
+ *	@brief  ライブキャスターの隠しキャラに電話をかけられるゾーンIDを取得
  *
  *	@param	const GAMEDATA *gamedata  ゲームデータ
  *
- *	@return 電話かけてよいかのフラグ
+ *	@return ライブキャスターの隠しキャラに電話をかけられるゾーンID
  */
 //-----------------------------------------------------------------------------
-extern BOOL GAMEDATA_GetLiveCasterSecretCallFlag( const GAMEDATA *gamedata );
+extern u32 GAMEDATA_GetLiveCasterSecretCallZoneID( const GAMEDATA *gamedata );
 //----------------------------------------------------------------------------
 /**
  *	@brief  室外演出で使用する部屋内カウントを取得

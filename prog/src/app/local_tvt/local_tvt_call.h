@@ -8,7 +8,7 @@
 //============================================================================================
 #pragma once
 //データ定義
-#define LOCAL_TVT_CALLDATA_MAX (55)
+#define LOCAL_TVT_CALLDATA_MAX (57)
 //人物定義
 #define LOCAL_TVT_PERSON_CHELEN (2)
 #define LOCAL_TVT_PERSON_MOTHER (4)
@@ -78,10 +78,12 @@
 #define SECRET_STATE_48 (47)
 #define SECRET_STATE_49 (48)
 #define SECRET_STATE_50 (49)
+#define SECRET_STATE_51 (50)
+#define SECRET_STATE_52 (51)
 //各状態最大数
 #define CHELEN_STATE_MAX (1)
 #define MOTHER_STATE_MAX (1)
 #define BELL_STATE_MAX (1)
-#define SECRET_STATE_MAX (50)
+#define SECRET_STATE_MAX (52)
 #define DOCTOR_STATE_MAX (1)
 #define RIVAL_STATE_MAX (1)

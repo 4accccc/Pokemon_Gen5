@@ -86,45 +86,32 @@ VMCMD_RESULT EvCmdPersonState_SetLTvtCall( VMHANDLE *p_vm, void *p_wk_adrs )
 }
 //----------------------------------------------------------------------------
 /**
- * @brief 隠しキャラから電話が掛かってくるかどうかチェック
+ * @brief 隠しキャラから電話がかかってくるのが終了したかどうか
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdPersonState_CheckSecretCalled( VMHANDLE *p_vm, void *p_wk_adrs )
+VMCMD_RESULT EvCmdPersonState_CheckSecretCallEnd( VMHANDLE *p_vm, void *p_wk_adrs )
 {
   SCRCMD_WORK   *p_wk = p_wk_adrs;
   GAMESYS_WORK  *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA      *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
   u16 *p_ret_wk = SCRCMD_GetVMWork( p_vm, p_wk_adrs );
+  u16 place    = VMGetU16( p_vm );
 
   PERSON_STATE *p_person_state  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
 
-  //条件
-  //電話可能
-  //１日１回だけ
-  //デート待ち合わせしていない
-  //不機嫌ではない
-  //１０％
-  BOOL is_once  = PERSON_STATE_GetSecretOnceDayCallFlag( p_person_state );
-  BOOL is_date  = (PERSON_STATE_GetSecretDateEvent( p_person_state ) == PERSON_STATE_SECRET_DATE_NONE);
-  BOOL is_data  = PERSON_STATE_GetLocalTvtCall( p_person_state, LOCAL_TVT_PERSON_SECRET );
-  BOOL is_disp  = PERSON_STATE_GetSecretDispleased( p_person_state );
-  BOOL is_rnd  = GFUser_GetPublicRand(100) < 10 ? TRUE: FALSE;
-#ifdef PM_DEBUG
-  if( DEBUG_FLG_GetFlg( DEBUG_FLG_LTvtSecretNotRnd ) )
+  int i;
+  int cnt = 0;
+  for( i = 0; i < PERSON_STATE_SECRET_CALLPLACE_MAX; i++ )
   {
-    is_rnd = TRUE;
+    if( PERSON_STATE_GetCallPlaceFlag( p_person_state, i ) )
+    {
+      cnt++;
+    }
   }
-#endif
-  *p_ret_wk = !is_once && is_date && is_data && is_rnd && !is_disp;
 
-#ifdef PM_DEBUG
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-  {
-    *p_ret_wk = TRUE;
-  }
-#endif
+  *p_ret_wk = cnt >= 10;
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -175,14 +162,16 @@ VMCMD_RESULT EvCmdPersonState_SetDateEnd( VMHANDLE *p_vm, void *p_wk_adrs )
  * @retval VMCMD_RESULT
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdPersonState_SetTradeFlag( VMHANDLE *p_vm, void *p_wk_adrs )
+VMCMD_RESULT EvCmdPersonState_SetTrade( VMHANDLE *p_vm, void *p_wk_adrs )
 {
   SCRCMD_WORK   *p_wk = p_wk_adrs;
   GAMESYS_WORK  *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA      *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
   PERSON_STATE  *p_person_state  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
+  u16 monsno = SCRCMD_GetVMWorkValue( p_vm, p_wk_adrs );
 
   PERSON_STATE_SetTradeFlag( p_person_state, TRUE );
+  PERSON_STATE_SetTradeMonsno( p_person_state, monsno );
 
   return VMCMD_RESULT_CONTINUE;
 }

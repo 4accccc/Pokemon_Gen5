@@ -10189,13 +10189,36 @@
 /**
  * @def _CALL_TVT_SECRET
  * @brief 隠しキャラからのデモ呼び出し
- */
+ *
+ * @param mode  以下の値
+ *        SCR_LTVT_CALLTVT_MODE_NORMAL    (0)   ///<  通常のライブキャスター
+ *        SCR_LTVT_CALLTVT_MODE_REVERSE   (1)   ///<  色反転ライブキャスター
+ *
+ *  @param  place 以下の値
+ *        SCR_LTVT_CALLTVT_PLACE_C04  各ゾーンで呼び出したときの値
+ *        SCR_LTVT_CALLTVT_PLACE_C05
+ *        SCR_LTVT_CALLTVT_PLACE_C06
+ *        SCR_LTVT_CALLTVT_PLACE_T03
+ *        SCR_LTVT_CALLTVT_PLACE_T04
+ *        SCR_LTVT_CALLTVT_PLACE_T07
+ *        SCR_LTVT_CALLTVT_PLACE_R05
+ *        SCR_LTVT_CALLTVT_PLACE_R06
+ *        SCR_LTVT_CALLTVT_PLACE_R07
+ *        SCR_LTVT_CALLTVT_PLACE_R09
+ *        SCR_LTVT_CALLTVT_PLACE_R11
+ *        SCR_LTVT_CALLTVT_PLACE_R12
+ *        SCR_LTVT_CALLTVT_PLACE_R13
+ *        SCR_LTVT_CALLTVT_PLACE_R14
+ *        SCR_LTVT_CALLTVT_PLACE_R16
+ */       
 //--------------------------------------------------------------
-#define _CALL_TVT_SECRET()  \
-    _ASM_CALL_TVT_SECRET
+#define _CALL_TVT_SECRET( mode, place )  \
+    _ASM_CALL_TVT_SECRET mode, place 
 
-  .macro  _ASM_CALL_TVT_SECRET
+  .macro  _ASM_CALL_TVT_SECRET mode, place
   .short  EV_SEQ_CALL_TVT_SECRET
+  .short  \mode
+  .short  \place
   .endm
 
 //======================================================================
@@ -12414,15 +12437,17 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ライブキャスター隠しキャラからの電話
- * @param ret_wk  TRUEのとき隠しキャラからの電話
+ * @brief ライブキャスター隠しキャラから電話がくるかチェック
+ * @param ret_wk  TRUEのとき隠しキャラからの電話がまだくる
+ *
+ *  この関数でチェックしワークを消すこと
  */
 //--------------------------------------------------------------
-#define _PERSON_TVT_CHECK_SECRET_CALL( ret_wk ) \
-    _ASM__PERSON_TVT_CHECK_SECRET_CALL ret_wk
+#define _PERSON_TVT_CHECK_SECRET_CALL_END( ret_wk ) \
+    _ASM__PERSON_TVT_CHECK_SECRET_CALL_END ret_wk
 
   .macro _ASM__PERSON_TVT_CHECK_SECRET_CALL ret_wk
-  .short EV_SEQ_PERSON_CHECK_SECRET
+  .short EV_SEQ_PERSON_CHECK_SECRET_END
   .short \ret_wk
   .endm
 
@@ -12442,6 +12467,12 @@
 //--------------------------------------------------------------
 /**
  * @brief 隠しキャラとのデートがあるかチェック
+ *  
+ *  @param ret_wk 以下の値が帰ってくる
+ *      SCR_PERSON_SECRET_DATE_NONE     (0)   ///<デートがない
+ *      SCR_PERSON_SECRET_DATE_FIRST    (1)   ///<初回デート
+ *      SCR_PERSON_SECRET_DATE_REGULAR  (2)   ///<定期デートがない
+ *      SCR_PERSON_SECRET_DATE_GIVE     (3)   ///<落し物受け渡しがない
  */
 //--------------------------------------------------------------
 #define _PERSON_STATE_CHECK_SECRET_DATE( ret_wk ) \
@@ -12467,13 +12498,16 @@
 //--------------------------------------------------------------
 /**
  * @brief 隠しキャラとの交換を行った
+ *
+ * @param monsno 交換したポケモン種族ナンバー ->TVで使う
  */
 //--------------------------------------------------------------
-#define _PERSON_STATE_SET_TRADE_FLAG() \
-    _ASM_PERSON_STATE_SET_TRADE_FLAG
+#define _PERSON_STATE_SET_TRADE( monsno ) \
+    _ASM_PERSON_STATE_SET_TRADE monsno
 
-  .macro _ASM_PERSON_STATE_SET_TRADE_FLAG
+  .macro _ASM_PERSON_STATE_SET_TRADE monsno
   .short EV_SEQ_PERSON_SET_TRADE_FLAG
+  .short \monsno
   .endm
 
 
@@ -14621,13 +14655,13 @@
 
 //======================================================================
 //
-//  データコンバート！
+//  データコンバート
 //
 //======================================================================
 .include "../../../prog/src/field/scrcmd_dataconvert.h"
 //--------------------------------------------------------------
 /**
- * _DATACONV_GET_FLAG コンバートした状況
+ * _DATACONV_GET_FLAG コンバートしたフラグを取得
  * @param flag      調べるフラグ
  *            DATACONV_FLAG_GAME_CLEAR        ゲームクリアしているか
  *            DATACONV_FLAG_FIRST_POKE_GET    最初のポケモンゲットしたか
@@ -14661,9 +14695,11 @@
 
 //--------------------------------------------------------------
 /**
- * _DATACONV_GET_FLAG コンバートした状況
+ * _DATACONV_GET_WORK コンバートしたワークを取得
  * @param wk_num    調べるワーク
- *            DATACONV_N_BATTLE_RAIMON  ライモンシティでのN戦とのワーク
+ *            DATACONV_WORK_FIRST_POKETYPE   最初になんのポケモンタイプを選んだか
+ *            DATACONV_WORK_N_BATTLE_RAIMON  ライモンシティでのN戦ワーク
+ *            DATACONV_WORK_FURNITURE_SHOP   シッポウシティで家具屋イベントをしたか
  *
  * @param ret_wk    ワークの中身
  */
@@ -14732,8 +14768,8 @@
 
 //--------------------------------------------------------------
 /**
- * _DATACONV_IS_CONV_MUSICAL ミュージカルがすでにコンバート済みか
- * @param ret_wk  TRUEならばコンバート済み  FALSEならまだ
+ * _DATACONV_IS_OVER_SCORE ミュージカルのスコアが元の持ち主より多いか
+ * @param ret_wk  TRUEならば自分の方が高い  FALSEなら元の持ち主の方が高い
  */
 //--------------------------------------------------------------
 #define _DATACONV_IS_OVER_SCORE( ret_wk ) \
