@@ -314,17 +314,8 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
   //ローカルライブキャスター
   {
     PERSON_STATE* p_person_state  = PERSON_STATE_GetWork(save);
-    const RTCDate *cp_rtc = EVTIME_GetRTCDate( gdata );
-
     //ローカルライブキャスター１日１回電話フラグを消す
-    PERSON_STATE_SetSecretOnceDayCallFlag( p_person_state, FALSE );
-    //ローカルライブキャスターデート待ち合わせすっぽかしチェック
-    if( PERSON_STATE_CheckSecretDataEventLater( p_person_state, cp_rtc ) )
-    {
-      //デートの約束を取り消し、不機嫌になる
-      PERSON_STATE_ClearSecretDateEvent( p_person_state );
-      PERSON_STATE_SetSecretDispleased( p_person_state, TRUE );
-    }
+    PERSON_STATE_SetSecretOnceDateFlag( p_person_state, FALSE );
   }
 
   if(!is_penalty){  //ペナルティタイムでないときだけ処理する

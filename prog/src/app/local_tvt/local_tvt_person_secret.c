@@ -55,6 +55,7 @@
 typedef struct 
 {
   s32   seq;
+  s32   sub_seq;
   BOOL  is_talk;
   u32   talk_msgID;
   LOCAL_TVT_POKELIST        *p_pokelist;
@@ -77,6 +78,8 @@ static BOOL LOCAL_TVT_SECRET_Greeting( LOCAL_TVT_PERSON_SYS *p_person, const LOC
 static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
 static BOOL LOCAL_TVT_SECRET_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
 static BOOL LOCAL_TVT_SECRET_TrueFace( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
+
+static BOOL Local_Tvt_Secret_FarewellInner( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, LOCAL_TVT_SECRET *p_wk, s32 *p_seq );
 
 //隠しキャラのデータ取得
 static PERSON_STATE_SECRET_DATE Local_Tvt_Secret_GetDateEvent( const LOCAL_TVT_CALLDATA *cp_data );
@@ -289,6 +292,7 @@ static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
   {
     SEQ_INIT,
     SEQ_MAIN,
+    SEQ_FAREWELL,
     SEQ_END,
   };
   LOCAL_TVT_SECRET *p_wk       = p_wk_adrs;
@@ -318,6 +322,9 @@ static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
         msgID += SECRET_MSGID_FEMALE_ADD;
       }
       LOCAL_TVT_CHARA_StartTalk( p_secret, cp_msg, msgID );
+
+      //話しかけた
+      p_wk->is_talk = TRUE;
     }
     p_wk->seq++;
     break;
@@ -328,11 +335,16 @@ static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
       p_wk->seq++;
     }
     break;
+    
+  //隠しキャラは話すを選んだらそのままさよならの処理へいく
+  case SEQ_FAREWELL:
+    if( Local_Tvt_Secret_FarewellInner( p_person, cp_param, p_wk, &p_wk->sub_seq ) )
+    {
+      p_wk->seq++;
+    }
+    break;
 
   case SEQ_END:
-    //話しかけた
-    p_wk->is_talk = TRUE;
-
     p_wk->seq = 0;
     return TRUE;
 
@@ -355,16 +367,32 @@ static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
 //-----------------------------------------------------------------------------
 static BOOL LOCAL_TVT_SECRET_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs )
 {
+  LOCAL_TVT_SECRET *p_wk = p_wk_adrs;
+  return Local_Tvt_Secret_FarewellInner( p_person, cp_param, p_wk, &p_wk->seq );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  さよなら  
+ *
+ *	@param	LOCAL_TVT_PERSON_SYS *p_person  人物システム
+ *	@param const LOCAL_TVT_PERSON_SYS_PARAM *cp_param 引数
+ *	@param	*p_wk_adrs  ワーク
+ *
+ *	@return TRUEで終了  FALSEで継続
+ */ 
+//-----------------------------------------------------------------------------
+static BOOL Local_Tvt_Secret_FarewellInner( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, LOCAL_TVT_SECRET *p_wk, s32 *p_seq )
+{
   enum
   {
     SEQ_INIT,
     SEQ_MAIN,
     SEQ_END,
   };
-  LOCAL_TVT_SECRET *p_wk       = p_wk_adrs;
   LOCAL_TVT_CHARA* p_secret = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
-  switch( p_wk->seq )
+  switch( (*p_seq) )
   {
   case SEQ_INIT:
     {
@@ -378,18 +406,18 @@ static BOOL LOCAL_TVT_SECRET_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOC
       }
       LOCAL_TVT_CHARA_StartTalk( p_secret, cp_msg, msgID );
     }
-    p_wk->seq++;
+    (*p_seq)++;
     break;
 
   case SEQ_MAIN:
     if( LOCAL_TVT_CHARA_WaitTalk( p_secret, cp_param->p_chara_sys ) )
     {
-      p_wk->seq++;
+      (*p_seq)++;
     }
     break;
 
   case SEQ_END:
-    p_wk->seq = 0;
+    (*p_seq) = 0;
   
     //話しかけた場合は状態変更
     if( p_wk->is_talk )
