@@ -6,6 +6,7 @@
 //============================================================================================
 #pragma once
 
+#include "field_g3d_palette.h"
 //------------------------------------------------------------------
 //
 //	マップデータ
@@ -78,6 +79,7 @@ typedef struct {
  * @brief	マップデータ登録
  */
 //------------------------------------------------------------------
-extern void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, u8 *gray_scale );
+extern void	FLDMAPPER_ResistData(
+    FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, const FLD_G3DPAL * fld_g3dPal );
 
 

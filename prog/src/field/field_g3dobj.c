@@ -13,6 +13,7 @@
 
 #include "system/palanm.h"
 
+#include "field_g3d_palette.h"  //FLD_G3DPAL
 //======================================================================
 //  define
 //======================================================================
@@ -78,7 +79,7 @@ struct _TAG_FLD_G3DOBJ_CTRL
   u16 obj_max;
   FLD_G3DOBJ_RES *pResTbl;
   FLD_G3DOBJ *pObjTbl;
-  u8 *gray_scale;
+  const FLD_G3DPAL * fld_g3dPal;
 };
 
 //======================================================================
@@ -87,7 +88,7 @@ struct _TAG_FLD_G3DOBJ_CTRL
 static void transTexture( FLD_G3DOBJ_RES *res );
 static void setResource(
     FLD_G3DOBJ_RES *res, HEAPID heapID,
-    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag, u8 *gray_scale );
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag, const FLD_G3DPAL * fld_g3dPal );
 static void delResource( FLD_G3DOBJ_RES *res );
 static void setObject( FLD_G3DOBJ *obj,
     FLD_G3DOBJ_RES *res, u32 resIdx, u32 mdlIdx, HEAPID heapID,
@@ -234,15 +235,15 @@ void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl )
 
 //--------------------------------------------------------------
 /**
- * FLD_G3DOBJ_CTRL グレースケール設定
+ * FLD_G3DOBJ_CTRL テクスチャカラー変更設定
  * @param ctrl FLD_G3DOBJ_CTRL
- * @param gray_scale グレースケール
+ * @param fld_g3dPal カラー変更情報へのポインタ
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLD_G3DOBJ_CTRL_SetGrayScale( FLD_G3DOBJ_CTRL *ctrl, u8 *gray_scale )
+void FLD_G3DOBJ_CTRL_SetFldG3DPal( FLD_G3DOBJ_CTRL *ctrl, const FLD_G3DPAL * fld_g3dPal )
 {
-  ctrl->gray_scale = gray_scale;
+  ctrl->fld_g3dPal = fld_g3dPal;
 }
 
 //--------------------------------------------------------------
@@ -257,14 +258,14 @@ void FLD_G3DOBJ_CTRL_SetGrayScale( FLD_G3DOBJ_CTRL *ctrl, u8 *gray_scale )
  */
 //--------------------------------------------------------------
 static FLD_G3DOBJ_RESIDX createResource( FLD_G3DOBJ_CTRL *ctrl,
-    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag, u8 *gray_scale )
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag, const FLD_G3DPAL * fld_g3dPal )
 {
   u16 i;
   FLD_G3DOBJ_RES *res = ctrl->pResTbl;
   
   for( i = 0; i < ctrl->res_max; i++, res++ ){
     if( res->pResMdl == NULL ){
-      setResource( res, ctrl->heapID, head, transFlag, gray_scale );
+      setResource( res, ctrl->heapID, head, transFlag, fld_g3dPal );
       return( i );
     }
   }
@@ -287,7 +288,7 @@ static FLD_G3DOBJ_RESIDX createResource( FLD_G3DOBJ_CTRL *ctrl,
 FLD_G3DOBJ_RESIDX FLD_G3DOBJ_CTRL_CreateResource( FLD_G3DOBJ_CTRL *ctrl,
     const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag )
 {
-  return( createResource(ctrl,head,transFlag,ctrl->gray_scale) );
+  return( createResource(ctrl,head,transFlag,ctrl->fld_g3dPal) );
 }
 
 //--------------------------------------------------------------
@@ -705,7 +706,7 @@ static void transTexture( FLD_G3DOBJ_RES *res )
 //--------------------------------------------------------------
 static void setResource(
     FLD_G3DOBJ_RES *res, HEAPID heapID,
-    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag, u8 *gray_scale )
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag, const FLD_G3DPAL * fld_g3dPal )
 {
   if( head->arcHandleMdl != NULL ){
     res->pResMdl = GFL_G3D_CreateResourceHandle(
@@ -717,7 +718,7 @@ static void setResource(
         head->arcHandleTex, head->arcIdxTex );
   }
   
-  if( gray_scale != NULL ){ //グレースケールの適用
+  if( fld_g3dPal != NULL ){ //カラーフィルタの適用
     GFL_G3D_RES *pTex = NULL;
     
     if( res->pResMdl != NULL ){
@@ -728,13 +729,7 @@ static void setResource(
       pTex = res->pResTex;
     }
     
-    if( GFL_G3D_CheckResourceType(pTex,GFL_G3D_RES_CHKTYPE_TEX) ){
-      NNSG3dResFileHeader *head = GFL_G3D_GetResourceFileHeader( pTex );
-      NNSG3dResTex *tex = NNS_G3dGetTex( head ); 
-      void *pData = (u8*)tex + tex->plttInfo.ofsPlttData;
-      u32 size = (u32)tex->plttInfo.sizePltt << 3;
-      PaletteGrayScaleShadeTable( pData, size / sizeof(u16), gray_scale );
-    }
+    FLD_G3DPAL_Filter( fld_g3dPal, pTex );
   }
   
   if( res->pResMdl != NULL || res->pResTex != NULL ){

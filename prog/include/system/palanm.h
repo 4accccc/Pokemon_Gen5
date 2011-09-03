@@ -166,8 +166,10 @@ void PaletteWorkSet_VramCopy(PALETTE_FADE_PTR pfd, FADEREQ req, u16 pos, u32 tra
 
 extern void PaletteGrayScale(u16* pal, int pal_size);
 extern void PaletteGrayScaleFlip(u16* pal, int pal_size);
-extern void PaletteGrayScaleShadeTable(u16* pal, int pal_size,u8 *shade_table);
+extern void PaletteGrayScaleShadeTable(u16* pal, int pal_size,const u8 *shade_table);
 extern void PaletteColorChange(u16* pal, int pal_size, int rp, int gp, int bp);
+extern void PaletteSepia(u16* pal, int pal_size );
+
 extern void PokeColorChange(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, HEAPID heap, FADEREQ req, u32 trans_size, u16 pos, int r, int g, int b);
 extern void SoftFadePfd(PALETTE_FADE_PTR pfd, FADEREQ req, u16 start_pos,  u16 col_num, u8 evy, u16 next_rgb);
 extern void ColorConceChange(const u16 *src, u16 *dest, u16 fade_bit, u8 evy, u16 next_rgb);

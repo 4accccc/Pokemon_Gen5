@@ -331,7 +331,8 @@ static const void* BM_AREA_HEADER_getNSBMDData( const BM_AREA_HEADER* header, u3
 
 static const void* BM_ANIME_DATA_GetAnimeData( const FIELD_BMANIME_DATA* bmanime, u32 idx );
 
-static void loadBMTextureSet(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, u8* gray_scale);
+static void loadBMTextureSet(
+    FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, const FLD_G3DPAL * fld_g3dPal);
 static void freeBMTextureSet(FIELD_BMODEL_MAN * man);
 
 //------------------------------------------------------------------
@@ -348,13 +349,14 @@ static void DEBUG_BMANIME_dump(const FIELD_BMANIME_DATA * data);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
-static void createAllResource(FIELD_BMODEL_MAN * man, u8 *gray_scale);
+static void createAllResource(FIELD_BMODEL_MAN * man, const FLD_G3DPAL * fld_g3dPal);
 static void deleteAllResource(FIELD_BMODEL_MAN * man);
 
 static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOBJ * g3dMapObj);
 static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOBJ * g3dMapObj);
 
-static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, u16 entryNo, u8 *gray_scale);
+static void OBJRES_initialize(
+    FIELD_BMODEL_MAN * man, OBJ_RES * objRes, u16 entryNo, const FLD_G3DPAL * fld_g3dPal);
 static void OBJRES_finalize( OBJ_RES * objRes );
 static void OBJHND_initialize(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl, const OBJ_RES* objRes);
 static void OBJHND_finalize( OBJ_HND * objHdl );
@@ -507,7 +509,8 @@ void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man)
  * @param man 配置モデルマネジャーへのポインタ
  */
 //------------------------------------------------------------------
-void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata, u8* gray_scale)
+void FIELD_BMODEL_MAN_Load(
+    FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata, const FLD_G3DPAL * fld_g3dPal)
 {	
 	u16 bmlist_index;
   ARCID bmtex_arc_id;
@@ -534,12 +537,12 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
   loadAreaBMData( man, mdl_arc_id, bmlist_index );
 
   //エリア別配置モデルテクスチャセットの読み込み
-  loadBMTextureSet(man, bmtex_arc_id, bmlist_index, gray_scale );
+  loadBMTextureSet(man, bmtex_arc_id, bmlist_index, fld_g3dPal );
 
 	//ID→登録順序の変換データテーブル生成
 	makeBMIDToEntryTable( man, default_id );
 
-  createAllResource( man, gray_scale );
+  createAllResource( man, fld_g3dPal );
   createFullTimeObjHandle( man, &man->g3dMapObj );
 
   OS_Printf( "heap rest = %d\n", GFL_HEAP_GetHeapFreeSize( FIELD_BMODEL_MAN_GetHeapID(man) ) );
@@ -908,12 +911,13 @@ static const void* BM_ANIME_DATA_GetAnimeData( const FIELD_BMANIME_DATA* bmanime
  * @param file_id  エリアIDから変換したファイル指定ID
  */
 //------------------------------------------------------------------
-static void loadBMTextureSet(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, u8* gray_scale)
+static void loadBMTextureSet(
+    FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, const FLD_G3DPAL * fld_g3dPal)
 {
   man->g3DresTex = GFL_G3D_CreateResourceArc( arc_id, file_id );
   
-  if( gray_scale != NULL ){
-    FLDMAPPER_Field_Grayscale( man->g3DresTex, gray_scale );
+  if( fld_g3dPal != NULL ){
+    FLD_G3DPAL_Filter( fld_g3dPal, man->g3DresTex );
   }
   if(	!GFL_G3D_TransVramTextureAndFreeImageEntity( man->g3DresTex )){
     GF_ASSERT(0);
@@ -1083,7 +1087,7 @@ static u8   TIMEANIME_CTRL_getIndex( const TIMEANIME_CTRL * tmanm_ctrl )
 //------------------------------------------------------------------
 //配置モデルマネジャーからの内容で生成
 //------------------------------------------------------------------
-static void createAllResource(FIELD_BMODEL_MAN * man, u8 *gray_scale)
+static void createAllResource(FIELD_BMODEL_MAN * man, const FLD_G3DPAL * fld_g3dPal)
 { 
   u32 entryCount = man->entryCount;
 
@@ -1103,8 +1107,8 @@ static void createAllResource(FIELD_BMODEL_MAN * man, u8 *gray_scale)
     for ( entryNo = 0; entryNo < man->objRes_Count; entryNo++ )
     {
       OBJ_RES * objRes = &man->objRes[entryNo];
-      //TAMADA_Printf("BM:Create Rsc %d (%d)\n", entryNo, bm_id);
-      OBJRES_initialize( man, objRes, entryNo, gray_scale );
+      OBJRES_initialize( man, objRes, entryNo, fld_g3dPal );
+      TAMADA_Printf("BM:Create Rsc %d (%d)\n", entryNo, objRes->bmInfo->bm_id);
     }
   }
 
@@ -1197,7 +1201,8 @@ static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOB
 //------------------------------------------------------------------
 // オブジェクトリソースを作成
 //------------------------------------------------------------------
-static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, u16 entryNo, u8 *gray_scale)
+static void OBJRES_initialize(
+    FIELD_BMODEL_MAN * man, OBJ_RES * objRes, u16 entryNo, const FLD_G3DPAL * fld_g3dPal)
 {
 	GFL_G3D_RES* resTex;
 

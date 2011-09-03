@@ -138,6 +138,8 @@
 
 #include "map_replace.h"  //MAPREPLACE_GetFlag
 
+#include "field_g3d_palette.h"  //FLD_G3DPAL_
+
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -348,6 +350,7 @@ struct _FIELDMAP_WORK
 	FLDEFF_CTRL *fldeff_ctrl;
 	UNION_EFF_SYSTEM *union_eff;    //ユニオンエフェクト制御システム
   FIELD_PALACE_SYS *palace_sys;  //侵入系ワーク
+  FLD_G3DPAL fld_g3dPal;          //3Dパレット制御
 
 	FIELDSKILL_MAPEFF * fieldskill_mapeff;
   
@@ -495,6 +498,7 @@ static fx32 fldmap_getProjMatZOffsValue( u16 zone_id );
 static BOOL zonedata_GetShadowUse( u16 zone_id );
 
 static BOOL zonedata_IsEnvSE( u16 zone_id );
+static BOOL zonedata_IsSepiaMap( u16 zone_id );
 static void setupLiveCaster( GAMEDATA *gdata, u32 zone_id );
 
 
@@ -777,6 +781,11 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     
     //進入用グレースケール管理作成
     fieldWork->palace_sys = FIELD_PALACE_Create( fieldWork->heapID, gsys , fieldWork , fieldWork->map_id );
+    {
+      u8 *gray_scale = FIELD_PALACE_GetShadeTable( fieldWork->palace_sys );
+      BOOL is_sepia = zonedata_IsSepiaMap( fieldWork->map_id );
+      FLD_G3DPAL_Init( &fieldWork->fld_g3dPal, gray_scale, is_sepia );
+    }
     
     SET_CHECK("setup: fldmapper");  //デバッグ：処理負荷計測
     {
@@ -790,14 +799,11 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     SET_CHECK("setup: bmodel load");  //デバッグ：処理負荷計測
       //ここで配置モデルリストをセットする
       {
-        u8 *gray_scale;
-        GAME_COMM_SYS_PTR game_comm;
-        game_comm = GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
-        gray_scale  = FIELD_PALACE_GetShadeTable( fieldWork->palace_sys );
-        FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata, gray_scale);
+        FIELD_BMODEL_MAN_Load(
+            bmodel_man, fieldWork->map_id, fieldWork->areadata, &fieldWork->fld_g3dPal);
 
-        //G3DOBJにグレースケール適用
-        FLD_G3DOBJ_CTRL_SetGrayScale( fieldWork->fieldG3dObjCtrl, gray_scale );
+        //G3DOBJにカラー変更情報を渡す
+        FLD_G3DOBJ_CTRL_SetFldG3DPal(fieldWork->fieldG3dObjCtrl, &fieldWork->fld_g3dPal);
       }
     }
 
@@ -817,13 +823,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     
     //マップデータ登録
-    {
-      u8 *gray_scale;
-      GAME_COMM_SYS_PTR game_comm;
-      game_comm = GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
-      gray_scale  = FIELD_PALACE_GetShadeTable( fieldWork->palace_sys );
-      FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res, gray_scale );
-    }
+    FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res, &fieldWork->fld_g3dPal );
 
     //NOGRIDマップデータ登録
     {
@@ -4259,6 +4259,24 @@ static BOOL zonedata_IsEnvSE( u16 zone_id )
   return FALSE;
 }
 
+//==================================================================
+/**
+ * @brief   セピア調にするかどうかの判定処理
+ * @date  2011.09.03
+ * @author  tamada
+ */
+//==================================================================
+static BOOL zonedata_IsSepiaMap( u16 zone_id )
+{
+  
+  if ( zone_id == ZONE_ID_OLDC01R0501 ) return TRUE;
+  if ( zone_id == ZONE_ID_OLDT04R0301 ) return TRUE;
+  if ( zone_id == ZONE_ID_OLDT06R0101 ) return TRUE;
+  if ( zone_id == ZONE_ID_OLDC08R0101 ) return TRUE;
+  if ( zone_id == ZONE_ID_OLDC02GYM0202 ) return TRUE;
+  if ( zone_id == ZONE_ID_OLDC05R0501 ) return TRUE;
+  return FALSE;
+}
 
 //----------------------------------------------------------------------------
 /**

@@ -187,7 +187,8 @@ struct _FLD_G3D_MAPPER {
 
 
 //------------------------------------------------------------------
-static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, u8 *gray_scale );
+static void CreateGlobalTexture(
+    FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, const FLD_G3DPAL * fld_g3dPal );
 static void DeleteGlobalTexture( FLDMAPPER* g3Dmapper );
 
 
@@ -700,7 +701,8 @@ EHL_PTR	FLDMAPPER_GetExHegihtPtr( FLDMAPPER* g3Dmapper )
  * @brief	マップデータ登録
  */
 //------------------------------------------------------------------
-void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, u8 *gray_scale )
+void	FLDMAPPER_ResistData(
+    FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, const FLD_G3DPAL * fld_g3dPal )
 {
   INIT_CHECK();
 
@@ -741,7 +743,7 @@ void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
   SET_CHECK("g3dmapper: texture");
   g3Dmapper->gtexType = resistData->gtexType;
 	//グローバルテクスチャ作成
-	CreateGlobalTexture( g3Dmapper, resistData, gray_scale );
+	CreateGlobalTexture( g3Dmapper, resistData, fld_g3dPal );
 	//グローバルオブジェクト作成
 	//CreateGlobalObject( g3Dmapper, resistData );
   
@@ -871,37 +873,13 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
 
 
 
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres, u8* gray_scale)
-{
-	NNSG3dResFileHeader*	header;
-	NNSG3dResTex*			texture;
-  u32 sz;
-  void* pData;
-  
-	header = GFL_G3D_GetResourceFileHeader(g3Dres);
-	texture = NNS_G3dGetTex( header ); 
-
-	if( texture ){
-    sz = (u32)texture->plttInfo.sizePltt << 3;
-    pData = (u8*)texture + texture->plttInfo.ofsPlttData;
-    if( gray_scale != NULL )
-    {
-      PaletteGrayScaleShadeTable(pData, sz / sizeof(u16),gray_scale);
-    }
-		return TRUE;
-	}
-	return FALSE;
-
-}
-
 //------------------------------------------------------------------
 /**
  * @brief	グローバルテクスチャ作成
  */
 //------------------------------------------------------------------
-static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, u8 *gray_scale )
+static void CreateGlobalTexture(
+    FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, const FLD_G3DPAL * fld_g3dPal )
 {
 	switch (resistData->gtexType) {
 	case FLDMAPPER_TEXTYPE_USE:
@@ -910,9 +888,9 @@ static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDAT
 			const FLDMAPPER_RESIST_TEX* gtexData = &resistData->gtexData;
 
       g3Dmapper->globalTexture = GFL_G3D_CreateResourceArc( gtexData->arcID, gtexData->datID );
-      if( gray_scale != NULL )
+      if( fld_g3dPal != NULL )
       {
-        FLDMAPPER_Field_Grayscale(g3Dmapper->globalTexture, gray_scale);
+        FLD_G3DPAL_Filter(fld_g3dPal, g3Dmapper->globalTexture);
       }
       if ( !GFL_G3D_TransVramTextureAndFreeImageEntity( g3Dmapper->globalTexture ) ) {
         GF_ASSERT(0);

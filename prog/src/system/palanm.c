@@ -1370,7 +1370,7 @@ void PaletteGrayScaleFlip(u16* pal, int pal_size)
  *
  */
 //--------------------------------------------------------------
-void PaletteGrayScaleShadeTable(u16* pal, int pal_size, u8* shade_table )
+void PaletteGrayScaleShadeTable(u16* pal, int pal_size, const u8* shade_table )
 {
   int i, r, g, b;
   u32 c;
@@ -1425,6 +1425,42 @@ void PaletteColorChange(u16* pal, int pal_size, int rp, int gp, int bp)
     if (b > 31){ b = 31; }
 
     *pal = (u16)((b<<10)|(g<<5)|r);
+    pal++;
+  }
+}
+
+//--------------------------------------------------------------
+//  セピア色調パラメータ
+//--------------------------------------------------------------
+u32 SepiaValueRed = 155;
+u32 SepiaValueGreen = 135;
+u32 SepiaValueBlue = 85;
+
+//--------------------------------------------------------------
+/**
+ * @brief パレットのセピア化
+ * @param[in]  pal       変更対象パレットデータ
+ * @param[in]  pal_size    変更サイズ(何色変更するか)
+ */
+//--------------------------------------------------------------
+void PaletteSepia(u16* pal, int pal_size)
+{
+  int i, r, g, b;
+  u32 c;
+
+  for(i = 0; i < pal_size; i++)
+  {
+    r = (*pal) & 0x1f;
+    g = ((*pal) >> 5) & 0x1f;
+    b = ((*pal) >> 10) & 0x1f;
+
+    c = RGBtoY(r,g,b);
+
+    *pal = (u16)(
+        (((c*SepiaValueBlue)>>8)<<10)|
+        (((c*SepiaValueGreen)>>8)<<5)|
+        ((c*SepiaValueRed)>>8)
+        );
     pal++;
   }
 }

@@ -200,10 +200,6 @@ extern void FLDMAPPER_GetDrawOffset( const FLDMAPPER *g3Dmapper, VecFx32 *offs )
 //------------------------------------------------------------------
 extern void FLDMAPPER_GetBlockXZPos( const FLDMAPPER * g3Dmapper, u32 * blockx, u32 * blockz );
 
-//--------------------------------------------------------------
-//テクスチャリソースを進入用のカラーに変更する
-//--------------------------------------------------------------
-extern BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres, u8* gray_scale);
 
 
 //--------------------------------------------------------------

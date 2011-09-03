@@ -16,6 +16,7 @@
 
 #include "map/dp3format.h"
 #include "field_hit_check.h"
+#include "field_g3d_palette.h"
 
 //============================================================================================
 //============================================================================================
@@ -58,7 +59,8 @@ extern void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man);
 //------------------------------------------------------------------
 //  マップデータの読み込み処理
 //------------------------------------------------------------------
-extern void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata, u8* gray_scale);
+extern void FIELD_BMODEL_MAN_Load(
+    FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata, const FLD_G3DPAL * fld_g3dPal);
 
 //------------------------------------------------------------------
 /// ヒープ指定の取得
