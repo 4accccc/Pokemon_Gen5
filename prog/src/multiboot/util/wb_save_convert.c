@@ -224,6 +224,7 @@ static void Wb_Save_Conv_ConvertData( const void *cp_data_adrs, WB_SAVE_CONV_DAT
       {
         { WK_SYS_FIRST_POKETYPE, WB_SAVE_CONV_WORK_SYS_FIRST_POKETYPE },
         { WK_SCENE_C04P01, WB_SAVE_CONV_WORK_N_BATTLE_RAIMON },
+        { WK_SCENE_C02R0101,  WB_SAVE_CONV_WORK_FURNITURE_SHOP },
       };
 
       for( i = 0; i < NELEMS( sc_convert_work_tbl ); i++ )
