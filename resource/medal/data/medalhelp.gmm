@@ -1026,17 +1026,17 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_084">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_085">
 		<language name="JPN" width="216">パソコンの　ボックス　ひとつが
 いっぱいに　なる　くらい
 ポケモンを　あつめてみよう！</language>
 		<language name="JPN_KANJI" width="216">パソコンの　ボックス　ひとつが
 いっぱいに　なる　くらい
 ポケモンを　集めてみよう！</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_085">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_086">
@@ -1060,6 +1060,11 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_090">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_091">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
@@ -2152,11 +2157,6 @@
 	</row>
 
 	<row id="MDL_HINT_SPECIAL_007">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_091">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
