@@ -9298,6 +9298,110 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dni_sepia_color_title"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セピアカラー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-03T10:15:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セピアカラー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-03T10:15:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_sepia_color_red"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>R</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-03T10:16:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>R</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-03T10:16:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_sepia_color_green"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>G</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-03T10:16:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>G</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-03T10:16:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_sepia_color_blue"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-03T10:16:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-03T10:16:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="dni_pokewood_point"
 		Style="Large">
 		<LanguageCell

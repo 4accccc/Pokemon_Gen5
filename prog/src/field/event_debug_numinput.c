@@ -248,6 +248,9 @@ static void DebugSetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 pa
 static u32 DebugGetWBTSaveFlag( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetWBTSaveFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param, u32 value );
 
+//セピア色調操作
+static u32 DebugGetSepiaColor( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param );
+static void DebugSetSepiaColor( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param, u32 value );
 
 #include "debug_numinput.cdat"
 
@@ -345,6 +348,10 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_WBTSave =
 {
   D_NINPUT_DATA_LIST, NELEMS( DNI_WBTSaveCount), DNI_WBTSaveCount
 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_SepiaColor =
+{
+  D_NINPUT_DATA_LIST, NELEMS(DNI_SepiaColorList), DNI_SepiaColorList,
+};
 
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
@@ -399,6 +406,7 @@ static const DEBUG_MENU_LIST DATA_DNumInputMenu[] =
   { dni_ltvt_00, (void*)&DATA_LocalLivecaster, GFL_OVERLAY_BLANK_ID },
   { dni_resort_00, (void*)&DATA_ResonanceResort, GFL_OVERLAY_BLANK_ID },
   { dni_wbtsave_title, (void*)&DATA_WBTSave, GFL_OVERLAY_BLANK_ID },
+  { dni_sepia_color_title, (void*)&DATA_SepiaColor, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1895,6 +1903,33 @@ static void DebugSetWBTSaveFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param,
   } else {
     WBTSAVE_ResetFlag( wbtsave, param );
   }
+}
+
+//=============================================================================
+//=============================================================================
+extern u32 SepiaValueRed;
+extern u32 SepiaValueGreen;
+extern u32 SepiaValueBlue;
+
+static u32 * getSepiaValue( int id )
+{
+  switch (id)
+  {
+  case 0: return &SepiaValueRed;
+  case 1: return &SepiaValueGreen;
+  case 2: return &SepiaValueBlue;
+  }
+  return &SepiaValueBlue;
+}
+static u32 DebugGetSepiaColor( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param )
+{
+  return *(getSepiaValue( param ));
+}
+
+static void DebugSetSepiaColor( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param, u32 value )
+{
+  u32 * color = getSepiaValue( param );
+  *color = value;
 }
 
 #endif  //PM_DEBUG

@@ -2842,7 +2842,7 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
   
 	MMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
 		fieldWork->heapID, gdata, fieldWork,
-    fieldWork->g3Dmapper, fieldWork->nogridMapper );
+    fieldWork->g3Dmapper, fieldWork->nogridMapper, &fieldWork->fld_g3dPal );
 	
 	MMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
 		fieldWork->fldMMdlSys, fieldWork->mainBbdActSys, 32 );

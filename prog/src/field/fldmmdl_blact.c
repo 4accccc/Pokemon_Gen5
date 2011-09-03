@@ -1370,11 +1370,14 @@ static void BBDResUnitIndex_AddResUnit(
 {
   GFL_G3D_RES *g3dres;
   const OBJCODE_PARAM_BUF_BBD *prm_bbd;
+  const FLD_G3DPAL * fld_g3dPal;
   
   prm_bbd = MMDL_TOOL_GetOBJCodeParamBufBBD( pParam );
   
   g3dres = GFL_G3D_CreateResourceHandle(
     MMDLSYS_GetResArcHandle(pBlActCont->mmdlsys), prm_bbd->res_idx );
+  fld_g3dPal = MMDLSYS_GetFldG3DPal( pBlActCont->mmdlsys );
+  FLD_G3DPAL_Filter( fld_g3dPal, g3dres );
   BBDResUnitIndex_AddResource( pBlActCont, g3dres,
       pParam->code, pParam->mdl_size, pParam->tex_size, flag );
 }

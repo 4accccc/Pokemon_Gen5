@@ -29,6 +29,8 @@
 
 #include "fmmdl_anm/fldmmdl_anmtbl.h"
 
+#include "field_g3d_palette.h"  //FLD_G3DPAL
+
 //======================================================================
 //	define
 //======================================================================
@@ -701,9 +703,9 @@ extern MMDLSYS * MMDLSYS_CreateSystem(
     HEAPID heapID, u32 max, MMDL_ROCKPOS *rockpos );
 extern void MMDLSYS_FreeSystem( MMDLSYS *fos );
 
-extern void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
+extern void MMDLSYS_SetupProc( MMDLSYS *mmdlsys, HEAPID heapID,
     GAMEDATA *gdata, FIELDMAP_WORK *fieldmap,
-    const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper );
+    const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper, const FLD_G3DPAL * fld_g3dPal );
 extern void MMDLSYS_DeleteProc( MMDLSYS *fos );
 extern void MMDLSYS_UpdateProc( MMDLSYS *fos );
 extern void MMDLSYS_VBlankProc( MMDLSYS *fos );
@@ -773,6 +775,7 @@ extern FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos );
 extern void * MMDLSYS_GetFieldMapWork( MMDLSYS *fos );
 extern GAMEDATA * MMDLSYS_GetGameData( MMDLSYS *fos );
 extern u16 MMDLSYS_GetTargetCameraAngleYaw( const MMDLSYS *mmdlsys );
+extern const FLD_G3DPAL * MMDLSYS_GetFldG3DPal( const MMDLSYS *mmdlsys );
 extern GFL_BBD_LIGHTMASK MMDLSYS_GetReflectionShadowLightMask( MMDLSYS *mmdlsys );
 extern void MMDLSYS_SetReflectionShadowLightMask( MMDLSYS *mmdlsys ,GFL_BBD_LIGHTMASK light_mask );
 

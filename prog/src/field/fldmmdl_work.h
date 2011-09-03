@@ -65,6 +65,7 @@ struct _TAG_MMDLSYS
   FLDNOGRID_MAPPER *pNOGRIDMapper;  ///<FLDNOGRID_MAPPER
   void *fieldMapWork; ///<FIELDMAP_WORK <-各ワーク単位での接続が良い。
   const u16 *targetCameraAngleYaw; //グローバルで参照するカメラ
+  const FLD_G3DPAL * fld_g3dPal;  ///<テクスチャカラー変更用情報 
 
   void *pMdlPrmWork;    //動作モデルパラメータポインタ
 };

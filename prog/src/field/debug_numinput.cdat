@@ -547,4 +547,15 @@ static const DEBUG_NUMINPUT_LIST DNI_WBTSaveCount[] = {
   { dni_wbtsave_flag_62,   62,                              &DNI_WBTSaveFlag },
   { dni_wbtsave_flag_63,   63,                              &DNI_WBTSaveFlag },
 };
+//////////////////////////////////////////////////////
+static const DEBUG_NUMINPUT_PARAM DNI_SepiaColorFunc =
+{
+  0, 256, DebugGetSepiaColor, DebugSetSepiaColor,
+};
+
+static const DEBUG_NUMINPUT_LIST DNI_SepiaColorList[] = {
+  { dni_sepia_color_red,    0, &DNI_SepiaColorFunc },
+  { dni_sepia_color_green,  1, &DNI_SepiaColorFunc },
+  { dni_sepia_color_blue,   2, &DNI_SepiaColorFunc },
+};
 #endif  //PM_DEBUG

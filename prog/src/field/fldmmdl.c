@@ -23,6 +23,8 @@
 
 #include "system/main.h"
 
+#include "field_g3d_palette.h"  //FLD_G3DPAL
+
 #ifdef PM_DEBUG
 #ifdef _NITRO
 //@note　OBJCODE_PARAM この構造体のサイズを変更するとコンバーターの修正まで変更が及びます。
@@ -257,12 +259,13 @@ void MMDLSYS_ClearSysOBJCodeParam( MMDLSYS *mmdlsys )
 //--------------------------------------------------------------
 void MMDLSYS_SetupProc( MMDLSYS *mmdlsys, HEAPID heapID,
     GAMEDATA *gdata, FIELDMAP_WORK *fieldmap,
-    const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper )
+    const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper, const FLD_G3DPAL * fld_g3dPal )
 {
   mmdlsys->heapID = heapID;
   mmdlsys->pG3DMapper = pG3DMapper;
   mmdlsys->gdata = gdata;
   mmdlsys->fieldMapWork = fieldmap;
+  mmdlsys->fld_g3dPal = fld_g3dPal; //swan追加
   
   mmdlsys->pTCBSysWork = GFL_HEAP_AllocMemory(
     heapID, GFL_TCB_CalcSystemWorkSize(mmdlsys->mmdl_max) );
@@ -1444,6 +1447,18 @@ u16 MMDLSYS_GetTargetCameraAngleYaw( const MMDLSYS *mmdlsys )
     return( *mmdlsys->targetCameraAngleYaw );
   }
   return( 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief テクスチャカラー変更情報を取得
+ * @param mmdlsys
+ * @return  FLD_G3DPAL
+ */
+//--------------------------------------------------------------
+const FLD_G3DPAL * MMDLSYS_GetFldG3DPal( const MMDLSYS *mmdlsys )
+{
+  return mmdlsys->fld_g3dPal;
 }
 
 //--------------------------------------------------------------
