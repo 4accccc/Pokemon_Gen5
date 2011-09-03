@@ -16,6 +16,15 @@
 #define POKEWOOD_MYPOKE_NUM           (  6 )    ///< ポケモンアイコンで保存する自分の手持ちポケモンアイコンの数
 #define POKEWOOD_SHOWING_MAX          (  4 )    ///< 同時に上映する最大数
 
+/// ポケウッド情報取得関数用定義
+enum{
+  PWSV_TYPE_SENARIO_OPEN=0,     ///< シナリオオープンフラグ
+  PWSV_TYPE_SENARIO_PLAYED,     ///< シナリオ撮影済みフラグ
+  PWSV_TYPE_SENARIO_SUCCESS,    ///< シナリオ成功終了済みフラグ
+  PWSV_TYPE_SENARIO_ANNOUNCED,  ///< シナリオオープン告知済みフラグ
+};
+
+
 /// ポケウッド興行成績データ構造体定義
 typedef struct {
   int     profits;                          // 収益             4
@@ -60,6 +69,10 @@ extern POKEWOOD_SAVEDATA* GAMEDATA_GetPokewoodSavedata( GAMEDATA *gamedata );
 //ポケウッドシナリオ解放・新着フラグ
 //=============================================================================================
 //=============================================================================================
+
+extern BOOL POKEWOOD_SAVEDATA_GetPokewoodFlag( const POKEWOOD_SAVEDATA *sv, int type, int no );
+extern void POKEWOOD_SAVEDATA_SetPokewoodFlag( POKEWOOD_SAVEDATA *sv, int type, int no );
+
 //=============================================================================================
 /**
  * @brief	ポケウッドシナリオ解放フラグ
@@ -67,6 +80,8 @@ extern POKEWOOD_SAVEDATA* GAMEDATA_GetPokewoodSavedata( GAMEDATA *gamedata );
 //=============================================================================================
 extern BOOL POKEWOOD_SAVEDATA_GetPokewoodOpenFlag( const POKEWOOD_SAVEDATA *sv, int no );
 extern void POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( POKEWOOD_SAVEDATA *sv, int no );
+extern  int POKEWOOD_SAVEDATA_GetSenarioOpenNum( POKEWOOD_SAVEDATA *sv );
+
 
 //=============================================================================================
 /**
@@ -116,6 +131,16 @@ extern  int POKEWOOD_SAVEDATA_GetStarPoint( POKEWOOD_SAVEDATA *sv );
 extern void POKEWOOD_SAVEDATA_AddStarPoint( POKEWOOD_SAVEDATA *sv, int value );
 extern void POKEWOOD_SAVEDATA_DecStarPoint( POKEWOOD_SAVEDATA *sv, int value );
 extern void POKEWOOD_SAVEDATA_SetStarPoint( POKEWOOD_SAVEDATA *sv, int value );
+extern  int POKEWOOD_SAVEDATA_CalcStarPoint2StarRank( int point );
+
+//=============================================================================================
+/**
+ * @brief	指定のスターランクを告知済みか？
+ */
+//=============================================================================================
+extern BOOL POKEWOOD_SAVEDATA_GetStarRankAnnounced( POKEWOOD_SAVEDATA *sv, int rank );
+extern void POKEWOOD_SAVEDATA_SetStarRankAnnounced( POKEWOOD_SAVEDATA *sv, int rank, BOOL value );
+
 
 //=============================================================================================
 /**

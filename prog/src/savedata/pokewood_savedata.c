@@ -23,16 +23,17 @@
 struct _POKEWOOD_SAVEDATA{
 
   u32 open_flag[POKEWOOD_ARRAY_NUM];          ///< ポケウッド解放フラグ      8
-  u32 played_flag[POKEWOOD_ARRAY_NUM];        ///< ポケウッド撮影済みフラグ  16
-  u32 success_flag[POKEWOOD_ARRAY_NUM];       ///< 成功フラグ取得済みフラグ  24
-  u8  showed_flag[POKEWOOD_RECSAVEDATA_MAX];  ///< 上映済みフラグ            32
-
+  u32 played_flag[POKEWOOD_ARRAY_NUM];        ///< ポケウッド撮影済みフラグ  8
+  u32 success_flag[POKEWOOD_ARRAY_NUM];       ///< 成功フラグ取得済みフラグ  8
+  u32 announce_flag[POKEWOOD_ARRAY_NUM];      ///< ポケウッドシナリオ解放告知済フラグ 8
+  u8  showed_flag[POKEWOOD_RECSAVEDATA_MAX];  ///< 上映済みフラグ            8
+                                                                      //     =40
   POKEWOOD_BOXOFFICE_RECORD boxoffice_record[POKEWOOD_BOXOFFICE_DATA_MAX];  // 興行成績ランキング 16*40
   s16 star_point;                             ///< プレイヤーのスターポイント 2
-  s16 padding;                                ///< 2
+  s16 star_rank_announce;                     ///< スターポイントが上がった事を告知したか
   u8  title_no[POKEWOOD_SHOWING_MAX];         ///< 上映中の映画の看板ナンバー
   
-  u8 array[316];                              ///<
+  u8 array[308];                              ///<
 };
 
 //---------------------------------------------------------------------------
@@ -102,6 +103,66 @@ static void _get_shift_offset( int no, int *offset, int *shift )
   *shift  = no-*offset*POKEWOOD_SHIFT_MAX;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	各々のフラグに関してテーブルポインタを返す
+ */
+//----------------------------------------------------------------------------------
+static u32* _get_flagtable_pointer( POKEWOOD_SAVEDATA *sv, int type )
+{
+  switch(type){
+  case PWSV_TYPE_SENARIO_OPEN:
+    return sv->open_flag;
+  case PWSV_TYPE_SENARIO_PLAYED:
+    return sv->played_flag;
+  case PWSV_TYPE_SENARIO_SUCCESS:
+    return sv->success_flag;
+  case PWSV_TYPE_SENARIO_ANNOUNCED:
+    return sv->announce_flag;
+  }
+  GF_ASSERT(0);
+  return NULL;
+}
+
+//=============================================================================================
+/**
+ * @brief	指定タイプのフラグを返す
+ *
+ * @param   sv		POKEWOOD_SAVEDATA
+ * @param   type	PWSV_TYPE_～(pokewood_savedata.hに記述）
+ * @param   no		シナリオNO
+ *
+ * @retval  BOOL	TRUE or FALSE
+ */
+//=============================================================================================
+BOOL POKEWOOD_SAVEDATA_GetPokewoodFlag( const POKEWOOD_SAVEDATA *sv, int type, int no )
+{
+  int offset, shift;
+  u32 *tbl=_get_flagtable_pointer( (POKEWOOD_SAVEDATA *)sv, type );
+
+  _get_shift_offset( no, &offset, &shift );
+  return (tbl[offset]>>shift)&1;
+}
+
+//=============================================================================================
+/**
+ * @brief	指定タイプのフラグをセット
+ *
+ * @param   sv		POKEWOOD_SAVEDATA
+ * @param   type	PWSV_TYPE_～(pokewood_savedata.hに記述）
+ * @param   no		シナリオNO
+ */
+//=============================================================================================
+void POKEWOOD_SAVEDATA_SetPokewoodFlag( POKEWOOD_SAVEDATA *sv, int type, int no )
+{
+  int offset, shift;
+  u32 *tbl=_get_flagtable_pointer( sv, type );
+
+  _get_shift_offset( no, &offset, &shift );
+  tbl[offset] |= (1<<shift);
+  
+}
+
 //=============================================================================================
 /**
  * @brief	ポケウッドシナリオ解放状態を取得
@@ -112,24 +173,11 @@ static void _get_shift_offset( int no, int *offset, int *shift )
 //=============================================================================================
 BOOL POKEWOOD_SAVEDATA_GetPokewoodOpenFlag( const POKEWOOD_SAVEDATA *sv, int no )
 {
-  int offset, shift;
-  _get_shift_offset( no, &offset, &shift );
-
-  return (sv->open_flag[offset]>>shift)&1;
+  return POKEWOOD_SAVEDATA_GetPokewoodFlag( sv, PWSV_TYPE_SENARIO_OPEN, no );
 }
-//=============================================================================================
-/**
- * @brief	ポケウッドシナリオ解放状態を設定
- * @param   sv	POKEWOOD_SAVEDATA
- * @param   no		シナリオＮＯ
- */
-//=============================================================================================
 void POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( POKEWOOD_SAVEDATA *sv, int no )
 {
-  int offset, shift;
-  _get_shift_offset( no, &offset, &shift );
-
-  sv->open_flag[offset] |= (1<<shift);
+  POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_OPEN, no );
 }
 //=============================================================================================
 /**
@@ -141,27 +189,34 @@ void POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( POKEWOOD_SAVEDATA *sv, int no )
 //=============================================================================================
 BOOL POKEWOOD_SAVEDATA_GetPokewoodPlayedFlag( const POKEWOOD_SAVEDATA *sv, int no )
 {
-  int offset, shift;
-  _get_shift_offset( no, &offset, &shift );
-
-  return (sv->played_flag[offset]>>shift)&1;
-  
+  return POKEWOOD_SAVEDATA_GetPokewoodFlag( sv, PWSV_TYPE_SENARIO_PLAYED, no );
 }
-//=============================================================================================
-/**
- * @brief	ポケウッドシナリオプレイ状態を設定（撮影済みに書き換える）
- * @param   sv	POKEWOOD_SAVEDATA
- * @param   no		シナリオＮＯ
- */
-//=============================================================================================
 void POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( POKEWOOD_SAVEDATA *sv, int no )
 {
-  int offset, shift;
-  _get_shift_offset( no, &offset, &shift );
-
-  sv->played_flag[offset] |= (1<<shift);
-  
+  POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_PLAYED, no );
 }
+
+//=============================================================================================
+/**
+ * @brief	このシナリオは成功フラグを立てているか？
+ *
+ * @param   sv		POKEWOOD_SAVEDATA
+ * @param   no		シナリオNO
+ *
+ * @retval  BOOL	TRUE:上映済み FALSE:上映してない
+ */
+//=============================================================================================
+BOOL POKEWOOD_SAVEDATA_GetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no )
+{
+  GF_ASSERT_MSG( no<POKEWOOD_RECSAVEDATA_MAX , "上映数の最大を超えています=%d\n",no);
+  return POKEWOOD_SAVEDATA_GetPokewoodFlag( sv, PWSV_TYPE_SENARIO_SUCCESS, no );
+}
+void POKEWOOD_SAVEDATA_SetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no, BOOL value )
+{
+  GF_ASSERT_MSG( no<POKEWOOD_RECSAVEDATA_MAX , "上映数の最大を超えています=%d\n",no);
+  POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_SUCCESS, no );
+}
+
 
 //=============================================================================================
 /**
@@ -226,45 +281,6 @@ void POKEWOOD_SAVEDATA_SetMovieShowed( POKEWOOD_SAVEDATA *sv, int no, BOOL value
 
 }
 
-//=============================================================================================
-/**
- * @brief	このシナリオは成功フラグを立てているか？
- *
- * @param   sv		POKEWOOD_SAVEDATA
- * @param   no		シナリオNO
- *
- * @retval  BOOL	TRUE:上映済み FALSE:上映してない
- */
-//=============================================================================================
-BOOL POKEWOOD_SAVEDATA_GetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no )
-{
-  int offset, shift;
-  GF_ASSERT_MSG( no<POKEWOOD_RECSAVEDATA_MAX , "上映数の最大を超えています=%d\n",no);
-
-  _get_shift_offset( no, &offset, &shift );
-
-  return (sv->success_flag[offset]>>shift)&1;
-}
-
-//=============================================================================================
-/**
- * @brief	シナリオ毎に成功フラグを立てる
- *
- * @param   sv    POKEWOOD_SAVEDATA
- * @param   no		シナリオNO
- * @param   value TRUE or FALSE
- */
-//=============================================================================================
-void POKEWOOD_SAVEDATA_SetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no, BOOL value )
-{
-  int offset, shift;
-  GF_ASSERT_MSG( no<POKEWOOD_RECSAVEDATA_MAX , "上映数の最大を超えています=%d\n",no);
-
-  _get_shift_offset( no, &offset, &shift );
-
-  sv->success_flag[offset] |= (1<<shift);
-
-}
 
 enum{
   POKEWOOD_STAR_POINT_MIN =  0,
@@ -342,6 +358,61 @@ void POKEWOOD_SAVEDATA_SetStarPoint( POKEWOOD_SAVEDATA *sv, int value )
 }
 
 
+#define POKEWOOD_STARRANK0_MIN    ( 0  )
+#define POKEWOOD_STARRANK0_MAX    ( 20 )
+#define POKEWOOD_STARRANK1_MAX    ( 40 )
+#define POKEWOOD_STARRANK2_MAX    ( 70 )
+#define POKEWOOD_STARRANK3_MAX    ( 95 )
+#define POKEWOOD_STARRANK4_MAX    ( 99 )
+//=============================================================================================
+/**
+ * @brief	プレイヤースターポイントをスターランクに変換する
+ *
+ * @param   point	スターポイント
+ *
+ * @retval  int		スターランク( 0-4 )
+ */
+//=============================================================================================
+int POKEWOOD_SAVEDATA_CalcStarPoint2StarRank( int point )
+{
+  if(point>=POKEWOOD_STARRANK0_MIN && point<POKEWOOD_STARRANK0_MAX){
+    return 0;
+  }else if(point>=POKEWOOD_STARRANK0_MAX && point<POKEWOOD_STARRANK1_MAX){
+    return 1;
+  }else if(point>=POKEWOOD_STARRANK1_MAX && point<POKEWOOD_STARRANK2_MAX){
+    return 2;
+  }else if(point>=POKEWOOD_STARRANK2_MAX && point<POKEWOOD_STARRANK3_MAX){
+    return 3;
+  }else if(point>=POKEWOOD_STARRANK3_MAX && point<POKEWOOD_STARRANK4_MAX){
+    return 4;
+  }
+  
+  GF_ASSERT_MSG(0,"スターランク確認：ここに来たらおかしい\n");
+  return 0;
+}
+
+//=============================================================================================
+/**
+ * @brief	指定のスターランクを告知済みか？
+ *
+ * @param   sv		POKEWOOD_SAVEDATA
+ * @param   rank	スターランク（スターポインｔをPOKEWOOD_SAVEDATA_CalcStarPoint2StarRankで変換してください）
+ *
+ * @retval  BOOL	告知済みであればTRUE.まだであればFALSE
+ */
+//=============================================================================================
+BOOL POKEWOOD_SAVEDATA_GetStarRankAnnounced( POKEWOOD_SAVEDATA *sv, int rank )
+{
+  return (sv->star_rank_announce>>rank)&1;
+}
+
+void POKEWOOD_SAVEDATA_SetStarRankAnnounced( POKEWOOD_SAVEDATA *sv, int rank, BOOL value )
+{
+  sv->star_rank_announce &= (0xffff^(1<<rank));
+  sv->star_rank_announce |= (value<<rank);
+}
+
+
 //=============================================================================================
 /**
  * @brief	上映中の看板ワークを設定
@@ -373,3 +444,22 @@ void POKEWOOD_SAVEDATA_SetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index, int title_
   sv->title_no[index] = title_no;
 }
 
+//=============================================================================================
+/**
+ * @brief	ポケウッドシナリオオープンの総数を返す
+ *
+ * @param   sv		POKEWOOD_SAVEDATA
+ *
+ * @retval  int		ポケウッドシナリオオープンの総数
+ */
+//=============================================================================================
+int POKEWOOD_SAVEDATA_GetSenarioOpenNum( POKEWOOD_SAVEDATA *sv )
+{
+  int i,count=0;
+  for(i=0;i<POKEWOOD_BOXOFFICE_DATA_MAX;i++){
+    if(POKEWOOD_SAVEDATA_GetPokewoodOpenFlag(sv,i)){
+      count++;
+    }
+  }
+  return count;
+}

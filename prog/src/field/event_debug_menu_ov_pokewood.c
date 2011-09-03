@@ -387,7 +387,7 @@ static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk )
       if(POKEWOOD_SAVEDATA_GetPokewoodOpenFlag(ps,i)){
       }
     }
-    OS_Printf(" pokewood senario open num = %d\n ", count);
+    OS_Printf(" pokewood senario open num = %d\n ", POKEWOOD_SAVEDATA_GetSenarioOpenNum(ps));
 /*
     POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,4);
     POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,5);

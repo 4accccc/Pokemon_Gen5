@@ -397,7 +397,7 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, F
 
   // ŠÏ‹q”‚ğİ’è
   {
-    int star_rank = PokewoodStarPoint2StarRank(POKEWOOD_SAVEDATA_GetStarPoint(ps));
+    int star_rank = POKEWOOD_SAVEDATA_CalcStarPoint2StarRank(POKEWOOD_SAVEDATA_GetStarPoint(ps));
     bsp->audience_num     = audience_tbl[star_rank][0] + GFUser_GetPublicRand(audience_tbl[star_rank][1]);
     bsp->player_star_rank = star_rank;
   }

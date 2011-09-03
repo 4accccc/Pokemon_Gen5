@@ -472,29 +472,6 @@ VMCMD_RESULT EvCmdPokewoodGetFirstTimeSeeingFlag( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-#define POKEWOOD_STARRANK0_MIN    ( 0  )
-#define POKEWOOD_STARRANK0_MAX    ( 20 )
-#define POKEWOOD_STARRANK1_MAX    ( 40 )
-#define POKEWOOD_STARRANK2_MAX    ( 70 )
-#define POKEWOOD_STARRANK3_MAX    ( 95 )
-#define POKEWOOD_STARRANK4_MAX    ( 99 )
-int PokewoodStarPoint2StarRank( int point )
-{
-  if(point>=POKEWOOD_STARRANK0_MIN && point<POKEWOOD_STARRANK0_MAX){
-    return 0;
-  }else if(point>=POKEWOOD_STARRANK0_MAX && point<POKEWOOD_STARRANK1_MAX){
-    return 1;
-  }else if(point>=POKEWOOD_STARRANK1_MAX && point<POKEWOOD_STARRANK2_MAX){
-    return 2;
-  }else if(point>=POKEWOOD_STARRANK2_MAX && point<POKEWOOD_STARRANK3_MAX){
-    return 3;
-  }else if(point>=POKEWOOD_STARRANK3_MAX && point<POKEWOOD_STARRANK4_MAX){
-    return 4;
-  }
-  
-  GF_ASSERT_MSG(0,"スターランク確認：ここに来たらおかしい\n");
-  return 0;
-}
 
 
 #if 0
