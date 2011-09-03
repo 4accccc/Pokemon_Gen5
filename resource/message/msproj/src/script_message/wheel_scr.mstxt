@@ -5578,10 +5578,15 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_rival_01</Text>
+			<Text>ヒュウ『この　かんらんしゃ
+ふたりのり　なんだってよ▼
+いもうとに　どれだけ　すごいか
+おしえたかったのにな……▼
+っていうか
+おまえ　つきあえよ▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:42:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:54:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5589,10 +5594,15 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_rival_01</Text>
+			<Text>ヒュウ『この　観覧車
+二人乗り専用　なんだってよ▼
+妹に　どれだけ　すごいか
+教えたかったのにな……▼
+っていうか
+おまえ　つきあえよ▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:42:40" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:38:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5601,11 +5611,11 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>ライバル：初回挨拶メッセージ
-
-メッセージ表示後、観覧車に乗りデモへ</Comment>
+・メッセージ表示後
+　観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:42:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5635,10 +5645,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_rival_02</Text>
+			<Text>よし！
+いもうとに　じまん　しよっと！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:43:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:04:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5646,10 +5657,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_rival_02</Text>
+			<Text>よし！
+妹に　自慢しよっと！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:43:27" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:38:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5658,11 +5670,10 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>ライバル：初回お別れメッセージ
-
-メッセージ表示後、画面外へ</Comment>
+・メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:43:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5692,10 +5703,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_rival_03</Text>
+			<Text>ここに　きたって　ことは
+かんらんしゃ　だろ！？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:44:24" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:41:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5703,10 +5715,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_rival_03</Text>
+			<Text>ここに　来たって　ことは
+観覧車だろ！？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:44:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:41:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5715,11 +5728,11 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>ライバル：汎用挨拶メッセージ
-
-メッセージ表示後、観覧車に乗りデモへ</Comment>
+・メッセージ表示後
+　観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:44:09" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5749,10 +5762,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_rival_04</Text>
+			<Text>さてと　きぶんてんかん　できたし
+とっくん　だぜ！　とっくん！！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:44:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5760,10 +5774,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_rival_04</Text>
+			<Text>さてと　気分転換できたし
+特訓だぜ！　特訓！！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:44:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:41:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5772,11 +5787,10 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>ライバル：汎用お別れメッセージ
-
-メッセージ表示後、画面外へ</Comment>
+・メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:44:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5806,10 +5820,14 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_bell_01</Text>
+			<Text>ベル『おおきいよねえ……！▼
+のったら　はるか　かなたまで
+みわたせるよねえ▼
+カノコタウン　みえるかなあ？
+ねえねえ　のろうよお！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:45:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:19:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5817,10 +5835,14 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_bell_01</Text>
+			<Text>ベル『おおきいよねえ……！▼
+乗ったら　はるか　彼方まで
+みわたせるよねえ▼
+カノコタウン　みえるかなあ？
+ねえねえ　乗ろうよお！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:45:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:19:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5829,11 +5851,11 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>ベル：初回挨拶メッセージ
-
-メッセージ表示後、観覧車に乗りデモへ</Comment>
+・メッセージ表示後
+　観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:46:00" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5863,10 +5885,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_bell_02</Text>
+			<Text>なんだか　えがおに　なっちゃうよね！
+それじゃあねえ▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:46:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:13:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5874,10 +5897,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_bell_02</Text>
+			<Text>なんだか　笑顔に　なっちゃうよね！
+それじゃあねえ▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:46:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:15:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5886,11 +5910,10 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>ベル：初回お別れメッセージ
-
-メッセージ表示後、画面外へ</Comment>
+・メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:46:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5920,10 +5943,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_bell_03</Text>
+			<Text>えへへ
+せっかくだし　のろうよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:46:51" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5931,10 +5955,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_bell_03</Text>
+			<Text>えへへ
+せっかくだし　乗ろうよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:46:51" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:15:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5943,11 +5968,11 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>ベル：汎用挨拶メッセージ
-
-メッセージ表示後、観覧車に乗りデモへ</Comment>
+・メッセージ表示後
+　観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:46:43" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5977,10 +6002,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_bell_04</Text>
+			<Text>とっても　たのしかったよお！
+じゃあ　またねえー！！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:46:53" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:42:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5988,10 +6014,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_bell_04</Text>
+			<Text>とっても　楽しかったよお！
+じゃあ　またねえー！！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:46:54" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:15:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6000,11 +6027,10 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>ベル：汎用お別れメッセージ
-
-メッセージ表示後、画面外へ</Comment>
+・メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:46:48" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6034,10 +6060,12 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_n_01</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]なつかしいな……▼
+キミ！　ボクと　この
+かんらんしゃに　のりたまえ！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:47:57" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6045,10 +6073,12 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_n_01</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]懐かしいな……▼
+キミ！　ボクと　この
+観覧車に　乗りたまえ！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:47:57" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:20:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6057,11 +6087,11 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>N：初回挨拶メッセージ
-
-メッセージ表示後、観覧車に乗りデモへ</Comment>
+・メッセージ表示後
+　観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:48:45" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6091,10 +6121,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_n_02</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……あの　ひを　おもいだした
+……すまない　しつれいする[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:48:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:10:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6102,10 +6133,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_n_02</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……あの日を　思い出した
+……すまない　失礼する[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:48:22" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:10:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6114,11 +6146,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>N：初回お別れメッセージ
-
-メッセージ表示後、画面外へ</Comment>
+・メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:48:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6148,10 +6179,14 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_n_03</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]
+ボクは かんらんしゃが
+だいすき　なんだ▼
+だから　キミ！
+ボクに　つきあいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:48:24" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:55:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6159,10 +6194,14 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_n_03</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]
+ボクは 観覧車が
+大好き　なんだ▼
+だから　キミ！
+ボクに　つきあいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:48:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:10:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6171,11 +6210,11 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>N：汎用挨拶メッセージ
-
-メッセージ表示後、観覧車に乗りデモへ</Comment>
+・メッセージ表示後
+　観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:48:51" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6205,10 +6244,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_n_04</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……やはり　かんらんしゃは　いい▼
+えんうんどう……　りきがく……
+うつくしい　すうしきの　あつまり……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:48:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6216,10 +6257,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_n_04</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……やはり　観覧車は　いい▼
+円運動……　力学……
+美しい　数式の　集まり……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:48:27" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:11:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6228,11 +6271,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>N：汎用お別れメッセージ
-
-メッセージ表示後、画面外へ</Comment>
+・メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:48:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6262,10 +6304,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_chelen_01</Text>
+			<Text>チェレン『……そういえば　ライモンには
+なんども　きているけれど▽
+のったことが　ないんだよね▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:00" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6273,10 +6317,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_chelen_01</Text>
+			<Text>チェレン『……そういえば　ライモンには
+何度も　来ているけれど▽
+乗ったことが　ないんだよね▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:26:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6285,11 +6331,11 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>チェレン：初回挨拶メッセージ
-
-メッセージ表示後、観覧車に乗りデモへ</Comment>
+・メッセージ表示後
+　観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6319,10 +6365,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_chelen_02</Text>
+			<Text>なにごとも　けいけん　だね▼
+たすかったよ
+いっしょに　のってくれて▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:22" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:24:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6330,10 +6378,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_chelen_02</Text>
+			<Text>なにごとも　経験だね▼
+助かったよ
+一緒に　乗ってくれて▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:26:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6342,11 +6392,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>チェレン：初回お別れメッセージ
-
-メッセージ表示後、画面外へ</Comment>
+・メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:54" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6376,10 +6425,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_chelen_03</Text>
+			<Text>さて……　かんらんしゃの
+いいところを　ことばに　するには……▼
+やはり　のるしかないよね▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:24" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:25:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6387,10 +6438,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_chelen_03</Text>
+			<Text>さて……　観覧車の
+いいところを　言葉に　するには……▼
+やはり　乗るしかないよね▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:26:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6399,11 +6452,11 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>チェレン：汎用挨拶メッセージ
-
-メッセージ表示後、観覧車に乗りデモへ</Comment>
+・メッセージ表示後
+　観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:59" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6433,10 +6486,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_chelen_04</Text>
+			<Text>さまざまな　ようそが　からみあい
+かんらんしゃを　こうせいしている……▼
+それを　うまく　いいあらわしたいね▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:26:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6444,10 +6499,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_chelen_04</Text>
+			<Text>さまざまな　要素が　絡み合い
+観覧車を　構成している……▼
+それを　うまく　言い表したいね▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:27" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T06:27:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6456,11 +6513,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>チェレン：汎用お別れメッセージ
-
-メッセージ表示後、画面外へ</Comment>
+・メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:53:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:52:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6491,21 +6547,23 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ　[Name:TrainerName ]くん▼
-…よかった▼
+……よかった▼
 きて　くれたんだね▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 えっ？▼
 べっ べつに　まって　ないよ！
 わたしも　いま　きた　ところだから…▼
-あはは…▼
+あはは……▼
 ねぇ　よかったら
 かんらんしゃに　のらない？▼
 ライモンシティの　かんらんしゃは
 ながめが　きれいな　ことで▽
 すごく　ゆうめい　なんだけど…▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 えっ　いいの？▼
-…よかった▼
+……よかった▼
 わたし　この　かんらんしゃに
 まえから　のって　みたかったんだ▼
 でも　この　かんらんしゃって
@@ -6514,8 +6572,8 @@ N</Text>
 うれしくって　ドキドキしてきちゃった
 さっそく　のろうよ　[Name:TrainerName ]くん！▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-01T08:46:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:49:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6523,10 +6581,34 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_swidol_w_01</Text>
+			<Text>あっ　[Name:TrainerName ]くん▼
+……よかった▼
+きて　くれたんだね▼
+……　……　……
+……　……　……▼
+えっ？▼
+べっ べつに　まって　ないよ！
+わたしも　いま　きた　ところだから…▼
+あはは……▼
+ねぇ　よかったら
+かんらんしゃに　のらない？▼
+ライモンシティの　かんらんしゃは
+ながめが　きれいな　ことで▽
+すごく　ゆうめい　なんだけど…▼
+……　……　……
+……　……　……▼
+えっ　いいの？▼
+……よかった▼
+わたし　この　かんらんしゃに
+まえから　のって　みたかったんだ▼
+でも　この　かんらんしゃって
+ふたりのり　せんよう　らしいから▽
+ずっと　がまん　していたんだよ▼
+うれしくって　ドキドキしてきちゃった
+さっそく　のろうよ　[Name:TrainerName ]くん！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:56:54" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:51:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6569,8 +6651,9 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……　……▼
-あはは…▼
+			<Text>……　……　……
+……　……　……▼
+あはは……▼
 [Name:TrainerName ]くんには
 ほんとうに　かんしゃ　しているの▼
 いまの　しごとを　がんばれるのも
@@ -6578,13 +6661,14 @@ N</Text>
 できれば　これからも
 はなし　あいてに　なってくれると▽
 うれしい……　かな▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 じゃあ　そろそろ　かえるね…▼
 きょうは　すごく　たのしかったよ
 またね　[Name:TrainerName ]くん！</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-01T12:27:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:49:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6592,10 +6676,24 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_swidol_w_02</Text>
+			<Text>……　……　……
+……　……　……▼
+あはは……▼
+[Name:TrainerName ]くんには
+ほんとうに　かんしゃ　しているの▼
+いまの　しごとを　がんばれるのも
+[Name:TrainerName ]くんの　おかげだと　おもう▼
+できれば　これからも
+はなし　あいてに　なってくれると▽
+うれしい……　かな▼
+……　……　……
+……　……　……▼
+じゃあ　そろそろ　かえるね…▼
+きょうは　すごく　たのしかったよ
+またね　[Name:TrainerName ]くん！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:57:37" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:51:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6639,21 +6737,22 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ　[Name:TrainerName ]くん▼
-あはは…▼
+あはは……▼
 まちどうしくって　いそいできちゃった▼
 あえて　うれしい……　かな▼
 ねぇ　よかったら
 また　かんらんしゃに　のらない？▼
 わたし　この　かんらんしゃの　こと
 きにいっちゃった　みたい▼
-……　……　……　……▼
+……　……　……
+……　……　……▼
 えっ　いいの？▼
-…よかった▼
+……よかった▼
 なんでだろ　ドキドキしてきちゃった
 さっそく　のろうよ　[Name:TrainerName ]くん！▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-01T12:28:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:49:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6661,10 +6760,23 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_swidol_w_03</Text>
+			<Text>あっ　[Name:TrainerName ]くん▼
+あはは……▼
+まちどうしくって　いそいできちゃった▼
+あえて　うれしい……　かな▼
+ねぇ　よかったら
+また　かんらんしゃに　のらない？▼
+わたし　この　かんらんしゃの　こと
+きにいっちゃった　みたい▼
+……　……　……
+……　……　……▼
+えっ　いいの？▼
+……よかった▼
+なんでだろ　ドキドキしてきちゃった
+さっそく　のろうよ　[Name:TrainerName ]くん！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:57:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:51:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6707,20 +6819,21 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……　……▼
+			<Text>……　……　……
+……　……　……▼
 きょうは　ありがとう▼
 さそって　くれて　うれしかったよ▼
 また　[Name:TrainerName ]くん　から
 たくさん　げんきを　もらっちゃったね▼
-あはは…▼
+あはは……▼
 これで　しごとも　がんばれるよ▼
 よかったら　また
 さそって　ほしい……　かな▼
 じゃあ　そろそろ　かえるね…▼
 またね　[Name:TrainerName ]くん！</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-01T12:28:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:49:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6728,10 +6841,21 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_swidol_w_04</Text>
+			<Text>……　……　……
+……　……　……▼
+きょうは　ありがとう▼
+さそって　くれて　うれしかったよ▼
+また　[Name:TrainerName ]くん　から
+たくさん　げんきを　もらっちゃったね▼
+あはは……▼
+これで　しごとも　がんばれるよ▼
+よかったら　また
+さそって　ほしい……　かな▼
+じゃあ　そろそろ　かえるね…▼
+またね　[Name:TrainerName ]くん！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:57:41" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:51:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7004,15 +7128,15 @@ N</Text>
 			Language="JPN">
 			<Text>ねぇ　[Name:TrainerName ]くん▼
 この　あいだ　しごとで
-べつの　ちほうに　いった　ときに▽
-[Name:PokemonName Idx="1" ]を　つかまえたんだけど…▽
+べつの　ちほうに　いったときに▼
+[Name:PokemonName Idx="1" ]を　つかまえたんだけど……
 [Name:TrainerName ]くんの　ポケモンと▽
 こうかんして　くれないかな？▼
 こうかん　してくれるのは
 どんな　ポケモンでも　いいよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-01T08:29:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:49:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7020,10 +7144,17 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]　msg_wheel_swidol_w_05</Text>
+			<Text>ねぇ　[Name:TrainerName ]くん▼
+この　あいだ　しごとで
+べつの　ちほうに　いったときに▼
+[Name:PokemonName Idx="1" ]を　つかまえたんだけど……
+[Name:TrainerName ]くんの　ポケモンと▽
+こうかんして　くれないかな？▼
+こうかん　してくれるのは
+どんな　ポケモンでも　いいよ▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T13:07:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:51:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7064,11 +7195,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう
-[Name:PokemonName Idx="1" ]も　うれしそうだよ▼</Text>
+			<Text>ありがとう！！
+[Name:PokemonName Idx="1" ]も　うれしそうだよ！▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-01T12:28:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:50:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7076,10 +7207,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_swidol_w_06</Text>
+			<Text>ありがとう！！
+[Name:PokemonName Idx="1" ]も　うれしそうだよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T07:02:51" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:50:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7120,12 +7252,13 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ざんねん…▼
+			<Text>そっか……
+ざんねん　だね……▼
 また　きかいが　あったら
-こうかん　してね…▼</Text>
+こうかん　してね……　ポケモン▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-01T08:29:59" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:50:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7133,10 +7266,13 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_swidol_w_07</Text>
+			<Text>そっか……
+残念だね……▼
+また　機会が　あったら
+交換してね……　ポケモン▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T07:02:53" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -1482,10 +1482,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_swrival_01</Text>
+			<Text>まっ　ときには　こーゆーので
+リラックスも　ひつよう　だよな</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:00:41" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:00:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1493,10 +1494,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_swrival_01</Text>
+			<Text>まっ　ときには　こーゆーので
+リラックスも　必要だよな</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:00:42" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:00:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1537,10 +1539,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_swrival_02</Text>
+			<Text>うわっ　すっげー！！
+めっちゃ　たかいじゃん！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:02:01" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1548,10 +1551,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_swrival_02</Text>
+			<Text>うわっ　すっげー！！
+めっちゃ　高いじゃん！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:02:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:01:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1592,10 +1596,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>msg_wheel_swrival_03</Text>
+			<Text>まっ
+それなりに　たのしかったよな</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:02:03" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:00:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1603,10 +1608,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>msg_wheel_swrival_03</Text>
+			<Text>まっ
+それなりに　楽しかったよな</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:02:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T05:01:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
