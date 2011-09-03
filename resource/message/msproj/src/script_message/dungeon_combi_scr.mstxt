@@ -6,12 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあ　オレ　ダンって　いうんだ▼
+			<Text>やあ　オレ　ホラって　いうんだ▼
 いきなりだが　ここで
 あったのも　なにかの　えん▽
 アンタに　おねがいが　あるんだぜ！▼
-オレ　ダンには　ジョンっていう
-あいぼうが　いるんだが▼
+オレ　ホラには　アナっていう
+パートナーが　いるんだが▼
 そいつに　ひごろの
 かんしゃの　きもちを▽
 つたえたくてな……▼
@@ -20,7 +20,7 @@
 だから　アンタに　おねがいするぜ！
 「おまえ　さいこうの▽
 あいぼう　だぜ！」▽
-って　ジョンに　つたえてくれ！▼
+って　アナに　つたえてくれ！▼
 アイツの　いばしょは　しらないが
 「ちかすいの　わきあがる▽
 ほらあなが　ぜっこうの▽
@@ -30,7 +30,7 @@
 じゃあ　たのんだぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:15:13" />
+				Time="2011-09-03T04:32:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -38,10 +38,31 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>やあ　オレ　ホラって　いうんだ▼
+いきなりだが　ここで
+あったのも　なにかの　えん▽
+アンタに　おねがいが　あるんだぜ！▼
+オレ　ホラには　アナっていう
+パートナーが　いるんだが▼
+そいつに　ひごろの
+かんしゃの　きもちを▽
+つたえたくてな……▼
+でも　じぶんの　くちで
+いうのは　はずかしいだろ？▼
+だから　アンタに　おねがいするぜ！
+「おまえ　さいこうの▽
+あいぼう　だぜ！」▽
+って　アナに　つたえてくれ！▼
+アイツの　いばしょは　しらないが
+「ちかすいの　わきあがる▽
+ほらあなが　ぜっこうの▽
+あなばスポット　だぜ！」▼
+とか　いっていたから
+そういう　ところに　いそうだな▽
+じゃあ　たのんだぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:13" />
+				Time="2011-09-03T04:36:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -76,26 +97,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>よう！　はじめまして
-オレは　ジョンだ　よろしくな！▼
-なに？　　あいぼうの
-ダンから　オレに　でんごん？▼
-オレが　さいこうの
-あいぼう　だって！？▼
+アタシは　アナ！　よろしく！▼
+なに？　パートナーの
+ホラから　アタシに　でんごん？▼
+アタシが　さいこうの
+パートナー　だって！？▼
 アイツ……
 なに　いってやがるんだ▼
-なあ　アンタ　オレからも
+なあ　アンタ　アタシからも
 でんごんを　たのまれてくれ▼
-ダンの　ヤツに
-「おまえこそ　さいこうの▽
-あいぼう　だぜ！」▽
-って　つたえてくれ！▼
+ホラの　ヤツに
+「アンタこそ　さいこうの▽
+パートナー　だぜ！」▽
+って　つたえてよ！▼
 それと　これは
-そのへんで　ひろったものだが▽
-たずねてきてくれた　おれいだ▽
-うけとってくれ！</Text>
+そのへんで　ひろったものだけど▽
+たずねてきてくれた　おれい▽
+うけとってよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:16:30" />
+				Time="2011-09-03T04:33:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -103,10 +124,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>よう！　はじめまして
+アタシは　アナ！　よろしく！▼
+なに？　パートナーの
+ホラから　アタシに　でんごん？▼
+アタシが　さいこうの
+パートナー　だって！？▼
+アイツ……
+なに　いってやがるんだ▼
+なあ　アンタ　アタシからも
+でんごんを　たのまれてくれ▼
+ホラの　ヤツに
+「アンタこそ　さいこうの▽
+パートナー　だぜ！」▽
+って　つたえてよ！▼
+それと　これは
+そのへんで　ひろったものだけど▽
+たずねてきてくれた　おれい▽
+うけとってよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -141,21 +179,21 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ダン「やあ　あんたに　あうのも
-これで　【４桁】かいめ　だな▼
-なに？　ジョンのヤツから
+これで　[Digit:4digits ]かいめ　だな▼
+なに？　アナの　ヤツから
 でんごん？▼
 やっぱり　おれが　さいこうの
-あいぼう　だって？▼
-まったく　ジョンめ……
+パートナー　だって？▼
+まったく　アナめ……
 よし！　じゃあ　おれからも▽
 「かえすがえすも　おまえが▽
-さいこうの　あいぼう　だぜ！」▽
+さいこうの　パートナー　だぜ！」▽
 ……と　でんごん　たのんだぜ！▼
 それと　これは
-おれいだ　うけとってくれ！</Text>
+おれいだ　うけとってくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:16:47" />
+				Time="2011-09-03T04:33:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -163,10 +201,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ダン「やあ　あんたに　あうのも
+これで　[Digit:4digits ]かいめ　だな▼
+なに？　アナの　ヤツから
+でんごん？▼
+やっぱり　おれが　さいこうの
+パートナー　だって？▼
+まったく　アナめ……
+よし！　じゃあ　おれからも▽
+「かえすがえすも　おまえが▽
+さいこうの　パートナー　だぜ！」▽
+……と　でんごん　たのんだぜ！▼
+それと　これは
+おれいだ　うけとってくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -192,22 +242,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジョン「おう！　あんたのかおを
-みるのも　【４桁】かいめか▼
-ほう　ダンのヤツから
-また　でんごんか▼
-かえすがえすも　おれが
-さいこうの　あいぼう　だって？▼
-ダンのヤツ……
-だったら　おれも▽
-「やっぱり　おまえが▽
-さいこうの　あいぼう　だぜ！」▽
-……よし　でんごん　たのんだぜ！▼
-それと　これは
-おれいだ　うけとってくれ！</Text>
+			<Text>アナ「あら！　あんたのかおを
+みるのも　[Digit:4digits ]かいめか▼
+へえ　ホラの　ヤツから
+また　でんごん▼
+かえすがえすも
+さいこうの　パートナー　だって？▼
+ホラの　ヤツ……
+だったら　アタシも▽
+「やっぱり　アンタが▽
+さいこうの　パートナー　だぜ！」▽
+……じゃ　でんごん　たのんだわ！▼
+それと　これは　おれいよ
+うけとってね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:16:47" />
+				Time="2011-09-03T04:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -215,10 +265,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アナ「あら！　あんたのかおを
+みるのも　[Digit:4digits ]かいめか▼
+へえ　ホラの　ヤツから
+また　でんごん▼
+かえすがえすも
+さいこうの　パートナー　だって？▼
+ホラの　ヤツ……
+だったら　アタシも▽
+「やっぱり　アンタが▽
+さいこうの　パートナー　だぜ！」▽
+……じゃ　でんごん　たのんだわ！▼
+それと　これは　おれいよ
+うけとってね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -244,26 +306,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 さばくの　まんなかで
 たいこの　ロマンを▽
 おいもとめる！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:20:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:20:30" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+さばくの　まんなかで
+たいこの　ロマンを▽
+おいもとめる！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -291,26 +358,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 すなに　うもれた　いせきで
 しょぎょう　むじょうの▽
 きょうちに　いたる！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:20:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:20:36" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+すなに　うもれた　いせきで
+しょぎょう　むじょうの▽
+きょうちに　いたる！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -338,27 +410,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 ビリっと　しびれる
 でんきと　じりょくに▽
 だいしぜんの
 ふしぎを　かんじる！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:20:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:20:40" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+ビリっと　しびれる
+でんきと　じりょくに▽
+だいしぜんの
+ふしぎを　かんじる！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -385,27 +463,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 よい　こうせきが　とれる
 こうざんには▽
 だいちの　パワーが▽
 あふれている！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:20:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:20:46" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+よい　こうせきが　とれる
+こうざんには▽
+だいちの　パワーが▽
+あふれている！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -432,26 +516,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 ふるい　いいつたえの　のこる
 きょだいな　あなに▽
 こころが　ゆさぶられる！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:20:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:20:53" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+ふるい　いいつたえの　のこる
+きょだいな　あなに▽
+こころが　ゆさぶられる！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -478,26 +567,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 かつて　かこうだった
 きゅうかざんの　みずうみを▽
 ながめて　いやされたい！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:20:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:20:57" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+かつて　かこうだった
+きゅうかざんの　みずうみを▽
+ながめて　いやされたい！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -525,26 +619,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 あかあかと　はげしく
 にえたぎる　マグマを　みて▽
 あつくなりたい！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:21:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:21:04" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+あかあかと　はげしく
+にえたぎる　マグマを　みて▽
+あつくなりたい！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -572,26 +671,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 げすいどうから　つづく
 しずかな　ふるい　ぬけみちで▽
 リラックス　したい！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:21:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:21:10" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+げすいどうから　つづく
+しずかな　ふるい　ぬけみちで▽
+リラックス　したい！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -618,25 +722,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 トロッコが　あるような
 こうどうで　ピクニックだ！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:21:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:21:16" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+トロッコが　あるような
+こうどうで　ピクニックだ！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -663,26 +771,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 かいすいの　かがれこむ
 ほらあなに　いって▽
 とこなつきぶんを　エンジョイだ！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:21:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:21:23" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+かいすいの　かがれこむ
+ほらあなに　いって▽
+とこなつきぶんを　エンジョイだ！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -709,26 +822,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 ちかすいの　わきあがる
 ほらあなが　ぜっこうの
 あなばスポット　だぜ！
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:21:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:21:31" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+ちかすいの　わきあがる
+ほらあなが　ぜっこうの
+あなばスポット　だぜ！
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -755,26 +873,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 でんせつの　けはいが　ただよう
 ほらあなに　いって▽
 オレも　でんせつになる！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:21:40" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+でんせつの　けはいが　ただよう
+ほらあなに　いって▽
+オレも　でんせつになる！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -801,26 +924,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいぼうの　いばしょ？
+			<Text>パートナーの　いばしょ？
 そういえば　アイツ……▼
 つよさを　もとめる　トレーナーが
 つどう　しゅぎょうの　ばで▽
 おのれを　きたえる！▽
-とか　いっていたなあ……</Text>
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-02T12:21:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:21:45" />
+				Time="2011-09-03T04:34:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>パートナーの　いばしょ？
+そういえば　アイツ……▼
+つよさを　もとめる　トレーナーが
+つどう　しゅぎょうの　ばで▽
+おのれを　きたえる！▽
+とか　いっていたっけ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:17:22" />
+				Time="2011-09-03T04:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -829,14 +957,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ヒントメッセージ
-修行の岩屋</Comment>
+修行の岩屋
+※未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:18:35" />
+				Time="2011-09-03T04:36:33" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

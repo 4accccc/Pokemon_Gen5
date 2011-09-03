@@ -1558,12 +1558,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『[Name:TrainerName Idx="0" ]の　おかげで
-あくじを　はたらいた　れんちゅうは▽
-ごそっと　とらえられたわよ！▼</Text>
+			<Text>アララギ『あら？
+ビクティニ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:53:17" />
+				Time="2011-09-03T03:50:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1571,12 +1570,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『[Name:TrainerName Idx="0" ]の　おかげで
-悪事を　働いた　連中は▽
-ごそっと　捕らえられたわよ！▼</Text>
+			<Text>アララギ『あら？
+ビクティニ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:53:13" />
+				Time="2011-09-03T03:50:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1584,10 +1582,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>♀：c06到着後
+・1回のみ
+・ビクティニ所有時
+・続けてhakase2_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:39:11" />
+				Time="2011-09-03T03:55:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1606,7 +1607,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1617,33 +1618,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ビクティニは
-その　からだから　あふれる▽
-エネルギーを　はっさんさせる　という▽
-まぼろしの　ポケモン……▼
-その　エネルギーに　ふれた
-ポケモンや　ひとは▼
-ぜんしんに　パワーが　あふれ
-いつもより　ちからを　はっきできたの▼
-だから　その　のうりょくを
-みずからの　やぼうのために▽
-あくようする　れんちゅうが▽
-あとを　たたなかったと　いうわ……▼
-ちかしつを　つくった　だいふごうは
-こころから　ビクティニを　おもって▽
-たすけようとしたに　ちがいないわ▼
-へやに　とじこめるって　やりかたは
-まちがっていたけど　ね▼
-ビクティニは　[Name:TrainerName Idx="0" ]の　おかげで
-プラズマだんの　あくじに▽
-りようされることもなく▽
-あたらしい　うんめいを　てにいれた▼
-ビクティニの　のうりょくを
-あくようされないように　するのは▽
-きみの　やくめ　よ！▼</Text>
+			<Text>アララギ『あら？
+あなたの　ポケモンずかん……▼
+ビクティニを
+つかまえたのね！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T03:53:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1651,33 +1632,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ビクティニは
-その小さな　体から　あふれる▽
-エネルギーを　発散させる　という▽
-まぼろしの　ポケモン……▼
-その　エネルギーに　触れた
-ポケモンや　人は▼
-全身に　パワーが　みなぎり
-いつもより　力を　発揮できたの▼
-だから　その　能力を
-みずからの　野望のために▽
-悪用する　連中が▽
-あとを　絶たなかったと　いうわ……▼
-地下室を　作った　大富豪は
-心から　ビクティニを　思って▽
-助けようとしたに　ちがいないわ▼
-部屋に　閉じこめるって　やりかたは
-間違っていたけど　ね▼
-ビクティニは　[Name:TrainerName Idx="0" ]の　おかげで
-プラズマ団の　悪事に▽
-利用されることもなく▽
-新しい　運命を　手に入れた▼
-ビクティニの　能力を
-悪用されないように　するのは▽
-きみの　役目よ！▼</Text>
+			<Text>アララギ『あら？
+あなたの　ポケモン図鑑……▼
+ビクティニを
+捕まえたのね！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:03:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1685,10 +1646,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>♀：c06到着後
+・1回のみ
+・ビクティニ捕獲済み
+・続けてhakase2_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:39:11" />
+				Time="2011-09-03T03:55:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1707,7 +1671,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1718,18 +1682,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でね……▼
-ビクティニの　イッシュずかんの
-ばんごうが　「０」なのは▼
-この　ポケモンずかんを　もって
-たびを　する　ポケモントレーナーに▼
-ビクティニの　しょうりを　もたらす
-パワーが　わけあたえられるように……▼
-そんな　ねがいが　こめられていると
-わたしは　きいたことが　あるわ▼</Text>
+			<Text>アララギ『あら？
+あなたの　ポケモンずかん……▼
+ビクティニを
+みたことが　あるのね！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T03:53:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1737,18 +1696,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>でね……▼
-ビクティニの　イッシュ図鑑の
-番号が　「０」なのは▼
-この　ポケモン図鑑を　所持して
-旅をする　ポケモントレーナーに▼
-ビクティニの　勝利を　もたらす
-パワーが　わけあたえられるように……▼
-そんな　願いが　こめられていると
-わたしは　きいたことが　あるわ▼</Text>
+			<Text>アララギ『あら？
+あなたの　ポケモン図鑑……▼
+ビクティニを
+みたことが　あるのね！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:03:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1756,10 +1710,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>♀：c06到着後
+・1回のみ
+・ビクティニみた
+・続けてhakase2_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:39:11" />
+				Time="2011-09-03T03:55:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1778,7 +1735,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1789,14 +1746,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギはかせ！▼
-こうそく　けいびせんに
-あくとうどもを　つめこみました！▼
-ヒウンシティへ　もどるとのことです！
-はかせも　ごじょうせん　ください！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:51:40" />
+				Time="2011-09-03T03:52:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1804,14 +1757,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ博士！▼
-高速　警備船に
-悪党どもを　詰め込みました！▼
-ヒウンシティへ　戻るとのことです！
-博士も　ご乗船ください！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:51:48" />
+				Time="2011-09-03T03:52:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1851,11 +1800,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『ありがとう
-すぐに　いきまーす！▼</Text>
+			<Text>ビクティニの　イッシュずかんの
+ばんごうが　「０」なのは▼
+この　ポケモンずかんを　もって
+たびを　する　ポケモントレーナーに▼
+ビクティニの　しょうりを　もたらす
+パワーが　わけあたえられるように……▼
+そんな　ねがいが　こめられていると
+わたしは　きいたことが　あるわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T03:51:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1863,11 +1818,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『ありがとう
-すぐに　いきまーす！▼</Text>
+			<Text>ビクティニの　イッシュ図鑑の
+番号が　「０」なのは▼
+この　ポケモン図鑑を　持って
+旅を　する　ポケモントレーナーに▼
+ビクティニの　勝利を　もたらす
+パワーが　わけあたえられるように……▼
+そんな　願いが　こめられていると
+わたしは　きいたことが　あるわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:03:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1875,18 +1836,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>♀：c06到着後
+・横を向いてメッセージ表示
+・続けてhakase2_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:39:11" />
+				Time="2011-09-03T04:04:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
 アララギ博士娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:04:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1897,7 +1860,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1908,15 +1871,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　のうりょく▼
-その　すごさに　こころまどわされ
-あくよう　しようと　するだなんて……▼
-ただしい　こころで　むきあってこそ
-わたしたち　ポケモンと　ひとの▽
-みらいは　あかるく　なるのにね！▼</Text>
+			<Text>ポケモンと　どう　せっするか……▼
+あなたが
+ポケモンずかんを　うめていくうちに▼
+あなたなりの　こたえが　みつかること
+きたい　しています！▼
+それじゃーね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T03:55:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1924,15 +1887,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　能力▼
-その　すごさに　心　惑わされ
-悪用しようと　するだなんて……▼
-正しい　心で　向き合ってこそ
-わたしたち　ポケモンと　人の▽
-未来は　明るく　なるのにね！▼</Text>
+			<Text>ポケモンと　どう　接するか……▼
+あなたが
+ポケモン図鑑を　埋めていくうちに▼
+あなたなりの　答えが　みつかること
+期待しています！▼
+それじゃーね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:04:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1940,18 +1903,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>♀：c06到着後
+・メッセージ表示後
+　船着場の方に移動
+・画面外に消えると、主人公操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:39:11" />
+				Time="2011-09-03T04:04:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>HAKASE2
 アララギ博士娘</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-03T04:04:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1962,7 +1928,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
