@@ -1,3 +1,1304 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1c_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デント『ポッド　きいてる？▼
+もっと　べんきょうして
+はやく　いちにんまえの▽
+ジムリーダーに　ならないと……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:10:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:10:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デント『ポッド　きいてる？▼
+もっと　勉強して
+はやく　一人前の▽
+ジムリーダーに　ならないと……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:53:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1C
+デント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポッド『それだけどさ▼
+いちねんまえ　おれたちが
+Ｎのしろに　いってれば▼
+しちけんじん　とか
+ダークトリニティ　とかに▽
+にげられなくて　すんだんだろ！▼
+そうすりゃ　みんなから
+３人　そろって……　とか▽
+いわれて　いない　はずだぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:54:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:49:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポッド『それだけどさ▼
+１年前　おれたちが
+Ｎの城に　行ってれば▼
+七賢人　とか
+ダークトリニティ　とかに▽
+逃げられなくて　すんだんだろ！▼
+そうすりゃ　みんなから
+３人　そろって……　とか▽
+いわれて　いない　はずだぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:54:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:49:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1A
+ポッド</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:49:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コーン『まあ
+そうでしょうね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:11:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:49:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コーン『まあ
+そうでしょうね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:46:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:49:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1B
+コーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:49:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1c_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デント『そうかなあ……
+でもまあ　いいじゃない▼
+まに　あわなかったけれど
+プラズマだんは　いなくなったし▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:56:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:49:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デント『そうかなあ……▼
+でもまあ　いいじゃない▼
+間に　合わなかったけれど
+プラズマ団は　いなくなったし▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:55:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:49:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1C
+デント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1a_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポッド『だーかーら！▼
+そういうこと　いってるから
+いつまで　たっても▽
+さんにん　そろって　いちにんまえ！▽
+そんな　あつかいを　されるんだよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:12:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:51:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポッド『だーかーら！▼
+そういうこと　いってるから
+いつまで　たっても▽
+３人　そろって　一人前！▽
+そんな　扱いを　されるんだよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:55:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:52:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1A
+ポッド</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:51:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1b_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コーン『かんがえすぎ　だけど
+０パーセントでは　ないよね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:15:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:00:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コーン『考えすぎ　だけど
+０パーセントでは　ないよね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:56:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:52:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1B
+コーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:51:56" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1c_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デント『ふたりとも……▼
+わるい　ヤツを　やっつけて
+いちにんまえと　みとめられるなんて▽
+ちょっと　おかしくない？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:22:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:53:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デント『ちょっと　２人とも……▼
+悪い　ヤツを　やっつけて
+一人前と　認められるなんて▽
+ちょっと　おかしくない？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:56:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:52:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1C
+デント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:52:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1a_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポッド『いいたいことは　わかる▼
+だけど　このままじゃ
+いつまで　たっても　かわらないだぜ？▼
+おれたちが　きたえても　おなじだけ
+ほかの　ジムリーダーも　つよくなる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:29:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポッド『いいたいことは　わかる▼
+だけど　このままじゃ
+いつまで　たっても　変わらないだぜ？▼
+おれたちが　鍛えても　同じだけ
+他の　ジムリーダーも　強くなる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:56:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:52:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1A
+ポッド</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:53:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_ninja1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『……だったら
+あいてを　してやる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:42:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『……だったら
+相手を　してやる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:57:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:52:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・出現
+・三つ子に！マーク
+　デントは？マーク後に！マーク</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:34:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_NINJA
+ダークトリニティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:53:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1b_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コーン『その　すがた
+ダークトリニティですね▽
+しかし　なぜ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:31:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:30:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コーン『その　姿
+ダークトリニティですね▽
+しかし　なぜ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:57:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:46:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:53:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1B
+コーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:30:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_ninja3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『……きまぐれ▼
+……うさばらし▼
+……ひまつぶし▼
+なんでも　いい▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:33:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:47:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『……気まぐれ▼
+……憂さ晴らし▼
+……暇つぶし▼
+なんでも　いい▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:57:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:47:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_NINJA
+ダークトリニティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:47:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1a_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポッド『３ｖｓ３か！▼
+さきに　たおした　やつが
+おれらの　なかで▽
+いちばん　つよいって　ことだぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:58:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポッド『３ｖｓ３か！▼
+先に　倒した　ヤツが
+おれらの　中で▽
+一番　強いって　ことだぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:58:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:52:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・
+・デントは一歩遅れる</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:00:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1A
+ポッド</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:00:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_ninja1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『……たあいも　ない▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:34:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『……他愛も　ない▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:00:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:52:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・３ｖｓ３の形になる
+・デントは遅れる
+・で画面暗転</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:50:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_NINJA
+ダークトリニティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:46:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_ninja2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『……こいつら　いがいの
+ジムリーダーには　きをつけよう▽
+つぎは　ジャマを　されないように……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:18:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『……こいつら以外の
+ジムリーダーには　気をつけよう▽
+次は　ジャマを　されないように……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:00:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:52:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_NINJA
+ダークトリニティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:50:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_ninja3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『……さて
+ゲーチスさまが　まっている▼
+あの　ポケモンを
+かくほ　せねば　ならない▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:07:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『……さて
+ゲーチスさまが　待っている▼
+あの　ポケモンを
+確保せねば　ならない▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:00:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・消失アニメ
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_NINJA
+ダークトリニティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:50:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1a_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポッド『……なんだよ▼
+なんだよ　これ！
+ふざけるなよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:37:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポッド『……なんだよ▼
+なんだよ　これ！
+ふざけるなよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:46:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1A
+ポッド</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:53:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1c_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デント『……だって
+あっとうてき　で▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:37:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デント『……だって
+圧倒的　で▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:00:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1C
+デント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:53:48" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1b_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コーン『みとめざるを　えません▼
+サンヨウの　ジムリーダーは
+３にん　そろって　いちにんまえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:37:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コーン『みとめざるを　えません▼
+サンヨウの　ジムリーダーは
+３にん　そろって　いちにんまえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:46:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1B
+コーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:53:56" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1c_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デント『……だから　さんにん
+ちからを　あわせて　きたえなおそう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:42:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デント『……だから　３人
+力を　あわせて　鍛えなおそう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:01:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T04:54:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:01:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1C
+デント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T05:54:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1a_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポッド『……むり　するなよ▼
+オレたち　みつご　だぜ？
+ほんとうに　いいたいこと　わかるって</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:01:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:38:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポッド『……無理するなよ▼
+オレたち　三つ子だぜ？
+本当に　いいたいこと　わかるって</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:01:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1A
+ポッド</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:38:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1b_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コーン『ええ▼
+はんぱな　じつりょくの　まま
+ジムリーダーを　つづけたって▽
+きもちが　はいりません▼
+それなら　いっそのこと……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:43:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:42:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コーン『ええ▼
+半端な　実力の　まま
+ジムリーダーを　続けたって▽
+気持ちが　はいりません▼
+それなら　いっそのこと……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:01:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1B
+コーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:38:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1c_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デント『そうですね▼
+ジムリーダーを　やめ
+ほんきで　きたえなおしましょう▼
+そして　３にんのうち　だれかが
+みんなに　みとめられるほどの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:44:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デント『そうですね▼
+ジムリーダーを　やめ
+本気で　鍛えなおしましょう▼
+そして　３人のうち　だれかが
+みんなに　認められるほどの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:02:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1C
+デント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:44:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1a_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポッド『おう！▼
+みんなに　みとめられるほどの
+ポケモントレーナー　そして！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポッド『おう！▼
+みんなに　認められるほどの
+ポケモントレーナー　そして！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:02:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1A
+ポッド</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:45:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader1b_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コーン『ジムリーダーに　なりましょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:46:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:46:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コーン『ジムリーダーに　なりましょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:46:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:46:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:02:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER1B
+コーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T06:46:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
