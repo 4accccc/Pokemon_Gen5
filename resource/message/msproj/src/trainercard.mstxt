@@ -973,10 +973,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バトルけんてい</Text>
+			<Text>フェスミッション　クリアすう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="mori:W00269"
+				Time="2011-09-03T06:53:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -984,10 +984,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バトル検定</Text>
+			<Text>フェスミッション　クリア数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="mori:W00269"
+				Time="2011-09-03T06:54:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -995,13 +995,12 @@ GFBTS1607：不要なスペース削除</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>カード裏面項目。
-トライアルハウスのバトル検定の現在ランク
-「バトルけんてい」の文字列から位１文字分
-空けて「○○○○ランク」と入れる。</Comment>
+			<Comment>カード裏面項目。【スワンで追加】
+フェスミッションに参加した回数。
+単位はなし。</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="mori:W00269"
+				Time="2011-09-03T06:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1017,6 +1016,146 @@ GFBTS1607：不要なスペース削除</Comment>
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TCARD_24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド　さつえい　かいすう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:54:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:54:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド　撮影　回数</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:54:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:54:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カード裏面項目。【スワンで追加】
+ポケウッドで撮影行った回数。
+単位はなし。</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:55:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TCARD_25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＷＢＴ　ゆうしょう　かいすう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:55:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:55:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＷＢＴ　優勝　回数</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:56:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:55:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カード裏面項目。【スワンで追加】
+ワールドバトルトーナメントで優勝した回数。
+単位はなし。</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:56:24" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TCARD_26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Area Idx="7" ]に</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:57:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:57:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Area Idx="7" ]に</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:57:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:57:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カード裏面項目。【スワンで追加】
+ジョインアベニューに招待した人数を表示するための１行目。
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:58:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TCARD_27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょうたいした　ひとの　かず</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:58:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:57:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>招待した　人の　数</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:58:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:58:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カード裏面項目。【スワンで追加】
+ジョインアベニューに招待した人数を表示するための２行目。
+単位はなし。</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-09-03T06:59:00" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="MSG_TCARD_12"

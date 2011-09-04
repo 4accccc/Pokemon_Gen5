@@ -28,6 +28,11 @@
 #include "savedata/zukan_savedata.h"
 #include "savedata/c_gear_data.h"
 #include "savedata/medalbox.h"
+#include "savedata/pokewood_savedata.h"
+#include "savedata/resonance_resort_sv.h"
+#include "field/resonance_resort_data.h"
+#include "savedata/wbt_save.h"
+#include "savedata/fmission_save.h"
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/g_power.h"
 #include "field/monolith_tool_notwifi.h"
@@ -119,7 +124,7 @@ static int sub_BadgeWait(TR_CARD_SYS* wk);
 static int sub_MedalInit(TR_CARD_SYS* wk);
 static int sub_MedalWait(TR_CARD_SYS* wk);
 static int _branch_card_app( TR_CARD_SYS* wk, TRCARD_CALL_PARAM *pp );
-static void TRAINERCARD_GetMedalData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameData, HEAPID heapId );
+static void TRAINERCARD_GetSwanSelfData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameData, HEAPID heapId );
 
 
 //------------------------------------------------------------------
@@ -172,7 +177,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   wk->tcp->SwanTrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( SWAN_TR_CARD_DATA ) );
   wk->tcp->TrCardData = &wk->tcp->SwanTrCardData->bw_data;
   TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible, wk->heapId);
-  TRAINERCARD_GetMedalData( wk->tcp->SwanTrCardData, pp->gameData, wk->heapId );
+  TRAINERCARD_GetSwanSelfData( wk->tcp->SwanTrCardData, pp->gameData, wk->heapId );
 
   DEBUG_TR_PRINT("pp->mode=%d\n", pp->mode);
 
@@ -508,20 +513,29 @@ static int sub_BadgeWait(TR_CARD_SYS* wk)
   return CARDSYS_END;
 }
 
+#define WBT_COUNT_MAX ( 99999 )
 //----------------------------------------------------------------------------------
 /**
- * @brief	【SWAN専用】送信トレーナーカード用メダル情報取得
+ * @brief	【SWAN専用】送信トレーナーカード用情報取得
  *
  * @param   sw_trcard	スワントレーナーカードデータ
  * @param   gameData	GAMEDATA
  * @param   heapId		HEAPID
  */
 //----------------------------------------------------------------------------------
-static void TRAINERCARD_GetMedalData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameData, HEAPID heapId )
+static void TRAINERCARD_GetSwanSelfData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameData, HEAPID heapId )
 {
-  u8 year, month, day;
-  MEDALBOX *medalBox = SaveData_GetMedalBox(GAMEDATA_GetSaveControlWork( gameData ));
+  u8  year, month, day;
+  u32 count=0,i;
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( gameData );
+  MEDALBOX *medalBox = SaveData_GetMedalBox(sv);
+  WBTSAVE *wbt_sv   = SAVEDATA_GetWBTSave(sv);
+  RESONANCE_RESORT_SV *reso_sv = RESONANCE_RESORT_SV_GetWork( sv );
+  RESORT_CITY_DATA *rcity_sv   = RESONANCE_RESORT_SV_GetCityData( reso_sv );
+  RECORD *rec = SaveData_GetRecord( sv );
+  FMISSION_SAVE* fmission_sv = SAVEDATA_GetFMissionSave(sv);
   
+  // メダル情報取得
   sw_trcard->medal_id      = MEDALBOX_GetPushMedalID( medalBox );
   sw_trcard->medal_cnt     = MEDALBOX_GetMedalCount( medalBox, FALSE );
   sw_trcard->medalbox_rank = MEDALBOX_GetMedalBoxRank( medalBox );
@@ -532,8 +546,28 @@ static void TRAINERCARD_GetMedalData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *ga
     sw_trcard->medal_get_month = month;
     sw_trcard->medal_get_day   = day;
   }
+
+  // WBT優勝回数の取得
+  for(i=0;i<WBTWIN_COUNT_MAX;i++){
+    count +=WBTSAVE_GetWinCount(wbt_sv, i);
+  }
+  if(count>WBT_COUNT_MAX){
+    count = WBT_COUNT_MAX;
+  }
+  sw_trcard->wbt_victory_cnt = count;
+
+  // ポケウッド撮影回数取得
+  sw_trcard->pokewood_rec_cnt = RECORD_Get( rec, RECID_RESORT_GUID_CNT);  // 仮
   
+  // ジョインアベニュー用情報取得
+  RESORT_CITY_DATA_GetData( rcity_sv, RESORT_CITY_DATA_PARAM_CITY_NAME, sw_trcard->my_janame );
+  sw_trcard->ja_invitaion_cnt = RECORD_Get( rec, RECID_RESORT_GUID_CNT);
+  
+  // フェスミッションクリア回数取得
+  sw_trcard->fmission_cnt = FMISSION_SAVE_GetMissionClearNum( fmission_sv );
 }
+
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -850,20 +884,20 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   {
     INTRUDE_SAVE_WORK *intrude_sv = SaveData_GetIntrude( sv );
     if(ISC_SAVE_GetPalaceSojournTime(intrude_sv)){
-      cardData->PaleceFlag      = 1;    
+      cardData->PaleceFlag      = 1;
     } 
   }
   // ミュージカルをした事があるか
   if(cardData->MusicalNum){
-    cardData->MusicalFlag   = 1;    
+    cardData->MusicalFlag   = 1;
   }
   // ポケシフターをした事があるか
   if(RECORD_Get( rec, RECID_POKESHIFTER_COUNT)){
-    cardData->PokeshifterFlag = 1;    
+    cardData->PokeshifterFlag = 1;
   }
   // トライアルハウスに参加した事があるか
   if(RECORD_Get( rec, RECID_TRIALHOUSE_COUNT)){
-    cardData->TrianHouseFlag  = 1;    
+    cardData->TrianHouseFlag  = 1;
   }
   
   //図鑑処理
@@ -958,9 +992,12 @@ TRCARD_CALL_PARAM*  TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , v
 int TRAINERCARD_GetCardRank( GAMEDATA *gameData )
 {
   int rank=0;
-  BSUBWAY_SCOREDATA *bs_score   = GAMEDATA_GetBSubwayScoreData( gameData );
-  MUSICAL_SAVE      *musical_sv = GAMEDATA_GetMusicalSavePtr( gameData );
-  OCCUPY_INFO       *occupy_sv  = GAMEDATA_GetMyOccupyInfo( gameData );
+  SAVE_CONTROL_WORK *sv          = GAMEDATA_GetSaveControlWork(gameData);
+  BSUBWAY_SCOREDATA *bs_score    = GAMEDATA_GetBSubwayScoreData( gameData );
+  MUSICAL_SAVE      *musical_sv  = GAMEDATA_GetMusicalSavePtr( gameData );
+  OCCUPY_INFO       *occupy_sv   = GAMEDATA_GetMyOccupyInfo( gameData );
+  POKEWOOD_SAVEDATA *pokewood_sv = GAMEDATA_GetPokewoodSavedata(gameData);
+  WBTSAVE           *wbt_sv      = SAVEDATA_GetWBTSave(sv);
 
   //ストーリークリア（殿堂入りとは違う）
   if (EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( gameData ),SYS_FLAG_GAME_CLEAR)){
@@ -973,10 +1010,29 @@ int TRAINERCARD_GetCardRank( GAMEDATA *gameData )
     rank++;
   }
 
+  // ブラックシティ・ホワイトフォレストのバランス数値が３０以上
+  if(OccupyInfo_GetWhiteLevel(occupy_sv)>=OCCUPY_QUALIFY
+  && OccupyInfo_GetBlackLevel(occupy_sv)>=OCCUPY_QUALIFY
+  ){
+    DEBUG_TR_PRINT( "BC/WFのバランス数値が両方共３０以上\n");
+    rank++;
+  }
+
+  //WBTチャンピオンズトーナメントで優勝
+  if(WBTSAVE_GetWinCount(wbt_sv,WBTWIN_COUNT_CHAMPION)){
+    DEBUG_TR_PRINT( "WBTチャンピオンズトーナメントで優勝\n");
+    rank++;
+  }
+
+  if(POKEWOOD_SAVEDATA_GetSenarioOpenNum(pokewood_sv)>=POKEWOOD_BOXOFFICE_DATA_MAX){
+    DEBUG_TR_PRINT( "ポケウッドのシナリオがフルオープン\n");
+    rank++;
+  }
+
+#if 0 //WBのときの条件
   // バトルサブウェイ、スーパーシングル、スーパーダブルでボス撃破
   if(BSUBWAY_SCOREDATA_SetFlag( bs_score,  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_SINGLE, BSWAY_SETMODE_get) 
   && BSUBWAY_SCOREDATA_SetFlag( bs_score,  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_DOUBLE, BSWAY_SETMODE_get) 
-//  && BSUBWAY_SCOREDATA_SetFlag( bs_score,  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_MULTI, BSWAY_SETMODE_get)    // 必要なら
   ){
     DEBUG_TR_PRINT( "バトルサブウェイボス撃破\n");
     rank++;
@@ -987,14 +1043,7 @@ int TRAINERCARD_GetCardRank( GAMEDATA *gameData )
     DEBUG_TR_PRINT( "ミュージカルグッズコンプ\n");
     rank++;
   }
-  
-  // ブラックシティ・ホワイトフォレストのバランス数値が３０以上
-  if(OccupyInfo_GetWhiteLevel(occupy_sv)>=OCCUPY_QUALIFY
-  && OccupyInfo_GetBlackLevel(occupy_sv)>=OCCUPY_QUALIFY
-  ){
-    DEBUG_TR_PRINT( "BC/WFのバランス数値が両方共３０以上\n");
-    rank++;
-  }
+#endif  
 
   return rank;
 }

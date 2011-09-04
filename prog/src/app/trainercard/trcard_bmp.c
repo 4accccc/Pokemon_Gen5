@@ -550,6 +550,8 @@ static const PRINTSYS_LSB col_tbl[]={
   PRINTSYS_MACRO_LSB(4,3,0),
 };
 
+
+#define JA_MYNAME_LEN ( 20 )
 //----------------------------------------------------------------------------------
 /**
  * @brief カラー対応１行描画関数
@@ -567,6 +569,17 @@ static void LinePrint( GFL_BMPWIN *win, TR_CARD_WORK *wk, int x, int y, STRBUF *
   PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(win), x, y, strbuf, wk->fontHandle,  col_tbl[col]);
 }
 
+static void _setup_ja_string( TR_CARD_WORK *wk, STRBUF *des )
+{
+  // ジョインアベニュー用文字列をwordsetに登録
+  STRBUF *ja_name = GFL_STR_CreateBuffer( JA_MYNAME_LEN+1, wk->heapId );
+  GFL_STR_SetStringCodeOrderLength( ja_name, wk->SwanTrCardData->my_janame, JA_MYNAME_LEN );
+  WORDSET_RegisterWord( wk->wordset, 7, ja_name, 0, 0, 0 );   //自分で命名できるジョインベニューの名前
+  
+  // トレーナーカード表示用に文字列展開
+  WORDSET_ExpandStr( wk->wordset, des, wk->CPrmBuf[MSG_TCARD_26] );
+  GFL_STR_DeleteBuffer( ja_name );
+}
 
 #define LINE_RIGHT_MARGIN   ( 8*1 )
 
@@ -582,7 +595,8 @@ static void LinePrint( GFL_BMPWIN *win, TR_CARD_WORK *wk, int x, int y, STRBUF *
 //----------------------------------------------------------------------------------
 static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, int y, int col )
 {
-  TR_CARD_DATA *inTrCardData = wk->TrCardData;
+  TR_CARD_DATA      *inTrCardData   = wk->TrCardData;
+  SWAN_TR_CARD_DATA *inSwanTrCardData = wk->SwanTrCardData;
   STRBUF *str = wk->DigitBuf;
 
   switch(line){
@@ -683,10 +697,38 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->gPowerNum, GPOWER_DIGIT,
             STR_NUM_DISP_SPACE,col );
     break;
+  case SCORE_LINE_FMISSION_CLEAR_NUM: //フェスミッションクリア回数
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_23], col );
+    WriteNumData( wk, win,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inSwanTrCardData->fmission_cnt, FMISSION_DIGIT,
+            STR_NUM_DISP_SPACE,col );
+    break;
+  case SCORE_LINE_POKEWOOD_REC_NUM: //ポケウッド撮影回数
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_24], col );
+    WriteNumData( wk, win,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inSwanTrCardData->pokewood_rec_cnt, MUSICAL_DIGIT,
+            STR_NUM_DISP_SPACE,col);
+    break;
   case SCORE_LINE_MUSICAL_NUM:              // ミュージカルをした回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_20], col );
     WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->MusicalNum, MUSICAL_DIGIT,
+            STR_NUM_DISP_SPACE,col);
+    break;
+  case SCORE_LINE_WBT_VICTORY_NUM:  // WBT優勝回数
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_25], col );
+    WriteNumData( wk, win,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inSwanTrCardData->wbt_victory_cnt, WBT_DIGIT,
+            STR_NUM_DISP_SPACE,col);
+    break;
+  case SCORE_LINE_JA_INVITAION_1:   // ジョインアベニュー招待回数1行目
+    _setup_ja_string( wk, str );
+    LinePrint( win, wk, 0, y, str, col );
+    break;
+  case SCORE_LINE_JA_INVITAION_2:   // ジョインアベニュー招待回数2行目
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_27], col );
+    WriteNumData( wk, win,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inSwanTrCardData->wbt_victory_cnt, JA_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_POKESHIFTER_HIGH:         // ポケシフターのハイスコア
@@ -695,18 +737,12 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->PokeshifterHigh, POKESHIFTER_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
-  case SCORE_LINE_TRIALHOUSE_HIGH:          // トライアウハウスの最高得点
+  case SCORE_LINE_TRIALHOUSE_HIGH:          // トライアルハウスの最高得点
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_22], col );
     WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseHigh, TRIALHOUSE_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
-//  case SCORE_LINE_TRIALHOUSE_RANK:          // トライアウハウスのランク
-//    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_23], col );
-//    WriteNumData( wk, win,
-//            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseRank, BATTLE_DIGIT,
-//            STR_NUM_DISP_SPACE,col);
-//    break;
   }
 
 
@@ -769,6 +805,11 @@ void TRCBmp_MakeScoreList( TR_CARD_WORK *wk, TR_CARD_DATA *TrCardData )
     _add_score_list( wk, SCORE_LINE_TRIALHOUSE_HIGH );
   }
 
+  _add_score_list( wk, SCORE_LINE_FMISSION_CLEAR_NUM );
+  _add_score_list( wk, SCORE_LINE_POKEWOOD_REC_NUM );
+  _add_score_list( wk, SCORE_LINE_WBT_VICTORY_NUM );
+  _add_score_list( wk, SCORE_LINE_JA_INVITAION_1 );
+  _add_score_list( wk, SCORE_LINE_JA_INVITAION_2 );
 
   
 }
@@ -982,7 +1023,7 @@ static void WriteNumDateYYMMDDHHMM( TR_CARD_WORK* wk,
   WORDSET_RegisterNumber( wk->wordset, 1, wk->TrCardData->Clear_m,      2, inDisptype, STR_NUM_CODE_ZENKAKU );
   WORDSET_RegisterNumber( wk->wordset, 2, wk->TrCardData->Clear_d,      2, inDisptype, STR_NUM_CODE_ZENKAKU );
   WORDSET_RegisterNumber( wk->wordset, 3, wk->TrCardData->ClearTime_h,  2, inDisptype, STR_NUM_CODE_ZENKAKU );
-  WORDSET_RegisterNumber( wk->wordset, 4, wk->TrCardData->ClearTime_m, 2, inDisptype, STR_NUM_CODE_ZENKAKU );
+  WORDSET_RegisterNumber( wk->wordset, 4, wk->TrCardData->ClearTime_m,  2, inDisptype, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordset, buff, wk->CreditBuf[TR_CARD_CREDIT_YYMMDDHHMM] );
   len = PRINTSYS_GetStrWidth(buff,wk->fontHandle,0);
 

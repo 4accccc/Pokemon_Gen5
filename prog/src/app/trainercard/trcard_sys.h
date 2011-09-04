@@ -21,7 +21,7 @@
 #define TRC_SCREEN_WIDTH  (32)
 //#define TR_CARD_WIN_MAX   (14)
 #define TR_CARD_PARAM_MAX (7)
-#define TR_CPRM_STR_MAX   (26)
+#define TR_CPRM_STR_MAX   (27)
 
 #define TR_CARD_BADGE_LV_MAX  (4)   //バッジの最大レベル
 #define TR_BADGE_NUM_MAX  (16)
@@ -64,10 +64,14 @@ enum{
   SCORE_LINE_SURETIGAI_NUM,
   SCORE_LINE_FEELING_CHECK_NUM,
   SCORE_LINE_G_POWER,
+  SCORE_LINE_FMISSION_CLEAR_NUM,  //【swan】フェスミッションのクリア回数
+  SCORE_LINE_POKEWOOD_REC_NUM,    //【swan】ポケウッド撮影回数
   SCORE_LINE_MUSICAL_NUM,
+  SCORE_LINE_WBT_VICTORY_NUM,     //【swan】ＷＢＴ優勝回数
+  SCORE_LINE_JA_INVITAION_1,      //【swan】ジョインアベニュー招待人数1行目
+  SCORE_LINE_JA_INVITAION_2,      //【swan】ジョインアベニュー招待人数2行目
   SCORE_LINE_POKESHIFTER_HIGH,
   SCORE_LINE_TRIALHOUSE_HIGH,
-//  SCORE_LINE_TRIALHOUSE_RANK,
   SCORE_LINE_MAX,
 };
 
@@ -126,6 +130,7 @@ typedef struct TR_CARD_WORK_tag
 
   TRCARD_CALL_PARAM* tcp; ///<カード呼び出しパラメータ
   TR_CARD_DATA *TrCardData;
+  SWAN_TR_CARD_DATA *SwanTrCardData;
   u8 TrSignData[SIGN_SIZE_X*SIGN_SIZE_Y*64];  //転送するので４バイト境界の位置に置くこと
   void *TrArcData;              //トレーナーグラフィックアーカイブデータ
   NNSG2dCharacterData* TrCharData;      //トレーナーキャラデータポインタ

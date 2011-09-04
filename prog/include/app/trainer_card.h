@@ -13,6 +13,7 @@
 #include "buflen.h"
 #include "savedata/playtime.h"
 #include "system/pms_data.h"
+#include "field/resonance_resort_data.h"
 
 #define SIGN_SIZE_X (24)  ///< トレーナーサインの書き込み領域開始Ｘ
 #define SIGN_SIZE_Y ( 8)  ///< トレーナーサインの書き込み領域開始Ｙ
@@ -119,6 +120,8 @@ typedef struct TR_CARD_DATA_tag
   u16 reached;      ///< 到着フラグ(通信時に使用）
 }TR_CARD_DATA;
 
+#define JA_NAME_LEN ( 20+1 )
+
 //================================================================================
 /**! @typedef SWAN_TR_CARD_DATA
   *           スワンで追加されるメダルデータを含んだトレーナーカード構造体
@@ -133,6 +136,17 @@ typedef struct{
   u8  medal_get_year;     ///< お気に入りメダルの取得年
   u8  medal_get_month;    ///< お気に入りメダルの取得月
   u8  medal_get_day;      ///< お気に入りメダルの取得日
+
+  u32 fmission_cnt;       ///< フェスミッションクリア回数
+  u16 pokewood_rec_cnt;   ///< ポケウッド撮影回数
+  u16 ja_invitaion_cnt;   ///< ジョインアベニュー招待回数
+  u32 wbt_victory_cnt;    ///< WBT優勝回数
+  u32 fmission_flag:1;    ///< フェスミッションの項目を表示する？
+  u32 pokewood_flag:1;    ///< ポケウッドの撮影回数を表示する？
+  u32 wbt_flag:1;         ///< WBTの優勝回数を表示する？
+  u32 ja_flag:1;          ///< ジョインアベニューの項目を表示する?
+  u16 etc:12;
+  u16 my_janame[RESORT_CITY_NAME_BUFF_MAX+1]; ///< 自分でつけるジョインアベニューの名前
   u16 _xor;               ///< スワンカードデータのXOR
   u16 reached;            ///< スワンカードデータの到着フラグ
 }SWAN_TR_CARD_DATA;

@@ -426,7 +426,8 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   wk->ObjWork.heapId = HEAPID_TR_CARD;
   //ˆøŒp‚¬ƒpƒ‰ƒ[ƒ^Žæ“¾
   wk->tcp = pwk;
-  wk->TrCardData = wk->tcp->TrCardData;
+  wk->TrCardData     = wk->tcp->TrCardData;
+  wk->SwanTrCardData = wk->tcp->SwanTrCardData;
   wk->key_mode = GFL_UI_CheckTouchOrKey();
 
   wk->msg_spd = MSGSPEED_GetWait();
