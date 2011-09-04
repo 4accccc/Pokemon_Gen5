@@ -1,3 +1,1303 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アロエ『おや　アーティ▼
+どうしたんだい？
+また　につまったのかい？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:29:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アロエ『おや　アーティ▼
+どうしたんだい？
+また　煮詰まったのかい？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:50:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・！マーク
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:26:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:26:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ『うーん
+ホネ　なのかなあ……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:29:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ『うーん
+ホネ　なのかなあ……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:33:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER3
+アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:29:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アロエ『……ホネ？▼
+そりゃ　はくぶつかん　だし
+ホネは　あるけどね▼
+なんだい？
+こんどの　モチーフ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:50:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アロエ『……ホネ？▼
+そりゃ　北部着かんだし
+ホネは　あるけどね▼
+なんだい？
+今度の　モチーフ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:33:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:29:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ『そうかなあ……？▼
+いや　そうじゃないかも……▼
+むしポケモンの　ばあい
+そとがわが　かたい……▽
+いわゆる　がいこっかく　でしょ▼
+ホネは　あまり　というか
+よく　わかんない▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:50:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ『そうかなあ……？▼
+いや　そうじゃないかも……▼
+むしポケモンの　場合
+外側が　硬い……▽
+いわゆる　外骨格　でしょ▼
+ホネは　あまり　というか
+よく　わかんない▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:50:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:33:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER3
+アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:33:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アロエ『で　ここに　くれば
+ホネについて　なにか　わかるかもと▼
+いいよ
+ゆっくり　しておいき▼
+なんだったら
+ダンナに　せつめい　させようか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:51:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アロエ『で　ここに　来れば
+ホネについて　なにか　わかるかもと▼
+いいよ
+ゆっくり　しておいき▼
+なんだったら
+ダンナに　説明させようか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:50:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:39:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ『むうん……▼
+そもそも　ねえさんに　とって
+ホネって　なーに？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:51:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:01:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ『むうん……▼
+そもそも　ねえさんに　とって
+ホネって　なーに？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:51:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER3
+アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:01:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アロエ『あたしが　ちいさいころさ▼
+こうざんで　いしを　ほっていた
+おやじは　いつも▽
+ホネを　もってかえってきてね▼
+こどもごころに　ホネの　みりょくに
+やられちまったんだよ▼
+いきている　ときは
+どんな　すがたを　していたのか？▼
+なぜ　ホネは　こんな
+かたちを　してるんだろう　とかね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:52:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:05:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アロエ『あたしが　小さいころさ▼
+鉱山で　石を　掘っていた
+おやじは　いつも▽
+ホネを　持って帰ってきてね▼
+子供心に　ホネの　魅力に
+やられちまったんだよ▼
+生きている　ときは
+どんな　姿を　していたのか？▼
+なぜ　ホネは　こんな
+形状を　してるんだろう　とかね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:52:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:02:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader3_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ『あう
+ちょっと　わかるかも▼
+むしポケモンも
+あしの　かたちとか▽
+きのうてきな　デザインだし▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:17:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:16:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ『あう
+ちょっと　わかるかも▼
+むしポケモンも
+脚の　形状とか　機能的な▽
+ムダのない　デザインだし▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:53:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER3
+アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:16:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader5_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『おお！　なんだ
+おまえら　そろってるな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:51:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『おお！　なんだ
+おまえら　そろってるな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・まずメッセージの未表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:51:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER5
+ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:51:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader3_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ『どうしたの？▼
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:52:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ『どうしたの？▼
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:06:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER3
+アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:51:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader5_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『ネジやまで
+カセキが　みつかったからな▼
+ここに　おいてもらえるか　とか
+みてもらいに　きたのよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:53:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:52:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン『ネジ山で
+カセキが　みつかったからな▼
+ここに　置いてもらえるか　とか
+みてもらいに　きたのよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:53:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER5
+ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T07:52:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader3_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ『ヤーコンさんにとって
+ホネって　どういう　もの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:17:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ『ヤーコンさんにとって
+ホネって　どういう　もの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER3
+アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:17:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader5_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『ん？
+そうよな……▼
+どんな　やつでも
+しんだら　ホネだけ　だもんな▼
+って　かんがえると　しんでも
+おかねに　なるのは　すごいな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:53:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:18:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン『ん？
+そうよな……▼
+どんな　やつでも
+死んだら　ホネだけ　だもんな▼
+って　考えると　死んでも
+お金に　なるのは　すごいな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:53:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER5
+ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:18:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アロエ『また　うそぶいてるのか
+しらないけどさ　アンタらしいね▼
+アーティは　アーティで
+ホネについて　かんがえてるんだからさ▼
+あんまり
+いいかげんを　いうんじゃないよ▼
+で　どんな　ホネだい？
+ちょいと　みせてごらんよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:36:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:19:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アロエ『また　うそぶいてるのか
+知らないけどさ　アンタらしいね▼
+アーティは　アーティで
+ホネについて　考えてるんだからさ▼
+あんまり
+いいかげんを　いうんじゃないよ▼
+で　どんな　ホネだい？
+ちょいと　みせてごらんよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:54:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:39:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:19:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader5_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『おお！　これだ　これ！▼
+で　どうだ？▼
+しりょうかちが　たかいか
+うって　たかいか　どっちだ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:25:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:24:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン『おお！　これだ　これ！▼
+で　どうだ？▼
+資料価値が　高いか
+売って　高いか　どっちだ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:54:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER5
+ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:20:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アロエ『そうだね
+いい　いみで　ふつうの　カセキだね▼
+しりょうてきかちも　たかくなければ
+うっても　たかくないよ▼
+ただ　ついている
+つちが　きになるね……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:32:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:25:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アロエ『そうだね
+いい意味で　普通の　カセキだね▼
+資料的価値も　高くなければ
+売っても　高くないよ▼
+ただ　付着している
+土が　気になるね……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:55:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:39:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:25:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader3_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ『どーゆーこと？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:28:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:27:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ『どーゆーこと？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER3
+アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:27:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アロエ『うん　びみょうなんだけど▼
+ネジやまの　つちとは
+ちょっと　ちがうようだね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:28:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:28:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アロエ『うん　微妙なんだけど▼
+ネジ山の　土とは
+ちょっと　違うようだね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:55:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:39:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:28:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader5_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『そうか！▼
+オレの　ネジやまには
+むげんの　かのうせいが▽
+まだまだ　ねむっているんだな！▼
+よーしっ
+ほって　ほりまくるか！▽
+オレの　ヤーコンロードを！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:37:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:34:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン『そうか！▼
+オレの　ネジ山には
+無限の　可能性が▽
+まだまだ　眠っているんだな！▼
+よーしっ
+掘って　掘りまくるか！▽
+オレの　ヤーコンロードを！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:55:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、画面下へ移動
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER5
+ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:30:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader5_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ！▼
+その　ふつうの　カセキは
+オマエに　くれてやる！▼
+それみて　ホネについて
+かんがえると　いいだろう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:36:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:35:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ！▼
+その　普通の　カセキは
+オマエに　くれてやる！▼
+それみて　ホネについて
+考えると　いいだろう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:55:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・途中で振り向きメッセージ
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER5
+ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:35:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader3_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ『ねえさん　ありがと▼
+ホネだけど　すきなように
+みれば　それで　いいのかな？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:37:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ『ねえさん　ありがと▼
+ホネだけど　好きなように
+みれば　それで　いいのかな？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:56:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:40:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER3
+アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:37:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader2_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アロエ『いいんじゃない？▼
+アタシと　アンタと　ヤーコンと
+みんな　ホネへの▽
+おもいは　バラバラ▽
+それでないと　きもちわるいだろ？▼
+それよりも　その　カセキ▼
+さいなん　だねえ……　ねむりに
+ついても　あれこれ　いわれてさ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:56:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:38:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アロエ『いいんじゃない？▼
+アタシと　アンタと　ヤーコンと
+みんな　ホネへの▽
+おもいは　バラバラ▽
+それでないと　気持ち悪いだろ？▼
+それよりも　その　カセキ▼
+災難だねえ……　眠りについても
+あれこれ　いわれてさ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:56:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:42:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:38:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc02gym0202_old_leader3_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ『だね▼
+この　カセキは
+じぶんなりに　モチーフに　することで▽
+ありがとうって　いうつもり▼
+じゃーね　ねえさん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:57:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:42:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ『だね▼
+この　カセキは
+自分なりに　モチーフに　することで▽
+ありがとうって　いうつもり▼
+じゃーね　ねえさん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:57:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:43:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面下に移動しながら
+　終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:42:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER3
+アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:42:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>

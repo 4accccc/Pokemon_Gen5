@@ -946,12 +946,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コーン『みとめざるを　えません▼
+			<Text>コーン『認めざるを　えません▼
 サンヨウの　ジムリーダーは
-３にん　そろって　いちにんまえ▼</Text>
+３人　そろって　一人前▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:46:26" />
+				Time="2011-09-04T07:18:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -986,11 +986,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デント『……だから　さんにん
-ちからを　あわせて　きたえなおそう▼</Text>
+			<Text>デント『そうだね▼
+ポッド　コーン
+ボク　おもうんだけど▼
+このまま　さんにん　そろって
+ジムリーダーを　しているかぎり▽
+なにも　かわらないと　おもう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:42:43" />
+				Time="2011-09-04T07:17:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -998,11 +1002,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デント『……だから　３人
-力を　あわせて　鍛えなおそう▼</Text>
+			<Text>デント『そうだね▼
+ポッド　コーン
+ボク　思うんだけど▼
+このまま　３人　そろって
+ジムリーダーを　しているかぎり▽
+なにも　変わらないと　おもう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T07:01:07" />
+				Time="2011-09-04T07:18:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1037,12 +1045,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポッド『……むり　するなよ▼
-オレたち　みつご　だぜ？
-ほんとうに　いいたいこと　わかるって</Text>
+			<Text>ポッド『まさか　おまえに
+さきに　いわれるとはね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T07:01:29" />
+				Time="2011-09-04T07:11:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1050,12 +1057,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポッド『……無理するなよ▼
-オレたち　三つ子だぜ？
-本当に　いいたいこと　わかるって</Text>
+			<Text>ポッド『まさか　おまえに
+先に　いわれるとはね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T07:01:24" />
+				Time="2011-09-04T07:18:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1090,14 +1096,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コーン『ええ▼
-はんぱな　じつりょくの　まま
-ジムリーダーを　つづけたって▽
-きもちが　はいりません▼
-それなら　いっそのこと……▼</Text>
+			<Text>コーン『もちろん　コーンも
+そう　かんがえて　いましたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:43:36" />
+				Time="2011-09-04T07:13:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1105,14 +1108,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コーン『ええ▼
-半端な　実力の　まま
-ジムリーダーを　続けたって▽
-気持ちが　はいりません▼
-それなら　いっそのこと……▼</Text>
+			<Text>コーン『もちろん　コーンも
+そう　考えて　いましたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T07:01:47" />
+				Time="2011-09-04T07:18:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1150,11 +1150,11 @@
 			<Text>デント『そうですね▼
 ジムリーダーを　やめ
 ほんきで　きたえなおしましょう▼
-そして　３にんのうち　だれかが
-みんなに　みとめられるほどの▼</Text>
+そして　３人のうち　だれかが
+みんなに　みとめられる　ほどの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:45:17" />
+				Time="2011-09-04T07:14:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1204,12 +1204,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポッド『おう！▼
-みんなに　みとめられるほどの
-ポケモントレーナー　そして！▼</Text>
+			<Text>ポッド『みつご　だもんな
+かんがえることは　おんなじ▼
+だったら　おんなじだけ　つよくなって
+また　３にん　そろって▽
+ジムリーダーに　なれば　いいか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:45:56" />
+				Time="2011-09-04T07:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1217,12 +1219,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポッド『おう！▼
-みんなに　認められるほどの
-ポケモントレーナー　そして！▼</Text>
+			<Text>ポッド『三つ子　だもんな
+考えることは　おんなじ▼
+だったら　おんなじだけ　強くなって
+また　３人　そろって▽
+ジムリーダーに　なれば　いいか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T07:02:19" />
+				Time="2011-09-04T07:19:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1257,10 +1261,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コーン『ジムリーダーに　なりましょう！</Text>
+			<Text>コーン『では　かわりの
+ジムリーダー　ですけど……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:46:19" />
+				Time="2011-09-04T07:15:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1268,10 +1273,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コーン『ジムリーダーに　なりましょう！</Text>
+			<Text>コーン『では　代わりの
+ジムリーダー　ですけど……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:46:26" />
+				Time="2011-09-04T07:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

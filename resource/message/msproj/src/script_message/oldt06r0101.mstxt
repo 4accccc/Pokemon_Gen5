@@ -1,3 +1,1417 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なるほど！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:04:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なるほど！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:46:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アデクとハチク、左右で向き合っている
+・サブウィンで
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:09:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:04:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader7_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:05:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:46:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・サブウィンで
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:10:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER7
+ハチク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:04:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うむ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:05:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うむ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:46:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・サブウィンで
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:10:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:04:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader7_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>では……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:06:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>では……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:46:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・サブウィンで
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:10:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER7
+ハチク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:06:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たのしみだな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:10:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>楽しみだな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:46:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・サブウィンで
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:10:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:10:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_bigfour3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ししょうッ！！
+よばれて　まいりましたぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>師匠ッ！！
+呼ばれて　参りましたぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:47:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・まず下からメッセージだけ
+・ギザウインで
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:11:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BIGFOUR3
+レンブ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:10:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデク『げんき　だな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:47:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデク『元気だな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:48:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ後、レンブ登場しハチクのそばへ
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:11:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:11:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_bigfour3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンブ『おお　きいたぞ！
+やくしゃ　ふっき　するそうだな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:14:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンブ『おお　きいたぞ！
+役者　復帰するそうだな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:47:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BIGFOUR3
+レンブ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:11:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader7_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク『……うむ！▼
+プラズマだんに　よって
+せけんは　そうぞうしくなった▼
+じぶんの　ポケモンと　むきあう……
+それすら　なやむようになった▼
+もちろん　どうつきあうか
+かんがえるのは　よいことだが▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:48:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク『……うむ！▼
+プラズマ団に　よって
+世間は　騒々しくなった▼
+自分の　ポケモンと　向き合う……
+それすら　悩むように　なった▼
+もちろん　どうつきあうか
+考えるのは　よいことだが▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:49:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER7
+ハチク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:14:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデク『じぶんで　こたえを　みつけよ▼
+そういわれても
+なかなか　むずかしいことだからな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:49:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデク『自分で　答えを　みつけよ▼
+そういわれても
+なかなか　難しいことだからな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:49:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T08:59:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:15:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader7_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク『……でだ▼
+わたしが　でる　えいがで
+ポケモンとの　つながりを　みてもらい▽
+みなに　あんしん　してもらえれば▼
+……そう　かんがえたのだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:17:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:16:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク『……でだ▼
+わたしが　でる　映画で
+ポケモンとの　つながりを　みてもらい▽
+みなに　安心してもらえれば▼
+……そう　考えたのだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:49:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER7
+ハチク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:16:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_bigfour3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンブ『おお！　なるほどな▼
+ジムに　こもっていて
+やってくる　ちょうせんしゃと▽
+かたらうだけでは　つたわらんもんな！▼
+だが　だいじょうぶ　なのか？
+さつえいちゅうに　ケガを……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:18:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:17:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンブ『おお！　なるほどな▼
+ジムに　こもっていて
+やってくる　挑戦者と▽
+語らうだけでは　伝わらんもんな！▼
+だが　大丈夫なのか？
+撮影中に　ケガを……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:50:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BIGFOUR3
+レンブ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:17:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデク『……レンブよ
+ハチクは　きめておるのだ▼
+しんぱいは　ときとして
+ひとの　かのうせいを　つぶすぞ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:18:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデク『……レンブよ
+ハチクは　決めておるのだ▼
+心配は　時として
+人の　可能性を　つぶすぞ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:50:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:18:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader7_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク『だいじょうぶ　です
+まよいは　ありませんから▼
+それに　レンブどのの
+こころづかいも　うれしいもの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:51:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク『大丈夫です
+迷いは　ありませんから▼
+それに　レンブ殿の
+心遣いも　うれしいもの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:51:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER7
+ハチク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:22:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader7_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……わかかったのだ▼
+どんな　アクションも　こなせる！▼
+そう　かしんし
+ひつようのない　きけんに　いどんだ▼
+それこそが
+じぶんの　そんざいかち　だと▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:51:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:23:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……わかかったのだ▼
+どんな　アクションも　こなせる！▼
+そう　過信し
+必要のない　危険に　いどんだ▼
+それこそが
+自分の　存在価値だと▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:51:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER7
+ハチク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:22:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader7_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そう……　えんじることで
+なにかを　つたえることよりも▽
+アクションの　すごさだけを　もとめた▼
+それゆえの　ケガなのです▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:24:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:24:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そう……　演じることで
+なにかを　伝えることよりも▽
+アクションの　すごさだけを　求めた▼
+それゆえの　ケガなのです▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:51:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER7
+ハチク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:24:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_bigfour3_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンブ『わかる　きがする▼
+つよさ　だけを　もとめると
+なぜ　もとめるのかが　うすれ▼
+しょうり　という　けっかだけを
+ほっして　しまうものな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:28:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:27:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンブ『わかる　気がする▼
+強さ　だけを　もとめると
+なぜ　求めるのかが　薄れ▼
+勝利　という　結果だけを
+欲して　しまうものな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:52:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BIGFOUR3
+レンブ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:27:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデク『それでだ
+わたしも　きめたことがある！▼
+わたしも　チャンピオンを　やめる！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:52:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:28:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデク『それでだ
+わたしも　きめたことがある！▼
+わたしも　チャンピオンを　辞する！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:52:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:28:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>われわれこそ
+ポケモンと　ともに　いきる　いみを▽
+みつめなおさねば　ならん▼
+だが　せぞくは
+まだ　ふあんで　ゆらいでおる▼
+そこで　あたらしい　きぼうを
+みなに　みせたくてな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:53:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:30:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>われわれこそ
+ポケモンと　共に生きる　意味▽
+みつめなおさねば　ならん▼
+だが　世俗は
+まだ　不安で　揺らいでおる▼
+そこで　新しい　希望を
+みなに　みせたくてな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:53:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・反対方向を向いて
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_bigfour3_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンブ『まあ　そりゃ
+ししょうが　きめたことなら▼
+それに　はんたいしても
+きかないんでしょ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:31:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:30:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンブ『まあ　そりゃ
+師匠が　決めたことなら▼
+それに　反対しても
+きかないんでしょ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:53:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BIGFOUR3
+レンブ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:30:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデク『でしいり　してきたときと
+うってかわって　ものわかりが　よいな▼
+あれか？▼
+してんのうに　なると
+それなりに　おとなに　なるのか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:32:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:32:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデク『弟子入り　してきたときと
+うってかわって　物分りが　よいな▼
+あれか？▼
+四天王に　なると
+それなりに　大人に　なるのか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:54:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:32:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_bigfour3_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンブ『じぶんが　つよければ
+ポケモンも　つよくなる……▼
+それは　かならずしも
+せいかいではないと　ポケモンが▽
+おしえてくれたから　ですかね？▼
+では　スパーリングの
+あいてを　させていただきますよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:54:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:34:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンブ『自分が　強ければ
+ポケモンも　強くなる……▼
+それは　必ずしも
+正解ではないと　ポケモンが▽
+教えてくれたから　ですかね？▼
+では　スパーリングの
+相手を　させていただきますよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:54:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BIGFOUR3
+レンブ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:34:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader7_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク『では　じぶんが
+みとどけましょう……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:37:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:37:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク『では　自分が
+見届けましょう……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:55:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER7
+ハチク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:37:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデク『たすかる▼
+あたらしく　チャンピオンと　なる
+トレーナーの　かべと　なるべく▼
+さいこうの　じょうたいで
+ポケモンしょうぶを　したいからな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:55:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:38:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデク『助かる▼
+新しく　チャンピオンと　なる
+トレーナーの　壁と　なるべく▼
+最高の　状態で
+ポケモン勝負を　したいからな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:55:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:29:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・レンブアデクが向き合う
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:39:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:37:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_champion_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデク『つよさ　とは！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:40:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:40:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデク『強さ　とは！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:55:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:40:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・レンブアデクが向き合う
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:40:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:40:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_bigfour3_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンブ『ポケモン　とは！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:38:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:38:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンブ『ポケモン　とは！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:46:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・レンブとアデク、一歩前にでて
+・終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:40:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BIGFOUR3
+レンブ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:37:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
