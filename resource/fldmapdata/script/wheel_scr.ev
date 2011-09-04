@@ -161,7 +161,7 @@ sub_wheel_talk_swan:
     IF $WK_OTHER_AMUSEMENT_PARTNER == SCR_AMUSEMENT_PARTNER_LCC THEN
       _GET_ZENKOKU_ZUKAN_FLAG( SCWK_ANSWER )
       // 全国図鑑を持っている かつ デートが2回目以降
-      IF $SCWK_ANSWER == TRUE && $lwk_date == 2 THEN
+      IF $SCWK_ANSWER == TRUE && $lwk_date == SCR_PERSON_SECRET_DATE_REGULAR THEN
         // 交換
         _CALL sub_wheel_trade
       ENDIF
