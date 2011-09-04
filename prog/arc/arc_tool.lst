@@ -368,4 +368,5 @@
   ARCID_GYM_OLD_ELEC "fieldmap/gym_old_elec.narc"  #旧電気ジム
   ARCID_PKWD_FIELD_GIMMICK_DATA   "fieldmap/pkwd_field_gmk.narc"   #ポケウッド(フィールド)ギミックデータ
   ARCID_PKWD_POSTER "pkwd_poster.narc" #ポケウッド看板グラフィック
+  ARCID_H06_GIMMICK "fieldmap/h06.narc" # H06ギミック
   

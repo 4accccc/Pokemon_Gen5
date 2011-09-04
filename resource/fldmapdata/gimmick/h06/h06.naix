@@ -1,0 +1,46 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: h06.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_H06_NAIX_
+#define NARC_H06_NAIX_
+
+enum {
+	NARC_h06_basu_a1_nsbmd = 0,
+	NARC_h06_basu_a1_nsbca = 1,
+	NARC_h06_basu_a2_nsbmd = 2,
+	NARC_h06_basu_a2_nsbca = 3,
+	NARC_h06_basu_b1_nsbmd = 4,
+	NARC_h06_basu_b1_nsbca = 5,
+	NARC_h06_basu_b2_nsbmd = 6,
+	NARC_h06_basu_b2_nsbca = 7,
+	NARC_h06_hoeru_1_nsbmd = 8,
+	NARC_h06_hoeru_1_nsbca = 9,
+	NARC_h06_hoeru_1_nsbta = 10,
+	NARC_h06_maman_1_nsbmd = 11,
+	NARC_h06_maman_1_nsbca = 12,
+	NARC_h06_maman_2_nsbmd = 13,
+	NARC_h06_maman_2_nsbca = 14,
+	NARC_h06_manta_1_nsbmd = 15,
+	NARC_h06_manta_1_nsbca = 16,
+	NARC_h06_manta_1_nsbta = 17,
+	NARC_h06_manta_2_nsbmd = 18,
+	NARC_h06_manta_2_nsbca = 19,
+	NARC_h06_manta_2_nsbta = 20,
+	NARC_h06_puru_a1_nsbmd = 21,
+	NARC_h06_puru_a1_nsbca = 22,
+	NARC_h06_puru_a2_nsbmd = 23,
+	NARC_h06_puru_a2_nsbca = 24,
+	NARC_h06_puru_b1_nsbmd = 25,
+	NARC_h06_puru_b1_nsbca = 26,
+	NARC_h06_puru_b2_nsbmd = 27,
+	NARC_h06_puru_b2_nsbca = 28
+};
+
+/* NARC_H06_NAIX_ */
+#endif

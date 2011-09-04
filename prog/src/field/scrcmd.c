@@ -113,6 +113,7 @@
 #include "scrcmd_keysystem.h"
 #include "scrcmd_dataconvert.h"
 #include "scrcmd_walk_count.h"
+#include "scrcmd_h06_gmk.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

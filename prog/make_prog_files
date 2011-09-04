@@ -511,7 +511,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_keysystem.c \
         field/scrcmd_dataconvert.c \
         field/scrcmd_walk_count.c \
-        field/animal_trail_data.c
+        field/animal_trail_data.c \
+        field/scrcmd_h06_gmk.c
 
 
 ###########################################################

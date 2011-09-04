@@ -37,7 +37,8 @@ SUBDIRS	=	gym_denki \
 					hide_ship_deck \
 					champion \
 					gym_old_denki \
-					pokewood
+					pokewood \
+					h06
 
 .PHONY:	do-build clean
 

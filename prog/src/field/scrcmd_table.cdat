@@ -1087,6 +1087,9 @@
   // 人物状態
   DEF_CMD( EvCmdPersonState_SetTrade, EV_SEQ_PERSON_SET_TRADE_FLAG )
 
+  // マリンチューブ
+  DEF_CMD( EvCmdH06Gmk_Init, EV_SEQ_H06_GMK_INIT )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
