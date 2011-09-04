@@ -148,7 +148,7 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
           SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
           PERSON_STATE* person_sv = PERSON_STATE_GetWork( save );
           
-          // デートメッセージ判定
+          // デート後メッセージ判定
           if( rnd == LLC_DATE_MSG )
           {
             // フラグが立っていないなら、通常メッセージ
@@ -157,13 +157,30 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
               rnd -= 1;   // 1つ前がフラグ立っていない版メッセージ
             }
           }
-          // 交換メッセージ判定
+          // デート前メッセージ判定
+          else if( rnd == LLC_DATE_MSG - 1 )
+          {
+            // フラグが立っているなら、通常後メッセージ
+            if( PERSON_STATE_GetDateEndFlag( person_sv ) == TRUE )
+            {
+              rnd += 1;   // 1つ前がフラグ立っていない版メッセージ
+            }
+          }
+
+          // 交換後メッセージ判定
           if( rnd == LLC_CHANGE_MSG )
           {
             // フラグが立っていないなら、通常メッセージ
             if( PERSON_STATE_GetTradeFlag( person_sv ) == FALSE )
             {
               rnd -= 1;   // 1つ前がフラグ立っていない版メッセージ
+            }
+          }
+          else if( rnd == LLC_CHANGE_MSG - 1 ){
+            // フラグが立っているなら、通常後メッセージ
+            if( PERSON_STATE_GetTradeFlag( person_sv ) == TRUE )
+            {
+              rnd += 1;   // 1つ前がフラグ立っていない版メッセージ
             }
           }
         }
