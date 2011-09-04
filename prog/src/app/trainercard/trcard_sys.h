@@ -184,6 +184,7 @@ typedef struct TR_CARD_WORK_tag
   STRBUF  *SignBuf[2];    //サイン説明メッセージ文字列バッファ
   STRBUF  *CPrmBuf[TR_CPRM_STR_MAX];  //カードパラメータ展開用文字列バッファ
   STRBUF  *CreditBuf[TR_CREDIT_STR_MAX];  // カードパラメータ展開用(回数単位表示用）文字列バッファ
+  STRBUF  *NoClearBuf;    // まだ未クリア時のタイム表示に使う文字列
 
   PMS_DATA      pms;          ///< 簡易会話
   PMS_DRAW_WORK *PmsDrawWork; ///< 簡易会話描画ワーク

@@ -62,7 +62,8 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Field[] = {
   { dni_record_128, RECID_PLEASURE_BOAT_CNT,    &DNP_Record_4 },      // 遊覧船に乗った回数
   { dni_record_129, RECID_RESORT_GUID_CNT,      &DNP_Record_4 },      // レゾナンスリゾートで観光客を街に案内した数
   { dni_record_130, RECID_RESORT_SHOP_MAKE_CNT, &DNP_Record_4 },      // レゾナンスリゾートでお店を作った数
-  { dni_record_132, RECID_RESORT_PRESENT_CNT, &DNP_Record_4 },      // レゾナンスリゾートでお店を作った数
+  { dni_record_132, RECID_RESORT_PRESENT_CNT, &DNP_Record_4 },        // レゾナンスリゾートでお店を作った数
+  { dni_record_133, RECID_POKEWOOD_REC_CNT, &DNP_Record_4 },          // ポケウッドで撮影をした回数
 };
 //-------------------------
 // 通信関連レコード

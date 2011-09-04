@@ -231,7 +231,7 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_CTVT_GAME_PLAY           (SMALL_REC_START+58)  ///< @ライブキャスターミニゲームのプレイ回数
 
 #define RECID_RESORT_PRESENT_CNT       (SMALL_REC_START+59)  ///< @レゾナンスリゾートでおみやげを貰った数
-#define RECID_SMALL_60                 (SMALL_REC_START+60)
+#define RECID_POKEWOOD_REC_CNT         (SMALL_REC_START+60)  ///< @ポケウッド撮影回数
 #define RECID_SMALL_61                 (SMALL_REC_START+61)
 #define RECID_SMALL_62                 (SMALL_REC_START+62)
 #define RECID_SMALL_63                 (SMALL_REC_START+63)
@@ -423,8 +423,8 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_RESORT_SHOP_MAKE_CNT_FLAG    ( 3 )  ///< @レゾナンスリゾートでお店を作った数
 #define RECID_CTVT_GAME_PLAY_FLAG          ( 3 )  ///< @ライブキャスターミニゲームのプレイ回数
 
-#define RECID_SMALL_59_FLAG                ( 2 )
-#define RECID_SMALL_60_FLAG                ( 2 )
+#define RECID_RESORT_PRESENT_CNT_FLAG      ( 3 )  ///< @レゾナンスリゾートでおみやげを貰った数
+#define RECID_POKEWOOD_REC_CNT_FLAG        ( 3 )  ///< @ポケウッド撮影回数
 #define RECID_SMALL_61_FLAG                ( 2 )
 #define RECID_SMALL_62_FLAG                ( 2 )
 #define RECID_SMALL_63_FLAG                ( 2 )

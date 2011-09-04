@@ -557,7 +557,7 @@ static void TRAINERCARD_GetSwanSelfData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA 
   sw_trcard->wbt_victory_cnt = count;
 
   // ポケウッド撮影回数取得
-  sw_trcard->pokewood_rec_cnt = RECORD_Get( rec, RECID_RESORT_GUID_CNT);  // 仮
+  sw_trcard->pokewood_rec_cnt = RECORD_Get( rec, RECID_POKEWOOD_REC_CNT);
   
   // ジョインアベニュー用情報取得
   RESORT_CITY_DATA_GetData( rcity_sv, RESORT_CITY_DATA_PARAM_CITY_NAME, sw_trcard->my_janame );

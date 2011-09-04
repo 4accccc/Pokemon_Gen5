@@ -625,8 +625,8 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
     if (inTrCardData->Clear_m != 0){  //Œ‚ª0Œ‚Å‚È‚¯‚ê‚ÎAƒNƒŠƒA‚µ‚½‚Æ‚İ‚È‚·
       WriteNumDateYYMMDDHHMM( wk, win, BMP_WIDTH_TYPE3, 0, y, str, STR_NUM_DISP_LEFT, col );
     }else{
-      int length = PRINTSYS_GetStrWidth( wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle, 0 );
-      LinePrint( win, wk, BMP_WIDTH_TYPE3-length, y, wk->CPrmBuf[MSG_TCARD_13], col );
+      int length = PRINTSYS_GetStrWidth( wk->NoClearBuf, wk->fontHandle, 0 );
+      LinePrint( win, wk, BMP_WIDTH_TYPE3-length, y, wk->NoClearBuf, col );
     }
     break;
   case SCORE_LINE_COMM_NUM: // ‚Â‚¤‚µ‚ñ‚µ‚½‰ñ”

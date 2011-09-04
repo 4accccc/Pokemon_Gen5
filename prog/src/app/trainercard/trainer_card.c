@@ -839,12 +839,15 @@ static void AllocStrBuf( TR_CARD_WORK * wk )
 
   //固定のバッファ作成
   wk->PlayTimeBuf = GFL_STR_CreateBuffer(TIME_H_DIGIT+1, wk->heapId);
-  wk->TmpBuf = GFL_STR_CreateBuffer(TR_STRING_LEN, wk->heapId);
-  wk->DigitBuf = GFL_STR_CreateBuffer(TR_DIGIT_LEN, wk->heapId);
-  wk->SecBuf =  GFL_STR_CreateBuffer(5, wk->heapId);
+  wk->TmpBuf      = GFL_STR_CreateBuffer(TR_STRING_LEN, wk->heapId);
+  wk->DigitBuf    = GFL_STR_CreateBuffer(TR_DIGIT_LEN, wk->heapId);
+  wk->SecBuf      = GFL_STR_CreateBuffer(TR_STRING_LEN, wk->heapId);
+  wk->NoClearBuf  = GFL_STR_CreateBuffer(TR_STRING_LEN*2, wk->heapId);
 
   //固定文字列取得
-  GFL_MSG_GetString(wk->msgMan, MSG_TCARD_12, wk->SecBuf);
+  GFL_MSG_GetString(wk->msgMan, MSG_TCARD_12, wk->SecBuf);        //「：」
+  GFL_MSG_GetString(wk->msgMan, MSG_TCARD_13, wk->NoClearBuf);    //「----年--月--日--時--分」
+
 
   for(i = 0;i < 3;i++){
     wk->ExpBuf[i] = GFL_MSG_CreateString(wk->msgMan, MSG_TCARD_BACK+i);
@@ -892,6 +895,7 @@ static void FreeStrBuf( TR_CARD_WORK * wk )
   GFL_STR_DeleteBuffer( wk->ExpBuf[1] );
   GFL_STR_DeleteBuffer( wk->ExpBuf[0] );
 
+  GFL_STR_DeleteBuffer( wk->NoClearBuf );
   GFL_STR_DeleteBuffer( wk->SecBuf );
   GFL_STR_DeleteBuffer( wk->DigitBuf );
   GFL_STR_DeleteBuffer( wk->TmpBuf );
