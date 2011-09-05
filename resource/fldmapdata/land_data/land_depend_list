@@ -1035,6 +1035,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_oldwbuill01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_oldbwgym0202_00_00.3dppack \
 	$(DIR_OUTPUT)/m_oldchurch01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_buill08_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \

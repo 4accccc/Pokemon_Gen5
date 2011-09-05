@@ -4258,3 +4258,7 @@ $(DIR_WBTMP)/m_oldchurch01_00_00.tbl: $(DIR_RES)/m_oldchurch01_00_00.bin
 	@echo create_bintbl m_oldchurch01_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_oldchurch01_00_00.bin
 
+$(DIR_WBTMP)/m_buill08_00_00.tbl: $(DIR_RES)/m_buill08_00_00.bin
+	@echo create_bintbl m_buill08_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_buill08_00_00.bin
+

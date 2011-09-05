@@ -1035,6 +1035,7 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_oldwbuill01_00_00.nsbmd \
 	$(DIR_TEMP)/m_oldbwgym0202_00_00.nsbmd \
 	$(DIR_TEMP)/m_oldchurch01_00_00.nsbmd \
+	$(DIR_TEMP)/m_buill08_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \
