@@ -3272,7 +3272,7 @@
 
 	<row id="ITEMNAME_628">
 		<language name="JPN" width="256">いでんしのくさび</language>
-		<language name="JPN_KANJI" width="256">いでんしのくびき</language>
+		<language name="JPN_KANJI" width="256">いでんしのくさび</language>
 	</row>
 
 	<row id="ITEMNAME_629">
@@ -3308,6 +3308,16 @@
 	<row id="ITEMNAME_635">
 		<language name="JPN" width="256">アクロママシーン</language>
 		<language name="JPN_KANJI" width="256">アクロママシーン</language>
+	</row>
+
+	<row id="ITEMNAME_636">
+		<language name="JPN" width="256">わすれもの</language>
+		<language name="JPN_KANJI" width="256">わすれもの</language>
+	</row>
+
+	<row id="ITEMNAME_637">
+		<language name="JPN" width="256">わすれもの</language>
+		<language name="JPN_KANJI" width="256">わすれもの</language>
 	</row>
 
 

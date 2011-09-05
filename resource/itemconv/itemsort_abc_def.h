@@ -625,6 +625,7 @@ static const u16 ItemSortByAbc[] = {
 	419,	//No.633 プラズマカード
 	491,	//No.634 よごれたハンカチ
 	26,	//No.635 アクロママシーン
+	615,	//No.637 わすれもの
 };
 
 /*
@@ -1245,4 +1246,5 @@ static const u16 ItemSortByAbc[] = {
   612  ItemNo.618  わざマシン９３
   613  ItemNo.619  わざマシン９４
   614  ItemNo.620  わざマシン９５
+  615  ItemNo.637  わすれもの
 */

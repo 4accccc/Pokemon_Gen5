@@ -5771,11 +5771,11 @@
 
 	<row id="ITEMINFO_627">
 		<language name="JPN" width="256">かくとくした　メダルを　しゅうのうし
-メダルに　かんけいのある　じょうほうを
-きろくする　べんりな　どうぐ。</language>
+メダルについての　じょうほうを
+きろくする　はこがたの　きかい。</language>
 		<language name="JPN_KANJI" width="256">獲得した　メダルを　収納し
-メダルに　関係のある　情報を
-記録する　便利な　道具。</language>
+メダルについての　情報を
+記録する　箱型の　機械。</language>
 	</row>
 
 	<row id="ITEMINFO_628">
@@ -5848,6 +5848,24 @@
 		<language name="JPN_KANJI" width="256">ポケモンの　能力を　無理やり
 目覚めさせる　特殊な　装置。
 だが　試作品のため　不完全。</language>
+	</row>
+
+	<row id="ITEMINFO_636">
+		<language name="JPN" width="256">おとしものの　ライブキャスター
+おとこアイドルのもの
+かりせつめいぶん</language>
+		<language name="JPN_KANJI" width="256">落し物の　ライブキャスター
+男アイドルのもの
+仮説明文</language>
+	</row>
+
+	<row id="ITEMINFO_637">
+		<language name="JPN" width="256">おとしものの　ライブキャスター
+おんなアイドルのもの
+かりせつめいぶん</language>
+		<language name="JPN_KANJI" width="256">落し物の　ライブキャスター
+女アイドルのもの
+仮説明文</language>
 	</row>
 
 
