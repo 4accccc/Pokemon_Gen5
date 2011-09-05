@@ -20,6 +20,7 @@
 #define TR_ELITEM_34                       4
 #define TR_BACKPACKERW_19                  5
 #define TR_RANGERM_24                      6
+#define TR_DOCTOR_09W                      7
 
 #endif //ZONE_D24R0901_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d24r0901.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

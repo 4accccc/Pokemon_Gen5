@@ -14,6 +14,12 @@
 #define FLD_ITEM_269                       2
 #define FLD_ITEM_268                       3
 #define FLD_ITEM_267                       4
+#define TR_KARATE_24                       5
+#define TR_BATTLEG_22                      6
+#define TR_ELITEM_43                       7
+#define TR_ELITEW_42                       8
+#define TR_SCHOOLB_15                      9
+#define TR_SCHOOLG_13                     10
 
 #endif //ZONE_D02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

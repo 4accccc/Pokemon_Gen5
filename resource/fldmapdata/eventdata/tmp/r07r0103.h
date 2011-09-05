@@ -15,6 +15,7 @@
 #define TR_ESPM_11                         2
 #define TR_ESPM_12                         3
 #define TR_DAISUKIW_04                     4
+#define TR_NURSE_04                        5
 
 #endif //ZONE_R07R0103_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r07r0103.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -19,6 +19,7 @@
 #define FLD_ITEM_95                        4
 #define TR_RANGERW_25                      5
 #define TR_SCIENTISTW_12                   6
+#define TR_DOCTOR_08                       7
 
 #endif //ZONE_D06R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -20,6 +20,7 @@
 #define TR_RANGERW_23                      4
 #define TR_BATTLEG_20                      5
 #define TR_BACKPACKERM_25                  6
+#define TR_DOCTOR_09                       7
 
 #endif //ZONE_D24R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d24r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
