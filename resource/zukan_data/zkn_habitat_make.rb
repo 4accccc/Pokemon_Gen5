@@ -73,10 +73,8 @@ def put_bin_file( f_name ,group_data ,mons_array )
   end
   # データ数
   bin << [ mons_array.size ].pack( "s" )
-
   # 出現データを出力
   mons_array.each_key{|key|
-    #puts key
     # モンスター番号
     bin << [ key.to_i ].pack( "s" )
     for season in SEASON_SPRING..SEASON_WINTER
@@ -191,9 +189,9 @@ zone_group_data.each_key{|zone_group|
 =end
 
 # バイナリデータの出力
-b_mons_array = Hash.new
-w_mons_array = Hash.new
 zone_group_data.each_key{|zone_group|
+  b_mons_array = Hash.new
+  w_mons_array = Hash.new
   group_data =  zone_group_data[zone_group]
   b_mons_data = group_data.black_data
   w_mons_data = group_data.white_data
@@ -207,7 +205,7 @@ zone_group_data.each_key{|zone_group|
 
   # ホワイト用データ作成
   #puts "- white"
-  #set_mons_array_data( group_data,w_mons_array ,w_mons_data)
+  set_mons_array_data( group_data,w_mons_array ,w_mons_data)
   put_bin_file( "hb_w_%s.bin"%[zone_group.downcase] ,group_data ,w_mons_array )
 }
 

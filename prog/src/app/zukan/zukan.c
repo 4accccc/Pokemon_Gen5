@@ -19,7 +19,6 @@
 #include "search/zukansearch.h"
 #include "detail/zukan_detail.h"
 #include "habitat_zone/habitat_zone.h"
-#include "habitat_list/habitat_list.h"
 
 #include "poke_tool/monsnum_def.h"  // for MONSNO_数字
 
@@ -652,60 +651,18 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
 //-----------------------------------------------------------------------------
 static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
 {
-  ZUKANHABITAT_ZONE_DATA * zone_info;
+  ZUKANHABITAT_ZONE_DATA * p_zone_info;
 
 	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANHABITAT_ZONE_DATA) );
 	GFL_STD_MemClear( wk->work, sizeof(ZUKANHABITAT_ZONE_DATA) );
-	zone_info = wk->work;
-	zone_info->p_gdata = wk->prm->gamedata;
+	p_zone_info = wk->work;
+	p_zone_info->p_gdata = wk->prm->gamedata;
 
-  // @todo ダミーではなく正常なデータを渡す必要がある
-  {
-    s32 i;
-    zone_info->zone_cnt = 5;
-    zone_info->start_zone_index = 0;
-    zone_info->start_season = 0;
-    zone_info->start_land_type = HABITAT_ZONE_APPEAR_LAND;
-    zone_info->p_zone_list_data =
-      GFL_HEAP_AllocClearMemory( HEAPID_ZUKAN_SYS, sizeof(HABITAT_ZONE_DATA)*5 );
+  // リストをデータを作成
+  MakeHabitatListData( p_zone_info );
 
-    // ゾーンごとのデータ作成
-    for( i = 0; i < zone_info->zone_cnt ; i ++ )
-    {
-      s32 n;
-      zone_info->p_zone_list_data[ i ].zone_group = i+2;
-      for( n = 0; n < HABITAT_ZONE_POKE_LIST_MAX - 14 ; n ++ )
-      {
-          // 捕獲コンプリート
-          HABITAT_ZONE_POKE_DATA *p_poke_data;
-          p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
-          p_poke_data->monsno = MONSNO_629;
-          p_poke_data->is_appear[0][0] = TRUE;
-          p_poke_data->status = HABITAT_ZONE_STATUS_GET;
-      }
-
-      // 見たコンプリート(水辺)
-      {
-        HABITAT_ZONE_POKE_DATA *p_poke_data;
-        p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
-        p_poke_data->monsno = MONSNO_629;
-        p_poke_data->is_appear[0][HABITAT_ZONE_APPEAR_WATERSIDE] = TRUE;
-        p_poke_data->status = HABITAT_ZONE_STATUS_LOOK;
-        n++;
-      }
-      // 見たことない（釣り）
-      {
-        HABITAT_ZONE_POKE_DATA *p_poke_data;
-        p_poke_data = &zone_info->p_zone_list_data[ i ].poke_data[n];
-        p_poke_data->monsno = MONSNO_629;
-        p_poke_data->is_appear[PMSEASON_AUTUMN][HABITAT_ZONE_APPEAR_FISHING]=TRUE;
-        p_poke_data->status = HABITAT_ZONE_STATUS_UNKNOWN;
-      }
-
-    }
-  }
-
-	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_habitat_zone), &ZUKANHABITAT_ZONE_ProcData, zone_info );
+	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_habitat_zone),
+                                      &ZUKANHABITAT_ZONE_ProcData, p_zone_info );
   return NextProcCall( wk, SEQ_HABITAT_ZONE_END );
 }
 
@@ -721,10 +678,10 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
 static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
 {
   int ret;
-  ZUKANHABITAT_ZONE_DATA * zone_info;
-  zone_info = wk->work;
+  ZUKANHABITAT_ZONE_DATA * p_zone_info;
+  p_zone_info = wk->work;
 
-  switch( zone_info->ret_mode ){
+  switch( p_zone_info->ret_mode ){
   case HABITAT_ZONE_RET_EXIT:		// 図鑑終了
     wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
     ret = SEQ_PROC_FINISH;
@@ -751,7 +708,7 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
   }
 		
   // 確保したデータ開放
-  GFL_HEAP_FreeMemory( zone_info->p_zone_list_data );
+  GFL_HEAP_FreeMemory( p_zone_info->p_zone_list_data );
   // ワーク開放
 	GFL_HEAP_FreeMemory( wk->work );
 

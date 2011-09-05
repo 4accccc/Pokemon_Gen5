@@ -369,4 +369,6 @@
   ARCID_PKWD_FIELD_GIMMICK_DATA   "fieldmap/pkwd_field_gmk.narc"   #ポケウッド(フィールド)ギミックデータ
   ARCID_PKWD_POSTER "pkwd_poster.narc" #ポケウッド看板グラフィック
   ARCID_H06_GIMMICK "fieldmap/h06.narc" # H06ギミック
-  
+  $VERSION_W2 ARCID_HABITAT_LIST_DATA  "habitat_data_w.narc"   #ホワイト版生息地リストデータ
+  $VERSION_B2 ARCID_HABITAT_LIST_DATA  "habitat_data_b.narc"   #ブラック版生息地リストデータ
+

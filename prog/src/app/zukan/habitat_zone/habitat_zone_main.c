@@ -867,7 +867,7 @@ static void SkipLandType( HABITAT_ZONE_WK *p_wk ,BOOL is_skip_r )
       {
         p_wk->land_type = HABITAT_ZONE_APPEAR_LAND;
       }
-      if( p_wk->land_appear[HABITAT_ZONE_APPEAR_LAND] == TRUE )
+      if( p_wk->land_appear[p_wk->land_type] == TRUE )
       {
         break;
       }
@@ -882,7 +882,7 @@ static void SkipLandType( HABITAT_ZONE_WK *p_wk ,BOOL is_skip_r )
       {
         p_wk->land_type = HABITAT_ZONE_APPEAR_FISHING;
       }
-      if( p_wk->land_appear[HABITAT_ZONE_APPEAR_LAND] == TRUE )
+      if( p_wk->land_appear[p_wk->land_type] == TRUE )
       {
         break;
       }
@@ -1043,8 +1043,7 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
 
   // ゾーンIDに対応した地名メッセージIDを取得
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
-  u16 place_id = ZONEDATA_GetPlaceNameID(
-                  zkn_area_zone_group[p_list_data->zone_group]);
+  u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_group);
   
   // 場所ごとにメッセージを切り替える
   if( p_wk->land_type == HABITAT_ZONE_APPEAR_LAND )
@@ -1185,8 +1184,7 @@ static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk )
 
   // ゾーンIDに対応した地名メッセージIDを取得
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
-  u16 place_id = ZONEDATA_GetPlaceNameID(
-      zkn_area_zone_group[p_list_data->zone_group]);
+  u16 place_id = ZONEDATA_GetPlaceNameID( p_list_data->zone_group );
 
   // ワードセットに登録
   WORDSET_RegisterPlaceName( p_wk->p_word_set, 0, place_id );
@@ -1377,8 +1375,8 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
   // 地形タイプのポケモンが存在しないときはスキップ
   if( p_wk->land_appear[p_wk->land_type] == FALSE )
   {
-    ONOUE_Printf("左スキップ\n");
-    SkipLandType( p_wk ,FALSE);
+    ONOUE_Printf("右スキップ\n");
+    SkipLandType( p_wk ,TRUE);
   }
 
   // 草地
@@ -1583,6 +1581,7 @@ static void MakeZoneCommonData( HABITAT_ZONE_WK *p_wk )
           // 出現するかどうか
           if( p_pk[i].is_appear[season_id][land_type] == TRUE )
           {
+            ONOUE_Printf("地形有り:%d\n",land_type);
             p_wk->land_appear[land_type] = TRUE;
 
             // 未発見の場合は、捕獲も見たもコンプリートではない
@@ -1729,7 +1728,7 @@ static void RefreshMapWin( HABITAT_ZONE_WK *p_wk )
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
 
   // マップ上の点滅アニメーションを表示
-  ONOUE_Printf("zone_group = %x\n",p_list_data->zone_group);
+  ONOUE_Printf("zone_group = %d\n",p_list_data->zone_group);
   HABITAT_ZONE_GRA_SetMapBlink( &p_wk->gra_sys ,p_list_data->zone_group);
 
   // マップ名を上画面に書き込む

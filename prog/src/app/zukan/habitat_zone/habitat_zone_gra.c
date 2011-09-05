@@ -1515,7 +1515,7 @@ void HABITAT_ZONE_GRA_SetMapBlink( HABITAT_ZONE_GRA_WK *p_wk ,u16 zone_group )
 {
   GFL_CLACTPOS pos;
 
-  u16 root_zone = TOWNMAP_UTIL_GetRootZoneID(p_wk->p_gdata, zkn_area_zone_group[zone_group] );
+  u16 root_zone = TOWNMAP_UTIL_GetRootZoneID(p_wk->p_gdata, zone_group );
   u16 dataIndex = TOWNMAP_DATA_SearchRootZoneID( p_wk->p_townmap_data ,root_zone );
 
   // アニメーションシーケンスの設定

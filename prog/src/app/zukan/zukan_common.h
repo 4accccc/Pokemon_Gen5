@@ -10,8 +10,10 @@
 //============================================================================================
 #pragma	once
 
+#include "gamesystem/pm_season.h"
 #include "savedata/zukan_savedata.h"
 #include "search/zukan_search_engine.h"
+#include "habitat_list/habitat_list.h"
 
 
 //============================================================================================
@@ -43,6 +45,32 @@ enum {
 	ZUKAN_LIST_MONS_SEE,				// 見た
 	ZUKAN_LIST_MONS_GET,				// 捕獲した
 };
+
+
+// 地形タイプ
+enum {
+  GROUND_TYPE_LAND,
+  GROUND_TYPE_WATERSIDE,
+  GROUND_TYPE_FISHING,
+  GROUND_TYPE_MAX,
+};
+
+// ポケモン生息データ
+typedef struct {
+  u16 mons_no;                          // モンスター番号
+  u8  landtype_appear[GROUND_TYPE_MAX]; // 地形存在フラグ
+  u8  season_appear[PMSEASON_TOTAL];    // 四季生息データ
+  u8  pad[1];                           // パディング
+}HABITAT_POKE_DATA;
+
+// 生息地アーカイブデータ
+typedef struct {
+	u16	  zone_group_id;                      // ゾーングループID
+  u8    version;                            // バージョン制限
+  u8    landtype_appear[GROUND_TYPE_MAX];   // 地形存在フラグ
+  u8    mons_num;                           // 登録ポケモン数
+  HABITAT_POKE_DATA mons_data[1]; // モンスターデータ(可変長)
+}HABITATZONEGROUP_DATA;
 
 
 //============================================================================================
@@ -146,3 +174,14 @@ extern void ZKNCOMM_ScrollBaseBG( u8 mainBG, u8 subBG, u32 * cnt );
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_CLWK * ZKNCOMM_CreateClact( GFL_CLUNIT * unit, const ZKNCOMM_CLWK_DATA * prm, HEAPID heapID );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生息地リスト用リストデータを作成する
+ *
+ *	@param	* p_zone_info 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void MakeHabitatListData( ZUKANHABITAT_ZONE_DATA * p_zone_info );
