@@ -169,7 +169,8 @@ void sub_AppCallWorkInit( FMISSION_APP_PARAM* prm, GAMESYS_WORK * gsys, GAMEDATA
   prm->gsys = gsys;
   prm->gdata = gdata;
   prm->mode = mode;
- 
-  prm->fmwk = (const FEST_MISSION*)LINK_FESTIVAL_GetMissionWork( GAMESYSTEM_GetLinkFestivalWork( gsys ) );
+
+  prm->fest_sys =  GAMESYSTEM_GetLinkFestivalWork( gsys );
+  prm->fmwk = (const FEST_MISSION*)LINK_FESTIVAL_GetMissionWork( prm->fest_sys );
   prm->fmission_sv = SAVEDATA_GetFMissionSave(save);
 }
