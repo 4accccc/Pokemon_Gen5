@@ -83,5 +83,11 @@
 "texset/indoor083.nsbtx"
 "texset/indoor084.nsbtx"
 "texset/indoor085.nsbtx"
+"texset/indoor086.nsbtx"
+"texset/indoor087.nsbtx"
+"texset/indoor088.nsbtx"
+"texset/indoor089.nsbtx"
+"texset/indoor090.nsbtx"
+"texset/indoor091.nsbtx"
 
 
