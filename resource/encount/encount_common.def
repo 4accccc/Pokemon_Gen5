@@ -32,6 +32,9 @@ ARC_ANM_LIST_FILENAME	= "g_anm_list.txt"
 TEX_ARCHIVER_DIR		= "area_map_tex"
 BM_ARCHIVER_DIR			= "area_build_model"
 
+#エンカウントデータファイル
+ENCOUNT_DATA_MARSHAL	= "encount_data.marshal"
+
 #------------------------------------------------------------------------------
 #	サブディレクトリ：
 #------------------------------------------------------------------------------
@@ -86,3 +89,17 @@ IDX_WATER_SP = 4
 IDX_FISHING = 5
 IDX_FISHING_SP = 6
 IDX_MAX = 7
+
+#地形タイプ
+GTYPE_GROUND  = 0
+GTYPE_WATER   = 1
+GTYPE_FISHING = 2
+GTYPE_MAX     = 3
+
+# 季節ID
+SEASON_NONE = 0
+SEASON_SPRING = 1
+SEASON_SUMMER = 2
+SEASON_AUTUMN = 3
+SEASON_WINTER = 4
+

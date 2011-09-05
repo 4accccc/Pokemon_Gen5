@@ -4,6 +4,7 @@
 #===============================================================
 
 load "encount_common.def"
+require "enc_hash_data"
 #require 'jstring'
 $KCODE = "SJIS" #文字コードをSJISに設定。monsno_hash.rbの読み込みに必要
 require "../../tools/hash/monsno_hash.rb"
@@ -12,15 +13,9 @@ arg = $*
 
 ##############################################
 #構造体定義
-$_enc_poke = Struct.new("EncPoke", :monsno, :form, :lv_min, :lv_max)
+$_enc_poke = Struct.new("EncPoke", :monsno, :form, :lv_min, :lv_max, :monsname)
 #エンカウトモンスターデータ構造体長
 ENC_MONS_DATA_SIZ = 4
-
-SEASON_NONE = 0
-SEASON_SPRING = 1
-SEASON_SUMMER = 2
-SEASON_AUTUMN = 3
-SEASON_WINTER = 4
 
 FORM_RND_CODE_STR = "-"
 FORM_RND_CODE = 31
@@ -133,14 +128,15 @@ class CEncTable
     data_num.times{ |i|
       pl = @mons_list[i]
       pl.monsno = $monsno_hash.fetch(column[i],nil)
-      print(column[i]+",")
+      pl.monsname = column[i]
+      #print(column[i]+",")
       if pl.monsno == nil then
         printf("\nERROR! %s モンスター名エラー %s\n",@zone_name,column[i])
         exit 1
       end
     }
     column.slice!(0..(data_num-1))
-    print("\n\n")
+    #print("\n\n")
   end
 
   #エンカウントデータ出力 4byte
@@ -155,6 +151,10 @@ class CEncTable
     end
   end
 
+  def get_mons_list
+    return @mons_list
+  end
+
 end
 
 #1マップのエンカウントデータ
@@ -163,6 +163,7 @@ class CMapData
   @item_idx   #アイテムテーブル指定
   @enc_prob #エンカウント率テーブル
   @table  #データテーブル
+  @ground_type  #地形タイプ
 
   #初期化
   def initialize zone_name
@@ -192,8 +193,8 @@ class CMapData
 
   #1マップのデータパース
   def perse column
-    print(column.join(","))
-    print("\n")
+    #print(column.join(","))
+    #print("\n")
     #アイテムテーブルindex取得
     @item_idx = $item_tbl_list.index(column[COL_ZONE_OFS_ITEM_TABLE])
     if @item_idx == nil then
@@ -204,6 +205,9 @@ class CMapData
     @enc_prob[IDX_GROUND_H] = get_enc_prob( column[COL_ZONE_OFS_PROB_GROUND_H],"GroundHigh")
     @enc_prob[IDX_WATER] = get_enc_prob( column[COL_ZONE_OFS_PROB_WATER],"Water")
     @enc_prob[IDX_FISHING] = column[COL_ZONE_OFS_PROB_FISHING] == "" ? 0 : column[COL_ZONE_OFS_PROB_FISHING].to_i
+
+    # 地形タイプ保存
+    @ground_type = column[COL_ZONE_OFS_PROB_GROUND_L]
     
     #配列の要素削除
     column.slice!(0..(COL_ZONE_HEADER_NUM-1))
@@ -214,9 +218,9 @@ class CMapData
     column.delete_at(COL_ZONE_OFS_PROB_WATER)
     column.delete_at(COL_ZONE_OFS_PROB_FISHING)
 =end
-    print("\n->"+@zone_name+" データサーチ開始 確率 "+@enc_prob.join(",")+"\n")
-    print(column.join(",")) 
-    print("\n")
+    #print("\n->"+@zone_name+" データサーチ開始 確率 "+@enc_prob.join(",")+"\n")
+    #print(column.join(",")) 
+    #print("\n")
     #グランドデータvalueパース
     @table[IDX_GROUND_L].perse_ground_val(column,@enc_prob[IDX_GROUND_L],"通常1")
     @table[IDX_GROUND_H].perse_ground_val(column,@enc_prob[IDX_GROUND_H],"通常2")
@@ -269,6 +273,16 @@ class CMapData
     output_enc_data(fp)
     fp.close()
   end
+
+  # テーブルデータ取得
+  def get_table_data
+    return @table
+  end
+  
+  # 地形タイプ取得
+  def get_ground_type
+    return @ground_type
+  end
 end
 
 #1ゾーンのデータ
@@ -289,7 +303,7 @@ class CZoneData
   #データ配列の走査
   def perse column,season_code,old_zone
     @zone_name = column[COL_ZONE_NAME].downcase
-    printf("\n#%s コンバート開始\n",@zone_name)
+    #printf("\n#%s コンバート開始\n",@zone_name)
 
     if /[^0-9A-Za-z]/ =~ @zone_name then
       printf("%s エラー ゾーン名が全角で記述されています-> %s\n半角英数字に直してください\n",@zone_name,@zone_name.scan(/[^0-9A-Za-z]/).join(","))
@@ -354,6 +368,19 @@ class CZoneData
   def get_season_code
     return @season
   end
+
+  #ホワイトデータ取得
+  def get_white_mapdata
+    return @white
+  end
+  # ブラックバージョンデータ有効確認
+  def get_black_enable
+    return @v2_enable
+  end
+  #ブラックデータ取得
+  def get_black_mapdata
+    return @black
+  end
 end #End of Class CMapData
 
 #ポケモン
@@ -369,21 +396,21 @@ class CEncountData
 
   #四季ファイルの連結
   def season_bin_link f_path,bin_path,zone_name
-    printf("%s 四季データ連結開始 -> %s\n",zone_name,f_path)
+    #printf("%s 四季データ連結開始 -> %s\n",zone_name,f_path)
     File.open(f_path,"wb"){ |file|
       for i in SEASON_SPRING..SEASON_WINTER do
         src = bin_path+"/"+zone_name+$output_suffix[i]
-        printf(" %s,",src)
+        #printf(" %s,",src)
         if FileTest.exist?(src)
           baseHandle = File::open(src)
           file.write(baseHandle.read)
           baseHandle.close
         else
-          printf("%s が必要です。ゾーン%sのデータを見直してください\n",src,zone_name)
+          #printf("%s が必要です。ゾーン%sのデータを見直してください\n",src,zone_name)
           exit 1
         end
       end
-      print("\n")
+      #print("\n")
     }
   end
 
@@ -401,6 +428,83 @@ class CEncountData
         end
         file.print("\""+buf+"\"\n")
       end
+    }
+  end
+
+  #エンカウントデータハッシュ出力
+  def output_marshall_data f_name,path
+    
+    zone_hash = Hash.new
+
+    for n in @zone_list do
+      season = n.get_season_code()
+      zone_name = n.get_zone_name()
+      black_enable = n.get_black_enable
+      white = n.get_white_mapdata
+      black = n.get_black_mapdata
+      white_table = white.get_table_data
+      black_table = black.get_table_data
+      white_data = nil
+      black_data = nil
+      
+      # ゾーンハッシュを生成
+      unless zone_hash.key?(zone_name) then
+        zone_hash[zone_name] = CEncHashData.new
+
+        if season == SEASON_NONE then
+          zone_hash[zone_name].season_enable = false
+        else
+          zone_hash[zone_name].season_enable = true
+        end
+        
+        # 黒バージョンの有効状態
+        zone_hash[zone_name].black_enable = black_enable
+      end
+
+      # データ取得
+      white_data = zone_hash[zone_name].white_data
+      black_data = zone_hash[zone_name].black_data
+
+      # ホワイトデータを登録
+      set_mons_data( white_table , white_data ,season)
+
+      # ブラックデータ登録
+      if black_enable == true then
+        set_mons_data( black_table , black_data ,season )
+      else
+        set_mons_data( white_table , black_data ,season )
+      end
+    end
+    
+    File.open(path+f_name,"wb"){ |file|
+      file << Marshal.dump(zone_hash)
+    }
+
+  end
+
+  # ハッシュデータ登録
+  def set_mons_data( table , dest ,season )
+    ground_type_id = [GTYPE_GROUND,GTYPE_GROUND,
+      GTYPE_GROUND,GTYPE_WATER,GTYPE_WATER,GTYPE_FISHING,GTYPE_FISHING]
+
+    # データ登録
+    IDX_MAX.times{|i|
+      ml = table[i].get_mons_list
+      type_id = ground_type_id[i]
+
+      # モンスターが存在しない場合は出力しない
+      if ml.size <= 0 then next end
+      for pl in ml do
+        if dest[type_id] == nil then raise "エラー" end
+        # 季節ごとのハッシュ登録先が存在するか調べる(存在しないときは作成)
+        unless dest[type_id].key?(season) then
+          dest[type_id][season] = Array.new
+        end
+        dest[type_id][season] << pl.monsno
+      end
+
+      # データをユニークにする
+      dest[type_id][season].uniq!
     }
   end
 
@@ -459,6 +563,9 @@ def convert
   c_enc.src_load("encount_wb.csv")
   c_enc.output_arclist(ARCW_LIST_FILENAME,WFBIN_DIR)
   c_enc.output_arclist(ARCB_LIST_FILENAME,BFBIN_DIR)
+
+  # エンカウントデータ出力
+  c_enc.output_marshall_data(ENCOUNT_DATA_MARSHAL,"./")
 end
 
 #実行

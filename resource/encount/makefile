@@ -10,7 +10,7 @@ DQ		="
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	= nishino	iwasawa
+USERS	= nishino	iwasawa onoue_masayuki
 
 #---------------------------------------------------------------
 #	共通ルールファイルのインクルード
@@ -124,5 +124,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 	@-rm $(NARCNAME_W) $(ARCW_LIST_FILE) $(NAIXNAME_W)
 	@-rm $(NARCNAME_B) $(ARCB_LIST_FILE)
 	@-rm $(CLEANFILES)
+	@-rm $(ENCOUNT_DATA_MARSHAL)
 endif
 
