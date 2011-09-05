@@ -2,15 +2,225 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_r16r0201_backpackerm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やあ　ポケモントレーナー▼
+ボクは　せかいじゅうを　まわって
+いろんな　ひとと　はなすのが▽
+だいすきな　たびびと　だよ▼
+ところで　ゾロアークという
+ポケモンを　しっているかい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:45:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:38:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やあ　ポケモントレーナー▼
+ボクは　せかいじゅうを　まわって
+いろんな　ひとと　はなすのが▽
+だいすきな　たびびと　だよ▼
+ところで　ゾロアークという
+ポケモンを　しっているかい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・一度のみ
+・はい/いいえの選択肢表示
+　はい　→backpackerm_02
+　いいえ→backpackerm_03
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>バックパッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:32:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16r0201_backpackerm_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すごいね！▼
+やっぱり　だまされないように
+ちえを　つけてるのかな？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:46:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:45:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すごいね！▼
+やっぱり　だまされないように
+ちえを　つけてるのかな？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+・続けてbackpackerm_04
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>バックパッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:38:28" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16r0201_backpackerm_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おやおや……▼
+せけんしらず　なのかな？
+それだと　だまされたりしない？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:48:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:46:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おやおや……▼
+せけんしらず　なのかな？
+それだと　だまされたりしない？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:48:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時
+・続けてbackpackerm_04
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>バックパッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:38:28" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16r0201_backpackerm_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２ねんほどまえ
+ここらに　すみついていて▼
+イリュージョンって　とくせいで
+この　そうげんの　ようすを▼
+まるごと　へんか　させて
+ひとや　ポケモンを　ばかしてたって▼
+とんでもないけど　ウワサには
+なにかしら　じじつが　ひめられている▼
+ゆめゆめ　うたがうことなかれ　だね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:44:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:42:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２ねんほどまえ
+ここらに　すみついていて▼
+イリュージョンって　とくせいで
+この　そうげんの　ようすを▼
+まるごと　へんか　させて
+ひとや　ポケモンを　ばかしてたって▼
+とんでもないけど　ウワサには
+なにかしら　じじつが　ひめられている▼
+ゆめゆめ　うたがうことなかれ　だね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面下に数歩歩くと
+　ゾロアークの動作モデルに差し替え
+　ダッシュで画面下に移動
+・画面外に消えると主人公操作可能に
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>バックパッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:38:28" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r16r0201_youngman_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せかいには　いろいろな　かちかんを
-もつ　ひとが　いるってことさ[Ctrl2:PageClear ]</Text>
+もつ　ひとが　いるってことさ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +229,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>世界には　いろいろな　価値観を
-持つ　人が　いるってことさ[Ctrl2:PageClear ]</Text>
+持つ　人が　いるってことさ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:29:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54,7 +264,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -66,13 +276,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じぶんは　たのしくないって　ことを
-たのしいって　おもう　ひとも　いる…[Ctrl2:PageClear ]
+たのしいって　おもう　ひとも　いる…▼
 せかいじゅうに　いろんな　かちかんが
-あるから　せかいは　ゆたかになるって[Ctrl2:LineFeed ]
-ボクは　おもうんだ[Ctrl2:PageClear ]</Text>
+あるから　せかいは　ゆたかになるって▽
+ボクは　おもうんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:30:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -81,13 +291,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>自分は　楽しくないって　ことを
-楽しいって　思う　人も　いる…[Ctrl2:PageClear ]
+楽しいって　思う　人も　いる…▼
 世界中に　いろんな　価値観が
-あるから　世界は　豊かになるって[Ctrl2:LineFeed ]
-ボクは　思うんだ[Ctrl2:PageClear ]</Text>
+あるから　世界は　豊かになるって▽
+ボクは　思うんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:30:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -118,7 +328,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -130,14 +340,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>せかいじゅうを　まわって
-いろんな　ひとと　はなしを　するのが[Ctrl2:LineFeed ]
-ボクは　だいすきだけど[Ctrl2:PageClear ]
+いろんな　ひとと　はなしを　するのが▽
+ボクは　だいすきだけど▼
 この　いえに　いる　おんなのひとは
-ひとりで　しずかに　くらすことを[Ctrl2:LineFeed ]
-だいじに　おもっているんだろうね[Ctrl2:PageClear ]</Text>
+ひとりで　しずかに　くらすことを▽
+だいじに　おもっているんだろうね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:30:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -146,14 +356,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>世界中を　回って
-いろんな　人と　話を　するのが[Ctrl2:LineFeed ]
-ボクは　大好きだけど[Ctrl2:PageClear ]
+いろんな　人と　話を　するのが▽
+ボクは　大好きだけど▼
 この家に　いる　女の人は
-１人で　静かに　暮らすことを[Ctrl2:LineFeed ]
-大事に　思っているんだろうね[Ctrl2:PageClear ]</Text>
+１人で　静かに　暮らすことを▽
+大事に　思っているんだろうね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:30:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -182,7 +392,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -240,7 +450,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -252,10 +462,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>やっぱり　ここが
-ゾロアークの　すみか　だったのか！[Ctrl2:PageClear ]</Text>
+ゾロアークの　すみか　だったのか！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -264,10 +474,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やっぱり　ここが
-ゾロアークの　すみか　だったのか！[Ctrl2:PageClear ]</Text>
+ゾロアークの　すみか　だったのか！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:29:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -299,7 +509,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -311,14 +521,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゾロアークは　じぶんたちの　すみかを
-あらされないように　イリュージョンで[Ctrl2:LineFeed ]
-ひとや　ポケモンを　ばかしているんだ[Ctrl2:PageClear ]
+あらされないように　イリュージョンで▽
+ひとや　ポケモンを　ばかしているんだ▼
 この　ばしょが　あやしいと　きいて
-しらべていたんだけど…[Ctrl2:LineFeed ]
-ボクも　ばかされていたらしい[Ctrl2:PageClear ]</Text>
+しらべていたんだけど…▽
+ボクも　ばかされていたらしい▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:30:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -327,14 +537,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゾロアークは　自分たちの　すみかを
-荒らされないように　イリュージョンで[Ctrl2:LineFeed ]
-人や　ポケモンを　化かしているんだ[Ctrl2:PageClear ]
+荒らされないように　イリュージョンで▽
+人や　ポケモンを　化かしているんだ▼
 この場所が　怪しいと　きいて
-調べていたんだけど…[Ctrl2:LineFeed ]
-ボクも　化かされていたらしい[Ctrl2:PageClear ]</Text>
+調べていたんだけど…▽
+ボクも　化かされていたらしい▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:30:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -364,7 +574,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -376,12 +586,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>キミが　つれていた　ポケモンに
-ゾロアークは　はげしく　はんのうした…[Ctrl2:PageClear ]
+ゾロアークは　はげしく　はんのうした…▼
 なにか　いんねん　みたいな　ものが
-あったんだろうね[Ctrl2:PageClear ]</Text>
+あったんだろうね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:28:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -390,12 +600,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>キミが　つれていた　ポケモンに
-ゾロアークは　はげしく　反応した…[Ctrl2:PageClear ]
+ゾロアークは　はげしく　反応した…▼
 なにか　因縁みたいな　ものが
-あったんだろうね[Ctrl2:PageClear ]</Text>
+あったんだろうね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -425,7 +635,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -437,12 +647,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こんな　うつくしい　のはらが
-ここに　あったなんて…[Ctrl2:PageClear ]
+ここに　あったなんて…▼
 まるで　この　けしきのほうが
-イリュージョン　みたいじゃないか！[Ctrl2:PageClear ]</Text>
+イリュージョン　みたいじゃないか！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:28:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -451,12 +661,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こんな　美しい　野原が
-ここに　あったなんて…[Ctrl2:PageClear ]
+ここに　あったなんて…▼
 まるで　この　景色のほうが
-イリュージョン　みたいじゃないか！[Ctrl2:PageClear ]</Text>
+イリュージョン　みたいじゃないか！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:29:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -486,7 +696,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -498,10 +708,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あやしい　おんなのひとが
-おそいかかってきた！[Ctrl2:PageClear ]</Text>
+おそいかかってきた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:28:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -510,10 +720,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>怪しい　女の人が
-襲いかかってきた！[Ctrl2:PageClear ]</Text>
+襲いかかってきた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-05T10:28:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -541,6 +751,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r16r0201_narrator_02"
@@ -590,5 +807,12 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
