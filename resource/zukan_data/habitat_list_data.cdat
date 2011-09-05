@@ -59,8 +59,11 @@ static const HABITAT_LIST_DATA sc_habitat_list_data[] =
   {SYS_FLAG_ARRIVE_R09,ZONE_ID_R09},  // ９番道路
   {SYS_FLAG_ARRIVE_D32R0101,ZONE_ID_D32R0101},  // 海辺の洞穴
   {SYS_FLAG_ARRIVE_W21,ZONE_ID_W21},  // ２１番水道
+  {SYS_FLAG_ARRIVE_R15,ZONE_ID_R15},  // １５番道路
+  {SYS_FLAG_ARRIVE_H05,ZONE_ID_H05},  // ワンダーブリッジ
   {SYS_FLAG_ARRIVE_C14,ZONE_ID_C14},  // セイガイハシティ
   {SYS_FLAG_ARRIVE_R22,ZONE_ID_R22},  // ２２番道路
+  {SYS_FLAG_ARRIVE_D10,ZONE_ID_D10},  // ジャイアントホール
   {SYS_FLAG_ARRIVE_R23,ZONE_ID_R23},  // ２３番道路
   {SYS_FLAG_ARRIVE_D26R0101,ZONE_ID_D26R0101},  // チャンピオンロード
   {SYS_FLAG_ARRIVE_R08,ZONE_ID_R08},  // ８番道路
@@ -81,4 +84,4 @@ static const HABITAT_LIST_DATA sc_habitat_list_data[] =
 };
 
 // 生息地リストデータ数
-#define HABITAT_LIST_DATA_MAX (54)
+#define HABITAT_LIST_DATA_MAX (57)
