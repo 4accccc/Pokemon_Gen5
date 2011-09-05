@@ -2341,6 +2341,37 @@ nsbtx_files/tex_set_in85.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in85
 	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in85.imd src_imd_files/in00_texset.imd src_imd_files/in85_local_texset.imd src_imd_files/tex_griddmy.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in85.imd -o nsbtx_files/tex_set_in85.nsbtx -etex
 
+nsbtx_files/tex_set_in86.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in86_local_texset.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in00_texset.imd + src_imd_files/in86_local_texset.imd Å® nsbtx_files/tex_set_in86.nsbtx
+	@-rm marged_imd_files/tex_set_in86.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in86.imd src_imd_files/in00_texset.imd src_imd_files/in86_local_texset.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in86.imd -o nsbtx_files/tex_set_in86.nsbtx -etex
+
+nsbtx_files/tex_set_in87.nsbtx: src_imd_files/in01_local_texset.imd
+	@echo src_imd_files/in01_local_texset.imd Å® nsbtx_files/tex_set_in87.nsbtx
+	@$(COPY) src_imd_files/in01_local_texset.imd marged_imd_files/tex_set_in87.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in87.imd -o nsbtx_files/tex_set_in87.nsbtx -etex
+
+nsbtx_files/tex_set_in88.nsbtx: src_imd_files/in68_local_texset.imd
+	@echo src_imd_files/in68_local_texset.imd Å® nsbtx_files/tex_set_in88.nsbtx
+	@$(COPY) src_imd_files/in68_local_texset.imd marged_imd_files/tex_set_in88.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in88.imd -o nsbtx_files/tex_set_in88.nsbtx -etex
+
+nsbtx_files/tex_set_in89.nsbtx: src_imd_files/in33_local_texset.imd
+	@echo src_imd_files/in33_local_texset.imd Å® nsbtx_files/tex_set_in89.nsbtx
+	@$(COPY) src_imd_files/in33_local_texset.imd marged_imd_files/tex_set_in89.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in89.imd -o nsbtx_files/tex_set_in89.nsbtx -etex
+
+nsbtx_files/tex_set_in90.nsbtx: src_imd_files/in83_local_texset.imd
+	@echo src_imd_files/in83_local_texset.imd Å® nsbtx_files/tex_set_in90.nsbtx
+	@$(COPY) src_imd_files/in83_local_texset.imd marged_imd_files/tex_set_in90.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in90.imd -o nsbtx_files/tex_set_in90.nsbtx -etex
+
+nsbtx_files/tex_set_in91.nsbtx: src_imd_files/in40_local_texset.imd
+	@echo src_imd_files/in40_local_texset.imd Å® nsbtx_files/tex_set_in91.nsbtx
+	@$(COPY) src_imd_files/in40_local_texset.imd marged_imd_files/tex_set_in91.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in91.imd -o nsbtx_files/tex_set_in91.nsbtx -etex
+
 nsbtx_files/tex_set_in_pc.nsbtx: src_imd_files/in00_texset.imd
 	@echo src_imd_files/in00_texset.imd Å® nsbtx_files/tex_set_in_pc.nsbtx
 	@$(COPY) src_imd_files/in00_texset.imd marged_imd_files/tex_set_in_pc.imd
