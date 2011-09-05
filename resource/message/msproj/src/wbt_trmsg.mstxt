@@ -26442,13 +26442,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どくに　かかった　ポケモンが
+			<Text>どくに　かかった　えものが
 よわっていく　さまが　だいすきさ……▼
 ふふっ　すぐには　おわらせないよ……
 じわじわと……たのしませてくれ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-01T08:11:49" />
+				Time="2011-09-05T10:54:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26456,13 +26456,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どくに　かかった　ポケモンが
+			<Text>どくに　かかった　獲物が
 弱っていく　さまが　大好きさ……▼
 ふふっ　すぐには　終わらせないよ……
 じわじわと……楽しませてくれ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-01T08:35:50" />
+				Time="2011-09-05T10:55:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -29521,11 +29521,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クールビューティー　【５文字】！
+			<Text>しょうりは　ひつぜん！　【５文字】！
 はがねの　こころで　はねつけろッ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-02T03:56:36" />
+				Time="2011-09-05T10:35:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -29533,11 +29533,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クールビューティー　【５文字】！
+			<Text>勝利は　必然ッ！　【５文字】！
 はがねの　心で　はねつけろッ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-02T04:24:26" />
+				Time="2011-09-05T10:35:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -29714,7 +29714,7 @@
 善人として　生きればいいさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-02T06:22:34" />
+				Time="2011-09-05T10:37:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -34113,11 +34113,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいしんげきが　とまらない！？
+			<Text>かいしんげきが　とまらないッ！？
 レッツゴー！　【５文字】！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-02T09:05:59" />
+				Time="2011-09-05T10:40:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -34125,11 +34125,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>快進撃が　止まらない！？
+			<Text>快進撃が　止まらないッ！？
 レッツゴー！　【５文字】！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-02T09:05:15" />
+				Time="2011-09-05T10:41:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -34754,11 +34754,11 @@
 			Language="JPN">
 			<Text>この　しあいが　おわれば　どちらかが
 チャンピオンに　なっているのね……▼
-かっても　まけても　こうかいしない
+かっても　まけても　こうかいの　ない
 たたかいを　しましょう！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T09:26:54" />
+				Time="2011-09-05T10:44:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -34768,11 +34768,11 @@
 			Language="JPN_KANJI">
 			<Text>この　試合が　終われば　どちらかが
 チャンピオンに　なっているのね……▼
-勝っても　負けても　後悔しない
+勝っても　負けても　後悔の　ない
 戦いを　しましょう！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T09:27:05" />
+				Time="2011-09-05T10:45:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -35505,11 +35505,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぶどうの　たつじん！　【５文字】！
+			<Text>ぶどうの　たつじんッ！　【５文字】！
 きょうてき　もとめて　さんせんだァ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-02T10:56:35" />
+				Time="2011-09-05T10:11:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -35517,11 +35517,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>武道の　達人！　【５文字】！
+			<Text>武道の　達人ッ！　【５文字】！
 強敵　求めて　参戦だァ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-02T10:59:16" />
+				Time="2011-09-05T10:11:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -36438,10 +36438,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンはかせ！　【５文字】！
-やしんを　いだき　とうじょうだ！▼</Text>
+やしんを　いだき　とうじょうだァ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T04:22:08" />
+				Time="2011-09-05T10:40:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -36450,10 +36450,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモン博士！　【５文字】！
-野心を　いだき　登場だ！▼</Text>
+野心を　いだき　登場だァ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T04:23:04" />
+				Time="2011-09-05T10:40:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -37369,11 +37369,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おのれの　みちを　つっぱしる！
-【５文字】に　だきょうなし！▼</Text>
+			<Text>おのれの　みちを　つっぱしるゥ！
+【５文字】に　だきょうなしィ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T07:28:51" />
+				Time="2011-09-05T10:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -37381,11 +37381,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>己の　道を　突っ走る！
-【５文字】に　妥協なし！▼</Text>
+			<Text>おのれの　道を　突っ走るゥ！
+【５文字】に　妥協なしィ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T07:33:48" />
+				Time="2011-09-05T10:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -37849,7 +37849,7 @@
 礼儀　正しき　【５文字】！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T08:07:21" />
+				Time="2011-09-05T09:58:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
