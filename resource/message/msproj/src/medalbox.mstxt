@@ -457,10 +457,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メダルだけ　みる</Text>
+			<Text>メダルだけみる</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-01T02:56:36" />
+				User="ito_hiroto:W00178"
+				Time="2011-09-05T02:30:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -468,10 +468,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メダルだけ　みる</Text>
+			<Text>メダルだけみる</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-01T02:56:41" />
+				User="ito_hiroto:W00178"
+				Time="2011-09-05T02:30:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -497,10 +497,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒントだけ　みる</Text>
+			<Text>ヒントだけみる</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-01T02:56:39" />
+				User="ito_hiroto:W00178"
+				Time="2011-09-05T02:30:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -508,10 +508,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒントだけ　みる</Text>
+			<Text>ヒントだけみる</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-01T02:56:41" />
+				User="ito_hiroto:W00178"
+				Time="2011-09-05T02:30:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
