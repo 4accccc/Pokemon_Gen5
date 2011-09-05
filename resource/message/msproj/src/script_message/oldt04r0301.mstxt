@@ -1,3 +1,1059 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『フウロちゃん
+お願いが　あるんだけど▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:31:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『フウロちゃん
+お願いが　あるんだけど▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:31:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader6_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウロ『なあに？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:58:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウロ『なあに？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:30:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER6
+フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『イメチェン
+いわゆる　イメージチェンジ！▼
+フウロちゃんに
+ちょっと　たしかめてもらいたいの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:45:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『イメチェン
+いわゆる　イメージチェンジ！▼▼
+フウロちゃんに
+ちょっと　確かめてもらいたいの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:45:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:19:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader6_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウロ『イメージ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:58:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウロ『イメージ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:30:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER6
+フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:19:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『そう……▼
+あたしね　モデルとして
+みんなの　あこがれを　げんじつの▽
+かたちに　しているでしょ▼
+でもね　じぶんの　やりたいことを
+ガマンしてる　わけでは　ないの▼
+それに　モデルをしていることで
+たいへんなこと　いじょうに▽
+たのしいことって　あるし▼
+あっ　たいへんなのは　たいへんよ
+だって　みんな　わたしのこと▽
+みためで　はんだん　するもの▼
+そう！　クールな　かんじで
+ギャグとか　いわなさそう！　とか▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:57:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『そう……▼
+あたしね　モデルとして
+みんなの　あこがれを　げんじつの▽
+かたちに　しているでしょ▼
+でもね　じぶんの　やりたいことを
+ガマンしてる　わけでは　ないの▼
+それに　モデルをしていることで
+たいへんなこと　いじょうに▽
+たのしいことって　あるし▼
+あっ　たいへんなのは　たいへんよ
+だって　みんな　わたしのこと▽
+みためで　はんだん　するもの▼
+そう！　クールな　かんじで
+ギャグとか　いわなさそう！　とか▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:57:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:19:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader6_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:19:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:20:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・サブウインで
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:20:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER6
+フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:19:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『でね
+ずっとずっと　かんがえたの！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:38:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『でね
+ずっとずっと　考えたの！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:38:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・一度横を向いてから
+　再度下を向いて
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:34:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:26:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイセンスな　ジョークよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T07:10:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:29:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイセンスな　ジョークよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:34:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:29:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:29:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:29:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんていうのかな
+みために　すきが　ない……▼
+そんな　あやまった
+イメージを　みずから　くずし▼
+したしみやすさを　かもしだすため
+ジョークで　つっこみどころを　つくるの！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T07:11:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:29:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんていうのかな
+みために　すきが　ない……▼
+そんな　あやまった
+イメージを　みずから　くずし▼
+したしみやすさを　かもしだすため
+ジョークで　つっこみどころを　つくるの！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:44:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:29:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・old_leader4_04とは逆方向を向いたまま
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:44:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:29:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader6_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウロ『う……　うん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:58:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウロ『う……　うん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:44:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER6
+フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:26:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『じゃあ　きいて▼
+ジョークその１▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T07:59:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『じゃあ　きいて▼
+ジョークその１▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:44:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T09:57:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『
+ジョークその２▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T07:11:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『
+ジョークその２▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:44:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『
+ジョークその３▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T07:11:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『
+ジョークその３▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:44:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader6_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウロ『カミツレちゃん▼
+それ　ジョーク　じゃなくて
+ダジャレ　だよ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T07:59:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウロ『カミツレちゃん▼
+それ　ジョーク　じゃなくて
+ダジャレ　だよ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:44:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER6
+フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『ジョークと　おもわせて
+ダジャレって　さらに　すきがあるよね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:54:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『ジョークと　思わせて
+ダジャレって　さらに　すきがあるよね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:44:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・！マーク後
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:33:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader6_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウロ『うーん
+ハイセンスすぎて　わかりにくいかも▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:52:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウロ『うーん
+ハイセンスすぎて　わかりにくいかも▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:44:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER6
+フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:37:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『……そう？▼
+じゃあ　まず
+ファッションから　みなおすね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:52:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『……そう？▼
+じゃあ　まず
+ファッションから　みなおすね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:44:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:37:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader6_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウロ『……うん▼
+カミツレちゃん　ポケモンしょうぶを
+おねがい　しても　いい？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:50:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウロ『……うん▼
+カミツレちゃん　ポケモン勝負を
+お願い　しても　いい？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:45:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER6
+フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:38:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader4_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『りょうかい！
+しょうぶは　そうかい！　なんてね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:50:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『りょうかい！
+しょうぶは　そうかい！　なんてね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:45:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:14:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER4
+カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:38:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader6_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウロ『カミツレちゃん……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:56:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:55:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウロ『カミツレちゃん……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:56:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:56:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・画面暗転して終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:56:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER6
+フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:55:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
