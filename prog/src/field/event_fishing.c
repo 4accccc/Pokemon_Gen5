@@ -25,6 +25,7 @@
 #include "effect_encount.h"
 #include "event_battle.h"
 #include "savedata/record.h"
+#include "savedata/resonance_resort_sv.h"
 
 #include "event_fishing.h"
 
@@ -335,6 +336,8 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
   case SEQ_HIT_SUCCESS:
     //釣り上げた回数  
     RECORD_Inc( wk->record, RECID_FISHING_SUCCESS );
+    //レゾナンスリゾート用レコード
+    RESORT_RECORD_AddID( RESORT_RECORD_ID_FISHING );
     {
       u8 eff_type = wk->enc_type == ENC_TYPE_EFFECT ? ENC_TYPE_EFFECT:ENC_TYPE_FISHING;
       GMEVENT_ChangeEvent( event, EVENT_WildPokeBattle( wk->gsys, wk->fieldWork, wk->bsp, FALSE, eff_type ) );

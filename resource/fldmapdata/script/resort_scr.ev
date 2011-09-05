@@ -10,7 +10,6 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_resort_scr.h"
-  .include  "../../../prog/src/field/resonance_resort/scrcmd_resort_def.h"
   .include  "../../../prog/src/field/resonance_resort/resort_people_def.h"
   .include  "resort_scr_define.h"
   .include  "c16r1501.h"

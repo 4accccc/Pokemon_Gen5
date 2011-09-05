@@ -49,6 +49,8 @@
 #include "pokewood/pokewood_work.h"
 #include "pokewood/pokewood_cutin.h"
 
+#include "savedata/resonance_resort_sv.h"
+
 #include "debug/debug_hudson.h"
 
 #include "msg/msg_pw_director_oldman.h"
@@ -8798,6 +8800,8 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     #ifdef   BUGFIX_AF_GFBTS2028_101007
     BPP_RenewPP( bpp );
     #endif
+
+    RESORT_RECORD_AddID( RESORT_RECORD_ID_POKE_LVUP );
 
     BPP_ReflectByPP( bpp );
     BPP_IsHP41( bpp );

@@ -13,6 +13,7 @@
 #include "gamesystem/gamedata_def.h"
 #include "gamesystem/game_beacon.h"
 #include "src/field/resonance_resort/resort_people_def.h"
+#include "src/field/resonance_resort/scrcmd_resort_def.h"
 
 
 //=============================================================================

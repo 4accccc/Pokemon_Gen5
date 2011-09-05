@@ -33,6 +33,7 @@
 #include "system/time_icon.h"
 #include "system/palanm.h"
 #include "sound/pm_sndsys.h"
+#include "savedata/resonance_resort_sv.h"
 
 #include "msg/msg_ircbattle.h"
 #include "../../field/event_ircbattle.h"
@@ -877,6 +878,14 @@ static void _modeFadeoutStart(IRC_BATTLE_MENU* pWork)
       GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pWork->dbw)));
     }
   }
+
+  //リゾート用履歴処理
+  if( EVENTIRCBTL_ENTRYMODE_SINGLE <= pWork->selectType 
+      &&  pWork->selectType <= EVENTIRCBTL_ENTRYMODE_COMPATIBLE ){
+    RESORT_RECORD_AddID( RESORT_RECORD_ID_IR );
+  }
+
+
   _CHANGE_STATE(pWork, _modeFadeout);        // 終わり
 }
 

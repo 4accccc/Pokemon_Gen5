@@ -3012,6 +3012,9 @@ static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
       u16 tex = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_TEX, NULL );
       GAMEDATA_SetAreaOfs( gamedata, tex );
     }
+
+    //レゾナンスリゾートにきたよ
+    RESORT_RECORD_AddID( RESORT_RECORD_ID_JA );
   }
   else
   {
@@ -3073,6 +3076,7 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
   if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE 
       && ZONEDATA_IsPalace(zone_id) == FALSE){ //パレス島では白黒にしない
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_INTRUDE );
+    RESORT_RECORD_AddID( RESORT_RECORD_ID_HILINK );
   }
   else{
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_NORMAL );

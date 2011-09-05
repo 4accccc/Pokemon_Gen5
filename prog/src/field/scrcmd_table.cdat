@@ -1090,6 +1090,13 @@
   // マリンチューブ
   DEF_CMD( EvCmdH06Gmk_Init, EV_SEQ_H06_GMK_INIT )
 
+  //  レゾナンスリゾート常駐
+  DEF_CMD( EvCmdResortSetRecord, EV_SEQ_RESORT_SET_RECORD )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

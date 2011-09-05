@@ -46,6 +46,9 @@ ev_egg_birth:
 
   // レコード加算
   _ADD_RECORD( RECID_TAMAGO_HATCHING, 1 )
+
+  //リゾート用差し込み
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_EGG )
 } 
 _END
 

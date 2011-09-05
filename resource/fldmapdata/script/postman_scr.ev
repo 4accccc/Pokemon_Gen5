@@ -133,6 +133,9 @@ sub_postman_main:
       //「受け取った！」
       _CALL sub_postman_receive
 
+      //レゾナンスリゾートのレコード
+      _RESORT_SET_RECORD( RESORT_RECORD_ID_MYSTERYGIFT )
+
       _BALLOONWIN_TALKOBJ_MSG( msg_postman_05 ) //またのごりようをおまちしております
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()

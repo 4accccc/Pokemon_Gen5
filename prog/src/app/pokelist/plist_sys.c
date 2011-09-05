@@ -28,6 +28,7 @@
 #include "savedata/mail.h"
 #include "savedata/mail_util.h"
 #include "savedata/regulation.h"
+#include "savedata/resonance_resort_sv.h"
 #include "waza_tool/wazano_def.h"
 #include "item/item.h"
 #include "field/zonedata.h"
@@ -1715,7 +1716,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           const PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_MSG_UseItemFunc( work  , 0 );
           
           //実際に適用
-          STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->zone_id , work->heapId );
+          BOOL is_use = STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->zone_id , work->heapId );
           OS_TFPrintf(2,"[%3d][%3d][%3d][%3d][%3d][%3d]:[%d]\n"
                 ,PP_Get(work->selectPokePara , ID_PARA_hp_exp , NULL )
                 ,PP_Get(work->selectPokePara , ID_PARA_pow_exp, NULL )
@@ -1726,6 +1727,12 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
                 ,canUse );
           if( useType == ITEM_TYPE_LV_UP )
           {
+            if( is_use )
+            {
+              //リゾートレコード
+              RESORT_RECORD_AddID( RESORT_RECORD_ID_POKE_LVUP );
+            }
+
             //レベルだけ表示HP変わるのでResetParamを使う
             PLIST_PLATE_ResetParam( work , work->plateWork[work->pokeCursor] , work->selectPokePara , 0 );
             //PMSND_PlaySystemSE( PLIST_SND_LVUP );

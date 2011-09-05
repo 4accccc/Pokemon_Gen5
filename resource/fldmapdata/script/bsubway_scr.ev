@@ -596,6 +596,9 @@ sub_receipt_challenge_single_double:
   //バトルサブウェイ挑戦中のビーコンセット
   _BEACON_SET_REQ_SUBWAY_START()
 
+  //リゾートレコード
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
+
   //デモ　出発
   _CALL sub_receipt_demo_start_train
   
@@ -757,6 +760,9 @@ sub_receipt_challenge_multi_ai:
   
   //バトルサブウェイ挑戦中のビーコンセット
   _BEACON_SET_REQ_SUBWAY_START()
+
+  //リゾートレコード
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
 
   //デモ　出発
   _CALL sub_receipt_demo_start_train
@@ -1190,6 +1196,9 @@ sub_receipt_challenge_multi_comm:
   
   //バトルサブウェイ挑戦中のビーコンセット
   _BEACON_SET_REQ_SUBWAY_START()
+
+  //リゾートレコード
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
   
   //デモ　出発
   _CALL sub_receipt_demo_start_train
@@ -1404,6 +1413,9 @@ sub_receipt_challenge_wifi:
   //バトルサブウェイ挑戦中のビーコンセット
   //100528 wifiトレイン挑戦中は出さない事になりました。
   //_BEACON_SET_REQ_SUBWAY_START()
+
+  //リゾートレコード
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
   
   //デモ　出発
   _CALL sub_receipt_demo_start_train
@@ -1482,6 +1494,9 @@ ev_bsw_game_continue:
 
     //バトルサブウェイ挑戦中のビーコンセット
     _BEACON_SET_REQ_SUBWAY_START()
+    
+    //リゾートレコード
+    _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
 
     //デモ　出発
     _CALL sub_receipt_demo_start_train

@@ -64,6 +64,8 @@ EVENT_START ev_tv
       $i_loop = FALSE     // èIóπ
     ENDSWITCH
   ENDWHILE
+
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_TV )
 }
 EVENT_END
 

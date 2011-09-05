@@ -10198,32 +10198,14 @@
  * @param mode  以下の値
  *        SCR_LTVT_CALLTVT_MODE_NORMAL    (0)   ///<  通常のライブキャスター
  *        SCR_LTVT_CALLTVT_MODE_REVERSE   (1)   ///<  色反転ライブキャスター
- *
- *  @param  place 以下の値
- *        SCR_LTVT_CALLTVT_PLACE_C04  各ゾーンで呼び出したときの値
- *        SCR_LTVT_CALLTVT_PLACE_C05
- *        SCR_LTVT_CALLTVT_PLACE_C06
- *        SCR_LTVT_CALLTVT_PLACE_T03
- *        SCR_LTVT_CALLTVT_PLACE_T04
- *        SCR_LTVT_CALLTVT_PLACE_T07
- *        SCR_LTVT_CALLTVT_PLACE_R05
- *        SCR_LTVT_CALLTVT_PLACE_R06
- *        SCR_LTVT_CALLTVT_PLACE_R07
- *        SCR_LTVT_CALLTVT_PLACE_R09
- *        SCR_LTVT_CALLTVT_PLACE_R11
- *        SCR_LTVT_CALLTVT_PLACE_R12
- *        SCR_LTVT_CALLTVT_PLACE_R13
- *        SCR_LTVT_CALLTVT_PLACE_R14
- *        SCR_LTVT_CALLTVT_PLACE_R16
  */       
 //--------------------------------------------------------------
-#define _CALL_TVT_SECRET( mode, place )  \
-    _ASM_CALL_TVT_SECRET mode, place 
+#define _CALL_TVT_SECRET( mode )  \
+    _ASM_CALL_TVT_SECRET mode
 
-  .macro  _ASM_CALL_TVT_SECRET mode, place
+  .macro  _ASM_CALL_TVT_SECRET mode
   .short  EV_SEQ_CALL_TVT_SECRET
   .short  \mode
-  .short  \place
   .endm
 
 //======================================================================
@@ -13576,7 +13558,57 @@
 
 //======================================================================
 //
-//  レゾナンスリゾート関連
+//  レゾナンスリゾート関連  常駐
+//
+//======================================================================
+.include "../../../prog/src/field/resonance_resort/scrcmd_resort_def.h"
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　リゾート用履歴設定
+ * @param id 何をしたかのID　以下の値
+ *    RESORT_RECORD_ID_NONE        ( 0)//なにもない
+ *    RESORT_RECORD_ID_DENDOU      ( 1)//殿堂入りした
+ *    RESORT_RECORD_ID_SUBWAY      ( 2)//サブウェイに参加した
+ *    RESORT_RECORD_ID_POKEWOOD    ( 3)//ポケウッドで映画を撮った
+ *    RESORT_RECORD_ID_TRIALHOUSE  ( 4)//トライアルハウスに参加した
+ *    RESORT_RECORD_ID_MUSICAL     ( 5)//ミュージカルをした
+ *    RESORT_RECORD_ID_HILINK      ( 6)//ハイリンクをした
+ *    RESORT_RECORD_ID_HILINKFES   ( 7)//ハイリンクフェスをした
+ *    RESORT_RECORD_ID_EGG         ( 8)//たまごを孵化した
+ *    RESORT_RECORD_ID_POKE_LVUP   ( 9)//ポケモンのレベルを上げた
+ *    RESORT_RECORD_ID_TV          (10)//テレビをみた
+ *    RESORT_RECORD_ID_DUSTBOX     (11)//ゴミ箱を漁った
+ *    RESORT_RECORD_ID_POKE_NAME   (12)//ポケモンにニックネームをつけた
+ *    RESORT_RECORD_ID_FISHING     (13)//ポケモンを釣り上げた
+ *    RESORT_RECORD_ID_HIDE_ITEM   (14)//隠しアイテムを見つけた
+ *    RESORT_RECORD_ID_FOSSIL      (15)//化石を復元した
+ *    RESORT_RECORD_ID_UNION       (16)//ユニオンルームへ行った
+ *    RESORT_RECORD_ID_GTS         (17)//GTSをした
+ *    RESORT_RECORD_ID_GTSNEGO     (18)//GTSネゴをした
+ *    RESORT_RECORD_ID_VIDEO       (19)//バトルビデオをみた
+ *    RESORT_RECORD_ID_RNDMATCH    (20)//ランダムマッチをした
+ *    RESORT_RECORD_ID_WHEEL       (21)//観覧車に乗った
+ *    RESORT_RECORD_ID_INFINITYD   (22)//無限ダンジョンをした
+ *    RESORT_RECORD_ID_WBT         (23)//WBTへ参加した
+ *    RESORT_RECORD_ID_JA          (24)//JAへ行った
+ *    RESORT_RECORD_ID_TVT_GAME    (25)//ライブキャスターミニゲームをした
+ *    RESORT_RECORD_ID_WIFICLUB    (26)//WIFIクラブへ行った
+ *    RESORT_RECORD_ID_ANIMALTRAIL (27)//けもの道へ行った
+ *    RESORT_RECORD_ID_GAMESYNC    (28)//ゲームシンクをした
+ *    RESORT_RECORD_ID_MYSTERYGIFT (29)//ふしぎなおくりものを貰った
+ *    RESORT_RECORD_ID_IR          (30)//IRをした
+ */
+//--------------------------------------------------------------
+#define _RESORT_SET_RECORD( id ) \
+    _ASM_RESORT_SET_RECORD id
+
+  .macro _ASM_RESORT_SET_RECORD id
+  .short EV_SEQ_RESORT_SET_RECORD
+  .endm
+
+//======================================================================
+//
+//  レゾナンスリゾート関連  レゾナンスリゾートギミックでしか動かない
 //
 //======================================================================
 //--------------------------------------------------------------

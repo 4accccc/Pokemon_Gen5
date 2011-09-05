@@ -79,6 +79,10 @@ EVENT_START ev_musical_recept_single
         _BALLOONWIN_OBJMSG_POS( msg_musical_test_02, SCWK_TARGET_OBJID, POS_DOWN )
         _BALLOONWIN_CLOSE()
 
+
+        //リゾートレコード
+        _RESORT_SET_RECORD( RESORT_RECORD_ID_MUSICAL )
+
         //入場アニメ
         _CALL recept_move_obj_solo
 
@@ -403,6 +407,10 @@ ev_musical_recept_comm_core:
     _BALLOONWIN_CLOSE()
     //通信同期(お友達の選択を待っています)
     _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_FIRST, 0, 0 )
+
+
+    //リゾートレコード
+    _RESORT_SET_RECORD( RESORT_RECORD_ID_MUSICAL )
 
     //入場アニメ
     _CALL recept_move_obj_comm

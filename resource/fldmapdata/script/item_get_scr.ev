@@ -211,6 +211,9 @@ ev_item_event_hideitem:
    
     // レコードを加算：隠しアイテムを入手した
     _ADD_RECORD( RECID_DOWSINGITEM_GET, 1 )
+
+    // レゾナンスリゾートレコード
+    _RESORT_SET_RECORD( RESORT_RECORD_ID_HIDE_ITEM )
   ENDIF
 _CHG_LOCAL_SCR
 _END

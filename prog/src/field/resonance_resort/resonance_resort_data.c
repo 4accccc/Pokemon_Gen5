@@ -4112,6 +4112,8 @@ void RESORT_RECORD_AddID( u32 record_id )
   RTCDate date;
   RESORT_DATE resort_date;
 
+  GF_ASSERT( record_id < RESORT_RECORD_ID_MAX );
+
   GFL_RTC_GetDate( &date );
 
   resort_date = RESORT_DATE_SET( date.year, date.month, date.day );

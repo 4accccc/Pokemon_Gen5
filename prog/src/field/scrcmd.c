@@ -114,6 +114,7 @@
 #include "scrcmd_dataconvert.h"
 #include "scrcmd_walk_count.h"
 #include "scrcmd_h06_gmk.h"
+#include "resonance_resort/scrcmd_resort.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

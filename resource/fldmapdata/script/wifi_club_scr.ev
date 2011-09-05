@@ -241,6 +241,9 @@ sub_club_counter_connect:
     _RET
   ENDIF
 
+  //レコード
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_WIFICLUB )
+
   //接続　それではご案内します
   _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_04, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE()

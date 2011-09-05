@@ -13,6 +13,7 @@
 #include "ddemo_main.h"
 #include "ddemo_seq.h"
 
+#include "savedata/resonance_resort_sv.h"
 
 
 //============================================================================================
@@ -66,6 +67,9 @@ static GFL_PROC_RESULT DendouDemoProc_Init( GFL_PROC * proc, int * seq, void * p
 		wk->debugNext = 1;
 	}
 #endif	// PM_DEBUG
+
+  //レゾナンスリゾート履歴
+  RESORT_RECORD_AddID( RESORT_RECORD_ID_DENDOU );
 
 	return GFL_PROC_RES_FINISH;
 }

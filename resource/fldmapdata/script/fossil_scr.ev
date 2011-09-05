@@ -180,6 +180,9 @@ recover_fossil_core:
 
   //化石復元回数加算
   _ADD_RECORD( RECID_FOSSIL_RESTORE, 1 )
+ 
+  //レゾナンスリゾート用レコード追加
+  _RESORT_SET_RECORD(  RESORT_RECORD_ID_FOSSIL )
 	
 	//受付が機械を触りに行く
 	_OBJ_ANIME( C02GYM0101_FOSSIL,anm_fossil_go)

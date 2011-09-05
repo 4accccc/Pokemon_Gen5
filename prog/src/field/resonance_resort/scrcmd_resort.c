@@ -54,6 +54,23 @@ extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_P
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
+ *	@brief  レコード設定
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortSetRecord( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  u16 id     = VMGetU16( p_core );
+  RESORT_RECORD_AddID( id );
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  話しかけ開始
  *
  *	@param	VMHANDLE *p_core 仮想マシンハンドル
@@ -1298,6 +1315,8 @@ VMCMD_RESULT EvCmdResortAddLv( VMHANDLE *p_core, void *p_wk_adrs )
         PP_Get( p_pp, ID_PARA_monsno, NULL ),
         PP_Get( p_pp, ID_PARA_form_no, NULL ),
         lv+1); //TODO いくつあがるか
+
+    RESORT_RECORD_AddID( RESORT_RECORD_ID_POKE_LVUP ); 
 
     PP_Put( p_pp, ID_PARA_exp, nextLevelExp );
     PP_Renew(p_pp);

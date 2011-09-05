@@ -427,6 +427,7 @@ sub_rndmatch_try:
     $reg_return = SEQ_SUB_RNDMATCH_EXIT
     _RET
   ENDIF
+
   
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
@@ -437,6 +438,9 @@ sub_rndmatch_try:
     $reg_return = SEQ_SUB_RNDMATCH_RETRY
     _RET
   ENDIF
+
+  //リゾートレコード
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_RNDMATCH )
 
   //手持ち全回復
   _TEMOTI_POKEMON_KAIFUKU()
@@ -725,6 +729,9 @@ sub_gts_normal_exchange:
     _RET
   ENDIF
 
+  //リゾートレコード
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_GTS )  
+
   //手持ち全回復
   _TEMOTI_POKEMON_KAIFUKU()
  
@@ -906,6 +913,9 @@ sub_gts_nego_exchange:
     _RET
   ENDIF
 
+  //リゾートレコード
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_GTSNEGO )  
+
   //手持ち全回復
   _TEMOTI_POKEMON_KAIFUKU()
  
@@ -1032,6 +1042,9 @@ sub_btl_recorder_call:
     $reg_return = SEQ_RETRY
     _RET
   ENDIF
+
+  //リゾートレコード
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_VIDEO )  
  
  _CALL sub_anm_wifi_counter_in
 

@@ -409,6 +409,9 @@ EVENT_START ev_union
 
   // 入場
   IF $room_in == TRUE THEN
+    //リゾートレコード
+    _RESORT_SET_RECORD( RESORT_RECORD_ID_UNION )
+
     //「おたのしみ ください」
     _BALLOONWIN_OBJMSG_POS( msg_pc_union_04, SCWK_TARGET_OBJID, POS_DL )
     _BALLOONWIN_CLOSE()

@@ -403,7 +403,6 @@ VMCMD_RESULT EvCmdCallTVTSecret( VMHANDLE *core, void *wk )
   PERSON_STATE  *person_state  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(gamedata) );
 
   u16 color = SCRCMD_GetVMWorkValue( core, wk );
-  u16 place = SCRCMD_GetVMWorkValue( core, wk );
 
   LOCAL_TVT_INIT_WORK * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(LOCAL_TVT_INIT_WORK) );
   param->mode     = LOCAL_TVT_MODE_APP_SECRET_CALL;
@@ -414,7 +413,7 @@ VMCMD_RESULT EvCmdCallTVTSecret( VMHANDLE *core, void *wk )
 		                               FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, param,
                                    CallBackFunc_FreeMemory, param );
 
-  PERSON_STATE_SetCallPlaceFlag( person_state, place, TRUE );
+  //PERSON_STATE_SetCallPlaceFlag( person_state, place, TRUE );
 
   SCRIPT_CallEvent( script, event );
 

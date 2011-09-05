@@ -35,6 +35,7 @@
 #include "savedata/c_gear_data.h"
 #include "savedata/zukan_wp_savedata.h"
 #include "savedata/musical_dist_save.h"
+#include "savedata/resonance_resort_sv.h"
 
 #include "gsync_local.h"
 #include "gsync_download.h"
@@ -620,6 +621,7 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
   pWork->errEnd = FALSE;
   pWork->noERROR = FALSE;
 
+  RESORT_RECORD_AddID( RESORT_RECORD_ID_GAMESYNC );
   
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
 

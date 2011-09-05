@@ -44,6 +44,7 @@
 
 //  savedata
 #include "savedata/misc.h"
+#include "savedata/resonance_resort_sv.h"
 
 //  se
 #include "sound/sound_manager.h"
@@ -4875,6 +4876,11 @@ static void FinishInput( NAMEIN_WORK *p_wk )
     { 
       p_wk->p_param->cancel = TRUE;
     }
+  }
+
+  if( p_wk->p_param->mode == NAMEIN_POKEMON && p_wk->p_param->cancel == FALSE )
+  {
+    RESORT_RECORD_AddID( RESORT_RECORD_ID_POKE_NAME );
   }
 }
 
