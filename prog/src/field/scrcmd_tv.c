@@ -52,11 +52,13 @@ extern u32 DebugTvNo;
 
 // LLCのデートフラグ見るメッセージ
 // が性別メッセージ始まりから何番目か
-#define LLC_DATE_MSG    (11)
+#define LLC_DATE_MSG_DEFAULT    (10)
+#define LLC_DATE_MSG_AFTER      (11)
 
 // LLCの交換フラグ見るメッセージ
 // が性別メッセージ始まりから何番目か
-#define LLC_CHANGE_MSG  (13)
+#define LLC_CHANGE_MSG_DEFAULT  (12)
+#define LLC_CHANGE_MSG_AFTER    (13)
 
 // CM確立
 #define CM_RAND_MAX     (100)
@@ -111,6 +113,20 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
       //タマゴではないポケモンを見つけられなかった
       if (i == num) GF_ASSERT(0);
     }
+
+    // 1番にLCCの隠しキャラと交換をした場合のみ、自分が交換に出したポケモンの種族名(タマゴを除く)
+    {
+      PERSON_STATE  *p_person_state = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(gdata) );
+
+      // 交換してる場合
+      if( PERSON_STATE_GetTradeFlag( p_person_state ) == TRUE )
+      {
+        u16 monsno = PERSON_STATE_GetTradeMonsno( p_person_state );
+        WORDSET_RegisterPokeMonsNameNo( wordset, 1, monsno );
+        ICHI_Printf("LCC隠しキャラとの交換に出したポケモンNO:%d\n", monsno);
+      }
+    }
+
   }
 
   // 何を選択したかでメッセージ分岐
@@ -149,7 +165,7 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
           PERSON_STATE* person_sv = PERSON_STATE_GetWork( save );
           
           // デート後メッセージ判定
-          if( rnd == LLC_DATE_MSG )
+          if( rnd == LLC_DATE_MSG_AFTER )
           {
             // フラグが立っていないなら、通常メッセージ
             if( PERSON_STATE_GetDateEndFlag( person_sv ) == FALSE )
@@ -158,7 +174,7 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
             }
           }
           // デート前メッセージ判定
-          else if( rnd == LLC_DATE_MSG - 1 )
+          else if( rnd == LLC_DATE_MSG_DEFAULT )
           {
             // フラグが立っているなら、通常後メッセージ
             if( PERSON_STATE_GetDateEndFlag( person_sv ) == TRUE )
@@ -168,7 +184,7 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
           }
 
           // 交換後メッセージ判定
-          if( rnd == LLC_CHANGE_MSG )
+          if( rnd == LLC_CHANGE_MSG_AFTER )
           {
             // フラグが立っていないなら、通常メッセージ
             if( PERSON_STATE_GetTradeFlag( person_sv ) == FALSE )
@@ -176,7 +192,8 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
               rnd -= 1;   // 1つ前がフラグ立っていない版メッセージ
             }
           }
-          else if( rnd == LLC_CHANGE_MSG - 1 ){
+          // 交換前メッセージ判定
+          else if( rnd == LLC_CHANGE_MSG_DEFAULT ){
             // フラグが立っているなら、通常後メッセージ
             if( PERSON_STATE_GetTradeFlag( person_sv ) == TRUE )
             {
