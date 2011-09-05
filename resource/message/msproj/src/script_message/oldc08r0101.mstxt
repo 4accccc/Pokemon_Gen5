@@ -1,3 +1,1157 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8w_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アイリス『やったー！
+オノノクス　ありがとう！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:29:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アイリス『やったー！
+オノノクス　ありがとう！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:11:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8W
+アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『さすがだね　アイリス▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:06:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガ『さすがだね　アイリス▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:11:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8B
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8w_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アイリス『で　おじーちゃん
+おはなしって　なあに？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:11:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アイリス『で　おじーちゃん
+お話って　なあに？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:11:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8W
+アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8b_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『うむ
+むかしを　おもいだしてね▼
+わたしは　こうけいしゃを　さがし
+せかいじゅうを　たびした▼
+とおく　はなれた
+りゅうのさと　も……▼
+そこで　アイリス
+きみと　であったね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:32:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガ『うむ
+昔を　おもいだしてね▼
+後継者を　探し
+わたしは　世界中を　旅した▼
+遠く　離れた
+竜の里も……▼
+そこで　アイリス
+きみと　出会ったね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:12:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8B
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8w_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アイリス『うん！　あたしが
+いちばん　つよかったの！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:09:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アイリス『うん！　あたしが
+一番　強かったの！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:12:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8W
+アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8b_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『うむ
+おどろいたよ▼
+ポケモンと　こころを　かよわし
+たのしそうに　たたかう　すがた▼
+みているだけで　えがおに　なれた▼
+あいても　まけを　くやしがりつつ
+しょうぶを　たのしんでいた▼
+この　しょうじょを
+こうけいしゃに　したい……▼
+そう　おもうのは　しぜんだった▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:19:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガ『うむ
+驚いた▼
+ポケモンと　心を　通わし
+楽しそうに　楽しそう　姿▼
+みているだけで　笑顔に　なれた▼
+相手も　負けを　くやしがりつつ
+勝負を　楽しんでいた▼
+この　少女を
+後継者に　したい……▼
+そう　思うのは　自然だった▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:53:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8B
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8w_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アイリス『うん！　イッシュにきて
+ほんと　よかったよ！▼
+いろんな　ひとが　いて
+いろんな　ポケモンが　たくさんで！▼
+でね▼
+りゅうのさと　では　ポケモンと
+くらすのが　あたりまえ　だったけど▼
+イッシュでは　そう　かんがえない
+ひとも　いたのとか　びっくり！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:33:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アイリス『うん！　イッシュに　来て
+ほんと　よかったよ！▼
+いろんな　人が　いて
+いろんな　ポケモンが　たくさんで！▼
+でね▼
+竜の里では　ポケモンと
+暮らすのが　当たり前　だったけど▼
+イッシュでは　そう　考えない
+人も　いたのとか　びっくり！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:53:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8W
+アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8b_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『わたしには　そんな
+アイリスの　はんのうが　しんせんだった▼
+そして　りゅうのさとを　でるなら
+けんぶんを　ひろめ▽
+チャンピオンに　めざすこと……▼
+その　やくそくに　したがい
+トレーナーとして▽
+ジムリーダーとして▼
+きたえていた　ときに
+アデク　じきじきの　しめいが　きた▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:10:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガ『わたしには　そんな
+アイリスの　反応が　新鮮だった▼
+そして　竜の里を　でるなら
+見聞を　広め▽
+チャンピオンに　めざすこと……▼
+その　約束に　従い
+トレーナーとして▽
+ジムリーダーとして▼
+鍛えていた　ときに
+アデク　直々の　使命が　きた▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:15:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8B
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:33:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8w_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アイリス『アデクの　おじーちゃん
+えがお　だったけどね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:15:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アイリス『アデクの　おじーちゃん
+笑顔だったけどね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:15:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8W
+アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8b_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『Ｎに　やぶれ
+きたえなおしたんだ▼
+とっくんの　あいてを　たのまれたが
+ききせまる　ものが　あった▼
+あたらしい　チャンピオン……
+おまえの　たかい　かべとなる▼
+そのためだけに　ひとは　じぶんを
+あれほど　おいこめるのだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:05:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガ『Ｎに　破れ
+鍛えなおしたんだ▼
+特訓の　相手を　頼まれたが
+鬼気迫る　ものが　あった▼
+新しい　チャンピオン……
+おまえの　高い　壁となる▼
+そのためだけに　人は　自分を
+あれほど　追い込めるのだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:17:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8B
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:34:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8w_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アイリス『アデクさん
+つよかった　ほんとうに！▼
+で　ちょっとだけ
+こころが　ゆらいだときも▼
+アイリスの　ポケモンは
+こんな　ピンチでも▼
+いい　めを　してる　って
+あたしたちを　はげましてくれて▼
+だから　かてたけど
+あたしは　まだまだって　かんじ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:22:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アイリス『アデクさん
+つよかった　とてもとても！▼
+で　ちょっとだけ
+心が　揺らいだときも▼
+アイリスの　ポケモンは
+こんな　ピンチでも▼
+いい　めを　してる　って
+あたしたちを　はげましてくれて▼
+だから　勝てたけど
+あたしは　まだまだって　感じ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:23:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:35:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8W
+アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:35:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8b_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『その　きもちを　わすれずにな▼
+で　はなしは　かわるが　いいかね▼
+ソウリュウに　きたとき
+その　レギンスを　あげたものだが▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:23:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガ『その気持ちを　忘れずにな▼
+で　話は　変わるが　いいかね▼
+ソウリュウに　来たとき
+その　レギンスを　あげたものだが▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T09:24:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:35:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8B
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:35:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8b_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チャンピオンに　なったのだ
+すこし　おめかし　しても　いいだろう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T05:58:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:35:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チャンピオンに　なったのだ
+すこし　おめかし　しても　いいだろう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:52:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:35:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:35:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8B
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:35:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8w_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アイリス『これ　あたらしい　ふく？
+じゃ　さっそく　きがえちゃうね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T05:59:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アイリス『これ　新しい　服？
+じゃ　さっそく　きがえちゃうね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:51:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・その場で２回転
+　２回転目に動作モデル差し替え
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T05:59:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8W
+アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_swchampion_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アイリス『うわー！
+すごーい　　ひらひらだよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:21:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アイリス『うわー！
+すごーい　　ひらひらだよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:40:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:39:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_SWCHAMPION
+アイリス（新）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8b_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『だいじ　なのは
+アイリスの　チャンピオンとしての▽
+こころがまえ　だがね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:40:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガ『なにより　大事なのは
+アイリスの　チャンピオンとしての▽
+心構え　だがね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:40:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8B
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8b_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしたちの　おさない　ころは
+まだ　モンスターボールも　なく▼
+ポケモンと　むきあわない
+ひどい　トレーナーは　ポケモンに▽
+にげられる……　そんなこともあった▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:40:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたしたちの　幼いころは
+まだ　モンスターボールも　なく▼
+ポケモンと　向き合わない
+ひどい　トレーナーは　ポケモンに▽
+逃げられる……　そんなこともあった▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:40:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8B
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:36:48" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_swchampion_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アイリス『おじーちゃんは
+だいじょうぶ　だったんでしょ！▼
+わかるもん▼
+おじーちゃんの　オノノクス
+おじーちゃんのこと　だいすきだもん！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:41:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-03T11:42:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アイリス『おじーちゃんは
+大丈夫　だったんでしょ！▼
+わかるもん▼
+おじーちゃんの　オノノクス
+おじーちゃんのこと　大好きだよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:41:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-03T11:42:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:35:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_SWCHAMPION
+アイリス（新）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-03T11:42:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_swchampion_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしね　きめてるの！
+どんな　チャンピオンに　なるか！▼
+シンオウの　しんわ　だけど▼
+ポケモンが　とびだすのって
+ひとに　かんしゃ　するためでしょ！▼
+きっと　おおむかしから
+ポケモンと　わたしたちは　たすけあい▽
+せかいを　ゆたかに　してたんだよ▼
+その　おもいでが　ポケモンみんなの
+こころに　きざみこまれてるの！▼
+だからね　もっともっと
+ポケモンと　ひとが　なかよくなって！▼
+モンスターボールが　なくなっても
+だいじょうぶな　せかいに　したいの！▼
+あたし　チャンピオンとして
+みんなに　そのことを　つたえたい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:51:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:47:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしね　決めてるの！
+どんな　チャンピオンに　なるか！▼
+シンオウの　神話だけど▼
+ポケモンが　飛びだすのって
+人に　感謝するためでしょ！▼
+きっと　大昔から
+ポケモンと　わたしたちは　助けあい▽
+世界を　豊かに　してたんだよ▼
+その　思い出が　ポケモンみんなの
+心に　刻みこまれてるの！▼
+だからね　もっともっと
+ポケモンと　人が　なかよくなって！▼
+モンスターボールが　なくなっても
+大丈夫な　世界に　したいの！▼
+あたし　チャンピオンとして
+みんなに　そのことを　伝えたい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:51:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:23:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・その場で１回転してからメッセージ表示
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:29:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_SWCHAMPION
+アイリス（新）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:23:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_leader8b_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『うむ！
+アイリスなら　できる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:48:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:23:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガ『うむ！
+アイリスなら　できる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T08:48:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:23:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面暗転し終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:23:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_LEADER8B
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T06:23:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>

@@ -1259,13 +1259,17 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さあ　いこう！▼
-ポケモンの　ため
-トレーナーの　ため▽
-すべての　いのちの　ため……▼</Text>
+			<Text>ボクには　きこえる▼
+モンスターボールの　なか
+ポケモンが　はなつ　トレーナーへの▽
+さまざまな　おもい……！▼
+なにより
+じぶんを　ひつようと　してくれる▼
+ひとと　であえた
+ポケモンの　よろこび……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T04:14:54" />
+				Time="2011-09-05T06:48:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1273,13 +1277,17 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さあ　行こう！▼
-ポケモンの　ため
-トレーナーの　ため▽
-すべての　命の　ため……▼</Text>
+			<Text>ボクには　きこえる▼
+モンスターボールの　中
+ポケモンが　放つ　トレーナーへの▽
+さまざまな　思い……！▼
+なにより
+自分を　必要と　してくれる▼
+ヒトと　出会えた
+ポケモンの　喜び……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T04:15:01" />
+				Time="2011-09-05T06:48:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1315,12 +1323,15 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そして　なにより
-この　ボクを　すくってくれた▽
+			<Text>ボクは　いくよ▼
+ポケモンの　ため
+トレーナーの　ため▽
+すべての　いのちの　ため……▼
+そして　この　ボクを　すくってくれた
 トモダチの　ために……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:11:45" />
+				Time="2011-09-05T04:51:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1328,12 +1339,15 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そして　なにより
-この　ボクを　すくってくれた▽
+			<Text>ボクは　いくよ▼
+ポケモンの　ため
+トレーナーの　ため▽
+すべての　命の　ため……▼
+そして　この　ボクを　救ってくれた
 トモダチの　ために……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:56:00" />
+				Time="2011-09-05T04:51:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
