@@ -1012,10 +1012,28 @@ enum {
 	NARC_item_icon_item_773_NCLR = 998,
 	NARC_item_icon_item_774_NCLR = 999,
 	NARC_item_icon_item_673_NCGR = 1000,
-	NARC_item_icon_item_dumy_NCGR = 1001,
-	NARC_item_icon_item_dumy_NCLR = 1002,
-	NARC_item_icon_item_yaji_NCGR = 1003,
-	NARC_item_icon_item_yaji_NCLR = 1004
+	NARC_item_icon_item_775_NCLR = 1001,
+	NARC_item_icon_item_775_NCGR = 1002,
+	NARC_item_icon_item_776_NCLR = 1003,
+	NARC_item_icon_item_776_NCGR = 1004,
+	NARC_item_icon_item_777_NCLR = 1005,
+	NARC_item_icon_item_777_NCGR = 1006,
+	NARC_item_icon_item_778_NCLR = 1007,
+	NARC_item_icon_item_778_NCGR = 1008,
+	NARC_item_icon_item_779_NCLR = 1009,
+	NARC_item_icon_item_779_NCGR = 1010,
+	NARC_item_icon_item_780_NCLR = 1011,
+	NARC_item_icon_item_780_NCGR = 1012,
+	NARC_item_icon_item_781_NCLR = 1013,
+	NARC_item_icon_item_781_NCGR = 1014,
+	NARC_item_icon_item_782_NCLR = 1015,
+	NARC_item_icon_item_782_NCGR = 1016,
+	NARC_item_icon_item_783_NCLR = 1017,
+	NARC_item_icon_item_783_NCGR = 1018,
+	NARC_item_icon_item_dumy_NCGR = 1019,
+	NARC_item_icon_item_dumy_NCLR = 1020,
+	NARC_item_icon_item_yaji_NCGR = 1021,
+	NARC_item_icon_item_yaji_NCLR = 1022
 };
 
 /* NARC_ITEM_ICON_NAIX_ */
