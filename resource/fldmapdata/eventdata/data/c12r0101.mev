@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/31 11:51:54
+#save date:2011/09/05 18:40:59
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c12r0101.wms
 #SECTION START:OBJ_EVENT
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 248
+-40 0 232
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 248
+-24 0 232
 #event number: 4
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 248
+-8 0 232
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 16 248
+-72 16 232
 #event number: 6
 #type
 1
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 16 248
+-56 16 232
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -236,7 +236,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-4
+5
 #event number: 0
 #Bg Event Label
 BG_C12R0101_PC_01
@@ -262,7 +262,7 @@ SCRID_BG_C12R0101_BED_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 184
+-72 0 200
 #event number: 2
 #Bg Event Label
 BG_C12R0101_BED_02
@@ -275,7 +275,7 @@ SCRID_BG_C12R0101_BED_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 184
+-56 0 200
 #event number: 3
 #Bg Event Label
 BG_C12R0101_WII_01
@@ -289,6 +289,19 @@ SCRID_BG_C12R0101_WII_01
 EVENTDATA_POSTYPE_GRID
 #position
 -136 0 216
+#event number: 4
+#Bg Event Label
+BG_C12R0101_BED_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C12R0101_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 184
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

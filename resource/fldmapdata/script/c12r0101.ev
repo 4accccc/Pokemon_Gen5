@@ -260,6 +260,7 @@ EVENT_END
 /*					BGÅFpc					*/
 /************************************************************/
 EVENT_START ev_bg_c12r0101_pc_01
+  _PLAYER_NAME( 0 )
   _TALK_START_SE_PLAY()
   _PLAINWIN_MSG_DOWN( msg_c12r0101_pc_01 )
   _LAST_KEYWAIT()
