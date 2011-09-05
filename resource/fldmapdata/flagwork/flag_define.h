@@ -399,9 +399,9 @@
 #define FE_R06R0301_ITEMGET_01             383 /* 0x017f 6番道路：アイテム入手フラグ */
 #define FE_R11R0201_ITEMGET_01             384 /* 0x0180 11番道路：アイテム入手フラグ */
 #define FE_R16R0101_ITEMGET_01             385 /* 0x0181 16番道路：アイテム入手フラグ */
-		/* not used   386(0x0182) */
-		/* not used   387(0x0183) */
-		/* not used   388(0x0184) */
+#define FE_R04_ITEMGET_01                  386 /* 0x0182 4番道路：アイテム入手フラグ */
+#define FE_T01R0401_HAKASE1_TALK           387 /* 0x0183 カノコタウン研究所：アララギ父初回会話フラグ */
+#define FE_T01R0401_HAKASE2_TALK           388 /* 0x0184 カノコタウン研究所：アララギ娘初回会話フラグ */
 		/* not used   389(0x0185) */
 		/* not used   390(0x0186) */
 		/* not used   391(0x0187) */
