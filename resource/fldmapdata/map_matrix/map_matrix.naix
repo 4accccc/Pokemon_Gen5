@@ -407,7 +407,17 @@ enum {
 	NARC_map_matrix_dun2722_mat_bin = 393,
 	NARC_map_matrix_dun2723_mat_bin = 394,
 	NARC_map_matrix_dun2724_mat_bin = 395,
-	NARC_map_matrix_remainder01_mat_bin = 396
+	NARC_map_matrix_remainder01_mat_bin = 396,
+	NARC_map_matrix_dun1005_mat_bin = 397,
+	NARC_map_matrix_h04hole_mat_bin = 398,
+	NARC_map_matrix_oldschool01_mat_bin = 399,
+	NARC_map_matrix_oldh01_mat_bin = 400,
+	NARC_map_matrix_oldadc01_mat_bin = 401,
+	NARC_map_matrix_oldbbuill01_mat_bin = 402,
+	NARC_map_matrix_oldwbuill01_mat_bin = 403,
+	NARC_map_matrix_oldbwgym0202_mat_bin = 404,
+	NARC_map_matrix_oldchurch01_mat_bin = 405,
+	NARC_map_matrix_buill08_mat_bin = 406
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
