@@ -5825,14 +5825,14 @@
 		<language name="JPN" width="256">ME-AVENUE-03</language>
 		<language name="JPN_KANJI" width="256">ME-AVENUE-03</language>
 	</row>
+	<row id="msg_seq_me_call_long">
+		<language name="JPN" width="256">ME-CALL-LONG</language>
+		<language name="JPN_KANJI" width="256">ME-CALL-LONG</language>
+	</row>
 	<row id="msg_seq_me_end">
 		<language name="JPN" width="256">ME-END</language>
 		<language name="JPN_KANJI" width="256">ME-END</language>
 	</row>
-          <row id="msg_seq_1346">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1347">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
