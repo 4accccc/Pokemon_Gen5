@@ -1,0 +1,84 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		habitat_list_data.cdat
+ *	@brief  生息地リスト用エンカウント解析データアーカイブインデックス
+ *	@author	Masayuki Onoue
+ *	@date		2011.09.04
+ *	@note		コンバータが出力したファイルです。（図鑑データコンバート時に出力）
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+//-------------------------------------
+///	生息地リスト用データ国｢体
+//=====================================
+typedef struct {
+  u16 sys_flag_id;
+  u16 zone_group_id;
+  u8  arc_idx;
+}HABITAT_LIST_DATA;
+
+//-------------------------------------
+///	生息地リスト用データ
+//=====================================
+static const HABITAT_LIST_DATA sc_habitat_list_data[] =
+{
+  {SYS_FLAG_ARRIVE_C12,ZONE_ID_C12},  // ヒオウギシティ
+  {SYS_FLAG_ARRIVE_R19,ZONE_ID_R19},  // １９番道路
+  {SYS_FLAG_ARRIVE_R20,ZONE_ID_R20},  // ２０番道路
+  {SYS_FLAG_ARRIVE_D22,ZONE_ID_D22},  // サンギ牧場
+  {SYS_FLAG_ARRIVE_C13,ZONE_ID_C13},  // タチワキシティ
+  {SYS_FLAG_ARRIVE_D23,ZONE_ID_D23},  // タチワキコンビナート
+  {SYS_FLAG_ARRIVE_C03,ZONE_ID_C03},  // ヒウンシティ
+  {SYS_FLAG_ARRIVE_D11R0101,ZONE_ID_D11R0101},  // ヒウン下水道
+  {SYS_FLAG_ARRIVE_R04,ZONE_ID_R04},  // ４番道路
+  {SYS_FLAG_ARRIVE_D03,ZONE_ID_D03},  // リゾートデザート
+  {SYS_FLAG_ARRIVE_D04R0101,ZONE_ID_D04R0101},  // 古代の城
+  {SYS_FLAG_ARRIVE_R05,ZONE_ID_R05},  // ５番道路
+  {SYS_FLAG_ARRIVE_R16,ZONE_ID_R16},  // １６番道路
+  {SYS_FLAG_ARRIVE_R16R0201,ZONE_ID_R16R0201},  // 迷いの森
+  {SYS_FLAG_ARRIVE_H02,ZONE_ID_H02},  // ホドモエの跳ね橋
+  {SYS_FLAG_ARRIVE_C05,ZONE_ID_C05},  // ホドモエシティ
+  {SYS_FLAG_ARRIVE_R06,ZONE_ID_R06},  // ６番道路
+  {SYS_FLAG_ARRIVE_D28R0101,ZONE_ID_D28R0101},  // 古代の抜け道
+  {SYS_FLAG_ARRIVE_R06R0201,ZONE_ID_R06R0201},  // フキヨセの洞穴
+  {SYS_FLAG_ARRIVE_D06,ZONE_ID_D06},  // 電気石の洞穴
+  {SYS_FLAG_ARRIVE_R07,ZONE_ID_R07},  // ７番道路
+  {SYS_FLAG_ARRIVE_R07R0101,ZONE_ID_R07R0101},  // タワーオブヘブン
+  {SYS_FLAG_ARRIVE_D24,ZONE_ID_D24},  // リバースマウンテン
+  {SYS_FLAG_ARRIVE_D25R0101,ZONE_ID_D25R0101},  // ストレンジャーハウス
+  {SYS_FLAG_ARRIVE_T04,ZONE_ID_T04},  // サザナミタウン
+  {SYS_FLAG_ARRIVE_R13,ZONE_ID_R13},  // １３番道路
+  {SYS_FLAG_ARRIVE_D20,ZONE_ID_D20},  // サザナミ湾
+  {SYS_FLAG_ARRIVE_R14,ZONE_ID_R14},  // １４番道路
+  {SYS_FLAG_ARRIVE_R14R0201,ZONE_ID_R14R0201},  // ほうじょうの社
+  {SYS_FLAG_ARRIVE_R12,ZONE_ID_R12},  // １２番道路
+  {SYS_FLAG_ARRIVE_H04,ZONE_ID_H04},  // ビレッジブリッジ
+  {SYS_FLAG_ARRIVE_R11,ZONE_ID_R11},  // １１番道路
+  {SYS_FLAG_ARRIVE_R09,ZONE_ID_R09},  // ９番道路
+  {SYS_FLAG_ARRIVE_D32R0101,ZONE_ID_D32R0101},  // 海辺の洞穴
+  {SYS_FLAG_ARRIVE_W21,ZONE_ID_W21},  // ２１番水道
+  {SYS_FLAG_ARRIVE_C14,ZONE_ID_C14},  // セイガイハシティ
+  {SYS_FLAG_ARRIVE_R22,ZONE_ID_R22},  // ２２番道路
+  {SYS_FLAG_ARRIVE_R23,ZONE_ID_R23},  // ２３番道路
+  {SYS_FLAG_ARRIVE_D26R0101,ZONE_ID_D26R0101},  // チャンピオンロード
+  {SYS_FLAG_ARRIVE_R08,ZONE_ID_R08},  // ８番道路
+  {SYS_FLAG_ARRIVE_R08R0101,ZONE_ID_R08R0101},  // セッカの湿原
+  {SYS_FLAG_ARRIVE_C07,ZONE_ID_C07},  // セッカシティ
+  {SYS_FLAG_ARRIVE_D08,ZONE_ID_D08},  // リュウラセンの塔
+  {SYS_FLAG_ARRIVE_D07,ZONE_ID_D07},  // ネジ山
+  {SYS_FLAG_ARRIVE_D02,ZONE_ID_D02},  // ヤグルマの森
+  {SYS_FLAG_ARRIVE_R03,ZONE_ID_R03},  // ３番道路
+  {SYS_FLAG_ARRIVE_R03R0301,ZONE_ID_R03R0301},  // 地下水脈の穴
+  {SYS_FLAG_ARRIVE_C01,ZONE_ID_C01},  // サンヨウシティ
+  {SYS_FLAG_ARRIVE_D01R0101,ZONE_ID_D01R0101},  // 夢の跡地
+  {SYS_FLAG_ARRIVE_R02,ZONE_ID_R02},  // ２番道路
+  {SYS_FLAG_ARRIVE_D02,ZONE_ID_R01},  // １番道路
+  {SYS_FLAG_ARRIVE_W17,ZONE_ID_W17},  // １７番水道
+  {SYS_FLAG_ARRIVE_R18,ZONE_ID_R18},  // １８番道路
+  {SYS_FLAG_ARRIVE_D13,ZONE_ID_D13},  // Ｐ２ラボ
+};
+
+// 生息地リストデータ数
+#define HABITAT_LIST_DATA_MAX (54)
