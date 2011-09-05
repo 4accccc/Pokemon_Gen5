@@ -130,6 +130,7 @@ static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_CallCityNameInput( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_CallOwnerNameInput( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_CallOwnerPhraseInput( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_CallOwnerThanksInput( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList_Input[] =
 {
@@ -137,6 +138,7 @@ static const DEBUG_MENU_LIST DATA_SubMenuList_Input[] =
   { DEBUG_FIELD_RESORT_13, debugMenuCallProc_CallCityNameInput, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_14, debugMenuCallProc_CallOwnerNameInput, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_15, debugMenuCallProc_CallOwnerPhraseInput, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_RESORT_43, debugMenuCallProc_CallOwnerThanksInput, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMenuData_Input = {
@@ -745,10 +747,14 @@ static BOOL debugMenuCallProc_CallOwnerNameInput( DEBUG_MENU_EVENT_WORK *p_wk )
 
 static BOOL debugMenuCallProc_CallOwnerPhraseInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  //GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_PHASE, p_wk->gmSys, NULL ) );
-  
-  DEBUG_EVENT_DebugMenu_CallSubMenu( p_wk, &DebugSubMenuData );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_PHASE, p_wk->gmSys, NULL ) );
 
   return TRUE;
 }
 
+static BOOL debugMenuCallProc_CallOwnerThanksInput( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_THANKS, p_wk->gmSys, NULL ) );
+
+  return TRUE;
+}

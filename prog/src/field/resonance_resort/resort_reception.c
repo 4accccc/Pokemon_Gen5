@@ -83,6 +83,8 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
   RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
 
+  BOOL is_people_add = TRUE;
+
   //汎用ワーク確保
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID, heapID, sizeof(RESORT_RECEPTION_WORK));
 
@@ -106,6 +108,12 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
     p_wk->p_sys = RESORT_SYSTEM_Init( &param, heapID );
   }
 
+  //人物追加フラグ取得
+  {
+    RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_wk->p_sys );
+    is_people_add = (RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_STATE,NULL)==RESORT_CITY_STATE_NORMAL);
+  }
+
   //人物システム
   {
     RESORT_PEOPLE_SYS_PARAM param;
@@ -116,7 +124,11 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
     param.max     = RECEPTION_PEOPLE_MAX;
     param.placeID  = RESORT_PLACEID_RECEPTION;
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
-    RESORT_PEOPLE_SYS_AddAll( p_wk->p_people_sys );
+
+    if( is_people_add )
+    {
+      RESORT_PEOPLE_SYS_AddAll( p_wk->p_people_sys );
+    }
   }
 }
 //----------------------------------------------------------------------------

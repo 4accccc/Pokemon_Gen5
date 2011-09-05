@@ -630,6 +630,19 @@ extern void RESORT_RECORD_AddID( u32 record_id );
 #define RESORT_TRAINER_ID_STORE_SIZE (32)
 
 //-------------------------------------
+///	街状態
+//=====================================
+typedef enum
+{
+  RESORT_CITY_STATE_TUTORIAL_01,    //チュートリアル開始
+  RESORT_CITY_STATE_TUTORIAL_02,    //招待を覚えよう
+  RESORT_CITY_STATE_TUTORIAL_03,    //案内を覚えよう
+  RESORT_CITY_STATE_NORMAL,         //通常モード
+  RESORT_CITY_STATE_MAX
+} RESORT_CITY_STATE;
+
+
+//-------------------------------------
 ///	引数
 //=====================================
 typedef enum
@@ -641,6 +654,7 @@ typedef enum
   RESORT_CITY_DATA_PARAM_RND_SEED,
   RESORT_CITY_DATA_PARAM_TEX,
   RESORT_CITY_DATA_FUN_DAY_FLAG,
+  RESORT_CITY_DATA_PARAM_STATE,
   RESORT_CITY_DATA_PARAM_MAX
 }RESORT_CITY_DATA_PARAM;
 

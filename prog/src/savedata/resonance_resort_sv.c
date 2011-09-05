@@ -211,6 +211,8 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
   RESORT_RECV_BUFF *p_temp_buff =  *(RESORT_RECV_BUFF **)GAMEDATA_GetResortBuffer( p_gamedata );
   RESORT_PROXY_BUFF *p_proxy_buff  =  RESONANCE_RESORT_SV_GetProxyBuff( p_wk );
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_wk );
+  RESORT_CITY_DATA *cp_city = RESONANCE_RESORT_SV_GetCityData( p_wk );
+
 
   //ïsê≥Ç»ÇÁÇŒâΩÇ‡ÇµÇ»Ç¢
   if( !sc_data_function_tbl[type].IsValid( cp_data_adrs ) )

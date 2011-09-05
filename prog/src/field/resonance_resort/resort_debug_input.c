@@ -99,6 +99,13 @@ typedef enum {
   EDITBOX_ID_FIRST_CHANGE_BTN,
   EDITBOX_ID_FIRST_CHANGE_NUM,
 
+  //街ページ
+  EDITBOX_ID_CITY_LV,
+  EDITBOX_ID_CITY_EXP,
+  EDITBOX_ID_CITY_TEX,
+  EDITBOX_ID_CITY_FUN_DAY,
+  EDITBOX_ID_CITY_STATE,
+
   //住民基礎データ
   EDITBOX_ID_BASIC_TRAINERID,
   EDITBOX_ID_BASIC_CONTRY,
@@ -261,7 +268,10 @@ typedef enum {
   EDITBOX_ID_MAX,
   //文字列の場合は以下を使う
 
-  EDITBOX_ID_BASIC_NAME = EDITBOX_ID_MAX,
+  EDITBOX_ID_CITY_CITYNAME   = EDITBOX_ID_MAX,
+  EDITBOX_ID_CITY_AUTHERNAME,
+
+  EDITBOX_ID_BASIC_NAME,
   EDITBOX_ID_BASIC_INTRODUCTION,
   EDITBOX_ID_EXT6_PHRASE,
 
@@ -430,6 +440,9 @@ static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrPa
 static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam );
 
 //STR_PARAM_PAGEのStore,Restore関数
+static void City_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
+static BOOL City_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
+
 static void Resident_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL Resident_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
 
@@ -452,7 +465,7 @@ static const STR_PARAM StrParamsFirst[] =
   //何を操作するか
   {STR_TYPE_SWITCH, RESORT_DATA_16,  STR_POS_X, STR_LINE2_POS_Y,
     8*8,STR_LINE2_POS_Y,12*8,TOUCH_H,
-    PEOPLE_00,3,EDITBOX_ID_FIRST_PEOPLE },
+    PEOPLE_00,4,EDITBOX_ID_FIRST_PEOPLE },
 
   //追加ボタン
   {STR_TYPE_BUTTON, CAPTION_NONE,  STR_POS_X, STR_LINE4_POS_Y,
@@ -468,6 +481,43 @@ static const STR_PARAM StrParamsFirst[] =
   {STR_TYPE_NUM, CAPTION_NONE,  STR_POS_X, STR_LINE6_POS_Y,
     10*8,STR_LINE6_POS_Y,4*8,TOUCH_H,
     32,0,EDITBOX_ID_FIRST_CHANGE_NUM },
+};
+
+//街ページ
+static const STR_PARAM StrParamsCity[] =
+{
+  //街情報
+  {STR_TYPE_CAPTION, RESORT_DATA_84,  STR_POS_X, STR_LINE0_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //街名
+  {STR_TYPE_EDITSTR, RESORT_DATA_85,  STR_POS_X, STR_LINE2_POS_Y,
+    40,STR_LINE2_POS_Y,12*10,TOUCH_H,
+    0,0,EDITBOX_ID_CITY_CITYNAME},
+  //持ち主名
+  {STR_TYPE_EDITSTR, RESORT_DATA_86,  STR_POS_X, STR_LINE3_POS_Y,
+    40,STR_LINE3_POS_Y,12*10,TOUCH_H,
+    0,0,EDITBOX_ID_CITY_AUTHERNAME},
+  //状態
+  {STR_TYPE_SWITCH, RESORT_DATA_87,  STR_POS_X, STR_LINE4_POS_Y,
+    40,STR_LINE4_POS_Y,10*8,TOUCH_H,
+    CITYSTATE_00,RESORT_CITY_STATE_MAX,EDITBOX_ID_CITY_STATE },
+  //LV
+  {STR_TYPE_NUM, RESORT_DATA_88,  STR_POS_X, STR_LINE5_POS_Y,
+    16,STR_LINE5_POS_Y,4*8,TOUCH_H,
+    255,0,EDITBOX_ID_CITY_LV },
+  //経験値
+  {STR_TYPE_NUM, RESORT_DATA_89, 60+STR_POS_X, STR_LINE5_POS_Y,
+    60+16,STR_LINE5_POS_Y,4*8,TOUCH_H,
+    65535,0,EDITBOX_ID_CITY_EXP },
+  //テクスチャ
+  {STR_TYPE_NUM, RESORT_DATA_90,  STR_POS_X, STR_LINE6_POS_Y,
+    32,STR_LINE6_POS_Y,4*8,TOUCH_H,
+    4,0,EDITBOX_ID_CITY_TEX },
+  //１日ファンフラグ
+  {STR_TYPE_SWITCH, RESORT_DATA_91,  80+STR_POS_X, STR_LINE6_POS_Y,
+    160,STR_LINE6_POS_Y,2*8,TOUCH_H,
+    YESNO_00,2,EDITBOX_ID_CITY_FUN_DAY },
 };
 
 //住民基本データ
@@ -1168,6 +1218,13 @@ static const STR_PARAM_DISPLAY sc_first_display_tbl[]  =
     StrParamsFirst, NELEMS(StrParamsFirst)
   },
 };
+static const STR_PARAM_DISPLAY sc_city_display_tbl[]  =
+{
+  //最初のページ
+  {
+    StrParamsCity, NELEMS(StrParamsCity)
+  },
+};
 static const STR_PARAM_DISPLAY sc_resident_display_tbl[]  =
 {
   //住民基礎情報
@@ -1202,6 +1259,14 @@ static const STR_PARAM_PAGE sc_first_page =
   NELEMS(sc_first_display_tbl),
   NULL,
   NULL,
+};
+
+static const STR_PARAM_PAGE sc_city_page =
+{
+  sc_city_display_tbl,
+  NELEMS(sc_city_display_tbl),
+  City_StoreData,
+  City_ReStoreData,
 };
 
 static const STR_PARAM_PAGE sc_resident_page =
@@ -2510,13 +2575,16 @@ static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrPa
 {
   switch( wk->BoxValue[EDITBOX_ID_FIRST_PEOPLE] )
   {
-  case 0: //住民
+  case 0: //街
+    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_city_page );
+    break;
+  case 1: //住民
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_resident_page );
     break;
-  case 1: //旅行者
+  case 2: //旅行者
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_tourist_page );
     break;
-  case 2: //自分
+  case 3: //自分
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_owner_page );
     break;
   default:
@@ -2531,13 +2599,16 @@ static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
 {
   switch( wk->BoxValue[EDITBOX_ID_FIRST_PEOPLE] )
   {
-  case 0: //住民
+  case 0: //街
+    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_city_page );
+    break;
+  case 1: //住民
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_resident_page );
     break;
-  case 1: //旅行者
+  case 2: //旅行者
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_tourist_page );
     break;
-  case 2: //自分
+  case 3: //自分
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_owner_page );
     break;
   default:
@@ -2548,6 +2619,67 @@ static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
   wk->Seq = SEQ_REDRAW;
 }
 
+//普通に受け取るだけのテーブル
+static const struct
+{
+  EDITBOX_ID editBoxID;
+  RESORT_CITY_DATA_PARAM resort_param;
+} sc_city_restore_tbl[]  =
+{
+  { EDITBOX_ID_CITY_LV,      RESORT_CITY_DATA_PARAM_LV       },
+  { EDITBOX_ID_CITY_EXP,     RESORT_CITY_DATA_PARAM_EXP      },
+  { EDITBOX_ID_CITY_TEX,     RESORT_CITY_DATA_PARAM_TEX      },
+  { EDITBOX_ID_CITY_FUN_DAY,RESORT_CITY_DATA_FUN_DAY_FLAG      },
+  { EDITBOX_ID_CITY_STATE,   RESORT_CITY_DATA_PARAM_STATE       },
+
+};
+static void City_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
+{
+  int i;
+  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+
+  //普通に受け取るだけのデータ
+  for( i = 0; i < NELEMS(sc_city_restore_tbl); i++ )
+  {
+    p_wk->BoxValue[sc_city_restore_tbl[i].editBoxID]  = RESORT_CITY_DATA_GetData( p_city, sc_city_restore_tbl[i].resort_param, NULL );
+  }
+
+  //文字データ
+  {
+    STRCODE strcode[64];
+
+    RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, strcode );
+    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_CITY_CITYNAME - EDITBOX_ID_MAX ], strcode );
+
+    RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_AUTHER_NAME, strcode );
+    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_CITY_AUTHERNAME - EDITBOX_ID_MAX ], strcode );
+  }
+}
+static BOOL City_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
+{
+  int i;
+  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+
+  //普通に受け取るだけのデータ
+  for( i = 0; i < NELEMS(sc_city_restore_tbl); i++ )
+  {
+    RESORT_CITY_DATA_SetData( p_city, sc_city_restore_tbl[i].resort_param, cp_wk->BoxValue[sc_city_restore_tbl[i].editBoxID] );
+  }
+
+  //文字データ
+  {
+    const STRCODE *cp_strcode;
+
+
+    cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_CITY_CITYNAME - EDITBOX_ID_MAX ] );
+    RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, (u32)cp_strcode );
+
+    cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_CITY_AUTHERNAME - EDITBOX_ID_MAX ] );
+    RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_AUTHER_NAME, (u32)cp_strcode );
+  }
+
+  return TRUE;
+}
 //=============================================================================
 /**
  *  住民データのセット関数

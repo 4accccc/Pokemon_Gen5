@@ -83,6 +83,7 @@ typedef struct
   void *p_wk_adrs;      //コールバックに与える引数
   void (*UpdateDataCallback)( void *p_wk_adrs, void *p_data_adrs, RESORT_RECV_DATA_UPDATE update ); //データに更新があれば更新間隔ごとに呼ばれる
   u32 update_interval; //更新間隔
+  BOOL enable;
 }RESORT_FIELD_BUFF_INIT_PARAM;
 
 static RESORT_FIELD_BUFF * RESORT_FIELD_BUFF_Init( HEAPID heapID, const RESORT_FIELD_BUFF_INIT_PARAM *cp_param );
@@ -99,7 +100,7 @@ static void RESORT_FIELD_BUFF_Main( RESORT_FIELD_BUFF *p_wk );
 //=====================================
 typedef struct _RESORT_CROWD_PEOPLE RESORT_CROWD_PEOPLE;
 
-static RESORT_CROWD_PEOPLE * RESORT_CROWD_PEOPLE_Init( HEAPID heapID, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player, const RESORT_BINARY_SHOP *cp_shop, const RESORT_BINARY_INSTITUTION *cp_institution, RESORT_PEOPLE_ALL_DATA *p_all_people );
+static RESORT_CROWD_PEOPLE * RESORT_CROWD_PEOPLE_Init( HEAPID heapID, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player, const RESORT_BINARY_SHOP *cp_shop, const RESORT_BINARY_INSTITUTION *cp_institution, RESORT_PEOPLE_ALL_DATA *p_all_people, BOOL enable );
 static void RESORT_CROWD_PEOPLE_Exit( RESORT_CROWD_PEOPLE *p_wk );
 static void RESORT_CROWD_PEOPLE_Main( RESORT_CROWD_PEOPLE *p_wk );
 static void RESORT_CROWD_PEOPLE_SetUp( RESORT_CROWD_PEOPLE *p_wk );
@@ -119,7 +120,7 @@ static void RESORT_CROWD_PEOPLE_ChangeOBJCodeReq( RESORT_CROWD_PEOPLE *p_wk, RES
 //=====================================
 typedef struct _RESORT_CROWD_NOISE  RESORT_CROWD_NOISE;
 
-static RESORT_CROWD_NOISE * RESORT_CROWD_NOISE_Init( HEAPID heapID, FLDMSGBG* p_msgbg, RESORT_ABSTRUCT_MANAGER *p_abstruct );
+static RESORT_CROWD_NOISE * RESORT_CROWD_NOISE_Init( HEAPID heapID, FLDMSGBG* p_msgbg, RESORT_ABSTRUCT_MANAGER *p_abstruct, BOOL enable );
 static void RESORT_CROWD_NOISE_Exit( RESORT_CROWD_NOISE *p_wk );
 static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WORK* cp_fieldmap );
 static void RESORT_CROWD_NOISE_Clear( RESORT_CROWD_NOISE *p_wk );
@@ -134,7 +135,7 @@ static void RESORT_CROWD_NOISE_Clear( RESORT_CROWD_NOISE *p_wk );
 //=====================================
 typedef struct _RESORT_FIELD_PEOPLE RESORT_FIELD_PEOPLE;
 
-static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYSTEM *p_sys, MMDLSYS *p_mmdlsys, const FIELD_PLAYER* cp_player );
+static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYSTEM *p_sys, MMDLSYS *p_mmdlsys, const FIELD_PLAYER* cp_player, BOOL is_people_add );
 static void RESORT_FIELD_PEOPLE_Exit( RESORT_FIELD_PEOPLE *p_wk );
 static void RESORT_FIELD_PEOPLE_Main( RESORT_FIELD_PEOPLE *p_wk, FIELD_PLAYER *p_player );
 static RESORT_PEOPLE_SYS * RESORT_FIELD_PEOPLE_GetPeopleSys( RESORT_FIELD_PEOPLE *p_wk );
@@ -206,6 +207,8 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
   const HEAPID heapID = FIELDMAP_GetHeapID(p_fieldmap);
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork(p_fieldmap) );
 
+  BOOL is_people_add = TRUE;
+
   //汎用ワーク確保
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID, heapID, sizeof(RESORT_FIELD_WORK));
 
@@ -228,12 +231,18 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
 
     p_wk->p_sys = RESORT_SYSTEM_Init( &param, heapID );
   }
+
+  //人物追加フラグ取得
+  {
+    RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_wk->p_sys );
+    is_people_add = (RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_STATE,NULL)==RESORT_CITY_STATE_NORMAL);
+  }
   
   //街へ来たとき１日１回だけファンが増加する
   RESORT_FIELD_AppearFun( p_wk->p_sys, p_gamedata, heapID );
 
   //人物システム
-  p_wk->p_people_sys = RESORT_FIELD_PEOPLE_Init( heapID, p_wk->p_sys, GAMEDATA_GetMMdlSys(p_gamedata), FIELDMAP_GetFieldPlayer(p_fieldmap) );
+  p_wk->p_people_sys = RESORT_FIELD_PEOPLE_Init( heapID, p_wk->p_sys, GAMEDATA_GetMMdlSys(p_gamedata), FIELDMAP_GetFieldPlayer(p_fieldmap), is_people_add );
 
   //NPCシステム
   {
@@ -248,7 +257,7 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
 
   //騒音
   {
-    p_wk->p_noise = RESORT_CROWD_NOISE_Init( heapID, FIELDMAP_GetFldMsgBG(p_fieldmap), RESORT_SYSTEM_GetAbstructManager( p_wk->p_sys ) );
+    p_wk->p_noise = RESORT_CROWD_NOISE_Init( heapID, FIELDMAP_GetFldMsgBG(p_fieldmap), RESORT_SYSTEM_GetAbstructManager( p_wk->p_sys ), is_people_add );
   }
 
   //演出
@@ -492,6 +501,10 @@ static void RESORT_FIELD_BUFF_Exit( RESORT_FIELD_BUFF *p_wk )
 //-----------------------------------------------------------------------------
 static void RESORT_FIELD_BUFF_Main( RESORT_FIELD_BUFF *p_wk )
 {
+  if( !p_wk->param.enable )
+  {
+    return;
+  }
   if( p_wk->update_frame++ > p_wk->param.update_interval )
   {
     Reception_Buff_UpdateRecv( p_wk );
@@ -670,6 +683,7 @@ static BOOL RESORT_CROWD_LINE_GetRegisterData( const RESORT_PEOPLE *cp_people, u
 //=====================================
 struct _RESORT_CROWD_PEOPLE
 {
+  BOOL enable;
   RESORT_CROWD_LINE         line[RESORT_CROWD_MOVE_LINE_MAX];
   RESORT_CROWD_PEOPLE_WK    wk[RESORT_CROWD_PEOPLE_BUFFER_MAX];
   const FIELD_PLAYER        *cp_player;
@@ -690,7 +704,7 @@ static RESORT_CROWD_PEOPLE_WK * Resort_Crowd_People_GetWkByPeople( RESORT_CROWD_
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-static RESORT_CROWD_PEOPLE * RESORT_CROWD_PEOPLE_Init( HEAPID heapID, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player, const RESORT_BINARY_SHOP *cp_shop, const RESORT_BINARY_INSTITUTION *cp_institution, RESORT_PEOPLE_ALL_DATA *p_all_people )
+static RESORT_CROWD_PEOPLE * RESORT_CROWD_PEOPLE_Init( HEAPID heapID, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player, const RESORT_BINARY_SHOP *cp_shop, const RESORT_BINARY_INSTITUTION *cp_institution, RESORT_PEOPLE_ALL_DATA *p_all_people, BOOL enable )
 {
   RESORT_CROWD_PEOPLE *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_CROWD_PEOPLE) );
   p_wk->cp_player = cp_player;
@@ -698,6 +712,7 @@ static RESORT_CROWD_PEOPLE * RESORT_CROWD_PEOPLE_Init( HEAPID heapID, MMDLSYS* p
   p_wk->cp_shop   = cp_shop;
   p_wk->cp_institution   = cp_institution;
   p_wk->p_all_people  = p_all_people;
+  p_wk->enable        = enable;
 
   {
     int i;
@@ -765,6 +780,11 @@ static void RESORT_CROWD_PEOPLE_Exit( RESORT_CROWD_PEOPLE *p_wk )
 //-----------------------------------------------------------------------------
 static void RESORT_CROWD_PEOPLE_Main( RESORT_CROWD_PEOPLE *p_wk )
 {
+  if( !p_wk->enable )
+  {
+    return;
+  }
+
   //各ライン動作
   {
     int i;
@@ -2030,6 +2050,7 @@ static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst );
 #define RESORT_CROWD_NOISE_WND_DRAW_MAX (3)
 struct _RESORT_CROWD_NOISE
 {
+  BOOL  enable;
   s16 wait;
   s16 wait_max;
 
@@ -2061,12 +2082,12 @@ static RESORT_ABSTRUCT_DATA * Resort_Crowd_Noise_GetDrawLotsData( RESORT_CROWD_N
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-static RESORT_CROWD_NOISE * RESORT_CROWD_NOISE_Init( HEAPID heapID, FLDMSGBG* p_msgbg, RESORT_ABSTRUCT_MANAGER *p_abstruct )
+static RESORT_CROWD_NOISE * RESORT_CROWD_NOISE_Init( HEAPID heapID, FLDMSGBG* p_msgbg, RESORT_ABSTRUCT_MANAGER *p_abstruct, BOOL enable )
 {
   RESORT_CROWD_NOISE *p_wk = GFL_HEAP_AllocClearMemory( heapID,sizeof(RESORT_CROWD_NOISE) );
   p_wk->p_msgbg     = p_msgbg;
   p_wk->p_abstruct  = p_abstruct;
-
+  p_wk->enable      = enable;
 
   {
     int i;
@@ -2110,6 +2131,11 @@ static void RESORT_CROWD_NOISE_Exit( RESORT_CROWD_NOISE *p_wk )
 //-----------------------------------------------------------------------------
 static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WORK* cp_fieldmap )
 {
+  if( !p_wk->enable )
+  {
+    return;
+  }
+
   if( FIELDMAP_CheckDoEvent( cp_fieldmap ) == FALSE )
   {
     enum
@@ -2869,7 +2895,7 @@ static void Field_People_UpdateDataCallback( void *p_wk_adrs, void *p_data_adrs,
  *	@return 人物管理ワーク
  */
 //-----------------------------------------------------------------------------
-static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYSTEM *p_sys, MMDLSYS *p_mmdlsys, const FIELD_PLAYER* cp_player )
+static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYSTEM *p_sys, MMDLSYS *p_mmdlsys, const FIELD_PLAYER* cp_player, BOOL is_people_add )
 {
   RESORT_FIELD_PEOPLE *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_FIELD_PEOPLE));
   p_wk->p_sys = p_sys;
@@ -2883,6 +2909,7 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
     param.p_wk_adrs = p_wk;
     param.UpdateDataCallback = Field_People_UpdateDataCallback;
     param.update_interval = RESORT_FIELD_PEOPLE_UPDATE_INTERVAL;
+    param.enable  = is_people_add;
 
 
     GF_ASSERT( param.p_recv_tmp_buff != NULL );
@@ -2900,7 +2927,10 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
     param.max = RESORT_FIELD_PEOPLE_MAX;
     param.placeID = RESORT_PLACEID_FIELD;
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
-    RESORT_PEOPLE_SYS_AddAll( p_wk->p_people_sys );
+    if( is_people_add )
+    {
+      RESORT_PEOPLE_SYS_AddAll( p_wk->p_people_sys );
+    }
   }
 
   //群集システム
@@ -2909,18 +2939,20 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
     p_wk->p_crowd = RESORT_CROWD_PEOPLE_Init( heapID, p_mmdlsys, cp_player, 
         RESORT_SYSTEM_GetBinaryShop(p_sys),
         RESORT_SYSTEM_GetBinaryInstitution(p_sys), 
-        RESORT_SYSTEM_GetPeopleAllData(p_sys));
+        RESORT_SYSTEM_GetPeopleAllData(p_sys), is_people_add );
 
-    for( i = 0; i < RESORT_FIELD_PEOPLE_MAX; i++ )
+    if( is_people_add )
     {
-      RESORT_PEOPLE *p_people =  RESORT_PEOPLE_SYS_GetPeopleByIndex( p_wk->p_people_sys, i );
-      if( p_people )
+      for( i = 0; i < RESORT_FIELD_PEOPLE_MAX; i++ )
       {
-        RESORT_CROWD_PEOPLE_Add( p_wk->p_crowd, p_people );
+        RESORT_PEOPLE *p_people =  RESORT_PEOPLE_SYS_GetPeopleByIndex( p_wk->p_people_sys, i );
+        if( p_people )
+        {
+          RESORT_CROWD_PEOPLE_Add( p_wk->p_crowd, p_people );
+        }
       }
+      RESORT_CROWD_PEOPLE_SetUp( p_wk->p_crowd );
     }
-
-    RESORT_CROWD_PEOPLE_SetUp( p_wk->p_crowd );
   }
 
   return p_wk;
@@ -3431,7 +3463,8 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
 {
   RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_sys );
 
-  if( RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_FUN_DAY_FLAG, NULL) == FALSE )
+  if( RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_STATE,NULL ) == RESORT_CITY_STATE_NORMAL 
+      && RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_FUN_DAY_FLAG, NULL) == FALSE )
   {
     int i;
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_gamedata);

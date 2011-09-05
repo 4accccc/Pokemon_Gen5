@@ -4222,7 +4222,7 @@ struct _RESORT_CITY_DATA
   u32     quest_clear_cnt;
   u32     exp;
   u32     tex;
-  u32     fun_day_flag;  //TODO  ‚Å‚©‚¢
+  u32     fun_day_flag;   //TODO  ‚Å‚©‚¢
   u8      secret_present_type;
   u8      secret_present_num;
   u8      secret_present_flag;
@@ -4328,6 +4328,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->tex;
   case RESORT_CITY_DATA_FUN_DAY_FLAG:
     return cp_wk->fun_day_flag;
+  case RESORT_CITY_DATA_PARAM_STATE:
+    return cp_wk->state;
   default:
     GF_ASSERT(0);
     return 0;
@@ -4363,6 +4365,9 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
     break;
   case RESORT_CITY_DATA_FUN_DAY_FLAG:
     p_wk->fun_day_flag  = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_STATE:
+    p_wk->state = data;
     break;
   default:
     GF_ASSERT(0);
