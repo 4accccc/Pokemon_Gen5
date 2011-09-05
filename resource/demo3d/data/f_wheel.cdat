@@ -249,7 +249,7 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_swleader1[] = {
 
 static const u16 res_f_wheel_file_swidolm[] = {
  NARC_data_demo3d_fmdl_swidolm_nsbmd,
- NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
+ NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
  NARC_data_demo3d_sub_obj_nsbca,
 };
 
@@ -262,7 +262,7 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_swidolm[] = {
 
 static const u16 res_f_wheel_file_swidolw[] = {
  NARC_data_demo3d_fmdl_swidolw_nsbmd,
- NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
+ NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
  NARC_data_demo3d_sub_obj_nsbca,
 };
 
