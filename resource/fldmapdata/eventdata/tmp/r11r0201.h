@@ -9,6 +9,7 @@
 #ifndef ZONE_R11R0201_EVC_H
 #define ZONE_R11R0201_EVC_H
 
+#define R11R0201_RANGERW_01                0
 
 #endif //ZONE_R11R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r11r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

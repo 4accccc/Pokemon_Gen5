@@ -34,6 +34,11 @@ DEFINE_LOCAL LWK_POKE_SELECT
 DEFINE_LOCAL LWK_POKE_SELECT_CHK
 DEFINE_LOCAL LWK_MONSNO
 
+//主人公方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL LCW_POSX
+DEFINE_LOCAL LCW_POSZ
+
 
 /**************************************************************/
 /*  男性：話しかけ（オタマロ見せイベント）                    */
@@ -196,18 +201,76 @@ EVENT_END
 //オタマロ合唱イベント【仮】演出は借り・ME待ち
 ev_c08r0402_me_call_01:
 
-  _TIME_WAIT( 15 )
+  //BGM停止
+  //_START_EVENT_BGM( SEQ_BGM_SILENCE_FIELD )
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+  //アニメ：主人公とマニア振り向き
+  _OBJ_ANIME( C08R0402_MAN3_01, anm_common_turn_u )
+  _TIME_WAIT( 3 )
+  IF $LCW_POSX == 9 && $LCW_POSZ == 13 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 10, 12, FORCE_TYPE_NPC, 8, DIR_LR ) 
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  _TIME_WAIT( 8 )
 
   //暗転
   _BLACK_OUT_SLOW()
   _DISP_FADE_END_CHECK()
 
+  //オタマロ01～05整列（再配置）
+  _OBJ_POS_CHANGE( C08R0402_POKE37_01, 7, 0, 9, DIR_DOWN )
+  _OBJ_POS_CHANGE( C08R0402_POKE37_02, 8, 0, 9, DIR_DOWN )
+  _OBJ_POS_CHANGE( C08R0402_POKE37_03, 9, 0, 9, DIR_DOWN )
+  _OBJ_POS_CHANGE( C08R0402_POKE37_04, 10, 0, 9, DIR_DOWN )
+  _OBJ_POS_CHANGE( C08R0402_POKE37_05, 11, 0, 9, DIR_DOWN )
+
+  //オタマロ06配置
+  _OBJ_ADD_EX( 12, 9, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE37, MV_DMY )
 
   //暗転復帰
   _BLACK_IN_SLOW()
   _DISP_FADE_END_CHECK()
 
-  _TIME_WAIT( 45 )
+  _TIME_WAIT( 16 )
+
+  //オタマロの歌
+  _ME_PLAY( SEQ_ME_OTAMARO )
+  _ME_WAIT()
+
+  _TIME_WAIT( 8 )
+
+  //暗転
+  _BLACK_OUT_SLOW()
+  _DISP_FADE_END_CHECK()
+
+  //オタマロ01～05元いた場所へ
+  _OBJ_POS_CHANGE( C08R0402_POKE37_01, 13, 0, 10, DIR_LEFT )
+  _OBJ_POS_CHANGE( C08R0402_POKE37_02, 14, 0, 5, DIR_LEFT )
+  _OBJ_POS_CHANGE( C08R0402_POKE37_03, 8, 0, 7, DIR_DOWN )
+  _OBJ_POS_CHANGE( C08R0402_POKE37_04, 8, 0, 12, DIR_UP )
+  _OBJ_POS_CHANGE( C08R0402_POKE37_05, 6, 0, 11, DIR_UP )
+
+  //オタマロ06削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+  //暗転復帰
+  _BLACK_IN_SLOW()
+  _DISP_FADE_END_CHECK()
+
+  _TIME_WAIT( 32 )
+
+  //アニメ：主人公とマニア振り向き
+  _OBJ_ANIME( C08R0402_MAN3_01, anm_common_turn_r )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+  _OBJ_ANIME_WAIT()
 
 _RET
 
@@ -246,5 +309,34 @@ EVENT_END
 EVENT_START   ev_c08r0402_poke37_05
   _EASY_TALK_POKEVOICE( MONSNO_586, msg_c08r0402_poke37_05_01 )
 EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 

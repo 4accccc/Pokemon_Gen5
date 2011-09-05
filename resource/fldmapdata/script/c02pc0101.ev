@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c02pc0101.h"
   .include  "c02pc0101.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,9 +21,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
-_EVENT_DATA    ev_c02pc0101_shop
-_EVENT_DATA    ev_c02pc0101_fix_shop
+_EVENT_DATA   ev_c02pc0101_shop
+_EVENT_DATA   ev_c02pc0101_fix_shop
+_EVENT_DATA   ev_c02pc0101_girl2_01
+_EVENT_DATA   ev_c02pc0101_backpackerm_01
+_EVENT_DATA   ev_c02pc0101_boy1_01
 _EVENT_DATA_END
 
 
@@ -32,17 +36,42 @@ _EVENT_DATA_END
 //  _END
 
 /************************************************************/
-/*						ショップ店員						*/
+/*  ショップ店員                                            */
 /************************************************************/
-EVENT_START	ev_c02pc0101_shop
-	_TALK_OBJ_START()
-	_SHOP_CALL()
+EVENT_START   ev_c02pc0101_shop
+  _TALK_OBJ_START()
+  _SHOP_CALL()
 EVENT_END
 
 //=============================================================
 //ショップカウンター 固定ショップ
 //=============================================================
-EVENT_START ev_c02pc0101_fix_shop
+EVENT_START   ev_c02pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( C02_FS )
 EVENT_END
+
+/**************************************************************/
+/*  女の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c02pc0101_girl2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02pc0101_girl2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  バックパッカー♂：話しかけ                                */
+/**************************************************************/
+EVENT_START   ev_c02pc0101_backpackerm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02pc0101_backpackerm_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c02pc0101_boy1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02pc0101_boy1_01 )
+EVENT_END
+
+
+
+

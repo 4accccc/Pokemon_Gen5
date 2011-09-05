@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c08r0501.h"
   .include  "c08r0501.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,15 +21,53 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA 	ev_bg_c08r0501_board_01
+_EVENT_DATA   ev_bg_c08r0501_board_01
+_EVENT_DATA   ev_c08r0501_informationw_01
+_EVENT_DATA   ev_c08r0501_man3_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*  電光掲示板のイベントスクリプト*/
+/*  電光掲示板のイベントスクリプト                            */
 /**************************************************************/
 EVENT_START   ev_bg_c08r0501_board_01
+  _LOOK_ELBOARD( ELBOARD_CAMERA_FRAME )
+EVENT_END
 
-	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c08r0501_informationw_01
+
+  _TALK_OBJ_START()
+  //受付嬢：ようこそ！　へんかを　このむ　まち（バージョンによってセリフが異なる）
+  _BALLOONWIN_OBJMSG_WB( msg_c08r0501_infomationw_01w, msg_c08r0501_infomationw_01b, C08R0501_INFORMATIONW_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 
 EVENT_END
+
+/**************************************************************/
+/*  男性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c08r0501_man3_01
+
+  //ゲームクリア後か
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //男性：たべているときは　ハッピー！▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0501_man3_02 )
+
+  ELSE
+    _TALK_OBJ_START()
+    //男性：２ねんまえ　かな……？▼
+    _BALLOONWIN_OBJMSG_WB( msg_c08r0501_man3_01w, msg_c08r0501_man3_01b, C08R0501_MAN3_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+
+

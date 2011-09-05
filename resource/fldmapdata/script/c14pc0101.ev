@@ -13,6 +13,7 @@
   .include  "c14pc0101.h"
   
   //@author Mizuguchi_Mai（ショップ等配置担当）
+  //@author fujimura_souichirou（一言メッセージ配置）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,9 +22,12 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_c14pc0101_shop
-_EVENT_DATA		ev_c14pc0101_fix_shop
+_EVENT_DATA   ev_c14pc0101_shop
+_EVENT_DATA   ev_c14pc0101_fix_shop
+_EVENT_DATA   ev_c14pc0101_woman2_01
+_EVENT_DATA   ev_c14pc0101_rangerm_01
 _EVENT_DATA_END
+
 
 //=============================================================
 //ショップカウンター 変動ショップ
@@ -40,3 +44,45 @@ EVENT_START ev_c14pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( C13_FS )
 EVENT_END
+
+/**************************************************************/
+/*  女性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c14pc0101_woman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14pc0101_woman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  レンジャー♂：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c14pc0101_rangerm_01
+
+  //手持ちに「なみのり」を覚えたポケモンがいるかチェック
+  DEFINE_LOCAL LWK_WAZA_RESURT
+  _CHECK_POKE_WAZA_GROUP( LWK_WAZA_RESURT, WAZANO_NAMINORI )
+
+  _DEBUG_PRINT_WK( LWK_WAZA_RESURT )
+
+  //「なみのり」を覚えたポケモンがいる
+  IF $LWK_WAZA_RESURT != 6 THEN
+
+    //「なみのり」を覚えたポケモンの種族名を指定タグにセット
+    _TEMOTI_MONS_NAME( 0, LWK_WAZA_RESURT )
+
+    //レンジャー♂：なみのり　できるのかよ！▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14pc0101_rangerm_01 )
+
+  //「なみのり」を覚えたポケモンがいない
+  ELSE
+
+    //レンジャー♂：ぜんぜん　なみのり　できねーじゃん！▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14pc0101_rangerm_02 )
+
+  ENDIF
+
+EVENT_END
+
+
+
+
+

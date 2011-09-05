@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r04w.h"
-  //.include  "r04w.h"
+  .include  "r04w.h"
+
+  //@author fujimura_souichirou（ウォーグルイベント）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +21,101 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r04w
+_EVENT_DATA   ev_zone_r04w
+_EVENT_DATA   ev_r04w_poke628_01
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL LCW_POSX
+DEFINE_LOCAL LCW_POSZ
+
+//曜日取得変数
+DEFINE_LOCAL LWK_WEEKCK
+
+
+/************************************************************/
+/*  ZONE_CHANGE_SCRIPT                                      */
+/************************************************************/
+INIT_EVENT_START  ev_zone_r04w
+
+  //曜日を取得
+  _GET_WEEK( LWK_WEEKCK )
+
+  //月曜日ならば、ウォーグルが出現（１週間に１匹のみ）
+  IF $LWK_WEEKCK == RTC_WEEK_MONDAY && FLAG_OFF( TMFLG_R04_POKE_567_633_MEET ) THEN
+
+    //==================================//
+    //ウォーグル表示
+    _FLAG_RESET( FV_R04_POKE_567_633_01 )
+    //==================================//
+
+  //それ以外の曜日は非表示に
+  ELSE
+
+    //==================================//
+    //ウォーグル表示
+    _FLAG_SET( FV_R04_POKE_567_633_01 )
+    //==================================//
+
+  ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*  ウォーグル：話しかけ（戦闘／毎週月曜日に出現）            */
 /**************************************************************/
-//ev_zone_r04w:
-//  _END
+EVENT_START   ev_r04w_poke628_01
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_r04w:
-  //とりあえず最初のラベルだけ生成している
-  _END
+  _TALK_OBJ_START()
+
+  //ウォーグル：わっわっわっわ！！
+  _VOICE_PLAY( MONSNO_567, 0 ) 
+  _GIZAPLAINWIN_MSG_POS( msg_r04w_poke628_01, POS_DOWN )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  //戦闘開始
+  {
+    DEFINE_LOCAL LWK_BTL_FLAG
+    $LWK_BTL_FLAG = SCR_WILD_BTL_FLAG_WILD_TALK   //野生話しかけ戦闘メッセージ
+    $LWK_BTL_FLAG |= SCR_WILD_BTL_FLAG_SPEABI3    //第３特性指定
+    _WILD_BTL_SET_EX( MONSNO_567, 20, LWK_BTL_FLAG )   //Lv.20 ウォーグル
+  }
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //==================================//
+    //ウォーグル非表示
+    _FLAG_SET( FV_R04_POKE_567_633_01 )
+    //フラグON
+    _FLAG_SET( TMFLG_R04_POKE_567_633_MEET )
+    //==================================//
+    _OBJ_DEL( R04W_POKE628_01 )   //ウォーグルを消す
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //ウォーグルを捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //倒した場合、あるいは逃げた場合
+
+    //システム：ウォーグルは
+    _SYSWIN_MSG( msg_r04w_poke628_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+
+  ENDSWITCH
+
+EVENT_END
+
+
+
 

@@ -9,6 +9,9 @@
 #ifndef ZONE_T01R0401_EVC_H
 #define ZONE_T01R0401_EVC_H
 
+#define T01R0401_HAKASE1_01                0
+#define T01R0401_HAKASE2_01                1
+#define T01R0401_POKE29_01                 2
 
 #endif //ZONE_T01R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t01r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

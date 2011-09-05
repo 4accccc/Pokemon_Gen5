@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_h01r0101.h"
-  //.include  "h01r0101.h"
+  .include  "h01r0101.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +21,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_h01r0101_board_01
+_EVENT_DATA   ev_bg_h01r0101_board_01
+_EVENT_DATA   ev_h01r0101_informationw_01
+_EVENT_DATA   ev_h01r0101_mountman_01
+_EVENT_DATA   ev_h01r0101_ol_01
 _EVENT_DATA_END
 
 
@@ -29,12 +34,34 @@ _EVENT_DATA_END
 //ev_zone_h01r0101:
 //  _END
 
-
 /**************************************************************/
-/*  電光掲示板のイベントスクリプト*/
+/*  電光掲示板のイベントスクリプト                            */
 /**************************************************************/
 EVENT_START   ev_bg_h01r0101_board_01
-
-	_LOOK_ELBOARD( ELBOARD_CAMERA_FRAME )
-
+  _LOOK_ELBOARD( ELBOARD_CAMERA_FRAME )
 EVENT_END
+
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_h01r0101_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01r0101_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  山男：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_h01r0101_mountman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01r0101_mountain_01 )
+EVENT_END
+
+/**************************************************************/
+/*  OL：話しかけ                                              */
+/**************************************************************/
+EVENT_START   ev_h01r0101_ol_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01r0101_ol_01 )
+EVENT_END
+
+
+
+

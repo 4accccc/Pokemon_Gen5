@@ -9,6 +9,10 @@
 #ifndef ZONE_C03R0501_EVC_H
 #define ZONE_C03R0501_EVC_H
 
+#define C03R0501_MOUNTMAN_01               0
+#define C03R0501_INFORMATIONW_01           1
+#define C03R0501_POKE33_01                 2
+#define C03R0501_OLDMAN_01                 3
 
 #endif //ZONE_C03R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

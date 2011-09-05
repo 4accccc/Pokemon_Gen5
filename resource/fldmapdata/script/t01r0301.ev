@@ -8,6 +8,8 @@
   .include  "../../../prog/include/msg/script/msg_t01r0301.h"
   .include  "t01r0301.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -15,4 +17,78 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_t01r0301_middleman2_01
+_EVENT_DATA   ev_t01r0301_middlewoman2_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  チェレンの父：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_t01r0301_middleman2_01
+
+  _TALK_OBJ_START()
+
+  //会話するのは初めてか？【仮】フラグは仮のもの
+  IF FLAG_OFF( FE_T02_LOW_TALK_01 ) THEN
+
+    //チェレンの父：ん？　きみがもつ
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middleman2_01 )
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //会話済みフラグON
+    _FLAG_SET( FE_T02_LOW_TALK_01 )
+    //========================================//
+
+    //アイテム「？？？」入手【仮】入手アイテムは仮のもの
+    _ITEM_EVENT_NOWAIT( ITEM_MASUTAABOORU, 1 )
+
+  ELSE
+
+    //チェレンの父：たびは　いいよ！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middleman2_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  チェレンの母：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_t01r0301_middlewoman2_01
+
+  _TALK_OBJ_START()
+
+  //データ引継ぎを行っているか【仮】フラグは仮のもの
+  IF FLAG_ON( FE_T02_LOW_TALK_01 ) THEN
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //前作主人公名代入【仮】コマンド待ち
+    _PLAYER_NAME( 1 )
+
+    //チェレンの母：あなた　《前作主人公》に　にてる……かも▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middlewoman2_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+
+    //チェレンの母：《主人公》っていうんだ▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middlewoman2_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+
+

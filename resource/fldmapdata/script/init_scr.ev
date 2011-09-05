@@ -414,6 +414,9 @@ ev_first_gameclear:
   _FLAG_SET( FV_D05_STOPPER_01 )
   $WK_SCENE_D05_STOPPER_01 = 1
 
+  //14番道路ゲートのストッパーを非表示
+  _FLAG_SET( FV_R14R0101_MAN3_01 )
+
 _RET
 
 

@@ -9,6 +9,9 @@
 #ifndef ZONE_R04R0102_EVC_H
 #define ZONE_R04R0102_EVC_H
 
+#define R04R0102_MIDDLEWOMAN2_01           0
+#define R04R0102_MIDDLEMAN2_01             1
+#define R04R0102_GIRL3_01                  2
 
 #endif //ZONE_R04R0102_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04r0102.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

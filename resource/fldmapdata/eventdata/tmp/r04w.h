@@ -27,6 +27,7 @@
 #define TR_DAISUKIW_03                     9
 #define TR_PRINCESS_08                    10
 #define TR_BACKPACKERM_18                 11
+#define R04W_POKE628_01                   12
 
 #endif //ZONE_R04W_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r04w.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

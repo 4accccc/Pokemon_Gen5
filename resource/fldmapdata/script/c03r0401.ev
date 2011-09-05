@@ -12,6 +12,8 @@
   .include  "msg_c03r0401.h"
   .include  "c03r0401.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -20,4 +22,101 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_c03r0401_boy3_01
+_EVENT_DATA   ev_c03r0401_ol_01
+_EVENT_DATA   ev_c03r0401_boy2_01
+_EVENT_DATA   ev_c03r0401_poke49_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c03r0401_boy3_01
+
+  _TALK_OBJ_START()
+
+  //メダル取得変数
+  DEFINE_LOCAL  MEDAL_CHC_TITLE_GET
+
+  //取得したメダル数取得
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_TITLE_GET, MEDAL_CHC_TITLE_GET )
+
+  //取得したメダル数代入
+  _NUMBER( 0, MEDAL_CHC_TITLE_GET, 3 )
+
+  //男の子：やあ！　きみ　メダルラリーに
+  _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy3_01 )
+
+  //メダルの個数が1～9
+  IF $MEDAL_CHC_TITLE_GET >= 1 && $MEDAL_CHC_TITLE_GET <= 9 THEN
+
+    //男の子：きみよりは　せんぱい　だね
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy3_02 )
+
+  //メダルの個数が10～29
+  ELSIF $MEDAL_CHC_TITLE_GET >= 10 && $MEDAL_CHC_TITLE_GET <= 29 THEN
+
+    //男の子：きみも　けっこう　あつめているけど▽
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy3_03 )
+
+  //メダルの個数が30～49
+  ELSIF $MEDAL_CHC_TITLE_GET >= 30 && $MEDAL_CHC_TITLE_GET <= 49 THEN
+
+    //男の子：しってるかい？　メダルを　５０コ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy3_04 )
+
+  //メダルの個数が50～99
+  ELSIF $MEDAL_CHC_TITLE_GET >= 50 && $MEDAL_CHC_TITLE_GET <= 99 THEN
+
+    //男の子：ゴールイン　したんだね？▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy3_05 )
+
+  //メダルの個数が100～199
+  ELSIF $MEDAL_CHC_TITLE_GET >= 100 && $MEDAL_CHC_TITLE_GET <= 199 THEN
+
+    //男の子：そんなに　あつめたの！？
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy3_06 )
+
+  //メダルの個数が200～254
+  ELSIF $MEDAL_CHC_TITLE_GET >= 200 && $MEDAL_CHC_TITLE_GET <= 254 THEN
+
+    //男の子：きっと　きみなら　すべての
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy3_07 )
+
+  //メダルの個数が255
+  ELSIF $MEDAL_CHC_TITLE_GET == 255 THEN
+
+    //男の子：ぜんぶの　メダルを　あつめたの！？
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy3_08 )
+
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  OL：話しかけ                                              */
+/**************************************************************/
+EVENT_START   ev_c03r0401_ol_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_ol_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c03r0401_boy2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ダンゴロ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c03r0401_poke49_01
+  _EASY_TALK_POKEVOICE( MONSNO_600, msg_c03r0401_poke49_01 )
+EVENT_END
+
+
+
+

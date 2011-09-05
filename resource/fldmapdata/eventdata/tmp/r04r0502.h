@@ -9,6 +9,7 @@
 #ifndef ZONE_R04R0502_EVC_H
 #define ZONE_R04R0502_EVC_H
 
+#define R04R0502_POLICEMAN_01              0
 
 #endif //ZONE_R04R0502_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r04r0502.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

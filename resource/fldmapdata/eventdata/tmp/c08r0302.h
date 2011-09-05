@@ -9,6 +9,8 @@
 #ifndef ZONE_C08R0302_EVC_H
 #define ZONE_C08R0302_EVC_H
 
+#define C08R0302_MAN2_01                   0
+#define C08R0302_MAN2_02                   1
 
 #endif //ZONE_C08R0302_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0302.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

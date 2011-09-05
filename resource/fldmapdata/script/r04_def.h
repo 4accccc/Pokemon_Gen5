@@ -13,5 +13,7 @@
 #define SCRID_POS_R04_SWBOSS_02 (6)
 #define SCRID_R04_OLDMAN1_01 (7)
 #define SCRID_R04_SWBOSS_01 (8)
+#define SCRID_R04_POKE630_01 (9)
+#define SCRID_ZONE_R04 (10)
 
 #endif //_R04_DEF_H_

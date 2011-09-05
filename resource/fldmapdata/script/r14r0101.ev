@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_r14r0101.h"
   .include  "r14r0101.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,8 +21,14 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_r14r0101_board_01
+_EVENT_DATA   ev_bg_r14r0101_board_01
+_EVENT_DATA   ev_r14r0101_informationw_01
+_EVENT_DATA   ev_r14r0101_man1_01
+_EVENT_DATA   ev_r14r0101_man3_01
 _EVENT_DATA_END
+
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
 
 
 /**************************************************************/
@@ -30,17 +38,68 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_r14r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
-
-/**************************************************************/
-/*  電光掲示板のイベントスクリプト*/
+/*  電光掲示板のイベントスクリプト                            */
 /**************************************************************/
 EVENT_START   ev_bg_r14r0101_board_01
+  _LOOK_ELBOARD( ELBOARD_CAMERA_FRAME )
+EVENT_END
 
-	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r14r0101_informationw_01
+
+  _TALK_OBJ_START()
+  //受付嬢：エネルギッシュな　まち（バージョンによってセリフが異なる）
+  _BALLOONWIN_OBJMSG_WB( msg_r14r0101_infomationw_01w, msg_r14r0101_infomationw_01b, R14R0101_INFORMATIONW_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 
 EVENT_END
+
+/**************************************************************/
+/*  男性01：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r14r0101_man1_01
+
+  _TALK_OBJ_START()
+  //男性01：ギラギラした　ブラックシティでは（バージョンによってセリフが異なる）
+  _BALLOONWIN_OBJMSG_WB( msg_r14r0101_man1_01w, msg_r14r0101_man1_01b, R14R0101_MAN1_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  男性02：話しかけ（ストッパー／ゲームクリア後削除）        */
+/**************************************************************/
+EVENT_START   ev_r14r0101_man3_01
+
+  _TALK_OBJ_START()
+
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+
+    //男性：なのと！　ブラックシティで
+    _BALLOONWIN_TALKOBJ_MSG( msg_r14r0101_man3_01b )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //W2
+  ELSE
+
+    //男性：なのと！　ホワイトフォレストで
+    _BALLOONWIN_TALKOBJ_MSG( msg_r14r0101_man3_01w )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+
+

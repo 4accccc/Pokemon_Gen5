@@ -5,6 +5,8 @@
 #define _R04R0401_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_R04R0401 (1)
+#define SCRID_R04R0401_GENTLEMAN_01 (1)
+#define SCRID_R04R0401_BOY1_01 (2)
+#define SCRID_R04R0401_MAN3_01 (3)
 
 #endif //_R04R0401_DEF_H_

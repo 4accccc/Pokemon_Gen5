@@ -9,6 +9,10 @@
 #ifndef ZONE_C03R0401_EVC_H
 #define ZONE_C03R0401_EVC_H
 
+#define C03R0401_BOY3_01                   0
+#define C03R0401_BOY2_01                   1
+#define C03R0401_POKE49_01                 2
+#define C03R0401_OL_01                     3
 
 #endif //ZONE_C03R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -40,6 +40,7 @@
 #define R04_BIGROCK_09                    22
 #define R04_BIGROCK_10                    23
 #define R04_BIGROCK_11                    24
+#define R04_POKE630_01                    25
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -49,10 +50,9 @@
 #define BGID_R04_SIGN3_01                 0
 #define BGID_R04_SIGN4_01                 1
 #define BGID_R04_SIGN1_01                 2
-#define R04_HIDE_ITEM_01                  3
-#define R04_HIDE_ITEM_03                  4
-#define R04_HIDE_ITEM_04                  5
-#define R04_HIDE_ITEM_05                  6
-#define R04_HIDE_ITEM_02                  7
+#define R04_HIDE_ITEM_03                  3
+#define R04_HIDE_ITEM_04                  4
+#define R04_HIDE_ITEM_05                  5
+#define R04_HIDE_ITEM_02                  6
 
 #endif //ZONE_R04_EVB_H

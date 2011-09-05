@@ -17,6 +17,7 @@
 #define TR_SWIMMERM_10                     5
 #define FLD_ITEM_127                       6
 #define FLD_ITEM_128                       7
+#define D20_WKOBJCODE00_POKE_01            8
 
 #endif //ZONE_D20_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d20.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

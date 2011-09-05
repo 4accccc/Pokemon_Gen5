@@ -10,6 +10,9 @@
 #ifndef ZONE_R04R0401_EVC_H
 #define ZONE_R04R0401_EVC_H
 
+#define R04R0401_GENTLEMAN_01              0
+#define R04R0401_MAN3_01                   1
+#define R04R0401_BOY1_01                   2
 
 #endif //ZONE_R04R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r04r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

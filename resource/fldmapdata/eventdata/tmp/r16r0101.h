@@ -10,6 +10,9 @@
 #ifndef ZONE_R16R0101_EVC_H
 #define ZONE_R16R0101_EVC_H
 
+#define R16R0101_BADMAN_01                 0
+#define R16R0101_AMBRELLA_01               1
+#define R16R0101_WOMAN1_01                 2
 
 #endif //ZONE_R16R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r16r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

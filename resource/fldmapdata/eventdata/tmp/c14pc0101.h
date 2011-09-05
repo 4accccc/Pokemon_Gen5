@@ -15,6 +15,8 @@
 #define C14PC0101_SHOPM1_01                3
 #define C14PC0101_SHOPM1_02                4
 #define C14PC0101_PCWOMAN                  5
+#define C14PC0101_WOMAN2_01                6
+#define C14PC0101_RANGERM_01               7
 
 #endif //ZONE_C14PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c14pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

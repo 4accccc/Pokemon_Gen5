@@ -6,7 +6,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c01pc0101.h"
-  //.include  "c01pc0101.h"
+  .include  "c01pc0101.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -15,8 +17,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c01pc0101_shop
-_EVENT_DATA    ev_c01pc0101_fix_shop
+_EVENT_DATA   ev_c01pc0101_shop
+_EVENT_DATA   ev_c01pc0101_fix_shop
+_EVENT_DATA   ev_c01pc0101_man2_01
+_EVENT_DATA   ev_c01pc0101_middleman2_01
+_EVENT_DATA   ev_c01pc0101_woman2_01
 _EVENT_DATA_END
 
 
@@ -51,3 +56,75 @@ EVENT_START ev_c01pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( C01_FS )
 EVENT_END
+
+/**************************************************************/
+/*  男性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c01pc0101_man2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01pc0101_man2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おじさん：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c01pc0101_middleman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01pc0101_middleman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  お姉さん：話しかけ（グラシデアの花入手イベント）          */
+/**************************************************************/
+EVENT_START ev_c01pc0101_woman2_01
+
+  //手持ちにシェイミがいるかチェック
+  DEFINE_LOCAL LWK_POKE_POS
+  DEFINE_LOCAL LWK_POKE_CK
+  _GET_EVT_POKE_POS ( MONSNO_492, FALSE, LWK_POKE_POS, LWK_POKE_CK )
+
+  _DEBUG_PRINT_WK ( LWK_POKE_CK )
+
+  //手持ちにシェイミがいる？
+  IF $LWK_POKE_CK == TRUE THEN
+
+    //既にグラシデアの花を入手している？
+    IF FLAG_ON( FE_T03PC0101_ITEMGET_01 ) THEN
+
+      //お姉さん：むかしからね　シンオウちほう　では
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01pc0101_woman2_02 )
+
+    //グラシデアの花未入手
+    ELSE
+
+      _TALK_OBJ_START()
+      //お姉さん：あら　シェイミ！▼
+      _BALLOONWIN_OBJMSG( msg_c01pc0101_woman2_01, C01PC0101_WOMAN2_01 )
+      _MSGWIN_CLOSE()
+
+      //アイテム「グラシデアのはな」入手
+      _ITEM_EVENT_KEYWAIT ( ITEM_GURASIDEANOHANA, 1  )
+
+      //お姉さん：むかしからね　シンオウちほう　では
+      _BALLOONWIN_OBJMSG( msg_c01pc0101_woman2_02, C01PC0101_WOMAN2_01 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //==================================//
+      //入手済みにフラグをセット
+      _FLAG_SET ( FE_C01PC0101_ITEMGET_01 )
+      //==================================//
+
+    ENDIF
+
+  //手持ちにシェイミはいない
+  ELSE
+
+    //お姉さん：グラシデアのはな　しってる？▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01pc0101_woman2_03 )
+
+  ENDIF
+
+EVENT_END
+
+
+
+

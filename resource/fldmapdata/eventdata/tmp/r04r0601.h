@@ -9,8 +9,9 @@
 #ifndef ZONE_R04R0601_EVC_H
 #define ZONE_R04R0601_EVC_H
 
-#define R04R0601_TRAINERW_01               0
-#define R04R0601_TRAINERM_01               1
+#define R04R0601_GIRL1_01                  0
+#define R04R0601_ASSISTANTM_01             1
+#define R04R0601_FIGHTERM_01               2
 
 #endif //ZONE_R04R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

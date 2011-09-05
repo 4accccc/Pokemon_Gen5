@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_r16r0101.h"
   .include  "r16r0101.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,4 +21,99 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_init_r16r0101
+_EVENT_DATA   ev_r16r0101_woman1_01
+_EVENT_DATA   ev_r16r0101_ambrella_01
+_EVENT_DATA   ev_r16r0101_badman_01
 _EVENT_DATA_END
+
+
+/************************************************************/
+/*  FIELD_INIT_LABEL                                        */
+/************************************************************/
+INIT_EVENT_START  ev_init_r16r0101
+
+  //ゲームクリア前ならば、エレベータの前にストッパー配置
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //エレベータ付近の女性を再配置
+    _OBJ_POS_CHANGE( R16R0101_WOMAN1_01, 20, 0, 4, DIR_UP )
+
+  ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  女性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_r16r0101_woman1_01
+
+  //ゲームクリア後か
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //女性：あの　エレベータ
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r16r0101_woman1_02 )
+
+  ELSE
+    //女性：ええ……？　ちょっとおー
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r16r0101_woman1_01 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  パラソル：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r16r0101_ambrella_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r16r0101_ambrella_01 )
+EVENT_END
+
+/**************************************************************/
+/*  スキンヘッズ：話しかけ（アイテム入手）                    */
+/**************************************************************/
+EVENT_START   ev_r16r0101_badman_01
+
+  _TALK_OBJ_START()
+
+  //アイテム入手済みか
+  IF FLAG_OFF( FE_R16R0101_ITEMGET_01 ) THEN
+
+    //スキンヘッズ：いま　じどうはんばいき　で
+    _BALLOONWIN_TALKOBJ_MSG( msg_r16r0101_badman_01 )
+
+    //アイテムが追加できるかチェック
+    _ADD_ITEM_CHK( ITEM_HAIPAABOORU, 1, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+
+      _MSGWIN_CLOSE()
+      //アイテム「おいしいみず」入手
+      _ITEM_EVENT_NOWAIT( ITEM_OISIIMIZU, 1 )
+
+      //========================================//
+      //タイムフラグON
+      _FLAG_SET( FE_R16R0101_ITEMGET_01 )
+      //========================================//
+
+    ELSE
+
+      //スキンヘッズ：バッグが　いっぱい　なのかよ！
+      _BALLOONWIN_TALKOBJ_MSG( msg_r16r0101_badman_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ELSE
+
+    //スキンヘッズ：ずっと　あたりつづけたら
+    _BALLOONWIN_TALKOBJ_MSG( msg_r16r0101_badman_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+
+

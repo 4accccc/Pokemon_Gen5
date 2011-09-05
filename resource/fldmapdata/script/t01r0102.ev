@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_t01r0102.h"
   .include  "t01r0102.h"
 
+  //@author fujimura_souichirou（移植・整理）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,143 +21,152 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_bg_t01r0102_game_01
-_EVENT_DATA    ev_bg_t01r0102_tv_01
-_EVENT_DATA    ev_bg_t01r0102_pc_01
-_EVENT_DATA    ev_bg_t01r0102_bed_01
-_EVENT_DATA    ev_t01r0102_prize1_01		//表彰状（地方）
-_EVENT_DATA    ev_t01r0102_prize2_01		//表彰状（全国）
-_EVENT_DATA    ev_t01r0102_trorhy1_01		//バトルサブウェイトロフィ（シングル）
-_EVENT_DATA    ev_t01r0102_trorhy2_01		//バトルサブウェイトロフィ（ダブル）
-_EVENT_DATA    ev_t01r0102_trorhy3_01		//バトルサブウェイトロフィ（マルチ）
+_EVENT_DATA   ev_bg_t01r0102_game_01
+_EVENT_DATA   ev_bg_t01r0102_tv_01
+_EVENT_DATA   ev_bg_t01r0102_pc_01
+_EVENT_DATA   ev_bg_t01r0102_bed_01
+_EVENT_DATA   ev_t01r0102_prize1_01   //表彰状（地方）
+_EVENT_DATA   ev_t01r0102_prize2_01   //表彰状（全国）
+_EVENT_DATA   ev_t01r0102_trorhy1_01    //バトルサブウェイトロフィ（シングル）
+_EVENT_DATA   ev_t01r0102_trorhy2_01    //バトルサブウェイトロフィ（ダブル）
+_EVENT_DATA   ev_t01r0102_trorhy3_01    //バトルサブウェイトロフィ（マルチ）
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*  T01R0102 GAME MACHINEのBG用イベントスクリプト*/
+/*  T01R0102 GAME MACHINEのBG用イベントスクリプト             */
 /**************************************************************/
 EVENT_START   ev_bg_t01r0102_game_01
-	_TALK_START_SE_PLAY()
-	
-	//部屋の状態でメッセージ分岐
-	_GET_MAPREPLACE_FLAG( MAPREPLACE_ID_07, SCWK_ANSWER )
-	
-	IF $SCWK_ANSWER == TRUE THEN
-		//置き換えフラグON ＝ 部屋が荒れてる
-		_PLAINWIN_MSG_DOWN( msg_t01r0102_game_02 )
-	ELSE
-		//置き換えフラグOFF ＝ 普段の状態
-		_PLAINWIN_MSG_DOWN( msg_t01r0102_game_01 )
-	ENDIF
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	
+
+  _TALK_START_SE_PLAY()
+
+  //部屋の状態でメッセージ分岐
+  _GET_MAPREPLACE_FLAG( MAPREPLACE_ID_07, SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == TRUE THEN
+    //置き換えフラグON ＝ 部屋が荒れてる
+    _PLAINWIN_MSG_DOWN( msg_t01r0102_game_02 )
+  ELSE
+    //置き換えフラグOFF ＝ 普段の状態
+    _PLAINWIN_MSG_DOWN( msg_t01r0102_game_01 )
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
 EVENT_END
 
 /**************************************************************/
-/*  T01R0102 TVのBG用イベントスクリプト*/
+/*  T01R0102 TVのBG用イベントスクリプト                       */
 /**************************************************************/
 EVENT_START   ev_bg_t01r0102_tv_01
-	_TALK_START_SE_PLAY()
-	
-	_PLAINWIN_MSG_DOWN( msg_t01r0102_tv_01 )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+
+  _TALK_START_SE_PLAY()
+
+  //ＢＧ：だれかが　みがいているのか
+  _PLAINWIN_MSG_DOWN( msg_t01r0102_tv_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 
 EVENT_END
 
 /**************************************************************/
-/*  T01R0102 PCのBG用イベントスクリプト*/
+/*  T01R0102 PCのBG用イベントスクリプト                       */
 /**************************************************************/
 EVENT_START   ev_bg_t01r0102_pc_01
-	_TALK_START_SE_PLAY()
-	
-	_PLAYER_NAME( 0 )
-	_SYSWIN_MSG( msg_t01r0102_pc_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+
+  _TALK_START_SE_PLAY()
+
+  //ＢＧ：パソコンだが　しばらく
+  _SYSWIN_MSG( msg_t01r0102_pc_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 
 EVENT_END
 
 /**************************************************************/
-/*  T01R0102 BEDのBG用イベントスクリプト*/
+/*  T01R0102 BEDのBG用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_bg_t01r0102_bed_01
-	_TALK_START_SE_PLAY()
-	
-	//部屋の状態でメッセージ分岐
-	_GET_MAPREPLACE_FLAG( MAPREPLACE_ID_07, SCWK_ANSWER )
-	
-	IF $SCWK_ANSWER == TRUE THEN
-		//置き換えフラグON ＝ 部屋が荒れてる
-		_PLAINWIN_MSG_DOWN( msg_t01r0102_bed_02 )
-	ELSE
-		//置き換えフラグOFF ＝ 普段の状態
-		_PLAINWIN_MSG_DOWN( msg_t01r0102_bed_01 )
-	ENDIF
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+
+  _TALK_START_SE_PLAY()
+
+  //ＢＧ：しわ　ひとつ　ない
+  _SYSWIN_MSG( msg_t01r0102_bed_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 
 EVENT_END
 
 /************************************************************/
-/*						【仮】表彰状（地方）						*/
+/*  【仮】表彰状（地方）                                    */
 /************************************************************/
 EVENT_START   ev_t01r0102_prize1_01
-	_TALK_START_SE_PLAY()
-	
-	//イッシュ図鑑完成の賞状だ！
-	//_PLAINWIN_MSG_DOWN( msg_t01r0102_award1_01 )
-	//_MSGWIN_CLOSE()
-	
-	_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_CHIHOU, 1 )
-	
+
+  _TALK_START_SE_PLAY()
+
+  //ＢＧ：イッシュずかん　かんせいの
+  _PLAINWIN_MSG_DOWN( msg_t01r0102_award1_01 )
+  _MSGWIN_CLOSE()
+
+  _CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_CHIHOU, 1 )
+
 EVENT_END
 
-
 /************************************************************/
-/*						【仮】表彰状（全国）						*/
+/*  【仮】表彰状（全国）                                    */
 /************************************************************/
 EVENT_START   ev_t01r0102_prize2_01
-	_TALK_START_SE_PLAY()
-	
-	//イッシュ図鑑完成の賞状だ！
-	//_PLAINWIN_MSG_DOWN( msg_t01r0102_award2_01 )
-	//_MSGWIN_CLOSE()
-	
-	_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_ZENKOKU, 1 )
-	
+
+  _TALK_START_SE_PLAY()
+
+  //ＢＧ：ぜんこくずかん　かんせいの
+  _PLAINWIN_MSG_DOWN( msg_t01r0102_award2_01 )
+  _MSGWIN_CLOSE()
+
+  _CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_ZENKOKU, 1 )
+
 EVENT_END
 
-
 /************************************************************/
-/*			【仮】バトルサブウェイトロフィ（シングル）			*/
+/*  【仮】バトルサブウェイトロフィ（シングル）              */
 /************************************************************/
 EVENT_START   ev_t01r0102_trorhy1_01
-	_TALK_START_SE_PLAY()
-	//_PLAINWIN_MSG_DOWN( msg_t01r0102_trophy1_01 )
-	//_LAST_KEYWAIT()
-	//_MSGWIN_CLOSE()
+
+  _TALK_START_SE_PLAY()
+
+  //ＢＧ：シングル　マスターに　しょうりした▽
+  _PLAINWIN_MSG_DOWN( msg_t01r0102_trophy1_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
 EVENT_END
 
-
 /************************************************************/
-/*			【仮】バトルサブウェイトロフィ（ダブル）				*/
+/*  【仮】バトルサブウェイトロフィ（ダブル）                */
 /************************************************************/
 EVENT_START   ev_t01r0102_trorhy2_01
-	_TALK_START_SE_PLAY()
-	//_PLAINWIN_MSG_DOWN( msg_t01r0102_trophy2_01 )
-	//_LAST_KEYWAIT()
-	//_MSGWIN_CLOSE()
+
+  _TALK_START_SE_PLAY()
+
+  //ＢＧ：ダブル　マスターに　しょうりした▽
+  _PLAINWIN_MSG_DOWN( msg_t01r0102_trophy2_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
 EVENT_END
 
-
 /************************************************************/
-/*			【仮】バトルサブウェイトロフィ（マルチ）				*/
+/*  【仮】バトルサブウェイトロフィ（マルチ）                */
 /************************************************************/
 EVENT_START   ev_t01r0102_trorhy3_01
-	_TALK_START_SE_PLAY()
-	//_PLAINWIN_MSG_DOWN( msg_t01r0102_trophy3_01 )
-	//_LAST_KEYWAIT()
-	//_MSGWIN_CLOSE()
+
+  _TALK_START_SE_PLAY()
+
+  //ＢＧ：マルチ　マスターに　しょうりした▽
+  _PLAINWIN_MSG_DOWN( msg_t01r0102_trophy3_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
 EVENT_END
+
+

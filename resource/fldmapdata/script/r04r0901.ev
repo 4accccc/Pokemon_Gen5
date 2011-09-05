@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r04r0901.h"
-  //.include  "r04r0901.h"
+  .include  "r04r0901.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,8 +21,20 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r04r0901
+_EVENT_DATA   ev_r04r0901_trainerw_01
+_EVENT_DATA   ev_r04r0901_trainerm_01
 _EVENT_DATA_END
+
+//ポケモンチェック変数一覧
+DEFINE_LOCAL LWK_RND            //乱数
+DEFINE_LOCAL LWK_WHILE_CLEAR    //繰り返し処理完了
+
+DEFINE_LOCAL LWK_PARTY_NUM      //手持ちポケモンの数
+DEFINE_LOCAL LWK_COUNT_NUM      //WHILE文のカウンタ
+DEFINE_LOCAL LWK_POKE_POW       //ポケモンのこうげき
+DEFINE_LOCAL LWK_POKE_POW_HIGH  //お題の値以上の「こうげき」のポケモン
+DEFINE_LOCAL LWK_POKE_POW_GOOD  //お題の値と同じ「こうげき」のポケモン
+DEFINE_LOCAL LWK_EGG_CHK        //タマゴであるか
 
 
 /**************************************************************/
@@ -30,9 +44,181 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  エリート♀：話しかけ                                      */
 /**************************************************************/
-ev_r04r0901:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_r04r0901_trainerw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  エリート♂：話しかけ（１日１回ＨＰチェッカー）            */
+/**************************************************************/
+EVENT_START   ev_r04r0901_trainerm_01
+
+  _TALK_OBJ_START()
+
+  //今日のこうげきチェックは終了したか
+  IF FLAG_OFF( TMFLG_R04_PARA_CLEAR_01 ) THEN
+
+    //今日の数値は保存したか
+    IF FLAG_OFF( TMFLG_R04_PARA_CHECK_01 ) THEN
+
+      //今日のお題となる数字を抽出（繰り返し処理）
+      WHILE $LWK_WHILE_CLEAR == 0
+
+        //乱数取得
+        _GET_RND( LWK_RND, 201 )
+
+        //乱数は50以上か
+        IF $LWK_RND >= 50 THEN
+          //50以上の場合、今日のお題として保存（値セット）
+          $WK_OTHER_R04_PARA_CHECK_01 = $LWK_RND
+          //条件が確定した（値セット）
+          $LWK_WHILE_CLEAR = 1
+
+        ENDIF
+
+      ENDWHILE
+
+      //========================================//
+      //フラグON（１日１回／値を固定する）
+      _FLAG_SET( TMFLG_R04_PARA_CHECK_01 )
+      //========================================//
+
+    ENDIF
+
+    //エリート♂：ぼくはね　ポケモンの
+    _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_01 )
+    _AB_KEYWAIT_MARK()
+
+    //数値を指定タグにセット
+    _NUMBER( 1, WK_OTHER_R04_PARA_CHECK_01, 3 )
+    //エリート♂：《数値》より　こうげきがある
+    _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_02 )
+    _AB_KEYWAIT_MARK()
+
+    //手持ちのポケモンの数を確認（全てのポケモン）
+    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+    //手持ちのポケモンの中に条件『お題の値と同じこうげき』を満たしたポケモンがいるか確認（繰り返し処理）
+    WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+      //条件を満たしたポケモンは見つかったか
+      IF $LWK_POKE_POW_GOOD == 0 THEN
+
+        //指定POSのポケモンの「こうげき」を取得
+        _GET_PARTY_POKE_PARAM( LWK_POKE_POW, LWK_COUNT_NUM, SCR_POKEPARA_POW )
+
+        //指定POSのポケモンはタマゴか
+        _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
+
+        //指定POSのポケモンの「こうげき」はお題と同じ数値か
+        IF $LWK_POKE_POW == $WK_OTHER_R04_PARA_CHECK_01 && $LWK_EGG_CHK == FALSE THEN
+
+          //条件を満たしたポケモンの名前取得
+          _TEMOTI_MONS_NAME( 0, LWK_COUNT_NUM )
+          //指定された数値そのものだった（値セット）
+          $LWK_POKE_POW_GOOD = 1
+
+        ENDIF
+
+      ENDIF
+
+      //カウント
+      $LWK_COUNT_NUM += 1
+
+    ENDWHILE
+
+    //条件を満たしたポケモン『お題の値と同じこうげき』は見つかったか
+    IF $LWK_POKE_POW_GOOD == 0 THEN
+
+      //数値リセット
+      $LWK_COUNT_NUM = 0
+
+      //手持ちのポケモンの中に条件『お題の値以上のこうげき』を満たしたポケモンがいるか確認（繰り返し処理）
+      WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+        //条件を満たしたポケモンは見つかったか
+        IF $LWK_POKE_POW_HIGH == 0 THEN
+
+          //指定POSのポケモンの「こうげき」を取得
+          _GET_PARTY_POKE_PARAM( LWK_POKE_POW, LWK_COUNT_NUM, SCR_POKEPARA_POW )
+
+          //指定POSのポケモンはタマゴか
+          _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
+
+          //指定POSのポケモンの「こうげき」はお題より大きいか
+          IF $LWK_POKE_POW >= $WK_OTHER_R04_PARA_CHECK_01 && $LWK_EGG_CHK == FALSE THEN
+
+            //条件を満たしたポケモンの名前取得
+            _TEMOTI_MONS_NAME( 0, LWK_COUNT_NUM )
+            //条件を満たしたポケモンがいた（値セット）
+            $LWK_POKE_POW_HIGH = 1
+
+          ENDIF
+
+        ENDIF
+
+        //カウント
+        $LWK_COUNT_NUM += 1
+
+      ENDWHILE
+
+    ENDIF
+
+    //手持ちに条件を満たしたポケモンがいた（お題の値と同じ）
+    IF $LWK_POKE_POW_GOOD == 1 THEN
+
+      //エリート♂：きみの　《ポケモン》！　まさに
+      _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_04 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //アイテム（しゅんぱつのハネ×５）入手
+      _ITEM_EVENT_NOWAIT( ITEM_SYUNPATUNOHANE, 5 )
+
+      //========================================//
+      //アイテム入手フラグON（１日１回）
+      _FLAG_SET( TMFLG_R04_PARA_CLEAR_01 )
+      //========================================//
+
+    //手持ちに条件を満たしたポケモンがいた（お題の値より高い）
+    ELSIF $LWK_POKE_POW_HIGH == 1 THEN
+
+      //エリート♂：きみの　《ポケモン》！
+      _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_03 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //アイテム（しゅんぱつのハネ×１）入手
+      _ITEM_EVENT_NOWAIT( ITEM_SYUNPATUNOHANE, 1 )
+
+      //========================================//
+      //アイテム入手フラグON（１日１回）
+      _FLAG_SET( TMFLG_R04_PARA_CLEAR_01 )
+      //========================================//
+
+    ELSE
+
+      //エリート♂：いいんだよ！　ポケモンの　よさは
+      _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_06 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //イベント終了（日付が変わるまで繰り返し）
+  ELSE
+
+    //エリート♂：さまざまな　こうげき♪
+    _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+
 
