@@ -809,6 +809,8 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_dun2723_00_01.nsbmd \
 	$(DIR_TEMP)/m_dun2724_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun2724_00_01.nsbmd \
+	$(DIR_TEMP)/m_dun1005_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun1005_00_01.nsbmd \
 	$(DIR_TEMP)/m_ruin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate01_00_00.nsbmd \
 	$(DIR_TEMP)/m_pc01_00_00.nsbmd \
@@ -1025,6 +1027,14 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_bwgym0401_00_01.nsbmd \
 	$(DIR_TEMP)/m_bwgym0401_01_01.nsbmd \
 	$(DIR_TEMP)/m_pwood04_00_00.nsbmd \
+	$(DIR_TEMP)/m_h04hole_00_00.nsbmd \
+	$(DIR_TEMP)/m_oldschool01_00_00.nsbmd \
+	$(DIR_TEMP)/m_oldh01_00_00.nsbmd \
+	$(DIR_TEMP)/m_oldadc01_00_00.nsbmd \
+	$(DIR_TEMP)/m_oldbbuill01_00_00.nsbmd \
+	$(DIR_TEMP)/m_oldwbuill01_00_00.nsbmd \
+	$(DIR_TEMP)/m_oldbwgym0202_00_00.nsbmd \
+	$(DIR_TEMP)/m_oldchurch01_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \

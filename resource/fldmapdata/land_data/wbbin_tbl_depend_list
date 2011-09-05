@@ -3366,6 +3366,14 @@ $(DIR_WBTMP)/m_dun2724_00_01.tbl: $(DIR_RES)/m_dun2724_00_01.bin
 	@echo create_bintbl m_dun2724_00_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2724_00_01.bin
 
+$(DIR_WBTMP)/m_dun1005_00_00.tbl: $(DIR_RES)/m_dun1005_00_00.bin
+	@echo create_bintbl m_dun1005_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1005_00_00.bin
+
+$(DIR_WBTMP)/m_dun1005_00_01.tbl: $(DIR_RES)/m_dun1005_00_01.bin
+	@echo create_bintbl m_dun1005_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1005_00_01.bin
+
 $(DIR_WBTMP)/m_ruin01_00_00.tbl: $(DIR_RES)/m_ruin01_00_00.bin
 	@echo create_bintbl m_ruin01_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ruin01_00_00.bin
@@ -4217,4 +4225,36 @@ $(DIR_WBTMP)/m_bwgym0401_01_01.tbl: $(DIR_RES)/m_bwgym0401_01_01.bin
 $(DIR_WBTMP)/m_pwood04_00_00.tbl: $(DIR_RES)/m_pwood04_00_00.bin
 	@echo create_bintbl m_pwood04_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_pwood04_00_00.bin
+
+$(DIR_WBTMP)/m_h04hole_00_00.tbl: $(DIR_RES)/m_h04hole_00_00.bin
+	@echo create_bintbl m_h04hole_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_h04hole_00_00.bin
+
+$(DIR_WBTMP)/m_oldschool01_00_00.tbl: $(DIR_RES)/m_oldschool01_00_00.bin
+	@echo create_bintbl m_oldschool01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_oldschool01_00_00.bin
+
+$(DIR_WBTMP)/m_oldh01_00_00.tbl: $(DIR_RES)/m_oldh01_00_00.bin
+	@echo create_bintbl m_oldh01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_oldh01_00_00.bin
+
+$(DIR_WBTMP)/m_oldadc01_00_00.tbl: $(DIR_RES)/m_oldadc01_00_00.bin
+	@echo create_bintbl m_oldadc01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_oldadc01_00_00.bin
+
+$(DIR_WBTMP)/m_oldbbuill01_00_00.tbl: $(DIR_RES)/m_oldbbuill01_00_00.bin
+	@echo create_bintbl m_oldbbuill01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_oldbbuill01_00_00.bin
+
+$(DIR_WBTMP)/m_oldwbuill01_00_00.tbl: $(DIR_RES)/m_oldwbuill01_00_00.bin
+	@echo create_bintbl m_oldwbuill01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_oldwbuill01_00_00.bin
+
+$(DIR_WBTMP)/m_oldbwgym0202_00_00.tbl: $(DIR_RES)/m_oldbwgym0202_00_00.bin
+	@echo create_bintbl m_oldbwgym0202_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_oldbwgym0202_00_00.bin
+
+$(DIR_WBTMP)/m_oldchurch01_00_00.tbl: $(DIR_RES)/m_oldchurch01_00_00.bin
+	@echo create_bintbl m_oldchurch01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_oldchurch01_00_00.bin
 
