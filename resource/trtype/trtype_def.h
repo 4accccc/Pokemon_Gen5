@@ -222,7 +222,7 @@
 #define	TRTYPE_PKWD_PRINCE    ( 209 )    //PKWD_PRINCE♂おうじさま
 #define	TRTYPE_PKWD_PRINCESS    ( 210 )    //PKWD_PRINCESS♀おひめさま
 #define	TRTYPE_PKWD_BATTLESHIP    ( 211 )    //PKWD_BATTLESHIP♂ハチクかん
-#define	TRTYPE_PKWD_ROBOPOLICE    ( 212 )    //PKWD_ROBOPOLICE♂ロボハチク
+#define	TRTYPE_PKWD_ROBOPOLICE    ( 212 )    //PKWD_ROBOPOLICE♂メカコンビ
 #define	TRTYPE_PKWD_UFO    ( 213 )    //PKWD_UFO♂ＵＦＯ
 #define	TRTYPE_PKWD_ALIEN    ( 214 )    //PKWD_ALIEN♀エイリアン
 #define	TRTYPE_PKWD_MIST    ( 215 )    //PKWD_MIST♀あかいきり
@@ -242,4 +242,5 @@
 #define	TRTYPE_BATTLEG_1    ( 229 )    //BATTLEG_1♀ポケモントレーナー
 #define	TRTYPE_SCIENTISTW_1    ( 230 )    //SCIENTISTW_1♀ポケモントレーナー
 #define	TRTYPE_PILOT_1    ( 231 )    //PILOT_1♂ヒウンマニア
-#define	TRTYPE_MAX	( 232 )
+#define	TRTYPE_PKWD_LADYBUG    ( 232 )    //PKWD_LADYBUG♂みらいじん
+#define	TRTYPE_MAX	( 233 )

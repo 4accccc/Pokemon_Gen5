@@ -213,7 +213,7 @@
 		"PKWD_PRINCE♂おうじさま"=>209,
 		"PKWD_PRINCESS♀おひめさま"=>210,
 		"PKWD_BATTLESHIP♂ハチクかん"=>211,
-		"PKWD_ROBOPOLICE♂ロボハチク"=>212,
+		"PKWD_ROBOPOLICE♂メカコンビ"=>212,
 		"PKWD_UFO♂ＵＦＯ"=>213,
 		"PKWD_ALIEN♀エイリアン"=>214,
 		"PKWD_MIST♀あかいきり"=>215,
@@ -233,6 +233,7 @@
 		"BATTLEG_1♀ポケモントレーナー"=>229,
 		"SCIENTISTW_1♀ポケモントレーナー"=>230,
 		"PILOT_1♂ヒウンマニア"=>231,
+		"PKWD_LADYBUG♂みらいじん"=>232,
 	}
 #
 	$trtype_id_hash = {
@@ -468,4 +469,5 @@
 		"TRTYPE_BATTLEG_1" =>229,
 		"TRTYPE_SCIENTISTW_1" =>230,
 		"TRTYPE_PILOT_1" =>231,
+		"TRTYPE_PKWD_LADYBUG" =>232,
 	}

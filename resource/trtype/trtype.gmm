@@ -1506,8 +1506,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_PKWD_ROBOPOLICE">
-		<language name="JPN" width="216">ロボハチク</language>
-		<language name="JPN_KANJI" width="216">ロボハチク</language>
+		<language name="JPN" width="216">メカコンビ</language>
+		<language name="JPN_KANJI" width="216">メカコンビ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_PKWD_UFO">
@@ -1603,6 +1603,11 @@
 	<row id="MSG_TRTYPE_PILOT_1">
 		<language name="JPN" width="216">ヒウンマニア</language>
 		<language name="JPN_KANJI" width="216">ヒウンマニア</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_LADYBUG">
+		<language name="JPN" width="216">みらいじん</language>
+		<language name="JPN_KANJI" width="216">みらいじん</language>
 	</row>
 
 	<flowchart-group-list>

@@ -855,7 +855,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		169,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.212 PKWD_ROBOPOLICE♂ロボハチク
+	{ // No.212 PKWD_ROBOPOLICE♂メカコンビ
 		170,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -934,6 +934,10 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 	{ // No.231 PILOT_1♂ヒウンマニア
 		 43,PTL_SEX_MALE,
 		SEQ_BGM_EYE_12
+	},
+	{ // No.232 PKWD_LADYBUG♂みらいじん
+		186,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
 	},
 };
 

@@ -184,6 +184,7 @@ trwb_pkwd_mob_f,PTL_SEX_FEMALE
 trwb_pkwd_playermob_m,PTL_SEX_MALE
 trwb_pkwd_playermob_f,PTL_SEX_FEMALE
 trwb_mugenboss,PTL_SEX_MALE
+trwb_pkwd_ladybug,PTL_SEX_MALE
 tbwb_hero,PTL_SEX_MALE
 tbwb_heroine,PTL_SEX_FEMALE
 tbwb_rival,PTL_SEX_MALE
