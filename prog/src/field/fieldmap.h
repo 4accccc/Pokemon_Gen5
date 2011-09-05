@@ -57,6 +57,8 @@
 
 #include "field_goout_effect.h"
 
+#include "field_g3d_palette.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -181,7 +183,7 @@ extern FACEUP_WK_PTR *FIELDMAP_GetFaceupWkPtrAdr(FIELDMAP_WORK *fieldWork);
 extern void FIELDMAP_SetCrowdPeopleSys( FIELDMAP_WORK * fieldWork, FIELD_CROWD_PEOPLE * crowdpeople );
 extern FIELD_CROWD_PEOPLE * FIELDMAP_GetCrowdPeopleSys( const FIELDMAP_WORK * fieldWork );
 extern FIELD_GOOUT_EFFECT * FIELDMAP_GetGooutEffect( const FIELDMAP_WORK * fieldWork );
-
+extern const FLD_G3DPAL * FIELDMAP_GetFldG3DPal( const FIELDMAP_WORK * fieldmap );
 extern fx32 FIELDMAP_GetBbdActYOffs( const FIELDMAP_WORK * fieldmap );
 #ifdef PM_DEBUG
 extern void FIELDMAP_InitDebugWork( FIELDMAP_WORK* fieldWork );

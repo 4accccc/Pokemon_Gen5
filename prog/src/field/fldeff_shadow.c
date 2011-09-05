@@ -17,6 +17,7 @@
 #include "fldmmdl.h"
 #include "fldeff_shadow.h"
 #include "field/zonedata.h"
+#include "field_g3d_palette.h"  //FLD_G3DPAL
 
 #include "debug/debug_flg.h" //DEBUG_FLG_～
 //======================================================================
@@ -44,6 +45,7 @@ struct _TAG_FLDEFF_SHADOW
   GFL_BBDACT_SYS *bbdactsys;
   GFL_BBD_SYS *bbdsys;
   int resIdx;
+  const FLD_G3DPAL * fld_g3dPal;  ///<テクスチャパレットフィルタ用情報
 };
 
 //--------------------------------------------------------------
@@ -102,6 +104,7 @@ void * FLDEFF_SHADOW_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
     FIELDMAP_WORK * fieldmap = FLDEFF_CTRL_GetFieldMapWork( fectrl );
     sd->bbdactsys = FIELDMAP_GetSubBbdActSys( fieldmap );
     sd->bbdsys = GFL_BBDACT_GetBBDSystem( sd->bbdactsys );
+    sd->fld_g3dPal = FIELDMAP_GetFldG3DPal( fieldmap );
   }
 
 	shadow_InitResource( sd );
@@ -156,6 +159,7 @@ static void shadow_InitResource( FLDEFF_SHADOW *sd )
   handle = FLDEFF_CTRL_GetArcHandleEffect( sd->fectrl );
   
   g3d_res	= GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_kage_nsbmd );
+  FLD_G3DPAL_Filter( sd->fld_g3dPal, g3d_res );
   {
     GFL_BBDACT_G3DRESDATA data;
     data.g3dres = g3d_res;
