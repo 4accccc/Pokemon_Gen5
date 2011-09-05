@@ -1,3 +1,1368 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その１『きいたか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:42:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その１『きいたか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:17:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:59:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その２『なにを？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:42:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その２『なにを？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:17:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:59:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その１『いや
+むかしの　なかまに　あったんだよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:17:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その１『いや
+昔の　仲間に　あったんだよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:18:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:59:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その２『ああ！　まだ
+プラズマだんに　いる　やつ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:17:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その２『ああ！　まだ
+プラズマ団に　いる　やつ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:59:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その１『もういちど　プラズマだんに
+もどるよう　せっとく　されたんだよね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:20:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その１『もう一度　プラズマ団に
+戻るよう　説得されたんだよね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:21:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その２『あの　はなしって　マジなの？▼
+てか　いまも　プラズマだんに
+けっこう　のこってるもんな▼
+ゲーチスさま……▼
+いや　ゲーチスって
+なんだかんだ　すごかったんだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:18:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その２『あの　話って　マジなの？▼
+てか　今も　プラズマ団に
+けっこう　残ってるもんな▼
+ゲーチスさま……▼
+いや　ゲーチスって
+なんだかんだ　すごかったんだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:19:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その１『な！　なんてことを！▼
+Ｎさまに　したことを　しっても
+そんなこと　いっちゃうわけ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:26:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その１『な！　なんてことを！▼
+Ｎさまに　したことを　知っても
+そんなこと　いっちゃうわけ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:26:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その２『たしかに
+あれは　どんびき　だけど▼
+でも　マジメに　なっても
+せけんは　つめたいよ？▼
+まるで　フリージオに
+かこまれてるようだもん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:28:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その２『たしかに
+あれは　どんびき　だけど▼
+でも　マジメに　なっても
+世間は　冷たいよ？▼
+まるで　フリージオに
+囲まれてるようだもん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:25:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その１『そりゃね……▼
+なんだかんだ　いって
+プラズマだん　だもの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:16:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その１『そりゃね……▼
+なんだかんだ　いって
+プラズマ団　だもの▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:19:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:02:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その２『とおい　ちほうに　いくのも
+あり　だったんじゃないの？▼
+プラズマだん　みたいな
+そしきって　どこにも　あるそうだし▽
+けいけんしゃ　ゆうぐう　されたかも！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:18:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その２『遠い　地方に　行くのも
+あり　だったんじゃないの？▼
+プラズマ団　みたいな
+組織って　どこにも　あるそうだし▽
+経験者優遇　されたかも！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:18:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T10:58:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:02:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その１『バカバカバカバカ！▼
+もうひとつ　おまけに　バカ！▼
+かわいく　いって　アンポンタン！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:31:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その１『バカバカバカバカ！▼
+もうひとつ　おまけに　バカ！▼
+かわいく　いって　アンポンタン！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:30:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・なぐるようなアニメ
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:45:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:02:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いたいいたいいたいいたいいたいいたい
+いてててててててててててててててて！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:46:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いたいいたいいたいいたいいたいいたい
+いてててててててててててててててて！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:46:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:02:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim1_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その１『オレたちが　やるべきことは
+ポケモンの　ために！　だろ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:20:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その１『オレたちが　やるべきことは
+ポケモンの　ために！　だろ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:20:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:02:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その２『しょうじき　すまんかった▼
+しかし　ポケモンも　たいへんだよね
+ボールに　はいったら　それっきり……▼
+そうなるかも　しれないのに　ほんとうに
+トレーナーのこと　すきなのかなあ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:20:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その２『正直　すまんかった▼
+しかし　ポケモンも　大変だよね
+ボールに　はいったら　それっきり……▼
+そうなるかも　しれないのに　本当に
+トレーナーのこと　すきなのかなあ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:20:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:02:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim1_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その１『な！▼
+というけど　Ｎさまは　ポケモンの
+そんな　おもいを　きいていたんだ……▼
+……そうぞうすると
+こころ　こわれそうだね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:34:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その１『な！▼
+というけど　Ｎさまは　ポケモンの
+そんな　思いを　きいていたんだ……▼
+……想像すると
+心　壊れそうだね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:20:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:03:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_kahaim2_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その２『Ｎさまは
+どこに　いるんだろうね……▼
+さてと　Ｎのしろに　いた
+ポケモンを　さがしに　いきますか▽
+ほご　してやらんとね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:34:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その２『Ｎさまは
+どこに　いるんだろうね……▼
+さてと　Ｎの城に　いた
+ポケモンを　探しに　いきますか▽
+保護してやらんとね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:34:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:01:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・二人画面下に退場する
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T02:57:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_HAKAIM
+元プラズマ団その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:03:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_boss_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『……ここに　いるけどね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:35:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-03T11:40:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ『……ここに　いるけどね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:56:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-03T11:40:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面中央まで移動して
+　上向きのままでメッセージ表示
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:23:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-03T11:40:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_boss_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボクを　しんじてくれた
+ミンナが　どうなんているか▽
+あんじて　いたが……▼
+カレラは　カレラで　ポケモンのために
+やれることを　わかっているんだね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:56:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:05:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボクを　信じてくれた
+ミンナが　どうなんているか▽
+案じていたが……▼
+カレラは　カレラで　ポケモンのために
+やれることを　わかっているんだね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:56:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:05:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・左右を見てからメッセージ表示
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:23:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:05:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_boss_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……それに　くらべ
+この　ボクと　きたら！▼
+ほんとうに　すべきだったのは▼
+ポケモンの　こえを
+とどける　ことだった……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:55:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……それに　くらべ
+この　ボクと　きたら！▼
+本当に　すべきだったのは▼
+ポケモンの　声を
+届ける　ことだった……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:57:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・一歩前進（画面下に）
+・続けて
+　Black2→old_boss_04b
+　White2→old_boss_04w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:25:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_boss_04b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゼクロムは　しっていた▼
+ながく　いきて
+おおくの　ひとを　しっていた▼
+にんげんと　ポケモンは　これまでも
+これからも　ともに　いきていくと▼
+その　かんけいせいの　なかで
+ひとの　おこないが　ポケモンに▽
+ただいなる　えいきょうを　およぼす▼
+それゆえ　りそうを　おいもとめる……▼
+ポケモンと　ひとの
+みらいを　きりひらく　ものを▽
+たすけようと　してくれるのだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:53:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゼクロムは　知っていた▼
+長く　生きて
+多くの　ヒトを　知っていた▼
+人間と　ポケモンは　これまでも
+これからも　共に　生きていくと▼
+その関係性の　中で
+ヒトの　行いが　ポケモンに▽
+多大なる　影響を　及ぼす▼
+それゆえ　理想を　追い求める……▼
+ポケモンと　ヒトの
+未来を　切り拓く　モノを▽
+助けようと　してくれるのだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:00:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_boss_04w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レシラムは　しっていた▼
+ながく　いきて
+おおくの　ひとを　しっていた▼
+にんげんと　ポケモンは　これまでも
+これからも　ともに　いきていくと▼
+その　かんけいせいの　なかで
+ひとの　おこないが　ポケモンに▽
+ただいなる　えいきょうを　およぼす▼
+それゆえ　しんじつを　おいもとめる……▼
+ポケモンと　ひとの
+みらいを　きりひらく　ものを▽
+たすけようと　してくれるのだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:55:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:53:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レシラムは　知っていた▼
+長く　生きて
+多くの　ヒトを　知っていた▼
+人間と　ポケモンは　これまでも
+これからも　共に　生きていくと▼
+その関係性の　中で
+ヒトの　行いが　ポケモンに▽
+多大なる　影響を　及ぼす▼
+それゆえ　真実を　追い求める……▼
+ポケモンと　ヒトの
+未来を　切り拓く　モノを▽
+助けようと　してくれるのだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:01:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:54:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:54:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:53:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_boss_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろと　くろを……▼
+ポケモンと　にんげんを　わける
+そんな　ひつようは　ない！▼
+それぞれの　いのち……▼
+そう　かんがえれば
+これいじょうは　ない　じょうたいに▽
+せかいは　ぶんかい　されていた▼
+それらの　くみあわせ……
+ゆうごうで　うまれる　かのうせい！▼
+そうすることで
+みえる　けしきが　ある▼
+そうすることで
+みえなかった　ものに▽
+かたちが　うまれる▼
+これらの　すうしきに　より
+せかいは　つくりなおされ▽
+より　ゆたかに　なるのだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:16:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>白と　黒を……▼
+ポケモンと　人間を　わける
+そんな　必要は　ない！▼
+それぞれの　命……▼
+そう　考えれば
+これ以上は　ない　状態に▽
+世界は　分解されていた▼
+それらの　組み合わせ……
+融合で　うまれる　可能性！▼
+そうすることで
+みえる　景色が　ある▼
+そうすることで
+みえなかった　ものに▽
+形が　うまれる▼
+これらの　数式に　より
+世界は　再構築され▽
+より　あざやかに　彩られるのだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:16:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ウインドウを閉じて間を表現
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:25:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_boss_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さあ　いこう！▼
+ポケモンの　ため
+トレーナーの　ため▽
+すべての　いのちの　ため……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:14:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さあ　行こう！▼
+ポケモンの　ため
+トレーナーの　ため▽
+すべての　命の　ため……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:15:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面上を向いて
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:26:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc01r0501_old_boss_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そして　なにより
+この　ボクを　すくってくれた▽
+トモダチの　ために……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:11:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そして　なにより
+この　ボクを　すくってくれた▽
+トモダチの　ために……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T03:56:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面下を向いて
+・画面下に移動しながら暗転処理
+・終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T04:26:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLD_BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-04T11:04:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
