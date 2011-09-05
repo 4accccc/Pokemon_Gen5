@@ -198,7 +198,7 @@ EVENT_START   ev_c08r0402_man3_01
 EVENT_END
 
 
-//オタマロ合唱イベント【仮】演出は借り・ME待ち
+//オタマロ合唱イベント
 ev_c08r0402_me_call_01:
 
   //BGM停止

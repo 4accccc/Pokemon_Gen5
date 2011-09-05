@@ -22,6 +22,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA   ev_pos_d25r0301_girl2_01
+_EVENT_DATA   ev_bg_d25r0301_picture_01
+_EVENT_DATA   ev_bg_d25r0301_picture_02
 _EVENT_DATA_END
 
 
@@ -65,6 +67,32 @@ EVENT_START   ev_pos_d25r0301_girl2_01
   //POSイベント進行
   $WK_SCENE_D05_GIRL2 = 1
   //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  絵画01                                                    */
+/**************************************************************/
+EVENT_START   ev_bg_d25r0301_picture_01
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：しょうぞうがが　ずれおちている……
+  _PLAINWIN_MSG_DOWN( msg_d25r0301_picture_01 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  絵画02                                                    */
+/**************************************************************/
+EVENT_START   ev_bg_d25r0301_picture_02
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：いつのまにか
+  _PLAINWIN_MSG_DOWN( msg_d25r0301_picture_02 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
 
 EVENT_END
 

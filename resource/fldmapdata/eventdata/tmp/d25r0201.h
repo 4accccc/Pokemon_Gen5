@@ -40,5 +40,31 @@
 #define D25R0201_BOOK6_02                21
 #define D25R0201_BOOK6_03                22
 #define D25R0201_BOOK6_04                23
+#define D25R0201_BOOK7_01                24
+#define D25R0201_BOOK7_02                25
+#define D25R0201_BOOK7_03                26
+#define D25R0201_BOOK7_04                27
+#define D25R0201_BOOK7_05                28
+#define D25R0201_BOOK7_06                29
+#define D25R0201_BOOK7_07                30
+#define D25R0201_BOOK7_08                31
+#define D25R0201_BOOK7_09                32
+#define D25R0201_BOOK7_10                33
+#define D25R0201_BOOK7_11                34
+#define D25R0201_BOOK7_12                35
+#define D25R0201_BOOK7_13                36
+#define D25R0201_BOOK7_14                37
+#define D25R0201_BOOK7_15                38
+#define D25R0201_BOOK7_16                39
+#define D25R0201_BOOK7_17                40
+#define D25R0201_BOOK7_18                41
+#define D25R0201_BOOK7_19                42
+#define D25R0201_BOOK7_20                43
+#define D25R0201_BOOK7_21                44
+#define D25R0201_BOOK7_22                45
+#define D25R0201_BOOK7_23                46
+#define D25R0201_BOOK7_24                47
+#define D25R0201_BOOK7_25                48
+#define D25R0201_BOOK7_26                49
 
 #endif //ZONE_D25R0201_EVB_H

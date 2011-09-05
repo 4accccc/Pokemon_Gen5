@@ -20,5 +20,9 @@
 #ifndef ZONE_D25R0301_EVB_H
 #define ZONE_D25R0301_EVB_H
 
+#define BG_D25R0301_PICTURE_01_01         0
+#define BG_D25R0301_PICTURE_01_02         1
+#define BG_D25R0301_PICTURE_02_01         2
+#define BG_D25R0301_PICTURE_02_02         3
 
 #endif //ZONE_D25R0301_EVB_H

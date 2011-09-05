@@ -10,6 +10,7 @@
 #ifndef ZONE_H06_EVC_H
 #define ZONE_H06_EVC_H
 
+#define H06_MAN3_01                        0
 
 #endif //ZONE_H06_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
