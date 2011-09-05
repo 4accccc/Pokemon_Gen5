@@ -12169,13 +12169,13 @@
 ……　……　……▼
 そうだね……▼
 やっぱり　はじめての　ポケモンは
-ノーマルタイプが　いいのかな？▽
+[Name:Type Idx="1" ]タイプが　いいのかな？▽
 こんど　いもうとと　いっしょに▽
 つかまえに　いって　みるね▼
 ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T04:52:55" />
+				User="nishino:W00221"
+				Time="2011-09-05T10:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13920,10 +13920,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　またあしたね[Ctrl2:PageClear ]</Text>
+			<Text>じゃあ　また　あとでね[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-05T04:46:00" />
+				User="nishino:W00221"
+				Time="2011-09-05T10:49:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14087,10 +14087,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>…じゃぁ　またね▼</Text>
+			<Text>……じゃぁ　またね▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T11:51:13" />
+				Time="2011-09-05T10:49:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
