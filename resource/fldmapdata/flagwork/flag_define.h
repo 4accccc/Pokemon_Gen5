@@ -2192,20 +2192,55 @@
 #define SYS_FLAG_ARRIVE_H01               2493 /* 0x09bd 到着フラグ：H01 */
 #define SYS_FLAG_ARRIVE_H03               2494 /* 0x09be 到着フラグ：H03 */
 #define SYS_FLAG_ARRIVE_H05               2495 /* 0x09bf 到着フラグ：H05 */
-		/* not used  2496(0x09c0) */
-		/* not used  2497(0x09c1) */
-		/* not used  2498(0x09c2) */
-		/* not used  2499(0x09c3) */
-		/* not used  2500(0x09c4) */
-		/* not used  2501(0x09c5) */
-		/* not used  2502(0x09c6) */
-		/* not used  2503(0x09c7) */
-		/* not used  2504(0x09c8) */
-		/* not used  2505(0x09c9) */
-		/* not used  2506(0x09ca) */
-		/* not used  2507(0x09cb) */
-		/* not used  2508(0x09cc) */
-		/* not used  2509(0x09cd) */
+#define SYS_FLAG_ARRIVE_R19               2496 /* 0x09c0 到着フラグ：R19 */
+#define SYS_FLAG_ARRIVE_R20               2497 /* 0x09c1 到着フラグ：R20 */
+#define SYS_FLAG_ARRIVE_D22               2498 /* 0x09c2 到着フラグ：D22 */
+#define SYS_FLAG_ARRIVE_D23               2499 /* 0x09c3 到着フラグ：D23 */
+#define SYS_FLAG_ARRIVE_D11R0101          2500 /* 0x09c4 到着フラグ：D11R0101 */
+#define SYS_FLAG_ARRIVE_R04               2501 /* 0x09c5 到着フラグ：R04 */
+#define SYS_FLAG_ARRIVE_D03               2502 /* 0x09c6 到着フラグ：D03 */
+#define SYS_FLAG_ARRIVE_D04R0101          2503 /* 0x09c7 到着フラグ：D04R0101 */
+#define SYS_FLAG_ARRIVE_R05               2504 /* 0x09c8 到着フラグ：R05 */
+#define SYS_FLAG_ARRIVE_R16               2505 /* 0x09c9 到着フラグ：R16 */
+#define SYS_FLAG_ARRIVE_R16R0201          2506 /* 0x09ca 到着フラグ：R16R0201 */
+#define SYS_FLAG_ARRIVE_H02               2507 /* 0x09cb 到着フラグ：H02 */
+#define SYS_FLAG_ARRIVE_R06               2508 /* 0x09cc 到着フラグ：R06 */
+#define SYS_FLAG_ARRIVE_D28R0101          2509 /* 0x09cd 到着フラグ：D28R0101 */
+#define SYS_FLAG_ARRIVE_R06R0201          2510 /* 0x09ce 到着フラグ：R06R0201 */
+#define SYS_FLAG_ARRIVE_D06               2511 /* 0x09cf 到着フラグ：D06 */
+#define SYS_FLAG_ARRIVE_R07               2512 /* 0x09d0 到着フラグ：R07 */
+#define SYS_FLAG_ARRIVE_R07R0101          2513 /* 0x09d1 到着フラグ：R07R0101 */
+#define SYS_FLAG_ARRIVE_D24               2514 /* 0x09d2 到着フラグ：D24 */
+#define SYS_FLAG_ARRIVE_D25R0101          2515 /* 0x09d3 到着フラグ：D25R0101 */
+#define SYS_FLAG_ARRIVE_R13               2516 /* 0x09d4 到着フラグ：R13 */
+#define SYS_FLAG_ARRIVE_D20               2517 /* 0x09d5 到着フラグ：D20 */
+#define SYS_FLAG_ARRIVE_R14               2518 /* 0x09d6 到着フラグ：R14 */
+#define SYS_FLAG_ARRIVE_R14R0201          2519 /* 0x09d7 到着フラグ：R14R0201 */
+#define SYS_FLAG_ARRIVE_R12               2520 /* 0x09d8 到着フラグ：R12 */
+#define SYS_FLAG_ARRIVE_H04               2521 /* 0x09d9 到着フラグ：H04 */
+#define SYS_FLAG_ARRIVE_R11               2522 /* 0x09da 到着フラグ：R11 */
+#define SYS_FLAG_ARRIVE_R09               2523 /* 0x09db 到着フラグ：R09 */
+#define SYS_FLAG_ARRIVE_D32R0101          2524 /* 0x09dc 到着フラグ：D32R0101 */
+#define SYS_FLAG_ARRIVE_W21               2525 /* 0x09dd 到着フラグ：W21 */
+#define SYS_FLAG_ARRIVE_R15               2526 /* 0x09de 到着フラグ：R15 */
+#define SYS_FLAG_ARRIVE_R22               2527 /* 0x09df 到着フラグ：R22 */
+#define SYS_FLAG_ARRIVE_D10               2528 /* 0x09e0 到着フラグ：D10 */
+#define SYS_FLAG_ARRIVE_R23               2529 /* 0x09e1 到着フラグ：R23 */
+#define SYS_FLAG_ARRIVE_D26R0101          2530 /* 0x09e2 到着フラグ：D26R0101 */
+#define SYS_FLAG_ARRIVE_R08               2531 /* 0x09e3 到着フラグ：R08 */
+#define SYS_FLAG_ARRIVE_R08R0101          2532 /* 0x09e4 到着フラグ：R08R0101 */
+#define SYS_FLAG_ARRIVE_D08               2533 /* 0x09e5 到着フラグ：D08 */
+#define SYS_FLAG_ARRIVE_D07               2534 /* 0x09e6 到着フラグ：D07 */
+#define SYS_FLAG_ARRIVE_D02               2535 /* 0x09e7 到着フラグ：D02 */
+#define SYS_FLAG_ARRIVE_R03               2536 /* 0x09e8 到着フラグ：R03 */
+#define SYS_FLAG_ARRIVE_R03R0301          2537 /* 0x09e9 到着フラグ：R03R0301 */
+#define SYS_FLAG_ARRIVE_D01R0101          2538 /* 0x09ea 到着フラグ：D01R0101 */
+#define SYS_FLAG_ARRIVE_R01               2539 /* 0x09eb 到着フラグ：R01 */
+#define SYS_FLAG_ARRIVE_R02               2540 /* 0x09ec 到着フラグ：R02 */
+#define SYS_FLAG_ARRIVE_W17               2541 /* 0x09ed 到着フラグ：W17 */
+#define SYS_FLAG_ARRIVE_R18               2542 /* 0x09ee 到着フラグ：R18 */
+#define SYS_FLAG_ARRIVE_D13               2543 /* 0x09ef 到着フラグ：D13 */
+#define SYS_FLAG_ARRIVE_D29R0101          2544 /* 0x09f0 到着フラグ：D29R0101 */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 

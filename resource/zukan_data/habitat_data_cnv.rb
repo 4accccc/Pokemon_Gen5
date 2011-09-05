@@ -85,7 +85,7 @@ data_file.each{|line|
 
   $habitat_arc_idx_table.delete(group_name)
 
-  out_file.puts "  {%s,%s},  // %s"%[ flg_name,group_name,line[COMMENT_INDEX],]
+  out_file.puts "  {%s,%s,%d},  // %s"%[ flg_name,group_name,arc_idx,line[COMMENT_INDEX]]
   table_lng += 1
 }
 
