@@ -3670,4 +3670,499 @@
 				Time="2011-09-02T04:51:39" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:4digits ]こ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:49:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:4digits ]こ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:49:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:49:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:49:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:4digits ]かい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:50:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:50:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:4digits ]かい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:50:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:50:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:50:35" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:4digits ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:51:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:51:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:4digits ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:51:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:51:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:51:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアもくひょう[Digit:4digits ]にん</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:57:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:57:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリアもくひょう[Digit:4digits ]にん</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:57:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:57:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:57:45" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアもくひょう[Digit:4digits ]こ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:58:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:57:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリアもくひょう[Digit:4digits ]こ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:58:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:58:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:58:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアもくひょう[Digit:4digits ]かい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:58:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:58:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリアもくひょう[Digit:4digits ]かい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:59:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:58:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:59:05" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアもくひょう[Digit:4digits ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:59:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:59:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリアもくひょう[Digit:4digits ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:59:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:59:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T02:59:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ][Digit:2digits Idx="1" ]こ～</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T03:00:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T03:00:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ][Digit:2digits Idx="1" ]こ～</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T03:00:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T03:00:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T03:00:55" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits ]ふん[Digit:2digits Idx="1" ]びょう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T08:42:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T08:41:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:2digits ]ふん[Digit:2digits Idx="1" ]びょう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T08:42:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T08:42:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T08:42:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits ]ふん</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T08:42:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T08:42:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:2digits ]ふん</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T08:42:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T08:42:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T08:43:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_28"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]ひき</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:46:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]ひき</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:47:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:47:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:47:18" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_29"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]にん</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:47:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:47:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]にん</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:47:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:47:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_30"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]こ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:47:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]こ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_31"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]かい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]かい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:49:00" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_32"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:48:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-09-05T10:49:00" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

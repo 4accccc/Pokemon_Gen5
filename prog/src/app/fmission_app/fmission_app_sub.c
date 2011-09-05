@@ -34,14 +34,18 @@ enum{
 	MES_CLEAR_COLOR     = 0,
 	//
 	//
-	// (main)(0-5:bg、6:cmn、8:font)
+	// (main bg)(0-5:bg、6:cmn、8:font)
 	FMA_BG_BASE_PAL		= 0,
 	FMA_BG_CMN_PAL		= 6,
 	//
 	FMA_BG_FONT_PAL		= 8,
 	//
-	// (main)(0-5:bg、8:font)
+	// (sub bg)(0-5:bg、8:font)
+	FMA_BG_SUB_BASE_PAL	= 0,
 	FMA_BG_SUB_FONT_PAL	= 8,
+	//
+	// (obj)(0:cmn、14:net)
+	FMA_OBJ_BASE_PAL	= 0,
 };
 
 //--------------
@@ -305,6 +309,36 @@ static const FMA_OBJ_DATA *fma_obj_tbl[] = {
 	fma_obj_result_tbl,			// 結果
 };
 
+//-----------
+// 共通obj
+//-----------
+// 情報
+static const s16 fma_obj_cmn_itbl[] = {
+	FMA_RESID_CMN_OBJ_PLT,
+	FMA_RESID_CMN_OBJ_CHR,
+	FMA_RESID_CMN_OBJ_CEL,
+	//
+	FMA_OBJ_MAXNUM,
+	FMA_CLWKMODE_CMN,
+};
+
+// OBJのテーブルデータ(cmn)
+static const FMA_OBJ_DATA fma_obj_cmn_info_tbl[] = {
+	{ 1,	0x30,	1,	1,	0,	1, 11,	0,},		// 戻るマーク
+	//
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
+
+//---------------
+// 星のシーケンス
+//---------------
+static const s16 fma_star_seq_tbl[] = {
+	2,		// 1つ
+	3,		// 2つ
+	4,		// 3つ
+	5,		// 4つ
+};
+
 //=============================================================================
 /**
  *								宣言
@@ -316,6 +350,7 @@ static void fma_init_string( FMISSION_APP_WORK* wk, const s32 mode );
 //
 static void fma_init_obj_clwk( FMISSION_APP_WORK* wk, const s32 drawtype, const FMA_OBJ_DATA *obj_adr, const s16 *info_adr );
 static void fma_init_obj_res( FMISSION_APP_WORK* wk, const s32 drawtype, const s16 *info_adr );
+static void fma_init_obj_res_cmn( FMISSION_APP_WORK* wk, const s32 drawtype );
 static void fma_init_obj( FMISSION_APP_WORK* wk );
 static void fma_exit_obj( FMISSION_APP_WORK* wk );
 
@@ -632,15 +667,18 @@ static void fma_init_obj_clwk( FMISSION_APP_WORK* wk, const s32 drawtype, const 
 	if(buf[4] == FMA_CLWKMODE_NORMAL){			// 通常
 		clwk = &wk->wk_obj.clwk[0];
 	}
-//	else if(buf[4] == T_DOWNLOAD_CLWKMODE_CMN){		// cmn
-//		clwk = &wk->wk_obj.cmn_clwk[0];
-//	}
+	else if(buf[4] == FMA_CLWKMODE_CMN){		// cmn
+		clwk = &wk->wk_obj.cmn_clwk[0];
+	}
 	
 	for(i=0;i<buf[3];i++){
 		// 終了判定
 		if(adr->anmseq == 0xff){
 			break;
 		}
+//		if(buf[4] == FMA_CLWKMODE_NORMAL){
+//			OS_Printf("seq :(%d)%d\n",i,adr->anmseq);
+//		}
 		tmp = adr->empty_num;
 		pos[0] = FmaCmn_get_empty(wk, tmp*2);
 		pos[1] = FmaCmn_get_empty(wk, tmp*2+1);
@@ -715,6 +753,37 @@ static void fma_init_obj_res( FMISSION_APP_WORK* wk, const s32 drawtype, const s
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  OBJ初期化(cmn res)
+ *
+ *	@param	FMISSION_APP_WORK* wk
+ *	@param	const s32			drawtype
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_init_obj_res_cmn( FMISSION_APP_WORK* wk, const s32 drawtype )
+{
+	// cmnのidを取得
+	const u32 	arcid    = APP_COMMON_GetArcId();
+	ARCHANDLE*	p_handle = GFL_ARC_OpenDataHandle( arcid, wk->heapID );
+    GFL_CLUNIT*	p_clunit = FMISSION_APP_GRA_GetClunit( wk->graphic );
+	u32			idx[4];
+	//
+	idx[0] = APP_COMMON_GetBarIconPltArcIdx();		// pal
+	idx[1] = APP_COMMON_GetBarIconCharArcIdx();		// ncg
+	idx[2] = APP_COMMON_GetBarIconCellArcIdx(  APP_COMMON_MAPPING_128K );	// cell
+	idx[3] = APP_COMMON_GetBarIconAnimeArcIdx( APP_COMMON_MAPPING_128K );	// anim
+	//
+	// セルアニメ用の処理
+	wk->wk_obj.res[ FMA_RESID_CMN_OBJ_PLT ] = GFL_CLGRP_PLTT_RegisterEx(   p_handle, idx[0], drawtype, 0x20*FMA_OBJ_BASE_PAL, 0, 4, wk->heapID );
+	wk->wk_obj.res[ FMA_RESID_CMN_OBJ_CHR ] = GFL_CLGRP_CGR_Register(      p_handle, idx[1], FALSE, drawtype, wk->heapID );
+	wk->wk_obj.res[ FMA_RESID_CMN_OBJ_CEL ] = GFL_CLGRP_CELLANIM_Register( p_handle, idx[2], idx[3], wk->heapID );
+	//
+	GFL_ARC_CloseDataHandle( p_handle );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  OBJ初期化まとめ
  *
  *	@param	FMISSION_APP_WORK* wk
@@ -729,8 +798,12 @@ static void fma_init_obj( FMISSION_APP_WORK* wk )
 	//
 	// リソース読み込み(通常)
 	fma_init_obj_res( wk, CLSYS_DRAW_SUB, &fma_obj_main_info_tbl[0] );
+	// リソース読み込み(cmn)
+	fma_init_obj_res_cmn( wk, CLSYS_DRAW_MAIN );
 	// CLWK登録(通常)
 	fma_init_obj_clwk( wk, CLSYS_DRAW_SUB, adr, &fma_obj_main_itbl[0] );
+	// CLWK登録(cmn)
+	fma_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &fma_obj_cmn_info_tbl[0], &fma_obj_cmn_itbl[0] );
 	//
 	// 通信アイコンセット(下画面)
 	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->heapID );
@@ -756,10 +829,20 @@ static void fma_exit_obj( FMISSION_APP_WORK* wk )
 			wk->wk_obj.clwk[i] = 0;
 		}
 	}
+	for(i=0;i<FMA_CMN_OBJ_MAXNUM;i++){
+		if(wk->wk_obj.cmn_clwk[i]){
+			GFL_CLACT_WK_Remove( wk->wk_obj.cmn_clwk[i] );
+			wk->wk_obj.cmn_clwk[i] = 0;
+		}
+	}
 	//リソース破棄 
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[FMA_RESID_OBJ_PLT] );
 	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[FMA_RESID_OBJ_CHR] );
 	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[FMA_RESID_OBJ_CEL] );
+	//
+	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[FMA_RESID_CMN_OBJ_PLT] );
+	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[FMA_RESID_CMN_OBJ_CHR] );
+	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[FMA_RESID_CMN_OBJ_CEL] );
 }
 
 //-----------------------------------------------------------------------------
@@ -785,16 +868,14 @@ void FmaCmn_chg_objseq( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wnum, 
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk[wnum], TRUE );
 	}
-#if 0
-	else if(wmode == T_DOWNLOAD_CLWKMODE_CMN){			// 共通
-		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
-			OS_Printf("cmn obj max error:%d\n",wnum);
-			return;
-		}
+	else if(wmode == FMA_CLWKMODE_CMN){			// 共通
+//		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
+//			OS_Printf("cmn obj max error:%d\n",wnum);
+//			return;
+//		}
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.cmn_clwk[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.cmn_clwk[wnum], TRUE );
 	}
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -819,15 +900,13 @@ void FmaCmn_set_obj_visible( FMISSION_APP_WORK *wk, const s32 wmode, const s32 w
 //		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[wnum], bflg );
 	}
-#if 0
-	else if(wmode == T_DOWNLOAD_CLWKMODE_CMN){		// 共通
-		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
-			OS_Printf("cmn obj max error:%d\n",wnum);
-			return;
-		}
+	else if(wmode == FMA_CLWKMODE_CMN){		// 共通
+//		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
+//			OS_Printf("cmn obj max error:%d\n",wnum);
+//			return;
+//		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.cmn_clwk[wnum], bflg );
 	}
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -855,17 +934,15 @@ BOOL FmaCmn_is_anime_end( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wnum
 			bflg = FALSE;
 		}
 	}
-#if 0
-	else if(wmode == T_DOWNLOAD_CLWKMODE_CMN){		// 共通
-		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
-			OS_Printf("cmn obj max error:%d\n",wnum);
-			return( FALSE );
-		}
+	else if(wmode == FMA_CLWKMODE_CMN){		// 共通
+//		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
+//			OS_Printf("cmn obj max error:%d\n",wnum);
+//			return( FALSE );
+//		}
 		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.cmn_clwk[wnum] ) == FALSE ){
 			bflg = FALSE;
 		}
 	}
-#endif
 	return( bflg );
 }
 
@@ -921,8 +998,9 @@ void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_w
 		}
 		// 表示
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[src_wnum+i], bflg );
-		// フレームを指定(FX32_SHIFTをするようだ)
-		GFL_CLACT_WK_SetAnmFrame( wk->wk_obj.clwk[src_wnum+i], (buf[3-i]<<FX32_SHIFT) );
+		// フレームを指定(FX32_SHIFTをするようだ)=>うまくいかない
+//		GFL_CLACT_WK_SetAnmFrame( wk->wk_obj.clwk[src_wnum+i], (buf[3-i]<<FX32_SHIFT) );
+		GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+i], buf[3-i] );
 		// x方向に加算
 		pos.x = srcpos + 8*i;
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+i], &pos, CLSYS_DEFREND_SUB );
@@ -981,8 +1059,8 @@ void FmaCmn_disp_time( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnu
 	// ここまででbuf[]に値(01:23)が入っているはず
 	// 分
 	for(i=0;i<2;i++){
-		// フレームを指定(FX32_SHIFTをするようだ)
-		GFL_CLACT_WK_SetAnmFrame( wk->wk_obj.clwk[src_wnum+i], (buf[i]<<FX32_SHIFT) );
+		// フレームを指定
+		GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+i], buf[i] );
 		// x方向に加算
 		pos.x = srcpos + 8*i;
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+i], &pos, CLSYS_DEFREND_SUB );
@@ -993,12 +1071,60 @@ void FmaCmn_disp_time( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnu
 	//
 	// 秒
 	for(i=0;i<2;i++){
-		// フレームを指定(FX32_SHIFTをするようだ)
-		GFL_CLACT_WK_SetAnmFrame( wk->wk_obj.clwk[src_wnum+3+i], (buf[2+i]<<FX32_SHIFT) );
+		// フレームを指定
+		GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+3+i], buf[2+i] );
 		// x方向に加算
 		pos.x = srcpos + 8*(3+i);
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+3+i], &pos, CLSYS_DEFREND_SUB );
 	}
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パラメータの取得
+ *
+ *	@param	FMISSION_APP_WORK* wk
+ *
+ *	@ret	BOOL			(TRUE:変更あり、FALSE:変更なし)
+ */
+//-----------------------------------------------------------------------------
+BOOL FmaCmn_main_festival( FMISSION_APP_WORK *wk, const s32 mode )
+{
+	BOOL	bflg=FALSE;
+	
+	// 初期化
+	if(mode == 0){
+		LINK_FESTIVAL_GetMissionStatus( wk->Param->fest_sys, &wk->MissionStatus  );
+		bflg = TRUE;
+	}
+	else{
+		bflg = LINK_FESTIVAL_TopScoreIsUpdate( wk->Param->fest_sys );
+		if(bflg == TRUE){
+			LINK_FESTIVAL_GetMissionStatus( wk->Param->fest_sys, &wk->MissionStatus  );
+		}
+	}
+	return( bflg );
+}
+
+//--------------------------------------------------------------
+/**
+ *	星表示
+ *
+ * @param   FMISSION_APP_WORK		*wk
+ */
+//--------------------------------------------------------------
+void FmaCmn_disp_star( FMISSION_APP_WORK *wk )
+{
+	s32			lv;
+	s32			cnum;
+	//
+	cnum = FMAI_CLWK_STAR;
+	if(wk->Mode == FMISSION_APP_MODE_RESULT){
+		cnum = FMAR_CLWK_STAR;
+	}
+	// レベルを取得
+	lv = wk->Param->fmwk->beacon.m_level;
+	// 星のシーケンス変更
+	FmaCmn_chg_objseq( wk, FMA_CLWKMODE_NORMAL, cnum, fma_star_seq_tbl[lv] );
+}
 

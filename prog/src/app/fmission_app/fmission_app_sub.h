@@ -29,3 +29,8 @@ extern BOOL FmaCmn_is_anime_end( FMISSION_APP_WORK *wk, const s32 wmode, const s
 extern void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnum, const s32 num, const s32 snum, const s32 smode );
 extern void FmaCmn_disp_time( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnum, const s32 src0, const s32 src1 );
 
+//
+extern BOOL FmaCmn_main_festival( FMISSION_APP_WORK *wk, const s32 mode );
+
+//
+extern void FmaCmn_disp_star( FMISSION_APP_WORK *wk );

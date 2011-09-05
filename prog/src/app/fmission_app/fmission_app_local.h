@@ -42,11 +42,13 @@ enum{
 	FMA_MSG_MAXNUM    	= 2,		// msg最大数
 	FMA_CANVAS_MAXNUM 	= 30,		// canvas最大数
 	FMA_OBJ_MAXNUM		= 20,		// obj最大数
+	FMA_CMN_OBJ_MAXNUM	= 2,		// obj最大数
 };
 
 // フラグ
 enum{
 	FLG_FMA_UPDATE		= (1<<0),	// 更新
+	FLG_FMA_DISP_1ST	= (1<<1),	// はじめの表示
 };
 
 //------------------
@@ -124,6 +126,10 @@ enum{
 	FMA_RESID_OBJ_PLT = 0,		// パレット
 	FMA_RESID_OBJ_CHR,			// キャラ
 	FMA_RESID_OBJ_CEL,			// セルアニメ
+	// cmn
+	FMA_RESID_CMN_OBJ_PLT,		// パレット
+	FMA_RESID_CMN_OBJ_CHR,		// キャラ
+	FMA_RESID_CMN_OBJ_CEL,		// セルアニメ
 	//
 	FMA_RESID_OBJ_MAX,
 };
@@ -173,6 +179,13 @@ enum{
 	FMAR_CLWK_RECORD_01,		// レコード
 };
 
+//-------------------
+// clwkのid(cmn)
+//-------------------
+enum{
+	FMA_CLWK_CMN_BACK = 0,		// 戻るアイコン
+};
+
 //=============================================================================
 /**
  *								構造体定義
@@ -185,7 +198,7 @@ typedef struct
 {
 	u32			res[FMA_RESID_OBJ_MAX]; 			// リソース
 	// 共通
-//	GFL_CLWK	*cmn_clwk[T_DOWNLOAD_CMN_OBJ_MAXNUM];	// CLWK(common)
+	GFL_CLWK	*cmn_clwk[FMA_CMN_OBJ_MAXNUM];		// CLWK(common)
 	// 通常
 	GFL_CLWK	*clwk[FMA_OBJ_MAXNUM];				// CLWK
 } FMISSION_APP_OBJ_WORK;
@@ -205,13 +218,20 @@ typedef struct
 	PRINT_QUE				*print_que;						// プリントキュー
 	GFL_MSGDATA				*MsgData[FMA_MSG_MAXNUM];		// メッセージ
 	PRINT_UTIL				PrintUtil[FMA_CANVAS_MAXNUM];	// 文字表示用
+	WORDSET					*Wordset;						// wordset
 	//
 	FMISSION_APP_PARAM 		*Param;				// 参照用として保存	
 	//
+	FMISSION_DATA_MAN		*FMissionManager;	// manager
+	ARCHANDLE				*Handle;
+	FMISSION_ARCDATA		*ArcData;
+	LINKFEST_MISSION_STATUS	MissionStatus;		// 情報(実体)
+	LINKFEST_LOG_TOP_SCORE	*TopScore;			// トップスコア用
 	//
 	s32						Step;				// 処理の流れ
 	s32						Mode;				// モード(詳細、評価)
 	u32						Flag;				// フラグ
+	s32						Timer;				// タイマ
 	//
 	s32						BgOffX;				// オフセット
 	//
