@@ -191,7 +191,8 @@ SUBDIRS	=	wmi \
 			pokewood_party \
 			pokewood_cutin \
 			gpower_app \
-			key_system
+			key_system \
+			marine_tube_gra
 
 
 include $(RESOURCE_MACRO)

@@ -19,5 +19,6 @@
 #ifndef ZONE_C14R0601_EVB_H
 #define ZONE_C14R0601_EVB_H
 
+#define BG_C14R0601_BOARD_01              0
 
 #endif //ZONE_C14R0601_EVB_H

@@ -476,6 +476,7 @@
 #define SCR_ZUKAN_AWARD_CHIHOU    (0)  // 地方図鑑完成
 #define SCR_ZUKAN_AWARD_ZENKOKU   (1)  // 全国図鑑完成
 #define SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP  (2)  // 路線図
+#define SCR_MARINE_TUBE_BOARD     (3)  // マリンチューブ掲示板
 
 //--------------------------------------------------------------
 /// 自機動作形態

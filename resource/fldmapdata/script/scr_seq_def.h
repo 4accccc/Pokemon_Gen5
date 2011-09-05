@@ -8115,6 +8115,11 @@
 #define _CALL_SUBWAY_ROUTE_MAP() \
     _ASM_ZUKAN_AWARD_PROC_CALL SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP, 0 
 
+//マリンチューブ掲示板
+// pattern  サザナミ側:0  セイガイハ側:1
+#define _CALL_MARINE_TUBE_BOARD( pattern ) \
+    _ASM_ZUKAN_AWARD_PROC_CALL SCR_MARINE_TUBE_BOARD, pattern
+
   .macro  _ASM_CALL_ZUKAN_AWARD demo_id, pattern
   .short  EV_SEQ_CALL_ZUKAN_AWARD
   .short  \demo_id

@@ -24,6 +24,7 @@
 _EVENT_DATA   ev_c14r0601_informationw_01
 _EVENT_DATA   ev_c14r0601_oldman_01
 _EVENT_DATA   ev_c14r0601_ambrella_01
+_EVENT_DATA   ev_bg_c14r0601_board_01
 _EVENT_DATA_END
 
 
@@ -47,6 +48,18 @@ EVENT_END
 EVENT_START   ev_c14r0601_ambrella_01
   //技マシン42「からげんき」入手
   _EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN42, 1, FE_C14R0601_ITEMGET_01, msg_c14r0601_ambrella_01, msg_c14r0601_ambrella_02, msg_c14r0601_ambrella_02 )
+EVENT_END
+
+/**************************************************************/
+/*  マリンチューブ掲示板(セイガイハ側)                        */
+/**************************************************************/
+EVENT_START   ev_bg_c14r0601_board_01
+  _TALK_START_SE_PLAY()
+	
+	_PLAINWIN_MSG_DOWN( msg_c14r0601_board_01 )
+	_MSGWIN_CLOSE()
+	
+	_CALL_MARINE_TUBE_BOARD(1)
 EVENT_END
 
 

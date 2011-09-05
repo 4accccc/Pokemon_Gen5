@@ -2713,6 +2713,11 @@ SRCS_OVERLAY_PSEL = demo/psel/psel.c \
 SRCS_OVERLAY_SUBWAY_MAP = app/subway_map/subway_map.c \
                           app/subway_map/subway_map_graphic.c
 
+# マリンチューブ案内板
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_MARINE_TUBE_BOARD = app/marine_tube_board/marine_tube_board.c \
+                                 app/marine_tube_board/marine_tube_board_graphic.c
+
 # ゲーム内マニュアル
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_MANUAL = app/manual/manual.c \

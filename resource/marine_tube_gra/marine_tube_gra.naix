@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: marine_tube_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MARINE_TUBE_GRA_NAIX_
+#define NARC_MARINE_TUBE_GRA_NAIX_
+
+enum {
+	NARC_marine_tube_gra_marine_tube_bg1_NCLR = 0,
+	NARC_marine_tube_gra_marine_tube_bg2_NCLR = 1,
+	NARC_marine_tube_gra_marine_tube_bg1_NCGR = 2,
+	NARC_marine_tube_gra_marine_tube_bg2_NCGR = 3,
+	NARC_marine_tube_gra_marine_tube_bg1_NSCR = 4,
+	NARC_marine_tube_gra_marine_tube_bg2_NSCR = 5
+};
+
+/* NARC_MARINE_TUBE_GRA_NAIX_ */
+#endif

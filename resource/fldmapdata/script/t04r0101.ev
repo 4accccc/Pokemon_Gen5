@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_init_t04r0101
 _EVENT_DATA    ev_reserve_t04r0101_first
+_EVENT_DATA    ev_bg_t04r0101_board_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -43,3 +44,16 @@ INIT_EVENT_END
 EVENT_START	ev_reserve_t04r0101_first
 
 EVENT_END
+
+/**************************************************************/
+/*  マリンチューブ掲示板(サザナミ側)                        */
+/**************************************************************/
+EVENT_START ev_bg_t04r0101_board_01
+  _TALK_START_SE_PLAY()
+	
+	_PLAINWIN_MSG_DOWN( msg_t04r0101_board_01 )
+	_MSGWIN_CLOSE()
+	
+	_CALL_MARINE_TUBE_BOARD(0)
+EVENT_END
+

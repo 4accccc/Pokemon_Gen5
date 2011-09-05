@@ -50,6 +50,7 @@
 #include "app/chihou_zukan_award.h"
 #include "app/zenkoku_zukan_award.h"
 #include "app/subway_map.h"
+#include "app/marine_tube_board.h"
 #include "demo/psel.h"
 
 #include "app/mailbox.h"
@@ -518,7 +519,8 @@ VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
   u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 patern  = SCRCMD_GetVMWorkValue( core, wk );
 
-  if( demo_id != SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP ){
+  if( demo_id == SCR_ZUKAN_AWARD_CHIHOU ||
+      demo_id == SCR_ZUKAN_AWARD_ZENKOKU ){
     GAMEBEACON_Set_ZukanComplete ();
   }
 
@@ -548,6 +550,16 @@ VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
       EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(subway_map), &SUBWAY_MAP_ProcData, param, NULL, NULL );
     }
     break;
+  case SCR_MARINE_TUBE_BOARD:
+    {
+      MARINE_TUBE_BOARD_PARAM* param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(MARINE_TUBE_BOARD_PARAM) );
+      param->gamesys = gsys;
+      param->type = patern;
+      EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(marine_tube_board), &MarineTubeBoardProcData, param, NULL, NULL );
+    }
+    break;
+  default:
+    GF_ASSERT(0);
   }
   return VMCMD_RESULT_SUSPEND;
 }
