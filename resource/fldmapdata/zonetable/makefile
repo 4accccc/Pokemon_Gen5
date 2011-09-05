@@ -60,6 +60,9 @@ DEPFILES	= ../area_data/area_id.h \
 MATRIXDATA = ../map_matrix/map_matrix.xls
 MATRIXHEADER = $(WORKDIR)/map_matrix.h
 
+ZONE_GROUP_HASH 		= ./zonegroup_hash/zone_group_hash.rb
+ZONE_GROUP_HASH_CNV = ./zonegroup_hash/zone_group_hash_cnv.rb
+
 #コンバート結果のテキストファイル一覧（比較対象となるもの）
 OUTPUT		= $(RESDIR)/zonetable.c
 
@@ -74,7 +77,7 @@ RESULTS		= $(RESDIR)/$(NARCNAME) $(RESDIR)/$(NAIXNAME)
 #----------------------------------------------------------------------------
 LDIRT_CLEAN = $(TEMP_FILES) $(addprefix $(TARGETDIR)/, $(RESULTS))
 LDIRT_CLEAN	+= $(OUTPUT) $(RESDIR)/*.bin $(DATATABTXT) $(CONVSRCS) $(RESULTS) \
-							 $(MATRIXHEADER)
+							 $(MATRIXHEADER) $(ZONE_GROUP_HASH)
 
 LINCLUDES	= $(NITROSDK_ROOT)/include
 LINCLUDES	+= $(dir $<)
@@ -106,10 +109,13 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #----------------------------------------------------------------------------
 .PHONY:	subdir	do-build clean test dummyfiles checkfiles
 
-do-build: subdir $(TARGETDIR)/$(NARCNAME)
+do-build: subdir $(TARGETDIR)/$(NARCNAME) $(ZONE_GROUP_HASH)
 
 $(TARGETDIR)/$(NARCNAME):	$(RESDIR)/$(NARCNAME)
 	$(foreach AFILE,$(RESULTS),$(COPY) $(AFILE) $(TARGETDIR) $(AND)) true
+
+$(ZONE_GROUP_HASH) : $(DATAFILE) $(ZONE_GROUP_HASH_CNV)
+	ruby $(ZONE_GROUP_HASH_CNV) $(ZONE_GROUP_HASH) $(DATATABTXT)
 
 
 $(DATATABTXT):	$(DATAFILE)
