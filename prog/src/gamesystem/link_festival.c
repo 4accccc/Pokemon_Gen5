@@ -30,6 +30,7 @@
 //==============================================================================
 static BOOL linkfes_IsMissionClear( LINK_FESTIVAL* wk, u32* score );
 static void lnkfes_BeaconSend( LINK_FESTIVAL* wk );
+static void topscore_Clear( LINK_FESTIVAL* wk, LINKFEST_LOG_TOP_SCORE* tsp );
 static void log_ClearAll( LINK_FESTIVAL* wk );
 static void log_LastMissionLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
 static BOOL log_CheckEgnoreLog( LINK_FESTIVAL* wk, const FEST_BEACON* beacon );
@@ -135,6 +136,18 @@ FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル ミッション　現在の自分のスコアを返す
+ *
+ * @retval 自分のスコア 
+ */
+//---------------------------------------------------------
+u16 LINK_FESTIVAL_GetMyScore( LINK_FESTIVAL* wk )
+{
+  return wk->m_beacon->my_score;
+}
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル ミッション残り時間を返す
  *
  * @retval  残り時間：秒単位
@@ -166,7 +179,7 @@ void LINK_FESTIVAL_GetMissionStatus( LINK_FESTIVAL* wk, LINKFEST_MISSION_STATUS*
     idx[i] = i; 
   }
 
-  //シェルソート(9と3はシェルソートアルゴリズムのリテラル)
+  //シェルソートでスコア高い順に並べ替え(9と3はシェルソートアルゴリズムのリテラル)
   {
     for( h = 1; h < (wk->log_num/9); h = h*3+1)
       ; //hを変化させたいだけなので、特にメイン処理はない
@@ -188,14 +201,14 @@ void LINK_FESTIVAL_GetMissionStatus( LINK_FESTIVAL* wk, LINKFEST_MISSION_STATUS*
     IWASAWA_Printf("SSort%d idx:%d-> %d\n",i,idx[i],wk->log[idx[i]].score.value);
   }
 #endif
-  if( sp->my_score >= wk->log[0].score.value ){
+  if( sp->my_score >= wk->log[ idx[0] ].score.value ){
     sp->my_ranking = 1; //1位
-  }else if( sp->my_score <= wk->log[ wk->log_num-1].score.value ){
+  }else if( sp->my_score <= wk->log[ idx[wk->log_num-1] ].score.value ){
     sp->my_ranking = sp->entry_num; //最下位
   }
   for( i = 0; i < wk->log_num;i++){
     if( sp->my_score >= wk->log[ idx[i] ].score.value ){
-      sp->my_ranking = i+1;
+      sp->my_ranking = i+1; //1オリジンで描画するので+1して返す
       break;
     }
   }
@@ -348,7 +361,7 @@ u16 LINK_FESTIVAL_FInfoScoreGet( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 void LINK_FESTIVAL_FInfoScoreInc( LINK_FESTIVAL* wk )
 {
-  if( wk->finfo_score < 0xFFFF ){
+  if( wk->finfo_score < FMISSION_SAVE_HIGH_SCORE_MAX ){
     wk->finfo_score += 1;
   }
 }
@@ -419,8 +432,8 @@ u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk )
   for(i = 0;i < wk->log_num;i++){
     score += wk->log[i].score.value;
   }
-  if( score > 0xFFFF ){
-    return 0xFFFF;
+  if( score > FMISSION_SAVE_HIGH_SCORE_MAX ){
+    return FMISSION_SAVE_HIGH_SCORE_MAX;
   }
   return score;
 }
@@ -471,9 +484,6 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   MI_CpuClear32( pl, sizeof(LINKFEST_MISSION_RESULT));
 
-  if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
-    return;
-  }
   pl->clear_f = linkfes_IsMissionClear( wk, &pl->score );
 
   if( wk->m_beacon->end_type == FMISSION_ENDTYPE_TIME ){
@@ -581,17 +591,9 @@ BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_LOG_ACTION action, u16 param )
 {
-  LINK_FESTIVAL* wk;
-  int inc = 1;  //@todo 現状スコア1固定
+  LINK_FESTIVAL* wk = GAMESYSTEM_GetLinkFestivalWork( gsys );
 
-  if( gsys == NULL ){
-    return FALSE;
-  }
-  wk = GAMESYSTEM_GetLinkFestivalWork( gsys );
-  if( wk == NULL ){
-    return FALSE;
-  }
-  return FEST_MISSION_ScoreCalc( &wk->mission, action, param, inc );
+  return FEST_MISSION_ScoreCalc( &wk->mission, action, param, 1 );  //スコア加算は1固定
 }
 
 //---------------------------------------------------------
@@ -614,10 +616,11 @@ int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk )
  * @param log 情報を格納したLINKFEST_LOG構造体型ワークへのポインタ
  */
 //---------------------------------------------------------
-LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src, BOOL with_param )
+LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src, BOOL with_param, int* log_score )
 {
   int i;
   LINKFEST_LOG* log;
+  *log_score = 0;
 
   if( (with_param) && 
       (wk->m_beacon->m_id != src->m_id || wk->m_beacon->key != src->key || wk->m_beacon->base_param != src->base_param ) ){
@@ -630,11 +633,14 @@ LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKF
       u16 root = log->score.tmap_root;
       u32 value = log->score.value;
 
-      log->score = src->prm.score;
+      log->score = src->prm.score;  //構造体コピー
       if( !with_param ){
         log->score.value = value; //パラメータ無しタイプはスコア取得できないので元の値を書き戻す
       }
       OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS log%d up tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
+
+      *log_score = log->score.value;  //今のスコアを返す
+
       if( root != src->prm.score.tmap_root ){
         return LINKFEST_SCORELOG_SET_MAP_CHANGE;
       }
@@ -651,6 +657,7 @@ LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKF
   //新規
   log = &wk->log[wk->log_num];
   log->score = src->prm.score;
+  *log_score = log->score.value;  //今のスコアを返す
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS nLog%d tr_id=%d, score=%d\n",wk->log_num, log->score.tr_id,log->score.value );
   ++wk->log_num;
   return LINKFEST_SCORELOG_SET_NEW_ENTRY;
@@ -780,7 +787,9 @@ BOOL LINK_FESTIVAL_TopScoreIsUpdate( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 void LINK_FESTIVAL_TopScoreGet( LINK_FESTIVAL* wk, LINKFEST_LOG_TOP_SCORE* tsp )
 {
-  *tsp = *wk->top_score;
+  tsp->tr_id = wk->top_score->tr_id;
+  tsp->score = wk->top_score->score;
+  GFL_STR_CopyBuffer( tsp->name, wk->top_score->name );
   wk->top_score_update_f = FALSE;
 }
 

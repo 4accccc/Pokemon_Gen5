@@ -464,6 +464,9 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
     break;
   case 2:
     if( PMSND_CheckPlayBGM() == FALSE ){
+      LINKFEST_MISSION_STATUS st;
+      LINK_FESTIVAL_GetMissionStatus( wk->fest_sys, &st );
+
       LINK_FESTIVAL_MissionEnd( wk->fest_sys );
       PMSND_PlaySE( EVFMISSION_SE_FADE_EFF );
       GMEVENT_CallEvent(event, EVENT_FSND_PopBGM( wk->gsys, FSND_FADE_NONE, FSND_FADE_FAST));

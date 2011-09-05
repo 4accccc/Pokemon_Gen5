@@ -285,19 +285,6 @@ GPOWER_ID FMISSION_GPOWER_TBL_GetData( FMISSION_GPOWER_TBL* tbl, STRBUF* name_bu
 
 //------------------------------------------------------------------
 /**
- * ログパラメータ取得　名前
- *
- * @param   p_log	    	ログ情報
- * @param   s_buf       PERSON_NAME_SIZE+EOM_SIZEを格納可能なSTRBUFのポインタ
- */
-//------------------------------------------------------------------
-void FMISSION_LOG_GetName( FMISSION_LOG* p_log, STRBUF* s_buf )
-{
-  GFL_STR_SetStringCodeOrderLength( s_buf, p_log->name, PERSON_NAME_SIZE+EOM_SIZE );
-}
-
-//------------------------------------------------------------------
-/**
  * ログパラメータ取得　 ポケモンニックネーム
  *
  * @param   p_log	    	ログ情報

@@ -43,7 +43,7 @@ typedef enum{
 }ENTRY_CHECK;
 
 static FMISSION_LOG_ACTION log_GetLogActionFromBeacon( const GAMEBEACON_INFO *info, FMISSION_LOG_SET_MODE mode );
-static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
+static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
 static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info );
 
 //------------------------------------------------------------------
@@ -59,6 +59,19 @@ void FMISSION_LOG_Clear( FMISSION_LOG* log )
     GFL_STD_MemFill16( log->name, eom, (PERSON_NAME_SIZE+EOM_SIZE)*sizeof(STRCODE));
     GFL_STD_MemFill16( log->str, eom, (GAMEBEACON_FREEWORD_MESSAGE_LEN)*sizeof(STRCODE) );
   }
+}
+
+//------------------------------------------------------------------
+/**
+ * ログパラメータ取得　名前
+ *
+ * @param   p_log	    	ログ情報
+ * @param   s_buf       PERSON_NAME_SIZE+EOM_SIZEを格納可能なSTRBUFのポインタ
+ */
+//------------------------------------------------------------------
+void FMISSION_LOG_GetName( FMISSION_LOG* p_log, STRBUF* s_buf )
+{
+  GFL_STR_SetStringCodeOrderLength( s_buf, p_log->name, PERSON_NAME_SIZE+EOM_SIZE );
 }
 
 //------------------------------------------------------------------
@@ -107,17 +120,18 @@ int FMISSION_LOG_TBL_SetLog( FMISSION_LOG_TBL* tbl, const FMISSION_LOG* p_log )
  *
  *  @param  tbl     FMISSION_LOG_TBL型構造体へのポインタ
  *  @param  info    セットするビーコン情報
+ *  @param  score   ログに保存するスコア
  *  @param  mode    ログのセットモード enum FMISSION_LOG_SET_MODE
  *  @param  mine_f  自分の行動ログならTRUE
  *
  *  データがいっぱいの場合、先頭のデータをところてん式に押し出して末尾にセット
  */
 //------------------------------------------------------------------
-void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAMEBEACON_INFO *info, FMISSION_LOG_SET_MODE mode, BOOL mine_f )
+void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f )
 {
   FMISSION_LOG  log;
 
-  if( log_MakeLogFromBeacon( &log, info, mode, mine_f )){
+  if( log_MakeLogFromBeacon( &log, info, score,mode, mine_f )){
     FMISSION_LOG_TBL_SetLog( tbl, &log );
   }
 }
@@ -357,7 +371,7 @@ static FMISSION_LOG_ACTION log_GetLogActionFromBeacon( const GAMEBEACON_INFO *in
  *  @param  new_f 新規エントリーならTRUE
  */
 //------------------------------------------------------------------
-static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, FMISSION_LOG_SET_MODE mode, BOOL mine_f )
+static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f )
 {
   FMISSION_LOG_ACTION action = log_GetLogActionFromBeacon( info, mode );
 
@@ -371,6 +385,7 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
   p_log->tr_id = info->trainer_id;
   p_log->sex = info->sex;
   p_log->tr_view = info->trainer_view;
+  p_log->score = score;
 
   //名前(info->nameはEOM抜き)
   GFL_STD_MemCopy16( info->name, p_log->name, PERSON_NAME_SIZE);

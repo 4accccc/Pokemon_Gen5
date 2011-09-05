@@ -133,6 +133,15 @@ extern FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル ミッション　現在の自分のスコアを返す
+ *
+ * @retval 自分のスコア 
+ */
+//---------------------------------------------------------
+extern u16 LINK_FESTIVAL_GetMyScore( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル ミッション残り時間を返す
  *
  * @retval  残り時間：秒単位
@@ -324,7 +333,7 @@ extern int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk );
  * @param log 情報を格納したLINKFEST_LOG_PARAM構造体型ワークへのポインタ
  */
 //---------------------------------------------------------
-extern LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src, BOOL with_param );
+extern LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src, BOOL with_param,int* log_score );
 
 //---------------------------------------------------------
 /*
@@ -399,8 +408,7 @@ extern LINKFEST_LOG_TOP_SCORE* LINKFEST_LOG_TOP_SCORE_Create( HEAPID heapID );
  * @brief リンクフェスティバル トップスコア格納ワーク開放
  */
 //---------------------------------------------------------
-extern void LINKFEST_LOG_TOP_SCORE_Delete( LINKFEST_LOG_TOP_SCORE* tsp );
-
+extern void LINKFEST_LOG_TOP_SCORE_Delete( LINKFEST_LOG_TOP_SCORE* sp );
 
 //====================================================
 //デバッグルーチン

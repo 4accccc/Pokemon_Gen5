@@ -27,6 +27,7 @@ struct _FMISSION_LOG{
   u8      tr_view:6;  //ユニオン見た目
   u8      action;     //ログアクションNO
   u16     param;      //ログアクションパラメータ
+  u16     score;      //ログ生成時のスコア
 };
 
 
@@ -100,13 +101,14 @@ extern int FMISSION_LOG_TBL_SetLog( FMISSION_LOG_TBL* tbl, const FMISSION_LOG* p
  *
  *  @param  tbl     FMISSION_LOG_TBL型構造体へのポインタ
  *  @param  info    セットするビーコン情報
+ *  @param  score   ログに保存するスコア
  *  @param  mode    ログのセットモード enum FMISSION_LOG_SET_MODE
  *  @param  mine_f  自分の行動ログならTRUE
  *
  *  データがいっぱいの場合、先頭のデータをところてん式に押し出して末尾にセット
  */
 //------------------------------------------------------------------
-extern void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAMEBEACON_INFO *info, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
+extern void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
 
 //------------------------------------------------------------------
 /*

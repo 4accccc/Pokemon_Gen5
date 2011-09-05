@@ -89,6 +89,31 @@ typedef struct _FMISSION_GPOWER_TBL FMISSION_GPOWER_TBL;
 typedef struct _FMISSION_ENTRY  FMISSION_ENTRY;
 typedef struct _FMISSION_ENTRY_TBL FMISSION_ENTRY_TBL;
 
+//最新ログ取得用構造体
+typedef struct _FMISSION_LOG_LATEST_PARAM{
+  STRBUF* name; ///<人物名格納バッファ
+  u16 score;    ///<スコア
+  u16 tr_id;    ///<トレーナーID
+}FMISSION_LOG_LATEST_PARAM;
 
-//関数のextern宣言は src/gamesystem/fmission_log_local.h
+#define FMISSION_LOG_LATEST_NUM_MAX (3)
+
+//最新3件のログ取得用構造体
+typedef struct _FMISSION_LOG_LATEST{
+  int num;
+  FMISSION_LOG_LATEST_PARAM  log[FMISSION_LOG_LATEST_NUM_MAX];
+}FMISSION_LOG_LATEST;
+
+//------------------------------------------------------------------
+/**
+ * ログパラメータ取得　名前
+ *
+ * @param   log	    	ログ情報
+ * @param   s_buf       PERSON_NAME_SIZE+EOM_SIZEを格納可能なSTRBUFのポインタ
+ */
+//------------------------------------------------------------------
+extern void FMISSION_LOG_GetName( FMISSION_LOG* log, STRBUF* s_buf );
+
+
+//他関数のextern宣言は src/gamesystem/fmission_log_local.h
 

@@ -117,16 +117,6 @@ extern GPOWER_ID FMISSION_GPOWER_TBL_GetData( FMISSION_GPOWER_TBL* tbl, STRBUF* 
 
 //------------------------------------------------------------------
 /**
- * ログパラメータ取得　名前
- *
- * @param   p_log	    	ログ情報
- * @param   s_buf       PERSON_NAME_SIZE+EOM_SIZEを格納可能なSTRBUFのポインタ
- */
-//------------------------------------------------------------------
-extern void FMISSION_LOG_GetName( FMISSION_LOG* p_log, STRBUF* s_buf );
-
-//------------------------------------------------------------------
-/**
  * ログパラメータ取得　 ポケモンニックネーム
  *
  * @param   p_log	    	ログ情報

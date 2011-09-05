@@ -60,6 +60,8 @@ typedef struct{
   GAMEBEACON_TYPE  beacon_type;       ///<typeがGAMEBEACON_TYPE_COMMONの時BWと互換性のあるビーコンを送信する
                                       ///<swanとbwではアンケートに互換性がないため、ビーコン送受信の1ターンごとに
                                       ///<swan専用ビーコンとbw互換のビーコンを交互に切り替えて発信する。
+  
+  STRBUF* sbuf_person_name;           ///<トレーナー名を格納可能なバッファ。フェスログ生成時に使用
 #ifdef PM_DEBUG
   BOOL  deb_beacon_priority_egnore;  //TRUEならビーコンリクエスト時にプライオリティ判定を無視する
 #endif

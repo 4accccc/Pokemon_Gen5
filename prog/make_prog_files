@@ -2661,7 +2661,8 @@ SRCS_OVERLAY_BEACON_DETAIL = app/beacon_detail/beacon_detail.c \
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_FMISSION_APP = app/fmission_app/fmission_app.c \
         app/fmission_app/fmission_app_gra.c \
-        app/fmission_app/fmission_app_sub.c
+        app/fmission_app/fmission_app_sub.c \
+        gamesystem/fmission_log_accessor_fapp.c
 
 # ‚·‚êˆá‚¢’²¸ƒŒ[ƒ_[‰æ–Ê
 #===> SRCS_OVERLAY_UI_COMMON

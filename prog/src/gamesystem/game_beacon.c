@@ -119,6 +119,8 @@ void GAMEBEACON_Init(HEAPID heap_id)
   GameBeaconSys = GFL_HEAP_AllocClearMemory(heap_id, sizeof(GAMEBEACON_SYSTEM));
   GameBeaconSys->end_log = -1;
   GameBeaconSys->beacon_type = GAMEBEACON_TYPE_COMMON;      //初期タイプはBW互換
+
+  GameBeaconSys->sbuf_person_name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heap_id );
   GAMEBEACON_Set_ResortDataEnable( TRUE );
 }
 
@@ -130,7 +132,8 @@ void GAMEBEACON_Init(HEAPID heap_id)
 void GAMEBEACON_Exit(void)
 {
   GF_ASSERT_HEAVY(GameBeaconSys != NULL);
-  
+ 
+  GFL_STR_DeleteBuffer( GameBeaconSys->sbuf_person_name );
   GFL_HEAP_FreeMemory(GameBeaconSys);
   GameBeaconSys = NULL;
 }
@@ -517,6 +520,7 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   LINKFEST_LOG_PARAM log;
   LINKFEST_SCORELOG_SET_CODE ret = LINKFEST_SCORELOG_SET_FAILED;
   BOOL is_entry,with_param;
+  int log_score;
 
   if( bsys->gsys == NULL ){
     GF_ASSERT(0);
@@ -554,7 +558,7 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
     log.prm.score.value = info->action.fmission.my_score;
   }  
   
-  ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log, with_param );
+  ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log, with_param, &log_score );
 
   if( ret != LINKFEST_SCORELOG_SET_FAILED ){
     FMISSION_LOG_TBL* tbl = LINK_FESTIVAL_GetMissionLogStackTbl( fest_sys );
@@ -562,11 +566,11 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
     //ミッションログ収集
     if( ret != LINKFEST_SCORELOG_SET_UPDATE ){
       if( ret == LINKFEST_SCORELOG_SET_NEW_ENTRY ){
-        FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_NEW, FALSE );
+        FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, log_score, FMISSION_LOG_SET_NEW, FALSE );
       }
-      FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_MAP, FALSE );
+      FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, log_score, FMISSION_LOG_SET_MAP, FALSE );
     }
-    FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_NORMAL, FALSE );
+    FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, log_score, FMISSION_LOG_SET_NORMAL, FALSE );
   }
 }
 
@@ -1086,7 +1090,8 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGER *send
   BEACONINFO_Set_Details_Walk( info );
 
   //生成したパラメータで、自分用のミッションログを生成
-  FMISSION_LOG_TBL_SetLogFromBeacon( LINK_FESTIVAL_GetMissionLogStackTbl(fest_sys), &tmp.info, FMISSION_LOG_SET_NORMAL, TRUE );
+  FMISSION_LOG_TBL_SetLogFromBeacon(
+    LINK_FESTIVAL_GetMissionLogStackTbl(fest_sys), &tmp.info, LINK_FESTIVAL_GetMyScore( fest_sys ), FMISSION_LOG_SET_NORMAL, TRUE );
   
   if(GAMEBEACON_SUB_CheckPriority( action ) == TRUE){
     //実際の送信バッファに生成したパラメータを反映して、送信リクエストをかける
@@ -1894,7 +1899,8 @@ void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAME
   if( LINK_FESTIVAL_TMapRootUpdate( fest_sys, info->townmap_root_zone_id ))
   {
     //自分用のミッションログを生成
-    FMISSION_LOG_TBL_SetLogFromBeacon( LINK_FESTIVAL_GetMissionLogStackTbl(fest_sys), info, FMISSION_LOG_SET_MAP, TRUE );
+    FMISSION_LOG_TBL_SetLogFromBeacon(
+      LINK_FESTIVAL_GetMissionLogStackTbl(fest_sys), info, LINK_FESTIVAL_GetMyScore(fest_sys), FMISSION_LOG_SET_MAP, TRUE );
   }
 }
 
