@@ -116,6 +116,7 @@ void LOCAL_TVT_SECRET_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
     u16 state = LOCAL_TVT_CALLDATA_GetState( cp_data, LOCAL_TVT_PERSON_SECRET );
     u32 index = LTVT_SECREAT_DATA_SearchIndex( state );
     LTVT_SECREAT_TALK talk = LTVT_SECREAT_DATA_GetTalkProg( index );
+    u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_data );
 
     if( LTVT_SECREAT_TALK_RING_OFF == talk )
     {
@@ -131,6 +132,11 @@ void LOCAL_TVT_SECRET_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
       p_person->list_msgID[1]     = CALL_SECRET_02;
       p_person->list_num          = 2;
       p_person->list_start_msgID  = LOCAL_TVT_CALLDATA_GetSpecialMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
+      //女性の場合は会話番号を足す
+      if( sex == PTL_SEX_FEMALE )
+      {
+        p_person->list_start_msgID += SECRET_MSGID_FEMALE_ADD;
+      }
       p_person->cp_list_msg_data  = cp_msg;
     }
   }
@@ -250,11 +256,15 @@ static BOOL LOCAL_TVT_SECRET_Greeting( LOCAL_TVT_PERSON_SYS *p_person, const LOC
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
       u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_param->p_data );
       u32 msgID = LOCAL_TVT_CALLDATA_GetGreetingMsgID( cp_param->p_data, LOCAL_TVT_PERSON_SECRET );
+
+#if 0 //かならず最初の１０回は相手からかけて、その後は自分しかかけないので
+      //エクセルで管理することにした
       //かけてくる場合番号を足す
       if( p_wk->mode == LOCAL_TVT_SECRET_MODE_SEND )
       {
         msgID += SECRET_MSGID_RECIVE_ADD;
       }
+#endif
       //女性の場合は会話番号を足す
       if( sex == PTL_SEX_FEMALE )
       {
@@ -407,6 +417,15 @@ static BOOL Local_Tvt_Secret_FarewellInner( LOCAL_TVT_PERSON_SYS *p_person, cons
       const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
       u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_param->p_data );
       u16 msgID = LOCAL_TVT_CALLDATA_GetFarewellMsgID( cp_param->p_data, LOCAL_TVT_PERSON_SECRET );
+      PERSON_STATE_SECRET_DATE date = Local_Tvt_Secret_GetDateEvent( cp_param->p_data );
+
+      //デートに誘っていたら（会話していたら）
+      //メッセージを帰る
+      if( date != PERSON_STATE_SECRET_DATE_NONE && p_wk->is_talk )
+      {
+        msgID = CALL_SECRET_TALK_SP_01;
+      }
+
       //女性の場合は会話番号を足す
       if( sex == PTL_SEX_FEMALE )
       {
