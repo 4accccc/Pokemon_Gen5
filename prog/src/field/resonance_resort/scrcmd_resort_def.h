@@ -165,6 +165,9 @@
 #define RESORT_SECRETARY_SEL_ONE              (113) //ÇPÇ¬ÇæÇØ
 #define RESORT_SECRETARY_SEL_MANY             (114) //ï°êî
 
+  //ÉtÉ@Éì
+#define RESORT_FUN_GREET_MSGID                (120) //à•éA
+
 //_RESORT_SEARCH_RECEPTIONóp
 #define RESORT_SEARCH_PROXY_GTS               (0)
 #define RESORT_SEARCH_PROXY_MYSTERY           (0)

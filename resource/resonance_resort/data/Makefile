@@ -25,6 +25,7 @@ targetkutikomi = resort_kutikomi
 targetoffreco  = resort_offreco
 targetcity 		= resort_city
 targetpresent = resort_present
+targetpreset = resort_preset
 
 #------------------------------------------------------------------------------
 #依存するファイル名
@@ -54,6 +55,7 @@ INSTITUTIONCONV 		= resort_institution_converter.rb
 SPOTCONV 		= resort_spot_converter.rb
 NPCCONV 			= resort_npc_converter.rb
 CITYCONV		= resort_city_converter.rb
+PRESETCONV		= resort_preset_converter.rb
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -68,7 +70,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR_ARC)/$(targetall).narc $(TARGETDIR_ARC)/$(targetall).naix $(TARGETDIR_PROG)/$(targetpeopleh).h $(TARGETDIR_PROG)/$(targetshop).h $(TARGETDIR_PROG)/$(targetspot).h
+do-build:	$(TARGETDIR_ARC)/$(targetall).narc $(TARGETDIR_ARC)/$(targetall).naix $(TARGETDIR_PROG)/$(targetpeopleh).h $(TARGETDIR_PROG)/$(targetshop).h $(TARGETDIR_PROG)/$(targetspot).h $(TARGETDIR_PROG)/$(targetpreset).h
 
 # narc のコピーだけ実行する
 $(TARGETDIR_ARC)/$(targetall).narc: $(targetall).narc
@@ -86,15 +88,18 @@ $(TARGETDIR_PROG)/$(targetshop).h:	$(targetshop).h
 $(TARGETDIR_PROG)/$(targetspot).h:	$(targetspot).h
 	$(COPY) $(targetspot).h $(TARGETDIR_PROG)
 
+$(TARGETDIR_PROG)/$(targetpreset).h:	$(targetpreset).h
+	$(COPY) $(targetpreset).h $(TARGETDIR_PROG)
+
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat $(targetpresent).dat
+$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat $(targetpresent).dat $(targetpreset).dat
 	nnsarc -r -l -n -i $(targetall) $^
 	$(NAIXCUT) $(targetall).naix
 	#-rm -f *.dat
 
 #データコンバート
-$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat $(targetpresent).dat $(targetshop).h $(targetspot).h: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch) $(objcode)
+$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat $(targetpresent).dat $(targetshop).h $(targetspot).h $(targetpreset).h $(targetpreset).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch) $(objcode)
 	$(XLSCONV) -o $(targetpeople).csv -p 1 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetshop).csv -p 2 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetservice).csv -p 3 -s csv $(xlsname).xls
@@ -106,6 +111,7 @@ $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(
 	$(XLSCONV) -o $(targetoffreco).csv -p 9 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetcity).csv -p 10 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetpresent).csv -p 11 -s csv $(xlsname).xls
+	$(XLSCONV) -o $(targetpreset).csv -p 12 -s csv $(xlsname).xls
 	-rm -f *.dat
 	ruby $(DEFINECONV) $(targetdefine).csv $(definehash) $(targetpeopleh)
 	ruby $(PEOPLECONV) $(targetpeople).csv $(msgfile) $(scriptfile) $(targetpeople)
@@ -114,6 +120,7 @@ $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(
 	ruby $(SPOTCONV) $(targetspot).csv $(msgfile) $(targetspot)
 	ruby $(NPCCONV) $(targetnpc).csv $(targetkutikomi).csv $(targetoffreco).csv $(msgfile) $(objcode) $(targetnpc) $(targetkutikomi) $(targetoffreco)
 	ruby $(CITYCONV) $(targetcity).csv $(targetpresent).csv $(msgfile) $(targetcity) $(targetpresent)
+	ruby $(PRESETCONV) $(targetpreset).csv $(msgfile) $(objcode) $(targetshop).h $(targetspot).h $(targetpreset)
 	-rm -f *.csv
 endif
 

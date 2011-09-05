@@ -1734,12 +1734,17 @@ static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup 
 #define UR_CHR_MOYA (UL_CHR_MOYA + FLIP_H)
 #define DL_CHR_MOYA (UL_CHR_MOYA + FLIP_V)
 #define DR_CHR_MOYA (UL_CHR_MOYA + FLIP_H + FLIP_V)
-#define U_CHR_MOYA (CHR_COUNT_GIZA+2)
+#define U_CHR_MOYA (UL_CHR_MOYA+2)
 #define D_CHR_MOYA (U_CHR_MOYA + FLIP_V)
-#define L_CHR_MOYA (CHR_COUNT_GIZA+3)
+#define L_CHR_MOYA (UL_CHR_MOYA+3)
 #define R_CHR_MOYA (L_CHR_MOYA + FLIP_H)
-#define SPC_CHR_MOYA (CHR_COUNT_GIZA+4)
-#define CONNECT_CHR_MOYA  (CHR_COUNT_GIZA+1)
+#define SPC_CHR_MOYA (UL_CHR_MOYA+4)
+#define CONNECT_CHR_MOYA  (UL_CHR_MOYA+1)
+
+#define U_CHR_MOYA_S (UL_CHR_MOYA+5)
+#define D_CHR_MOYA_S (U_CHR_MOYA_S + FLIP_V)
+#define L_CHR_MOYA_S (UL_CHR_MOYA+6)
+#define R_CHR_MOYA_S (L_CHR_MOYA_S + FLIP_H)
 
 static void writeWindow_Normal(
     TALKMSGWIN_SYS* tmsgwinSys, GFL_BMPWIN *bmpwin, TAIL_SETPAT tailPat )
@@ -2107,29 +2112,57 @@ static void writeWindow_Moya(
       GFL_BG_FillScreen(frameID,
           (wplt | (UL_CHR_MOYA+chrOffs)),
           px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+      GFL_BG_FillScreen(frameID,
+          (wplt | (U_CHR_MOYA_S+chrOffs)),
+          px, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+      GFL_BG_FillScreen(frameID,
+          (wplt | (L_CHR_MOYA_S+chrOffs)),
+          px - 1, py, 1, 1, GFL_BG_SCRWRT_PALIN);
     }
 
     GFL_BG_FillScreen(frameID,
         (wplt | (U_CHR_MOYA+chrOffs)),
-        px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN);
+        px + 1, py - 1, sx - 1, 1, GFL_BG_SCRWRT_PALIN);
 
     if(overR == FALSE){
       GFL_BG_FillScreen(frameID,
           (wplt | (UR_CHR_MOYA+chrOffs)),
           px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+      GFL_BG_FillScreen(frameID,
+          (wplt | (U_CHR_MOYA_S+chrOffs)),
+          px + sx - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+      GFL_BG_FillScreen(frameID,
+          (wplt | (R_CHR_MOYA_S+chrOffs)),
+          px + sx, py, 1, 1, GFL_BG_SCRWRT_PALIN);
     }
   }
   
   if(overL == FALSE){
-    GFL_BG_FillScreen(frameID,
-        (wplt | (L_CHR_MOYA+chrOffs)),
-        px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN);
+    if( overU == FALSE ){
+      GFL_BG_FillScreen(frameID,
+          (wplt | (L_CHR_MOYA+chrOffs)),
+          px - 1, py + 1, 1, sy - 1, GFL_BG_SCRWRT_PALIN);
+    }else{
+      GFL_BG_FillScreen(frameID,
+          (wplt | (L_CHR_MOYA+chrOffs)),
+          px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN);
+    }
   }
 
   if(overR == FALSE){
-    GFL_BG_FillScreen(frameID,
-        (wplt | (R_CHR_MOYA+chrOffs)),
-        px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN);
+    if( overU == FALSE ){
+      GFL_BG_FillScreen(frameID,
+         (wplt | (R_CHR_MOYA+chrOffs)),
+          px + sx, py + 1, 1, sy - 1, GFL_BG_SCRWRT_PALIN);
+    }else{
+      GFL_BG_FillScreen(frameID,
+         (wplt | (R_CHR_MOYA+chrOffs)),
+          px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN);
+    }
   }
 
   if(overD == FALSE){
@@ -2137,16 +2170,32 @@ static void writeWindow_Moya(
       GFL_BG_FillScreen(frameID,
           (wplt | (DL_CHR_MOYA+chrOffs)),
           px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+      GFL_BG_FillScreen(frameID,
+          (wplt | (D_CHR_MOYA_S+chrOffs)),
+          px, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+      GFL_BG_FillScreen(frameID,
+          (wplt | (L_CHR_MOYA_S+chrOffs)),
+          px - 1, py + sy - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
     }
 
     GFL_BG_FillScreen(frameID,
         (wplt | (D_CHR_MOYA+chrOffs)),
-        px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN);
+        px + 1, py + sy, sx - 1, 1, GFL_BG_SCRWRT_PALIN);
 
     if(overR == FALSE){
       GFL_BG_FillScreen(frameID,
           (wplt | (DR_CHR_MOYA+chrOffs)),
           px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+      GFL_BG_FillScreen(frameID,
+          (wplt | (D_CHR_MOYA_S+chrOffs)),
+          px + sx - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+
+      GFL_BG_FillScreen(frameID,
+          (wplt | (R_CHR_MOYA_S+chrOffs)),
+          px + sx, py + sy - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
     }
   }
   

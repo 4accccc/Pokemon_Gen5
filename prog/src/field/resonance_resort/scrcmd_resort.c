@@ -595,22 +595,25 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     {
       RESORT_COMM_TYPE  comm  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_COMM_ID, NULL );
       u32 num  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXTEND_NUM, NULL );
-      if( comm == RESORT_COMM_TYPE_BEACON )
       {
-        u32 msg_start = SexGetMsgID( sex, resort_tourist_greet_07_m, resort_tourist_greet_07_f );
-        GF_ASSERT( num > 0 );
-        *p_ret_wk = msg_start + num - 1;
 
-      }
-      else if( comm == RESORT_COMM_TYPE_NULL )
-      {
-        //ファンかチュートリアル
-        GF_ASSERT(0);
-      }
-      else
-      {
-        u32 msg_start = SexGetMsgID( sex, resort_tourist_greet_00_m, resort_tourist_greet_00_f );
-        *p_ret_wk = msg_start + comm - RESORT_COMM_TYPE_START;
+        if( comm == RESORT_COMM_TYPE_BEACON )
+        {
+          u32 msg_start = SexGetMsgID( sex, resort_tourist_greet_07_m, resort_tourist_greet_07_f );
+          GF_ASSERT( num > 0 );
+          *p_ret_wk = msg_start + num - 1;
+
+        }
+        else if( comm == RESORT_COMM_TYPE_NULL )
+        {
+          //ファンかチュートリアル
+          GF_ASSERT(0);
+        }
+        else
+        {
+          u32 msg_start = SexGetMsgID( sex, resort_tourist_greet_00_m, resort_tourist_greet_00_f );
+          *p_ret_wk = msg_start + comm - RESORT_COMM_TYPE_START;
+        }
       }
     }
     break;
@@ -718,6 +721,11 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_RESIDENT_LV_MSGID:
     *p_ret_wk = SexGetMsgID( sex, resort_resident_lv_00_m, resort_resident_lv_00_f );
     break;
+
+  case RESORT_FUN_GREET_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_fun_greet_00_m, resort_fun_greet_00_f );
+    break;
+
   case RESORT_MSGID_BOARD_00:
   case RESORT_MSGID_BOARD_01:
   case RESORT_MSGID_BOARD_02:

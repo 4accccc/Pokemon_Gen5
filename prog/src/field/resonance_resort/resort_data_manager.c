@@ -1220,3 +1220,67 @@ void RESORT_ABSTRUCT_DATA_ModifyProfWord( RESORT_ABSTRUCT_DATA *p_wk, HEAPID hea
     PROF_WORD_FreeWork( p_prof );
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ファン設定処理
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	RESORT_BINARY_PRESET *cp_preset プリセットデータ
+ *	@param	RESORT_RECV_DATA *cp_owner  自分のデータ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_MANAGER_SetProxyFunRandom( RESORT_PROXY_DATA *p_wk, const RESORT_BINARY_PRESET *cp_preset, const RESORT_RECV_DATA *cp_owner, HEAPID heapID )
+{
+  u32 presetID  = 0;
+  while(TRUE )
+  {
+    presetID = GFUser_GetPublicRand( RESORT_PRESET_ID_MAX );
+
+    if( RESORT_BINARY_PRESET_GetData( cp_preset, presetID, RESORT_BINARY_PRESET_PARAM_TYPE ) == RESORT_PRESET_TYPE_RANDOM )
+    {
+      break;
+    }
+  }
+
+
+  RESORT_PROXY_DATA_InitInstance( p_wk );
+
+  {
+    u32 name = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_NAME);
+    u32 sex = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_SEX);
+    u32 view = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_VIEW);
+    u32 id = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_ID);
+    u32 job = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_JOB);
+
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
+    STRBUF *p_name = GFL_MSG_CreateString( p_msg, name );
+
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_NAME, (u32)GFL_STR_GetStringCodePointer(p_name) );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_SEX, sex );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_OBJCODE, view );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, id );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, job );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_TYPE, RESORT_PROXY_TYPE_FUN );
+
+    GFL_STR_DeleteBuffer( p_name );
+    GFL_MSG_Delete( p_msg );
+  }
+
+  {
+    STRCODE strcode[ 64 ];
+
+    RESORT_RECV_DATA_GetData( cp_owner, RESORT_DATA_PARAM_INTRODUCTION, strcode );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_INTRODUCTION, (u32)strcode );
+
+    RESORT_RECV_DATA_GetData( cp_owner, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)strcode );
+
+    RESORT_RECV_DATA_GetData( cp_owner, RESORT_DATA_PARAM_EXT7_THANKS, strcode );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT7_THANKS, (u32)strcode );
+  }
+
+  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_RND_SEED, GFUser_GetPublicRand(GFL_STD_RAND_MAX) );
+  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_VER, GET_VERSION() );
+  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_LANG, PM_LANG );
+}

@@ -164,8 +164,8 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
 
       //ƒwƒbƒ_‹¤’ÊÝ’è
       {
-        u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
-        header.obj_code = UnionView_GetObjCode( trainer_view );
+        u8 objcode = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_OBJCODE, NULL );
+        header.obj_code = objcode;
         header.event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary  );
         header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
       }
@@ -244,8 +244,8 @@ void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk )
 void RESORT_PEOPLE_ChangeOBJCode( RESORT_PEOPLE *p_wk )
 {
   MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
-  u16 code = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
-  MMDL_ChangeOBJCode( p_mmdl, UnionView_GetObjCode( code ) );
+  u16 code = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_OBJCODE, NULL );
+  MMDL_ChangeOBJCode( p_mmdl, code );
 }
 //----------------------------------------------------------------------------
 /**

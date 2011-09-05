@@ -38,6 +38,7 @@
 #include "resonance_resort/resort_shop.h"
 #include "resonance_resort/resort_binary.h"
 #include "resonance_resort/resort_shop.h"
+#include "net_app/union/union_beacon_tool.h"
 
 //--------------------------------------------------------------
 /// proto
@@ -308,7 +309,7 @@ static void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gamedata )
   sex = RESORT_RECV_DATA_GetData( p_wk, RESORT_DATA_PARAM_SEX, NULL );
 
   //見た目
-  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINERVIEW, sex*8+GFL_STD_MtRand(8) );
+  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_OBJCODE, UnionView_GetObjCode(sex*8+GFL_STD_MtRand(8)) );
   //名前セット
   {
     GFL_MSGDATA* p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(HEAPID_PROC) );

@@ -30,6 +30,7 @@ _EVENT_DATA    ev_resort_secretary_move
 _EVENT_DATA    ev_resort_secretary_center
 _EVENT_DATA    ev_resort_secretary_pc
 _EVENT_DATA    ev_resort_secretary_select
+_EVENT_DATA    ev_resort_proxy_fun
 _EVENT_DATA    ev_resort_npc_mouthcomm
 _EVENT_DATA    ev_resort_npc_offreco
 _EVENT_DATA    ev_resort_infomation
@@ -483,12 +484,19 @@ sub_tourist_spot:
         _SYSWIN_MSG( resort_sys_16, POS_DOWN )
 
         //施設レベルアップ
+
+
+        _ME_PLAY( SEQ_ME_AVENUE_01 )
         SWITCH $LWK_RET
         CASE RESORT_SET_SPOT_SHOP_LVUP THEN
           _SYSWIN_MSG( resort_sys_13, POS_DOWN )
+	        _ME_WAIT()
+	        //_AB_KEYWAIT_MARK()
 
         CASE RESORT_SET_SPOT_SHOP_CHANGE THEN
           _SYSWIN_MSG( resort_sys_13, POS_DOWN )
+	        _ME_WAIT()
+	        //_AB_KEYWAIT_MARK()
 
           _SYSWIN_CLOSE()
           //変化した店を見せるためにフィールド開き直し
@@ -505,7 +513,10 @@ sub_tourist_spot:
 
           _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 0 )
           //○○から○○になった！
+          _ME_PLAY( SEQ_ME_AVENUE_02 )
           _SYSWIN_MSG( resort_sys_20, POS_DOWN )
+	        _ME_WAIT()
+	        //_AB_KEYWAIT_MARK()
         ENDSWITCH
       ENDIF
 
@@ -526,7 +537,11 @@ sub_tourist_spot:
       IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP THEN
         _RESORT_START_EFFECT( RESORT_EFFECT_CONFETTI )
         _RESORT_SET_WORD( RESORT_WORD_CITY_RANK, RESORT_WORD_PARAM_NONE, 0, 2 )
+
+        _ME_PLAY( SEQ_ME_AVENUE_02 )
         _SYSWIN_MSG( resort_sys_18, POS_DOWN )
+	      _ME_WAIT()
+	      //_AB_KEYWAIT_MARK()
       ENDIF
     ENDIF
 
@@ -868,8 +883,14 @@ sub_resident_lot:
       //TODO 何等がなに？
       //データからひっぱってきた値
       _NUMBER( 0, LWK_RET, 2 )
+
+
+      _ME_PLAY( SEQ_ME_AVENUE_03 )
   	  _BALLOONWIN_OBJMSG_POS( resort_lot_01, LWK_OBJID, POS_DEFAULT )
+	    _ME_WAIT()
+	    //_AB_KEYWAIT_MARK()
     	_BALLOONWIN_CLOSE()
+
       $LWK_RET += 10
  	    _ITEM_EVENT_KEYWAIT( LWK_RET, 1 )
     ENDIF
@@ -1731,8 +1752,87 @@ sub_secretary_select_main_menu:
   _RESORT_SET_MY_DATA( RESORT_MY_PARAM_WANT_JOB, LWK_MENU_RET )
 }
 _RET
+
 /**************************************************************/
-/*            NPC　クチコミ                     */
+/*            代理人　ファン                                  */
+/**************************************************************/
+EVENT_START ev_resort_proxy_fun
+{
+	_TALK_OBJ_START()
+  _RESORT_TALK_START()
+
+  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
+
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_WORD_PARAM_FRONT, 0, 2 )
+
+  //挨拶文
+  _RESORT_GET_MSGID( RESORT_FUN_GREET_MSGID, LWK_MSGID )
+	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DEFAULT )
+	_BALLOONWIN_CLOSE()
+
+  //訪問してきました
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
+	_SYSWIN_MSG( resort_sys_select_00, POS_DOWN )
+
+  //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
+  $LWK_MENU_LOOP = TRUE
+  WHILE $LWK_MENU_LOOP == TRUE
+    //メニュー表示
+    _CALL sub_proxy_fun_menu
+
+    //分岐
+    SWITCH $LWK_MENU_RET
+    CASE SEQ_TOURIST_INVITATION THEN   //招待
+      _CALL sub_tourist_invitation
+    CASE SEQ_TOURIST_SPOT THEN         //おすすめスポット
+      _CALL sub_tourist_spot
+    CASE SEQ_TOURIST_BYE THEN          //またね
+      _CALL sub_tourist_bye
+    DEFAULT
+      $LWK_MENU_LOOP = FALSE //念のため無限ループを避ける
+    ENDSWITCH
+  ENDWHILE
+
+  _RESORT_TALK_END()
+}
+EVENT_END
+
+//==============================================================
+//サブルーチン：代理人ファンメニュー表示
+//==============================================================
+sub_proxy_fun_menu:
+{
+  DEFINE_LOCAL LWK_IS_SECRETARY_FULL 
+  DEFINE_LOCAL LWK_IS_INSTITUTION_EMPTY
+
+  _SYSWIN_MSG( msg_exp_window , POS_DOWN ) // 説明文表示用のウィンドウを表示
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
+
+	_BMPMENU_MAKE_LIST_EX( resort_sys_select_01, resort_sys_select_info_01, SEQ_TOURIST_INVITATION )	//招待
+
+  //スポットは施設がないとでない
+  _RESORT_GET_DATA( RESORT_GET_PARAM_IS_INSTITUTION_EMPTY, LWK_IS_INSTITUTION_EMPTY )
+  IF $LWK_IS_INSTITUTION_EMPTY == FALSE THEN
+	  _BMPMENU_MAKE_LIST_EX( resort_sys_select_03, resort_sys_select_info_03, SEQ_TOURIST_SPOT )	    //スポット
+  ENDIF
+
+	_BMPMENU_MAKE_LIST_EX( resort_sys_select_10, resort_sys_select_info_10, SEQ_TOURIST_BYE )	        //またね
+
+	//メニュー表示
+	_BMPMENU_START()
+
+  //どうしますか？を閉じる
+  _SYSWIN_CLOSE()
+
+  IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+    $LWK_MENU_RET = SEQ_TOURIST_BYE
+  ENDIF
+}
+_RET
+
+/**************************************************************/
+/*            NPC　クチコミ                                   */
 /**************************************************************/
 EVENT_START ev_resort_npc_mouthcomm
 {

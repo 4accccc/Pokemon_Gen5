@@ -18,6 +18,8 @@
 #include "../gmk_tmp_wk.h"
 #include "arc/fieldmap/zone_id.h" //for ZONE_ID_
 #include "system/prof_word.h"
+#include "savedata/medalbox.h"
+
 //script
 #include "../script.h"     //for SCRIPT_CallScript
 
@@ -162,6 +164,12 @@ static void RESORT_FIELD_EFFECT_Start( RESORT_FIELD_EFFECT *p_wk, RESORT_FIELD_E
 static BOOL RESORT_FIELD_EFFECT_IsStop( const RESORT_FIELD_EFFECT *cp_wk, RESORT_FIELD_EFFECT_ID id );
 static void RESORT_FIELD_EFFECT_Stop( RESORT_FIELD_EFFECT *p_wk, RESORT_FIELD_EFFECT_ID id );
 
+//=============================================================================
+/**
+ *          その他
+ */
+//=============================================================================
+static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, HEAPID heapID );
 
 //=============================================================================
 /**
@@ -203,6 +211,7 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(prof_word) );
 
+
   //リゾートシステム作成
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
@@ -219,6 +228,9 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
 
     p_wk->p_sys = RESORT_SYSTEM_Init( &param, heapID );
   }
+  
+  //街へ来たとき１日１回だけファンが増加する
+  RESORT_FIELD_AppearFun( p_wk->p_sys, p_gamedata, heapID );
 
   //人物システム
   p_wk->p_people_sys = RESORT_FIELD_PEOPLE_Init( heapID, p_wk->p_sys, GAMEDATA_GetMMdlSys(p_gamedata), FIELDMAP_GetFieldPlayer(p_fieldmap) );
@@ -1460,16 +1472,7 @@ static void Resort_Crowd_People_Wk_UpdateStreat( RESORT_CROWD_PEOPLE_WK *p_wk, M
 //-----------------------------------------------------------------------------
 static void Resort_Crowd_People_Wk_InitKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk )
 {
-  u16 extend = RESORT_PEOPLE_GetData( p_wk->p_people, RESORT_DATA_PARAM_EXTEND_BIT, NULL );
-  u16 bit_num = 0;
-  int i;
-  for( i = 0; i < RESORT_EXTEND_TYPE_MAX; i++ )
-  {
-    if( extend & 1<<i )
-    {
-      bit_num++;
-    }
-  }
+  u16 bit_num = RESORT_PEOPLE_GetData( p_wk->p_people, RESORT_DATA_PARAM_EXTEND_NUM, NULL );
 
   bit_num = p_wk->move_grid * bit_num / (RESORT_CROWD_MOVE_LIMIT_FRONT-RESORT_CROWD_MOVE_LIMIT_BACK);
 
@@ -3411,3 +3414,93 @@ static void Resort_Field_Effect_StopConfetti( RESORT_FIELD_EFFECT *p_wk )
 
   p_wk->cp_func[RESORT_FIELD_EFFECT_ID_CONFETTI] = NULL;
 }
+
+//=============================================================================
+/**
+ *          その他
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ファン出現処理
+ *
+ *	@param	RESORT_SYSTEM *p_sys システム
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, HEAPID heapID )
+{
+  RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_sys );
+
+  if( RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_FUN_DAY_FLAG, NULL) == FALSE )
+  {
+    int i;
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_gamedata);
+    RESONANCE_RESORT_SV *p_reso_sv = RESONANCE_RESORT_SV_GetWork(p_sv);
+    RESORT_PEOPLE_ALL_DATA *p_all_people  = RESORT_SYSTEM_GetPeopleAllData( p_sys );
+    RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
+    RESORT_BINARY_PRESET *p_preset = RESORT_SYSTEM_GetBinaryPreset( p_sys );
+    RESORT_PROXY_BUFF *p_buff = RESORT_SYSTEM_GetProxyBuff( p_sys );
+    RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID) );
+    
+    u32 fun_appear_num = 0;
+
+    {
+      static const u8 sc_card_rank_add[]  =
+      {
+        1,2,3,4,5,5
+      };
+      static const u8 sc_badge_add[]  =
+      {
+        1,1,1,1,2,2,2,2,
+      };
+      static const u8 sc_medal_add[]  =
+      {
+        1,2,3,4,5
+      };
+
+      u32 rank  = TRAINERCARD_GetCardRank( p_gamedata );
+      u8  badge = MISC_GetBadgeCount( SaveData_GetMisc(p_sv) );
+      u16 medal = MEDALBOX_GetMedalCount( SaveData_GetMedalBox(p_sv) , FALSE );
+
+      if( rank < NELEMS(sc_card_rank_add) )
+      {
+        fun_appear_num += sc_card_rank_add[ rank ];
+      }
+      else
+      {
+        fun_appear_num += sc_card_rank_add[ NELEMS(sc_card_rank_add)-1 ];
+      }
+      if( rank < NELEMS(sc_badge_add) )
+      {
+        fun_appear_num += sc_badge_add[ rank ];
+      }
+      else
+      {
+        fun_appear_num += sc_badge_add[ NELEMS(sc_badge_add)-1 ];
+      }
+      if( rank < NELEMS(sc_medal_add) )
+      {
+        fun_appear_num += sc_medal_add[ rank ];
+      }
+      else
+      {
+        fun_appear_num += sc_medal_add[ NELEMS(sc_medal_add)-1 ];
+      }
+    }
+
+    for( i = 0; i < fun_appear_num; i++ )
+    {
+      RESORT_DATA_MANAGER_SetProxyFunRandom( p_proxy, p_preset, p_owner, heapID );
+      if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) != RESORT_SETDATA_SET )
+      {
+        continue;
+      }
+    }
+
+    RESORT_PROXY_DATA_Exit( p_proxy );
+
+    RESORT_CITY_DATA_SetData(p_city,RESORT_CITY_DATA_FUN_DAY_FLAG, TRUE);
+  }
+}
+
+

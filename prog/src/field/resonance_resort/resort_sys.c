@@ -33,6 +33,7 @@ struct _RESORT_SYSTEM
   RESORT_BINARY_CITY    *p_binary_city;
   RESORT_BINARY_INSTITUTION *p_binary_insti;
   RESORT_BINARY_PRESENT *p_binary_present;
+  RESORT_BINARY_PRESET *p_binary_preset;
 
   RESORT_ABSTRUCT_MANAGER *p_abstruct;
 
@@ -77,6 +78,7 @@ RESORT_SYSTEM * RESORT_SYSTEM_Init( const RESORT_ALL_DATA_PARAM *cp_param, HEAPI
   p_wk->p_binary_city = RESORT_BINARY_CITY_Init( heapID );
   p_wk->p_binary_insti = RESORT_BINARY_INSTITUTION_Init( heapID );
   p_wk->p_binary_present  = RESORT_BINARY_PRESENT_Init( heapID );
+  p_wk->p_binary_preset   = RESORT_BINARY_PRESET_Init( heapID );
 
   //データ作成
   p_wk->p_abstruct = RESORT_ABSTRUCT_MANAGER_Init( cp_param, heapID );
@@ -102,6 +104,8 @@ void RESORT_SYSTEM_Exit( RESORT_SYSTEM *p_wk )
   RESORT_ABSTRUCT_MANAGER_Exit( p_wk->p_abstruct );
 
   //バイナリ破棄
+
+  RESORT_BINARY_PRESET_Exit( p_wk->p_binary_preset );
   RESORT_BINARY_PRESENT_Exit( p_wk->p_binary_present );
   RESORT_BINARY_INSTITUTION_Exit( p_wk->p_binary_insti );
   RESORT_BINARY_CITY_Exit( p_wk->p_binary_city );
@@ -175,6 +179,19 @@ RESORT_BINARY_INSTITUTION * RESORT_SYSTEM_GetBinaryInstitution( RESORT_SYSTEM *p
 RESORT_BINARY_PRESENT * RESORT_SYSTEM_GetBinaryPresent( RESORT_SYSTEM *p_wk )
 {
   return p_wk->p_binary_present;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ROM内人物プリセットデータ
+ *
+ *	@param	RESORT_SYSTEM *p_wk   ワーク
+ *
+ *	@return ROM内人物プリセットデータ
+ */
+//-----------------------------------------------------------------------------
+RESORT_BINARY_PRESET * RESORT_SYSTEM_GetBinaryPreset( RESORT_SYSTEM *p_wk )
+{
+  return p_wk->p_binary_preset;
 }
 //----------------------------------------------------------------------------
 /**

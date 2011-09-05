@@ -83,19 +83,6 @@ static BOOL s_debug_permission = FALSE;
 //#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
 #define RESORT_VALID_ASSERT(...) RESORT_Printf( __VA_ARGS__ )
 
-static inline RESORT_GET_TrainerView( u8 view, u8 sex ) 
-{
-  if( sex == PM_MALE )
-  {
-    return view;
-  }
-  else
-  {
-    return view + UNION_VIEW_INDEX_WOMAN_START;
-  }
-}
-
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  RTC構造体からリゾート用日時への変換
@@ -324,7 +311,7 @@ typedef struct
   STRCODE introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN]; //<自己紹介(!! EOM除く !!) 16 32
   u8  version;                      ///<バージョン    1 33
   u8  language;                     ///<言語コード    1 34
-  u8  trainer_view:4;                 ///<見た目        1 35
+  u8  dummy2:4;                 ///<見た目        1 35 -> trainer_view から objcodeにした
   u8  sex:4;                          ///<性別          1 36
   u8  dummy1;
   u16 trainerID;                    ///<トレーナーID(下位16ビット)  2 38
@@ -332,7 +319,7 @@ typedef struct
   u8 hobby;                      ///<趣味  1 40
   u16 play_hour     :10;          ///< プレイ時間 2 42
   u16 play_min      :6;
-  u16 dummy2;
+  u16 objcode;            ///<みため
 }RESORT_BASIC1_DATA;
 
 SDK_COMPILER_ASSERT( sizeof(RESORT_BASIC1_DATA) == RESORT_BASIC1_DATA_SIZE );
@@ -356,14 +343,7 @@ static void RESORT_BASIC1_DATA_SetMyStatus( RESORT_BASIC1_DATA *p_wk, const MYST
   p_wk->version   = MyStatus_GetRomCode( cp_mystatus );
   p_wk->language  = MyStatus_GetRegionCode( cp_mystatus );
 
-  if( p_wk->sex == PM_MALE )
-  {
-    p_wk->trainer_view = MyStatus_GetTrainerView(cp_mystatus);
-  }
-  else
-  {
-    p_wk->trainer_view = MyStatus_GetTrainerView(cp_mystatus) - UNION_VIEW_INDEX_WOMAN_START;
-  }
+  p_wk->objcode = UnionView_GetObjCode( MyStatus_GetTrainerView(cp_mystatus) );
 }
 
 //----------------------------------------------------------------------------
@@ -426,7 +406,7 @@ static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GA
   p_wk->language  = cp_beacon_info->language;
   p_wk->nation    = cp_beacon_info->nation;
   p_wk->area      = cp_beacon_info->area;
-  p_wk->trainer_view  = cp_beacon_info->trainer_view;
+  p_wk->objcode  = UnionView_GetObjCode( cp_beacon_info->trainer_view );
   {
     const QUESTIONNAIRE_ANSWER_WORK *cp_ques_ans = &cp_beacon_info->question_answer;
     p_wk->job   = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_JOB);
@@ -455,10 +435,22 @@ static BOOL RESORT_BASIC1_DATA_IsValid( const RESORT_BASIC1_DATA *cp_wk )
     return FALSE;
   }
   //見た目
-  if( cp_wk->trainer_view > UNION_VIEW_INDEX_MAN_END )
   {
-    RESORT_VALID_ASSERT( "基本データ１：見た目が不正です\n" );
-    return FALSE;
+    int i;
+    BOOL is_ok = FALSE;
+    for( i = 0; i <= UNION_VIEW_INDEX_MAX; i++ )
+    {
+      if( cp_wk->objcode == UnionView_GetObjCode( i ) )
+      {
+        is_ok = TRUE;
+        break;
+      }
+    }
+    if( !is_ok )
+    {
+      RESORT_VALID_ASSERT( "基本データ１：見た目が不正です\n" );
+      return FALSE;
+    }
   }
   //国地域
   if( !WIFI_COUNTRY_CheckNG( cp_wk->nation, cp_wk->area, cp_wk->language) )
@@ -1047,7 +1039,7 @@ struct _RESORT_PROXY_DATA
   u8    type;
   u8    present_bit;
   u16   pokemon;
-  u16   goto_shop;
+  u16   want_spot;
   u8    want_job;
   u8    placeID;
   u8    peopleID;
@@ -1325,7 +1317,7 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
   else
   {
     //見た目が変わるか変更
-    BOOL change_view   = p_wk->basic1.trainer_view != cp_beacon->basic1.trainer_view;
+    BOOL change_view   = p_wk->basic1.objcode != cp_beacon->basic1.objcode;
 
     //ベーシックは必ずマージ
     p_wk->basic1  = cp_beacon->basic1;
@@ -1346,7 +1338,7 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
 
     if( change_view )
     {
-      NAGI_Printf( "recv view %d\n", p_wk->basic1.trainer_view );
+      NAGI_Printf( "recv view %d\n", p_wk->basic1.objcode );
       RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_VIEW);
     }
     else
@@ -1377,7 +1369,7 @@ BOOL RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
   else
   {
 
-    BOOL change_view   = p_wk->basic1.trainer_view != cp_recv->basic1.trainer_view;
+    BOOL change_view   = p_wk->basic1.objcode != cp_recv->basic1.objcode;
 
     //必ずいれる
     p_wk->basic1  = cp_recv->basic1;
@@ -1430,10 +1422,10 @@ BOOL RESORT_RECV_DATA_MergeProxy( RESORT_RECV_DATA *p_wk, const RESORT_PROXY_DAT
   }
   else
   {
-    BOOL change_view   = p_wk->basic1.trainer_view != cp_proxy->basic1.trainer_view;
+    BOOL change_view   = p_wk->basic1.objcode != cp_proxy->basic1.objcode;
 
     //見た目だけマージ
-    p_wk->basic1.trainer_view = cp_proxy->basic1.trainer_view;
+    p_wk->basic1.objcode = cp_proxy->basic1.objcode;
 
     if( change_view )
     {
@@ -1506,8 +1498,8 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return cp_wk->placeID;
   case RESORT_DATA_PARAM_SEX:
     return cp_wk->basic1.sex;
-  case RESORT_DATA_PARAM_TRAINERVIEW:
-    return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
+  case RESORT_DATA_PARAM_OBJCODE:
+    return cp_wk->basic1.objcode;
   case RESORT_DATA_PARAM_NAME:
     RESORT_BASIC1_DATA_GetName(&cp_wk->basic1, p_ret_adrs );
     return 0;
@@ -1764,12 +1756,8 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_WANT_JOB:
     p_wk->basic2.want_job  = data;
     break;
-  case RESORT_DATA_PARAM_TRAINERVIEW:
-    if( data > UNION_VIEW_INDEX_MAN_END )
-    {
-      data -= UNION_VIEW_INDEX_WOMAN_START;
-    }
-    p_wk->basic1.trainer_view = data;
+  case RESORT_DATA_PARAM_OBJCODE:
+    p_wk->basic1.objcode = data;
     OS_TPrintf( "デバッグ用値設定\n" );
     break;
   case RESORT_DATA_PARAM_SEX:
@@ -2277,7 +2265,7 @@ BOOL RESORT_PROXY_DATA_IsValid( const RESORT_PROXY_DATA *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  代理人データを設定
+ *	@brief  代理人データを設定(GTS, PDW)
  *
  *	@param	RESORT_PROXY_DATA *p_wk ワーク
  *	@param  MYSTATUS  マイステータス
@@ -2288,9 +2276,21 @@ void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, const MYSTATUS *cp_
 {
   RESORT_PROXY_DATA_InitInstance( p_wk );
 
-  p_wk->type = 1;  //TODO
+  switch( comm_type )
+  {
+  default:
+    GF_ASSERT(0);
+    comm_type = RESORT_COMM_TYPE_GTS;
+    /*  fall  */
+  case RESORT_COMM_TYPE_GTS:
+    p_wk->type = RESORT_PROXY_TYPE_GTS;
+    break;
+  case  RESORT_COMM_TYPE_PDW:
+    p_wk->type = RESORT_PROXY_TYPE_PDW;
+  }
+
   p_wk->comm_type = comm_type;
-  p_wk->want_job  = 0; //TODO
+  p_wk->want_job  = 0;
 
   RESORT_BASIC1_DATA_SetMyStatus( &p_wk->basic1, cp_status );
 
@@ -2324,15 +2324,8 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     return cp_wk->placeID; 
   case RESORT_DATA_PARAM_SEX:
     return cp_wk->basic1.sex;
-  case RESORT_DATA_PARAM_TRAINERVIEW:
-    if( cp_wk->basic1.sex == PM_MALE )
-    {
-      return cp_wk->basic1.trainer_view;
-    }
-    else
-    {
-      return cp_wk->basic1.trainer_view + UNION_VIEW_INDEX_WOMAN_START;
-    }
+  case RESORT_DATA_PARAM_OBJCODE:
+    return cp_wk->basic1.objcode;
   case RESORT_DATA_PARAM_NAME:
     {
       STRCODE *p_str  = p_ret_adrs;
@@ -2404,6 +2397,11 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
       GFL_MSG_Delete( p_msg );
     }
     return 0;
+
+  case RESORT_DATA_PARAM_EXTEND_NUM:
+    return 0;
+  case RESORT_DATA_PARAM_WANT_SPOT:
+    return cp_wk->want_spot;
   default:
     GF_ASSERT_MSG(0,"未対応%d\n",param);
     return 0;
@@ -2430,6 +2428,52 @@ void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_DATA_PARAM param
     break;
   case RESORT_DATA_PARAM_LOCK:
     //なにもしない
+    break;
+  case RESORT_DATA_PARAM_NAME:
+    GFL_STD_MemCopy( (const void*)data, p_wk->basic1.name, sizeof(STRCODE)*(PERSON_NAME_SIZE) );
+    break;
+
+  case RESORT_DATA_PARAM_EXT6_PHRASE:
+    GFL_STD_MemCopy( (const void*)data, p_wk->extend6.phrase, sizeof(STRCODE)*RESORT_PHRASE_LEN );
+    break;
+  case RESORT_DATA_PARAM_EXT7_THANKS:
+    GFL_STD_MemCopy( (const void*)data, p_wk->extend7.thanks, sizeof(STRCODE)*RESORT_THANKS_LEN );
+    break;
+  case RESORT_DATA_PARAM_INTRODUCTION:
+    GFL_STD_MemCopy( (const void*)data, p_wk->basic1.introduction, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN );
+    break;
+  case RESORT_DATA_PARAM_SEX:
+    p_wk->basic1.sex  = data;
+    break;
+  case RESORT_DATA_PARAM_VER:
+    p_wk->basic1.version = data;
+    break;
+  case RESORT_DATA_PARAM_LANG:
+    p_wk->basic1.language = data;
+    break;
+  case RESORT_DATA_PARAM_RND_SEED:
+    p_wk->rnd_seed  = data;
+    break;
+  case RESORT_DATA_PARAM_OBJCODE:
+    p_wk->basic1.objcode  = data;
+    break;
+  case RESORT_DATA_PARAM_TRAINER_ID:
+    p_wk->basic1.trainerID = data;
+    break;
+  case RESORT_DATA_PARAM_REPLACE_LOCK:
+    /*  何もしない  */
+    break;
+  case RESORT_DATA_PARAM_TYPE:
+    p_wk->type  = data;
+    break;
+  case RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG:
+    /*  何もしない  */
+    break;
+  case RESORT_DATA_PARAM_WANT_SPOT:
+    p_wk->want_spot = data;
+    break;
+  case RESORT_DATA_PARAM_WANT_JOB:
+    p_wk->want_job  = data;
     break;
   default:
     GF_ASSERT_MSG(0,"未対応%d\n",param);
@@ -2567,9 +2611,6 @@ BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp
     RESORT_PROXY_DATA_AddProxy( p_data, cp_proxy );
     RESORT_RECV_Printf( "空のデータに入れた！\n" );
     return TRUE;
-  }
-  else
-  {
   }
 
   RESORT_RECV_Printf( "代理人データを受け取ったが、バッファがいっぱい！\n" );
@@ -3520,7 +3561,7 @@ BOOL RESORT_SECRETARY_DATA_MergeProxy( RESORT_SECRETARY_DATA *p_wk, const RESORT
   GF_ASSERT( !RESORT_SECRETARY_DATA_IsEmpty( p_wk ) );
 
   //見た目だけマージ
-  p_wk->basic1.trainer_view = cp_proxy->basic1.trainer_view;
+  p_wk->basic1.objcode = cp_proxy->basic1.objcode;
 
   return TRUE;
 }
@@ -3551,8 +3592,8 @@ u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DA
     return 0;
   case RESORT_DATA_PARAM_SEX: 
     return cp_wk->basic1.sex;
-  case RESORT_DATA_PARAM_TRAINERVIEW:
-    return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex ); 
+  case RESORT_DATA_PARAM_OBJCODE:
+    return cp_wk->basic1.objcode; 
   case RESORT_DATA_PARAM_PRESENT_BIT:
     return cp_wk->present_bit;
   case RESORT_DATA_PARAM_RND_SEED:
@@ -4177,10 +4218,10 @@ struct _RESORT_CITY_DATA
   u32     talk_cnt;     //7*4=28 376
   u32     build_cnt;
   u32     quest_clear_cnt;
-  u32     exp;  //TODO
-  u32     tex;  //TODO
-  u32     todo3;  //TODO
-  u8      secret_present_type;  
+  u32     exp;
+  u32     tex;
+  u32     fun_day_flag;  //TODO  でかい
+  u8      secret_present_type;
   u8      secret_present_num;
   u8      secret_present_flag;
   u8      trainerID_cnt;
@@ -4283,6 +4324,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->rnd_seed;
   case RESORT_CITY_DATA_PARAM_TEX:
     return cp_wk->tex;
+  case RESORT_CITY_DATA_FUN_DAY_FLAG:
+    return cp_wk->fun_day_flag;
   default:
     GF_ASSERT(0);
     return 0;
@@ -4316,6 +4359,9 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
   case RESORT_CITY_DATA_PARAM_TEX:
     p_wk->tex = data;
     break;
+  case RESORT_CITY_DATA_FUN_DAY_FLAG:
+    p_wk->fun_day_flag  = data;
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -4337,6 +4383,9 @@ void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
 
   //乱数再抽選
   p_wk->rnd_seed      = GFUser_GetPublicRand(0);
+
+  //ファンを再度出現させる
+  p_wk->fun_day_flag  = FALSE;
 }
 //----------------------------------------------------------------------------
 /**

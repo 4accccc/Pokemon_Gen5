@@ -12,6 +12,9 @@
 
 #include "field/resonance_resort_data.h"
 #include "resonance_resort_data.naix"
+#include "resort_shop.h"
+#include "resort_spot.h"
+#include "resort_preset.h"
 
 //=============================================================================
 /**
@@ -430,4 +433,37 @@ typedef enum
 #define RESORT_BINARY_PRESENT_Exit(x) RESORT_BINARY_Exit(x)
 #define RESORT_BINARY_PRESENT_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)
 
+//=============================================================================
+/**
+ *					プリセットデータ
+*/
+//=============================================================================
+//-------------------------------------
+///	ワーク
+//=====================================
+typedef RESORT_BINARY RESORT_BINARY_PRESET;
 
+//-------------------------------------
+///	取得データ
+//=====================================
+typedef enum
+{
+  RESORT_BINARY_PRESET_PARAM_TYPE,
+  RESORT_BINARY_PRESET_PARAM_NAME,
+  RESORT_BINARY_PRESET_PARAM_VIEW,
+  RESORT_BINARY_PRESET_PARAM_SEX,
+  RESORT_BINARY_PRESET_PARAM_ID,
+  RESORT_BINARY_PRESET_PARAM_JOB,
+  RESORT_BINARY_PRESET_PARAM_SPOT,
+  RESORT_BINARY_PRESET_PARAM_INTRO,
+  RESORT_BINARY_PRESET_PARAM_PHRASE,
+  RESORT_BINARY_PRESET_PARAM_THANKS,
+  RESORT_BINARY_PRESET_PARAM_MAX,
+}RESORT_BINARY_PRESET_PARAM;
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+#define RESORT_BINARY_PRESET_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_preset_dat,RESORT_BINARY_PRESET_PARAM_MAX,x)
+#define RESORT_BINARY_PRESET_Exit(x) RESORT_BINARY_Exit(x)
+#define RESORT_BINARY_PRESET_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)

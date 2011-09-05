@@ -54,6 +54,8 @@
 #include "savedata/resonance_resort_sv.h"
 #include "wifi_unionobj_plt.cdat" //for sc_wifi_unionobj_plt
 #include "scrcmd_resort.h"
+#include "system/nsbtx_to_clwk.h"
+#include "arc/fieldmap/fldmmdl_mdlparam.naix"
 
 // BMPWIN定義テーブル
 
@@ -252,7 +254,7 @@ static void obj_load_item( SHOP_BUY_APP_WORK *wk );
 static void obj_load_people( SHOP_BUY_APP_WORK *wk );
 static void obj_del( SHOP_BUY_APP_WORK *wk );
 static void itemicon_resource_change( SHOP_BUY_APP_WORK *wk, u16 itemno );
-static void people_resource_change( SHOP_BUY_APP_WORK *wk, u16 trainer_view );
+static void people_resource_change( SHOP_BUY_APP_WORK *wk, u16 mdl_id );
 static void bmpwin_init( SHOP_BUY_APP_WORK *wk );
 static void print_money( SHOP_BUY_APP_WORK *wk );
 static void bmpwin_exit( SHOP_BUY_APP_WORK *wk );
@@ -297,6 +299,8 @@ static void SecretaryList_Change( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void SecretaryList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void InstitutionList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
+
+static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u16 * rsc_idx );
 
 
 //scrcmd_resort.cのソースを使う
@@ -1522,7 +1526,7 @@ static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id )
       wk->lineup[cnt].id    = i;
       wk->lineup[cnt].serviceID = 0;
       wk->lineup[cnt].price =  0;
-      wk->lineup[cnt].param1 = RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
+      wk->lineup[cnt].param1 = RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_OBJCODE, NULL );
       wk->lineup[cnt].param2 = 0;
       wk->lineup[cnt].p_data_adrs = p_secretary;
 
@@ -1608,7 +1612,7 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
       wk->lineup[cnt].id    = i;
       wk->lineup[cnt].serviceID = 0;
       wk->lineup[cnt].price =  0;
-      wk->lineup[cnt].param1 = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
+      wk->lineup[cnt].param1 = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_OBJCODE, NULL );
       wk->lineup[cnt].param2 = 0;
       wk->lineup[cnt].p_data_adrs = p_resident;
 
@@ -2078,31 +2082,20 @@ static void itemicon_resource_change( SHOP_BUY_APP_WORK *wk, u16 itemno )
    
   }
 }
-static void people_resource_change( SHOP_BUY_APP_WORK *wk, u16 trainer_view )
+static void people_resource_change( SHOP_BUY_APP_WORK *wk, u16 mdl_id )
 {
-  NNSG2dCharacterData* chara;
-  NNSG2dPaletteData*   pltt;
-  void *chara_buf,*pltt_buf;
-  const u16 *cp_plt_adrs;
-  
-  if(trainer_view<16){
+  if( mdl_id != RESORT_SHOP_ITEMID_NONE )
+  {
+    u8 anm_id;
+    u16 rsc_idx;
 
-    pltt_buf = GFL_ARCHDL_UTIL_LoadPalette( wk->iconHandle, 
-                  NARC_wifi_unionobj_wifi_union_obj_NCLR, &pltt, wk->heapId );
-    chara_buf = GFL_ARCHDL_UTIL_LoadOBJCharacter( wk->iconHandle, 
-                  NARC_wifi_unionobj_front00_NCGR+trainer_view, 0, &chara, wk->heapId );
-  
-    //GFL_CLGRP_PLTT_Replace( wk->clact_res[2][ SHOP_OBJ_RES_PLTT ], pltt, 1 );
+    {
+      ARCHANDLE * handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, wk->heapId );
+      getMMdlObjCodeParam( handle, mdl_id, &anm_id, &rsc_idx );
+      GFL_ARC_CloseDataHandle( handle );
+    }
 
-    //PLTTには転送元を変えられるReplaceがないので、SDKレベルで転送する
-    cp_plt_adrs = (const u16*)pltt->pRawData + sc_wifi_unionobj_plt[ trainer_view ]*16;
-    DC_FlushRange( cp_plt_adrs, 32 );
-    GX_LoadOBJPltt( cp_plt_adrs, 0x20*2, 32 );
-
-    GFL_CLGRP_CGR_Replace( wk->clact_res[2][ SHOP_OBJ_RES_CHAR ], chara );
-
-    GFL_HEAP_FreeMemory( pltt_buf );
-    GFL_HEAP_FreeMemory( chara_buf );
+    CLWK_TransNSBTX( wk->ClactWork[SHOP_OBJ_ITEM], ARCID_MMDL_RES, rsc_idx, anm_id, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DEFREND_MAIN, wk->heapId );
 
     GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ITEM], TRUE );
   }else{
@@ -3118,4 +3111,55 @@ static void InstitutionList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id )
   }
   OS_Printf("\n");
 #endif 
+}
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 動作モデル正面絵パターンナンバーの取得
+ *
+ * fldmmdlのOBJCODE_PARAMから正面絵の位置を引っ張る
+ * OBJCODE_PARAM::anm_idからアニメパターンの種類がわかるので、
+ * それぞれのアニメパターンの種類から下向き静止アニメをとりだし、
+ * その指定パターンを正面絵のパターンナンバーとして取り出している
+ */
+//-----------------------------------------------------------------------------
+static u8 getFrontAnimePatternNo( anm_id )
+{
+  const MMDL_BBDACT_ANMTBL * mmdl_anm_tbl;
+  GF_ASSERT( anm_id < MMDL_BLACT_ANMTBLNO_MAX );
+  mmdl_anm_tbl = &DATA_MMDL_BBDACT_ANM_ListTable[ anm_id ];
+  GF_ASSERT( AC_DIR_D < mmdl_anm_tbl->anm_max );
+
+  return mmdl_anm_tbl->pAnmTbl[AC_DIR_D]->anmData.celIdx;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 動作モデルIDから動作モデルパラメータを取得する
+ * @param handle
+ * @param mmdl_id
+ * @param anm_id
+ * @param rsc_idx
+ */
+//-----------------------------------------------------------------------------
+static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u16 * rsc_idx )
+{
+  OBJCODE_PARAM objcode_param;
+  u32 size = sizeof( OBJCODE_PARAM );
+  u32 offs = OBJCODE_PARAM_TOTAL_NUMBER_SIZE + ( size * MMDL_TOOL_OBJCodeToDataNumber(mmdl_id) );
+  GFL_ARC_LoadDataOfsByHandle( handle, NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
+      offs, size, &objcode_param );
+
+#if 0
+  TAMADA_Printf("OBJCODE_PARAM:mmdl_id = %d\n",mmdl_id );
+  TAMADA_Printf("OBJCODE_PARAM:offs = %d\n", (offs - OBJCODE_PARAM_TOTAL_NUMBER_SIZE) / size );
+  TAMADA_Printf("OBJCODE_PARAM:anm_id = %d\n",objcode_param.anm_id );
+  TAMADA_Printf("OBJCODE_PARAM:res_idx = %d\n",
+      ((OBJCODE_PARAM_BUF_BBD *)objcode_param.buf)->res_idx );
+#endif
+
+  *anm_id = getFrontAnimePatternNo( objcode_param.anm_id );
+  *rsc_idx = ((OBJCODE_PARAM_BUF_BBD *)objcode_param.buf)->res_idx;
 }

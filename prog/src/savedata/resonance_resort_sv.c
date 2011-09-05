@@ -150,7 +150,7 @@ RESORT_CITY_DATA * RESONANCE_RESORT_SV_GetCityData( RESONANCE_RESORT_SV *p_wk )
  *	@return TRUEデータマージorセット  FALSEデータ破棄
  */
 //-----------------------------------------------------------------------------
-BOOL RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type )
+RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type )
 {
 
   typedef BOOL (*IS_VALID)(  const void *cp_data_adrs );
@@ -215,13 +215,13 @@ BOOL RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedat
   //不正ならば何もしない
   if( !sc_data_function_tbl[type].IsValid( cp_data_adrs ) )
   {
-    return FALSE;
+    return RESORT_SETDATA_NONE;
   }
 
   //市民データのマージ
   if( RESORT_PEOPLE_ALL_DATA_MergeData( p_all_people, cp_data_adrs, type ) )
   {
-    return TRUE;
+    return RESORT_SETDATA_MERGE;
   }
   else
   {
@@ -236,13 +236,13 @@ BOOL RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedat
       case RESRT_MERGE_ORDER_PROXY_RECV:
         if( sc_data_function_tbl[type].MergeRecvBuff( p_sv_buff, cp_data_adrs ) )
         {
-          return TRUE;
+          return RESORT_SETDATA_MERGE;
         }
         if( p_temp_buff )
         {
           if( sc_data_function_tbl[type].MergeRecvBuff( p_temp_buff, cp_data_adrs ) )
           {
-            return TRUE;
+            return RESORT_SETDATA_MERGE;
           }
         }
         order ^=  1;
@@ -250,7 +250,7 @@ BOOL RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedat
       case RESRT_MERGE_ORDER_RECV_PROXY:
         if( sc_data_function_tbl[type].MergeProxyBuff( p_proxy_buff, cp_data_adrs ) )
         {
-          return TRUE;
+          return RESORT_SETDATA_MERGE;
         }
         order ^=  1;
         break;
@@ -267,10 +267,18 @@ BOOL RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedat
     {
       is_set = sc_data_function_tbl[type].AddRecvData( p_temp_buff, cp_data_adrs );
     }
-    return is_set;
+    if( is_set )
+    {
+      return RESORT_SETDATA_SET;
+    }
   }
   else
   {
-    return sc_data_function_tbl[type].AddProxyData( p_proxy_buff, cp_data_adrs );
+    if( sc_data_function_tbl[type].AddProxyData( p_proxy_buff, cp_data_adrs ) )
+    {
+      return RESORT_SETDATA_SET;
+    }
   }
+
+  return RESORT_SETDATA_NONE;
 }
