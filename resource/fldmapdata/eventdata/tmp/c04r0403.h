@@ -23,6 +23,8 @@
 #define C04R0403_BOY2_02                  11
 #define C04R0403_FAN_01_2                 12
 #define C04R0403_FAN_02_2                 13
+#define C04R0403_POKE30A_01               14
+#define C04R0403_POKE30B_01               15
 
 #endif //ZONE_C04R0403_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0403.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

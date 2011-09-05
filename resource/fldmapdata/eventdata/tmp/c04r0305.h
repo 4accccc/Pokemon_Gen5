@@ -33,6 +33,8 @@
 #define C04R0305_SOCCERM_07               21
 #define C04R0305_FAN_01_2                 22
 #define C04R0305_FAN_02_2                 23
+#define C04R0305_POKE17A_01               24
+#define C04R0305_POKE17B_01               25
 
 #endif //ZONE_C04R0305_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0305.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

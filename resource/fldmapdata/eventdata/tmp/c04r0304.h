@@ -26,6 +26,7 @@
 #define C04R0304_FAN_02_2                 14
 #define C04R0304_TRAINER_01               15
 #define C04R0304_BASEBALLM_07             16
+#define C04R0304_POKE31_01                17
 
 #endif //ZONE_C04R0304_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0304.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

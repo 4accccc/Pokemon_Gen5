@@ -21,6 +21,7 @@
 #define C04R0404_BASKETM_02                9
 #define C04R0404_FAN_01_2                 10
 #define C04R0404_FAN_02_2                 11
+#define C04R0404_POKE38_01                12
 
 #endif //ZONE_C04R0404_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0404.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

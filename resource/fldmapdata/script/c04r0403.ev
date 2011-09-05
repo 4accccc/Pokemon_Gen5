@@ -13,6 +13,8 @@
   .include  "c04r0403.h"
   .include  "../../../prog/src/field/rebattle_trainer.h"
 
+//@author Suginaka_Katsunori
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -25,6 +27,8 @@ _EVENT_DATA    ev_c04r0403_tennisw_01
 _EVENT_DATA    ev_c04r0403_tennisw_02
 _EVENT_DATA    ev_c04r0403_boy2_01
 _EVENT_DATA    ev_c04r0403_boy2_02
+_EVENT_DATA		ev_c04r0403_poke30a_01
+_EVENT_DATA		ev_c04r0403_poke30b_01
 _EVENT_DATA_END
 
 
@@ -144,4 +148,17 @@ EVENT_START	ev_c04r0403_boy2_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0403_boy2b_01 )
 EVENT_END
 
+/**************************************************************/
+/*				ヨーテリーＡ								  */
+/**************************************************************/
+EVENT_START	ev_c04r0403_poke30a_01
+	_EASY_TALK_POKEVOICE( MONSNO_YOOTERII, msg_c04r0403_poke30a_01 )
+EVENT_END
+
+/**************************************************************/
+/*				ヨーテリーＢ								  */
+/**************************************************************/
+EVENT_START	ev_c04r0403_poke30b_01
+	_EASY_TALK_POKEVOICE( MONSNO_YOOTERII, msg_c04r0403_poke30b_01 )
+EVENT_END
 

@@ -13,6 +13,8 @@
   .include  "c04r0303.h"
   .include  "../../../prog/src/field/rebattle_trainer.h"
 
+//@author Suginaka_Katsunori
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -37,6 +39,9 @@ _EVENT_DATA    ev_c04r0303_footballm_13
 _EVENT_DATA    ev_c04r0303_footballm_14
 _EVENT_DATA    ev_c04r0303_footballm_15
 _EVENT_DATA    ev_c04r0303_gentleman_01
+_EVENT_DATA		ev_c04r0303_poke33_01
+_EVENT_DATA		ev_c04r0303_poke34_01
+_EVENT_DATA		ev_c04r0303_poke35_01
 _EVENT_DATA_END
 
 
@@ -312,4 +317,23 @@ EVENT_START	ev_c04r0303_gentleman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_gentleman_01 )
 EVENT_END
 
+/**************************************************************/
+/*			ヤナップ										  */
+/**************************************************************/
+EVENT_START	ev_c04r0303_poke33_01
+	_EASY_TALK_POKEVOICE( MONSNO_YANAPPU, msg_c04r0303_poke33_01 )
+EVENT_END
 
+/**************************************************************/
+/*			バオップ										  */
+/**************************************************************/
+EVENT_START	ev_c04r0303_poke34_01
+	_EASY_TALK_POKEVOICE( MONSNO_BAOPPU, msg_c04r0303_poke34_01 )
+EVENT_END
+
+/**************************************************************/
+/*			ヒヤップ										  */
+/**************************************************************/
+EVENT_START	ev_c04r0303_poke35_01
+	_EASY_TALK_POKEVOICE( MONSNO_HIYAPPU, msg_c04r0303_poke35_01 )
+EVENT_END

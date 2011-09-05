@@ -38,6 +38,9 @@
 #define C04R0303_CORN_02                  26
 #define C04R0303_CORN_03                  27
 #define C04R0303_GENTLEMAN_01             28
+#define C04R0303_POKE33_01                29
+#define C04R0303_POKE34_01                30
+#define C04R0303_POKE35_01                31
 
 #endif //ZONE_C04R0303_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0303.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

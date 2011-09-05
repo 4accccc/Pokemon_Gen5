@@ -13,6 +13,8 @@
   .include  "c04r0305.h"
   .include  "../../../prog/src/field/rebattle_trainer.h"
 
+//@author Suginaka_Katsunori
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -28,6 +30,8 @@ _EVENT_DATA    ev_c04r0305_soccerm_04
 _EVENT_DATA    ev_c04r0305_soccerm_05
 _EVENT_DATA    ev_c04r0305_soccerm_06
 _EVENT_DATA    ev_c04r0305_soccerm_07
+_EVENT_DATA		ev_c04r0305_poke17a_01
+_EVENT_DATA		ev_c04r0305_poke17b_01
 _EVENT_DATA_END
 
 
@@ -172,3 +176,17 @@ EVENT_START	ev_c04r0305_soccerm_07
 EVENT_END
 
 
+/**************************************************************/
+/*			ミネズミＡ										  */
+/**************************************************************/
+EVENT_START	ev_c04r0305_poke17a_01
+	_EASY_TALK_POKEVOICE( MONSNO_MINEZUMI, msg_c04r0305_poke17a_01 )
+EVENT_END
+
+
+/**************************************************************/
+/*			ミネズミＢ										  */
+/**************************************************************/
+EVENT_START	ev_c04r0305_poke17b_01
+	_EASY_TALK_POKEVOICE( MONSNO_MINEZUMI, msg_c04r0305_poke17b_01 )
+EVENT_END
