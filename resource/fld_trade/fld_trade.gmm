@@ -549,6 +549,48 @@
       </row><row id="TRADE_OYA_36">
         <language name="JPN" width="256">ハナコ</language>
         <language name="JPN_KANJI" width="256">ハナコ</language>
+      </row><row id="TRADE_POKE_37">
+        <language name="JPN" width="256">マイム</language>
+        <language name="JPN_KANJI" width="256">マイム</language>
+      </row><row id="TRADE_OYA_37">
+        <language name="JPN" width="256">ユキエ</language>
+        <language name="JPN_KANJI" width="256">ユキエ</language>
+      </row><row id="TRADE_POKE_38">
+        <language name="JPN" width="256">ウソきち</language>
+        <language name="JPN_KANJI" width="256">ウソきち</language>
+      </row><row id="TRADE_OYA_38">
+        <language name="JPN" width="256">ショウスケ</language>
+        <language name="JPN_KANJI" width="256">ショウスケ</language>
+      </row><row id="TRADE_POKE_39">
+        <language name="JPN" width="256">ガントル</language>
+        <language name="JPN_KANJI" width="256">ガントル</language>
+      </row><row id="TRADE_OYA_39">
+        <language name="JPN" width="256">ゲンゾウ</language>
+        <language name="JPN_KANJI" width="256">ゲンゾウ</language>
+      </row><row id="TRADE_POKE_40">
+        <language name="JPN" width="256">フサフサ</language>
+        <language name="JPN_KANJI" width="256">フサフサ</language>
+      </row><row id="TRADE_OYA_40">
+        <language name="JPN" width="256">ツルマル</language>
+        <language name="JPN_KANJI" width="256">ツルマル</language>
+      </row><row id="TRADE_POKE_41">
+        <language name="JPN" width="256">メタモン</language>
+        <language name="JPN_KANJI" width="256">メタモン</language>
+      </row><row id="TRADE_OYA_41">
+        <language name="JPN" width="256">ユイ</language>
+        <language name="JPN_KANJI" width="256">ユイ</language>
+      </row><row id="TRADE_POKE_42">
+        <language name="JPN" width="256">シッポ</language>
+        <language name="JPN_KANJI" width="256">シッポ</language>
+      </row><row id="TRADE_OYA_42">
+        <language name="JPN" width="256">ハツネ</language>
+        <language name="JPN_KANJI" width="256">ハツネ</language>
+      </row><row id="TRADE_POKE_43">
+        <language name="JPN" width="256">チャック</language>
+        <language name="JPN_KANJI" width="256">チャック</language>
+      </row><row id="TRADE_OYA_43">
+        <language name="JPN" width="256">ハツネ</language>
+        <language name="JPN_KANJI" width="256">ハツネ</language>
       </row>
 
   <lock>
