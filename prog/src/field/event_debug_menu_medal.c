@@ -181,7 +181,7 @@ static void debugMenuAllTitleMedalOpen( DEBUG_MEDALBOX_WORK* wk )
       // ヒントメダルを開放
       if( medal_state < MEDAL_STATE_TITLE_ACHIVE )
       {
-        MEDALBOX_SetTitleMedalAchive( medal_box , medal_id );
+        DEBUG_SetMedalState( medal_box , medal_id, MEDAL_STATE_TITLE_ACHIVE );
       }
       MEDALBOX_SetTitleMedalGetFlg( medal_box , medal_id , 99 , 12 , 31 );
       GAMEBEACON_SendDataUpdate_MedalCount( MEDALBOX_GetMedalCount(medal_box,FALSE));
@@ -267,7 +267,7 @@ static void debugMenuTitleMedalAchive( DEBUG_MEDALBOX_WORK* wk )
       OS_Printf("MEDALID %d: %u ->",medal_id , medal_state);
 
       // タイトルメダルを達成
-      MEDALBOX_SetTitleMedalAchive( medal_box , medal_id );
+      DEBUG_SetMedalState( medal_box , medal_id, MEDAL_STATE_TITLE_ACHIVE );
 
       // 設定後のタイトル達成状況を表示
       medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
@@ -594,7 +594,7 @@ static void setMedalState( MEDALBOX * medal_box, u8 id, u8 state )
     MEDALBOX_SetHintMedalAchive( medal_box, id );
     break;
   case MEDAL_STATE_TITLE_ACHIVE:
-    MEDALBOX_SetTitleMedalAchive( medal_box, id );
+    DEBUG_SetMedalState( medal_box, id, MEDAL_STATE_TITLE_ACHIVE );
     break;
   case MEDAL_STATE_TITLE_GET:
     DEBUG_SetMedalState( medal_box, id, MEDAL_STATE_TITLE_ACHIVE );
@@ -710,7 +710,7 @@ static void debugMenuMedalDataRandomSet( DEBUG_MEDALBOX_WORK* wk )
         OS_Printf("タイトル開放 %d: %u ->",medal_id , medal_state);
 
         // タイトルメダルを開放
-        MEDALBOX_SetTitleMedalAchive( medal_box , medal_id );
+        DEBUG_SetMedalState( medal_box , medal_id, MEDAL_STATE_TITLE_ACHIVE );
         //MEDALBOX_SetTitleMedalGetFlg( medal_box , medal_id , GFL_STD_MtRand( 99 ) + 1 , GFL_STD_MtRand( 12 ) + 1 , GFL_STD_MtRand( 31 ) + 1  );
 
         // 設定後の開放状況を表示

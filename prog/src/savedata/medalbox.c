@@ -178,10 +178,13 @@ u8 MEDALBOX_GetMedalState( const MEDALBOX *p_mdlbox, MedalID medal_id )
 //-----------------------------------------------------------------------------
 void MEDALBOX_SetTitleMedalAchive( MEDALBOX * p_mdlbox, MedalID medal_id )
 {
-  MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
+  u8  medal_status = MEDALBOX_GetMedalState( p_mdlbox, medal_id );
 
-  SetMedalState( p_medal_st , MEDAL_STATE_TITLE_ACHIVE );
-
+  if ( medal_status < MEDAL_STATE_TITLE_ACHIVE )
+  {
+    MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
+    SetMedalState( p_medal_st , MEDAL_STATE_TITLE_ACHIVE );
+  }
 }
 
 //----------------------------------------------------------------------------
