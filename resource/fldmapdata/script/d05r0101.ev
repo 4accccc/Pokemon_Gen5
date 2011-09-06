@@ -163,6 +163,8 @@ EVENT_START   ev_reserve_d05r0101_tutorial
   _FLAG_SET( FV_D05R0101_SWRIVAL_01 )
   //D05 プラズマ団イベントSCENE_CHANGE有効
   $WK_SCENE_D05 = 2
+  //プラズマフリゲート・現在地対応
+  $WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_C05
   //========================================//
 
   //【仮】トーナメント後のイベントまでジャンプ

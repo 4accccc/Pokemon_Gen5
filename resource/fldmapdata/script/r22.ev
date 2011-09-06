@@ -200,6 +200,8 @@ EVENT_START   ev_pos_r22_poke5_01
   _FLAG_SET( FV_R22_SWBOSS_01 )
   //フラグON（D32のイワパレスイベント用）
   _FLAG_SET( FE_R22_SWBOSS_ITEM_01 )
+  //プラズマフリゲート・現在地対応
+  $WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_W21
   //==================================//
 
 EVENT_END

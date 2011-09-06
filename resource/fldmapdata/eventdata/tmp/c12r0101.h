@@ -26,5 +26,6 @@
 #define BG_C12R0101_BED_01                1
 #define BG_C12R0101_BED_02                2
 #define BG_C12R0101_WII_01                3
+#define BG_C12R0101_BED_03                4
 
 #endif //ZONE_C12R0101_EVB_H

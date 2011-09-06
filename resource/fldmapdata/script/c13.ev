@@ -518,7 +518,7 @@ _TALK_OBJ_START()
 		_BALLOONWIN_TALKOBJ_MSG( msg_c13_swplazmam1_04 )
 		_MSGWIN_CLOSE()
 		
-		//戦闘開始
+		//【仮】戦闘開始
 		//_TRAINER_BTL_SET()
 		
 		//敗戦チェック

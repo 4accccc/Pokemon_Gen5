@@ -182,6 +182,8 @@ INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
   _FLAG_RESET( FV_W21_SWLEADER1_01 )
   //W21イベント進行
   $WK_SCENE_W21_01 = 3
+  //プラズマフリゲート・現在地対応
+  $WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_D10
   //========================================//
   
   //W21に遷移
