@@ -838,6 +838,8 @@ void LINKFEST_LOG_TOP_SCORE_Delete( LINKFEST_LOG_TOP_SCORE* tsp )
 {
   GFL_STR_DeleteBuffer( tsp->name );
   MI_CpuClear8( tsp, sizeof(LINKFEST_LOG_TOP_SCORE));
+
+  GFL_HEAP_FreeMemory( tsp );
 }
 
 
