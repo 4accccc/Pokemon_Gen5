@@ -140,6 +140,7 @@ sub_wheel_talk_swan:
     ENDIF
   ENDIF
 
+  // デモ再生
   _DEMO_FADEOUT_BLACK_CALL()
   _CALL_3D_DEMO_EX( DEMO3D_ID_F_WHEEL, i_scene_id )
 
@@ -181,6 +182,9 @@ sub_wheel_talk_swan:
   //========================================/
   // 初回フラグをたてる
   _FLAG_SET( lwk_flag_id )
+
+  // JAの履歴差し込み 「観覧車に乗った」
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_WHEEL )
   //========================================/
 
 }
@@ -409,9 +413,12 @@ sub_wheel_ride_main:
   ////////////////////////////////////////////////
   //フラグセット
   
+  // JAの履歴差し込み 「観覧車に乗った」
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_WHEEL )
+  
   //一日一回フラグを立てる
   _FLAG_SET( TMFLG_AMUSEMENT_TR_BTL )
-  
+
   //対戦済みフラグチェック
   _TRAINER_FLAG_CHECK( lwk_tr_id, i_ret )
   IF $i_ret == TRUE THEN
