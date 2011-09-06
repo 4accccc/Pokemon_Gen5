@@ -117,8 +117,9 @@ u32 MedalSortList[] = {
     MDLID_MUGEN_AREA_W_LV2,	//じゅどうますたー
     MDLID_WBT_JOUTO,	//じょうとさいきょう
     MDLID_SHOPPING_CNT_LV1,	//じょうれんかすたまー
-    MDLID_SURECHIGAI_CNT_LV1,	//すいーとほーむ
+    MDLID_RECOVERY_HOME,	//すいーとほーむ
     MDLID_SURECHIGAI_CNT_LV2,	//すくらんぶる１００
+    MDLID_SURECHIGAI_CNT_LV1,	//すくらんぶる３０
     MDLID_SURECHIGAI_CNT_LV3,	//すくらんぶる５００
     MDLID_FISHING_LV3,	//すごいつりびと
     MDLID_GUIDANCE_CNT_LV3,	//すたんぷこれくたー
@@ -221,7 +222,6 @@ u32 MedalSortList[] = {
     MDLID_DATACONVERT_LV3,	//べてらんこんばーたー
     MDLID_MUSICALWIN_LV3,	//べてらんすたー
     MDLID_VENDOR_COUNT_LV1,	//べんだーますたー
-    MDLID_RECOVERY_HOME,	//ほーむしっく
     MDLID_WBT_HOUEN,	//ほうえんさいきょう
     MDLID_MARINETUBE,	//ほえるおーうぉっち
     MDLID_WBT_HODOMOE,	//ほどもえさいきょう

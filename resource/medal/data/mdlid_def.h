@@ -72,8 +72,8 @@
 #define MDLID_SHOPPING_MONEY_LV1	(58)	// ぜいたくカスタマー
 #define MDLID_PREMIUM_BALL_LV1	(59)	// かいものじょうず
 #define MDLID_SODATEYA_CNT_LV1	(60)	// そだてやマニア
-#define MDLID_RECOVERY_HOME	(61)	// ホームシック
-#define MDLID_SURECHIGAI_CNT_LV1	(62)	// スイートホーム
+#define MDLID_RECOVERY_HOME	(61)	// スイートホーム
+#define MDLID_SURECHIGAI_CNT_LV1	(62)	// スクランブル３０
 #define MDLID_SURECHIGAI_CNT_LV2	(63)	// スクランブル１００
 #define MDLID_SURECHIGAI_CNT_LV3	(64)	// スクランブル５００
 #define MDLID_SURECHIGAI_CNT_MAX	(65)	// ラッシュアワー
