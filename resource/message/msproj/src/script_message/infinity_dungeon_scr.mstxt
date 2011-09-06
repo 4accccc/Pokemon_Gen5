@@ -15276,11 +15276,14 @@ Cギアを　見てごらん▼
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここは　ちからだけじゃ　かてないわ
-たたかわないことも　さくせんよ</Text>
+			<Text>もうっ！
+せっかく　いいところまで　いったのに▽
+やられちゃった！▼
+むりしないで　たたかいを　さけて
+おいしゃさんを　さがすべきだったかな▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T01:49:13" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T03:11:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15288,11 +15291,14 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここは　力だけじゃ　勝てないわ
-戦わないことも　作戦よ</Text>
+			<Text>もうっ！
+せっかく　いいところまで　行ったのに▽
+やられちゃった！▼
+無理しないで　戦いを　さけて
+お医者さんを　探すべきだったかな？▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T01:49:44" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:35:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15306,19 +15312,26 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:01:38" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バトルガール　白の樹洞</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:18:23" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_w_01_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリア6？
-そんな　エリアまで　あるのね▼
-わたしも　がんばって　
-さきの　エリアを　めざすわ！</Text>
+			<Text>あなた　もう　エリア６に
+いったらしいじゃない！▼
+くぅー！　まけてられないわね！
+すぐに　おいついて　みせるからね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T01:51:27" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T03:35:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15326,13 +15339,13 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エリア6？
-そんな　エリアまで　あるのね▼
-わたしも　がんばって　
-先の　エリアを　目指すわ！</Text>
+			<Text>あなた　もう　エリア６に
+行ったらしいじゃない！▼
+くぅー！　負けてられないわね！
+すぐに　追いついて　みせるからね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T01:51:49" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T03:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15346,19 +15359,28 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:01:41" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バトルガール　白の樹洞</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:18:24" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_w_01_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリアを　せいはしたの？
-すごいわ！！▼
-みかけによらず　あなた　つよいのね
-こんど　てあわせしてね！</Text>
+			<Text>ねぇ　あなた！　すべての　エリアを
+せいはしたんだって！？▼
+あのバンジロウを　こえる
+トレーナーが　あらわれただなんて▽
+しんじられない……▼
+うん……とにかく　おめでとう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T01:58:00" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T03:23:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15366,13 +15388,15 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エリアを　制覇したの？
-すごいわ！！▼
-みかけによらず　あなた　強いのね
-今度　手合わせしてね！</Text>
+			<Text>ねぇ　あなた！　全ての　エリアを
+制覇したんだって！？▼
+あのバンジロウを　超える
+トレーナーが　現れただなんて▽
+信じられない……▼
+うん……とにかく　おめでとう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T01:58:25" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T03:23:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15386,17 +15410,26 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:01:44" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>バトルガール　白の樹洞</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:18:26" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_w_02_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゅどうの　さいかそうって
-どうなって　いるんだろうね？</Text>
+			<Text>しろのじゅどうの　さいかそうには
+いったい　なにが　あるのか……▼
+……ふむ　わたしが　いちばんに
+ときあかして　みせるよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:07:38" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T03:26:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15404,11 +15437,13 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>樹洞の　最下層って
-どうなって　いるんだろうね？</Text>
+			<Text>白の樹洞の　最下層には
+いったい　なにが　あるのか……▼
+……ふむ　わたしが　一番に
+解き明かして　みせるよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:07:58" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T03:36:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15422,19 +15457,27 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:01:48" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>やまおとこ　白の樹洞
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:21:47" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_w_02_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やっと　エリア3まで
-いくことが　できたよ▼
-え？　エリア6！？
-これいじょう　いけるかな　……▼</Text>
+			<Text>ふふふっ！　きいてくれ！
+ついに　エリア３まで　いったんだ！▼
+……って　エリア６！？
+うえには　うえが　いるもんだな……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:14:17" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:36:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15442,13 +15485,13 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やっと　エリア3まで
-行くことが　できたよ▼
-え？　エリア6！？
-これ以上　行けるかな　……▼</Text>
+			<Text>ふふふっ！　聞いてくれ！
+ついに　エリア３まで　行ったんだ！▼
+……って　エリア６！？
+上には　上が　いるもんだな……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:14:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:36:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15462,23 +15505,31 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:01:51" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>やまおとこ　白の樹洞
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:21:51" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_w_02_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よし！　エリア6まで
-クリアできたぞ！▼
-え？　エリアを　せいはした？
-すごいよ！　キミ！▼
-さいかそうは　……
-いや！　じぶんで　いくよ▼
-じぶんの　このめで
-さいかそうを　みるんだ！</Text>
+			<Text>ふふっ！　げきせんを　くぐりぬけ
+ついに　わたしは　クリアした！▽
+あの　やばすぎる　エリア５をな！▼
+……って　ぜんぶ　クリアしたの？
+きみ　さいかそうまで　いったの？▼
+ははっ……すごすぎる……▼
+……いつか　わたしも　このめで
+さいかそうを　みてみたいもんだな……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:22:33" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T03:47:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15486,17 +15537,17 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よし！　エリア6まで
-クリアできたぞ！▼
-え？　エリアを　制覇した？
-すごいよ！　キミ！▼
-最下層は　……
-いや！　自分で　行くよ▼
-自分の　この目で
-最下層を　見るんだ！</Text>
+			<Text>ふふっ！　激戦を　くぐりぬけ
+ついに　わたしは　クリアした！▽
+あの　やばすぎる　エリア５をな！▼
+……って　全部　クリアしたの？
+きみ　最下層まで　行ったの？▼
+ははっ……すごすぎる……▼
+……いつか　わたしも　この目で
+最下層を　みてみたいもんだな……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:23:13" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T03:48:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15510,17 +15561,26 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:01:54" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>やまおとこ　白の樹洞
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:21:55" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_b_01_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　しせつは　ひじょうに
-きょうみぶかいわ</Text>
+			<Text>そらの　はてまで　つきぬけて
+そびえたつ　くろのまてんろう……▽
+きょうみぶかい　たてもの　よね……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:25:32" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15528,11 +15588,12 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　施設は　非常に
-興味深いわ</Text>
+			<Text>空の　果てまで　突き抜けて
+そびえたつ　黒の摩天楼……▽
+非常に　興味深い　建造物ね……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:26:37" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:41:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15546,19 +15607,28 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:25:44" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>科学者女　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:18:42" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_b_01_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリア6？
-このさきは　どんな　ばしょなのかしら▼
-けんきゅしゃとして
-きょうみは　つきないわ！</Text>
+			<Text>エリア６は　もう　ちじょうからは
+みえないくらいの　たかい　ところに▽
+あるみたいね……▼
+ホント　どこまで　つづいてるのかしら
+けんきゅうしゃとして▽
+きょうみは　つきないわね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:29:41" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:48:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15566,13 +15636,14 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エリア6？
-この先は　どんな　場所なのかしら▼
-研究者として
-興味は　尽きないわ！</Text>
+			<Text>エリア６は　もう　地上からは
+みえないくらいの　高い所に▽
+あるみたいね……▼
+ホント　どこまで　続いてるのかしら？
+研究者として　興味は　尽きないわね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:29:48" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:48:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15586,20 +15657,28 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:25:49" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>科学者女　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:18:53" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_b_01_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなた　さいじょうかいまで
-いけたのね！▼
-エリア10　……
-どんな　ばしょなのかしら
-わたしも　ぜったいに　いくわよ！</Text>
+			<Text>あなた　いちばん　うえの
+エリアも　クリアしたんだってね……▼
+バンジロウくんしか　そんなこと
+できるトレーナー　いないとおもってた▼
+すごいわ……まさに　もう
+くもの　うえの　ひとって　かんじね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:31:17" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:12:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15607,14 +15686,15 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなた　最上階まで
-行けたのね！▼
-エリア10　……
-どんな　場所なのかしら
-わたしも　絶対に　行くわよ！</Text>
+			<Text>あなた　一番　上の
+エリアも　クリアしたんだってね……▼
+バンジロウくんしか　そんなこと
+できるトレーナー　いないと思ってた▼
+すごいわ……まさに　もう
+雲の上の人って　感じね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T02:31:11" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:12:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15628,18 +15708,27 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:25:54" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>科学者女　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:18:50" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_b_02_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このビルには　つよいちからを
-かんじるよ▼
-ううう　ふるえが　とまらない　……</Text>
+			<Text>いままで　みたことも　ない
+つよい　ちからを　かんじる……▼
+ふるえが……とまらないよ……
+このビルには　いったい▽
+なにが　かくされているんだ？▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T04:08:02" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:18:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15647,11 +15736,14 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このビルには　強い力を　感じるよ
-ううう　振るえが　止まらない　……</Text>
+			<Text>いままで　みたことも　ない
+強い力を　感じる……▼
+震えが……止まらないよ……
+このビルには　いったい▽
+なにが　隠されているんだ？▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T04:08:40" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:19:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15665,19 +15757,27 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:25:59" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>サイキッカー男　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:20:52" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_b_02_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ますます　ビルからの　ちからが
-つよくなってるよ▼
-ううう　だめだ！
-とりはだが　とまらない　……</Text>
+			<Text>なんなんだ　この　ちからは！
+どんどん　おおきくなって　いるんだ！▼
+ううっ……とりはだが　とまらない……
+くろのまてんろう……▽
+いったい　どんな　ひみつが……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T04:10:23" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:50:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15685,12 +15785,14 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ますます　ビルからの　力が　強くなってるよ▼
-ううう　だめだ！
-鳥肌が　止まらない　……</Text>
+			<Text>なんなんだ　この　力は！
+どんどん　大きくなって　いるんだ！▼
+ううっ……鳥肌が　止まらない……
+黒の摩天楼……▽
+いったい　どんな　秘密が……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T04:10:12" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:50:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15704,18 +15806,29 @@ Cギアを　見てごらん▼
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:26:03" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>サイキッカー男　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:20:55" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mob_b_02_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>え？　ぜんエリアを　せいはした？▼
-そうか！　このふるえの　げんいんは
-つよいちからを　もつ　キミだったんだ！</Text>
+			<Text>きみが　すべての
+エリアを　せいはしたと　きいて▽
+ぼくも　すべてを　りかいしたよ▼
+いままで　ぼくが　かんじていた
+ふるえあがるような　ちから……▼
+それは　きみが　もっていた
+せんざいのうりょく　だったんだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T04:12:15" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:31:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15723,12 +15836,16 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>え？　全エリアを　制覇した？▼
-そうか！　この震えの　原因は
-強い力を　持つ　キミだったんだ！</Text>
+			<Text>きみが　全ての
+エリアを　制覇したと　聞いて▽
+ぼくも　全てを　理解したよ▼
+いままで　ぼくが　感じていた
+震え上がるような　力……▼
+それは　きみが　もっていた
+潜在能力だったんだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-02T04:12:06" />
+				User="swan_scenario:W00293"
+				Time="2011-09-06T04:33:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15741,6 +15858,13 @@ Cギアを　見てごらん▼
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-09-02T02:26:09" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>サイキッカー男　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-06T02:21:00" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>
