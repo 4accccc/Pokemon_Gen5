@@ -1223,6 +1223,76 @@ void RESORT_ABSTRUCT_DATA_ModifyProfWord( RESORT_ABSTRUCT_DATA *p_wk, HEAPID hea
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  プリセットデータから代理人を設定
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	type  代理人タイプ
+ *	@param	RESORT_BINARY_PRESET *cp_preset プリセット
+ *	@param	presetID  プリセットインデックス
+ *	@param	heapID  テンポラリ用ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Data_Manager_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 type, const RESORT_BINARY_PRESET *cp_preset, u16 presetID, HEAPID heapID )
+{
+  RESORT_PROXY_DATA_InitInstance( p_wk );
+
+  {
+    u32 name = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_NAME);
+    u32 intro = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_INTRO);
+    u32 phrase = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_PHRASE);
+    u32 thanks = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_THANKS);
+    u32 sex = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_SEX);
+    u32 view = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_VIEW);
+    u32 id = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_ID);
+    u32 job = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_JOB);
+
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
+
+    {
+      STRBUF *p_name = GFL_MSG_CreateString( p_msg, name );
+      RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_NAME, (u32)GFL_STR_GetStringCodePointer(p_name) );
+      GFL_STR_DeleteBuffer( p_name );
+    }
+    {
+      STRBUF *p_intro = GFL_MSG_CreateString( p_msg, intro );
+      RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_INTRODUCTION, (u32)GFL_STR_GetStringCodePointer(p_intro) );
+      GFL_STR_DeleteBuffer( p_intro );
+    }
+    {
+      STRBUF *p_phrase = GFL_MSG_CreateString( p_msg, phrase );
+      RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)GFL_STR_GetStringCodePointer(p_phrase) );
+      GFL_STR_DeleteBuffer( p_phrase );
+    }
+    {
+      STRBUF *p_thanks = GFL_MSG_CreateString( p_msg, thanks );
+      RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT7_THANKS, (u32)GFL_STR_GetStringCodePointer(p_thanks) );
+      GFL_STR_DeleteBuffer( p_thanks );
+    }
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_SEX, sex );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_OBJCODE, view );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, id );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, job );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_TYPE, type );
+
+    GFL_MSG_Delete( p_msg );
+  }
+
+  //日時
+  {
+    RTCDate date;
+    GFL_RTC_GetDate(&date);
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_MEET_YEAR, date.year );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_MEET_MONTH, date.month );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_MEET_DAY, date.day );
+  }
+
+  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_RND_SEED, GFUser_GetPublicRand(GFL_STD_RAND_MAX) );
+  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_VER, GET_VERSION() );
+  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_LANG, PM_LANG );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  ファン設定処理
  *
  *	@param	RESORT_PROXY_DATA *p_wk ワーク
@@ -1243,30 +1313,10 @@ void RESORT_DATA_MANAGER_SetProxyFunRandom( RESORT_PROXY_DATA *p_wk, const RESOR
     }
   }
 
+  //プリセットを設定
+  Resort_Data_Manager_SetProxyPreset( p_wk, RESORT_PROXY_TYPE_FUN, cp_preset, presetID, heapID );
 
-  RESORT_PROXY_DATA_InitInstance( p_wk );
-
-  {
-    u32 name = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_NAME);
-    u32 sex = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_SEX);
-    u32 view = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_VIEW);
-    u32 id = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_ID);
-    u32 job = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_JOB);
-
-    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
-    STRBUF *p_name = GFL_MSG_CreateString( p_msg, name );
-
-    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_NAME, (u32)GFL_STR_GetStringCodePointer(p_name) );
-    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_SEX, sex );
-    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_OBJCODE, view );
-    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, id );
-    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, job );
-    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_TYPE, RESORT_PROXY_TYPE_FUN );
-
-    GFL_STR_DeleteBuffer( p_name );
-    GFL_MSG_Delete( p_msg );
-  }
-
+  //ファンは主人公のフリーワードをコピーする
   {
     STRCODE strcode[ 64 ];
 
@@ -1280,7 +1330,63 @@ void RESORT_DATA_MANAGER_SetProxyFunRandom( RESORT_PROXY_DATA *p_wk, const RESOR
     RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT7_THANKS, (u32)strcode );
   }
 
-  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_RND_SEED, GFUser_GetPublicRand(GFL_STD_RAND_MAX) );
-  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_VER, GET_VERSION() );
-  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_LANG, PM_LANG );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秘書にプリセットを使用して設定
+ *
+ *	@param	RESORT_SECRETARY_DATA *p_wk ワーク
+ *	@param	RESORT_BINARY_PRESET *cp_preset プリセット
+ *	@param  preset_type タイプ
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_MANAGER_SetSecretaryPreset( RESORT_SECRETARY_DATA *p_wk, u16 type, const RESORT_BINARY_PRESET *cp_preset, u16 preset_type, u16 peopleID, HEAPID heapID )
+{
+  u32 presetID  = 0;
+  
+  for( presetID = 0; presetID < RESORT_BINARY_GetMax(cp_preset); presetID++ )
+  {
+    if( RESORT_BINARY_PRESET_GetData( cp_preset, presetID, RESORT_BINARY_PRESET_PARAM_TYPE ) == preset_type )
+    {
+      break;
+    }
+  }
+  GF_ASSERT( presetID < RESORT_BINARY_GetMax(cp_preset) );
+
+  {
+    RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID ));
+    Resort_Data_Manager_SetProxyPreset( p_proxy, 0, cp_preset, presetID, heapID );
+    RESORT_SECRETARY_DATA_ConvertProxy( p_wk, p_proxy, peopleID, RESORT_PLACEID_RECEPTION, type );
+    RESORT_PROXY_DATA_Exit(p_proxy);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人にプリセットを使用して設定
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	type  代理人タイプ
+ *	@param	RESORT_BINARY_PRESET *cp_preset プリセット
+ *	@param	preset_type プリセットタイプ
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_MANAGER_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 type, const RESORT_BINARY_PRESET *cp_preset, u16 preset_type, HEAPID heapID )
+{
+  u32 presetID  = 0;
+  
+  for( presetID = 0; presetID < RESORT_BINARY_GetMax(cp_preset); presetID++ )
+  {
+    if( RESORT_BINARY_PRESET_GetData( cp_preset, presetID, RESORT_BINARY_PRESET_PARAM_TYPE ) == preset_type )
+    {
+      break;
+    }
+  }
+  GF_ASSERT( presetID < RESORT_BINARY_GetMax(cp_preset) );
+
+  //プリセットを設定
+  Resort_Data_Manager_SetProxyPreset( p_wk, type, cp_preset, presetID, heapID );
 }

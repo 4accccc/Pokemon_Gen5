@@ -54,23 +54,6 @@ extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_P
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  レコード設定
- *
- *	@param	VMHANDLE *p_core 仮想マシンハンドル
- *	@param	*p_wk_adrs       スクリプトコマンドワーク
- *
- *	@return 終了コード
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdResortSetRecord( VMHANDLE *p_core, void *p_wk_adrs )
-{
-  SCRCMD_WORK *p_wk = p_wk_adrs;
-  u16 id     = VMGetU16( p_core );
-  RESORT_RECORD_AddID( id );
-  return VMCMD_RESULT_CONTINUE;
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  話しかけ開始
  *
  *	@param	VMHANDLE *p_core 仮想マシンハンドル
@@ -2394,6 +2377,29 @@ VMCMD_RESULT EvCmdResortEndEffect( VMHANDLE *p_core, void *p_wk_adrs )
   GF_ASSERT( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) );
 
   RESORT_FIELD_EndEffect( p_field, id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プリセットデータで人物を追加
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 結果コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortSetPresetPoeple( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+
+  u16 people  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 preset  = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
   return VMCMD_RESULT_CONTINUE;
 }

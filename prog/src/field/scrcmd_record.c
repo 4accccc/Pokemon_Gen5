@@ -22,6 +22,7 @@
 #include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
+#include "savedata/resonance_resort_sv.h"
 
 #include "scrcmd_record.h"
 
@@ -79,3 +80,20 @@ VMCMD_RESULT EvCmdGetRecord( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レコード設定
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortSetRecord( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  u16 id     = VMGetU16( p_core );
+  RESORT_RECORD_AddID( id );
+  return VMCMD_RESULT_CONTINUE;
+}

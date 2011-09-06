@@ -25,12 +25,13 @@
 #define RESORT_RESIDENT_TYPE_FLORIST (3) //花屋
 #define RESORT_RESIDENT_TYPE_MAX (8) //最大
 //代理人
-#define RESORT_PROXY_TYPE_TUTORIAL (2) //チュートリアル
 #define RESORT_PROXY_TYPE_PDW (1) //PDW
 #define RESORT_PROXY_TYPE_GTS (0) //GTS
-#define RESORT_PROXY_TYPE_CELEB (4) //セレブ
-#define RESORT_PROXY_TYPE_FUN (3) //ファン
-#define RESORT_PROXY_TYPE_MAX (5) //最大
+#define RESORT_PROXY_TYPE_CELEB (5) //セレブ
+#define RESORT_PROXY_TYPE_TUTORIAL_02 (3) //チュートリアル案内
+#define RESORT_PROXY_TYPE_TUTORIAL_01 (2) //チュートリアル招待
+#define RESORT_PROXY_TYPE_FUN (4) //ファン
+#define RESORT_PROXY_TYPE_MAX (6) //最大
 //観光客
 #define RESORT_TURIST_TYPE_NONE (0) //種類なし
 #define RESORT_TURIST_TYPE_MAX (1) //最大
@@ -94,8 +95,12 @@
 #define RESORT_APPEAL_LV_HIGH (2) //強
 #define RESORT_APPEAL_LV_MAX (3) //最大
 //プリセットタイプ
+#define RESORT_PRESET_TYPE_SECRETARY_03 (6) //秘書３
+#define RESORT_PRESET_TYPE_SECRETARY_04 (7) //秘書４
 #define RESORT_PRESET_TYPE_TUTORIAL1 (0) //チュートリアル１
 #define RESORT_PRESET_TYPE_TUTORIAL2 (1) //チュートリアル２
 #define RESORT_PRESET_TYPE_APPOINT (3) //セレブ特定出現
 #define RESORT_PRESET_TYPE_RANDOM (2) //ファンランダム出現
-#define RESORT_PRESET_TYPE_MAX (4) //最大
+#define RESORT_PRESET_TYPE_SECRETARY_01 (4) //秘書１
+#define RESORT_PRESET_TYPE_SECRETARY_02 (5) //秘書２
+#define RESORT_PRESET_TYPE_MAX (8) //最大

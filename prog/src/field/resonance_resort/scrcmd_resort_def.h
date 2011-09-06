@@ -229,6 +229,16 @@
 //_RESORT_xxxx_EFFECT用
 #define RESORT_EFFECT_CONFETTI                (0)
 
+//_RESORT_SET_PRESET_PEOPLE用
+#define RESORT_PRESET_TUTORIAL_01             (0)
+#define RESORT_PRESET_TUTORIAL_02             (1)
+#define RESORT_PRESET_FUN_RANDOM              (2)
+#define RESORT_PRESET_CELEV_RANDOM            (3)
+#define RESORT_PRESET_SECRETARY_01            (4)
+#define RESORT_PRESET_SECRETARY_02            (5)
+#define RESORT_PRESET_SECRETARY_03            (6)
+#define RESORT_PRESET_SECRETARY_04            (7)
+
 //リゾート用レコードID
 #define  RESORT_RECORD_ID_NONE        ( 0)//なにもない
 #define  RESORT_RECORD_ID_DENDOU      ( 1)//殿堂入りした

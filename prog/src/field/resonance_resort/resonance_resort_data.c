@@ -2402,6 +2402,15 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     return 0;
   case RESORT_DATA_PARAM_WANT_SPOT:
     return cp_wk->want_spot;
+
+  case RESORT_DATA_PARAM_MEET_YEAR:
+    return cp_wk->meet_year;
+  case RESORT_DATA_PARAM_MEET_MONTH:
+    return cp_wk->meet_month;
+  case RESORT_DATA_PARAM_MEET_DAY:
+    return cp_wk->meet_day;
+
+
   default:
     GF_ASSERT_MSG(0,"–¢‘Î‰ž%d\n",param);
     return 0;
@@ -2474,6 +2483,16 @@ void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_DATA_PARAM param
     break;
   case RESORT_DATA_PARAM_WANT_JOB:
     p_wk->want_job  = data;
+    break;
+
+  case RESORT_DATA_PARAM_MEET_YEAR:
+    p_wk->meet_year = data;
+    break;
+  case RESORT_DATA_PARAM_MEET_MONTH:
+    p_wk->meet_month  = data;
+    break;
+  case RESORT_DATA_PARAM_MEET_DAY:
+    p_wk->meet_day  = data;
     break;
   default:
     GF_ASSERT_MSG(0,"–¢‘Î‰ž%d\n",param);
@@ -4112,7 +4131,7 @@ void RESORT_RECORD_AddID( u32 record_id )
   RTCDate date;
   RESORT_DATE resort_date;
 
-  GF_ASSERT( record_id < RESORT_RECORD_ID_MAX );
+  GF_ASSERT_MSG( record_id < RESORT_RECORD_ID_MAX, "%d<MAX", record_id );
 
   GFL_RTC_GetDate( &date );
 

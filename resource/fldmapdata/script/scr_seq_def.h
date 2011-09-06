@@ -13604,6 +13604,7 @@
 
   .macro _ASM_RESORT_SET_RECORD id
   .short EV_SEQ_RESORT_SET_RECORD
+  .short \id
   .endm
 
 //======================================================================
