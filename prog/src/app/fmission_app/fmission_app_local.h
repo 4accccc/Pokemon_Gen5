@@ -52,6 +52,13 @@ enum{
 	FLG_FMA_ONLY		= (1<<2),	// 1人のみの場合
 	//
 	FLG_FMA_SCROLL_STOP	= (1<<8),	// スクロール停止
+	FLG_FMA_TIME_STOP	= (1<<9),	// タイマ停止
+	//
+	FLG_FMA_LEVEL0		= (1<<16),	// レベル0
+	FLG_FMA_LEVEL1		= (1<<17),	// レベル1
+	FLG_FMA_LEVEL2		= (1<<18),	// レベル2
+	FLG_FMA_LEVEL3		= (1<<19),	// レベル3
+	//
 };
 
 //------------------
@@ -245,9 +252,10 @@ typedef struct
 	s32						Step;				// 処理の流れ
 	s32						Mode;				// モード(詳細、評価)
 	u32						Flag;				// フラグ
-	//
 	s32						BgOffX;				// オフセット
 	s32						Count;				// tmp
+	s32						LevelTimer;			// タイマ
+	s32						Level;				// 段階
 	//
 	FMISSION_APP_OLD_WORK	OldWork;			// 保存
 	//

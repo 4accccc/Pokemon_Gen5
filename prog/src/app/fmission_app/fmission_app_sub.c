@@ -286,19 +286,19 @@ static const FMA_OBJ_DATA fma_obj_info_tbl[] = {
 
 // OBJのテーブルデータ(結果)
 static const FMA_OBJ_DATA fma_obj_result_tbl[] = {
-	{ 7,	0x40,	1,	1,	0,	1,	5,	0,},		// 人数アイコン
-	{ 5,	0x40,	1,	1,	0,	1,	6,	0,},		// 星
-	{ 0,	0x40,	1,	1,	0,	0,	8,	0,},		// 時間
-	{ 0,	0x40,	1,	1,	0,	0,	8,	0,},		// 時間
-	{ 1,	0x40,	1,	1,	0,	0,	8,	0,},		// 時間(コロン)
-	{ 0,	0x40,	1,	1,	0,	0,	8,	0,},		// 時間
-	{ 0,	0x40,	1,	1,	0,	0,	8,	0,},		// 時間
-	{ 0,	0x40,	1,	1,	0,	0,	7,	0,},		// スコア
-	{ 0,	0x40,	1,	1,	0,	0,	7,	0,},		// スコア
-	{ 0,	0x40,	1,	1,	0,	0,	7,	0,},		// スコア
-	{ 0,	0x40,	1,	1,	0,	0,	7,	0,},		// スコア
-	{ 8,	0x40,	1,	1,	0,	1,	9,	0,},		// レコード(トータルスコア)
-	{ 8,	0x40,	1,	1,	0,	1, 10,	0,},		// レコード(クリアタイム)
+	{ 7,	0x40,	1,	0,	0,	1,	5,	0,},		// 人数アイコン
+	{ 5,	0x40,	1,	0,	0,	1,	6,	0,},		// 星
+	{ 0,	0x40,	1,	0,	0,	0,	8,	0,},		// 時間
+	{ 0,	0x40,	1,	0,	0,	0,	8,	0,},		// 時間
+	{ 1,	0x40,	1,	0,	0,	0,	8,	0,},		// 時間(コロン)
+	{ 0,	0x40,	1,	0,	0,	0,	8,	0,},		// 時間
+	{ 0,	0x40,	1,	0,	0,	0,	8,	0,},		// 時間
+	{ 0,	0x40,	1,	0,	0,	0,	7,	0,},		// スコア
+	{ 0,	0x40,	1,	0,	0,	0,	7,	0,},		// スコア
+	{ 0,	0x40,	1,	0,	0,	0,	7,	0,},		// スコア
+	{ 0,	0x40,	1,	0,	0,	0,	7,	0,},		// スコア
+	{ 8,	0x40,	1,	0,	0,	1,	9,	0,},		// レコード(トータルスコア)
+	{ 8,	0x40,	1,	0,	0,	1, 10,	0,},		// レコード(クリアタイム)
 	//
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -1092,6 +1092,7 @@ void FmaCmn_disp_time( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnu
 	// ここまででbuf[]に値(01:23)が入っているはず
 	// 分
 	for(i=0;i<2;i++){
+		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[src_wnum+i], TRUE );
 		// フレームを指定
 		GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+i], buf[i] );
 		// x方向に加算
@@ -1099,11 +1100,13 @@ void FmaCmn_disp_time( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnu
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+i], &pos, CLSYS_DEFREND_SUB );
 	}
 	// コロン
+	GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[src_wnum+2], TRUE );
 	pos.x = srcpos + 8*2;
 	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+2], &pos, CLSYS_DEFREND_SUB );
 	//
 	// 秒
 	for(i=0;i<2;i++){
+		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[src_wnum+3+i], TRUE );
 		// フレームを指定
 		GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+3+i], buf[2+i] );
 		// x方向に加算
@@ -1130,6 +1133,8 @@ void FmaCmn_disp_star( FMISSION_APP_WORK *wk )
 	}
 	// レベルを取得
 	lv = wk->Param->fmwk->beacon.m_level;
+	// 表示
+	GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[cnum], TRUE );
 	// 星のシーケンス変更
 	FmaCmn_chg_objseq( wk, FMA_CLWKMODE_NORMAL, cnum, fma_star_seq_tbl[lv] );
 }
