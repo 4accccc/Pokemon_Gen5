@@ -35,6 +35,7 @@
 #include "./event_fmission.h"
 #include "./event_subscreen.h"
 #include "savedata/fmission_save.h"
+#include "savedata/resonance_resort_sv.h"
 
 #include "sound/pm_sndsys.h"
 #include "sound/swan_sound_data.sadl"
@@ -361,6 +362,8 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
       }else{  //自分で開催
         FMISSION_SAVE_IncMissionOpenNum( f_save );
       }
+      //ジョインアベニュー履歴セット
+      RESORT_RECORD_AddID( RESORT_RECORD_ID_HILINKFES );
     }
     wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
     FLDSYSWIN_ClearWindow( wk->win );
