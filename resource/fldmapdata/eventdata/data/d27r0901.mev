@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/23 12:51:51
+#save date:2011/09/05 19:42:46
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r0901.wms
 #SECTION START:OBJ_EVENT
@@ -9,38 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r0901.wms
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#type
-1
-#ID name
-SWPLAZMAM_13
-#OBJ CODE Number
-SWPLAZMAM
-#MOVE CODE Number
-MV_RND_DLR
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
 0
-#Event Script Name
-SCRID_TRID_SWPLAZMAM_13
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-2
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--216 0 184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -81,7 +50,7 @@ DOOR_ID_D27R0701_D27R0901_EXIT01
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
-EXIT_TYPE_DOOR
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -90,11 +59,11 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 1
 #Door Event Label
-DOOR_ID_D27R0901_D27R0201_EXIT01
+DOOR_ID_D27R0901_D27R1401_EXIT01
 #Next Zone ID Name
-ZONE_ID_D27R0201
+ZONE_ID_D27R1401
 #Next Door ID Name
-DOOR_ID_D27R0201_D27R0901_EXIT01
+DOOR_ID_D27R1401_D27R0901_EXIT01
 #Door Direction
 EXIT_DIR_NON
 #Door Type
@@ -106,6 +75,23 @@ EVENTDATA_POSTYPE_GRID
 #size
 1 1
 #event number: 2
+#Door Event Label
+DOOR_ID_D27R0901_D27R1701_EXIT01
+#Next Zone ID Name
+ZONE_ID_D27R1701
+#Next Door ID Name
+DOOR_ID_D27R1701_D27R0901_EXIT01
+#Door Direction
+EXIT_DIR_NON
+#Door Type
+EXIT_TYPE_WARP
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 120
+#size
+1 1
+#event number: 3
 #Door Event Label
 DOOR_ID_D27R0901_D27R1601_EXIT01
 #Next Zone ID Name
@@ -119,33 +105,16 @@ EXIT_TYPE_WARP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 120
+-216 0 120
 #size
 1 1
-#event number: 3
+#event number: 4
 #Door Event Label
 DOOR_ID_D27R0901_D27R1601_EXIT02
 #Next Zone ID Name
 ZONE_ID_D27R1601
 #Next Door ID Name
 DOOR_ID_D27R1601_D27R0901_EXIT02
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--216 0 120
-#size
-1 1
-#event number: 4
-#Door Event Label
-DOOR_ID_D27R0901_D27R1601_EXIT03
-#Next Zone ID Name
-ZONE_ID_D27R1601
-#Next Door ID Name
-DOOR_ID_D27R1601_D27R0901_EXIT03
 #Door Direction
 EXIT_DIR_NON
 #Door Type

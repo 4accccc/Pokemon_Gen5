@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/23 12:55:05
+#save date:2011/09/05 19:46:28
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r1701.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-216 0 152
+232 0 136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -70,7 +70,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-5
+4
 #event number: 0
 #Door Event Label
 DOOR_ID_D27R1701_D27R0701_EXIT01
@@ -81,7 +81,7 @@ DOOR_ID_D27R0701_D27R1701_EXIT01
 #Door Direction
 EXIT_DIR_RIGHT
 #Door Type
-EXIT_TYPE_DOOR
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -89,6 +89,23 @@ EVENTDATA_POSTYPE_GRID
 #size
 1 1
 #event number: 1
+#Door Event Label
+DOOR_ID_D27R1701_D27R1401_EXIT01
+#Next Zone ID Name
+ZONE_ID_D27R1401
+#Next Door ID Name
+DOOR_ID_D27R1401_D27R1701_EXIT01
+#Door Direction
+EXIT_DIR_NON
+#Door Type
+EXIT_TYPE_WARP
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 120
+#size
+1 1
+#event number: 2
 #Door Event Label
 DOOR_ID_D27R1701_D27R0201_EXIT01
 #Next Zone ID Name
@@ -105,47 +122,13 @@ EVENTDATA_POSTYPE_GRID
 216 0 120
 #size
 1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_D27R1701_D27R1401_EXIT02
-#Next Zone ID Name
-ZONE_ID_D27R1401
-#Next Door ID Name
-DOOR_ID_D27R1401_D27R1701_EXIT02
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-88 0 120
-#size
-1 1
 #event number: 3
 #Door Event Label
-DOOR_ID_D27R1701_D27R1401_EXIT03
+DOOR_ID_D27R1701_D27R0901_EXIT01
 #Next Zone ID Name
-ZONE_ID_D27R1401
+ZONE_ID_D27R0901
 #Next Door ID Name
-DOOR_ID_D27R1401_D27R1701_EXIT03
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-88 0 216
-#size
-1 1
-#event number: 4
-#Door Event Label
-DOOR_ID_D27R1701_D27R1401_EXIT01
-#Next Zone ID Name
-ZONE_ID_D27R1401
-#Next Door ID Name
-DOOR_ID_D27R1401_D27R1701_EXIT01
+DOOR_ID_D27R0901_D27R1701_EXIT01
 #Door Direction
 EXIT_DIR_NON
 #Door Type
