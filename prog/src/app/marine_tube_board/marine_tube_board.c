@@ -92,9 +92,9 @@ enum
 #define MSGWND_FRAME_CHR  (1)
 // BMPWIN
 #define MSGWND_BMPWIN_X (1)
-#define MSGWND_BMPWIN_Y (19)
+#define MSGWND_BMPWIN_Y (1)
 #define MSGWND_BMPWIN_W (30)
-#define MSGWND_BMPWIN_H (4)
+#define MSGWND_BMPWIN_H (6)
 
 #define STRBUF_SIZE     (512) // メッセージバッファサイズ
 
