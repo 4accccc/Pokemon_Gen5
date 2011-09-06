@@ -9438,10 +9438,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あーうー！　だきまくらを　かえるまで
-あとちょっとなのにー！▼</Text>
+あと　ちょっとなのにー！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-10T06:33:49" />
+				Time="2011-09-06T10:26:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -9449,11 +9449,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あーうー！　だきまくらを　買えるまで
-あとちょっとなのにー！▼</Text>
+			<Text>あーうー！　抱きまくらを　買えるまで
+あと　ちょっとなのにー！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-10T06:34:03" />
+				Time="2011-09-06T10:26:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -9903,7 +9903,7 @@
 って　もうロボットは　いい？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-10T07:20:59" />
+				Time="2011-09-06T10:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -12012,11 +12012,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おはな　みたいに　みんな
+			<Text>お花　みたいに　みんな
 散っていっちゃった……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-11T10:52:00" />
+				Time="2011-09-06T10:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26407,10 +26407,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>けっこうな　おてまえで……
-じょうひんな　しあいで　よかったわ▼</Text>
+じょうひんな　しあいで　よかったわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-30T07:26:39" />
+				Time="2011-09-06T10:23:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26418,11 +26418,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>結構な　お手前で
-……上品な　試合で　良かったわ▼</Text>
+			<Text>結構な　お手前で……
+上品な　試合で　良かったわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-30T07:25:52" />
+				Time="2011-09-06T10:23:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
