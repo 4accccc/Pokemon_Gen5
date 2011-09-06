@@ -19,6 +19,20 @@
 #define FLD_ITEM_262                       5
 #define FLD_ITEM_261                       6
 #define FLD_ITEM_260                       7
+#define TR_FUTAGO_09                       8
+#define TR_FUTAGO_09_2                     9
+#define TR_KINDERGARTENM_10               10
+#define TR_CHILDCARE_09                   11
+#define TR_KINDERGARTENW_09               12
+#define TR_KINDERGARTENM_11               13
+#define TR_TANPAN_31                      14
+#define TR_RANGERW_28                     15
+#define TR_RANGERM_28                     16
+#define TR_VETERANM_20                    17
+#define TR_RANGERM_27                     18
+#define TR_VETERANW_17                    19
+#define TR_TANPAN_32                      20
+#define TR_RANGERW_27                     21
 
 #endif //ZONE_D02R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
