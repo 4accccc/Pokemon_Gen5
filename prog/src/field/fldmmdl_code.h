@@ -624,13 +624,23 @@
 
 //芝居系　判り易い名前で置き換え
 #define AC_PC_BOW (AC_ACT0_STOP) ///<PCお辞儀
-#define AC_RIVAL_ACT0 (AC_ACT0_LOOP) ///<ライバル専用 つま先アニメ
-#define AC_SUPPORT_ACT0 (AC_ACT0_STOP) ///<サポート専用 帽子アニメ
+#define AC_LEADER1C_BOW (AC_ACT0_STOP) ///<デントお辞儀
+#define AC_RIVAL_ACT0 (AC_ACT0_LOOP) ///<ライバル チェレン専用 つま先アニメ
+#define AC_SUPPORT_ACT0 (AC_ACT0_STOP) ///<サポート ベル専用 帽子アニメ
 #define AC_N_ACT0 (AC_ACT0_STOP) ///<N専用 両手アニメ
 #define AC_N_ACT1 (AC_ACT1_STOP) ///<N専用 首アニメ
 #define AC_N_ACT2 (AC_ACT2_LOOP) ///<N専用 腕アニメ
 #define AC_SAGE1_ACT0 (AC_ACT0_STOP) ///<SAGE1専用 両手アニメ
 #define AC_CHAMPION_ACT0 (AC_ACT0_STOP) ///<CHAMPION専用 髪揺れアニメ
-#define AC_SWLEADER4_ACT0 (AC_ACT0_STOP) ///<SWLEADER4(スワンカミツレ)専用 振り返りアニメ
+
+#define AC_SWLEADER1_TIPTOE (AC_ACT0_LOOP) ///<スワンチェレン専用 つま先アニメ
+#define AC_SWLEADER4_TURN (AC_ACT0_STOP)   ///<スワンカミツレ専用 振り返りアニメ
+#define AC_SWRIVAL_ACT0 (AC_ACT0_STOP)     ///<スワンライバル(ヒュウ)専用 アニメ
+#define AC_SWBELL_HAT (AC_ACT0_STOP)       ///<スワンベル専用 帽子アニメ
+#define AC_BIGFOUR3_STANDUP (AC_ACT0_STOP) ///<スワンレンブ専用 立ち上がるアニメ
+#define AC_SWBOSS_ACT0 (AC_ACT0_STOP)      ///<アクロマ専用 アニメ
+#define AC_SWSAGE1_STICK (AC_ACT0_STOP)     ///<スワンゲーチス専用 杖で床を打つアニメ
+#define AC_OLD_NINJA_APPEAR (AC_NINJA_ACT0)   ///<セピア忍者専用 現れるアニメ
+#define AC_OLD_NINJA_DISAPPER (AC_NINJA_ACT1)   ///<セピア忍者専用 消えるアニメ
 
 #endif //MMDL_CODE_H_FILE

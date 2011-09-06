@@ -36,6 +36,10 @@
 #include "fmmdl_anm_shinmu_b.h"
 #include "fmmdl_anm_shinmu_c.h"
 #include "fmmdl_anm_nonflip_swleader4.h"
+#include "fmmdl_anm_nonflip_bigfour3.h"
+#include "fmmdl_anm_nonflip_swboss.h"
+#include "fmmdl_anm_nonflip_swrival.h"
+#include "fmmdl_anm_nonflip_swsage1.h"
 
 
 //===================================================
@@ -73,6 +77,10 @@ typedef enum
   MMDL_BLACT_ANMTBLNO_SHINMU_B,  ///<ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
   MMDL_BLACT_ANMTBLNO_SHINMU_C,  ///<ゼクレシキュレムアニメ　上昇
   MMDL_BLACT_ANMTBLNO_NONFLIP_SWLEADER4,  ///<スワンカミツレ　フリップ無しアニメ＋芝居1パターン
+  MMDL_BLACT_ANMTBLNO_NONFLIP_BIGFOUR3,  ///<スワンレンブ　フリップ無しアニメ＋芝居1パターン
+  MMDL_BLACT_ANMTBLNO_NONFLIP_SWBOSS,  ///<アクロマ　フリップ無しアニメ＋芝居1パターン
+  MMDL_BLACT_ANMTBLNO_NONFLIP_SWRIVAL,  ///<スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
+  MMDL_BLACT_ANMTBLNO_NONFLIP_SWSAGE1,  ///<スワンゲーチス　フリップ無しアニメ＋芝居1パターン
   MMDL_BLACT_ANMTBLNO_MAX,  ///<最大
 }MMDL_BLACT_ANMTBLNO;
 

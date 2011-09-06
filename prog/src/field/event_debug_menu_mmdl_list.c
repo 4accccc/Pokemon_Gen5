@@ -385,8 +385,57 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_CHAMPION_ACT0;
                 break;
               case MMDL_BLACT_ANMTBLNO_NONFLIP_SWLEADER4:
-                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SWLEADER4_ACT0;
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SWLEADER4_TURN;
                 break;
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_BIGFOUR3:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_BIGFOUR3_STANDUP;
+                break;
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_SWBOSS:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SWBOSS_ACT0;
+                break;
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_SWRIVAL:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SWRIVAL_ACT0;
+                break;
+              case MMDL_BLACT_ANMTBLNO_NONFLIP_SWSAGE1:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SWSAGE1_STICK;
+                break;
+#if 0
+              case MMDL_BLACT_ANMTBLNO_SHINMU_A:
+                ac_act_u = AC_DIR_U;
+                ac_act_d = AC_SHIN_MU_GUTARI;
+                ac_act_l = AC_SHIN_MU_FLY_L;
+                ac_act_r = AC_SHIN_MU_FLY_UPPER;
+                break;
+              case MMDL_BLACT_ANMTBLNO_SHINMU_B:
+                ac_act_u = AC_DIR_U;
+                ac_act_d = AC_DIR_D;
+                ac_act_l = AC_SHIN_MU_HOERU;
+                ac_act_r = AC_SHIN_MU_TURN;
+                break;
+              case MMDL_BLACT_ANMTBLNO_SHINMU_C:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SHIN_MU_C_FLY;
+#endif
+                break;
+              }
+            }
+            
+            if( key_cont & PAD_KEY_UP ){
+              if( ac_act_u != ACMD_NOT ){
+                ac = ac_act_u;
+              }else{
+                ac = AC_STAY_WALK_U_32F;
+              }
+            }else if( key_cont & PAD_KEY_DOWN ){
+              if( ac_act_d != ACMD_NOT ){
+                ac = ac_act_d;
+              }else{
+                ac = AC_STAY_WALK_D_32F;
+              }
+            }else if( key_cont & PAD_KEY_LEFT ){
+              if( ac_act_l != ACMD_NOT ){
+                ac = ac_act_l;
+              }else{
+                ac = AC_STAY_WALK_L_32F;
               }
             }
             

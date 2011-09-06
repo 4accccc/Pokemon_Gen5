@@ -31,4 +31,8 @@
     "ANMID_SHINMU_B"=>25, #ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
     "ANMID_SHINMU_C"=>26, #ゼクレシキュレムアニメ　上昇
     "ANMID_NONFLIP_SWLEADER4"=>27, #スワンカミツレ　フリップ無しアニメ＋芝居1パターン
+    "ANMID_NONFLIP_BIGFOUR3"=>28, #スワンレンブ　フリップ無しアニメ＋芝居1パターン
+    "ANMID_NONFLIP_SWBOSS"=>29, #アクロマ　フリップ無しアニメ＋芝居1パターン
+    "ANMID_NONFLIP_SWRIVAL"=>30, #スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
+    "ANMID_NONFLIP_SWSAGE1"=>31, #スワンゲーチス　フリップ無しアニメ＋芝居1パターン
   }

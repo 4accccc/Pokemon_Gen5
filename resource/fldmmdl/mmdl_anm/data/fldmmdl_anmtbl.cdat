@@ -36,6 +36,10 @@
 #include "fmmdl_anm_shinmu_b.cdat"
 #include "fmmdl_anm_shinmu_c.cdat"
 #include "fmmdl_anm_nonflip_swleader4.cdat"
+#include "fmmdl_anm_nonflip_bigfour3.cdat"
+#include "fmmdl_anm_nonflip_swboss.cdat"
+#include "fmmdl_anm_nonflip_swrival.cdat"
+#include "fmmdl_anm_nonflip_swsage1.cdat"
 
 
 //===========================================
@@ -100,6 +104,14 @@ const MMDL_BBDACT_ANMTBL DATA_MMDL_BBDACT_ANM_ListTable[MMDL_BLACT_ANMTBLNO_MAX]
   { DATA_BlActShinMu_CTbl, DRAW_ANMNO_SHINMU_C_MAX },  ///<ゼクレシキュレムアニメ　上昇
   //MMDL_BLACT_ANMTBLNO_NONFLIP_SWLEADER4
   { DATA_BlActNonFlip_SWLeader4Tbl, DRAW_ANMNO_NONFLIP_SWLEADER4_MAX },  ///<スワンカミツレ　フリップ無しアニメ＋芝居1パターン
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_BIGFOUR3
+  { DATA_BlActNonFlip_Bigfour3Tbl, DRAW_ANMNO_NONFLIP_BIGFOUR3_MAX },  ///<スワンレンブ　フリップ無しアニメ＋芝居1パターン
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_SWBOSS
+  { DATA_BlActNonFlip_SWBossTbl, DRAW_ANMNO_NONFLIP_SWBOSS_MAX },  ///<アクロマ　フリップ無しアニメ＋芝居1パターン
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_SWRIVAL
+  { DATA_BlActNonFlip_SWRivalTbl, DRAW_ANMNO_NONFLIP_SWRIVAL_MAX },  ///<スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
+  //MMDL_BLACT_ANMTBLNO_NONFLIP_SWSAGE1
+  { DATA_BlActNonFlip_SWSage1Tbl, DRAW_ANMNO_NONFLIP_SWSAGE1_MAX },  ///<スワンゲーチス　フリップ無しアニメ＋芝居1パターン
 };
 
 #endif //__D_FLDMMDL_ANMTBL_D__

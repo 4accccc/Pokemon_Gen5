@@ -30,5 +30,9 @@ ANMFILE_LIST =	fmmdl_anm_hero.xls \
 				fmmdl_anm_shinmu_a.xls \
 				fmmdl_anm_shinmu_b.xls \
 				fmmdl_anm_shinmu_c.xls \
-				fmmdl_anm_nonflip_swleader4.xls
+				fmmdl_anm_nonflip_swleader4.xls \
+				fmmdl_anm_nonflip_bigfour3.xls \
+				fmmdl_anm_nonflip_swboss.xls \
+				fmmdl_anm_nonflip_swrival.xls \
+				fmmdl_anm_nonflip_swsage1.xls
 

@@ -28,6 +28,10 @@ ANMID_SHINMU_A,MDLSIZE_64x64:8:8:15:t8x8x15.imd:t8x8x15:mmdl_anm/tmp/fmmdl_anm_s
 ANMID_SHINMU_B,MDLSIZE_64x64:8:8:15:t8x8x15.imd:t8x8x15:mmdl_anm/tmp/fmmdl_anm_shinmu_b.csv,
 ANMID_SHINMU_C,MDLSIZE_64x64:8:8:15:t8x8x15.imd:t8x8x15:mmdl_anm/tmp/fmmdl_anm_shinmu_c.csv,
 ANMID_NONFLIP_SWLEADER4,MDLSIZE_32x32:4:4:18:t4x4x18.imd:t4x4x18:mmdl_anm/tmp/fmmdl_anm_nonflip_swleader4.csv,
+ANMID_NONFLIP_BIGFOUR3,MDLSIZE_32x32:4:4:14:t4x4x14.imd:t4x4x14:mmdl_anm/tmp/fmmdl_anm_nonflip_bigfour3.csv,
+ANMID_NONFLIP_SWBOSS,MDLSIZE_32x32:4:4:16:t4x4x16.imd:t4x4x16:mmdl_anm/tmp/fmmdl_anm_nonflip_swboss.csv,
+ANMID_NONFLIP_SWRIVAL,MDLSIZE_32x32:4:4:16:t4x4x16.imd:t4x4x16:mmdl_anm/tmp/fmmdl_anm_nonflip_swrival.csv,
+ANMID_NONFLIP_SWSAGE1,MDLSIZE_32x32:4:4:16:t4x4x16.imd:t4x4x16:mmdl_anm/tmp/fmmdl_anm_nonflip_swsage1.csv,
 #END,,
 
 パラメータ内訳：対応モデル:横キャラ数:縦キャラ数:総パターン数:対応imd名:対応ダミーncg&nclファイル名:アニメ定義ファイルcsv
@@ -61,6 +65,10 @@ ANMID_NONFLIP_SWLEADER4,MDLSIZE_32x32:4:4:18:t4x4x18.imd:t4x4x18:mmdl_anm/tmp/fm
 #define ANMID_SHINMU_B 25 //ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
 #define ANMID_SHINMU_C 26 //ゼクレシキュレムアニメ　上昇
 #define ANMID_NONFLIP_SWLEADER4 27 //スワンカミツレ　フリップ無しアニメ＋芝居1パターン
+#define ANMID_NONFLIP_BIGFOUR3 28 //スワンレンブ　フリップ無しアニメ＋芝居1パターン
+#define ANMID_NONFLIP_SWBOSS 29 //アクロマ　フリップ無しアニメ＋芝居1パターン
+#define ANMID_NONFLIP_SWRIVAL 30 //スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
+#define ANMID_NONFLIP_SWSAGE1 31 //スワンゲーチス　フリップ無しアニメ＋芝居1パターン
 
 
 //fldmmdl_list.xls <説明タブ>コピペ用フィールド
@@ -92,6 +100,10 @@ ANMID_SHINMU_A
 ANMID_SHINMU_B
 ANMID_SHINMU_C
 ANMID_NONFLIP_SWLEADER4
+ANMID_NONFLIP_BIGFOUR3
+ANMID_NONFLIP_SWBOSS
+ANMID_NONFLIP_SWRIVAL
+ANMID_NONFLIP_SWSAGE1
 //ダミー
 //パターン数 24 自機基本アニメ
 //パターン数 7 汎用人型　フリップ有アニメ
@@ -120,3 +132,7 @@ ANMID_NONFLIP_SWLEADER4
 //パターン数 15 ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
 //パターン数 15 ゼクレシキュレムアニメ　上昇
 //パターン数 18 スワンカミツレ　フリップ無しアニメ＋芝居1パターン
+//パターン数 14 スワンレンブ　フリップ無しアニメ＋芝居1パターン
+//パターン数 16 アクロマ　フリップ無しアニメ＋芝居1パターン
+//パターン数 16 スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
+//パターン数 16 スワンゲーチス　フリップ無しアニメ＋芝居1パターン
