@@ -61,6 +61,8 @@ animal_trail_call:
   _SE_WAIT()
 
   IF $SCWK_ANSWER == SCR_YES THEN
+    // JA—š—ð
+    _RESORT_SET_RECORD( RESORT_RECORD_ID_ANIMALTRAIL )
     // ˆÚ“®ŒÄ‚Ño‚µ
     _SE_PLAY( SEQ_SE_KAIDAN )
     _WARP_ANIMAL_TRAIL( LWK_ANIMAL_TRAIL_ID )
