@@ -11,12 +11,14 @@
 
 
 class CEncHashData
-  attr_accessor :white_data ,:black_data ,:black_enable ,:season_enable
+  attr_accessor :white_data ,:black_data ,:black_enable ,:season_enable ,:black_ground_type ,:white_ground_type 
 
   # 初期化
   def initialize
     @white_data = {GTYPE_GROUND=>{},GTYPE_WATER=>{},GTYPE_FISHING=>{}}
     @black_data = {GTYPE_GROUND=>{},GTYPE_WATER=>{},GTYPE_FISHING=>{}}
+    @white_ground_type = GROUDN_TYPE_NONE
+    @black_ground_type = GROUDN_TYPE_NONE
   end
 
   # クラスを結合する
@@ -26,11 +28,32 @@ class CEncHashData
     if other.season_enable == true then
       @season_enable = true
     end
- 
+
+    # 地形タイプのマージ
+    @white_ground_type =
+      ground_type_merge( @white_ground_type ,other.white_ground_type )
+    @black_ground_type =
+      ground_type_merge( @black_ground_type ,other.black_ground_type )
+   
     # データの結合
     concat_data( @white_data ,other.white_data )
     concat_data( @black_data ,other.black_data )
 
+  end
+
+  # 地形タイプのマージ
+  def ground_type_merge(gtype,other_gtype)
+    # 地形タイプを統合する
+    if  gtype == GROUDN_TYPE_NONE then
+      gtype = other_gtype
+    elsif other_gtype != GROUDN_TYPE_NONE then
+      # 混合タイプチェック
+      unless gtype == other_gtype then
+        gtype = GROUDN_TYPE_MULTI
+      end
+    end
+
+    return gtype
   end
   
   # データ結合

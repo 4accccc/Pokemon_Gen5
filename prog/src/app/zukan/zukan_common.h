@@ -184,4 +184,15 @@ extern GFL_CLWK * ZKNCOMM_CreateClact( GFL_CLUNIT * unit, const ZKNCOMM_CLWK_DAT
  *	@retval
  */
 //-----------------------------------------------------------------------------
-extern void MakeHabitatListData( ZUKANHABITAT_ZONE_DATA * p_zone_info );
+extern void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生息地リスト用リストデータ作成
+ *
+ *	@param	* zone_list 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void MakeHabitatListData( ZUKANHABITAT_LIST_DATA * p_zone_list );

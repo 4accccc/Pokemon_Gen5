@@ -91,9 +91,9 @@ $(ENCPROB_DIR)/$(ENCPROB_DAT): $(ENCPROB_DAT)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 
-$(ARCW_LIST_FILE):$(NNSARC_DEPEND_FILES)
+$(ARCW_LIST_FILE):$(NNSARC_DEPEND_FILES) encount_conv.rb
 	ruby encount_conv.rb
-$(ARCB_LIST_FILE):$(NNSARC_DEPEND_FILES)
+$(ARCB_LIST_FILE):$(NNSARC_DEPEND_FILES) encount_conv.rb
 	ruby encount_conv.rb
 
 $(NARCNAME_W): $(ARCW_LIST_FILE) 

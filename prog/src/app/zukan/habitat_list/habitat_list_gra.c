@@ -31,6 +31,8 @@
 
 #include "ui/print_tool.h"  // for PRINTTOOL_PrintColor
 
+#include "field/zonedata.h" // for ZONEDATA_GetPlaceNameID
+
 FS_EXTERN_OVERLAY(ui_common);
 
 //=============================================================================
@@ -1361,7 +1363,7 @@ void HABITAT_LIST_GRA_MakeList( HABITAT_LIST_GRA_WK* p_wk, u8 list_size,
     {
       // @todo 地形存在の有無をみて、背景シーケンスを設定する
       s32 screen_id;
-      u16 place_id = p_list_data[i].zone_group;
+      u16 place_id = ZONEDATA_GetPlaceNameID( p_list_data[i].zone_group );
       p_wk->p_place_name[i] = GFL_MSG_CreateString( p_msg , place_id );
       //ONOUE_Printf("場所ID：%x\n",place_id);
       screen_id = GetBackGroundScreenID( &p_list_data[i] );

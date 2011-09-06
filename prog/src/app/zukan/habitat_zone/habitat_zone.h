@@ -60,7 +60,9 @@ typedef struct {
 
 // 生息地リストアーカイブデータ
 typedef struct {
-  u16   season_enable;
+  u8    season_enable;
+  u8    land_enable[HABITAT_ZONE_APPEAR_MAX];
+  u16   ground_type;
   u16   data_num;
   ARC_HABITAT_MONS_DATA mons_data[HABITAT_ZONE_POKE_LIST_MAX];
 }ARC_HABITAT_ZONE_DATA;

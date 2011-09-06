@@ -38,6 +38,9 @@ $item_tbl_list = ["なし","洞窟","橋"]
 #エンカウント率パターンテーブル(FMの値リストと一致している必要アリ)
 $enc_prob_list = ["弱草Lv1","弱草Lv2","強草Lv1","強草Lv2","弱長草Lv1","強長草Lv1","洞窟Lv1","洞窟Lv2","砂漠Lv1","水上Lv1","水上Lv2","沼地Lv1"]
 
+# 地面タイプ置換え用配列（地面の時のみ置換え、水上はなしに置き換えておく）
+$groud_type_id = [GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUDN_TYPE_CAVE,GROUDN_TYPE_CAVE,GROUND_TYPE_SAND,GROUDN_TYPE_NONE,GROUDN_TYPE_NONE,GROUDN_TYPE_SWAMP]
+
 #エンカウントテーブル
 class CEncTable
   MONSNO_BIT_NUM = 11
@@ -459,6 +462,25 @@ class CEncountData
         
         # 黒バージョンの有効状態
         zone_hash[zone_name].black_enable = black_enable
+      end
+
+      # 地形タイプ保存(ホワイト)
+      groudn_type = white.get_ground_type
+      if groudn_type.size > 0 then
+        idx = $enc_prob_list.index(groudn_type)
+        zone_hash[zone_name].white_ground_type = $groud_type_id[idx]
+      end
+
+      # 地形タイプ保存(ブラック)
+      if black_enable == true then
+        groudn_type = black.get_ground_type
+        if groudn_type.size > 0 then
+          idx = $enc_prob_list.index(groudn_type)
+          zone_hash[zone_name].black_ground_type = $groud_type_id[idx]
+        end
+      else
+        zone_hash[zone_name].black_ground_type =
+                                  zone_hash[zone_name].white_ground_type
       end
 
       # データ取得

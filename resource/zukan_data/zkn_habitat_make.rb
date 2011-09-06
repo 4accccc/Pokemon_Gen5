@@ -11,7 +11,7 @@
 
 # データハッシュ型を取得
 load    File.dirname(__FILE__) + '/../encount/encount_common.def'
-require File.dirname(__FILE__) + '/../encount/enc_hash_data'
+require File.dirname(__FILE__) + '/../encount/enc_hash_data.rb'
 require File.dirname(__FILE__) + '/../fldmapdata/zonetable/zonegroup_hash/zone_group_hash.rb'
 
 # 出力形式用モンスターデータ
@@ -67,12 +67,32 @@ def put_bin_file( f_name ,group_data ,mons_array )
   
   # 季節の有効状態
   if group_data.season_enable == true then
-    bin << [ 1 ].pack( "s" )
+    bin << [ 1 ].pack( "C" )
   else
-    bin << [ 0 ].pack( "s" )
+    bin << [ 0 ].pack( "C" )
   end
+
+  # 地形の有効状態を設定
+  landtype_enable = [0,0,0] 
+  mons_array.each_key{|key|
+    for season in SEASON_SPRING..SEASON_WINTER
+      GTYPE_MAX.times{|g_type|
+        if mons_array[key].is_appear[season-SEASON_SPRING][g_type] == true then
+          landtype_enable[ g_type ] = 1
+        end
+      }
+    end
+  }
+  bin << [ landtype_enable[GTYPE_GROUND] ].pack( "C" )  # 地面
+  bin << [ landtype_enable[GTYPE_WATER] ].pack( "C" )   # 海
+  bin << [ landtype_enable[GTYPE_FISHING] ].pack( "C" ) # 釣り
+  
+  # 地形タイプ
+  bin << [ mons_array.size ].pack( "S" )
+ 
   # データ数
-  bin << [ mons_array.size ].pack( "s" )
+  bin << [ mons_array.size ].pack( "S" )
+
   # 出現データを出力
   mons_array.each_key{|key|
     # モンスター番号
@@ -98,6 +118,8 @@ end
 season_name = ["四季なし","春","夏","秋","冬"]
 # 地形名
 ground_type_name = ["土","海","釣"]
+# 地形名詳細
+info_ground_type_name = ["草地","砂地","沼","洞窟","混合","なし"]
 
 # エンカウントデータの読み込み
 encount_data          = nil
@@ -144,6 +166,8 @@ zone_group_data.each_key{|zone_group|
   puts "【 %s(ホワイト) 】"%[zone_group]
   puts " 四季 :%s"%[data.season_enable]
   puts " 黒有 :%s"%[data.black_enable]
+  puts " 白地形 :%s"%[info_ground_type_name[data.white_ground_type]]
+  puts " 黒地形 :%s"%[info_ground_type_name[data.black_ground_type]]
 
   # ホワイト
   GTYPE_MAX.times{|g_type|
@@ -151,8 +175,8 @@ zone_group_data.each_key{|zone_group|
       puts "【 %s 】"%[ground_type_name[g_type]]
       data.white_data[g_type].each_key{|season|
         print "%s(%2d種類):"%[season_name[season],data.white_data[g_type][season].size]
-        if data.white_data[g_type][season].size > 15 then
-          #raise "15種類以上使用されています"
+        if data.white_data[g_type][season].size > 20 then
+          #raise "20種類以上使用されています"
         end
         data.white_data[g_type][season].each{|mons_data|
           print "%s,"%[mons_data]
@@ -196,15 +220,12 @@ zone_group_data.each_key{|zone_group|
   b_mons_data = group_data.black_data
   w_mons_data = group_data.white_data
 
-  #puts "【%s】"%[zone_group]
-  #puts "- black"
   # ブラック用データ作成
   set_mons_array_data( group_data,b_mons_array ,b_mons_data )
   put_bin_file( "hb_b_%s.bin"%[zone_group.downcase] ,group_data ,b_mons_array )
 
 
   # ホワイト用データ作成
-  #puts "- white"
   set_mons_array_data( group_data,w_mons_array ,w_mons_data)
   put_bin_file( "hb_w_%s.bin"%[zone_group.downcase] ,group_data ,w_mons_array )
 }

@@ -659,7 +659,7 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
 	p_zone_info->p_gdata = wk->prm->gamedata;
 
   // リストをデータを作成
-  MakeHabitatListData( p_zone_info );
+  MakeHabitatZoneListData( p_zone_info );
 
 	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_habitat_zone),
                                       &ZUKANHABITAT_ZONE_ProcData, p_zone_info );
@@ -727,60 +727,18 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
 //-----------------------------------------------------------------------------
 static int MainSeq_CallHabitatZoneList( ZUKAN_MAIN_WORK * wk )
 {
-  ZUKANHABITAT_LIST_DATA * zone_list;
+  ZUKANHABITAT_LIST_DATA * p_zone_list;
 
 	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANHABITAT_LIST_DATA) );
 	GFL_STD_MemClear( wk->work, sizeof(ZUKANHABITAT_LIST_DATA) );
-	zone_list = wk->work;
-	zone_list->p_gdata = wk->prm->gamedata;
+	p_zone_list = wk->work;
+	p_zone_list->p_gdata = wk->prm->gamedata;
 
-  // @todo ダミーデータではないデータを入れる必要がある
-  // @todo データを作る際はBC、WF、火山、４番道路、チャンピオンロードに注意する
-  {
-    s32 i;
-    ZUKANHABITAT_LIST_LISTDATA *p_ld;
-    zone_list->p_list_data = GFL_HEAP_AllocClearMemory(
-        HEAPID_ZUKAN_SYS, sizeof(ZUKANHABITAT_LIST_LISTDATA)*20 );
-    for( i = 0; i < 20 ; i ++ )
-    {
-      p_ld = &zone_list->p_list_data[i];
-      // ダミーデータを保存する
-      p_ld->zone_group = i;
-      p_ld->is_exist_landtype[0] = TRUE;
-      p_ld->is_exist_landtype[1] = TRUE;
-      p_ld->is_exist_landtype[2] = FALSE;
-      p_ld->is_complete[0] = TRUE;
-      p_ld->list_status[0] = HABITAT_LIST_STATUS_LOOK_CMP;
-      p_ld->list_status[1] = HABITAT_LIST_STATUS_NOTICE;
-      p_ld->list_status[2] = HABITAT_LIST_STATUS_NONE;
-    }
-    // リストサイズを設定
-    zone_list->list_size = i;
-    
-    // 地形タイプを上書き
-    p_ld = &zone_list->p_list_data[0];
-    p_ld->is_exist_landtype[0] = TRUE;
-    p_ld->is_exist_landtype[1] = FALSE;
-    p_ld->is_exist_landtype[2] = FALSE;
-    p_ld = &zone_list->p_list_data[1];
-    p_ld->is_exist_landtype[0] = FALSE;
-    p_ld->is_exist_landtype[1] = TRUE;
-    p_ld->is_exist_landtype[2] = FALSE;
-    p_ld = &zone_list->p_list_data[2];
-    p_ld->is_exist_landtype[0] = TRUE;
-    p_ld->is_exist_landtype[1] = TRUE;
-    p_ld->is_exist_landtype[2] = FALSE;
-    p_ld = &zone_list->p_list_data[3];
-    p_ld->is_exist_landtype[0] = FALSE;
-    p_ld->is_exist_landtype[1] = TRUE;
-    p_ld->is_exist_landtype[2] = TRUE;
-    p_ld = &zone_list->p_list_data[4];
-    p_ld->is_exist_landtype[0] = TRUE;
-    p_ld->is_exist_landtype[1] = TRUE;
-    p_ld->is_exist_landtype[2] = TRUE;
-  }
+  // リストデータを作成する
+  MakeHabitatListData( p_zone_list );
 
-  GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_habitat_list), &ZUKANHABITAT_LIST_ProcData, zone_list );
+  GFL_PROC_LOCAL_CallProc( wk->localProc,
+      FS_OVERLAY_ID(zukan_habitat_list), &ZUKANHABITAT_LIST_ProcData, p_zone_list );
   return NextProcCall( wk, SEQ_HABITAT_ZONE_LIST_END );
 }
 
