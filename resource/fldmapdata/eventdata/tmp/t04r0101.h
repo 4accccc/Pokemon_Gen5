@@ -18,5 +18,7 @@
 #define ZONE_T04R0101_EVB_H
 
 #define BG_T04R0101_BOARD_01              0
+#define BG_T04R0101_BOARD_02              1
+#define BG_T04R0101_BOARD_03              2
 
 #endif //ZONE_T04R0101_EVB_H
