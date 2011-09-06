@@ -402,8 +402,8 @@
 #define FE_R04_ITEMGET_01                  386 /* 0x0182 4番道路：アイテム入手フラグ */
 #define FE_T01R0401_HAKASE1_TALK           387 /* 0x0183 カノコタウン研究所：アララギ父初回会話フラグ */
 #define FE_T01R0401_HAKASE2_TALK           388 /* 0x0184 カノコタウン研究所：アララギ娘初回会話フラグ */
-		/* not used   389(0x0185) */
-		/* not used   390(0x0186) */
+#define FE_H06_ITEMGET_01                  389 /* 0x0185 マリンチューブ：アイテム入手フラグ */
+#define FE_D01R0101_RATI2_MEET_01          390 /* 0x0186 夢の跡地：ラティオス（ラティアス）に会った */
 		/* not used   391(0x0187) */
 		/* not used   392(0x0188) */
 		/* not used   393(0x0189) */
@@ -570,7 +570,7 @@
 #define FV_C03P07_SUNGLASSES_01            652 /* 0x028c ヒウンシティジム前：ダンペイ */
 #define FV_C03P17_SWCHAMPION_01            653 /* 0x028d ヒウンシティ下水道前：アイリス */
 #define FV_C03P17_SWRIVAL_01               654 /* 0x028e ヒウンシティ下水道前：ライバル */
-#define FV_D11R0101_SWCHAMPION_01          655 /* 0x028f ヒウンシティ下水道：アイリスとプラズマ団 */
+#define FV_D11R0101_SWRIVAL_01             655 /* 0x028f ヒウンシティ下水道：ライバルとプラズマ団 */
 #define FV_C03P01_SWBOSS_01                656 /* 0x0290 ヒウンシティセントラルエリア：アクロマ */
 #define FV_R04_BIGROCK_01                  657 /* 0x0291 4番道路：イワパレス擬態大きな岩 */
 #define FV_R04_SWBOSS_01                   658 /* 0x0292 4番道路：アクロマ */
@@ -720,6 +720,9 @@
 #define FV_R04_POKE_567_633_01             802 /* 0x0322 4番道路：バルジーナ（ウォーグル） */
 #define FV_D20_POKE_536_01                 803 /* 0x0323 サザナミ湾：ブルンゲル */
 #define FV_R14R0101_MAN3_01                804 /* 0x0324 14番道路：ストッパー */
+#define FV_C03P07_MACOMO_01                805 /* 0x0325 ヒウンシティ・チャレンジストリート：マコモ */
+#define FV_C03R1103_MACOMO_01              806 /* 0x0326 ヒウンシティ・便利ビル3F：マコモ */
+#define FV_C07GYM0101_LEADDER7_01          807 /* 0x0327 セッカシティジム跡地：ハチク */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

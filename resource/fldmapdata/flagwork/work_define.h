@@ -263,6 +263,8 @@
 #define WK_SCENE_C16_TUTORIAL_01         16651 /* 0x410b ジョインアベニュー：チュートリアルイベント制御ワーク */
 #define WK_SCENE_D01R0101_RATI2          16652 /* 0x410c 夢の跡地：ラティオス（ラティアス）POSイベントの制御 */
 #define WK_SCENE_D26R0101_BOSS           16653 /* 0x410d バッジチェックゲート：NイベントPOS制御ワーク */
+#define WK_SCENE_C03P07_CGEAR_01         16654 /* 0x410e ヒウンシティ・チャレンジストリート：マコモＣギア入手イベント制御ワーク */
+#define WK_SCENE_C03P08_FESGUIDE_01      16655 /* 0x410f ヒウンシティ：フェスチュートリアルPOS制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
