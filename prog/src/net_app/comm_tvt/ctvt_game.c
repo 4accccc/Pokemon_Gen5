@@ -39,6 +39,8 @@
 
 // レコード
 #include "savedata/record.h"
+// JA履歴差し込み
+#include "savedata/resonance_resort_sv.h"
 
 //debug
 #include "debug/debug_str_conv.h"
@@ -1946,6 +1948,10 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       {
         // ライブキャスターミニゲームプレイ回数インクリメント
         RECORD_Inc( gameWork->record, RECID_CTVT_GAME_PLAY );
+      }
+      // JAの履歴差し込み 「LCミニゲームをした」
+      {
+        RESORT_RECORD_AddID( RESORT_RECORD_ID_TVT_GAME );
       }
     }
     break;
