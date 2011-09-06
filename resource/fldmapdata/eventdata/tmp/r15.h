@@ -16,6 +16,11 @@
 #define R15_ROCK_02                        1
 #define FLD_ITEM_251                       2
 #define FLD_ITEM_252                       3
+#define TR_DAISUKIM_06                     4
+#define TR_SCIENTISTW_14                   5
+#define TR_DAISUKIW_05                     6
+#define TR_BACKPACKERM_28                  7
+#define TR_BACKPACKERW_23                  8
 
 #endif //ZONE_R15_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r15.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
