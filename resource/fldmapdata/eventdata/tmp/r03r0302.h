@@ -13,6 +13,10 @@
 #define FLD_ITEM_283                       1
 #define FLD_ITEM_284                       2
 #define FLD_ITEM_287                       3
+#define TR_BATTLEG_24                      4
+#define TR_KARATE_25                       5
+#define TR_KARATE_26                       6
+#define TR_VETERANM_03                     7
 
 #endif //ZONE_R03R0302_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03r0302.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

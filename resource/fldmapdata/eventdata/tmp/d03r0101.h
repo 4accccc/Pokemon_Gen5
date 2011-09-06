@@ -17,6 +17,15 @@
 #define D03R0101_DARUMA_03                 3
 #define D03R0101_DARUMA_04                 4
 #define D03R0101_DARUMA_05                 5
+#define TR_BACKPACKERW_24                  6
+#define TR_RANGERW_30                      7
+#define TR_RANGERM_30                      8
+#define TR_NURSE_03                        9
+#define TR_ESPM_15                        10
+#define TR_ESPW_14                        11
+#define TR_BACKPACKERM_29                 12
+#define TR_BACKPACKERM_30                 13
+#define TR_BACKPACKERW_25                 14
 
 #endif //ZONE_D03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

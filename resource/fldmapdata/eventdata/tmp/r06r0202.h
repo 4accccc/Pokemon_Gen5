@@ -13,6 +13,8 @@
 #define R06R0202_ROCK_01                   0
 #define R06R0202_ROCK_02                   1
 #define R06R0202_ROCK_03                   2
+#define TR_ELITEM_44                       3
+#define TR_ELITEW_43                       4
 
 #endif //ZONE_R06R0202_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06r0202.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
