@@ -39,7 +39,7 @@ typedef enum{
 // リストデータ
 typedef struct {
   u16           zone_group; // ゾーングループ
-  BOOL          is_exist_landtype[ HABITAT_ZONE_APPEAR_MAX ];
+  u8            is_exist_landtype[ HABITAT_ZONE_APPEAR_MAX ];
   ZONE_COMTYPE  is_complete[ HABITAT_ZONE_APPEAR_MAX ];  // コンプリートしているか
   HABITAT_LIST_STATUS list_status[HABITAT_ZONE_APPEAR_MAX];  // リストの状態
 }ZUKANHABITAT_LIST_LISTDATA;

@@ -1417,9 +1417,9 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
   s32 index = -1;
   s32 i;
   BOOL is_cmp;
-  BOOL is_l = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_LAND ];
-  BOOL is_w = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_WATERSIDE ];
-  BOOL is_f = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_FISHING ];
+  u8 is_l = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_LAND ];
+  u8 is_w = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_WATERSIDE ];
+  u8 is_f = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_FISHING ];
 
   const BOOL land_type[][HABITAT_ZONE_APPEAR_MAX]=
   {
@@ -1592,9 +1592,9 @@ static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py 
   GRA_POKEICON_DATA *p_icondata;
   GFL_CLACTPOS pos;
   ZUKANHABITAT_LIST_LISTDATA *p_data = &p_wk->p_list_data[item_index];
-  BOOL is_l = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_LAND ];
-  BOOL is_w = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_WATERSIDE ];
-  BOOL is_f = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_FISHING ];
+  u8 is_l = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_LAND ];
+  u8 is_w = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_WATERSIDE ];
+  u8 is_f = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_FISHING ];
   
   // HABITAT_LIST_STATUSと同じ順番で、アニメーションシーケンスを定義
   u16 anm_seq;

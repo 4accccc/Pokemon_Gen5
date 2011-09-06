@@ -18,7 +18,8 @@
 //	定数
 //===================================================================================
 enum{
-  HABITAT_ZONE_POKE_LIST_MAX  = 20,  // ゾーン詳細画面のポケモンデータ最大数
+  HABITAT_ZONE_POKE_DATA_MAX  = 20,   // リストに収まるデータ数
+  HABITAT_ZONE_POKE_LIST_MAX  = 30 ,  // ポケモンデータ最大数
 };
 
 // 戻り値
@@ -67,11 +68,11 @@ typedef struct {
   ARC_HABITAT_MONS_DATA mons_data[HABITAT_ZONE_POKE_LIST_MAX];
 }ARC_HABITAT_ZONE_DATA;
 
-// リストデータ
+// ポケモンデータ
 typedef struct {
-  s32   monsno; // モンスターナンバー
+  u16   monsno; // モンスターナンバー
   u8  is_appear[ PMSEASON_TOTAL ][ HABITAT_ZONE_APPEAR_MAX ]; // 出現条件 
-  HABITAT_ZONE_STATUS status; // 見た、捕獲、知らない
+  u8 status; // 見た、捕獲、知らない
 }HABITAT_ZONE_POKE_DATA;
 
 // ゾーンデータ

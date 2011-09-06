@@ -244,11 +244,6 @@ void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info )
   // セーブデータ取得
   p_save = GAMEDATA_GetZukanSave( p_zone_info->p_gdata );
 
-  EVENTWORK_SetEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_C12);
-  EVENTWORK_SetEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_R19);
-  EVENTWORK_SetEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_R20);
-  EVENTWORK_SetEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_D22);
-
   // リストの長さをまず取得
   for( i = 0; i < HABITAT_LIST_DATA_MAX ; i++ )
   {
@@ -312,6 +307,9 @@ void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info )
         // ポケモンデータを設定
         for( n = 0; n < arc_data.data_num; n ++ )
         {
+          // 最大値チェック
+          GF_ASSERT( arc_data.data_num <= HABITAT_ZONE_POKE_LIST_MAX );
+
           p_poke_data = &p_zone_data->poke_data[n];
           p_poke_data->monsno = arc_data.mons_data[n].monsno;
           ONOUE_Printf("モンスター番号:%u\n",p_poke_data->monsno);
@@ -357,11 +355,6 @@ void MakeHabitatListData( ZUKANHABITAT_LIST_DATA * p_zone_list )
 
   // @todo ダミーデータではないデータを入れる必要がある
   // @todo データを作る際はBC、WF、火山、４番道路、チャンピオンロードに注意する
-
-  EVENTWORK_SetEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_C12);
-  EVENTWORK_SetEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_R19);
-  EVENTWORK_SetEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_R20);
-  EVENTWORK_SetEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_D22);
  
   // リストの長さをまず取得
   for( i = 0; i < HABITAT_LIST_DATA_MAX ; i++ )
@@ -399,7 +392,7 @@ void MakeHabitatListData( ZUKANHABITAT_LIST_DATA * p_zone_list )
         p_ld = &p_zone_list->p_list_data[data_cnt];
         // ゾーングループ
         p_ld->zone_group = sc_habitat->zone_group_id;
-        // 地形有無(アーカイブはBOOL型ではない)
+        // 地形有無
         p_ld->is_exist_landtype[HABITAT_ZONE_APPEAR_LAND]
           = arc_data.land_enable[HABITAT_ZONE_APPEAR_LAND];
         p_ld->is_exist_landtype[HABITAT_ZONE_APPEAR_WATERSIDE]
