@@ -10,8 +10,9 @@
 #ifndef ZONE_C01R0201_EVC_H
 #define ZONE_C01R0201_EVC_H
 
-#define C01R0201_MEDALOYAJI                0
-#define C01R0201_BIGMAN_01                 1
+#define C01R0201_OLDMAN1_01                0
+#define C01R0201_OLDWOMAN1_01              1
+#define C01R0201_BIGMAN_01                 2
 
 #endif //ZONE_C01R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

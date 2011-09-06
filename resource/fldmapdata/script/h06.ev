@@ -12,7 +12,7 @@
   .include  "msg_h06.h"
   .include  "h06.h"
 
-  //@author fujimura_souichirou（橋マニアイベント）
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,7 +23,20 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_zone_h06
 _EVENT_DATA   ev_h06_man3_01
+_EVENT_DATA   ev_h06_fighterm_01
+_EVENT_DATA   ev_h06_man3_02
+_EVENT_DATA   ev_h06_soccerm_01
+_EVENT_DATA   ev_h06_maid_01
+_EVENT_DATA   ev_h06_lady_01
+_EVENT_DATA   ev_h06_trainerw_01
 _EVENT_DATA_END
+
+//手持ちに「どくバリ」を持ったポケモンが要るか用変数定義
+DEFINE_LOCAL LWK_PARTY_NUM    //手持ちポケモンの数
+DEFINE_LOCAL LWK_COUNT_NUM    //WHILE文のカウンタ
+DEFINE_LOCAL LWK_POKE_ITEMNO  //ポケモンの保持アイテムナンバー
+DEFINE_LOCAL LWK_CLEAR_POKE   //条件を満たしたポケモンの有無
+DEFINE_LOCAL LWK_EGG_CHK      //タマゴであるか
 
 
 /**************************************************************/
@@ -102,6 +115,120 @@ EVENT_START   ev_h06_man3_01
 
     //太った兄さん：げんき　でてきたー！　ありがとう▼
     _BALLOONWIN_TALKOBJ_MSG( msg_h06_bridge_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  カラテ王：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_h06_fighterm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h06_fighterm_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_h06_man3_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h06_man3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  サッカー選手：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_h06_soccerm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h06_soccerm_01 )
+EVENT_END
+
+/**************************************************************/
+/*  メイド：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_h06_maid_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h06_maid_01 )
+EVENT_END
+
+/**************************************************************/
+/*  マダム：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_h06_lady_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h06_lady_01 )
+EVENT_END
+
+/**************************************************************/
+/*  エリート♀：話しかけ（ポケモン見せ／アイテム入手）        */
+/**************************************************************/
+EVENT_START   ev_h06_trainerw_01
+
+  _TALK_OBJ_START()
+
+  //アイテム「くろいヘドロ」を既に受け取っている？
+  IF FLAG_OFF( FE_H06_ITEMGET_01 ) THEN
+
+    //手持ちのポケモンの数を確認（全てのポケモン）
+    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+    //手持ちのポケモンの中に条件『どくバリを持っている』ポケモンがいるか確認（繰り返し処理）
+    WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+      //条件を満たしたポケモンは見つかったか
+      IF $LWK_CLEAR_POKE == 0 THEN
+
+        //指定POSのポケモンの「保持アイテムナンバー」を取得
+        _GET_PARTY_POKE_PARAM( LWK_POKE_ITEMNO, LWK_COUNT_NUM, SCR_POKEPARA_ITEMNO )
+
+        //指定POSのポケモンはタマゴか
+        _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
+
+        //指定POSのポケモンは「どくバリ」を持っているか
+        IF $LWK_POKE_ITEMNO == $ITEM_DOKUBARI && $LWK_EGG_CHK == FALSE THEN
+
+          //条件を満たしたポケモンの名前取得
+          _TEMOTI_MONS_NAME( 0, LWK_COUNT_NUM )
+          //条件を満たしたポケモンがいた（値セット）
+          $LWK_CLEAR_POKE = 1
+
+        ENDIF
+
+      ENDIF
+
+      //カウント
+      $LWK_COUNT_NUM += 1
+
+    ENDWHILE
+
+    //手持ちに条件を満たしたポケモンがいた
+    IF $LWK_CLEAR_POKE == 1 THEN
+
+      //エリート♀：どくバリを　もってる！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_h06_trainerw_02 )
+      _MSGWIN_CLOSE()
+
+      //アイテム（くろいヘドロ）入手
+      _ITEM_EVENT_NOWAIT( ITEM_KUROIHEDORO, 1 )
+
+      //========================================//
+      //アイテム入手フラグON
+      _FLAG_SET( FE_H06_ITEMGET_01 )
+      //========================================//
+
+    //手持ちに条件を満たしたポケモンがいない
+    ELSE
+
+      //エリート♀：どくバリを　もたせてる？
+      _BALLOONWIN_TALKOBJ_MSG( msg_h06_trainerw_01 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //アイテム受け取り済み
+  ELSE
+
+    //エリート♀：くろいヘドロ！　それを　もって
+    _BALLOONWIN_TALKOBJ_MSG( msg_h06_trainerw_03 )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 

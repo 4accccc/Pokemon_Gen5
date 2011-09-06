@@ -12,6 +12,8 @@
   .include  "msg_c08r0801.h"
   .include  "c08r0801.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,13 +21,38 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c08r0801_woman2_01
+_EVENT_DATA   ev_c08r0801_man3_01
+_EVENT_DATA   ev_c08r0801_woman2_01
 _EVENT_DATA_END
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+
+
 /**************************************************************/
-/* WOMAN2_01                                               */
+/*  男性：話しかけ                                            */
 /**************************************************************/
-//【仮】動作モデル変更予定
-EVENT_START   ev_c08r0801_woman2_01
-	_EASY_TALK_ITEM_EVENT(ITEM_AKAIITO, 1, FE_C08R0801_ITEMGET_01, msg_c08r0801_woman2_01, msg_c08r0801_woman2_02, msg_c08r0801_woman2_02 )
+EVENT_START   ev_c08r0801_man3_01
+
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //バージョンでポケモンが異なる
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    //Ｂ版ならゼクロムの話
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0801_man3_01b )
+  ELSE
+    //Ｗ版ならレシラムの話
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0801_man3_01w )
+  ENDIF
+
 EVENT_END
+
+/**************************************************************/
+/*  女性：話しかけ（アイテム入手）                            */
+/**************************************************************/
+EVENT_START   ev_c08r0801_woman2_01
+  _EASY_TALK_ITEM_EVENT( ITEM_KEMURIDAMA, 1, FE_C08R0801_ITEMGET_01, msg_c08r0801_woman2_01, msg_c08r0801_woman2_02, msg_c08r0801_woman2_02 )
+EVENT_END
+
+

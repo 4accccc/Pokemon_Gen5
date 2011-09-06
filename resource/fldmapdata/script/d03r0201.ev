@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d03r0201.h"
-  //.include  "d03r0201.h"
+  .include  "d03r0201.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,14 +21,31 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_d03r0201_elboard_01
+_EVENT_DATA   ev_bg_d03r0201_elboard_01
+_EVENT_DATA   ev_d03r0201_informationw_01
+_EVENT_DATA   ev_d03r0201_boy3_01
 _EVENT_DATA_END
 
+
 /**************************************************************/
-/*  電光掲示板のイベントスクリプト*/
+/*  電光掲示板のイベントスクリプト                            */
 /**************************************************************/
 EVENT_START   ev_bg_d03r0201_elboard_01
-
-	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
-
+  _LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
 EVENT_END
+
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_d03r0201_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0201_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_d03r0201_boy3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0201_boy3_01 )
+EVENT_END
+
+

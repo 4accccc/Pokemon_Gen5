@@ -19,6 +19,7 @@
 #define C13PC0101_WORKMAN2_01              7
 #define C13PC0101_GIRL1_01                 8
 #define C13PC0101_MEDALOYAJI               9
+#define C13PC0101_DELIVERY                10
 
 #endif //ZONE_C13PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c13pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

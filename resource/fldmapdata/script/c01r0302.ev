@@ -6,7 +6,9 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_c01r0302.h"
-  //.include  "c01r0302.h"
+  .include  "c01r0302.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -15,5 +17,72 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
+_EVENT_DATA   ev_zone_c01r0302
+_EVENT_DATA   ev_c01r0302_man1_01
+_EVENT_DATA   ev_c01r0302_breederw_01
+_EVENT_DATA   ev_c01r0302_poke1_01
+_EVENT_DATA   ev_c01r0302_poke2_01
 _EVENT_DATA_END
+
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+
+
+/************************************************************/
+/*  ZONE_CHANGE_LABEL                                       */
+/************************************************************/
+INIT_EVENT_START  ev_zone_c01r0302
+
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    $OBJCHRWORK0 = POKE24   //Ｂ版ならモンメン
+  ELSE
+    $OBJCHRWORK0 = POKE18   //Ｗ版ならチュリネ
+  ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  男性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c01r0302_man1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0302_man1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ブリーダー♀：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c01r0302_breederw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0302_breederw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ミネズミ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c01r0302_poke1_01
+  _EASY_TALK_POKEVOICE( MONSNO_537, msg_c01r0302_poke1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  モンメン（チュリネ）：話しかけ                            */
+/**************************************************************/
+EVENT_START   ev_c01r0302_poke2_01
+
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //バージョンでポケモンが異なる
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    //Ｂ版ならモンメン
+    _EASY_TALK_POKEVOICE( MONSNO_521, msg_c01r0302_poke2_01b )
+  ELSE
+    //Ｗ版ならチュリネ
+    _EASY_TALK_POKEVOICE( MONSNO_517, msg_c01r0302_poke2_01 )
+  ENDIF
+
+EVENT_END
+
+

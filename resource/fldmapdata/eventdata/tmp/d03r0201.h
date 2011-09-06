@@ -10,6 +10,8 @@
 #ifndef ZONE_D03R0201_EVC_H
 #define ZONE_D03R0201_EVC_H
 
+#define D03R0201_INFORMATIONW_01           0
+#define D03R0201_BOY3_01                   1
 
 #endif //ZONE_D03R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d03r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

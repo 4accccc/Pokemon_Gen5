@@ -1,5 +1,5 @@
 #event data
-#save date:2010/06/01 12:18:24
+#save date:2011/09/06 11:59:15
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r15r0201.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,100 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r15r0201.wms
 #hold event type:
 1
 #hold event number:
+3
+#event number: 0
+#type
+1
+#ID name
+R15R0201_ASSISTANTM_01
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_R15R0201_ASSISTANTM_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 88
+#event number: 1
+#type
+1
+#ID name
+R15R0201_VETERANW_01
+#OBJ CODE Number
+VETERANW
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R15R0201_VETERANW_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 168
+#event number: 2
+#type
+1
+#ID name
+R15R0201_POKE39_01
+#OBJ CODE Number
+POKE39
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R15R0201_POKE39_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 168
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

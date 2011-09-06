@@ -9,6 +9,9 @@
 #ifndef ZONE_T05R0201_EVC_H
 #define ZONE_T05R0201_EVC_H
 
+#define T05R0201_MIDDLEMAN2_01             0
+#define T05R0201_OLDWOMAN1_01              1
+#define T05R0201_BABYBOY1_01               2
 
 #endif //ZONE_T05R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t05r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

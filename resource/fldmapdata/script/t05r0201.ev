@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_t05r0201.h"
-  //.include  "t05r0201.h"
+  .include  "t05r0201.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +21,41 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_t05r0201_middleman2_01
+_EVENT_DATA   ev_t05r0201_oldwoman1_01
+_EVENT_DATA   ev_t05r0201_babyboy1_01
 _EVENT_DATA_END
+
+//道具交換用ワーク
+DEFINE_LOCAL  lwk_sub_item
+
+
+/**************************************************************/
+/*  おじさん：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_t05r0201_middleman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05r0201_middleman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おばあさん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_t05r0201_oldwoman1_01
+
+  //交換道具をセット
+  $lwk_sub_item = ITEM_HOSINOKAKERA
+
+  //道具名をセット
+  _ITEM_NAME( 0, lwk_sub_item )
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05r0201_oldwoman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_t05r0201_babyboy1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05r0201_babyboy1_01 )
+EVENT_END
+
+

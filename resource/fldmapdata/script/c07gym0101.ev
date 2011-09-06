@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c07gym0101.h"
   .include  "c07gym0101.h"
 
+  //@author fujimura_souichirou（ハチクイベント追加）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -35,44 +37,122 @@ _EVENT_DATA    ev_pos_c07gym0101_zimen_07
 _EVENT_DATA    ev_pos_c07gym0101_zimen_08
 _EVENT_DATA_END
 
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
 //------------------------------注意--------------------------------//
-//																	//
-//	ジムギミックに LOCALWORK15、01、02、03 を使用ししています。     //
-//	同マップ内の使用を禁止します。									//
-//	LOCALWORK15 ⇒ POS起動WORK。常に0。								//
-//	LOCALWORK01 ⇒ 歯車0を管理するWORK。オンオフで0か1になる。      //
-//	LOCALWORK02 ⇒ 歯車1を管理するWORK。オンオフで0か1になる。      //
-//	LOCALWORK03 ⇒ 歯車2を管理するWORK。オンオフで0か1になる。      //
-//																	//
+//                                                                  //
+//  ジムギミックに LOCALWORK15、01、02、03 を使用ししています。     //
+//  同マップ内の使用を禁止します。                                  //
+//  LOCALWORK15 ⇒ POS起動WORK。常に0。                             //
+//  LOCALWORK01 ⇒ 歯車0を管理するWORK。オンオフで0か1になる。      //
+//  LOCALWORK02 ⇒ 歯車1を管理するWORK。オンオフで0か1になる。      //
+//  LOCALWORK03 ⇒ 歯車2を管理するWORK。オンオフで0か1になる。      //
+//                                                                  //
 //------------------------------------------------------------------//
 
 
 /**************************************************************/
-/*          ジムリーダー会話                                  */
+/*  ハチク：話しかけ                                          */
 /**************************************************************/
-EVENT_START		ev_c07gym0101_leader7_01
+EVENT_START   ev_c07gym0101_leader7_01
 
+  _TALK_OBJ_START()
+
+  //ハチク：そのむかし　ケガをして
+  _BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_leader_01 )
+  _MSGWIN_CLOSE()
+
+  //自機方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  //アニメ：ハチク別方向を向く
+  SWITCH $LWK_DIR
+  CASE DIR_UP THEN
+    _OBJ_ANIME( C07GYM0101_LEADER7_01, anm_common_turn_l )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( C07GYM0101_LEADER7_01, anm_common_turn_u )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( C07GYM0101_LEADER7_01, anm_common_turn_r )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( C07GYM0101_LEADER7_01, anm_common_turn_d )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+
+  //ハチク：ジムリーダーを　つとめ
+  _BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_leader_02 )
+  _MSGWIN_CLOSE()
+
+  //自機方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  //アニメ：ハチク主人公と向き合う
+  SWITCH $LWK_DIR
+  CASE DIR_UP THEN
+    _OBJ_ANIME( C07GYM0101_LEADER7_01, anm_common_turn_d )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( C07GYM0101_LEADER7_01, anm_common_turn_l )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( C07GYM0101_LEADER7_01, anm_common_turn_u )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( C07GYM0101_LEADER7_01, anm_common_turn_r )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+
+  //ハチク：おしえることは　おそわること……
+  _BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_leader_03 )
+  _MSGWIN_CLOSE()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+  //アニメ：ハチク退場
+  IF $LCW_POSX == 17 && $LCW_POSZ == 15 THEN
+    _OBJ_ANIME_AUTO( C07GYM0101_LEADER7_01, 16, 23, FORCE_TYPE_NPC, 8, DIR_LR )
+    _TIME_WAIT( 8*2 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+  ELSE
+    _OBJ_ANIME_AUTO( C07GYM0101_LEADER7_01, 17, 23, FORCE_TYPE_NPC, 8, DIR_UD )
+    _TIME_WAIT( 8 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( C07GYM0101_LEADER7_01 )
+
+  //========================================//
+  //ハチクを非表示に
+  _FLAG_SET( FV_C07GYM0101_LEADDER7_01 )
+  //========================================//
 
 EVENT_END
 
 /************************************************************/
-/*						ジムガイド							*/
+/*  ガイドー：話しかけ                                      */
 /************************************************************/
-EVENT_START	ev_c07gym0101_sunglasses_01
+EVENT_START   ev_c07gym0101_sunglasses_01
+
+  //ジム内にハチクがいる
+  IF FLAG_OFF( FV_C07GYM0101_LEADDER7_01 ) THEN
+    //ガイド：やっぱ　いいすねえ……！▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_glasses_01 )
+
+  ELSE
+    //ガイド：あー　もうしわけ　ないっすねえ▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_glasses_02 )
+
+  ENDIF
 
 EVENT_END
 
 /************************************************************/
-/*							石像							*/
+/*  ＢＧ：石像                                              */
 /************************************************************/
-EVENT_START	ev_bg_c07gym0101_statue_01
-	_TALK_START_SE_PLAY()
+EVENT_START   ev_bg_c07gym0101_statue_01
 
-  // ポケモンジム　あとち
+  _TALK_START_SE_PLAY()
+  //ＢＧ：ポケモンジム　あとち
   _PLAINWIN_MSG_DOWN( msg_c07gym0101_statue_01 )
-
-	_LAST_KEYWAIT()
-	_PLAINWIN_CLOSE()
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
 
 EVENT_END
 
@@ -265,4 +345,34 @@ EVENT_START	ev_pos_c07gym0101_zimen_08
   _POS_PLAYER_TURN()
 	_GYM_ICE_CHG_RAIL(6)
 EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
 

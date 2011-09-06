@@ -10,6 +10,9 @@
 #ifndef ZONE_R15R0201_EVC_H
 #define ZONE_R15R0201_EVC_H
 
+#define R15R0201_ASSISTANTM_01             0
+#define R15R0201_VETERANW_01               1
+#define R15R0201_POKE39_01                 2
 
 #endif //ZONE_R15R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r15r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -10,7 +10,13 @@
 #ifndef ZONE_H06_EVC_H
 #define ZONE_H06_EVC_H
 
-#define H06_MAN3_01                        0
+#define H06_FIGHTERM_01                    0
+#define H06_LADY_01                        1
+#define H06_MAID_01                        2
+#define H06_TRAINERW_01                    3
+#define H06_MAN3_01                        4
+#define H06_MAN3_02                        5
+#define H06_SOCCERM_01                     6
 
 #endif //ZONE_H06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
