@@ -399,7 +399,7 @@
 "H04HOLE.bin"
 "oldschool01.bin"
 "oldh01.bin"
-"oldabc01.bin"
+"oldadc01.bin"
 "oldbbuill01.bin"
 "oldwbuill01.bin"
 "oldbwgym0202.bin"
