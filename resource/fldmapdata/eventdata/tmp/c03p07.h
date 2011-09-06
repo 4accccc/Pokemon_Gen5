@@ -14,6 +14,7 @@
 
 #define C03P07_SUNGLASSES_01               0
 #define C03P07_INFORMATIONW_01             1
+#define C03P07_MACOMO_01                   2
 
 #endif //ZONE_C03P07_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

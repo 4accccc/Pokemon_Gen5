@@ -25,6 +25,7 @@
 _EVENT_DATA   ev_bg_c03p07_gymsign_01
 _EVENT_DATA   ev_c03p07_sunglasses_01
 _EVENT_DATA   ev_c03p07_informationw_01
+_EVENT_DATA   ev_scene_c03p07_cgear_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -122,6 +123,160 @@ EVENT_START   ev_c03p07_sunglasses_01
 
 EVENT_END
 
+/**************************************************************/
+/*   SCENE_CHANGE：Cギア入手イベント                                    */
+/**************************************************************/
+EVENT_START   ev_scene_c03p07_cgear_01
+
+  //カメラ移動
+  _CAMERA_START()   //カメラ操作開始
+  _CAMERA_PURGE()   //カメラのバインドを解く
+  _CAMERA_MOVE( 6917,0,835584,1540096,0,3178496,40 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+  _OBJ_ANIME( C03P07_MACOMO_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME_AUTO( C03P07_MACOMO_01, 22,48, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+   //マコモ：やっほー
+  _BALLOONWIN_OBJMSG_POS( msg_c03p07_inventor_01, C03P07_MACOMO_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：「!」
+  _OBJ_ANIME( C03P07_MACOMO_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //マコモ：いきなり
+  _BALLOONWIN_OBJMSG_POS( msg_c03p07_inventor_02, C03P07_MACOMO_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //Ｃギア入手処理をコール
+  _CALL	ev_cgear_get
+  
+  //マコモ：くわしいことは
+  _BALLOONWIN_OBJMSG_POS( msg_c03p07_inventor_05, C03P07_MACOMO_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：マコモ退場
+  _OBJ_ANIME_AUTO( C03P07_MACOMO_01, 13,48, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  
+  //マコモOBJ削除
+  _OBJ_DEL( C03P07_MACOMO_01 )
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()    //カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()   //カメラ操作終了
+  
+  //==================================//
+  
+  //C03のPOS無効
+  $WK_SCENE_C03P07_CGEAR_01 = 2
+  
+  //C03P07のマコモ非表示
+  _FLAG_SET( FV_C03P07_MACOMO_01 )
+  //C03R1103のマコモ表示
+  _FLAG_RESET( FV_C03R1103_MACOMO_01 )
+  
+  //==================================//
+	
+EVENT_END
+
+//Ｃギア入手処理
+ev_cgear_get:
+	//Ｃギアを手に入れた！
+	_ME_PLAY( SEQ_ME_KEYITEM )
+	_PLAYER_NAME( 0 )
+	_SYSWIN_MSG( msg_c03p07_cgear_01, POS_DOWN )
+	_ME_WAIT()
+	_AB_KEYWAIT_MARK()
+
+	//Ｃギアの電源ON/OFF選択
+	_PUT_CGEAR_COMMENT( TRUE )		//注意書きを表示
+	{
+	DEFINE_LOCAL lwk_loop
+	WHILE $lwk_loop != 555
+	
+		//Cギアの電源をONにしますか？
+		_SYSWIN_MSG( msg_c03p07_cgear_02, POS_DOWN )
+		_BMPMENU_INIT_RIGHT( MENU_X1, 13, 0, 1, SCWK_ANSWER )
+		_BMPMENU_MAKE_LIST( msg_c03p07_cgear_03, 0 )	//はい
+		_BMPMENU_MAKE_LIST( msg_c03p07_cgear_04, 1 )	//いいえ
+		_BMPMENU_START()
+
+		IF $SCWK_ANSWER == 0 THEN
+			//はい選択
+			_PUT_CGEAR_COMMENT( FALSE )		//注意書きを非表示
+			
+			//本体設定が通信可能な状態かチェック
+			_GET_AVAILABLE_WIRELESS( SCWK_TEMP0 )
+			IF $SCWK_TEMP0 == TRUE THEN
+				//通信可能
+
+				//質問メッセージのウインドウを消す
+				_MSGWIN_CLOSE()
+				
+				//Cギア起動ＳＥ
+				_SE_PLAY( SEQ_SE_DECIDE3 )
+				_CGEAR_ON_DEMO( TRUE )		//Ｃギア画面をアクティブで起動
+				_SE_WAIT()
+				
+				//ほら！Ｃギアが起動したでしょ！
+				_BALLOONWIN_OBJMSG_POS( msg_c03p07_inventor_03 , C03P07_MACOMO_01, POS_DEFAULT )
+
+			ELSE
+				//通信不可（TWL本体設定により無線通信がOFFになっている状態）
+				
+				//DS本体設定により通信できません
+				_SYSWIN_MSG( msg_c03p07_cgear_06, POS_DOWN )
+				_MSGWIN_CLOSE()
+				
+				_CGEAR_ON_DEMO( FALSE )		//Ｃギア画面をパッシブで起動
+				
+				//Ｃギアの画面があらわれたでしょ？
+				_BALLOONWIN_OBJMSG_POS( msg_c03p07_inventor_04 , C03P07_MACOMO_01, POS_DEFAULT )
+				
+			ENDIF
+			
+			//ループから抜ける
+			$lwk_loop = 555
+			
+		ELSE
+			//いいえ選択なら再確認メッセージ
+			//通信機能がオフになりますがよろしいですか？
+			_SYSWIN_MSG( msg_c03p07_cgear_05, POS_DOWN )
+			_BMPMENU_INIT_RIGHT( MENU_X1, 13, 0, 1, SCWK_ANSWER )
+			_BMPMENU_MAKE_LIST( msg_c03p07_cgear_03, 0 )	//はい
+			_BMPMENU_MAKE_LIST( msg_c03p07_cgear_04, 1 )	//いいえ
+			_BMPMENU_START()
+			
+			IF $SCWK_ANSWER == SCR_YES THEN
+				//はい選択なら通信オフで先へ進む
+				_MSGWIN_CLOSE()
+				
+				_PUT_CGEAR_COMMENT( FALSE )		//注意書きを非表示
+				
+				_CGEAR_ON_DEMO( FALSE )		//Ｃギア画面をパッシブで起動
+				
+				//Ｃギアの画面があらわれたでしょ？
+				_BALLOONWIN_OBJMSG_POS( msg_c03p07_inventor_04 , C03P07_MACOMO_01, POS_DEFAULT )
+				
+				//ループから抜ける
+				$lwk_loop = 555
+				
+			ENDIF
+			
+		
+		ENDIF
+	
+	ENDWHILE
+	}
+_RET
 
 /**************************************************************/
 /*  受付嬢：はなしかけ（ヒウン名所巡りイベント）              */

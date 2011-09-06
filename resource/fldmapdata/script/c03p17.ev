@@ -22,13 +22,16 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_scene_c03p17_swchampion_02
 _EVENT_DATA		ev_c03p17_swchampion_01
-_EVENT_DATA		ev_c03p17_swrival_01
 _EVENT_DATA		ev_c03p17_workman_01
-_EVENT_DATA		ev_c03p17_pilot_01
 _EVENT_DATA		ev_zone_c03p17
 _EVENT_DATA		ev_init_c03p17
+_EVENT_DATA		ev_pos_c03p17_swchampion_03
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+  DEFINE_LOCAL LWK_DIR
+  DEFINE_LOCAL  LCW_POSX
+  DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
@@ -44,18 +47,8 @@ INIT_EVENT_END
 INIT_EVENT_START ev_init_c03p17
   
   //下水道ストッパーをレゾナンスリゾート終了まで配置
-  IF $WK_SCENE_C03P17 < 3 THEN
+  IF $WK_SCENE_C03P17 < 1 THEN
     _OBJ_POS_CHANGE( C03P17_WORKMAN_01, 11, -1, 21, DIR_LEFT )
-  ENDIF
-  
-  //イベント進行で配置を分岐
-  IF $WK_SCENE_C03P17 == 2 THEN
-  //レゾナンスリゾート誘導中
-    _OBJ_POS_CHANGE( C03P17_SWRIVAL_01, 8, 0, 19, DIR_RIGHT )
-    _OBJ_POS_CHANGE( C03P17_SWCHAMPION_01, 10, 0, 14, DIR_DOWN )
-    
-  ELSIF $WK_SCENE_C03P17 == 3 THEN
-  //【仮】レゾナンスリゾート誘導復帰後（誘導後の状態を名木橋君に確認）
   ENDIF
 
 INIT_EVENT_END
@@ -64,6 +57,10 @@ INIT_EVENT_END
 /*		SCENE_CHANGE：アイリス誘導イベント
 /**************************************************************/
 EVENT_START		ev_scene_c03p17_swchampion_02
+  
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
 
   //カメラ移動
   _CAMERA_START()		//カメラ操作開始
@@ -118,53 +115,100 @@ EVENT_START		ev_scene_c03p17_swchampion_02
     _BALLOONWIN_OBJMSG_POS( msg_c03p17_swrival_03, C03P17_SWRIVAL_01, POS_DEFAULT )
   ENDIF
   
-  //ライバル：きいたんだが
+  //ライバル：となると
   _BALLOONWIN_OBJMSG_POS( msg_c03p17_swrival_04, C03P17_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   }
   
-  //アニメ：ライバル・船近くに移動
-  _OBJ_ANIME_AUTO( C03P17_SWRIVAL_01, 8,19, FORCE_TYPE_NOT, 8, DIR_UD )
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()    //カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()   //カメラ操作終了
+  
+  //アニメ：ライバル・下水道に移動
+  _OBJ_ANIME( C03P17_SWRIVAL_01, anm_swrival_go_d11 )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( C03P17_SWRIVAL_01, anm_staystep_r )
+  
+  _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
   _OBJ_ANIME_WAIT()
 
   //アイリス：いいんじゃない？
   _BALLOONWIN_OBJMSG_POS( msg_c03p17_swchampion_02, C03P17_SWCHAMPION_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-
-  //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (40)
-  //カメラ待ち
-  _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-  _CAMERA_END()		//カメラ操作終了
   
   //==================================//
-  
-  //C03P17_SCENE_CHANGE無効・レゾナンスリゾート誘導開始
+  //C03P17_SCENE_CHANGE無効
   $WK_SCENE_C03P17 = 2
+  //==================================//
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆ライバル下水道へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_go_d11
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		POS：下水道クリア後
+/**************************************************************/
+EVENT_START		ev_pos_c03p17_swchampion_03
+
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  $LCW_POSZ -= 2
+  
+  //アニメ：アイリス主人公の前に移動
+  _OBJ_ANIME_AUTO( C03P17_SWCHAMPION_01, LCW_POSX , LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //アイリス：きみのともだち
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swchampion_03, C03P17_SWCHAMPION_01, POS_DEFAULT )
+  
+  //アイリス：これから
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swchampion_04, C03P17_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
   
   //==================================//
+  //C03P17_POS無効
+  $WK_SCENE_C03P17 = 4
+  //C03P07ジム前ストッパー解除
+  _FLAG_SET( FV_C03P07_SUNGLASSES_01 )
+  //==================================//
+  
 EVENT_END
 
 /**************************************************************/
 /*		アイリス話しかけ
 /**************************************************************/
 EVENT_START		ev_c03p17_swchampion_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_swchampion_02 )
-EVENT_END
-
-/**************************************************************/
-/*		ライバル話しかけ
-/**************************************************************/
-EVENT_START		ev_c03p17_swrival_01
+  
   //下水道クリア後
-  IF $WK_SCENE_C03P17 == 5 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_swrival_08 )
+  IF $WK_SCENE_C03P17 > 4 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_swchampion_04 )
+  //下水道クリア前
   ELSE
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_swrival_04 )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_swchampion_02 )
   ENDIF
+  
 EVENT_END
 
 /**************************************************************/
@@ -183,123 +227,6 @@ EVENT_START		ev_c03p17_workman_01
   ENDIF
 EVENT_END
 
-/**************************************************************/
-/*		パイロット
-/**************************************************************/
-EVENT_START		ev_c03p17_pilot_01
-  
-  //【仮】レゾナンスリゾートへの移動・チュートリアル
-  IF $WK_SCENE_C03P17 <=2 THEN
-    _CALL ev_c03p17_resort_guide_01
-  ELSE
-  
-  ENDIF
-  
-EVENT_END
-
-//【仮】レゾナンスリゾート案内イベント（名木橋君が組む）
-ev_c03p17_resort_guide_01:
-
-  //暗転処理
-  _BLACK_OUT_SLOW()
-	_DISP_FADE_END_CHECK()
-	
-	//【仮】登場人物移動
-	_OBJ_POS_CHANGE( C03P17_SWCHAMPION_01, 10, 0, 17, DIR_DOWN )
-	_OBJ_POS_CHANGE( C03P17_SWRIVAL_01, 9, 0, 19, DIR_RIGHT )
-	_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 10, 0, 19, DIR_LEFT )
-	_OBJ_POS_CHANGE( C03P17_WORKMAN_01, 12, 0, 19, DIR_LEFT )
-  
-	//暗転復帰
-	_BLACK_IN_SLOW()
-	_DISP_FADE_END_CHECK()
-
-  //==================================//
-  
-  //レゾナンスリゾート誘導終了
-  $WK_SCENE_C03P17 = 3
-  
-  //==================================//
-  
-  //アイリス誘導イベント
-  _CALL ev_c03p17_swchampion_d11guide_01
-
-_RET
-
-//下水道誘導イベント
-ev_c03p17_swchampion_d11guide_01:
-
-  //カメラ移動
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 9467,0,1552384,688128,0,1277952,40 )
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-  
-  //ライバル：いなかった
-  _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swrival_05, C03P17_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //ライバル：おれ…ぜったいゆるさないから！
-  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swrival_07, C03P17_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：ライバル退場
-  _OBJ_ANIME_AUTO( C03P17_SWRIVAL_01, 2,14, FORCE_TYPE_NOT, 8, DIR_UD )
-  _OBJ_ANIME_WAIT()
-  
-  //ライバル動作モデル削除
-  _OBJ_DEL( C03P17_SWRIVAL_01 )
-  
-  //階段SE再生
-  _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
-  
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
-  _OBJ_ANIME_WAIT()
-  
-  //アイリス：きみのともだち
-  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swchampion_03, C03P17_SWCHAMPION_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：アイリス退場
-  _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_swchampion_go_d11 )
-  _TIME_WAIT(24)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
-  _OBJ_ANIME_WAIT()
-  
-  //アイリス・ライバル動作モデル削除
-  _OBJ_DEL( C03P17_SWCHAMPION_01 )
-  
-  //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (40)
-  //カメラ待ち
-  _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-  _CAMERA_END()		//カメラ操作終了
-
-  //==================================//
-  
-  //C03P17アイリス非表示
-  _FLAG_SET( FV_C03P17_SWCHAMPION_01 )
-  //C03P17ライバル非表示
-  _FLAG_SET( FV_C03P17_SWRIVAL_01 )
-  //下水道イベント中
-  $WK_SCENE_C03P17 = 4
-  
-  //==================================//
-_RET
-
-//--------------------------------------------------------------------
-//	☆アイリス下水道へ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_swchampion_go_d11
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA	AC_WALK_R_8F,8
-	_ANIME_DATA	AC_WALK_U_8F,4
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く

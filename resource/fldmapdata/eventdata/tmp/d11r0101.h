@@ -16,7 +16,7 @@
 #ifndef ZONE_D11R0101_EVC_H
 #define ZONE_D11R0101_EVC_H
 
-#define D11R0101_SWCHAMPION_01             0
+#define D11R0101_SWRIVAL_01                0
 #define D11R0101_PLASMAM_01                1
 #define D11R0101_PLASMAM_02                2
 #define FLD_ITEM_31                        3
