@@ -1390,3 +1390,142 @@ void RESORT_DATA_MANAGER_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 type, cons
   //プリセットを設定
   Resort_Data_Manager_SetProxyPreset( p_wk, type, cp_preset, presetID, heapID );
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プリセットからデータを作成
+ *
+ *	@param	RESORT_DATA_MANAGER *p_wk ワーク
+ *	@param	*p_sys  リゾーとシステム
+ *	@param	people_type 人物タイプ
+ *	@param	preset_type プリセットタイプ
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_PROXY_BUFF *p_proxy_buff, const RESORT_BINARY_PRESET *cp_preset, u16 people_type, u16 preset_type,  HEAPID heapID )
+{
+  switch( people_type )
+  {
+  case RESORT_PEOPLE_TYPE_PROXY:
+    {
+      static const struct 
+      {
+        u16 preset_type;
+        u16 proxy_type;
+      }sc_preset_type_to_proxy_type[] =
+      {
+        { RESORT_PRESET_TYPE_TUTORIAL1 , RESORT_PROXY_TYPE_TUTORIAL_01 },
+        { RESORT_PRESET_TYPE_TUTORIAL2 , RESORT_PROXY_TYPE_TUTORIAL_02 },
+        { RESORT_PRESET_TYPE_APPOINT,    RESORT_PROXY_TYPE_CELEB },
+      };
+      int i;
+      BOOL is_set;
+      u16 proxy_type  = 0xFF;
+
+      for( i = 0; i < NELEMS(sc_preset_type_to_proxy_type); i++)
+      {
+        if( sc_preset_type_to_proxy_type[i].preset_type == preset_type )
+        {
+          proxy_type = sc_preset_type_to_proxy_type[i].proxy_type;
+        }
+      }
+      GF_ASSERT( proxy_type != 0xFF );
+
+      {
+        RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID) );
+        RESORT_DATA_MANAGER_SetProxyPreset( p_proxy, proxy_type, cp_preset, preset_type, heapID );
+        is_set = RESORT_PROXY_BUFF_Add( p_proxy_buff, p_proxy );
+        GF_ASSERT( is_set );
+        RESORT_PROXY_DATA_Exit( p_proxy );
+      }
+    }
+    break;
+  case RESORT_PEOPLE_TYPE_SECRETARY:
+    {
+      static const struct 
+      {
+        u16 preset_type;
+        u16 sec_type;
+      }sc_preset_type_to_sec_type[] =
+      {
+        { RESORT_PRESET_TYPE_TUTORIAL1 , RESORT_PROXY_TYPE_TUTORIAL_01 },
+        { RESORT_PRESET_TYPE_TUTORIAL2 , RESORT_PROXY_TYPE_TUTORIAL_02 },
+        { RESORT_PRESET_TYPE_APPOINT,    RESORT_PROXY_TYPE_CELEB },
+      };
+      int i;
+      BOOL is_set;
+      u16 sec_type  = 0xFF;
+
+      for( i = 0; i < NELEMS(sc_preset_type_to_sec_type); i++)
+      {
+        if( sc_preset_type_to_sec_type[i].preset_type == preset_type )
+        {
+          sec_type = sc_preset_type_to_sec_type[i].sec_type;
+        }
+      }
+      GF_ASSERT( sec_type != 0xFF );
+
+      {
+        RESORT_SECRETARY_DATA *p_empty;
+        RESORT_SECRETARY_DATA *p_secretary = RESORT_SECRETARY_DATA_Init( GFL_HEAP_LOWID(heapID) );
+        u16 peopleID = RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( p_wk, RESORT_PLACEID_RECEPTION );
+        RESORT_DATA_MANAGER_SetSecretaryPreset( p_secretary, sec_type, cp_preset, preset_type, peopleID, heapID );
+
+        p_empty = RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( p_people_all );
+        GF_ASSERT( p_empty );
+        GFL_STD_MemCopy( p_secretary, p_empty, RESORT_SECRETARY_DATA_SIZE );
+        RESORT_DATA_MANAGER_Update( p_wk );
+        RESORT_SECRETARY_DATA_Exit( p_secretary );
+      }
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+#if 0
+//=============================================================================
+/**
+ *					ランク閲覧
+*/
+//=============================================================================
+//-------------------------------------
+///	ランクウィンドウ
+//=====================================
+typedef struct _RESORT_RANK_WND
+{
+  FLDMSGWIN *p_fldmsgwin;
+} ;
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ウィンドウ作成
+ *
+ *	@param	HEAPID heapID 
+ *
+ *	@return RESORT_RANK_WND ワーク
+ */
+//-----------------------------------------------------------------------------
+RESORT_RANK_WND * RESORT_RANK_WND_Create( FLDMSGBG *p_msgbg, HEAPID heapID );
+{
+  SORT_RANK_WND *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(SORT_RANK_WND) );
+  {
+  
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
+
+    p_wk->p_fldmsgwin = FLDMSGWIN_Add(p_msgbg, p_msg, 
+      POKESTATUS_BMP_X, POKESTATUS_BMP_Y, POKESTATUS_BMP_SIZE_X, POKESTATUS_BMP_SIZE_Y);
+
+    FLDMSGWIN_ClearWindow(p_wk->p_fldmsgwin);
+
+    FLDMSGWIN_Print( p_wk->p_fldmsgwin, 0, 0,  );
+
+    GFL_MSG_Delete( p_msg );
+  }
+
+  return p_wk;
+}
+#endif

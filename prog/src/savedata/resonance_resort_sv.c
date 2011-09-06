@@ -214,7 +214,7 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
   RESORT_CITY_DATA *cp_city = RESONANCE_RESORT_SV_GetCityData( p_wk );
 
   //もしチュートリアル中で、代理人ならば、２こ開けておく
-  if( RESORT_CITY_DATA_GetData(cp_city, RESORT_CITY_DATA_PARAM_STATE, NULL ) != RESORT_CITY_STATE_NORMAL 
+  if( RESORT_CITY_DATA_GetData(cp_city, RESORT_CITY_DATA_PARAM_IS_TUTORIAL, NULL ) 
       && type == RESORT_MERGE_TYPE_PROXY 
       && RESORT_PROXY_BUFF_GetCnt(p_proxy_buff) + 2 >= RESORT_PROXY_BUFF_GetMax(p_proxy_buff) )
   {

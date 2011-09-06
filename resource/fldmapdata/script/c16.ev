@@ -23,7 +23,9 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_c16
 _EVENT_DATA    ev_init_c16
-_EVENT_DATA    ev_scene_c16_tutorial_01
+_EVENT_DATA    ev_pos_c16_tutorial_01
+_EVENT_DATA    ev_c16_secretary_01_tutorial
+_EVENT_DATA    ev_c16_secretary_02_tutorial
 _EVENT_DATA    ev_recover_c16
 _EVENT_DATA_END
 
@@ -47,13 +49,15 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START ev_init_c16
 
-  //イベント進行で配置を分岐
-  IF $WK_SCENE_C16_TUTORIAL_01 == 1 THEN
-    _OBJ_POS_CHANGE( C16_SWRIVAL_01, 15, 0, 73, DIR_DOWN )
-  ENDIF
-  
   // 出口位置変更
   _CALL ev_c16_exit_change
+
+  // 初回イベントのオーナー位置変更
+  IF $WK_SCENE_C16_TUTORIAL_01 == 1 THEN
+    _OBJ_DEL(C16_OWNER_01)
+    _OBJ_DEL(C16_SECRETARY_01)
+    _OBJ_DEL(C16_SECRETARY_02)
+  ENDIF
 
 INIT_EVENT_END
 
@@ -84,19 +88,115 @@ ev_c16_exit_change:
 _RET
 
 /**************************************************************/
-/*			SCENE_CHANGE：【仮】誘導イベント					  */
+/*			誘導イベント					                                */
 /**************************************************************/
-EVENT_START		ev_scene_c16_tutorial_01
+EVENT_START		ev_pos_c16_tutorial_01
+{
+	//うーんこまったな
+	_BALLOONWIN_OBJMSG( msg_c16_owner_01, C16_OWNER_01 )
+	_MSGWIN_CLOSE()
 
-  _BALLOONWIN_OBJMSG_POS( msg_c16_swrival_04,C16_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
+	//オーナー：！マーク
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( C16_OWNER_01, anm_mark_gyoe )
+	_OBJ_ANIME_WAIT()
+
+  //オーナー：ちかよってくる
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSZ -= 1
+  _OBJ_ANIME_AUTO( C16_OWNER_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+
+  $LCW_POSX -= 1
+  _OBJ_ANIME_AUTO( C16_SECRETARY_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+  $LCW_POSX += 2
+  _OBJ_ANIME_AUTO( C16_SECRETARY_02, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_c16_owner_02, C16_OWNER_01 )
+
+  //はいいいえ
+  {
+    DEFINE_LOCAL LWK_YESNO
+    DEFINE_LOCAL LWK_LOOP
+
+    $LWK_LOOP = TRUE
+    WHILE $LWK_LOOP == TRUE
+      _YES_NO_WIN( LWK_YESNO )
+      IF $LWK_YESNO == SCR_YES THEN
+	      _BALLOONWIN_OBJMSG( msg_c16_owner_03_yes, C16_OWNER_01 )
+	      _MSGWIN_CLOSE()
+        $LWK_LOOP = FALSE
+      ELSE
+	      _BALLOONWIN_OBJMSG( msg_c16_owner_03_no, C16_OWNER_01 )
+      ENDIF
+    ENDWHILE
+  }
+
+  //口癖入力
+  _RESORT_INPUT_AUTHERPHRASE()
+
+	_BALLOONWIN_OBJMSG( msg_c16_owner_04, C16_OWNER_01 )
+	_MSGWIN_CLOSE()
+
+  //感謝入力
+  _RESORT_INPUT_AUTHERTHANKS()
+
+	_BALLOONWIN_OBJMSG( msg_c16_owner_05, C16_OWNER_01 )
+	_MSGWIN_CLOSE()
+
+	_BALLOONWIN_OBJMSG( msg_c16_secretary_01, C16_SECRETARY_01 )
+	_MSGWIN_CLOSE()
+
+  //オーナー去る
+	_OBJ_ANIME( C16_OWNER_01, anm_first_owner_goaway_01 )
+	_OBJ_ANIME_WAIT()
+  _OBJ_DEL( C16_OWNER_01 )
+
+  //
+	_BALLOONWIN_OBJMSG( msg_c16_secretary_02, C16_SECRETARY_01 )
+	_MSGWIN_CLOSE()
+
+  //自分の呼び名入力
+  _RESORT_INPUT_AUTHERNAME()
+
+	_BALLOONWIN_OBJMSG( msg_c16_secretary_03, C16_SECRETARY_01 )
+	_MSGWIN_CLOSE()
+
   //==================================//
   //C16誘導イベント終了
-  $WK_SCENE_C16_TUTORIAL_01 = 2
-  //C16ライバル非表示
-  _FLAG_SET( FV_C16_SWRIVAL_01 )
+  $WK_SCENE_C16_TUTORIAL_01 = 1
   //==================================//
-  
-  
+} 
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mark_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//オーナー：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_owner_goaway_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/*			チュートリアル用秘書１			                          */
+/**************************************************************/
+EVENT_START	ev_c16_secretary_01_tutorial
+{
+}
+EVENT_END
+/**************************************************************/
+/*			チュートリアル用秘書２					                      */
+/**************************************************************/
+EVENT_START	ev_c16_secretary_02_tutorial
+{
+}
 EVENT_END

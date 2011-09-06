@@ -168,3 +168,17 @@ extern BOOL RESORT_DATA_MANAGER_CheckConvert( const RESORT_DATA_MANAGER *cp_wk, 
 extern void RESORT_DATA_MANAGER_SetProxyFunRandom( RESORT_PROXY_DATA *p_wk, const RESORT_BINARY_PRESET *cp_preset, const RESORT_RECV_DATA *cp_owner, HEAPID heapID );
 extern void RESORT_DATA_MANAGER_SetSecretaryPreset( RESORT_SECRETARY_DATA *p_wk, u16 type, const RESORT_BINARY_PRESET *cp_preset, u16 preset_type, u16 peopleID, HEAPID heapID );
 extern void RESORT_DATA_MANAGER_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 type, const RESORT_BINARY_PRESET *cp_preset, u16 preset_type, HEAPID heapID );
+
+extern void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_PROXY_BUFF *p_proxy_buff, const RESORT_BINARY_PRESET *cp_preset, u16 people_type, u16 preset_type,  HEAPID heapID );
+
+
+//=============================================================================
+/**
+ *					ÉåÉRÅ[Éhâ{óó
+*/
+//=============================================================================
+#if 0
+typedef struct _RESORT_RANK_WND RESORT_RANK_WND;
+extern RESORT_RANK_WND * RESORT_RANK_WND_Create( HEAPID heapID );
+extern void RESORT_RANK_WND_Delete( RESORT_RANK_WND *p_wk );
+#endif

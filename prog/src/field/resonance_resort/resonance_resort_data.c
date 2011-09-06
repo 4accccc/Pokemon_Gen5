@@ -4241,7 +4241,9 @@ struct _RESORT_CITY_DATA
   u32     quest_clear_cnt;
   u32     exp;
   u32     tex;
-  u32     fun_day_flag;   //TODO  ‚Å‚©‚¢
+  u32     fun_day_flag  : 1;
+  u32     is_tutorial   : 1;
+  u32     dummy         :30;
   u8      secret_present_type;
   u8      secret_present_num;
   u8      secret_present_flag;
@@ -4294,6 +4296,7 @@ void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
   p_wk->my_name[0]  = GFL_STR_GetEOMCode();
   p_wk->rnd_seed    = GFUser_GetPublicRand(0);
   p_wk->lv          = 1;
+  p_wk->is_tutorial = 1;
 
   {
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, GFL_HEAP_LOWID(HEAPID_SAVE) );
@@ -4347,8 +4350,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->tex;
   case RESORT_CITY_DATA_FUN_DAY_FLAG:
     return cp_wk->fun_day_flag;
-  case RESORT_CITY_DATA_PARAM_STATE:
-    return cp_wk->state;
+  case RESORT_CITY_DATA_PARAM_IS_TUTORIAL:
+    return cp_wk->is_tutorial;
   default:
     GF_ASSERT(0);
     return 0;
@@ -4385,8 +4388,8 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
   case RESORT_CITY_DATA_FUN_DAY_FLAG:
     p_wk->fun_day_flag  = data;
     break;
-  case RESORT_CITY_DATA_PARAM_STATE:
-    p_wk->state = data;
+  case RESORT_CITY_DATA_PARAM_IS_TUTORIAL:
+    p_wk->is_tutorial = data;
     break;
   default:
     GF_ASSERT(0);

@@ -111,7 +111,7 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
   //人物追加フラグ取得
   {
     RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_wk->p_sys );
-    is_people_add = (RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_STATE,NULL)==RESORT_CITY_STATE_NORMAL);
+    is_people_add = !RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_IS_TUTORIAL,NULL);
   }
 
   //人物システム

@@ -234,7 +234,7 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
   //人物追加フラグ取得
   {
     RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_wk->p_sys );
-    is_people_add = (RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_STATE,NULL)==RESORT_CITY_STATE_NORMAL);
+    is_people_add = !RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_IS_TUTORIAL,NULL);
   }
   
   //街へ来たとき１日１回だけファンが増加する
@@ -3089,7 +3089,7 @@ static void Field_People_UpdateDataCallback( void *p_wk_adrs, void *p_data_adrs,
 //-----------------------------------------------------------------------------
 static void Field_People_UpdateDataCallbackTutorial( void *p_wk_adrs, void *p_data_adrs, u32 people_type, RESORT_RECV_DATA_UPDATE update )
 {
-  BOOL is_update = TRUE;
+  BOOL is_update = FALSE;
 
   if( people_type == RESORT_PEOPLE_TYPE_PROXY )
   {
@@ -3482,7 +3482,7 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
 {
   RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_sys );
 
-  if( RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_STATE,NULL ) == RESORT_CITY_STATE_NORMAL 
+  if( !RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_IS_TUTORIAL,NULL ) 
       && RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_FUN_DAY_FLAG, NULL) == FALSE )
   {
     int i;

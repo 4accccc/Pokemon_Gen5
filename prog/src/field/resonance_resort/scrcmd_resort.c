@@ -2241,6 +2241,9 @@ VMCMD_RESULT EvCmdResortSetMyData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_MY_PARAM_TEX:
     RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_TEX, data );
     break;
+  case RESORT_MY_PARAM_IS_TUTORIAL:
+    RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_IS_TUTORIAL, data );
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -2397,10 +2400,17 @@ VMCMD_RESULT EvCmdResortSetPresetPoeple( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+  RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
+  const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
+  const RESORT_BINARY_PRESET *cp_preset = RESORT_SYSTEM_GetBinaryPreset(p_sys);
+  RESORT_PROXY_BUFF *p_proxy_buff = RESORT_SYSTEM_GetProxyBuff(p_sys);
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
 
   u16 people  = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 preset  = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
+  RESORT_DATA_MANAGER_SetPresetPeople( p_data_manager, p_people_all, p_proxy_buff, cp_preset, people, preset, heapID );
   return VMCMD_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------
