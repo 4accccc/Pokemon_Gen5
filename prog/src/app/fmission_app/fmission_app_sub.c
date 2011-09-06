@@ -339,6 +339,15 @@ static const s16 fma_star_seq_tbl[] = {
 	5,		// 4つ
 };
 
+//----------------
+// タッチペン領域
+//----------------
+static const GFL_UI_TP_HITTBL fma_rect_01_tbl[] = {
+  { 168, 192, 232, 255 }, 			// 戻る
+  //
+  { GFL_UI_TP_HIT_END,0,0,0 }
+};
+
 //=============================================================================
 /**
  *								宣言
@@ -957,24 +966,25 @@ BOOL FmaCmn_is_anime_end( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wnum
  *	@param	const s32			値
  *	@param	const s32			桁数(max4)
  *	@param	const s32			モード(0:値のみ,1:0埋め)
+ *	@param	const s32,s32		座標
  */
 //-----------------------------------------------------------------------------
-void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnum, const s32 num, const s32 snum, const s32 smode )
+void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnum, const s32 num, const s32 snum, const s32 smode,
+												const s32 x, const s32 y)
 {
 	s32				i;
 	s32				buf[4];
 	GFL_CLACTPOS	pos;
-	s32				srcpos;
 	BOOL			bflg;
 	s32				tmp=num;		// 値セット
+	s32				rflg = 1;		// (0:左あわせ、1:右あわせ)
 	
 	// 初期化
 	for(i=0;i<4;i++){
 		buf[i] = 0;
 	}
-	// 先頭の座標の取得
-	GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[src_wnum], &pos, CLSYS_DEFREND_SUB );
-	srcpos = pos.x;
+	pos.x = x;
+	pos.y = y;
 	//
 	for(i=0;i<snum;i++){
 		// 各桁をセット
@@ -986,24 +996,47 @@ void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_w
 	}
 	//
 //	OS_Printf("%d,%d,%d,%d\n",buf[0],buf[1],buf[2],buf[3]);
-	//
-	// ここまででbuf[]に逆順で値が入っているはず
-	for(i=0;i<4;i++){
-		// 値のみ表示
-		bflg = TRUE;
-		if(smode == 0){
-			if((buf[3-i] == 0)&&(i != (4-1))){
-				bflg = FALSE;
+	// 左あわせ(しばらく残し)
+	if(rflg == 0){
+		// ここまででbuf[]に逆順で値が入っているはず
+		for(i=0;i<4;i++){
+			// 値のみ表示
+			bflg = TRUE;
+			if(smode == 0){
+				if((buf[3-i] == 0)&&(i != (4-1))){
+					bflg = FALSE;
+				}
 			}
+			// 表示
+			GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[src_wnum+i], bflg );
+			// フレームを指定(FX32_SHIFTをするようだ)=>うまくいかない
+//			GFL_CLACT_WK_SetAnmFrame( wk->wk_obj.clwk[src_wnum+i], (buf[3-i]<<FX32_SHIFT) );
+			GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+i], buf[3-i] );
+			// x方向に加算
+			pos.x = x + 8*i;
+			GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+i], &pos, CLSYS_DEFREND_SUB );
 		}
-		// 表示
-		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[src_wnum+i], bflg );
-		// フレームを指定(FX32_SHIFTをするようだ)=>うまくいかない
-//		GFL_CLACT_WK_SetAnmFrame( wk->wk_obj.clwk[src_wnum+i], (buf[3-i]<<FX32_SHIFT) );
-		GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+i], buf[3-i] );
-		// x方向に加算
-		pos.x = srcpos + 8*i;
-		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+i], &pos, CLSYS_DEFREND_SUB );
+	}
+	// 右あわせ
+	else{
+		// ここまででbuf[]に逆順で値が入っているはず
+		for(i=0;i<4;i++){
+			// 値のみ表示
+			bflg = TRUE;
+			if(smode == 0){
+				if((buf[i] == 0)&&(i != 0)){
+					bflg = FALSE;
+				}
+			}
+			// 表示
+			GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[src_wnum+3-i], bflg );
+			// フレームを指定(FX32_SHIFTをするようだ)=>うまくいかない
+//			GFL_CLACT_WK_SetAnmFrame( wk->wk_obj.clwk[src_wnum+i], (buf[3-i]<<FX32_SHIFT) );
+			GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+3-i], buf[i] );
+			// x方向に加算
+			pos.x = x + 8*(3-i);
+			GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+3-i], &pos, CLSYS_DEFREND_SUB );
+		}
 	}
 }
 
@@ -1079,33 +1112,6 @@ void FmaCmn_disp_time( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnu
 	}
 }
 
-//-----------------------------------------------------------------------------
-/**
- *	@brief  パラメータの取得
- *
- *	@param	FMISSION_APP_WORK* wk
- *
- *	@ret	BOOL			(TRUE:変更あり、FALSE:変更なし)
- */
-//-----------------------------------------------------------------------------
-BOOL FmaCmn_main_festival( FMISSION_APP_WORK *wk, const s32 mode )
-{
-	BOOL	bflg=FALSE;
-	
-	// 初期化
-	if(mode == 0){
-		LINK_FESTIVAL_GetMissionStatus( wk->Param->fest_sys, &wk->MissionStatus  );
-		bflg = TRUE;
-	}
-	else{
-		bflg = LINK_FESTIVAL_TopScoreIsUpdate( wk->Param->fest_sys );
-		if(bflg == TRUE){
-			LINK_FESTIVAL_GetMissionStatus( wk->Param->fest_sys, &wk->MissionStatus  );
-		}
-	}
-	return( bflg );
-}
-
 //--------------------------------------------------------------
 /**
  *	星表示
@@ -1126,5 +1132,21 @@ void FmaCmn_disp_star( FMISSION_APP_WORK *wk )
 	lv = wk->Param->fmwk->beacon.m_level;
 	// 星のシーケンス変更
 	FmaCmn_chg_objseq( wk, FMA_CLWKMODE_NORMAL, cnum, fma_star_seq_tbl[lv] );
+}
+
+//--------------------------------------------------------------
+/**
+ *	タッチ判定
+ *
+ * @param   FMISSION_APP_WORK		*wk
+ */
+//--------------------------------------------------------------
+s32 FmaCmn_chk_tp( FMISSION_APP_WORK *wk )
+{
+	s32		id;
+	//
+	// タッチあり
+	id = GFL_UI_TP_HitTrg( &fma_rect_01_tbl[0] );
+	return( id );
 }
 

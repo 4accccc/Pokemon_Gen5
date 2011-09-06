@@ -49,6 +49,9 @@ enum{
 enum{
 	FLG_FMA_UPDATE		= (1<<0),	// 更新
 	FLG_FMA_DISP_1ST	= (1<<1),	// はじめの表示
+	FLG_FMA_ONLY		= (1<<2),	// 1人のみの場合
+	//
+	FLG_FMA_SCROLL_STOP	= (1<<8),	// スクロール停止
 };
 
 //------------------
@@ -192,6 +195,16 @@ enum{
  */
 //=============================================================================
 //-------------------------------------
+// 一つ前の情報(まとめ)
+//-------------------------------------
+typedef struct{
+	s32			Timer;			// 時間
+	s32			Num;			// 人数
+	s32			Score;			// スコア
+	s32			Rank;			// ランク
+} FMISSION_APP_OLD_WORK;
+
+//-------------------------------------
 /// OBJ管理ワーク
 //-------------------------------------
 typedef struct
@@ -227,13 +240,16 @@ typedef struct
 	FMISSION_ARCDATA		*ArcData;
 	LINKFEST_MISSION_STATUS	MissionStatus;		// 情報(実体)
 	LINKFEST_LOG_TOP_SCORE	*TopScore;			// トップスコア用
+	FMISSION_LOG_LATEST		*Latest;			// ログ
 	//
 	s32						Step;				// 処理の流れ
 	s32						Mode;				// モード(詳細、評価)
 	u32						Flag;				// フラグ
-	s32						Timer;				// タイマ
 	//
 	s32						BgOffX;				// オフセット
+	s32						Count;				// tmp
+	//
+	FMISSION_APP_OLD_WORK	OldWork;			// 保存
 	//
 	s16						*EmptyBuffer;		// 座標用のバッファ(必ず破棄すること)
 } FMISSION_APP_WORK;
