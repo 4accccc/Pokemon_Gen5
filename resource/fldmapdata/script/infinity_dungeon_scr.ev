@@ -566,6 +566,9 @@ select_area:
 
     IF $SCWK_ANSWER == SCR_YES THEN
 
+      // JA—š—ð
+      _RESORT_SET_RECORD( RESORT_RECORD_ID_INFINITYD )
+
       // ‚¶‚ã‚ñ‚Ñ‚Í‚æ‚ë‚µ‚¢‚Å‚·‚Ë
       IF $LWK_D_VERSION == VERSION_B2 THEN
         _BALLOONWIN_OBJMSG_POS( msg_info_b_04_00 , SCWK_TARGET_OBJID, POS_DL )
