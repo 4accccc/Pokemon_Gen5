@@ -848,6 +848,13 @@ static GMEVENT * STAGE_FALL_CreateEvent( GAMESYS_WORK* gsys )
     work->mmdl = MMDLSYS_SearchOBJID( mmdlsys, C09R0301_BIGFOUR3_01 );
     GF_ASSERT_MSG( work->mmdl, "レンブがみつからない\n");
   }
+  // 芝居
+  {
+    // アニメコマンドセット
+    MMDL_SetAcmd( work->mmdl, AC_BIGFOUR3_STANDUP );
+    // アニメ一時停止
+    MMDL_OnStatusBit( work->mmdl, MMDL_STABIT_PAUSE_ANM );
+  }
 
   // データ設定
   work->now_height = STAGE_Y_HIGH;
@@ -1000,6 +1007,12 @@ static GMEVENT_RESULT StageFallEvent( GMEVENT* event, int* seq, void* wk )
       FIELD_TASK_MAN* taskMan;
       taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
       if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
+        {
+          // アニメコマンド破棄
+          MMDL_FreeAcmd( p_wk->mmdl );
+          // アニメ一時停止解除
+          MMDL_OffStatusBit( p_wk->mmdl, MMDL_STABIT_PAUSE_ANM );
+        }
         return GMEVENT_RES_FINISH;
       }
     }

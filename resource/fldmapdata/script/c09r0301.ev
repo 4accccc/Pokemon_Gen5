@@ -324,10 +324,16 @@ EVENT_START   ev_pos_c09r0301_enter_02
 
   _TIME_WAIT( 30 )
 
-  //ステージ落下
+    //ステージ落下
   _FOURKINGS_FIGHT_STAGE()
 
-  _TIME_WAIT( 40 ) 
+  _TIME_WAIT( 30 ) 
+
+  //レンブの芝居(立ち上がる)
+  _OBJ_ANIME( C09R0301_BIGFOUR3_01, anm_renbu_stand_up )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 10 ) 
 
   //ライト点灯
   _FOURKINGS_FIGHT_LIGHT()
@@ -362,5 +368,13 @@ EVENT_END
 _ANIME_LABEL  anm_tr_gyoe
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------
+//  レンブ：芝居
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_renbu_stand_up
+  _ANIME_DATA AC_BIGFOUR3_STANDUP,1
+  _ANIME_DATA ACMD_END,0
+
 
 
