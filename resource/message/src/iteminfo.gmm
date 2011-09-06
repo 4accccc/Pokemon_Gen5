@@ -5779,48 +5779,48 @@
 	</row>
 
 	<row id="ITEMINFO_628">
-		<language name="JPN" width="256">キュレムを　がったい　させる
-かりせつめいぶん
-かりせつめいぶん</language>
-		<language name="JPN_KANJI" width="256">キュレムを　合体　させる
-仮説明文
-仮説明文</language>
+		<language name="JPN" width="256">もとは　ひとつだったと　いわれる
+キュレムと　あるポケモンを
+がったいさせる　いっついの　くさび。</language>
+		<language name="JPN_KANJI" width="256">元は　ひとつだったと　いわれる
+キュレムと　あるポケモンを
+合体させる　一対の　くさび。</language>
 	</row>
 
 	<row id="ITEMINFO_629">
-		<language name="JPN" width="256">キュレムを　ぶんり　させる
-かりせつめいぶん
-かりせつめいぶん</language>
-		<language name="JPN_KANJI" width="256">キュレムを　分離　させる
-仮説明文
-仮説明文</language>
+		<language name="JPN" width="256">がったいした　キュレムと
+あるポケモンを　もとどおりに
+ぶんりさせる　いっついの　くさび。</language>
+		<language name="JPN_KANJI" width="256">合体した　キュレムと
+あるポケモンを　元通りに
+分離させる　一対の　くさび。</language>
 	</row>
 
 	<row id="ITEMINFO_630">
-		<language name="JPN" width="256">きょかしょう
-かりせつめいぶん
-かりせつめいぶん</language>
-		<language name="JPN_KANJI" width="256">許可証
-仮説明文
-仮説明文</language>
+		<language name="JPN" width="256">わずかな　ひとしか　しらない
+しぜんほごくに　はいるために
+ひつような　ライセンスカード。</language>
+		<language name="JPN_KANJI" width="256">わずかな　人しか　知らない
+自然保護区に　入るために
+必要な　ライセンスカード。</language>
 	</row>
 
 	<row id="ITEMINFO_631">
-		<language name="JPN" width="256">まるいおまもり
-かりせつめいぶん
-かりせつめいぶん</language>
-		<language name="JPN_KANJI" width="256">丸いお守り
-仮説明文
-仮説明文</language>
+		<language name="JPN" width="256">もっていると　そだてやさんで
+タマゴが　みつかりやすくなる
+ふしぎで　とてもまるい　おまもり。</language>
+		<language name="JPN_KANJI" width="256">持っていると　育て屋さんで
+タマゴが　みつかりやすくなる
+不思議で　とてもまるい　おまもり。</language>
 	</row>
 
 	<row id="ITEMINFO_632">
-		<language name="JPN" width="256">ひかるおまもり
-かりせつめいぶん
-かりせつめいぶん</language>
-		<language name="JPN_KANJI" width="256">光るお守り
-仮説明文
-仮説明文</language>
+		<language name="JPN" width="256">もっていると　ひかる　ポケモンと
+であいやすくなる　といわれる
+ふしぎで　ひかりかがやく　おまもり。</language>
+		<language name="JPN_KANJI" width="256">持っていると　ひかる　ポケモンと
+出会いやすくなる　といわれる
+不思議で　ひかりかがやく　おまもり。</language>
 	</row>
 
 	<row id="ITEMINFO_633">
