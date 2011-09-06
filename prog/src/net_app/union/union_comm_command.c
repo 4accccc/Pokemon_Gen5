@@ -391,6 +391,23 @@ BOOL UnionSend_TrainerCardParam(UNION_SYSTEM_PTR unisys)
 {
   GF_ASSERT_HEAVY(unisys->alloc.my_card != NULL);
   
+  OS_TPrintf("TR_CARD_DATA = %x\n", sizeof(SWAN_TR_CARD_DATA));
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+    UNION_CMD_TRAINERCARD_PARAM, sizeof(SWAN_TR_CARD_DATA), 
+    unisys->alloc.my_card, TRUE, FALSE, TRUE);
+}
+
+//==================================================================
+/**
+ * データ送信：BWトレーナーカード情報
+ * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_BwTrainerCardParam(UNION_SYSTEM_PTR unisys)
+{
+  GF_ASSERT_HEAVY(unisys->alloc.my_card != NULL);
+  
   OS_TPrintf("TR_CARD_DATA = %x\n", sizeof(TR_CARD_DATA));
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
     UNION_CMD_TRAINERCARD_PARAM, sizeof(TR_CARD_DATA), 

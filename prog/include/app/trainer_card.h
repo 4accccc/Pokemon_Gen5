@@ -139,7 +139,7 @@ typedef struct{
 
   u32 fmission_cnt;       ///< フェスミッションクリア回数
   u16 pokewood_rec_cnt;   ///< ポケウッド撮影回数
-  u16 ja_invitaion_cnt;   ///< ジョインアベニュー招待回数
+  u16 ja_invitation_cnt;   ///< ジョインアベニュー招待回数
   u32 wbt_victory_cnt;    ///< WBT優勝回数
   u32 fmission_flag:1;    ///< フェスミッションの項目を表示する？
   u32 pokewood_flag:1;    ///< ポケウッドの撮影回数を表示する？
@@ -173,6 +173,8 @@ FS_EXTERN_OVERLAY(trainercard);
 
 extern void TRAINERCARD_GetSelfData( 
             TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData, BOOL edit, HEAPID heapId );
+extern void TRAINERCARD_GetSwanSelfData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameData, HEAPID heapId );
+
 extern TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_SelfData( GAMEDATA *gameData , HEAPID heapId, BOOL edit );
 extern TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , void* pCardData , HEAPID heapId );
 extern const GFL_PROC_DATA TrCardSysProcData;

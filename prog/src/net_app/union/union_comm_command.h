@@ -67,6 +67,7 @@ extern BOOL UnionSend_FirstChildParam(void);
 extern BOOL UnionSend_FirstParentAnswer(UNION_FIRST_PARENT_ANSWER answer);
 extern BOOL UnionSend_Mystatus(UNION_SYSTEM_PTR unisys);
 extern BOOL UnionSend_TrainerCardParam(UNION_SYSTEM_PTR unisys);
+extern BOOL UnionSend_BwTrainerCardParam(UNION_SYSTEM_PTR unisys);
 extern BOOL UnionSend_ColosseumEntryStatus(COLOSSEUM_BASIC_STATUS *basic_status);
 extern BOOL UnionSend_ColosseumEntryAnswer(int send_netid, COMM_ENTRY_ANSWER answer);
 extern BOOL UnionSend_ColosseumEntryAllReady(void);

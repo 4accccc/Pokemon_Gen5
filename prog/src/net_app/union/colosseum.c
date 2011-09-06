@@ -53,8 +53,9 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, GAMESYS_WORK *gsy
   clsys = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(COLOSSEUM_SYSTEM));
   clsys->cps = CommPlayer_Init(COLOSSEUM_MEMBER_MAX, gsys, HEAPID_UNION, FALSE);
   for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
-    clsys->recvbuf.tr_card[i] = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
-    clsys->recvbuf.pokeparty[i] = PokeParty_AllocPartyWork(HEAPID_UNION);
+    clsys->recvbuf.sw_tr_card[i] = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(SWAN_TR_CARD_DATA));  //SWANカード領域を確保
+    clsys->recvbuf.tr_card[i]    =  &clsys->recvbuf.sw_tr_card[i]->bw_data;                             //BW部分ポインタを渡す
+    clsys->recvbuf.pokeparty[i]  = PokeParty_AllocPartyWork(HEAPID_UNION);
   }
   
   //初期値セット
@@ -77,6 +78,7 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, GAMESYS_WORK *gsy
   
   //自分のトレーナーカード情報セット
   TRAINERCARD_GetSelfData(clsys->recvbuf.tr_card[my_net_id], game_data, TRUE, FALSE, HEAPID_UNION);
+  TRAINERCARD_GetSwanSelfData(clsys->recvbuf.sw_tr_card[my_net_id], game_data, HEAPID_UNION);
   clsys->recvbuf.tr_card_occ[my_net_id] = TRUE;
   
   return clsys;
@@ -94,7 +96,7 @@ void Colosseum_ExitSystem(COLOSSEUM_SYSTEM_PTR clsys, GAMESYS_WORK *gsys)
   int i;
   
   for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
-    GFL_HEAP_FreeMemory(clsys->recvbuf.tr_card[i]);
+    GFL_HEAP_FreeMemory(clsys->recvbuf.sw_tr_card[i]);
     GFL_HEAP_FreeMemory(clsys->recvbuf.pokeparty[i]);
   }
   CommPlayer_Exit(gsys, clsys->cps);

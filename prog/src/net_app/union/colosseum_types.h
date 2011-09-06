@@ -66,7 +66,8 @@ typedef struct{
   COMM_PLAYER_PACKAGE comm_player_pack[COLOSSEUM_MEMBER_MAX];     ///<通信相手の座標
   u8 comm_player_pack_update[COLOSSEUM_MEMBER_MAX];               ///<TRUE:更新あり
 
-  TR_CARD_DATA *tr_card[COLOSSEUM_MEMBER_MAX];         ///<通信相手のトレーナーカード情報
+  SWAN_TR_CARD_DATA *sw_tr_card[COLOSSEUM_MEMBER_MAX]; ///<通信相手のSWANトレーナーカード情報
+  TR_CARD_DATA *tr_card[COLOSSEUM_MEMBER_MAX];         ///<通信相手のBWトレーナーカード情報
   u8 tr_card_occ[COLOSSEUM_MEMBER_MAX];                ///<TRUE:トレーナーカードデータ有効
 
   POKEPARTY *pokeparty[COLOSSEUM_MEMBER_MAX];          ///<通信相手のポケモンパーティ

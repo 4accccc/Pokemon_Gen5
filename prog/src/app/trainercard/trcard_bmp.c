@@ -770,7 +770,7 @@ static void _add_score_list( TR_CARD_WORK *wk, int index )
  * @param   wk    TR_CARD_WORK
  */
 //=============================================================================================
-void TRCBmp_MakeScoreList( TR_CARD_WORK *wk, TR_CARD_DATA *TrCardData )
+void TRCBmp_MakeScoreList( TR_CARD_WORK *wk, TR_CARD_DATA *TrCardData, SWAN_TR_CARD_DATA *SwanTrCardData )
 {
   int i;
 
@@ -805,12 +805,26 @@ void TRCBmp_MakeScoreList( TR_CARD_WORK *wk, TR_CARD_DATA *TrCardData )
     _add_score_list( wk, SCORE_LINE_TRIALHOUSE_HIGH );
   }
 
-  _add_score_list( wk, SCORE_LINE_FMISSION_CLEAR_NUM );
-  _add_score_list( wk, SCORE_LINE_POKEWOOD_REC_NUM );
-  _add_score_list( wk, SCORE_LINE_WBT_VICTORY_NUM );
-  _add_score_list( wk, SCORE_LINE_JA_INVITAION_1 );
-  _add_score_list( wk, SCORE_LINE_JA_INVITAION_2 );
+  // フェスミッション項目を表示するか?
+  if(SwanTrCardData->fmission_flag){
+    _add_score_list( wk, SCORE_LINE_FMISSION_CLEAR_NUM );
+  }
 
+  // ポケウッド撮影回数を表示するか?
+  if(SwanTrCardData->pokewood_flag){
+    _add_score_list( wk, SCORE_LINE_POKEWOOD_REC_NUM );
+  }
+
+  // WBT優勝回数を表示するか?
+  if(SwanTrCardData->wbt_flag){
+    _add_score_list( wk, SCORE_LINE_WBT_VICTORY_NUM );
+  }
+
+  // ジョインアベニュー招待回数を表示するか?
+  if(SwanTrCardData->ja_flag){
+    _add_score_list( wk, SCORE_LINE_JA_INVITAION_1 );
+    _add_score_list( wk, SCORE_LINE_JA_INVITAION_2 );
+  }
   
 }
 

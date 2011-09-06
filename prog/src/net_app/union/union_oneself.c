@@ -2511,6 +2511,36 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
   return FALSE;
 }
 
+static int _version_check( UNION_SYSTEM_PTR unisys )
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
+  int i,rom;
+  for(i=0;i<GFL_NET_GetConnectNum();i++){
+    MYSTATUS *status = GAMEDATA_GetMyStatusPlayer( gamedata, i );
+    rom = MyStatus_GetRomCode(status);
+    if(rom==VERSION_BLACK || rom==VERSION_WHITE){
+      OS_Printf("============================= BW検出 トレーナーカードデータを対応させます\n");
+      return VERSION_BLACK;
+    }
+  }
+ OS_Printf("============================= SWAN検出 トレーナーカードデータはSWAN版で送信\n");
+  return VERSION_W2;
+}
+
+enum{
+  UNION_TRCARD_SEQ_START=0,
+  UNION_TRCARD_SEQ_TRCARD_SYNC1,
+  UNION_TRCARD_SEQ_TRCARD_SEND,
+  UNION_TRCARD_SEQ_BW_TRCARD_SEND,
+  UNION_TRCARD_SEQ_TRCARD_RECV_WAIT,
+  UNION_TRCARD_SEQ_TRCARD_SYNC2,
+  UNION_TRCARD_SEQ_TRCARD_SYNC2_WAIT,
+  UNION_TRCARD_SEQ_TRCARD_APP_EXEC,
+  UNION_TRCARD_SEQ_TRCARD_APP_WAIT,
+  UNION_TRCARD_SEQ_TRCARD_SYNC3,
+  UNION_TRCARD_SEQ_END,
+  
+};
 //--------------------------------------------------------------
 /**
  * トレーナーカード呼び出し：更新
@@ -2530,14 +2560,15 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
   }
 
   switch(*seq){
-  case 0:   //トレーナーカードの情報を送りあう
+  case UNION_TRCARD_SEQ_START:   //トレーナーカードの情報を送りあう
     //同期取りの前に送信データと受信バッファを作成
     GF_ASSERT_HEAVY(unisys->alloc.my_card == NULL && unisys->alloc.target_card == NULL);
     unisys->alloc.my_card 
-      = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
+      = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(SWAN_TR_CARD_DATA));
     unisys->alloc.target_card 
-      = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
-    TRAINERCARD_GetSelfData(unisys->alloc.my_card, unisys->uniparent->game_data, TRUE, FALSE, HEAPID_UNION);
+      = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(SWAN_TR_CARD_DATA));
+    TRAINERCARD_GetSelfData(&unisys->alloc.my_card->bw_data, unisys->uniparent->game_data, TRUE, FALSE, HEAPID_UNION);
+    TRAINERCARD_GetSwanSelfData( unisys->alloc.my_card, unisys->uniparent->game_data, HEAPID_UNION );
     GFL_STD_MemCopy(  //一応何かの事故で受け取れなかった時のケアの為、自分のをコピーしておく
       unisys->alloc.my_card, unisys->alloc.target_card, sizeof(TR_CARD_DATA));
     
@@ -2552,60 +2583,70 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 
     (*seq)++;
     break;
-  case 1:
+  case UNION_TRCARD_SEQ_TRCARD_SYNC1:
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード前の同期取り成功\n");
-      (*seq)++;
+      if(_version_check(unisys) == VERSION_W2){
+        (*seq) = UNION_TRCARD_SEQ_TRCARD_SEND;      // SWANトレーナーカードを送信
+      }else{
+        (*seq) = UNION_TRCARD_SEQ_BW_TRCARD_SEND;   // BWトレーナーカードを送信
+      }
     }
     break;
-  case 2:
+  case UNION_TRCARD_SEQ_TRCARD_SEND:
     if(UnionSend_TrainerCardParam(unisys) == TRUE){
-      OS_TPrintf("トレーナーカード情報送信\n");
-      (*seq)++;
+      OS_TPrintf("スワントレーナーカード情報送信\n");
+      (*seq) = UNION_TRCARD_SEQ_TRCARD_RECV_WAIT;
     }
     break;
-  case 3:
+  case UNION_TRCARD_SEQ_BW_TRCARD_SEND:
+    if(UnionSend_BwTrainerCardParam(unisys) == TRUE){
+      OS_TPrintf("BWトレーナーカード情報送信\n");
+      (*seq) = UNION_TRCARD_SEQ_TRCARD_RECV_WAIT;
+    }
+    break;
+  case UNION_TRCARD_SEQ_TRCARD_RECV_WAIT:
     if(situ->mycomm.target_card_receive == TRUE
         && UnionMsg_TalkStream_Check(unisys) == TRUE){
       OS_TPrintf("相手のカード受信\n");
-      unisys->alloc.target_card->SignDisenable = TRUE;
+      unisys->alloc.target_card->bw_data.SignDisenable = TRUE;
       unisys->alloc.card_param = TRAINERCASR_CreateCallParam_CommData(
         unisys->uniparent->game_data, unisys->alloc.target_card, HEAPID_UNION);
       (*seq)++;
     }
     break;
-  case 4:   //画面切り替え前の同期取り
+  case UNION_TRCARD_SEQ_TRCARD_SYNC2:   //画面切り替え前の同期取り
     GFL_NET_HANDLE_TimeSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_BEFORE, WB_NET_UNION);
     OS_TPrintf("トレーナーカード画面切り替え前の同期取り開始\n");
     (*seq)++;
     break;
-  case 5:
+  case UNION_TRCARD_SEQ_TRCARD_SYNC2_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード画面切り替え前の同期取り成功\n");
       (*seq)++;
     }
     break;
-  case 6:
+  case UNION_TRCARD_SEQ_TRCARD_APP_EXEC:
     UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_TRAINERCARD, unisys->alloc.card_param);
     (*seq)++;
     break;
-  case 7:
+  case UNION_TRCARD_SEQ_TRCARD_APP_WAIT:
     if(UnionSubProc_IsExits(unisys) == FALSE){
       OS_TPrintf("サブPROC終了\n");
       (*seq)++;
     }
     break;
-  case 8:   //トレーナーカード画面終了後の同期取り
+  case UNION_TRCARD_SEQ_TRCARD_SYNC3:   //トレーナーカード画面終了後の同期取り
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_01_02_4);
     GFL_NET_HANDLE_TimeSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER, WB_NET_UNION);
     OS_TPrintf("トレーナーカード終了後の同期取り開始\n");
     (*seq)++;
     break;
-  case 9:
+  case UNION_TRCARD_SEQ_END:
     if(UnionMsg_TalkStream_Check(unisys) == FALSE){
       break;
     }
@@ -3593,13 +3634,25 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_CARD_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード交換前の同期取り成功\n");
-      (*seq)++;
+//      (*seq)++;
+      // 接続メンバーがBWなら旧トレーナーカードで送信
+      if(_version_check(unisys) == VERSION_W2){
+        (*seq)=8;
+      }else{
+        (*seq)=18;
+      }
     }
     break;
   case 8:
-    OS_TPrintf("全員分のトレーナーカードを交換し合います\n");
-    if(ColosseumSend_TrainerCard(clsys->recvbuf.tr_card[my_net_id]) == TRUE){
-      (*seq)++;
+    OS_TPrintf("全員スワンのトレーナーカードを交換し合います\n");
+    if(ColosseumSend_TrainerCard(clsys->recvbuf.sw_tr_card[my_net_id]) == TRUE){
+      (*seq)=9;
+    }
+    break;
+  case 18:
+    OS_TPrintf("全員BWのトレーナーカードを交換し合います\n");
+    if(ColosseumSend_BwTrainerCard(clsys->recvbuf.tr_card[my_net_id]) == TRUE){
+      (*seq)=9;
     }
     break;
   case 9:
@@ -4677,7 +4730,8 @@ static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION
     _PlayerMinePause(unisys, fieldWork, TRUE);
     {
       int pm_version = MyStatus_GetRomCode(&clsys->basic_status[clsys->talk_obj_id].myst);
-      if ( (pm_version == VERSION_BLACK) || (pm_version == VERSION_WHITE) )     //ブラック・ホワイトバージョン
+      if ( (pm_version == VERSION_BLACK) || (pm_version == VERSION_WHITE) || 
+           (pm_version == VERSION_W2)    || (pm_version == VERSION_B2))     //ブラック・ホワイトバージョン
       {
         TR_CARD_RANK card_rank = clsys->recvbuf.tr_card[clsys->talk_obj_id]->CardRank;
         if(card_rank < TR_CARD_RANK_BLACK) msg_id = msg_union_card_01 + card_rank;
@@ -4685,9 +4739,11 @@ static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION
         {
           switch(pm_version){
           case VERSION_BLACK:
+          case VERSION_B2:
             msg_id = msg_union_card_07;
             break;
           case VERSION_WHITE:
+          case VERSION_W2:
             msg_id = msg_union_card_06;
             break;
           default:

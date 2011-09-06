@@ -481,8 +481,8 @@ typedef struct{
   POKEPARTY *bbox_party;      ///<バトルボックス用のPOKEPARTY
 
   TRCARD_CALL_PARAM *card_param;  ///<カード画面呼び出しようのParentWork
-  TR_CARD_DATA *my_card;      ///<自分のカード情報(送信バッファ)
-  TR_CARD_DATA *target_card;  ///<相手のカード情報(受信バッファ)
+  SWAN_TR_CARD_DATA *my_card;      ///<自分のカード情報(送信バッファ)
+  SWAN_TR_CARD_DATA *target_card;  ///<相手のカード情報(受信バッファ)
   u8  resort_data[RESORT_RECV_DATA_SIZE]; ///<リゾート情報
 }UNION_ALLOC;
 

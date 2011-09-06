@@ -221,7 +221,8 @@ static void _ColosseumRecv_TrainerCard(const int netID, const int size, const vo
   }
   
   OS_TPrintf("コロシアム：トレーナーカード受信 net_id = %d\n", netID);
-  GFL_STD_MemCopy(pData, clsys->recvbuf.tr_card[netID], size);
+  GFL_STD_MemCopy(pData, clsys->recvbuf.sw_tr_card[netID], size);   // 結果としてswanトレーナーカードでも
+                                                                    // BWトレーナーカードでも受け取ることができる
   clsys->recvbuf.tr_card_occ[netID] = TRUE;
 }
 
@@ -232,7 +233,19 @@ static void _ColosseumRecv_TrainerCard(const int netID, const int size, const vo
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL ColosseumSend_TrainerCard(TR_CARD_DATA *send_card)
+BOOL ColosseumSend_TrainerCard(SWAN_TR_CARD_DATA *send_card)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+    COLOSSEUM_CMD_TRAINERCARD, sizeof(SWAN_TR_CARD_DATA), send_card, TRUE, FALSE, TRUE);
+}
+//==================================================================
+/**
+ * データ送信：座標パッケージ
+ * @param   select_list		選択結果(UNION_MSG_MENU_SELECT_???)
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_BwTrainerCard(TR_CARD_DATA *send_card)
 {
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
     COLOSSEUM_CMD_TRAINERCARD, sizeof(TR_CARD_DATA), send_card, TRUE, FALSE, TRUE);

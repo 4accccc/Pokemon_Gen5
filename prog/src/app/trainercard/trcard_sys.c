@@ -124,7 +124,6 @@ static int sub_BadgeWait(TR_CARD_SYS* wk);
 static int sub_MedalInit(TR_CARD_SYS* wk);
 static int sub_MedalWait(TR_CARD_SYS* wk);
 static int _branch_card_app( TR_CARD_SYS* wk, TRCARD_CALL_PARAM *pp );
-static void TRAINERCARD_GetSwanSelfData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameData, HEAPID heapId );
 
 
 //------------------------------------------------------------------
@@ -523,7 +522,7 @@ static int sub_BadgeWait(TR_CARD_SYS* wk)
  * @param   heapId		HEAPID
  */
 //----------------------------------------------------------------------------------
-static void TRAINERCARD_GetSwanSelfData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameData, HEAPID heapId )
+void TRAINERCARD_GetSwanSelfData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameData, HEAPID heapId )
 {
   u8  year, month, day;
   u32 count=0,i;
@@ -561,10 +560,28 @@ static void TRAINERCARD_GetSwanSelfData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA 
   
   // ジョインアベニュー用情報取得
   RESORT_CITY_DATA_GetData( rcity_sv, RESORT_CITY_DATA_PARAM_CITY_NAME, sw_trcard->my_janame );
-  sw_trcard->ja_invitaion_cnt = RECORD_Get( rec, RECID_RESORT_GUID_CNT);
+  sw_trcard->ja_invitation_cnt = RECORD_Get( rec, RECID_RESORT_GUID_CNT);
   
   // フェスミッションクリア回数取得
   sw_trcard->fmission_cnt = FMISSION_SAVE_GetMissionClearNum( fmission_sv );
+
+
+  // 表示可能か設定
+  {
+    EVENTWORK * ev = GAMEDATA_GetEventWork( gameData );
+    if(sw_trcard->wbt_victory_cnt){   // WBT
+      sw_trcard->wbt_flag = 1;
+    }
+    if( EVENTWORK_CheckEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR ) == TRUE ){  // フェスミッション
+      sw_trcard->fmission_flag = 1;
+    }
+    if(sw_trcard->pokewood_rec_cnt){  // ポケウッド
+      sw_trcard->pokewood_flag = 1;
+    }
+    if(sw_trcard->ja_invitation_cnt){  // ジョインアベニュー
+      sw_trcard->ja_flag = 1;
+    }
+  }
 }
 
 
@@ -967,6 +984,7 @@ TRCARD_CALL_PARAM*  TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , v
   TRCARD_CALL_PARAM* callParam;
   
   callParam = GFL_HEAP_AllocClearMemory( heapId , sizeof( TRCARD_CALL_PARAM ) );
+  callParam->SwanTrCardData = pCardData;
   callParam->TrCardData = pCardData;
   callParam->gameData = gameData;
   callParam->value = 0;

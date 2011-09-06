@@ -68,7 +68,7 @@ extern int  TRCBmp_SignDrawYesNoWait(TR_CARD_WORK* wk,const u8 pat);
 extern void TRCBmp_PrintTrainerType( TR_CARD_WORK *wk, int trtype, int trans_sw );
 extern void TRCBmp_PrintPersonality( TR_CARD_WORK *wk, int personality, int trans_sw );
 extern void TRCBmp_WriteScoreListWin( TR_CARD_WORK *wk, int scrol_point, int trans_sw, int col );
-extern void TRCBmp_MakeScoreList( TR_CARD_WORK *wk, TR_CARD_DATA *TrCardData );
+extern void TRCBmp_MakeScoreList( TR_CARD_WORK *wk, TR_CARD_DATA *TrCardData, SWAN_TR_CARD_DATA *SwanTrCardData );
 
 
 #endif //_TRCARD_BMP_H_

@@ -467,7 +467,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   InitTRCardCellActor( &wk->ObjWork , &vramBank );
 
   // 裏面表示項目設定
-  TRCBmp_MakeScoreList( wk, wk->tcp->TrCardData );
+  TRCBmp_MakeScoreList( wk, wk->tcp->TrCardData, wk->tcp->SwanTrCardData );
 
   // 下画面セルアクター登録
   SetTrCardActorSub( &wk->ObjWork);
