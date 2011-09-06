@@ -28,6 +28,9 @@
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 
+// medal
+#include "savedata/medalbox.h"
+
 // mine
 #include "scrcmd_h06_gmk.h"
 #include "field_gimmick_h06.h"
@@ -59,6 +62,13 @@ VMCMD_RESULT EvCmdH06Gmk_Init( VMHANDLE *core, void *wk )
     if( hour >= 15 && hour <= 16 )
     {
       time_zone = TIME_ZONE_RARE;
+
+      // 「ホエルオーウォッチ」メダル達成
+      {
+        SAVE_CONTROL_WORK   *save     = GAMEDATA_GetSaveControlWork( p_gdata );
+        MEDALBOX            *medalbox = SaveData_GetMedalBox( save );
+        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_MARINETUBE );
+      }
     }
     else if( hour >= 6 && hour <= 14 )
     {
