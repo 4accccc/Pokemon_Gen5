@@ -10,6 +10,7 @@
 #define ZONE_D24R0201_EVC_H
 
 #define TR_RANGERM_23                      0
+#define FLD_ITEM_124                       1
 
 #endif //ZONE_D24R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d24r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

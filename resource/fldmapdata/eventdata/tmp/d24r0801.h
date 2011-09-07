@@ -10,6 +10,7 @@
 #define ZONE_D24R0801_EVC_H
 
 #define TR_RANGERW_24                      0
+#define FLD_ITEM_125                       1
 
 #endif //ZONE_D24R0801_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d24r0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
