@@ -15,6 +15,9 @@
 #define FLD_ITEM_154                       1
 #define FLD_ITEM_155                       2
 #define FLD_ITEM_156                       3
+#define TR_BREEDERW_05                     4
+#define TR_RANGERM_16                      5
+#define TR_RANGERW_16                      6
 
 #endif //ZONE_R11_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r11.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
