@@ -32,6 +32,7 @@
 #define SEQ_SECRETARY_WORK_SHOPSORT     (6)
 #define SEQ_SECRETARY_WORK_NEON         (7)
 #define SEQ_SECRETARY_WORK_BYE          (8)
+#define SEQ_SECRETARY_WORK_RANKWINDOW   (9)
 
 #define SEQ_SECRETARY_NEON_COOL         (0)
 #define SEQ_SECRETARY_NEON_BEAUTIFUL    (1)
@@ -59,6 +60,8 @@
 #define SEQ_SECRETARY_PC_MAILBOX  (4)
 #define SEQ_SECRETARY_PC_HELP     (5)
 #define SEQ_SECRETARY_PC_BYE      (6)
+
+#define SEQ_SCRETARY_RANK_BYE     (10)
 
 //クチコミNPCの分岐
 #define SEQ_MOUTHCOMM_HEAR        (0)

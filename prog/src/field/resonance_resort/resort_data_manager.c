@@ -14,10 +14,12 @@
 #include "system/prof_word.h"
 #include "arc/arc_def.h"
 #include "arc/script_message.naix"
+#include "msg/script/msg_resort_scr.h"
 #include "net/dwc_tool.h"
 #include "savedata/resonance_resort_sv.h"
 #include "resort_data_manager.h"
 #include "system/gfl_use.h"
+#include "field/resort_work.h"
 //=============================================================================
 /**
  *	人物配置情報
@@ -1483,21 +1485,11 @@ void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESORT_PEOP
   }
 }
 
-#if 0
 //=============================================================================
 /**
  *					ランク閲覧
 */
 //=============================================================================
-//-------------------------------------
-///	ランクウィンドウ
-//=====================================
-typedef struct _RESORT_RANK_WND
-{
-  FLDMSGWIN *p_fldmsgwin;
-} ;
-
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  ウィンドウ作成
@@ -1507,31 +1499,35 @@ typedef struct _RESORT_RANK_WND
  *	@return RESORT_RANK_WND ワーク
  */
 //-----------------------------------------------------------------------------
-RESORT_RANK_WND * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSGBG *p_msgbg, WORDSET *p_wordset, u32 param, HEAPID heapID );
+FLDMSGWIN * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSGBG *p_msgbg, WORDSET *p_wordset, GAMEDATA *p_gamedata, u32 param, HEAPID heapID )
 {
   enum
   {
     RNKDATA_NUM = 9,
     RNKDATA_EMPTY = 0xFFFFFFFF,
+
+    RNKDATA_W = 30,
+    RNKDATA_H = 22,
   };
 
-  RESORT_RANK_WND *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_RANK_WND) );
-
-  strict
+  struct
   {
     u32 index;
     u32 value;
-  }rnkdata[ RESORT_RESIDENT_DATA_NUM ];
+  }rnkdata[ RNKDATA_NUM ];
 
   int i, j;
-  int cnt;
+  int cnt = 0;
+
+  RESORT_WORK *p_reso_wk = GAMEDATA_GetReosrtWork( p_gamedata );
+  MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
 
   GF_ASSERT( param < 8 );
 
   //ランキング作成
 
   //空に
-  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  for( i = 0; i < RNKDATA_NUM; i++ )
   {
     rnkdata[i].index  = RNKDATA_EMPTY;
     rnkdata[i].value  = RNKDATA_EMPTY;
@@ -1543,8 +1539,8 @@ RESORT_RANK_WND * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, 
     RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i );
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_data) )
     {
-      if( RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param < 4
-        || RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param >= 4 )
+      if( (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param < 4)
+        || (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_03) && param >= 4) )
       {
         rnkdata[cnt].index  = i;
         rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT2_RANK_00 + param, NULL );
@@ -1553,51 +1549,46 @@ RESORT_RANK_WND * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, 
     }
   }
   {
-    RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
-    if( !RESORT_RESIDENT_DATA_IsEmpty(p_data) )
-    {
-      if( RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param < 4
-        || RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param >= 4 )
-      {
-        rnkdata[cnt].index  = i;
-        rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT2_RANK_00 + param, NULL );
-        cnt++;
-      }
-    }
+    rnkdata[cnt].index  = 8;
+    rnkdata[cnt].value  = RESORT_WORK_GetData( p_reso_wk, RESORT_WORK_GET_PARAM_RNKDATA_NET_TRADE + param );
+    cnt++;
   }
-
   //ソート
   for( i = 0; i < cnt-1; i++ )
   {
     for( j = cnt-1; j > i; j-- )
     {
-      u32 idx1  = j-1;
-      u32 idx2  = j;
-      if( rnkdata[idx1].value > rnkdata[idx2].value )
+      s32 idx1  = j-1;
+      s32 idx2  = j;
+      if( rnkdata[idx1].value < rnkdata[idx2].value )
       {
-        u32 value. index;
-        value = rnkdata[idx1].value;
-        index = rnkdata[idx1].index;
+        s32 value = rnkdata[idx1].value;
+        s32 index = rnkdata[idx1].index;
         rnkdata[idx1] = rnkdata[idx2];
         rnkdata[idx2].value = value;
         rnkdata[idx2].index = index;
       }
     }
   }
-
   {
-  
+    FLDMSGWIN *p_fldmsgwin = FLDMSGWIN_Add(p_msgbg, NULL, 
+      1, 1, RNKDATA_W, RNKDATA_H);
+    u32 w;
+    STRBUF *p_name_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
     STRBUF *p_src_str = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(heapID) );
     STRBUF *p_dst_str = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(heapID) );
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
 
-    p_wk->p_fldmsgwin = FLDMSGWIN_Add(p_msgbg, p_msg, 
-      0, 0, 30, 22);
+    GFL_FONT *p_font = FLDMSGBG_GetFontHandle( p_msgbg );
 
-    FLDMSGWIN_ClearWindow(p_wk->p_fldmsgwin);
+    FLDMSGWIN_ClearWindow(p_fldmsgwin);
 
     //タイトル描画
-    FLDMSGWIN_Print( p_wk->p_fldmsgwin, 0, 0, resort_rnkwnd_title_00 + param );
+    {
+      GFL_MSG_GetString( p_msg, resort_rnkwnd_title_00 + param, p_dst_str );
+      w =  PRINTSYS_GetStrWidth( p_dst_str, p_font, 0 );
+      FLDMSGWIN_PrintStrBuf( p_fldmsgwin, RNKDATA_W*8/2-w/2, 0, p_dst_str );
+    }
 
     for( i = 0; i < cnt; i++ )
     {
@@ -1613,32 +1604,46 @@ RESORT_RANK_WND * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, 
       }
       //順位
       GFL_MSG_GetString( p_msg, resort_rnkwnd_rank_00, p_src_str );
-      WORDSET_RegisterNumber( p_wordset, 0, cnt+1, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, 0, i+1, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
       WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
-      FLDMSGWIN_PrintStrBuf( p_wk->p_fldmsgwin, 0, 0, p_dst_str );
+      w =  PRINTSYS_GetStrWidth( p_dst_str, p_font, 0 );
+      FLDMSGWIN_PrintStrBuf( p_fldmsgwin, 5*8-w, (3+i*2)*8, p_dst_str );
 
       //名前
       {
-        u32 sex = RESORT_RESIDENT_DATA_GetData(p_data, RESORT_DATA_PARAM_SEX, NULL );
-        RESORT_RESIDENT_DATA_GetData(p_data, RESORT_DATA_PARAM_NAME, NULL );
-        GFL_MSG_GetString( p_msg, resort_rnkwnd_name_00, p_src_str );
-        WORDSET_RegisterWord( p_wordset, 0, cnt+1, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-        WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
-        FLDMSGWIN_PrintStrBuf( p_wk->p_fldmsgwin, 0, 0, p_dst_str );
+        if( rnkdata[i].index == 8 )
+        {
+          WORDSET_RegisterPlayerName( p_wordset, 0, p_mystatus );
+        }
+        else
+        {
+          STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
+          u32 sex = RESORT_RESIDENT_DATA_GetData(p_data, RESORT_DATA_PARAM_SEX, NULL );
+          RESORT_RESIDENT_DATA_GetData(p_data, RESORT_DATA_PARAM_NAME, name );
+          GFL_STR_SetStringCode( p_name_str, name );
+          GFL_MSG_GetString( p_msg, resort_rnkwnd_name_00, p_src_str );
+          WORDSET_RegisterWord( p_wordset, 0, p_name_str, sex, TRUE, PM_LANG );
+        }
+        {
+          WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
+          w =  PRINTSYS_GetStrWidth( p_dst_str, p_font, 0 );
+          FLDMSGWIN_PrintStrBuf( p_fldmsgwin, 15*8-w, (3+i*2)*8, p_dst_str );
+        }
       }
 
       //数
       GFL_MSG_GetString( p_msg, resort_rnkwnd_cnt_00, p_src_str );
       WORDSET_RegisterNumber( p_wordset, 0, rnkdata[i].value, 7, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
       WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
-      FLDMSGWIN_PrintStrBuf( p_wk->p_fldmsgwin, 0, 0, p_dst_str );
+      w =  PRINTSYS_GetStrWidth( p_dst_str, p_font, 0 );
+      FLDMSGWIN_PrintStrBuf( p_fldmsgwin, 27*8-w, (3+i*2)*8, p_dst_str );
     }
 
     GFL_MSG_Delete( p_msg );
     GFL_STR_DeleteBuffer( p_dst_str );
     GFL_STR_DeleteBuffer( p_src_str );
-  }
+    GFL_STR_DeleteBuffer( p_name_str );
 
-  return p_wk;
+    return p_fldmsgwin;
+  }
 }
-#endif

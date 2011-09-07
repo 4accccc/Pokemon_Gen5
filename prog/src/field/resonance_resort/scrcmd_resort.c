@@ -41,7 +41,6 @@ static RESORT_PEOPLE_SYS * Resort_Scrcmd_GetPeopleSys( FIELDMAP_WORK *p_field );
 static u16 Resort_Scrcmd_GetMmdlID( FIELDMAP_WORK *p_field );
 static RESORT_NPC_SYS * Resort_Scrcmd_GetNpcSys( FIELDMAP_WORK *p_field );
 static s32 PrmExp_Up( s32 exp, s32 other, s32 up );
-static GMEVENT* EVENT_StartBlendBrightness( GMEVENT* parent, GAMESYS_WORK* gsys, int plane, int now, int next, int sync );
 
 
 extern RESORT_SYSTEM * Resort_Scrcmd_GetSystem( FIELDMAP_WORK *p_field );
@@ -702,6 +701,9 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_SECRETARY_NEON_SEL_MSGID:
     *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_06_m, resort_secretary_talk_06_f );
+    break;
+  case RESORT_SECRETARY_RANK_SEL_MSGID:
+    *p_ret_wk = SexGetMsgID( sex, resort_secretary_talk_08_m, resort_secretary_talk_08_f );
     break;
   case RESORT_SECRETARY_SEL_GREET_MSGID:
     *p_ret_wk = SexGetMsgID( sex, resort_secretary_greet_01_m, resort_secretary_greet_01_m );
@@ -2360,6 +2362,148 @@ VMCMD_RESULT EvCmdResortSetPresetPoeple( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_DATA_MANAGER_SetPresetPeople( p_data_manager, p_people_all, p_proxy_buff, cp_preset, p_mystatus, people, preset, heapID );
   return VMCMD_RESULT_CONTINUE;
 }
+
+//=============================================================================
+/**
+ *  ランキング表示
+ */
+//=============================================================================
+typedef struct
+{
+  FLDMSGWIN *p_msg_win;
+  s16 param;
+  u16 seq;
+  u16 *p_ret_wk;
+}RANKWINDOW_WK;
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランキング表示シーケンス
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL VmWait_RankWindow( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_START_DRAW,
+    SEQ_WAIT_DRAW,
+    SEQ_WAIT_BUTTON,
+    SEQ_NEXT,
+    SEQ_END_DRAW,
+    SEQ_END,
+  };
+
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+  void** pp_subproc_wk_adrs = SCRIPT_SetSubProcWorkPointerAdrs( p_script );
+  const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
+  RANKWINDOW_WK *p_subwk  = *pp_subproc_wk_adrs;
+  FLDMSGBG *p_msgbg = FIELDMAP_GetFldMsgBG( p_field );
+  WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
+
+  switch( p_subwk->seq )
+  {
+  case SEQ_START_DRAW:
+    p_subwk->p_msg_win = RESORT_RANK_WND_Create( RESORT_SYSTEM_GetPeopleAllData(p_sys), p_msgbg, p_wordset, p_gamedata, p_subwk->param, heapID );
+    p_subwk->seq++;
+    break;
+  case SEQ_WAIT_DRAW:
+    if( FLDMSGWIN_CheckPrintTrans( p_subwk->p_msg_win ) )
+    {
+      GFL_BG_LoadScreenV_Req( 
+        GFL_BMPWIN_GetFrame( FLDMSGWIN_GetBmpWin( p_subwk->p_msg_win ) ) );
+      p_subwk->seq++;
+    }
+    break;
+  case SEQ_WAIT_BUTTON:
+    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+    {
+      PMSND_PlaySE( BANK_SE_WB_CANCEL1 );
+      p_subwk->seq  = SEQ_END_DRAW;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      PMSND_PlaySE( SEQ_SE_SELECT1 );
+      p_subwk->param++;
+      p_subwk->param %= 8;
+      p_subwk->seq  = SEQ_NEXT;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      PMSND_PlaySE( SEQ_SE_SELECT1 );
+      p_subwk->param--;
+      p_subwk->param = p_subwk->param < 0? 7: p_subwk->param;
+      p_subwk->seq  = SEQ_NEXT;
+    }
+    break;
+  case SEQ_NEXT:
+    FLDMSGWIN_ClearWindow(p_subwk->p_msg_win );
+    FLDMSGWIN_Delete( p_subwk->p_msg_win );
+    p_subwk->seq  = SEQ_START_DRAW;
+    break;
+  case SEQ_END_DRAW:
+    FLDMSGWIN_ClearWindow(p_subwk->p_msg_win );
+    GFL_BG_LoadScreenV_Req( 
+      GFL_BMPWIN_GetFrame( FLDMSGWIN_GetBmpWin( p_subwk->p_msg_win ) ) );
+    FLDMSGWIN_Delete( p_subwk->p_msg_win );
+    p_subwk->seq++;
+    break;
+  case SEQ_END:
+    *p_subwk->p_ret_wk = p_subwk->param;
+    GFL_HEAP_FreeMemory( p_subwk );
+    *pp_subproc_wk_adrs = NULL;
+    return TRUE;
+  }
+
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランキング画面表示
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 結果コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortPrintRankWindow( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+  RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
+  const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
+  void** pp_subproc_wk_adrs = SCRIPT_SetSubProcWorkPointerAdrs( p_script );
+  u16 param  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  RANKWINDOW_WK *p_subwk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RANKWINDOW_WK));
+  p_subwk->param      = param;
+  p_subwk->p_ret_wk  =  p_ret_wk;
+
+  *pp_subproc_wk_adrs = p_subwk;
+
+  // ショップ呼び出し
+  VMCMD_SetWait( p_core, VmWait_RankWindow );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  システムを取得
@@ -2514,76 +2658,4 @@ static s32 PrmExp_Up( s32 exp, s32 other, s32 up )
     exp = PRMEXP_MAX - other;
   }
   return exp;
-}
-//=============================================================================
-/**
- *  輝度変更イベント
- */
-//=============================================================================
-//-------------------------------------
-///	イベントワーク
-//=====================================
-typedef struct
-{
-  int plane;
-  int now;
-  int next;
-  int sync;
-  int cnt;
-} EVENT_BRIGHT_WORK;
-
-static GMEVENT_RESULT Event_BlendBrightness( GMEVENT* event, int* seq, void* wk );
-//----------------------------------------------------------------------------
-/**
- *	@brief  輝度変更イベント
- *
- *	@param	GMEVENT* parent   親イベント
- *	@param	gsys      ゲームシステム
- *	@param  plane     BG面	
- *	@param	now       現在の輝度
- *	@param	next      変更後の輝度
- *	@param  sync      シンク
- *
- *	@return イベント
- */
-//-----------------------------------------------------------------------------
-static GMEVENT* EVENT_StartBlendBrightness( GMEVENT* parent, GAMESYS_WORK* gsys, int plane, int now, int next, int sync )
-{
-  GMEVENT* event;
-  EVENT_BRIGHT_WORK* work;
-
-  // 生成
-  event = GMEVENT_Create( gsys, parent, Event_BlendBrightness, sizeof(EVENT_BRIGHT_WORK) );
-
-  // 初期化
-  work = GMEVENT_GetEventWork( event );
-  GFL_STD_MemClear( work, sizeof(EVENT_BRIGHT_WORK));
-  work->plane = plane;
-  work->now   = now;
-  work->next  = next;
-  work->sync  = sync;
-  work->cnt   = 0;
-  return event;
-} 
-static GMEVENT_RESULT Event_BlendBrightness( GMEVENT* event, int* seq, void* wk )
-{
-  EVENT_BRIGHT_WORK* work = wk;
-
-  switch( *seq )
-  {
-  case 0:
-    {
-      int brightness = work->now + (work->next - work->now) * work->cnt / work->sync;
-      if( work->cnt++ > work->sync )
-      {
-        brightness = work->next;
-        (*seq)++;
-      }
-      G2_SetBlendBrightness( work->plane, brightness );
-    }
-    break;
-  case 1:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
 }

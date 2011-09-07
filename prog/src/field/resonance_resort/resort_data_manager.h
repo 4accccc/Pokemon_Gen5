@@ -13,6 +13,7 @@
 #include "resort_map.h"
 #include "resort_people_def.h"
 #include "resort_binary.h"
+#include "field/field_msgbg.h"
 
 //=============================================================================
 /**
@@ -177,8 +178,4 @@ extern void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESO
  *					ÉåÉRÅ[Éhâ{óó
 */
 //=============================================================================
-#if 0
-typedef struct _RESORT_RANK_WND RESORT_RANK_WND;
-extern RESORT_RANK_WND * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, HEAPID heapID );
-extern void RESORT_RANK_WND_Delete( RESORT_RANK_WND *p_wk );
-#endif
+extern FLDMSGWIN * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSGBG *p_msgbg, WORDSET *p_wordset, GAMEDATA *p_gamedata, u32 param, HEAPID heapID );

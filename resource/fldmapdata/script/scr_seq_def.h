@@ -14162,6 +14162,20 @@
   .short \preset
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  ランキング画面表示
+ */
+//--------------------------------------------------------------
+#define _RESORT_PRINT_RANKWND( param, ret_wk ) \
+      _ASM_RESORT_PRINT_RANKWND param, ret_wk
+
+  .macro _ASM_RESORT_PRINT_RANKWND param, ret_wk
+  .short EV_SEQ_RESORT_PRINT_RANKWND
+  .short \param
+  .short \ret_wk
+  .endm
+
 //======================================================================
 //
 //    無限ダンジョン関連

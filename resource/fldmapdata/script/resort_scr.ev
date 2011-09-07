@@ -1257,6 +1257,9 @@ EVENT_START    ev_resort_secretary_work
       _RESORT_GET_MSGID( RESORT_SECRETARY_CITYLV_MSGID, LWK_MSGID )
 	    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DEFAULT )
 
+    CASE SEQ_SECRETARY_WORK_RANKWINDOW THEN //ランクウィンドウ
+      _CALL sub_secretary_rankwindow
+
     CASE SEQ_SECRETARY_WORK_CITYNAME THEN   //街名
        _BALLOONWIN_CLOSE()
        _RESORT_INPUT_CITYNAME()
@@ -1341,6 +1344,7 @@ sub_secretary_work_main_menu:
 
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
 	_BMPMENU_MAKE_LIST( resort_sys_select_12, SEQ_SECRETARY_WORK_CITYLV )	    //街情報
+  _BMPMENU_MAKE_LIST( resort_sys_select_47, SEQ_SECRETARY_WORK_RANKWINDOW ) //ランキングウィンドウ
   _BMPMENU_MAKE_LIST( resort_sys_select_31, SEQ_SECRETARY_WORK_CITYNAME )	//街の呼び名
   _BMPMENU_MAKE_LIST( resort_sys_select_32, SEQ_SECRETARY_WORK_AUTHERNAME )	//自分の呼び名
   _BMPMENU_MAKE_LIST( resort_sys_select_33, SEQ_SECRETARY_WORK_AUTHERPHRASE )	//くちぐせ
@@ -1389,6 +1393,48 @@ sub_secretary_neon:
     _RESORT_SET_MY_DATA( RESORT_MY_PARAM_TEX, LWK_MENU_RET )
     
   ENDIF
+}
+_RET
+
+//==============================================================
+//サブルーチン：秘書　ランクウィンドウ
+//==============================================================
+sub_secretary_rankwindow:
+{
+  $LWK_MENU_RET = 0
+  $LWK_MENU_SUBLOOP = TRUE
+
+  WHILE $LWK_MENU_SUBLOOP == TRUE
+
+    //どうしますか？
+    _RESORT_GET_MSGID( RESORT_SECRETARY_RANK_SEL_MSGID, LWK_MSGID )
+	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DEFAULT )
+
+	  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, LWK_MENU_RET, 1, LWK_MENU_RET )
+	  _BMPMENU_MAKE_LIST( resort_sys_select_rnk_0, RESORT_RANK_WND_NET_TRADE  )
+    _BMPMENU_MAKE_LIST( resort_sys_select_rnk_1, RESORT_RANK_WND_NICKNAME   )
+    _BMPMENU_MAKE_LIST( resort_sys_select_rnk_2, RESORT_RANK_WND_JA_TOURIST )
+    _BMPMENU_MAKE_LIST( resort_sys_select_rnk_3, RESORT_RANK_WND_BUY_MONEY )
+    _BMPMENU_MAKE_LIST( resort_sys_select_rnk_4, RESORT_RANK_WND_CROSSING   )
+    _BMPMENU_MAKE_LIST( resort_sys_select_rnk_5, RESORT_RANK_WND_NET_BATTLE )
+    _BMPMENU_MAKE_LIST( resort_sys_select_rnk_6, RESORT_RANK_WND_GET_POKE  )
+    _BMPMENU_MAKE_LIST( resort_sys_select_rnk_7, RESORT_RANK_WND_HATCH_EGG )	
+    _BMPMENU_MAKE_LIST( resort_sys_select_46,  SEQ_SCRETARY_RANK_BYE )	
+
+	  //メニュー表示
+	  _BMPMENU_START()
+
+    IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+      $LWK_MENU_RET = SEQ_SCRETARY_RANK_BYE
+    ENDIF
+
+    IF $LWK_MENU_RET == SEQ_SCRETARY_RANK_BYE THEN
+      $LWK_MENU_SUBLOOP = FALSE
+    ELSE
+      _BALLOONWIN_CLOSE()
+      _RESORT_PRINT_RANKWND( LWK_MENU_RET, LWK_MENU_RET )
+    ENDIF
+  ENDWHILE
 }
 _RET
 

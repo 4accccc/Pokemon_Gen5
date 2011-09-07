@@ -159,6 +159,7 @@
 #define RESORT_SECRETARY_SHOPSORT_MSGID       (104) //お店交換
 #define RESORT_SECRETARY_NEON_OK_MSGID        (105) //ネオン変更
 #define RESORT_SECRETARY_NEON_SEL_MSGID       (106) //ネオン選択
+#define RESORT_SECRETARY_RANK_SEL_MSGID       (107) //ランキング画面選択
 
 #define RESORT_SECRETARY_SEL_GREET_MSGID      (110) //挨拶
 #define RESORT_SECRETARY_SEL_BYE_MSGID        (111) //またね
@@ -247,7 +248,6 @@
 #define RESORT_PRESET_SECRETARY_04            (7)
 
 //_RESORT_PRINT_RECORD_WND用
-#if 0
 #define RESORT_RANK_WND_NET_TRADE             (0)
 #define RESORT_RANK_WND_NICKNAME              (1)
 #define RESORT_RANK_WND_JA_TOURIST            (2)
@@ -257,7 +257,7 @@
 #define RESORT_RANK_WND_GET_POKE              (6)
 #define RESORT_RANK_WND_HATCH_EGG             (7)
 #define RESORT_RANK_WND_MAX                   (8)
-#endif                  
+
 //リゾート用レコードID
 #define  RESORT_RECORD_ID_NONE        ( 0)//なにもない
 #define  RESORT_RECORD_ID_DENDOU      ( 1)//殿堂入りした

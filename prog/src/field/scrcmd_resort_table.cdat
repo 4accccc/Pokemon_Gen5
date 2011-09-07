@@ -19,7 +19,7 @@
   DEF_CMD( EvCmdResortTalkEnd, EV_SEQ_RESORT_TALK_END )
   DEF_CMD( EvCmdResortGetData, EV_SEQ_RESORT_GET_DATA )
   DEF_CMD( EvCmdResortGetMsgID, EV_SEQ_RESORT_GET_MSGID )
-  NO_CMD()
+  DEF_CMD( EvCmdResortPrintRankWindow, EV_SEQ_RESORT_PRINT_RANKWND )
   DEF_CMD( EvCmdResortJobChange, EV_SEQ_RESORT_JOB_CHANGE )
   NO_CMD()
   DEF_CMD( EvCmdResortSetWord, EV_SEQ_RESORT_SET_WORD)

@@ -302,6 +302,16 @@ static void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gamedata )
   //自分のデータをいれた後、トレーナーIDと名前を変える
   RESORT_RECV_DATA_SetMyData( p_wk, p_gamedata );
 
+  {
+    int i;
+    for( i = 0; i < 8; i++ )
+    {
+      RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT2_RANK_00+i, GFL_STD_MtRand(9999999) );
+    }
+    RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXTEND_ADD, RESORT_EXTEND_TYPE_02 );
+    RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXTEND_ADD, RESORT_EXTEND_TYPE_03 );
+  }
+
   //トレーナーID
   RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, GFL_STD_MtRand(GFL_STD_RAND_MAX) );
   trainerID = RESORT_RECV_DATA_GetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, NULL );

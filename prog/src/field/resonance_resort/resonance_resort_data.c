@@ -1825,6 +1825,10 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_EXTEND_BIT:
     p_wk->extend_flag = data;
     break;
+  case RESORT_DATA_PARAM_EXTEND_ADD:
+    GF_ASSERT( data < RESORT_EXTEND_TYPE_MAX );
+    p_wk->extend_flag |= 1<<data;
+    break;
   case RESORT_DATA_PARAM_INIT_FLAG:
     p_wk->init_flag = data;
     break;
