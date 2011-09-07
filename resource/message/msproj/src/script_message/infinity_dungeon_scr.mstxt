@@ -1354,12 +1354,12 @@
 どこまで　つづいているのか▽
 はあくして　いないぐらいだからな▼
 キミも　きになるだろう？
-さいかそうに　なにがあるのか▼
+さいかそうに　なにが　あるのか▼
 それじゃ　キミが　どこまで　いけるか
 その　じつりょくを　みせてもらおう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-24T07:14:06" />
+				Time="2011-09-07T02:44:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1373,12 +1373,12 @@
 どこまで　続いているのか▽
 把握して　いないぐらいだからな▼
 キミも　気になるだろう？
-最下層に　何があるのか　……▼
+最下層に　何が　あるのか▼
 それじゃ　キミが　どこまで　いけるのか
 その　実力を　みせてもらおう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-24T07:15:42" />
+				Time="2011-09-07T02:44:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5389,6 +5389,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:22:33" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:48:46" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_b_02_00"
@@ -5417,6 +5424,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:22:48" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:48:52" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_b_03_00"
@@ -5445,6 +5459,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:23:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:49:00" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_b_04_00"
@@ -5473,6 +5494,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:23:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:49:06" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_help_b_01_00"
@@ -5521,10 +5549,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名</Comment>
+			<Comment>黒の摩天楼受付
+
+・トレーナー名＝プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:19:33" />
+				Time="2011-09-07T02:49:52" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5582,6 +5612,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:25:15" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:49:40" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_attention_b_01_00"
@@ -5624,12 +5661,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名
+			<Comment>黒の摩天楼受付
+
+・トレーナー名＝プレイヤー名
 ・ニックネーム＝ポケモン名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:19:47" />
+				Time="2011-09-07T02:49:49" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5671,11 +5710,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名
+			<Comment>黒の摩天楼受付
+
+・トレーナー名＝プレイヤー名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-04T04:49:03" />
+				Time="2011-09-07T02:50:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5705,6 +5746,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:27:32" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:50:12" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_b_01_00"
@@ -5741,11 +5789,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名
+			<Comment>黒の摩天楼受付
+
+・トレーナー名＝プレイヤー名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:20:22" />
+				Time="2011-09-07T02:50:22" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5781,10 +5831,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・2桁＝エリアの数字</Comment>
+			<Comment>黒の摩天楼受付
+
+・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:20:29" />
+				Time="2011-09-07T02:50:29" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5822,10 +5874,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名</Comment>
+			<Comment>黒の摩天楼受付
+
+・トレーナー名＝プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:20:00" />
+				Time="2011-09-07T02:50:40" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5871,6 +5925,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:32:31" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:50:55" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_b_05_00"
@@ -5905,6 +5966,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:34:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:51:02" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_b_06_00"
@@ -5943,10 +6011,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名</Comment>
+			<Comment>黒の摩天楼受付
+
+・トレーナー名＝プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:20:03" />
+				Time="2011-09-07T02:51:09" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5978,6 +6048,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:39:08" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:51:19" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_w_01_00"
@@ -6008,6 +6085,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:51:28" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_w_02_00"
@@ -6036,6 +6120,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:51:40" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_w_03_00"
@@ -6064,6 +6155,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:51:47" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_w_04_00"
@@ -6092,6 +6190,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:51:53" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_help_w_01_00"
@@ -6137,6 +6242,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:51:58" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_help_w_02_00"
@@ -6195,6 +6307,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:52:04" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_attention_w_01_00"
@@ -6237,12 +6356,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名
+			<Comment>白の樹洞受付
+
+・トレーナー名＝プレイヤー名
 ・ニックネーム＝ポケモン名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:21:04" />
+				Time="2011-09-07T02:52:15" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6282,11 +6403,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名
+			<Comment>白の樹洞受付
+
+・トレーナー名＝プレイヤー名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:17:48" />
+				Time="2011-09-07T02:52:30" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6314,6 +6437,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:52:37" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_w_01_00"
@@ -6348,11 +6478,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名
+			<Comment>白の樹洞受付
+
+・トレーナー名＝プレイヤー名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:21:04" />
+				Time="2011-09-07T02:52:48" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6387,10 +6519,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・2桁＝エリアの数字</Comment>
+			<Comment>白の樹洞受付
+
+・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:21:11" />
+				Time="2011-09-07T02:52:56" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6428,10 +6562,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名</Comment>
+			<Comment>白の樹洞受付
+
+・トレーナー名＝プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:21:19" />
+				Time="2011-09-07T02:53:06" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6475,6 +6611,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:53:13" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_w_05_00"
@@ -6511,6 +6654,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:53:19" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_w_06_00"
@@ -6549,10 +6699,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー名＝プレイヤー名</Comment>
+			<Comment>白の樹洞受付
+
+・トレーナー名＝プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:21:23" />
+				Time="2011-09-07T02:53:31" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6584,6 +6736,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:53:39" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_menu_01_00"
@@ -6612,10 +6771,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>選択肢</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:21:12" />
+				Time="2011-09-07T02:53:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6659,10 +6818,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>選択肢</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:21:13" />
+				Time="2011-09-07T02:53:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6706,10 +6865,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>選択肢</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:21:14" />
+				Time="2011-09-07T02:53:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6753,10 +6912,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>エレベーター選択肢</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:25:05" />
+				Time="2011-09-07T02:54:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6800,11 +6959,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・2桁＝階層の数字
-黒の摩天楼用</Comment>
+			<Comment>黒の摩天楼用エレベーター
+
+・2桁＝階層の数字
+</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-09T12:36:44" />
+				Time="2011-09-07T02:54:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6848,11 +7009,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・2桁＝階層の数字
-白の樹洞用</Comment>
+			<Comment>白の樹洞用エレベーター
+
+・2桁＝階層の数字
+</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-09T12:36:54" />
+				Time="2011-09-07T02:54:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6896,10 +7059,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>選択肢</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:25:06" />
+				Time="2011-09-07T02:54:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6943,10 +7106,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>選択肢</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:25:07" />
+				Time="2011-09-07T02:54:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6994,6 +7157,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T03:08:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>注意文</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T02:54:51" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_area_00"
@@ -7022,10 +7192,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・2桁＝エリアの数字</Comment>
+			<Comment>選択肢
+
+・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-03T09:24:10" />
+				Time="2011-09-07T02:55:03" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -7120,6 +7292,15 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼　エリア1
+チュートリアルイベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:19:03" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_01_02_00"
@@ -7182,6 +7363,15 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-10T08:27:36" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼　エリア2
+チュートリアルイベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:19:24" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_01_03_00"
@@ -7230,6 +7420,15 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼　エリア3
+イベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:19:46" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_01_04_00"
@@ -7288,6 +7487,15 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-10T08:27:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼　エリア4
+イベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:19:51" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_01_05_00"
@@ -7336,6 +7544,15 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼　エリア5
+イベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:19:58" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_01_00"
@@ -7400,6 +7617,15 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:31" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞　エリア1
+チュートリアルイベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:20:21" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_02_00"
@@ -7462,6 +7688,15 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:31" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞　エリア2
+チュートリアルイベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:20:32" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_03_00"
@@ -7514,6 +7749,15 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:31" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞　エリア3
+イベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:20:40" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_04_00"
@@ -7570,6 +7814,15 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-10T08:27:40" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞　エリア4
+イベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:20:48" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_05_00"
@@ -7618,6 +7871,15 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:31" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞　エリア5
+イベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:20:55" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_02_01_00"
@@ -7670,6 +7932,15 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:33:18" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼　エリア1
+チュートリアルイベント会話
+（エリア途中）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:26:35" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_02_02_00"
@@ -7734,6 +8005,15 @@ Cギアを　見てみて▼
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:33:33" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼　エリア2
+チュートリアルイベント会話
+(エリア途中）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:26:58" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_02_01_00"
@@ -7786,6 +8066,15 @@ Cギアを　見てみて▼
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:33:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞　エリア1
+チュートリアルイベント会話
+（エリア途中）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:28:00" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -7859,6 +8148,15 @@ Cギアを　見てごらん▼
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:33:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞　エリア2
+チュートリアルイベント会話
+（エリア途中）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:27:49" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -7910,6 +8208,15 @@ Cギアを　見てごらん▼
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:34:55" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼　エリア3
+イベント会話
+（ボス部屋　バンジロウ登場）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:29:07" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_03_01_00"
@@ -7954,6 +8261,15 @@ Cギアを　見てごらん▼
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:34:55" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞　エリア3
+イベント会話
+（ボス部屋　バンジロウ登場）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-07T03:29:02" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_hint_up_01">
