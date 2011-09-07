@@ -1,7 +1,7 @@
 #WorldMap SaveData 
-#save date:2011/05/24 12:46:47
+#save date:2011/09/07 13:32:37
 #Width
-1
+2
 #Height
 2
 #block x offset
@@ -11,6 +11,8 @@
 #3dp file names
 C:\home\swan_data3d\field\out58\map24_06.3dp
 C:\home\swan_data3d\field\out58\map24_07.3dp
+
+C:\home\swan_data3d\field\out58\tship25_07.3dp
 #block size
 32 32
 #End of WorldMap SaveData
