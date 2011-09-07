@@ -738,6 +738,9 @@ _EVENT_DATA ev_TRID_ELITEW_43
 _EVENT_DATA ev_TRID_SWRIVAL_16
 _EVENT_DATA ev_TRID_SWRIVAL_17
 _EVENT_DATA ev_TRID_SWRIVAL_18
+_EVENT_DATA ev_TRID_NINJA_05
+_EVENT_DATA ev_TRID_NINJA_06
+_EVENT_DATA ev_TRID_NINJA_07
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1466,6 +1469,9 @@ ev_TRID_ELITEW_43:
 ev_TRID_SWRIVAL_16:
 ev_TRID_SWRIVAL_17:
 ev_TRID_SWRIVAL_18:
+ev_TRID_NINJA_05:
+ev_TRID_NINJA_06:
+ev_TRID_NINJA_07:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------

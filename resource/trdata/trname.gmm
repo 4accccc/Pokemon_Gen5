@@ -4060,6 +4060,21 @@
 		<language name="JPN_KANJI" width="216">ライバル</language>
 	</row>
 
+	<row id="ninja_05">
+		<language name="JPN" width="216">ＮＩＮＪＡ</language>
+		<language name="JPN_KANJI" width="216">ＮＩＮＪＡ</language>
+	</row>
+
+	<row id="ninja_06">
+		<language name="JPN" width="216">ＮＩＮＪＡ</language>
+		<language name="JPN_KANJI" width="216">ＮＩＮＪＡ</language>
+	</row>
+
+	<row id="ninja_07">
+		<language name="JPN" width="216">ＮＩＮＪＡ</language>
+		<language name="JPN_KANJI" width="216">ＮＩＮＪＡ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
