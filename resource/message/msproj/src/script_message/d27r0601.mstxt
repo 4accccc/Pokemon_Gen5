@@ -1261,12 +1261,12 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船３回目
-・ダークトリニティ全員倒すから
+・ダークトリニティ全員倒してから
 ・0＝主人公名
 ・１＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:13:35" />
+				Time="2011-09-07T02:44:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1279,6 +1279,219 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0601_monitor_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュちほうの
+マップが　うつしだされている</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:02:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T02:57:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュちほうの
+マップが　映しだされている</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:04:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:04:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝7、GRIDZ＝5～6
+・GRIDX＝10、GRIDZ＝1</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:02:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モニタ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T02:49:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0601_monitor_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふねに　かんする　データが
+ひょうじ　されている……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:02:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T02:59:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>船に　関する　データが
+表示されている……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:04:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:04:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝13、GRIDZ＝2</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:02:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モニタ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T02:50:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0601_monitor_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モニタは
+スノーノイズ　じょうたい　だ……▼
+せんないに　いるだろう
+だんいんの　こえが　きこえる……！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:06:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:03:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モニタは
+スノーノイズ状態だ……▼
+船内に　いるだろう
+団員の　話し声が　きこえる……！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:06:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:04:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・クリア前
+・GRIDX＝9、GRIDZ＝2
+・GRIDX＝12、GRIDZ＝1
+・GRIDX＝14、GRIDZ＝4
+・GRIDX＝15、GRIDZ＝5～6</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:04:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モニタ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T02:51:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0601_monitor_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モニタは
+スノーノイズ　じょうたい　だ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:06:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T02:56:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モニタは
+スノーノイズ状態だ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:06:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:04:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・クリア後
+・GRIDX＝9、GRIDZ＝2
+・GRIDX＝12、GRIDZ＝1
+・GRIDX＝14、GRIDZ＝4
+・GRIDX＝15、GRIDZ＝5～6</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:06:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>モニタ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T02:51:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

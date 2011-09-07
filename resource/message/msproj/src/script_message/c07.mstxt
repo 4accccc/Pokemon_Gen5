@@ -746,41 +746,23 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c07_ambrella1_03"
+		Label="msg_c07_ninja1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>オマエか
+よかったな▼
+ゲーチスさまは
+もう　なにも　なされない……▼
+いや　ただしくは
+もう　なにも　できない……　か▼
+それは　いい
+おわった　はなしだ▼
+ただ　オマエは　おもしろい
+オレたちと　たたかえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:29" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:28" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:32" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:32" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c07_ambrella1_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……　……　……▼
-……　……　おまえか▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:56:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -788,11 +770,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……▼
-……　……　おまえか▼</Text>
+			<Text>オマエか
+よかったな▼
+ゲーチスさまは
+もう　なにも　なされない……▼
+いや　ただしくは
+もう　なにも　できない……　か▼
+それは　いい
+おわった　はなしだ▼
+ただ　オマエは　おもしろい
+オレたちと　たたかえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-07T03:28:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -801,11 +791,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・posを踏むと3人出現
-・続けてninja2_01</Comment>
+・初回
+・posを踏むと出現
+・はい/いいえの選択肢表示
+　はい　→ninja1_02
+　いいえ→ninja1_03
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-07T03:25:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -815,130 +809,52 @@
 				User="matsumiya:W00224"
 				Time="2011-09-02T11:19:02" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c07_ambrella1_05"
+		Label="msg_c07_ninja1_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲーチスさまは　いない▼
-……しろ　から　すくいだしたあと
-ひとりで　どこかに　ゆかれた▼</Text>
+			<Text>オレたちと　たたかえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:58:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:56:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲーチスさまは　いない▼
-……城から　救い出したあと
-単身　どこかに　行かれた▼</Text>
+			<Text>オレたちと　たたかえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:58:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:56:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてninja3_01</Comment>
+・２回目以降
+・posを踏むと出現
+・はい/いいえの選択肢表示
+　はい　→ninja1_03
+　いいえ→終了
+・再度会話はninja1_02
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ダークトリニティ
-その２</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c07_ambrella1_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてninja1_02</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ダークトリニティ
-その３</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c07_ambrella1_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・主人公に隣接して
-・アイテム入手処理
-　No135「こんごうだま」
-・続けてninja2_02</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-07T03:25:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -946,131 +862,54 @@
 その１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:56:51" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c07_ambrella1_08"
+		Label="msg_c07_ninja1_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>オマエに　かつ！　それを
+ゲーチスさまに　ほうこくする！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-07T03:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:57:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>オマエに　かつ！　それを
+ゲーチスさまに　ほうこくする！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-07T03:28:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:57:53" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・主人公に隣接して
-・アイテム入手処理
-　No136「しらたま」
-・続けてninja3_02</Comment>
+・メッセージ表示後、トレーナー戦闘に
+・戦闘後ポケモンが
+　2匹以下→ninja2_01
+　３匹以上→ninja2_02
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ダークトリニティ
-その２</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c07_ambrella1_09"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・主人公に隣接して
-・アイテム入手処理
-　No112「はっきんだま」
-・続けてninja1_03</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ダークトリニティ
-その３</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c07_ambrella1_10"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてninja2_03</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-07T03:21:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1078,41 +917,59 @@
 その１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:59:24" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c07_ambrella1_11"
+		Label="msg_c07_ninja2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>つづいて　オレが……▼
+とおもったが　トリプルバトルが
+できるだけの　ポケモンが　いないな▼
+また　きせつが　かわったとき
+あいて　してやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-07T03:27:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:57:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>つづいて　オレが……▼
+とおもったが　トリプルバトルが
+できるだけの　ポケモンが　いないな▼
+また　きせつが　かわったとき
+あいて　してやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-07T03:28:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-06T08:57:53" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてninja3_03</Comment>
+・ポケモン2匹以下
+・メッセージ表示後、
+　ダークトリニティ消去アニメ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-07T03:19:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1120,18 +977,179 @@
 その２</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-07T03:16:24" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c07_ambrella1_12"
+		Label="msg_c07_ninja2_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>……どうする
+つづけて　たたかうか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-07T03:19:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-06T08:57:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……どうする
+つづけて　たたかうか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:28:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-06T08:57:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン３匹以上
+・はい/いいえの選択肢表示
+　はい　→ninja2_03
+　いいえ→ninja2_04
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:21:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ダークトリニティ
+その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-06T08:59:35" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c07_ninja2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たたかうこと！▼
+それだけが　いま
+オレが　いきている　あかし▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:20:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:17:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たたかうこと！▼
+それだけが　いま
+オレが　いきている　あかし▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:28:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:17:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン３匹以上
+　はい選択時
+・メッセージ表示後、トレーナー戦闘に
+・戦闘後ポケモンが
+　2匹以下→ninja3_01
+　３匹以上→ninja3_02
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:25:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ダークトリニティ
+その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:17:47" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c07_ninja2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうか……▼
+また　きせつが　かわったとき
+あいて　してやる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:20:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:17:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうか……▼
+また　きせつが　かわったとき
+あいて　してやる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:28:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:17:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン３匹以上
+　いいえ選択時
+・メッセージ表示後、
+　ダークトリニティ消去アニメ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:21:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ダークトリニティ
+その２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:17:47" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c07_ninja3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つづいて　オレが……▼
+とおもったが　ローテーションで
+たたかえるほど　ポケモンが　いないな▼
+また　きせつが　かわったとき
+あいて　してやる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:26:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1139,10 +1157,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>つづいて　オレが……▼
+とおもったが　ローテーションで
+たたかえるほど　ポケモンが　いないな▼
+また　きせつが　かわったとき
+あいて　してやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-07T03:28:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1151,11 +1173,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ表示後、ダークトリニティの
-　動作モデルを消去する</Comment>
+・ポケモン2匹以下
+・メッセージ表示後、
+　ダークトリニティ消去アニメ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-07T03:26:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1163,60 +1187,182 @@
 その３</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T11:19:02" />
+				Time="2011-09-07T03:26:16" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c07_ambrella1_13"
+		Label="msg_c07_ninja3_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>……どうする
+つづけて　たたかうか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-07T03:26:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-02T11:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>……どうする
+つづけて　たたかうか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-07T03:28:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-02T11:19:02" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン３匹以上
+・はい/いいえの選択肢表示
+　はい　→ninja2_03
+　いいえ→ninja2_04
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:26:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ダークトリニティ
+その３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:26:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c07_ambrella1_14"
+		Label="msg_c07_ninja3_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-07T03:28:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-02T11:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-07T03:28:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T12:03:33" />
+				Time="2011-09-02T11:19:02" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン３匹以上
+　はい選択時
+・メッセージ表示後、トレーナー戦闘に
+・戦闘後ポケモンが
+　2匹以下→ninja3_01
+　３匹以上→ninja3_02
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:26:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ダークトリニティ
+その３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:26:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c07_ninja3_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうか……▼
+また　きせつが　かわったとき
+あいて　してやる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:26:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T11:19:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうか……▼
+また　きせつが　かわったとき
+あいて　してやる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:28:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-02T11:19:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン３匹以上
+　いいえ選択時
+・メッセージ表示後、
+　ダークトリニティ消去アニメ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:26:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ダークトリニティ
+その３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:26:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c07_sign1_01"
