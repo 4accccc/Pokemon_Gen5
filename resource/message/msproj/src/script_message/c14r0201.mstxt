@@ -2,17 +2,17 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c14r0201_01_01"
+		Label="msg_c14r0201_badman_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねえねえ　あなた
-[Name:PokemonName Idx="0" ]　って　ポケモン　もってる？▼
-よかったら　あたしの　[Name:PokemonName Idx="1" ]と
-あなたの　[Name:PokemonName Idx="0" ]　こうかん　しよ？</Text>
+			<Text>ヨーヨーヨー
+マンタイン　って　ポケモン　もってる？▼
+もってるなら　モジャンボと
+オメーの　マンタイン　こうかん　だぜ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:54:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえねえ　あなた
-[Name:PokemonName Idx="0" ]　って　ポケモン　もってる？▼
-よかったら　あたしの　[Name:PokemonName Idx="1" ]と
-あなたの　[Name:PokemonName Idx="0" ]　交換しよ？</Text>
+			<Text>ヨーヨーヨー
+マンタイン　って　ポケモン　持ってる？▼
+持ってるなら　モジャンボと
+オメーの　マンタイン　交換だぜ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:54:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -34,23 +34,22 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂
 ・ポケモン交換前
 ・はい/いいえの選択肢表示
 　はい→ポケモン選択画面
-　いいえ→woman2_04
-・0＝渡すポケモン
-・1＝もらうポケモン</Comment>
+　いいえ→woman2_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:51:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>BADMAN
+スキンヘッズ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-07T05:51:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -68,15 +67,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0201_01_02"
+		Label="msg_c14r0201_badman_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うわー　ありがとう！
-では　こうかん　しましょ！▼</Text>
+			<Text>やるじゃん！
+じゃ　レッツ　ポケモントレード！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:54:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -84,11 +83,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うわー　ありがとう！
-では　交換しましょ！▼</Text>
+			<Text>やるじゃん！
+じゃ　レッツ　ポケモントレード！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -96,20 +95,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂
 ・はい選択
 　ポケモン選択画面で条件を満たすポケモンを選択
 　メッセージ表示後に交換デモ開始</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:51:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>BADMAN
+スキンヘッズ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:30:15" />
+				Time="2011-09-07T05:51:09" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -120,17 +120,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0201_01_03"
+		Label="msg_c14r0201_badman_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うふふ！　あたしの
-[Name:PokemonName Idx="1" ]　だいじにしてね！▼
-あたしも　もらった
-[Name:PokemonName Idx="0" ]　だいじに　するから！</Text>
+			<Text>ヨーヨーヨー！　オレがあげた
+モジャンボ　サイコーだぜ！▼
+オレも　マンタイン
+もらって　サイコーきぶん　な！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:55:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -138,13 +138,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うふふ！　あたしの
-[Name:PokemonName Idx="1" ]　大事にしてね！▼
-あたしも　もらった
-[Name:PokemonName Idx="0" ]　大事にするから！</Text>
+			<Text>ヨーヨーヨー！　オレがあげた
+モジャンボ　サイコーだぜ！▼
+オレも　マンタイン
+もらって　サイコーきぶん　な！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:55:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -152,20 +152,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・交換デモ終了後、以下のメッセージを自動表示
-・0＝渡すポケモン
-・1＝もらうポケモン</Comment>
+			<Comment>♂
+・交換デモ終了後、以下のメッセージを自動表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:51:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>BADMAN
+スキンヘッズ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:30:15" />
+				Time="2011-09-07T05:51:09" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -176,15 +175,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0201_01_04"
+		Label="msg_c14r0201_badman_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしが　こうかん　してほしいのは
-[Name:PokemonName Idx="0" ]　なんだけど……</Text>
+			<Text>ヨーヨーヨー　ほしいのは
+マンタイン　なんだぜ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:56:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -192,11 +191,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしが　交換してほしいのは
-[Name:PokemonName Idx="0" ]　なんだけど……</Text>
+			<Text>ヨーヨーヨー　ほしいのは
+マンタイン　なんだぜ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:56:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -204,19 +203,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・ポケモン交換
-・0＝渡すポケモン</Comment>
+			<Comment>♂
+・ポケモン交換</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:51:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>BADMAN
+スキンヘッズ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:30:15" />
+				Time="2011-09-07T05:51:09" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -227,16 +226,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0201_01_05"
+		Label="msg_c14r0201_badman_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だめなら　しかたないな……▼
-でも　きが　かわったら
-ポケモン　こうかん　しようね！</Text>
+			<Text>まー　いいや！　きがかわったら
+ポケモントレード　しようぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -244,12 +242,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だめなら　しかたないな……▼
-でも　気が　変わったら
-ポケモン交換　しようね！</Text>
+			<Text>まー　いいや！　気が変わったら
+ポケモントレード　しようぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:56:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -257,19 +254,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂
 ・いいえ選択
 　もしくはポケモン選択画面で「やめる」を選択</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:51:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>BADMAN
+スキンヘッズ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:30:15" />
+				Time="2011-09-07T05:51:09" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -280,16 +278,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0201_01_06"
+		Label="msg_c14r0201_badman_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　おかげで
-あたしと　あなた▽
-おともだちに　なれたよね！</Text>
+			<Text>ポケモントレードしたら
+どんな　やつでも　ともだち！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:56:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -297,12 +294,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　おかげで
-あたしと　あなた▽
-お友達に　なれたよね！</Text>
+			<Text>ポケモントレードしたら
+どんな　やつでも　ともだち！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:57:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -310,18 +306,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂
 ・ポケモン交換後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:29:59" />
+				Time="2011-09-07T05:51:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>BADMAN
+スキンヘッズ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T05:30:15" />
+				Time="2011-09-07T05:51:09" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -332,14 +329,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0201_02_01"
+		Label="msg_c14r0201_waitress_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>わたしも　かれと
+ファッションを　こうかん　したの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:27:34" />
+				Time="2011-09-07T05:57:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -347,10 +345,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>わたしも　かれと
+ファッションを　交換したの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:27:34" />
+				Time="2011-09-07T05:57:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -358,17 +357,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♀</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:27:34" />
+				Time="2011-09-07T05:51:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>WAITRESS</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:27:34" />
+				Time="2011-09-07T05:52:31" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

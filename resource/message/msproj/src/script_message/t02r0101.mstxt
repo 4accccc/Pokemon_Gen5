@@ -212,4 +212,800 @@
 				Time="2011-06-20T11:54:30" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ね！　よかったらなんだけど▼
+あなたの　ツンベアーと
+あたしの　エイパムを▽
+ポケモンこうかん　しよーよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:07:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:05:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ね！　よかったらなんだけど▼
+あなたの　ツンベアーと
+あたしの　エイパムを▽
+ポケモンこうかん　しよーよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン交換前
+・はい/いいえの選択肢表示
+　はい→ポケモン選択画面
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:05:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:03:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うれしい！　では　さっそく
+ポケモンこうかん　スタート!▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:10:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:09:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うれしい！　では　さっそく
+ポケモンこうかん　スタート!▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択
+　ポケモン選択画面で条件を満たすポケモンを選択
+　メッセージ表示後に、交換デモ開始</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:05:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:04:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしの　エイパム
+ものひろいを　おぼえているのよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:12:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:10:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしの　エイパム
+ものひろいを　おぼえているのよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・交換デモ終了後、以下のメッセージを自動表示
+・マップチェンジまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:38:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:04:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうよね……　あなたにとって
+だいじな　パートナー　なのね▼　
+もし　よければ
+ポケモンこうかん　してね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:42:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:38:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうよね……　あなたにとって
+だいじな　パートナー　なのね▼　
+もし　よければ
+ポケモンこうかん　してね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択
+　もしくはポケモン選択画面で「やめる」を選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:42:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:04:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたに　こうかんして　もらった
+ツンベアー！　つよくなったわ！▽
+きっと　たまげちゃうわよ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:40:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:39:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたに　こうかんして　もらった
+ツンベアー！　つよくなったわ！▽
+きっと　たまげちゃうわよ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン交換後＋マップチェンジ後
+・はい選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:40:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:04:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ね！　よかったらなんだけど
+ポケモンしょうぶ　おねがいできる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:41:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:41:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ね！　よかったらなんだけど
+ポケモンしょうぶ　おねがいできる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン交換後＋マップチェンジ後
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:41:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:04:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff40</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたに　こうかんして　もらった
+ツンベアー！　つよくなったわ！▽
+きっと　たまげちゃうわよ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:41:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:41:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたに　こうかんして　もらった
+ツンベアー！　つよくなったわ！▽
+きっと　たまげちゃうわよ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン交換後＋マップチェンジ後
+・はい選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:41:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:04:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff40</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうよね……　いつもいつも
+しょうぶ　したいわけじゃ　ないよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:42:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:42:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうよね……　いつもいつも
+しょうぶ　したいわけじゃ　ないよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン交換後＋マップチェンジ後
+・いいえ選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:41:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:04:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff40</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふぁー！
+おもしろかった！▼
+ね！　よかったらなんだけど▼
+ユキノオーを　くれない？
+あたしの　ジュペッタ　あげるから！▽
+ポケモンこうかん　しよーよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふぁー！
+おもしろかった！▼
+ね！　よかったらなんだけど▼
+ユキノオーを　くれない？
+あたしの　ジュペッタ　あげるから！▽
+ポケモンこうかん　しよーよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:43:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・交換＋戦闘後
+・交換まで繰り返し
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:44:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:04:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うれしい！　では　さっそく
+ポケモンこうかん　スタート!▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うれしい！　では　さっそく
+ポケモンこうかん　スタート!▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択
+　ポケモン選択画面で条件を満たすポケモンを選択
+　メッセージ表示後に、交換デモ開始</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:44:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしの　ジュペッタ
+おみとおしを　おぼえているのよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしの　エイパム
+ものひろいを　おぼえているのよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・交換デモ終了後、以下のメッセージを自動表示
+・マップチェンジまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:44:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうよね……　あなたにとって
+だいじな　パートナー　なのね▼　
+もし　よければ
+ポケモンこうかん　してね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうよね……　あなたにとって
+だいじな　パートナー　なのね▼　
+もし　よければ
+ポケモンこうかん　してね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン交換後＋マップチェンジ後
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:45:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:44:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたに　こうかんして　もらった
+ツンベアー！　つよくなったわ！▽
+きっと　たまげちゃうわよ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたに　こうかんして　もらった
+ツンベアー！　つよくなったわ！▽
+きっと　たまげちゃうわよ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン交換後＋マップチェンジ後
+・はい選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうよね……　いつもいつも
+しょうぶ　したいわけじゃ　ないよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうよね……　いつもいつも
+しょうぶ　したいわけじゃ　ないよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン交換後＋マップチェンジ後
+・いいえ選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>ね！　あたし　あなたと
+ポケモンこうかん　できて▼
+さらに　ポケモンしょうぶも　して
+すっごく　うれしいんだよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ね！　あたし　あなたと
+ポケモンこうかん　できて▼
+さらに　ポケモンしょうぶも　して
+すっごく　うれしいんだよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:47:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:47:07" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T06:46:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
