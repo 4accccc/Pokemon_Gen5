@@ -560,10 +560,11 @@
 			Language="JPN">
 			<Comment>♀
 ・girl3_02表示後
+・クリアならmsg_c03r1103_girl3_08
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:19:47" />
+				Time="2011-09-07T10:38:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -582,7 +583,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c01r0102_select_01">
+		Label="msg_c01r0102_select_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボックス</Text>
@@ -955,6 +957,383 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1103_girl3_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あっ　ボックスの
+つかいがっては　どうですか？▼
+そうだ！　イーブイって　ポケモンが
+たくさん　いるんですけど▽
+１ぴき　もらってくれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:38:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あっ　ボックスの
+つかいがっては　どうですか？▼
+そうだ！　イーブイって　ポケモンが
+たくさん　いるんですけど▽
+１ぴき　もらってくれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン入手前
+・はい/いいえ
+　はい
+　はい、でも手持ち一杯
+　いいえ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:28:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＧＩＲＬ3
+パソコン管理者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:26:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1103_girl3_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントーの　しりあいから
+ゆずってもらった　イーブイです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:31:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい！
+かわいがって　あげてください！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:28:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＧＩＲＬ3
+パソコン管理者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1103_girl3_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+イーブイを　てにいれた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:31:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+イーブイを　手に入れた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:31:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1103_girl3_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てにいれた　イーブイに
+ニックネームを　つけますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:31:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>手に入れた　イーブイに
+ニックネームを　つけますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:32:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・はい／いいえの選択肢表示
+　はい　→名前入力画面に
+　いいえ→終了
+・1=ポケモン名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1103_girl3_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あっ！　つれている
+ポケモンが　いっぱい　ですね▼
+こんなときは　ボックスに
+あずけて　くださいね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:31:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あっ！　つれている
+ポケモンが　いっぱい　ですね▼
+こんなときは　ボックスに
+あずけて　くださいね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:32:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時、でも手持ち一杯</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:28:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＧＩＲＬ3
+パソコン管理者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1103_girl3_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ざんねん　です▼
+でも　きが　かわったら
+また　はなしかけてください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:32:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ざんねん　です▼
+でも　きが　かわったら
+また　はなしかけてください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:32:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:28:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＧＩＲＬ3
+パソコン管理者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1103_girl3_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イーブイは　おおくの
+しんかの　かのうせいを　ひめた▽
+すごい　ポケモン　なんです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:32:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イーブイは　おおくの
+しんかの　かのうせいを　ひめた▽
+すごい　ポケモン　なんです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:32:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:28:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＧＩＲＬ3
+パソコン管理者</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

@@ -394,6 +394,381 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r06r0101_assistantm4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>４つの　きせつの　シキジカが
+どうじに　みれる　けんきゅうじょ！▼
+シキジカについてなら
+ちょっとした　エキスパート　です▼
+どうですか？　われわれが　みつけた
+ちょっと　めずらしい　シキジカを▽
+あなたも　そだててみませんか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:10:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:04:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>４つの　きせつの　シキジカが
+どうじに　みれる　けんきゅうじょ！▼
+シキジカについてなら
+ちょっとした　エキスパート　です▼
+どうですか？　われわれが　みつけた
+ちょっと　めずらしい　シキジカを▽
+あなたも　そだててみませんか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン入手前
+・はい/いいえ
+　はい
+　はい、でも手持ち一杯
+　いいえ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:10:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+助手♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:02:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_assistantm4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい！
+かわいがって　あげてください！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:19:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:19:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい！
+かわいがって　あげてください！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:10:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+助手♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:03:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_assistantm4_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+シキジカを　てにいれた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:18:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:18:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+シキジカを　手に入れた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:19:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:18:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:20:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:20:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_assistantm4_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てにいれた　シキジカに
+ニックネームを　つけますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:18:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:18:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>手に入れた　シキジカに
+ニックネームを　つけますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:19:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:18:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・はい／いいえの選択肢表示
+　はい　→名前入力画面に
+　いいえ→終了
+・1=ポケモン名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:20:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:20:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_assistantm4_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たくさんの　ポケモンを
+つれて　おられるの　ですね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:20:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:19:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たくさんの　ポケモンを
+つれて　おられるの　ですね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時、でも手持ち一杯</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:18:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+助手♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:13:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_assistantm4_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうですか……　ちょっと
+めずらしい　シキジカ　なのですが</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:21:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:15:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうですか……　ちょっと
+めずらしい　シキジカ　なのですが</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:20:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+助手♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:13:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_assistantm4_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てんのめぐみ……▼
+なんでも　わざのこうかが
+２ばいに　なるそうですよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:20:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>てんのめぐみ……▼
+なんでも　わざのこうかが
+２ばいに　なるそうですよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:22:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:27:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+助手♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:20:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r06r0101_assistantm3_01"
 		Style="Large">
 		<LanguageCell
@@ -480,7 +855,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -570,7 +945,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -646,7 +1021,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -719,7 +1094,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -792,7 +1167,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -865,7 +1240,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -938,7 +1313,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1001,7 +1376,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1063,7 +1438,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1141,7 +1516,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1207,7 +1582,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1269,7 +1644,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1302,20 +1677,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・四季イベント
-・msg_r06r0101_assistantm3_04の
-　イベント終了後に一度
-　zone変更して戻ってくると出現</Comment>
+			<Comment>ポケモン
+・swanでは最初から配置
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:34:28" />
+				Time="2011-09-07T10:06:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>バンビーナ（春）</Text>
+			<Text>poke
+ポケモン・シキジカ春</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:04:56" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1324,6 +1699,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r06r0101_poke02_01"
@@ -1352,20 +1734,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・四季イベント
-・msg_r06r0101_assistantm3_05の
-　イベント終了後に一度
-　zone変更して戻ってくると出現</Comment>
+			<Comment>ポケモン
+・swanでは最初から配置
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:34:34" />
+				Time="2011-09-07T10:06:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>バンビーナ（夏）</Text>
+			<Text>poke
+ポケモン・シキジカ夏</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:05:06" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1374,6 +1756,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r06r0101_poke03_01"
@@ -1402,20 +1791,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・四季イベント
-・msg_r06r0101_assistantm3_06の
-　イベント終了後に一度
-　zone変更して戻ってくると出現</Comment>
+			<Comment>ポケモン
+・swanでは最初から配置
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:34:35" />
+				Time="2011-09-07T10:06:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>バンビーナ（秋）</Text>
+			<Text>poke
+ポケモン・シキジカ秋</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:05:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1424,6 +1813,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r06r0101_poke04_01"
@@ -1452,20 +1848,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・四季イベント
-・msg_r06r0101_assistantm3_07の
-　イベント終了後に一度
-　zone変更して戻ってくると出現</Comment>
+			<Comment>ポケモン
+・swanでは最初から配置
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:34:36" />
+				Time="2011-09-07T10:06:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>バンビーナ（冬）</Text>
+			<Text>poke
+ポケモン・シキジカ冬</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-07T10:05:12" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1474,6 +1870,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r06r0101_assistantw1_01"
