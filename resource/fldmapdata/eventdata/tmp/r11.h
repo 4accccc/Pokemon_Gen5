@@ -12,6 +12,9 @@
 #define ZONE_R11_EVC_H
 
 #define R11_POKE6_01                       0
+#define FLD_ITEM_154                       1
+#define FLD_ITEM_155                       2
+#define FLD_ITEM_156                       3
 
 #endif //ZONE_R11_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r11.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

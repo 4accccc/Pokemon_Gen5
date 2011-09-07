@@ -17,6 +17,10 @@
 #define TR_ELITEW_31                       5
 #define R23_TREE_01                        6
 #define R23_TREE_02                        7
+#define FLD_ITEM_195                       8
+#define FLD_ITEM_194                       9
+#define FLD_ITEM_196                      10
+#define FLD_ITEM_197                      11
 
 #endif //ZONE_R23_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r23.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
