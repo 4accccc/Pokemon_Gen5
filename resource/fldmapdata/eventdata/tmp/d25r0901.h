@@ -9,6 +9,7 @@
 #ifndef ZONE_D25R0901_EVC_H
 #define ZONE_D25R0901_EVC_H
 
+#define TR_ESPW_08                         0
 
 #endif //ZONE_D25R0901_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d25r0901.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

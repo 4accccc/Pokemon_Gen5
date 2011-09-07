@@ -9,6 +9,7 @@
 #ifndef ZONE_D25R0701_EVC_H
 #define ZONE_D25R0701_EVC_H
 
+#define FLD_ITEM_114                       0
 
 #endif //ZONE_D25R0701_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d25r0701.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

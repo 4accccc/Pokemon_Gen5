@@ -10,6 +10,8 @@
 #ifndef ZONE_D25R0201_EVC_H
 #define ZONE_D25R0201_EVC_H
 
+#define FLD_ITEM_111                       0
+#define FLD_ITEM_113                       1
 
 #endif //ZONE_D25R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d25r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
