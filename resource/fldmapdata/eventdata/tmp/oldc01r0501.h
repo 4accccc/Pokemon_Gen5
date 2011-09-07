@@ -8,6 +8,12 @@
 #ifndef ZONE_OLDC01R0501_EVC_H
 #define ZONE_OLDC01R0501_EVC_H
 
+#define OLDC01R0501_OLD_LEADER1A_01        0
+#define OLDC01R0501_OLD_LEADER1C_01        1
+#define OLDC01R0501_OLD_LEADER1B_01        2
+#define OLDC01R0501_OLD_NINJA_01           3
+#define OLDC01R0501_OLD_NINJA_02           4
+#define OLDC01R0501_OLD_NINJA_03           5
 
 #endif //ZONE_OLDC01R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/oldc01r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -23,7 +23,8 @@
   .include  "d08r0901.h"
   .include  "d01r0101.h"
   
-
+  .include  "oldc01r0501.h"
+  .include  "oldc01r0501_def.h"
   .include "c08r0401_def.h"
   .include "t01.h"
   .include "hiden_def.h"
@@ -640,7 +641,7 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 1 )	//ＷＢＴ２回戦
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 2 )	//ＷＢＴ決勝戦
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 3 )	//Ｃ１３ネオプラズマ団イベント
-		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 5 )	//D02プラズマ団
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 4 )	//過去イベント・三つ子
 		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 6 )	//C03のゲーチスイベント
 		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 80 )		//ラストイベント１・はじめから
 		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 90 )		//ラストイベント２・伝説捕獲前
@@ -698,26 +699,19 @@ EVENT_START   ev_debug_suginaka
 			//マップチェンジ
 			_MAP_CHANGE( ZONE_ID_C13, 237, 670, DIR_RIGHT )
 
-		ELSIF $SCWK_ANSWER == 6 THEN
+		ELSIF $SCWK_ANSWER == 4 THEN
 		
-			//プラズマ団イベント終了
-			//$WK_SCENE_C03P07 = 3
+			_MAP_FADE_BLACK_OUT_SLOW()
 		
-			//ビル内にゲーチスその他出現＆イベント開始
-			//$WK_SCENE_C03R1101 = 1
-			//_FLAG_RESET( FV_C03R1101_PLASMA )
-		
-			//C03P07のイベント関連OBJフラグセット
-			//_FLAG_SET( FV_C03P07_SUPPORT_LEADER8 )
-			//_FLAG_SET( FV_C03P07_PLASMA_LEADER3 )
-		
-			//C03P15からアイリス・サポート削除
-			//_FLAG_SET( FV_C03P15_SUPPORT_LEADER8 )
-
-			$SCWK_TEMP0 = 428
-
+			//過去イベント三つ子起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDC01R0501_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
 			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_C03P07, 9, 33, DIR_LEFT )
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC01R0501, 7,0, 3, DIR_LEFT )
+			
+			$SCWK_TEMP0 = 428
 		
 		ELSIF $SCWK_ANSWER == 80 THEN
 			//ラストシーン・はじめから
