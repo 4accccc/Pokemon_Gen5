@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="matsuzaki_tsubasa" host="W00193" date="2011-04-26T17:24:57" source="m_adc01_00_00.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-09-07T12:03:23" source="m_oldadc01_00_00_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="matsuzaki_tsubasa" host="W00193" date="2011-04-26T17:24:57" source="m_adc01_00_00.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-09-07T12:03:23" source="m_oldadc01_00_00_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2005,7 +2005,7 @@
 				<primitive index="0" type="quads" vertex_size="32">
 					<mtx idx="0"/>
 					<tex st="0.000000 16.000000"/>
-					<clr rgb="31 8 8"/>
+					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="-1.500000 0.015625 -1.249756"/>
 					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="-1.250000 0.015625"/>
@@ -2022,7 +2022,7 @@
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-2.000000 0.015625"/>
 					<tex st="0.000000 16.000000"/>
-					<clr rgb="15 27 15"/>
+					<clr rgb="27 27 27"/>
 					<pos_xz xz="-3.030273 -1.289795"/>
 					<tex st="16.000000 16.000000"/>
 					<pos_xz xz="-2.790039 -1.220459"/>
@@ -2031,7 +2031,7 @@
 					<tex st="0.000000 0.000000"/>
 					<pos_xz xz="-2.960938 -1.529785"/>
 					<tex st="0.000000 16.000000"/>
-					<clr rgb="31 8 8"/>
+					<clr rgb="31 31 31"/>
 					<pos_xz xz="-3.500488 -1.250000"/>
 					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="-3.250488 0.015625"/>
@@ -2040,7 +2040,7 @@
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-3.500488 0.015625"/>
 					<tex st="0.000000 16.000000"/>
-					<clr rgb="15 27 15"/>
+					<clr rgb="27 27 27"/>
 					<pos_xz xz="-3.000488 -1.750000"/>
 					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="-2.750488 0.015625"/>
@@ -2057,7 +2057,7 @@
 					<tex st="0.000000 0.000000"/>
 					<pos_xz xz="-3.519287 -1.978027"/>
 					<tex st="0.000000 16.000000"/>
-					<clr rgb="31 8 8"/>
+					<clr rgb="31 31 31"/>
 					<pos_xz xz="-1.547119 -1.834473"/>
 					<tex st="16.000000 16.000000"/>
 					<pos_xz xz="-1.334473 -1.702881"/>
