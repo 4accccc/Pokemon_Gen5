@@ -25,6 +25,8 @@
   
   .include  "oldc01r0501.h"
   .include  "oldc01r0501_def.h"
+  .include  "oldc02gym0202.h"
+  .include  "oldc02gym0202_def.h"
   .include "c08r0401_def.h"
   .include "t01.h"
   .include "hiden_def.h"
@@ -642,7 +644,7 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 2 )	//ＷＢＴ決勝戦
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 3 )	//Ｃ１３ネオプラズマ団イベント
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 4 )	//過去イベント・三つ子
-		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 6 )	//C03のゲーチスイベント
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 5 )	//過去イベント・シッポウ
 		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 80 )		//ラストイベント１・はじめから
 		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 90 )		//ラストイベント２・伝説捕獲前
 		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 100 )	//ラストイベント３・Ｎ戦前
@@ -703,28 +705,27 @@ EVENT_START   ev_debug_suginaka
 		
 			_MAP_FADE_BLACK_OUT_SLOW()
 		
-			//過去イベント三つ子起動
+			//過去イベント・三つ子起動
 			_RESERVE_SCRIPT( SCRID_RESERVE_OLDC01R0501_EVENT_01 )
 			
 			_MAP_FADE_END_CHECK()
 			
 			//マップチェンジ
-			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC01R0501, 7,0, 3, DIR_LEFT )
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC01R0501, 7,0, 3, DIR_DOWN )
 			
 			$SCWK_TEMP0 = 428
 		
-		ELSIF $SCWK_ANSWER == 80 THEN
-			//ラストシーン・はじめから
-			//OBJ調整
-			//_FLAG_SET( FV_N01R0502_LEGEND_01 )
-			//_FLAG_SET( FV_N01R0502_LEGEND_02 )
-			//_FLAG_SET( FV_N01R0502_EVENT_01 )
-
-			//ワークを０に
-			//$WK_SCENE_N01R0502 = 0
-
+		ELSIF $SCWK_ANSWER == 5 THEN
+			
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・シッポウ起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDC02GYM0202_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
 			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_N01R0502, 16, 58, DIR_UP )
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC02GYM0202, 5, 1, 5, DIR_DOWN )
 			
 			$SCWK_TEMP0 = 428
 	

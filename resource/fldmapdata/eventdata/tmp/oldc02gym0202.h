@@ -8,6 +8,9 @@
 #ifndef ZONE_OLDC02GYM0202_EVC_H
 #define ZONE_OLDC02GYM0202_EVC_H
 
+#define OLDC02GYM0202_OLD_LEADER2_01       0
+#define OLDC02GYM0202_OLD_LEADER3_01       1
+#define OLDC02GYM0202_OLD_LEADER5_01       2
 
 #endif //ZONE_OLDC02GYM0202_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/oldc02gym0202.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
