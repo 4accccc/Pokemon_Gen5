@@ -450,3 +450,4 @@
 "nsbmdfiles/h06_light01.nsbmd"
 "nsbmdfiles/h06_light02.nsbmd"
 "nsbmdfiles/c15_gate_02.nsbmd"
+"nsbmdfiles/door_c14.nsbmd"
