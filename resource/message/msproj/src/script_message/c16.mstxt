@@ -2,15 +2,14 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c16_swrival_04"
+		Label="msg_c16_none"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-チュートリアルイベント▼</Text>
+			<Text>　</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:23:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-チュートリアルイベント▼</Text>
+			<Text>　</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:23:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -30,10 +28,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>テストID</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:23:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -48,10 +46,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うーん　こまったな……▼</Text>
+			<Text>うーん　こまったな……
+わたしも　ひしょも　いそがしいし…▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-06T07:43:00" />
+				Time="2011-09-07T04:28:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -59,10 +58,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うーん　こまったな……▼</Text>
+			<Text>うーん　こまったな……
+わたしも　ひしょも　いそがしいし…▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-06T07:43:03" />
+				Time="2011-09-07T04:29:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -70,10 +70,50 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>テストID</Comment>
+			<Comment />
 			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_owner_01_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっと　きみきみ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:24:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっと　きみきみ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:24:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -88,11 +128,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>という　わけなんだよ
-どうだい　やってみないか</Text>
+			<Text>ジョインアベニューに　ようこそ！▼
+とはいっても　ごらんのように
+いまは　なにもない　ただの　とおりだよ▼
+もうしおくれたね▼
+わたしは　このジョインアベニューの
+オーナーなんだ▼
+わたしの　ゆめは　このとおりを
+せかいいち　にぎわいがある　ばしょに　すること！▼
+……　でも　ここを　かんりするひとが
+これなくなって　こまっているんだよね▼
+きみは　みたところ　トレーナーで　かくちをめぐっているね
+いろんなひとと　である　ひとに　たのみたいんだ▼
+どうだね　きみ　やってみないかい
+</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-06T09:31:37" />
+				Time="2011-09-07T04:58:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -100,11 +152,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>という　わけなんだよ
-どうだい　やってみないか</Text>
+			<Text>ジョインアベニューに　ようこそ！▼
+とはいっても　ごらんのように
+いまは　なにもない　ただの　とおりだよ▼
+もうしおくれたね▼
+わたしは　このジョインアベニューの
+オーナーなんだ▼
+わたしの　ゆめは　このとおりを
+せかいいち　にぎわいがある　ばしょに　すること！▼
+……　でも　ここを　かんりするひとが
+これなくなって　こまっているんだよね▼
+きみは　みたところ　トレーナーで　かくちをめぐっているね
+いろんなひとと　である　ひとに　たのみたいんだ▼
+どうだね　きみ　やってみないかい</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-06T09:31:39" />
+				Time="2011-09-07T04:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -112,10 +175,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>テストID</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -132,10 +195,10 @@
 			Language="JPN">
 			<Text>ありがとう！
 じゃあ　きみのことを　おしえてくれ▽
-かんげきしたとき　なんていう？▼</Text>
+きみの　くちぐせは　なんていう？▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-06T09:32:06" />
+				Time="2011-09-07T03:29:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -145,10 +208,10 @@
 			Language="JPN_KANJI">
 			<Text>ありがとう！
 じゃあ　きみのことを　おしえてくれ▽
-かんげきしたとき　なんていう？▼</Text>
+きみの　くちぐせは　なんていう？▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-06T09:32:10" />
+				Time="2011-09-07T03:29:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -156,10 +219,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>テストID</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -175,10 +238,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そんなこと　いわずに
-やってはくれないかね▼</Text>
+やってはくれないかね</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-06T09:32:25" />
+				Time="2011-09-07T03:29:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -187,10 +250,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そんなこと　いわずに
-やってはくれないかね▼</Text>
+やってはくれないかね</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-06T09:32:28" />
+				Time="2011-09-07T03:29:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -198,10 +261,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>テストID</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -240,10 +303,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>テストID</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -258,12 +321,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみは　おもったとおりの　しょうねんだな！▼
-…おっと　そろそろ　しごとの　じかんだ
-あとは　ひしょ１　よろしくたのむよ▼</Text>
+			<Text>きみは　おもったとおりの　しょうねんだな！▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-06T07:49:39" />
+				Time="2011-09-07T03:37:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -271,12 +332,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみは　おもったとおりの　しょうねんだな！▼
-…おっと　そろそろ　しごとの　じかんだ
-あとは　ひしょ１　よろしくたのむよ▼</Text>
+			<Text>きみは　おもったとおりの　しょうねんだな！▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-06T07:49:48" />
+				Time="2011-09-07T03:37:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -284,10 +343,90 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>テストID</Comment>
+			<Comment />
 			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_owner_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>…おっと　そろそろ　しごとの　じかんだ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:38:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>…おっと　そろそろ　しごとの　じかんだ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:38:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_owner_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひしょ１　あとのことは　まかせたぞ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:39:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひしょ１　あとのことは　まかせたぞ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:39:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -324,10 +463,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>テストID</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -366,10 +505,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>テストID</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -410,10 +549,500 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>テストID</Comment>
+			<Comment />
 			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとを　よぶためには　べんりなしせつや
+やくだつしせつを　つくるのが　よいでしょう▼
+そう！　おみせです！
+おみせを　つくるには　まちに　きたひとを▽
+かんゆうして　「しょうたい」して　あげましょう▼
+……おや　このまちに　だれか　きたようです
+さっそく　「しょうたい」してあげましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:15:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひとを　よぶためには　べんりなしせつや
+やくだつしせつを　つくるのが　よいでしょう▼
+そう！　おみせです！
+おみせを　つくるには　まちに　きたひとを▽
+かんゆうして　「しょうたい」して　あげましょう▼
+……おや　このまちに　だれか　きたようです
+さっそく　「しょうたい」してあげましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:15:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まずは　おみせを　たてましょう
+まちを　あるくひとに　「しょうたい」して▽
+おみせを　つくって　もらいましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:16:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まずは　おみせを　たてましょう
+まちを　あるくひとに　「しょうたい」して▽
+おみせを　つくって　もらいましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:16:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとうございます！
+りっぱな　おみせが　たちましたね▼
+おみせを　つくっても　おきゃくさまが
+きて　いただけなければ　いみがありません▼
+つぎは　おきゃくさまに　おみせを　しょうかいして
+「あんない」　してあげましょう▼
+……また　どなたか　いらっしゃったようです
+さっそく　「あんない」　してあげましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:17:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとうございます！
+りっぱな　おみせが　たちましたね▼
+おみせを　つくっても　おきゃくさまが
+きて　いただけなければ　いみがありません▼
+つぎは　おきゃくさまに　おみせを　しょうかいして
+「あんない」　してあげましょう▼
+……また　どなたか　いらっしゃったようです
+さっそく　「あんない」　してあげましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:17:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おみせに　おきゃくさまを
+「あんない」してあげましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:18:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おみせに　おきゃくさまを
+「あんない」してあげましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:18:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとうございます！
+おみせに　おきゃくさまを　あんないして▽
+まちの　にんきどが　あがりました▼
+おみせや　まちのにんきを　あげて
+どんどん　ゆうめいに　していきましょう▼
+それでは　わたくしどもは　あなたさまの
+ひしょとして　じむしょのなかで　たいきしますね▼
+いろいろなことを　サポートしますので
+えんりょなく　もうしつけください▼
+それでは▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:20:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとうございます！
+おみせに　おきゃくさまを　あんないして▽
+まちの　にんきどが　あがりました▼
+おみせや　まちのにんきを　あげて
+どんどん　ゆうめいに　していきましょう▼
+それでは　わたくしどもは　あなたさまの
+ひしょとして　じむしょのなかで　たいきしますね▼
+いろいろなことを　サポートしますので
+えんりょなく　もうしつけください▼
+それでは▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:20:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T04:36:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:50:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:50:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:50:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:50:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:50:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:50:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:50:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_secretary2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:50:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-07T03:50:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T10:16:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

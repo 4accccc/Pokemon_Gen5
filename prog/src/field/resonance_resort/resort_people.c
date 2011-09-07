@@ -77,6 +77,8 @@ static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
 //秘書
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
 
+static void Resort_People_DeleteNotBideMMdl( RESORT_PEOPLE_SYS *p_wk );
+
 //-------------------------------------
 ///	抽象動作
 //=====================================
@@ -477,7 +479,6 @@ static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
  *
  *	@param	void *p_data_adrs   データ
  *	@param	*p_header           MMDL作成用ヘッダ
- *	@param	RESORT_BINARY_PEOPLE *cp_binary バイナリデータ
  */
 //-----------------------------------------------------------------------------
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
@@ -628,22 +629,47 @@ void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk )
     }
   }
 
-  //作成してバインドできなかったMMDLは消す
-  //->拡張バッファ対策(セーブ復帰時は拡張ばっふぁが消えている)
+  Resort_People_DeleteNotBideMMdl( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物バッファの人を追加
+ *
+ *	@param	RESORT_PEOPLE_SYS *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_SYS_AddPeopleBufferType( RESORT_PEOPLE_SYS *p_wk, const RESORT_DATA_BUFFER_TYPE c_buffer_tbl[], u32 tbl_len )
+{
+  RESORT_PLACEID placeID = p_wk->param.placeID;
+  int peopleID;
+
+  RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->param.p_abstruct, c_buffer_tbl, tbl_len );
+
+  while(TRUE)
   {
-    MMDL *p_mmdl;
-    u32 no  = 0;
-    while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&p_mmdl,&no) == TRUE ){
-      if( MMDL_GetOBJID(p_mmdl) >= RESORT_PEOPLE_MMDLID_OFS
-          && MMDL_GetZoneID(p_mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID)
-          && RESORT_PEOPLE_SYS_GetPeopleByMmdl(p_wk,p_mmdl) == NULL )
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->param.p_abstruct, c_buffer_tbl, tbl_len );
+    if( p_data == NULL )
+    {
+      break;
+    }
+
+    if( !RESORT_ABSTRUCT_DATA_IsEmpty(p_data) )
+    {
+      peopleID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      if( !RESORT_DATA_MANAGER_IsPlaceEmpty( p_wk->param.p_data_manager, placeID, peopleID ) )
       {
-        MMDL_Delete( p_mmdl );
+        RESORT_PEOPLE_SYS_ADD_PARAM param;
+        GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
+        param.p_data      = p_data;
+        param.placeID     = p_wk->param.placeID;
+        RESORT_PEOPLE_SYS_Add( p_wk, &param, peopleID );
       }
     }
   }
-}
 
+
+  Resort_People_DeleteNotBideMMdl( p_wk );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  人物を一人追加
@@ -886,4 +912,30 @@ RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByAbstruct( RESORT_PEOPLE_SYS *p_wk, 
     }
   }
   return NULL;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バインドできなかったMMDLを消す
+ *
+ *	@param	RESORT_PEOPLE_SYS *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Resort_People_DeleteNotBideMMdl( RESORT_PEOPLE_SYS *p_wk )
+{
+  //作成してバインドできなかったMMDLは消す
+  //->拡張バッファ対策(セーブ復帰時は拡張ばっふぁが消えている)
+  {
+    MMDL *p_mmdl;
+    u32 no  = 0;
+    while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&p_mmdl,&no) == TRUE ){
+      if( MMDL_GetOBJID(p_mmdl) >= RESORT_PEOPLE_MMDLID_OFS
+          && MMDL_GetZoneID(p_mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID)
+          && RESORT_PEOPLE_SYS_GetPeopleByMmdl(p_wk,p_mmdl) == NULL )
+      {
+        MMDL_Delete( p_mmdl );
+      }
+    }
+  }
 }

@@ -555,7 +555,6 @@ struct _RESORT_ABSTRUCT_DATA
 {
   void *p_data_adrs;
   const RESORT_ABSTRUCT_DATA_FUNCTION *cp_func;
-  BOOL is_create;
   RESORT_DATA_BUFFER_TYPE buffer_type;
   u32 index;
   RESORT_DATA_TYPE type;
@@ -633,13 +632,6 @@ RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_DATA_Init( HEAPID heapID, void *p_data_ad
 
   RESORT_ABSTRUCT_DATA_Setup( p_wk, p_data_adrs, type, index );
 
-  if( p_data_adrs == NULL )
-  {
-    GF_ASSERT(0);
-    p_wk->p_data_adrs = p_wk->cp_func->Init( heapID );
-    p_wk->is_create = TRUE;
-  }
-
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -651,11 +643,6 @@ RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_DATA_Init( HEAPID heapID, void *p_data_ad
 //-----------------------------------------------------------------------------
 void RESORT_ABSTRUCT_DATA_Exit( RESORT_ABSTRUCT_DATA *p_wk )
 {
-  if( p_wk->is_create )
-  {
-    p_wk->is_create = FALSE;
-    p_wk->cp_func->Exit( p_wk->p_data_adrs );
-  }
 
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -672,7 +659,6 @@ void RESORT_ABSTRUCT_DATA_Exit( RESORT_ABSTRUCT_DATA *p_wk )
 void RESORT_ABSTRUCT_DATA_Setup( RESORT_ABSTRUCT_DATA *p_wk, void *p_data_adrs, RESORT_DATA_TYPE type, u32 index )
 {
   GF_ASSERT( p_data_adrs != NULL );
-  GF_ASSERT( p_wk->is_create == FALSE );
   GF_ASSERT( type < RESORT_DATA_BUFFER_TYPE_MAX );
   p_wk->buffer_type = type;
   p_wk->index = index;
@@ -1245,6 +1231,7 @@ static void Resort_Data_Manager_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 typ
     u32 view = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_VIEW);
     u32 id = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_ID);
     u32 job = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_JOB);
+    u32 spot = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_SPOT);
 
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
 
@@ -1272,6 +1259,7 @@ static void Resort_Data_Manager_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 typ
     RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_OBJCODE, view );
     RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, id );
     RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, job );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_SPOT, spot );
     RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_TYPE, type );
 
     GFL_MSG_Delete( p_msg );
@@ -1403,7 +1391,7 @@ void RESORT_DATA_MANAGER_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 type, cons
  *	@param	heapID  ヒープID
  */
 //-----------------------------------------------------------------------------
-void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_PROXY_BUFF *p_proxy_buff, const RESORT_BINARY_PRESET *cp_preset, u16 people_type, u16 preset_type,  HEAPID heapID )
+void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_PROXY_BUFF *p_proxy_buff, const RESORT_BINARY_PRESET *cp_preset, const MYSTATUS *cp_mystatus, u16 people_type, u16 preset_type, HEAPID heapID )
 {
   switch( people_type )
   {
@@ -1435,6 +1423,15 @@ void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESORT_PEOP
       {
         RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID) );
         RESORT_DATA_MANAGER_SetProxyPreset( p_proxy, proxy_type, cp_preset, preset_type, heapID );
+
+        //もしチュートリアル用ならばプレイヤーの初期お店になる
+        if( RESORT_PRESET_TYPE_TUTORIAL1 == preset_type )
+        {
+          RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
+          u32 want_job = RESORT_OWNER_DATA_GetWantJob( p_owner, cp_mystatus );
+          RESORT_PROXY_DATA_SetData( p_proxy, RESORT_DATA_PARAM_WANT_JOB, want_job );
+        }
+
         is_set = RESORT_PROXY_BUFF_Add( p_proxy_buff, p_proxy );
         GF_ASSERT( is_set );
         RESORT_PROXY_DATA_Exit( p_proxy );
@@ -1449,9 +1446,10 @@ void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESORT_PEOP
         u16 sec_type;
       }sc_preset_type_to_sec_type[] =
       {
-        { RESORT_PRESET_TYPE_TUTORIAL1 , RESORT_PROXY_TYPE_TUTORIAL_01 },
-        { RESORT_PRESET_TYPE_TUTORIAL2 , RESORT_PROXY_TYPE_TUTORIAL_02 },
-        { RESORT_PRESET_TYPE_APPOINT,    RESORT_PROXY_TYPE_CELEB },
+        { RESORT_PRESET_SECRETARY_01, RESORT_SECRETARY_TYPE_WORK },
+        { RESORT_PRESET_SECRETARY_02, RESORT_SECRETARY_TYPE_MOVE },
+        { RESORT_PRESET_SECRETARY_03, RESORT_SECRETARY_TYPE_CENTER },
+        { RESORT_PRESET_SECRETARY_04, RESORT_SECRETARY_TYPE_PC },
       };
       int i;
       BOOL is_set;
@@ -1509,21 +1507,136 @@ typedef struct _RESORT_RANK_WND
  *	@return RESORT_RANK_WND ワーク
  */
 //-----------------------------------------------------------------------------
-RESORT_RANK_WND * RESORT_RANK_WND_Create( FLDMSGBG *p_msgbg, HEAPID heapID );
+RESORT_RANK_WND * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSGBG *p_msgbg, WORDSET *p_wordset, u32 param, HEAPID heapID );
 {
-  SORT_RANK_WND *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(SORT_RANK_WND) );
+  enum
+  {
+    RNKDATA_NUM = 9,
+    RNKDATA_EMPTY = 0xFFFFFFFF,
+  };
+
+  RESORT_RANK_WND *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_RANK_WND) );
+
+  strict
+  {
+    u32 index;
+    u32 value;
+  }rnkdata[ RESORT_RESIDENT_DATA_NUM ];
+
+  int i, j;
+  int cnt;
+
+  GF_ASSERT( param < 8 );
+
+  //ランキング作成
+
+  //空に
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    rnkdata[i].index  = RNKDATA_EMPTY;
+    rnkdata[i].value  = RNKDATA_EMPTY;
+  }
+
+  //データを集める
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i );
+    if( !RESORT_RESIDENT_DATA_IsEmpty(p_data) )
+    {
+      if( RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param < 4
+        || RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param >= 4 )
+      {
+        rnkdata[cnt].index  = i;
+        rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT2_RANK_00 + param, NULL );
+        cnt++;
+      }
+    }
+  }
+  {
+    RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
+    if( !RESORT_RESIDENT_DATA_IsEmpty(p_data) )
+    {
+      if( RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param < 4
+        || RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param >= 4 )
+      {
+        rnkdata[cnt].index  = i;
+        rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT2_RANK_00 + param, NULL );
+        cnt++;
+      }
+    }
+  }
+
+  //ソート
+  for( i = 0; i < cnt-1; i++ )
+  {
+    for( j = cnt-1; j > i; j-- )
+    {
+      u32 idx1  = j-1;
+      u32 idx2  = j;
+      if( rnkdata[idx1].value > rnkdata[idx2].value )
+      {
+        u32 value. index;
+        value = rnkdata[idx1].value;
+        index = rnkdata[idx1].index;
+        rnkdata[idx1] = rnkdata[idx2];
+        rnkdata[idx2].value = value;
+        rnkdata[idx2].index = index;
+      }
+    }
+  }
+
   {
   
+    STRBUF *p_src_str = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(heapID) );
+    STRBUF *p_dst_str = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(heapID) );
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
 
     p_wk->p_fldmsgwin = FLDMSGWIN_Add(p_msgbg, p_msg, 
-      POKESTATUS_BMP_X, POKESTATUS_BMP_Y, POKESTATUS_BMP_SIZE_X, POKESTATUS_BMP_SIZE_Y);
+      0, 0, 30, 22);
 
     FLDMSGWIN_ClearWindow(p_wk->p_fldmsgwin);
 
-    FLDMSGWIN_Print( p_wk->p_fldmsgwin, 0, 0,  );
+    //タイトル描画
+    FLDMSGWIN_Print( p_wk->p_fldmsgwin, 0, 0, resort_rnkwnd_title_00 + param );
+
+    for( i = 0; i < cnt; i++ )
+    {
+      RESORT_RESIDENT_DATA *p_data;
+      
+      if( rnkdata[i].index == 8 )
+      {
+        p_data = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
+      }
+      else
+      {
+        p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, rnkdata[i].index );
+      }
+      //順位
+      GFL_MSG_GetString( p_msg, resort_rnkwnd_rank_00, p_src_str );
+      WORDSET_RegisterNumber( p_wordset, 0, cnt+1, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+      WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
+      FLDMSGWIN_PrintStrBuf( p_wk->p_fldmsgwin, 0, 0, p_dst_str );
+
+      //名前
+      {
+        u32 sex = RESORT_RESIDENT_DATA_GetData(p_data, RESORT_DATA_PARAM_SEX, NULL );
+        RESORT_RESIDENT_DATA_GetData(p_data, RESORT_DATA_PARAM_NAME, NULL );
+        GFL_MSG_GetString( p_msg, resort_rnkwnd_name_00, p_src_str );
+        WORDSET_RegisterWord( p_wordset, 0, cnt+1, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+        WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
+        FLDMSGWIN_PrintStrBuf( p_wk->p_fldmsgwin, 0, 0, p_dst_str );
+      }
+
+      //数
+      GFL_MSG_GetString( p_msg, resort_rnkwnd_cnt_00, p_src_str );
+      WORDSET_RegisterNumber( p_wordset, 0, rnkdata[i].value, 7, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+      WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
+      FLDMSGWIN_PrintStrBuf( p_wk->p_fldmsgwin, 0, 0, p_dst_str );
+    }
 
     GFL_MSG_Delete( p_msg );
+    GFL_STR_DeleteBuffer( p_dst_str );
+    GFL_STR_DeleteBuffer( p_src_str );
   }
 
   return p_wk;

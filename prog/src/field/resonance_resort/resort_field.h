@@ -46,3 +46,5 @@ extern void RESORT_FIELD_StopCrowdPeople( FIELDMAP_WORK *p_fieldmap, void* p_peo
 extern void RESORT_FIELD_StartEffect( FIELDMAP_WORK *p_fieldmap, u32 id );
 extern BOOL RESORT_FIELD_WaitEffect( FIELDMAP_WORK *p_fieldmap, u32 id );
 extern void RESORT_FIELD_EndEffect( FIELDMAP_WORK *p_fieldmap, u32 id );
+
+extern void RESORT_FIELD_StartPeople( FIELDMAP_WORK *p_fieldmap );

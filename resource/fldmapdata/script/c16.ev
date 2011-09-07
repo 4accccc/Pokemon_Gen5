@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_c16.h"
   .include  "c16.h"
+  .include  "../../../prog/src/field/resonance_resort/resort_people_def.h"
   
   //@author Mizuguchi_Mai
 
@@ -26,15 +27,13 @@ _EVENT_DATA    ev_init_c16
 _EVENT_DATA    ev_pos_c16_tutorial_01
 _EVENT_DATA    ev_c16_secretary_01_tutorial
 _EVENT_DATA    ev_c16_secretary_02_tutorial
+_EVENT_DATA    ev_reserve_c16_tutorial
 _EVENT_DATA    ev_recover_c16
 _EVENT_DATA_END
 
 //バージョン取得
 DEFINE_LOCAL LCWK_VERSION
-//話しかけた方向取得変数
-DEFINE_LOCAL LWK_DIR
-DEFINE_LOCAL  LCW_POSX
-DEFINE_LOCAL  LCW_POSZ
+
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
@@ -48,16 +47,36 @@ INIT_EVENT_END
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START ev_init_c16
-
   // 出口位置変更
   _CALL ev_c16_exit_change
 
-  // 初回イベントのオーナー位置変更
-  IF $WK_SCENE_C16_TUTORIAL_01 == 1 THEN
+  // 初回イベントのオーナーと秘書位置変更
+  SWITCH $WK_SCENE_C16_TUTORIAL_SEQ
+  CASE 1 THEN
+    _OBJ_DEL(C16_OWNER_01)
+    _OBJ_POS_CHANGE( C16_SECRETARY_01, 15, 0, 70, DIR_DOWN )
+    _OBJ_POS_CHANGE( C16_SECRETARY_02, 14, 0, 70, DIR_DOWN )
+  CASE 2 THEN
+    _OBJ_DEL(C16_OWNER_01)
+    _OBJ_POS_CHANGE( C16_SECRETARY_01, 15, 0, 70, DIR_DOWN )
+    _OBJ_POS_CHANGE( C16_SECRETARY_02, 14, 0, 70, DIR_DOWN )
+  CASE 3 THEN
+    _OBJ_DEL(C16_OWNER_01)
+    _OBJ_POS_CHANGE( C16_SECRETARY_01, 15, 0, 70, DIR_DOWN )
+    _OBJ_POS_CHANGE( C16_SECRETARY_02, 14, 0, 70, DIR_DOWN )
+  CASE 4 THEN
+    _OBJ_DEL(C16_OWNER_01)
+    _OBJ_POS_CHANGE( C16_SECRETARY_01, 15, 0, 70, DIR_DOWN )
+    _OBJ_POS_CHANGE( C16_SECRETARY_02, 14, 0, 70, DIR_DOWN )
+  CASE 5 THEN
+    _OBJ_DEL(C16_OWNER_01)
+    _OBJ_POS_CHANGE( C16_SECRETARY_01, 15, 0, 70, DIR_DOWN )
+    _OBJ_POS_CHANGE( C16_SECRETARY_02, 14, 0, 70, DIR_DOWN )
+  CASE 6 THEN
     _OBJ_DEL(C16_OWNER_01)
     _OBJ_DEL(C16_SECRETARY_01)
     _OBJ_DEL(C16_SECRETARY_02)
-  ENDIF
+  ENDSWITCH
 
 INIT_EVENT_END
 
@@ -99,18 +118,19 @@ EVENT_START		ev_pos_c16_tutorial_01
 	//オーナー：！マーク
 	_TIME_WAIT( 16 )
 	_OBJ_ANIME( C16_OWNER_01, anm_mark_gyoe )
+
+  //秘書下をむく
+	_OBJ_ANIME( C16_SECRETARY_01, anm_first_dir_down )
+	_OBJ_ANIME( C16_SECRETARY_02, anm_first_dir_down )
 	_OBJ_ANIME_WAIT()
 
-  //オーナー：ちかよってくる
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  $LCW_POSZ -= 1
-  _OBJ_ANIME_AUTO( C16_OWNER_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+  //ちょっときみきみ
+	_BALLOONWIN_OBJMSG( msg_c16_owner_01_00, C16_OWNER_01 )
+	_MSGWIN_CLOSE()
 
-  $LCW_POSX -= 1
-  _OBJ_ANIME_AUTO( C16_SECRETARY_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
-  $LCW_POSX += 2
-  _OBJ_ANIME_AUTO( C16_SECRETARY_02, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
+  //プレイヤーこさせる
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 15, 71, FORCE_TYPE_NOT, 8, DIR_LR )
+	_OBJ_ANIME_WAIT()
 
 	_BALLOONWIN_OBJMSG( msg_c16_owner_02, C16_OWNER_01 )
 
@@ -124,13 +144,13 @@ EVENT_START		ev_pos_c16_tutorial_01
       _YES_NO_WIN( LWK_YESNO )
       IF $LWK_YESNO == SCR_YES THEN
 	      _BALLOONWIN_OBJMSG( msg_c16_owner_03_yes, C16_OWNER_01 )
-	      _MSGWIN_CLOSE()
         $LWK_LOOP = FALSE
       ELSE
 	      _BALLOONWIN_OBJMSG( msg_c16_owner_03_no, C16_OWNER_01 )
       ENDIF
     ENDWHILE
   }
+  _MSGWIN_CLOSE()
 
   //口癖入力
   _RESORT_INPUT_AUTHERPHRASE()
@@ -144,15 +164,39 @@ EVENT_START		ev_pos_c16_tutorial_01
 	_BALLOONWIN_OBJMSG( msg_c16_owner_05, C16_OWNER_01 )
 	_MSGWIN_CLOSE()
 
+	//オーナー：！マーク
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( C16_OWNER_01, anm_mark_gyoe )
+	_OBJ_ANIME_WAIT()
+
+  //じかんが
+	_BALLOONWIN_OBJMSG( msg_c16_owner_06, C16_OWNER_01 )
+	_MSGWIN_CLOSE()
+
+	//オーナー：右向く
+  //秘書１：左向く
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( C16_OWNER_01, anm_first_dir_right )
+	_OBJ_ANIME( C16_SECRETARY_01, anm_first_dir_left )
+	_OBJ_ANIME_WAIT()
+
+  //オーナー：頼んだよ
+	_BALLOONWIN_OBJMSG( msg_c16_owner_07, C16_OWNER_01 )
+	_MSGWIN_CLOSE()
+
+  //わかりました
 	_BALLOONWIN_OBJMSG( msg_c16_secretary_01, C16_SECRETARY_01 )
 	_MSGWIN_CLOSE()
+
+  //秘書１退く
+  _OBJ_ANIME( C16_SECRETARY_01, anm_first_sec01_makeaway_01 )
 
   //オーナー去る
 	_OBJ_ANIME( C16_OWNER_01, anm_first_owner_goaway_01 )
 	_OBJ_ANIME_WAIT()
   _OBJ_DEL( C16_OWNER_01 )
 
-  //
+  //始めまして
 	_BALLOONWIN_OBJMSG( msg_c16_secretary_02, C16_SECRETARY_01 )
 	_MSGWIN_CLOSE()
 
@@ -163,12 +207,14 @@ EVENT_START		ev_pos_c16_tutorial_01
 	_MSGWIN_CLOSE()
 
   //==================================//
-  //C16誘導イベント終了
+  //C16強制チュートリアル終了
   $WK_SCENE_C16_TUTORIAL_01 = 1
+
+  //次からは案内チュートリアル開始
+  $WK_SCENE_C16_TUTORIAL_SEQ = 1
   //==================================//
 } 
 EVENT_END
-
 
 //--------------------------------------------------------------------
 //！マーク
@@ -178,11 +224,43 @@ _ANIME_LABEL	anm_mark_gyoe
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
+//下向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_dir_down
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//右向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_dir_right
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//左向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_dir_left
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//秘書１：退く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_sec01_makeaway_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA AC_WAIT_8F, 10
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //オーナー：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_first_owner_goaway_01
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -191,12 +269,139 @@ _ANIME_LABEL	anm_first_owner_goaway_01
 /**************************************************************/
 EVENT_START	ev_c16_secretary_01_tutorial
 {
+	_TALK_OBJ_START()
+
+  //チュートリアルのシーケンスにより話すことが違う
+  SWITCH $WK_SCENE_C16_TUTORIAL_SEQ
+  CASE 0 THEN //通常ここにはこない。念のため会話して終了
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary_04, C16_SECRETARY_01 )
+	  _MSGWIN_CLOSE()
+
+  CASE 1 THEN //話しかけチュートリアル開始
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary_05, C16_SECRETARY_01 )
+	  _MSGWIN_CLOSE()
+
+    //招待する人を追加
+    _RESORT_SET_PRESET_PEOPLE( RESORT_PEOPLE_TYPE_PROXY, RESORT_PRESET_TUTORIAL_01 )
+
+    //招待チュートリアル開始へ
+    //==================================//
+    $WK_SCENE_C16_TUTORIAL_SEQ  = 2
+    //==================================//
+
+  CASE 2 THEN //招待チュートリアル中
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary_06, C16_SECRETARY_01 )
+	  _MSGWIN_CLOSE()
+
+  CASE 3 THEN //招待シュートリアル終了
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary_07, C16_SECRETARY_01 )
+	  _MSGWIN_CLOSE()
+
+    //案内する人を追加
+    _RESORT_SET_PRESET_PEOPLE( RESORT_PEOPLE_TYPE_PROXY, RESORT_PRESET_TUTORIAL_02 )
+    //案内チュートリアル開始
+    //==================================//
+    $WK_SCENE_C16_TUTORIAL_SEQ  = 4
+    //==================================//
+  CASE 4 THEN //案内チュートリアル中
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary_08, C16_SECRETARY_01 )
+	  _MSGWIN_CLOSE()
+
+  CASE 5 THEN //案内チュートリアル完了  //ここにはこない
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary_04, C16_SECRETARY_01 )
+	  _MSGWIN_CLOSE()
+  DEFAULT
+  ENDSWITCH
 }
 EVENT_END
+
+//--------------------------------------------------------------------
+//秘書１：室内へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_sec01_inroom
+  _ANIME_DATA AC_WAIT_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,5
+  _ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//秘書２：室内へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_sec02_inroom
+	_ANIME_DATA	AC_WALK_L_8F,4
+  _ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*			チュートリアル用秘書２					                      */
 /**************************************************************/
 EVENT_START	ev_c16_secretary_02_tutorial
 {
+	_TALK_OBJ_START()
+
+  //チュートリアルのシーケンスにより話すことが違う
+  SWITCH $WK_SCENE_C16_TUTORIAL_SEQ
+  CASE 0 THEN //通常ここにはこない。念のため会話して終了
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary2_01, C16_SECRETARY_02 )
+	  _MSGWIN_CLOSE()
+
+  CASE 1 THEN
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary2_01, C16_SECRETARY_02 )
+	  _MSGWIN_CLOSE()
+
+  CASE 2 THEN
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary2_02, C16_SECRETARY_02 )
+	  _MSGWIN_CLOSE()
+
+  CASE 3 THEN
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary2_03, C16_SECRETARY_02 )
+	  _MSGWIN_CLOSE()
+
+  CASE 4 THEN
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary2_04, C16_SECRETARY_02 )
+	  _MSGWIN_CLOSE()
+
+  CASE 5 THEN
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary2_05, C16_SECRETARY_02 )
+	  _MSGWIN_CLOSE()
+  ENDSWITCH
+}
+EVENT_END
+
+/**************************************************************/
+/*			リザーブ：チュートリアル		                          */
+/**************************************************************/
+EVENT_START	ev_reserve_c16_tutorial
+{
+	  _OBJ_ANIME( C16_SECRETARY_01, anm_first_dir_down )
+    _OBJ_ANIME_WAIT()
+
+	  _BALLOONWIN_OBJMSG( msg_c16_secretary_09, C16_SECRETARY_01 )
+	  _MSGWIN_CLOSE()
+
+    //歩いて去っていく
+    _OBJ_ANIME( C16_SECRETARY_02, anm_first_sec02_inroom )
+	  _OBJ_ANIME( C16_SECRETARY_01, anm_first_sec01_inroom )
+    _OBJ_ANIME_WAIT()
+
+    _OBJ_DEL( C16_SECRETARY_02 )
+
+    //階段SE再生
+    _SE_PLAY( SEQ_SE_KAIDAN )
+    _SE_WAIT()
+
+    _OBJ_DEL( C16_SECRETARY_01 )
+
+
+    //秘書を追加
+    _RESORT_SET_PRESET_PEOPLE( RESORT_PEOPLE_TYPE_SECRETARY, RESORT_PRESET_SECRETARY_01 )
+    _RESORT_SET_PRESET_PEOPLE( RESORT_PEOPLE_TYPE_SECRETARY, RESORT_PRESET_SECRETARY_02 )
+
+    //チュートリアル完全終了
+    //==================================//
+    $WK_SCENE_C16_TUTORIAL_SEQ  = 6
+
+    _RESORT_SET_MY_DATA( RESORT_MY_PARAM_IS_TUTORIAL, FALSE )
+    //==================================//
 }
 EVENT_END

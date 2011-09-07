@@ -705,10 +705,10 @@ static void RESORT_EXTEND2_DATA_SetMyData( RESORT_EXTEND2_DATA *p_wk, const GAME
   RESORT_WORK *p_resort_wk  = GAMEDATA_GetReosrtWork( (GAMEDATA *)cp_gamedata );
 
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND2_DATA) );
-  p_wk->rank_data[0]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_CAPTURE_POKE );
-  p_wk->rank_data[1]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_FINISHING_SUCCESS );
-  p_wk->rank_data[2]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_TAMAGO_HATCHING );
-  p_wk->rank_data[3]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_BATTLE_COUNT );
+  p_wk->rank_data[0]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_NET_TRADE );
+  p_wk->rank_data[1]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_NICKNAME );
+  p_wk->rank_data[2]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_JA_TOURIST );
+  p_wk->rank_data[3]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_BUY_MONEY );
 }
 //----------------------------------------------------------------------------
 /**
@@ -740,10 +740,10 @@ static void RESORT_EXTEND3_DATA_SetMyData( RESORT_EXTEND3_DATA *p_wk, const GAME
   RESORT_WORK *p_resort_wk  = GAMEDATA_GetReosrtWork( (GAMEDATA *)cp_gamedata );
 
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND3_DATA) );
-  p_wk->rank_data[0]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_WALK_COUNT );
-  p_wk->rank_data[1]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_TRADE_COUNT );
-  p_wk->rank_data[2]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_SHOPPING_CNT );
-  p_wk->rank_data[3]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RECORD_DENDOU_CNT );
+  p_wk->rank_data[0]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_CROSSING );
+  p_wk->rank_data[1]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_NET_BATTLE );
+  p_wk->rank_data[2]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_GET_POKE );
+  p_wk->rank_data[3]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_HATCH_EGG );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2623,6 +2623,11 @@ BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp
 {
   RESORT_PROXY_DATA *p_data;
 
+  if( !RESORT_PROXY_DATA_IsValid(cp_proxy) )
+  {
+    return FALSE;
+  }
+
   //空のデータがあったら入れる
   p_data  = Resort_Proxy_Buff_GetEmptyData( p_wk );
   if( p_data )
@@ -3303,6 +3308,8 @@ void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT
   p_wk->meet_year = cp_proxy->meet_year;
   p_wk->meet_month = cp_proxy->meet_month;
   p_wk->meet_day  = cp_proxy->meet_day;
+
+  p_wk->basic2.want_job  = cp_proxy->want_job;
 
   //場所を設定
   p_wk->peopleID  = peopleID;
@@ -4158,7 +4165,7 @@ void RESORT_RECORD_AddID( u32 record_id )
       goto RESORT_RECORD_ADD_ID_SORT;
     }
   }
-  //空きチェック
+  //押し出し
   for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
   {
     u32 next_id = i + 1;

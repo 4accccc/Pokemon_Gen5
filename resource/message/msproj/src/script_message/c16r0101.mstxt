@@ -2,14 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="none"
+		Label="resort_drill_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>[Name:ResortMayor Idx="0" ]！
+ごしつもん　ありますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:29:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>[Name:ResortMayor Idx="0" ]！
+ごしつもん　ありますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:29:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,11 +30,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>何もなし</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:29:49" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>α版用の説明人間
+
+0：市長名</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:29:49" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -40,5 +51,715 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　イッシュちほうの
+はるか　みなみの　うみに　ある▼
+うめたてて　つくられた
+じんこうの　しま　です▼
+ヒウンシティから　ひこうきに　のって
+おとずれる　ことが　できます▼
+トレーナーが　はねやすみ　できる
+すてきな　リゾートに　なるように▽
+げんざい　かいはつ　しています▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　イッシュちほうの
+はるか　みなみの　うみに　ある▼
+うめたてて　つくられた
+じんこうの　しま　です▼
+ヒウンシティから　ひこうきに　のって
+おとずれる　ことが　できます▼
+トレーナーが　はねやすみ　できる
+すてきな　リゾートに　なるように▽
+げんざい　かいはつ　しています▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:00" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>回答１
+ここって　どこ？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:00" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このリゾートを　けいかくした
+とある　おかねもちの▽
+ジェントルマンに　スカウトされて▼
+あなたは　この　リゾートの
+かいはつの　せきにんしゃ　である▽
+『[Name:ResortMayor Idx="0" ]』に　なりました▼
+ここでの　もくてきは　ただ　ひとつ
+すてきな　リゾートを　つくること！▼
+あそびに　きた　ひとびとが
+まんぞく　できる　しまに　しましょう▼
+うしろに　おしごとを　てだすけ　する
+ひしょも　ひかえて　いますから▽
+なんなりと　もうしつけ　ください▼　</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>このリゾートを　けいかくした
+とある　おかねもちの▽
+ジェントルマンに　スカウトされて▼
+あなたは　この　リゾートの
+かいはつの　せきにんしゃ　である▽
+『[Name:ResortMayor Idx="0" ]』に　なりました▼
+ここでの　もくてきは　ただ　ひとつ
+すてきな　リゾートを　つくること！▼
+あそびに　きた　ひとびとが
+まんぞく　できる　しまに　しましょう▼
+うしろに　おしごとを　てだすけ　する
+ひしょも　ひかえて　いますから▽
+なんなりと　もうしつけ　ください▼　</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>回答２
+なにを　するの？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さまざまな　つうしんを　して
+まちに　ゲストを　よびましょう▼
+つうしんしした　あいては
+このさきの　ワープポイントから　いく▽
+ゲストルームに　やってくるので▽
+はなしかけて　みましょう▼
+ゲストルームで　できることは
+つぎの　２つ　です▼
+「まちに　しょうたい」　すること
+「スポットに　あんない」　すること▼
+くわくは　それぞれの
+せつめいを　おききください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さまざまな　つうしんを　して
+まちに　ゲストを　よびましょう▼
+つうしんしした　あいては
+このさきの　ワープポイントから　いく▽
+ゲストルームに　やってくるので▽
+はなしかけて　みましょう▼
+ゲストルームで　できることは
+つぎの　２つ　です▼
+「まちに　しょうたい」　すること
+「スポットに　あんない」　すること▼
+くわくは　それぞれの
+せつめいを　おききください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:11" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>回答３
+すてきにな　リゾートにするには？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲストをよぶ　には
+とにかく　つうしんする　こと　です▼
+Ｃ－ＧＥＡＲを　ＯＮにしておけば
+すれちがった　あいてが　やってきます▼
+ハイリンクで　しんにゅうされたり
+ユニオンルームや　ＩＲつうしん▽
+ランダムマッチ　ＧＴＳ　などで▽
+あそんだ　あいても　やってきます▼
+つうしん　したら　まずは
+ゲストルームへ　いってみましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲストをよぶ　には
+とにかく　つうしんする　こと　です▼
+Ｃ－ＧＥＡＲを　ＯＮにしておけば
+すれちがった　あいてが　やってきます▼
+ハイリンクで　しんにゅうされたり
+ユニオンルームや　ＩＲつうしん▽
+ランダムマッチ　ＧＴＳ　などで▽
+あそんだ　あいても　やってきます▼
+つうしん　したら　まずは
+ゲストルームへ　いってみましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>回答４
+ゲストをよぶ　には？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「しょうたいする」を　えらぶと
+ゲストが　リゾートの　じゅうにんと▽
+なって　たてものが　つくられます▼
+ゆめを　もっている　ひとは
+とくべつな　スポットが　できるので▼
+しょうたいする　ときに　あいての
+はなしを　よくきいて　えらびましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「しょうたいする」を　えらぶと
+ゲストが　リゾートの　じゅうにんと▽
+なって　たてものが　つくられます▼
+ゆめを　もっている　ひとは
+とくべつな　スポットが　できるので▼
+しょうたいする　ときに　あいての
+はなしを　よくきいて　えらびましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:22" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>回答５
+「しょうたい　する」って？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲストルームに　いる　ひとへ
+「あんないする」を▽
+やってみましょう▼
+ゲストが　まんぞくすると
+あんない　した　スポットと▽
+まちの　にんきが　あがります▼
+にんきを　たくさん　あつめると
+レベルアップ　しますよ▼
+スポットの　レベルが　あがれば
+しなものや　サービスが▽
+はってんして　べんりに　なります▼
+まちの　レベルが　あがると
+あたらしい　スポットを▽
+たてられるように　なったり▼
+うわさを　ききつけて
+ジムリーダーの　ような▽
+ゆうめいじんが　あそびに▽
+くるかも　しれません▼
+ゲストの　いきたい　ところへ
+うまく　あんないして▽
+にんきを　あげて　いきましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲストルームに　いる　ひとへ
+「あんないする」を▽
+やってみましょう▼
+ゲストが　まんぞくすると
+あんない　した　スポットと▽
+まちの　にんきが　あがります▼
+にんきを　たくさん　あつめると
+レベルアップ　しますよ▼
+スポットの　レベルが　あがれば
+しなものや　サービスが▽
+はってんして　べんりに　なります▼
+まちの　レベルが　あがると
+あたらしい　スポットを▽
+たてられるように　なったり▼
+うわさを　ききつけて
+ジムリーダーの　ような▽
+ゆうめいじんが　あそびに▽
+くるかも　しれません▼
+ゲストの　いきたい　ところへ
+うまく　あんないして▽
+にんきを　あげて　いきましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:27" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>回答６
+「おすすめを　おしえる」って？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すてきな　リゾートになること
+たのしてみに　しています▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すてきな　リゾートになること
+たのしてみに　しています▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:35" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>回答７
+だいじょうぶ！
+
+0：市長名</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここって　どこ？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここって　どこ？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢１</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なにをするの？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なにをするの？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢２</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すてきなリゾート　って？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すてきなリゾート　って？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:52" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢３</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲストをよぶ　には？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲストをよぶ　には？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:02" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢４</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょうたいする　って？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しょうたいする　って？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢５</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あんないする　って？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あんないする　って？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:14" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢６</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だいじょうぶ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だいじょうぶ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

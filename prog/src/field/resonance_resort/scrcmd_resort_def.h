@@ -169,6 +169,12 @@
   //ファン
 #define RESORT_FUN_GREET_MSGID                (120) //挨拶
 
+  //チュートリアル１
+#define RESORT_TUTORIAL01_GREET_MSGID         (125) //挨拶
+
+  //チュートリアル２
+#define RESORT_TUTORIAL02_GREET_MSGID         (130) //挨拶
+
 //_RESORT_SEARCH_RECEPTION用
 #define RESORT_SEARCH_PROXY_GTS               (0)
 #define RESORT_SEARCH_PROXY_MYSTERY           (0)
@@ -242,14 +248,16 @@
 
 //_RESORT_PRINT_RECORD_WND用
 #if 0
-#define RESORT_RANK_WND_CAPTURE_NET_TRADE
-#define RESORT_RANK_WND_CAPTURE_NICKNAME
-#define RESORT_RANK_WND_CAPTURE_TOURIST_COME
-#define RESORT_RANK_WND_CAPTURE_BUY_MONEY
-#define RESORT_RANK_WND_CAPTURE_SIRETOGAI
-#define RESORT_RANK_WND_CAPTURE_NET_BATTLE
-#define RESORT_RANK_WND_CAPTURE_
-#endif
+#define RESORT_RANK_WND_NET_TRADE             (0)
+#define RESORT_RANK_WND_NICKNAME              (1)
+#define RESORT_RANK_WND_JA_TOURIST            (2)
+#define RESORT_RANK_WND_BUY_MONEY             (3)
+#define RESORT_RANK_WND_CROSSING              (4)
+#define RESORT_RANK_WND_NET_BATTLE            (5)
+#define RESORT_RANK_WND_GET_POKE              (6)
+#define RESORT_RANK_WND_HATCH_EGG             (7)
+#define RESORT_RANK_WND_MAX                   (8)
+#endif                  
 //リゾート用レコードID
 #define  RESORT_RECORD_ID_NONE        ( 0)//なにもない
 #define  RESORT_RECORD_ID_DENDOU      ( 1)//殿堂入りした

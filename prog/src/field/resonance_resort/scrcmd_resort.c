@@ -722,6 +722,13 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     *p_ret_wk = SexGetMsgID( sex, resort_resident_lv_00_m, resort_resident_lv_00_f );
     break;
 
+  case RESORT_TUTORIAL01_GREET_MSGID:
+    *p_ret_wk = resort_tutorial_01_greet_00;
+    break;
+
+  case RESORT_TUTORIAL02_GREET_MSGID:
+    *p_ret_wk = resort_tutorial_02_greet_00;
+    break;
   case RESORT_FUN_GREET_MSGID:
     *p_ret_wk = SexGetMsgID( sex, resort_fun_greet_00_m, resort_fun_greet_00_f );
     break;
@@ -1681,79 +1688,14 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
  *	@return 終了コード
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdResortCallInputCityName( VMHANDLE *p_core, void *p_wk_adrs )
+VMCMD_RESULT EvCmdResortCallInputName( VMHANDLE *p_core, void *p_wk_adrs )
 {
   SCRCMD_WORK*      work = p_wk_adrs;
   SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
+  u16 type      =   VMGetU16( p_core );
 
-  GMEVENT* event = EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_CITY_NAME, gsys, NULL );
-
-  SCRIPT_CallEvent( sc, event );
-
-  return VMCMD_RESULT_SUSPEND;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  自分の街での呼び名を登録
- *
- *	@param	VMHANDLE *p_core 仮想マシンハンドル
- *	@param	*p_wk_adrs       スクリプトコマンドワーク
- *
- *	@return 終了コード
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdResortCallInputAutherName( VMHANDLE *p_core, void *p_wk_adrs )
-{
-  SCRCMD_WORK*      work = p_wk_adrs;
-  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  GMEVENT* event = EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_NAME, gsys, NULL );
-
-  SCRIPT_CallEvent( sc, event );
-
-  return VMCMD_RESULT_SUSPEND;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  自分のくちぐせを登録
- *
- *	@param	VMHANDLE *p_core 仮想マシンハンドル
- *	@param	*p_wk_adrs       スクリプトコマンドワーク
- *
- *	@return 終了コード
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdResortCallInputAutherPhrase( VMHANDLE *p_core, void *p_wk_adrs )
-{
-  SCRCMD_WORK*      work = p_wk_adrs;
-  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  GMEVENT* event = EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_PHASE, gsys, NULL );
-
-  SCRIPT_CallEvent( sc, event );
-
-  return VMCMD_RESULT_SUSPEND;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  自分の感謝を登録
- *
- *	@param	VMHANDLE *p_core 仮想マシンハンドル
- *	@param	*p_wk_adrs       スクリプトコマンドワーク
- *
- *	@return 終了コード
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdResortCallInputAutherThanks( VMHANDLE *p_core, void *p_wk_adrs )
-{
-  SCRCMD_WORK*      work = p_wk_adrs;
-  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  GMEVENT* event = EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_THANKS, gsys, NULL );
+  GMEVENT* event = EVENT_NameInput_Resort( type, gsys, NULL );
 
   SCRIPT_CallEvent( sc, event );
 
@@ -2243,6 +2185,10 @@ VMCMD_RESULT EvCmdResortSetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_MY_PARAM_IS_TUTORIAL:
     RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_IS_TUTORIAL, data );
+    if( data == FALSE )
+    {
+      RESORT_FIELD_StartPeople( p_field );
+    }
     break;
   default:
     GF_ASSERT(0);
@@ -2406,11 +2352,12 @@ VMCMD_RESULT EvCmdResortSetPresetPoeple( VMHANDLE *p_core, void *p_wk_adrs )
   const RESORT_BINARY_PRESET *cp_preset = RESORT_SYSTEM_GetBinaryPreset(p_sys);
   RESORT_PROXY_BUFF *p_proxy_buff = RESORT_SYSTEM_GetProxyBuff(p_sys);
   RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
+  MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
 
   u16 people  = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 preset  = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
-  RESORT_DATA_MANAGER_SetPresetPeople( p_data_manager, p_people_all, p_proxy_buff, cp_preset, people, preset, heapID );
+  RESORT_DATA_MANAGER_SetPresetPeople( p_data_manager, p_people_all, p_proxy_buff, cp_preset, p_mystatus, people, preset, heapID );
   return VMCMD_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------

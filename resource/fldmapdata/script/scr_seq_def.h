@@ -2108,8 +2108,8 @@
 /**
  *  _YES_NO_WIN はい、いいえ選択
  *  @param ret_wk はい、いいえ選択結果格納先
-*  @retval SCR_YES (0)のとき、「はい」を選択
-*  @retval SCR_NO (1)のとき、「いいえ」またはキャンセル
+*   @retval SCR_YES (0)のとき、「はい」を選択
+*   @retval SCR_NO (1)のとき、「いいえ」またはキャンセル
  */
 //--------------------------------------------------------------
 #define _YES_NO_WIN( ret_wk ) _ASM_YES_NO_WIN ret_wk
@@ -13937,19 +13937,21 @@
       _ASM_RESORT_INPUT_CITYNAME
 
   .macro _ASM_RESORT_INPUT_CITYNAME
-  .short EV_SEQ_RESORT_INPUT_CITYNAME
+  .short EV_SEQ_RESORT_INPUT_NAME
+  .short 0
   .endm
 
 //--------------------------------------------------------------
 /**
- * @brief リゾート用　街名を入力するPROCを呼ぶ
+ * @brief リゾート用　自分の呼び名を入力するPROCを呼ぶ
  */
 //--------------------------------------------------------------
 #define _RESORT_INPUT_AUTHERNAME() \
       _ASM_RESORT_INPUT_AUTHERNAME
 
   .macro _ASM_RESORT_INPUT_AUTHERNAME
-  .short EV_SEQ_RESORT_INPUT_AUTHERNAME
+  .short EV_SEQ_RESORT_INPUT_NAME
+  .short 1
   .endm
 
 //--------------------------------------------------------------
@@ -13961,7 +13963,8 @@
       _ASM_RESORT_INPUT_AUTHERPHRASE
 
   .macro _ASM_RESORT_INPUT_AUTHERPHRASE
-  .short EV_SEQ_RESORT_INPUT_AUTHERPHRASE
+  .short EV_SEQ_RESORT_INPUT_NAME
+  .short 2
   .endm
 
 //--------------------------------------------------------------
@@ -13973,7 +13976,8 @@
       _ASM_RESORT_INPUT_AUTHERTHANKS
 
   .macro _ASM_RESORT_INPUT_AUTHERTHANKS
-  .short EV_SEQ_RESORT_INPUT_AUTHERTHANKS
+  .short EV_SEQ_RESORT_INPUT_NAME
+  .short 3
   .endm
   
 //--------------------------------------------------------------
@@ -14141,6 +14145,21 @@
   .macro _ASM_RESORT_END_EFFECT id
   .short EV_SEQ_RESORT_END_EFFECT
   .short \id
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  プリセットデータから人物登録
+ */
+//--------------------------------------------------------------
+#define _RESORT_SET_PRESET_PEOPLE( people, preset ) \
+      _ASM_RESORT_SET_PRESET_PEOPLE people, preset
+
+  .macro _ASM_RESORT_SET_PRESET_PEOPLE people, preset
+  .short EV_SEQ_RESORT_SET_PRESET_PEOPLE
+  .short \people
+  .short \preset
   .endm
 
 //======================================================================

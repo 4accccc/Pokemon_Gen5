@@ -3694,6 +3694,8 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
 		u16 msgID;
 		u16 zoneID;
 
+    BOOL is_ja_ok = TRUE;
+
 		//ínñº
 		zoneID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
 		GF_ASSERT( zoneID != TOWNMAP_DATA_ERROR );
@@ -3702,6 +3704,8 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
     {
       const STRCODE *cp_code = (const STRCODE *)RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, NULL );
       GFL_STR_SetStringCode( p_wk->p_strbuf, cp_code );
+
+      is_ja_ok = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_IS_TUTORIAL, NULL );
     }
     else
     {
@@ -3726,7 +3730,7 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
 		}
 
     //ñºèäï\é¶
-    if( PLACEDATA_IsVisiblePlaceName( cp_data ) )
+    if( PLACEDATA_IsVisiblePlaceName( cp_data ) && is_ja_ok )
     { 
       //PLACE1
       msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE1_MSGID);

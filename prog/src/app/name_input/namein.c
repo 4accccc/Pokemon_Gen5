@@ -4896,7 +4896,11 @@ static void FinishInput( NAMEIN_WORK *p_wk )
 static BOOL CanDecide( NAMEIN_WORK *p_wk )
 { 
   if( p_wk->p_param->mode == NAMEIN_MYNAME ||
-      p_wk->p_param->mode == NAMEIN_RIVALNAME )
+      p_wk->p_param->mode == NAMEIN_RIVALNAME ||
+      p_wk->p_param->mode == NAMEIN_FREE_RESORT_CITY ||
+      p_wk->p_param->mode == NAMEIN_FREE_RESORT_AUTHER ||
+      p_wk->p_param->mode == NAMEIN_FREE_RESORT_PHRASE ||
+      p_wk->p_param->mode == NAMEIN_FREE_RESORT_THANKS )
   { 
     //ŽålŒö–¼“ü—Í‚Ì‚Æ‚«‚ÍA‰½‚à“ü‚ê‚Ä‚È‚¢‚Æ‚«‚ÍŒˆ’è‚Å‚«‚È‚¢
     if( STRINPUT_GetStrLength( &p_wk->strinput ) == 0 && STRINPUT_GetChangeStrLength( & p_wk->strinput) == 0 )
@@ -5404,7 +5408,16 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         if( !CanDecide( p_wk) )
         { 
           PMSND_PlaySE( NAMEIN_SE_BEEP );
-          MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_008 );
+
+          if( p_wk->p_param->mode == NAMEIN_MYNAME ||
+            p_wk->p_param->mode == NAMEIN_RIVALNAME )
+          {
+            MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_008 );
+          }
+          else
+          {
+            MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_00_SW );
+          }
           p_wk->is_illegal_msg  = TRUE;
           break;
         }

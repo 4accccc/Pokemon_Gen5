@@ -27,7 +27,7 @@
 //=====================================
 struct _RESORT_WORK
 {
-  u32 data[RESORT_WORK_GET_PARAM_RECORD_MAX];
+  u32 data[RESORT_WORK_GET_PARAM_RNKDATA_MAX];
 };
 //=============================================================================
 /**
@@ -72,16 +72,16 @@ void RESORT_WORK_Exit( RESORT_WORK *p_wk )
 void RESORT_WORK_ReLoadData( RESORT_WORK *p_wk, SAVE_CONTROL_WORK *p_sv )
 {
   RECORD *p_record = SaveData_GetRecord(p_sv);
-  p_wk->data[ RESORT_WORK_GET_PARAM_RECORD_CAPTURE_POKE ] = RECORD_Get(p_record, RECID_CAPTURE_POKE );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RECORD_FINISHING_SUCCESS ]  = RECORD_Get(p_record, RECID_FISHING_SUCCESS );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RECORD_TAMAGO_HATCHING ]  = RECORD_Get(p_record, RECID_TAMAGO_HATCHING );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RECORD_BATTLE_COUNT ] = RECORD_Get(p_record, RECID_BATTLE_COUNT );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RECORD_WALK_COUNT ]   = RECORD_Get(p_record, RECID_WALK_COUNT );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RECORD_TRADE_COUNT ]  = RECORD_Get(p_record, RECID_WIFI_TRADE )
-    + RECORD_Get(p_record, RECID_COMM_TRADE )
-    + RECORD_Get(p_record, RECID_IRC_TRADE );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RECORD_SHOPPING_CNT ] = RECORD_Get(p_record, RECID_SHOPPING_CNT );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RECORD_DENDOU_CNT ]   = RECORD_Get(p_record, RECID_DENDOU_CNT );
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_NET_TRADE ] = RECORD_Get(p_record, RECID_COMM_TRADE ) + RECORD_Get(p_record, RECID_WIFI_TRADE ) + RECORD_Get(p_record, RECID_IRC_TRADE );
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_NICKNAME ]  = RECORD_Get(p_record, RECID_NICKNAME );
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_JA_TOURIST ]  = RECORD_Get(p_record, RECID_RESORT_GUID_CNT ) + RECORD_Get(p_record, RECID_RESORT_SHOP_MAKE_CNT );
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_BUY_MONEY ] = RECORD_Get(p_record, RECID_SHOPPING_MONEY );
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_CROSSING ]   = RECORD_Get(p_record, RECID_SURECHIGAI_NUM );
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_NET_BATTLE ]  = RECORD_Get(p_record, RECID_COMM_BATTLE )
+    + RECORD_Get(p_record, RECID_WIFI_BATTLE )
+    + RECORD_Get(p_record, RECID_IRC_BATTLE );
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_GET_POKE ] = RECORD_Get(p_record, RECID_CAPTURE_POKE );
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_HATCH_EGG ]   = RECORD_Get(p_record, RECID_TAMAGO_HATCHING );
 }
 //----------------------------------------------------------------------------
 /**
@@ -95,6 +95,6 @@ void RESORT_WORK_ReLoadData( RESORT_WORK *p_wk, SAVE_CONTROL_WORK *p_sv )
 //-----------------------------------------------------------------------------
 u32 RESORT_WORK_GetData( const RESORT_WORK *cp_wk, RESORT_WORK_GET_PARAM param )
 {
-  GF_ASSERT( param < RESORT_WORK_GET_PARAM_RECORD_MAX );
+  GF_ASSERT( param < RESORT_WORK_GET_PARAM_RNKDATA_MAX );
   return cp_wk->data[ param ];
 }
