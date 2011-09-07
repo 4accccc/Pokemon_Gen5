@@ -4427,7 +4427,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       break;
     case ICON_TYPE_RIVAL:
       //ライバルのリソース　（ライバル名入力はなくなりました＋ライバルのリソースまだ呼んでませんが念のため残しておきます）
-      CLWK_TransNSBTX( p_wk->p_clwk, ARCID_MMDL_RES, NARC_fldmmdl_mdlres_swhero_nsbtx, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DEFREND_MAIN, heapID );
+      CLWK_TransNSBTX( p_wk->p_clwk, ARCID_MMDL_RES, NARC_fldmmdl_mdlres_swrival_nsbtx, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DEFREND_MAIN, heapID );
       break;
     case ICON_TYPE_PERSON:
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
@@ -4789,8 +4789,8 @@ static STRBUF* INITNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, H
     return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
 
   case NAMEIN_RIVALNAME:
-    //ライバル名 //ライバル名入力はなくなりました
-    return NULL;//GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
+    //ライバル名 「ヒュウ」
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
 
   case NAMEIN_FRIENDNAME:
     return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
