@@ -125,13 +125,21 @@ EVENT_START		ev_scene_c03p17_swchampion_02
   //カメラ待ち
   _CAMERA_WAIT_MOVE()
   _CAMERA_BIND()    //カメラバインド　主人公位置をカメラが追従するようになります
-  _CAMERA_END()   //カメラ操作終了
   
   //アニメ：ライバル・下水道に移動
   _OBJ_ANIME( C03P17_SWRIVAL_01, anm_swrival_go_d11 )
   _TIME_WAIT( 16 )
   _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
+  
+  _CAMERA_END()   //カメラ操作終了
+  
+  //ライバル動作モデル削除
+  _OBJ_DEL( C03P17_SWRIVAL_01 )
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
   
   _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_staystep_l )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
@@ -144,6 +152,8 @@ EVENT_START		ev_scene_c03p17_swchampion_02
   //==================================//
   //C03P17_SCENE_CHANGE無効
   $WK_SCENE_C03P17 = 2
+  //C03P17ライバル非表示
+  _FLAG_SET( FV_C03P17_SWRIVAL_01 )
   //==================================//
 EVENT_END
 
@@ -202,7 +212,7 @@ EVENT_END
 EVENT_START		ev_c03p17_swchampion_01
   
   //下水道クリア後
-  IF $WK_SCENE_C03P17 > 4 THEN
+  IF $WK_SCENE_C03P17 > 3 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_swchampion_04 )
   //下水道クリア前
   ELSE

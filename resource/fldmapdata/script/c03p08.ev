@@ -24,7 +24,20 @@
 _EVENT_DATA		ev_bg_c03p08_sign_01
 _EVENT_DATA		ev_init_c03p08
 _EVENT_DATA		ev_recover_c03p08
+_EVENT_DATA		ev_c03p08_fesguide_01
+_EVENT_DATA		ev_pos_c03p08_fesguide_01
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+//------------------------！注意！------------------------------//
+//																//
+//		LOCALWORK15をCギア状態判定ワークに使用			//
+//		ゾーン内での使用を禁止します							//
+//																//
+//--------------------------------------------------------------//
 
 /**************************************************************/
 /*           FIELD_INIT_LABEL								  */
@@ -45,8 +58,141 @@ INIT_EVENT_START	ev_recover_c03p08
 INIT_EVENT_END
 
 /**************************************************************/
+/*		話しかけ：フェスガイド									  */
+/**************************************************************/
+EVENT_START		ev_c03p08_fesguide_01
+
+  //チュートリアル終了
+  IF $WK_SCENE_C03P08_FESGUIDE_01 == 2 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p08_fesguide_05 )
+  //チュートリアル前
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p08_fesguide_01 )
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		POS：フェスガイド									  */
+/**************************************************************/
+EVENT_START		ev_pos_c03p08_fesguide_01
+  
+  //アニメ「！」
+  _OBJ_ANIME( C03P08_FESGUIDE_01, anm_guide_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+
+  IF $LCW_POSX != 13 THEN
+    $LCW_POSX -= 1
+    _OBJ_ANIME_AUTO( C03P08_FESGUIDE_01, LCW_POSX , LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //ガイド：そこのあなた
+  _BALLOONWIN_OBJMSG_POS( msg_c03p08_fesguide_02,C03P08_FESGUIDE_01, POS_DEFAULT )
+  
+  //Cギアの電源状態を取得
+  _GET_CGEAR_STATUS( LOCALWORK15 )
+  
+  //Cギア
+  IF $LOCALWORK15 == 0 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_c03p08_fesguide_03 ,C03P08_FESGUIDE_01, POS_DEFAULT )
+  ENDIF
+  
+  //ハイリンク初回チュートリアル終了
+  IF $WK_SCENE_PALACE01 == 0 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_c03p08_fesguide_04 ,C03P08_FESGUIDE_01, POS_DEFAULT )
+  ENDIF
+  
+  //ガイド：ひとがたくさんいるばしょなら
+  _BALLOONWIN_OBJMSG_POS( msg_c03p08_fesguide_05 ,C03P08_FESGUIDE_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //POSイベント無効
+  $WK_SCENE_C03P08_FESGUIDE_01 = 2
+  //========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ガイド：振り向き「！」
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_guide_gyoe
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
 /*		C03P08		SIGN									  */
 /**************************************************************/
 EVENT_START		ev_bg_c03p08_sign_01
 	_EASY_BGWIN_MSG( msg_c03p08_sign_01, TYPE_ROAD )
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0

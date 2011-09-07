@@ -75,7 +75,7 @@ init_flags:
 	_FLAG_SET(FV_C12R0101_SWMAMA)
 	_FLAG_SET(FV_C12R0101_SWBELL)
 
-  //C04P09 ヒウンアイスイベントの行列非表示
+  //C03P09 ヒウンアイスイベントの行列非表示
   _FLAG_SET( FV_C03P09_PEOPLE_01 )
   _FLAG_SET( FV_C03P09_PEOPLE_02 )
 
@@ -122,6 +122,8 @@ init_flags:
 	_FLAG_SET( FV_C03P17_SWRIVAL_01 ) //ライバル：下水道前イベント起動時表示
 	_FLAG_SET( FV_C03P17_PILOT_01 ) //ライバル：下水道前イベント起動時表示
 	_FLAG_SET( FV_C03P01_SWBOSS_01 )  //アクロマ：ジムクリア後表示
+	_FLAG_SET( FV_C03P07_MACOMO_01 )  //マコモ：ジムクリア後表示
+	_FLAG_SET( FV_C03R1103_MACOMO_01 )  //マコモ：Cギア入手後表示
 	
 	//R04
 	_FLAG_SET( FV_R04_SWBOSS_01 ) //アクロマ：ジムクリア後表示
