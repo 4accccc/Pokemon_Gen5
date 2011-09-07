@@ -196,7 +196,7 @@ typedef enum
   PRINT_UTIL_MAX,
 }PRINT_UTIL_WIN;
 
-// 地形アイコンID(HABITAT_ZONE_APPEARの並びと同一)
+// 地形アイコンID(HABITAT_GROUND_TYPEの並びと同一)
 typedef enum{
   GRA_LANDICON_TYPE_LAND,
   GRA_LANDICON_TYPE_WATERSIDE,

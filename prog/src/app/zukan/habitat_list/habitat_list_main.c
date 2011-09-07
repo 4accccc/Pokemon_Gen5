@@ -55,7 +55,7 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk );
 static void CreateAppData( HABITAT_LIST_WK *p_wk );
 static void InitModeButton( HABITAT_LIST_WK *p_wk );
 static BOOL CheckInput( HABITAT_LIST_WK *p_wk );
-static HABITAT_ZONE_APPEAR GetButtonType(
+static HABITAT_GROUND_TYPE GetButtonType(
                   ZUKANHABITAT_LIST_LISTDATA *p_data,u8 button_no );
 static void CallCellAnm( HABITAT_LIST_WK *p_wk ,u16 clwk_id, u16 anm_seq,
                                   u16 next_seq_id,SEQ_CHANGE_PARAM param );
@@ -473,7 +473,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       s32 cursor_pos = key_status - HABITATLIST_UI_ICON_R_01;
       s32 list_index = sc_cnt + cursor_pos;
       p_data = HABITAT_LIST_GRA_GetListData( &p_wk->gra_sys ,list_index);
-      if( GetButtonType( p_data , 2 ) != HABITAT_ZONE_APPEAR_MAX )
+      if( GetButtonType( p_data , 2 ) != HABITAT_GROUND_MAX )
       {
         SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
         HABITAT_LIST_GRA_SetCursorPos( &p_wk->gra_sys, cursor_pos );
@@ -498,7 +498,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       s32 cursor_pos = key_status - HABITATLIST_UI_ICON_C_01;
       s32 list_index = sc_cnt + cursor_pos;
       p_data = HABITAT_LIST_GRA_GetListData( &p_wk->gra_sys ,list_index);
-      if( GetButtonType( p_data , 1 ) != HABITAT_ZONE_APPEAR_MAX )
+      if( GetButtonType( p_data , 1 ) != HABITAT_GROUND_MAX )
       {
         SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
         HABITAT_LIST_GRA_SetCursorPos( &p_wk->gra_sys, cursor_pos );
@@ -523,7 +523,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       s32 cursor_pos = key_status - HABITATLIST_UI_ICON_L_01;
       s32 list_index = sc_cnt + cursor_pos;
       p_data = HABITAT_LIST_GRA_GetListData( &p_wk->gra_sys ,list_index);
-      if( GetButtonType( p_data , 0 ) != HABITAT_ZONE_APPEAR_MAX )
+      if( GetButtonType( p_data , 0 ) != HABITAT_GROUND_MAX )
       {
         SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
         HABITAT_LIST_GRA_SetCursorPos( &p_wk->gra_sys, cursor_pos );
@@ -898,32 +898,32 @@ static void InitModeButton( HABITAT_LIST_WK *p_wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static HABITAT_ZONE_APPEAR GetButtonType(
+static HABITAT_GROUND_TYPE GetButtonType(
                   ZUKANHABITAT_LIST_LISTDATA *p_data,u8 button_no )
 {
-  u8 index = HABITAT_ZONE_APPEAR_MAX -1 ;
-  HABITAT_ZONE_APPEAR button_data[HABITAT_ZONE_APPEAR_MAX] = {
-    HABITAT_ZONE_APPEAR_MAX,
-    HABITAT_ZONE_APPEAR_MAX,
-    HABITAT_ZONE_APPEAR_MAX
+  u8 index = HABITAT_GROUND_MAX -1 ;
+  HABITAT_GROUND_TYPE button_data[HABITAT_GROUND_MAX] = {
+    HABITAT_GROUND_MAX,
+    HABITAT_GROUND_MAX,
+    HABITAT_GROUND_MAX
   };
 
-  if( p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_FISHING ] == TRUE )
+  if( p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ] == TRUE )
   {
-    button_data[ index ] = HABITAT_ZONE_APPEAR_FISHING;
+    button_data[ index ] = HABITAT_GROUND_FISHING;
     ONOUE_Printf("íﬁÅ@");
     index--;
   }
-  if( p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_WATERSIDE ] == TRUE )
+  if( p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ] == TRUE )
   {
-    button_data[ index ] = HABITAT_ZONE_APPEAR_WATERSIDE;
+    button_data[ index ] = HABITAT_GROUND_WATERSIDE;
     ONOUE_Printf("êÖÅ@");
     index--;
   }
-  if( p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_LAND ] == TRUE )
+  if( p_data->is_exist_landtype[ HABITAT_GROUND_LAND ] == TRUE )
   {
     ONOUE_Printf("ëêÅ@");
-    button_data[ index ] = HABITAT_ZONE_APPEAR_LAND;
+    button_data[ index ] = HABITAT_GROUND_LAND;
   }
   ONOUE_Printf("\n");
 

@@ -239,7 +239,7 @@ void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info )
   // データ初期化
   p_zone_info->start_zone_index = 0;
   p_zone_info->start_season = 0;
-  p_zone_info->start_land_type = HABITAT_ZONE_APPEAR_LAND;
+  p_zone_info->start_land_type = HABITAT_GROUND_LAND;
 
   // セーブデータ取得
   p_save = GAMEDATA_GetZukanSave( p_zone_info->p_gdata );
@@ -319,17 +319,17 @@ void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info )
           // ゲット
           if( ZUKANSAVE_GetPokeGetFlag( p_save ,p_poke_data->monsno))
           {
-            p_poke_data->status = HABITAT_ZONE_STATUS_GET;
+            p_poke_data->status = HABITAT_POKE_STATUS_GET;
           }
           // 見た
           else if( ZUKANSAVE_GetPokeSeeFlag( p_save ,p_poke_data->monsno) )
           {
-            p_poke_data->status = HABITAT_ZONE_STATUS_LOOK;
+            p_poke_data->status = HABITAT_POKE_STATUS_LOOK;
           }
           // 知らない
           else
           {
-            p_poke_data->status = HABITAT_ZONE_STATUS_UNKNOWN;
+            p_poke_data->status = HABITAT_POKE_STATUS_UNKNOWN;
           }
         }
       }
@@ -351,11 +351,18 @@ void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info )
 void MakeHabitatListData( ZUKANHABITAT_LIST_DATA * p_zone_list )
 {
   s32 i;
-  EVENTWORK *p_event_wk = GAMEDATA_GetEventWork( p_zone_list->p_gdata );
+  u8 season_id,ground_id;
+  ZUKAN_SAVEDATA *p_save;
 
-  // @todo ダミーデータではないデータを入れる必要がある
-  // @todo データを作る際はBC、WF、火山、４番道路、チャンピオンロードに注意する
- 
+  // イベントワーク取得
+  EVENTWORK *p_event_wk = GAMEDATA_GetEventWork( p_zone_list->p_gdata );
+  
+  // セーブデータ取得
+	SAVE_CONTROL_WORK *p_svcont =
+                GAMEDATA_GetSaveControlWork( p_zone_list->p_gdata );
+  HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
+  p_save = GAMEDATA_GetZukanSave( p_zone_list->p_gdata );
+  
   // リストの長さをまず取得
   for( i = 0; i < HABITAT_LIST_DATA_MAX ; i++ )
   {
@@ -372,7 +379,7 @@ void MakeHabitatListData( ZUKANHABITAT_LIST_DATA * p_zone_list )
       sizeof(ZUKANHABITAT_LIST_LISTDATA)*p_zone_list->list_size );
 
   {
-    s32 i;
+    s32 i,n;
     s32 data_cnt = 0;
     ZUKANHABITAT_LIST_LISTDATA *p_ld;
 		ARCHANDLE	*p_handle	= 
@@ -390,21 +397,112 @@ void MakeHabitatListData( ZUKANHABITAT_LIST_DATA * p_zone_list )
         // アーカイブデータからデータを格納する
         GFL_ARC_LoadDataByHandle( p_handle , sc_habitat->arc_idx , &arc_data);
         p_ld = &p_zone_list->p_list_data[data_cnt];
+
         // ゾーングループ
         p_ld->zone_group = sc_habitat->zone_group_id;
+
         // 地形有無
-        p_ld->is_exist_landtype[HABITAT_ZONE_APPEAR_LAND]
-          = arc_data.land_enable[HABITAT_ZONE_APPEAR_LAND];
-        p_ld->is_exist_landtype[HABITAT_ZONE_APPEAR_WATERSIDE]
-          = arc_data.land_enable[HABITAT_ZONE_APPEAR_WATERSIDE];
-        p_ld->is_exist_landtype[HABITAT_ZONE_APPEAR_FISHING]
-          = arc_data.land_enable[HABITAT_ZONE_APPEAR_FISHING];
+        p_ld->is_exist_landtype[HABITAT_GROUND_LAND]
+          = arc_data.land_enable[HABITAT_GROUND_LAND];
+        p_ld->is_exist_landtype[HABITAT_GROUND_WATERSIDE]
+          = arc_data.land_enable[HABITAT_GROUND_WATERSIDE];
+        p_ld->is_exist_landtype[HABITAT_GROUND_FISHING]
+          = arc_data.land_enable[HABITAT_GROUND_FISHING];
+
         // コンプリート状態
-        p_ld->is_complete[0] = TRUE;
-        // リスト状態
-        p_ld->list_status[0] = HABITAT_LIST_STATUS_LOOK_CMP;
-        p_ld->list_status[1] = HABITAT_LIST_STATUS_NOTICE;
-        p_ld->list_status[2] = HABITAT_LIST_STATUS_NONE;
+        {
+          BOOL flg;
+          u8 is_land_appear[HABITAT_GROUND_MAX];  // その地形にポケモンが出現するか
+          p_ld->is_complete[HABITAT_GROUND_LAND]      = HABITAT_ZONE_STATUS_GET;
+          p_ld->is_complete[HABITAT_GROUND_WATERSIDE] = HABITAT_ZONE_STATUS_GET;
+          p_ld->is_complete[HABITAT_GROUND_FISHING]   = HABITAT_ZONE_STATUS_GET;
+
+          // 地形ごとに出現するかどうかをチェックする
+          for( n = 0; n < arc_data.data_num ; n++ )
+          {
+            // 初期化
+            GFL_STD_MemClear( is_land_appear ,sizeof(is_land_appear) );
+
+            for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id++ )
+            {
+              for( season_id = 0 ; season_id < PMSEASON_TOTAL; season_id++ )
+              {
+                is_land_appear[ground_id] |=
+                  arc_data.mons_data[n].is_appear[season_id][ground_id];
+              }
+            }
+
+            // その地形に出現する場合は、捕獲状況をチェックする
+            for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id++ )
+            {
+              if( is_land_appear[ground_id] >= 1 )
+              {
+                // 捕獲チェック
+                if( p_ld->is_complete[ground_id] == HABITAT_ZONE_STATUS_GET )
+                {
+                  flg=ZUKANSAVE_GetPokeGetFlag(p_save,arc_data.mons_data[n].monsno);
+                  if(!flg)
+                  {
+                    // 見たコンプリートに格下げ
+                    p_ld->is_complete[ground_id] = HABITAT_ZONE_STATUS_LOOK;
+                  }
+                }
+                // 見たチェック
+                if( p_ld->is_complete[ground_id] == HABITAT_ZONE_STATUS_LOOK )
+                {
+                  if(!ZUKANSAVE_GetPokeSeeFlag(p_save,arc_data.mons_data[n].monsno))
+                  {
+                    // 未コンプリートに格下げ
+                    p_ld->is_complete[ground_id] = HABITAT_ZONE_STATUS_NONE;
+                  }
+                }
+              }
+            }
+          }
+
+          // リスト状態(セーブと異なる場合は、びっくりマークに変更)
+          for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id++ )
+          {
+            HABITATLIST_STATUS list_status;
+            list_status = HABITATLIST_SAVE_GetZoneStatus( p_habitat_sv,i,ground_id );
+
+            if( p_ld->is_exist_landtype[ground_id] == TRUE )
+            {
+              switch( p_ld->is_complete[ground_id] )
+              {
+              case HABITAT_ZONE_STATUS_GET:
+                if( list_status == HABITAT_ZONE_STATUS_GET )
+                {
+                  p_ld->list_status[ground_id] = HABITAT_LIST_STATUS_GET_CMP;
+                }
+                else
+                {
+                  p_ld->list_status[ground_id] = HABITAT_LIST_STATUS_NOTICE;
+                }
+                break;
+              case HABITAT_ZONE_STATUS_LOOK:
+                if( list_status == HABITAT_ZONE_STATUS_LOOK )
+                {
+                  p_ld->list_status[ground_id] = HABITAT_LIST_STATUS_LOOK_CMP;
+                }
+                else
+                {
+                  p_ld->list_status[ground_id] = HABITAT_LIST_STATUS_NOTICE;
+                }
+                break;
+              case HABITAT_ZONE_STATUS_NONE:
+                p_ld->list_status[ground_id] = HABITAT_LIST_STATUS_NONE;
+                break;
+              }
+            }
+            else
+            {
+              // 登録ポケモンなしの場合
+              p_ld->list_status[ground_id] = HABITAT_LIST_STATUS_NONE;
+            }
+          }
+        }
+
         data_cnt++;
       }
     }

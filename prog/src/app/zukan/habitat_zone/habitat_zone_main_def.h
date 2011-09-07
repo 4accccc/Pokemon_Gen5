@@ -91,12 +91,12 @@ struct _HABITAT_ZONE_WK{
   s32   list_size;                  // ポケモンリストに表示されている数
   s32   zone_data_index;            // リストのインデックス
   s32   season;                     // 表示中のの季節
-  HABITAT_ZONE_APPEAR land_type;  // 表示中のの場所タイプ
+  HABITAT_GROUND_TYPE land_type;  // 表示中のの場所タイプ
   WORDSET *p_word_set;
 
   // ゾーンごとに更新されるデータ -----------------
-  BOOL  land_appear[ HABITAT_ZONE_APPEAR_MAX ];           // 地形を表示するか
-  BOOL  land_complete_status[ HABITAT_ZONE_APPEAR_MAX ];  // 地形ごとのコンプリート
+  BOOL  land_appear[ HABITAT_GROUND_MAX ];           // 地形を表示するか
+  BOOL  land_complete_status[ HABITAT_GROUND_MAX ];  // 地形ごとのコンプリート
   u32   monsno_list[HABITAT_ZONE_POKE_LIST_MAX];  // 表示中のモンスター番号リスト
 
   SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ

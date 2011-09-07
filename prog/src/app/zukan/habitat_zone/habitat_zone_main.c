@@ -771,7 +771,7 @@ static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk )
         p_wk->land_type--;
         if( p_wk->land_type < 0 )
         {
-          p_wk->land_type = HABITAT_ZONE_APPEAR_FISHING;
+          p_wk->land_type = HABITAT_GROUND_FISHING;
         }
         // 地形タイプのポケモンが存在しないときはスキップ
         if( p_wk->land_appear[p_wk->land_type] == FALSE )
@@ -783,9 +783,9 @@ static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk )
       else if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
       {
         p_wk->land_type++;
-        if( p_wk->land_type >= HABITAT_ZONE_APPEAR_MAX )
+        if( p_wk->land_type >= HABITAT_GROUND_MAX )
         {
-          p_wk->land_type = HABITAT_ZONE_APPEAR_LAND;
+          p_wk->land_type = HABITAT_GROUND_LAND;
         }
         // 地形タイプのポケモンが存在しないときはスキップ
         if( p_wk->land_appear[p_wk->land_type] == FALSE )
@@ -860,12 +860,12 @@ static void SkipLandType( HABITAT_ZONE_WK *p_wk ,BOOL is_skip_r )
 
   if( is_skip_r == TRUE )
   {
-    for( i = 0; i < HABITAT_ZONE_APPEAR_MAX; i++ )
+    for( i = 0; i < HABITAT_GROUND_MAX; i++ )
     {
       p_wk->land_type++;
-      if( p_wk->land_type >= HABITAT_ZONE_APPEAR_MAX )
+      if( p_wk->land_type >= HABITAT_GROUND_MAX )
       {
-        p_wk->land_type = HABITAT_ZONE_APPEAR_LAND;
+        p_wk->land_type = HABITAT_GROUND_LAND;
       }
       if( p_wk->land_appear[p_wk->land_type] == TRUE )
       {
@@ -875,12 +875,12 @@ static void SkipLandType( HABITAT_ZONE_WK *p_wk ,BOOL is_skip_r )
   }
   else
   {
-    for( i = 0; i < HABITAT_ZONE_APPEAR_MAX; i++ )
+    for( i = 0; i < HABITAT_GROUND_MAX; i++ )
     {
       p_wk->land_type--;
       if( p_wk->land_type < 0 )
       {
-        p_wk->land_type = HABITAT_ZONE_APPEAR_FISHING;
+        p_wk->land_type = HABITAT_GROUND_FISHING;
       }
       if( p_wk->land_appear[p_wk->land_type] == TRUE )
       {
@@ -1046,7 +1046,7 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
   u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_group);
   
   // 場所ごとにメッセージを切り替える
-  if( p_wk->land_type == HABITAT_ZONE_APPEAR_LAND )
+  if( p_wk->land_type == HABITAT_GROUND_LAND )
   {
     // @todo 場所ごとに、草むら、砂地、沼、洞窟を切り替える処理を作る
     msg_id = msg_seisoku_zone_01;
@@ -1054,11 +1054,11 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
 //    msg_id = msg_seisoku_zone_03;
 //    msg_id = msg_seisoku_zone_04;
   }
-  else if( p_wk->land_type == HABITAT_ZONE_APPEAR_WATERSIDE )
+  else if( p_wk->land_type == HABITAT_GROUND_WATERSIDE )
   {
     msg_id = msg_seisoku_zone_05;
   }
-  else if( p_wk->land_type == HABITAT_ZONE_APPEAR_FISHING )
+  else if( p_wk->land_type == HABITAT_GROUND_FISHING )
   {
     msg_id = msg_seisoku_zone_06;
   }
@@ -1294,13 +1294,13 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
   for( i = 0; i < HABITAT_ZONE_POKE_LIST_MAX; i ++ )
   {
     // 表示判断
-    if( (p_pk[i].status == HABITAT_ZONE_STATUS_NONEXISTENT) ||
+    if( (p_pk[i].status == HABITAT_POKE_STATUS_NONEXISTENT) ||
         (p_pk[i].is_appear[p_wk->season][p_wk->land_type] == FALSE ) )
     {
       // 表示しないときは何もしない
       ONOUE_Printf("%2d:存在しない\n",i);
     }
-    else if( p_pk[i].status >= HABITAT_ZONE_STATUS_LOOK )        // 見たか、捕獲のみ
+    else if( p_pk[i].status >= HABITAT_POKE_STATUS_LOOK )        // 見たか、捕獲のみ
     {
       // ポケモンアイコンをセット
       HABITAT_ZONE_GRA_SetPokeIcon( &p_wk->gra_sys ,p_pk[i].monsno, index );
@@ -1310,12 +1310,12 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
       p_wk->monsno_list[index] = p_pk[i].monsno;
 
       // アイコン状態を設定
-      if( p_pk[i].status == HABITAT_ZONE_STATUS_LOOK )
+      if( p_pk[i].status == HABITAT_POKE_STATUS_LOOK )
       {
         HABITAT_ZONE_GRA_SetSmallIconStatus( &p_wk->gra_sys ,index ,
                                                 GRA_SMALLICON_LOOK);
       }
-      else if( p_pk[i].status == HABITAT_ZONE_STATUS_GET )
+      else if( p_pk[i].status == HABITAT_POKE_STATUS_GET )
       {
         HABITAT_ZONE_GRA_SetSmallIconStatus( &p_wk->gra_sys ,index ,
                                                 GRA_SMALLICON_GET);
@@ -1380,14 +1380,14 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
   }
 
   // 草地
-  if( p_wk->land_type == HABITAT_ZONE_APPEAR_LAND )
+  if( p_wk->land_type == HABITAT_GROUND_LAND )
   {
     HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
                     GRA_LANDICON_TYPE_LAND,GRA_LANDICON_ON );
   }
   else
   {
-    if( p_wk->land_appear[HABITAT_ZONE_APPEAR_LAND] == TRUE )
+    if( p_wk->land_appear[HABITAT_GROUND_LAND] == TRUE )
     {
       HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
                         GRA_LANDICON_TYPE_LAND,GRA_LANDICON_OFF );
@@ -1400,14 +1400,14 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
   }
 
   // 波乗り
-  if( p_wk->land_type == HABITAT_ZONE_APPEAR_WATERSIDE )
+  if( p_wk->land_type == HABITAT_GROUND_WATERSIDE )
   {
     HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
                     GRA_LANDICON_TYPE_WATERSIDE,GRA_LANDICON_ON );
   }
   else
   {
-    if( p_wk->land_appear[HABITAT_ZONE_APPEAR_WATERSIDE] == TRUE )
+    if( p_wk->land_appear[HABITAT_GROUND_WATERSIDE] == TRUE )
     {
       HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
                         GRA_LANDICON_TYPE_WATERSIDE,GRA_LANDICON_OFF );
@@ -1420,14 +1420,14 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
   }
 
   // 釣り
-  if( p_wk->land_type == HABITAT_ZONE_APPEAR_FISHING )
+  if( p_wk->land_type == HABITAT_GROUND_FISHING )
   {
     HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
                     GRA_LANDICON_TYPE_FISHING,GRA_LANDICON_ON );
   }
   else
   {
-    if( p_wk->land_appear[HABITAT_ZONE_APPEAR_FISHING] == TRUE )
+    if( p_wk->land_appear[HABITAT_GROUND_FISHING] == TRUE )
     {
       HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
                         GRA_LANDICON_TYPE_FISHING,GRA_LANDICON_OFF );
@@ -1441,23 +1441,23 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
 
   // コンプリートアイコン表示
   {
-    HABITAT_ZONE_APPEAR land_type = HABITAT_ZONE_APPEAR_LAND;
-    for(land_type=HABITAT_ZONE_APPEAR_LAND;
-                                land_type<HABITAT_ZONE_APPEAR_MAX; land_type ++ )
+    HABITAT_GROUND_TYPE land_type = HABITAT_GROUND_LAND;
+    for(land_type=HABITAT_GROUND_LAND;
+                                land_type<HABITAT_GROUND_MAX; land_type ++ )
     {
       if( p_wk->land_appear[land_type] == TRUE )
       {
         switch( p_wk->land_complete_status[land_type] )
         {
-        case ZONE_COMTYPE_GET:
+        case HABITAT_ZONE_STATUS_GET:
           HABITAT_ZONE_GRA_SetMiddleIconStatus( &p_wk->gra_sys ,
               land_type, GRA_MIDDLEICON_GET);
           break;
-        case ZONE_COMTYPE_LOOK:
+        case HABITAT_ZONE_STATUS_LOOK:
           HABITAT_ZONE_GRA_SetMiddleIconStatus( &p_wk->gra_sys ,
               land_type, GRA_MIDDLEICON_LOOK);
           break;
-        case ZONE_COMTYPE_NONE:
+        case HABITAT_ZONE_STATUS_NONE:
           HABITAT_ZONE_GRA_SetMiddleIconStatus( &p_wk->gra_sys ,
               land_type, GRA_MIDDLEICON_NONE);
           break;
@@ -1567,14 +1567,14 @@ static void MakeZoneCommonData( HABITAT_ZONE_WK *p_wk )
   GFL_STD_MemClear( p_wk->land_appear , sizeof(p_wk->land_appear) );
   
   // アイコンの開放状態を設定
-  for( land_type = 0; land_type < HABITAT_ZONE_APPEAR_MAX; land_type ++ )
+  for( land_type = 0; land_type < HABITAT_GROUND_MAX; land_type ++ )
   {
     BOOL is_look_cmp = TRUE;
     BOOL is_get_cmp  = TRUE;
     for( i = 0; i < HABITAT_ZONE_POKE_LIST_MAX; i ++ )
     {
       // ポケモンが存在するかどうか
-      if( p_pk[i].status >= HABITAT_ZONE_STATUS_UNKNOWN )
+      if( p_pk[i].status >= HABITAT_POKE_STATUS_UNKNOWN )
       {
         for( season_id = 0; season_id < PMSEASON_TOTAL; season_id ++ )
         {
@@ -1585,13 +1585,13 @@ static void MakeZoneCommonData( HABITAT_ZONE_WK *p_wk )
             p_wk->land_appear[land_type] = TRUE;
 
             // 未発見の場合は、捕獲も見たもコンプリートではない
-            if( p_pk[i].status == HABITAT_ZONE_STATUS_UNKNOWN )
+            if( p_pk[i].status == HABITAT_POKE_STATUS_UNKNOWN )
             {
               is_look_cmp  = FALSE;
               is_get_cmp   = FALSE;
             }
             // 見た状態のポケモンがいた場合、捕獲コンプリートはない
-            else if( p_pk[i].status == HABITAT_ZONE_STATUS_LOOK )
+            else if( p_pk[i].status == HABITAT_POKE_STATUS_LOOK )
             {
               is_get_cmp   = FALSE;
             }
@@ -1605,19 +1605,19 @@ static void MakeZoneCommonData( HABITAT_ZONE_WK *p_wk )
     // 捕獲コンプリート
     if( is_get_cmp == TRUE )
     {
-      p_wk->land_complete_status[land_type] = ZONE_COMTYPE_GET;
+      p_wk->land_complete_status[land_type] = HABITAT_ZONE_STATUS_GET;
       ONOUE_Printf("捕獲コンプリート\n");
     }
     // 見たコンプリート
     else if( is_look_cmp == TRUE )
     {
-      p_wk->land_complete_status[land_type] = ZONE_COMTYPE_LOOK;
+      p_wk->land_complete_status[land_type] = HABITAT_ZONE_STATUS_LOOK;
       ONOUE_Printf("見たコンプリート\n");
     }
     // コンプリートなし
     else
     {
-      p_wk->land_complete_status[land_type] = ZONE_COMTYPE_NONE;
+      p_wk->land_complete_status[land_type] = HABITAT_ZONE_STATUS_NONE;
       ONOUE_Printf("コンプリートなし\n");
     }
   }
@@ -1684,15 +1684,15 @@ static void SetZoneSelectButton( HABITAT_ZONE_WK *p_wk )
   // 陸地ボタン
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_BUTTON_LAND );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,
-      p_wk->land_appear[HABITAT_ZONE_APPEAR_LAND]);
+      p_wk->land_appear[HABITAT_GROUND_LAND]);
   // 水辺ボタン
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_BUTTON_WATERSIDE );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,
-      p_wk->land_appear[HABITAT_ZONE_APPEAR_WATERSIDE]);
+      p_wk->land_appear[HABITAT_GROUND_WATERSIDE]);
   // 釣りボタン
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_BUTTON_FISHING );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,
-      p_wk->land_appear[HABITAT_ZONE_APPEAR_FISHING]);
+      p_wk->land_appear[HABITAT_GROUND_FISHING]);
   // 上矢印
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_UP_ARROW );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
@@ -1790,7 +1790,7 @@ static s32 CheckIsExistPoke( HABITAT_ZONE_WK *p_wk ,u8 index )
   HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
 
   // ポケモンが存在するかどうか
-  if( p_zd->poke_data[index].status >= HABITAT_ZONE_STATUS_LOOK )
+  if( p_zd->poke_data[index].status >= HABITAT_POKE_STATUS_LOOK )
   {
     return p_zd->poke_data[index].monsno;
   }

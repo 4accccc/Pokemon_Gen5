@@ -1417,11 +1417,11 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
   s32 index = -1;
   s32 i;
   BOOL is_cmp;
-  u8 is_l = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_LAND ];
-  u8 is_w = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_WATERSIDE ];
-  u8 is_f = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_FISHING ];
+  u8 is_l = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ];
+  u8 is_w = p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ];
+  u8 is_f = p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ];
 
-  const BOOL land_type[][HABITAT_ZONE_APPEAR_MAX]=
+  const BOOL land_type[][HABITAT_GROUND_MAX]=
   {
     {TRUE,FALSE,FALSE}, // 草地だけ
     {FALSE,TRUE,FALSE}, // 水辺だけ
@@ -1433,9 +1433,9 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
   // @todo 釣竿と波乗り入手状態チェックを入れる
   for( i = 0; i < FLIST_BACK_NORMAL_MAX ; i++ )
   {
-    if( (land_type[i][ HABITAT_ZONE_APPEAR_LAND ] == is_l ) &&
-        (land_type[i][ HABITAT_ZONE_APPEAR_WATERSIDE ] == is_w ) &&
-        (land_type[i][ HABITAT_ZONE_APPEAR_FISHING ] == is_f ) )
+    if( (land_type[i][ HABITAT_GROUND_LAND ] == is_l ) &&
+        (land_type[i][ HABITAT_GROUND_WATERSIDE ] == is_w ) &&
+        (land_type[i][ HABITAT_GROUND_FISHING ] == is_f ) )
     {
       index = i;
       break;
@@ -1453,7 +1453,7 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
   for( i = 0; i < FLIST_BACK_NORMAL_MAX ; i++ )
   {
     if( (p_data->is_exist_landtype[i] == TRUE ) &&
-        (p_data->is_complete[i] != ZONE_COMTYPE_GET ) )
+        (p_data->is_complete[i] != HABITAT_ZONE_STATUS_GET ) )
     {
       is_cmp = FALSE; 
       break;
@@ -1592,9 +1592,9 @@ static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py 
   GRA_POKEICON_DATA *p_icondata;
   GFL_CLACTPOS pos;
   ZUKANHABITAT_LIST_LISTDATA *p_data = &p_wk->p_list_data[item_index];
-  u8 is_l = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_LAND ];
-  u8 is_w = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_WATERSIDE ];
-  u8 is_f = p_data->is_exist_landtype[ HABITAT_ZONE_APPEAR_FISHING ];
+  u8 is_l = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ];
+  u8 is_w = p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ];
+  u8 is_f = p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ];
   
   // HABITAT_LIST_STATUSと同じ順番で、アニメーションシーケンスを定義
   u16 anm_seq;
@@ -1635,7 +1635,7 @@ static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py 
   // 釣り、水辺、草地の順でつめる
   if( is_f == TRUE )
   {
-    HABITAT_LIST_STATUS st = p_data->list_status[ HABITAT_ZONE_APPEAR_FISHING ];
+    HABITAT_LIST_STATUS st = p_data->list_status[ HABITAT_GROUND_FISHING ];
     if( st != HABITAT_LIST_STATUS_NONE )
     {
       p_icondata[clwk_ofs].anm_seq = sc_anm_seq_tbl[ st ];
@@ -1645,7 +1645,7 @@ static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py 
   }
   if( is_w == TRUE )
   {
-    HABITAT_LIST_STATUS st = p_data->list_status[ HABITAT_ZONE_APPEAR_WATERSIDE ];
+    HABITAT_LIST_STATUS st = p_data->list_status[ HABITAT_GROUND_WATERSIDE ];
     if( st != HABITAT_LIST_STATUS_NONE )
     {
       p_icondata[clwk_ofs].anm_seq = sc_anm_seq_tbl[ st ];
@@ -1655,7 +1655,7 @@ static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py 
   }
   if( is_l == TRUE )
   {
-    HABITAT_LIST_STATUS st = p_data->list_status[ HABITAT_ZONE_APPEAR_LAND ];
+    HABITAT_LIST_STATUS st = p_data->list_status[ HABITAT_GROUND_LAND ];
     if( st != HABITAT_LIST_STATUS_NONE )
     {
       p_icondata[clwk_ofs].anm_seq = sc_anm_seq_tbl[ st ];
