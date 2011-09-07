@@ -9585,10 +9585,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……もしもし？▼</Text>
+			<Text>あの……　[Name:TrainerName ]さん　ですか？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T04:06:44" />
+				User="nishino:W00221"
+				Time="2011-09-07T03:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9607,10 +9607,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>このキャラが電話を受けた場合。１段階目</Comment>
+			<Comment>このキャラが電話をかけた場合。１段階目</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T03:05:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9632,11 +9632,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ！　[Name:TrainerName ]くん▼
-うん　いまは　だいじょうぶ　だよ▼</Text>
+			<Text>……もしもし？▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T09:59:54" />
+				Time="2011-09-06T02:41:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9644,11 +9643,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ！　[Name:TrainerName ]くん▼
-うん　今は　大丈夫だよ▼</Text>
+			<Text>……もしもし？▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T10:01:05" />
+				Time="2011-09-06T02:41:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9656,10 +9654,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>このキャラが電話を受けた場合。２段階目</Comment>
+			<Comment>このキャラが電話をかけた場合。２段階目</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T03:05:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9681,11 +9679,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ！　[Name:TrainerName ]くん▼
-うん　いまは　だいじょうぶ　だよ▼</Text>
+			<Text>……もしもし？▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T10:00:05" />
+				Time="2011-09-06T02:41:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9693,11 +9690,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ！　[Name:TrainerName ]くん▼
-うん　今は　大丈夫だよ▼</Text>
+			<Text>……もしもし？▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T10:01:13" />
+				Time="2011-09-06T02:41:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9705,10 +9701,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>このキャラが電話を受けた場合。３段階目</Comment>
+			<Comment>このキャラが電話をかけた場合。３段階目</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T03:06:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9730,11 +9726,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ！　[Name:TrainerName ]くん▼
-かおが　みれて　うれしい……　かな▼</Text>
+			<Text>……もしもし？▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T10:00:21" />
+				Time="2011-09-06T02:41:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9742,11 +9737,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ！　[Name:TrainerName ]くん▼
-顔が　みれて　うれしい……　かな▼</Text>
+			<Text>……もしもし？▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T10:01:30" />
+				Time="2011-09-06T02:41:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9754,10 +9748,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>このキャラが電話を受けた場合。４段階目</Comment>
+			<Comment>このキャラが電話をかけた場合。４段階目</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T03:06:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9779,11 +9773,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もっ　もしもし▼
-すこし　よろしいでしょうか？▼</Text>
+			<Text>……もしもし？▼
+あっ　[Name:TrainerName ]さん　ですか？</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T09:47:52" />
+				Time="2011-09-07T03:07:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9791,11 +9785,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もっ　もしもし▼
-少し　よろしいでしょうか？▼</Text>
+			<Text>……もしもし？▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T09:48:08" />
+				Time="2011-09-06T02:41:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9828,11 +9821,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もっ　もしもし▼
-すこし　よろしいでしょうか？▼</Text>
+			<Text>あっ！　[Name:TrainerName ]くん▼
+うん　いまは　だいじょうぶ　だよ▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T09:47:52" />
+				Time="2011-09-06T02:40:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9840,11 +9833,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もっ　もしもし▼
-少し　よろしいでしょうか？▼</Text>
+			<Text>あっ！　[Name:TrainerName ]くん▼
+うん　今は　大丈夫だよ▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T09:48:08" />
+				Time="2011-09-06T02:41:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9877,11 +9870,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もっ　もしもし▼
-すこし　よろしいでしょうか？▼</Text>
+			<Text>あっ！　[Name:TrainerName ]くん▼
+うん　いまは　だいじょうぶ　だよ▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T09:47:52" />
+				Time="2011-09-06T02:40:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9889,11 +9882,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もっ　もしもし▼
-少し　よろしいでしょうか？▼</Text>
+			<Text>あっ！　[Name:TrainerName ]くん▼
+うん　今は　大丈夫だよ▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T09:48:08" />
+				Time="2011-09-06T02:41:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9926,11 +9919,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もっ　もしもし▼
-すこし　よろしいでしょうか？▼</Text>
+			<Text>あっ！　[Name:TrainerName ]くん▼
+かおが　みれて　うれしい……　かな▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T09:47:44" />
+				Time="2011-09-06T02:40:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9938,11 +9931,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もっ　もしもし▼
-少し　よろしいでしょうか？▼</Text>
+			<Text>あっ！　[Name:TrainerName ]くん▼
+顔が　みれて　うれしい……　かな▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T09:48:01" />
+				Time="2011-09-06T02:41:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9975,11 +9968,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もっ　もしもし？▼
-すこし　よろしいでしょうか？▼</Text>
+			<Text>おっ　おそくなって　ごめんね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T04:09:42" />
+				User="nishino:W00221"
+				Time="2011-09-06T02:43:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9987,11 +9979,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もっ　もしもし？▼
-少し　よろしいでしょうか▼</Text>
+			<Text>おっ　遅くなって　ごめんね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T04:19:43" />
+				User="nishino:W00221"
+				Time="2011-09-06T02:43:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10058,10 +10049,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あのね　あのね……</Text>
+			<Text>あのね……</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T07:57:57" />
+				Time="2011-09-06T04:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -10069,10 +10060,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あのね　あのね……</Text>
+			<Text>あのね……</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T08:02:01" />
+				Time="2011-09-06T04:52:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -11232,7 +11223,7 @@
 [Name:TrainerName ]さんて
 ジムバッジを　[Name:Hobby Idx="1" ]つも▽
 もっているんですか？▼
-すっごく　つよいんですね▼
+すごく　つよいんですね▼
 ……　……　……
 ……　……　……▼
 あっ！▼
@@ -11240,8 +11231,8 @@
 そろそろ　しごとに　もどりますね
 また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-03T09:00:42" />
+				User="nishino:W00221"
+				Time="2011-09-07T03:26:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11253,7 +11244,7 @@
 [Name:TrainerName ]さんて
 ジムバッジを　[Name:Hobby Idx="1" ]つも▽
 持っているんですか？▼
-すっごく　強いんですね▼
+すごく　強いんですね▼
 ……　……　……
 ……　……　……▼
 あっ！▼
@@ -11261,8 +11252,8 @@
 そろそろ　仕事に　もどりますね
 また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-03T09:00:45" />
+				User="nishino:W00221"
+				Time="2011-09-07T03:26:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12458,7 +12449,7 @@
 おとうさんと　ケンカ　しちゃって……▼
 ……　……　……
 ……　……　……▼
-うん…▼
+うん……▼
 [Name:TrainerName ]くんに
 はなしを　きいて　もらったら▽
 なんだか　すっきり　しちゃった▼
@@ -12466,8 +12457,8 @@
 おとうさんに　あやまって　みるね▼
 ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T04:16:51" />
+				User="nishino:W00221"
+				Time="2011-09-06T03:46:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12482,7 +12473,7 @@
 お父さんと　ケンカ　しちゃって……▼
 ……　……　……
 ……　……　……▼
-うん…▼
+うん……▼
 [Name:TrainerName ]くんに
 話を　きいて　もらったら▽
 なんだか　すっきり　しちゃった▼
@@ -12490,8 +12481,8 @@
 おとうさんに　謝って　みるね▼
 ありがとう　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T04:55:21" />
+				User="nishino:W00221"
+				Time="2011-09-06T03:46:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12757,7 +12748,7 @@
 よく　そうだんに　のってもらっていて▽
 すごく　たすかって　いるから▽
 [Name:TrainerName ]くんの　かおを　みて▽
-おれいを　いいたいんだ▼
+おれいを　いいたいの▼
 ……　……　……
 ……　……　……▼
 えっ　ほんと？　あいてるの？▼
@@ -12768,8 +12759,8 @@
 [Name:TrainerName ]くんと　あえるの
 すごく　たのしみ……　かな▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T06:00:23" />
+				User="nishino:W00221"
+				Time="2011-09-07T04:30:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12785,7 +12776,7 @@
 よく　相談に　のってもらっていて▽
 すごく　助かって　いるから▽
 [Name:TrainerName ]くんの　かおを　みて▽
-お礼を　いいたいんだ▼
+お礼を　いいたいの▼
 ……　……　……
 ……　……　……▼
 えっ　ほんと？　空いてるの？▼
@@ -12796,8 +12787,8 @@
 [Name:TrainerName ]くんと　会えるの
 すごく　楽しみ……　かな▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T06:00:47" />
+				User="nishino:W00221"
+				Time="2011-09-07T04:30:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12830,10 +12821,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３１[Ctrl2:PageClear ]</Text>
+			<Text>このあいだ　しごとで
+カントーちほうに　いって　きたの▼
+また　おつきみやまで　ピッピを
+つかまえて　きちゃった……▼
+あはは……▼
+かわいいから　なんびき　でも
+ほしく　なっちゃうよね▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T11:00:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12877,10 +12878,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３２[Ctrl2:PageClear ]</Text>
+			<Text>このあいだ　しごとで
+ジョウトちほうに　いって　きたの▼
+れきしてきな　たてものが　おおくて
+すごく　しんぴてき　だったんだよ▼
+めいぶつの　いかりまんじゅうも
+ほんとうに　おいしかったなぁ……▼
+あはは……▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T08:12:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12924,10 +12935,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３３[Ctrl2:PageClear ]</Text>
+			<Text>……　……　……
+……　……　……▼
+えへへ……▼
+……　……　……
+……　……　……▼
+うふふ……▼
+あっ…　ごめんね▼
+[Name:TrainerName ]くんと　はなしているのが
+うれしくて　つい　にやけちゃった▼
+あはは……▼
+でも　ほんとうに　[Name:TrainerName ]くんと
+おはなし　しているのが　たのしいの▼
+この　じかんが
+ずっと　つづいて　ほしい……　かな▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-06T11:02:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12971,10 +12999,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３４[Ctrl2:PageClear ]</Text>
+			<Text>このあいだ　しごとで
+シンオウちほうに　いって　きたの▼
+だいしぜんが　いんしょうてきで
+ものすごく　あっとう　されちゃった▼
+めいぶつの　もりのヨウカンも
+ほんとうに　おいしかったなぁ……▼
+あはは……
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T10:24:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13018,10 +13056,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３５[Ctrl2:PageClear ]</Text>
+			<Text>きのうの　よる　ほしが　すごく
+きれい　だったんだけど……▽
+[Name:TrainerName ]くんは　みた？▼
+ながれぼしも　たくさん　ふってきて
+ほんとうに　きれい　だったんだよ▼
+わたしは　ながれぼしに
+いっぱい　おねがいを　しちゃった▼
+えっ？▼
+あはは……▼
+なにを　おねがい　したかは
+ないしょ……　かな▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-06T12:19:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13065,10 +13117,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３６[Ctrl2:PageClear ]</Text>
+			<Text>ライモンシティの　トライアルハウスで
+バトルけんていを　うけてきたの▼
+ぜんかい　うけた　とき　よりも
+せいせきが　すこし　あがったんだよ▼
+また　ちょうせんして
+せいせきを　あげて　いきたいな▼
+できたら　[Name:TrainerName ]くんに
+バトルに　ついて　おしえてもらえたら▽
+うれしい……　かな▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T08:21:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13112,10 +13176,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３７[Ctrl2:PageClear ]</Text>
+			<Text>このあいだ　しごとで
+ホウエンちほうに　いって　きたの▼
+おもしろい　まちが　おおくて
+なんか　びっくり　しちゃった▼
+めいぶつの　フエンせんべいも
+ほんとうに　おいしかったなぁ……▼
+あはは……▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T08:12:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13159,10 +13233,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３８[Ctrl2:PageClear ]</Text>
+			<Text>このあいだ　ダウジングマシンを
+チェック　していたら▽
+すごく　いいものが　ひろえたの▼
+おとうさんに　あげたら
+おおよろこび　してくれたんだよ▼
+[Name:TrainerName ]くんに
+ダウジングマシンの　ことを
+きいて　おいて　よかったよ▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T08:46:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13206,10 +13291,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　３９[Ctrl2:PageClear ]</Text>
+			<Text>あっ！▼
+ごめんなさい　[Name:TrainerName ]くん▼
+いまから　しごとが
+はじまっちゃう　みたいなの……▼
+もう　きらないと……▼
+ほんとうに　ごめんなさい……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-06T14:51:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13253,24 +13343,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ごめんね▼
-しごとの　あいま　だったんだけど
+			<Text>しごとの　あいま　だったんだけど
 おはなし　したかったから▽
 こえ　のみで　おうとうしちゃった▼
 あはは……▼
-……　……　……　……
-……　……　……　……▼
+……　……　……
+……　……　……▼
 しごとが　いそがしくて
 ヘトヘトだったん　だけど……▼
 [Name:TrainerName ]くんの　こえを　きいたら
 げんきが　でてきた……　かな▼
 あっ！▼
-もう　じかん　だぁ▼
+もう　じかん　みたい▼
 そろそろ　しごとに　もどらなきゃ▼
 つぎは　かおをみて　おはなししたいな▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T10:27:04" />
+				Time="2011-09-06T03:44:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13278,24 +13367,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごめんね▼
-仕事の　合間だったんだけど
+			<Text>仕事の　合間だったんだけど
 お話したかったから▽
 声のみで　応答しちゃった▼
 あはは……▼
-……　……　……　……
-……　……　……　……▼
+……　……　……
+……　……　……▼
 仕事が　忙しくて
 ヘトヘトだったん　だけど……▼
 [Name:TrainerName ]くんの　声を　きいたら
 元気が　でてきた……　かな▼
 あっ！▼
-もう　時間だぁ▼
+もう　時間みたい▼
 そろそろ　仕事に　もどらなきゃ▼
 次は　顔を見て　お話したいな▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T10:29:19" />
+				Time="2011-09-06T03:45:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13328,10 +13416,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４１[Ctrl2:PageClear ]</Text>
+			<Text>このあいだ　すごく　けしきの　いい
+さんぽコースを　みつけたの▼
+あの　かんじ　だと
+きせつ　ごとに　ふんいきが▽
+ガラッと　かわるんじゃ　ないかな？▼
+よかったら　こんど
+ふたりで　あるいて　みたい……　かな▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-06T10:04:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13375,10 +13473,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４２[Ctrl2:PageClear ]</Text>
+			<Text>このあいだ　すごく　おいしい
+ケーキの　おみせを　みつけたの▼
+いままでに　たべたことの　ないような
+ふしぎな　あじ　だったなぁ…▼
+よかったら　こんど
+ふたりで　たべに　いきたい……　かな▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-06T10:04:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13422,10 +13529,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４３[Ctrl2:PageClear ]</Text>
+			<Text>いま　ちょうど
+[Name:TrainerName ]くんの　ことを▽
+かんがえて　いたんだよ▼
+……って　わたし
+なにを　いってるんだろ！▼
+……　……　……
+……　……　……▼
+あはは……▼
+あー　えーっと▼
+そっ　そろそろ　しごとに　もどるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-06T07:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13469,10 +13585,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４４[Ctrl2:PageClear ]</Text>
+			<Text>さいきん　いそがしくて
+あまり　ねむれて　いないの▼
+はなし　あいてが
+[Name:TrainerName ]くんじゃ　なかったら▽
+ぜったい　ねちゃってると　おもうな▼
+ふふっ……▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-06T14:39:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13516,10 +13641,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４５[Ctrl2:PageClear ]</Text>
+			<Text>きょうは　すごしやすいよね▼
+しごとが　なければ
+さんぽしたい　きぶん　なんだけど……▼
+[Name:TrainerName ]くんと
+はなしが　できたから　がまんするね▼
+ふふっ……▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T09:51:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13563,10 +13697,30 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４６[Ctrl2:PageClear ]</Text>
+			<Text>……　……　……
+……　……　……▼
+？▼
+……　……　……
+……　……　……▼
+？？▼
+……　……　……
+……　……　……▼
+？？？▼
+……　……　……
+……　…こえ　ますかー！！▼
+……あっ！▼
+なっ　なんか　こえが
+とどいて　いなかった　みたいだね……▼
+あはは……▼
+おおごえ　だしちゃって
+すごく　はずかしい……　かな▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-06T14:45:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13610,10 +13764,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４７[Ctrl2:PageClear ]</Text>
+			<Text>あっ　こらっ　だめだよっ！▼
+もうっ……▼
+……はぁ▼
+ごめんね……▼
+おとうとと　いもうとが
+じゃまして　きちゃって……▼
+なんだか　[Name:TrainerName ]くんと
+おはなし　して　いるのに▽
+やきもちを　やいてるみたい▼
+ふふっ▼
+いつもは　なまいき　だけど
+かわいい　ところも　あるんだね▼
+あっ　こらっ　またっ！▼
+もうっ……▼
+[Name:TrainerName ]くん　ごめんね……▼
+きょうは　おとなしく
+おとうとと　いもうとの　あいてを▽
+することに　するよ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T08:49:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13657,10 +13828,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４８[Ctrl2:PageClear ]</Text>
+			<Text>ゴホッ　ゴホッ▼
+ごめんなさい……
+カゼひいちゃった　みたいで……▼
+……　……　……
+……　……　……▼
+うん……
+ほんとに　ごめんな…　ゴホッ　…さい▼
+ざんねん　だけど……
+いまは　おとなしく　やすんでいるね▼
+でも……
+[Name:TrainerName ]くんの　かおが　みれたから▽
+すぐ　げんきに　なれると　おもうな▼
+あはは……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T04:33:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13704,10 +13887,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきですね　４９[Ctrl2:PageClear ]</Text>
+			<Text>このまえ　じどうはんばいきで
+ミックスオレを　かったんだけど……▼
+なんと！▼
+あたりで　もう１ぽん　でてきたんだよ▼
+すごい　でしょー
+[Name:TrainerName ]くん　あたったこと　ある？▼
+ふたりで　いるとき　だったら
+わけて　あげられたのに……　ざんねん▼
+……　……　……
+……　……　……▼
+あっ！▼
+そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-09-07T10:12:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13804,9 +13998,9 @@
 でて　しまったみたいで…▼
 あはは……▼
 せっかく　れんらくを　くれたのに
-はなし　できなかったね…▼
+おはなし　できなかったね…▼
 かってに　きゅうけい　しようとした
-バチが　あたっちゃったのかな…▼
+バチが　あたっちゃったのかな……▼
 えっ？▼
 あっ　ごめんなさい　ひとりごとだよ▼
 あはは……▼
@@ -13815,7 +14009,7 @@
 そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-05T05:01:19" />
+				Time="2011-09-07T10:10:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13920,10 +14114,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　また　あとでね[Ctrl2:PageClear ]</Text>
+			<Text>じゃあ　また　あとでね▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-05T10:49:05" />
+				Time="2011-09-06T09:40:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13967,10 +14161,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さよなら▼</Text>
+			<Text>では　さようなら▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-04T08:58:21" />
+				Time="2011-09-05T11:15:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
