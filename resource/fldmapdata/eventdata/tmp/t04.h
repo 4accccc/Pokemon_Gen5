@@ -20,6 +20,7 @@
 #define T04_MAID_01                        2
 #define T04_AMBRELLA_01                    3
 #define T04_BABYGIRL1_01                   4
+#define FLD_ITEM_126                       5
 
 #endif //ZONE_T04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

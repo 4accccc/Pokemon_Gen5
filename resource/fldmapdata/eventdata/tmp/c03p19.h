@@ -9,6 +9,8 @@
 #ifndef ZONE_C03P19_EVC_H
 #define ZONE_C03P19_EVC_H
 
+#define FLD_ITEM_29                        0
+#define FLD_ITEM_30                        1
 
 #endif //ZONE_C03P19_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p19.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
