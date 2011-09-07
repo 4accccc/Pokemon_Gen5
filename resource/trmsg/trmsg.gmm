@@ -15836,6 +15836,21 @@
 これからも　喜びに　満ちている！</language>
 	</row>
 
+	<row id="TRID_NINJA_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……だから　どうした</language>
+		<language name="JPN_KANJI" width="216">……だから　どうした</language>
+	</row>
+
+	<row id="TRID_NINJA_06_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">しょせん　かげの　そんざい　か</language>
+		<language name="JPN_KANJI" width="216">所詮　影の存在か</language>
+	</row>
+
+	<row id="TRID_NINJA_07_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">みたされぬ</language>
+		<language name="JPN_KANJI" width="216">満たされぬ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
