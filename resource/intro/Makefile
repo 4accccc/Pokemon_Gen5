@@ -100,6 +100,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.N*
 	rm -f *.narc
 	rm -f *.naix
+	rm -f *.h
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif

@@ -36,7 +36,7 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 } },
 
   // BGMフェードイン
-  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING }, CMD_READ_NEXT },  // BGM切り替え  
+  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 }, CMD_READ_NEXT },  // BGM切り替え  
   { INTRO_CMD_TYPE_BGM_FADEIN, { 90 }, CMD_READ_NEXT },         // BGMフェードイン
   { INTRO_CMD_TYPE_WAIT, { 90 }, },                             // ウェイト
 
@@ -72,8 +72,8 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
   { INTRO_CMD_TYPE_CLEAR_WINDOW, },			// メッセージウィンドウクリア
 
   { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 30, 0, -16 }, },						// ブラックからフェードイン
-  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 }, CMD_READ_NEXT }, // BGM切替
-  { INTRO_CMD_TYPE_BGM_CHANGE_WAIT,  },                         // BGM切替待ち
+  //{ INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 }, CMD_READ_NEXT }, // BGM切替
+  //{ INTRO_CMD_TYPE_BGM_CHANGE_WAIT,  },                         // BGM切替待ち
 
   { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_01, 0, 1 }, },    // ハーイ！
   { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_02, 0, 1 }, },		// わたし　アララギと　いいます
@@ -193,7 +193,7 @@ static const INTRO_CMD_DATA c_intro_scene_05_retake_yesno[] =
 #ifdef CMD_SAVE_ON
   { INTRO_CMD_TYPE_SAVE_RESUME }, // セーブ再開
 #endif
-  
+
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 }, }, // 画面フェードイン
 
   { INTRO_CMD_TYPE_WORDSET, { INTRO_WORDSET_TRAINER, 0 }, CMD_READ_NEXT },  // トレーナー名をレジスト
@@ -207,9 +207,8 @@ static const INTRO_CMD_DATA c_intro_scene_05_retake_yesno[] =
 
   // 分岐 確認メッセージ
   { INTRO_CMD_TYPE_YESNO, { msg_intro_yesno_01, msg_intro_yesno_02, TRUE }, },
-    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_06 },        // はい > シーン6にジャンプ
+    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_06 },   // はい > シーン6にジャンプ
     { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_05_RETRY },  // いいえ
-
 };
 
 //---------------------------------------------------------------------------
@@ -227,52 +226,112 @@ static const INTRO_CMD_DATA c_intro_scene_05_retry[] =
   { INTRO_CMD_TYPE_END, }, // 一旦終了 game_start.c から名前入力を呼び出して戻ってくる
 };
 
-
 //---------------------------------------------------------------------------
-// シーン 06 博士が締める
+// シーン 06 ライバル名入力
 //---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_06[] = 
 { 
-  { INTRO_CMD_TYPE_SET_RETCODE, INTRO_RETCODE_NORMAL }, // 外部アプリに通常終了を返す
+  { INTRO_CMD_TYPE_SET_RETCODE, INTRO_RETCODE_INPUT_RIVAL }, // 外部アプリにライバル名入力を返す
 
   { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_06, 0, 1 } }, // [トレーナー名]と いう　なまえ！
-  
-// 100503 追加 ******************************************************************
 
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_06_01, 0, 1 } },  // 仲間を紹介するわね
   { INTRO_CMD_TYPE_MCSS_FADE_REQ, {0, FALSE}, },                // 博士フェードアウト
   { INTRO_CMD_TYPE_CMD_BG_EFF_IN, },                            // BG表示
-  { INTRO_CMD_TYPE_CMD_OBJ_IN, { 1 }, },                        // ライバル表示
-  // SE
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_06_02, 0, 1 } },  // このこは　チェレン
-  { INTRO_CMD_TYPE_CMD_OBJ_IN, { 2 }, },                        // サポート表示
-  // SE
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_06_03, 0, 1 } },  // このこは　ペル
-  { INTRO_CMD_TYPE_CMD_OBJ_IN, { 0 }, },                        // 主人公表示
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_06_04, 0, 1 } },  // ポケモンを　プレゼントします
+  { INTRO_CMD_TYPE_CMD_OBJ_IN, { 0 }, },                        // ライバル表示
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_rival_01, 0, 1 } }, // おともだちに ついて きかせてね
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_rival_02, 0, 1 } }, // かれの なまえも おしえてくれるかな
+
+#ifdef CMD_SAVE_ON
+  { INTRO_CMD_TYPE_SAVE_SASUPEND }, // セーブ中断
+#endif
+
+  { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 2 }, }, // 画面フェードアウト
+  { INTRO_CMD_TYPE_END, }, // 一旦終了 game_start.c から名前入力を呼び出して戻ってくる
+
+};
+
+//---------------------------------------------------------------------------
+// シーン 06 リトライ判定（名前入力から復帰）
+//---------------------------------------------------------------------------
+static const INTRO_CMD_DATA c_intro_scene_06_retake_yesno[] = 
+{ 
+  { INTRO_CMD_TYPE_LOAD_BG, { 1 }, CMD_READ_NEXT }, // BGをロード
+  { INTRO_CMD_TYPE_CMD_OBJ_LOAD, },                 // OBJロード
+
+  // 外部から再開するため、データロード
+  { INTRO_CMD_TYPE_MCSS_LOAD, {0, 0, 0, 0x5a0c }, CMD_READ_NEXT },        // 博士ロード
+
+  //↑ROMアクセスはここまで↑
+
+#ifdef CMD_SAVE_ON
+  { INTRO_CMD_TYPE_SAVE_RESUME }, // セーブ再開
+#endif
+  
+  { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, { 0, FALSE }, },		// 博士非表示
+
+  { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 }, }, // 画面フェードイン
+
+  { INTRO_CMD_TYPE_CMD_BG_EFF_IN, },                            // BG表示
+  { INTRO_CMD_TYPE_CMD_OBJ_IN, { 0 }, },                        // ライバル表示
+
+  { INTRO_CMD_TYPE_WORDSET, { INTRO_WORDSET_RIVAL, 1 }, CMD_READ_NEXT },  // ライバル名をレジスト
+
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_rival_03, 0, 1 } }, //[トレーナー名]ね それで あっている？
+
+  { INTRO_CMD_TYPE_WAIT, 1 },
+
+  // 分岐 確認メッセージ
+  { INTRO_CMD_TYPE_YESNO, { msg_intro_yesno_01, msg_intro_yesno_02, TRUE }, },
+    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_07 },        // はい > シーン7にジャンプ
+    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_06_RETRY },  // いいえ
+
+};
+
+//---------------------------------------------------------------------------
+// シーン 06 > ライバル名前入力「いいえ」
+//---------------------------------------------------------------------------
+static const INTRO_CMD_DATA c_intro_scene_06_retry[] = 
+{ 
+  { INTRO_CMD_TYPE_SET_RETCODE, INTRO_RETCODE_RETAKE }, // 外部アプリにリトライを返す
+
+#ifdef CMD_SAVE_ON
+  { INTRO_CMD_TYPE_SAVE_SASUPEND }, // セーブ中断
+#endif
+
+  { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 2 }, }, // 画面フェードアウト
+  { INTRO_CMD_TYPE_END, }, // 一旦終了 game_start.c から名前入力を呼び出して戻ってくる
+};
+
+//---------------------------------------------------------------------------
+// シーン 07 博士が締める
+//---------------------------------------------------------------------------
+static const INTRO_CMD_DATA c_intro_scene_07[] = 
+{ 
+  { INTRO_CMD_TYPE_SET_RETCODE, INTRO_RETCODE_NORMAL }, // 外部アプリに通常終了を返す
+
   { INTRO_CMD_TYPE_CMD_OBJ_OUT, },                              // 主人公・ライバル・サポート非表示
   { INTRO_CMD_TYPE_CMD_BG_EFF_OUT, },                           // BG非表示
 
-  { INTRO_CMD_TYPE_MCSS_FADE_REQ, {0, TRUE}, },  // 博士フェードイン
-
-// 100503 追加 ******************************************************************
+  { INTRO_CMD_TYPE_MCSS_FADE_REQ, {0, TRUE}, },                 // 博士フェードイン
 
 #ifdef CMD_SAVE_ON
   { INTRO_CMD_TYPE_SAVE_MYSTATUS }, // マイステータスのセーブ
   { INTRO_CMD_TYPE_SAVE_CHECK_ALL_END }, // セーブ終了終了チェック
 #endif
 
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_07, 0, 1 } }, // [トレーナー名]！！
+  { INTRO_CMD_TYPE_WORDSET, { INTRO_WORDSET_TRAINER, 0 }, CMD_READ_NEXT },  // トレーナー名をレジスト
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_06_04, 0, 1 } },// [トレーナー名]！！
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_07, 0, 1 } },   // 締め
 
-  // 博士フェードアウト
+  { INTRO_CMD_TYPE_MCSS_FADE_REQ, {0, FALSE}, },                // 博士フェードアウト
 
-  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_07 },
+  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_08 },
 };
 
 //---------------------------------------------------------------------------
-// シーン 07
+// シーン 08
 //---------------------------------------------------------------------------
-static const INTRO_CMD_DATA c_intro_scene_07[] = 
+static const INTRO_CMD_DATA c_intro_scene_08[] = 
 { 
   { INTRO_CMD_TYPE_BGM_FADEOUT, { 60 } },               // BGMフェードアウト
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 6 }, }, // 画面フェードアウト
@@ -297,5 +356,8 @@ static const INTRO_CMD_DATA* c_intro_scene_access_tbl[ INTRO_SCENE_ID_MAX ] =
   c_intro_scene_05_retake_yesno,
   c_intro_scene_05_retry,
   c_intro_scene_06,
+  c_intro_scene_06_retake_yesno,
+  c_intro_scene_06_retry,
   c_intro_scene_07,
+  c_intro_scene_08,
 };

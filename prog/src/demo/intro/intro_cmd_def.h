@@ -271,6 +271,7 @@ typedef enum {
 typedef enum
 { 
   INTRO_WORDSET_TRAINER,
+  INTRO_WORDSET_RIVAL,
   INTRO_WORDSET_MAX,
 } INTRO_WORDSET;
 

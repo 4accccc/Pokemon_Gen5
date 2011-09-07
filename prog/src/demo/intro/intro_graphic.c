@@ -424,7 +424,8 @@ INTRO_GRAPHIC_WORK * INTRO_GRAPHIC_Init( int display_select, INTRO_SCENE_ID scen
 	GFL_DISP_GXS_InitVisibleControl();
 
 	// ‘O”¼‚ÆŒã”¼‚Åİ’è‚ğ•Ï‚¦‚é
-	if( scene == INTRO_SCENE_ID_05_RETAKE_YESNO ){
+	if( scene == INTRO_SCENE_ID_05_RETAKE_YESNO ||
+      scene == INTRO_SCENE_ID_06_RETAKE_YESNO ){
 		GFL_DISP_SetBank( &sc_vramSetTable2 );
 		//ƒ‚ƒWƒ…[ƒ‹‰Šú‰»
 #ifdef GRAPHIC_BG_USE

@@ -101,7 +101,8 @@ INTRO_MCSS_WORK* INTRO_MCSS_Create( HEAPID heap_id, INTRO_SCENE_ID scene )
   wk->heap_id = heap_id;
 
   // intro_g3d‚Æ•Às‚³‚¹‚é‚½‚ß‚É‚¸‚ç‚µž‚Þ
-	if( scene != INTRO_SCENE_ID_05_RETAKE_YESNO ){
+	if( scene != INTRO_SCENE_ID_05_RETAKE_YESNO &&
+      scene != INTRO_SCENE_ID_06_RETAKE_YESNO ){
 	  MCSS_SetTextureTransAdrs( wk->mcss, 0x70000 );
 	}
 	MCSS_SetTexPaletteTransAdrs( wk->mcss, 0x4000 );

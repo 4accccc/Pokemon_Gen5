@@ -24,6 +24,8 @@
 #include "system/gfl_use.h"
 #include "demo/demo3d.h"
 #include "field/zonedata.h"
+#include "message.naix"
+#include "msg/msg_intro.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
 
@@ -226,6 +228,7 @@ typedef struct
   u32 voice_load_id;
   MYSTATUS *mystatus;
   CONFIG *config;
+  SAVE_CONTROL_WORK *sv_ctrl;   // swan追加
 }GAMESTART_FIRST_WORK;
 
 #define USE_INTRSAVE //INTRSAVE有効無効切り替えフラグ
@@ -256,6 +259,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   // セーブデータ:ワークエリアのの初期化
   SaveControl_ClearData( sv_ctrl );
   
+  work->sv_ctrl  = sv_ctrl;
   work->mystatus = MyStatus_AllocWork(GFL_HEAPID_APP);
   work->config = CONFIG_AllocWork(GFL_HEAPID_APP);
 
@@ -306,6 +310,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   work->introParam.scene_id   = INTRO_SCENE_ID_00;
   work->introParam.intr_save  = work->intr_save;
   work->introParam.voice_load_id = work->voice_load_id;
+  work->introParam.sv_ctrl    = work->sv_ctrl;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -326,6 +331,12 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     SEQ_INPUT_NAME_RETAKE_YESNO,
     SEQ_INPUT_NAME_RETAKE_CHECK,
     SEQ_INPUT_NAME_RETAKE_CHECK_WAIT,
+    // SWAN追加
+    SEQ_INPUT_RIVAL_NAME,
+    SEQ_INPUT_RIVAL_NAME_WAIT,
+    SEQ_INPUT_RIVAL_NAME_RETAKE_YESNO,
+    SEQ_INPUT_RIVAL_NAME_RETAKE_CHECK,
+    SEQ_INPUT_RIVAL_NAME_RETAKE_CHECK_WAIT,
     SEQ_END,
   };
   
@@ -386,14 +397,82 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     break;
   case SEQ_INPUT_NAME_RETAKE_CHECK:
     // 名前入力復帰判定
-    if( work->introParam.retcode == INTRO_RETCODE_NORMAL )
+    if( work->introParam.retcode == INTRO_RETCODE_INPUT_RIVAL )
     {
-      (*seq) = SEQ_END;
+      (*seq) = SEQ_INPUT_RIVAL_NAME;
     }
     else
     {
       // 名前入力に復帰
       (*seq) = SEQ_INPUT_NAME;
+    }
+    break;
+
+//== SWAN 追加==========================
+
+  // ライバル名入力プロセス呼び出し
+  case SEQ_INPUT_RIVAL_NAME:
+    // 名前入力
+    {
+      STRBUF *p_default_str;
+      GFL_MSGDATA *msg;
+      msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_intro_dat, GFL_HEAPID_APP );
+      p_default_str = GFL_MSG_CreateString( msg, msg_intro_rival_name01 );
+      // デフォルメ名を設定
+      GFL_STR_CopyBuffer( work->nameInParam->strbuf, p_default_str );
+      GFL_STR_DeleteBuffer( p_default_str );
+      GFL_MSG_Delete( msg );
+
+      work->nameInParam->mode = NAMEIN_RIVALNAME;
+      GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(namein), &NameInputProcData, work->nameInParam );
+      (*seq) = SEQ_INPUT_RIVAL_NAME_WAIT;
+    }
+    break;
+  // ライバル名入力プロセス終了待ち
+  case SEQ_INPUT_RIVAL_NAME_WAIT:
+    if( up_status != GFL_PROC_MAIN_VALID )
+    {
+      (*seq) = SEQ_INPUT_RIVAL_NAME_RETAKE_YESNO;
+    }
+    break;
+  // ライバル名が決定かどうかのシーン呼び出し
+  case SEQ_INPUT_RIVAL_NAME_RETAKE_YESNO:
+    {
+      // ライバル名セット
+      {
+        ETC_SAVE_WORK *etcsave = SaveData_GetEtc( work->sv_ctrl );
+        const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(work->nameInParam->strbuf);
+        // セーブデータに保存
+        EtcSave_SetRivalName( etcsave, cp_strcode );
+      }
+
+      //イントロデモ 名前入力の判定
+      work->introParam.scene_id = INTRO_SCENE_ID_06_RETAKE_YESNO;
+
+      GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(intro), &ProcData_Intro, &work->introParam );
+      (*seq) = SEQ_INPUT_RIVAL_NAME_RETAKE_CHECK_WAIT;
+    }
+    break;
+  // ライバル名決定待ち
+  case SEQ_INPUT_RIVAL_NAME_RETAKE_CHECK_WAIT:
+    if( up_status != GFL_PROC_MAIN_VALID )
+    {
+      (*seq) = SEQ_INPUT_RIVAL_NAME_RETAKE_CHECK;
+    }
+    break;
+  // ライバル名決定
+  case SEQ_INPUT_RIVAL_NAME_RETAKE_CHECK:
+    {
+      // 名前入力復帰判定
+      if( work->introParam.retcode == INTRO_RETCODE_NORMAL )
+      {
+        (*seq) = SEQ_END;
+      }
+      else
+      {
+        // 名前入力に復帰
+        (*seq) = SEQ_INPUT_RIVAL_NAME;
+      }
     }
     break;
   case SEQ_END:

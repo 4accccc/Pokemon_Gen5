@@ -44,7 +44,11 @@ enum {
 
 //RES
 static const GFL_G3D_UTIL_RES res_unit_select[] = {
+#if PM_VERSION==VERSION_B2
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg_b_nsbmd, GFL_G3D_UTIL_RESARC },
+#else
   { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbmd, GFL_G3D_UTIL_RESARC },
+#endif
   { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbma, GFL_G3D_UTIL_RESARC },
   { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbtp, GFL_G3D_UTIL_RESARC },
@@ -185,7 +189,8 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic, INTRO_SCENE_ID sc
 									&pos, &up, &target, heap_id );
 	}
   
-	if( scene != INTRO_SCENE_ID_05_RETAKE_YESNO ){
+	if( scene != INTRO_SCENE_ID_05_RETAKE_YESNO && 
+      scene != INTRO_SCENE_ID_06_RETAKE_YESNO ){
     int i;
     
 	  // ƒ†ƒjƒbƒg’Ç‰Á

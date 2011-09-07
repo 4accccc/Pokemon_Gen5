@@ -45,7 +45,10 @@ typedef enum
   INTRO_SCENE_ID_05_RETAKE_YESNO,
   INTRO_SCENE_ID_05_RETRY,
   INTRO_SCENE_ID_06,
+  INTRO_SCENE_ID_06_RETAKE_YESNO,
+  INTRO_SCENE_ID_06_RETRY,
   INTRO_SCENE_ID_07,
+  INTRO_SCENE_ID_08,
   INTRO_SCENE_ID_MAX,
 } INTRO_SCENE_ID;
 
@@ -55,6 +58,7 @@ typedef enum
 typedef enum {
   INTRO_RETCODE_NORMAL = 0, ///< ’Êí
   INTRO_RETCODE_RETAKE,     ///< ‚â‚è’¼‚µ
+  INTRO_RETCODE_INPUT_RIVAL,///< ƒ‰ƒCƒoƒ‹–¼“ü—Í
 } INTRO_RETCODE;
 
 //=============================================================================
@@ -73,6 +77,7 @@ typedef struct {
   INTRO_SCENE_ID      scene_id;
   INTR_SAVE_CONTROL*  intr_save;
   u32                 voice_load_id;
+  SAVE_CONTROL_WORK*  sv_ctrl;
   // [OUT]
   INTRO_RETCODE       retcode;
 } INTRO_PARAM;

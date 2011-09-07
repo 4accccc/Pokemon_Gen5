@@ -47,6 +47,7 @@
 
 #include "savedata/save_control.h"      // for
 #include "savedata/save_control_intr.h" // for
+#include "savedata/etc_save.h"
 
 //=============================================================================
 /**
@@ -98,10 +99,10 @@ struct _INTRO_CMD_WORK {
 	// ＢＧエフェクト用
 	u16	bgEffBuff[64*32];
 	// OBJ
-	GFL_CLWK * clwk[3];
-	u32	chrRes[3];
-	u32	palRes[3];
-	u32	celRes[3];
+	GFL_CLWK * clwk;
+	u32	chrRes;
+	u32	palRes;
+	u32	celRes;
 };
 
 //=============================================================================
@@ -277,6 +278,7 @@ static BOOL (*c_cmdtbl_comp[ INTRO_CMD_COMP_MAX ])() =
 // WORDSET関数
 //=============================================================================
 static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID );
+static void CMD_WORDSET_RIVAL( INTRO_CMD_WORK* wk, int bufID );
 
 // INTRO_WORDSET と対応
 //--------------------------------------------------------------
@@ -285,6 +287,7 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID );
 static void (*c_cmdtbl_wordset[ INTRO_WORDSET_MAX ])() = 
 { 
   CMD_WORDSET_TRAINER,
+  CMD_WORDSET_RIVAL,
 };
 
 //-----------------------------------------------------------------------------
@@ -512,8 +515,17 @@ static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
   handle  = GFL_ARC_OpenDataHandle( ARCID_INTRO_GRA, heap_id );
 
   // 上下画面ＢＧパレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x40, heap_id );
-  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
+
+  // バージョンによってパレットを分ける
+  if( GET_VERSION() == VERSION_B2 ){
+    GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_b_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x40, heap_id );
+    GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_b_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
+  }
+  else
+  {
+    GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x40, heap_id );
+    GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
+  }
   
   //  ----- 下画面 -----
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_intro_intro_bg_NCGR,
@@ -1565,6 +1577,7 @@ static BOOL CMD_OBJ_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_INTRO_GRA, wk->heap_id );
 
+#if 0
 	// 主人公
 	if( MyStatus_GetMySex( wk->init_param->mystatus ) == PTL_SEX_MALE ){
 		wk->chrRes[0] = GFL_CLGRP_CGR_Register(
@@ -1585,15 +1598,17 @@ static BOOL CMD_OBJ_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 		wk->celRes[0] = GFL_CLGRP_CELLANIM_Register(
 											ah, NARC_intro_intro_heroine_NCER, NARC_intro_intro_heroine_NANR, wk->heap_id );
 	}
+#endif
 	// ライバル
-	wk->chrRes[1] = GFL_CLGRP_CGR_Register(
+	wk->chrRes = GFL_CLGRP_CGR_Register(
 										ah, NARC_intro_intro_rival_NCGR,
 										FALSE, CLSYS_DRAW_MAIN, wk->heap_id );
-	wk->palRes[1] = GFL_CLGRP_PLTT_Register(
+	wk->palRes = GFL_CLGRP_PLTT_Register(
 										ah, NARC_intro_intro_rival_NCLR,
 										CLSYS_DRAW_MAIN, 0x20, wk->heap_id );
-	wk->celRes[1] = GFL_CLGRP_CELLANIM_Register(
+	wk->celRes = GFL_CLGRP_CELLANIM_Register(
 										ah, NARC_intro_intro_rival_NCER, NARC_intro_intro_rival_NANR, wk->heap_id );
+#if 0
 	// サポート
 	wk->chrRes[2] = GFL_CLGRP_CGR_Register(
 										ah, NARC_intro_intro_support_NCGR,
@@ -1603,32 +1618,29 @@ static BOOL CMD_OBJ_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 										CLSYS_DRAW_MAIN, 0x40, wk->heap_id );
 	wk->celRes[2] = GFL_CLGRP_CELLANIM_Register(
 										ah, NARC_intro_intro_support_NCER, NARC_intro_intro_support_NANR, wk->heap_id );
+#endif
 
   GFL_ARC_CloseDataHandle( ah );
 
-	{
-		GFL_CLWK_DATA	dat[] = { { 128, 72, 0, 0, 1 }, { 64, 72, 0, 10, 1 }, { 192, 72, 0, 10, 1 } };
-		u32	i;
-		for( i=0; i<3; i++ ){
-			wk->clwk[i] = GFL_CLACT_WK_Create(
-											INTRO_GRAPHIC_GetClunit(wk->graphic),
-											wk->chrRes[i], wk->palRes[i], wk->celRes[i], &dat[i], CLSYS_DEFREND_MAIN, wk->heap_id );
-			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
-		}
-	}
+  {
+    //GFL_CLWK_DATA	dat[] = { { 128, 72, 0, 0, 1 }, { 64, 72, 0, 10, 1 }, { 192, 72, 0, 10, 1 } };
+    // 真ん中
+    GFL_CLWK_DATA	dat = { 128, 72, 0, 0, 1 };
+    wk->clwk = GFL_CLACT_WK_Create(
+        INTRO_GRAPHIC_GetClunit(wk->graphic),
+        wk->chrRes, wk->palRes, wk->celRes, &dat, CLSYS_DEFREND_MAIN, wk->heap_id );
+    GFL_CLACT_WK_SetDrawEnable( wk->clwk, FALSE );
+  }
 	return TRUE;
 }
 
 static BOOL CMD_OBJ_UNLOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-	u32	i;
 
-	for( i=0; i<3; i++ ){
-		GFL_CLGRP_CGR_Release( wk->chrRes[i] );
-    GFL_CLGRP_PLTT_Release( wk->palRes[i] );
-    GFL_CLGRP_CELLANIM_Release( wk->celRes[i] );
-		GFL_CLACT_WK_Remove( wk->clwk[i] );
-	}
+  GFL_CLGRP_CGR_Release( wk->chrRes );
+  GFL_CLGRP_PLTT_Release( wk->palRes );
+  GFL_CLGRP_CELLANIM_Release( wk->celRes );
+  GFL_CLACT_WK_Remove( wk->clwk );
 
 	return TRUE;
 }
@@ -1641,15 +1653,15 @@ static BOOL CMD_OBJ_IN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 	case 0:
 		G2_SetBlendAlpha(
 			GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 0, 16 );
-		GFL_CLACT_WK_SetObjMode( wk->clwk[param[0]], GX_OAM_MODE_XLU );
-		GFL_CLACT_WK_SetDrawEnable( wk->clwk[param[0]], TRUE );
+		GFL_CLACT_WK_SetObjMode( wk->clwk, GX_OAM_MODE_XLU );
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk, TRUE );
 		sdat->seq++;
 		break;
 
 	case 16:
 		for( i=0; i<3; i++ ){
-			if( GFL_CLACT_WK_GetObjMode( wk->clwk[i] ) == GX_OAM_MODE_XLU ){
-				GFL_CLACT_WK_SetObjMode( wk->clwk[i], GX_OAM_MODE_NORMAL );
+			if( GFL_CLACT_WK_GetObjMode( wk->clwk ) == GX_OAM_MODE_XLU ){
+				GFL_CLACT_WK_SetObjMode( wk->clwk, GX_OAM_MODE_NORMAL );
 			}
 		}
 		sdat->seq = 0;
@@ -1673,15 +1685,15 @@ static BOOL CMD_OBJ_OUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 		G2_SetBlendAlpha(
 			GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 16, 0 );
 		for( i=0; i<3; i++ ){
-			GFL_CLACT_WK_SetObjMode( wk->clwk[i], GX_OAM_MODE_XLU );
+			GFL_CLACT_WK_SetObjMode( wk->clwk, GX_OAM_MODE_XLU );
 		}
 		sdat->seq++;
 		break;
 
 	case 16:
 		for( i=0; i<3; i++ ){
-			GFL_CLACT_WK_SetObjMode( wk->clwk[i], GX_OAM_MODE_NORMAL );
-			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
+			GFL_CLACT_WK_SetObjMode( wk->clwk, GX_OAM_MODE_NORMAL );
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk, FALSE );
 		}
 		sdat->seq = 0;
 		return TRUE;
@@ -1748,6 +1760,23 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
   WORDSET_RegisterPlayerName( wordset, bufID, mystatus );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  ライバル名をレジスト
+ *
+ *  @param  INTRO_CMD_WORK* wk
+ *  @param  bufID 
+ */
+//-----------------------------------------------------------------------------
+static void CMD_WORDSET_RIVAL( INTRO_CMD_WORK* wk, int bufID )
+{
+  ETC_SAVE_WORK *etcsave = SaveData_GetEtc( wk->init_param->sv_ctrl );
+  WORDSET* wordset;
+
+  wordset   = INTRO_MSG_GetWordSet( wk->wk_msg );
+
+  WORDSET_RegisterRivalName( wordset, bufID, EtcSave_GetRivalName( etcsave ) );
+}
 
 //=============================================================================
 /**
