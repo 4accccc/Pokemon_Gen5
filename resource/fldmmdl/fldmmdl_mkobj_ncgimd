@@ -1519,9 +1519,9 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader4.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #old_champion.imd
-./mmdl_res/old_champion.imd: ./mmdl_nchara/old_champion.ncg ./mmdl_nchara/old_champion.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+./mmdl_res/old_champion.imd: ./mmdl_nchara/old_champion.ncg ./mmdl_nchara/old_champion.ncl ./mmdl_dmy/t4x4x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip_champion.csv
 	@echo convert ncg_imd old_champion
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_champion.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_champion.ncg ./mmdl_res ./mmdl_dmy/t4x4x15.imd 4 4 15
 
 #old_bigfour3.imd
 ./mmdl_res/old_bigfour3.imd: ./mmdl_nchara/old_bigfour3.ncg ./mmdl_nchara/old_bigfour3.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
@@ -1564,9 +1564,9 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader3.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #old_boss.imd
-./mmdl_res/old_boss.imd: ./mmdl_nchara/old_boss.ncg ./mmdl_nchara/old_boss.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+./mmdl_res/old_boss.imd: ./mmdl_nchara/old_boss.ncg ./mmdl_nchara/old_boss.ncl ./mmdl_dmy/t4x4x22.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip_boss_n.csv
 	@echo convert ncg_imd old_boss
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_boss.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_boss.ncg ./mmdl_res ./mmdl_dmy/t4x4x22.imd 4 4 22
 
 #old_hakaim.imd
 ./mmdl_res/old_hakaim.imd: ./mmdl_nchara/old_hakaim.ncg ./mmdl_nchara/old_hakaim.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv

@@ -596,8 +596,8 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='t4x4x16' color_size='16' index='0'>
-		5294 2d6b 4a52 4210 3def 2d6b 5294 2529 
-		6f7b 0000 14a5 2108 3def 5ef7 6f7b 7fff 
+		2a12 1549 21ce 1dd3 1d4d 150a 29d3 10c9 
+		3698 0000 0c83 10a5 216c 3232 3a96 42fa 
 	</tex_palette>
 </tex_palette_array>
 

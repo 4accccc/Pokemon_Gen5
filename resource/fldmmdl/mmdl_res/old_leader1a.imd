@@ -452,8 +452,8 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='t4x4x12' color_size='16' index='0'>
-		4a52 294a 1ce7 14a5 39ce 56b5 3def 18c6 
-		2d6b 2529 294a 5294 6f7b 7fff 6318 0000 
+		2a12 14e8 10a6 0c84 1d8f 2593 1d10 0c86 
+		18ea 14c9 14ea 25b1 3656 3e97 2df1 0421 
 	</tex_palette>
 </tex_palette_array>
 
