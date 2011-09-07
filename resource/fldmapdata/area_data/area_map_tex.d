@@ -2362,9 +2362,10 @@ nsbtx_files/tex_set_in89.nsbtx: src_imd_files/in33_local_texset.imd
 	@$(COPY) src_imd_files/in33_local_texset.imd marged_imd_files/tex_set_in89.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in89.imd -o nsbtx_files/tex_set_in89.nsbtx -etex
 
-nsbtx_files/tex_set_in90.nsbtx: src_imd_files/in83_local_texset.imd
-	@echo src_imd_files/in83_local_texset.imd Å® nsbtx_files/tex_set_in90.nsbtx
-	@$(COPY) src_imd_files/in83_local_texset.imd marged_imd_files/tex_set_in90.imd
+nsbtx_files/tex_set_in90.nsbtx: src_imd_files/in83_local_texset.imd src_imd_files/old_gym02_light_tex.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in83_local_texset.imd + src_imd_files/old_gym02_light_tex.imd Å® nsbtx_files/tex_set_in90.nsbtx
+	@-rm marged_imd_files/tex_set_in90.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in90.imd src_imd_files/in83_local_texset.imd src_imd_files/old_gym02_light_tex.imd src_imd_files/tex_griddmy.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in90.imd -o nsbtx_files/tex_set_in90.nsbtx -etex
 
 nsbtx_files/tex_set_in91.nsbtx: src_imd_files/in40_local_texset.imd
