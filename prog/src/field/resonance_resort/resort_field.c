@@ -2305,11 +2305,11 @@ static void Resort_Crowd_Noise_CheckBufferNum( RESORT_CROWD_NOISE *p_wk )
   };
   u32 cnt = 0;
 
-  RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
+  RESORT_ABSTRUCT_ITERATOR ite = RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
 
   while(TRUE)
   {
-    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->p_abstruct, &ite, sc_type, NELEMS(sc_type) );
     if( p_data == NULL )
     {
       break;
@@ -2377,11 +2377,11 @@ static RESORT_ABSTRUCT_DATA * Resort_Crowd_Noise_GetDrawLotsData( RESORT_CROWD_N
   static u16 s_index[DRAWLOTS_BUFFER_MAX];
   int cnt = 0;
 
-  RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
+  RESORT_ABSTRUCT_ITERATOR ite = RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
 
   while(TRUE)
   {
-    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->p_abstruct, sc_type, NELEMS(sc_type) );
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->p_abstruct, &ite, sc_type, NELEMS(sc_type) );
     if( p_data == NULL )
     {
       break;
@@ -2970,7 +2970,7 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
     }
     else
     {
-      RESORT_DATA_BUFFER_TYPE type = RESORT_DATA_BUFFER_TYPE_RESIDENT;
+      static const RESORT_DATA_BUFFER_TYPE type = RESORT_DATA_BUFFER_TYPE_RESIDENT;
       RESORT_PEOPLE_SYS_AddPeopleBufferType( p_wk->p_people_sys, &type, 1 );
     }
   }

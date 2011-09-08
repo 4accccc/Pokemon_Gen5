@@ -269,6 +269,10 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #elif defined DEBUG_ONLY_FOR_tamada || defined DEBUG_ONLY_FOR_tanaka_ryota
 #define QuickJumpStart   DEBUG_FIELD_WBT
 #define QuickJumpSelect  DEBUG_FIELD_POKEWOOD
+
+#elif defined DEBUG_ONLY_FOR_shiiyama_yukiko
+#define QuickJumpStart   DEBUG_FIELD_NUMINPUT
+#define QuickJumpSelect  DEBUG_FIELD_RESORT
 #endif
 
 //--------------------------------------------------------------

@@ -643,11 +643,11 @@ void RESORT_PEOPLE_SYS_AddPeopleBufferType( RESORT_PEOPLE_SYS *p_wk, const RESOR
   RESORT_PLACEID placeID = p_wk->param.placeID;
   int peopleID;
 
-  RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->param.p_abstruct, c_buffer_tbl, tbl_len );
+  RESORT_ABSTRUCT_ITERATOR ite = RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->param.p_abstruct, c_buffer_tbl, tbl_len );
 
   while(TRUE)
   {
-    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->param.p_abstruct, c_buffer_tbl, tbl_len );
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->param.p_abstruct, &ite, c_buffer_tbl, tbl_len );
     if( p_data == NULL )
     {
       break;

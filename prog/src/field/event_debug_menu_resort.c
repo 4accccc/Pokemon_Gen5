@@ -39,6 +39,7 @@
 #include "resonance_resort/resort_binary.h"
 #include "resonance_resort/resort_shop.h"
 #include "net_app/union/union_beacon_tool.h"
+#include "resonance_resort/resort_debug_inline.h"
 
 //--------------------------------------------------------------
 /// proto
@@ -294,63 +295,6 @@ static BOOL debugMenuCallProc_Input( DEBUG_MENU_EVENT_WORK *p_wk )
   return TRUE;
 }
 
-static void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gamedata )
-{
-  u32 trainerID;
-  u32 sex;
-
-  //自分のデータをいれた後、トレーナーIDと名前を変える
-  RESORT_RECV_DATA_SetMyData( p_wk, p_gamedata );
-
-  {
-    int i;
-    for( i = 0; i < 8; i++ )
-    {
-      RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT2_RANK_00+i, GFL_STD_MtRand(9999999) );
-    }
-    RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXTEND_ADD, RESORT_EXTEND_TYPE_02 );
-    RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXTEND_ADD, RESORT_EXTEND_TYPE_03 );
-  }
-
-  //トレーナーID
-  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, GFL_STD_MtRand(GFL_STD_RAND_MAX) );
-  trainerID = RESORT_RECV_DATA_GetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, NULL );
-
-  //性別
-  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_SEX, GFL_STD_MtRand(2) );
-  sex = RESORT_RECV_DATA_GetData( p_wk, RESORT_DATA_PARAM_SEX, NULL );
-
-  //見た目
-  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_OBJCODE, UnionView_GetObjCode(sex*8+GFL_STD_MtRand(8)) );
-  //名前セット
-  {
-    GFL_MSGDATA* p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-    STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, RESORT_NAME_00+GFL_STD_MtRand(20) );
-    RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_NAME, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
-    GFL_STR_DeleteBuffer( p_strbuf );
-    GFL_MSG_Delete( p_msg );
-  }
-  //自己紹介、感謝、くちぐせ
-  {
-    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-    {
-      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_introduction_00+trainerID%10 );
-      RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_INTRODUCTION, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
-      GFL_STR_DeleteBuffer( p_strbuf );
-    }
-    {
-      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_kutiguse_00+trainerID%10 );
-      RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
-      GFL_STR_DeleteBuffer( p_strbuf );
-    }
-    {
-      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_thanks_00+trainerID%10 );
-      RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT7_THANKS, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
-      GFL_STR_DeleteBuffer( p_strbuf );
-    }
-    GFL_MSG_Delete( p_msg );
-  }
-}
 
 static BOOL debugMenuCallProc_SetRecv( DEBUG_MENU_EVENT_WORK *p_wk )
 {
@@ -479,13 +423,18 @@ static BOOL debugMenuCallProc_AllProxy( DEBUG_MENU_EVENT_WORK *p_wk )
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
   RESORT_PROXY_BUFF *p_proxy_buff = RESONANCE_RESORT_SV_GetProxyBuff( p_resort );
+  RESORT_CITY_DATA  *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort );
+
+  BOOL is_tutorial = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_IS_TUTORIAL, NULL );
 
   RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
   while(TRUE)
   {
     Debug_Resort_SetProxy( p_proxy, p_wk->gdata, p_wk->heapID );
     RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_proxy, RESORT_MERGE_TYPE_PROXY );
-    if( RESORT_PROXY_BUFF_GetCnt( p_proxy_buff ) >= RESONANCE_RESORT_SV_PROXY_BUFF_NUM )
+    if( (RESORT_PROXY_BUFF_GetCnt( p_proxy_buff ) >= RESONANCE_RESORT_SV_PROXY_BUFF_NUM && !is_tutorial)
+      || (RESORT_PROXY_BUFF_GetCnt( p_proxy_buff ) >= 10 && is_tutorial)
+        )
     {
       break;
     }

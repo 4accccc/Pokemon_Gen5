@@ -26,10 +26,16 @@
 #include "message.naix"
 #include "debug_message.naix"
 #include "msg/debug/msg_debug_resort.h"
-
+#include "arc/script_message.naix"
+#include "msg/script/msg_resort_scr.h"
+#include "msg/debug/msg_debug_resort2.h"
 #include "savedata/resonance_resort_sv.h"
 #include "resort_debug_input.h"
 #include "resort_shop.h"
+#include "resort_binary.h"
+#include "resort_map.h"
+#include "net_app/union/union_beacon_tool.h"
+#include "resort_debug_inline.h"
 
 #define PROC_HEAP_SIZE  (0x40000)
 #define PRINT_FRAME (GFL_BG_FRAME1_M)
@@ -105,6 +111,48 @@ typedef enum {
   EDITBOX_ID_CITY_TEX,
   EDITBOX_ID_CITY_FUN_DAY,
   EDITBOX_ID_IS_TUTORIAL,
+
+  //‚¨“X”z’u
+  EDITBOX_ID_SHOP_ID_00,
+  EDITBOX_ID_SHOP_KIND_00,
+  EDITBOX_ID_SHOP_LV_00,
+  EDITBOX_ID_SHOP_EXP_00,
+  EDITBOX_ID_SHOP_TYPE_00,
+  EDITBOX_ID_SHOP_ID_01,
+  EDITBOX_ID_SHOP_KIND_01,
+  EDITBOX_ID_SHOP_LV_01,
+  EDITBOX_ID_SHOP_EXP_01,
+  EDITBOX_ID_SHOP_TYPE_01,
+  EDITBOX_ID_SHOP_ID_02,
+  EDITBOX_ID_SHOP_KIND_02,
+  EDITBOX_ID_SHOP_LV_02,
+  EDITBOX_ID_SHOP_EXP_02,
+  EDITBOX_ID_SHOP_TYPE_02,
+  EDITBOX_ID_SHOP_ID_03,
+  EDITBOX_ID_SHOP_KIND_03,
+  EDITBOX_ID_SHOP_LV_03,
+  EDITBOX_ID_SHOP_EXP_03,
+  EDITBOX_ID_SHOP_TYPE_03,
+  EDITBOX_ID_SHOP_ID_04,
+  EDITBOX_ID_SHOP_KIND_04,
+  EDITBOX_ID_SHOP_LV_04,
+  EDITBOX_ID_SHOP_EXP_04,
+  EDITBOX_ID_SHOP_TYPE_04,
+  EDITBOX_ID_SHOP_ID_05,
+  EDITBOX_ID_SHOP_KIND_05,
+  EDITBOX_ID_SHOP_LV_05,
+  EDITBOX_ID_SHOP_EXP_05,
+  EDITBOX_ID_SHOP_TYPE_05,
+  EDITBOX_ID_SHOP_ID_06,
+  EDITBOX_ID_SHOP_KIND_06,
+  EDITBOX_ID_SHOP_LV_06,
+  EDITBOX_ID_SHOP_EXP_06,
+  EDITBOX_ID_SHOP_TYPE_06,
+  EDITBOX_ID_SHOP_ID_07,
+  EDITBOX_ID_SHOP_KIND_07,
+  EDITBOX_ID_SHOP_LV_07,
+  EDITBOX_ID_SHOP_EXP_07,
+  EDITBOX_ID_SHOP_TYPE_07,
 
   //Z–¯Šî‘bƒf[ƒ^
   EDITBOX_ID_BASIC_TRAINERID,
@@ -343,6 +391,7 @@ typedef struct
   u32 len;
   void (*StoreData)( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
   BOOL (*ReStoreData)( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
+  BOOL (*PushCallback)( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv, u32 boxID );
 } STR_PARAM_PAGE;
 
 //Šeƒy[ƒW‚Ìc‚Ì‚Â‚È‚ª‚èiŠK‘wj
@@ -432,6 +481,9 @@ struct _DEBUG_INPUT_WORK
   BOOL            touch_prev_flag;
   RESONANCE_RESORT_SV *p_resort_sv;
   DATA_MODIFY_TYPE  modify_type;
+
+  RESORT_BINARY_SHOP  *p_shop;
+  GAMEDATA *p_gamedata;
 };
 
 //STR_TYPE_BUTTON‚Ìarg2‚ÉŽw’è‚·‚éƒR[ƒ‹ƒoƒbƒN
@@ -451,6 +503,10 @@ static BOOL Tourist_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_I
 
 static void Owner_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL Owner_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
+static void ShopPos_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
+
+static BOOL ShopPos_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
+static BOOL ShopPos_PushCallback( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv, u32 boxID );
 //-------------------------------------
 ///	ƒf[ƒ^
 //=====================================
@@ -1211,6 +1267,210 @@ static const STR_PARAM StrParamsResidentExtend89[] =
     5*8,STR_LINE7_POS_Y,12*8,TOUCH_H,
     0,0,EDITBOX_ID_EXT6_PHRASE },
 };
+
+//‚¨“X”z’uƒy[ƒW
+#define HARF_LINE (128)
+static const STR_PARAM StrParamsShopPos[] =
+{
+  //‚¨“X”z’u
+  {STR_TYPE_CAPTION, PEOPLE_01,  STR_POS_X, STR_LINE0_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //‚¨“X‚W
+  {STR_TYPE_CAPTION, RESORT_DATA_99,  STR_POS_X, STR_LINE2_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //‚¨“XID
+  {STR_TYPE_NUM, RESORT_DATA_43, STR_POS_X, STR_LINE3_POS_Y,
+    32,STR_LINE3_POS_Y, 2*8,TOUCH_H,
+    RESORT_SHOP_ID_MAX-1,0,EDITBOX_ID_SHOP_ID_07 },
+  //‚¨“XŽí—Þ
+  {STR_TYPE_SWITCH, CAPTION_NONE,  STR_POS_X, STR_LINE3_POS_Y,
+    70,STR_LINE3_POS_Y,6*8,TOUCH_H,
+    SHOPTYPE_00, RESORT_RESIDENT_TYPE_MAX,EDITBOX_ID_SHOP_KIND_07 },
+  //LV
+  {STR_TYPE_NUM, RESORT_DATA_88,  STR_POS_X, STR_LINE4_POS_Y,
+    16,STR_LINE4_POS_Y,2*8,TOUCH_H,
+    RESORT_SHOP_LVMAX-1,0,EDITBOX_ID_SHOP_LV_07 },
+  //EXP
+  {STR_TYPE_NUM, RESORT_DATA_89,  32 + STR_POS_X, STR_LINE4_POS_Y,
+    32+20,STR_LINE4_POS_Y,4*8,TOUCH_H,
+    9999,0,EDITBOX_ID_SHOP_EXP_07 },
+  //TYPE
+  {STR_TYPE_NUM, RESORT_DATA_82,  88 + STR_POS_X, STR_LINE4_POS_Y,
+    88+24,STR_LINE4_POS_Y,2*8,TOUCH_H,
+    9,0,EDITBOX_ID_SHOP_TYPE_07 },
+  //‚¨“X‚V
+  {STR_TYPE_CAPTION, RESORT_DATA_98,  HARF_LINE, STR_LINE2_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //‚¨“XID
+  {STR_TYPE_NUM, RESORT_DATA_43, HARF_LINE+STR_POS_X, STR_LINE3_POS_Y,
+    HARF_LINE+32,STR_LINE3_POS_Y, 2*8,TOUCH_H,
+    RESORT_SHOP_ID_MAX-1,0,EDITBOX_ID_SHOP_ID_06 },
+  //‚¨“XŽí—Þ
+  {STR_TYPE_SWITCH, CAPTION_NONE,  HARF_LINE+STR_POS_X, STR_LINE3_POS_Y,
+    HARF_LINE+70,STR_LINE3_POS_Y,6*8,TOUCH_H,
+    SHOPTYPE_00, RESORT_RESIDENT_TYPE_MAX,EDITBOX_ID_SHOP_KIND_06 },
+  //LV
+  {STR_TYPE_NUM, RESORT_DATA_88,  HARF_LINE+STR_POS_X, STR_LINE4_POS_Y,
+    HARF_LINE+16,STR_LINE4_POS_Y,2*8,TOUCH_H,
+    RESORT_SHOP_LVMAX-1,0,EDITBOX_ID_SHOP_LV_06 },
+  //EXP
+  {STR_TYPE_NUM, RESORT_DATA_89,  HARF_LINE+32 + STR_POS_X, STR_LINE4_POS_Y,
+    HARF_LINE+32+20,STR_LINE4_POS_Y,4*8,TOUCH_H,
+    9999,0,EDITBOX_ID_SHOP_EXP_06 },
+  //TYPE
+  {STR_TYPE_NUM, RESORT_DATA_82,  HARF_LINE+88 + STR_POS_X, STR_LINE4_POS_Y,
+    HARF_LINE+88+24,STR_LINE4_POS_Y,2*8,TOUCH_H,
+    9,0,EDITBOX_ID_SHOP_TYPE_06 },
+  //‚¨“X‚U
+  {STR_TYPE_CAPTION, RESORT_DATA_97,  STR_POS_X, STR_LINE5_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //‚¨“XID
+  {STR_TYPE_NUM, RESORT_DATA_43, STR_POS_X, STR_LINE6_POS_Y,
+    32,STR_LINE6_POS_Y, 2*8,TOUCH_H,
+    RESORT_SHOP_ID_MAX-1,0,EDITBOX_ID_SHOP_ID_05 },
+  //‚¨“XŽí—Þ
+  {STR_TYPE_SWITCH, CAPTION_NONE,  STR_POS_X, STR_LINE6_POS_Y,
+    70,STR_LINE6_POS_Y,6*8,TOUCH_H,
+    SHOPTYPE_00, RESORT_RESIDENT_TYPE_MAX,EDITBOX_ID_SHOP_KIND_05 },
+  //LV
+  {STR_TYPE_NUM, RESORT_DATA_88,  STR_POS_X, STR_LINE7_POS_Y,
+    16,STR_LINE7_POS_Y,2*8,TOUCH_H,
+    RESORT_SHOP_LVMAX-1,0,EDITBOX_ID_SHOP_LV_05 },
+  //EXP
+  {STR_TYPE_NUM, RESORT_DATA_89,  32 + STR_POS_X, STR_LINE7_POS_Y,
+    32+20,STR_LINE7_POS_Y,4*8,TOUCH_H,
+    9999,0,EDITBOX_ID_SHOP_EXP_05 },
+  //TYPE
+  {STR_TYPE_NUM, RESORT_DATA_82,  88 + STR_POS_X, STR_LINE7_POS_Y,
+    88+24,STR_LINE7_POS_Y,2*8,TOUCH_H,
+    9,0,EDITBOX_ID_SHOP_TYPE_05 },
+  //‚¨“X‚T
+  {STR_TYPE_CAPTION, RESORT_DATA_96,  HARF_LINE, STR_LINE5_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //‚¨“XID
+  {STR_TYPE_NUM, RESORT_DATA_43, HARF_LINE+STR_POS_X, STR_LINE6_POS_Y,
+    HARF_LINE+32,STR_LINE6_POS_Y, 2*8,TOUCH_H,
+    RESORT_SHOP_ID_MAX-1,0,EDITBOX_ID_SHOP_ID_04 },
+  //‚¨“XŽí—Þ
+  {STR_TYPE_SWITCH, CAPTION_NONE,  HARF_LINE+STR_POS_X, STR_LINE6_POS_Y,
+    HARF_LINE+70,STR_LINE6_POS_Y,6*8,TOUCH_H,
+    SHOPTYPE_00, RESORT_RESIDENT_TYPE_MAX,EDITBOX_ID_SHOP_KIND_04 },
+  //LV
+  {STR_TYPE_NUM, RESORT_DATA_88,  HARF_LINE+STR_POS_X, STR_LINE7_POS_Y,
+    HARF_LINE+16,STR_LINE7_POS_Y,2*8,TOUCH_H,
+    RESORT_SHOP_LVMAX-1,0,EDITBOX_ID_SHOP_LV_04 },
+  //EXP
+  {STR_TYPE_NUM, RESORT_DATA_89,  HARF_LINE+32 + STR_POS_X, STR_LINE7_POS_Y,
+    HARF_LINE+32+20,STR_LINE7_POS_Y,4*8,TOUCH_H,
+    9999,0,EDITBOX_ID_SHOP_EXP_04 },
+  //TYPE
+  {STR_TYPE_NUM, RESORT_DATA_82,  HARF_LINE+88 + STR_POS_X, STR_LINE7_POS_Y,
+    HARF_LINE+88+24,STR_LINE7_POS_Y,2*8,TOUCH_H,
+    9,0,EDITBOX_ID_SHOP_TYPE_04 },
+  //‚¨“X‚S
+  {STR_TYPE_CAPTION, RESORT_DATA_95,  STR_POS_X, STR_LINE8_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //‚¨“XID
+  {STR_TYPE_NUM, RESORT_DATA_43, STR_POS_X, STR_LINE9_POS_Y,
+    32,STR_LINE9_POS_Y, 2*8,TOUCH_H,
+    RESORT_SHOP_ID_MAX-1,0,EDITBOX_ID_SHOP_ID_03 },
+  //‚¨“XŽí—Þ
+  {STR_TYPE_SWITCH, CAPTION_NONE,  STR_POS_X, STR_LINE9_POS_Y,
+    70,STR_LINE9_POS_Y,6*8,TOUCH_H,
+    SHOPTYPE_00, RESORT_RESIDENT_TYPE_MAX,EDITBOX_ID_SHOP_KIND_03 },
+  //LV
+  {STR_TYPE_NUM, RESORT_DATA_88,  STR_POS_X, STR_LINE10_POS_Y,
+    16,STR_LINE10_POS_Y,2*8,TOUCH_H,
+    RESORT_SHOP_LVMAX-1,0,EDITBOX_ID_SHOP_LV_03 },
+  //EXP
+  {STR_TYPE_NUM, RESORT_DATA_89,  32 + STR_POS_X, STR_LINE10_POS_Y,
+    32+20,STR_LINE10_POS_Y,4*8,TOUCH_H,
+    9999,0,EDITBOX_ID_SHOP_EXP_03 },
+  //TYPE
+  {STR_TYPE_NUM, RESORT_DATA_82,  88 + STR_POS_X, STR_LINE10_POS_Y,
+    88+24,STR_LINE10_POS_Y,2*8,TOUCH_H,
+    9,0,EDITBOX_ID_SHOP_TYPE_03 },
+  //‚¨“X‚R
+  {STR_TYPE_CAPTION, RESORT_DATA_94,  HARF_LINE, STR_LINE8_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //‚¨“XID
+  {STR_TYPE_NUM, RESORT_DATA_43, HARF_LINE+STR_POS_X, STR_LINE9_POS_Y,
+    HARF_LINE+32,STR_LINE9_POS_Y, 2*8,TOUCH_H,
+    RESORT_SHOP_ID_MAX-1,0,EDITBOX_ID_SHOP_ID_02 },
+  //‚¨“XŽí—Þ
+  {STR_TYPE_SWITCH, CAPTION_NONE,  HARF_LINE+STR_POS_X, STR_LINE9_POS_Y,
+    HARF_LINE+70,STR_LINE9_POS_Y,6*8,TOUCH_H,
+    SHOPTYPE_00, RESORT_RESIDENT_TYPE_MAX,EDITBOX_ID_SHOP_KIND_02 },
+  //LV
+  {STR_TYPE_NUM, RESORT_DATA_88,  HARF_LINE+STR_POS_X, STR_LINE10_POS_Y,
+    HARF_LINE+16,STR_LINE10_POS_Y,2*8,TOUCH_H,
+    RESORT_SHOP_LVMAX-1,0,EDITBOX_ID_SHOP_LV_02 },
+  //EXP
+  {STR_TYPE_NUM, RESORT_DATA_89,  HARF_LINE+32 + STR_POS_X, STR_LINE10_POS_Y,
+    HARF_LINE+32+20,STR_LINE10_POS_Y,4*8,TOUCH_H,
+    9999,0,EDITBOX_ID_SHOP_EXP_02 },
+  //TYPE
+  {STR_TYPE_NUM, RESORT_DATA_82,  HARF_LINE+88 + STR_POS_X, STR_LINE10_POS_Y,
+    HARF_LINE+88+24,STR_LINE10_POS_Y,2*8,TOUCH_H,
+    9,0,EDITBOX_ID_SHOP_TYPE_02 },
+  //‚¨“X‚Q
+  {STR_TYPE_CAPTION, RESORT_DATA_93,  STR_POS_X, STR_LINE11_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //‚¨“XID
+  {STR_TYPE_NUM, RESORT_DATA_43, STR_POS_X, STR_LINE12_POS_Y,
+    32,STR_LINE12_POS_Y, 2*8,TOUCH_H,
+    RESORT_SHOP_ID_MAX-1,0,EDITBOX_ID_SHOP_ID_01 },
+  //‚¨“XŽí—Þ
+  {STR_TYPE_SWITCH, CAPTION_NONE,  STR_POS_X, STR_LINE12_POS_Y,
+    70,STR_LINE12_POS_Y,6*8,TOUCH_H,
+    SHOPTYPE_00, RESORT_RESIDENT_TYPE_MAX,EDITBOX_ID_SHOP_KIND_01 },
+  //LV
+  {STR_TYPE_NUM, RESORT_DATA_88,  STR_POS_X, STR_LINE13_POS_Y,
+    16,STR_LINE13_POS_Y,2*8,TOUCH_H,
+    RESORT_SHOP_LVMAX-1,0,EDITBOX_ID_SHOP_LV_01 },
+  //EXP
+  {STR_TYPE_NUM, RESORT_DATA_89,  32 + STR_POS_X, STR_LINE13_POS_Y,
+    32+20,STR_LINE13_POS_Y,4*8,TOUCH_H,
+    9999,0,EDITBOX_ID_SHOP_EXP_01 },
+  //TYPE
+  {STR_TYPE_NUM, RESORT_DATA_82,  88 + STR_POS_X, STR_LINE13_POS_Y,
+    88+24,STR_LINE13_POS_Y,2*8,TOUCH_H,
+    9,0,EDITBOX_ID_SHOP_TYPE_01 },
+  //‚¨“X‚P
+  {STR_TYPE_CAPTION, RESORT_DATA_92,  HARF_LINE, STR_LINE11_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //‚¨“XID
+  {STR_TYPE_NUM, RESORT_DATA_43, HARF_LINE+STR_POS_X, STR_LINE12_POS_Y,
+    HARF_LINE+32,STR_LINE12_POS_Y, 2*8,TOUCH_H,
+    RESORT_SHOP_ID_MAX-1,0,EDITBOX_ID_SHOP_ID_00 },
+  //‚¨“XŽí—Þ
+  {STR_TYPE_SWITCH, CAPTION_NONE,  HARF_LINE+STR_POS_X, STR_LINE12_POS_Y,
+    HARF_LINE+70,STR_LINE12_POS_Y,6*8,TOUCH_H,
+    SHOPTYPE_00, RESORT_RESIDENT_TYPE_MAX,EDITBOX_ID_SHOP_KIND_00 },
+  //LV
+  {STR_TYPE_NUM, RESORT_DATA_88,  HARF_LINE+STR_POS_X, STR_LINE13_POS_Y,
+    HARF_LINE+16,STR_LINE13_POS_Y,2*8,TOUCH_H,
+    RESORT_SHOP_LVMAX-1,0,EDITBOX_ID_SHOP_LV_00 },
+  //EXP
+  {STR_TYPE_NUM, RESORT_DATA_89,  HARF_LINE+32 + STR_POS_X, STR_LINE13_POS_Y,
+    HARF_LINE+32+20,STR_LINE13_POS_Y,4*8,TOUCH_H,
+    9999,0,EDITBOX_ID_SHOP_EXP_00 },
+  //TYPE
+  {STR_TYPE_NUM, RESORT_DATA_82,  HARF_LINE+88 + STR_POS_X, STR_LINE13_POS_Y,
+    HARF_LINE+88+24,STR_LINE13_POS_Y,2*8,TOUCH_H,
+    9,0,EDITBOX_ID_SHOP_TYPE_00 },
+};
+
+
 static const STR_PARAM_DISPLAY sc_first_display_tbl[]  =
 {
   //Å‰‚Ìƒy[ƒW
@@ -1220,7 +1480,7 @@ static const STR_PARAM_DISPLAY sc_first_display_tbl[]  =
 };
 static const STR_PARAM_DISPLAY sc_city_display_tbl[]  =
 {
-  //Å‰‚Ìƒy[ƒW
+  //ŠXƒf[ƒ^‚Ìƒy[ƒW
   {
     StrParamsCity, NELEMS(StrParamsCity)
   },
@@ -1253,10 +1513,18 @@ static const STR_PARAM_DISPLAY sc_resident_display_tbl[]  =
   },
 };
 
+static const STR_PARAM_DISPLAY sc_shoppos_display_tbl[]  =
+{
+  //‚¨“X”z’u
+  {
+    StrParamsShopPos, NELEMS(StrParamsShopPos)
+  },
+};
 static const STR_PARAM_PAGE sc_first_page =
 {
   sc_first_display_tbl,
   NELEMS(sc_first_display_tbl),
+  NULL,
   NULL,
   NULL,
 };
@@ -1267,6 +1535,7 @@ static const STR_PARAM_PAGE sc_city_page =
   NELEMS(sc_city_display_tbl),
   City_StoreData,
   City_ReStoreData,
+  NULL,
 };
 
 static const STR_PARAM_PAGE sc_resident_page =
@@ -1275,6 +1544,7 @@ static const STR_PARAM_PAGE sc_resident_page =
   NELEMS(sc_resident_display_tbl),
   Resident_StoreData,
   Resident_ReStoreData,
+  NULL,
 };
 
 static const STR_PARAM_PAGE sc_tourist_page =
@@ -1283,6 +1553,7 @@ static const STR_PARAM_PAGE sc_tourist_page =
   NELEMS(sc_resident_display_tbl),
   Tourist_StoreData,
   Tourist_ReStoreData,
+  NULL,
 };
 
 static const STR_PARAM_PAGE sc_owner_page =
@@ -1291,6 +1562,16 @@ static const STR_PARAM_PAGE sc_owner_page =
   NELEMS(sc_resident_display_tbl),
   Owner_StoreData,
   Owner_ReStoreData,
+  NULL,
+};
+
+static const STR_PARAM_PAGE sc_shoppos_page =
+{
+  sc_shoppos_display_tbl,
+  NELEMS(sc_shoppos_display_tbl),
+  ShopPos_StoreData,
+  ShopPos_ReStoreData,
+  ShopPos_PushCallback,
 };
 
 static GFL_PROC_RESULT DEBUG_INPUT_Resort_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
@@ -1338,6 +1619,7 @@ static STR_PARAM_PAGE_STACK * Page_PushPage( STR_PARAM_PAGE_STACK *p_wk, const S
 static STR_PARAM_PAGE_STACK * Page_PopPage( STR_PARAM_PAGE_STACK *p_wk );
 static void Page_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL Page_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
+static BOOL Page_PushCallback( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv, u32 boxID );
 
 //util
 
@@ -1456,7 +1738,9 @@ static GFL_PROC_RESULT DEBUG_INPUT_Resort_Init( GFL_PROC* proc, int* seq, void* 
     GFL_STD_MemClear( wk, sizeof(DEBUG_INPUT_WORK));
     wk->Seq = 0;
     wk->HeapID = HEAPID_WIFIMATCH_DEBUG;
+    wk->p_shop  = RESORT_BINARY_SHOP_Init(HEAPID_WIFIMATCH_DEBUG);
     wk->p_resort_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(p_param->p_gamedata) );
+    wk->p_gamedata  = p_param->p_gamedata;
 
     //‰Šúƒy[ƒWì¬
     wk->p_pageData = Page_PushPage( NULL, &sc_first_page );
@@ -1484,6 +1768,8 @@ static GFL_PROC_RESULT DEBUG_INPUT_Resort_Quit( GFL_PROC* proc, int* seq, void* 
 
   CleanupDisp( wk );
 
+
+  RESORT_BINARY_SHOP_Exit( wk->p_shop );
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_WIFIMATCH_DEBUG );
 
@@ -1904,6 +2190,39 @@ static void UpdateBox( DEBUG_INPUT_WORK* wk, u32 inBoxID, u32 inValue )
   ypos = p->TouchY;
 
   PRINT_UTIL_PrintColor( &wk->PrintUtil, wk->PrintQue, xpos, ypos, wk->StrBuf, wk->Font, color );
+
+  Page_PushCallback( wk, wk->p_resort_sv, inBoxID );
+}
+
+static void UpdateBoxInner( DEBUG_INPUT_WORK* wk, u32 inBoxID, u32 inValue )
+{
+  const STR_PARAM* p  = NULL;
+  u32 str_width, str_height, xpos, ypos;
+  PRINTSYS_LSB color;
+  u8 color_bg;
+
+  p = GetBoxForEditBoxID( wk, inBoxID );
+  if( p == NULL ) return;
+  if ( p->Type == STR_TYPE_EDITSTR ) return;
+  if(  p->Type == STR_TYPE_CAPTION ) return;
+
+  color = GetBoxSubBGColor( p->Type );
+  color_bg = PRINTSYS_LSB_GetB( color );
+
+  GFL_BMP_Fill( wk->Bmp, p->TouchX, p->TouchY, p->TouchW, p->TouchH, color_bg );
+
+  wk->BoxValue[ inBoxID ] = inValue;
+  GetBoxStr( wk, inBoxID, wk->StrBuf );
+
+  str_width = PRINTSYS_GetStrWidth( wk->StrBuf, wk->Font, 0 );
+  xpos = p->TouchX;
+  if( str_width < p->TouchW ){
+    xpos += (p->TouchW - str_width) / 2;
+  }
+  str_height = GFL_FONT_GetLineHeight( wk->Font );
+  ypos = p->TouchY;
+
+  PRINT_UTIL_PrintColor( &wk->PrintUtil, wk->PrintQue, xpos, ypos, wk->StrBuf, wk->Font, color );
 }
 
 static void UpdateStrBox( DEBUG_INPUT_WORK* wk, u32 inBoxID)
@@ -1934,6 +2253,8 @@ static void UpdateStrBox( DEBUG_INPUT_WORK* wk, u32 inBoxID)
   ypos = p->TouchY;
 
   PRINT_UTIL_PrintColor( &wk->PrintUtil, wk->PrintQue, xpos, ypos, wk->BoxStrBuf[ strBoxID ], wk->Font, color );
+
+  Page_PushCallback( wk, wk->p_resort_sv, inBoxID );
 }
 
 
@@ -2578,13 +2899,16 @@ static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrPa
   case 0: //ŠX
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_city_page );
     break;
-  case 1: //Z–¯
+  case 1: //“X”z’u
+    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_shoppos_page );
+    break;
+  case 2: //Z–¯
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_resident_page );
     break;
-  case 2: //—·sŽÒ
+  case 3: //—·sŽÒ
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_tourist_page );
     break;
-  case 3: //Ž©•ª
+  case 4: //Ž©•ª
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_owner_page );
     break;
   default:
@@ -2602,13 +2926,16 @@ static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
   case 0: //ŠX
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_city_page );
     break;
-  case 1: //Z–¯
+  case 1: //“X”z’u
+    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_shoppos_page );
+    break;
+  case 2: //Z–¯
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_resident_page );
     break;
-  case 2: //—·sŽÒ
+  case 3: //—·sŽÒ
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_tourist_page );
     break;
-  case 3: //Ž©•ª
+  case 4: //Ž©•ª
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_owner_page );
     break;
   default:
@@ -3231,6 +3558,116 @@ static BOOL Owner_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INP
 
 }
 
+//•’Ê‚ÉŽó‚¯Žæ‚é‚¾‚¯‚Ìƒe[ƒuƒ‹
+static const struct
+{
+  EDITBOX_ID editBoxID;
+  RESORT_DATA_PARAM resort_param;
+} sc_shoppos_restore_tbl[]  =
+{
+  { EDITBOX_ID_SHOP_ID_00,    RESORT_INSTITUTION_DATA_PARAM_ID },
+  { EDITBOX_ID_SHOP_LV_00,    RESORT_INSTITUTION_DATA_PARAM_LV },
+  { EDITBOX_ID_SHOP_EXP_00,   RESORT_INSTITUTION_DATA_PARAM_EXP },
+};
+
+#define SHOPPOS_OFS (EDITBOX_ID_SHOP_TYPE_00-EDITBOX_ID_SHOP_ID_00+1)
+
+static void ShopPos_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
+{
+
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+  int i, j;
+
+  //‚Ü‚¸‚ÍZl‚ð‚¢‚Á‚Ï‚¢‚É‚·‚é
+  {
+    RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->HeapID) );
+    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+    {
+      RESORT_RESIDENT_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, i );
+      if( RESORT_RESIDENT_DATA_IsEmpty( p_dst ) )
+      {
+        Debug_Resort_SetRecv( p_recv, p_wk->p_gamedata );
+        RESORT_RESIDENT_DATA_ConvertRecv( p_dst, p_recv, 63-i, RESORT_PLACEID_FIELD );
+      }
+    }
+
+    RESORT_RECV_DATA_Exit( p_recv );
+  }
+
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, i );
+    RESORT_INSTITUTION_DATA *p_ins = RESORT_RESIDENT_DATA_GetInstitution(p_data);
+    const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_wk->p_shop, p_data );
+    for( j = 0; j < NELEMS(sc_shoppos_restore_tbl); j++ )
+    {
+      p_wk->BoxValue[sc_shoppos_restore_tbl[j].editBoxID+SHOPPOS_OFS*i] = 
+        RESORT_INSTITUTION_DATA_GetData( p_ins, sc_shoppos_restore_tbl[j].resort_param );
+    }
+    p_wk->BoxValue[EDITBOX_ID_SHOP_KIND_00+SHOPPOS_OFS*i] = RESORT_BINARY_SHOP_DATA_GetData(cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
+    p_wk->BoxValue[EDITBOX_ID_SHOP_TYPE_00+SHOPPOS_OFS*i] = RESORT_BINARY_SHOP_DATA_GetData(cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+  }
+}
+
+static BOOL ShopPos_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
+{
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+  int i, j;
+
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, i );
+    RESORT_INSTITUTION_DATA *p_ins = RESORT_RESIDENT_DATA_GetInstitution(p_data);
+    const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( cp_wk->p_shop, p_data );
+    for( j = 0; j < NELEMS(sc_shoppos_restore_tbl); j++ )
+    {
+      RESORT_INSTITUTION_DATA_SetData( p_ins, sc_shoppos_restore_tbl[j].resort_param, cp_wk->BoxValue[sc_shoppos_restore_tbl[j].editBoxID+SHOPPOS_OFS*i] );
+    }
+    RESORT_RESIDENT_DATA_SetData( p_data, RESORT_DATA_PARAM_WANT_JOB, cp_wk->BoxValue[EDITBOX_ID_SHOP_ID_00+SHOPPOS_OFS*i] );
+    RESORT_RESIDENT_DATA_SetData( p_data, RESORT_DATA_PARAM_TYPE, cp_wk->BoxValue[EDITBOX_ID_SHOP_KIND_00+SHOPPOS_OFS*i] );
+  }
+
+  return TRUE;
+}
+static BOOL ShopPos_PushCallback( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv, u32 boxID )
+{
+  u32 index   = (boxID-EDITBOX_ID_SHOP_ID_00) / SHOPPOS_OFS;
+  u32 baseID  = boxID - index * SHOPPOS_OFS;
+
+  //ID‚ð‚©‚¦‚½‚çAKIND,LV,TYPE‚ª‚©‚í‚èEXP‚ª‚O‚É‚È‚é
+  //KIND‚ð‚©‚¦‚½‚çAID‚ª‚©‚í‚é
+  //LV‚ð‚©‚¦‚½‚çAID‚ª‚©‚í‚é
+  //TYPE‚ð‚©‚¦‚½‚çAID‚ª‚©‚í‚é
+  switch( baseID )
+  {
+  case EDITBOX_ID_SHOP_ID_00:
+    {
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( p_wk->p_shop, p_wk->BoxValue[ boxID ] );
+      u16 kind  = RESORT_BINARY_SHOP_DATA_GetData(cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP);
+      u16 lv    = RESORT_BINARY_SHOP_DATA_GetData(cp_shop_data, RESORT_BINARY_SHOP_PARAM_LV);
+      u16 type  = RESORT_BINARY_SHOP_DATA_GetData(cp_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE);
+      UpdateBoxInner( p_wk, EDITBOX_ID_SHOP_KIND_00 + index * SHOPPOS_OFS, kind );
+      UpdateBoxInner( p_wk, EDITBOX_ID_SHOP_LV_00 + index * SHOPPOS_OFS, lv );
+      UpdateBoxInner( p_wk, EDITBOX_ID_SHOP_EXP_00 + index * SHOPPOS_OFS, 0 );
+      UpdateBoxInner( p_wk, EDITBOX_ID_SHOP_TYPE_00 + index * SHOPPOS_OFS, type );
+    }
+    break;
+  case EDITBOX_ID_SHOP_KIND_00:
+  case EDITBOX_ID_SHOP_LV_00:
+  case EDITBOX_ID_SHOP_TYPE_00:
+    {
+      u16 kind  = p_wk->BoxValue[ EDITBOX_ID_SHOP_KIND_00 + index * SHOPPOS_OFS ];
+      u16 lv    = p_wk->BoxValue[ EDITBOX_ID_SHOP_LV_00 + index * SHOPPOS_OFS ];
+      u16 type  = p_wk->BoxValue[ EDITBOX_ID_SHOP_TYPE_00 + index * SHOPPOS_OFS ];
+      u32 id = RESORT_BINARY_SHOP_SearchShopID( p_wk->p_shop, kind, lv, type );
+      UpdateBoxInner( p_wk, EDITBOX_ID_SHOP_ID_00 + index * SHOPPOS_OFS, id );
+    }
+    break;
+  }
+
+  return TRUE;
+}
+
 static const STR_PARAM_DISPLAY *Page_GetStrParamDisplay( STR_PARAM_PAGE_STACK *p_wk )
 {
   return &p_wk->cp_now_page->display[ p_wk->page ];
@@ -3281,6 +3718,16 @@ static BOOL Page_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPU
   if( cp_wk->p_pageData->cp_now_page->ReStoreData )
   {
     return cp_wk->p_pageData->cp_now_page->ReStoreData( p_resort_sv, cp_wk );
+  }
+
+  return FALSE;
+}
+
+static BOOL Page_PushCallback( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv, u32 boxID )
+{
+  if(p_wk->p_pageData->cp_now_page->PushCallback )
+  {
+    return p_wk->p_pageData->cp_now_page->PushCallback( p_wk, p_resort_sv, boxID );
   }
 
   return FALSE;

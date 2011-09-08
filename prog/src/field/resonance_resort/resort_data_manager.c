@@ -96,6 +96,7 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
   };
 
   int i, j;
+  RESORT_ABSTRUCT_ITERATOR ite;
 
   //クリア
   for( i = 0; i < RESORT_PLACEID_MAX; i++ )
@@ -109,10 +110,10 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
     }
   }
 
-  RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->p_abstruct, sc_tbl, NELEMS(sc_tbl) );
+  ite = RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->p_abstruct, sc_tbl, NELEMS(sc_tbl) );
   while(1)
   {
-    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->p_abstruct, sc_tbl, NELEMS(sc_tbl) );
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->p_abstruct, &ite, sc_tbl, NELEMS(sc_tbl) );
     if( p_data == NULL )
     {
       break;
@@ -122,6 +123,7 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
       u16 peopleID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
       RESORT_PLACEID placeID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_PLACE_ID, NULL );
 
+      GF_ASSERT( peopleID < RESORT_DATA_MANAGER_MAX );
       //登録されていないのを除く
       if( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX )
       {
@@ -897,8 +899,6 @@ enum
 struct _RESORT_ABSTRUCT_MANAGER
 {
   RESORT_ABSTRUCT_DATA  *p_data[ DATA_INDEX_MAX ];
-  u16 current;
-  u16 tbl_index;
 };
 
 //-------------------------------------
@@ -1024,10 +1024,15 @@ void RESORT_ABSTRUCT_MANAGER_Exit( RESORT_ABSTRUCT_MANAGER * p_wk )
  *	@return データ
  */
 //-----------------------------------------------------------------------------
-void RESORT_ABSTRUCT_MANAGER_BeginIterator( RESORT_ABSTRUCT_MANAGER * p_wk, const RESORT_DATA_BUFFER_TYPE *cp_tbl, u32 tbl_max )
+RESORT_ABSTRUCT_ITERATOR RESORT_ABSTRUCT_MANAGER_BeginIterator( RESORT_ABSTRUCT_MANAGER * p_wk, const RESORT_DATA_BUFFER_TYPE *cp_tbl, u32 tbl_max )
 {
-  p_wk->tbl_index = 0;
-  p_wk->current = sc_type[ cp_tbl[p_wk->tbl_index] ].start;
+  RESORT_ABSTRUCT_ITERATOR ite;
+  GFL_STD_MemClear( &ite, sizeof( RESORT_ABSTRUCT_ITERATOR) );
+
+  ite.tbl_index = 0;
+  ite.current = sc_type[ cp_tbl[ 0 ] ].start;
+
+  return ite;
 }
 
 //----------------------------------------------------------------------------
@@ -1041,21 +1046,21 @@ void RESORT_ABSTRUCT_MANAGER_BeginIterator( RESORT_ABSTRUCT_MANAGER * p_wk, cons
  *	@return データ  NULLで終了
  */
 //-----------------------------------------------------------------------------
-RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_MANAGER_NextIterator( RESORT_ABSTRUCT_MANAGER * p_wk, const RESORT_DATA_BUFFER_TYPE *cp_tbl, u32 tbl_max )
+RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_MANAGER_NextIterator( RESORT_ABSTRUCT_MANAGER * p_wk, RESORT_ABSTRUCT_ITERATOR *p_ite, const RESORT_DATA_BUFFER_TYPE *cp_tbl, u32 tbl_max )
 {
-  if( p_wk->tbl_index < tbl_max )
+  if( p_ite->tbl_index < tbl_max )
   {
-    if( sc_type[ cp_tbl[p_wk->tbl_index] ].start <= p_wk->current && p_wk->current < sc_type[ cp_tbl[p_wk->tbl_index] ].end )
+    if( sc_type[ cp_tbl[p_ite->tbl_index] ].start <= p_ite->current && p_ite->current < sc_type[ cp_tbl[p_ite->tbl_index] ].end )
     {
-      return p_wk->p_data[ p_wk->current++ ];
+      return p_wk->p_data[ p_ite->current++ ];
     }
     else
     {
-      p_wk->tbl_index++;
-      if( p_wk->tbl_index < tbl_max )
+      p_ite->tbl_index++;
+      if( p_ite->tbl_index < tbl_max )
       {
-        p_wk->current = sc_type[ cp_tbl[p_wk->tbl_index] ].start;
-        return p_wk->p_data[ p_wk->current++ ];
+        p_ite->current = sc_type[ cp_tbl[p_ite->tbl_index] ].start;
+        return p_wk->p_data[ p_ite->current++ ];
       }
     }
   }
@@ -1162,10 +1167,10 @@ RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_MANAGER_GetDataByPeopleIndex( RESORT_ABST
 //-----------------------------------------------------------------------------
 RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_MANAGER_GetEmptyData( RESORT_ABSTRUCT_MANAGER * p_wk,RESORT_DATA_BUFFER_TYPE type )
 {
-  RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk, &type, 1 );
+  RESORT_ABSTRUCT_ITERATOR ite = RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk, &type, 1 );
   while(1)
   {
-    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk, &type, 1 );
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk, &ite, &type, 1 );
     if( p_data == NULL )
     {
       return NULL;
