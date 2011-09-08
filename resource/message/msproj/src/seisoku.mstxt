@@ -1525,6 +1525,220 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_seisoku_zone_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Place ]に
+せいそくする　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Place ]に
+生息する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:09:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>橋エンカウント選択時に表示</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:09:58" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_zone_08a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Place ]
+[System:Color name="1" ]はる[/System:Color]に　せいそくする　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:09:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Place ]
+[System:Color name="1" ]春[/System:Color]に　生息する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:09:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>橋エンカウント選択時に表示
+※春用</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:10:03" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_zone_08b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Place ]
+[System:Color name="1" ]なつ[/System:Color]に　せいそくする　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:09:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Place ]
+[System:Color name="1" ]夏[/System:Color]に　生息する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:09:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>橋エンカウント選択時に表示
+※夏用</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:10:07" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_zone_08c"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Place ]
+[System:Color name="1" ]あき[/System:Color]に　せいそくする　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:09:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Place ]
+[System:Color name="1" ]秋[/System:Color]に　生息する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:09:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>橋エンカウント選択時に表示
+※秋用</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:10:12" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_zone_08d"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Place ]
+[System:Color name="1" ]ふゆ[/System:Color]に　せいそくする　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:09:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Place ]
+[System:Color name="1" ]冬[/System:Color]に　生息する　ポケモン</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:09:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:08:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>橋エンカウント選択時に表示
+※冬用</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-08T12:10:17" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_seisoku_result_01"
 		Style="Large">
 		<LanguageCell
