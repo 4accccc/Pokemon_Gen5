@@ -70,6 +70,7 @@ extern u8 AREADATA_GetBBDColor(const AREADATA * areadata);
 extern BOOL AREADATA_HasSeason(u16 area_id);
 extern BOOL AREADATA_HasSeasonDiff(u16 area_id);
 
-extern BOOL AREADATA_HasDungeonArea(u16 area_id);
-extern BOOL AREADATA_HasResortInstitutionArea(u16 area_id);
+extern BOOL AREADATA_IsDungeonArea(u16 area_id);
+extern BOOL AREADATA_IsResortInstitutionArea(u16 area_id);
+extern BOOL AREADATA_IsWBTHallArea(u16 area_id);
 

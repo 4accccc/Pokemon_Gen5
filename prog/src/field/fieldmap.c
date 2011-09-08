@@ -499,6 +499,7 @@ static BOOL zonedata_GetShadowUse( u16 zone_id );
 
 static BOOL zonedata_IsEnvSE( u16 zone_id );
 static BOOL zonedata_IsSepiaMap( u16 zone_id );
+static BOOL zonedata_IsInfinityDungeonEntrance( u16 zone_id );
 
 //data
 static const GFL_DISP_VRAM fldmapdata_dispVram;
@@ -568,13 +569,13 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
     {
       area_ofs_id = PMSEASON_GetConsiderCommSeason(gsys);
     }
-    else if (AREADATA_HasDungeonArea(area_id))
+    else if (AREADATA_IsDungeonArea(area_id))
     {
       PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
       ZONEID zone_id = PLAYERWORK_getZoneID( pw );
  
       // 無限ダンジョン受付は常に0番に固定
-      if( (zone_id != ZONE_ID_D31R0101) && (zone_id != ZONE_ID_D31R0201) )
+      if( zonedata_IsInfinityDungeonEntrance( zone_id ) == FALSE )
       {
         // 無限ダンジョンのダンジョンエリア情報を取得
         SAVE_CONTROL_WORK *p_scw = GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
@@ -582,9 +583,13 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
         area_ofs_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
       }
     }
-    else if ( AREADATA_HasResortInstitutionArea( area_id ) )
+    else if ( AREADATA_IsResortInstitutionArea( area_id ) )
     {
       area_ofs_id = GAMEDATA_GetAreaOfs( fieldWork->gamedata );
+    }
+    else if ( AREADATA_IsWBTHallArea( area_id ) )
+    {
+      area_ofs_id = 0;  //仮
     }
 
     // エリア情報を取得
@@ -4291,3 +4296,19 @@ static BOOL zonedata_IsSepiaMap( u16 zone_id )
   if ( zone_id == ZONE_ID_OLDC05R0501 ) return TRUE;
   return FALSE;
 }
+
+//==================================================================
+/**
+ * @brief 無限ダンジョン入り口かどうかの判定処理
+ * @date  2011.09.08
+ * @author  onoue,tamada
+ */
+//==================================================================
+static BOOL zonedata_IsInfinityDungeonEntrance( u16 zone_id )
+{
+  // 無限ダンジョン受付は常に0番に固定
+  return ( (zone_id == ZONE_ID_D31R0101) || (zone_id == ZONE_ID_D31R0201) );
+}
+
+
+

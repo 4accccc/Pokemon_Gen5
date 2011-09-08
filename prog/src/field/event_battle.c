@@ -384,7 +384,7 @@ GMEVENT * EVENT_TrainerBattle(
   if ( (flags & SCR_BATTLE_MODE_MUGEN) != 0 )
   {
     u16 area_id = ZONEDATA_GetAreaID( FIELDMAP_GetZoneID(fieldmap));
-    if (AREADATA_HasDungeonArea(area_id))
+    if (AREADATA_IsDungeonArea(area_id))
     {
       GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
       SAVE_CONTROL_WORK *p_scw = GAMEDATA_GetSaveControlWork( gdata );

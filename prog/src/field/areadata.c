@@ -207,7 +207,7 @@ BOOL AREADATA_HasSeason(u16 area_id)
 //------------------------------------------------------------------
 //無限ダンジョンエリアのある/なし
 //------------------------------------------------------------------
-BOOL AREADATA_HasDungeonArea(u16 area_id)
+BOOL AREADATA_IsDungeonArea(u16 area_id)
 {
   if (AREA_ID_IN74 <= area_id && area_id < AREA_ID_IN76)
   {
@@ -219,9 +219,20 @@ BOOL AREADATA_HasDungeonArea(u16 area_id)
 //------------------------------------------------------------------
 //リゾートのテクスチャ複数エリアかどうか
 //------------------------------------------------------------------
-BOOL AREADATA_HasResortInstitutionArea(u16 area_id)
+BOOL AREADATA_IsResortInstitutionArea(u16 area_id)
 {
   if( AREA_ID_IN72 <= area_id && area_id < AREA_ID_IN73 )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+//------------------------------------------------------------------
+///WBT会場のエリアかどうか
+//------------------------------------------------------------------
+BOOL AREADATA_IsWBTHallArea(u16 area_id)
+{
+  if( AREA_ID_IN79 <= area_id && area_id < AREA_ID_IN80 )
   {
     return TRUE;
   }
