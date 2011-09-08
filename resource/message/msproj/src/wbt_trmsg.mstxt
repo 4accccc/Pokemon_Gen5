@@ -29521,11 +29521,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうりは　ひつぜん！　【５文字】！
+			<Text>【５文字】！　すべての　こうげきを！
 はがねの　こころで　はねつけろッ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T10:35:17" />
+				Time="2011-09-08T02:42:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -29533,11 +29533,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勝利は　必然ッ！　【５文字】！
+			<Text>【５文字】！　すべての　攻撃を！
 はがねの　心で　はねつけろッ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T10:35:32" />
+				Time="2011-09-08T02:42:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37370,10 +37370,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おのれの　みちを　つっぱしるゥ！
-【５文字】に　だきょうなしィ！▼</Text>
+マイウェイ　【５文字】！　カモンッ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T10:39:41" />
+				Time="2011-09-08T02:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -37382,10 +37382,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おのれの　道を　突っ走るゥ！
-【５文字】に　妥協なしィ！▼</Text>
+マイウェイ　【５文字】！　カモンッ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T10:39:46" />
+				Time="2011-09-08T02:39:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -37834,10 +37834,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>れいに　はじまり　れいに　おわる！
-れいぎ　ただしき　【５文字】！▼</Text>
+れいぎただしき　せんし　【５文字】！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T07:41:35" />
+				Time="2011-09-08T02:45:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -37846,10 +37846,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>礼に　始まり　礼に　終わる！
-礼儀　正しき　【５文字】！▼</Text>
+礼儀正しき　戦士　【５文字】！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-05T09:58:50" />
+				Time="2011-09-08T02:45:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"

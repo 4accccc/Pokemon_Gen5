@@ -15388,7 +15388,7 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねぇ　あなた！　全ての　エリアを
+			<Text>ねぇ　あなた！　すべての　エリアを
 制覇したんだって！？▼
 あのバンジロウを　超える
 トレーナーが　現れただなんて▽
@@ -15396,7 +15396,7 @@ Cギアを　見てごらん▼
 うん……とにかく　おめでとう！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-06T03:23:42" />
+				Time="2011-09-08T02:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15836,16 +15836,16 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみが　全ての
+			<Text>きみが　すべての
 エリアを　制覇したと　聞いて▽
 ぼくも　全てを　理解したよ▼
 いままで　ぼくが　感じていた
 震え上がるような　力……▼
-それは　きみが　もっていた
+それは　きみが　持っていた
 潜在能力だったんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-06T04:33:35" />
+				Time="2011-09-08T02:43:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"

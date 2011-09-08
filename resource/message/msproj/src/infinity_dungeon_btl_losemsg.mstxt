@@ -11382,10 +11382,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>負けることなんて　怖くない！
-逃げ出さず　戦い続けるだけ！▼</Text>
+逃げださず　戦い続けるだけ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-11T07:22:10" />
+				Time="2011-09-08T02:53:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11760,11 +11760,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おっ　いいデータ！▼
+			<Text>おっ　いいデータ！
 研究者にとって　ここは　パラダイスね▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-11T09:56:55" />
+				Time="2011-09-08T03:05:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12210,11 +12210,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うう……にんきものへの　みちは
-けわしいもんだな……▼</Text>
+			<Text>うう……
+にんきものへの　みちは　けわしい……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T03:20:25" />
+				Time="2011-09-08T03:02:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12222,11 +12222,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うう……人気者への　道は
-けわしいもんだな……▼</Text>
+			<Text>うう……
+人気者への　道は　けわしいな……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T03:20:25" />
+				Time="2011-09-08T03:02:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12378,11 +12378,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うえには　これくらい　あぶない
-ポケモンが　たくさん　いるのかな？▼</Text>
+			<Text>うえには　あなたの　ポケモンくらい
+あぶないのが　たくさん　いるのかな？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-12T03:11:59" />
+				Time="2011-09-08T02:59:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12390,11 +12390,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>上には　これくらい　あぶない
-ポケモンが　たくさん　いるのかな？▼</Text>
+			<Text>上には　あなたの　ポケモンくらい
+危ないのが　たくさん　いるのかな？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-12T03:12:07" />
+				Time="2011-09-08T02:59:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
