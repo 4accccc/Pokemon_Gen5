@@ -730,7 +730,7 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
     {
-      WBT_GIMMICK_EffectStart( p_fieldmap, SCR_WBT_EFFECT_CHAMP, SCR_WBT_EFFECT_POS_L );
+      WBT_GIMMICK_WinEffectStart( p_fieldmap );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
     {
@@ -918,6 +918,7 @@ void WBT_GIMMICK_WinEffectStart( FIELDMAP_WORK *p_fieldmap )
 
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
+
     // アニメ再生
     for( i=0; i<ANM_WIN_A_NUM; i++ )
     {
@@ -1065,6 +1066,9 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
   // WIN エフェクトの設定
   EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_E_WIN_START, ANM_WIN_A_NUM, effect_pos );
   EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_E_WIN_LOOP, ANM_WIN_B_NUM, effect_pos );
+  // WIN エフェクトはカリングしない
+  FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_START, FALSE );
+  FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, FALSE );
 
   //=====================================
   // 照明の設定
