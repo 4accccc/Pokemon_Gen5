@@ -15620,7 +15620,7 @@ Cギアを　見てごらん▼
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリア６は　もう　ちじょうからは
+			<Text>エリア６は　ちじょうからは
 みえないくらい　たかい　ところに▽
 あるみたいね……▼
 ホント　どこまで　つづいてるのかしら
@@ -15628,7 +15628,7 @@ Cギアを　見てごらん▼
 きょうみは　つきないわね▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-08T02:24:05" />
+				Time="2011-09-08T03:14:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15636,14 +15636,14 @@ Cギアを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エリア６は　もう　地上からは
+			<Text>エリア６は　地上からは
 みえないくらい　高い所に▽
 あるみたいね……▼
 ホント　どこまで　続いてるのかしら？
 研究者として　興味は　尽きないわね▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-08T02:24:10" />
+				Time="2011-09-08T03:14:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"

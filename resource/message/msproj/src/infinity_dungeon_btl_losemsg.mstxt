@@ -13973,10 +13973,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そんな！　ぼくが　こんなところで
-つまづくはずが　ないんだ！▼</Text>
+つまずくはずが　ないんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-12T10:09:54" />
+				Time="2011-09-08T03:23:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13985,10 +13985,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そんな！　ぼくが　こんなところで
-つまづくはずが　ないんだ！▼</Text>
+つまずくはずが　ないんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-12T10:09:57" />
+				Time="2011-09-08T03:23:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14896,11 +14896,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごぉい！　あなたなら
+			<Text>すごーい！　あなたなら
 もっと　うえに　いけちゃいそうだね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-22T04:28:36" />
+				Time="2011-09-08T03:29:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14908,11 +14908,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごぉい！　あなたなら
+			<Text>すごーい！　あなたなら
 もっと　上に　行けちゃいそうだね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-22T04:29:05" />
+				Time="2011-09-08T03:29:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
