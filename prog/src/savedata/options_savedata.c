@@ -34,5 +34,6 @@ void OPTIONS_SAVEDATA_Init( OPTIONS_SAVEDATA * sv )
   MYPMS_Init( &sv->mypms_data );
   CGEAR_SV_Init( &sv->cgear_savedata );
   SHORTCUT_Init( &sv->shortcut );
+  BOAST_MSG_SAVEDATA_Init( &sv->boast_message );
 }
 

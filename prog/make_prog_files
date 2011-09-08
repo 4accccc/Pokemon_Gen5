@@ -77,7 +77,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/fmission_save.c \
         savedata/pokewood_savedata.c \
         savedata/cygnus_savedata.c \
-        savedata/questionnaire_index.c
+        savedata/questionnaire_index.c \
+        savedata/boast_message.c
 
 
 #’ÊM‚Ìí’“

@@ -16,6 +16,8 @@
 
 #include "shortcut_local.h"
 
+#include "boast_message_local.h"
+
 //----------------------------------------------------------
 /**
  * @brief
@@ -27,6 +29,8 @@ struct _OPTIONS_SAVEDATA{
   CGEAR_SAVEDATA cgear_savedata;
 
   SHORTCUT shortcut;
+
+  BOAST_MSG_SAVEDATA boast_message;
 
 };
 
