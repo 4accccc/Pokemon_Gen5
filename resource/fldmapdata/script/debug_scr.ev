@@ -31,6 +31,8 @@
   .include  "oldt06r0101_def.h"
   .include  "oldc08r0101.h"
   .include  "oldc08r0101_def.h"
+  .include  "oldt04r0301.h"
+  .include  "oldt04r0301_def.h"
   .include "c08r0401_def.h"
   .include "t01.h"
   .include "hiden_def.h"
@@ -651,7 +653,7 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 5 )	//過去イベント・シッポウ
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 6 )	//過去イベント・サンギ
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 7 )	//過去イベント・ソウリュウ
-		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 100 )	//ラストイベント３・Ｎ戦前
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_11, 8 )	//過去イベント・サザナミ
 		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 110 )	//ラストイベント４・ゲーチス戦前
 		_BMPMENU_MAKE_LIST( msg_debug_00, 800 )	//やめる
 		//メニュー表示
@@ -761,22 +763,17 @@ EVENT_START   ev_debug_suginaka
 			
 			$SCWK_TEMP0 = 428
 		
-		ELSIF $SCWK_ANSWER == 110 THEN
-			//ラストシーン・ゲーチス戦前
-			//OBJセット
-			//_FLAG_SET( FV_C09R0501_RIVAL_01 )
-			//_FLAG_SET( FV_C09R0501_CHAMPION_01 )
-			//_FLAG_SET( FV_N01R0501_SAGE1 )
-			//_FLAG_RESET( FV_N01R0502_EVENT_01 )
+		ELSIF $SCWK_ANSWER == 8 THEN
 
-			//謁見の間、水が干上がった状態のマップに変更
-			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
-
-			//ワーク
-			//$WK_SCENE_N01R0502 = 5
-			//$WK_SCENE_C09R0501 = 2	
-				
-			_MAP_CHANGE( ZONE_ID_N01R0502, 16, 45, DIR_UP )
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・サザナミ起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDT04R0301_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDT04R0301, 6, 0, 5, DIR_DOWN )
 			
 			$SCWK_TEMP0 = 428
 

@@ -8,6 +8,8 @@
 #ifndef ZONE_OLDT04R0301_EVC_H
 #define ZONE_OLDT04R0301_EVC_H
 
+#define OLDT04R0301_OLD_LEADER6_01         0
+#define OLDT04R0301_OLD_LEADER4_01         1
 
 #endif //ZONE_OLDT04R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/oldt04r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

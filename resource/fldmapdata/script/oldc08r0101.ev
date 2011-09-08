@@ -118,7 +118,13 @@ EVENT_START		ev_reserve_oldc08r0101_event_01
 	//シャガ：チャンピオンに　なったのだ
 	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_07 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
 	_MSGWIN_CLOSE()
-	
+
+	_OBJ_ANIME( OLDC08R0101_OLD_LEADER8B, anm_leader8b_act_01 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( OLDC08R0101_OLD_LEADER8B, anm_leader8b_act_02 )
+	_OBJ_ANIME_WAIT()
+
 	//アイリス　！マーク
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_gyoe )
 	_OBJ_ANIME_WAIT()
@@ -126,13 +132,15 @@ EVENT_START		ev_reserve_oldc08r0101_event_01
 	//アイリス：これ　あたらしい
 	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8w_07 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
 	_MSGWIN_CLOSE()
-	
+
 	//アイリス　その場で回転⇒モデル削除⇒新モデルで追加
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_leader8w_act_02 )
 	_OBJ_ANIME_WAIT()
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	_OBJ_ADD_EX( 10,9,DIR_LEFT,MMDL_ID_EVENTOBJ_00,OLD_SWCHAMPION,MV_DMY )
-	
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_leader8w_act_02 )
+	_OBJ_ANIME_WAIT()
+
 	//アイリス：うわー！
 	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_swchampion_01 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
 	_MSGWIN_CLOSE()
@@ -209,6 +217,10 @@ _ANIME_LABEL	anm_walk_6u
 
 _ANIME_LABEL	anm_walk_16d
 	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_16r
+	_ANIME_DATA	AC_WALK_R_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -307,7 +319,7 @@ _ANIME_LABEL	anm_leave
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader8w_act_01
 	_ANIME_DATA	AC_STAY_JUMP_L_8F,2
-	_ANIME_DATA	AC_MARK_ONPU,1
+	//_ANIME_DATA	AC_MARK_ONPU,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader8w_act_02
@@ -338,3 +350,12 @@ _ANIME_LABEL	anm_leader8w_act_03
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_leader8b_act_01
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader8b_act_02
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0

@@ -1,5 +1,5 @@
 #../data/oldt04r0301.mev
-../tmp/oldt04r0301.bin:../data/oldt04r0301.mev ../../script/sp_oldt04r0301.bin $(UNIQ_SCRIPTHEADER) ../tmp/oldt04r0301.h 
+../tmp/oldt04r0301.bin:../data/oldt04r0301.mev ../../script/sp_oldt04r0301.bin $(UNIQ_SCRIPTHEADER) ../tmp/oldt04r0301.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/OLDT04R0301_def.h 
 	@echo ../data/oldt04r0301.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/oldt04r0301.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/oldt04r0301.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/OLDT04R0301_def.h 
 

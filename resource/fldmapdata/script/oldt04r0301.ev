@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_oldt04r0301.h"
-  //.include  "oldt04r0301.h"
+  .include  "oldt04r0301.h"
+
+//@author Suginaka Katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +21,301 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_oldt04r0301
+_EVENT_DATA    ev_reserve_oldt04r0301_event_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/*			過去イベント	カミツレ・フウロ				  */
+/**************************************************************/
+EVENT_START		ev_reserve_oldt04r0301_event_01
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_oldt04r0301:
-//  _END
+	//暗転復帰
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_oldt04r0301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	//カメラ操作　ちょっと上のほうを初期位置にする
+	_CAMERA_MOVE( 9694,0,970698,425984,339968,360448,1 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vanish_on )
+	_OBJ_ANIME_WAIT()
+
+	_MAP_FADE_BLACK_IN()
+
+	//カメラ操作　デフォ位置に移動
+	_CAMERA_RECV_MOVE( 60 ) //一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+	_MAP_FADE_END_CHECK()
+
+	//カミツレ：フウロちゃん
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_01 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//フウロ　？マーク
+	_OBJ_ANIME( OLDT04R0301_OLD_LEADER6_01, anm_hatena )
+	_OBJ_ANIME_WAIT()
+	
+	//フウロ：なあに？
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader6_01 , OLDT04R0301_OLD_LEADER6_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：イメチェン
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_02 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//フウロ：イメージ？
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader6_02 , OLDT04R0301_OLD_LEADER6_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ　右に１歩ゆっくりと移動
+	_OBJ_ANIME( OLDT04R0301_OLD_LEADER4_01, anm_leader6_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//カミツレ：そう……
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_03 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//サブウィン　……
+	_SUBWIN_MSG( msg_oldc01r0501_old_leader6_03 , 8 , 5 , 1 )
+	_TIME_WAIT( 25 )
+	_SUBWIN_CLOSE( 1 )
+	
+	//カミツレ　フウロのほうへ振り向く
+	_OBJ_ANIME( OLDT04R0301_OLD_LEADER4_01, anm_leader6_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//カミツレ：でね　ずっと
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_04 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ　１歩進む
+	_OBJ_ANIME( OLDT04R0301_OLD_LEADER4_01, anm_leader6_move_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//カミツレ：ハイセンスなジョーク
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_05 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ　右に２歩ゆっくりと移動
+	_OBJ_ANIME( OLDT04R0301_OLD_LEADER4_01, anm_leader6_move_04 )
+	_OBJ_ANIME_WAIT()
+	
+	//カミツレ：なんていうのかな
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_06 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//フウロ：う　うん
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader6_04 , OLDT04R0301_OLD_LEADER6_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ　振り向く
+	_OBJ_ANIME( OLDT04R0301_OLD_LEADER4_01, anm_leader6_move_02 )
+	_OBJ_ANIME_WAIT()
+
+	//カミツレ：じゃあ　きいて
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_07 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ　１歩進む
+	_OBJ_ANIME( OLDT04R0301_OLD_LEADER4_01, anm_leader6_move_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//カミツレ：ジョークその２
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_08 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ　１歩進む
+	_OBJ_ANIME( OLDT04R0301_OLD_LEADER4_01, anm_leader6_move_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//カミツレ：ジョークその３
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_09 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//サブウィン　……
+	_SUBWIN_MSG( msg_oldc01r0501_old_leader6_03 , 8 , 5 , 1 )
+	_TIME_WAIT( 25 )
+	_SUBWIN_CLOSE( 1 )
+	
+	//フウロ：カミツレちゃん
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader6_05 , OLDT04R0301_OLD_LEADER6_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ　！マーク
+	_OBJ_ANIME( OLDT04R0301_OLD_LEADER4_01, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//カミツレ：ジョークと　おもわせて
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_10 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//フウロ：うーん
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader6_06 , OLDT04R0301_OLD_LEADER6_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：そう？
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_11 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//フウロ：うん
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader6_07 , OLDT04R0301_OLD_LEADER6_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：りょうかい！
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader4_12 , OLDT04R0301_OLD_LEADER4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_TIME_WAIT( 60 )
+	
+	//フウロ：カミツレちゃん……
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader6_08 , OLDT04R0301_OLD_LEADER6_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//暗転
+	_CAMERA_MOVE( 9694,0,970698,425984,339968,360448,30 )
+	
+	_OBJ_ANIME_WAIT()
+	
+	//画面暗転処理
+	//_MAP_FADE_BLACK_OUT()
+	//_MAP_FADE_END_CHECK()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//予約スクリプト
+	//_RESERVE_SCRIPT( SCRID_RESERVE_C01GYM0101 )
+
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
+	//【仮】ブラックイン　本来は飛び先へ呼ぶ
+	//_MAP_FADE_BLACK_IN()
+	//_MAP_FADE_END_CHECK()
+
+	//マップチェンジ
+	_MAP_CHANGE( ZONE_ID_T04R0301, 6, 5, DIR_DOWN )
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_walk_6u
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_16d
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_4r
+	_ANIME_DATA	AC_STAY_WALK_R_4F,1
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_4l
+	_ANIME_DATA	AC_STAY_WALK_L_4F,1
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：１歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_back_l
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：非表示
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vanish_on
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆個別処理：リーダー
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader6_move_01
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_leader6_move_02
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader6_move_03
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_leader6_move_04
+	_ANIME_DATA	AC_WALK_R_16F,2
+	_ANIME_DATA	ACMD_END,0
