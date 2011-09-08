@@ -17149,12 +17149,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このまま　最上階まで　行き
-超有名になって▽
+			<Text>最上階まで　行き　超有名になって
 町中の　女の子に　モテまくるぞ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-31T07:23:26" />
+				Time="2011-09-08T06:46:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -17416,10 +17415,10 @@
 			<Text>きゅうせいちょう　している
 データが　あると　きいてきた！▼
 どのていどの　ものか
-けんしょう　させてもらうよ！▼</Text>
+しらべさせてもらうよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-31T07:27:40" />
+				Time="2011-09-08T06:25:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -18041,11 +18040,11 @@
 なんで　かぞくりょこうで　こんな▽
 やばそうな　ところにくるのよ！▼
 ゆうえんちとか　うみとか　あるでしょ！▼
-えーい！　おこれる　むすめの▽
+えーい！　おこれる　むすめの
 いちげきを　うけなさい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-31T07:37:11" />
+				Time="2011-09-08T06:42:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -18057,11 +18056,11 @@
 なんで　家族旅行で　こんな▽
 やばそうな　ところにくるのよ！▼
 遊園地とか　海とか　あるでしょ！▼
-えーい！　怒れる　娘の▽
-一撃を　受けなさい！▼</Text>
+えーい！
+怒れる娘の　一撃を　受けなさい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-31T07:37:18" />
+				Time="2011-09-08T06:42:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27915,12 +27914,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さいしんぶまで　あとすこし！
-ポケモンたちを　げんきにして▽
+			<Text>ポケモンたちを　げんきにして
 ゴールまで　つっぱしりましょ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-31T10:24:03" />
+				Time="2011-09-08T06:59:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27928,12 +27926,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>最深部まで　あと少し！
-ポケモンたちを　元気にして▽
+			<Text>ポケモンたちを　元気にして
 ゴールまで　突っ走りましょ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-31T10:24:24" />
+				Time="2011-09-08T06:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
