@@ -13,8 +13,10 @@
 enum {
 	NARC_field_landdata_patch_JA_CAFE_01_R_dat = 0,
 	NARC_field_landdata_patch_JA_CAFE_01_L_dat = 1,
-	NARC_field_landdata_patch_JA_CAFE_03_R_dat = 2,
-	NARC_field_landdata_patch_JA_CAFE_03_L_dat = 3
+	NARC_field_landdata_patch_JA_CAFE_02_R_dat = 2,
+	NARC_field_landdata_patch_JA_CAFE_02_L_dat = 3,
+	NARC_field_landdata_patch_JA_CAFE_03_R_dat = 4,
+	NARC_field_landdata_patch_JA_CAFE_03_L_dat = 5
 };
 
 /* NARC_FIELD_LANDDATA_PATCH_NAIX_ */
