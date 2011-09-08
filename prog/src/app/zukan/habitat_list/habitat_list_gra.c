@@ -81,10 +81,14 @@ FS_EXTERN_OVERLAY(ui_common);
 #define	SCROLL_BAR_UY	( 12 )
 #define	SCROLL_BAR_DY	( 156 )
 
+#define	BLEND_EV1		( 6 )				// ブレンド係数
+#define	BLEND_EV2		( 10 )			// ブレンド係数
+
 // コールバック関数
 static void ListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp );
 static void ListCallBack_Move( void * work, u32 item_index, BOOL flg );
 static void ListCallBack_Scroll( void * work, s8 mv );
+static void SetLRButtonAnm( HABITAT_LIST_GRA_WK *p_wk ,BOOL is_force );
 
 // リストコールバック
 static const FRAMELIST_CALLBACK	sc_frm_list_callback = {
@@ -169,6 +173,8 @@ static void GRA_LoadObjGraphic( HABITAT_LIST_GRA_WK *p_wk );
 static void GRA_InitPaletteFade( HABITAT_LIST_GRA_WK *p_wk );
 static void GRA_InitBlinkAnm( HABITAT_LIST_GRA_WK *p_wk );
 static void GRA_InitBmpWin( HABITAT_LIST_GRA_WK *p_wk );
+static void GRA_SetBlendAlpha(void);
+static void GRA_SetWindow(void);
 
 // 終了系
 static void GRA_ResetWindow( void );
@@ -176,6 +182,7 @@ static void GRA_ExitPaletteFade( HABITAT_LIST_GRA_WK *p_wk );
 static void GRA_ExitBg( void );
 static void GRA_ExitObj( HABITAT_LIST_GRA_WK *p_wk );
 static void GRA_ExitBmpWin( HABITAT_LIST_GRA_WK *p_wk );
+static void GRA_ExitBlinkAnm( HABITAT_LIST_GRA_WK *p_wk );
 
 // 処理系
 static void GRA_SetPalFadeSeq( HABITAT_LIST_GRA_WK *p_wk, u8 start, u8 end );
@@ -183,6 +190,8 @@ static void GRA_PrintMain( HABITAT_LIST_GRA_WK *p_wk );
 static void GRA_BlinkAnmMain( HABITAT_LIST_GRA_WK *p_wk );
 static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data );
 static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py ,BOOL disp );
+static void SetCursorEnable( HABITAT_LIST_GRA_WK *p_wk , BOOL flg );
+static void RefreshCursorPos( HABITAT_LIST_GRA_WK *p_wk );
 
 //===============================================================================
 // 初期化・終了関数呼び出し
@@ -225,8 +234,9 @@ void HABITAT_LIST_GRA_Init( HABITAT_LIST_GRA_WK *p_wk ,GAMEDATA *p_gdata )
   GRA_LoadObjGraphic( p_wk );     // OBJ初期化
   GRA_LoadBgGraphic();            // BGリソース読み込み
   GRA_InitPaletteFade( p_wk );    // パレットフェード
-  //  GRA_InitBlinkAnm( p_wk );       // 点滅アニメ
-
+  GRA_InitBlinkAnm( p_wk );       // 点滅アニメ
+  GRA_SetBlendAlpha();            // 半透明処理
+  GRA_SetWindow();                // ウィンドウ設定
 }
 
 //----------------------------------------------------------------------------
@@ -265,6 +275,9 @@ void HABITAT_LIST_GRA_Exit( HABITAT_LIST_GRA_WK *p_wk )
   // BMPWINの開放
   GRA_ExitBmpWin( p_wk );
 
+  // 点滅アニメの開放
+  GRA_ExitBlinkAnm( p_wk );
+
   // OBJの終了処理
   GRA_ExitObj( p_wk );
   
@@ -273,6 +286,10 @@ void HABITAT_LIST_GRA_Exit( HABITAT_LIST_GRA_WK *p_wk )
 
   // パレットフェードの終了
   GRA_ExitPaletteFade( p_wk );
+
+  // ブレンド初期化
+	G2_BlendNone();
+	G2S_BlendNone();
 
 	// 輝度を最低にしておく
 	GX_SetMasterBrightness( -16 );
@@ -306,6 +323,34 @@ void HABITAT_LIST_GRA_VblankMain( HABITAT_LIST_GRA_WK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  HBlankメイン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_LIST_GRA_HblankMain( HABITAT_LIST_GRA_WK *p_wk )
+{
+  s32	vcount = GX_GetVCount();
+
+  if( vcount >= 168 ){
+    G2S_ChangeBlendAlpha( 11, 5 );
+  }else if( vcount >= 144 ){
+    G2S_ChangeBlendAlpha( 10, 6 );
+  }else if( vcount >= 120 ){
+    G2S_ChangeBlendAlpha( 9, 7 );
+  }else if( vcount >= 96 ){
+    G2S_ChangeBlendAlpha( 8, 8 );
+  }else if( vcount >= 72 ){
+    G2S_ChangeBlendAlpha( 6, 10 );
+  }else{
+    G2S_ChangeBlendAlpha( 4, 12 );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  グラフィックメイン
  *
  *	@param	*p_wk 
@@ -321,9 +366,8 @@ void HABITAT_LIST_GRA_Main( HABITAT_LIST_GRA_WK *p_wk )
   // スクロールバーの位置を補正
   HABITAT_LIST_GRA_GetScrollBarYPos( p_wk );
 
-
-//  // カーソル点滅アニメ
-//  GRA_BlinkAnmMain( p_wk );
+  // カーソル点滅アニメ
+  GRA_BlinkAnmMain( p_wk );
 
   // 背景スクロール
   p_wk->back_bg_scroll_wait_count++;
@@ -351,7 +395,13 @@ void HABITAT_LIST_GRA_Main( HABITAT_LIST_GRA_WK *p_wk )
 //-----------------------------------------------------------------------------
 u32 HABITAT_LIST_GRA_ListMain( HABITAT_LIST_GRA_WK *p_wk )
 {
-  return FRAMELIST_Main( p_wk->p_lwk );
+  u32 ret = FRAMELIST_Main( p_wk->p_lwk );
+  if( ret == FRAMELIST_RET_NONE )
+  {
+    SetCursorEnable( p_wk, TRUE );
+    SetLRButtonAnm( p_wk , FALSE);
+  }
+  return ret;
 }
 
 //===============================================================================
@@ -795,6 +845,7 @@ static void GRA_LoadObjGraphic( HABITAT_LIST_GRA_WK *p_wk )
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_common_obj[i], FALSE );
     // 説明ボタンより下
     GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[i] ,2 );
+    GFL_CLACT_WK_SetObjMode(p_wk->p_clwk_common_obj[i],GX_OAM_MODE_XLU);
   }
 
   for( i = LIST_ICON_CLWKID_START_S; i < LIST_ICON_CLWKID_END_S; i++ )
@@ -805,6 +856,17 @@ static void GRA_LoadObjGraphic( HABITAT_LIST_GRA_WK *p_wk )
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_common_obj[i], FALSE );
     // 説明ボタンより下
     GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[i] ,2 );
+    GFL_CLACT_WK_SetObjMode(p_wk->p_clwk_common_obj[i],GX_OAM_MODE_XLU);
+  }
+
+  // 半透明ウィンドウ
+  for( i = LIST_ICON_CLWKID_START_SW; i < LIST_ICON_CLWKID_END_SW; i++ )
+  {
+    p_wk->p_clwk_common_obj[i] = UI_EASY_CLWK_CreateCLWK( 
+        &p_wk->clres_common_obj_s, p_wk->p_clunit, 
+        0, 0, OBJ_ANM_SEQ_NEW_ICON, HEAPID_ZUKAN_HABITAT_LIST );
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_common_obj[i], TRUE );
+    GFL_CLACT_WK_SetObjMode(p_wk->p_clwk_common_obj[i],GX_OAM_MODE_OBJWND);
   }
 
   // ミニマップ --------------------------------------------------
@@ -857,6 +919,14 @@ static void GRA_LoadObjGraphic( HABITAT_LIST_GRA_WK *p_wk )
       OBJ_ANM_SEQ_SCROLL_BAR, HEAPID_ZUKAN_HABITAT_LIST );
   GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[SCROLL_BAR_CLWKID] ,1 ); // ボタンより下
 
+  // リストカーソル --------------------------------------------------
+  p_wk->p_clwk_common_obj[LIST_CURSOR_CLWKID] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_common_obj, p_wk->p_clunit, 
+      0,0,
+      OBJ_ANM_SEQ_LIST_CURSOR, HEAPID_ZUKAN_HABITAT_LIST );
+  GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[LIST_CURSOR_CLWKID] ,1 ); // ボタンより下
+
+
   // 共通素材系読み込み ------------------------------------------------
 
   // 左矢印
@@ -908,6 +978,26 @@ static void GRA_InitPaletteFade( HABITAT_LIST_GRA_WK *p_wk )
 	PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_BG, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_HABITAT_LIST );
 	PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_HABITAT_LIST );
 	PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_OBJ, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_HABITAT_LIST );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief		ウィンドウ設定
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//----------------------------------------------------------------------------------
+static void GRA_SetWindow(void)
+{
+	G2S_SetWndOBJInsidePlane(
+		GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
+		GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ, TRUE );
+	G2S_SetWndOutsidePlane(
+		GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
+		GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ, TRUE );
+	GXS_SetVisibleWnd( GX_WNDMASK_OW );
 }
 
 //----------------------------------------------------------------------------
@@ -1038,26 +1128,57 @@ static void GRA_SetPalFadeSeq( HABITAT_LIST_GRA_WK *p_wk, u8 start, u8 end )
 //-----------------------------------------------------------------------------
 static void GRA_InitBlinkAnm( HABITAT_LIST_GRA_WK *p_wk )
 {
-//  ARCHANDLE * ah;
-//
-//  // 図鑑グラフィックアーカイブ
-//  ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_HABITAT_LIST );
-//	
-//  // 点滅させるパレットの指定
-//  p_wk->p_blinkanm_wk = BLINKPALANM_Create( BLINK_PALID_POKE_CURSOR_CHANGE*16  ,
-//        BLINK_PAL_SIZE_POKE_CURSOR , BGM_FRAME_LIST, HEAPID_ZUKAN_HABITAT_LIST );
-//
-//  // パレットアニメデータの作成
-//  BLINKPALANM_SetPalBufferArcHDL( p_wk->p_blinkanm_wk, ah,
-//                    NARC_zukan_gra_list_list_bgd_NCLR, 
-//                    BLINK_PALID_POKE_CURSOR_START*16, 
-//                    BLINK_PALID_POKE_CURSOR_END*16 );
-//    
-//  // アーカイブクローズ
-//  GFL_ARC_CloseDataHandle( ah );
+  ARCHANDLE * ah;
+
+  // 図鑑グラフィックアーカイブ
+  ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_HABITAT_LIST );
 	
+  // 点滅させるパレットの指定
+  p_wk->p_blinkanm_wk = BLINKPALANM_Create( BLINK_PALID_POKE_CURSOR_CHANGE*16  ,
+        BLINK_PAL_SIZE_POKE_CURSOR , BLINKPALANM_MODE_MAIN_OBJ,
+        HEAPID_ZUKAN_HABITAT_LIST );
+
+  // パレットアニメデータの作成
+  BLINKPALANM_SetPalBufferArcHDL( p_wk->p_blinkanm_wk, ah,
+                    NARC_zukan_gra_list_list_objd_NCLR, 
+                    BLINK_PALID_POKE_CURSOR_START*16, 
+                    BLINK_PALID_POKE_CURSOR_END*16 );
+    
+  // アーカイブクローズ
+  GFL_ARC_CloseDataHandle( ah );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  点滅アニメ終了処理
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GRA_ExitBlinkAnm( HABITAT_LIST_GRA_WK *p_wk )
+{
+  // 終了
+  BLINKPALANM_Exit( p_wk->p_blinkanm_wk );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief		アルファブレンド設定
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//----------------------------------------------------------------------------------
+static void GRA_SetBlendAlpha(void)
+{
+	G2S_SetBlendAlpha(
+		GX_BLEND_PLANEMASK_BG2,
+		GX_BLEND_PLANEMASK_BG3,
+		BLEND_EV1, BLEND_EV2 );
+}
 
 //=============================================================================
 //
@@ -1093,28 +1214,39 @@ static void GRA_PrintMain( HABITAT_LIST_GRA_WK *p_wk )
   // アイコンをリフレッシュする
   {
     s32 i ;
+    BOOL cursor_pos_refresh = FALSE;
     for( i = LIST_ICON_CLWKID_START; i < LIST_ICON_CLWKID_END; i ++ )
     {
       GFL_CLWK *p_clwk = p_wk->p_clwk_common_obj[i];
-      GRA_POKEICON_DATA *p_icon = &p_wk->pokeicon_data_main[i - LIST_ICON_CLWKID_START];
+      GRA_ICON_DATA *p_icon = &p_wk->icon_data_main[i - LIST_ICON_CLWKID_START];
       if( p_icon->is_refresh == TRUE )
       {
         GFL_CLACT_WK_SetDrawEnable( p_clwk , p_icon->draw_flag );
         GFL_CLACT_WK_SetAnmSeq( p_clwk, p_icon->anm_seq );
         GFL_CLACT_WK_SetPos( p_clwk , &p_icon->pos, CLSYS_DRAW_MAIN );
         p_icon->is_refresh = FALSE;
+        cursor_pos_refresh = TRUE;
       }
     }
     for( i = LIST_ICON_CLWKID_START_S; i < LIST_ICON_CLWKID_END_S; i ++ )
     {
       GFL_CLWK *p_clwk = p_wk->p_clwk_common_obj[i];
-      GRA_POKEICON_DATA *p_icon = &p_wk->pokeicon_data_sub[i - LIST_ICON_CLWKID_START_S];
+      GFL_CLWK *p_clwk_win;
+      GRA_ICON_DATA *p_icon = &p_wk->icon_data_sub[i - LIST_ICON_CLWKID_START_S];
+      s32 win_id = (i-LIST_ICON_CLWKID_START_S)+LIST_ICON_CLWKID_START_SW;
+      p_clwk_win = p_wk->p_clwk_common_obj[win_id];
       if( p_icon->is_refresh == TRUE )
       {
         GFL_CLACT_WK_SetDrawEnable( p_clwk , p_icon->draw_flag );
         GFL_CLACT_WK_SetAnmSeq( p_clwk, p_icon->anm_seq );
         GFL_CLACT_WK_SetPos( p_clwk , &p_icon->pos, CLSYS_DRAW_SUB );
         p_icon->is_refresh = FALSE;
+        cursor_pos_refresh = TRUE;
+
+        // 同時にウィンドウの形、場所も移動させる
+        GFL_CLACT_WK_SetDrawEnable( p_clwk_win , p_icon->draw_flag );
+        GFL_CLACT_WK_SetPos( p_clwk_win , &p_icon->pos, CLSYS_DRAW_SUB );
+        GFL_CLACT_WK_SetAnmSeq( p_clwk_win, p_icon->anm_seq );
       }
     }
   }
@@ -1232,8 +1364,8 @@ void HABITAT_LIST_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_LIST_GRA_WK *p_wk
 //-----------------------------------------------------------------------------
 static void GRA_BlinkAnmMain( HABITAT_LIST_GRA_WK *p_wk )
 {
-//  // カーソル点滅アニメーション
-//  BLINKPALANM_Main( p_wk->p_blinkanm_wk );
+  // カーソル点滅アニメーション
+  BLINKPALANM_Main( p_wk->p_blinkanm_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -1374,9 +1506,10 @@ void HABITAT_LIST_GRA_MakeList( HABITAT_LIST_GRA_WK* p_wk, u8 list_size,
 
 	// 点滅アニメパレット設定(リストカーソル)
   {
+    // 選択時の色は明滅しない
     ARCHANDLE * ah;
     ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_HABITAT_LIST );
-    FRAMELIST_LoadBlinkPalette( p_wk->p_lwk, ah, NARC_zukan_gra_list_list_bgd_NCLR, BLINK_PAL_NO_01, BLINK_PAL_NO_02 );
+    FRAMELIST_LoadBlinkPalette( p_wk->p_lwk, ah, NARC_zukan_gra_list_list_bgd_NCLR, BLINK_PAL_NO_SELECT, BLINK_PAL_NO_SELECT );
     GFL_ARC_CloseDataHandle( ah );
   }
 
@@ -1394,6 +1527,12 @@ void HABITAT_LIST_GRA_MakeList( HABITAT_LIST_GRA_WK* p_wk, u8 list_size,
     // スクロールバーの位置を補正
     HABITAT_LIST_GRA_GetScrollBarYPos( p_wk );
   }
+	// 表示項目数
+	if( list_size < ZKNLISTMAIN_LIST_POS_MAX ){
+		p_wk->list_pos_max = list_size;
+	}else{
+		p_wk->list_pos_max = ZKNLISTMAIN_LIST_POS_MAX;
+	}
 
   // リストサイズを格納
   p_wk->list_size = list_size;
@@ -1541,6 +1680,8 @@ static void ListCallBack_Draw( void *work, u32 item_index, PRINT_UTIL *p_util, s
 //-----------------------------------------------------------------------------
 static void ListCallBack_Move( void * work, u32 item_index, BOOL flg )
 {
+  HABITAT_LIST_GRA_WK *p_wk = work;
+  RefreshCursorPos( p_wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1559,19 +1700,15 @@ static void ListCallBack_Scroll( void * work, s8 mv )
   HABITAT_LIST_GRA_WK *p_wk = work;
   for( i = 0; i < LIST_ICON_MAX; i ++ )
   {
-    GRA_POKEICON_DATA *p_icon_m = &p_wk->pokeicon_data_main[i];
-    GRA_POKEICON_DATA *p_icon_s = &p_wk->pokeicon_data_sub[i];
+    GRA_ICON_DATA *p_icon_m = &p_wk->icon_data_main[i];
+    GRA_ICON_DATA *p_icon_s = &p_wk->icon_data_sub[i];
     p_icon_m->pos.y -= mv;
     p_icon_s->pos.y -= mv;
     p_icon_m->is_refresh = TRUE;
     p_icon_s->is_refresh = TRUE;
   }
-
-//		if( (pos.y) <= -16 || (pos.y) >= 200 ){
-//      //ONOUE_Printf("py = %d 非表示(下)\n",pos.y);
-//      //GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_common_obj[item_index], FALSE );
-//    }
   
+  SetCursorEnable( p_wk, FALSE );
 }
 
 //----------------------------------------------------------------------------
@@ -1589,7 +1726,7 @@ static void ListCallBack_Scroll( void * work, s8 mv )
 static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py ,BOOL disp )
 {
   s32 clwk_ofs = 0;
-  GRA_POKEICON_DATA *p_icondata;
+  GRA_ICON_DATA *p_icondata;
   GFL_CLACTPOS pos;
   ZUKANHABITAT_LIST_LISTDATA *p_data = &p_wk->p_list_data[item_index];
   u8 is_l = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ];
@@ -1609,11 +1746,11 @@ static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py 
 
   if( disp == TRUE )
   {
-    p_icondata = &p_wk->pokeicon_data_main[(item_index%LIST_BAR_NUM)*LIST_ICON_NUM];
+    p_icondata = &p_wk->icon_data_main[(item_index%LIST_BAR_NUM)*LIST_ICON_NUM];
   }
   else
   {
-    p_icondata = &p_wk->pokeicon_data_sub[(item_index%LIST_BAR_NUM)*LIST_ICON_NUM];
+    p_icondata = &p_wk->icon_data_sub[(item_index%LIST_BAR_NUM)*LIST_ICON_NUM];
   }
 
   // アイコンの位置を設定する
@@ -1720,10 +1857,10 @@ void HABITAT_LIST_GRA_RecoverDrawFlag( HABITAT_LIST_GRA_WK *p_wk )
   // 古いアイコン表示情報を保存
   for( i = 0; i < LIST_ICON_MAX; i++ )
   {
-    GRA_POKEICON_DATA *p_ic_m;
-    GRA_POKEICON_DATA *p_ic_s;
-    p_ic_m = &p_wk->pokeicon_data_main[i];
-    p_ic_s = &p_wk->pokeicon_data_sub[i];
+    GRA_ICON_DATA *p_ic_m;
+    GRA_ICON_DATA *p_ic_s;
+    p_ic_m = &p_wk->icon_data_main[i];
+    p_ic_s = &p_wk->icon_data_sub[i];
     // 更新が無かったものは非表示にする
     if( p_ic_m->is_refresh == FALSE )
     {
@@ -1750,6 +1887,39 @@ void HABITAT_LIST_GRA_RecoverDrawFlag( HABITAT_LIST_GRA_WK *p_wk )
 u32 HABITAT_LIST_GRA_GetListPos( HABITAT_LIST_GRA_WK *p_wk )
 {
   return FRAMELIST_GetListPos( p_wk->p_lwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソル位置を取得する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u32 HABITAT_LIST_GRA_GetCursorPos( HABITAT_LIST_GRA_WK *p_wk )
+{
+  return FRAMELIST_GetCursorPos( p_wk->p_lwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リストを下に下げれるかを取得
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL HABITAT_LIST_GRA_GetCanListDown( HABITAT_LIST_GRA_WK *p_wk )
+{
+  if( (FRAMELIST_CheckScrollMax( p_wk->p_lwk ) == FALSE ) &&
+      ( (p_wk->list_pos_max -1)== HABITAT_LIST_GRA_GetCursorPos(p_wk)))
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1835,3 +2005,127 @@ void HABITAT_LIST_GRA_SetAnmSeq( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid ,u32 anm_
   GFL_CLACT_WK_SetAutoAnmFlag( p_clwk , TRUE );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーション起動チェック
+ *
+ *	@param	*p_wk 
+ *	@param	clwkid 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL HABITAT_LIST_GRA_CheckAnmActive( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid )
+{
+  return GFL_CLACT_WK_CheckAnmActive( p_wk->p_clwk_common_obj[clwkid]);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションシーケンスを取得する
+ *
+ *	@param	*p_wk 
+ *	@param	clwkid 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u16 HABITAT_LIST_GRA_GetAnmSeq( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid )
+{
+  return GFL_CLACT_WK_GetAnmSeq( p_wk->p_clwk_common_obj[clwkid]);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソルの表示状態を設定する
+ *
+ *	@param	*p_wk 
+ *	@param	flg 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetCursorEnable( HABITAT_LIST_GRA_WK *p_wk , BOOL flg )
+{
+  GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_common_obj[LIST_CURSOR_CLWKID], flg );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソル位置をリフレッシュする
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void RefreshCursorPos( HABITAT_LIST_GRA_WK *p_wk )
+{
+  s32 i;
+  GFL_CLACTPOS	pos;
+  GFL_CLWK *p_clwk = p_wk->p_clwk_common_obj[LIST_CURSOR_CLWKID];
+  u32 cursor_pos = FRAMELIST_GetCursorPos( p_wk->p_lwk );
+  u32 sc_cnt = HABITAT_LIST_GRA_GetScrollCount( p_wk );
+
+  pos.y = (ZKNLISTMAIN_LIST_PY*8)+LIST_ICON_Y_OFFSET + (LIST_BAR_H*cursor_pos);
+  pos.x = LIST_BAR_POS_X;
+
+  // リストアイコンの位置決定
+  for( i = 0; i < HABITAT_GROUND_MAX; i++ )
+  {
+    if( p_wk->p_list_data[cursor_pos+sc_cnt].is_exist_landtype[i] == TRUE )
+    {
+      pos.x -= 16;
+    }
+  }
+  GFL_CLACT_WK_SetPos( p_clwk , &pos, CLSYS_DRAW_MAIN );
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  左右矢印ボタンのアニメーションシーケンスを設定する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetLRButtonAnm( HABITAT_LIST_GRA_WK *p_wk ,BOOL is_force )
+{
+  u32 sc_cnt = HABITAT_LIST_GRA_GetScrollCount( p_wk );
+  u32 cursor_pos  = HABITAT_LIST_GRA_GetCursorPos( p_wk );
+
+  if(((HABITAT_LIST_GRA_CheckAnmActive(p_wk,L_BUTTON_CLWKID ) == FALSE)||
+      (HABITAT_LIST_GRA_GetAnmSeq(p_wk,L_BUTTON_CLWKID) != APP_COMMON_BARICON_CURSOR_LEFT_ON)) ||
+      (is_force == TRUE ))
+  {
+    if( sc_cnt == 0 && cursor_pos == 0)
+    {
+      HABITAT_LIST_GRA_SetAnmSeq( p_wk,
+          L_BUTTON_CLWKID,APP_COMMON_BARICON_CURSOR_LEFT_OFF);
+    }
+    else
+    {
+      HABITAT_LIST_GRA_SetAnmSeq( p_wk,
+          L_BUTTON_CLWKID,APP_COMMON_BARICON_CURSOR_LEFT);
+    }
+  }
+
+  if( ((HABITAT_LIST_GRA_CheckAnmActive( p_wk ,R_BUTTON_CLWKID ) == FALSE ) ||
+      (HABITAT_LIST_GRA_GetAnmSeq(p_wk,R_BUTTON_CLWKID) != APP_COMMON_BARICON_CURSOR_RIGHT_ON)) ||
+      (is_force == TRUE ))
+  {
+    if( HABITAT_LIST_GRA_GetCanListDown( p_wk ) )
+    {
+      HABITAT_LIST_GRA_SetAnmSeq( p_wk,
+          R_BUTTON_CLWKID,APP_COMMON_BARICON_CURSOR_RIGHT_OFF);
+    }
+    else
+    {
+      HABITAT_LIST_GRA_SetAnmSeq( p_wk,
+          R_BUTTON_CLWKID,APP_COMMON_BARICON_CURSOR_RIGHT);
+    }
+  }
+}

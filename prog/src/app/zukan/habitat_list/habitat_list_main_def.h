@@ -48,6 +48,7 @@ typedef enum {
   SEQ_CHANGE_PARAM_X,
   SEQ_CHANGE_PARAM_TOUCH,
   SEQ_CHANGE_PARAM_NONE,
+  SEQ_CHANGE_PARAM_NOANM_WAIT,
 }SEQ_CHANGE_PARAM;
 
 //-------------------------------------
@@ -87,6 +88,7 @@ struct _HABITAT_LIST_WK{
   HABITAT_LIST_GRA_WK gra_sys;
   GFL_MSGDATA         *p_app_msg;
   GFL_TCB             *p_vtask;
+  GFL_TCB             *p_htask;
   BOOL  is_zenkoku;
 
   WORDSET         *p_word_set;

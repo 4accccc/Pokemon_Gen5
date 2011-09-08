@@ -51,8 +51,19 @@ enum
   LIST_ICON_X_OFFSET   = 12,       // リストアイコンのXオフセット値
   LIST_ICON_Y_OFFSET   = 12,      // リストアイコンのYオフセット値
   LIST_ICON_SET_W      = 16,       // アイコンの幅
-  BLINK_PAL_NO_01      = 7,       // 点滅用パレット
-  BLINK_PAL_NO_02      = 8,       // 点滅用パレット
+  BLINK_PAL_NO_01      = 5,       // 点滅用パレット(選択時)
+  BLINK_PAL_NO_02      = 7,       // 点滅用パレット(選択時)
+  BLINK_PAL_NO_01_CMP  = 6,       // 点滅用パレット(選択時)
+  BLINK_PAL_NO_02_CMP  = 7,       // 点滅用パレット(選択時)
+  BLINK_PAL_NO_SELECT  = 7,       // 点滅用パレット(選択時)
+  LIST_BAR_H           = 24,      // リストカーソルの高さ
+  LIST_BAR_POS_X       = 116,     // リストカーソルX位置
+
+  BLINK_PALID_POKE_CURSOR_CHANGE  = 0x1,  // 点滅(書き換え対象)
+  BLINK_PALID_POKE_CURSOR_START   = 0x1,  // 点滅用パレット番号(基準)
+  BLINK_PALID_POKE_CURSOR_END     = 0x2,  // 滅用パレット番号(終了)
+  BLINK_PAL_SIZE_POKE_CURSOR      = 0x5,    // 点滅させるパレットの数
+
 };
 
 // OBJWK定義
@@ -62,6 +73,8 @@ enum
   LIST_ICON_CLWKID_END = (LIST_ICON_CLWKID_START + LIST_ICON_MAX),
   LIST_ICON_CLWKID_START_S,
   LIST_ICON_CLWKID_END_S = (LIST_ICON_CLWKID_START_S + LIST_ICON_MAX),
+  LIST_ICON_CLWKID_START_SW,
+  LIST_ICON_CLWKID_END_SW = (LIST_ICON_CLWKID_START_SW + LIST_ICON_MAX),
   MINIMAP_CLWKID,
   MODE_BUTTON_01_CLWKID,
   MODE_BUTTON_02_CLWKID,
@@ -74,6 +87,7 @@ enum
   EXIT_BUTTON_CLWKID,
   SCROLL_BUTTON_CLWKID,
   SCROLL_BAR_CLWKID,
+  LIST_CURSOR_CLWKID,
   COMMON_OBJ_WK_MAX,
 };
 
@@ -90,6 +104,7 @@ enum
   OBJ_ANM_SEQ_SCROLL_BAR          = 3,    // スクロールバー
   OBJ_ANM_SEQ_SELECT_BUTTON       = 1,    // セレクトボタン
   OBJ_ANM_SEQ_SELECT_BUTTON_ANM   = 5,    // セレクトボタン(アニメ)
+  OBJ_ANM_SEQ_LIST_CURSOR         = 33,    // リストカーソル
   OBJ_ANM_SEQ_MODE_BUTTON     = 13,   // モード切替ボタン
   OBJ_ANM_SEQ_MODE_BUTTON_ANM = 14,   // モード切替ボタン（アニメ）
   OBJ_ANM_SEQ_MINIMAP     = 15, // ミニマップ
@@ -183,7 +198,7 @@ typedef struct {
   BOOL is_refresh;
   u16 anm_seq;
   GFL_CLACTPOS pos;
-}GRA_POKEICON_DATA;
+}GRA_ICON_DATA;
 
 // ゾーン詳細画面ワーク:グラフィック
 typedef struct {
@@ -192,7 +207,7 @@ typedef struct {
 
   // パレットフェード　-------------------------------
   PALETTE_FADE_PTR  p_pfd;
-//  BLINKPALANM_WORK  *p_blinkanm_wk; // 点滅用
+  BLINKPALANM_WORK  *p_blinkanm_wk; // 点滅用
 	
   // セルアクターユニット
   GFL_CLUNIT			*p_clunit;
@@ -220,11 +235,12 @@ typedef struct {
 
   // リスト -----------
   u8              list_size;
+  u32             list_pos_max;
   FRAMELIST_WORK  *p_lwk;		// リストワーク
   STRBUF          *p_place_name[PLACE_DATA_MAX];
   ZUKANHABITAT_LIST_LISTDATA *p_list_data;
-  GRA_POKEICON_DATA pokeicon_data_main[ LIST_ICON_MAX ];
-  GRA_POKEICON_DATA pokeicon_data_sub[ LIST_ICON_MAX ];
+  GRA_ICON_DATA icon_data_main[ LIST_ICON_MAX ];
+  GRA_ICON_DATA icon_data_sub[ LIST_ICON_MAX ];
 
 }HABITAT_LIST_GRA_WK;
 
@@ -237,6 +253,7 @@ extern void HABITAT_LIST_GRA_Init( HABITAT_LIST_GRA_WK *p_wk ,GAMEDATA *p_gdata 
 extern void HABITAT_LIST_GRA_CallOpeningFade( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_Exit( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_VblankMain( HABITAT_LIST_GRA_WK *p_wk );
+extern void HABITAT_LIST_GRA_HblankMain( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_Main( HABITAT_LIST_GRA_WK *p_wk );
 extern BOOL HABITAT_LIST_GRA_CheckPrintUtilStatus( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_WIN win_id, const STRBUF* str,
@@ -259,4 +276,8 @@ extern void HABITAT_LIST_GRA_SetCursorPos( HABITAT_LIST_GRA_WK *p_wk ,u32 cursor
 extern ZUKANHABITAT_LIST_LISTDATA* HABITAT_LIST_GRA_GetListData(
                                   HABITAT_LIST_GRA_WK *p_wk ,u32 list_index );
 extern void HABITAT_LIST_GRA_SetAnmSeq( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid ,u32 anm_seq );
+extern u32 HABITAT_LIST_GRA_GetCursorPos( HABITAT_LIST_GRA_WK *p_wk );
+extern BOOL HABITAT_LIST_GRA_GetCanListDown( HABITAT_LIST_GRA_WK *p_wk );
+extern BOOL HABITAT_LIST_GRA_CheckAnmActive( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid );
+extern u16 HABITAT_LIST_GRA_GetAnmSeq( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid );
 

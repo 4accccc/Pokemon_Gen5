@@ -48,6 +48,11 @@ static void ZukanHabitatList_VBlankInit( HABITAT_LIST_WK *p_wk );
 static void ZukanHabitatList_VBlankExit( HABITAT_LIST_WK *p_wk );
 static void ZukanHabitatList_VBlank( GFL_TCB* tcb, void* wk );
 
+// HBlank-------------------
+static void ZukanHabitatList_HBlankInit( HABITAT_LIST_WK *p_wk );
+static void ZukanHabitatList_HBlankExit( HABITAT_LIST_WK *p_wk );
+static void ZukanHabitatList_HBlank( GFL_TCB* tcb, void* wk );
+
 // ワーク関連 --------------
 static HABITAT_LIST_WK* CreateWkData( GFL_PROC * proc ,ZUKANHABITAT_LIST_DATA *p_list_info );
 static void DeleteWkData( GFL_PROC * proc , HABITAT_LIST_WK *p_wk );
@@ -96,6 +101,9 @@ static GFL_PROC_RESULT ZukanHabitatList_Init( GFL_PROC * proc, int * seq, void *
 
        // Vブランクタスク初期化
        ZukanHabitatList_VBlankInit( p_wk );
+
+       // Hブランクタスク初期化
+       ZukanHabitatList_HBlankInit( p_wk );
 
       // サブシーケンスを進める
       (*seq)++;
@@ -178,6 +186,8 @@ static GFL_PROC_RESULT ZukanHabitatList_Exit( GFL_PROC * proc, int * seq, void *
   DeleteFrameListData( p_wk );
   // Vブランクタスクの終了
   ZukanHabitatList_VBlankExit( p_wk );
+  // Hブランクタスクの終了
+  ZukanHabitatList_HBlankExit( p_wk );
   // グラフィックの終了処理
   HABITAT_LIST_GRA_Exit( &p_wk->gra_sys );
   // ワークデータの開放
@@ -229,6 +239,51 @@ static void ZukanHabitatList_VBlank( GFL_TCB* tcb, void* wk )
   HABITAT_LIST_WK *p_wk = wk;
   // グラフィックVブランク処理
   HABITAT_LIST_GRA_VblankMain( &p_wk->gra_sys );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Hブランクタスク初期化
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ZukanHabitatList_HBlankInit( HABITAT_LIST_WK *p_wk )
+{
+	p_wk->p_htask = GFUser_HIntr_CreateTCB( ZukanHabitatList_HBlank, p_wk, 0 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Hブランクタスク終了処理
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ZukanHabitatList_HBlankExit( HABITAT_LIST_WK *p_wk )
+{
+  GFL_TCB_DeleteTask( p_wk->p_htask );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Hブランクタスク
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ZukanHabitatList_HBlank( GFL_TCB* tcb, void* wk )
+{
+  HABITAT_LIST_WK *p_wk = wk;
+  // グラフィックVブランク処理
+  HABITAT_LIST_GRA_HblankMain( &p_wk->gra_sys );
 }
 
 
