@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……バリアだ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……バリア　だ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:18:52" />
+				Time="2011-09-08T08:19:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……バリアだ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……バリア　だ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:19:05" />
+				Time="2011-09-08T08:19:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -62,10 +62,10 @@
 ふねの　なかの　スイッチを　さがして
 バリアを　けすしかないか▼
 [Name:TrainerName ]！　てわけして
-スイッチを　さがすぞ！▼</Text>
+スイッチを　さがすぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:18:57" />
+				Time="2011-09-08T08:19:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -77,10 +77,10 @@
 船内の　どこかに　あるだろう
 スイッチで　バリアを　解除しないとな▼
 [Name:TrainerName ]！　手分けして
-スイッチを　探すぞ！▼</Text>
+スイッチを　探すぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:19:08" />
+				Time="2011-09-08T08:19:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

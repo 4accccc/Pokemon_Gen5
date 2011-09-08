@@ -65,10 +65,12 @@
 こんな　かっこうを　してますけど
 もとプラズマだん　です！▼
 ロットさまに　たのまれ
-スパイを　やっているんですよ！▼</Text>
+スパイを　やっているんですよ！▼
+というわけで
+ここだけの　はなし……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:13:04" />
+				Time="2011-09-08T08:23:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -80,10 +82,12 @@
 こんな　格好を　してますけど
 元プラズマ団　です！▼
 ロットさまに　頼まれ
-スパイを　やっているんですよ！▼</Text>
+スパイを　やっているんですよ！▼
+というわけで
+ここだけの　話……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:13:15" />
+				Time="2011-09-08T08:24:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -120,13 +124,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>というわけで
-ここだけの　はなし……▼
-この　ふねの　なかは
+			<Text>この　ふね……▼
+プラズマフリゲートの　なかは
 ワープパネルで　いどう　するんです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T06:42:11" />
+				Time="2011-09-08T08:24:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -134,13 +137,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>というわけで
-ここだけの　話……▼
-この　船内の　移動は
-ワープパネル　なんです</Text>
+			<Text>この船……▼
+プラズマフリゲートは
+ワープパネルで　移動するんです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T06:42:30" />
+				Time="2011-09-08T08:24:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
