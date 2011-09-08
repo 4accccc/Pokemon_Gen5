@@ -37,7 +37,7 @@ SUBDIRS	= anime_files
 include $(PROJECT_RSCDIR)\macro_define
 
 XLS2TAB	= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
-TEXMAG	= $(PROJECT_ROOT)/tools/tex_mag/tex_mag.exe
+TEXMAG	= $(PROJECT_ROOT)/tools/imdtools/tex_mag/tex_mag.exe
 
 
 WKDIR			= wkdir
@@ -267,7 +267,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
 
 texture_clean:
-	@-rm -f $(TEXSETDIR)/*.nsbtx $(TEXSETDIR)/*.imd
+	@-rm -f $(TEXSETDIR)/*.nsbtx $(TEXSETDIR)/*.imd $(TEXSETDIR)/*.txt
 	@-rm -f $(TEXSET_TMPDIR)/*
 	@-rm -f $(TEXSET_DEP_OUTDOOR) $(TEXSET_ARC_OUTDOOR)
 	@-rm -f $(TEXSET_DEP_INDOOR) $(TEXSET_ARC_INDOOR)

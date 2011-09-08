@@ -56,7 +56,7 @@ DQ		="
 #
 #----------------------------------------------------------------------------
 #Makeで生成される*.binはmake cleanの削除対象にする
-CLEANFILES	= $(subst $(DQ),,$(NSBTXFILESDIR)/*.nsbtx $(MARGED_TEXIMD_DIR)/*.imd)
+CLEANFILES	= $(subst $(DQ),,$(NSBTXFILESDIR)/*.nsbtx $(MARGED_TEXIMD_DIR)/*.imd $(MARGED_TEXIMD_DIR)/*.txt)
 
 #----------------------------------------------------------------------------
 #	ツールへのパス指定
