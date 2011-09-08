@@ -18,9 +18,9 @@
 #define DOOR_ID_D09_D09R0201_EXIT01      13
 #define DOOR_ID_D09_R10R0901_EXIT01      14
 #define DOOR_ID_D09_D09R1201_EXIT03      15
-#define DOOR_ID_D09_C09_EXIT01           16
-#define DOOR_ID_D09_D09R0501_EXIT01      17
-#define DOOR_ID_D09_D09R1401_EXIT01      18
+#define DOOR_ID_D09_D09R0501_EXIT01      16
+#define DOOR_ID_D09_D09R1401_EXIT01      17
+#define DOOR_ID_D09_C09_EXIT01           18
 
 #endif //ZONE_D09_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d09.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
