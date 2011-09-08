@@ -452,4 +452,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/h06_light02.nsbmd \
 	$(RESDIR)/c15_gate_02.nsbmd \
 	$(RESDIR)/door_c14.nsbmd \
+	$(RESDIR)/c14_boat.nsbmd \
 
