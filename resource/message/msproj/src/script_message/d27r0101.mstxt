@@ -164,11 +164,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『まっ　どうでも　いいだろ？
-おまえたちは　ここで　おわり　だから▼</Text>
+			<Text>プラズマだん『どうでも　いいだろ
+ここで　コテンパンに　されるんだから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T07:03:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -176,11 +176,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『まっ　どうでも　いいだろ？
-おまえたちは　ここで　終わり　だから▼</Text>
+			<Text>プラズマ団『どうでも　いいだろ
+ここで　コテンパンに　されるんだから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T07:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -190,10 +190,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船：1回目
-・画面上（もしくは左）からプラズマ団×６登場</Comment>
+・画面上からプラズマ団×６登場</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T07:05:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -216,11 +216,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なるほど
-プラズマだんの　アジトって　わけね▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『フン！
+プラズマだんの　アジトかよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T06:38:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -228,11 +228,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なるほど
-プラズマ団の　アジトって　わけね▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『フン！
+プラズマ団の　アジトかよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T06:38:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -268,11 +268,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『そう！　だから
-ぞろぞろ　あらわれるぜ？▼</Text>
+			<Text>プラズマだん『そう！
+ぞろぞろ　あらわれるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T07:02:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -280,11 +280,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『そう！　だから
-ぞろぞろ　現れるぜ？▼</Text>
+			<Text>プラズマ団『そう！
+ぞろぞろ　現れるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T07:02:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -294,12 +294,12 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船：1回目
-・画面下（もしくは右）からプラズマ団×６登場
+・画面下からプラズマ団×６登場
 ・主人公たち、振り向く
 ・続けてswrival_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T07:05:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -322,11 +322,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『だから　なんだよ
-よわいから　たくさん　いるんだろ？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『だから？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T06:39:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -334,11 +333,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『だから　なんだよ
-弱いから　たくさん　いるんだろ？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『だから？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T06:40:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -378,11 +376,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『うでに　じしんが　あるのか？
+			<Text>プラズマだん『うぬぼれてやがる！
 だけど　４れんぞくは　きびしいだろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T06:40:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -390,11 +388,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『腕に　自信が　あるのか？
+			<Text>プラズマ団『うぬぼれてやがる！
 だけど　４連続は　厳しいだろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T06:40:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -536,10 +534,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『なんだよ　こいつ！
-２ねんまえの　あいつ　みたいだな▼</Text>
+あの　トレーナー　みたいだな▽
+あの　２ねんまえの……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T07:08:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -548,10 +547,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『なんだよ　こいつ！
-２年前の　あいつ　みたいだな▼</Text>
+あの　トレーナー　みたいだな▽
+あの　２年前の……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-09-08T07:08:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
