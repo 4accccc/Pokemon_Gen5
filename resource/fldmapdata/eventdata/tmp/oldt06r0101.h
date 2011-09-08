@@ -8,6 +8,9 @@
 #ifndef ZONE_OLDT06R0101_EVC_H
 #define ZONE_OLDT06R0101_EVC_H
 
+#define OLDT06R0101_OLD_CHAMPION_01        0
+#define OLDT06R0101_OLD_LEADER7_01         1
+#define OLDT06R0101_OLD_BIGFOUR3_01        2
 
 #endif //ZONE_OLDT06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/oldt06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
