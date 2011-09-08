@@ -145,6 +145,7 @@ struct _WBT_SYSTEM {
   ///選択したダウンロードデータ
   u8 select_dl_data;
 
+  u8 audience_type;     ///<観客の種類
 
   u64 seed64;
   GFL_STD_RandContext rand_context;

@@ -31,6 +31,8 @@ typedef u8 WBTROM_TRID;
 
 enum { WBTROM_TRID_INVALID = 0xff };
 
+enum { WBT_AUDIENCE_TYPE_MAX = 4 };
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct _WBTRESULT WBTRESULT;
@@ -82,6 +84,7 @@ extern void WBTSYS_SetStage( WBTSYS * wbtsys, WBTSTAGE stage );
 extern WBTSTAGE WBTSYS_GetStage( const WBTSYS * wbtsys );
 
 extern u64 WBTSYS_GetRandomSeed( const WBTSYS * wbtsys );
+extern u8 WBTSYS_GetAudienceType( const WBTSYS * wbtsys );
 
 extern POKEPARTY * WBTSYS_GetMyParty( WBTSYS * wbtsys );
 extern POKEPARTY * WBTSYS_GetEnemyParty( WBTSYS * wbtsys );

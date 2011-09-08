@@ -69,6 +69,7 @@ WBTSYS * WBTSYS_Create( HEAPID heapID )
     wbtsys->seed64 = (seed64 << 32) + GFL_STD_MtRand( 0 );
     GFL_STD_RandInit( &wbtsys->rand_context, wbtsys->seed64 );
   }
+  wbtsys->audience_type = GFUser_GetPublicRand( WBT_AUDIENCE_TYPE_MAX );
 
   for (i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
@@ -235,6 +236,12 @@ WBTSTAGE WBTSYS_GetStage( const WBTSYS * wbtsys )
 u64 WBTSYS_GetRandomSeed( const WBTSYS * wbtsys )
 {
   return wbtsys->seed64;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u8 WBTSYS_GetAudienceType( const WBTSYS * wbtsys )
+{
+  return wbtsys->audience_type;
 }
 
 //------------------------------------------------------------------

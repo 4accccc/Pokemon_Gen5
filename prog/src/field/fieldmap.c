@@ -140,6 +140,8 @@
 
 #include "field_g3d_palette.h"  //FLD_G3DPAL_
 
+#include "wbt_system.h"
+
 //======================================================================
 //	DEBUG’è‹`
 //======================================================================
@@ -589,7 +591,11 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
     }
     else if ( AREADATA_IsWBTHallArea( area_id ) )
     {
-      area_ofs_id = 0;  //‰¼
+      WBTSYS ** wbtsys = GAMEDATA_GetWBTSysPointer( fieldWork->gamedata );
+      if (wbtsys != NULL && *wbtsys != NULL )
+      {
+        area_ofs_id = WBTSYS_GetAudienceType( *wbtsys );
+      }
     }
 
     // ƒGƒŠƒAî•ñ‚ğæ“¾
