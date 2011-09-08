@@ -30,7 +30,6 @@ extern void FmaCmn_chg_pal( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wn
 extern void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnum, const s32 num, const s32 snum, const s32 smode,
 								const s32 x, const s32 y );
 extern void FmaCmn_disp_time( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnum, const s32 src0, const s32 src1 );
-//extern void FmaCmn_disp_star( FMISSION_APP_WORK *wk );
 extern void FmaCmn_disp_star( FMISSION_APP_WORK *wk, const s32 cnum );
 
 //
@@ -38,4 +37,8 @@ extern s32  FmaCmn_chk_tp( FMISSION_APP_WORK *wk );
 //
 extern BOOL FmaCmn_main_meswin( FMISSION_APP_WORK* wk );
 extern void FmaCmn_disp_winmes( FMISSION_APP_WORK* wk, const s32 mode, const s32 id, const s32 smode );
+//
+extern s32  FmaCmn_chk_itemget( FMISSION_APP_WORK *wk, const s32 itemid );
+//
+extern void FmaCmn_disp_arrow( FMISSION_APP_WORK *wk, const BOOL bflg );
 

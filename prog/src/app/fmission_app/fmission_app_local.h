@@ -63,6 +63,7 @@ enum{
 	FLG_FMA_SCROLL_STOP	= (1<<8),	// スクロール停止
 	FLG_FMA_TIME_STOP	= (1<<9),	// タイマ停止
 	FLG_FMA_HILINK		= (1<<10),	// ハイリンクの条件を満たす
+	FLG_FMA_GET2		= (1<<11),	// 成功して報酬を獲得2
 	//
 	FLG_FMA_NEW_TS		= (1<<12),	// トータルスコア(NEWマーク)
 	FLG_FMA_NEW_CT		= (1<<13),	// クリアタイム(NEWマーク)
@@ -71,6 +72,9 @@ enum{
 	FLG_FMA_LEVEL1		= (1<<17),	// レベル1
 	FLG_FMA_LEVEL2		= (1<<18),	// レベル2
 	FLG_FMA_LEVEL3		= (1<<19),	// レベル3
+	//
+	FLG_FMA_ME_WAIT		= (1<<20),	// ME待ち
+	FLG_FMA_ME_MES		= (1<<21),	// MEのメッセージ待ち
 	//
 	FLG_FMA_MSG_00		= (1<<24),	// 成功or失敗
 	FLG_FMA_MSG_01		= (1<<25),	// 手に入れたor失敗
@@ -248,6 +252,14 @@ typedef struct{
 } FMISSION_APP_OLD_WORK;
 
 //-------------------------------------
+// スコアログの情報(1名分)
+//-------------------------------------
+typedef struct{
+	STRBUF		*strbuf;		// 名前
+	s32			score;			// スコア
+} FMISSION_APP_LOG;
+
+//-------------------------------------
 /// OBJ管理ワーク
 //-------------------------------------
 typedef struct
@@ -290,6 +302,7 @@ typedef struct
 	LINKFEST_MISSION_RESULT MissionResult;		// 結果(実体)
 	LINKFEST_LOG_TOP_SCORE	*TopScore;			// トップスコア用
 	FMISSION_LOG_LATEST		*Latest;			// ログ
+	FMISSION_APP_LOG		ScoreLog;			// スコアログ(1名分)
 	//
 	s32						Step;				// 処理の流れ
 	s32						Mode;				// モード(詳細、評価)

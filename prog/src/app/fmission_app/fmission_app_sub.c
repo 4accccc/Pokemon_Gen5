@@ -1232,6 +1232,7 @@ static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id 
 	STRBUF		*str_tmp;
 	STRBUF		*strbuf2;
 	MYSTATUS	*mystatus;
+	MYITEM		*myitem;
 	
 	// PrintStream終了時にはdeleteしないとtaskが残ってしまうようだ
 	if( wk->PrintStream ){
@@ -1253,16 +1254,27 @@ static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id 
 		WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
 		// アイテム名
 		WORDSET_RegisterItemName( wk->Wordset, 1, wk->MissionResult.item );
-		// アイテム数
-		buf[0] = wk->MissionResult.item_num;
-		buf[1] = wk->MissionResult.bonus_num;
-		WORDSET_RegisterNumber( wk->Wordset, 2, (buf[0]+buf[1]), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		// (所持可能な)アイテム数を求める
+		buf[0] = FmaCmn_chk_itemget(wk, wk->MissionResult.item);
+		buf[1] = wk->MissionResult.item_num+wk->MissionResult.bonus_num;
+		if(buf[1] > buf[0]){
+			buf[1] = buf[0];
+		}
+		WORDSET_RegisterNumber( wk->Wordset, 2, buf[1], 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		//
+//		buf[0] = wk->MissionResult.item_num;
+//		buf[1] = wk->MissionResult.bonus_num;
+//		WORDSET_RegisterNumber( wk->Wordset, 2, (buf[0]+buf[1]), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 		// セット
 		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id]);
 		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
 		GFL_STR_DeleteBuffer(strbuf2);
 		GFL_STR_DeleteBuffer(str_tmp);
+		//
+		// 後処理としてアイテムを実際に加算
+		myitem = GAMEDATA_GetMyItem( wk->Param->gdata );
+		MYITEM_AddItem( myitem, wk->MissionResult.item, buf[1], wk->heapID );
 	}
 	// 手に入れられない
 	else if(id == FMA_MSGWIN_03){
@@ -1287,15 +1299,25 @@ static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id 
 		WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
 		// アイテム名
 		WORDSET_RegisterItemName( wk->Wordset, 1, wk->MissionResult.sp_item );
-		// アイテム数
-		buf[0] = wk->MissionResult.sp_item_num;
-		WORDSET_RegisterNumber( wk->Wordset, 2, buf[0], 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		// (所持可能な)アイテム数を求める
+		buf[0] = FmaCmn_chk_itemget(wk, wk->MissionResult.sp_item);
+		buf[1] = wk->MissionResult.sp_item_num;
+		if(buf[1] > buf[0]){
+			buf[1] = buf[0];
+		}
+		WORDSET_RegisterNumber( wk->Wordset, 2, buf[1], 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+//		buf[0] = wk->MissionResult.sp_item_num;
+//		WORDSET_RegisterNumber( wk->Wordset, 2, buf[0], 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 		// セット
 		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[2]);
 		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
 		GFL_STR_DeleteBuffer(strbuf2);
 		GFL_STR_DeleteBuffer(str_tmp);
+		//
+		// 後処理としてアイテムを実際に加算
+		myitem = GAMEDATA_GetMyItem( wk->Param->gdata );
+		MYITEM_AddItem( myitem, wk->MissionResult.sp_item, buf[1], wk->heapID );
 	}
 	// 個人
 	else if(id == FMA_MSGWIN_05){
@@ -1420,4 +1442,52 @@ void FmaCmn_disp_winmes( FMISSION_APP_WORK* wk, const s32 mode, const s32 id, co
 		fma_set_meswin( wk, mode, id );
 	}
 }
+
+//--------------------------------------------------------------
+/**
+ * アイテム取得のチェック
+ *
+ * @param   FMISSION_APP_WORK		*wk
+ * @param   const s32				id
+ * @param   const s32				加算しようとしている数
+ *
+ * @ret     s32						持てる数
+ */
+//--------------------------------------------------------------
+s32 FmaCmn_chk_itemget( FMISSION_APP_WORK *wk, const s32 itemid )
+{
+	s32		num;
+	u16		nownum;
+	u32		maxnum;
+	
+	// 所持最大数
+	maxnum = MYITEM_GetItemMax( itemid );
+	// 現在の所持数
+	nownum = MYITEM_GetItemNum( GAMEDATA_GetMyItem(wk->Param->gdata), itemid, wk->heapID );
+	// 追加で持てる数
+	num = maxnum-nownum;
+	//
+	return( num );
+}
+
+//--------------------------------------------------------------
+/**
+ * 矢印表示
+ *
+ * @param   FMISSION_APP_WORK		*wk
+ *
+ * @ret		
+ */
+//--------------------------------------------------------------
+void FmaCmn_disp_arrow( FMISSION_APP_WORK *wk, const BOOL bflg )
+{
+	if(bflg == TRUE){
+		APP_KEYCURSOR_Write( wk->MsgCursorWork, GFL_BMPWIN_GetBmp(wk->PrintUtil[FMAR_CANVAS_DOWN_WIN].win), 15 );
+		GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[FMAR_CANVAS_DOWN_WIN].win );
+	}else{
+		APP_KEYCURSOR_Clear( wk->MsgCursorWork, GFL_BMPWIN_GetBmp(wk->PrintUtil[FMAR_CANVAS_DOWN_WIN].win), 15 );
+		GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[FMAR_CANVAS_DOWN_WIN].win );
+	}
+}
+
 
