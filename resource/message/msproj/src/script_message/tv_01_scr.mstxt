@@ -10510,10 +10510,29 @@ OHHHH！　バッチリ　おめかしした
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】英語番組　[Name:PokemonName Idx="3" ] 17</Text>
+			<Text>ボブ『HI EVERYONE！▼
+きょうの　『TRADE'N TALK』では
+ボクが　よく　いわれる　この▽
+ひとことを　しょうかい　しよう！▼
+『じょうだんだろ！？』▼
+ボクの　まわりには　ショッキングな
+ニュースが　おおくてね▼
+こないだも　まっかな　[Name:PokemonName Idx="3" ]を
+みたんだよって　はなしたら▽
+こう　いわれたんだよ！▼
+『You're kidding!』
+ヨァー　キディンッ！▼
+じょうだんだろ！？　ってね！
+ほんとだよ！▼
+とても　きげんの　わるい
+[Name:PokemonName Idx="3" ]は　いかりで　かおが▽
+まっかに　なってたのさ！▽
+……ああ　こわかった！▼
+そんなわけで　きょうは　ここまで！
+みんな　SEE YOU AGAIN！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:00:28" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:55:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10521,10 +10540,29 @@ OHHHH！　バッチリ　おめかしした
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】英語番組　[Name:PokemonName Idx="3" ]</Text>
+			<Text>ボブ『HI EVERYONE！▼
+今日の　『TRADE'N TALK』では
+ボクが　よく　いわれる　この▽
+一言を　紹介しよう！▼
+『冗談だろ！？』▼
+ボクの　周りには　ショッキングな
+ニュースが　多くてね▼
+こないだも　真っ赤な　[Name:PokemonName Idx="3" ]を
+みたんだよって　話したら▽
+こう　いわれたんだよ！▼
+『You're kidding!』
+ヨァー　キディンッ！▼
+冗談だろ！？　ってね！
+ほんとだよ！▼
+とても　機嫌の　悪い
+[Name:PokemonName Idx="3" ]は　怒りで　顔が▽
+真っ赤に　なってたのさ！▽
+……ああ　怖かった！▼
+そんなわけで　今日は　ここまで！
+みんな　SEE YOU AGAIN！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:05:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:55:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10814,10 +10852,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧イッシュビュー枠 1</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:00:34" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10825,10 +10863,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧イッシュビュー枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10836,11 +10874,11 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧イッシュビュー枠）
+			<Comment>■バラエティ　未定
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -10862,10 +10900,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧イッシュビュー枠 2</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:00:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10873,10 +10911,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧イッシュビュー枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:33" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10884,11 +10922,11 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧イッシュビュー枠）
+			<Comment>■バラエティ　未定
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:33" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -10910,10 +10948,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧イッシュビュー枠 3</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:00:53" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10921,10 +10959,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧イッシュビュー枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:34" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10932,11 +10970,11 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧イッシュビュー枠）
+			<Comment>■バラエティ　未定
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:34" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -10958,10 +10996,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧イッシュビュー枠 4</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:00:54" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10969,10 +11007,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧イッシュビュー枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:35" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10980,11 +11018,11 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧イッシュビュー枠）
+			<Comment>■バラエティ　未定
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:35" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -11006,10 +11044,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧イッシュビュー枠 5</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:00:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11017,10 +11055,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧イッシュビュー枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:36" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11028,11 +11066,11 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧イッシュビュー枠）
+			<Comment>■バラエティ　未定
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:36" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -11054,10 +11092,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧イッシュビュー枠 6</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:00:57" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11065,10 +11103,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧イッシュビュー枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:37" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11076,11 +11114,11 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧イッシュビュー枠）
+			<Comment>■バラエティ　未定
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:37" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -11102,10 +11140,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧イッシュビュー枠 7</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:00:58" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11113,10 +11151,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧イッシュビュー枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11124,11 +11162,11 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧イッシュビュー枠）
+			<Comment>■バラエティ　未定
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -11150,10 +11188,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧イッシュビュー枠 8</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:00:59" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11161,10 +11199,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧イッシュビュー枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11172,11 +11210,11 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧イッシュビュー枠）
+			<Comment>■バラエティ　未定
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -11198,10 +11236,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧イッシュビュー枠 9</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:01" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11209,10 +11247,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧イッシュビュー枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11220,11 +11258,11 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧イッシュビュー枠）
+			<Comment>■バラエティ　未定
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -11246,10 +11284,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧イッシュビュー枠 10</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:03" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11257,10 +11295,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧イッシュビュー枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:41" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11268,11 +11306,11 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧イッシュビュー枠）
+			<Comment>■バラエティ　未定
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:06:41" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:53:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12155,10 +12193,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】がんばるあの子 1</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:22" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12166,10 +12204,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】がんばるあの子</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12177,11 +12215,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　かんばるあの子
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12203,10 +12241,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】がんばるあの子 2</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12214,10 +12252,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】がんばるあの子</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:35" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12225,11 +12263,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　かんばるあの子
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:35" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12251,10 +12289,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】がんばるあの子 3</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12262,10 +12300,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】がんばるあの子</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12273,11 +12311,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　かんばるあの子
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12299,10 +12337,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】がんばるあの子 4</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12310,10 +12348,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】がんばるあの子</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12321,11 +12359,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　かんばるあの子
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12347,10 +12385,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】がんばるあの子 5</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:28" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12358,10 +12396,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】がんばるあの子</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12369,11 +12407,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　かんばるあの子
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12395,10 +12433,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】がんばるあの子 6</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12406,10 +12444,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】がんばるあの子</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:44" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12417,11 +12455,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　かんばるあの子
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:44" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12443,10 +12481,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】がんばるあの子 7</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12454,10 +12492,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】がんばるあの子</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:47" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12465,11 +12503,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　かんばるあの子
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:47" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12491,10 +12529,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】がんばるあの子 8</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12502,10 +12540,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】がんばるあの子</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:49" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12513,11 +12551,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　かんばるあの子
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:49" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12539,10 +12577,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】がんばるあの子 9</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:33" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12550,10 +12588,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】がんばるあの子</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:50" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12561,11 +12599,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　かんばるあの子
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:50" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12587,10 +12625,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】がんばるあの子 10</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-02T11:01:35" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12598,10 +12636,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】がんばるあの子</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:51" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12609,11 +12647,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　かんばるあの子
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:08:51" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -12635,10 +12673,10 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】未定　旧砂嵐枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:09:27" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12646,10 +12684,10 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】未定　旧砂嵐枠</Text>
+			<Text>内容未定</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:09:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12657,11 +12695,11 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■バラエティ　未定（旧砂嵐枠）
+			<Comment>■バラエティ
 ・担当：？？？</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-01T12:09:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:51:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">

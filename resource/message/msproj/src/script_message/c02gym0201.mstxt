@@ -386,6 +386,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>続けてウインドウ表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:25" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ジャンル</Text>
@@ -413,10 +420,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「じどうしょ」の　ほんだな▼</Text>
+			<Text>「ポケモンえほん」の　ほんだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:43:16" />
+				Time="2011-09-08T06:41:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -424,15 +431,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「児童書」の　本棚▼</Text>
+			<Text>「ポケモン絵本」の　本棚▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:43:29" />
+				Time="2011-09-08T06:41:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>続けてウインドウ表示
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:32" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ジャンル</Text>
@@ -460,11 +475,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「キズぐすりって　すごい！」
+			<Text>「ホネと　カセキと　わたしたち」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:43:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -472,11 +487,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「キズぐすりって　すごい！」
+			<Text>「ホネと　カセキと　わたしたち」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:43:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -516,11 +531,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「きかんしゃの　こうぞう」
+			<Text>「ポケモンと　おしごと」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -528,11 +543,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「機関車の　構造」
+			<Text>「ポケモンと　お仕事」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -572,11 +587,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ポケモンしょうぶの　ぎじゅつ」
+			<Text>「うつりかわる　イッシュ」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -584,11 +599,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ポケモン勝負の　技術」
+			<Text>「移り変わる　イッシュ」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -628,11 +643,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ポケモンセンターの　しくみ」
+			<Text>「のりもの　だいすき！」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -640,11 +655,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ポケモンセンターの　仕組み」
+			<Text>「のりもの　大好き！」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -684,11 +699,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ミネズミの　せいたい」
+			<Text>「５つの　はし」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -696,11 +711,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ミネズミの　生態」
+			<Text>「５つの　橋」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -740,11 +755,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ツタージャの　せいたい」
+			<Text>「おいしいもの　たべたい！」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -752,11 +767,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ツタージャの　生態」
+			<Text>「おいしいもの　食べたい！」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -796,11 +811,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ミジュマルの　せいたい」
+			<Text>「イッシュかんこうガイド」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -808,11 +823,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ミジュマルの　生態」
+			<Text>「イッシュ観光ガイド」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -852,11 +867,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ポカブの　せいたい」
+			<Text>「でんこうけいじばんの　ひみつ」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -864,11 +879,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ポカブの　生態」
+			<Text>「電光掲示板の　秘密」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -908,11 +923,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ポケモン　えかきうた」
+			<Text>「よわむしヨーテリーの　たんけん１」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -920,11 +935,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ポケモン　えかきうた」
+			<Text>「よわむし　ヨーテリーの　たんけん１」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -964,11 +979,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「はじめまして　ポケモンちゃん」
+			<Text>「よわむしヨーテリーの　たんけん２」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -976,11 +991,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「はじめまして　ポケモンちゃん」
+			<Text>「よわむし　ヨーテリーの　たんけん２」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1020,11 +1035,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「３ばんどうろの　ぼうけん」
+			<Text>「よわむしヨーテリーの　たんけん３」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1032,11 +1047,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「３ばんどうろの　ぼうけん」
+			<Text>「よわむし　ヨーテリーの　たんけん３」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1076,11 +1091,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ポケモンの　おかし」
+			<Text>「よわむしヨーテリーの　たんけん４」
 この　ほんを　よみますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1088,11 +1103,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ポケモンの　お菓子」
+			<Text>「よわむし　ヨーテリーの　たんけん４」
 この本を　読みますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1132,14 +1147,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キズぐすりの　こうぞうや
-ただしい　つかいかたに▽
-ついて　かいてある▼
-やんちゃな　ポケモンへの
-つかいかたの　コツも　かかれている</Text>
+			<Text>ポケモンの　ホネと　カセキについての
+けんきゅうを　まとめた　ほんだ▼
+ホネや　カセキを　しらべることで
+こだいの　ポケモンの　せいたいを▽
+りかいできるだけではなく▼
+こだいに　いきていた　ひとびとが
+どう　ポケモンと　かかわっていたかが▽
+わかると　かかれている▼
+こだいじんに　とって　ポケモンは
+しんぴてきな　もので　いまよりも▽
+とくべつな　そんざいだったようだ▼
+さくしゃめいの　ところに
+アロエと　かかれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:43:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1147,13 +1170,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キズぐすりの　構造や
-正しい　使い方について　書いてある▼
-やんちゃな　ポケモンへの
-使い方の　コツも　書かれている</Text>
+			<Text>ポケモンの　ホネと　カセキについての
+研究を　まとめた　本だ▼
+ホネや　カセキを　調べることで
+古代の　ポケモンの　生態を▽
+理解できるだけではなく▼
+古代に　生きていた　人々が
+どう　ポケモンと　関わっていたかが▽
+分かると　書かれている▼
+古代人に　とって　ポケモンは
+神秘的な　もので　いまよりも▽
+もっと　特別な　存在だったようだ▼
+作者名の　ところに
+アロエと　書かれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:43:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1161,11 +1193,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>「キズぐすりって　すごい！」
+			<Comment>「ホネと　カセキと　わたしたち」
 この　ほんを　よみますか？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:43:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1194,14 +1226,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きかんしゃに　ついて
-かかれている　ほんだ▼
-からだのなかで　ほのおを　もやし
-その　じょうきの　ちからで▽
-けむりを　だしながら　はしっていく！▼</Text>
+			<Text>さまざまな　しごとの　げんばで
+だいかつやくする　ポケモンたちを▽
+しょうかいする　ほんだ▼
+とうげいかが　おさらや　つぼを
+やきあげるためには▼
+かまどの　おんどを　３００どまで
+あげなければなりません▼
+そこで　かつやくするのが　バオップ！
+じまんの　ふさで　おんどを　あげて▽
+みごとに　やきあげてみせます▼
+……と　かかれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:43:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1209,14 +1247,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>機関車に　ついて
-書かれている　本だ▼
-体の中で　炎を　燃やし
-その　蒸気の　力で▽
-煙を　出しながら　走っていく！▼</Text>
+			<Text>様々な　仕事の　現場で
+大活躍する　ポケモンたちを▽
+紹介する　本だ▼
+陶芸家が　お皿や　つぼを
+焼き上げるためには▼
+かまどの　温度を　３００度まで
+上げなければなりません▼
+そこで　活躍するのが　バオップ！
+自慢の　ふさで　温度を　上げて▽
+見事に　焼き上げてみせます▼
+……と　書かれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:43:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1224,11 +1268,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>「きかんしゃの　こうぞう」
+			<Comment>「ポケモンと　おしごと」
 この　ほんを　よみますか？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:43:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1257,13 +1301,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　いれかえるときの
-タイミングについて　かかれている▼
-「あぶないと　おもう　まえには
-いれかえろ！」</Text>
+			<Text>この２ねんで　さまがわりした
+イッシュちほうに　ついての　ほんだ▼
+イッシュには　まいとし　たくさんの
+ひとが　うつりすんで　くるので▼
+めまぐるしい　そくどで　まちも
+かんきょうも　かわっていきます▽
+……と　かかれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1271,13 +1318,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　入れ替えるときの
-タイミングについて　書かれている▼
-「危ないと　思う前には
-入れ替えろ！」</Text>
+			<Text>この２年で　様変わりした
+イッシュ地方に　ついての　本だ▼
+イッシュには　毎年　たくさんの
+人が　移り住んで　くるので▼
+めまぐるしい　速度で　街も
+環境も　変わっていきます▽
+……と　書かれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1318,13 +1368,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンセンターの
-しくみに　ついて　まとめてある▼
-はたらく　おねえさんの　１にちも
-くわしく　かかれている</Text>
+			<Text>ヒウンシティの　ゆうらんせんや
+フキヨセシティの　ひこうきなどの▽
+のりものに　ついて　かかれている▼
+ひこうきなどが　なかった　じだいは
+きかんしゃが　イッシュかくちを▽
+はしりまわっていたそうです▼
+シッポウシティに　ある　せんろは
+そのじだいの　なごり▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1332,13 +1386,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンセンターの
-仕組みに　ついて　まとめてある▼
-働く　お姉さんの　1日も
-詳しく　書かれている</Text>
+			<Text>ヒウンシティの　遊覧船や
+フキヨセシティの　飛行機などの▽
+乗り物に　ついて　書かれている▼
+飛行機などが　なかった　時代は
+機関車が　イッシュ各地を▽
+走りまわっていたそうです▼
+シッポウシティに　ある　線路は
+その時代の　名残▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1379,13 +1437,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミネズミの　せいたいが　かいてある▼
-しっぽの　うごきで　れんらくしあう
-しっぽを　たてる　うごきは▽
-てきを　はっけんしたときの　サインだ▼</Text>
+			<Text>イッシュちほう　めいぶつの
+５つの　はしを　たびしてまわった▽
+バックパッカーの　ほんだ▼
+ゆうぐれの　スカイアローブリッジで
+ゆうらんせんを　みながら　のむ▽
+ミックスオレの　みりょくに　ついて▽
+２００ページほど　かかれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1393,13 +1454,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミネズミの　生態が　書いてある▼
-しっぽの　動きで　連絡しあう
-しっぽを　立てる　動きは▽
-敵を　発見したときの　サインだ▼</Text>
+			<Text>イッシュ地方名物の
+５つの　橋を　旅してまわった▽
+バックパッカーの　本だ▼
+夕暮れの　スカイアローブリッジで
+遊覧船を　みながら　飲む▽
+ミックスオレの　魅力に　ついて▽
+２００ページほど　書かれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1440,13 +1504,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ツタージャの　せいたいが　かいてある▼
-ひあたりのよい　ばしょで
-たいように　しっぽを　むけていたなら▽
-こうごうせいの　さいちゅうだ</Text>
+			<Text>イッシュちほうの　グルメじょうほうが
+まとめられた　じょうほうしだ▼
+つうは　モーモーミルクを　のみながら
+ビレッジサンドを　たべたあとに▼
+なつかしの　ヒウンアイスを
+たいらげる……と　かかれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1454,13 +1520,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ツタージャの　生態が　書いてある▼
-日当たりの良い　場所で
-太陽に　しっぽを　向けていたなら▽
-光合成の　最中だ</Text>
+			<Text>イッシュ地方の　グルメ情報が
+まとめられた　情報誌だ▼
+通は　モーモーミルクを　飲みながら
+ビレッジサンドを　食べたあとに▼
+懐かしの　ヒウンアイスを
+たいらげる……と　書かれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1501,13 +1569,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミジュマルの　せいたいが　かいてある▼
-おなかにある　ホタチは　とてもかたく
-おへそから　つくられており▽
-ミジュマルは　どうぐとして　つかう</Text>
+			<Text>さいしんの　かんこうじょうほうが
+まとめられた　ほんだ▼
+えいがずきなら　ポケウッド！▼
+しょうぶずきなら　ホドモエシティの
+ワールドバトルトーナメント！▼
+のんびりしたいなら
+セイガイハシティで　バカンスを！▽
+……と　かかれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1515,13 +1587,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミジュマルの　生態が　書いてある▼
-お腹にある　ホタチは　とても硬く
-おへそから　作られており▽
-ミジュマルは　道具として　使う</Text>
+			<Text>最新の　観光情報が
+まとめられた　本だ▼
+映画好きなら　ポケウッド！▼
+勝負好きなら　ホドモエシティの
+ワールドバトルトーナメント！▼
+のんびりしたいなら
+セイガイハシティで　バカンスを！▽
+……と　書かれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1562,13 +1638,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポカブの　せいたいが　かいてある▼
-たいないでは　ほのおが　もえあがり
-はなのあなから　ほのおを　はきだす▽
-げんきがないと　けむりしか　だせない</Text>
+			<Text>かくちの　ゲートに　せっちされている
+でんこうけいじばんに　ついて▽
+てっていしゅざいした　ほんだ▼
+あたりまえの　ように　ながれている
+おてんきじょうほうや　ポケモンの▽
+はっせい　じょうほうの　うらには▽
+ねっけつ　ちょうさいんたちの▽
+かずおおくの　ドラマがあった……▽
+と　かかれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1576,13 +1657,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポカブの　生態が　書いてある▼
-体内では　炎が　燃えあがり
-鼻の穴から　炎を　吐き出す▽
-元気がないと　煙しか　出せない</Text>
+			<Text>各地の　ゲートに　設置されている
+電光掲示板に　ついて▽
+徹底取材した　本だ▼
+当たり前の　ように　流れている
+お天気情報や▽
+ポケモンの　発生情報の　裏には▽
+熱血調査員たちの▽
+数多くの　ドラマがあった……▽
+と　書かれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1623,12 +1709,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　えかきうたが
-たくさん　のっている▼
-どれも　よくにてて　かきやすそう</Text>
+			<Text>こころやさしくも　よわむしな
+１ぴきの　ヨーテリーの　おはなしだ▼
+おもい　びょうきに　かかってしまった
+おばあちゃんを　たすけるため▼
+こわいおばけが　すみつく　どうくつに
+あるという　やくそうを　もとめて▼
+なきむし　ヨーテリーが　ゆうきをだして
+たびだつまでが　かかれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1636,12 +1727,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　絵描き歌が
-たくさん　載っている▼
-どれも　よく似てて　描きやすそう</Text>
+			<Text>心優しくも　弱虫な
+１匹の　ヨーテリーの　お話だ▼
+重い　病気に　かかってしまった
+おばあちゃんを　助けるため▼
+怖いおばけが　住みついた　洞穴に
+あるという　薬草を　求めて▼
+泣き虫　ヨーテリーが　勇気をだして
+旅立つまでが　かかれている▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1682,14 +1778,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うまれて　はじめて
-ポケモンと　であった▽
-おとこのこの　どうわだ▼
-ちゃいろの　ちいさな
-ポケモンを　つれている▼</Text>
+			<Text>よわむしな　ヨーテリーと
+おこりんぼうの　ゾロアの　おはなしだ▼
+やくそうを　もとめて　どうくつへ
+むかう　ヨーテリーの　まえに▽
+きょうぼうな　ゾロアが　たちはだかる▼
+いろいろあって　なんだかんだで
+ふたりは　ともだちに　なって▽
+いっしょに　いくことに　なりました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1697,14 +1796,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>生まれて　初めて
-ポケモンと　出会った▽
-男の子の　童話だ▼
-茶色の　小さな
-ポケモンを　連れている▼</Text>
+			<Text>弱虫な　ヨーテリーと
+おこりんぼうの　ゾロアの　お話だ▼
+薬草を　求めて　洞穴へ
+向かう　ヨーテリーの　前に▽
+凶暴な　ゾロアが　たちはだかる▼
+いろいろあって　なんだかんだで
+二人は　友達に　なって▽
+一緒に　旅することに　なりました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1745,13 +1847,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　つれた　しょうねんが　
-だいぼうけんする　ものがたりだ▼
-ふたりの　おとこのこと　おんなのこが
-いっしょに　ぼうけんを　している</Text>
+			<Text>よわむしな　ヨーテリーと
+おこりんぼうだけど　やさしい　ゾロアと▽
+さびしがりやのデスマスの　おはなしだ▼
+ヨーテリーたちが　どうくつに　はいると
+ぶきみな　うめきごえが　きこえてくる▼
+ヨーテリーと　ゾロア　からだを
+よせあって　おくへ　すすむと　そこに▽
+おおごえを　あげて　ないている▽
+デスマスが　いました▼
+みんなと　なかよくなりたいのに
+こわがって　だれも　ともだちに▽
+なってくれないのだそうです▼
+なんだかんだで　すぐに
+うちとけあった　３びきは　いっしょに▽
+どうくつの　おくへと　すすみます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1759,13 +1872,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　連れた　少年が　
-大冒険する　物語だ▼
-２人の　男の子と　女の子が
-一緒に　冒険を　している</Text>
+			<Text>弱虫な　ヨーテリーと
+おこりんぼうだけど　優しい　ゾロアと▽
+寂しがりやの　デスマスの　お話だ▼
+ヨーテリーたちが　洞穴に　入ると
+不気味な　うめき声が　聞こえてきます▼
+ヨーテリーと　ゾロア　身体を
+よせあって　奥へ　進むと　そこに▽
+大声をあげて　泣いている▽
+デスマスが　いました▼
+みんなと　仲良くなりたいのに
+怖がって　だれも　友達に▽
+なってくれないのだそうです▼
+なんだかんだで　すぐに
+打ち解けあった　３匹は　一緒に▽
+洞穴の　奥へと　進みます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1806,17 +1930,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きのみを　おなべにいれ
-あっためて　つくる▽
-おいしい　おかしが　のっている▼
-とおい　シンオウちほう　には
-きのみから　つくる▽
-「ポフィン」と　よばれる▼
-おかしが　あり
-ポケモンたちの　だいこうぶつです▼</Text>
+			<Text>ヨーテリーと　ゾロア　それに　デスマス
+なかよし　３にんぐみの　おはなしだ▼
+コロモリの　たいぐんから　にげたり
+いじわるな　ワルビルを　３びきで▽
+ちからを　あわせて　たおしたりして▽
+いよいよ　やくそうを　みつける！▼
+「また　あそぼうね！」
+と　ゆびきりげんまん　３びきは▽
+もっと　あそびたいのを　がまんして▽
+それぞれの　おうちに　かえります▼
+ヨーテリーが　もちかえった　やくそうを
+のんだ　おばあさんは　すぐに▽
+げんきに　なりました　やったね！▼
+それからも　３びきの　ゆうじょうは
+ずっとずっと　つづいていきましたとさ▽
+めでたし　めでたし！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1824,16 +1956,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>木の実を　おなべに入れ　温めて作る
-おいしい　お菓子が　載っている▼
-遠い　シンオウ地方　には
-木の実から　作る▼
-「ポフィン」と　呼ばれる
-お菓子が　あり▽
-ポケモンたちの　大好物です▼</Text>
+			<Text>ヨーテリーと　ゾロア　それに　デスマス
+仲良し　３人組の　お話だ▼
+コロモリの　大群から　逃げたり
+いじわるな　ワルビルを　３匹で▽
+力を　あわせて　たおしたりして▽
+いよいよ　薬草を　みつける！▼
+「また　遊ぼうね！」
+と　ゆびきりげんまん　３匹は▽
+もっと　遊びたいのを　我慢して▽
+それぞれの　おうちに　帰ります▼
+ヨーテリーが　持ち帰った　薬草を
+飲んだ　おばあさんは　すぐに▽
+元気に　なりました　やったね！▼
+それからも　３匹の　友情は
+ずっとずっと　続いていきましたとさ▽
+めでたし　めでたし！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T06:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
