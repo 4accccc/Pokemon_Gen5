@@ -5,6 +5,6 @@
 #define _OLDC08R0101_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_OLDC08R0101 (1)
+#define SCRID_RESERVE_OLDC08R0101_EVENT_01 (1)
 
 #endif //_OLDC08R0101_DEF_H_

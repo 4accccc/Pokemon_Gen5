@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_oldc08r0101.h"
-  //.include  "oldc08r0101.h"
+  .include  "oldc08r0101.h"
+
+//@author Suginaka Katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +21,320 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_oldc08r0101
+_EVENT_DATA		ev_reserve_oldc08r0101_event_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*			過去イベント	アロエ・アーティ・ヤーコン		  */
 /**************************************************************/
-//ev_zone_oldc08r0101:
-//  _END
+EVENT_START		ev_reserve_oldc08r0101_event_01
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_oldc08r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	//暗転復帰
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　ちょっと上のほうを初期位置にする
+	_CAMERA_MOVE( 9694,0,970636,622592,344064,622592,1 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vanish_on )
+	_OBJ_ANIME_WAIT()
+
+	//旧アイリス出現
+	_OBJ_ADD_EX( 10,9,DIR_LEFT,MMDL_ID_EVENTOBJ_00,OLD_LEADER8W,MV_DMY )
+
+	_MAP_FADE_BLACK_IN()
+
+	//カメラ操作　デフォ位置に移動
+	_CAMERA_RECV_MOVE( 60 ) //一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+	_MAP_FADE_END_CHECK()
+
+	//アイリス　小躍り
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_leader8w_act_01 )
+	_OBJ_ANIME_WAIT()
+
+	//アイリス：やったー！
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8w_01 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//シャガ：さすがだね
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_01 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//アイリス：で　おじーちゃん
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8w_02 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//シャガ：うむ　むかしを　おもいだしてね
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_02 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//アイリス：うん！
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8w_03 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//シャガ　下を向く
+	_OBJ_ANIME( OLDC08R0101_OLD_LEADER8B, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+
+	//シャガ：うむ　おどろいたよ
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_03 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//アイリス　その場を跳ねる
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_jump_l )
+	_OBJ_ANIME_WAIT()
+	
+	//アイリス：うん！　イッシュ
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8w_04 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//シャガ　アイリスのほうをむく
+	_OBJ_ANIME( OLDC08R0101_OLD_LEADER8B, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+	
+	//シャガ：わたしには　そんな
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_04 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//アイリス：アデクの
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8w_05 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//シャガ：Ｎに　やぶれ
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_05 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//アイリス：アデクさん
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8w_06 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//シャガ：その　きもちを
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_06 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
+	
+	//シャガ：チャンピオンに　なったのだ
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_07 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//アイリス　！マーク
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//アイリス：これ　あたらしい
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8w_07 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//アイリス　その場で回転⇒モデル削除⇒新モデルで追加
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_leader8w_act_02 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	_OBJ_ADD_EX( 10,9,DIR_LEFT,MMDL_ID_EVENTOBJ_00,OLD_SWCHAMPION,MV_DMY )
+	
+	//アイリス：うわー！
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_swchampion_01 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//シャガ：だいじ　なのは
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_08 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
+	
+	//シャガ：わたしたちの　おさない
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_09 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//アイリス；おじーちゃんは
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_swchampion_02 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	
+	//アイリス　その場一回転
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_leader8w_act_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//アイリス：あたしね　きめてるの
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_swchampion_03 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//シャガ：うむ！
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader8b_10 , OLDC08R0101_OLD_LEADER8B, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//暗転
+	_CAMERA_MOVE( 9694,0,970636,622592,344064,622592,30 )
+	
+	//画面暗転処理
+	//_MAP_FADE_BLACK_OUT()
+	//_MAP_FADE_END_CHECK()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//予約スクリプト
+	//_RESERVE_SCRIPT( SCRID_RESERVE_C01GYM0101 )
+
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
+	//【仮】ブラックイン　本来は飛び先へ呼ぶ
+	//_MAP_FADE_BLACK_IN()
+	//_MAP_FADE_END_CHECK()
+
+	//マップチェンジ
+	_MAP_CHANGE( ZONE_ID_C08R0101, 9, 9, DIR_UP )
+
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_walk_6u
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_16d
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場ジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_jump_u
+	_ANIME_DATA	AC_STAY_JUMP_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_d
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_r
+	_ANIME_DATA	AC_STAY_JUMP_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_l
+	_ANIME_DATA	AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：１歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_back_l
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：非表示
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vanish_on
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：非表示
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leave
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆リーダー：移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader8w_act_01
+	_ANIME_DATA	AC_STAY_JUMP_L_8F,2
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_act_02
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_act_03
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
 
