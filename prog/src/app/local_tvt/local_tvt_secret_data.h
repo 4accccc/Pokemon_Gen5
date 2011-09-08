@@ -74,4 +74,4 @@ extern LTVT_SECREAT_TALK LTVT_SECREAT_DATA_GetTalkProg( u32 index );
 extern LTVT_SECREAT_FACE LTVT_SECREAT_DATA_GetFace( u32 index );
 extern PERSON_STATE_SECRET_DATE LTVT_SECREAT_DATA_GetDate( u32 index );
 extern BOOL LTVT_SECREAT_DATA_IsPlayerCall( u32 index );
-extern BOOL LTVT_SECREAT_DATA_IsReceive( u32 index );
+extern u32 LTVT_SECREAT_DATA_GetCallSECnt( u32 index );

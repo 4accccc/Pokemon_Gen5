@@ -48,6 +48,8 @@
 //=============================================================================
 #define CALLMODE_END_WAIT (30)
 
+#define CALL_CNT_DEFAULT_MAX  (2)
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -62,7 +64,9 @@ typedef struct
   TIMEICON_WORK     *p_timeicon;
   LOCAL_TVT_MESSAGE *p_message;
   u16               call_cnt;
+  u16               call_cnt_max;
   u16               is_end;
+  u16               cnt;
 } CALLMSG;
 
 
@@ -81,6 +85,7 @@ struct _LOCAL_TVT_CALL
   u16                   call_list[LOCAL_TVT_CALLSELECT_SELECT_MAX];
   s32                   call_no;
   u32                   cnt;
+  u32                   call_se_cnt;
 };
 //=============================================================================
 /**
@@ -100,7 +105,7 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
 static void LOCAL_TVT_SEQ_FadeOut( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //呼び出し中画面
-static void CALLMSG_Init( CALLMSG *p_wk, LOCAL_TVT_MESSAGE *p_message, HEAPID heapID );
+static void CALLMSG_Init( CALLMSG *p_wk, LOCAL_TVT_MESSAGE *p_message, u32 call_cnt, HEAPID heapID );
 static void CALLMSG_Exit( CALLMSG *p_wk );
 static void CALLMSG_Main( CALLMSG *p_wk );
 static BOOL CALLMSG_IsEnd( const CALLMSG *cp_wk );
@@ -119,6 +124,7 @@ LOCAL_TVT_CALL * LOCAL_TVT_CALL_Init( const LOCAL_TVT_CALL_PARAM *cp_param, HEAP
   LOCAL_TVT_CALL* p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_CALL) );
   p_wk->param   = *cp_param;
   p_wk->heapID  = heapID;
+  p_wk->call_se_cnt = CALL_CNT_DEFAULT_MAX;
 
   //呼び出しデータ作成
   p_wk->p_data  = LOCAL_TVT_CALLDATA_Init( p_wk->param.p_gamedata, heapID );
@@ -368,6 +374,7 @@ static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_perso
     }
     param[0].bgType       = LOCAL_TVT_CALLDATA_GetBack( p_wk->p_data, LOCAL_TVT_PERSON_SECRET );
     param[0].weatherType  = LOCAL_TVT_CALLDATA_GetWeather( p_wk->p_data, LOCAL_TVT_PERSON_SECRET );
+
     {
       LOCAL_TVT_SECRET_MODE mode  = LOCAL_TVT_SECRET_MODE_RECIVE;
       if( p_wk->param.mode == LOCAL_TVT_MODE_APP_SECRET_CALL )
@@ -595,7 +602,13 @@ static void LOCAL_TVT_SEQ_Calling( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_w
   switch( *p_seq )
   {
   case SEQ_INIT:
-    CALLMSG_Init( &p_wk->callmsg, p_wk->param.p_message, p_wk->heapID );
+    {
+      if( p_wk->call_list[p_wk->call_no] == LOCAL_TVT_PERSON_SECRET )
+      {
+        p_wk->call_se_cnt = LOCAL_TVT_SECRET_GetCallSECnt( p_wk->p_data );
+      }
+    }
+    CALLMSG_Init( &p_wk->callmsg, p_wk->param.p_message, p_wk->call_se_cnt, p_wk->heapID );
     (*p_seq)++;
     break;
 
@@ -743,7 +756,7 @@ static void LOCAL_TVT_SEQ_FadeOut( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_w
  *    呼び出しメッセージ
  */
 //=============================================================================
-#define CALLMSG_CALL_CNT  (240)
+#define CALLMSG_CALL_CNT  (120)
 //----------------------------------------------------------------------------
 /**
  *	@brief  呼び出しメッセージ初期化
@@ -753,13 +766,14 @@ static void LOCAL_TVT_SEQ_FadeOut( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_w
  *	@param	heapID        ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CALLMSG_Init( CALLMSG *p_wk, LOCAL_TVT_MESSAGE *p_message, HEAPID heapID )
+static void CALLMSG_Init( CALLMSG *p_wk, LOCAL_TVT_MESSAGE *p_message, u32 call_cnt, HEAPID heapID )
 {
 
   GF_ASSERT( GFL_MSG_GetStrCount(LOCAL_TVT_MESSAGE_GetCallMsgData(p_message)) != 0 );
   GFL_STD_MemClear( p_wk, sizeof(CALLMSG));
   GF_ASSERT( GFL_MSG_GetStrCount(LOCAL_TVT_MESSAGE_GetCallMsgData(p_message)) != 0 );
   p_wk->p_message = p_message;
+  p_wk->call_cnt_max  = call_cnt;
   p_wk->p_msgwin = GFL_BMPWIN_Create( LTVT_FRAME_SUB_MSG , 
                                         2 , 9 , 28 , 2 ,
                                         LTVT_PLT_BG_SUB_FONT,
@@ -813,15 +827,19 @@ static void CALLMSG_Main( CALLMSG *p_wk )
     return;
   }
       
-  if( p_wk->call_cnt == CALLMSG_CALL_CNT/2 )
+  if( p_wk->cnt++ >= CALLMSG_CALL_CNT )
   {
-    PMSND_PlaySE_byPlayerID( LOCAL_TVT_SE_TEL_CALL, SEPLAYER_SE2 );
-  }
-
-  if( p_wk->call_cnt++ >= CALLMSG_CALL_CNT )
-  {
-    PMSND_StopSE();
-    p_wk->is_end  = TRUE;
+    p_wk->cnt = 0;
+    p_wk->call_cnt++;
+    if( p_wk->call_cnt >= p_wk->call_cnt_max )
+    {
+      PMSND_StopSE();
+      p_wk->is_end  = TRUE;
+    }
+    else
+    {
+      PMSND_PlaySE_byPlayerID( LOCAL_TVT_SE_TEL_CALL, SEPLAYER_SE2 );
+    }
   }
 }
 //----------------------------------------------------------------------------

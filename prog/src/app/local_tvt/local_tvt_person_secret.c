@@ -462,9 +462,11 @@ static BOOL Local_Tvt_Secret_FarewellInner( LOCAL_TVT_PERSON_SYS *p_person, cons
         //１日１回デートON
         LOCAL_TVT_CALLDATA_SetSecretOnceDate( cp_param->p_data );
       }
-
-      //話しかけたので好感度アップ
-      LOCAL_TVT_CALLDATA_AddState( cp_param->p_data, LOCAL_TVT_PERSON_SECRET, LOCAL_TVT_SECRET_PHASE_RANGE_MAX );
+      else
+      {
+        //話しかけたので好感度アップ
+        LOCAL_TVT_CALLDATA_AddState( cp_param->p_data, LOCAL_TVT_PERSON_SECRET, LOCAL_TVT_SECRET_PHASE_RANGE_MAX );
+      }
     }
 
     //終了
@@ -761,4 +763,20 @@ static void Local_Tvt_Secret_Qanswer_Check( const QUESTIONNAIRE_ANSWER_WORK *cp_
       *p_is_answer  = TRUE;
     }
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  呼び出し音回数
+ *
+ *	@param	const LOCAL_TVT_CALLDATA *cp_data データ
+ *
+ *	@return SE回数
+ */
+//-----------------------------------------------------------------------------
+u32 LOCAL_TVT_SECRET_GetCallSECnt( const LOCAL_TVT_CALLDATA *cp_data )
+{
+  u16 state = LOCAL_TVT_CALLDATA_GetState( cp_data, LOCAL_TVT_PERSON_SECRET );
+  u32 index = LTVT_SECREAT_DATA_SearchIndex( state );
+  return LTVT_SECREAT_DATA_GetCallSECnt( index );
 }

@@ -43,3 +43,5 @@ typedef enum
   LOCAL_TVT_SECRET_FACE_VISIBLE_F,  //èóÅFëfäÁ
 }LOCAL_TVT_SECRET_FACE;
 extern LOCAL_TVT_SECRET_FACE LOCAL_TVT_SECRET_GetFace( const LOCAL_TVT_CALLDATA *cp_data );
+
+extern u32 LOCAL_TVT_SECRET_GetCallSECnt( const LOCAL_TVT_CALLDATA *cp_data );

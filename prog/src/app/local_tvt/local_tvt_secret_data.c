@@ -10,6 +10,8 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #include "local_tvt_secret_data.h"
 
+#define CALL_SE_CNT_DEFAULT  (2)
+#define CALL_SE_CNT_SP  (4)
 //=============================================================================
 /**
  *					データ
@@ -26,7 +28,7 @@ static const struct
   LTVT_SECREAT_FACE   face;
   PERSON_STATE_SECRET_DATE   date; 
   BOOL  is_player_call; //プレイヤーがかけられる
-  BOOL  is_receive;     //あちらがかけてくる
+  u32  call_se_cnt;     //呼び出し回数
 } sc_secreat_data[] =
 {
   { LOCAL_TVT_SECRET_PHASE_1_START, //フェース範囲開始
@@ -35,7 +37,7 @@ static const struct
     LTVT_SECREAT_FACE_SOUND,        //顔
     PERSON_STATE_SECRET_DATE_NONE,         //デートにさそうか
     FALSE,                          //プレイヤーがかけられるか
-    TRUE,                           //あちらからかかってくるか
+    CALL_SE_CNT_DEFAULT,            //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_1_LAST,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_1_LAST,  //フェーズ範囲終了
@@ -43,7 +45,7 @@ static const struct
     LTVT_SECREAT_FACE_SOUND,        //顔
     PERSON_STATE_SECRET_DATE_GIVE,         //デートにさそうか
     FALSE,                          //プレイヤーがかけられるか
-    TRUE,                           //あちらからかかってくるか
+    CALL_SE_CNT_DEFAULT,            //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_2_START, //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_3_END,   //フェーズ範囲終了
@@ -51,7 +53,7 @@ static const struct
     LTVT_SECREAT_FACE_MASK,         //顔
     PERSON_STATE_SECRET_DATE_NONE,         //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
-    FALSE,                          //あちらからかかってくるか
+    CALL_SE_CNT_DEFAULT,            //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_3_LAST,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_3_LAST,  //フェーズ範囲終了
@@ -59,7 +61,7 @@ static const struct
     LTVT_SECREAT_FACE_MASK,         //顔
     PERSON_STATE_SECRET_DATE_FIRST,        //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
-    FALSE,                          //あちらからかかってくるか
+    CALL_SE_CNT_DEFAULT,            //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_4_START_1,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_4_END_1,  //フェーズ範囲終了
@@ -67,7 +69,7 @@ static const struct
     LTVT_SECREAT_FACE_MASK,         //顔
     PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
-    FALSE,                          //あちらからかかってくるか
+    CALL_SE_CNT_DEFAULT,            //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_4_SOUND,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_4_SOUND,  //フェーズ範囲終了
@@ -75,7 +77,7 @@ static const struct
     LTVT_SECREAT_FACE_SOUND,         //顔
     PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
-    FALSE,                          //あちらからかかってくるか
+    CALL_SE_CNT_SP,               //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_4_START_2,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_4_END_2,  //フェーズ範囲終了
@@ -83,7 +85,7 @@ static const struct
     LTVT_SECREAT_FACE_MASK,         //顔
     PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
-    FALSE,                          //あちらからかかってくるか
+    CALL_SE_CNT_DEFAULT,            //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_4_TRUE,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_4_TRUE,  //フェーズ範囲終了
@@ -91,7 +93,7 @@ static const struct
     LTVT_SECREAT_FACE_TRUE,         //顔
     PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
-    FALSE,                          //あちらからかかってくるか
+    CALL_SE_CNT_SP,            //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_4_APOLOGY,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_4_APOLOGY,  //フェーズ範囲終了
@@ -99,7 +101,7 @@ static const struct
     LTVT_SECREAT_FACE_MASK,         //顔
     PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
-    FALSE,                          //あちらからかかってくるか
+    CALL_SE_CNT_DEFAULT,            //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_4_START_3,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_4_END_3,  //フェーズ範囲終了
@@ -107,7 +109,7 @@ static const struct
     LTVT_SECREAT_FACE_MASK,         //顔
     PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
-    FALSE,                          //あちらからかかってくるか
+    CALL_SE_CNT_DEFAULT,            //呼び出し回数
   },
 };
 
@@ -207,7 +209,7 @@ BOOL LTVT_SECREAT_DATA_IsPlayerCall( u32 index )
  *	@return 相手からかかってくるかどうか  TRUEかかってくる
  */
 //-----------------------------------------------------------------------------
-BOOL LTVT_SECREAT_DATA_IsReceive( u32 index )
+u32 LTVT_SECREAT_DATA_GetCallSECnt( u32 index )
 {
-  return sc_secreat_data[index].is_receive;
+  return sc_secreat_data[index].call_se_cnt;
 }
