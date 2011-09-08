@@ -612,6 +612,8 @@ ev_enter_hall:
 	
   _RESERVE_SCRIPT( SCRID_WBT_HALL_01 )
 
+  //ジョインアベニュー：WBTに参加した状態を通知
+  _RESORT_SET_RECORD( RESORT_RECORD_ID_WBT )
   _RET
 
 //--------------------------------------------------------------------
