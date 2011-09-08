@@ -30,13 +30,28 @@
 #include "arc/fieldmap/wbt_gmk.naix"
 #include "arc/face_gra.naix"
 #include "font/font.naix"
+#include "message.naix"
 
 // sound
 #include "sound/pm_sndsys.h"
 
+// tool
+#include "wbt_tool.h"
+#include "tr_tool/trtype_def.h"
+
+// debug
+#include "debug/debug_str_conv.h"
+
 // mine
 #include "wbt_gimmick.h"
 
+
+//-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef PM_DEBUG
+#define WBT_DEBUG_MENU
+#endif //PM_DEBUG
 
 //=============================================================================
 /**
@@ -89,6 +104,11 @@ typedef struct {
   NNSG2dPaletteData   *plt;
   void *chr_buf;
   void *pal_buf;
+
+#ifdef WBT_DEBUG_MENU
+  STRBUF* trtype_name;
+  GFL_MSGDATA *trtype_msg;
+#endif
 
 } WBT_GMK_TMP;
 
@@ -575,6 +595,18 @@ static FIELD_TASK_RETVAL VisionWinTaskFunc( void* wk );
 static void CHAMP_TASK_Add( WBT_GMK_TMP *p_wk );
 static FIELD_TASK_RETVAL ChampTaskFunc( void* wk );
 
+
+#ifdef WBT_DEBUG_MENU
+//-------------------------------------
+///	デバッグメニュー
+//=====================================
+static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID );
+static void DEBUGMENU_Exit( void );
+
+static int  debug_trface;
+
+#endif // WBT_DEBUG_MENU
+
 //=============================================================================
 /**
  *					外部公開関数
@@ -609,7 +641,12 @@ void WBT_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap )
   // EXPOBJ初期化
   EXPOBJ_ObjSet( p_wk );
 
-  ICHI_Printf("gimmick init\n");
+#ifdef WBT_DEBUG_MENU
+  p_wk->trtype_name = GFL_STR_CreateBuffer( BUFLEN_TRAINER_TYPE_NAME, HEAPID_FIELDMAP );
+  p_wk->trtype_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                     NARC_message_trtype_dat, HEAPID_FIELDMAP );
+  DEBUGMENU_Init( p_wk, p_fieldmap, HEAPID_FIELDMAP );
+#endif // WBT_DEBUG_MENU
 }
 
 //----------------------------------------------------------------------------
@@ -622,6 +659,12 @@ void WBT_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap )
 void WBT_GIMMICK_End( FIELDMAP_WORK *p_fieldmap )
 {
   WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
+
+#ifdef WBT_DEBUG_MENU
+  DEBUGMENU_Exit();
+  GFL_MSG_Delete( p_wk->trtype_msg );
+  GFL_STR_DeleteBuffer( p_wk->trtype_name );
+#endif // WBT_DEBUG_MENU
 
   // EXPOBJ破棄
   EXPOBJ_ObjDell( p_wk );
@@ -662,7 +705,7 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
       strbuf2  = MyStatus_CreateNameString( myStatus, p_wk->heapID );
 
       OS_Printf("デバッグ VSビジョン\n");
-      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_VS, strbuf1, strbuf2, 0, 1 );
+      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_VS, strbuf1, strbuf2, 0, debug_trface );
 
       GFL_STR_DeleteBuffer( strbuf1 );
       GFL_STR_DeleteBuffer( strbuf2 );
@@ -677,7 +720,7 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
       strbuf1  = MyStatus_CreateNameString( myStatus, p_wk->heapID );
 
       OS_Printf("デバッグ 優勝ビジョン\n");
-      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_WIN_PLAYER, strbuf1, NULL, 0, 0 );
+      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_WIN_PLAYER, strbuf1, NULL, debug_trface, 0 );
 
       GFL_STR_DeleteBuffer( strbuf1 );
     }
@@ -2044,4 +2087,147 @@ static FIELD_TASK_RETVAL ChampTaskFunc( void* wk )
 
   return FIELD_TASK_RETVAL_CONTINUE;
 }
+
+
+#ifdef WBT_DEBUG_MENU
+//=============================================================================
+/**
+ *    デバッグメニュー
+ */
+//=============================================================================
+//-------------------------------------
+///	マクロ
+//=====================================
+#define DEBUGMENU_WBT (2)
+
+//-------------------------------------
+///	static
+//=====================================
+// キー入力でデータ変更
+static BOOL DebugWin_ChangeData( int *p_param, int min, int max );
+// データの変更
+static void DebugWin_Update_ChangeData( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeData( void *userWork, DEBUGWIN_ITEM *item );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  R+Yにデバッグメニュー追加
+ *
+ *	@param	*p_wk       ギミックワーク
+ *	@param	*p_fieldmap フィールドマップワーク
+ *	@param	heapID      ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID )
+{
+  // デバッグメニューグループ追加
+  DEBUGWIN_AddGroupToTop( DEBUGMENU_WBT, "WBT", heapID );
+
+  // 
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeData,
+                              DebugWin_Draw_ChangeData,
+                              p_wk,
+                              DEBUGMENU_WBT,
+                              heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  R+Yからデバッグメニュー破棄
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_Exit( void )
+{
+  DEBUGWIN_RemoveGroup( DEBUGMENU_WBT );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグ数値入力
+ *
+ *	@param	*p_param  変更する値のポインタ
+ *	@param	min       入力する時の最小値
+ *	@param	max       入力する時の最大値
+ *
+ *	@retval TRUE 入力あり
+ *	@retval FALSE 入力なし
+ */
+//-----------------------------------------------------------------------------
+static BOOL DebugWin_ChangeData( int *p_param, int min, int max )
+{
+  int value = 0;
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  { 
+    value = -1;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  { 
+    value = +1;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+  { 
+    value = -10;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+  { 
+    value = +10;
+  }
+
+  (*p_param) += value;
+  (*p_param)  = MATH_CLAMP( (*p_param), min, max );
+
+  if( value == 0 )
+  {
+    return FALSE;
+  }
+  else
+  {
+    return TRUE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  顔グラフィック　更新
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeData( void *userWork, DEBUGWIN_ITEM *item )
+{
+  WBT_GMK_TMP *p_wk = userWork;
+  int value = debug_trface;
+
+  if( DebugWin_ChangeData( &value, 0, TRTYPE_MAX-1 ) )
+  {
+    // 更新あり
+    debug_trface = value;
+    // トレーナータイプ名取得
+    //WBTTOOL_GetRomTrainerName( p_wk->heapID, debug_trface, p_wk->trtype_name );
+    p_wk->trtype_name = GFL_MSG_CreateString( p_wk->trtype_msg, debug_trface );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  顔グラフィック　描画
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeData( void *userWork, DEBUGWIN_ITEM *item )
+{
+  WBT_GMK_TMP *p_wk = userWork;
+  const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(p_wk->trtype_name);
+  char str[BUFLEN_TRAINER_TYPE_NAME] = {0};
+
+  DEB_STR_CONV_StrcodeToSjis( cp_strcode, str, BUFLEN_TRAINER_TYPE_NAME );
+
+  DEBUGWIN_ITEM_SetNameV( item, "%s[%d]", str, debug_trface );
+}
+
+#endif // WBT_DEBUG_MENU
 
