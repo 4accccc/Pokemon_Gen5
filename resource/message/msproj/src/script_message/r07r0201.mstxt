@@ -9,12 +9,12 @@
 			<Text>おぬし！　ポケモンの
 エモンガは　つかまえたか？▼
 もし　つかまえているなら
-わしの　ガントルと
+わしの　ギガイアスと
 おぬしの　エモンガを▽
 こうかん　しないか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:49:13" />
+				Time="2011-09-08T04:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25,12 +25,12 @@
 			<Text>おぬし！　ポケモンの
 エモンガは　捕まえたか？▼
 もし　捕まえているなら
-わしの　ガントルと
+わしの　ギガイアスと
 おぬしの　エモンガを▽
 交換しないか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:49:23" />
+				Time="2011-09-08T04:48:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -135,13 +135,11 @@
 			Language="JPN">
 			<Text>おお！　おお！　なんとも
 キュートな　ポケモン　だ！▼
-おぬしも　ガントルを……
-じゃなかった▼
-ギガイアスを
+おぬしも　ギガイアスを
 たいせつに　してくれよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:47:36" />
+				Time="2011-09-08T04:48:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -151,13 +149,11 @@
 			Language="JPN_KANJI">
 			<Text>おお！　おお！　なんとも
 キュートな　ポケモン　だ！▼
-おぬしも　ガントルを……
-じゃなかった▼
-ギガイアスを
+おぬしも　ギガイアスを
 大切に　してくれよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:47:46" />
+				Time="2011-09-08T04:48:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
