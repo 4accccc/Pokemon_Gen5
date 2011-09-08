@@ -34,11 +34,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ホワイトエリア1
-ボス：BREEDERW</Comment>
+			<Comment>再戦　戦闘開始　ホワイトエリア1</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:37:17" />
+				Time="2011-08-23T02:20:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -88,11 +87,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ホワイトエリア2
-ボス：BREEDERM</Comment>
+			<Comment>再戦　戦闘開始　ホワイトエリア2</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:37:39" />
+				Time="2011-08-23T02:20:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -140,11 +138,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ホワイトエリア3
-ボス：RANGERW</Comment>
+			<Comment>再戦　戦闘開始　ホワイトエリア3</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:37:52" />
+				Time="2011-08-23T02:20:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -197,11 +194,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ホワイトエリア4
-ボス：RANGERM</Comment>
+			<Comment>再戦　戦闘開始　ホワイトエリア4</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:38:10" />
+				Time="2011-08-23T02:20:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -253,11 +249,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ホワイトエリア5
-ボス：VETERANW</Comment>
+			<Comment>再戦　戦闘開始　ホワイトエリア5</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:38:24" />
+				Time="2011-08-23T02:20:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -309,11 +304,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ホワイトエリア6
-ボス：TRAINERM</Comment>
+			<Comment>再戦　戦闘開始　ホワイトエリア6</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:38:35" />
+				Time="2011-08-23T02:20:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -365,11 +359,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ホワイトエリア7
-ボス：TRAINERW</Comment>
+			<Comment>再戦　戦闘開始　ホワイトエリア7</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:38:47" />
+				Time="2011-08-23T02:18:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -419,11 +412,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ホワイトエリア8
-ボス：VETERANM</Comment>
+			<Comment>再戦　戦闘開始　ホワイトエリア8</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:39:07" />
+				Time="2011-08-23T02:18:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -475,11 +467,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ホワイトエリア9
-ボス：VETERANW</Comment>
+			<Comment>再戦　戦闘開始　ホワイトエリア9</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:39:22" />
+				Time="2011-08-23T02:18:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -533,11 +524,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ホワイトエリア10
-ボス：MUGENBOSS（バンジロウ）</Comment>
+			<Comment>再戦　戦闘開始　ホワイトエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:40:18" />
+				Time="2011-08-23T02:18:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -588,11 +578,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>再戦　戦闘開始　ホワイトエリア10
-（バージョン違いに登場するトレーナー用）
-ボス：VETERANM</Comment>
+（バージョン違いに登場するトレーナー用）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:40:36" />
+				Time="2011-08-23T02:19:17" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -628,11 +617,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ブラックエリア1
-ボス：BREEDERM</Comment>
+			<Comment>再戦　戦闘開始　ブラックエリア1</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:41:04" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -682,11 +670,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ブラックエリア2
-ボス：BREEDERW</Comment>
+			<Comment>再戦　戦闘開始　ブラックエリア2</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:41:17" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -734,11 +721,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ブラックエリア3
-ボス：RANGERM</Comment>
+			<Comment>再戦　戦闘開始　ブラックエリア3</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:41:30" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -790,11 +776,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ブラックエリア4
-ボス：RANGERW</Comment>
+			<Comment>再戦　戦闘開始　ブラックエリア4</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:41:55" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -848,11 +833,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ブラックエリア5
-ボス：VETERANM</Comment>
+			<Comment>再戦　戦闘開始　ブラックエリア5</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:42:13" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -904,11 +888,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ブラックエリア6
-ボス：TRAINERW</Comment>
+			<Comment>再戦　戦闘開始　ブラックエリア6</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:42:25" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -960,11 +943,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ブラックエリア7
-ボス：TRAINERM</Comment>
+			<Comment>再戦　戦闘開始　ブラックエリア7</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:42:36" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1014,11 +996,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ブラックエリア8
-ボス：VETERANW</Comment>
+			<Comment>再戦　戦闘開始　ブラックエリア8</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:42:47" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1070,11 +1051,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ブラックエリア9
-ボス：VETERANM</Comment>
+			<Comment>再戦　戦闘開始　ブラックエリア9</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:42:59" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1128,11 +1108,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘開始　ブラックエリア10
-ボス：MUGENBOSS（バンジロウ）</Comment>
+			<Comment>再戦　戦闘開始　ブラックエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:43:16" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1182,11 +1161,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>再戦　戦闘開始　ブラックエリア10
-（バージョン違いに登場するトレーナー用）
-ボス：VETERANW</Comment>
+（バージョン違いに登場するトレーナー用）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:43:26" />
+				Time="2011-08-23T02:20:49" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1228,11 +1206,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ホワイトエリア1
-ボス：BREEDERW</Comment>
+			<Comment>初回　戦闘開始　ホワイトエリア1</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:43:40" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1287,11 +1264,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ホワイトエリア2
-ボス：BREEDERM</Comment>
+			<Comment>初回　戦闘開始　ホワイトエリア2</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:43:50" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1347,11 +1323,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ホワイトエリア3
-ボス：RANGERW</Comment>
+			<Comment>初回　戦闘開始　ホワイトエリア3</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:44:01" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1379,12 +1354,12 @@
 どこまで　つづいているのか▽
 はあくして　いないぐらいだからな▼
 キミも　きになるだろう？
-さいかそうに　なにが　あるのか▼
+さいかそうに　なにがあるのか▼
 それじゃ　キミが　どこまで　いけるか
 その　じつりょくを　みせてもらおう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T02:44:00" />
+				Time="2011-08-24T07:14:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1398,12 +1373,12 @@
 どこまで　続いているのか▽
 把握して　いないぐらいだからな▼
 キミも　気になるだろう？
-最下層に　何が　あるのか▼
+最下層に　何があるのか　……▼
 それじゃ　キミが　どこまで　いけるのか
 その　実力を　みせてもらおう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T02:44:12" />
+				Time="2011-08-24T07:15:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1411,11 +1386,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ホワイトエリア4
-ボス：RANGERM</Comment>
+			<Comment>初回　戦闘開始　ホワイトエリア4</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:44:19" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1474,11 +1448,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ホワイトエリア5
-ボス：VETERANW</Comment>
+			<Comment>初回　戦闘開始　ホワイトエリア5</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:44:32" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1538,11 +1511,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ホワイトエリア6
-ボス：TRAINERM</Comment>
+			<Comment>初回　戦闘開始　ホワイトエリア6</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:44:42" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1605,11 +1577,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ホワイトエリア7
-ボス：TRAINERW</Comment>
+			<Comment>初回　戦闘開始　ホワイトエリア7</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:44:54" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1667,11 +1638,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ホワイトエリア8
-ボス：VETERANM</Comment>
+			<Comment>初回　戦闘開始　ホワイトエリア8</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:45:04" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1729,11 +1699,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ホワイトエリア9
-ボス：VETERANW</Comment>
+			<Comment>初回　戦闘開始　ホワイトエリア9</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:45:15" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1799,11 +1768,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ホワイトエリア10
-ボス：MUGENBOSS（バンジロウ）</Comment>
+			<Comment>初回　戦闘開始　ホワイトエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:45:32" />
+				Time="2011-08-23T07:39:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1869,11 +1837,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>初回　戦闘開始　ホワイトエリア10
-（バージョン違いに登場するトレーナー用）
-ボス：VETERANM</Comment>
+（バージョン違いに登場するトレーナー用）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:46:44" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1915,11 +1882,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ブラックエリア1
-ボス：BREEDERM</Comment>
+			<Comment>初回　戦闘開始　ブラックエリア1</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:47:08" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1974,11 +1940,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ブラックエリア2
-ボス：BREEDERW</Comment>
+			<Comment>初回　戦闘開始　ブラックエリア2</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:47:17" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2034,11 +1999,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ブラックエリア3
-ボス：RANGERM</Comment>
+			<Comment>初回　戦闘開始　ブラックエリア3</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:47:29" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2098,11 +2062,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ブラックエリア4
-ボス：RANGERW</Comment>
+			<Comment>初回　戦闘開始　ブラックエリア4</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:47:42" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2160,11 +2123,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ブラックエリア5
-ボス：VETERANM</Comment>
+			<Comment>初回　戦闘開始　ブラックエリア5</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:47:54" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2224,11 +2186,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ブラックエリア6
-ボス：TRAINERW</Comment>
+			<Comment>初回　戦闘開始　ブラックエリア6</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:49:05" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2291,11 +2252,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ブラックエリア7
-ボス：TRAINERM</Comment>
+			<Comment>初回　戦闘開始　ブラックエリア7</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:49:16" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2357,11 +2317,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ブラックエリア8
-ボス：VETERANW</Comment>
+			<Comment>初回　戦闘開始　ブラックエリア8</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:49:27" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2421,11 +2380,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ブラックエリア9
-ボス：VETERANM</Comment>
+			<Comment>初回　戦闘開始　ブラックエリア9</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:49:38" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2491,11 +2449,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘開始　ブラックエリア10
-ボス：MUGENBOSS（バンジロウ）</Comment>
+			<Comment>初回　戦闘開始　ブラックエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:45:40" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2562,11 +2519,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>初回　戦闘開始　ブラックエリア10
-（バージョン違いに登場するトレーナー用）
-ボス：VETERANW</Comment>
+（バージョン違いに登場するトレーナー用）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:49:51" />
+				Time="2011-08-23T02:21:33" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2604,11 +2560,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ホワイトエリア1
-ボス：BREEDERW</Comment>
+			<Comment>再戦　戦闘終了　ホワイトエリア1</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:50:03" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2660,11 +2615,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ホワイトエリア2
-ボス：BREEDERM</Comment>
+			<Comment>再戦　戦闘終了　ホワイトエリア2</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:50:13" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2714,11 +2668,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ホワイトエリア3
-ボス：RANGERW</Comment>
+			<Comment>再戦　戦闘終了　ホワイトエリア3</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:50:22" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2772,11 +2725,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ホワイトエリア4
-ボス：RANGERM</Comment>
+			<Comment>再戦　戦闘終了　ホワイトエリア4</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:50:35" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2828,11 +2780,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ホワイトエリア5
-ボス：VETERANW</Comment>
+			<Comment>再戦　戦闘終了　ホワイトエリア5</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:50:48" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2882,11 +2833,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ホワイトエリア6
-ボス：TRAINERM</Comment>
+			<Comment>再戦　戦闘終了　ホワイトエリア6</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:51:02" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2936,11 +2886,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ホワイトエリア7
-ボス：TRAINERW</Comment>
+			<Comment>再戦　戦闘終了　ホワイトエリア7</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:51:13" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2998,11 +2947,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ホワイトエリア8
-ボス：VETERANM</Comment>
+			<Comment>再戦　戦闘終了　ホワイトエリア8</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:51:24" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3056,11 +3004,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ホワイトエリア9
-ボス：VETERANW</Comment>
+			<Comment>再戦　戦闘終了　ホワイトエリア9</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:51:35" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3112,11 +3059,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ホワイトエリア10
-ボス：MUGENBOSS（バンジロウ）</Comment>
+			<Comment>再戦　戦闘終了　ホワイトエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:45:47" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3177,11 +3123,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>再戦　戦闘終了　ホワイトエリア10
-（バージョン違いに登場するトレーナー用）
-ボス：VETERANM</Comment>
+（バージョン違いに登場するトレーナー用）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:51:45" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -3226,11 +3171,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ブラックエリア1
-ボス：BREEDERM</Comment>
+			<Comment>再戦　戦闘終了　ブラックエリア1</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:51:55" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3282,11 +3226,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ブラックエリア2
-ボス：BREEDERW</Comment>
+			<Comment>再戦　戦闘終了　ブラックエリア2</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:52:04" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3336,11 +3279,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ブラックエリア3
-ボス：RANGERM</Comment>
+			<Comment>再戦　戦闘終了　ブラックエリア3</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:52:13" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3394,11 +3336,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ブラックエリア4
-ボス：RANGERW</Comment>
+			<Comment>再戦　戦闘終了　ブラックエリア4</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:52:23" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3450,11 +3391,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ブラックエリア5
-ボス：VETERANM</Comment>
+			<Comment>再戦　戦闘終了　ブラックエリア5</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:52:33" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3504,11 +3444,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ブラックエリア6
-ボス：TRAINERW</Comment>
+			<Comment>再戦　戦闘終了　ブラックエリア6</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:52:42" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3560,11 +3499,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ブラックエリア7
-ボス：TRAINERM</Comment>
+			<Comment>再戦　戦闘終了　ブラックエリア7</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:52:53" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3624,11 +3562,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ブラックエリア8
-ボス：VETERANW</Comment>
+			<Comment>再戦　戦闘終了　ブラックエリア8</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:53:07" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3682,11 +3619,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ブラックエリア9
-ボス：VETERANM</Comment>
+			<Comment>再戦　戦闘終了　ブラックエリア9</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:53:20" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3738,11 +3674,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>再戦　戦闘終了　ブラックエリア10
-ボス：MUGENBOSS（バンジロウ）</Comment>
+			<Comment>再戦　戦闘終了　ブラックエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:45:59" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3802,11 +3737,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>再戦　戦闘終了　ブラックエリア10
-（バージョン違いに登場するトレーナー用）
-ボス：VETERANW</Comment>
+（バージョン違いに登場するトレーナー用）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:53:32" />
+				Time="2011-08-23T02:22:21" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -3848,11 +3782,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア1
-ボス：BREEDERM</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア1</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:54:02" />
+				Time="2011-08-23T07:39:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3920,11 +3853,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア2
-ボス：BREEDERW</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア2</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:54:15" />
+				Time="2011-08-23T07:40:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3980,11 +3912,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア3
-ボス：RANGERM</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア3</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:55:49" />
+				Time="2011-08-23T07:40:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4036,11 +3967,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア4
-ボス：RANGERW</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア4</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:56:00" />
+				Time="2011-08-23T07:40:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4098,11 +4028,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア5
-ボス：VETERANM</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア5</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:56:12" />
+				Time="2011-08-23T07:40:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4162,11 +4091,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア6
-ボス：TRAINERW</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア6</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:56:23" />
+				Time="2011-08-23T07:40:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4222,11 +4150,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア7
-ボス：TRAINERM</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア7</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:56:32" />
+				Time="2011-08-23T07:40:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4284,11 +4211,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア8
-ボス：VETERANW</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア8</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:56:42" />
+				Time="2011-08-23T07:40:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4344,11 +4270,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア9
-ボス：VETERANM</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア9</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:56:53" />
+				Time="2011-08-23T07:40:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4411,11 +4336,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ブラックエリア10
-ボス：MUGENBOSS（バンジロウ）</Comment>
+			<Comment>初回　戦闘終了　ブラックエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:46:06" />
+				Time="2011-08-23T07:38:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4474,11 +4398,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>初回　戦闘終了　ブラックエリア10
-（バージョン違いに登場するトレーナー用）
-ボス：VETERANW</Comment>
+（バージョン違いに登場するトレーナー用）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:57:05" />
+				Time="2011-08-23T07:40:50" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -4520,11 +4443,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア1
-ボス：BREEDERW</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア1</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:57:15" />
+				Time="2011-08-23T07:40:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4592,11 +4514,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア2
-ボス：BREEDERM</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア2</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:57:28" />
+				Time="2011-08-23T07:41:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4652,11 +4573,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア3
-ボス：RANGERW</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア3</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:57:41" />
+				Time="2011-08-23T07:41:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4708,11 +4628,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア4
-ボス：RANGERM</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア4</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:57:52" />
+				Time="2011-08-23T07:41:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4770,11 +4689,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア5
-ボス：VETERANW</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア5</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:58:08" />
+				Time="2011-08-23T07:41:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4834,11 +4752,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア6
-ボス：TRAINERM</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア6</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:58:18" />
+				Time="2011-08-23T07:41:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4894,11 +4811,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア7
-ボス：TRAINERW</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア7</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:58:28" />
+				Time="2011-08-23T07:41:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4956,11 +4872,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア8
-ボス：VETERANM</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア8</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:58:39" />
+				Time="2011-08-23T07:41:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5016,11 +4931,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア9
-ボス：VETERANW</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア9</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:58:50" />
+				Time="2011-08-23T07:41:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5083,11 +4997,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回　戦闘終了　ホワイトエリア10
-ボス：MUGENBOSS（バンジロウ）</Comment>
+			<Comment>初回　戦闘終了　ホワイトエリア10（バンジロウ））</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:46:13" />
+				Time="2011-08-23T07:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5146,11 +5059,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>初回　戦闘終了　ホワイトエリア10
-（バージョン違いに登場するトレーナー用）
-ボス：VETERANM</Comment>
+（バージョン違いに登場するトレーナー用）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:59:01" />
+				Time="2011-08-23T07:41:56" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5182,10 +5094,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ドクター共通回復確認</Comment>
+			<Comment>ドクター回復確認</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:59:18" />
+				Time="2011-08-14T08:28:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5231,10 +5143,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ドクター共通回復拒否</Comment>
+			<Comment>ドクター回復拒否</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:59:23" />
+				Time="2011-08-14T08:28:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5280,10 +5192,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ドクター共通回復後</Comment>
+			<Comment>ドクター回復後</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:59:27" />
+				Time="2011-08-14T08:28:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5329,10 +5241,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ナース共通回復確認</Comment>
+			<Comment>ナース回復確認</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:59:31" />
+				Time="2011-08-14T08:28:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5378,10 +5290,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ナース共通回復拒否</Comment>
+			<Comment>ナース回復拒否</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:59:35" />
+				Time="2011-08-14T08:29:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5427,10 +5339,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ナース共通回復後</Comment>
+			<Comment>ナース回復後</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T03:59:39" />
+				Time="2011-08-14T08:29:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5477,14 +5389,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:22:33" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:19" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_b_02_00"
@@ -5513,14 +5417,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:22:48" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:23" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_b_03_00"
@@ -5549,14 +5445,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:23:07" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:27" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_b_04_00"
@@ -5585,14 +5473,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:23:17" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:30" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_help_b_01_00"
@@ -5641,13 +5521,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW
-
-・トレーナー名＝プレイヤー名</Comment>
+			<Comment>・トレーナー名＝プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:33" />
+				Time="2011-08-03T09:19:33" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5705,14 +5582,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:25:15" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:43" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_attention_b_01_00"
@@ -5755,15 +5624,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW
-
-・トレーナー名＝プレイヤー名
+			<Comment>・トレーナー名＝プレイヤー名
 ・ニックネーム＝ポケモン名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:47" />
+				Time="2011-08-03T09:19:47" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5805,14 +5671,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW
-
-・トレーナー名＝プレイヤー名
+			<Comment>・トレーナー名＝プレイヤー名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:50" />
+				Time="2011-08-04T04:49:03" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5842,14 +5705,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:27:32" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:53" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_b_01_00"
@@ -5886,14 +5741,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW
-
-・トレーナー名＝プレイヤー名
+			<Comment>・トレーナー名＝プレイヤー名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:57" />
+				Time="2011-08-03T09:20:22" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5929,13 +5781,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW
-
-・2桁＝エリアの数字</Comment>
+			<Comment>・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:00" />
+				Time="2011-08-03T09:20:29" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5973,13 +5822,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW
-
-・トレーナー名＝プレイヤー名</Comment>
+			<Comment>・トレーナー名＝プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:05" />
+				Time="2011-08-03T09:20:00" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6025,14 +5871,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:32:31" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:16" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_b_05_00"
@@ -6067,14 +5905,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:34:45" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:19" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_b_06_00"
@@ -6113,13 +5943,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW
-
-・トレーナー名＝プレイヤー名</Comment>
+			<Comment>・トレーナー名＝プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:23" />
+				Time="2011-08-03T09:20:03" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6151,14 +5978,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:39:08" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:25" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_w_01_00"
@@ -6189,14 +6008,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:45" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_w_02_00"
@@ -6225,14 +6036,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:48" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_w_03_00"
@@ -6261,14 +6064,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:51" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_w_04_00"
@@ -6297,14 +6092,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:54" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_help_w_01_00"
@@ -6350,14 +6137,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:01:57" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_help_w_02_00"
@@ -6416,14 +6195,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:00" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_attention_w_01_00"
@@ -6466,15 +6237,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2
-
-・トレーナー名＝プレイヤー名
+			<Comment>・トレーナー名＝プレイヤー名
 ・ニックネーム＝ポケモン名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:03" />
+				Time="2011-08-03T09:21:04" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6514,14 +6282,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2
-
-・トレーナー名＝プレイヤー名
+			<Comment>・トレーナー名＝プレイヤー名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:06" />
+				Time="2011-08-04T05:17:48" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6549,14 +6314,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:08" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_w_01_00"
@@ -6591,14 +6348,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2
-
-・トレーナー名＝プレイヤー名
+			<Comment>・トレーナー名＝プレイヤー名
 ・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:13" />
+				Time="2011-08-03T09:21:04" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6633,13 +6387,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2
-
-・2桁＝エリアの数字</Comment>
+			<Comment>・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:15" />
+				Time="2011-08-03T09:21:11" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6677,13 +6428,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2
-
-・トレーナー名＝プレイヤー名</Comment>
+			<Comment>・トレーナー名＝プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:19" />
+				Time="2011-08-03T09:21:19" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6727,14 +6475,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:23" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_w_05_00"
@@ -6771,14 +6511,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:25" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_clear_w_06_00"
@@ -6817,13 +6549,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2
-
-・トレーナー名＝プレイヤー名</Comment>
+			<Comment>・トレーナー名＝プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:28" />
+				Time="2011-08-03T09:21:23" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6855,14 +6584,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-01T10:45:23" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:32" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_menu_01_00"
@@ -6891,10 +6612,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付選択肢</Comment>
+			<Comment />
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:42" />
+				Time="2011-08-01T11:21:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6938,10 +6659,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付選択肢</Comment>
+			<Comment />
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:48" />
+				Time="2011-08-01T11:21:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6985,10 +6706,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付選択肢</Comment>
+			<Comment />
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:54" />
+				Time="2011-08-01T11:21:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7032,10 +6753,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エレベーター階層確認</Comment>
+			<Comment />
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:03:40" />
+				Time="2011-08-01T11:25:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7079,13 +6800,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>黒の摩天楼用エレベーター
-
-・2桁＝階層の数字
-</Comment>
+			<Comment>・2桁＝階層の数字
+黒の摩天楼用</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T02:54:23" />
+				Time="2011-08-09T12:36:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7129,13 +6848,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>白の樹洞用エレベーター
-
-・2桁＝階層の数字
-</Comment>
+			<Comment>・2桁＝階層の数字
+白の樹洞用</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T02:54:33" />
+				Time="2011-08-09T12:36:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7179,10 +6896,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エレベーター選択肢</Comment>
+			<Comment />
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:03:31" />
+				Time="2011-08-01T11:25:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7226,10 +6943,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エレベーター選択肢</Comment>
+			<Comment />
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:03:44" />
+				Time="2011-08-01T11:25:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7277,13 +6994,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T03:08:06" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>受付に戻る選択時の注意文</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:03:58" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_area_00"
@@ -7312,12 +7022,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エレベーター選択肢
-
-・2桁＝エリアの数字</Comment>
+			<Comment>・2桁＝エリアの数字</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:04:08" />
+				Time="2011-08-03T09:24:10" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -7412,17 +7120,6 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:45" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼　エリア1
-ボス：BREEDERM
-
-チュートリアルイベント会話
-（エレベーターから出た瞬間）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:04:39" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_01_02_00"
@@ -7485,17 +7182,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-08-10T08:27:36" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼　エリア2
-ボス：BREEDERW
-
-チュートリアルイベント会話
-（エレベーターから出た瞬間）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:04:53" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_01_03_00"
@@ -7544,17 +7230,6 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:45" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼　エリア3
-NPC：ASSISTANTM
-
-イベント会話
-（エレベーターから出た瞬間）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:05:41" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_01_04_00"
@@ -7613,17 +7288,6 @@ NPC：ASSISTANTM
 				User="nakamura_akira:W00280"
 				Time="2011-08-10T08:27:39" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼　エリア4
-NPC：ASSISTANTM
-
-イベント会話
-（エレベーターから出た瞬間）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:06:15" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_01_05_00"
@@ -7672,17 +7336,6 @@ NPC：ASSISTANTM
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:45" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼　エリア5
-NPC：MUGENBOSS（バンジロウ）
-
-イベント会話
-（エレベーターから出た瞬間）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:06:50" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_01_00"
@@ -7747,17 +7400,6 @@ NPC：MUGENBOSS（バンジロウ）
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:31" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞　エリア1
-ボス：BREEDERW
-
-チュートリアルイベント会話
-（エレベーターから出た瞬間）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:08:06" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_02_00"
@@ -7820,17 +7462,6 @@ NPC：MUGENBOSS（バンジロウ）
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:31" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞　エリア2
-ボス：BREEDERM
-
-チュートリアルイベント会話
-（エレベーターから出た瞬間）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:08:18" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_03_00"
@@ -7883,17 +7514,6 @@ NPC：MUGENBOSS（バンジロウ）
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:31" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞　エリア3
-NPC：FIGHTERM
-
-イベント会話
-（エレベーターから出た瞬間）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:08:43" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_04_00"
@@ -7950,17 +7570,6 @@ NPC：FIGHTERM
 				User="nakamura_akira:W00280"
 				Time="2011-08-10T08:27:40" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞　エリア4
-NPC：FIGHTERM
-
-イベント会話
-（エレベーターから出た瞬間）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:08:53" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_05_00"
@@ -8009,17 +7618,6 @@ NPC：FIGHTERM
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:32:31" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞　エリア5
-NPC：MUGENBOSS（バンジロウ）
-
-イベント会話
-（エレベーターから出た瞬間）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:06:58" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_02_01_00"
@@ -8072,17 +7670,6 @@ NPC：MUGENBOSS（バンジロウ）
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:33:18" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼　エリア1
-ボス：BREEDERM
-
-チュートリアルイベント会話
-（エリア途中）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:09:26" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_02_02_00"
@@ -8147,17 +7734,6 @@ Cギアを　見てみて▼
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:33:33" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼　エリア2
-ボス：BREEDERW
-
-チュートリアルイベント会話
-(エリア途中）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:09:39" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_02_01_00"
@@ -8210,17 +7786,6 @@ Cギアを　見てみて▼
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:33:45" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞　エリア1
-ボス：BREEDERW
-
-チュートリアルイベント会話
-（エリア途中）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:09:53" />
-		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -8294,17 +7859,6 @@ Cギアを　見てごらん▼
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:33:45" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞　エリア2
-ボス：BREEDERM
-
-チュートリアルイベント会話
-（エリア途中）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:10:05" />
-		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -8356,17 +7910,6 @@ Cギアを　見てごらん▼
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:34:55" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼　エリア3
-NPC：MUGENBOSS（バンジロウ）
-
-イベント会話
-（ボス部屋）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:07:13" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_03_01_00"
@@ -8411,17 +7954,6 @@ NPC：MUGENBOSS（バンジロウ）
 				User="onoue_masayuki:W00272"
 				Time="2011-08-07T07:34:55" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞　エリア3
-NPC：MUGENBOSS（バンジロウ）
-
-イベント会話
-（ボス部屋）</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:07:25" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_hint_up_01">
@@ -16089,14 +15621,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>エリア６は　もう　ちじょうからは
-みえないくらいの　たかい　ところに▽
+みえないくらい　たかい　ところに▽
 あるみたいね……▼
 ホント　どこまで　つづいてるのかしら
 けんきゅうしゃとして▽
 きょうみは　つきないわね▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-06T04:48:08" />
+				Time="2011-09-08T02:24:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -16105,13 +15637,13 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>エリア６は　もう　地上からは
-みえないくらいの　高い所に▽
+みえないくらい　高い所に▽
 あるみたいね……▼
 ホント　どこまで　続いてるのかしら？
 研究者として　興味は　尽きないわね▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-06T04:48:26" />
+				Time="2011-09-08T02:24:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
