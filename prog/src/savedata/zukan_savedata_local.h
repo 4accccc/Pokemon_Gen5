@@ -67,8 +67,8 @@ struct ZUKAN_SAVEDATA {
 
 	u32	zenkoku_flag:1;				///< 全国図鑑保持フラグ
 	u32	habitat_flag:1;				///< 生息地リスト所持フラグ
-	u32	ver_up_flg:9;				///< バーションアップフラグ
-	u32	zukan_mode:1;					///< 閲覧中の図鑑モード
+	u32	ver_up_flg:8;				  ///< バーションアップフラグ
+	u32	zukan_mode:2;					///< 閲覧中の図鑑モード
 	u32	defaultMonsNo:10;			///< 閲覧中のポケモン番号
 	u32	shortcutMonsNo:10;		///< Ｙ登録されたポケモン番号（諸事情により未使用）
 
