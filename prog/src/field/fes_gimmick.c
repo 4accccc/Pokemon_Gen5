@@ -131,14 +131,7 @@ FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWor
   wk->fmwk = (const FEST_MISSION*)LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
  
   wk->fieldWork = fieldWork;
-  //フィールドエフェクトコントローラ取得
-  wk->fectrl = FIELDMAP_GetFldEffCtrl( fieldWork );
-  //MMDLSYS
-  wk->mmdl_sys = FIELDMAP_GetMMdlSys( fieldWork );
-  //自機のMMDLを取得しておく
-  wk->field_player = FIELDMAP_GetFieldPlayer( fieldWork );
-  wk->player_mmdl = FIELD_PLAYER_GetMMdl( wk->field_player );
-
+  //イベントデータ
   wk->evdata = GAMEDATA_GetEventData( wk->gdata );
   wk->evwork = GAMEDATA_GetEventWork( wk->gdata );
 
@@ -148,11 +141,6 @@ FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWor
       wk->railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
     }
   }
-
-
-  //道具ミッション用エフェクトタスクを常駐で持つ
-  wk->eff_task = FLDEFF_FES_KIRA_SetEffect( wk->fectrl );
-
   return wk;
 }
 
@@ -163,12 +151,54 @@ FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWor
 //----------------------------------------------------------------------
 void FES_GIMMICK_SYS_Delete( FES_GIMMICK* wk )
 {
+  MI_CpuClear8( wk, sizeof(FES_GIMMICK));
+  GFL_HEAP_FreeMemory( wk );
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック　動作モデルセットアップ処理
+ */
+//----------------------------------------------------------------------
+void FES_GIMMICK_SYS_MMdlSetup( FES_GIMMICK* wk, MMDLSYS* mmdl_sys )
+{
+  //MMDLSYS
+  wk->mmdl_sys = mmdl_sys;
+
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック　フェス用フィールドエフェクトを初期化
+ *
+ *  システム初期化のタイミングだと、フィールドエフェクトが未初期化のため
+ *  専用のエフェクト初期化関数を用意
+ */
+//----------------------------------------------------------------------
+void FES_GIMMICK_SYS_FldEffSetup( FES_GIMMICK* wk, FLDEFF_CTRL* fectrl, FIELD_PLAYER* f_player )
+{
+  //フィールドエフェクトコントローラ取得
+  wk->fectrl = fectrl;
+  
+  //エフェクト当たり判定用に自機のMMDLを取得しておく
+  wk->field_player = f_player;
+  wk->player_mmdl = FIELD_PLAYER_GetMMdl( wk->field_player );
+  
+  //道具ミッション用エフェクトタスクを常駐で持つ
+  wk->eff_task = FLDEFF_FES_KIRA_SetEffect( wk->fectrl );
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック　フェス用フィールドエフェクトを削除
+ */
+//----------------------------------------------------------------------
+void FES_GIMMICK_SYS_FldEffDelete( FES_GIMMICK* wk )
+{
   if( wk->eff_task != NULL ){
     FLDEFF_TASK_CallDelete( wk->eff_task );
     wk->eff_task = NULL;
   }
-  MI_CpuClear8( wk, sizeof(FES_GIMMICK));
-  GFL_HEAP_FreeMemory( wk );
 }
 
 //----------------------------------------------------------------------
@@ -193,6 +223,7 @@ void FES_GIMMICK_ZoneChangeSetup( FES_GIMMICK* wk, u16 zone_id )
 //    itemball_Setup( fest_sys, fmwk, gsys, zone_id );
   }
 }
+
 
 //----------------------------------------------------------------------
 /*

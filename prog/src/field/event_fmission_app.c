@@ -72,7 +72,11 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
   case _FIELD_FADE_START:
     {
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut_Black(gsys, fwork, FIELD_FADE_WAIT);
+      if( faw->mode == FMISSION_APP_MODE_INFO ){
+        fade_event = EVENT_FieldFadeOut_Black(gsys, fwork, FIELD_FADE_WAIT);
+      }else{
+        fade_event = EVENT_FieldFadeOut_White(gsys, fwork, FIELD_FADE_WAIT);
+      }
       GMEVENT_CallEvent(event, fade_event);
     }
     //ビーコンの子→親切り替えをストップ(子の状態で固定リクエスト)
@@ -100,6 +104,10 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     (*seq)++;
     break;
   case _FIELD_OPEN:
+    if( faw->mode == FMISSION_APP_MODE_RESULT ){
+      //ミッション終了処理
+      LINK_FESTIVAL_MissionEnd( GAMESYSTEM_GetLinkFestivalWork( faw->gsys ) );
+    }
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq)++;
     break;
@@ -107,12 +115,14 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     {
       GMEVENT* fade_event;
 
-      if( faw->mode == FMISSION_APP_MODE_RESULT ){
+      if( faw->mode == FMISSION_APP_MODE_INFO ){
+        fade_event = EVENT_FieldFadeIn_Black(gsys, fwork, FIELD_FADE_WAIT);
+      }else{
         FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fwork);
         FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_BEACON_VIEW );
+        fade_event = EVENT_FieldFadeIn_White(gsys, fwork, FIELD_FADE_WAIT);
       }
       
-      fade_event = EVENT_FieldFadeIn_Black(gsys, fwork, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;

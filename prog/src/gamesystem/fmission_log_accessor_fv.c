@@ -174,7 +174,7 @@ BOOL FMISSION_LOG_StackTbl_GetLog( FMISSION_LOG_TBL* tbl, FMISSION_LOG* p_log )
   *p_log = tbl->log[0];
 
   //スタックテーブル前詰め
-  GFL_STD_MemCopy32( &tbl->log[1], &tbl->log[0], sizeof(FMISSION_LOG)*FMISSION_LOG_END);
+  GFL_STD_MemCopy( &tbl->log[1], &tbl->log[0], sizeof(FMISSION_LOG)*FMISSION_LOG_END);
   FMISSION_LOG_Clear( &tbl->log[FMISSION_LOG_END] );
   --tbl->entry_num;
 
@@ -276,7 +276,7 @@ GPOWER_ID FMISSION_GPOWER_TBL_GetData( FMISSION_GPOWER_TBL* tbl, STRBUF* name_bu
   id = tbl->power[0].gpower_id;
 
   //テーブル前詰め
-  GFL_STD_MemCopy32( &tbl->power[1], &tbl->power[0], sizeof(FMISSION_GPOWER)*FMISSION_GPOWER_TBL_END);
+  GFL_STD_MemCopy( &tbl->power[1], &tbl->power[0], sizeof(FMISSION_GPOWER)*FMISSION_GPOWER_TBL_END);
   FMISSION_GPOWER_Clear( &tbl->power[FMISSION_GPOWER_TBL_END] );
   --tbl->entry_num;
 

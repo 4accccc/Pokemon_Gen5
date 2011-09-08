@@ -33,6 +33,7 @@
 
 #include "./event_fieldmap_control.h"
 #include "./event_fmission.h"
+#include "./event_fmission_app.h"
 #include "./event_subscreen.h"
 #include "savedata/fmission_save.h"
 #include "savedata/resonance_resort_sv.h"
@@ -443,6 +444,31 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
   FMISSION_EVWORK* wk = work;
   FEST_BEACON* beacon = &wk->mission.beacon;
 
+  switch( *seq ){
+  case 0:
+    if( wk->result.clear_f && beacon->life > 0 ){ //クリアでミッション終了した場合
+      evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_clear );
+    }else{  //タイムアップの場合
+      evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_timeup );
+    }
+    PMSND_PlaySE( EVFMISSION_SE_END_EFF );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      FMISSION_APP_MODE mode = FMISSION_APP_MODE_RESULT;
+      GMEVENT* call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+          FS_OVERLAY_ID( notwifi_event_fmission_app ), EVENT_FMissionApp, (void*)&mode );
+      GMEVENT_CallEvent( event, call_event );
+    }
+    (*seq)++;
+    break;
+  default:
+    sub_ReleaseFMissionWork( wk );
+    return GMEVENT_RES_FINISH;
+  }
+
+#if 0
   switch (*seq) {
   case 0:
     if( wk->result.clear_f && beacon->life > 0 ){ //クリアでミッション終了した場合
@@ -537,6 +563,7 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }
+#endif
   return GMEVENT_RES_CONTINUE;
 }
 

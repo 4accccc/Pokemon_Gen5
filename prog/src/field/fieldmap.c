@@ -837,6 +837,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     //CAMERA_AREAの反映
     setupCameraArea( fieldWork, fieldWork->map_id, fieldWork->heapID );
+    
+    //フェスミッションギミック初期化(動作モデル初期化前に作成)
+    fieldWork->fesGimmickSys = FES_GIMMICK_SYS_Create( gsys , fieldWork, fieldWork->heapID );
     break;
 
   case 3:
@@ -999,8 +1002,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->Fld3dCiPtr = FLD3D_CI_Init(HEAPID_FLD3DCUTIN, fieldWork->FldPrtclSys);
     //エンカウントエフェクト
     fieldWork->EncEffCntPtr = ENCEFF_CreateCntPtr(fieldWork->heapID, fieldWork);
-    //フェスミッションギミック
-    fieldWork->fesGimmickSys = FES_GIMMICK_SYS_Create( gsys , fieldWork, fieldWork->heapID );
+    //フェス用フィールドエフェクト作成
+    FES_GIMMICK_SYS_FldEffSetup(fieldWork->fesGimmickSys, fieldWork->fldeff_ctrl, fieldWork->field_player );
 
     // 育て屋
     {
@@ -1405,8 +1408,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
-  //フェスミッションギミックワーク破棄
-  FES_GIMMICK_SYS_Delete(fieldWork->fesGimmickSys);
+  //フェス用フィールドエフェクト破棄
+  FES_GIMMICK_SYS_FldEffDelete(fieldWork->fesGimmickSys);
   //エンカウントエフェクトコントローラ破棄
   ENCEFF_DeleteCntPtr(fieldWork->EncEffCntPtr);
   //フィールド3Ｄカットインコントローラ破棄
@@ -1512,8 +1515,12 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   //登録テーブルごとに個別の終了処理を呼び出し
   fieldWork->func_tbl->delete_func(fieldWork);
   fldmap_ClearMapCtrlWork( fieldWork );
-  
+ 
+  //動作モデル破棄
   fldmapMain_MMDL_Finish(fieldWork);
+  
+  //フェスミッションギミックワーク破棄
+  FES_GIMMICK_SYS_Delete(fieldWork->fesGimmickSys);
   
   //自機破棄
   FIELD_PLAYER_Delete( fieldWork->field_player );
@@ -2867,7 +2874,9 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
     KAGAYA_Printf( "FIELD INIT ADD HERO TEX sex=%d\n", sex );
   }
 #endif
-  
+  //フェス動作モデルリソースセットアップ
+  FES_GIMMICK_SYS_MMdlSetup( fieldWork->fesGimmickSys, fmmdlsys );
+ 
   MMDL_G3DOBJCONT_Setup( //動作モデルオブジェクト　セットアップ
       fieldWork->fldMMdlSys, fieldWork->fieldG3dObjCtrl );
 

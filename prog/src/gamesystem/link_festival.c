@@ -82,7 +82,7 @@ void LINK_FESTIVAL_Delete( LINK_FESTIVAL* wk )
   LINKFEST_LOG_TOP_SCORE_Delete( wk->top_score );
   GFL_HEAP_FreeMemory( wk->p_arc_data );  //ミッションデータアーカイブ開放
   
-  MI_CpuClear32(wk,sizeof(LINK_FESTIVAL));
+  MI_CpuClear8(wk,sizeof(LINK_FESTIVAL));
   GFL_HEAP_FreeMemory( wk );
 }
 
@@ -482,7 +482,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( wk->gdata );
   FMISSION_SAVE* f_save = SAVEDATA_GetFMissionSave( save );
 
-  MI_CpuClear32( pl, sizeof(LINKFEST_MISSION_RESULT));
+  MI_CpuClear8( pl, sizeof(LINKFEST_MISSION_RESULT));
 
   pl->clear_f = linkfes_IsMissionClear( wk, &pl->score );
 
