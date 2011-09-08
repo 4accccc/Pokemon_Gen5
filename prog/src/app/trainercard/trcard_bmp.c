@@ -728,7 +728,7 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
   case SCORE_LINE_JA_INVITAION_2:   // ジョインアベニュー招待回数2行目
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_27], col );
     WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inSwanTrCardData->wbt_victory_cnt, JA_DIGIT,
+            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inSwanTrCardData->ja_invitation_cnt, JA_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_POKESHIFTER_HIGH:         // ポケシフターのハイスコア

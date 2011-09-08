@@ -932,9 +932,9 @@ static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookH
   int Version = 1;
 
   // ＷＢのバージョンにあわせてバレット切り替え（WB以外は全て青）
-  if(wk->TrCardData->Version==VERSION_WHITE){
+  if(wk->TrCardData->Version==VERSION_W2 || wk->TrCardData->Version==VERSION_WHITE){
     Version = 0;
-  }else if(wk->TrCardData->Version==VERSION_BLACK){
+  }else if(wk->TrCardData->Version==VERSION_B2 || wk->TrCardData->Version==VERSION_BLACK){
     Version = 1;
   }else{
     inCardRank = 6;
@@ -1067,7 +1067,7 @@ static void SetTrCardBg( void )
 //----------------------------------------------------------------------------------
 static int _get_card_ncgr( int version )
 {
-  if(version==VERSION_WHITE){
+  if(version==VERSION_WHITE || version==VERSION_W2){
     return NARC_trainer_case_card_w_NCGR;
   }else{
     return NARC_trainer_case_card_NCGR;
@@ -1085,7 +1085,7 @@ static int _get_card_ncgr( int version )
 //----------------------------------------------------------------------------------
 static int _get_card_face_nscr( int version )
 {
-  if(version==VERSION_WHITE){
+  if(version==VERSION_WHITE || version==VERSION_W2){
     return NARC_trainer_case_card_faca_w_NSCR;
   }else{
     return NARC_trainer_case_card_faca_NSCR;
@@ -1248,10 +1248,10 @@ static void Trans_CardBackScreen( TR_CARD_WORK *wk, int version )
 {
   // アニメONかOFFかで転送するスクリーンを替える
   const int card_back_screen[][2]={
-    { NARC_trainer_case_card_back_w_NSCR, NARC_trainer_case_card_back_NSCR,},    // サインアニメOFF
+    { NARC_trainer_case_card_back_w_NSCR, NARC_trainer_case_card_back_NSCR,},   // サインアニメOFF
     { NARC_trainer_case_card_back2_w_NSCR, NARC_trainer_case_card_back2_NSCR,}, // サインアニメON
   };
-  if(version==VERSION_WHITE){
+  if(version==VERSION_WHITE || version==VERSION_W2){
     version = 0;
   }else{
     version = 1;
