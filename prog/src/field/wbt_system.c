@@ -239,13 +239,6 @@ u64 WBTSYS_GetRandomSeed( const WBTSYS * wbtsys )
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-u8 WBTSYS_GetAudienceType( const WBTSYS * wbtsys )
-{
-  return wbtsys->audience_type;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 void WBTSYS_SetSelectDLData( WBTSYS * wbtsys, u8 no )
 {
   GF_ASSERT( no <= WBT_DOWNLOAD_NUM );
