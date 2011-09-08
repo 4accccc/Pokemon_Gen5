@@ -16,10 +16,15 @@
 
 #include "app/app_menu_common.h"
 
+#include "system/bmp_winframe.h"
+#include "gamesystem/msgspeed.h"
+
 #include "fmission_app_local.h"
 #include "fmission_app_sub.h"
 
 #include "fmission_app.naix"
+
+#include "msg/msg_fmission_app.h"
 
 //=============================================================================
 /**
@@ -32,6 +37,7 @@ enum{
 	FMA_EMPTY_MAXNUM	= 14*2,
 	//
 	MES_CLEAR_COLOR     = 0,
+	MES_SYSWIN_CLEAR_COLOR		= 15,	// (システムウインドウの)クリアカラー
 	//
 	//
 	// (main bg)(0-5:bg、6:cmn、8:font)
@@ -42,10 +48,15 @@ enum{
 	//
 	// (sub bg)(0-5:bg、8:font)
 	FMA_BG_SUB_BASE_PAL	= 0,
+	FMA_BG_SUB_WIN_PAL	= 4,
 	FMA_BG_SUB_FONT_PAL	= 8,
 	//
 	// (obj)(0:cmn、14:net)
 	FMA_OBJ_BASE_PAL	= 0,
+	//
+	// (sub)(0-1:base)
+	FMA_OBJ_SUB_BASE_PAL = 0,
+	FMA_OBJ_SUB_CHG_FONT = 1,
 };
 
 //--------------
@@ -230,6 +241,8 @@ const FMA_CANVAS_DATA fma_canvas_01_tbl[] = {
   { GFL_BG_FRAME0_M,   23, 15,	6,	2,	FMA_BG_FONT_PAL,},			// スコアボーナス(右)
   { GFL_BG_FRAME0_M,   13, 18, 16,	2,	FMA_BG_FONT_PAL,},			// ダブルボーナス(右)
   //
+  { GFL_BG_FRAME1_S,   1, 19, 30,	4,	FMA_BG_SUB_FONT_PAL,},		// Window(上)
+  //
   { 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 
@@ -348,6 +361,19 @@ static const GFL_UI_TP_HITTBL fma_rect_01_tbl[] = {
   { GFL_UI_TP_HIT_END,0,0,0 }
 };
 
+// 文字列
+static const s16 fma_meswin_tbl[] = {
+	msg_fmission_str_33,		// 達成
+	msg_fmission_str_34,		// 失敗
+	msg_fmission_str_35,		// 手に入れた
+	msg_fmission_str_36,		// これ以上もてない
+	msg_fmission_str_37,		// ダブルスコア
+	msg_fmission_str_38,		// 個人の思いが..
+	msg_fmission_str_39,		// みんなの思いが..
+	msg_fmission_str_40,		// ホワイト
+	msg_fmission_str_41,		// ブラック
+};
+
 //=============================================================================
 /**
  *								宣言
@@ -362,6 +388,8 @@ static void fma_init_obj_res( FMISSION_APP_WORK* wk, const s32 drawtype, const s
 static void fma_init_obj_res_cmn( FMISSION_APP_WORK* wk, const s32 drawtype );
 static void fma_init_obj( FMISSION_APP_WORK* wk );
 static void fma_exit_obj( FMISSION_APP_WORK* wk );
+//
+static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id );
 
 //=============================================================================
 //=============================================================================
@@ -405,6 +433,15 @@ void FmaCmn_data_exit( FMISSION_APP_WORK* wk )
 			GFL_BMPWIN_Delete( wk->PrintUtil[i].win );
 			wk->PrintUtil[i].win = 0;
 		}
+	}
+	// PrintStream後処理
+	if(wk->MsgBuffer){
+		GFL_STR_DeleteBuffer( wk->MsgBuffer );
+		wk->MsgBuffer = 0;
+	}
+	if(wk->PrintStream){
+		PRINTSYS_PrintStreamDelete( wk->PrintStream );
+		wk->PrintStream = 0;
 	}
 	
 	// obj
@@ -685,9 +722,6 @@ static void fma_init_obj_clwk( FMISSION_APP_WORK* wk, const s32 drawtype, const 
 		if(adr->anmseq == 0xff){
 			break;
 		}
-//		if(buf[4] == FMA_CLWKMODE_NORMAL){
-//			OS_Printf("seq :(%d)%d\n",i,adr->anmseq);
-//		}
 		tmp = adr->empty_num;
 		pos[0] = FmaCmn_get_empty(wk, tmp*2);
 		pos[1] = FmaCmn_get_empty(wk, tmp*2+1);
@@ -955,6 +989,37 @@ BOOL FmaCmn_is_anime_end( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wnum
 	return( bflg );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  objのシーケンスの切り替え
+ *
+ *	@param	FMISSION_APP_WORK* wk
+ *	@param	const s32			(0:通常、1:共通)
+ *	@param	const s32			objワーク番号
+ *	@param	const s32			ワーク
+ *	@param	const s32			カラー
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void FmaCmn_chg_pal( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wnum, const s32 cnum )
+{
+	// 切り替え
+	if(wmode == FMA_CLWKMODE_NORMAL){			// 通常
+//		if(wnum >= FMA_CLWKID_MAX){
+//			OS_Printf("obj max error:%d\n",wnum);
+//			return;
+//		}
+		GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.clwk[wnum], cnum, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+	}
+	else if(wmode == FMA_CLWKMODE_CMN){			// 共通
+//		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
+//			OS_Printf("cmn obj max error:%d\n",wnum);
+//			return;
+//		}
+		GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.cmn_clwk[wnum], cnum, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+	}
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -1122,15 +1187,10 @@ void FmaCmn_disp_time( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_wnu
  * @param   FMISSION_APP_WORK		*wk
  */
 //--------------------------------------------------------------
-void FmaCmn_disp_star( FMISSION_APP_WORK *wk )
+void FmaCmn_disp_star( FMISSION_APP_WORK *wk, const s32 cnum )
 {
 	s32			lv;
-	s32			cnum;
-	//
-	cnum = FMAI_CLWK_STAR;
-	if(wk->Mode == FMISSION_APP_MODE_RESULT){
-		cnum = FMAR_CLWK_STAR;
-	}
+	
 	// レベルを取得
 	lv = wk->Param->fmwk->beacon.m_level;
 	// 表示
@@ -1153,5 +1213,211 @@ s32 FmaCmn_chk_tp( FMISSION_APP_WORK *wk )
 	// タッチあり
 	id = GFL_UI_TP_HitTrg( &fma_rect_01_tbl[0] );
 	return( id );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  会話ウインドウ(セット)
+ *
+ *	@param	FMISSION_APP_WORK* wk
+ *	@param	const s32			モード
+ *	@param	const s32			(FMA_MSGWIN_**)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id )
+{
+	s32			buf[2];
+	STRBUF		*str_tmp;
+	STRBUF		*strbuf2;
+	MYSTATUS	*mystatus;
+	
+	// PrintStream終了時にはdeleteしないとtaskが残ってしまうようだ
+	if( wk->PrintStream ){
+		PRINTSYS_PrintStreamDelete( wk->PrintStream );
+		wk->PrintStream = 0;
+	}
+	// Msgの再構築
+	if( wk->MsgBuffer ){
+		GFL_STR_DeleteBuffer( wk->MsgBuffer );
+		wk->MsgBuffer = 0;
+	}
+	//
+	// 手に入れた
+	if(id == FMA_MSGWIN_02){
+		// プレイヤ名
+		mystatus = GAMEDATA_GetMyStatus( wk->Param->gdata );
+		strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
+		MyStatus_CopyNameString( mystatus, strbuf2 );
+		WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+		// アイテム名
+		WORDSET_RegisterItemName( wk->Wordset, 1, wk->MissionResult.item );
+		// アイテム数
+		buf[0] = wk->MissionResult.item_num;
+		buf[1] = wk->MissionResult.bonus_num;
+		WORDSET_RegisterNumber( wk->Wordset, 2, (buf[0]+buf[1]), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		// セット
+		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
+		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id]);
+		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
+		GFL_STR_DeleteBuffer(strbuf2);
+		GFL_STR_DeleteBuffer(str_tmp);
+	}
+	// 手に入れられない
+	else if(id == FMA_MSGWIN_03){
+		// プレイヤ名
+		mystatus = GAMEDATA_GetMyStatus( wk->Param->gdata );
+		strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
+		MyStatus_CopyNameString( mystatus, strbuf2 );
+		WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+		// セット
+		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
+		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id]);
+		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
+		GFL_STR_DeleteBuffer(strbuf2);
+		GFL_STR_DeleteBuffer(str_tmp);
+	}
+	// 手に入れた2(sp)
+	else if(id == FMA_MSGWIN_02A){
+		// プレイヤ名
+		mystatus = GAMEDATA_GetMyStatus( wk->Param->gdata );
+		strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
+		MyStatus_CopyNameString( mystatus, strbuf2 );
+		WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+		// アイテム名
+		WORDSET_RegisterItemName( wk->Wordset, 1, wk->MissionResult.sp_item );
+		// アイテム数
+		buf[0] = wk->MissionResult.sp_item_num;
+		WORDSET_RegisterNumber( wk->Wordset, 2, buf[0], 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		// セット
+		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
+		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[2]);
+		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
+		GFL_STR_DeleteBuffer(strbuf2);
+		GFL_STR_DeleteBuffer(str_tmp);
+	}
+	// 個人
+	else if(id == FMA_MSGWIN_05){
+		// プレイヤ名
+		mystatus = GAMEDATA_GetMyStatus( wk->Param->gdata );
+		strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
+		MyStatus_CopyNameString( mystatus, strbuf2 );
+		WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+		GFL_STR_DeleteBuffer(strbuf2);
+		// バージョン
+		strbuf2 = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[7+wk->MissionResult.hilink_version]);
+		WORDSET_RegisterWord( wk->Wordset, 1, strbuf2, 0, TRUE, PM_LANG );
+		// バージョンレベル
+		buf[0] = wk->MissionResult.hilink_level_up;
+		WORDSET_RegisterNumber( wk->Wordset, 2, buf[0], 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		// セット
+		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
+		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id]);
+		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
+		GFL_STR_DeleteBuffer(strbuf2);
+		GFL_STR_DeleteBuffer(str_tmp);
+	}
+	// みんな
+	else if(id == FMA_MSGWIN_06){
+		// バージョン
+		strbuf2 = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[7+wk->MissionResult.hilink_version]);
+		WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+		// バージョンレベル
+		buf[0] = wk->MissionResult.hilink_level_up;
+		WORDSET_RegisterNumber( wk->Wordset, 1, buf[0], 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		// セット
+		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
+		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id]);
+		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
+		GFL_STR_DeleteBuffer(strbuf2);
+		GFL_STR_DeleteBuffer(str_tmp);
+	}
+	// その他
+	else{
+		// メッセージバッファ
+		wk->MsgBuffer = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id] );
+	}
+	//
+	// stream設定 => ここのwk->MsgBufferは終わるまで削除してはいけない
+	wk->PrintStream = PRINTSYS_PrintStream(
+				wk->PrintUtil[mode].win, 0, 0, wk->MsgBuffer, wk->font,
+				MSGSPEED_GetWait(), wk->MsgTcblSys, 4, wk->heapID, MES_SYSWIN_CLEAR_COLOR );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  会話ウインドウ(処理)
+ *
+ *	@param	FMISSION_APP_WORK* wk
+ *
+ *	@retval	BOOL				(TRUE:再生中、FALSE:終了)
+ */
+//-----------------------------------------------------------------------------
+BOOL FmaCmn_main_meswin( FMISSION_APP_WORK* wk )
+{
+	BOOL	bflg;
+	
+	// 念のため
+	if(wk->PrintStream == 0){
+		return( FALSE );
+	}
+	//
+	// 文字送りカーソル処理
+	APP_KEYCURSOR_Main( wk->MsgCursorWork, wk->PrintStream, wk->PrintUtil[FMAR_CANVAS_DOWN_WIN].win );
+	// streamの入力処理をまとめて処理してくれるらしい
+	// 内部でkey/touchの判定もしてくれるようだ
+	bflg = APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->PrintSysWork , wk->PrintStream );
+	// 連結部分がうまくいかないため自前で処理(?)
+//	bflg = td_update_printstream( wk );
+	if( bflg == TRUE ){
+		// 終了
+		return( FALSE );
+	}
+	return( TRUE );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  winにメッセージ表示
+ *
+ *	@param	FMISSION_APP_WORK* wk
+ *	@param	const s32				(canvasの番号)
+ *	@param	const s32				番号
+ *	@param	const s32				(0:一発表示、1:stream表示)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void FmaCmn_disp_winmes( FMISSION_APP_WORK* wk, const s32 mode, const s32 id, const s32 smode )
+{
+	s32			flg=0;
+	STRBUF		*strbuf;
+	STRBUF		*strbuf2;
+	STRBUF		*expbuf;
+	
+	//-----------------
+	// ウインドウ表示
+	//-----------------
+	// 会話ウィンドウセット(キャラデータを転送)
+	BmpWinFrame_GraphicSet( GFL_BG_FRAME1_S, 1, FMA_BG_SUB_WIN_PAL, MENU_TYPE_SYSTEM, wk->heapID);
+	// 会話ウインドウ表示
+	BmpWinFrame_Write( wk->PrintUtil[mode].win, WINDOW_TRANS_ON, 1, FMA_BG_SUB_WIN_PAL );
+	// 文字スクリーン作成
+	GFL_BMPWIN_MakeScreen( wk->PrintUtil[mode].win );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[mode].win) );
+	// クリア
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[mode].win ), MES_SYSWIN_CLEAR_COLOR );
+	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[mode].win );
+	//
+	if(smode == 0){			// 一発だし
+		// 通常
+		strbuf = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id] );
+		FmaCmn_disp_string( wk, mode, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+		GFL_STR_DeleteBuffer( strbuf );
+	}
+	else{					// stream表示
+		fma_set_meswin( wk, mode, id );
+	}
 }
 

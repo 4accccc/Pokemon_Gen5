@@ -27,6 +27,9 @@
 //アーカイブ
 #include "arc_def.h"
 
+#include "app/app_printsys_common.h"
+#include "app/app_keycursor.h"
+
 //外部公開
 #include "app/fmission_app.h"
 
@@ -50,15 +53,32 @@ enum{
 	FLG_FMA_UPDATE		= (1<<0),	// 更新
 	FLG_FMA_DISP_1ST	= (1<<1),	// はじめの表示
 	FLG_FMA_ONLY		= (1<<2),	// 1人のみの場合
+	FLG_FMA_SUCCESS		= (1<<3),	// 成功時
+	//
+	FLG_FMA_BONUS		= (1<<4),	// ボーナス時
+	FLG_FMA_DOUBLE		= (1<<5),	// ダブルスコア時
+	FLG_FMA_CLEAR_TIME	= (1<<6),	// クリアタイム表示
+	FLG_FMA_GET			= (1<<7),	// 成功して報酬を獲得
 	//
 	FLG_FMA_SCROLL_STOP	= (1<<8),	// スクロール停止
 	FLG_FMA_TIME_STOP	= (1<<9),	// タイマ停止
+	FLG_FMA_HILINK		= (1<<10),	// ハイリンクの条件を満たす
+	//
+	FLG_FMA_NEW_TS		= (1<<12),	// トータルスコア(NEWマーク)
+	FLG_FMA_NEW_CT		= (1<<13),	// クリアタイム(NEWマーク)
 	//
 	FLG_FMA_LEVEL0		= (1<<16),	// レベル0
 	FLG_FMA_LEVEL1		= (1<<17),	// レベル1
 	FLG_FMA_LEVEL2		= (1<<18),	// レベル2
 	FLG_FMA_LEVEL3		= (1<<19),	// レベル3
 	//
+	FLG_FMA_MSG_00		= (1<<24),	// 成功or失敗
+	FLG_FMA_MSG_01		= (1<<25),	// 手に入れたor失敗
+	FLG_FMA_MSG_02		= (1<<26),	// ダブルスコア
+	FLG_FMA_MSG_03		= (1<<27),	// 手に入れた2
+	//
+	FLG_FMA_MSG_04		= (1<<28),	// 共鳴した
+	FLG_FMA_MSG_END		= (1<<29),	// 終了
 };
 
 //------------------
@@ -126,6 +146,8 @@ enum{
 	FMAR_CANVAS_DOWN_GAIN_R,
 	FMAR_CANVAS_DOWN_BONUS_R,
 	FMAR_CANVAS_DOWN_DOUBLE_R,
+	//
+	FMAR_CANVAS_DOWN_WIN,
 };
 
 //-----------------------------
@@ -196,6 +218,20 @@ enum{
 	FMA_CLWK_CMN_BACK = 0,		// 戻るアイコン
 };
 
+//-------------------
+// MSG
+//-------------------
+enum{
+	FMA_MSGWIN_00 = 0,			// 達成
+	FMA_MSGWIN_01,				// 失敗
+	FMA_MSGWIN_02,				// 手に入れた
+	FMA_MSGWIN_03,				// いれられない
+	FMA_MSGWIN_04,				// ダブルスコア
+	FMA_MSGWIN_05,				// 個人
+	FMA_MSGWIN_06,				// みんな
+	FMA_MSGWIN_02A,				// 手に入れた2
+};
+
 //=============================================================================
 /**
  *								構造体定義
@@ -239,6 +275,11 @@ typedef struct
 	GFL_MSGDATA				*MsgData[FMA_MSG_MAXNUM];		// メッセージ
 	PRINT_UTIL				PrintUtil[FMA_CANVAS_MAXNUM];	// 文字表示用
 	WORDSET					*Wordset;						// wordset
+	PRINT_STREAM			*PrintStream;					// 文字表示用(PrintStream)
+	GFL_TCBLSYS				*MsgTcblSys;					// メッセージ用タスク
+	STRBUF					*MsgBuffer;						// メッセージ用バッファ
+	APP_KEYCURSOR_WORK		*MsgCursorWork;					// ページ送りマーク用ワーク
+	APP_PRINTSYS_COMMON_WORK PrintSysWork;					// 汎用PrintStream管理ワーク
 	//
 	FMISSION_APP_PARAM 		*Param;				// 参照用として保存	
 	//
@@ -246,6 +287,7 @@ typedef struct
 	ARCHANDLE				*Handle;
 	FMISSION_ARCDATA		*ArcData;
 	LINKFEST_MISSION_STATUS	MissionStatus;		// 情報(実体)
+	LINKFEST_MISSION_RESULT MissionResult;		// 結果(実体)
 	LINKFEST_LOG_TOP_SCORE	*TopScore;			// トップスコア用
 	FMISSION_LOG_LATEST		*Latest;			// ログ
 	//
