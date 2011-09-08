@@ -183,8 +183,8 @@ extern void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESO
  *					ÉåÉRÅ[Éhâ{óó
 */
 //=============================================================================
-extern FLDMSGWIN * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSGBG *p_msgbg, WORDSET *p_wordset, GAMEDATA *p_gamedata, u32 param, HEAPID heapID );
-
+extern FLDMSGWIN * RESORT_RANK_WND_Create( FLDMSGBG *p_msgbg, HEAPID heapID );
+extern void RESORT_RANK_WND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSGBG *p_msgbg, WORDSET *p_wordset, GAMEDATA *p_gamedata, u32 param, HEAPID heapID );
 
 extern u16 RESORT_SCRCMD_GetMsgID( u16 param, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_ABSTRUCT_MANAGER *p_man, RESORT_CITY_DATA *p_city ,RESORT_BINARY_SPOT *p_spot, RESORT_BINARY_SHOP *p_shop, RESORT_BINARY_CITY *p_city_data, WORDSET *p_wordset, HEAPID heapID );
 

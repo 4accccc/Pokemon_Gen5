@@ -1495,25 +1495,43 @@ void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESORT_PEOP
  *					ランク閲覧
 */
 //=============================================================================
+enum
+{
+  RNKDATA_NUM = 9,
+  RNKDATA_EMPTY = 0xFFFFFFFF,
+
+  RNKDATA_W = 30,
+  RNKDATA_H = 22,
+};
 //----------------------------------------------------------------------------
 /**
  *	@brief  ウィンドウ作成
+ *
+ *	@param	FLDMSGBG *p_msgbg
+ *	@param	heapID 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+FLDMSGWIN * RESORT_RANK_WND_Create( FLDMSGBG *p_msgbg, HEAPID heapID )
+{
+  FLDMSGWIN *p_fldmsgwin = FLDMSGWIN_Add(p_msgbg, NULL, 
+      1, 1, RNKDATA_W, RNKDATA_H);
+
+  return p_fldmsgwin;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ウィンドウ描画
  *
  *	@param	HEAPID heapID 
  *
  *	@return RESORT_RANK_WND ワーク
  */
 //-----------------------------------------------------------------------------
-FLDMSGWIN * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSGBG *p_msgbg, WORDSET *p_wordset, GAMEDATA *p_gamedata, u32 param, HEAPID heapID )
+void RESORT_RANK_WND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSGBG *p_msgbg, WORDSET *p_wordset, GAMEDATA *p_gamedata, u32 param, HEAPID heapID )
 {
-  enum
-  {
-    RNKDATA_NUM = 9,
-    RNKDATA_EMPTY = 0xFFFFFFFF,
-
-    RNKDATA_W = 30,
-    RNKDATA_H = 22,
-  };
 
   struct
   {
@@ -1576,8 +1594,6 @@ FLDMSGWIN * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSG
     }
   }
   {
-    FLDMSGWIN *p_fldmsgwin = FLDMSGWIN_Add(p_msgbg, NULL, 
-      1, 1, RNKDATA_W, RNKDATA_H);
     u32 w;
     STRBUF *p_name_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
     STRBUF *p_src_str = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(heapID) );
@@ -1648,11 +1664,8 @@ FLDMSGWIN * RESORT_RANK_WND_Create( RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSG
     GFL_STR_DeleteBuffer( p_dst_str );
     GFL_STR_DeleteBuffer( p_src_str );
     GFL_STR_DeleteBuffer( p_name_str );
-
-    return p_fldmsgwin;
   }
 }
-
 
 
 static u32 SexGetMsgID( u32 sex, u32 male, u32 female )

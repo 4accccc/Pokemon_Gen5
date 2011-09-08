@@ -1977,10 +1977,10 @@ static BOOL VmWait_RankWindow( VMHANDLE *p_core, void *p_wk_adrs )
 {
   enum
   {
+    SEQ_INIT_DRAW,
     SEQ_START_DRAW,
     SEQ_WAIT_DRAW,
     SEQ_WAIT_BUTTON,
-    SEQ_NEXT,
     SEQ_END_DRAW,
     SEQ_END,
   };
@@ -1999,8 +1999,12 @@ static BOOL VmWait_RankWindow( VMHANDLE *p_core, void *p_wk_adrs )
 
   switch( p_subwk->seq )
   {
+  case SEQ_INIT_DRAW:
+    p_subwk->p_msg_win = RESORT_RANK_WND_Create( p_msgbg, heapID );
+    p_subwk->seq++;
+    break;
   case SEQ_START_DRAW:
-    p_subwk->p_msg_win = RESORT_RANK_WND_Create( RESORT_SYSTEM_GetPeopleAllData(p_sys), p_msgbg, p_wordset, p_gamedata, p_subwk->param, heapID );
+    RESORT_RANK_WND_Write( p_subwk->p_msg_win, RESORT_SYSTEM_GetPeopleAllData(p_sys), p_msgbg, p_wordset, p_gamedata, p_subwk->param, heapID );
     p_subwk->seq++;
     break;
   case SEQ_WAIT_DRAW:
@@ -2022,20 +2026,15 @@ static BOOL VmWait_RankWindow( VMHANDLE *p_core, void *p_wk_adrs )
       PMSND_PlaySE( SEQ_SE_SELECT1 );
       p_subwk->param++;
       p_subwk->param %= 8;
-      p_subwk->seq  = SEQ_NEXT;
+      p_subwk->seq  = SEQ_START_DRAW;
     }
     else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
     {
       PMSND_PlaySE( SEQ_SE_SELECT1 );
       p_subwk->param--;
       p_subwk->param = p_subwk->param < 0? 7: p_subwk->param;
-      p_subwk->seq  = SEQ_NEXT;
+      p_subwk->seq  = SEQ_START_DRAW;
     }
-    break;
-  case SEQ_NEXT:
-    FLDMSGWIN_ClearWindow(p_subwk->p_msg_win );
-    FLDMSGWIN_Delete( p_subwk->p_msg_win );
-    p_subwk->seq  = SEQ_START_DRAW;
     break;
   case SEQ_END_DRAW:
     FLDMSGWIN_ClearWindow(p_subwk->p_msg_win );
