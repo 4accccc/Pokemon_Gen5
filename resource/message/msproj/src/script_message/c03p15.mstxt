@@ -584,10 +584,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー戦後</Comment>
+			<Comment>トレーナー戦後
+・アイテム入手処理
+　No021「ねむけざまし」</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:11:59" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T03:45:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

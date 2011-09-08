@@ -426,11 +426,11 @@
 			<Comment>♀
 ・はい選択時
 ・アイテム入手処理
-　No000「ハンカチ（仮）」未発注、たいせつなもの
+　No634「よごれたハンカチ」（たいせつなもの）
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:40:18" />
+				Time="2011-09-08T02:52:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -598,11 +598,11 @@
 			<Comment>♀
 ・条件達成時
 ・アイテム入手処理
-　No000「？？？」
+　No064「エネコのシッポ」
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:23:43" />
+				Time="2011-09-08T02:53:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

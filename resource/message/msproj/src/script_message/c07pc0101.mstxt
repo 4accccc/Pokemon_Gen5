@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　道具名
+			<Text>この　くろおび
 たくさん　あるから　わけてあげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T03:17:28" />
+				Time="2011-09-08T03:33:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　道具名
+			<Text>この　くろおび
 たくさん　あるから　わけてあげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T03:17:31" />
+				Time="2011-09-08T03:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -32,11 +32,11 @@
 			Language="JPN">
 			<Comment>♀
 ・アイテム入手処理
-　No000「？？？」
+　No241「くろおび」
 ・swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T03:16:59" />
+				Time="2011-09-08T03:33:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -52,12 +52,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>道具の　説明▼
+			<Text>くろおび　はね
+ポケモンに　もたせると▼
+かくとうタイプの　わざの
+いりょくが　アップするの！▼
 バトルガールだった　おばあちゃんから
 もらった　もの　なんだ　ソレ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T03:55:23" />
+				Time="2011-09-08T03:34:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65,12 +68,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>道具の　説明▼
+			<Text>くろおび　はね
+ポケモンに　持たせると▼
+かくとうタイプの　技の
+威力が　アップするの！▼
 バトルガールだった　おばあちゃんから
 もらった　もの　なんだ　ソレ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T03:55:29" />
+				Time="2011-09-08T03:34:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

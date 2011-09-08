@@ -254,10 +254,10 @@
 ・ツタージャ選択時
 ・いいえ選択時
 ・アイテム入手処理
-　No551「くさのジュエル」（仮）</Comment>
+　No551「くさのジュエル」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T07:26:08" />
+				Time="2011-09-08T03:35:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -416,10 +416,10 @@
 ・ポカブ選択時
 ・はい選択時
 ・アイテム入手処理
-　No548「ほのおのジュエル」（仮）</Comment>
+　No548「ほのおのジュエル」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T07:25:44" />
+				Time="2011-09-08T03:35:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -678,10 +678,10 @@
 ・ミジュマル選択時
 ・はい選択時
 ・アイテム入手処理
-　No549「みずのジュエル」（仮）</Comment>
+　No549「みずのジュエル」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T07:25:56" />
+				Time="2011-09-08T03:35:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

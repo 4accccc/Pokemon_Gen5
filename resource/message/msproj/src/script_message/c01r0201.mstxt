@@ -33,12 +33,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手前
-　No003「スーパーボール」入手処理
+・アイテム入手処理
+　No003「スーパーボール」
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T04:54:18" />
+				Time="2011-09-08T03:25:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

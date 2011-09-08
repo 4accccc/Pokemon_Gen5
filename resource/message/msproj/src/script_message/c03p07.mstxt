@@ -918,10 +918,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー戦後</Comment>
+			<Comment>トレーナー戦後
+・アイテム入手処理
+　No018「どくけし」</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:07:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-08T03:44:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -173,10 +173,10 @@
 			<Comment>♂
 ・GRIDX＝1、GRIDZ＝3、右向き
 ・アイテム入手処理
-　No000「？？？」</Comment>
+　No229「かわらずのいし」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:13:50" />
+				Time="2011-09-08T03:29:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -199,13 +199,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いつ　なにを　おおせに　なられても
-スムーズに　たいおう　できるよう▽
-ばっちり　じゅんびを　しているのです▼
+かわらない　たいどで▽
+たいおう　できるように　しております▼
 それが　ポケモントレーナーだった
 ちちの　おしえ　なのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:09:33" />
+				Time="2011-09-08T03:30:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -214,13 +214,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いつ　なにを　仰せに　なられても
-スムーズに　対応できるよう▽
-ばっちり　準備を　しているのです▼
+変わらぬ　態度で▽
+対応できるように　しております▼
 それが　ポケモントレーナーだった
 父の　教え　なのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-04T11:09:33" />
+				Time="2011-09-08T03:30:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

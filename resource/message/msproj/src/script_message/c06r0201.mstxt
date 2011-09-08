@@ -884,11 +884,11 @@
 ・一度でも保護区に行って以降
 ・以下の選択肢表示
 　ヤマジタウン
-　ほごく（仮称）
+　しぜんほごく
 　やめる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:44:49" />
+				Time="2011-09-08T03:31:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -952,10 +952,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほごく</Text>
+			<Text>しぜんほごく</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:42:46" />
+				Time="2011-09-08T03:31:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -963,10 +963,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほごく</Text>
+			<Text>自然保護区</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:42:53" />
+				Time="2011-09-08T03:31:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -974,11 +974,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ほごく（仮称）選択
+			<Comment>しぜんほごく選択
 ・続けてinfomationw_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:42:33" />
+				Time="2011-09-08T03:31:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1300,11 +1300,11 @@
 			Language="JPN">
 			<Comment>♂
 ・アイテム入手処理
-　No000「ネットボール」×５
+　No006「ネットボール」×５
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:49:42" />
+				Time="2011-09-08T03:32:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

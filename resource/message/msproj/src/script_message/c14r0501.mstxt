@@ -240,10 +240,11 @@
 			Language="JPN">
 			<Comment>♀
 ・連れ歩き中＋規定歩数に達している
-・アイテム入手処理</Comment>
+・アイテム入手処理
+　No088「しんじゅ」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T04:07:21" />
+				Time="2011-09-08T02:57:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
