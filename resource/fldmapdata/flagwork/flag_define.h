@@ -404,7 +404,7 @@
 #define FE_T01R0401_HAKASE2_TALK           388 /* 0x0184 カノコタウン研究所：アララギ娘初回会話フラグ */
 #define FE_H06_ITEMGET_01                  389 /* 0x0185 マリンチューブ：アイテム入手フラグ */
 #define FE_D01R0101_RATI2_MEET_01          390 /* 0x0186 夢の跡地：ラティオス（ラティアス）に会った */
-		/* not used   391(0x0187) */
+#define FE_RES_BOAST_FIRSTTALK             391 /* 0x0187 すれ違い調査隊自慢隊員の初回会話フラグ */
 		/* not used   392(0x0188) */
 		/* not used   393(0x0189) */
 

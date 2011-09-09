@@ -29,6 +29,7 @@ typedef struct _EVWORK_FWORD_INPUT{
   GAMESYS_WORK* gsys;
   GAMEDATA*     gdata;
   MISC*         misc;
+  BOAST_MSG_SAVEDATA* boast_msg_sv;
   MYSTATUS*     my;
   FIELDMAP_WORK* fieldmap;
   BEACON_STATUS* b_status;
@@ -72,6 +73,7 @@ GMEVENT* EVENT_FreeWordInput( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, GMEVE
   wk->heapID = HEAPID_PROC;
 
   wk->misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork( wk->gdata ) );
+  wk->boast_msg_sv = BOAST_MSG_SAVEDATA_GetSaveData( GAMEDATA_GetSaveControlWork( wk->gdata ) );
   wk->my = GAMEDATA_GetMyStatus( wk->gdata );
   wk->b_status = GAMEDATA_GetBeaconStatus( wk->gdata );
 
@@ -79,13 +81,14 @@ GMEVENT* EVENT_FreeWordInput( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, GMEVE
   wk->param.mode = mode;
   wk->param.hero_sex = MyStatus_GetMySex( wk->my );
   wk->param.p_misc = wk->misc;
-  wk->param.p_boast_msg_sv = BOAST_MSG_SAVEDATA_GetSaveData( GAMEDATA_GetSaveControlWork( wk->gdata ) );
+  wk->param.p_boast_msg_sv = wk->boast_msg_sv;
   
-  GF_ASSERT( (mode >= NAMEIN_GREETING_WORD && mode <= NAMEIN_FREE_WORD) || mode == NAMEIN_FREE_FES_WORD );
+  GF_ASSERT( (mode >= NAMEIN_GREETING_WORD && mode <= NAMEIN_FREE_WORD) || mode == NAMEIN_FREE_FES_WORD || mode == NAMEIN_BOAST_WORD );
 
-  if( mode == NAMEIN_FREE_FES_WORD )
+  // フェス用フリーワードかすれ違い自慢入力
+  if( mode == NAMEIN_FREE_FES_WORD || mode == NAMEIN_BOAST_WORD )
   {
-    wk->param.wordmax = NAMEIN_FREE_WORD_LENGTH;   // フェス用フリーワード
+    wk->param.wordmax = NAMEIN_FREE_WORD_LENGTH;   // フリーワード
   } else {
     wk->param.wordmax = DATA_WordLength[ mode - NAMEIN_GREETING_WORD ];
   }
@@ -99,6 +102,8 @@ GMEVENT* EVENT_FreeWordInput( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, GMEVE
   case NAMEIN_THANKS_WORD:   // すれちがいお礼言葉 param1自分の性別
     GFL_STR_SetStringCode( wk->param.strbuf, MISC_CrossComm_GetThankyouMessage( wk->misc ) );
     break;
+  case NAMEIN_BOAST_WORD:   // すれちがい自慢言葉 param1自分の性別
+    GFL_STR_SetStringCode( wk->param.strbuf, BOAST_MSG_SAVEDATA_GetMsg( wk->boast_msg_sv ) );
   case NAMEIN_FREE_WORD:  //すれ違いフリーワード
   case NAMEIN_FREE_FES_WORD: // フェス用フリーワード
     //初期は空文字
@@ -154,6 +159,9 @@ static void sub_ResultGet( EVWORK_FWORD_INPUT* wk, NAMEIN_PARAM* param )
     break;
   case NAMEIN_THANKS_WORD:   // すれちがいお礼言葉
     MISC_CrossComm_SetThankyouMessage( wk->misc, param->strbuf );
+    break;
+  case NAMEIN_BOAST_WORD:   // すれちがい自慢言葉
+    BOAST_MSG_SAVEDATA_SetMsg( wk->boast_msg_sv, param->strbuf );
     break;
   case NAMEIN_FREE_WORD:  //すれ違いフリーワード
     GFL_STR_CopyBuffer( BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->param.strbuf );
