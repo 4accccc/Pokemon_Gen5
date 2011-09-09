@@ -43,4 +43,190 @@
 				Time="2011-08-10T12:25:29" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c15_sunglasses_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ようこそ　ポケウッドへ！
+おまちしておりましたよ！▼
+さっそくですが　あなたを
+まっている　かたが　います！▼
+ごあんない　しましょう！
+どうぞ　こちらへ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T01:27:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-07T05:47:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ようこそ　ポケウッドへ！
+おまちしておりましたよ！▼
+さっそくですが　あなたを
+まっている　かたが　います！▼
+ごあんない　しましょう！
+どうぞ　こちらへ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:10:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:10:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+チュートリアルイベントキャラ
+
+C15に入室と同時にイベント
+起動
+
+終了後連れ歩き開始</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T01:29:14" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_sunglasses_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ついでと　いっては　なんですが
+かるく　ポケウッドの　なかを▽
+ごしょうかい　しましょうか▼
+ここ　ポケウッドは　えいがの　ために
+つくられた　えいがの　みやこ！▼
+ここで　おおくの　えいがが　つくられ
+そして　じょうえい　されています！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T01:28:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-07T05:53:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ついでと　いっては　なんですが
+かるく　ポケウッドの　なかを▽
+ごしょうかい　しましょうか▼
+ここ　ポケウッドは　えいがの　ために
+つくられた　えいがの　みやこ！▼
+ここで　おおくの　えいがが　つくられ
+そして　じょうえい　されています！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:10:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:10:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+チュートリアルイベントキャラ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-07T06:03:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_sunglasses_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　シアター！▼
+えいが　さくひんの　じょうえいは
+もちろんの　こと▽
+えいがスターの　ファンが▽
+あつまることも　あるんですよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T01:28:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T01:19:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　シアター！▼
+えいが　さくひんの　じょうえいは
+もちろんの　こと▽
+えいがスターの　ファンが▽
+あつまることも　あるんですよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:10:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:10:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+チュートリアルイベントキャラ
+
+シアター近くで停止
+
+メッセージ終了後移動再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T01:29:53" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_sunglasses_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここが　さつえいスタジオ！▼
+ここで　ポケウッドの　えいがは
+さつえい　されるのです！▼
+さあ！　なかへ　どうぞ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T01:28:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T01:25:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここが　さつえいスタジオ！▼
+ここで　ポケウッドの　えいがは
+さつえい　されるのです！▼
+さあ！　なかへ　どうぞ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:10:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:10:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+チュートリアルイベントキャラ
+
+撮影スタジオ前で停止
+
+メッセージ終了後スタジオ入室
+→msg_c15r0201_sunglasses_01</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T02:47:29" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

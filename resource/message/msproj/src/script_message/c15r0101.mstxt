@@ -1,3 +1,251 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c15r0101_pwmoji_01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ジャンプスーツは
+ＶＦＸに　かかせないのだっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:39:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:16:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwmoji
+
+撮影バトル時に入室した際は消す</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:17:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0101_pwmoji_02_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>さいしんぎじゅつなのは　いいけど
+けっこう　はずかしいわよね……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:40:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:16:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀pwmoji
+
+撮影バトル時に入室した際は消す</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:17:53" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0101_man3_01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>おれは　ＶＦＸの　スペシャリスト！▼
+ここで　さつえいした
+キミの　えいぞうも▽
+スゲー　さくひんに　かえちゃうぜ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:31:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:20:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀man3
+
+撮影バトル時にもいる</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:27:57" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0101_man3_02_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＶＦＸとは　コンピュータを　つかった
+えいぞうを　かこうする　ぎじゅつ！▼
+ポケウッドの　えいがは
+このVFXが　いのちなのだ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:31:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:27:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀man3
+
+撮影バトル時にもいる</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:43:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0101_middlewoman1_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたくしは　ライター▼
+えいがの　ストーリーに　なる
+だいほんを　つくっています▼
+あたまの　なかは　いつだって
+おはなしで　パツンパツンですわ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T09:04:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:28:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀middlewoman1
+
+撮影バトル時に入室した際は消す</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:43:31" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0101_middeman2_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>わしは　ビックな　おおおとこ！
+でも　しごとは　こどうぐ　だ！▼
+やくしゃが　つかう　こものや
+セットのかぐを　つくることも　あるぞ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T09:04:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:43:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂middeman2
+
+撮影バトル時に入室した際は消す</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:53:49" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0101_middeman1_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうも　シネマトグラファーです▼
+いや　まあ　かんたんに　いうと
+カメラマン　なんですけどね</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:51:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:48:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂middeman1
+
+撮影バトル時にもいる</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:53:58" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0101_middeman1_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボクは　ろくおんぎし！▼
+やくしゃさんの　セリフを
+とったりするのが　しごとさ！▼
+ポケウッドの　えいがさくひんは
+ほとんどが　アフレコだから▽
+いまは　ヒマ　なんだけどね</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T09:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T08:56:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂middeman1
+
+撮影バトル時にもいる</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T09:04:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0101_woman2_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>もう……　どこ　いったのよ……▼
+メガホンが　ないと　かんとくに
+また　しかられるよ……▼
+アナタ　やくしゃさん？
+ワタシは　ＡＤ　やってます</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T09:10:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T09:05:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂middeman1
+
+撮影バトル時にもいる</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T09:08:26" />
+		</CommentCell>
+	</TextRow>
+</MessageStudioText>

@@ -1,3 +1,5617 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c15r0301_pwowner_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>さて！　[Name:TrainerName ]ちゃんが
+さっき　さつえいした　えいがが
+こうかい　してるからさ！▼
+うけつけの　とこへ　いってみようか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:24:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:05:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さて！　[Name:TrainerName ]ちゃんが
+さっき　さつえいした　えいがが
+こうかい　してるからさ！▼
+うけつけの　とこへ　いってみようか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+チュートリアルイベントキャラ
+
+→msg_c15r0301_sunglasses_01</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:26:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0301_sunglasses_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヘイ！　ボス！
+そろそろ　おじかんが……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:09:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:09:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヘイ！　ボス！
+そろそろ　おじかんが……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+チュートリアルイベントキャラ
+
+
+ロビーに入室してくる
+メッセージ終了
+→msg_c15r0301_pwowner_02</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:28:33" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0301_pwowner_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああ……　わかった
+すぐに　いく……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:11:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:09:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああ……　わかった
+すぐに　いく……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+チュートリアルイベントキャラ
+
+メッセージ終了
+→msg_c15r0301_pwowner_03</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:28:57" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0301_pwowner_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴメンね！　[Name:TrainerName ]ちゃん！▼
+ボク　いかなくちゃいけないけど
+[Name:TrainerName ]ちゃん　はさ▽
+えいがを　エンジョイ　してきてね！▼
+ポケウッドは　いつでも
+キミを　まってるからさ！▽
+いつでも　あそびに　きてよね！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:23:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:11:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴメンね！　[Name:TrainerName ]ちゃん！▼
+ボク　いかなくちゃいけないけど
+[Name:TrainerName ]ちゃん　はさ▽
+えいがを　エンジョイ　してきてね！▼
+ポケウッドは　いつでも
+キミを　まってるからさ！▽
+いつでも　あそびに　きてよね！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+チュートリアルイベントキャラ
+
+メッセージ終了
+
+サングラスと一緒に退室
+
+チュートリアルイベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:29:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0301_PWMOJI_01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッドの　えいがには　さいしんの
+VFXぎじゅつが　つかわれている！▼
+この　ジャンプスーツを　きて
+さつえい　すれば▽
+そらだって　とべるのだっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:37:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッドの　えいがには　さいしんの
+VFXぎじゅつが　つかわれている！▼
+この　ジャンプスーツを　きて
+さつえい　すれば▽
+そらだって　とべるのだっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0301_PWMOJI_02_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>さいしんぎじゅつなのは　わかるけど
+けっこう　コレ　はずかしいよ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:11:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:47:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さいしんぎじゅつなのは　わかるけど
+けっこう　コレ　はずかしいよ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0301_policeman_01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここはな　セレブな　じょゆう
+せんようの　がくや　なんだぜ▼
+……　……　……はいりてえ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:18:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T03:50:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここはな　セレブな　じょゆう
+せんようの　がくや　なんだぜ▼
+……　……　……はいりてえ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>（X26,Y27）</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:28:33" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0301_policeman_02_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここはさ　ウチの　ボスが　みとめた
+おおものスター　しか　はいれない▽
+スペシャルな　がくや　なの▼
+キミみたいな　しんじんは
+かえった！　かえった！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:30:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:12:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここはさ　ウチの　ボスが　みとめた
+おおものスター　しか　はいれない▽
+スペシャルな　がくや　なの▼
+キミみたいな　しんじんは
+かえった！　かえった！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0301_policeman_02_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>お　おつかれさまですっ！
+ウッドウさんから　うかがっております！▼
+[Name:TrainerName ]さん！
+こちらの　がくやを　ごじゆうに▽
+ごりよう　くださいませっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:27:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:19:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お　おつかれさまですっ！
+ウッドウさんから　うかがっております！▼
+[Name:TrainerName ]さん！
+こちらの　がくやを　ごじゆうに▽
+ごりよう　くださいませっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0301_backpackerw_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>とうちゃん……　かあちゃん……▼
+オラ　ここで　せいこうして
+じょゆうさんに　なるだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:35:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:30:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>とうちゃん……　かあちゃん……▼
+オラ　ここで　せいこうして
+じょゆうさんに　なるだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_01_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッドの　さつえいって
+レンタルポケモンで▽
+チャンレンジするでしょ？▼
+あたしの　ヨーテリーちゃんは
+えいがに　でられないの？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:38:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-08T04:35:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッドの　さつえいって
+レンタルポケモンで▽
+チャンレンジするでしょ？▼
+あたしの　ヨーテリーちゃんは
+えいがに　でられないの？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-09T10:08:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>あ！　[Name:TrainerName ]さん！▼
+オレ　[Name:TrainerName ]さんの
+でてる　さくひんの　だいファンなんすよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:24:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:21:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あ！　[Name:TrainerName ]さん！▼
+オレ　[Name:TrainerName ]さんの
+出てる　作品の　大ファンなんすよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:20:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BACKPACKERM
+
+ファン１挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:21:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_01_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>いま　こうかいしてる　えいがも
+[Name:TrainerName ]　さん　じゃないと▽
+ありえないっスよ！　さすがっス！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:22:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:24:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今　公開してる　映画も
+[Name:TrainerName ]　さん　じゃないと▽
+ありえないっスよ！　さすがっス！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BACKPACKERM
+
+ファン１ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:34:05" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_01_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>やー！　さっきのも　おもしろかった！▼
+やっぱ　[Name:TrainerName ]さんの
+えいがって　さいこう　っスよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:21:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:27:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やー！　さっきのも　面白かった！▼
+やっぱ　[Name:TrainerName ]さんの
+映画って　最高っスよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:23:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BACKPACKERM
+
+ファン１グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:34:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_01_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　さくひん　なんスけど……
+[Name:TrainerName ]さんが　でてなきゃ▽
+みてないかも　しれないっス……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:23:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:28:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　作品　なんスけど……
+[Name:TrainerName ]さんが　出てなきゃ▽
+見てないかも　しれないっス……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:24:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BACKPACKERM
+
+ファン１バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:33:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_01_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>いつも　おつかれさまっス！
+これ　うけとってくださいよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:24:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:31:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いつも　お疲れ様っス！
+これ　受け取ってくださいよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:24:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BACKPACKERM
+
+ファン１道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_01_02～pwfun_01_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:33:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_01_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>もちものが　いっぱいッスね……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:36:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:36:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もちものが　いっぱいッスね……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BACKPACKERM
+
+ファン１プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:35:35" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_02_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　おうえん　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:48:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:37:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　応援　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:24:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン２挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:37:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_02_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　えいがも　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　てんさい　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:49:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:40:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　映画も　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　天才　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:24:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン２ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:40:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_02_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　さくひんも　サイコー！！
+つぎの　えいがも
+たのしみに　まってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:43:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　作品も　サイコー！！
+次の　映画も
+楽しみに　待ってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:25:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン２グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:40:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_02_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん！！▼
+さくひんは　ともかく　わたしは
+[Name:TrainerName ]さんを▽
+おうえん　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:50:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:45:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん！！▼
+作品は　ともかく　私は
+[Name:TrainerName ]さんを▽
+応援　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:26:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン２バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:40:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_02_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！　これ　さしいれです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:26:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:45:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！　これ　差し入れです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:26:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン２道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_02_02～pwfun_02_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:10:51" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_02_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:51:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:46:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン２プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:40:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_03_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>スゲー！　[Name:TrainerName ]さんだ！
+ボク　あなたの　ファンなんです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:52:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:51:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スゲー！　[Name:TrainerName ]さんだ！
+ボク　あなたの　ファンなんです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン３挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:47:27" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_03_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　すごかったです！
+まさか　あんなラストに　なるなんて！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:27:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:53:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　すごかったです！
+まさか　あんなラストに　なるなんて！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:26:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン３ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:52:58" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_03_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　よかったです！
+[Name:TrainerName ]さん　かがやいてました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:28:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:53:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　よかったです！
+[Name:TrainerName ]さん　かがやいてました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:28:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン３グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:57:05" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_03_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが……
+なんていうか　ぼくは　よかったです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:29:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:53:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画……
+何ていうか　僕は　よかったです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:29:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン３バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:57:08" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_03_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！
+これ　よかったら　つかってください！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:29:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:54:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！
+これ　よかったら　使ってください！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:29:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン３道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_03_02～pwfun_03_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:10:38" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_03_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ？　[Name:TrainerName ]さん！
+もちものが　いっぱい　じゃないですか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:56:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:55:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれ？　[Name:TrainerName ]さん！
+もちものが　いっぱい　じゃないですか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン３プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:57:14" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_04_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒュー！　[Name:TrainerName ]　じゃん！
+アンタの　えいがって　イイよねー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:59:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:58:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒュー！　[Name:TrainerName ]　じゃん！
+アンタの　映画って　イイよねー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:30:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀MUSICIANW
+
+ファン４挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T09:58:08" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_04_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　えいがも　シビレたー！
+あんなのアリ？　って　かんじでさ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:00:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:00:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　映画も　シビレたー！
+あんなのアリ？　って　感じでさ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀MUSICIANW
+
+ファン４ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:10:14" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_04_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいのも　ビリビリきた！！
+アンタ　さいこう　だよねー！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:03:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:01:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回のも　ビリビリきた！！
+アンタ　最高　だよねー！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:30:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀MUSICIANW
+
+ファン４グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:10:11" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_04_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>まー　こんかいの　さくひんは
+マアマア　って　かんじ　だけどさー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:03:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:02:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まー　今回の　作品は
+マアマア　って　感じ　だけどさー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:30:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀MUSICIANW
+
+ファン４バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:10:09" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_04_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>いつも　シビれる　えいがを
+みせてくれる　アンタに！　ホラ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:05:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:03:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いつも　シビれる　映画を
+見せてくれる　アンタに！　ホラ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:31:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀MUSICIANW
+
+ファン４道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_04_02～pwfun_04_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:10:24" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_04_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれー？
+もちものが　いっぱい　じゃーん！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:06:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:05:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれー？
+もちものが　いっぱい　じゃーん！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀MUSICIANW
+
+ファン４プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:10:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_05_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>おわっ！　ち　ちょっと！　あなたはっ！
+あの　[Name:TrainerName ]　だよなっ！？　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:18:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:07:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おわっ！　ち　ちょっと！　あなたはっ！
+あの　[Name:TrainerName ]　だよなっ！？　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂POLICEMAN
+
+ファン５挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:07:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_05_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたの　こんかいの　さくひんっ！！
+ほんかん　グッと　きちゃった！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:33:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:11:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたの　今回の　作品っ！！
+本官　グッと　きちゃったっ！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:34:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂POLICEMAN
+
+ファン５ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:09:49" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_05_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　えいがも　さいこう！
+ほんかん　[Name:TrainerName ]に　むちゅう！　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:33:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:12:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　映画も　じつに　最高！
+本官　[Name:TrainerName ]に　夢中！　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:32:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂POLICEMAN
+
+ファン５グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:09:46" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_05_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>なに！？　こんかいの　さくひん！▼
+あの　さくひんに　[Name:TrainerName ]は
+ふさわしくないと　おもうがっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:37:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:15:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>何！？　今回の　作品！▼
+あの　作品に　[Name:TrainerName ]は
+ふさわしくないと　思うがっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:36:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂POLICEMAN
+
+ファン5バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:09:42" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_05_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>かんげきの　ほんかんから　コレを！
+ワイロではなく　プレゼントをっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:21:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:19:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>感激の　本官から　コレを！
+ワイロではなく　プレゼントをっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:37:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂POLICEMAN
+
+ファン５道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_05_02～pwfun_05_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:09:38" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_05_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>そんな！　そんな！
+もちものが　いっぱい　ですと！？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:20:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:20:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そんな！　そんな！
+もちものが　いっぱい　ですと！？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂POLICEMAN
+
+ファン５プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:09:18" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_06_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　おうえん　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　応援　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:38:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン6挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_06_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　えいがも　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　てんさい　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　映画も　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　天才　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:38:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン6ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:47" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_06_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　さくひんも　サイコー！！
+つぎの　えいがも
+たのしみに　まってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:39:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　作品も　サイコー！！
+次の　映画も
+楽しみに　待ってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:38:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン6グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_06_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん！！▼
+さくひんは　ともかく　わたしは
+[Name:TrainerName ]さんを▽
+おうえん　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん！！▼
+作品は　ともかく　私は
+[Name:TrainerName ]さんを▽
+応援　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:38:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン6バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:53" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_06_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！　これ　さしいれです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:39:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！　これ　差し入れです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:38:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン6道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_06_02～pwfun_06_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:24:00" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_06_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン6プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:22:58" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_07_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>わー　ほんものの　[Name:TrainerName ]　だー
+なんで　こんな　とこに　いるのー？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:27:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:24:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わー　ほんものの　[Name:TrainerName ]　だー
+なんで　こんな　とこに　いるのー？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY2
+
+ファン７挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:26:28" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_07_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　すごかったぞー
+[Name:TrainerName ]は　かっこいいなー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:29:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:27:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　えいが　すごかったぞー
+[Name:TrainerName ]は　かっこいいなー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY2
+
+ファン７ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:26:00" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_07_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　おもしろかったぞー
+[Name:TrainerName ]は　おもしろいなー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:29:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:28:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　えいが　おもしろかったぞー
+[Name:TrainerName ]は　おもしろいなー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY2
+
+ファン7グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:31:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_07_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　よく　わかんないー
+[Name:TrainerName ]は　ヘンだなー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:30:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:29:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　えいが　よく　わかんないー
+[Name:TrainerName ]は　ヘンだなー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY2
+
+ファン7バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:31:47" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_07_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>これ　[Name:TrainerName ]に　やるー！
+たいせつに　するんだぞー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:31:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:30:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>これ　[Name:TrainerName ]に　やるー！
+たいせつに　するんだぞー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY2
+
+ファン7道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_07_02～pwfun_07_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:32:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_07_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんだよー
+もちもの　へらしてきてよー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:48:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:31:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんだよー
+もちもの　へらしてきてよー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY2
+
+ファン7プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:31:58" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_08_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>キャッ！　もしかして　[Name:TrainerName ]？
+わたしったら　ほんと　ラッキー！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:35:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:33:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キャッ！　もしかして　[Name:TrainerName ]？
+私ったら　ほんと　ラッキー！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:39:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀NURSE
+
+ファン8挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:33:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_08_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいがの　[Name:TrainerName ]！
+いままでにない　ステキさが　あったわ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:41:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:35:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画の　[Name:TrainerName ]！
+今までにない　ステキさが　あったわ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:41:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀NURSE
+
+ファン8ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:33:42" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_08_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいがの　[Name:TrainerName ]！
+いつもどおり　ステキ　だったわ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:42:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:40:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画の　[Name:TrainerName ]！
+いつも通り　ステキ　だったわ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:42:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀NURSE
+
+ファン8グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:33:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_08_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいがの　[Name:TrainerName ]！
+いつも　ステキさが　なかったわ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:42:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:41:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画の　[Name:TrainerName ]！
+いつも　ステキさが　なかったわ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:42:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀NURSE
+
+ファン8バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:33:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_08_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>がんばってる　[Name:TrainerName ]に
+ナースの　さしいれを　あげちゃう！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:45:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:44:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>がんばってる　[Name:TrainerName ]に
+ナースの　差し入れを　あげちゃう！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:43:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀NURSE
+
+ファン8道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_08_02～pwfun_08_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:33:34" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_08_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>まあ　しょうがないわねー
+もちものが　いっぱいじゃないの</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:46:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:45:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まあ　しょうがないわねー
+もちものが　いっぱいじゃないの</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀NURSE
+
+ファン8プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:33:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_09_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>オレは　オマエの　ファン……
+あくしゅ　してくれないか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:50:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:48:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オレは　オマエの　ファン……
+あくしゅ　してくれないか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂TRAINERM
+
+ファン9挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:47:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_09_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　さくひん……
+どうしたら　あんな　えんぎが……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:51:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:49:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　作品……
+どうしたら　あんな　演技が……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:43:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂TRAINERM
+ファン9ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:47:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_09_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　さくひん……
+オマエの　えんぎは　さいこうさ……
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:44:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:51:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　作品……
+オマエの　演技は　最高さ……
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:44:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂TRAINERM
+
+ファン9グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:47:38" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_09_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　さくひん……
+かんとくが　もんだい　だな……
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:44:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:52:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　作品……
+かんとくが　問題　だな……
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:44:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂TRAINERM
+ファン9バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:47:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_09_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>オレの　きもちだ……
+どうか　うけとってくれ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:45:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:54:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オレの　気持ちだ……
+どうか　受け取ってくれ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:45:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂TRAINERM
+
+ファン9道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_09_02～pwfun_09_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:56:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_09_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんてことだ……
+もちものが　いっぱいだぜ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:55:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:55:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>何てことだ……
+もちものが　いっぱいだぜ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:46:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂TRAINERM
+
+ファン9プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:47:43" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_10_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　おうえん　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　応援　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン10挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:56:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_10_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　えいがも　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　てんさい　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　映画も　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　天才　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン10ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_10_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　さくひんも　サイコー！！
+つぎの　えいがも
+たのしみに　まってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:46:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　作品も　サイコー！！
+次の　映画も
+楽しみに　待ってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン10グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:05" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_10_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん！！▼
+さくひんは　ともかく　わたしは
+[Name:TrainerName ]さんを▽
+おうえん　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん！！▼
+作品は　ともかく　私は
+[Name:TrainerName ]さんを▽
+応援　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン10バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:09" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_10_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！　これ　さしいれです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:46:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！　これ　差し入れです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン10道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_10_02～pwfun_10_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:28" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_10_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン10プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:57:19" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_11_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>スゲー！　[Name:TrainerName ]さんだ！
+ボク　あなたの　ファンなんです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スゲー！　[Name:TrainerName ]さんだ！
+ボク　あなたの　ファンなんです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン11挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:45" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_11_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　すごかったです！
+まさか　あんなラストに　なるなんて！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:47:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　すごかったです！
+まさか　あんなラストに　なるなんて！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:47:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン11ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_11_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　よかったです！
+[Name:TrainerName ]さん　かがやいてました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:47:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　よかったです！
+[Name:TrainerName ]さん　かがやいてました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:47:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン11グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_11_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが……
+なんていうか　ぼくは　よかったです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:47:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画……
+何ていうか　僕は　よかったです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:47:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン11バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:53" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_11_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！
+これ　よかったら　つかってください！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:47:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！
+これ　よかったら　使ってください！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:47:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン11道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_11_02～pwfun_11_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:59:03" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_11_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ？　[Name:TrainerName ]さん！
+もちものが　いっぱい　じゃないですか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:58:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれ？　[Name:TrainerName ]さん！
+もちものが　いっぱい　じゃないですか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン11プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T10:59:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_12_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>はわわ……　スターじゃ……
+スターの　[Name:TrainerName ]　じゃ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:07:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:01:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はわわ……　スターじゃ……
+スターの　[Name:TrainerName ]　じゃ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀OLDWOMAN1
+
+ファン12挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:00:30" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_12_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　さくひんで　おどろきすぎて
+こしが　なおったんじゃ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:07:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:02:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　作品で　おどろきすぎて
+腰が　治ったんじゃ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:48:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀OLDWOMAN1
+
+ファン12ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:00:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_12_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　さくひんで　わらいすぎて
+いればが　なくなったんじゃ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:07:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:07:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　作品で　笑いすぎて
+入れ歯が　なくなったんじゃ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:48:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀OLDWOMAN1
+
+ファン12グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:00:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_12_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　さくひんが　むずかしくて
+ぐっすり　ねむれたんじゃ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:09:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:08:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　作品が　むずかしくて
+ぐっすり　ねむれたんじゃ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:48:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀OLDWOMAN1
+
+ファン12バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:00:53" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_12_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>スターには　ものたらんかも　しれんが
+これを　もって　いって　くだされ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:09:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:09:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スターには　物足らんかも　しれんが
+これを　持って行って　くだされ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀OLDWOMAN1
+
+ファン12道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_12_02～pwfun_12_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:12:42" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_12_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>さすがは　スターじゃ……
+もちものが　いっぱい　じゃ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:10:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さすがは　スターじゃ……
+もちものが　いっぱい　じゃ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀OLDWOMAN1
+
+ファン12プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:00:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_13_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>スゲー！　[Name:TrainerName ]さんだ！
+ボク　あなたの　ファンなんです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スゲー！　[Name:TrainerName ]さんだ！
+ボク　あなたの　ファンなんです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン1３挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:12:08" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_13_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　すごかったです！
+まさか　あんなラストに　なるなんて！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　すごかったです！
+まさか　あんなラストに　なるなんて！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン1３ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:12:05" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_13_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　よかったです！
+[Name:TrainerName ]さん　かがやいてました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　よかったです！
+[Name:TrainerName ]さん　かがやいてました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン1３グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_13_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが……
+なんていうか　ぼくは　よかったです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画……
+何ていうか　僕は　よかったです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン1３バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_13_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！
+これ　よかったら　つかってください！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！
+これ　よかったら　使ってください！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:49:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン1３道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_13_02～pwfun_13_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:12:24" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_13_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ？　[Name:TrainerName ]さん！
+もちものが　いっぱい　じゃないですか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれ？　[Name:TrainerName ]さん！
+もちものが　いっぱい　じゃないですか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン13プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:11:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_14_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっと　アンタ　[Name:TrainerName ]やろ！？
+ウチな　めっちゃ　ファンやねん！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:37:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:15:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっと　アンタ　[Name:TrainerName ]やろ！？
+ウチな　めっちゃ　ファンやねん！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀TENNISW
+
+ファン14挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:15:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_14_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　ゴツかったわー！
+アンタの　えんぎ　すごすぎるわ！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:52:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:37:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　ゴツかったわー！
+アンタの　演技　すごすぎるわ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:51:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀TENNISW
+
+ファン14ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:15:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_14_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　おもろかったー！
+アンタの　えいが　だいすきや！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:52:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:37:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　おもろかったー！
+アンタの　映画　大好きや！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:52:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀TENNISW
+
+ファン14グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:15:26" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_14_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいがって　どうなん？
+ウチは　キライじゃない　けどなー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:52:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:38:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画って　どうなん？
+ウチは　キライじゃない　けどなー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:52:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀TENNISW
+
+ファン14バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:15:28" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_14_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>これな　ウチからの　さしいれ！
+さつえいの　あいまに　つかってな！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:39:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>これな　ウチからの　差し入れ！
+撮影の　合間に　使ってな！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:53:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀TENNISW
+
+ファン14道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_14_02～pwfun_14_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:15:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_14_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>え？　もちものが　いっぱい　なん？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:41:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:40:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>え？　もちものが　いっぱい　なん？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀TENNISW
+
+ファン14プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:15:49" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_15_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>スゲー！　[Name:TrainerName ]さんだ！
+ボク　あなたの　ファンなんです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:43:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:41:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スゲー！　[Name:TrainerName ]さんだ！
+ボク　あなたの　ファンなんです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン15挨拶メッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:43:28" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_15_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　すごかったです！
+まさか　あんなラストに　なるなんて！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:53:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:41:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　すごかったです！
+まさか　あんなラストに　なるなんて！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:53:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン15ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:42:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_15_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　よかったです！
+[Name:TrainerName ]さん　かがやいてました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:53:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:41:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　よかったです！
+[Name:TrainerName ]さん　かがやいてました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:53:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン15グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:42:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_15_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが……
+なんていうか　ぼくは　よかったです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:53:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:41:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画……
+何ていうか　僕は　よかったです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:53:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン15バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:42:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_15_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！
+これ　よかったら　つかってください！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:53:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:41:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！
+これ　よかったら　使ってください！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:53:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン15道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_15_02～pwfun_15_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:42:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_15_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ？　[Name:TrainerName ]さん！
+もちものが　いっぱい　じゃないですか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:43:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:43:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれ？　[Name:TrainerName ]さん！
+もちものが　いっぱい　じゃないですか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン15プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:42:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_16_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　おうえん　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　応援　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:54:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン16挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:31" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_16_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　えいがも　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　てんさい　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　映画も　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　天才　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:54:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン16ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:33" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_16_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　さくひんも　サイコー！！
+つぎの　えいがも
+たのしみに　まってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:54:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　作品も　サイコー！！
+次の　映画も
+楽しみに　待ってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:54:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン16グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:35" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_16_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん！！▼
+さくひんは　ともかく　わたしは
+[Name:TrainerName ]さんを▽
+おうえん　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん！！▼
+作品は　ともかく　私は
+[Name:TrainerName ]さんを▽
+応援　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:54:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン16バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_16_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！　これ　さしいれです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:54:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！　これ　差し入れです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:54:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン16道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_16_02～pwfun_16_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:43" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_16_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン16プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:44:46" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_17_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>あ！　えいがのなかの　ひとだ！
+すごい！　すごい！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:55:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:46:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あ！　えいがのなかの　ひとだ！
+すごい！　すごい！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:55:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY1
+
+ファン17挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:46:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_17_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　すごかったよ！
+ぼくも　パパも　ビックリだもん！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:48:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:47:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　えいが　すごかったよ！
+ぼくも　パパも　ビックリだもん！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY1
+
+ファン17ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:46:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_17_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　おもしろかった！
+ぼくも　ママも　ウットリだもん！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:49:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:48:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　えいが　おもしろかった！
+ぼくも　ママも　ウットリだもん！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY1
+
+ファン17グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:46:30" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_17_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　ねむたかった！
+パパも　ママも　グッスリだもん！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:50:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:49:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　えいが　ねむたかった！
+パパも　ママも　グッスリだもん！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY1
+
+ファン17バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:46:33" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_17_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねえねえ　えいがのなかの　ひと！
+これ　あげるから　つかって！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:55:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:53:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ねえねえ　えいがのなかの　ひと！
+これ　あげるから　つかって！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:56:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY1
+ファン17道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_17_02～pwfun_17_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:46:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_17_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ？　もちものが　いっぱいなの？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれ？　もちものが　いっぱいなの？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY1
+
+ファン17プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:46:43" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_18_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　おうえん　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　応援　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:56:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン18挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:55:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_18_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　えいがも　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　てんさい　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　映画も　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　天才　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:56:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン18ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:55:07" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_18_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　さくひんも　サイコー！！
+つぎの　えいがも
+たのしみに　まってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　作品も　サイコー！！
+次の　映画も
+楽しみに　待ってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:56:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン18グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:55:09" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_18_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん！！▼
+さくひんは　ともかく　わたしは
+[Name:TrainerName ]さんを▽
+おうえん　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん！！▼
+作品は　ともかく　私は
+[Name:TrainerName ]さんを▽
+応援　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:56:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン18バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:55:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_18_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！　これ　さしいれです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！　これ　差し入れです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:56:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン18道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_18_02～pwfun_18_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:55:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_18_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:54:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン18プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:55:19" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_19_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>スゲー！　[Name:TrainerName ]さんだ！
+ボク　あなたの　ファンなんです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スゲー！　[Name:TrainerName ]さんだ！
+ボク　あなたの　ファンなんです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン19挨拶メッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:35" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_19_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　すごかったです！
+まさか　あんなラストに　なるなんて！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　すごかったです！
+まさか　あんなラストに　なるなんて！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン19ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_19_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが　よかったです！
+[Name:TrainerName ]さん　かがやいてました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画　よかったです！
+[Name:TrainerName ]さん　かがやいてました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン19グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:30" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_19_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが……
+なんていうか　ぼくは　よかったです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　映画……
+何ていうか　僕は　よかったです！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン19バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:28" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_19_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！
+これ　よかったら　つかってください！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！
+これ　よかったら　使ってください！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン19道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_19_02～pwfun_19_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:26" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_19_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ？　[Name:TrainerName ]さん！
+もちものが　いっぱい　じゃないですか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれ？　[Name:TrainerName ]さん！
+もちものが　いっぱい　じゃないですか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MAN3
+
+ファン19プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:56:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_20_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　おうえん　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　ですよね！？
+いつも　応援　してます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン20挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:34" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_20_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　えいがも　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　てんさい　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　映画も　すごかった！！
+[Name:TrainerName ]さん　って▽
+やっぱり　天才　ですよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン20ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_20_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　さくひんも　サイコー！！
+つぎの　えいがも
+たのしみに　まってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:56:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　作品も　サイコー！！
+次の　映画も
+楽しみに　待ってますね！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン20グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_20_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん！！▼
+さくひんは　ともかく　わたしは
+[Name:TrainerName ]さんを▽
+おうえん　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん！！▼
+作品は　ともかく　私は
+[Name:TrainerName ]さんを▽
+応援　してますから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン20バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:43" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_20_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの！　これ　さしいれです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:56:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの！　これ　差し入れです！
+よかったら　もらってください！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:57:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン20道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_20_02～pwfun_20_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_20_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああーん！
+もちものが　いっぱいなんですか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN2
+
+ファン20プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:57:58" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_21_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>マジか！　スターの　[Name:TrainerName ]だっ！
+プラズマだん　やめて　よかったぜーっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:59:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:59:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マジか！　スターの　[Name:TrainerName ]だっ！
+プラズマ団　やめて　よかったぜーっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:59:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂HAKAIM
+
+ファン21挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:59:09" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_21_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　さくひん！　オドロキだぜ！
+あんな　えいがは　みたことねえ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:07:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:00:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　作品！　オドロキだぜ！
+あんな　映画は　見たことねえ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:00:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂HAKAIM
+
+ファン21ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:59:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_21_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　さくひん！　ゴキゲンだぜ！
+オマエの　えいがは　ハズレなし！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:08:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:06:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　作品！　ゴキゲンだぜ！
+オマエの　映画は　ハズレなし！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:00:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂HAKAIM
+
+ファン21グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:59:16" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_21_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　さくひん！　イガイだぜ！
+オマエが　ぜんぜん　いきてねえ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:09:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:08:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　作品！　イガイだぜ！
+オマエが　ぜんぜん　活きてねえ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:00:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂HAKAIM
+
+ファン21バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:59:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_21_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん　だったときの　もんだ！
+いいから　うけとって　くんな！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:10:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:09:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団　だったときの　もんだ！
+いいから　受け取って　くんな！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:00:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂HAKAIM
+
+ファン21道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_21_02～pwfun_21_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:59:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_21_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>オーイ　オイオイ！
+もちものを　へらしてきて　くれよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:11:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:11:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オーイ　オイオイ！
+もちものを　へらしてきて　くれよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂HAKAIM
+
+ファン21プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T11:59:26" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_22_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>アタイさ　アンタの　ファンなの……
+べつに　ファンだって　イイわよね？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:13:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アタイさ　アンタの　ファンなの……
+べつに　ファンだって　イイわよね？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀SWPLAZMAW
+
+ファン22挨拶メッセージ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:12:46" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_22_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの　えいが……
+アンタの　えんぎは　ミラクルよ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:01:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:14:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの　映画……
+アンタの　演技は　ミラクルよ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:00:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀SWPLAZMAW
+
+ファン22ストレンジEDメッセージ
+
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:12:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_22_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの　えいが……
+アンタの　えんぎが　まぶしかった……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:01:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:14:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの　映画……
+アンタの　演技が　まぶしかった……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:01:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀SWPLAZMAW
+
+ファン22グッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:12:49" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_22_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　えいが……▼
+あんな　アンタは　みたくないわ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:14:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの　映画……▼
+あんな　アンタは　見たくないわ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:01:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀SWPLAZMAW
+
+ファン22バッドEDメッセージ
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:12:51" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_22_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>これを　うけとって　ほしいの
+アタイだと　おもってさ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:02:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:14:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>これを　受け取って　ほしいの
+アタイだと　思ってさ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:03:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀SWPLAZMAW
+
+ファン22道具授与メッセージ
+
+メッセージ終了後アイテム取得処理
+
+処理終了後
+
+pwfun_22_02～pwfun_22_04の
+いずれかへ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:12:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pwfun_22_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>もちものが　いっぱい……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:03:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:14:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もちものが　いっぱい……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T13:03:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:19:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀SWPLAZMAW
+
+ファン22プレイヤー道具いっぱいメッセージ
+
+メッセージ終了後アイテム取得処理
+
+終了後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-05T12:12:54" />
+		</CommentCell>
+	</TextRow>
+</MessageStudioText>
