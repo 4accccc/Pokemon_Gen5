@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-09-07T17:14:31" source="map24_04.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-09-09T16:14:29" source="map24_04.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-09-07T17:14:31" source="map24_04.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-09-09T16:14:29" source="map24_04.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1397,14 +1397,14 @@
 		path="C:/home/swan_data3d/field/out58/chip/tex/out58_zan5.tga"
 	>
 		<bitmap size="64">
-			7777 7777 7777 7777 7777 6667 7666 7777
-			6677 6666 6666 7766 6666 5566 6655 6666
-			5666 5555 5555 6665 5555 4445 5444 5555
-			4555 4444 4444 5554 4444 4444 4444 4444
-			4444 3344 4433 4444 4444 2222 2222 4444
-			2222 2222 2222 2222 1122 1111 1111 2211
-			1111 1111 1111 1111 1111 1111 1111 1111
-			1111 0011 1100 1111 0111 0000 0000 1110
+			3333 3333 3333 3333 3333 2223 3222 3333
+			2233 2222 2222 3322 2222 1122 2211 2222
+			1222 6611 1166 2221 6111 6666 6666 1116
+			6666 5566 6655 6666 5666 5555 5555 6665
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 4445 5444 5555 4455 4444 4444 5544
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 0044 4400 4444 0444 0000 0000 4440
 		</bitmap>
 	</tex_image>
 	<tex_image index="19" name="sea_mizu1"
@@ -1519,7 +1519,7 @@
 		6180 6f55 779a 7e67 7ecc 7f32 7fff 7fff
 	</tex_palette>
 	<tex_palette index="18" name="out58_zan5_pl" color_size="8">
-		0000 5ea0 5ec5 62c9 62ed 62ee 6710 6b31
+		7fff 62ed 6710 6b31 56a0 5ee6 630a 7fff
 	</tex_palette>
 	<tex_palette index="19" name="sea_mizu1_pl" color_size="16">
 		6a88 4da0 51c1 6642 6a87 4580 5a01 55e1
@@ -1655,7 +1655,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
