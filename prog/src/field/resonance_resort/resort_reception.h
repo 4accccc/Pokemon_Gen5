@@ -12,6 +12,7 @@
 #include "field/fieldmap_proc.h"  //for FIELDMAP_WORK
 #include "resort_people.h"
 #include "resort_sys.h"
+#include "resort_npc.h"
 
 //=============================================================================
 /**
@@ -39,3 +40,4 @@ extern void RESORT_RECEPTION_Move( FIELDMAP_WORK *p_fieldmap );
 //スクリプトコマンドに使用
 extern RESORT_PEOPLE_SYS * RESORT_RECEPTION_GetPeopleSys( FIELDMAP_WORK *p_fieldmap );
 extern RESORT_SYSTEM * RESORT_RECEPTION_GetResortSys( FIELDMAP_WORK *p_fieldmap );
+extern RESORT_NPC_SYS * RESORT_RECEPTION_GetNpcSys( FIELDMAP_WORK *p_fieldmap );

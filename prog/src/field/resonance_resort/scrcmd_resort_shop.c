@@ -191,6 +191,7 @@ typedef struct _SHOP_BUY_APP_WORK{
   RESORT_PEOPLE_ALL_DATA  *p_all_people;
   RESORT_ABSTRUCT_MANAGER *p_abstruct_man;
   RESORT_PEOPLE           *p_people;
+  RESORT_CITY_DATA        *p_city;
 
   u16*  ret_service_type;
   u16*  ret_service_param;
@@ -304,7 +305,7 @@ static void SecretaryList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void InstitutionList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
 
 static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u16 * rsc_idx );
-
+static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price );
 
 //scrcmd_resort.cのソースを使う
 extern RESORT_SYSTEM * Resort_Scrcmd_GetSystem( FIELDMAP_WORK *p_field );
@@ -356,6 +357,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.p_present = RESORT_SYSTEM_GetBinaryPresent( resort_sys );
   sbw->wk.p_all_people = RESORT_SYSTEM_GetPeopleAllData( resort_sys );
   sbw->wk.p_abstruct_man  = RESORT_SYSTEM_GetAbstructManager( resort_sys );
+  sbw->wk.p_city  = RESORT_SYSTEM_GetCityData( resort_sys );
 
 
   *sbw->wk.ret_service_type = FALSE;
@@ -1513,7 +1515,7 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id )
     wk->lineup[i].serviceID = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_SERVICE_ID );
  
     // Gパワー係数を掛けてから値段を代入する
-    wk->lineup[i].price =  GPOWER_Calc_Sale(price);
+    wk->lineup[i].price =  ResortShop_CalcPlace(wk,price);//GPOWER_Calc_Sale(price);
     wk->lineup[i].param1 = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_PARAM_1 );
     wk->lineup[i].param2 = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_PARAM_2 );
 
@@ -1686,12 +1688,11 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
 
         GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(wk->heapId) );
         STRBUF *p_shoplabel = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop_type );
-        STRBUF *p_shopinfo  = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04_01 + shop_type);
 
         STRBUF *p_name_str;
         STRBUF *p_info_str;
         STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_02 );
-        STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04 );
+        STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04_01 + shop_type );
         u8 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
 
         p_name_str = GFL_STR_CreateBuffer( 64, wk->heapId );
@@ -1704,7 +1705,6 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
 
         WORDSET_RegisterWord( wk->wordSet, 1, p_shoplabel, PM_NEUTRAL, TRUE, PM_LANG );
         WORDSET_RegisterNumber( wk->wordSet, 2, lv+1, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-        WORDSET_RegisterWord( wk->wordSet, 3, p_shopinfo, PM_NEUTRAL, TRUE, PM_LANG );
         WORDSET_RegisterNumber( wk->wordSet, 4, y, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
         WORDSET_RegisterNumber( wk->wordSet, 5, m, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
         WORDSET_RegisterNumber( wk->wordSet, 6, d, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -1716,7 +1716,6 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
 
         GFL_STR_DeleteBuffer( p_info_tmp );
         GFL_STR_DeleteBuffer( p_name_tmp );
-        GFL_STR_DeleteBuffer( p_shopinfo );
         GFL_STR_DeleteBuffer( p_shoplabel );
         GFL_MSG_Delete( p_msg );
         GFL_STR_DeleteBuffer( p_shopname );
@@ -1820,7 +1819,7 @@ static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
     STRBUF *p_shopinfo = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop_type );
 
     STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_02 );
-    STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04 );
+    STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04_01 +shop_type );
     u8 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
 
     WORDSET_RegisterNumber( wk->wordSet, 1, i+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -3215,4 +3214,30 @@ static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u
 
   *anm_id = getFrontAnimePatternNo( objcode_param.anm_id );
   *rsc_idx = ((OBJCODE_PARAM_BUF_BBD *)objcode_param.buf)->res_idx;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	SHOP_BUY_APP_WORK *wk ワーク
+ *	@param	price   値段
+ *
+ *	@return 計算後の値段
+ */
+//-----------------------------------------------------------------------------
+static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
+{
+  enum
+  {
+    RESORT_PRICE_COEFFEICENT = FX32_CONST(0.004f),
+    RESORT_FEVER_NONE_COEFFEICENT   = 1,
+    RESORT_FEVER_EXIST_COEFFEICENT  = 2,
+  };
+  BOOL is_fever = RESORT_SCRCMD_IsFever( p_wk->p_abstruct_man, p_wk->p_city );
+  u32 fever_num = is_fever ? RESORT_FEVER_EXIST_COEFFEICENT: RESORT_FEVER_NONE_COEFFEICENT;
+  u32 city_lv = RESORT_CITY_DATA_GetData( p_wk->p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+
+  return price - FX_Whole(price * (city_lv-1) * fever_num * RESORT_PRICE_COEFFEICENT );
 }

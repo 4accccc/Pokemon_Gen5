@@ -32,6 +32,7 @@
 #include "field/resonance_resort_data.h"
 #include "resort_people.h"
 #include "scrcmd_resort_def.h"
+#include "resort_npc.h"
 #include "resort_sys.h"
 
 //mine
@@ -47,7 +48,8 @@
  *          人物管理
  */
 //=============================================================================
-#define RECEPTION_PEOPLE_MAX (32)
+#define RECEPTION_PEOPLE_MAX      (32)
+#define RESORT_RECEPTION_NPC_MAX  (32)
 //=============================================================================
 /**
  *          迎賓館
@@ -60,6 +62,7 @@ typedef struct
 {
   RESORT_PEOPLE_SYS   *p_people_sys;
   RESORT_SYSTEM       *p_sys;
+  RESORT_NPC_SYS      *p_npc_sys;
 } RESORT_RECEPTION_WORK;
 
 //-------------------------------------
@@ -130,6 +133,17 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
       RESORT_PEOPLE_SYS_AddAll( p_wk->p_people_sys );
     }
   }
+
+  //NPCシステム
+  {
+    RESORT_NPC_SYS_PARAM param;
+    GFL_STD_MemClear( &param, sizeof(RESORT_NPC_SYS_PARAM) );
+    param.p_mmdlsys = GAMEDATA_GetMMdlSys(p_gamedata);
+    param.max   = RESORT_RECEPTION_NPC_MAX;
+    param.p_city = RESORT_SYSTEM_GetCityData( p_wk->p_sys );
+    param.placeID  = RESORT_PLACEID_RECEPTION;
+    p_wk->p_npc_sys = RESORT_NPC_SYS_Init( &param, heapID );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -141,6 +155,7 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
 void RESORT_RECEPTION_End( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
+  RESORT_NPC_SYS_Exit( p_wk->p_npc_sys );
   RESORT_PEOPLE_SYS_Exit( p_wk->p_people_sys );
   RESORT_SYSTEM_Exit( p_wk->p_sys );
 
@@ -160,6 +175,7 @@ void RESORT_RECEPTION_Move( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
 
+  RESORT_NPC_SYS_Main( p_wk->p_npc_sys );
   RESORT_PEOPLE_SYS_Main( p_wk->p_people_sys, FIELDMAP_GetFieldPlayer(p_fieldmap) );
 }
 //=============================================================================
@@ -194,4 +210,18 @@ RESORT_SYSTEM * RESORT_RECEPTION_GetResortSys( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
   return p_wk->p_sys;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NPCシステムを取得
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap   フィールドマップ
+ *
+ *	@return NPCシステム
+ */
+//-----------------------------------------------------------------------------
+RESORT_NPC_SYS * RESORT_RECEPTION_GetNpcSys( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
+  return p_wk->p_npc_sys;
 }

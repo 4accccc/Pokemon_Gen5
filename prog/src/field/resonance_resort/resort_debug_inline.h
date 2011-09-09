@@ -44,6 +44,11 @@ static inline void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gam
 
   //見た目
   RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_OBJCODE, UnionView_GetObjCode(sex*8+GFL_STD_MtRand(8)) );
+
+  
+  //ビーコン
+  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_COMM_ID, RESORT_COMM_TYPE_BEACON );
+
   //名前セット
   {
     GFL_MSGDATA* p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(HEAPID_PROC) );

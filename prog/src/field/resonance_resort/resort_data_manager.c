@@ -1906,6 +1906,8 @@ u16 RESORT_SCRCMD_GetMsgID( u16 param, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_
   case RESORT_RESIDENT_LV_MSGID:
     return SexGetMsgID( sex, resort_resident_lv_00_m, resort_resident_lv_00_f );
     break;
+  case RESORT_RESIDENT_FEVER_MSGID:
+    return SexGetMsgID( sex, resort_resident_fever_00_m, resort_resident_fever_00_f );
 
   case RESORT_TUTORIAL01_GREET_MSGID:
     return resort_tutorial_01_greet_00;
@@ -2180,4 +2182,44 @@ void RESORT_SCRCMD_CheckSpot( u16 index, RESORT_RESIDENT_DATA *p_resident, RESOR
       break;
     }
   }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィーバーになったかどうか
+ *
+ *	@param	RESORT_ABSTRUCT_MANAGER *p_man  
+ *	@param	*p_city_data  街データ
+ *
+ *	@return TRUEフィーバー
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_SCRCMD_IsFever( RESORT_ABSTRUCT_MANAGER *p_man, RESORT_CITY_DATA *p_city_data )
+{
+  static const RESORT_DATA_BUFFER_TYPE sc_tbl[] =
+  {
+    RESORT_DATA_BUFFER_TYPE_RESIDENT,
+  };
+
+  RESORT_ABSTRUCT_ITERATOR ite = RESORT_ABSTRUCT_MANAGER_BeginIterator( p_man, sc_tbl, NELEMS(sc_tbl) );
+
+  while(1)
+  {
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_man, &ite, sc_tbl, NELEMS(sc_tbl) );
+    if( p_data == NULL )
+    {
+      break;
+    }
+    else
+    {
+      RESORT_RESIDENT_DATA *p_resi = RESORT_ABSTRUCT_DATA_GetDataAdrs(p_data);
+      RESORT_INSTITUTION_DATA *p_ins = RESORT_RESIDENT_DATA_GetInstitution(p_resi);
+      if( RESORT_INSTITUTION_DATA_GetData(p_ins, RESORT_INSTITUTION_DATA_PARAM_LV ) != RESORT_SHOP_LVMAX )
+      {
+        return FALSE;
+      }
+    }
+  }
+  return TRUE;
 }

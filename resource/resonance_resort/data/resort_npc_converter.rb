@@ -19,12 +19,10 @@ require "resort_define_hash.rb"
 #=====================================
 NPCCSV      = ARGV[0]
 KUTIKOMICSV = ARGV[1]
-OFFRECOCSV  = ARGV[2]
-MSG_HEADER  = ARGV[3]
-OBJCODE     = ARGV[4]
-OUTPUTNAME_NPC      = ARGV[5]
-OUTPUTNAME_KUTIKOMI = ARGV[6]
-OUTPUTNAME_OFFRECO  = ARGV[7]
+MSG_HEADER  = ARGV[2]
+OBJCODE     = ARGV[3]
+OUTPUTNAME_NPC      = ARGV[4]
+OUTPUTNAME_KUTIKOMI = ARGV[5]
 def checkArgument
   if NPCCSV == nil
     puts "引数1にcsvのファイル名を指定してください"
@@ -32,10 +30,6 @@ def checkArgument
   end
   if KUTIKOMICSV == nil
     puts "引数2にcsvのファイル名を指定してください"
-    return false
-  end
-  if OFFRECOCSV == nil
-    puts "引数3にcsvのファイル名を指定してください"
     return false
   end
   if MSG_HEADER == nil
@@ -54,20 +48,12 @@ def checkArgument
     puts "引数7に出力ファイル名を指定してください"
     return false
   end
-  if OUTPUTNAME_OFFRECO == nil
-    puts "引数7に出力ファイル名を指定してください"
-    return false
-  end
   unless FileTest.exists?(NPCCSV)
     puts "#{NPCCSV}が見つかりません"
     return false
   end
   unless FileTest.exists?(KUTIKOMICSV)
     puts "#{KUTIKOMICSV}が見つかりません"
-    return false
-  end
-  unless FileTest.exists?(OFFRECOCSV)
-    puts "#{OFFRECOCSV}が見つかりません"
     return false
   end
   unless FileTest.exists?(MSG_HEADER)
@@ -149,48 +135,6 @@ def convertKutikomi( csv, data, msg_h, tagHash )
     end
   end
 end
-
-#-------------------------------------
-# オフレコデータコンバート
-#=====================================
-OFFRECO_ROW_START    = 1     #行開始位置
-OFFRECO_COL_START    = 0     #列開始位置
-OFFRECO_COL_BIT      = OFFRECO_COL_START     #列:ビット番号
-OFFRECO_COL_GROUP    = 1     #列:グループ
-OFFRECO_COL_TYPE     = 2     #列：オフレコタイプ
-OFFRECO_COL_MSG      = 3     #列：メッセージ
-
-OFFRECO_COL_MSG_NUM  = 8
-def convertOffreco( csv, data, msg_h )
-  
-  #データの作成
-  msgdata = HeaderDataArray.new
-  msgdata.load( msg_h )
-
-  for row in OFFRECO_ROW_START...csv.row_length-1
-    bit   = csv.get( row, OFFRECO_COL_BIT )
-    group = csv.get( row, OFFRECO_COL_GROUP )
-    type  = csv.get( row, OFFRECO_COL_TYPE )
-
-    data.write_u16( bit )
-    data.write_u16( group )
-    data.write_u16( $define_hash[ type ] )
-
-    for col in OFFRECO_COL_MSG...OFFRECO_COL_MSG+OFFRECO_COL_MSG_NUM-1
-      msg  = csv.get( row, col )
-      begin
-        data.write_u16( msgdata.search( "#{msg}", "#{row}行の#{msg_h}" ) )
-      rescue HeaderSearchError
-        exit(1)
-      end
-    end
-
-    #アライメント
-    data.write_u16(0)
-
-  end
-end
-
 #-------------------------------------
 # NPCのデータコンバート
 #=====================================
@@ -268,27 +212,20 @@ begin
   kutikomiCsv.setSuffix( '#END' )
   kutikomiCsv.load( KUTIKOMICSV )
 
-  offrecoCsv = CsvLoader.new
-  offrecoCsv.setSuffix( '#END' )
-  offrecoCsv.load( OFFRECOCSV )
-
   #data作成
   npcData       = BinaryBuilder.new
   kutikomiData  = BinaryBuilder.new
-  offrecoData   = BinaryBuilder.new
 
   #それぞれのタグを渡すためのハッシュ
   tagHash = Hash.new
 
   #コンバート
   convertKutikomi( kutikomiCsv, kutikomiData, MSG_HEADER, tagHash )
-  convertOffreco( offrecoCsv, offrecoData, MSG_HEADER )
   convertNpc( npcCsv, npcData, OBJCODE, tagHash )
 
   #date書き込み
   npcData.genelate( "#{OUTPUTNAME_NPC}.dat" )
   kutikomiData.genelate( "#{OUTPUTNAME_KUTIKOMI}.dat" )
-  offrecoData.genelate( "#{OUTPUTNAME_OFFRECO}.dat" )
 
 end
 

@@ -152,6 +152,7 @@
 #define RESORT_RESIDENT_CHANGE_OK_MSGID       (84)  //ì]êEOKÇ™ÇÒÇŒÇËÇ‹Ç∑
 #define RESORT_RESIDENT_CHANGE_NG_MSGID       (85)  //ì]êENGÇ±ÇÃÇ‹Ç‹Ç‚ÇËÇ‹Ç∑
 #define RESORT_RESIDENT_LV_MSGID              (86)  //Ç®ìXLV
+#define RESORT_RESIDENT_FEVER_MSGID           (87)  //ÉtÉBÅ[ÉoÅ[
   //îÈèë
 #define RESORT_SECRETARY_GREET_MSGID          (100) //à•éA
 #define RESORT_SECRETARY_BYE_MSGID            (101) //Ç‹ÇΩÇÀ

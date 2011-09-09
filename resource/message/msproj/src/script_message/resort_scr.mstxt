@@ -3184,6 +3184,104 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_resident_fever_00_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>げんざい　[Name:ResortTown ]は
+サービス　きかんちゅうです！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T07:02:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>げんざい　[Name:ResortTown ]は
+サービス　きかんちゅうです！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T07:02:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_fever_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『いってきますー！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『いってきますー！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_resident_lv_00_m"
 		Style="Large">
 		<LanguageCell
@@ -8013,6 +8111,65 @@ GTSで　こうかんしたこと
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-08-31T13:42:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>街レベル
+
+0：リゾート名
+1：リゾートレベル
+2：リゾート肩書き</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_sys_21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……！！▼
+すばらしい　おみせが
+たくさん　できた　きねんに▽
+なんど　すべての　おみせが▽
+サービスきかんに　はいった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T07:09:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……！！▼
+すばらしい　おみせが
+たくさん　できた　きねんに▽
+なんど　すべての　おみせが▽
+サービスきかんに　はいった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T07:09:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41402,17 +41559,18 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_00"
+		Label="resort_offreco_sys_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[Name:TrainerName Idx="0" ]さんって……
-でんどういり　しているみたいね▼</Text>
+			<Text>わたし　[Name:ResortTown ]　だいすき！▼
+このまちに　いるひとも　だいすき！▼
+だから　みんなの　れきしを
+しらべて　ます▼
+だれの　れきし　しりたいですか？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:05:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41420,13 +41578,14 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[Name:TrainerName Idx="0" ]さんって……
-でんどういり　しているみたいね▼</Text>
+			<Text>わたし　[Name:ResortTown ]　だいすき！▼
+このまちに　いるひとも　だいすき！▼
+だから　みんなの　れきしを
+しらべて　ます▼
+だれの　れきし　しりたいですか？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:05:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41455,18 +41614,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_01"
+		Label="resort_offreco_sys_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-サブウェイマスターを▽
-たおしている　みたいね▼</Text>
+			<Text>では　わたしが　しっている
+[Name:TrainerName ]の　れきしを▽
+すべて　かたりましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:06:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41474,19 +41631,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-サブウェイマスターを▽
-たおしている　みたいね▼</Text>
+			<Text>では　わたしが　しっている
+[Name:TrainerName ]の　れきしを▽
+すべて　かたりましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:06:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41503,19 +41665,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_02"
+		Label="resort_offreco_sys_03_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-スーパートレインの▽
-サブウェイマスターを▽
-たおしている　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+２０[Digit:2digits Idx="1" ]ねん　[Digit:2digits Idx="2" ]がつ　[Digit:2digits Idx="3" ]にちに
+ぼうけんを　はじめました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:08:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41523,20 +41682,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-スーパートレインの▽
-サブウェイマスターを▽
-たおしている　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+２０[Digit:2digits Idx="1" ]ねん　[Digit:2digits Idx="2" ]がつ　[Digit:2digits Idx="3" ]にちに
+ぼうけんを　はじめました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:08:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41553,18 +41716,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_03"
+		Label="resort_offreco_sys_03_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ボックスには　ポケモンが▽
-３０ひき　いない　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+いつから　ぼうけんを
+はじめたのか　わかりません……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:09:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41572,19 +41733,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ボックスには　ポケモンが▽
-３０ひき　いない　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+いつから　ぼうけんを
+はじめたのか　わかりません……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:09:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41601,18 +41767,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_04"
+		Label="resort_offreco_sys_04_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ボックスには　ポケモンが▽
-１２０ひき　いない　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+２０[Digit:2digits Idx="1" ]ねん　[Digit:2digits Idx="2" ]がつ　[Digit:2digits Idx="3" ]にちに
+でんどういり　しました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:09:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41620,19 +41784,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ボックスには　ポケモンが▽
-１２０ひき　いない　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+２０[Digit:2digits Idx="1" ]ねん　[Digit:2digits Idx="2" ]がつ　[Digit:2digits Idx="3" ]にちに
+でんどういり　しました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:10:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41649,18 +41818,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_05"
+		Label="resort_offreco_sys_04_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ボックスには　ポケモンが▽
-５００ひき　いじょう　いるみたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+でんどういり　しているのか
+さだかでは　ありません……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:10:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41668,19 +41835,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ボックスには　ポケモンが▽
-５００ひき　いじょう　いるみたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+でんどういり　しているのか
+さだかでは　ありません……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:10:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41697,18 +41869,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_06"
+		Label="resort_offreco_sys_05_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ともだち　てちょうの　とうろくが▽
-だれも　いない　みたいね……▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+[Digit:3digits Idx="1" ]じかん　[Digit:3digits Idx="2" ]ふん
+ぼうけん　してます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41716,19 +41886,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ともだち　てちょうの　とうろくが▽
-だれも　いない　みたいね……▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+[Digit:3digits Idx="1" ]じかん　[Digit:3digits Idx="2" ]ふん
+ぼうけん　してます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:19:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41745,18 +41920,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_07"
+		Label="resort_offreco_sys_05_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ともだち　てちょうの　とうろくが▽
-８にん　ちかく　いる　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+どれくらいの　あいだ　ぼうけんを
+しているのか　わかりません……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:19:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41764,19 +41937,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ともだち　てちょうの　とうろくが▽
-８にん　ちかく　いる　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+どれくらいの　あいだ　ぼうけんを
+しているのか　わかりません……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41793,18 +41971,17 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_08"
+		Label="resort_offreco_sys_06_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ともだち　てちょうの　とうろくが▽
-１６にん　ちかく　いる　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+ポケモンずかんに
+つかまえた　ポケモンを　[Digit:3digits Idx="1" ]ひき　を▽
+とうろく　しています▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:20:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41812,19 +41989,25 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ともだち　てちょうの　とうろくが▽
-１６にん　ちかく　いる　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+ポケモンずかんに
+つかまえた　ポケモンを　[Digit:3digits Idx="1" ]ひき　を▽
+とうろく　しています▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:20:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41841,18 +42024,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_09"
+		Label="resort_offreco_sys_06_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ともだち　てちょうの　とうろくが▽
-３２にん　ちかく　いる　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+どれくらい　ずかん　とうろくを
+しているか　わかりません……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:20:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41860,19 +42041,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ともだち　てちょうの　とうろくが▽
-３２にん　ちかく　いる　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+どれくらい　ずかん　とうろくを
+しているか　わかりません……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:20:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41889,18 +42075,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_10"
+		Label="resort_offreco_sys_07_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ともだち　てちょうの　とうろくが▽
-３２にん　いっぱい　いるみたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+せんとうに　[Name:PokemonName Idx="1" ]を
+つれて　ぼうけん　しています▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:21:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41908,19 +42092,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ともだち　てちょうの　とうろくが▽
-３２にん　いっぱい　いるみたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+せんとうに　[Name:PokemonName Idx="1" ]を
+つれて　ぼうけん　しています▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:21:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41937,18 +42126,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_11"
+		Label="resort_offreco_sys_07_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ダウジングで　ひろう　どうぐを▽
-ぜんぜん　みつけて　いない　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+どんな　ポケモンを　つれているのか
+わかりません▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:21:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41956,19 +42143,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ダウジングで　ひろう　どうぐを▽
-ぜんぜん　みつけて　いない　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+どんな　ポケモンを　つれているのか
+わかりません▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:21:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -41985,18 +42177,17 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_12"
+		Label="resort_offreco_sys_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ダウジングで　ひろう　どうぐを▽
-たくさん　みつけている　みたいね▼</Text>
+			<Text>いじょうが　[Name:TrainerName ]の
+れきし　エピソード１　です▼
+[Name:TrainerName ]の　こと
+もっと　しりたいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:23:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -42004,19 +42195,25 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ダウジングで　ひろう　どうぐを▽
-たくさん　みつけている　みたいね▼</Text>
+			<Text>いじょうが　[Name:TrainerName ]の
+れきし　エピソード１　です▼
+[Name:TrainerName ]の　こと
+もっと　しりたいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -42033,18 +42230,17 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_13"
+		Label="resort_offreco_sys_09_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ダウジングで　ひろう　どうぐを▽
-ほとんど　みつけている　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+[Name:Location Idx="1" ]の
+[Name:Area Idx="2" ]▽
+しゅっしん　です▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:36:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -42052,19 +42248,25 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ダウジングで　ひろう　どうぐを▽
-たくさん　みつけている　みたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+[Name:Location Idx="1" ]の
+[Name:Area Idx="2" ]▽
+しゅっしん　です▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:36:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -42081,19 +42283,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_14"
+		Label="resort_offreco_sys_09_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ＧＴＳネゴシエーションで▽
-だれとも　しりあいに▽
-なっていないみたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+[Name:Location Idx="1" ]
+しゅっしん　です▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:36:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -42101,20 +42300,24 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ＧＴＳネゴシエーションで▽
-だれとも　しりあいに▽
-なっていないみたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+[Name:Location Idx="1" ]
+しゅっしん　です▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:36:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -42131,19 +42334,16 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_offreco_15"
+		Label="resort_offreco_sys_09_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ＧＴＳネゴシエーションで▽
-だれとも　しりあいに▽
-なっていないみたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+どこから　やってきたのか
+わかりません……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:37:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -42151,20 +42351,633 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここだけの　はなし　なんだけど
-きいて　きいて！▼
-[System:Color name="2" ][Name:TrainerName Idx="0" ]さん[/System:Color]って……
-ＧＴＳネゴシエーションで▽
-だれとも　しりあいに▽
-なっていないみたいね▼</Text>
+			<Text>[Name:TrainerName ]は……▼
+どこから　やってきたのか
+わかりません……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_10_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は……▼
+[Name:Hobby Idx="1" ]を
+している　らしいです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:38:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は……▼
+[Name:Hobby Idx="1" ]を
+している　らしいです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:38:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_10_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は……▼
+どんな　しょくぎょうなのか　わかりません……▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:38:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は……▼
+どんな　しょくぎょうなのか　わかりません……▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:38:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_11_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は……▼
+[Name:Hobby Idx="1" ]が
+いきがい　らしいです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:39:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は……▼
+[Name:Hobby Idx="1" ]が
+いきがい　らしいです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_11_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は……▼
+なにを　いきがいに　しているのかは
+わかりません……▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:40:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は……▼
+なにを　いきがいに　しているのかは
+わかりません……▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:40:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_12_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]の
+ジョインアベニューは……▽
+ランクが　[Digit:2digits Idx="1" ]らしいです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:41:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]の
+ジョインアベニューは……▽
+ランクが　[Digit:2digits Idx="1" ]らしいです▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:41:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_12_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]の
+ジョインアベニューは……▽
+どれだけ　はってん　しているのか▽
+わかりません▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:42:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]の
+ジョインアベニューは……▽
+どれだけ　はってん　しているのか▽
+わかりません▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:42:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_13_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]の
+ジョインアベニューには……▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:46:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]の
+ジョインアベニューには……▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:46:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_13_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortShop ]が　[Digit:1digit Idx="1" ]けん▼
+ごうけい　[Digit:1digit Idx="2" ]けんの　おみせが
+あるらしい　です▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:52:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortShop ]▼
+[Name:ResortShop ]が　[Digit:1digit Idx="1" ]けん▼
+ごうけい　[Digit:1digit Idx="2" ]けんの　おみせが
+あるらしい　です▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:52:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_13_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortShop ]が　[Digit:1digit Idx="1" ]けん▽</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:52:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortShop ]が　[Digit:1digit Idx="1" ]けん▽</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:52:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_13_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どんな　おみせが
+たっているのか　わかりません……▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:51:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どんな　おみせが
+たっているのか　わかりません……▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:51:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortTown ]　だいすき！▼
+すんでいる　ひと　みんな　だいすき！▼
+わたし　いつまでも
+この　まち　みてます▼
+また　はなしかけて　くださいね</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:54:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortTown ]　だいすき！▼
+すんでいる　ひと　みんな　だいすき！▼
+わたし　いつまでも
+この　まち　みてます▼
+また　はなしかけて　くださいね</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:54:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_offreco_sys_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]の
+れきし　エピソード２　です▽
+かたりましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:55:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]の
+れきし　エピソード２　です▽
+かたりましょう▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T10:55:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オフレコ：内部データ語り</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>

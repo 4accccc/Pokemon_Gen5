@@ -1865,6 +1865,7 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
   RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
   RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
   switch( param )
   {
 	case RESORT_MY_PARAM_GOSSIP_00:
@@ -1890,7 +1891,7 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     *p_ret_wk = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_WANT_JOB, NULL );
     break;
   case RESORT_MY_PARAM_IS_FEVER:
-    *p_ret_wk = FALSE; //TODO
+    *p_ret_wk = RESORT_SCRCMD_IsFever( RESORT_SYSTEM_GetAbstructManager(p_sys),RESORT_SYSTEM_GetCityData(p_sys) );
     break;
   default:
     GF_ASSERT(0);
@@ -2255,7 +2256,10 @@ static RESORT_NPC_SYS * Resort_Scrcmd_GetNpcSys( FIELDMAP_WORK *p_field )
   {
     return RESORT_FIELD_GetNpcSys( p_field );
   }
-  GF_ASSERT(0);
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
+  {
+    return RESORT_RECEPTION_GetNpcSys( p_field );
+  }
   return NULL;
 }
 
