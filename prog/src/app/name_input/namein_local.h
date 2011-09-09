@@ -107,7 +107,7 @@ enum
 
   //メインOBJ
   PLT_OBJ_CURSOR_M    = 0,  //文字列の下のバーOBJ
-  PLT_OBJ_ICON_M      = 2,  //アイコン
+  PLT_OBJ_ICON_M      = 4,  //アイコン
   PLT_OBJ_SEX_M      = PLT_OBJ_ICON_M+POKEICON_PAL_MAX,  //性別文字色
 
   //サブBG
@@ -153,6 +153,9 @@ typedef enum
   CLWKID_PC,
   CLWKID_CURSOR_TOP,
   CLWKID_CURSOR_END = CLWKID_CURSOR_TOP + OBJ_CURSOR_MAX,
+  CLWKID_BUTTON_GREETING, // 挨拶ボタン
+  CLWKID_BUTTON_THANKS,   // お礼ボタン
+  CLWKID_BUTTON_BOAST,    // 自慢ボタン
   CLWKID_MAX,
 } CLWKID;
 
@@ -338,6 +341,24 @@ typedef enum
   ICON_TYPE_HATENA,
   ICON_TYPE_CITY,
 } ICON_TYPE;
+
+//-------------------------------------
+///	ショートカットボタン
+//=====================================
+// ボタンの座標
+#define BUTTON_POS_X  (200)
+#define BUTTON_POS_Y  (20)
+#define BUTTON_WIDTH  (16)
+#define BUTTON_HEIGHT (24)
+#define BUTTON_X_MERGE  (1)
+
+// ボタンの種類
+typedef enum {
+  BUTTON_TYPE_GREETING,   // 挨拶ボタン
+  BUTTON_TYPE_THANKS,     // お礼ボタン
+  BUTTON_TYPE_BOAST,      // 自慢ボタン
+  BUTTON_TYPE_NULL,       // 
+} BUTTON_TYPE;
 
 //-------------------------------------
 /// その他
@@ -591,5 +612,10 @@ typedef struct
   //海外文字等入力できない文字があったときは、デフォルト文字は存在していても
   //ここは無しになる
   STRBUF  *p_initdraw_str;
+
+  //ショートカットモード
+  BOOL  is_shortcut;
+  BOOL  input_shortcut;   // ショートカットボタンを押したフラグ
+                          // この後に何か入力するとボタンを押したことにはしない
 
 } NAMEIN_WORK;

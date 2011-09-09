@@ -14,6 +14,7 @@
 #include "savedata\box_savedata.h"
 #include "savedata/save_control_intr.h"
 #include "savedata/misc.h"
+#include "savedata/boast_message.h"
 
 //=============================================================================
 /**
@@ -49,6 +50,8 @@ typedef enum
 
   NAMEIN_FREE_RESORT_THANKS,  //リゾート口癖  param1 自分の性別
 
+  NAMEIN_FREE_FES_WORD,  // フェスフリーワード（ショートカット有り） param1自分の性別
+
 	NAMEIN_MAX,
 }NAMEIN_MODE;
 
@@ -63,6 +66,19 @@ typedef enum
   NAMEIN_PROF_ALL_ENABLE  = NAMEIN_PROF_NUMBER_ENABLE | NAMEIN_PROF_STRING_ENABLE,     //全て許可
 
 } NAMEIN_PROF_FLAG;
+
+//-------------------------------------
+///	ショートカット用戻り値定義
+//=====================================
+typedef enum {
+  NAMEIN_SHORTCUT_RET_NULL,       // 選択なし
+  NAMEIN_SHORTCUT_RET_GREETING,   // 挨拶ボタン
+  NAMEIN_SHORTCUT_RET_THANKS,     // お礼ボタン
+  NAMEIN_SHORTCUT_RET_BOAST,      // 自慢ボタン
+
+  NAMEIN_SHORTCUT_RET_MAX,
+
+} NAMEIN_SHORTCUT_RET;
 
 
 //-------------------------------------
@@ -171,6 +187,10 @@ typedef struct
                                                                                           //※NULLを渡して良いのはイントロだけです
 
   NAMEIN_PROF_FLAG  prof_flag;
+
+  BOAST_MSG_SAVEDATA  *p_boast_msg_sv;   // [in] 自慢メッセージのセーブ
+  NAMEIN_SHORTCUT_RET shortcut_ret; // [out] ショートカット有りモードで起動したときの
+                                    // 最後に押されたボタン
 
 } NAMEIN_PARAM;
 

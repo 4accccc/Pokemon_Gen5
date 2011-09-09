@@ -45,6 +45,7 @@
 //  savedata
 #include "savedata/misc.h"
 #include "savedata/resonance_resort_sv.h"
+#include "savedata/boast_message.h"
 
 //  se
 #include "sound/sound_manager.h"
@@ -232,6 +233,14 @@ static void Icon_StartMove( ICON_WORK *p_wk );
 static BOOL Icon_MainMove( ICON_WORK *p_wk );
 
 static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 );
+
+//-------------------------------------
+///	SHORTCUT_BUTTON
+//=====================================
+static void SHORTCUT_BUTTON_Init( const OBJ_WORK *cp_obj, const BOOL is_shortcut );
+static BUTTON_TYPE SHORTCUT_BUTTON_IsTrg( const OBJ_WORK *cp_obj );
+static STRBUF* SHORTCUT_BUTTON_CreateStr( const NAMEIN_PARAM * cp_param, BUTTON_TYPE type, HEAPID heapID );
+
 //-------------------------------------
 /// その他
 //=====================================
@@ -337,6 +346,10 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
       {
         namein_mode = NAMEIN_FREE_RESORT_PHRASE;
       }
+      else if( namein_mode == NAMEIN_FREE_FES_WORD )
+      {
+        namein_mode = NAMEIN_FREE_WORD;
+      }
       mode    = MISC_GetNameInMode( p_param->p_misc, namein_mode );
     }
   }
@@ -371,6 +384,18 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 
   //初期化
   p_wk->p_param = p_param;
+
+  // ショートカットモード判定
+  if( p_param->mode == NAMEIN_FREE_WORD ||
+      p_param->mode == NAMEIN_FREE_FES_WORD )
+  {
+    p_wk->is_shortcut = TRUE;
+    OS_Printf("ショートカット有りモード\n");
+  }
+  else
+  {
+    p_wk->is_shortcut = FALSE;
+  }
 
   //共通モジュールの作成
   p_wk->p_font    = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
@@ -420,6 +445,9 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, p_wk->p_word, HEAPID_NAME_INPUT );
   PS_Init( &p_wk->ps, HEAPID_NAME_INPUT );
   p_wk->p_prof  = PROF_WORD_AllocWork( HEAPID_NAME_INPUT );
+
+  // 初期化
+  SHORTCUT_BUTTON_Init( &p_wk->obj, p_wk->is_shortcut );
 
   //文字描画
   if( p_param->mode == NAMEIN_POKEMON )
@@ -739,6 +767,24 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
           CLSYS_DEFREND_MAIN,
           heapID );
       GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+    }
+
+    // ボタン
+    for( i=CLWKID_BUTTON_GREETING; i<=CLWKID_BUTTON_BOAST; i++ )
+    {
+      cldata.pos_x = BUTTON_POS_X  + (BUTTON_WIDTH * (i-CLWKID_BUTTON_GREETING));
+      cldata.pos_x += BUTTON_X_MERGE * (i-CLWKID_BUTTON_GREETING);
+      cldata.pos_y = BUTTON_POS_Y;
+      cldata.anmseq = 6 + i - CLWKID_BUTTON_GREETING;
+      p_wk->p_clwk[i] = GFL_CLACT_WK_Create( p_clunit,
+          p_wk->res[RESID_OBJ_COMMON_CHR],
+          p_wk->res[RESID_OBJ_COMMON_PLT],
+          p_wk->res[RESID_OBJ_COMMON_CEL],
+          &cldata,
+          CLSYS_DEFREND_MAIN,
+          heapID );
+      // 非表示設定
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
     }
   }
@@ -4687,6 +4733,8 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
 { 
   switch( mode )
   { 
+  case NAMEIN_FREE_FES_WORD:
+    /* fallthrough  */
   case NAMEIN_FREE_RESORT_AUTHER:
     /* fallthrough  */
   case NAMEIN_FREE_RESORT_PHRASE:
@@ -4736,6 +4784,117 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
   }
 
 }
+
+//=============================================================================
+/**
+ *    SHORTCUT_BUTTON
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ショートカットボタン 初期化
+ *
+ *	@param	const OBJ_WORK *cp_obj  オブジェワーク
+ *	@param	BOOL is_shortcut        ショートカット有無フラグ
+ */
+//-----------------------------------------------------------------------------
+static void SHORTCUT_BUTTON_Init( const OBJ_WORK *cp_obj, const BOOL is_shortcut )
+{
+  if( is_shortcut == TRUE )
+  {
+    int i;
+    for( i=CLWKID_BUTTON_GREETING; i<=CLWKID_BUTTON_BOAST; i++ )
+    {
+      // 表示する
+      GFL_CLACT_WK_SetDrawEnable( OBJ_GetClwk( cp_obj, i ), TRUE );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ショートカットボタンをタッチしたか
+ *
+ *	@param	const OBJ_WORK *cp_obj 
+ *
+ *	@return BUTTON_TYPE_NULL以外ならタッチ
+ */
+//-----------------------------------------------------------------------------
+static BUTTON_TYPE SHORTCUT_BUTTON_IsTrg( const OBJ_WORK *cp_obj )
+{
+  int i;
+
+  for( i=CLWKID_BUTTON_GREETING; i<=CLWKID_BUTTON_BOAST; i++ )
+  {
+    u32 x, y;
+    GFL_CLACTPOS  clpos;
+    GFL_CLACT_WK_GetPos( OBJ_GetClwk( cp_obj, i ), &clpos, CLSYS_DRAW_MAIN );
+
+    if( GFL_UI_TP_GetPointTrg( &x, &y) )
+    {
+      GFL_POINT pos;
+      GFL_RECT  rect;
+
+      rect.left   = clpos.x - BUTTON_WIDTH/2;
+      rect.top    = clpos.y - BUTTON_HEIGHT/2;
+      rect.right  = clpos.x + BUTTON_WIDTH/2;
+      rect.bottom = clpos.y + BUTTON_HEIGHT/2;
+
+      pos.x = x;
+      pos.y = y;
+
+      if( COLLISION_IsRectXPos( &rect, &pos ) )
+      {
+        // アニメ再生
+        GFL_CLACT_WK_SetAutoAnmFlag( OBJ_GetClwk( cp_obj, i ), TRUE );
+        GFL_CLACT_WK_SetAnmFrame( OBJ_GetClwk( cp_obj, i ), 0 );
+        GFL_CLACT_WK_ResetAnm( OBJ_GetClwk( cp_obj, i ) );
+
+        return (i-CLWKID_BUTTON_GREETING);
+      }
+    }
+  }
+
+  return BUTTON_TYPE_NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  登録されている文字を作成し返す
+ *
+ *	@param	const NAMEIN_PARAM * cp_param 名前入力パラメータ
+ *	@param	type    BUTTON_TYPE_XXX
+ *	@param	heapID  ヒープID
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static STRBUF* SHORTCUT_BUTTON_CreateStr( const NAMEIN_PARAM * cp_param, BUTTON_TYPE type, HEAPID heapID )
+{
+  STRBUF *p_str = GFL_STR_CreateBuffer( NAMEIN_FREE_WORD_LENGTH+EOM_CODESIZE, heapID );
+
+  GF_ASSERT( type < BUTTON_TYPE_NULL );
+  GF_ASSERT( cp_param->p_misc );
+  GF_ASSERT( cp_param->p_boast_msg_sv );
+
+  switch( type ) {
+  case BUTTON_TYPE_GREETING:    // すれ違い挨拶言葉
+    GFL_STR_SetStringCode( p_str, MISC_CrossComm_GetSelfIntroduction( cp_param->p_misc ) );
+    break;
+  case BUTTON_TYPE_THANKS:      // すれ違いお礼言葉
+    GFL_STR_SetStringCode( p_str, MISC_CrossComm_GetThankyouMessage( cp_param->p_misc ) );
+    break;
+  case BUTTON_TYPE_BOAST:       // 自慢メッセージ
+    GFL_STR_SetStringCode( p_str, BOAST_MSG_SAVEDATA_GetMsg( cp_param->p_boast_msg_sv ) );
+    break;
+  default:
+    GF_ASSERT(0);
+    return NULL;
+  }
+
+  return p_str;
+}
+
 //=============================================================================
 /**
  *    その他
@@ -4802,6 +4961,7 @@ static STRBUF* INITNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, H
     return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
 
   case NAMEIN_FREE_WORD:
+  case NAMEIN_FREE_FES_WORD:
     return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
 
   case NAMEIN_FREE_PASSWORD:
@@ -4860,6 +5020,40 @@ static void FinishInput( NAMEIN_WORK *p_wk )
 
 
     GFL_STR_DeleteBuffer( p_src_str );
+  }
+
+  // ショートカットボタンに登録されている文字列と
+  // 入力文字列の一致確認
+  // 一致していたら→ボタンを押して確定したとする。
+  if( p_wk->is_shortcut == TRUE && p_wk->input_shortcut )
+  {
+    int i;
+    STRBUF *p_str;
+    p_str = GFL_STR_CreateBuffer( NAMEIN_FREE_WORD_LENGTH+EOM_CODESIZE, HEAPID_NAME_INPUT );
+
+    for( i=BUTTON_TYPE_GREETING; i<=BUTTON_TYPE_BOAST; i++ )
+    {
+      switch( i ){
+      case BUTTON_TYPE_GREETING:    // すれ違い挨拶言葉
+        GFL_STR_SetStringCode( p_str, MISC_CrossComm_GetSelfIntroduction( p_wk->p_param->p_misc ) );
+        break;
+      case BUTTON_TYPE_THANKS:      // すれ違いお礼言葉
+        GFL_STR_SetStringCode( p_str, MISC_CrossComm_GetThankyouMessage( p_wk->p_param->p_misc ) );
+        break;
+      case BUTTON_TYPE_BOAST:       // 自慢メッセージ
+        GFL_STR_SetStringCode( p_str, BOAST_MSG_SAVEDATA_GetMsg( p_wk->p_param->p_boast_msg_sv ) );
+        break;
+      }
+
+      if( GFL_STR_CompareBuffer( p_str, p_wk->p_param->strbuf ) )
+      {
+        p_wk->p_param->shortcut_ret = i + 1;
+        ICHI_Printf("ショートカットボタンを押して終了 %d\n", i);
+        break;
+      }
+    }
+
+    GFL_STR_DeleteBuffer( p_str );
   }
 
   //入力数が0ならば
@@ -5504,6 +5698,30 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
         PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
       }
+      // ショートカットボタンをタッチしたら、デフォルト登録
+      if( p_wk->is_shortcut == TRUE )
+      {
+        BUTTON_TYPE type = SHORTCUT_BUTTON_IsTrg( &p_wk->obj );
+        if( type != BUTTON_TYPE_NULL )
+        {
+          // 登録されている文字を入力
+          STRBUF  *p_default;
+          p_default = SHORTCUT_BUTTON_CreateStr( p_wk->p_param, type, HEAPID_NAME_INPUT );
+
+          //一端全てけす
+          STRINPUT_Delete( &p_wk->strinput );
+
+          //デフォルト名入力
+          if( p_default != NULL )
+          {
+            p_wk->input_shortcut = TRUE;    // 押したことにする
+            STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_default) );
+            GFL_STR_DeleteBuffer( p_default );
+          }
+
+          PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+        }
+      }
       break;
     case KEYBOARD_INPUT_SHIFT:      //シフト
       /*  何もしない */
@@ -5522,7 +5740,25 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     default:
       GF_ASSERT(0);
     }
+
+    // ショートカットモードの場合
+    //  ショートカットボタンを押して、
+    //  その後に終了以外の入力があるとボタンを押したことにしない
+    if( p_wk->is_shortcut == TRUE )
+    {
+      if( p_wk->input_shortcut == TRUE )
+      {
+        if( input != KEYBOARD_INPUT_NONE &&
+            input != KEYBOARD_INPUT_EXIT ) 
+        {
+          // 押したことにしない
+          p_wk->input_shortcut = FALSE;
+        }
+      }
+    }
   }
+
+  
 
   //メイン処理
   KEYBOARD_Main( &p_wk->keyboard, &p_wk->strinput );
@@ -5558,6 +5794,10 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       if( namein_mode == NAMEIN_FREE_RESORT_THANKS )
       {
         namein_mode = NAMEIN_FREE_RESORT_PHRASE;
+      }
+      else if( namein_mode == NAMEIN_FREE_FES_WORD )
+      {
+        namein_mode = NAMEIN_FREE_WORD;
       }
 
       input_type  = KEYBOARD_GetInputType( &p_wk->keyboard );
