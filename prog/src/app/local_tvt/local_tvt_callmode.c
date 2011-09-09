@@ -352,26 +352,7 @@ static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_perso
     LOCAL_TVT_MOTHER_SetPerson( p_person, p_wk->param.p_message, LOCAL_TVT_MESSAGE_GetCallMsgData( p_wk->param.p_message), p_wk->param.p_gamedata, p_wk->heapID );
     break;
   case LOCAL_TVT_PERSON_SECRET:
-    switch( LOCAL_TVT_SECRET_GetFace( p_wk->p_data ) )
-    {
-    default:
-      GF_ASSERT(0);
-    case LOCAL_TVT_SECRET_FACE_INVISIBLE:
-      param[0].charaType    = LTCT_SOUNDONLY;
-      break;
-    case LOCAL_TVT_SECRET_FACE_HIDE_M:
-      param[0].charaType    = LTCT_SECRET_M_MASK;
-      break;
-    case LOCAL_TVT_SECRET_FACE_HIDE_F:
-      param[0].charaType    = LTCT_SECRET_F_MASK;
-      break;
-    case LOCAL_TVT_SECRET_FACE_VISIBLE_M:
-      param[0].charaType    = LTCT_SECRET_M;
-      break;
-    case LOCAL_TVT_SECRET_FACE_VISIBLE_F:
-      param[0].charaType    = LTCT_SECRET_F;
-      break;
-    }
+    param[0].charaType    = LOCAL_TVT_SECRET_GetFace( p_wk->p_data );
     param[0].bgType       = LOCAL_TVT_CALLDATA_GetBack( p_wk->p_data, LOCAL_TVT_PERSON_SECRET );
     param[0].weatherType  = LOCAL_TVT_CALLDATA_GetWeather( p_wk->p_data, LOCAL_TVT_PERSON_SECRET );
 

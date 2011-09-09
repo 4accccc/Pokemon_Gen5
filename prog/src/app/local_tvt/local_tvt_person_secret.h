@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 #include "local_tvt_person.h"
+#include "local_tvt_type_def.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -34,14 +35,6 @@ typedef enum
 }LOCAL_TVT_SECRET_MODE;
 extern void LOCAL_TVT_SECRET_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *cp_msg, GAMEDATA *p_gamedata, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_SECRET_MODE mode, HEAPID heapID );
 
-typedef enum
-{
-  LOCAL_TVT_SECRET_FACE_INVISIBLE,//映らない
-  LOCAL_TVT_SECRET_FACE_HIDE_M,     //男：顔を隠している
-  LOCAL_TVT_SECRET_FACE_VISIBLE_M,  //男：素顔
-  LOCAL_TVT_SECRET_FACE_HIDE_F,     //女：顔を隠している
-  LOCAL_TVT_SECRET_FACE_VISIBLE_F,  //女：素顔
-}LOCAL_TVT_SECRET_FACE;
-extern LOCAL_TVT_SECRET_FACE LOCAL_TVT_SECRET_GetFace( const LOCAL_TVT_CALLDATA *cp_data );
+extern LOCAL_TVT_CHARA_TYPE LOCAL_TVT_SECRET_GetFace( const LOCAL_TVT_CALLDATA *cp_data );
 
 extern u32 LOCAL_TVT_SECRET_GetCallSECnt( const LOCAL_TVT_CALLDATA *cp_data );

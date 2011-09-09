@@ -179,6 +179,10 @@ static const u8 charaResList[LTCT_MAX][3] = {
     //隠しキャラ(変装)
     { NARC_local_tvt_graphic_chara_idol_m_mask_NCLR    , NARC_local_tvt_graphic_chara_idol_m_mask_1_NCGR    , NARC_local_tvt_graphic_obj_idol_m_mask_NCLR },
     { NARC_local_tvt_graphic_chara_idol_f_mask_NCLR  , NARC_local_tvt_graphic_chara_idol_f_mask_1_NCGR  , NARC_local_tvt_graphic_obj_idol_f_mask_NCLR },
+    //隠しキャラ(変装２)
+    { NARC_local_tvt_graphic_chara_idol_m_mask2_NCLR    , NARC_local_tvt_graphic_chara_idol_m_mask2_1_NCGR    , NARC_local_tvt_graphic_obj_idol_m_mask2_NCLR },
+    { NARC_local_tvt_graphic_chara_idol_f_mask2_NCLR  , NARC_local_tvt_graphic_chara_idol_f_mask2_1_NCGR  , NARC_local_tvt_graphic_obj_idol_f_mask2_NCLR },
+
     //主人公分岐用・主人公(女)素材
     { NARC_local_tvt_graphic_chara_player_f_NCLR , NARC_local_tvt_graphic_chara_player_f_1_NCGR , NARC_local_tvt_graphic_obj_player_f_NCLR },
 };

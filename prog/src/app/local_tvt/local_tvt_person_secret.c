@@ -150,36 +150,44 @@ void LOCAL_TVT_SECRET_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
  *	@return 顔出しタイプ
  */
 //-----------------------------------------------------------------------------
-LOCAL_TVT_SECRET_FACE LOCAL_TVT_SECRET_GetFace( const LOCAL_TVT_CALLDATA *cp_data )
+LOCAL_TVT_CHARA_TYPE LOCAL_TVT_SECRET_GetFace( const LOCAL_TVT_CALLDATA *cp_data )
 {
   u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_data );
   u16 state = LOCAL_TVT_CALLDATA_GetState( cp_data, LOCAL_TVT_PERSON_SECRET );
   u32 index = LTVT_SECREAT_DATA_SearchIndex( state );
-  LTVT_SECREAT_FACE face = LTVT_SECREAT_DATA_GetFace( index );
 
-  switch( face )
+  switch( LTVT_SECREAT_DATA_GetFace( index ) )
   {
   default:
     GF_ASSERT(0);
   case LTVT_SECREAT_FACE_SOUND:
-    return LOCAL_TVT_SECRET_FACE_INVISIBLE;
+    return LTCT_SOUNDONLY;
   case LTVT_SECREAT_FACE_MASK:
     if( sex == PM_MALE )
     {
-      return LOCAL_TVT_SECRET_FACE_HIDE_M;
+      return LTCT_SECRET_M_MASK;
     }
     else
     {
-      return LOCAL_TVT_SECRET_FACE_HIDE_F;
+      return LTCT_SECRET_F_MASK;
     }
   case LTVT_SECREAT_FACE_TRUE:
     if( sex == PM_MALE )
     {
-      return LOCAL_TVT_SECRET_FACE_VISIBLE_M;
+      return LTCT_SECRET_M;
     }
     else
     {
-      return LOCAL_TVT_SECRET_FACE_VISIBLE_F;
+      return LTCT_SECRET_F;
+    }
+  case LTVT_SECREAT_FACE_MASK2:
+    if( sex == PM_MALE )
+    {
+      return LTCT_SECRET_M_MASK2;
+    }
+    else
+    {
+      return LTCT_SECRET_F_MASK2;
     }
   }
 }
@@ -451,7 +459,6 @@ static BOOL Local_Tvt_Secret_FarewellInner( LOCAL_TVT_PERSON_SYS *p_person, cons
     {
       u16 state = LOCAL_TVT_CALLDATA_GetState( cp_param->p_data, LOCAL_TVT_PERSON_SECRET );
       u32 index = LTVT_SECREAT_DATA_SearchIndex( state );
-      LTVT_SECREAT_FACE face = LTVT_SECREAT_DATA_GetFace( index );
 
       PERSON_STATE_SECRET_DATE  date = Local_Tvt_Secret_GetDateEvent( cp_param->p_data );
 

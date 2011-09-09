@@ -61,6 +61,7 @@ typedef enum
   LTVT_SECREAT_FACE_SOUND,
   LTVT_SECREAT_FACE_MASK,
   LTVT_SECREAT_FACE_TRUE,
+  LTVT_SECREAT_FACE_MASK2,
 } LTVT_SECREAT_FACE;
 
 //=============================================================================
