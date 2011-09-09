@@ -1279,15 +1279,17 @@ static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id 
 	// 手に入れられない
 	else if(id == FMA_MSGWIN_03){
 		// プレイヤ名
-		mystatus = GAMEDATA_GetMyStatus( wk->Param->gdata );
-		strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
-		MyStatus_CopyNameString( mystatus, strbuf2 );
-		WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+//		mystatus = GAMEDATA_GetMyStatus( wk->Param->gdata );
+//		strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
+//		MyStatus_CopyNameString( mystatus, strbuf2 );
+//		WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+		// アイテム名
+		WORDSET_RegisterItemName( wk->Wordset, 0, wk->MissionResult.item );
 		// セット
 		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id]);
 		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
-		GFL_STR_DeleteBuffer(strbuf2);
+//		GFL_STR_DeleteBuffer(strbuf2);
 		GFL_STR_DeleteBuffer(str_tmp);
 	}
 	// 手に入れた2(sp)
@@ -1318,6 +1320,17 @@ static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id 
 		// 後処理としてアイテムを実際に加算
 		myitem = GAMEDATA_GetMyItem( wk->Param->gdata );
 		MYITEM_AddItem( myitem, wk->MissionResult.sp_item, buf[1], wk->heapID );
+	}
+	// 手に入れられない2
+	else if(id == FMA_MSGWIN_03A){
+		// アイテム名
+		WORDSET_RegisterItemName( wk->Wordset, 0, wk->MissionResult.sp_item );
+		// セット
+		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
+		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[3]);
+		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
+//		GFL_STR_DeleteBuffer(strbuf2);
+		GFL_STR_DeleteBuffer(str_tmp);
 	}
 	// 個人
 	else if(id == FMA_MSGWIN_05){

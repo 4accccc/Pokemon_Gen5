@@ -212,6 +212,7 @@ static void fma_disp_total_score( FMISSION_APP_WORK *wk, const s32 mode );
 static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num, const s32 snum );
 static void fma_chk_log_buffer( FMISSION_APP_WORK *wk );
 static void fma_chk_latest( FMISSION_APP_WORK *wk, const s32 num );
+static void fma_set_latest( FMISSION_APP_WORK *wk, const s32 src, const s32 dest );
 
 //
 static void fma_disp_fix_string( FMISSION_APP_WORK *wk, const s32 mode );
@@ -943,7 +944,7 @@ static void fma_chk_diff( FMISSION_APP_WORK* wk )
 	num = wk->MissionStatus.entry_num;
 	if(wk->OldWork.Num != num){
 		// 1人の場合
-		if(wk->OldWork.Num <= 1){
+		if(num <= 1){
 			wk->Flag |= FLG_FMA_ONLY;
 			wk->Flag |= FLG_FMA_SCROLL_STOP;
 			wk->BgOffX = 0;
@@ -1287,7 +1288,8 @@ static void fma_update_result( FMISSION_APP_WORK* wk )
 		if(wk->Flag & FLG_FMA_MSG_END){
 			wk->Step = STEP_END;
 			// SE
-			PMSND_PlaySE( SND_FMA_CANCEL );
+//			PMSND_PlaySE( SND_FMA_CANCEL );
+			PMSND_PlaySE( SND_FMA_SKIP );
 		}
 	}
 	//
@@ -1931,12 +1933,7 @@ static void fma_chk_latest( FMISSION_APP_WORK *wk, const s32 num )
 	}
 	else if(j == 1){	// 0番目の情報を1に写し、0番目に情報をセット
 		// 0番を1番にセット
-		wk->LatestLocal.log[1].tr_id = wk->LatestLocal.log[0].tr_id;
-		wk->LatestLocal.log[1].score = wk->LatestLocal.log[0].score;
-		if(wk->LatestLocal.log[1].name){
-			GFL_STR_DeleteBuffer( wk->LatestLocal.log[1].name );
-		}
-		wk->LatestLocal.log[1].name = GFL_STR_CreateCopyBuffer( wk->LatestLocal.log[0].name, wk->heapID );
+		fma_set_latest( wk, 0, 1 );
 		//
 		// 0番に情報をセット
 		wk->LatestLocal.log[0].tr_id = wk->Latest->log[num].tr_id;
@@ -1949,22 +1946,12 @@ static void fma_chk_latest( FMISSION_APP_WORK *wk, const s32 num )
 	else if((j == 2)||(j == -1)){	// 1->2へ、0->1にして、0番目に情報をセット
 		// 0番を1番にセット
 		if(wk->LatestLocal.log[0].tr_id != 0){
-			wk->LatestLocal.log[1].tr_id = wk->LatestLocal.log[0].tr_id;
-			wk->LatestLocal.log[1].score = wk->LatestLocal.log[0].score;
-			if(wk->LatestLocal.log[1].name){
-				GFL_STR_DeleteBuffer( wk->LatestLocal.log[1].name );
-			}
-			wk->LatestLocal.log[1].name = GFL_STR_CreateCopyBuffer( wk->LatestLocal.log[0].name, wk->heapID );
+			fma_set_latest( wk, 0, 1 );
 		}
 		//
 		// 1番を2番にセット
 		if(wk->LatestLocal.log[1].tr_id != 0){
-			wk->LatestLocal.log[2].tr_id = wk->LatestLocal.log[1].tr_id;
-			wk->LatestLocal.log[2].score = wk->LatestLocal.log[1].score;
-			if(wk->LatestLocal.log[2].name){
-				GFL_STR_DeleteBuffer( wk->LatestLocal.log[2].name );
-			}
-			wk->LatestLocal.log[2].name = GFL_STR_CreateCopyBuffer( wk->LatestLocal.log[1].name, wk->heapID );
+			fma_set_latest( wk, 1, 2 );
 		}
 		//
 		// 0番に情報をセット
@@ -1974,6 +1961,34 @@ static void fma_chk_latest( FMISSION_APP_WORK *wk, const s32 num )
 			GFL_STR_DeleteBuffer( wk->LatestLocal.log[0].name );
 		}
 		wk->LatestLocal.log[0].name = GFL_STR_CreateCopyBuffer( wk->Latest->log[num].name, wk->heapID );
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアログの情報の移動
+ *
+ * @param   FMISSION_APP_WORK		*wk
+ * @param   const s32				元
+ * @param   const s32				先
+ */
+//--------------------------------------------------------------
+static void fma_set_latest( FMISSION_APP_WORK *wk, const s32 src, const s32 dest )
+{
+	// クリア
+	if(src == -1){
+		wk->LatestLocal.log[dest].tr_id = 0;
+		wk->LatestLocal.log[dest].score = 0;
+		if(wk->LatestLocal.log[dest].name){
+			GFL_STR_DeleteBuffer( wk->LatestLocal.log[dest].name );
+		}
+	}else{
+		wk->LatestLocal.log[dest].tr_id = wk->LatestLocal.log[src].tr_id;
+		wk->LatestLocal.log[dest].score = wk->LatestLocal.log[src].score;
+		if(wk->LatestLocal.log[dest].name){
+			GFL_STR_DeleteBuffer( wk->LatestLocal.log[dest].name );
+		}
+		wk->LatestLocal.log[dest].name = GFL_STR_CreateCopyBuffer( wk->LatestLocal.log[src].name, wk->heapID );
 	}
 }
 
@@ -2109,7 +2124,7 @@ static BOOL fma_chk_meswin( FMISSION_APP_WORK *wk )
 				// ME再生
 				fma_snd_me( wk, 0 );
 			}else{
-				id = FMA_MSGWIN_03;
+				id = FMA_MSGWIN_03A;
 				// 手に入らず
 				wk->Flag |= FLG_FMA_ME_MES;
 			}
@@ -2200,7 +2215,8 @@ static BOOL fma_is_snd_me_end( FMISSION_APP_WORK *wk )
 //--------------------------------------------------------------
 static void fma_debug( FMISSION_APP_WORK *wk )
 {
-#ifdef PM_DEBUG
+//#ifdef PM_DEBUG
+#if 0
 	// debug
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 		if(wk->Flag & FLG_FMA_ONLY){

@@ -632,6 +632,7 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
 static void fmission_highscore( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk, const s32 id )
 {
   u8           buf[2];
+  s32          lv;
   s32          flg=0;
   s32          dflg=0;
   s32          num;
@@ -672,7 +673,9 @@ static void fmission_highscore( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk
     
     if(flg == 0){		// ƒXƒRƒA
       WORDSET_RegisterNumber(appwk->setup->wordset, 0, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-      str = GFL_MSG_CreateString( appwk->setup->mm_monolith, mono_mes_tbl[BMPWIN_SCORE_R*4] );
+//      str = GFL_MSG_CreateString( appwk->setup->mm_monolith, mono_mes_tbl[BMPWIN_SCORE_R*4] );
+      lv = wk->ArcData[wk->Id].common.unit;
+      str = GFL_MSG_CreateString( appwk->setup->mm_monolith, mono_mes_clear_tbl[lv] );
     }else{			// ŽžŠÔ
       if(buf[1] == 0){     // •ª‚Ì‚Ý
         WORDSET_RegisterNumber(appwk->setup->wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
