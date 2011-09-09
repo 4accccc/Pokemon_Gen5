@@ -220,6 +220,34 @@ VMCMD_RESULT EvCmdCrossCommThanksMessageInputCall( VMHANDLE *core, void *wk )
 }
 
 //======================================================================
+// すれ違い『自慢メッセージ』入力画面
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   すれ違い『自慢メッセージ』入力画面の呼び出し
+ * @param   core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCrossCommBoastMessageInputCall( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*   work       = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   script     = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*  gameSystem = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  GMEVENT* event;
+  u16* ret_wk;
+
+  // コマンド引数を取得
+  ret_wk = SCRCMD_GetVMWork( core, work ); // 第一引数
+  event = EVENT_FreeWordInput( gameSystem, fieldmap, NULL, NAMEIN_BOAST_WORD, ret_wk );
+  // イベントを呼ぶ
+  SCRIPT_CallEvent( script, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//======================================================================
 //======================================================================
 //--------------------------------------------------------------
 /**

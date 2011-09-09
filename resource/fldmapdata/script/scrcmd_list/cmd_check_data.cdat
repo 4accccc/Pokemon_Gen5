@@ -710,4 +710,5 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (707)
   { FALSE, FALSE, FALSE }, // NO_CMD (708)
   { FALSE, FALSE, FALSE }, // NO_CMD (709)
+  { TRUE, FALSE, FALSE }, // _CALL_CROSS_COMM_BOAST_MSG_INPUT (710)
 };

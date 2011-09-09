@@ -11777,6 +11777,21 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief すれ違い『自慢メッセージ』入力画面を呼び出す
+ *
+ * @param ret [out] 入力を確定したかどうかを受け取るワーク ( TRUE: 確定 )
+ */
+//--------------------------------------------------------------
+#define _CALL_CROSS_COMM_BOAST_MSG_INPUT( ret ) \
+    _ASM_CALL_CROSS_COMM_BOAST_MSG_INPUT ret
+
+  .macro _ASM_CALL_CROSS_COMM_BOAST_MSG_INPUT ret
+  .short EV_SEQ_CALL_CROSS_COMM_BOAST_MSG_INPUT
+  .short \ret
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief すれ違い調査の, 自分の回答を設定する
  *
  * @param qID [in] 質問ID ( QUESTION_ID_xxxx )
