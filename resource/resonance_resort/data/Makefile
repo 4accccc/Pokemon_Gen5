@@ -56,6 +56,7 @@ SPOTCONV 		= resort_spot_converter.rb
 NPCCONV 			= resort_npc_converter.rb
 CITYCONV		= resort_city_converter.rb
 PRESETCONV		= resort_preset_converter.rb
+PRESENTCONV		= resort_present_converter.rb
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -115,11 +116,12 @@ $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(
 	-rm -f *.dat
 	ruby $(DEFINECONV) $(targetdefine).csv $(definehash) $(targetpeopleh)
 	ruby $(PEOPLECONV) $(targetpeople).csv $(msgfile) $(scriptfile) $(targetpeople)
-	ruby $(SHOPCONV) $(targetshop).csv $(targetservice).csv $(msgfile) $(bmodelfile) $(landpatch) $(targetshop) $(targetservice)
+	ruby $(PRESENTCONV) $(targetpresent).csv $(targetpresent)
+	ruby $(SHOPCONV) $(targetshop).csv $(targetservice).csv $(msgfile) $(bmodelfile) $(landpatch) $(targetpresent).h $(targetshop) $(targetservice)
 	ruby $(INSTITUTIONCONV) $(targetinstitution).csv $(fieldevent) $(targetinstitution)
 	ruby $(SPOTCONV) $(targetspot).csv $(msgfile) $(targetspot)
 	ruby $(NPCCONV) $(targetnpc).csv $(targetkutikomi).csv $(targetoffreco).csv $(msgfile) $(objcode) $(targetnpc) $(targetkutikomi) $(targetoffreco)
-	ruby $(CITYCONV) $(targetcity).csv $(targetpresent).csv $(msgfile) $(targetcity) $(targetpresent)
+	ruby $(CITYCONV) $(targetcity).csv $(targetpresent).h $(msgfile) $(targetcity)
 	ruby $(PRESETCONV) $(targetpreset).csv $(msgfile) $(objcode) $(targetshop).h $(targetspot).h $(targetpreset)
 	-rm -f *.csv
 endif

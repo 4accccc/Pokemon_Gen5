@@ -221,8 +221,13 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_GET_PARAM_TYPE:
     *p_ret_wk = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TYPE, NULL );
     break;
-  case RESORT_GET_PARAM_DAY_FLAG:
-    *p_ret_wk = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_DAY_FLAG, NULL );
+  case RESORT_GET_PARAM_LOT_DAY_FLAG:
+    GF_ASSERT( RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct) == RESORT_PEOPLE_TYPE_RESIDENT );
+    {
+      RESORT_RESIDENT_DATA *p_resi = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_abstruct );
+      RESORT_INSTITUTION_DATA *p_ins = RESORT_RESIDENT_DATA_GetInstitution(p_resi );
+      *p_ret_wk = RESORT_INSTITUTION_DATA_IsBit( p_ins, RESORT_INSTITUTION_DATA_BIT_SHOP_01 );
+    }
     break;
   case RESORT_GET_PARAM_IS_INSTITUTION_FULL:
     *p_ret_wk = (RESORT_PEOPLE_ALL_DATA_GetResidentCount( p_all_people ) == RESORT_RESIDENT_DATA_NUM);
@@ -974,15 +979,55 @@ VMCMD_RESULT EvCmdResortLot( VMHANDLE *p_core, void *p_wk_adrs )
   SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+
+  const RESORT_BINARY_SHOP  *cp_shop = RESORT_SYSTEM_GetBinaryShop(p_sys);
+  const RESORT_BINARY_PRESENT *cp_present = RESORT_SYSTEM_GetBinaryPresent(p_sys);
   
-  u16 param = VMGetU16(p_core);
+  u16 param = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 *p_ret_item	= SCRCMD_GetVMWork( p_core, p_wk );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
 
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
   RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
 
-  *p_ret_wk = RESORT_ABSTRUCT_DATA_GetRnd( p_abstruct, RESORT_RND_ID_SHOP_LIST_00, 11 );
+  GF_ASSERT( RESORT_PEOPLE_GetPeopleData(p_people,RESORT_PEOPLE_DATA_PARAM_TYPE) == RESORT_PEOPLE_TYPE_RESIDENT );
+  GF_ASSERT( param < 6 );
+
+  *p_ret_wk   = RESORT_LOT_FAILURE;
+
+  //この人の住民を取得
+  //そこからリスト最初のサービスIDを取得
+  //サービスIDに登録されている抽選アイテムリストIDを取得
+  //抽選アイテムリストを乱数にかける
+  {
+    int i;
+    RESORT_RESIDENT_DATA *p_resi = RESORT_PEOPLE_GetDataAdrs( p_people );
+    const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData(cp_shop, p_resi  );
+    const RESORT_BINARY_SERVICE_DATA *cp_service = RESORT_BINARY_SHOP_DATA_GetList( cp_shop, cp_shop_data, 0 );
+
+    u16 listID = RESORT_BINARY_SERVICE_DATA_GetData( cp_service, RESORT_BINARY_SERVICE_PARAM_PARAM_1 );
+    u16 service = RESORT_BINARY_SERVICE_DATA_GetData( cp_service, RESORT_BINARY_SERVICE_PARAM_SERVICE_ID );
+
+    u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( p_abstruct, RESORT_RND_ID_SHOP_LIST_00+param, 100 );
+    u32 percent = 0;
+    GF_ASSERT( listID < RESORT_BINARY_GetMax(cp_present) );
+    GF_ASSERT( service == RESORT_SERVICE_TYPE_DRAWLOTS );
+    for( i = 0; i < RESORT_BINARY_PRESENT_PARAM_ITEM_MAX; i++ )
+    {
+      u32 item = RESORT_BINARY_PRESENT_GetData(cp_present, listID, RESORT_BINARY_PRESENT_PARAM_ITEM_00+i*2);
+      percent += RESORT_BINARY_PRESENT_GetData(cp_present, listID, RESORT_BINARY_PRESENT_PARAM_PERCENT_00+i*2);
+      if( rnd < percent )
+      {
+        GF_ASSERT_MSG( item != 0, "idx%d item%d percent%d rnd%d\n", i, item, percent, rnd );
+        *p_ret_item = item;
+        *p_ret_wk   = i+1;
+        break;
+      }
+    }
+
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -1087,30 +1132,36 @@ VMCMD_RESULT EvCmdResortAddEffort( VMHANDLE *p_core, void *p_wk_adrs )
   
   u16 idx   = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 effort = VMGetU16(p_core);
-  u16 value   = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  s16 value   = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
 
   POKEPARTY *p_party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
   POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_party, idx );
 
+  if( effort >= RESORT_DEC_EFFORT_HP )
+  {
+    effort -= RESORT_DEC_EFFORT_HP;
+    value *= -1;
+  }
+
   {
     int i;
-    u16 value;
-    u16 all = 0;
+    s32 v;
+    s32 all = 0;
 
     for( i = 0; i < 6; i++ )
     {
       all += PP_Get( p_pp, ID_PARA_hp_exp + i, NULL );
       if( i == effort )
       {
-        value = PP_Get( p_pp, ID_PARA_hp_exp + i, NULL );
+        v = PP_Get( p_pp, ID_PARA_hp_exp + i, NULL );
       }
     }
     
-    value = PrmExp_Up( value, all, value );
-    if( value != -1 )
+    v = PrmExp_Up( v, all, value );
+    if( v != -1 )
     {
-      PP_Put( p_pp, ID_PARA_hp_exp + effort, value );
+      PP_Put( p_pp, ID_PARA_hp_exp + effort, v );
       PP_Renew( p_pp );
       *p_ret_wk = TRUE;
     }
@@ -1169,7 +1220,13 @@ VMCMD_RESULT EvCmdResortSetDayFlag( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_wk, p_people_sys );
 
-  RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_DAY_FLAG, TRUE );
+  GF_ASSERT( RESORT_PEOPLE_GetPeopleData(p_people,RESORT_PEOPLE_DATA_PARAM_TYPE) == RESORT_PEOPLE_TYPE_RESIDENT );
+
+  {
+    RESORT_RESIDENT_DATA *p_resi = RESORT_PEOPLE_GetDataAdrs( p_people );
+    RESORT_INSTITUTION_DATA *p_ins = RESORT_RESIDENT_DATA_GetInstitution(p_resi );
+    RESORT_INSTITUTION_DATA_SetBit( p_ins, RESORT_INSTITUTION_DATA_BIT_SHOP_01, TRUE );
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -1831,6 +1888,9 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_MY_PARAM_WANT_JOB:
     *p_ret_wk = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_WANT_JOB, NULL );
+    break;
+  case RESORT_MY_PARAM_IS_FEVER:
+    *p_ret_wk = FALSE; //TODO
     break;
   default:
     GF_ASSERT(0);

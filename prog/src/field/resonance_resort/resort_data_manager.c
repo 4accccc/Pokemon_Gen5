@@ -511,6 +511,7 @@ u32 RESORT_ABSTRUCT_DATA_DrawLotsPresentItem( const RESORT_ABSTRUCT_DATA *cp_wk,
 
       if( rnd < present_recv )
       {
+        GF_ASSERT_MSG( item != 0, "idx%d item%d percent%d rnd%d\n", i, item, present_recv, rnd );
         return item;
       }
     }
@@ -1686,7 +1687,12 @@ static u32 SexGetMsgID( u32 sex, u32 male, u32 female )
 u16 RESORT_SCRCMD_GetMsgID( u16 param, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_ABSTRUCT_MANAGER *p_man, RESORT_CITY_DATA *p_city_data ,RESORT_BINARY_SPOT *p_spot, RESORT_BINARY_SHOP *p_shop, RESORT_BINARY_CITY *p_city, WORDSET *p_wordset, HEAPID heapID )
 {
   u32 sex = PM_MALE;
-  u16 people_type = RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct);
+  u16 people_type = 0;
+  
+  if( p_abstruct )
+  {
+    people_type = RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct);
+  }
 
   switch( param )
   {
@@ -1911,7 +1917,50 @@ u16 RESORT_SCRCMD_GetMsgID( u16 param, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_
   case RESORT_FUN_GREET_MSGID:
     return SexGetMsgID( sex, resort_fun_greet_00_m, resort_fun_greet_00_f );
     break;
-
+  case RESORT_SHOP_LOT_SUCCESS_MSGID:
+    return SexGetMsgID( sex, resort_lot_01_m, resort_lot_01_f );
+  case RESORT_SHOP_LOT_FAILER_MSGID:
+    return SexGetMsgID( sex, resort_lot_00_m, resort_lot_00_f );
+  case RESORT_SHOP_LOT_DAYEND_MSGID:
+    return SexGetMsgID( sex, resort_lot_02_m, resort_lot_02_f );
+  case RESORT_SHOP_LOT_READY_MSGID:
+    return SexGetMsgID( sex, resort_lot_03_m, resort_lot_03_f );
+  case RESORT_SHOP_LOT_BIG_MSGID:
+    return SexGetMsgID( sex, resort_lot_04_m, resort_lot_04_f );
+  case RESORT_SHOP_LOT_FEVER_MSGID:
+    return SexGetMsgID( sex, resort_lot_05_m, resort_lot_05_f );
+  case RESORT_SHOP_MONEY_MSGID:
+    return SexGetMsgID( sex, resort_shop_money_00_m, resort_shop_money_00_f );
+  case RESORT_SHOP_EGG_NG_MSGID:
+    return SexGetMsgID( sex, resort_shop_egg_ng_00_m, resort_shop_egg_ng_00_f );
+  case RESORT_SHOP_POKE_NG_MSGID:
+    return SexGetMsgID( sex, resort_shop_poke_ng_00_m, resort_shop_poke_ng_00_f );
+  case RESORT_SHOP_DORYOKU_U_NG_MSGID:
+    return SexGetMsgID( sex, resort_shop_doryoku_ng_00_m, resort_shop_doryoku_ng_00_f );
+  case RESORT_SHOP_DORYOKU_D_NG_MSGID:
+    return SexGetMsgID( sex, resort_shop_doryoku_ng_01_m, resort_shop_doryoku_ng_01_f );
+  case RESORT_SHOP_NATUKI_NG_MSGID:
+    return SexGetMsgID( sex, resort_shop_natuki_ng_00_m, resort_shop_natuki_ng_00_f );
+  case RESORT_SHOP_LV_NG_MSGID:
+    return SexGetMsgID( sex, resort_shop_lv_ng_00_m, resort_shop_lv_ng_00_f );
+  case RESORT_SHOP_PARLOR_OK_MSGID:
+    return SexGetMsgID( sex, resort_parlor_01_m, resort_parlor_01_f );
+  case RESORT_SHOP_PARLOR_POKESEL_MSGID:
+    return SexGetMsgID( sex, resort_parlor_00_m, resort_parlor_00_f );
+  case RESORT_SHOP_BREEDER_OK_MSGID: 
+    return SexGetMsgID( sex, resort_breeder_01_m, resort_breeder_01_f );
+  case RESORT_SHOP_BREEDER_POKESEL_MSGID:
+    return SexGetMsgID( sex, resort_breeder_00_m, resort_breeder_00_f );
+  case RESORT_SHOP_EXERCIDE_OK_MSGID:
+    return SexGetMsgID( sex, resort_exercice_01_m, resort_exercice_01_f );
+  case RESORT_SHOP_EXERCIDE_POKESEL_MSGID:
+    return SexGetMsgID( sex, resort_exercice_00_m, resort_exercice_00_f );
+  case RESORT_SHOP_NURSERY_OK_MSGID:
+    return SexGetMsgID( sex, resort_nursery_01_m, resort_nursery_01_f );
+  case RESORT_SHOP_NURSERY_POKESEL_MSGID:
+    return SexGetMsgID( sex, resort_nursery_00_m, resort_nursery_00_f );
+  case RESORT_SHOP_NURSERY_HATCH_MSGID:
+    return SexGetMsgID( sex, resort_nursery_02_m, resort_nursery_02_f );
   case RESORT_MSGID_BOARD_00:
   case RESORT_MSGID_BOARD_01:
   case RESORT_MSGID_BOARD_02:

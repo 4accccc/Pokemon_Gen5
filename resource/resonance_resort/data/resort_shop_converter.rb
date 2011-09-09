@@ -12,6 +12,7 @@
 require "../../../tools/headerdata.rb"
 require "conv_tool.rb"
 require "resort_define_hash.rb"
+require "resort_present.rb"
 require "../../itemconv/item_hash.rb"
 #-------------------------------------
 # 引数チェック
@@ -23,8 +24,9 @@ ARG_SERVICE_CSV = 1
 ARG_MSG_H       = 2
 ARG_BMODEL_NAIX = 3
 ARG_PATCH_H     = 4
-ARG_SHOP_OUTPUT = 5
-ARG_SERVICE_OUTPUT  = 6
+ARG_ITEMLIST_H  = 5
+ARG_SHOP_OUTPUT = 6
+ARG_SERVICE_OUTPUT  = 7
 def checkArgument
   if ARGV[ARG_SHOP_CSV] == nil
     puts "引数1にship csvのファイル名を指定してください"
@@ -46,6 +48,10 @@ def checkArgument
     puts "引数４に配置モデルのnaixファイル名を指定してください"
     return false
   end
+  if ARGV[ARG_ITEMLIST_H] == nil
+    puts "引数４に抽選アイテムのhファイル名を指定してください"
+    return false
+  end
   if ARGV[ARG_SHOP_OUTPUT] == nil
     puts "引数5にshop 出力ファイル名を指定してください"
     return false
@@ -55,7 +61,7 @@ def checkArgument
     return false
   end
 
-  for i in 0...ARG_PATCH_H
+  for i in 0...ARG_ITEMLIST_H
     unless FileTest.exists?(ARGV[i])
       puts "#{ARGV[i]}が見つかりません"
       return false
@@ -84,11 +90,14 @@ SERVICE_COL_PARAM_1     = 6         #列：サービス種類ごとの効果１
 SERVICE_COL_PARAM_2     = 7         #列：サービス種類ごとの効果２
 SERVICE_COL_EFFECT_M      = 8         #列：演出メッセージ男
 SERVICE_COL_EFFECT_F      = 9         #列：演出メッセージ女
-def  convertService( csv, data, h_define, h_item, gmm, h_service )
+def  convertService( csv, data, h_define, h_item, gmm, h_service, presentlist_h )
   
   #データの作成
   msgdata = HeaderDataArray.new
   msgdata.load( gmm )
+
+  predata = HeaderDataArray.new
+  predata.load( presentlist_h )
 
   for row in SERVICE_ROW_START...csv.row_length-1
     
@@ -139,12 +148,42 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service )
     data.write_u16( money )
     data.write_u16( h_define[kind] )
 
-    if kind == "道具"
+    case kind 
+    when "道具"
       data.write_u16( h_item[param1] )
       data.write_u16( param2 )
+
+    when "掘り出し物"
+      if $item_list_hash[param1] != "掘り出し物用"
+        puts "#{tag}に掘り出し物用以外の抽選アイテムリストが指定されています"
+        exit(1)
+      end
+      begin
+        data.write_u16( predata.search( "RESORT_LIST_ID_#{param1}", "#{row}行の抽選アイテムリスト" ) )
+        data.write_u16( 0 )
+      rescue HeaderSearchError
+        exit(1)
+      end
+
+    when "くじ抽選"
+      if $item_list_hash[param1] != "くじ用"
+        puts "#{tag}にくじ用以外の抽選アイテムリストが指定されています"
+        exit(1)
+      end
+      begin
+        data.write_u16( predata.search( "RESORT_LIST_ID_#{param1}", "#{row}行の抽選アイテムリスト" ) )
+        data.write_u16( 0 )
+      rescue HeaderSearchError
+        exit(1)
+      end
+
     else
       data.write_u16( param1 )
-      data.write_u16( 0 )
+      if param2 == nil 
+        data.write_u16( 0 )
+      else
+        data.write_u16( param2 )
+      end
       if name_flg == 0
         puts "名前フラグOFFは道具だけです"
         exit(1)
@@ -187,15 +226,14 @@ SHOP_COL_NEXTEXP       = 4         #列：次の経験値
 SHOP_COL_NAME          = 5         #列：お店名
 SHOP_COL_3DMD_L        = 6         #列：外観左
 SHOP_COL_3DMD_R        = 7         #列：外観右
-SHOP_COL_LIST1         = 9         #列：リスト１
-SHOP_COL_LIST2         = 10         #列：リスト２
-SHOP_COL_LIST3         = 11         #列：リスト３
-SHOP_COL_LIST4         = 12         #列：リスト４
-SHOP_COL_LIST5         = 13         #列：リスト５
-SHOP_COL_LIST6         = 14         #列：リスト６
+SHOP_COL_LIST1         = 8         #列：リスト１
+SHOP_COL_LIST2         = 9         #列：リスト２
+SHOP_COL_LIST3         = 10         #列：リスト３
+SHOP_COL_LIST4         = 11         #列：リスト４
+SHOP_COL_LIST5         = 12         #列：リスト５
+SHOP_COL_LIST6         = 13         #列：リスト６
 SHOP_COL_LIST_START    = SHOP_COL_LIST1
 SHOP_COL_LIST_END      = SHOP_COL_LIST6
-SHOP_COL_END           = 15        #列最後
 def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
 
   #データの作成
@@ -225,7 +263,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
 
     #データ書き込み
     data.write_u16( h_define[shop] )
-    data.write_u16( 0 ) #TODO
+    data.write_u16( type )
     data.write_u16( lv )
     data.write_u16( nextexp )
 
@@ -255,6 +293,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
       exit(1)
     end
 
+    data.write_u16( 0 ) #ダミー
     for i in SHOP_COL_LIST_START...SHOP_COL_LIST_END+1
       list   = csv.get( row, i )
       if list == nil
@@ -318,7 +357,7 @@ begin
   #コンバート
   service_hash = Hash.new
 
-  convertService( serviceCsv, serviceData, $define_hash, $item_hash, ARGV[ARG_MSG_H], service_hash )
+  convertService( serviceCsv, serviceData, $define_hash, $item_hash, ARGV[ARG_MSG_H], service_hash, ARGV[ARG_ITEMLIST_H] )
   convertShop( shopCsv, shopData, $define_hash, ARGV[ARG_MSG_H], ARGV[ARG_BMODEL_NAIX], ARGV[ARG_PATCH_H], service_hash, header )
 
   #date書き込み

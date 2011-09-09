@@ -372,6 +372,7 @@ u16 RESORT_BINARY_SHOP_DATA_GetData( const RESORT_BINARY_SHOP_DATA *cp_wk, RESOR
 const RESORT_BINARY_SERVICE_DATA * RESORT_BINARY_SHOP_DATA_GetList( const RESORT_BINARY_SHOP *cp_wk, const RESORT_BINARY_SHOP_DATA *cp_shop, u16 list )
 {
   u16 service_tag = cp_shop->param[RESORT_BINARY_SHOP_PARAM_LIST_01+list];
+  GF_ASSERT( list < RESORT_BINARY_SHOP_LIST_MAX );
   
   if( service_tag < RESORT_BINARY_GetMax( cp_wk->p_service ) )
   {

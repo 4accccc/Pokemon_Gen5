@@ -23,7 +23,7 @@
 #define RESORT_GET_PARAM_IS_INSTITUTION_EMPTY   (6)
 #define RESORT_GET_PARAM_IS_EVENT           (7)
 #define RESORT_GET_PARAM_TYPE               (8)
-#define RESORT_GET_PARAM_DAY_FLAG           (9)
+#define RESORT_GET_PARAM_LOT_DAY_FLAG       (9)
 #define RESORT_GET_PARAM_IS_INSTITUTION_FULL  (10)
 #define RESORT_GET_PARAM_SHOPKIND             (11)
 #define RESORT_GET_PARAM_HAS_RECORD         (12)
@@ -64,6 +64,7 @@
 #define RESORT_MY_PARAM_WANT_JOB           (16)
 #define RESORT_MY_PARAM_TEX                (17)
 #define RESORT_MY_PARAM_IS_TUTORIAL        (18)
+#define RESORT_MY_PARAM_IS_FEVER           (19)
 
 //_RESORT_JOB_CHANGE用
 #define RESORT_JOBCHANGE_RESIDENT           (0)
@@ -176,6 +177,32 @@
   //チュートリアル２
 #define RESORT_TUTORIAL02_GREET_MSGID         (130) //挨拶
 
+  //お店
+#define RESORT_SHOP_LOT_SUCCESS_MSGID         (140) //くじ当たり
+#define RESORT_SHOP_LOT_FAILER_MSGID          (141) //くじハズレ
+#define RESORT_SHOP_LOT_DAYEND_MSGID          (142) //くじ終了
+#define RESORT_SHOP_LOT_READY_MSGID           (143) //でははっぴょうします
+#define RESORT_SHOP_LOT_BIG_MSGID             (144) //くじ大当たり
+#define RESORT_SHOP_LOT_FEVER_MSGID           (145) //フィーバー中
+
+#define RESORT_SHOP_PARLOR_OK_MSGID           (150)
+#define RESORT_SHOP_PARLOR_POKESEL_MSGID      (151)
+#define RESORT_SHOP_BREEDER_OK_MSGID          (152)
+#define RESORT_SHOP_BREEDER_POKESEL_MSGID     (153)
+#define RESORT_SHOP_EXERCIDE_OK_MSGID         (154)
+#define RESORT_SHOP_EXERCIDE_POKESEL_MSGID    (155)
+#define RESORT_SHOP_NURSERY_OK_MSGID          (156)
+#define RESORT_SHOP_NURSERY_POKESEL_MSGID     (157)
+#define RESORT_SHOP_NURSERY_HATCH_MSGID       (158)
+
+#define RESORT_SHOP_MONEY_MSGID               (160) //お代をいただきますね
+#define RESORT_SHOP_EGG_NG_MSGID              (161) //タマゴはだめ
+#define RESORT_SHOP_POKE_NG_MSGID             (162) //ポケモンはだめ
+#define RESORT_SHOP_DORYOKU_U_NG_MSGID        (163) //努力値あがらない
+#define RESORT_SHOP_DORYOKU_D_NG_MSGID        (164) //努力値さがらない
+#define RESORT_SHOP_NATUKI_NG_MSGID           (165) //なつきあがらない
+#define RESORT_SHOP_LV_NG_MSGID               (166) //LVあがらない
+
 //_RESORT_SEARCH_RECEPTION用
 #define RESORT_SEARCH_PROXY_GTS               (0)
 #define RESORT_SEARCH_PROXY_MYSTERY           (0)
@@ -190,6 +217,12 @@
 #define RESORT_ADD_EFFORT_AGI                 (3)
 #define RESORT_ADD_EFFORT_SPEPOW              (4)
 #define RESORT_ADD_EFFORT_SPEDEF              (5)
+#define RESORT_DEC_EFFORT_HP                  (6)
+#define RESORT_DEC_EFFORT_POW                 (7)
+#define RESORT_DEC_EFFORT_DEF                 (8)
+#define RESORT_DEC_EFFORT_AGI                 (9)
+#define RESORT_DEC_EFFORT_SPEPOW              (10)
+#define RESORT_DEC_EFFORT_SPEDEF              (11)
 
 //_RESORT_DELETE_PEOPLE用
 #define RESORT_DELTE_PEOPLE_MINE              (0xFF)

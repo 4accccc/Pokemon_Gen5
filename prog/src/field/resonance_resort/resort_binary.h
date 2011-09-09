@@ -366,6 +366,7 @@ typedef enum
   RESORT_BINARY_SHOP_PARAM_NAME,
   RESORT_BINARY_SHOP_PARAM_3DMD_L,
   RESORT_BINARY_SHOP_PARAM_3DMD_R,
+  RESORT_BINARY_SHOP_PARAM_DUMMY, //ダミー
   RESORT_BINARY_SHOP_PARAM_LIST_01,
   RESORT_BINARY_SHOP_PARAM_LIST_02,
   RESORT_BINARY_SHOP_PARAM_LIST_03,
@@ -396,13 +397,14 @@ extern u16 RESORT_BINARY_SERVICE_DATA_GetData( const RESORT_BINARY_SERVICE_DATA 
 
 //=============================================================================
 /**
- *					おみやげデータ
+ *					おみやげデータ  →  抽選アイテムデータ
 */
 //=============================================================================
 //-------------------------------------
 ///	ワーク
 //=====================================
 typedef RESORT_BINARY RESORT_BINARY_PRESENT;
+
 
 //-------------------------------------
 ///	取得データ
@@ -421,10 +423,19 @@ typedef enum
   RESORT_BINARY_PRESENT_PARAM_ITEM_04,
   RESORT_BINARY_PRESENT_PARAM_PERCENT_05,
   RESORT_BINARY_PRESENT_PARAM_ITEM_05,
+  RESORT_BINARY_PRESENT_PARAM_PERCENT_06,
+  RESORT_BINARY_PRESENT_PARAM_ITEM_06,
+  RESORT_BINARY_PRESENT_PARAM_PERCENT_07,
+  RESORT_BINARY_PRESENT_PARAM_ITEM_07,
+  RESORT_BINARY_PRESENT_PARAM_PERCENT_08,
+  RESORT_BINARY_PRESENT_PARAM_ITEM_08,
+  RESORT_BINARY_PRESENT_PARAM_PERCENT_09,
+  RESORT_BINARY_PRESENT_PARAM_ITEM_09,
+
   RESORT_BINARY_PRESENT_PARAM_MAX,
 }RESORT_BINARY_PRESENT_PARAM;
 
-#define RESORT_BINARY_PRESENT_PARAM_ITEM_MAX  (6)
+#define RESORT_BINARY_PRESENT_PARAM_ITEM_MAX  (10)
 
 //-------------------------------------
 ///	PUBLIC

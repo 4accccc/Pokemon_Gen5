@@ -13756,15 +13756,16 @@
  * @param[out]  値段
  */
 //--------------------------------------------------------------
-#define _RESORT_CALL_LIST( idx, param, ret_type, ret_param, ret_idx, ret_price ) \
-    _ASM_RESORT_CALL_LIST idx, param, ret_type, ret_param, ret_idx, ret_price
+#define _RESORT_CALL_LIST( idx, param, ret_type, ret_param, ret_param2, ret_idx, ret_price ) \
+    _ASM_RESORT_CALL_LIST idx, param, ret_type, ret_param, ret_param2, ret_idx, ret_price
 
-  .macro _ASM_RESORT_CALL_LIST idx, param, ret_type, ret_param, ret_idx, ret_price
+  .macro _ASM_RESORT_CALL_LIST idx, param, ret_type, ret_param, ret_param2, ret_idx, ret_price
   .short EV_SEQ_RESORT_CALL_LIST
   .short \idx
   .short \param
   .short \ret_type
   .short \ret_param
+  .short \ret_param2
   .short \ret_idx
   .short \ret_price
   .endm
@@ -13785,17 +13786,19 @@
 /**
  * @brief リゾート用　くじをひく
  * @param[in]   cnt 何回目か
+ * @param[out]  ret_item あたった場合のアイテム番号
  * @param[out]  ret_wk 　下記
  *      RESORT_LOT_FAILURE　…外れ
  *      1~10                …１等～１０等
  */
 //--------------------------------------------------------------
-#define _RESORT_LOT( cnt, ret_wk ) \
-      _ASM_RESORT_LOT cnt, ret_wk
+#define _RESORT_LOT( cnt, ret_item, ret_wk ) \
+      _ASM_RESORT_LOT cnt, ret_item, ret_wk
 
-  .macro _ASM_RESORT_LOT cnt, ret_wk
+  .macro _ASM_RESORT_LOT cnt, ret_item, ret_wk
   .short EV_SEQ_RESORT_LOT
   .short \cnt
+  .short \ret_item
   .short \ret_wk
   .endm
 
@@ -13839,10 +13842,10 @@
 
 //--------------------------------------------------------------
 /**
- * @brief リゾート用　１日フラグをON
+ * @brief リゾート用　くじ用１日フラグをON
  */
 //--------------------------------------------------------------
-#define _RESORT_SET_DAY_FLAG() \
+#define _RESORT_SET_LOT_DAY_FLAG() \
       _ASM_RESORT_SET_DAY_FLAG
 
   .macro _ASM_RESORT_SET_DAY_FLAG
