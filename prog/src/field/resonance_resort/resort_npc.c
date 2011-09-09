@@ -59,7 +59,7 @@ RESORT_NPC_SYS * RESORT_NPC_SYS_Init( const RESORT_NPC_SYS_PARAM *cp_param, HEAP
   RESORT_NPC_SYS *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_NPC_SYS) );
   p_wk->param = *cp_param;
   p_wk->p_binary_npc        = RESORT_BINARY_NPC_Init( heapID );
-  p_wk->p_binary_offreco    = RESORT_BINARY_OFFRECO_Init( heapID );
+  p_wk->p_binary_offreco    = NULL;
   p_wk->p_binary_mouthcomm  = RESORT_BINARY_MOUTHCOMM_Init( heapID );
 
   Resort_Npc_Sys_AddAll( p_wk );
@@ -76,7 +76,6 @@ RESORT_NPC_SYS * RESORT_NPC_SYS_Init( const RESORT_NPC_SYS_PARAM *cp_param, HEAP
 void RESORT_NPC_SYS_Exit( RESORT_NPC_SYS *p_wk )
 {
   RESORT_BINARY_MOUTHCOMM_Exit( p_wk->p_binary_mouthcomm );
-  RESORT_BINARY_OFFRECO_Exit( p_wk->p_binary_offreco );
   RESORT_BINARY_NPC_Exit( p_wk->p_binary_npc );
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -136,7 +135,7 @@ u16 RESORT_NPC_SYS_GetMoutchCommData( const RESORT_NPC_SYS *cp_wk, u32 index, RE
 //-----------------------------------------------------------------------------
 u16 RESORT_NPC_SYS_GetOffRecoData( const RESORT_NPC_SYS *cp_wk, u32 index, RESORT_BINARY_OFFRECO_PARAM param )
 {
-  return RESORT_BINARY_OFFRECO_GetData( cp_wk->p_binary_offreco, index, param );
+  return 0; 
 }
 
 //----------------------------------------------------------------------------
@@ -202,7 +201,7 @@ static void Resort_Npc_Sys_AddAll( RESORT_NPC_SYS *p_wk )
 //-----------------------------------------------------------------------------
 u32 RESORT_NPC_SYS_GetOffRecoMax( const RESORT_NPC_SYS *cp_wk )
 {
-  return RESORT_BINARY_OFFRECO_GetMax( cp_wk->p_binary_offreco );
+  return 0;
 }
 //----------------------------------------------------------------------------
 /**
@@ -230,20 +229,7 @@ u32 RESORT_NPC_SYS_GetParam( const RESORT_NPC_SYS *cp_wk, u32 index )
 //-----------------------------------------------------------------------------
 u32 RESORT_NPC_SYS_CalcOffrecoGroupMax( const RESORT_NPC_SYS *cp_wk )
 {
-  int i;
-  int cnt = 0;
-  int now_group = 0xFFFF;
-  int pre_group = 0xFFFF;
-  for( i = 0; i < RESORT_BINARY_OFFRECO_GetMax( cp_wk->p_binary_offreco ); i++ )
-  {
-    now_group = RESORT_BINARY_OFFRECO_GetData( cp_wk->p_binary_offreco, i, RESORT_BINARY_OFFRECO_PARAM_GROUP );
-    if( now_group != pre_group )
-    {
-      cnt++;
-      now_group = pre_group;
-    }
-  }
-  return cnt;
+  return 0;
 }
 //----------------------------------------------------------------------------
 /**
@@ -257,14 +243,5 @@ u32 RESORT_NPC_SYS_CalcOffrecoGroupMax( const RESORT_NPC_SYS *cp_wk )
 //-----------------------------------------------------------------------------
 u32 RESORT_NPC_SYS_GetOffrecoIndexByType( const RESORT_NPC_SYS *cp_wk, u32 type )
 {
-  int i;
-  for( i = 0; i < RESORT_BINARY_OFFRECO_GetMax( cp_wk->p_binary_offreco ); i++ )
-  {
-    if( RESORT_BINARY_OFFRECO_GetData( cp_wk->p_binary_offreco, i, RESORT_BINARY_OFFRECO_PARAM_TYPE ) == type )
-    {
-      return i;
-    }
-  }
-  GF_ASSERT(0);
   return 0;
 }
