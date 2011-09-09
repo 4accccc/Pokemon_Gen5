@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-09-09T14:04:30"/>
+	<create user="ibe_mana" host="W00191" date="2011-09-09T15:14:00"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -1773,15 +1773,15 @@
 			dddd 58bc 2538 19a1 5552 1255 219a 8835
 			dddd 58bc 2883 1991 5552 1255 2199 8388
 			dddd 58bc 5555 2112 4444 2444 5211 8655
-			dddd 58bc 5555 0225 0000 0000 5522 8655
-			dddd 68bc 5555 0045 0000 0000 5540 8655
-			dddd 68bc 5555 0045 0000 0000 5540 8655
-			dddd 8bcd 5555 0045 0000 0000 5540 b855
-			dddd 8bcd 5556 0045 0000 0000 5540 b865
-			dddd bcdd 5568 0045 0000 0000 5540 cb86
-			dddd cddd 688b 0045 0000 0000 8540 dcb8
-			31dd d13d 8bbc 0448 0000 0000 b844 ddcb
-			111d 111d bccd 48bb 4444 4444 cbbb dddc
+			dddd 58bc 5555 0225 0000 0000 5422 8655
+			dddd 68bc 5555 0045 0000 0000 5400 8655
+			dddd 68bc 5555 0045 0000 0000 5400 8655
+			dddd 8bcd 5555 0045 0000 0000 5400 b855
+			dddd 8bcd 5556 0045 0000 0000 5400 b865
+			dddd bcdd 5568 0045 0000 0000 5400 cb86
+			dddd cddd 688b 0045 0000 0000 8400 dcb8
+			31dd d13d 8bbc 0448 0000 0000 b440 ddcb
+			111d 111d bccd 48bb 4444 4444 cbb4 dddc
 			113d 3111 bcdd bb88 6668 bb86 cb88 dddd
 			13dd d311 8bcd 8677 5555 6855 b855 dddc
 			1ddd dd11 68bc 7777 7777 7777 8677 ddcb
@@ -1847,14 +1847,14 @@
 			2666 1351 6662 1266 2135 6666 a98b aaaa
 			2666 1331 5552 1255 2133 6666 a98b aaaa
 			6666 2112 bbbb 2bbb 6211 6666 a98b aaaa
-			6666 0225 0000 0000 6522 6666 a98b aaaa
-			6665 00b5 0000 0000 65b0 5666 a98b aaaa
-			6665 00b5 0000 0000 65b0 5666 a98b aaaa
-			666b 00b5 0000 0000 65b0 b666 aa98 aaaa
-			665b 00b5 0000 0000 65b0 b566 aa98 aaaa
-			55b8 00b5 0000 0000 55b0 8b55 aaa9 aaaa
-			bb89 00b5 0000 0000 55b0 98bb aaaa aaaa
-			889a 0bbb 0000 0000 bbbb a988 aaaa aaaa
+			6666 022b 0000 0000 6522 6666 a98b aaaa
+			6665 000b 0000 0000 65b0 5666 a98b aaaa
+			6665 000b 0000 0000 65b0 5666 a98b aaaa
+			666b 000b 0000 0000 65b0 b666 aa98 aaaa
+			665b 000b 0000 0000 65b0 b566 aa98 aaaa
+			55b8 000b 0000 0000 55b0 8b55 aaa9 aaaa
+			bb89 000b 0000 0000 55b0 98bb aaaa aaaa
+			889a 00bb 0000 0000 bbbb a988 aaaa aaaa
 			99aa b888 bbbb bbbb 888b aa99 2a21 aaa1
 			9aaa bbb8 77b8 8b77 8bbb 1aa9 1a11 aa11
 			89aa b44b 444b b444 b44b 2a98 1111 aa21
@@ -2002,27 +2002,20 @@
 	</tex_image>
 	<tex_image index="32" name="out58_zan5"
 		width="16" height="16" original_width="16" original_height="16"
-		format="a5i3"
+		format="palette16"
+		color0_mode="transparency"
 		palette_name="out58_zan5_pl"
 		path="C:/home/swan_data3d/field/out58/chip/tex/out58_zan5.tga"
 	>
-		<bitmap size="128">
-			fdfd fdfd fdfd fdfd fdfd fdfd fdfd fdfd
-			fdfd fdfd fcfd fcfc fcfc fdfc fdfd fdfd
-			fdfd fcfc fcfc fcfc fcfc fcfc fcfc fdfd
-			fcfc fcfc fcfc fafa fafa fcfc fcfc fcfc
-			fcfc fafc fafa fbfb fbfb fafa fcfa fcfc
-			fafa fbfa fbfb fbfb fbfb fbfb fafb fafa
-			fbfb fbfb fbfb f9f9 f9f9 fbfb fbfb fbfb
-			fbfb f9fb f9f9 f9f9 f9f9 f9f9 fbf9 fbfb
-			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
-			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
-			f9f9 f9f9 f8f9 f8f8 f8f8 f9f8 f9f9 f9f9
-			f9f9 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 0606 0606 f8f8 f8f8 f8f8
-			f8f8 06f8 0606 0606 0606 0606 f806 f8f8
+		<bitmap size="64">
+			3333 3333 3333 3333 3333 2223 3222 3333
+			2233 2222 2222 3322 2222 1122 2211 2222
+			1222 6611 1166 2221 6111 6666 6666 1116
+			6666 5566 6655 6666 5666 5555 5555 6665
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 4445 5444 5555 4455 4444 4444 5544
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 0044 4400 4444 0444 0000 0000 4440
 		</bitmap>
 	</tex_image>
 	<tex_image index="33" name="out58_zanb"
@@ -2340,7 +2333,7 @@
 		7fff 6a68 6aab 66ae 6661 6a84 6241 6682
 	</tex_palette>
 	<tex_palette index="32" name="out58_zan5_pl" color_size="8">
-		56a0 5ee6 62ed 630a 6710 6b31 7fff 7fff
+		7fff 62ed 6710 6b31 56a0 5ee6 630a 7fff
 	</tex_palette>
 	<tex_palette index="33" name="out58_zanb_pl" color_size="24">
 		6261 6661 6682 6a84 6aa4 6aa5 6aa7 6aa8
