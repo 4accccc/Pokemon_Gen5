@@ -228,7 +228,7 @@ GMEVENT* FVSEvent_CheckCommon( FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
     break;
   case EV_CALL_TALKMSG_INPUT:
     call_event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL,
-              NAMEIN_FREE_WORD, BEACON_STATUS_GetFreeWordInputResultPointer( wk->b_status ) );
+              NAMEIN_FREE_FES_WORD, BEACON_STATUS_GetFreeWordInputResultPointer( wk->b_status ) );
     event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_HELLO );
     break;
   

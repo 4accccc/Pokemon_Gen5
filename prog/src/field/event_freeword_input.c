@@ -79,10 +79,16 @@ GMEVENT* EVENT_FreeWordInput( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, GMEVE
   wk->param.mode = mode;
   wk->param.hero_sex = MyStatus_GetMySex( wk->my );
   wk->param.p_misc = wk->misc;
+  wk->param.p_boast_msg_sv = BOAST_MSG_SAVEDATA_GetSaveData( GAMEDATA_GetSaveControlWork( wk->gdata ) );
   
-  GF_ASSERT( mode >= NAMEIN_GREETING_WORD && mode <= NAMEIN_FREE_WORD );
+  GF_ASSERT( (mode >= NAMEIN_GREETING_WORD && mode <= NAMEIN_FREE_WORD) || mode == NAMEIN_FREE_FES_WORD );
 
-  wk->param.wordmax = DATA_WordLength[ mode - NAMEIN_GREETING_WORD ];
+  if( mode == NAMEIN_FREE_FES_WORD )
+  {
+    wk->param.wordmax = NAMEIN_FREE_WORD_LENGTH;   // フェス用フリーワード
+  } else {
+    wk->param.wordmax = DATA_WordLength[ mode - NAMEIN_GREETING_WORD ];
+  }
   wk->param.strbuf = GFL_STR_CreateBuffer( wk->param.wordmax+EOM_SIZE, wk->heapID );
   wk->param.prof_flag = NAMEIN_PROF_DISABLE;
 
@@ -94,6 +100,7 @@ GMEVENT* EVENT_FreeWordInput( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, GMEVE
     GFL_STR_SetStringCode( wk->param.strbuf, MISC_CrossComm_GetThankyouMessage( wk->misc ) );
     break;
   case NAMEIN_FREE_WORD:  //すれ違いフリーワード
+  case NAMEIN_FREE_FES_WORD: // フェス用フリーワード
     //初期は空文字
     break;
   default:
@@ -151,6 +158,64 @@ static void sub_ResultGet( EVWORK_FWORD_INPUT* wk, NAMEIN_PARAM* param )
   case NAMEIN_FREE_WORD:  //すれ違いフリーワード
     GFL_STR_CopyBuffer( BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->param.strbuf );
     GAMEBEACON_Set_FreeWord( param->strbuf );
+
+    // ショートカットボタン戻り値
+    switch( param->shortcut_ret ){
+    case NAMEIN_SHORTCUT_RET_NULL:  // 選択なし
+      {
+        ICHI_Printf("ボタン選択なし\n");
+      }
+      break;
+    case NAMEIN_SHORTCUT_RET_GREETING:  // 挨拶ボタン
+      {
+        ICHI_Printf("挨拶ボタン選択\n");
+      }
+      break;
+    case NAMEIN_SHORTCUT_RET_THANKS:    // お礼ボタン
+      {
+        ICHI_Printf("お礼ボタン選択\n");
+      }
+      break;
+    case NAMEIN_SHORTCUT_RET_BOAST:     // 自慢ボタン
+      {
+        ICHI_Printf("自慢ボタン選択\n");
+      }
+      break;
+    default:
+      GF_ASSERT(0);
+    }
+
+    break;
+  case NAMEIN_FREE_FES_WORD:  // フェス用フリーワード
+    GFL_STR_CopyBuffer( BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->param.strbuf );
+    GAMEBEACON_Set_FreeWord( param->strbuf );
+
+    // ショートカットボタン戻り値
+    switch( param->shortcut_ret ){
+    case NAMEIN_SHORTCUT_RET_NULL:  // 選択なし
+      {
+        ICHI_Printf("ボタン選択なし\n");
+      }
+      break;
+    case NAMEIN_SHORTCUT_RET_GREETING:  // 挨拶ボタン
+      {
+        ICHI_Printf("挨拶ボタン選択\n");
+      }
+      break;
+    case NAMEIN_SHORTCUT_RET_THANKS:    // お礼ボタン
+      {
+        ICHI_Printf("お礼ボタン選択\n");
+      }
+      break;
+    case NAMEIN_SHORTCUT_RET_BOAST:     // 自慢ボタン
+      {
+        ICHI_Printf("自慢ボタン選択\n");
+      }
+      break;
+    default:
+      GF_ASSERT(0);
+    }
+
     break;
   default:
     GF_ASSERT(0);
