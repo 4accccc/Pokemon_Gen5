@@ -342,6 +342,10 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
   if( flags & SCR_WILD_BTL_FLAG_IMMORTAL ){
     BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_LEGEND_EX );
   }
+  //タマゲタケシンボルエンカウント識別用
+  if( flags & SCR_WILD_BTL_FLAG_MUSHROOM_ENC ){
+    BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_MUSHROOM_ENC );
+  }
   //エンカウントイベント生成
   return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, TRUE, ENC_TYPE_NORMAL );
 }

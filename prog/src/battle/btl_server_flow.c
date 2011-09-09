@@ -10287,7 +10287,10 @@ static BOOL scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke )
     BTL_SVFSUB_CalcExp( wk, party, deadPoke, wk->calcExpWork );
 
     if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_WILD){
-      GAMEBEACON_Set_FMissionWildPokemonKnockOut( BPP_GetMonsNo( deadPoke ));
+      GAMEBEACON_Set_FMissionWildPokemonKnockOut(
+        BPP_GetMonsNo( deadPoke ),
+        BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_EFF_ENC ),
+        BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_MUSHROOM_ENC ) );
     }
     return getexp_make_cmd( wk, party, wk->calcExpWork );
   }

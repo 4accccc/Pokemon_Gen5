@@ -14,9 +14,9 @@
 #include "gamesystem/gamesystem.h"
 
 typedef enum{
-  FM_CHECK_SCORE_FAILED,  //
-  FM_CHECK_SCORE_SUCCESS,  //
-  FM_CHECK_SCORE_SUCCESS_UP,  //
+  FM_CHECK_SCORE_FAILED,  //ミッションにエントリーしていないのでチェックできなかった
+  FM_CHECK_SCORE_SUCCESS,  //スコアチェックが出来た(ミッションエントリー中)
+  FM_CHECK_SCORE_SUCCESS_UP,  //スコアがあがった
 }FM_CHECK_SCORE_RET;
 
 //==============================================================================

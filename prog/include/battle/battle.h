@@ -166,6 +166,8 @@ typedef enum {
   BTL_STATUS_FLAG_CAMERA_OFF = 0x0800,    ///< カメラ動作オフ
   BTL_STATUS_FLAG_CONFIG_SHARE = 0x1000,  ///< コンフィグ設定を親機のもので行う
   BTL_STATUS_FLAG_N_POKE = 0x2000,        ///<ＮポケモンとのエンカウントならTRUE
+  BTL_STATUS_FLAG_EFF_ENC = 0x4000,       ///<エフェクトエンカウントならTRUE
+  BTL_STATUS_FLAG_MUSHROOM_ENC = 0x8000,  ///<タマゲタケシンボルエンカウントならTRUE
 }BTL_STATUS_FLAG;
 
 //-----------------------------------------------------------------------------------

@@ -312,6 +312,9 @@ GMEVENT * EVENT_WildPokeBattleEx( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, B
   wbew->n_poke_id = n_poke_id;
   wbew->fishing_f = BATTLE_PARAM_CheckBtlStatusFlag( bp, BTL_STATUS_FLAG_FISHING );
 
+  if( enc_type == ENC_TYPE_EFFECT ){
+    BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_EFF_ENC );
+  }
 #ifdef PM_DEBUG
   debug_FieldDebugFlagSet( bp );
 #endif

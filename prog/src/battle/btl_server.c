@@ -1821,7 +1821,9 @@ void BTL_SERVER_NotifyPokemonCapture( BTL_SERVER* server, const BTL_POKEPARAM* b
 {
   const POKEMON_PARAM* pp;
   pp = BPP_GetSrcData( bpp );
-  GAMEBEACON_Set_PokemonGet( PP_Get( pp, ID_PARA_monsno, NULL ) );
+  GAMEBEACON_Set_PokemonGet( PP_Get( pp, ID_PARA_monsno, NULL ),
+    BTL_MAIN_GetSetupStatusFlag( server->mainModule, BTL_STATUS_FLAG_EFF_ENC ),
+    BTL_MAIN_GetSetupStatusFlag( server->mainModule, BTL_STATUS_FLAG_MUSHROOM_ENC ) );
 
   BTL_MAIN_RECORDDATA_Inc( server->mainModule, RECID_CAPTURE_POKE );
   BTL_MAIN_RECORDDATA_Inc( server->mainModule, RECID_DAYCNT_CAPTURE );

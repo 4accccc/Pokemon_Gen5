@@ -42,7 +42,7 @@ EVENT_START	ev_tamagetake_enc
 	IF $lwk_poke_lv == 0 THEN
 		$lwk_poke_lv = 5
 	ENDIF
-	_WILD_BTL_SET( MONSNO_580, lwk_poke_lv )
+	_WILD_BTL_SET_EX( MONSNO_580, lwk_poke_lv, SCR_WILD_BTL_FLAG_MUSHROOM_ENC )
 	
 	_WILD_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -77,7 +77,7 @@ EVENT_START	ev_morobareru_enc
 	IF $lwk_poke_lv == 0 THEN
 		$lwk_poke_lv = 5
 	ENDIF
-	_WILD_BTL_SET( MONSNO_581, lwk_poke_lv )
+	_WILD_BTL_SET_EX( MONSNO_581, lwk_poke_lv, SCR_WILD_BTL_FLAG_MUSHROOM_ENC )
 	
 	_WILD_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN

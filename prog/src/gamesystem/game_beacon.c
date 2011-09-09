@@ -1169,7 +1169,7 @@ FM_CHECK_SCORE_RET GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACTION action
 {
   LINK_FESTIVAL* fest_sys;
 
-  if( GameBeaconSys->gsys == NULL ){
+  if( GameBeaconSys == NULL || GameBeaconSys->gsys == NULL ){
     return FM_CHECK_SCORE_FAILED;
   }
   fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
@@ -1442,12 +1442,14 @@ void GAMEBEACON_SendDataUpdate_PushMedal( MedalID push_medal )
  * 送信ビーコンセット：ポケモン捕獲
  *
  * @param   monsno    ポケモン番号
+ * @param   eff_enc_f エフェクトエンカウントならTRUE
+ * @param   mushroom_enc_f  タマゲタケシンボルエンカウントならTRUE
  */
 //==================================================================
-void GAMEBEACON_Set_PokemonGet( u16 monsno )
+void GAMEBEACON_Set_PokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f )
 {
   if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EFF_ENC_CAPTURE, monsno ) ){
-    GAMEBEACON_Set_FMissionWildPokemonGet( monsno );
+    GAMEBEACON_Set_FMissionWildPokemonGet( monsno, eff_enc_f, mushroom_enc_f );
     return;
   }
 
@@ -1522,41 +1524,49 @@ void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
  * 送信ビーコンセット：フェスミッション野生ポケモン捕獲
  *
  * @param   monsno    ポケモン番号
- */
-//==================================================================
-void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno)
-{
-  //チェックはGAMEBEACON_Set_PokemonGet()で事前に行っているので、ここではやらなくていい
-  GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_EFF_ENC_CAPTURE, monsno );
-}
-
-#if 0
-//==================================================================
-/**
- * ビーコンセット：フェスミッションポケモン捕獲
+ * @param   eff_enc_f エフェクトエンカウントならTRUE
+ * @param   mushroom_enc_f  タマゲタケシンボルエンカウントならTRUE
  *
- * @param   monsno    ポケモン番号
+ * フェスミッションビーコン送信チェックはGAMEBEACON_Set_PokemonGet()で事前に行っているので、ここではやらなくていい
  */
 //==================================================================
-void BEACONINFO_Set_FMissionWildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
+void GAMEBEACON_Set_FMissionWildPokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f )
 {
-  GAMEBEACON_SUB_SendBeaconSetFMission( info, GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE, monsno );
-  
-  BEACONINFO_Set_Details_Walk(info);
+  u8 action;
+
+  if( eff_enc_f ){
+    action = GAMEBEACON_ACTION_FMISSION_EFF_ENC_CAPTURE;
+  }else if( mushroom_enc_f ){
+    action = GAMEBEACON_ACTION_FMISSION_MUSHROOM_CAPTURE;
+  }else{
+    action = GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE;
+  }
+  GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, action, monsno );
 }
-#endif
 
 //==================================================================
 /**
  * 送信ビーコンセット：フェスミッション野生ポケモン倒した
  *
  * @param   monsno    ポケモン番号
+ * @param   eff_enc_f エフェクトエンカウントならTRUE
+ * @param   mushroom_enc_f  タマゲタケシンボルエンカウントならTRUE
  */
 //==================================================================
-void GAMEBEACON_Set_FMissionWildPokemonKnockOut(u16 monsno)
+void GAMEBEACON_Set_FMissionWildPokemonKnockOut( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f )
 {
+  u8 action;
+
   if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EFF_ENC_WIN, monsno ) ){
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_EFF_ENC_WIN, monsno );
+
+    if( eff_enc_f ){
+      action = GAMEBEACON_ACTION_FMISSION_EFF_ENC_WIN;
+    }else if( mushroom_enc_f ){
+      action = GAMEBEACON_ACTION_FMISSION_MUSHROOM_WIN;
+    }else{
+      action = GAMEBEACON_ACTION_FMISSION_POKE_WIN;
+    }
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, action, monsno );
   }
 }
 
