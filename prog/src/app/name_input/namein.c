@@ -350,6 +350,10 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
       {
         namein_mode = NAMEIN_FREE_WORD;
       }
+      else if( namein_mode == NAMEIN_BOAST_WORD )
+      {
+        namein_mode = NAMEIN_THANKS_WORD;
+      }
       mode    = MISC_GetNameInMode( p_param->p_misc, namein_mode );
     }
   }
@@ -4733,6 +4737,8 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
 { 
   switch( mode )
   { 
+  case NAMEIN_BOAST_WORD:
+    /* fallthrough  */
   case NAMEIN_FREE_FES_WORD:
     /* fallthrough  */
   case NAMEIN_FREE_RESORT_AUTHER:
@@ -4958,6 +4964,9 @@ static STRBUF* INITNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, H
     return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
     
   case NAMEIN_THANKS_WORD:
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
+
+  case NAMEIN_BOAST_WORD:
     return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
 
   case NAMEIN_FREE_WORD:
@@ -5798,6 +5807,10 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       else if( namein_mode == NAMEIN_FREE_FES_WORD )
       {
         namein_mode = NAMEIN_FREE_WORD;
+      }
+      else if( namein_mode == NAMEIN_BOAST_WORD )
+      {
+        namein_mode = NAMEIN_THANKS_WORD;
       }
 
       input_type  = KEYBOARD_GetInputType( &p_wk->keyboard );

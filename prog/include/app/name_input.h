@@ -51,6 +51,7 @@ typedef enum
   NAMEIN_FREE_RESORT_THANKS,  //リゾート口癖  param1 自分の性別
 
   NAMEIN_FREE_FES_WORD,  // フェスフリーワード（ショートカット有り） param1自分の性別
+  NAMEIN_BOAST_WORD,    // すれちがい自慢言葉 param1自分の性別
 
 	NAMEIN_MAX,
 }NAMEIN_MODE;
