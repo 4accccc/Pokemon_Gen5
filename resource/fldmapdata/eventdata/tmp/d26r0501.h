@@ -26,6 +26,8 @@
 #define TR_VETERANM_21                     6
 #define TR_RANGERW_29                      7
 #define TR_RANGERM_29                      8
+#define TR_ELITEW_38W                      9
+#define TR_ELITEM_39W                     10
 
 #endif //ZONE_D26R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
