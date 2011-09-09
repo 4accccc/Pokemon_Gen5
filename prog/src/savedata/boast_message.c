@@ -16,6 +16,11 @@
 #include "boast_message_local.h"
 #include "options_local.h"      // OPTIONS_SAVEDATA
 
+#include "system/main.h"             // for HEAPID_xxxx
+#include "arc/arc_def.h"             // for ARCID_xxxx
+#include "arc/script_message.naix"   // for NARC_xxxx
+#include "msg/script/msg_c03r0101.h" // for msg_xxxx
+
 //----------------------------------------------------------
 //セーブデータシステムに依存する関数
 //----------------------------------------------------------
@@ -40,6 +45,24 @@ int BOAST_MSG_SAVEDATA_GetWorkSize( void )
 void BOAST_MSG_SAVEDATA_Init( BOAST_MSG_SAVEDATA *p_boast_msg_sv )
 {
 	GFL_STD_MemClear(p_boast_msg_sv, BOAST_MSG_SAVEDATA_GetWorkSize());
+
+  // すれ違いデフォルトメッセージ
+  {
+    GFL_MSGDATA* msg;
+    STRBUF* strbuf;
+
+    msg = GFL_MSG_Create( 
+        GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
+        NARC_script_message_c03r0101_dat, GetHeapLowID(HEAPID_SAVE) );
+
+    // 自慢
+    strbuf = GFL_MSG_CreateString( msg, msg_c03r0101_input_c );
+    GFL_STR_GetStringCode( 
+        strbuf, p_boast_msg_sv->boast_message, SAVE_SURETIGAI_BOAST_LEN );
+    GFL_STR_DeleteBuffer( strbuf );
+
+    GFL_MSG_Delete( msg );
+  }
 }
 
 //----------------------------------------------------------
