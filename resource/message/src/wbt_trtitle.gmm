@@ -786,8 +786,8 @@
 	</row>
 
 	<row id="WBT_TRTITLE_68">
-		<language name="JPN" width="216">ＷＣＳチャンピオン</language>
-		<language name="JPN_KANJI" width="216">ＷＣＳチャンピオン</language>
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
 	<row id="WBT_TRTITLE_69">
@@ -1081,26 +1081,6 @@
 	</row>
 
 	<row id="WBT_TRTITLE_127">
-		<language name="JPN" width="216">ポケモントレーナー</language>
-		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
-	</row>
-
-	<row id="WBT_TRTITLE_128">
-		<language name="JPN" width="216">ポケモントレーナー</language>
-		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
-	</row>
-
-	<row id="WBT_TRTITLE_129">
-		<language name="JPN" width="216">ポケモントレーナー</language>
-		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
-	</row>
-
-	<row id="WBT_TRTITLE_130">
-		<language name="JPN" width="216">ポケモントレーナー</language>
-		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
-	</row>
-
-	<row id="WBT_TRTITLE_131">
 		<language name="JPN" width="216">ポケモントレーナー</language>
 		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
