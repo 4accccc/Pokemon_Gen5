@@ -19,6 +19,7 @@ _EVENT_DATA ev_force_question  // 強制アンケートイベント
 _EVENT_DATA	ev_member_question // アンケート隊員
 _EVENT_DATA	ev_member_hello    // 挨拶隊員
 _EVENT_DATA	ev_member_thanks   // お礼隊員
+_EVENT_DATA	ev_member_boast    // 自慢隊員
 _EVENT_DATA	ev_member_a        // 一般隊員A
 _EVENT_DATA	ev_member_b        // 一般隊員B
 _EVENT_DATA	ev_member_c        // 一般隊員C
@@ -3840,6 +3841,64 @@ EVENT_START ev_member_thanks
 EVENT_END 
 
 
+//======================================================================
+// ■自慢隊員メイン
+//======================================================================
+EVENT_START ev_member_boast 
+{
+  // 会話スタート
+  _TALK_OBJ_START()
+
+  //「へい！」
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_man2_01, SCWK_TARGET_OBJID, POS_DOWN )
+  //_BALLOONWIN_CLOSE() 
+
+  // 初回会話チェック
+  _FLAG_CHECK( FE_RES_BOAST_FIRSTTALK, SCWK_ANSWER )
+
+  // 初回会話
+  IF $SCWK_ANSWER == FALSE THEN 
+    _FLAG_SET( FE_RES_BOAST_FIRSTTALK ) // 初回会話フラグを立てる
+    //「じまん をきかせてくれよ？」
+    _BALLOONWIN_OBJMSG_POS( msg_c03r0101_man2_02, SCWK_TARGET_OBJID, POS_DOWN )
+  // 通常会話
+  ELSE 
+    //「また じまんしにきたのか いいぜ きかせてくれよ？」
+    _BALLOONWIN_OBJMSG_POS( msg_c03r0101_man2_03, SCWK_TARGET_OBJID, POS_DOWN )
+  ENDIF
+
+  //『はい』or『いいえ』選択
+  _YES_NO_WIN( SCWK_ANSWER )
+  //_BALLOONWIN_CLOSE()
+
+  //『いいえ』
+  IF $SCWK_ANSWER == SCR_NO THEN
+    //「いつでもきな」
+    _BALLOONWIN_OBJMSG_POS( msg_c03r0101_man2_04, SCWK_TARGET_OBJID, POS_DOWN )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE() 
+    // イベント終了
+  ELSE
+    // フリーワード入力画面を呼ぶ
+    _BALLOONWIN_CLOSE()
+    _CALL_CROSS_COMM_BOAST_MSG_INPUT( SCWK_ANSWER ) 
+
+    // 入力を確定
+    IF $SCWK_ANSWER == TRUE THEN
+      //「！！ いいじまんだぜ」
+      _BALLOONWIN_OBJMSG_POS( msg_c03r0101_man2_05, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE() 
+      // 入力をキャンセル
+    ELSE
+      //「いつでもきな」
+      _BALLOONWIN_OBJMSG_POS( msg_c03r0101_man2_04, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE() 
+    ENDIF 
+  ENDIF
+}
+EVENT_END 
 
 //======================================================================
 // ■一般隊員A

@@ -25156,6 +25156,168 @@ girl4_04へ続く
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c03r0101_man2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>へい！
+じまん　してるかーい▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:17:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>へい！
+自慢　してるかーい▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:18:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・自慢隊員
+このメッセージの表示後、分岐
+
+はじめての会話　⇒　man2_02へ
+一度会話している　⇒　man2_03へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:14:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2
+自慢隊員</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:14:33" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0101_man2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おれに　キミの　じまんを
+きかせてくれよ？▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:21:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>俺に　キミの　自慢を
+聞かせてくれよ？▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:21:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・自慢隊員
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　自慢入力画面　入力後　⇒　man2_05へ
+『いいえ』　⇒　man2_04へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:15:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2
+自慢隊員</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:14:33" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0101_man2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>また　じまんしに　きたのか
+いいぜ　きかせてくれよ？▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:23:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また　自慢しに　来たのか
+いいぜ　聞かせてくれよ？▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:23:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・自慢隊員
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　自慢入力画面　入力後　⇒　man2_05へ
+『いいえ』　⇒　man2_04へ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:16:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2
+自慢隊員</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:14:33" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c03r0101_input_c"
 		Style="Large">
 		<LanguageCell
@@ -25193,6 +25355,110 @@ girl4_04へ続く
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-09-08T10:57:55" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0101_man2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうか　じまん　したくなったら
+いつでもきな▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:26:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうか　自慢　したくなったら
+いつでもきな▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・自慢隊員
+自慢受付時に『いいえ』を選択時に表示
+会話終了</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:16:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2
+自慢隊員</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:14:33" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0101_man2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>！！
+いい　じまん　だぜ！▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:24:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>！！
+いい　自慢　だぜ！▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:24:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・自慢隊員
+自慢入力画面で、自慢入力処理後、表示
+会話終了</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:17:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2
+自慢隊員</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-09T08:14:33" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
