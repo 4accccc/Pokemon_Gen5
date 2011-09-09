@@ -58,7 +58,7 @@ static const struct
   { LOCAL_TVT_SECRET_PHASE_3_LAST,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_3_LAST,  //フェーズ範囲終了
     LTVT_SECREAT_TALK_NONE,         //会話プログラム処理
-    LTVT_SECREAT_FACE_MASK,         //顔
+    LTVT_SECREAT_FACE_MASK2,         //顔
     PERSON_STATE_SECRET_DATE_FIRST,        //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
     CALL_SE_CNT_DEFAULT,            //呼び出し回数
@@ -66,7 +66,7 @@ static const struct
   { LOCAL_TVT_SECRET_PHASE_4_START_1,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_4_END_1,  //フェーズ範囲終了
     LTVT_SECREAT_TALK_DAILY_RND,    //会話プログラム処理
-    LTVT_SECREAT_FACE_MASK,         //顔
+    LTVT_SECREAT_FACE_MASK2,         //顔
     PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
     CALL_SE_CNT_DEFAULT,            //呼び出し回数
@@ -75,14 +75,14 @@ static const struct
     LOCAL_TVT_SECRET_PHASE_4_SOUND,  //フェーズ範囲終了
     LTVT_SECREAT_TALK_NONE,         //会話プログラム処理
     LTVT_SECREAT_FACE_SOUND,         //顔
-    PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
+    PERSON_STATE_SECRET_DATE_NONE,      //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
     CALL_SE_CNT_SP,               //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_4_START_2,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_4_END_2,  //フェーズ範囲終了
     LTVT_SECREAT_TALK_DAILY_RND,         //会話プログラム処理
-    LTVT_SECREAT_FACE_MASK,         //顔
+    LTVT_SECREAT_FACE_MASK2,         //顔
     PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
     CALL_SE_CNT_DEFAULT,            //呼び出し回数
@@ -91,22 +91,22 @@ static const struct
     LOCAL_TVT_SECRET_PHASE_4_TRUE,  //フェーズ範囲終了
     LTVT_SECREAT_TALK_RING_OFF,         //会話プログラム処理
     LTVT_SECREAT_FACE_TRUE,         //顔
-    PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
+    PERSON_STATE_SECRET_DATE_NONE,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
     CALL_SE_CNT_SP,            //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_4_APOLOGY,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_4_APOLOGY,  //フェーズ範囲終了
     LTVT_SECREAT_TALK_NONE,         //会話プログラム処理
-    LTVT_SECREAT_FACE_MASK,         //顔
-    PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
+    LTVT_SECREAT_FACE_MASK2,         //顔
+    PERSON_STATE_SECRET_DATE_NONE,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
     CALL_SE_CNT_DEFAULT,            //呼び出し回数
   },
   { LOCAL_TVT_SECRET_PHASE_4_START_3,  //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_4_END_3,  //フェーズ範囲終了
     LTVT_SECREAT_TALK_DAILY_RND,         //会話プログラム処理
-    LTVT_SECREAT_FACE_MASK,         //顔
+    LTVT_SECREAT_FACE_MASK2,         //顔
     PERSON_STATE_SECRET_DATE_REGULAR,       //デートにさそうか
     TRUE,                           //プレイヤーがかけられるか
     CALL_SE_CNT_DEFAULT,            //呼び出し回数

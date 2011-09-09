@@ -429,7 +429,7 @@ static BOOL Local_Tvt_Secret_FarewellInner( LOCAL_TVT_PERSON_SYS *p_person, cons
 
       //デートに誘っていたら（会話していたら）
       //メッセージを帰る
-      if( date != PERSON_STATE_SECRET_DATE_NONE && p_wk->is_talk )
+      if( (date == PERSON_STATE_SECRET_DATE_FIRST || date == PERSON_STATE_SECRET_DATE_REGULAR ) && p_wk->is_talk )
       {
         msgID = CALL_SECRET_TALK_SP_01;
       }
