@@ -1385,10 +1385,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どきどき　わくわく　ラッキーくじ。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+どきどき　わくわく　ラッキーくじ
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:40:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1396,10 +1398,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どきどき　わくわく　ラッキーくじ。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+どきどき　わくわく　ラッキーくじ
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:40:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1426,10 +1430,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　レベルを　あげます。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+ポケモンの　レベルを　あげます
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:39:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1437,10 +1443,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　レベルを　あげます。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+ポケモンの　レベルを　あげます
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1466,10 +1474,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いいものを　やすく　うります。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+いいものを　やすく　うります
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:40:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1477,10 +1487,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いいものを　やすく　うります。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+いいものを　やすく　うります
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1506,10 +1518,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きのみを　うります。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+きのみを　うります
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:40:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1517,10 +1532,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きのみを　うります。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+きのみを　うります
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:40:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1546,10 +1564,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　つよくします。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+ポケモンを　つよくします
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:40:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1557,10 +1578,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　つよくします。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+ポケモンを　つよくします
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:40:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1586,10 +1610,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タマゴを　ふか　させます。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+タマゴを　ふか　させます
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:41:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1597,10 +1624,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タマゴを　ふか　させます。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+タマゴを　ふか　させます
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:41:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1626,10 +1656,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほりだしもの　うっています。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+ほりだしもの　うっています
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1637,10 +1670,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほりだしもの　うっています。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+ほりだしもの　うっています
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:41:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1666,10 +1702,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　まんぞく　させます。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+ポケモンを　まんぞく　させます
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:41:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1677,10 +1716,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　まんぞく　させます。</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+ポケモンを　まんぞく　させます
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:41:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2080,6 +2122,92 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="mes_shop_09_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは　[Name:Item Idx="0" ]を
+かんてい　します▼
+……
+…………▼
+………………
+………………▼
+むむっ　これは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:56:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは　[Name:Item Idx="0" ]を
+かんてい　します▼
+……
+…………▼
+………………
+………………▼
+むむっ　これは！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:56:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="mes_shop_09_21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item Idx="2" ]は
+[Name:Item ]でした！
+まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
+[Name:Item Idx="0" ]を
+[Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:58:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item Idx="2" ]は
+[Name:Item ]でした！
+まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
+[Name:Item Idx="0" ]を
+[Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-09T04:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

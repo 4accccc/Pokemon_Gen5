@@ -186,9 +186,11 @@ typedef struct _SHOP_BUY_APP_WORK{
 
   RESORT_BINARY_SHOP      *p_shop;
   const RESORT_BINARY_SHOP_DATA *cp_shop_data;
+  RESORT_BINARY_PRESENT *p_present;
   RESORT_INSTITUTION_DATA *p_institution;
   RESORT_PEOPLE_ALL_DATA  *p_all_people;
   RESORT_ABSTRUCT_MANAGER *p_abstruct_man;
+  RESORT_PEOPLE           *p_people;
 
   u16*  ret_service_type;
   u16*  ret_service_param;
@@ -351,6 +353,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.ret_service_idx = ret_service_idx;
   sbw->wk.ret_price = ret_price;
   sbw->wk.p_shop    = RESORT_SYSTEM_GetBinaryShop( resort_sys );
+  sbw->wk.p_present = RESORT_SYSTEM_GetBinaryPresent( resort_sys );
   sbw->wk.p_all_people = RESORT_SYSTEM_GetPeopleAllData( resort_sys );
   sbw->wk.p_abstruct_man  = RESORT_SYSTEM_GetAbstructManager( resort_sys );
 
@@ -375,6 +378,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
     //自分のお店データを取得
     {
       RESORT_PEOPLE *p_people = Resort_ScrcmdShop_GetFrontPeople( work, fieldmap );
+      sbw->wk.p_people = p_people;
 
       GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
 
@@ -674,6 +678,7 @@ enum{
   SHOPBUY_SEQ_YESNO,
   SHOPBUY_SEQ_SELECT_YESNO_WAIT,
   SHOPBUY_SEQ_BUY,
+  SHOPBUY_SEQ_TREASSURE,
   SHOPBUY_SEQ_MSG_WAIT,
   SHOPBUY_SEQ_END,
 };
@@ -1141,6 +1146,17 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
       wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
       wk->next = SHOPBUY_SEQ_BACK;
     }
+    else if( wk->cp_select->serviceID == RESORT_SERVICE_TYPE_TREASURE )
+    {
+      PMSND_PlaySE( SEQ_SE_SYS_22 );
+      ShopDecideMsg( wk, mes_shop_09_20, wk->cp_select );
+      _sub_payment( wk, wk->cp_select->price );
+      print_mygold( wk );
+      RESORT_INSTITUTION_DATA_SetBit(wk->p_institution, wk->cp_select->id, TRUE );
+
+      wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
+      wk->next = SHOPBUY_SEQ_TREASSURE;
+    }
     else
     {
       //その他のサービスは選んだら終了。あとでスクリプト側から料金とフラグを建てる
@@ -1148,6 +1164,36 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
       ShopPrintMsg( wk, mes_shop_02_07_03 );
       wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
       wk->next = SHOPBUY_SEQ_END;
+    }
+    break;
+
+  case SHOPBUY_SEQ_TREASSURE:
+    {
+      u32 item = 0;
+      {
+        u32 percent = 0;
+        u32 listID = wk->cp_select->param1;
+        RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( wk->p_people );
+        u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( p_abstruct, RESORT_RND_ID_SHOP_LIST_00+wk->cp_select->id, 100 );
+        int i;
+        for( i = 0; i < RESORT_BINARY_PRESENT_PARAM_ITEM_MAX; i++ )
+        {
+          u32 v = RESORT_BINARY_PRESENT_GetData( wk->p_present, listID, RESORT_BINARY_PRESENT_PARAM_ITEM_00+i*2);
+          percent += RESORT_BINARY_PRESENT_GetData(wk->p_present, listID, RESORT_BINARY_PRESENT_PARAM_PERCENT_00+i*2);
+          if( rnd < percent )
+          {
+            item = v;
+            break;
+          }
+        }
+        GF_ASSERT_MSG( item != 0, "idx%d item%d percent%d rnd%d\n", i, item, percent, rnd );
+      }
+
+      WORDSET_RegisterWord( wk->wordSet, 2, wk->cp_select->p_decidename, PM_NEUTRAL, TRUE, PM_LANG );
+      ShopPrintMsgItem( wk, mes_shop_09_21, item );
+      MYITEM_AddItem( wk->myitem, item, 1, wk->heapId);
+      wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
+      wk->next = SHOPBUY_SEQ_BACK;
     }
     break;
 
