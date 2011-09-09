@@ -141,6 +141,10 @@ typedef enum{
   BG_TALK_TYPE_NORMAL,  //話し掛けイベント
   BG_TALK_TYPE_BOARD, //看板イベント
   BG_TALK_TYPE_HIDE,  //隠しアイテム
+  BG_TALK_TYPE_MAX,
+
+  BG_TALK_TYPE_DUMMY_FES = BG_TALK_TYPE_MAX, ///<フェスミッション用ダミーイベント
+  BG_TALK_TYPE_DUMMY_FES_NPC, ///<フェスNPCミッション用ダミーイベント
 }BG_TALK_TYPE;
 
 //------------------------------------------------------------------
