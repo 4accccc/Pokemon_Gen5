@@ -33,6 +33,8 @@
   .include  "oldc08r0101_def.h"
   .include  "oldt04r0301.h"
   .include  "oldt04r0301_def.h"
+  .include  "oldc05r0501.h"
+  .include  "oldc05r0501_def.h"
   .include "c08r0401_def.h"
   .include "t01.h"
   .include "hiden_def.h"
@@ -654,7 +656,7 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 6 )	//過去イベント・サンギ
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 7 )	//過去イベント・ソウリュウ
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_11, 8 )	//過去イベント・サザナミ
-		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 110 )	//ラストイベント４・ゲーチス戦前
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 9 )	//過去イベント・ホドモエ
 		_BMPMENU_MAKE_LIST( msg_debug_00, 800 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -774,6 +776,20 @@ EVENT_START   ev_debug_suginaka
 			
 			//マップチェンジ
 			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDT04R0301, 6, 0, 5, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 9 THEN
+
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・ホドモエ起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDC05R0501_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC05R0501, 7, 0, 18, DIR_DOWN )
 			
 			$SCWK_TEMP0 = 428
 

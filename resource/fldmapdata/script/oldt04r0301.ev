@@ -78,7 +78,7 @@ EVENT_START		ev_reserve_oldt04r0301_event_01
 
 	//サブウィン　……
 	_SUBWIN_MSG( msg_oldc01r0501_old_leader6_03 , 8 , 5 , 1 )
-	_TIME_WAIT( 25 )
+	_TIME_WAIT( 50 )
 	_SUBWIN_CLOSE( 1 )
 	
 	//カミツレ　フウロのほうへ振り向く
@@ -135,7 +135,7 @@ EVENT_START		ev_reserve_oldt04r0301_event_01
 	
 	//サブウィン　……
 	_SUBWIN_MSG( msg_oldc01r0501_old_leader6_03 , 8 , 5 , 1 )
-	_TIME_WAIT( 25 )
+	_TIME_WAIT( 50 )
 	_SUBWIN_CLOSE( 1 )
 	
 	//フウロ：カミツレちゃん

@@ -8,6 +8,9 @@
 #ifndef ZONE_OLDC05R0501_EVC_H
 #define ZONE_OLDC05R0501_EVC_H
 
+#define OLDC05R0501_OLD_HAKAIM_01          0
+#define OLDC05R0501_OLD_HAKAIM_02          1
+#define OLDC05R0501_OLD_BOSS_01            2
 
 #endif //ZONE_OLDC05R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/oldc05r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
