@@ -313,7 +313,6 @@ typedef struct
 	s32						Mode;				// モード(詳細、評価)
 	u32						Flag;				// フラグ
 	s32						BgOffX;				// オフセット
-	s32						Count;				// tmp
 	s32						LevelTimer;			// タイマ
 	s32						Level;				// 段階
 	//

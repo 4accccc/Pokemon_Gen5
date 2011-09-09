@@ -209,7 +209,7 @@ static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s3
 //
 static void fma_disp_highscore( FMISSION_APP_WORK *wk );
 static void fma_disp_total_score( FMISSION_APP_WORK *wk, const s32 mode );
-static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num, const s32 snum );
+static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num );
 static void fma_chk_log_buffer( FMISSION_APP_WORK *wk );
 static void fma_chk_latest( FMISSION_APP_WORK *wk, const s32 num );
 static void fma_set_latest( FMISSION_APP_WORK *wk, const s32 src, const s32 dest );
@@ -500,7 +500,6 @@ static void fma_init( FMISSION_APP_WORK* wk )
 	wk->Mode	= wk->Param->mode;		// これで分岐
 	wk->Flag	= 0;
 	wk->BgOffX	= 0;
-	wk->Count	= 0;
 	wk->LevelTimer = 0;
 	wk->Level	= 0;
 	//
@@ -1027,7 +1026,7 @@ static void fma_chk_scroll( FMISSION_APP_WORK* wk )
 	if((wk->BgOffX != 0)&&(wk->BgOffX != 0x10000)){
 		return;
 	}
-	// ログの人数(wk->Count)を表示
+	// 書き換え
 	if(wk->BgOffX == 0){		// 0の時=>256側を書き換える
 		flg |= 1;
 	}
@@ -1037,17 +1036,12 @@ static void fma_chk_scroll( FMISSION_APP_WORK* wk )
 	// 0側
 	if(flg & 2){
 		FmaCmn_clear_canvas( wk, FMAI_CANVAS_UP_SCROLL_00 );
-		fma_disp_scroll_info( wk, FMAI_CANVAS_UP_SCROLL_00, wk->Count );
-		wk->Count++;
+		fma_disp_scroll_info( wk, FMAI_CANVAS_UP_SCROLL_00 );
 	}
 	// 256側
 	if(flg & 1){
 		FmaCmn_clear_canvas( wk, FMAI_CANVAS_UP_SCROLL_01 );
-		fma_disp_scroll_info( wk, FMAI_CANVAS_UP_SCROLL_01, wk->Count );
-		wk->Count++;
-	}
-	if(wk->Count >= 3){
-		wk->Count = 0;
+		fma_disp_scroll_info( wk, FMAI_CANVAS_UP_SCROLL_01 );
 	}
 }
 
@@ -1288,7 +1282,6 @@ static void fma_update_result( FMISSION_APP_WORK* wk )
 		if(wk->Flag & FLG_FMA_MSG_END){
 			wk->Step = STEP_END;
 			// SE
-//			PMSND_PlaySE( SND_FMA_CANCEL );
 			PMSND_PlaySE( SND_FMA_SKIP );
 		}
 	}
@@ -1791,10 +1784,9 @@ static void fma_disp_total_score( FMISSION_APP_WORK *wk, const s32 mode )
  *
  * @param   FMISSION_APP_WORK		*wk
  * @param   const s32				(番号)
- * @param   const s32				(未使用)
  */
 //--------------------------------------------------------------
-static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num, const s32 snum )
+static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num )
 {
 	s32			buf[4];
 	s32			i;
@@ -1807,8 +1799,6 @@ static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num, const s3
 	
 	id = wk->Param->fmwk->beacon.m_id;
 	buf[0] = wk->ArcData[id].common.unit;
-//	buf[1] = snum;
-//	buf[2] = 9876;
 	
 	// データがなにもない
 	if(wk->LatestLocal.num == 0){
@@ -1944,14 +1934,13 @@ static void fma_chk_latest( FMISSION_APP_WORK *wk, const s32 num )
 		wk->LatestLocal.log[0].name = GFL_STR_CreateCopyBuffer( wk->Latest->log[num].name, wk->heapID );
 	}
 	else if((j == 2)||(j == -1)){	// 1->2へ、0->1にして、0番目に情報をセット
-		// 0番を1番にセット
-		if(wk->LatestLocal.log[0].tr_id != 0){
-			fma_set_latest( wk, 0, 1 );
-		}
-		//
 		// 1番を2番にセット
 		if(wk->LatestLocal.log[1].tr_id != 0){
 			fma_set_latest( wk, 1, 2 );
+		}
+		// 0番を1番にセット
+		if(wk->LatestLocal.log[0].tr_id != 0){
+			fma_set_latest( wk, 0, 1 );
 		}
 		//
 		// 0番に情報をセット
