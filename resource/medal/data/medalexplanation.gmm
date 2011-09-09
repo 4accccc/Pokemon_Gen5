@@ -1834,19 +1834,19 @@
 
 	<row id="MDL_EXP_APPLICATION_008">
 		<language name="JPN" width="216">ミュージカルで　たかいひょうかを
-はじめて　もらった　ういういしい
+５かい　もらった　はなばなしい
 かつやくの　あかしとなる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ミュージカルで　高い評価を
-初めて　もらった　初々しい
+５回　もらった　華々しい
 活躍の　証しとなる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_009">
 		<language name="JPN" width="216">ミュージカルで　たかいひょうかを
-５かい　もらった　はなばなしい
+はじめて　もらった　ういういしい
 かつやくの　あかしとなる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ミュージカルで　高い評価を
-５回　もらった　華々しい
+初めて　もらった　初々しい
 活躍の　証しとなる　メダル。</language>
 	</row>
 
@@ -1860,24 +1860,6 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_011">
-		<language name="JPN" width="216">ミュージカルで　たかいひょうかを
-３０かい　もらった　セレブリティな
-かつやくの　あかしとなる　メダル。</language>
-		<language name="JPN_KANJI" width="216">ミュージカルで　高い評価を
-３０回　もらった　セレブリティな
-活躍の　証しとなる　メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_012">
-		<language name="JPN" width="216">ミュージカルグッズを　すべて　あつめ
-ファッションリーダーとなった
-はなやかさを　たたえる　メダル。</language>
-		<language name="JPN_KANJI" width="216">ミュージカルグッズを　すべて　集め
-ファッションリーダーとなった
-華やかさを　称える　メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_013">
 		<language name="JPN" width="216">ミュージカルの　でまちファンが
 １０にんに　たっした　ふどうの
 にんきを　たたえる　メダル。</language>
@@ -1886,13 +1868,31 @@
 人気を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_014">
+	<row id="MDL_EXP_APPLICATION_012">
+		<language name="JPN" width="216">ミュージカルで　たかいひょうかを
+３０かい　もらった　セレブリティな
+かつやくの　あかしとなる　メダル。</language>
+		<language name="JPN_KANJI" width="216">ミュージカルで　高い評価を
+３０回　もらった　セレブリティな
+活躍の　証しとなる　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_013">
 		<language name="JPN" width="216">かんらんしゃでの　さまざまな
 であいを　つうじて
 しきを　たのしんだ　メダル。</language>
 		<language name="JPN_KANJI" width="216">観覧車での　様々な
 出会いを　通じて
 四季を　楽しんだ　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_014">
+		<language name="JPN" width="216">ミュージカルグッズを　すべて　あつめ
+ファッションリーダーとなった
+はなやかさを　たたえる　メダル。</language>
+		<language name="JPN_KANJI" width="216">ミュージカルグッズを　すべて　集め
+ファッションリーダーとなった
+華やかさを　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_015">
@@ -1905,20 +1905,20 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_016">
-		<language name="JPN" width="216">５にんと　ともだちコードを
-こうかんした　かっぱつな　
-こうりゅうの　あかしとなる　メダル。</language>
-		<language name="JPN_KANJI" width="216">５人と　ともだちコードを
-交換した　活発な　交流の
-証しとなる　メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_017">
 		<language name="JPN" width="216">１０にんと　ともだちコードを
 こうかんした　せっきょくてきな
 こうりゅうの　あかしとなる　メダル。</language>
 		<language name="JPN_KANJI" width="216">１０人と　ともだちコードを
 交換した　積極的な　交流の
+証しとなる　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_017">
+		<language name="JPN" width="216">５にんと　ともだちコードを
+こうかんした　かっぱつな　
+こうりゅうの　あかしとなる　メダル。</language>
+		<language name="JPN_KANJI" width="216">５人と　ともだちコードを
+交換した　活発な　交流の
 証しとなる　メダル。</language>
 	</row>
 

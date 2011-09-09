@@ -1221,13 +1221,13 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_008">
-		<language name="JPN" width="216">かけだしスター</language>
-		<language name="JPN_KANJI" width="216">かけだしスター</language>
+		<language name="JPN" width="216">ちゅうけんスター</language>
+		<language name="JPN_KANJI" width="216">ちゅうけんスター</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_009">
-		<language name="JPN" width="216">ちゅうけんスター</language>
-		<language name="JPN_KANJI" width="216">ちゅうけんスター</language>
+		<language name="JPN" width="216">かけだしスター</language>
+		<language name="JPN_KANJI" width="216">かけだしスター</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_010">
@@ -1236,23 +1236,23 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_011">
-		<language name="JPN" width="216">ミュージカルプリマ</language>
-		<language name="JPN_KANJI" width="216">ミュージカルプリマ</language>
-	</row>
-
-	<row id="MDL_NAME_APPLICATION_012">
-		<language name="JPN" width="216">オシャレばんちょう</language>
-		<language name="JPN_KANJI" width="216">オシャレばんちょう</language>
-	</row>
-
-	<row id="MDL_NAME_APPLICATION_013">
 		<language name="JPN" width="216">１０にんのでまち</language>
 		<language name="JPN_KANJI" width="216">１０にんのでまち</language>
 	</row>
 
-	<row id="MDL_NAME_APPLICATION_014">
+	<row id="MDL_NAME_APPLICATION_012">
+		<language name="JPN" width="216">ミュージカルプリマ</language>
+		<language name="JPN_KANJI" width="216">ミュージカルプリマ</language>
+	</row>
+
+	<row id="MDL_NAME_APPLICATION_013">
 		<language name="JPN" width="216">デートのたつじん</language>
 		<language name="JPN_KANJI" width="216">デートのたつじん</language>
+	</row>
+
+	<row id="MDL_NAME_APPLICATION_014">
+		<language name="JPN" width="216">オシャレばんちょう</language>
+		<language name="JPN_KANJI" width="216">オシャレばんちょう</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_015">
@@ -1261,13 +1261,13 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_016">
-		<language name="JPN" width="216">ともだちブロード</language>
-		<language name="JPN_KANJI" width="216">ともだちブロード</language>
+		<language name="JPN" width="216">ともだちワイド</language>
+		<language name="JPN_KANJI" width="216">ともだちワイド</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_017">
-		<language name="JPN" width="216">ともだちワイド</language>
-		<language name="JPN_KANJI" width="216">ともだちワイド</language>
+		<language name="JPN" width="216">ともだちブロード</language>
+		<language name="JPN_KANJI" width="216">ともだちブロード</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_018">

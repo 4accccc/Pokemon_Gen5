@@ -1534,6 +1534,11 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_008">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_009">
 		<language name="JPN" width="216">ポケモンミュージカルで
 ステキに　ドレスアップすれば
 たかいひょうかを　もらえるよ</language>
@@ -1542,31 +1547,12 @@
 高い評価を　もらえるよ</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_009">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
 	<row id="MDL_HINT_APPLICATION_010">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_011">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_012">
-		<language name="JPN" width="216">ミュージカルグッズを
-ぜんぶ　あつめて
-オシャレに　なろう！</language>
-		<language name="JPN_KANJI" width="216">ミュージカルグッズを
-全部　集めて
-オシャレに　なろう！</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_013">
 		<language name="JPN" width="216">ミュージカルに　たくさん
 さんかして　めざせ
 でまちファン　１０にん！</language>
@@ -1575,9 +1561,23 @@
 出待ちファン　１０人！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_014">
+	<row id="MDL_HINT_APPLICATION_012">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_013">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_014">
+		<language name="JPN" width="216">ミュージカルグッズを
+ぜんぶ　あつめて
+オシャレに　なろう！</language>
+		<language name="JPN_KANJI" width="216">ミュージカルグッズを
+全部　集めて
+オシャレに　なろう！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_015">
