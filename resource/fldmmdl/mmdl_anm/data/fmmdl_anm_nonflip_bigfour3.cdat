@@ -13,9 +13,9 @@
 // é≈ãèÇP
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActNonFlip_Bigfour3_Act0[] = {
-  { 12, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
-  { 13, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
-  {  3, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   { GFL_BBDACT_ANMCOM_END,0,0,0 },
 };
 

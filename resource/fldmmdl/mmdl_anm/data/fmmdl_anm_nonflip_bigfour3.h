@@ -18,7 +18,7 @@
 
 
 ///ƒtƒŒ[ƒ€”’è‹`
-#define DRAW_ANMFRM_NONFLIP_BIGFOUR3_ACT0  ( 30 )
+#define DRAW_ANMFRM_NONFLIP_BIGFOUR3_ACT0  ( 12 )
 
 
 #endif //__H_FMMDL_ANM_NONFLIP_BIGFOUR3_H__
