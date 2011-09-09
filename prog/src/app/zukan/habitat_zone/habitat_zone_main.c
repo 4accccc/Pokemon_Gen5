@@ -93,7 +93,6 @@ static const MainFunc MainSeq[] = {
 // メッセージ---------------------------------------
 static PRINTSYS_LSB GetMsgFontColor( void );
 static void DrawLandMsg( HABITAT_ZONE_WK *p_wk );
-static void DrawSeasonMsg( HABITAT_ZONE_WK *p_wk );
 static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk );
 static void ClearExplanationMsg( HABITAT_ZONE_WK *p_wk );
 static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk );
@@ -213,17 +212,24 @@ static void MAINSEQ_FadeIn( HABITAT_ZONE_WK *p_wk )
 static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
 {
   s32 key_trg = GFL_UI_KEY_GetTrg();
+  HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
 
   // 四季切替
   if( key_trg & PAD_BUTTON_L )
   {
-    ONOUE_Printf("季節切替L\n");
-    SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_L );
+    if( p_list_data->season_enable == TRUE )
+    {
+      ONOUE_Printf("季節切替L\n");
+      SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_L );
+    }
   }
   else if( key_trg & PAD_BUTTON_R )
   {
-    ONOUE_Printf("季節切替R\n");
-    SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_R );
+    if( p_list_data->season_enable == TRUE )
+    {
+      ONOUE_Printf("季節切替R\n");
+      SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_R );
+    }
   }
   else if( key_trg & PAD_KEY_LEFT )
   {
@@ -438,9 +444,6 @@ static void MAINSEQ_AppInit( HABITAT_ZONE_WK *p_wk )
   // リストデータを解析し、必要なデータを作成する
   MakeZoneCommonData( p_wk );
 
-  // 四季メッセージ書き込み
-  DrawSeasonMsg( p_wk );
- 
   // 地形アイコン更新
   RefreshLandTypeIcon( p_wk );
 
@@ -554,6 +557,9 @@ static PRINTSYS_LSB GetMsgFontColor( void )
 static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
 {
   GFL_CLWK *p_clwk;
+  
+  HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
+  GF_ASSERT( p_list_data->season_enable == TRUE );
 
   // 移動方向にあわせて、CLWKを取得しておく
   if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
@@ -597,9 +603,6 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
       GFL_CLACT_WK_SetAnmIndex( p_clwk , 0);
       GFL_CLACT_WK_SetAutoAnmFlag( p_clwk ,TRUE );
 
-      // 四季メッセージ書き込み
-      DrawSeasonMsg( p_wk );
- 
       // 地形アイコン更新
       RefreshLandTypeIcon( p_wk );
 
@@ -673,6 +676,9 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
   // メッセージ書き換え
   case 0:
     {
+      // 季節を春に戻す
+      p_wk->season = PMSEASON_SPRING;
+
       // アニメーションシーケンスを決定、季節の切替
       if( p_wk->seq_param == SEQ_CHANGE_PARAM_UP )
       {
@@ -1048,23 +1054,41 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
   // 場所ごとにメッセージを切り替える
   if( p_wk->land_type == HABITAT_GROUND_LAND )
   {
-    // @todo 場所ごとに、草むら、砂地、沼、洞窟を切り替える処理を作る
-    msg_id = msg_seisoku_zone_01;
-//    msg_id = msg_seisoku_zone_02;
-//    msg_id = msg_seisoku_zone_03;
-//    msg_id = msg_seisoku_zone_04;
+    const msg_id_table[] =
+    {
+      msg_seisoku_zone_01,  // 草地
+      msg_seisoku_zone_02,  // 砂地
+      msg_seisoku_zone_03,  // 沼
+      msg_seisoku_zone_04,  // 洞窟
+      msg_seisoku_zone_08,  // 橋
+      msg_seisoku_zone_07,  // 混合
+      msg_seisoku_zone_07,  // なし
+    };
+    GF_ASSERT( p_list_data->info_ground_type < HABITAT_GROUND_INFO_NONE );
+    
+    // 地形ごとにメッセージを選択
+    msg_id = msg_id_table[p_list_data->info_ground_type];
   }
   else if( p_wk->land_type == HABITAT_GROUND_WATERSIDE )
   {
+    // 水辺
     msg_id = msg_seisoku_zone_05;
+   
   }
   else if( p_wk->land_type == HABITAT_GROUND_FISHING )
   {
+    // 釣り
     msg_id = msg_seisoku_zone_06;
   }
   else
   {
     GF_ASSERT( 0 );
+  }
+ 
+  // 季節判定
+  if( p_list_data->season_enable == TRUE )
+  {
+    msg_id += p_wk->season + 1; // 季節は1スタート
   }
 
   // ワードセットに登録
@@ -1085,42 +1109,6 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
   GFL_STR_DeleteBuffer( dest_str );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  四季メッセージ書き込み
- *
- *	@param	*p_wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void DrawSeasonMsg( HABITAT_ZONE_WK *p_wk )
-{
-  s32           index = p_wk->season;
-  STRBUF        *str;
-  PRINTSYS_LSB  font_colro = GetMsgFontColor();
-
-  // 季節
-  u32 season_msg_id[] =
-  {
-    msg_seisoku_season_01,
-    msg_seisoku_season_02,
-    msg_seisoku_season_03,
-    msg_seisoku_season_04,
-  };
-
-  // メッセージの書き込み
-  str = GFL_MSG_CreateString( p_wk->p_app_msg , season_msg_id[ index ] );
-
-  // メッセージの書き込み
-  HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
-      SEASON_MSG_POS_X , SEASON_MSG_POS_Y,SEASON_MSG_W,SEASON_MSG_H ,
-      font_colro );
-
-  // バッファーの消去 
-  GFL_STR_DeleteBuffer( str );
 }
 
 //----------------------------------------------------------------------------
@@ -1298,7 +1286,6 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
         (p_pk[i].is_appear[p_wk->season][p_wk->land_type] == FALSE ) )
     {
       // 表示しないときは何もしない
-      ONOUE_Printf("%2d:存在しない\n",i);
     }
     else if( p_pk[i].status >= HABITAT_POKE_STATUS_LOOK )        // 見たか、捕獲のみ
     {
@@ -1326,6 +1313,7 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
       }
 
       index++;
+      GF_ASSERT( index <= HABITAT_ZONE_POKE_DATA_MAX );
       ONOUE_Printf("%2d:ポケモンアイコン読み込み\n",i);
     }
     else
@@ -1347,8 +1335,10 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
 
   if( index == 0 )
   {
+    // 生息していない場合はありえない
     // 生息していませんメッセージ表示
     DrawNoHabitatDatatMsg( p_wk );
+    GF_ASSERT(0);
   }
   else
   {
@@ -1379,7 +1369,7 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
     SkipLandType( p_wk ,TRUE);
   }
 
-  // 草地
+  // 草地ボタンの点灯
   if( p_wk->land_type == HABITAT_GROUND_LAND )
   {
     HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
@@ -1387,6 +1377,7 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
   }
   else
   {
+    // 地形状況更新
     if( p_wk->land_appear[HABITAT_GROUND_LAND] == TRUE )
     {
       HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
@@ -1407,6 +1398,7 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
   }
   else
   {
+    // 地形状況更新
     if( p_wk->land_appear[HABITAT_GROUND_WATERSIDE] == TRUE )
     {
       HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
@@ -1427,6 +1419,7 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
   }
   else
   {
+    // 地形状況更新
     if( p_wk->land_appear[HABITAT_GROUND_FISHING] == TRUE )
     {
       HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
@@ -1436,42 +1429,6 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
     {
       HABITAT_ZONE_GRA_SetLnadTypeIcon( &p_wk->gra_sys ,
                         GRA_LANDICON_TYPE_FISHING,GRA_LANDICON_NONE );
-    }
-  }
-
-  // コンプリートアイコン表示
-  {
-    HABITAT_GROUND_TYPE land_type = HABITAT_GROUND_LAND;
-    for(land_type=HABITAT_GROUND_LAND;
-                                land_type<HABITAT_GROUND_MAX; land_type ++ )
-    {
-      if( p_wk->land_appear[land_type] == TRUE )
-      {
-        switch( p_wk->land_complete_status[land_type] )
-        {
-        case HABITAT_ZONE_STATUS_GET:
-          HABITAT_ZONE_GRA_SetMiddleIconStatus( &p_wk->gra_sys ,
-              land_type, GRA_MIDDLEICON_GET);
-          break;
-        case HABITAT_ZONE_STATUS_LOOK:
-          HABITAT_ZONE_GRA_SetMiddleIconStatus( &p_wk->gra_sys ,
-              land_type, GRA_MIDDLEICON_LOOK);
-          break;
-        case HABITAT_ZONE_STATUS_NONE:
-          HABITAT_ZONE_GRA_SetMiddleIconStatus( &p_wk->gra_sys ,
-              land_type, GRA_MIDDLEICON_NONE);
-          break;
-        default:
-          GF_ASSERT(0);
-          break;
-        }
-      }
-      else
-      {
-        // 地形が非表示の時はアイコンも非表示
-        HABITAT_ZONE_GRA_SetMiddleIconStatus( &p_wk->gra_sys ,
-                                      land_type, GRA_MIDDLEICON_NONE);
-      }
     }
   }
 
@@ -1491,6 +1448,7 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
 static void RefreshLandPokeIcon( HABITAT_ZONE_WK *p_wk )
 {
   s32 i;
+  HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
 
   for( i = 0; i < HABITAT_ZONE_POKE_LIST_MAX; i ++ )
   {
@@ -1507,6 +1465,25 @@ static void RefreshLandPokeIcon( HABITAT_ZONE_WK *p_wk )
 
   // ポケモンアイコン作成
   MakePokeIconList( p_wk );
+
+  // 生息地リスト
+  {
+    GFL_CLWK *p_clwk;
+    if( p_list_data->season_enable == TRUE )
+    {
+      p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+      p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+    }
+    else
+    {
+      p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+      p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1665,6 +1642,12 @@ static void SetPokeSelectButton( HABITAT_ZONE_WK *p_wk )
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_BUTTON_EXPLANATION );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
 
+  // 季節用左右ボタン
+  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+
   // 説明を見るの文字列書き込み
   DrawExplanationMsg( p_wk );
 }
@@ -1681,6 +1664,8 @@ static void SetPokeSelectButton( HABITAT_ZONE_WK *p_wk )
 static void SetZoneSelectButton( HABITAT_ZONE_WK *p_wk )
 {
   GFL_CLWK *p_clwk;
+  HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
+
   // 陸地ボタン
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_BUTTON_LAND );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,
@@ -1705,6 +1690,12 @@ static void SetZoneSelectButton( HABITAT_ZONE_WK *p_wk )
   // キャンセル
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_CANCEL );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+
+  // 季節用左右ボタン
+  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable);
+  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable);
 
   // 説明を見る
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_BUTTON_EXPLANATION );

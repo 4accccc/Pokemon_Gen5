@@ -296,14 +296,19 @@ void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info )
         // データ初期化
         GFL_STD_MemClear( p_zone_data ,sizeof(p_zone_data) );
         
-        p_zone_data->zone_group = sc_habitat->zone_group_id;
-
         // アーカイブからデータを取得
         GFL_ARC_LoadDataByHandle( p_handle , sc_habitat->arc_idx , &arc_data);
+        
+        // ゾーンごとのデータ
+        p_zone_data->zone_group = sc_habitat->zone_group_id;
+        p_zone_data->season_enable = arc_data.season_enable;
+        p_zone_data->info_ground_type = arc_data.ground_type;
+
         ONOUE_Printf("==========================\n");
         ONOUE_Printf("ゾーンID:%u\n",p_zone_data->zone_group);
-        ONOUE_Printf("季節フラグ:%u\n",arc_data.season_enable);
+        ONOUE_Printf("季節フラグ:%u\n",p_zone_data->season_enable);
         ONOUE_Printf("モンスター種類:%u\n",arc_data.data_num);
+        ONOUE_Printf("地形タイプ:%u\n",arc_data.ground_type);
         // ポケモンデータを設定
         for( n = 0; n < arc_data.data_num; n ++ )
         {

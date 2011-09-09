@@ -42,9 +42,9 @@
 enum
 {
   OBJ_POS_L_X = 24,
-  OBJ_POS_L_Y = 60,
-  OBJ_POS_R_X = 80,
-  OBJ_POS_R_Y = 60,
+  OBJ_POS_L_Y = 110,
+  OBJ_POS_R_X = 232,
+  OBJ_POS_R_Y = 110,
   OBJ_POS_STAMP_BIG_X = 224,
   OBJ_POS_STAMP_BIG_Y = 20,
   OBJ_POS_STAMP_LAND_X = 128,
@@ -102,9 +102,6 @@ enum
   OBJ_WK_SEASON_L,
   OBJ_WK_SEASON_R,
   OBJ_WK_STAMP_BIG,
-  OBJ_WK_STAMP_LAND,
-  OBJ_WK_STAMP_WATERSIDE,
-  OBJ_WK_STAMP_FISHING,
   OBJ_WK_BUTTON_LAND,
   OBJ_WK_BUTTON_WATERSIDE,
   OBJ_WK_BUTTON_FISHING,
@@ -131,9 +128,6 @@ enum
 // 定数定義
 enum{
   HABITAT_ZONE_UNIT_CLWK_MAX  = HABITAT_ZONE_POKE_LIST_MAX + COMMON_OBJ_WK_MAX,
-  LAND_TYPE_ICON_PAL_ON       = 0xA,  // 地形タイプがONの時のパレット
-  LAND_TYPE_ICON_PAL_OFF      = 0x9,  // 地形タイプがOFFの時のパレット
-  LAND_TYPE_ICON_PAL_NONE     = 0xB,  // 地形タイプがないの時のパレット
   LAND_TYPE_ICON_W            = 4,   // 地形タイプアイコンの幅
   LAND_TYPE_ICON_H            = 3,   // 地形タイプアイコンの高さ
   LAND_TYPE_ICON_LAND_POS_X   = 13,   // 草地アイコンの開始座標
@@ -146,14 +140,14 @@ enum{
   BLINK_PALID_POKE_CURSOR_START   = 0x9,  // ポケモン選択点滅用パレット番号(基準)
   BLINK_PALID_POKE_CURSOR_END     = 0xA,  // ポケモン選択点滅用パレット番号(終了)
   BLINK_PAL_SIZE_POKE_CURSOR      = 5,    // 点滅させるパレットの数
-  POKEICON_ROW      = 3,  // リストの行数
+  POKEICON_ROW      = 4,  // リストの行数
   POKEICON_LINE     = 5,  // リストの列数
   POKEICON_START_X  = 48, // リストの開始X座標
-  POKEICON_START_Y  = 88, // リストの開始Y座標
+  POKEICON_START_Y  = 56, // リストの開始Y座標
   POKEICON_MARGIN_W = 40, // 横のアイコンまでの距離
   POKEICON_MARGIN_Y = 32, // 下のアイコンまでの距離
   POKEICON_CURSOR_POS_X   = 4,    // ポケモンアイコンカーソルの開始位置
-  POKEICON_CURSOR_POS_Y   = 10,   // ポケモンアイコンカーソルの開始位置
+  POKEICON_CURSOR_POS_Y   = 6,   // ポケモンアイコンカーソルの開始位置
   POKEICON_CURSOR_POS_W   = POKEICON_MARGIN_W/8,   // カーソルの開始位置
   POKEICON_CURSOR_POS_H   = POKEICON_MARGIN_Y/8,   // カーソルの開始位置
   POKEICON_CURSOR_ON_PALID    = BLINK_PALID_POKE_CURSOR_CHANGE,
@@ -313,6 +307,4 @@ extern void HABITAT_ZONE_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_ZONE_GRA_W
 extern void HABITAT_ZONE_GRA_SetMapBlink( HABITAT_ZONE_GRA_WK *p_wk ,u16 zone_group );
 extern void HABITAT_ZONE_GRA_SetSmallIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
                                           u16 index ,GRA_SMALLICON_STATUS status);
-extern void HABITAT_ZONE_GRA_SetMiddleIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
-                      GRA_LANDICON_TYPE icon_type ,GRA_MIDDLEICON_STATUS status);
 

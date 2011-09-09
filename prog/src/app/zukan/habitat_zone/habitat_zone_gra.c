@@ -670,7 +670,7 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     prm.anm_id    = NARC_zukan_gra_list_list_objd_NANR;
     prm.pltt_line = 0;
     prm.pltt_src_ofs  = 0;
-    prm.pltt_src_num  = 7;
+    prm.pltt_src_num  = 0xB;
 
     UI_EASY_CLWK_LoadResource( &p_wk->clres_common_obj, &prm, p_wk->p_clunit, HEAPID_ZUKAN_HABITAT_ZONE );
   }
@@ -729,25 +729,8 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
       OBJ_POS_STAMP_BIG_X, OBJ_POS_STAMP_BIG_Y,
       OBJ_ANM_SEQ_STAMP_BIG_LOOK, HEAPID_ZUKAN_HABITAT_ZONE );
     // @todo スタンプ状態でアニメーションフレームを設定できるようにする
-    GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG],TRUE );
-
-    // 陸地スタンプ
-    p_wk->p_clwk_common_obj[OBJ_WK_STAMP_LAND] = UI_EASY_CLWK_CreateCLWK( 
-      &p_wk->clres_common_obj, p_wk->p_clunit, 
-      OBJ_POS_STAMP_LAND_X, OBJ_POS_STAMP_LAND_Y,
-      OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK, HEAPID_ZUKAN_HABITAT_ZONE );
-
-    // 水辺スタンプ
-    p_wk->p_clwk_common_obj[OBJ_WK_STAMP_WATERSIDE] = UI_EASY_CLWK_CreateCLWK( 
-      &p_wk->clres_common_obj, p_wk->p_clunit, 
-      OBJ_POS_STAMP_WATERSIDE_X, OBJ_POS_STAMP_WATERSIDE_Y,
-      OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK, HEAPID_ZUKAN_HABITAT_ZONE );
-
-    // 釣りスタンプ
-    p_wk->p_clwk_common_obj[OBJ_WK_STAMP_FISHING] = UI_EASY_CLWK_CreateCLWK( 
-      &p_wk->clres_common_obj, p_wk->p_clunit, 
-      OBJ_POS_STAMP_FISHING_X, OBJ_POS_STAMP_FISHING_Y,
-      OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK, HEAPID_ZUKAN_HABITAT_ZONE );
+    GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG],FALSE );
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG],FALSE );
 
     // 陸地ボタン
     p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_LAND] = UI_EASY_CLWK_CreateCLWK( 
@@ -1304,14 +1287,6 @@ void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
   // セルアクターワーク
   GFL_CLWK *p_clwk;
 
-  // 状態ごとのパレット番号
-  u8 palid[] =
-  {
-    LAND_TYPE_ICON_PAL_ON,
-    LAND_TYPE_ICON_PAL_OFF,
-    LAND_TYPE_ICON_PAL_NONE,
-  };
-
   // 状態ごとのボタンON/OFF状態
   BOOL is_button[] =
   {
@@ -1345,9 +1320,6 @@ void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
   switch( icon_type )
   {
   case GRA_LANDICON_TYPE_LAND:
-    GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,
-        LAND_TYPE_ICON_LAND_POS_X,LAND_TYPE_ICON_LAND_POS_Y,
-        LAND_TYPE_ICON_W,LAND_TYPE_ICON_H,palid[ status ]);
     p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_BUTTON_LAND );
     GFL_CLACT_WK_SetDrawEnable( p_clwk ,is_button[ status ]);
     GFL_CLACT_WK_SetAnmSeq( p_clwk , anm_seq[GRA_LANDICON_TYPE_LAND][status]);
@@ -1355,9 +1327,6 @@ void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
     break;
 
   case GRA_LANDICON_TYPE_WATERSIDE:
-    GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,
-        LAND_TYPE_ICON_WATERSIDE_POS_X,LAND_TYPE_ICON_WATERSIDE_POS_Y,
-        LAND_TYPE_ICON_W,LAND_TYPE_ICON_H,palid[ status ]);
     p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_BUTTON_WATERSIDE );
     GFL_CLACT_WK_SetDrawEnable( p_clwk ,is_button[ status ]);
     GFL_CLACT_WK_SetAnmSeq( p_clwk , anm_seq[GRA_LANDICON_TYPE_WATERSIDE][status]);
@@ -1365,9 +1334,6 @@ void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
     break;
 
   case GRA_LANDICON_TYPE_FISHING:
-    GFL_BG_ChangeScreenPalette( BGM_FRAME_BACK ,
-        LAND_TYPE_ICON_FISHING_POS_X,LAND_TYPE_ICON_FISHING_POS_Y,
-        LAND_TYPE_ICON_W,LAND_TYPE_ICON_H,palid[ status ]);
     p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_BUTTON_FISHING );
     GFL_CLACT_WK_SetDrawEnable( p_clwk ,is_button[ status ]);
     GFL_CLACT_WK_SetAnmSeq( p_clwk , anm_seq[GRA_LANDICON_TYPE_FISHING][status]);
@@ -1642,62 +1608,6 @@ void HABITAT_ZONE_GRA_SetSmallIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
   default:
     GF_ASSERT(0);
     break;
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  中サイズアイコンのステータスを設定する
- *
- *	@param	p_wk 
- *	@param	index 
- *	@param	status
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-void HABITAT_ZONE_GRA_SetMiddleIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
-                          GRA_LANDICON_TYPE icon_type ,GRA_MIDDLEICON_STATUS status)
-{
-  s32 i;
-  GFL_CLWK* p_clwk;
-  
-    // 状態ごとのボタンアニメーションシーケンス
-  s32 anm_seq[] =
-  {
-    OBJ_ANM_SEQ_STAMP_MIDDLE_GET,
-    OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK,
-    OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK,  // <=非表示用ダミー
-  };
-
-  switch( icon_type )
-  {
-  case GRA_LANDICON_TYPE_LAND:
-    p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_STAMP_LAND );
-    break;
-
-  case GRA_LANDICON_TYPE_WATERSIDE:
-    p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_STAMP_WATERSIDE );
-    break;
-
-  case GRA_LANDICON_TYPE_FISHING:
-    p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_STAMP_FISHING );
-    break;
-
-  default:
-    GF_ASSERT(0);
-    break;
-  }
-
-  // ステータスによってアニメーション状態を設定する
-  if( status != GRA_SMALLICON_NONE )
-  {
-    GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE );
-    GFL_CLACT_WK_SetAnmSeq( p_clwk , anm_seq[status]);
-  }
-  else
-  {
-    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE );
   }
 }
 

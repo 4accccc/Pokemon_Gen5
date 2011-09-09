@@ -38,6 +38,17 @@ typedef enum{
   HABITAT_POKE_STATUS_GET,
 }HABITAT_POKE_STATUS;
 
+// 地形の詳細
+typedef enum{
+  HABITAT_GROUND_INFO_GRASS,
+  HABITAT_GROUND_INFO_SAND,
+  HABITAT_GROUND_INFO_SWAMP,
+  HABITAT_GROUND_INFO_CAVE,
+  HABITAT_GROUND_INFO_BRIDGE,
+  HABITAT_GROUND_INFO_MULTI,
+  HABITAT_GROUND_INFO_NONE,
+}HABITAT_GROUND_INFO_TYPE;
+
 // 生息地リストアーカイブデータ
 typedef struct {
   u16   monsno; // モンスターナンバー
@@ -64,6 +75,8 @@ typedef struct {
 // ゾーンデータ
 typedef struct {
   u16 zone_group;              // ゾーングループ
+  u16 season_enable;           // 季節の存在状態
+  HABITAT_GROUND_INFO_TYPE info_ground_type;  // 地形の詳細情報
   HABITAT_ZONE_POKE_DATA poke_data[ HABITAT_ZONE_POKE_LIST_MAX ]; // データリスト
 }HABITAT_ZONE_DATA;
 

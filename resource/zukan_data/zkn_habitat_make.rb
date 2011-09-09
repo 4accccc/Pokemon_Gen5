@@ -62,7 +62,7 @@ def set_mons_array_data( group_data ,mons_array ,mons_data )
 end
 
 # バイナリデータを出力する
-def put_bin_file( f_name ,group_data ,mons_array )
+def put_bin_file( f_name ,group_data ,mons_array ,group_type )
   bin = open(f_name,"w")
   
   # 季節の有効状態
@@ -88,7 +88,7 @@ def put_bin_file( f_name ,group_data ,mons_array )
   bin << [ landtype_enable[GTYPE_FISHING] ].pack( "C" ) # 釣り
   
   # 地形タイプ
-  bin << [ mons_array.size ].pack( "S" )
+  bin << [ group_type.to_i ].pack( "S" )
  
   # データ数
   bin << [ mons_array.size ].pack( "S" )
@@ -222,12 +222,12 @@ zone_group_data.each_key{|zone_group|
 
   # ブラック用データ作成
   set_mons_array_data( group_data,b_mons_array ,b_mons_data )
-  put_bin_file( "hb_b_%s.bin"%[zone_group.downcase] ,group_data ,b_mons_array )
+  put_bin_file( "hb_b_%s.bin"%[zone_group.downcase] ,group_data ,b_mons_array,group_data.black_ground_type )
 
 
   # ホワイト用データ作成
   set_mons_array_data( group_data,w_mons_array ,w_mons_data)
-  put_bin_file( "hb_w_%s.bin"%[zone_group.downcase] ,group_data ,w_mons_array )
+  put_bin_file( "hb_w_%s.bin"%[zone_group.downcase] ,group_data ,w_mons_array,group_data.white_ground_type )
 }
 
 # データインデックステーブルを作成
