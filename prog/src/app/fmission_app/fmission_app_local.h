@@ -48,7 +48,7 @@ enum{
 	FMA_CMN_OBJ_MAXNUM	= 2,		// obj最大数
 };
 
-// フラグ
+// フラグ(Flag)
 enum{
 	FLG_FMA_UPDATE		= (1<<0),	// 更新
 	FLG_FMA_DISP_1ST	= (1<<1),	// はじめの表示
@@ -83,6 +83,8 @@ enum{
 	//
 	FLG_FMA_MSG_04		= (1<<28),	// 共鳴した
 	FLG_FMA_MSG_END		= (1<<29),	// 終了
+	//
+	FLG_FMA_DEBUG		= (1<<31),	// debug
 };
 
 //------------------
@@ -257,6 +259,7 @@ typedef struct{
 typedef struct{
 	STRBUF		*strbuf;		// 名前
 	s32			score;			// スコア
+	s32			tr_id;			// tr_id
 } FMISSION_APP_LOG;
 
 //-------------------------------------
@@ -302,6 +305,7 @@ typedef struct
 	LINKFEST_MISSION_RESULT MissionResult;		// 結果(実体)
 	LINKFEST_LOG_TOP_SCORE	*TopScore;			// トップスコア用
 	FMISSION_LOG_LATEST		*Latest;			// ログ
+	FMISSION_LOG_LATEST		LatestLocal;		// ログ(localで使用：実体)
 	FMISSION_APP_LOG		ScoreLog;			// スコアログ(1名分)
 	//
 	s32						Step;				// 処理の流れ

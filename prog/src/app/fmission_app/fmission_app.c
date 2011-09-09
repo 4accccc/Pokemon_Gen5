@@ -163,6 +163,13 @@ static const s16 fmar_wait_tbl[] = {
 	-1,
 };
 
+// ME
+static const u16 fmai_me_tbl[] = {
+	SND_FMA_ITEM,		// 獲得
+	SND_FMA_CLEAR,		// クリア
+	SND_FMA_MISS,		// ミス
+};
+
 //=============================================================================
 /**
  *							プロトタイプ宣言
@@ -203,6 +210,9 @@ static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s3
 static void fma_disp_highscore( FMISSION_APP_WORK *wk );
 static void fma_disp_total_score( FMISSION_APP_WORK *wk, const s32 mode );
 static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num, const s32 snum );
+static void fma_chk_log_buffer( FMISSION_APP_WORK *wk );
+static void fma_chk_latest( FMISSION_APP_WORK *wk, const s32 num );
+
 //
 static void fma_disp_fix_string( FMISSION_APP_WORK *wk, const s32 mode );
 static void fma_chk_level_timer( FMISSION_APP_WORK *wk );
@@ -210,7 +220,7 @@ static void fma_chk_level_timer( FMISSION_APP_WORK *wk );
 static BOOL fma_chk_meswin( FMISSION_APP_WORK *wk );
 static s32 fma_chk_itemget( FMISSION_APP_WORK *wk, const s32 itemid );
 //
-static void fma_snd_me( FMISSION_APP_WORK *wk );
+static void fma_snd_me( FMISSION_APP_WORK *wk, const s32 mode );
 static BOOL fma_is_snd_me_end( FMISSION_APP_WORK *wk );
 
 //
@@ -351,12 +361,6 @@ static GFL_PROC_RESULT FMissionAppProc_Exit( GFL_PROC *proc, int *seq, void *pwk
 	// 破棄
 	//--------------
 	fma_exit( wk );
-	
-	// 破棄
-	if(wk->ScoreLog.strbuf){
-		GFL_STR_DeleteBuffer( wk->ScoreLog.strbuf );
-		wk->ScoreLog.strbuf = 0;
-	}
 	
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
@@ -499,11 +503,13 @@ static void fma_init( FMISSION_APP_WORK* wk )
 	wk->LevelTimer = 0;
 	wk->Level	= 0;
 	//
+	//
+#ifdef PM_DEBUG
 	// R押しながら(debug)
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
-		wk->Mode = 1;
+		wk->Flag |= FLG_FMA_DEBUG;
 	}
-	//
+#endif
 	wk->OldWork.Timer	= -1;
 	wk->OldWork.Num 	= -1;
 	wk->OldWork.Score 	= -1;
@@ -511,7 +517,14 @@ static void fma_init( FMISSION_APP_WORK* wk )
 	//
 	wk->ScoreLog.strbuf = 0;
 	wk->ScoreLog.score  = 0;
+	wk->ScoreLog.tr_id	= 0;
 	//
+	wk->LatestLocal.num = 0;
+	for(i=0;i<FMISSION_LOG_LATEST_NUM_MAX;i++){
+		wk->LatestLocal.log[i].name  = 0;	// 破棄忘れずに
+		wk->LatestLocal.log[i].score = 0;
+		wk->LatestLocal.log[i].tr_id = 0;
+	}
 	for(i=0;i<FMA_CANVAS_MAXNUM;i++){
 		wk->PrintUtil[i].win = 0;
 	}
@@ -578,8 +591,23 @@ static void fma_down( FMISSION_APP_WORK* wk )
 //-----------------------------------------------------------------------------
 static void fma_exit( FMISSION_APP_WORK* wk )
 {
+	s32		i;
+	//
 	// データ破棄
 	FmaCmn_data_exit( wk );
+	//
+	// 破棄
+	if(wk->ScoreLog.strbuf){
+		GFL_STR_DeleteBuffer( wk->ScoreLog.strbuf );
+		wk->ScoreLog.strbuf = 0;
+	}
+	// 破棄
+	for(i=0;i<FMISSION_LOG_LATEST_NUM_MAX;i++){
+		if(wk->LatestLocal.log[i].name){
+			GFL_STR_DeleteBuffer( wk->LatestLocal.log[i].name );
+			wk->LatestLocal.log[i].name = 0;
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -645,17 +673,7 @@ static void fma_scroll_bg( FMISSION_APP_WORK* wk )
 //-----------------------------------------------------------------------------
 static void fma_init_info( FMISSION_APP_WORK* wk )
 {
-#if 0	// 後日検討
-	{
-		FMISSION_LOG_TBL* tbl = LINK_FESTIVAL_GetMissionLogStackTbl( wk->Param->fest_sys );
-		FMISSION_LOG_StackTbl_GetLogLatest( tbl, wk->Latest );
-		//
-		OS_Printf("%d\n",wk->Latest->num);
-//		for(int i=0;i<wk->Latest->num;i++){
-//			OS_Printf("%d\n",wk->Latest->num);
-//		}
-	}
-#endif
+	// 必要であれば
 }
 
 //-----------------------------------------------------------------------------
@@ -804,6 +822,7 @@ static void fma_update_up_info( FMISSION_APP_WORK* wk )
 	// 右側(可変)
 	//----------
 	// 参加人数
+	FmaCmn_clear_canvas( wk, FMAI_CANVAS_UP_JOIN_R );
 	fma_disp_fes_string( wk, FMA_MES_JOIN, FMAI_CANVAS_UP_JOIN_R, 48, 0, PRINTTOOL_MODE_RIGHT );
 	//
 	// トータルスコア
@@ -996,6 +1015,9 @@ static void fma_chk_scroll( FMISSION_APP_WORK* wk )
 {
 	s32		flg=0;
 	//
+	// ログのチェック(毎フレーム必要)
+	fma_chk_log_buffer( wk );
+	
 	// 一人モードの場合
 	if(wk->Flag & FLG_FMA_ONLY){
 		return;
@@ -1113,10 +1135,14 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 		wk->Flag |= FLG_FMA_HILINK;
 	}
 	//
+#ifdef PM_DEBUG
 	// debug
-	wk->Flag |= (FLG_FMA_SUCCESS|FLG_FMA_BONUS|FLG_FMA_DOUBLE|FLG_FMA_CLEAR_TIME|FLG_FMA_GET|FLG_FMA_GET2|FLG_FMA_HILINK);
-	wk->Flag |= (FLG_FMA_NEW_TS|FLG_FMA_NEW_CT);
-	
+	if(wk->Flag & FLG_FMA_DEBUG){
+		wk->Flag |= (FLG_FMA_SUCCESS|FLG_FMA_BONUS|FLG_FMA_DOUBLE|FLG_FMA_CLEAR_TIME|FLG_FMA_GET|FLG_FMA_GET2|FLG_FMA_HILINK);
+		wk->Flag |= (FLG_FMA_NEW_TS|FLG_FMA_NEW_CT);
+	}
+#endif
+
 #ifdef PM_DEBUG
 	OS_Printf("clear, ver, vernum, score :%d,%d,%d,%d\n",
 			wk->MissionResult.clear_f,
@@ -1162,18 +1188,37 @@ static void fma_key_result( FMISSION_APP_WORK* wk )
 			fma_update_result( wk );
 			break;
 		//
+		// ME待ち
+		case STEP_LV1+5:
+			// MEを鳴らしている場合
+			if( wk->Flag & FLG_FMA_ME_WAIT ){
+				bflg = fma_is_snd_me_end( wk );
+				if(bflg == FALSE){
+					wk->Flag &= ~FLG_FMA_ME_WAIT;
+					wk->Flag |= FLG_FMA_ME_MES;		// 矢印表示
+					wk->Step = STEP_LV1+10;
+				}
+			}
+			break;
+		//
 		// stream待ち(1発表示)
 		case STEP_LV1+10:
 			// メッセージ終了
 			if(wk->Flag & FLG_FMA_MSG_END){
 				wk->Step = STEP_LV1;
+				wk->Flag |= FLG_FMA_ME_MES;			// 矢印表示
 			}else{
+				// MEのメッセージ=>矢印を表示する(毎フレーム)
+				if(wk->Flag & FLG_FMA_ME_MES){
+					FmaCmn_disp_arrow( wk, TRUE );
+				}
 				// キー待ち
 				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 					fma_chk_meswin( wk );
 					wk->Step = STEP_LV2;
 					// SE
 					PMSND_PlaySE( SND_FMA_SKIP );
+					wk->Flag &= ~FLG_FMA_ME_MES;
 				}
 			}
 			break;
@@ -1185,6 +1230,7 @@ static void fma_key_result( FMISSION_APP_WORK* wk )
 				// 入力待ち
 				if(wk->Flag & FLG_FMA_MSG_END){
 					wk->Step = STEP_LV1;
+					wk->Flag |= FLG_FMA_ME_MES;
 				}else{
 					// MEを鳴らしている場合
 					if( wk->Flag & FLG_FMA_ME_WAIT ){
@@ -1194,17 +1240,16 @@ static void fma_key_result( FMISSION_APP_WORK* wk )
 							wk->Flag |= FLG_FMA_ME_MES;
 						}
 					}else{
-						// MEのメッセージ=>矢印を表示する
+						// MEのメッセージ=>矢印を表示する(毎フレーム)
 						if(wk->Flag & FLG_FMA_ME_MES){
 							FmaCmn_disp_arrow( wk, TRUE );
 						}
 						if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+							wk->Flag &= ~FLG_FMA_ME_MES;
 							// 次のメッセージがあるかの判定
 							fma_chk_meswin( wk );
 							// SE
 							PMSND_PlaySE( SND_FMA_SKIP );
-							//
-							wk->Flag &= ~FLG_FMA_ME_MES;
 						}
 					}
 				}
@@ -1253,6 +1298,15 @@ static void fma_update_result( FMISSION_APP_WORK* wk )
 		wk->Flag &= ~FLG_FMA_UPDATE;
 		wk->Flag &= ~(FLG_FMA_LEVEL0|FLG_FMA_LEVEL1|FLG_FMA_LEVEL2|FLG_FMA_LEVEL3);
 	}
+	//
+	//
+	// メッセージ終了で矢印表示=>最後の矢印待ち
+	if(wk->Flag & FLG_FMA_MSG_END){
+		// MEのメッセージ=>矢印を表示する
+		if(wk->Flag & FLG_FMA_ME_MES){
+			FmaCmn_disp_arrow( wk, TRUE );
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1266,6 +1320,7 @@ static void fma_update_result( FMISSION_APP_WORK* wk )
 //-----------------------------------------------------------------------------
 static void fma_update_up_result( FMISSION_APP_WORK* wk )
 {
+	s32		flg=0;
 	s32		timer;
 	s32		id;
 	s32		buf[2];
@@ -1299,6 +1354,8 @@ static void fma_update_up_result( FMISSION_APP_WORK* wk )
 		fma_disp_fes_string( wk, FMA_MES_JOIN, FMAR_CANVAS_UP_JOIN_R, 48, 0, PRINTTOOL_MODE_RIGHT );
 		// 人アイコン
 		FmaCmn_set_obj_visible( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_ICON_01, TRUE );
+		// SE
+		PMSND_PlaySE( SND_FMA_RESULT );
 	}
 	//-----------
 	// LV2の場合
@@ -1342,11 +1399,19 @@ static void fma_update_up_result( FMISSION_APP_WORK* wk )
 		// トータルスコア(NEW)
 		if(wk->Flag & FLG_FMA_NEW_TS){
 			FmaCmn_set_obj_visible( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_RECORD_00, TRUE );
+			flg = 1;
 		}
 		//
 		// クリアタイム(NEW)
 		if(wk->Flag & FLG_FMA_NEW_CT){
 			FmaCmn_set_obj_visible( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_RECORD_01, TRUE );
+			flg = 1;
+		}
+		// SE
+		if(flg == 0){		// 通常
+			PMSND_PlaySE( SND_FMA_RESULT );
+		}else{				// ハイスコア
+			PMSND_PlaySE( SND_FMA_HISCORE );
 		}
 	}
 }
@@ -1713,7 +1778,6 @@ static void fma_disp_total_score( FMISSION_APP_WORK *wk, const s32 mode )
 		sbuf[0] = FmaCmn_get_empty( wk, FMA_EMPTY_RESULT*2 );
 		sbuf[1] = FmaCmn_get_empty( wk, FMA_EMPTY_RESULT*2+1 );
 		//
-//		buf[0] = wk->MissionStatus.total_score;
 		buf[0] = wk->MissionResult.score;
 		FmaCmn_disp_number( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_SCORE_00, buf[0], 4, 0, sbuf[0]+buf[1], sbuf[1] );
 	}
@@ -1725,7 +1789,7 @@ static void fma_disp_total_score( FMISSION_APP_WORK *wk, const s32 mode )
  *
  * @param   FMISSION_APP_WORK		*wk
  * @param   const s32				(番号)
- * @param   const s32				(人の情報(仮))
+ * @param   const s32				(未使用)
  */
 //--------------------------------------------------------------
 static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num, const s32 snum )
@@ -1741,29 +1805,26 @@ static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num, const s3
 	
 	id = wk->Param->fmwk->beacon.m_id;
 	buf[0] = wk->ArcData[id].common.unit;
-	buf[1] = snum;
-	buf[2] = 9876;
+//	buf[1] = snum;
+//	buf[2] = 9876;
 	
-	// 何人かを探す
-	tbl = LINK_FESTIVAL_GetMissionLogStackTbl( wk->Param->fest_sys );
-	FMISSION_LOG_StackTbl_GetLogLatest( tbl, wk->Latest );
-	// 表示しない
-	if(wk->Latest->num <= 1){
+	// データがなにもない
+	if(wk->LatestLocal.num == 0){
 		return;
 	}
 	//
 	// まだ表示してない => 0番を表示
 	if(wk->ScoreLog.strbuf == 0){
 		// ログの情報をコピー
-		wk->ScoreLog.strbuf = GFL_STR_CreateCopyBuffer( wk->Latest->log[0].name, wk->heapID );
-		wk->ScoreLog.score  = wk->Latest->log[0].score;
+		wk->ScoreLog.strbuf = GFL_STR_CreateCopyBuffer( wk->LatestLocal.log[0].name, wk->heapID );
+		wk->ScoreLog.score  = wk->LatestLocal.log[0].score;
+		wk->ScoreLog.tr_id  = wk->LatestLocal.log[0].tr_id;
 	}
 	else{
-		// (すでに表示した)同じ名前を探す
+		// (すでに表示した)同じIDを探す
 		j=-1;
-		for(i=0;i<wk->Latest->num;i++){
-			bflg = GFL_STR_CompareBuffer( wk->Latest->log[i].name, wk->ScoreLog.strbuf );
-			if(bflg == TRUE){
+		for(i=0;i<wk->LatestLocal.num;i++){
+			if(wk->LatestLocal.log[i].tr_id == wk->ScoreLog.tr_id){
 				j = i;
 				break;
 			}
@@ -1771,23 +1832,20 @@ static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num, const s3
 		// ここまでで何番目(j)に名前の番号が入る
 		// (該当なし(-1)もありうる)
 		i = j+1;
-		if(i >= wk->Latest->num){
+		if(i >= wk->LatestLocal.num){
 			i = 0;
 		}
 		// iに求める番号が入っているはず
 		// ログの情報をコピー
 		GFL_STR_DeleteBuffer( wk->ScoreLog.strbuf );
-		wk->ScoreLog.strbuf = GFL_STR_CreateCopyBuffer( wk->Latest->log[i].name, wk->heapID );
-		wk->ScoreLog.score  = wk->Latest->log[i].score;
+		wk->ScoreLog.strbuf = GFL_STR_CreateCopyBuffer( wk->LatestLocal.log[i].name, wk->heapID );
+		wk->ScoreLog.score  = wk->LatestLocal.log[i].score;
+		wk->ScoreLog.tr_id  = wk->LatestLocal.log[i].tr_id;
 	}
-	
-//	WORDSET_RegisterWord( wk->Wordset, 0, wk->Latest->log[0].name, 0, TRUE, PM_LANG );
 	//
 	// (00 or 01)
 	strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[0]+2] );
 	WORDSET_RegisterWord( wk->Wordset,  0, wk->ScoreLog.strbuf, 0, TRUE, PM_LANG );
-//	WORDSET_RegisterNumber(wk->Wordset, 0, buf[1], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);	// test
-//	WORDSET_RegisterNumber(wk->Wordset, 1, buf[2], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 	WORDSET_RegisterNumber(wk->Wordset, 1, wk->ScoreLog.score,  4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 	expbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
 	WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf );
@@ -1798,9 +1856,133 @@ static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num, const s3
 
 //--------------------------------------------------------------
 /**
+ * スコアログのチェック(毎フレーム必要)
+ *
+ * @param   FMISSION_APP_WORK		*wk
+ */
+//--------------------------------------------------------------
+static void fma_chk_log_buffer( FMISSION_APP_WORK *wk )
+{
+	s32		i;
+	s32		j;
+	FMISSION_LOG_TBL* tbl;
+	
+	// 最新の3人分の情報を取得
+	tbl = LINK_FESTIVAL_GetMissionLogStackTbl( wk->Param->fest_sys );
+	FMISSION_LOG_StackTbl_GetLogLatest( tbl, wk->Latest );
+	//
+	// チェック
+	for(i=0;i<FMISSION_LOG_LATEST_NUM_MAX;i++){
+		fma_chk_latest( wk, i );
+	}
+	//
+	j=0;
+	for(i=0;i<FMISSION_LOG_LATEST_NUM_MAX;i++){
+		if(wk->LatestLocal.log[i].tr_id != 0){
+			j++;
+		}
+	}
+	wk->LatestLocal.num = j;
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアログの最新バッファがローカルバッファ同じかチェックし、
+ * 適切な場所にセット
+ *
+ * @param   FMISSION_APP_WORK		*wk
+ * @param   const s32				スコアログのログ番号(0-2)
+ */
+//--------------------------------------------------------------
+static void fma_chk_latest( FMISSION_APP_WORK *wk, const s32 num )
+{
+	s32		j;
+	s32		i;
+	s32		flg=0;
+	BOOL	bflg;
+	
+	// idが0は除く
+	if(wk->Latest->log[num].tr_id == 0){
+		return;
+	}
+	
+	// tr_idと名前が同じかをチェック
+	j=-1;
+	for(i=0;i<FMISSION_LOG_LATEST_NUM_MAX;i++){
+		// idが同じ
+		if(wk->Latest->log[num].tr_id == wk->LatestLocal.log[i].tr_id){
+			// 名前が同じ
+			bflg = GFL_STR_CompareBuffer( wk->Latest->log[num].name, wk->LatestLocal.log[i].name );
+			if(bflg == TRUE){
+				j=i;
+				break;
+			}
+		}
+	}
+	// ここまでで(j)番目のデータと同じかがわかる
+	// 該当なし(-1)もわかる
+	if(j == 0){			// 0番目の情報を置き換える
+		wk->LatestLocal.log[j].tr_id = wk->Latest->log[num].tr_id;
+		wk->LatestLocal.log[j].score = wk->Latest->log[num].score;
+		if(wk->LatestLocal.log[j].name){
+			GFL_STR_DeleteBuffer( wk->LatestLocal.log[j].name );
+		}
+		wk->LatestLocal.log[j].name = GFL_STR_CreateCopyBuffer( wk->Latest->log[num].name, wk->heapID );
+	}
+	else if(j == 1){	// 0番目の情報を1に写し、0番目に情報をセット
+		// 0番を1番にセット
+		wk->LatestLocal.log[1].tr_id = wk->LatestLocal.log[0].tr_id;
+		wk->LatestLocal.log[1].score = wk->LatestLocal.log[0].score;
+		if(wk->LatestLocal.log[1].name){
+			GFL_STR_DeleteBuffer( wk->LatestLocal.log[1].name );
+		}
+		wk->LatestLocal.log[1].name = GFL_STR_CreateCopyBuffer( wk->LatestLocal.log[0].name, wk->heapID );
+		//
+		// 0番に情報をセット
+		wk->LatestLocal.log[0].tr_id = wk->Latest->log[num].tr_id;
+		wk->LatestLocal.log[0].score = wk->Latest->log[num].score;
+		if(wk->LatestLocal.log[0].name){
+			GFL_STR_DeleteBuffer( wk->LatestLocal.log[0].name );
+		}
+		wk->LatestLocal.log[0].name = GFL_STR_CreateCopyBuffer( wk->Latest->log[num].name, wk->heapID );
+	}
+	else if((j == 2)||(j == -1)){	// 1->2へ、0->1にして、0番目に情報をセット
+		// 0番を1番にセット
+		if(wk->LatestLocal.log[0].tr_id != 0){
+			wk->LatestLocal.log[1].tr_id = wk->LatestLocal.log[0].tr_id;
+			wk->LatestLocal.log[1].score = wk->LatestLocal.log[0].score;
+			if(wk->LatestLocal.log[1].name){
+				GFL_STR_DeleteBuffer( wk->LatestLocal.log[1].name );
+			}
+			wk->LatestLocal.log[1].name = GFL_STR_CreateCopyBuffer( wk->LatestLocal.log[0].name, wk->heapID );
+		}
+		//
+		// 1番を2番にセット
+		if(wk->LatestLocal.log[1].tr_id != 0){
+			wk->LatestLocal.log[2].tr_id = wk->LatestLocal.log[1].tr_id;
+			wk->LatestLocal.log[2].score = wk->LatestLocal.log[1].score;
+			if(wk->LatestLocal.log[2].name){
+				GFL_STR_DeleteBuffer( wk->LatestLocal.log[2].name );
+			}
+			wk->LatestLocal.log[2].name = GFL_STR_CreateCopyBuffer( wk->LatestLocal.log[1].name, wk->heapID );
+		}
+		//
+		// 0番に情報をセット
+		wk->LatestLocal.log[0].tr_id = wk->Latest->log[num].tr_id;
+		wk->LatestLocal.log[0].score = wk->Latest->log[num].score;
+		if(wk->LatestLocal.log[0].name){
+			GFL_STR_DeleteBuffer( wk->LatestLocal.log[0].name );
+		}
+		wk->LatestLocal.log[0].name = GFL_STR_CreateCopyBuffer( wk->Latest->log[num].name, wk->heapID );
+	}
+}
+
+//--------------------------------------------------------------
+/**
  * 固定文字列表示(1回だけ表示)
  *
  * @param   FMISSION_APP_WORK		*wk
+ * @param   const s32				番号(未使用)
  */
 //--------------------------------------------------------------
 static void fma_disp_fix_string( FMISSION_APP_WORK *wk, const s32 mode )
@@ -1840,9 +2022,10 @@ static void fma_chk_level_timer( FMISSION_APP_WORK *wk )
 			wk->Flag |= FLG_FMA_TIME_STOP;
 			// メッセージウインドウ表示
 			fma_chk_meswin( wk );
-			wk->Step = STEP_LV1+10;
+			wk->Step = STEP_LV1+5;
 			//
 		}else{
+			// FLG_FMA_LEVEL*と対応
 			wk->Flag |= (1<<(16+(wk->Level-1)));
 			wk->Flag |= FLG_FMA_UPDATE;
 		}
@@ -1854,6 +2037,8 @@ static void fma_chk_level_timer( FMISSION_APP_WORK *wk )
  * メッセージ表示(win)
  *
  * @param   FMISSION_APP_WORK		*wk
+ *
+ * @ret     BOOL					(TRUE:表示、FALSE:表示しない)
  */
 //--------------------------------------------------------------
 static BOOL fma_chk_meswin( FMISSION_APP_WORK *wk )
@@ -1866,9 +2051,13 @@ static BOOL fma_chk_meswin( FMISSION_APP_WORK *wk )
 		// 判定
 		if(wk->Flag & FLG_FMA_SUCCESS){
 			id = FMA_MSGWIN_00;
+			// ME再生
+			fma_snd_me( wk, 1 );
 		}else{
 			id = FMA_MSGWIN_01;
-			// 終了
+			// ME再生
+			fma_snd_me( wk, 2 );
+			// 終了(失敗の場合は終了)
 			wk->Flag |= FLG_FMA_MSG_END;
 		}
 		// 一発だし
@@ -1883,9 +2072,11 @@ static BOOL fma_chk_meswin( FMISSION_APP_WORK *wk )
 		if(wk->Flag & FLG_FMA_GET){
 			id = FMA_MSGWIN_02;
 			// ME再生
-			fma_snd_me( wk );
+			fma_snd_me( wk, 0 );
 		}else{
 			id = FMA_MSGWIN_03;
+			// 報酬手に入らず=>矢印表示
+			wk->Flag |= FLG_FMA_ME_MES;
 		}
 		// stream
 		FmaCmn_disp_winmes( wk, FMAR_CANVAS_DOWN_WIN, id, 1 );
@@ -1900,6 +2091,8 @@ static BOOL fma_chk_meswin( FMISSION_APP_WORK *wk )
 			// stream
 			FmaCmn_disp_winmes( wk, FMAR_CANVAS_DOWN_WIN, id, 1 );
 			wk->Flag |= FLG_FMA_MSG_02;
+			// 矢印表示
+			wk->Flag |= FLG_FMA_ME_MES;
 			return( TRUE );
 		}
 		else{
@@ -1914,9 +2107,11 @@ static BOOL fma_chk_meswin( FMISSION_APP_WORK *wk )
 			if(wk->Flag & FLG_FMA_GET2){
 				id = FMA_MSGWIN_02A;
 				// ME再生
-				fma_snd_me( wk );
+				fma_snd_me( wk, 0 );
 			}else{
 				id = FMA_MSGWIN_03;
+				// 手に入らず
+				wk->Flag |= FLG_FMA_ME_MES;
 			}
 			// stream
 			FmaCmn_disp_winmes( wk, FMAR_CANVAS_DOWN_WIN, id, 1 );
@@ -1963,13 +2158,15 @@ static BOOL fma_chk_meswin( FMISSION_APP_WORK *wk )
  * ME再生
  *
  * @param   FMISSION_APP_WORK		*wk
+ * @param   const s32				(0:アイテム、1:クリア、2:失敗)
  */
 //--------------------------------------------------------------
-static void fma_snd_me( FMISSION_APP_WORK *wk )
+static void fma_snd_me( FMISSION_APP_WORK *wk, const s32 mode )
 {
 	PMSND_PauseBGM( TRUE );
 	PMSND_PushBGM();
-	PMSND_PlayBGM( SND_FMA_ME );
+	PMSND_PlayBGM( fmai_me_tbl[mode] );
+	//
 	wk->Flag |= FLG_FMA_ME_WAIT;
 }
 
@@ -1989,7 +2186,6 @@ static BOOL fma_is_snd_me_end( FMISSION_APP_WORK *wk )
 	if(PMSND_CheckPlayBGM() == FALSE){
 		PMSND_PopBGM();
 		PMSND_PauseBGM( FALSE );
-		wk->Flag &= ~FLG_FMA_ME_WAIT;
 		bflg = FALSE;
 	}
 	return( bflg );
@@ -2019,20 +2215,6 @@ static void fma_debug( FMISSION_APP_WORK *wk )
 		}
 		wk->Flag |= FLG_FMA_UPDATE;
 	}
-	// test
-//	if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
-//		FmaCmn_disp_arrow( wk, TRUE );
-//	}
-//	if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
-//		FmaCmn_disp_arrow( wk, FALSE );
-//	}
-	// test
-//	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-//		FMISSION_LOG_TBL* tbl = LINK_FESTIVAL_GetMissionLogStackTbl( wk->Param->fest_sys );
-//		FMISSION_LOG_StackTbl_GetLogLatest( tbl, wk->Latest );
-//		//
-//		OS_Printf("%d\n",wk->Latest->num);
-//	}
 #endif	// PM_DEBUG
 }
 
