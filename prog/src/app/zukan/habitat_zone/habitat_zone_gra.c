@@ -536,7 +536,7 @@ static void GRA_InitBmpWin( HABITAT_ZONE_GRA_WK *p_wk )
   {
     p_wk->p_event_win_sub = GFL_BMPWIN_Create( BGM_FRAME_EVMSG_WIN,
         2   , 8   ,
-        32 -4  , 24 -8 -7 ,
+        32 -4  , 24 -8 -7 -4 ,
         HABITAT_ZONE_MBG_PAL_FONT , GFL_BMP_CHRAREA_GET_B );
 
     // スクリーンの作成
@@ -779,15 +779,15 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     // メニューバー
     p_wk->p_clwk_common_obj[OBJ_WK_MENU_BAR] = UI_EASY_CLWK_CreateCLWK( 
       &p_wk->clres_common_obj, p_wk->p_clunit, 
-      0, 0, OBJ_ANM_SEQ_MENU_BAR, HEAPID_ZUKAN_HABITAT_ZONE );
+      MENU_BAR_POS_X, MENU_BAR_POS_Y, OBJ_ANM_SEQ_MENU_BAR, HEAPID_ZUKAN_HABITAT_ZONE );
     GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[OBJ_WK_MENU_BAR] ,1 );
+    GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk_common_obj[OBJ_WK_MENU_BAR] ,1 );
 
     // 大きなスタンプ
     p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG] = UI_EASY_CLWK_CreateCLWK( 
       &p_wk->clres_common_obj, p_wk->p_clunit, 
       OBJ_POS_STAMP_BIG_X, OBJ_POS_STAMP_BIG_Y,
       OBJ_ANM_SEQ_STAMP_BIG_LOOK, HEAPID_ZUKAN_HABITAT_ZONE );
-    // @todo スタンプ状態でアニメーションフレームを設定できるようにする
     GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG],FALSE );
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG],FALSE );
 

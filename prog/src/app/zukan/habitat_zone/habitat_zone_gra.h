@@ -97,7 +97,7 @@ enum
   OBJ_ANM_SEQ_BUTTON_FISHING_ANM  = 21,
   OBJ_ANM_SEQ_BUTTON_EXPLANATION  = 28,
   OBJ_ANM_SEQ_BUTTON_EXPLANATION_ANM  = 29,
-  OBJ_ANM_SEQ_MENU_BAR  = 29,
+  OBJ_ANM_SEQ_MENU_BAR  = 31,
 };
 
 // OBJWKID
@@ -160,6 +160,8 @@ enum{
   POKEICON_CURSOR_NONE_PALID  = 0xB,
   SMALL_ICON_OFFSET_X   = 16,    // ポケモンアイコン用見た、捕獲アイコンオフセット
   SMALL_ICON_OFFSET_Y   = 0,   // ポケモンアイコン用見た、捕獲アイコンオフセット
+  MENU_BAR_POS_X   = 256/2,    // メニューバーの位置
+  MENU_BAR_POS_Y   = 192/2,     // メニューバーの位置
 
 };
 

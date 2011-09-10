@@ -30,6 +30,9 @@
 //=============================================================================
 typedef void (*MainFunc)(HABITAT_ZONE_WK*);
 
+enum{
+  COMPLETE_EVENT_WAIT_FRAME = 30,
+};
 
 //=============================================================================
 /**
@@ -724,6 +727,7 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
       GFL_CLACT_WK_SetAnmFrame( p_clwk ,0);
       GFL_CLACT_WK_SetAnmSeq( p_clwk , anm_seq );
       GFL_CLACT_WK_SetAutoAnmFlag( p_clwk ,TRUE );
+      GFL_CLACT_WK_StartAnm( p_clwk );
 
       // シーケンスを進める
       p_wk->sub_seq++;
@@ -811,7 +815,6 @@ static void SetCompIcon( HABITAT_ZONE_WK *p_wk )
   {
   case HABITAT_ZONE_STATUS_NONE:
     {
-      ONOUE_Printf("そうフレーム数:%x\n",GFL_CLACT_WK_GetAnmFrame( p_clwk ));
       GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
     }
     break;
@@ -821,6 +824,7 @@ static void SetCompIcon( HABITAT_ZONE_WK *p_wk )
       GFL_CLACT_WK_SetAnmFrame( p_clwk ,GFL_CLACT_WK_GetAnmFrame( p_clwk ) );
       GFL_CLACT_WK_SetAnmSeq( p_clwk ,OBJ_ANM_SEQ_STAMP_BIG_LOOK );
       GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+      GFL_CLACT_WK_StopAnm( p_clwk );
     }
     break;
   case HABITAT_ZONE_STATUS_GET:
@@ -829,6 +833,7 @@ static void SetCompIcon( HABITAT_ZONE_WK *p_wk )
       GFL_CLACT_WK_SetAnmFrame( p_clwk ,GFL_CLACT_WK_GetAnmFrame( p_clwk ) );
       GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_STAMP_BIG_GET );
       GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+      GFL_CLACT_WK_StopAnm( p_clwk );
     }
     break;
   }
@@ -1144,7 +1149,13 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
   PRINTSYS_LSB  font_colro = GetMsgFontColor();
   switch( p_wk->sub_seq )
   {
-  case 0:
+  default:
+    {
+      // 起動シーケンス待ち
+      p_wk->sub_seq++;
+    }
+    break;
+  case COMPLETE_EVENT_WAIT_FRAME:
     {
       u32           msg_id;
       STRBUF        *str;
@@ -1160,7 +1171,7 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       if( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET )
       {
         // ファンファーレ
-        PMSND_PlayBGM( BANK_ME_ZUKAN_02 );
+        PMSND_PlayBGM( BANK_ME_ZUKAN_01 );
 
         // 地形メッセージIDを取得
         msg_id = GetLandTypeMsgIDGetCmp( p_wk->land_type,p_list_data->info_ground_type);
@@ -1190,7 +1201,7 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       p_wk->sub_seq++;
     }
     break;
-  case 1:
+  case COMPLETE_EVENT_WAIT_FRAME + 1:
     {
       if( !PMSND_CheckPlayBGM() )
       {
@@ -1200,7 +1211,7 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       }
     }
     break;
-  case 2:
+  case COMPLETE_EVENT_WAIT_FRAME + 2:
     // はんこアニメーション再生
     {
       if( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET )
@@ -1214,7 +1225,7 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       p_wk->sub_seq++;
     }
     break;
-  case 3:
+  case COMPLETE_EVENT_WAIT_FRAME + 3:
     // はんこアニメーション終了待ち
     {
       GFL_CLWK *p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_STAMP_BIG );
@@ -1227,7 +1238,7 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       }
     }
     break;
-  case 4:
+  case COMPLETE_EVENT_WAIT_FRAME + 4:
     {
       if( (GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY) ||
           (GFL_UI_TP_GetTrg() == TRUE) )
