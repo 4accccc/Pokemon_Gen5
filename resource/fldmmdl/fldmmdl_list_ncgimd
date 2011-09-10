@@ -317,6 +317,12 @@ FMMDL_RESLIST_NCGIMD = \
 	poke51.imd \
 	pwowner.imd \
 	pwmoji.imd \
+	poke52.imd \
+	poke53.imd \
+	poke54.imd \
+	poke55.imd \
+	poke56.imd \
+	poke57.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \

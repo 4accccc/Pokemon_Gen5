@@ -1588,6 +1588,36 @@
 	@echo convert ncg_imd pwmoji
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pwmoji.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
 
+#poke52.imd
+./mmdl_res/poke52.imd: ./mmdl_nchara/poke52.ncg ./mmdl_nchara/poke52.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke52
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke52.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke53.imd
+./mmdl_res/poke53.imd: ./mmdl_nchara/poke53.ncg ./mmdl_nchara/poke53.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke53
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke53.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke54.imd
+./mmdl_res/poke54.imd: ./mmdl_nchara/poke54.ncg ./mmdl_nchara/poke54.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke54
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke54.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke55.imd
+./mmdl_res/poke55.imd: ./mmdl_nchara/poke55.ncg ./mmdl_nchara/poke55.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke55
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke55.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke56.imd
+./mmdl_res/poke56.imd: ./mmdl_nchara/poke56.ncg ./mmdl_nchara/poke56.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke56
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke56.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke57.imd
+./mmdl_res/poke57.imd: ./mmdl_nchara/poke57.ncg ./mmdl_nchara/poke57.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke57
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke57.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_dmy/t4x4x8.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv
 	@echo convert ncg_imd tsure_001
