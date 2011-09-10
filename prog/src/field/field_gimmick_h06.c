@@ -26,6 +26,7 @@
 
 // mine
 #include "field_gimmick_h06.h"
+#include "field_gimmick_h06_sv.h"
 
 //=============================================================================
 /**
@@ -51,7 +52,7 @@
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
-  TIME_ZONE           *p_sv_time_zone;// セーブ
+  H06_GIMMICK_SV_WORK *p_sv_wk;       // セーブワーク
 
 } H06_GIMMICK_TMP;
 
@@ -397,6 +398,12 @@ static void EXPOBJ_ObjSetOne( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, int anm_
 // アニメ再生
 static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx );
 
+//-------------------------------------
+///	セーブ
+//=====================================
+static void SAVE_SaveAnmFrm( H06_GIMMICK_TMP *p_wk );
+static void SAVE_LoadAnmFrm( H06_GIMMICK_TMP *p_wk );
+
 
 //=============================================================================
 /**
@@ -423,15 +430,18 @@ void H06_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap )
   p_wk = GMK_TMP_WK_GetWork( p_fieldmap, H06_GIMMICK_TMP_ASSIGN_ID );
   p_wk->p_fieldmap  = p_fieldmap;
   p_wk->exp_obj     = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
-  p_wk->p_sv_time_zone = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_H06 );
+  p_wk->p_sv_wk = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_H06 );
 
-  ICHI_Printf("時間帯:%d\n", *p_wk->p_sv_time_zone);
+  ICHI_Printf("時間帯:%d\n", p_wk->p_sv_wk->time_zone);
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
 
   // 出現ポケモン設定
   EXPOBJ_Init( p_wk );
+
+  // セーブ復帰
+  SAVE_LoadAnmFrm( p_wk );
 }
 
 //--------------------------------------------------------------
@@ -445,6 +455,9 @@ void H06_GIMMICK_End( FIELDMAP_WORK *p_fieldmap )
 {
   H06_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, H06_GIMMICK_TMP_ASSIGN_ID );
   
+  // セーブ保存
+  SAVE_SaveAnmFrm( p_wk );
+
   // EXPOBJ破棄
   EXPOBJ_ObjDell( p_wk );
 
@@ -481,7 +494,7 @@ void H06_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 //-----------------------------------------------------------------------------
 static void EXPOBJ_Init( H06_GIMMICK_TMP *p_wk )
 {
-  switch( *p_wk->p_sv_time_zone ){
+  switch( p_wk->p_sv_wk->time_zone ){
   case TIME_ZONE_AM:
     ANM_Play( p_wk->exp_obj, OBJ_BASU_A1 );
     ANM_Play( p_wk->exp_obj, OBJ_BASU_A2 );
@@ -642,6 +655,64 @@ static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx )
     // ループ再生設定
     FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
     FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );   // アニメ再生設定
+  }
+}
+
+//=============================================================================
+/**
+ *        セーブ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメの経過フレームを保存する
+ *
+ *	@param	H06_GIMMICK_TMP *p_wk   ギミックワーク
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SaveAnmFrm( H06_GIMMICK_TMP *p_wk )
+{
+  FLD_EXP_OBJ_CNT_PTR exp_obj = p_wk->exp_obj;
+  H06_GIMMICK_SV_WORK *p_sv = p_wk->p_sv_wk;
+
+  int i;
+
+  for( i=0; i<OBJ_NUM; i++ )
+  {
+    int anm_no;
+    int anm_num = anm_num_tbl[i];
+
+    for( anm_no=0; anm_no<anm_num; anm_no++ )
+    {
+      p_sv->anm_frm[ i+anm_no ] = FLD_EXP_OBJ_GetObjAnmFrm( exp_obj, H06_GIMMICK_UNIT_IDX, i, anm_no );
+      ICHI_Printf("セーブ %d anmfrm %x \n", i, p_sv->anm_frm[i]);
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメの経過フレームを復帰する
+ *
+ *	@param	H06_GIMMICK_TMP *p_wk   ギミックワーク
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_LoadAnmFrm( H06_GIMMICK_TMP *p_wk )
+{
+  FLD_EXP_OBJ_CNT_PTR exp_obj = p_wk->exp_obj;
+  H06_GIMMICK_SV_WORK *p_sv = p_wk->p_sv_wk;
+
+  int i;
+
+  for( i=0; i<OBJ_NUM; i++ )
+  {
+    int anm_no;
+    int anm_num = anm_num_tbl[i];
+
+    for( anm_no=0; anm_no<anm_num; anm_no++ )
+    {
+     FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, H06_GIMMICK_UNIT_IDX, i, anm_no, p_sv->anm_frm[ i+anm_no ] );
+      ICHI_Printf("セーブ %d anmfrm %x \n", i, p_sv->anm_frm[i]);
+    }
   }
 }
 

@@ -34,6 +34,7 @@
 // mine
 #include "scrcmd_h06_gmk.h"
 #include "field_gimmick_h06.h"
+#include "field_gimmick_h06_sv.h"
 
 
 //----------------------------------------------------------------------------
@@ -51,7 +52,7 @@ VMCMD_RESULT EvCmdH06Gmk_Init( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( gsys );
-  TIME_ZONE *p_sv_time_zone = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_H06 );
+  H06_GIMMICK_SV_WORK *p_sv_wk = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_H06 );
 
 
   // ŽžŠÔ‘Ñ•ªŠò
@@ -83,7 +84,7 @@ VMCMD_RESULT EvCmdH06Gmk_Init( VMHANDLE *core, void *wk )
     ICHI_Printf("ŽžŠÔ:%d\n",hour);
     ICHI_Printf("ŽžŠÔ‘Ñ:%d\n", time_zone);
 
-    *p_sv_time_zone = time_zone;
+    p_sv_wk->time_zone = time_zone;
   }
 
   return VMCMD_RESULT_CONTINUE;
