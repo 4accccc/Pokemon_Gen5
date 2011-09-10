@@ -14993,10 +14993,11 @@
  * @brief ポケウッド：上映データ選択
  */
 //--------------------------------------------------------------
-#define _PKWD_SELECT_MOVIE( rec_pos )  \
-    _ASM_PKWD_SELECT_MOVIE rec_pos
-    .macro  _ASM_PKWD_SELECT_MOVIE rec_pos
+#define _PKWD_SELECT_MOVIE( mode, rec_pos )  \
+    _ASM_PKWD_SELECT_MOVIE mode, rec_pos
+    .macro  _ASM_PKWD_SELECT_MOVIE mode, rec_pos
     .short  EV_SEQ_PKWD_SELECT_MOVIE
+    .short  \mode
     .short  \rec_pos
     .endm
 
