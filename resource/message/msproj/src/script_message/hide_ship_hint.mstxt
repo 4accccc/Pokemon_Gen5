@@ -167,10 +167,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>パスワードの　ヒントは……▼
+ポケモンの　なまえ　だよ
+ははは！　これじゃ　わからないか▼
+ヒントを　もうひとつ
+たかさは　１．１ｍ　だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:47" />
+				Time="2011-09-10T10:53:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -178,10 +182,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>パスワードの　ヒントは……▼
+ポケモンの　名前だよ
+ははは！　これじゃ　わからないか▼
+ヒントを　もうひとつ
+たかさは　１．１ｍ　だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:52" />
+				Time="2011-09-10T10:53:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -190,10 +198,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント1-3</Comment>
+・ヒント1-3
+・ミルホッグのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:39:52" />
+				Time="2011-09-10T10:49:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -216,10 +225,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>パスワードの　ヒントは……▼
+ポケモンの　なまえ　だよ
+ははは！　これじゃ　わからないか▼
+ヒントを　もうひとつ
+たかさは　１．１ｍ　だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:49" />
+				Time="2011-09-10T10:53:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -227,10 +240,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>パスワードの　ヒントは……▼
+ポケモンの　名前だよ
+ははは！　これじゃ　わからないか▼
+ヒントを　もうひとつ
+たかさは　１．１ｍ　だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:52" />
+				Time="2011-09-10T10:53:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -239,10 +256,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント1-4</Comment>
+・ヒント1-4
+・レパルダスのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:39:54" />
+				Time="2011-09-10T10:49:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -424,10 +442,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>たしか　ノーマルタイプの　ポケモンだ！▼
+おまえが　どこまで　いけるか
+たのしませて　もらうと　するか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:53" />
+				Time="2011-09-10T10:52:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -435,10 +455,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>たしか　ノーマルタイプの　ポケモンだ！▼
+おまえが　どこまで　いけるか
+たのしませて　もらうと　するか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:53" />
+				Time="2011-09-10T10:52:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -447,10 +469,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント2-3</Comment>
+・ヒント2-3
+・ミルホッグのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:09" />
+				Time="2011-09-10T10:49:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -473,10 +496,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>たしか　あくタイプの　ポケモンだ！
+おまえが　どこまで　いけるか
+たのしませて　もらうと　するか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:53" />
+				Time="2011-09-10T10:52:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -484,10 +509,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>たしか　あくタイプの　ポケモンだ！
+おまえが　どこまで　いけるか
+たのしませて　もらうと　するか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:53" />
+				Time="2011-09-10T10:52:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -496,10 +523,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント2-4</Comment>
+・ヒント2-4
+・レパルダスのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:12" />
+				Time="2011-09-10T10:49:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -697,10 +725,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>まけたからには
+いさぎよく　おしえてやる▼
+パスワードは　ポケモンの　なまえ
+そいつの　おもさは　２７ｋｇさ▼
+ケチくさい　とか　いうなよ
+そういうのは　おもうだけにしろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:54" />
+				Time="2011-09-10T10:54:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -708,10 +741,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>負けたからには
+潔く　教えてやる▼
+パスワードは　ポケモンの　名前
+そいつの　重さは　２７ｋｇさ▼
+ケチくさい　とか　いうなよ
+そういうのは　思うだけにしろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:54" />
+				Time="2011-09-10T10:55:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -720,10 +758,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント3-3</Comment>
+・ヒント3-3
+・ミルホッグのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:59" />
+				Time="2011-09-10T10:49:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -746,10 +785,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>まけたからには
+いさぎよく　おしえてやる▼
+パスワードは　ポケモンの　なまえ
+そいつの　おもさは　３７．５ｋｇさ▼
+ケチくさい　とか　いうなよ
+そういうのは　おもうだけにしろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:54" />
+				Time="2011-09-10T10:54:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -757,10 +801,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>負けたからには
+潔く　教えてやる▼
+パスワードは　ポケモンの　名前
+そいつの　重さは　３７．５ｋｇさ▼
+ケチくさい　とか　いうなよ
+そういうのは　思うだけにしろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:54" />
+				Time="2011-09-10T10:55:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -769,10 +818,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント3-4</Comment>
+・ヒント3-4
+・レパルダスのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:01" />
+				Time="2011-09-10T10:49:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -958,10 +1008,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>つよいから　おしえてやるよ
+パスワードの　ヒントは……▼
+ポケモンずかん　では
+けいかいポケモンと　されている▽
+なんて　なまえ　だったっけ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:55" />
+				Time="2011-09-10T10:55:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -969,10 +1023,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>つよいから　おしえてやるよ
+パスワードの　ヒントは……▼
+ポケモンずかん　では
+けいかいポケモンと　されている▽
+なんて　なまえ　だったっけ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:55" />
+				Time="2011-09-10T10:56:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -981,10 +1039,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント4-3</Comment>
+・ヒント4-3
+・ミルホッグのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:47" />
+				Time="2011-09-10T10:49:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1007,10 +1066,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>つよいから　おしえてやるよ
+パスワードの　ヒントは……▼
+ポケモンずかん　では
+れいこくポケモンと　されている▽
+なんて　なまえ　だったっけ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:55" />
+				Time="2011-09-10T10:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1018,10 +1081,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>つよいから　おしえてやるよ
+パスワードの　ヒントは……▼
+ポケモンずかん　では
+れいこくポケモンと　されている▽
+なんて　なまえ　だったっけ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:55" />
+				Time="2011-09-10T10:56:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1030,10 +1097,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント4-4</Comment>
+・ヒント4-4
+・レパルダスのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:50" />
+				Time="2011-09-10T10:49:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
