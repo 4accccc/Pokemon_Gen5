@@ -337,6 +337,518 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c04p01_swidolw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひろった
+ライブキャスターが　なっている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:31:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひろった
+ライブキャスターが　なっている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:35:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ライブキャスターを拾うとこのメッセージ
+・コール音再生と同時に表示
+・コール音終了後にswidolw_02を表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:45:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:34:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・メッセージ表示後、ライブキャスター画面へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:49:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひろった
+ライブキャスターが　なっている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:35:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひろった
+ライブキャスターが　なっている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:35:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ライブキャスターを拾うとこのメッセージ
+・コール音再生と同時に表示
+・コール音終了後にswidolm_02を表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:46:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:35:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolm_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・メッセージ表示後、ライブキャスター画面へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:49:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:46:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolw_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:50:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:31:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:36:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてswidolm_02_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:54:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:46:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolw_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　てわたした！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:49:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:49:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　手渡した！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:49:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:49:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・No637「わすれもの」をバッグから削除
+・続けてswidolw_02_03
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:54:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:48:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolw_02_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ばいばい！
+仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:50:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:50:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ばいばい！
+仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、退場
+　画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:50:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:50:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolm_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswidolm_02_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:54:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:46:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolm_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　てわたした！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　手渡した！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・No636「わすれもの」をバッグから削除
+・続けてswidolm_02_03
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:54:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:48:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolm_02_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ばいばい！
+仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ばいばい！
+仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、退場
+　画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:51:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T11:50:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c04p01_gymsign_01"
 		Style="Large">
 		<LanguageCell
