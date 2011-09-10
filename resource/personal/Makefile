@@ -43,7 +43,7 @@ $(PERSONAL_SWAN): personal_wb.csv personal_pw.csv
 #	make cleanÉãÅ[Éã
 #------------------------------------------------------------------------------
 clean:
-	rm $(PERSONAL_SWAN)
+	rm -f $(PERSONAL_SWAN)
 	$(MAKE) -f convcsv.mk clean
 	$(MAKE) -f mknarc.mk clean
 
