@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-09-09T11:14:41" source="map13_04.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-09-09T21:59:37" source="map13_04.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-09-09T11:14:41" source="map13_04.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-09-09T21:59:37" source="map13_04.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -174,12 +174,12 @@
 			2222 2222 2222 2222 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="fence_01"
+	<tex_image index="6" name="c8b_saku01"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="fence_01_pl"
-		path="C:/home/swan_data3d/field/out00/chip/tex/fence_01.tga"
+		palette_name="c8b_saku01_pl"
+		path="C:/home/swan_data3d/field/out13/chip/tex/c8b_saku01.tga"
 	>
 		<bitmap size="128">
 			5425 5555 5555 5245 4324 4444 4444 4234
@@ -877,8 +877,8 @@
 		7fe0 45ed 4a0e 4e4d 5aae 5eee 7393 6b52
 		5ef0 6311 6732 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="6" name="fence_01_pl" color_size="8">
-		1084 298e 35f2 4255 4676 4eb9 31b0 7fff
+	<tex_palette index="6" name="c8b_saku01_pl" color_size="8">
+		14a5 2d6b 35ad 3def 4210 4a52 2d6b 7fff
 	</tex_palette>
 	<tex_palette index="7" name="gake01a_pl" color_size="8">
 		1d70 214d 2190 2191 25b2 25d5 29f7 2e18
