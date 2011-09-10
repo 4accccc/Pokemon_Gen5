@@ -47,4 +47,170 @@
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_lostboy_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>うわーん！　うわわーん！！
+まいごに　なっちゃった　うわーん！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:30:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:25:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うわーん！　うわわーん！！
+まいごに　なっちゃった　うわーん！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>吹き出しウインドウ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:29:41" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>吹き出しウインドウ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_lostboy_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>タウンマップを　みせてあげた！▼
+</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:29:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:26:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タウンマップを　みせてあげた！▼
+</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムウインドウ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:07" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>システムウインドウ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_lostboy_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>……　……
+……ぐす　ありがとう▽
+おうちの　ばしょ　わかった……▼
+ぼく　かえる！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:33:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:31:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……　……
+……ぐす　ありがとう▽
+おうちの　ばしょ　わかった……▼
+ぼく　かえる！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>吹き出しウインドウ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:34:57" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>吹き出しウインドウ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_lostboy_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょうねんは　かえっていった……</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:34:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:34:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しょうねんは　かえっていった……</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムウインドウ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-29T11:32:34" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>システムウインドウ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-12T10:35:11" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

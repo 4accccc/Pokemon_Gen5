@@ -5,13 +5,13 @@
 
   .text
   .include  "scr_seq_def.h"
-
   .include  "../../message/dst/script/msg_fmission_scr.h"
-  
+
 //--------------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------------
 _EVENT_DATA   ev_fmission_item_get
+_EVENT_DATA   ev_fmission_npc_talk
 _EVENT_DATA_END //終了
 
 //--------------------------------------------------------------------
@@ -26,5 +26,59 @@ EVENT_START ev_fmission_item_get
   _ITEM_EVENT_FMISSION_ITEM_GET( i_item )
 }
 EVENT_END
+
+
+/**************************************************************/
+/*  NPC探しミッション：話しかけイベント                       */
+/**************************************************************/
+EVENT_START   ev_fmission_npc_talk
+  _TALK_OBJ_START()
+  
+  
+  /*------------迷子レスキューミッション---------------*/
+  
+  //うわーん
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_lostboy_01 )
+  _MSGWIN_CLOSE()
+  
+  //タウンマップをみせた
+  _SYSWIN_MSG( msg_fm_npc_lostboy_02, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ありがとう
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_lostboy_03 )
+  _MSGWIN_CLOSE()
+  
+  //暗転復帰でNPC消す
+  _CALL	ev_fmission_npc_vanish
+  
+  //きえさった・・・
+  _SYSWIN_MSG( msg_fm_npc_lostboy_04, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+EVENT_END
+
+
+//共通処理：暗転して話しかけ相手を消す
+ev_fmission_npc_vanish:
+  //話しかけ相手に登録されている非表示フラグを取得
+  //【fes仮】
+  
+  //暗転開始
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+  
+  _TIME_WAIT( 8 )
+  //_OBJ_DEL( id )話しかけ相手を消す
+  //非表示フラグをセット
+  
+  //暗転復帰
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+  
+  
+_RET
+
 
 
