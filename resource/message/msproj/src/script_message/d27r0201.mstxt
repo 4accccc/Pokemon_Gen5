@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……バリア　だ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……バリア　だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T08:19:37" />
+				Time="2011-09-10T04:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……バリア　だ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……バリア　だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T08:19:41" />
+				Time="2011-09-10T04:25:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -121,10 +121,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バリアが　かいじょ　された！▼</Text>
+			<Text>かべの　むこうで
+バリアが　かいじょ　される▽
+おとが　きこえた！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:19:01" />
+				Time="2011-09-10T05:31:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -132,10 +134,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バリアが　解除された！▼</Text>
+			<Text>壁の　向こうで
+バリアが　解除される▽
+音が　きこえた！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:19:11" />
+				Time="2011-09-10T05:32:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

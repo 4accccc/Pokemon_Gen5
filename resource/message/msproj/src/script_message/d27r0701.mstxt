@@ -180,9 +180,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>というわけで
-ここだけの　はなし……▼
-この　ふねの　なかは
+			<Text>この　ふねの　なかは
 ワープパネルで　いどう　するんです▼
 ですが　そのまえに　パスワードが
 ひつよう　なんですよ▼
@@ -192,7 +190,7 @@
 ヒントは　？？？？？　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T06:49:06" />
+				Time="2011-09-10T04:35:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -200,9 +198,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>というわけで
-ここだけの　話……▼
-この　船内の　移動は
+			<Text>この　船内の　移動は
 ワープパネル　なんです▼
 ですが　その前に　パスワードが
 必要なんですよ▼
@@ -212,7 +208,7 @@
 ヒントは　？？？？？　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T06:49:14" />
+				Time="2011-09-10T04:36:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -246,5 +242,113 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0701_swplazmam2_01b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワープパネルでの
+いどうが　おぼえられなくて▽
+まだ　ポケモン　もらえない……▼
+そんな　オレだが
+すごいことを　しっている▼
+バリアを　かいじょ　するには
+４つの　スイッチを　ふむんだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:34:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:26:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワープパネルでの
+移動が　覚えられなくて▽
+まだ　ポケモン　もらえない……▼
+そんな　オレだが
+すごいことを　知っている▼
+バリアを　解除するには
+４つの　スイッチを　踏むんだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:35:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:34:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・GRIDX＝18、GRIDZ＝13</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:24:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:26:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0701_swplazmam2_01w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワープパネルでの
+いどうが　おぼえられなくて▽
+まだ　ポケモン　もらえない……▼
+そんな　オレだが
+すごいことを　しっている▼
+パスワードにゅうりょく　には
+プラズマカードが　いるんだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:34:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:34:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワープパネルでの
+移動が　覚えられなくて▽
+まだ　ポケモン　もらえない……▼
+そんな　オレだが
+すごいことを　知っている▼
+パスワード入力　には
+プラズマカードが　いるんだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:35:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:34:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・GRIDX＝18、GRIDZ＝13</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:24:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T05:26:15" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

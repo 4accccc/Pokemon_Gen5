@@ -2028,10 +2028,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『おいかけるぞ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『さてと……▼
+ぜんかいは　わけの　わからない
+れんちゅうに　つれだされたが▽
+こんどこそ　このふねを　しらべる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T08:58:12" />
+				Time="2011-09-10T06:44:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2039,10 +2042,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『追いかけるぞ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『さてと……▼
+前回は　わけの　わからない
+連中に　連れだされたが▽
+今度こそ　この船を　調べる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T08:58:20" />
+				Time="2011-09-10T06:45:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2081,11 +2087,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おい！
-ここ　しらべるぜ▼</Text>
+			<Text>うーん
+ここ　あやしそうだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T09:01:11" />
+				Time="2011-09-10T04:23:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2093,11 +2099,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おい！
-ここ　調べるぜ▼</Text>
+			<Text>うーん
+ここ　怪しそうだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T09:01:20" />
+				Time="2011-09-10T04:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2114,12 +2120,11 @@
 　GRIDX＝19、GRIDZ＝15～17
 ・White2
 　GRIDX＝17～19、GRIDZ＝48
-・ハッチが開いている状態
 ・メッセージ後、ライバルが先に侵入する
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T09:20:57" />
+				Time="2011-09-10T06:36:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2142,11 +2147,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『こっちだ！
-ちょっと　きてくれよ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『おい！
+ちょっと　きてくれよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T08:17:35" />
+				Time="2011-09-10T06:40:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2154,11 +2159,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『こっちだ！
-ちょっと　来てくれよ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『おい！
+ちょっと　来てくれよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T08:17:41" />
+				Time="2011-09-10T06:40:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2253,10 +2258,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『しまった！
-ハッチを　あけたままに　してきた！</Text>
+ハッチが　しまっていない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:24:27" />
+				Time="2011-09-10T06:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2264,11 +2269,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『しまった！
-ハッチを　開けたままに　してきた！</Text>
+			<Text>プラズマだん『しまった！
+ハッチが　しまっていない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:12:38" />
+				Time="2011-09-10T06:41:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
