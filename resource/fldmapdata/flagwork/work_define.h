@@ -266,6 +266,7 @@
 #define WK_SCENE_C03P07_CGEAR_01         16654 /* 0x410e ヒウンシティ・チャレンジストリート：マコモＣギア入手イベント制御ワーク */
 #define WK_SCENE_C03P08_FESGUIDE_01      16655 /* 0x410f ヒウンシティ：フェスチュートリアルPOS制御ワーク */
 #define WK_SCENE_C16_TUTORIAL_SEQ        16656 /* 0x4110 ジョインアベニュー：チュートリアルイベント進行ワーク */
+#define WK_SCENE_D02R0101_SWLEADER1      16657 /* 0x4111  */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
@@ -294,7 +295,7 @@
 #define WK_OTHER_SPORTS_RND_TR4          16753 /* 0x4171 リトルコートのランダム配置トレーナー２人目 */
 #define WK_OTHER_SPORTS_RND_TR5          16754 /* 0x4172 リトルコートのランダム配置トレーナー３人目 */
 #define WK_OTHER_WHEEL_SEASON            16755 /* 0x4173 観覧車イベント：季節を保存しておくワーク。 C04P01のゾーンチェンジで季節を取得し、前回から季節が変化していたら、観覧車トレーナー用のタイムフラグをリセットする */
-#define WK_OTHER_D11R0101_PAIR           16756 /* 0x4174 下水道：アイリス連れ歩きセリフ */
+#define WK_OTHER_D11R0101_PAIR           16756 /* 0x4174 下水道：ライバル連れ歩きセリフ */
 #define WK_OTHER_R05_KINOMI              16757 /* 0x4175 スワン5番道路木の実販売 */
 #define WK_OTHER_BSUBWAY_RECEIPT         16758 /* 0x4176 バトルサブウェイ、受付制御 */
 #define WK_OTHER_BSUBWAY_TEST            16759 /* 0x4177 バトルサブウェイ、テスト */
@@ -316,6 +317,7 @@
 #define WK_OTHER_R04_PARA_CHECK_01       16775 /* 0x4187 パラメータチェッカーで指定されたパラメータ格納用ワーク。 ブラック版は「すばやさ」、ホワイト版は「ＨＰ」をチェックする */
 #define WK_OTHER_AMUSEMENT_PARTNER       16776 /* 0x4188 ライモン遊園地：観覧車でのパートナーを保存しておく用ワーク */
 #define WK_OTHER_LCC_TRADE_CNT           16777 /* 0x4189 ライモン遊園地：観覧車で隠しキャラとのデート後の交換回数カウント用ワーク */
+#define WK_OTHER_D02R0101_PAIR           16778 /* 0x418a ヤグルマの森：チェレン連れ歩きセリフ */
 
 #define WK_AREA_END                      16815 /* 0x41af  */
 

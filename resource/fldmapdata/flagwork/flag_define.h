@@ -405,8 +405,10 @@
 #define FE_H06_ITEMGET_01                  389 /* 0x0185 マリンチューブ：アイテム入手フラグ */
 #define FE_D01R0101_RATI2_MEET_01          390 /* 0x0186 夢の跡地：ラティオス（ラティアス）に会った */
 #define FE_RES_BOAST_FIRSTTALK             391 /* 0x0187 すれ違い調査隊自慢隊員の初回会話フラグ */
-		/* not used   392(0x0188) */
-		/* not used   393(0x0189) */
+#define FE_D02R0101_PAIR_01                392 /* 0x0188 ヤグルマの森：連れ歩き状態管理フラグ */
+#define FE_C03R1103_FIRSTTALK              393 /* 0x0189 ヒウンシティ：マコモの初回会話フラグ C03R1103 */
+#define FE_C03R1103_POKE_GET               394 /* 0x018a ヒウンシティ：ショーロのイーブイ入手フラグ */
+		/* not used   395(0x018b) */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -723,6 +725,9 @@
 #define FV_C03P07_MACOMO_01                805 /* 0x0325 ヒウンシティ・チャレンジストリート：マコモ */
 #define FV_C03R1103_MACOMO_01              806 /* 0x0326 ヒウンシティ・便利ビル3F：マコモ */
 #define FV_C07GYM0101_LEADDER7_01          807 /* 0x0327 セッカシティジム跡地：ハチク */
+#define FV_D02R0101_SWLEADER1_01           808 /* 0x0328 ヤグルマの森：チェレン・七賢人 */
+#define FV_D27R1001_R1301_POKE10_01        809 /* 0x0329 プラズマフリゲート：研究施設キュレム */
+#define FV_R20_RANGER_01                   810 /* 0x032a 20番道路：季節表示トレーナー */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
