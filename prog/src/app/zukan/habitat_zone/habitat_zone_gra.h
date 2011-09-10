@@ -135,12 +135,6 @@ enum{
   HABITAT_ZONE_UNIT_CLWK_MAX  = HABITAT_ZONE_POKE_LIST_MAX + COMMON_OBJ_WK_MAX,
   LAND_TYPE_ICON_W            = 4,   // 地形タイプアイコンの幅
   LAND_TYPE_ICON_H            = 3,   // 地形タイプアイコンの高さ
-  LAND_TYPE_ICON_LAND_POS_X   = 13,   // 草地アイコンの開始座標
-  LAND_TYPE_ICON_LAND_POS_Y   = 6,   // 草地アイコンの開始座標
-  LAND_TYPE_ICON_WATERSIDE_POS_X  = 19,   // 草地アイコンの開始座標
-  LAND_TYPE_ICON_WATERSIDE_POS_Y  = 6,    // 草地アイコンの開始座標
-  LAND_TYPE_ICON_FISHING_POS_X    = 25,   // 草地アイコンの開始座標
-  LAND_TYPE_ICON_FISHING_POS_Y    = 6,    // 草地アイコンの開始座標
   BLINK_PALID_POKE_CURSOR_CHANGE  = 0xA,  // 滅用パレット番号(書き換え対象)
   BLINK_PALID_POKE_CURSOR_START   = 0x9,  // ポケモン選択点滅用パレット番号(基準)
   BLINK_PALID_POKE_CURSOR_END     = 0xA,  // ポケモン選択点滅用パレット番号(終了)
@@ -324,7 +318,7 @@ extern void HABITAT_ZONE_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_ZONE_GRA_W
 extern void HABITAT_ZONE_GRA_SetMapBlink( HABITAT_ZONE_GRA_WK *p_wk ,u16 zone_group );
 extern void HABITAT_ZONE_GRA_SetSmallIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
                                           u16 index ,GRA_SMALLICON_STATUS status);
-extern void HABITAT_ZONE_GRA_MakeFrameWinMsg(const STRBUF* str,HABITAT_ZONE_GRA_WK *p_wk ,PRINTSYS_LSB font_colro);
+extern void HABITAT_ZONE_GRA_MakeFrameWinMsg(const STRBUF* str,HABITAT_ZONE_GRA_WK *p_wk );
 
 extern void HABITAT_ZONE_GRA_DeleteFrameWinMsg( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_EnableStrCursor( HABITAT_ZONE_GRA_WK *p_wk );

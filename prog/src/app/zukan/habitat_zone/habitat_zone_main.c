@@ -23,6 +23,14 @@
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h" // for SYS_FLAG_ARRIVE_*
 #include "../../../../../resource/habitat_list/habitat_list_data.cdat" // for sc_habitat_list_data
 
+#define GET_CURPOS_X(i) ((POKEICON_CURSOR_POS_X + (i%POKEICON_LINE)*POKEICON_CURSOR_POS_W)*8)
+#define GET_CURPOS_Y(i) ((POKEICON_CURSOR_POS_Y + (i/POKEICON_LINE)*POKEICON_CURSOR_POS_H)*8)
+#define POKECURSOR_W (POKEICON_CURSOR_POS_W*8)
+#define POKECURSOR_H (POKEICON_CURSOR_POS_H*8)
+
+#define FCOL_WP01WN		( PRINTSYS_LSB_Make(0xF,0x1,0x2) )	// フォントカラー：両用０１白抜
+#define FCOL_BP01WN		( PRINTSYS_LSB_Make(0x1,0x2,0xF) )	// フォントカラー：両用０１黒抜
+
 //=============================================================================
 /**
  *					定数宣言
@@ -30,8 +38,197 @@
 //=============================================================================
 typedef void (*MainFunc)(HABITAT_ZONE_WK*);
 
+// 定数
 enum{
+  // タッチバー上のボタン座標
+  TOUCHBAR_ICON_Y	    = 168,
+  TOUCHBAR_ICON_X_07  = 232,
+  TB_SX			= 24,
+  TB_SY			= 24,
+  TB_PY			= TOUCHBAR_ICON_Y,
+  TB_PX07		= TOUCHBAR_ICON_X_07,
+  TB_PX06		= TB_PX07 - TB_SX,
+  TB_PX05		= TB_PX06 - TB_SX,
+  
+  TB_PX04		= TB_PX06 - (TB_SX*8),
+  TB_PX03		= TB_PX04 - TB_SX,
+
+  // コンプリートイベント
   COMPLETE_EVENT_WAIT_FRAME = 30,
+};
+
+// タッチ座標テーブル
+static const GFL_UI_TP_HITTBL sc_touch_hit_tbl_top_menu[] =
+{
+  { TB_PY, TB_PY+TB_SY-1, TB_PX05, TB_PX05+TB_SX-1 },		// Ｙ
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX06, TB_PX06+TB_SX-1 },		// Ｘ
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX07, TB_PX07+TB_SX-1 },		// 戻る
+	
+  { TB_PY, TB_PY+TB_SY-1,
+    OBJ_POS_BUTTON_LAND_X - 12, OBJ_POS_BUTTON_LAND_X + 12 },		// 草地
+  { TB_PY, TB_PY+TB_SY-1,
+    OBJ_POS_BUTTON_WATERSIDE_X - 12, OBJ_POS_BUTTON_WATERSIDE_X + 12 },		// 水辺
+  { TB_PY, TB_PY+TB_SY-1,
+    OBJ_POS_BUTTON_FISHING_X - 12, OBJ_POS_BUTTON_FISHING_X + 12 },		// 釣り
+
+	{ TB_PY, TB_PY+TB_SY-1, 0, 16 },		    // 上
+	{ TB_PY, TB_PY+TB_SY-1, 0+24, 16+24 },		    // 下
+
+	{ 102, 110 + 16, 16 , 40 },		          // 季節L
+	{ 102, 110 + 16, 216 , 240 },		        // 季節R
+	
+  // カーソル
+  { GET_CURPOS_Y(0) ,GET_CURPOS_Y(0) + POKECURSOR_H,
+    GET_CURPOS_X(0),GET_CURPOS_X(0)+POKECURSOR_W},
+  { GET_CURPOS_Y(1) ,GET_CURPOS_Y(1) + POKECURSOR_H,
+    GET_CURPOS_X(1),GET_CURPOS_X(1)+POKECURSOR_W},
+  { GET_CURPOS_Y(2) ,GET_CURPOS_Y(2) + POKECURSOR_H,
+    GET_CURPOS_X(2),GET_CURPOS_X(2)+POKECURSOR_W},
+  { GET_CURPOS_Y(3) ,GET_CURPOS_Y(3) + POKECURSOR_H,
+    GET_CURPOS_X(3),GET_CURPOS_X(3)+POKECURSOR_W},
+  { GET_CURPOS_Y(4) ,GET_CURPOS_Y(4) + POKECURSOR_H,
+    GET_CURPOS_X(4),GET_CURPOS_X(4)+POKECURSOR_W},
+  { GET_CURPOS_Y(5) ,GET_CURPOS_Y(5) + POKECURSOR_H,
+    GET_CURPOS_X(5),GET_CURPOS_X(5)+POKECURSOR_W},
+  { GET_CURPOS_Y(6) ,GET_CURPOS_Y(6) + POKECURSOR_H,
+    GET_CURPOS_X(6),GET_CURPOS_X(6)+POKECURSOR_W},
+  { GET_CURPOS_Y(7) ,GET_CURPOS_Y(7) + POKECURSOR_H,
+    GET_CURPOS_X(7),GET_CURPOS_X(7)+POKECURSOR_W},
+  { GET_CURPOS_Y(8) ,GET_CURPOS_Y(8) + POKECURSOR_H,
+    GET_CURPOS_X(8),GET_CURPOS_X(8)+POKECURSOR_W},
+  { GET_CURPOS_Y(9) ,GET_CURPOS_Y(9) + POKECURSOR_H,
+    GET_CURPOS_X(9),GET_CURPOS_X(9)+POKECURSOR_W},
+  { GET_CURPOS_Y(10) ,GET_CURPOS_Y(10) + POKECURSOR_H,
+    GET_CURPOS_X(10),GET_CURPOS_X(10)+POKECURSOR_W},
+  { GET_CURPOS_Y(11) ,GET_CURPOS_Y(11) + POKECURSOR_H,
+    GET_CURPOS_X(11),GET_CURPOS_X(11)+POKECURSOR_W},
+  { GET_CURPOS_Y(12) ,GET_CURPOS_Y(12) + POKECURSOR_H,
+    GET_CURPOS_X(12),GET_CURPOS_X(12)+POKECURSOR_W},
+  { GET_CURPOS_Y(13) ,GET_CURPOS_Y(13) + POKECURSOR_H,
+    GET_CURPOS_X(13),GET_CURPOS_X(13)+POKECURSOR_W},
+  { GET_CURPOS_Y(14) ,GET_CURPOS_Y(14) + POKECURSOR_H,
+    GET_CURPOS_X(14),GET_CURPOS_X(14)+POKECURSOR_W},
+  { GET_CURPOS_Y(15) ,GET_CURPOS_Y(15) + POKECURSOR_H,
+    GET_CURPOS_X(15),GET_CURPOS_X(15)+POKECURSOR_W},
+  { GET_CURPOS_Y(16) ,GET_CURPOS_Y(16) + POKECURSOR_H,
+    GET_CURPOS_X(16),GET_CURPOS_X(16)+POKECURSOR_W},
+  { GET_CURPOS_Y(17) ,GET_CURPOS_Y(17) + POKECURSOR_H,
+    GET_CURPOS_X(17),GET_CURPOS_X(17)+POKECURSOR_W},
+  { GET_CURPOS_Y(18) ,GET_CURPOS_Y(18) + POKECURSOR_H,
+    GET_CURPOS_X(18),GET_CURPOS_X(18)+POKECURSOR_W},
+  { GET_CURPOS_Y(19) ,GET_CURPOS_Y(19) + POKECURSOR_H,
+    GET_CURPOS_X(19),GET_CURPOS_X(19)+POKECURSOR_W},
+};
+
+// トップキー入力ID
+enum{
+  TPID_BUTTON_Y,
+  TPID_BUTTON_X,
+  TPID_BUTTON_RETURN,
+  TPID_BUTTON_GROUND_LAND,
+  TPID_BUTTON_GROUND_WATERSIDE,
+  TPID_BUTTON_GROUND_FISHING,
+  TPID_BUTTON_UP,
+  TPID_BUTTON_DOWN,
+  TPID_BUTTON_SEASON_L,
+  TPID_BUTTON_SEASON_R,
+
+  TPID_LIST_CURSOR_01,
+  TPID_LIST_CURSOR_02,
+  TPID_LIST_CURSOR_03,
+  TPID_LIST_CURSOR_04,
+  TPID_LIST_CURSOR_05,
+  TPID_LIST_CURSOR_06,
+  TPID_LIST_CURSOR_07,
+  TPID_LIST_CURSOR_08,
+  TPID_LIST_CURSOR_09,
+  TPID_LIST_CURSOR_10,
+  TPID_LIST_CURSOR_11,
+  TPID_LIST_CURSOR_12,
+  TPID_LIST_CURSOR_13,
+  TPID_LIST_CURSOR_14,
+  TPID_LIST_CURSOR_15,
+  TPID_LIST_CURSOR_16,
+  TPID_LIST_CURSOR_17,
+  TPID_LIST_CURSOR_18,
+  TPID_LIST_CURSOR_19,
+  TPID_LIST_CURSOR_20,
+};
+
+// タッチ座標テーブル
+static const GFL_UI_TP_HITTBL sc_touch_hit_tbl_poke_select[] =
+{
+  { TB_PY, TB_PY+TB_SY-1, TB_PX07, TB_PX07+TB_SX-1 },		// 戻る
+	{ TB_PY, TB_PY+TB_SY-1, 96, 212 },		                // 説明を見るボタン
+
+  // カーソル
+  { GET_CURPOS_Y(0) ,GET_CURPOS_Y(0) + POKECURSOR_H,
+    GET_CURPOS_X(0),GET_CURPOS_X(0)+POKECURSOR_W},
+  { GET_CURPOS_Y(1) ,GET_CURPOS_Y(1) + POKECURSOR_H,
+    GET_CURPOS_X(1),GET_CURPOS_X(1)+POKECURSOR_W},
+  { GET_CURPOS_Y(2) ,GET_CURPOS_Y(2) + POKECURSOR_H,
+    GET_CURPOS_X(2),GET_CURPOS_X(2)+POKECURSOR_W},
+  { GET_CURPOS_Y(3) ,GET_CURPOS_Y(3) + POKECURSOR_H,
+    GET_CURPOS_X(3),GET_CURPOS_X(3)+POKECURSOR_W},
+  { GET_CURPOS_Y(4) ,GET_CURPOS_Y(4) + POKECURSOR_H,
+    GET_CURPOS_X(4),GET_CURPOS_X(4)+POKECURSOR_W},
+  { GET_CURPOS_Y(5) ,GET_CURPOS_Y(5) + POKECURSOR_H,
+    GET_CURPOS_X(5),GET_CURPOS_X(5)+POKECURSOR_W},
+  { GET_CURPOS_Y(6) ,GET_CURPOS_Y(6) + POKECURSOR_H,
+    GET_CURPOS_X(6),GET_CURPOS_X(6)+POKECURSOR_W},
+  { GET_CURPOS_Y(7) ,GET_CURPOS_Y(7) + POKECURSOR_H,
+    GET_CURPOS_X(7),GET_CURPOS_X(7)+POKECURSOR_W},
+  { GET_CURPOS_Y(8) ,GET_CURPOS_Y(8) + POKECURSOR_H,
+    GET_CURPOS_X(8),GET_CURPOS_X(8)+POKECURSOR_W},
+  { GET_CURPOS_Y(9) ,GET_CURPOS_Y(9) + POKECURSOR_H,
+    GET_CURPOS_X(9),GET_CURPOS_X(9)+POKECURSOR_W},
+  { GET_CURPOS_Y(10) ,GET_CURPOS_Y(10) + POKECURSOR_H,
+    GET_CURPOS_X(10),GET_CURPOS_X(10)+POKECURSOR_W},
+  { GET_CURPOS_Y(11) ,GET_CURPOS_Y(11) + POKECURSOR_H,
+    GET_CURPOS_X(11),GET_CURPOS_X(11)+POKECURSOR_W},
+  { GET_CURPOS_Y(12) ,GET_CURPOS_Y(12) + POKECURSOR_H,
+    GET_CURPOS_X(12),GET_CURPOS_X(12)+POKECURSOR_W},
+  { GET_CURPOS_Y(13) ,GET_CURPOS_Y(13) + POKECURSOR_H,
+    GET_CURPOS_X(13),GET_CURPOS_X(13)+POKECURSOR_W},
+  { GET_CURPOS_Y(14) ,GET_CURPOS_Y(14) + POKECURSOR_H,
+    GET_CURPOS_X(14),GET_CURPOS_X(14)+POKECURSOR_W},
+  { GET_CURPOS_Y(15) ,GET_CURPOS_Y(15) + POKECURSOR_H,
+    GET_CURPOS_X(15),GET_CURPOS_X(15)+POKECURSOR_W},
+  { GET_CURPOS_Y(16) ,GET_CURPOS_Y(16) + POKECURSOR_H,
+    GET_CURPOS_X(16),GET_CURPOS_X(16)+POKECURSOR_W},
+  { GET_CURPOS_Y(17) ,GET_CURPOS_Y(17) + POKECURSOR_H,
+    GET_CURPOS_X(17),GET_CURPOS_X(17)+POKECURSOR_W},
+  { GET_CURPOS_Y(18) ,GET_CURPOS_Y(18) + POKECURSOR_H,
+    GET_CURPOS_X(18),GET_CURPOS_X(18)+POKECURSOR_W},
+  { GET_CURPOS_Y(19) ,GET_CURPOS_Y(19) + POKECURSOR_H,
+    GET_CURPOS_X(19),GET_CURPOS_X(19)+POKECURSOR_W},
+};
+
+// トップキー入力ID
+enum{
+  TPID_PSELECT_RETURN,
+  TPID_PSELECT_EXPLANATIO,
+
+  TPID_PS_LIST_CURSOR_01,
+  TPID_PS_LIST_CURSOR_02,
+  TPID_PS_LIST_CURSOR_03,
+  TPID_PS_LIST_CURSOR_04,
+  TPID_PS_LIST_CURSOR_05,
+  TPID_PS_LIST_CURSOR_06,
+  TPID_PS_LIST_CURSOR_07,
+  TPID_PS_LIST_CURSOR_08,
+  TPID_PS_LIST_CURSOR_09,
+  TPID_PS_LIST_CURSOR_10,
+  TPID_PS_LIST_CURSOR_11,
+  TPID_PS_LIST_CURSOR_12,
+  TPID_PS_LIST_CURSOR_13,
+  TPID_PS_LIST_CURSOR_14,
+  TPID_PS_LIST_CURSOR_15,
+  TPID_PS_LIST_CURSOR_16,
+  TPID_PS_LIST_CURSOR_17,
+  TPID_PS_LIST_CURSOR_18,
+  TPID_PS_LIST_CURSOR_19,
+  TPID_PS_LIST_CURSOR_20,
 };
 
 //=============================================================================
@@ -95,7 +292,6 @@ static const MainFunc MainSeq[] = {
 };
 
 // メッセージ---------------------------------------
-static PRINTSYS_LSB GetMsgFontColor( void );
 static void DrawLandMsg( HABITAT_ZONE_WK *p_wk );
 static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk );
 static void ClearExplanationMsg( HABITAT_ZONE_WK *p_wk );
@@ -236,72 +432,188 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
 {
   s32 key_trg = GFL_UI_KEY_GetTrg();
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
+  s32   key_status;
+	key_status = GFL_UI_TP_HitTrg( sc_touch_hit_tbl_top_menu );
 
-  // 四季切替
-  if( key_trg & PAD_BUTTON_L )
+  switch( key_status )
   {
-    if( p_list_data->season_enable == TRUE )
+  case TPID_BUTTON_Y:
     {
-      ONOUE_Printf("季節切替L\n");
-      SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_L );
+      ONOUE_Printf("TP_BUTTON_Y\n");
     }
-  }
-  else if( key_trg & PAD_BUTTON_R )
-  {
-    if( p_list_data->season_enable == TRUE )
+    break;
+  case TPID_BUTTON_X:
     {
-      ONOUE_Printf("季節切替R\n");
-      SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_R );
+      SetNextSeq( p_wk ,MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_X );
+      ONOUE_Printf("TP_BUTTON_X\n");
     }
-  }
-  else if( key_trg & PAD_KEY_LEFT )
-  {
-    ONOUE_Printf("場所タイプ切替L\n");
-    SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_L );
-  }
-  else if( key_trg & PAD_KEY_RIGHT )
-  {
-    ONOUE_Printf("場所タイプ切替R\n");
-    SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_R );
-  }
-  else if( key_trg & PAD_KEY_UP )
-  {
-    ONOUE_Printf("ゾーン切替UP\n");
-    SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_UP );
-  }
-  else if( key_trg & PAD_KEY_DOWN )
-  {
-    ONOUE_Printf("ゾーン切替DOWN\n");
-    SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_DOWN );
-  }
-  else if( key_trg & PAD_BUTTON_A )
-  {
-    if( p_wk->list_size > 0 )
+    break;
+  case TPID_BUTTON_RETURN:
     {
-      SetNextSeq( p_wk ,MAIN_SEQ_POKESELECT_KEY_INPUT ,SEQ_CHANGE_PARAM_A );
-      ONOUE_Printf("ポケモン選択画面へ\n");
+      ONOUE_Printf("TP_BUTTON_RETURN\n");
+      SetNextSeq( p_wk ,MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_B );
     }
-    else
+    break;
+  case TPID_BUTTON_GROUND_LAND:
     {
-      ONOUE_Printf("リストにポケモンがいないのでスルー\n");
+      if( p_wk->land_appear[HABITAT_GROUND_LAND] == TRUE )
+      {
+        ONOUE_Printf("草地\n");
+        p_wk->land_type = HABITAT_GROUND_LAND;
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
+      }
     }
-  }
-  else if( key_trg & PAD_BUTTON_B )
-  {
-    // @todo 生息地リストへ飛ばす
-    SetNextSeq( p_wk ,MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_B );
-    ONOUE_Printf("生息地リスト画面へ\n");
-  }
-  else if( key_trg & PAD_BUTTON_X )
-  {
-    SetNextSeq( p_wk ,MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_X );
-    ONOUE_Printf("フィールドへ戻る\n");
-  }
-  else if( key_trg & PAD_BUTTON_Y )
-  {
-    ONOUE_Printf("ショートカット登録ON/OFF\n");
-  }
+    break;
+  case TPID_BUTTON_GROUND_WATERSIDE:
+    {
+      if( p_wk->land_appear[HABITAT_GROUND_WATERSIDE] == TRUE )
+      {
+        ONOUE_Printf("水辺\n");
+        p_wk->land_type = HABITAT_GROUND_WATERSIDE;
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
+      }
+    }
+    break;
+  case TPID_BUTTON_GROUND_FISHING:
+    {
+      if( p_wk->land_appear[HABITAT_GROUND_FISHING] == TRUE )
+      {
+        ONOUE_Printf("釣り\n");
+        p_wk->land_type = HABITAT_GROUND_FISHING;
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
+      }
+    }
+    break;
+  case TPID_BUTTON_UP:
+    {
+      ONOUE_Printf("ゾーン切替UP\n");
+      SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_UP );
+    }
+    break;
+  case TPID_BUTTON_DOWN:
+    {
+      ONOUE_Printf("ゾーン切替DOWN\n");
+      SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_DOWN );
+    }
+    break;
+  case TPID_BUTTON_SEASON_L:
+    {
+      if( p_list_data->season_enable == TRUE )
+      {
+        ONOUE_Printf("季節切替L\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_L );
+      }
+    }
+    break;
+  case TPID_BUTTON_SEASON_R:
+    {
+      if( p_list_data->season_enable == TRUE )
+      {
+        ONOUE_Printf("季節切替R\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_R );
+      }
+    }
+    break;
+  case TPID_LIST_CURSOR_01:
+  case TPID_LIST_CURSOR_02:
+  case TPID_LIST_CURSOR_03:
+  case TPID_LIST_CURSOR_04:
+  case TPID_LIST_CURSOR_05:
+  case TPID_LIST_CURSOR_06:
+  case TPID_LIST_CURSOR_07:
+  case TPID_LIST_CURSOR_08:
+  case TPID_LIST_CURSOR_09:
+  case TPID_LIST_CURSOR_10:
+  case TPID_LIST_CURSOR_11:
+  case TPID_LIST_CURSOR_12:
+  case TPID_LIST_CURSOR_13:
+  case TPID_LIST_CURSOR_14:
+  case TPID_LIST_CURSOR_15:
+  case TPID_LIST_CURSOR_16:
+  case TPID_LIST_CURSOR_17:
+  case TPID_LIST_CURSOR_18:
+  case TPID_LIST_CURSOR_19:
+  case TPID_LIST_CURSOR_20:
+    {
+      s32 index = key_status - TPID_LIST_CURSOR_01;
+      if(  index < p_wk->list_size )
+      {
+        p_wk->tp_select_index = index;
+        SetNextSeq( p_wk ,MAIN_SEQ_POKESELECT_KEY_INPUT ,SEQ_CHANGE_PARAM_TOUCH );
+      }
+      ONOUE_Printf("カーソル番号:%d\n",p_wk->tp_select_index +1);
+    }
+    break;
 
+    // タッチ入力なし
+  case GFL_UI_TP_HIT_NONE:
+    {
+      // 四季切替
+      if( key_trg & PAD_BUTTON_L )
+      {
+        if( p_list_data->season_enable == TRUE )
+        {
+          ONOUE_Printf("季節切替L\n");
+          SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_L );
+        }
+      }
+      else if( key_trg & PAD_BUTTON_R )
+      {
+        if( p_list_data->season_enable == TRUE )
+        {
+          ONOUE_Printf("季節切替R\n");
+          SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_R );
+        }
+      }
+      else if( key_trg & PAD_KEY_LEFT )
+      {
+        ONOUE_Printf("場所タイプ切替L\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_L );
+      }
+      else if( key_trg & PAD_KEY_RIGHT )
+      {
+        ONOUE_Printf("場所タイプ切替R\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_R );
+      }
+      else if( key_trg & PAD_KEY_UP )
+      {
+        ONOUE_Printf("ゾーン切替UP\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_UP );
+      }
+      else if( key_trg & PAD_KEY_DOWN )
+      {
+        ONOUE_Printf("ゾーン切替DOWN\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_DOWN );
+      }
+      else if( key_trg & PAD_BUTTON_A )
+      {
+        if( p_wk->list_size > 0 )
+        {
+          SetNextSeq( p_wk ,MAIN_SEQ_POKESELECT_KEY_INPUT ,SEQ_CHANGE_PARAM_A );
+          ONOUE_Printf("ポケモン選択画面へ\n");
+        }
+        else
+        {
+          ONOUE_Printf("リストにポケモンがいないのでスルー\n");
+        }
+      }
+      else if( key_trg & PAD_BUTTON_B )
+      {
+        // @todo 生息地リストへ飛ばす
+        SetNextSeq( p_wk ,MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_B );
+        ONOUE_Printf("生息地リスト画面へ\n");
+      }
+      else if( key_trg & PAD_BUTTON_X )
+      {
+        SetNextSeq( p_wk ,MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_X );
+        ONOUE_Printf("フィールドへ戻る\n");
+      }
+      else if( key_trg & PAD_BUTTON_Y )
+      {
+        ONOUE_Printf("ショートカット登録ON/OFF\n");
+      }
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -363,84 +675,165 @@ static void MAINSEQ_ReturnTopKeyInput( HABITAT_ZONE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void MAINSEQ_PokeSelectKeyInput( HABITAT_ZONE_WK *p_wk )
 {
-  switch(p_wk->sub_seq)
+  s32 key_trg = GFL_UI_KEY_GetTrg();
+  HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
+  s32   key_status;
+  key_status = GFL_UI_TP_HitTrg( sc_touch_hit_tbl_poke_select );
+
+  switch( key_status )
   {
-  // 初回選択状態反映、メニューの切替
-  case 0:
+  case TPID_PSELECT_RETURN:
     {
-      // ポケモン選択時用ボタン表示に切替
-      SetPokeSelectButton( p_wk );
-
-      // ボタンの有効状態書き換え
-      if( p_wk->seq_param == SEQ_CHANGE_PARAM_A )
+      // トップキー入力処理に移動
+      SetNextSeq( p_wk ,MAIN_SEQ_RETURN_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_B );
+      ONOUE_Printf("ポケモン選択：ゾーン詳細画面に戻る\n");
+    }
+    break;
+  case TPID_PSELECT_EXPLANATIO:
+    {
+      // ポケモンを選択しているか調べる
+      s32 mons_no = CheckIsExistPoke( p_wk ,p_wk->select_index );
+      if( mons_no >= 0 )
       {
-        // カーソルはアクティブ状態に移行
-        ONOUE_Printf("ポケモン選択：カーソル有効化処理実行\n");
-        SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_NONE );
-        return; 
+        ZUKANSAVE_SetDefaultMons( p_wk->p_zkn_sv ,mons_no );
+        SetNextSeq( p_wk ,MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_POKE_SELECT );
+        ONOUE_Printf("ポケモン選択：ポケモン選択[%d]\n",mons_no);
       }
-      else if( p_wk->seq_param == SEQ_CHANGE_PARAM_TOUCH )
+    }
+    break;
+  case TPID_PS_LIST_CURSOR_01:
+  case TPID_PS_LIST_CURSOR_02:
+  case TPID_PS_LIST_CURSOR_03:
+  case TPID_PS_LIST_CURSOR_04:
+  case TPID_PS_LIST_CURSOR_05:
+  case TPID_PS_LIST_CURSOR_06:
+  case TPID_PS_LIST_CURSOR_07:
+  case TPID_PS_LIST_CURSOR_08:
+  case TPID_PS_LIST_CURSOR_09:
+  case TPID_PS_LIST_CURSOR_10:
+  case TPID_PS_LIST_CURSOR_11:
+  case TPID_PS_LIST_CURSOR_12:
+  case TPID_PS_LIST_CURSOR_13:
+  case TPID_PS_LIST_CURSOR_14:
+  case TPID_PS_LIST_CURSOR_15:
+  case TPID_PS_LIST_CURSOR_16:
+  case TPID_PS_LIST_CURSOR_17:
+  case TPID_PS_LIST_CURSOR_18:
+  case TPID_PS_LIST_CURSOR_19:
+  case TPID_PS_LIST_CURSOR_20:
+    {
+      s32 index = key_status - TPID_PS_LIST_CURSOR_01;
+      if(  index < p_wk->list_size )
       {
-        // @todo 処理を確認(カーソルは選択されないまま見るが出る？)
+        p_wk->tp_select_index = index;
+        SetNextSeq( p_wk ,MAIN_SEQ_POKESELECT_KEY_INPUT ,SEQ_CHANGE_PARAM_TOUCH );
+        ONOUE_Printf("カーソル番号:%d\n",p_wk->tp_select_index +1);
       }
-      else if( p_wk->seq_param == SEQ_CHANGE_PARAM_NONE )
-      {
-        // カーソル移動から戻ってきたときは何もしない
-      }
-      else
-      {
-        GF_ASSERT(0);
-      }
-      p_wk->sub_seq++;
     }
     break;
 
-  // キー入力処理
-  case 1:
+    // タッチ入力なし
+  case GFL_UI_TP_HIT_NONE:
     {
-      s32 key_trg = GFL_UI_KEY_GetTrg();
-
-      // 四季切替
-      if( key_trg & PAD_KEY_LEFT )
+      switch(p_wk->sub_seq)
       {
-        SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_L );
-        ONOUE_Printf("ポケモン選択：リスト左移動\n");
-      }
-      else if( key_trg & PAD_KEY_RIGHT )
-      {
-        SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_R );
-        ONOUE_Printf("ポケモン選択：リスト右移動\n");
-      }
-      else if( key_trg & PAD_KEY_UP )
-      {
-        SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_UP );
-        ONOUE_Printf("ポケモン選択：リスト上移動\n");
-      }
-      else if( key_trg & PAD_KEY_DOWN )
-      {
-        SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_DOWN );
-        ONOUE_Printf("ポケモン選択：リスト下移動\n");
-      }
-      else if( key_trg & PAD_BUTTON_B )
-      {
-        // トップキー入力処理に移動
-        SetNextSeq( p_wk ,MAIN_SEQ_RETURN_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_B );
-        ONOUE_Printf("ポケモン選択：ゾーン詳細画面に戻る\n");
-      }
-      else if( key_trg & PAD_BUTTON_A )
-      {
-        // ポケモンを選択しているか調べる
-        s32 mons_no = CheckIsExistPoke( p_wk ,p_wk->select_index );
-        if( mons_no >= 0 )
+        // 初回選択状態反映、メニューの切替
+      case 0:
         {
-          ZUKANSAVE_SetDefaultMons( p_wk->p_zkn_sv ,mons_no );
-          SetNextSeq( p_wk ,MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_POKE_SELECT );
-          ONOUE_Printf("ポケモン選択：ポケモン選択[%d]\n",mons_no);
+          // ポケモン選択時用ボタン表示に切替
+          SetPokeSelectButton( p_wk );
 
+          // ボタンの有効状態書き換え
+          if( p_wk->seq_param == SEQ_CHANGE_PARAM_A )
+          {
+            // カーソルはアクティブ状態に移行
+            ONOUE_Printf("ポケモン選択：カーソル有効化処理実行\n");
+            SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_NONE );
+            return; 
+          }
+          else if( p_wk->seq_param == SEQ_CHANGE_PARAM_TOUCH )
+          {
+            // @todo 処理を確認(カーソルは選択されないまま見るが出る？)
+            SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_TOUCH );
+            return; 
+          }
+          else if( p_wk->seq_param == SEQ_CHANGE_PARAM_NONE )
+          {
+            // カーソル移動から戻ってきたときは何もしない
+          }
+          else
+          {
+            GF_ASSERT(0);
+          }
+          p_wk->sub_seq++;
         }
+        break;
+
+        // キー入力処理
+      case 1:
+        {
+          s32 key_trg = GFL_UI_KEY_GetTrg();
+
+          if( p_wk->is_cursor_active == TRUE )
+          {
+            // 移動
+            if( key_trg & PAD_KEY_LEFT )
+            {
+              SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_L );
+              ONOUE_Printf("ポケモン選択：リスト左移動\n");
+            }
+            else if( key_trg & PAD_KEY_RIGHT )
+            {
+              SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_R );
+              ONOUE_Printf("ポケモン選択：リスト右移動\n");
+            }
+            else if( key_trg & PAD_KEY_UP )
+            {
+              SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_UP );
+              ONOUE_Printf("ポケモン選択：リスト上移動\n");
+            }
+            else if( key_trg & PAD_KEY_DOWN )
+            {
+              SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_DOWN );
+              ONOUE_Printf("ポケモン選択：リスト下移動\n");
+            }
+            else if( key_trg & PAD_BUTTON_B )
+            {
+              // トップキー入力処理に移動
+              SetNextSeq( p_wk ,MAIN_SEQ_RETURN_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_B );
+              ONOUE_Printf("ポケモン選択：ゾーン詳細画面に戻る\n");
+            }
+            else if( key_trg & PAD_BUTTON_A )
+            {
+              // ポケモンを選択しているか調べる
+              s32 mons_no = CheckIsExistPoke( p_wk ,p_wk->select_index );
+              if( mons_no >= 0 )
+              {
+                ZUKANSAVE_SetDefaultMons( p_wk->p_zkn_sv ,mons_no );
+                SetNextSeq( p_wk ,MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_POKE_SELECT );
+                ONOUE_Printf("ポケモン選択：ポケモン選択[%d]\n",mons_no);
+
+              }
+            }
+          }
+          else
+          {
+            if( key_trg & PAD_BUTTON_B )
+            {
+              SetNextSeq( p_wk ,MAIN_SEQ_RETURN_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_B );
+              ONOUE_Printf("ポケモン選択：ゾーン詳細画面に戻る\n");
+            }
+            // カーソルがOFFの時にトリガー入力
+            else if( key_trg )
+            {
+              ONOUE_Printf("カーソルの有効化\n");
+              SetNextSeq( p_wk ,MAIN_SEQ_MOVE_POKE_CURSOR ,SEQ_CHANGE_PARAM_NONE );
+            }
+          }
+        }
+        break;
       }
     }
-    break;
   }
 }
 
@@ -555,20 +948,6 @@ static void MAINSEQ_AppExit( HABITAT_ZONE_WK *p_wk )
     }
     break;
   }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  フォントカラーを取得する
- *
- *	@param	
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static PRINTSYS_LSB GetMsgFontColor( void )
-{
-  return PRINTSYS_LSB_Make(1,2,3);
 }
 
 //----------------------------------------------------------------------------
@@ -894,6 +1273,16 @@ static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk )
           SkipLandType( p_wk ,TRUE);
         }
       }
+      else if( p_wk->seq_param == SEQ_CHANGE_PARAM_SET_LAND_TYPE )
+      {
+        // セットされている地形タイプに切り替える
+        ONOUE_Printf("直接指定\n");
+        GF_ASSERT( p_wk->land_appear[ p_wk->land_type ] == TRUE );
+      }
+      else 
+      {
+        GF_ASSERT(0);
+      }
 
       // 地形アイコン更新
       RefreshLandTypeIcon( p_wk );
@@ -1025,10 +1414,7 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
       s32 list_h = 0; 
 
       // 現在のカーソル位置をOFFに
-      if( p_wk->is_cursor_active == TRUE )
-      {
-        SetCursorstatus( p_wk ,p_wk->select_index ,FALSE );
-      }
+      SetCursorstatus( p_wk ,p_wk->select_index ,FALSE );
 
       // 現在のリスト位置を計算
       if( p_wk->select_index != 0 )
@@ -1082,6 +1468,12 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
       {
         ONOUE_Printf("カーソルの有効化\n");
       }
+      else if( p_wk->seq_param == SEQ_CHANGE_PARAM_TOUCH )
+      {
+        ONOUE_Printf("ポケモンのみアクション\n");
+        x = p_wk->tp_select_index%POKEICON_LINE;
+        y = p_wk->tp_select_index/POKEICON_LINE;
+      }
 
       // x,y位置をリスト位置に変換
       ONOUE_Printf("2:x = %d,y=%d\n",x,y);
@@ -1120,7 +1512,21 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
       }
 
       // 新しいカーソル位置をONに
-      SetCursorstatus( p_wk ,p_wk->select_index ,TRUE );
+      if( p_wk->seq_param != SEQ_CHANGE_PARAM_TOUCH )
+      {
+        SetCursorstatus( p_wk ,p_wk->select_index ,TRUE );
+        ONOUE_Printf("カーソルON(選択インデックス%d)\n",p_wk->select_index);
+      }
+      else
+      {
+        // ポケモンのみアクションさせる
+        if( CheckIsExistPoke( p_wk ,p_wk->select_index ) >= 0 )
+        {
+          HABITAT_ZONE_GRA_SetPokeAnmFlag(&p_wk->gra_sys,p_wk->select_index,TRUE);
+        }
+        p_wk->is_cursor_active = FALSE;
+        ONOUE_Printf("カーソルOFF\n");
+      }
 
       // サブシーケンスを進める
       p_wk->sub_seq++;
@@ -1146,7 +1552,6 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
 {
-  PRINTSYS_LSB  font_colro = GetMsgFontColor();
   switch( p_wk->sub_seq )
   {
   default:
@@ -1160,7 +1565,6 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       u32           msg_id;
       STRBUF        *str;
       STRBUF        *dest_str;
-      PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
       // ゾーンIDに対応した地名メッセージIDを取得
       HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
@@ -1172,7 +1576,6 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       {
         // ファンファーレ
         PMSND_PlayBGM( BANK_ME_ZUKAN_01 );
-
         // 地形メッセージIDを取得
         msg_id = GetLandTypeMsgIDGetCmp( p_wk->land_type,p_list_data->info_ground_type);
       }
@@ -1195,7 +1598,7 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       WORDSET_ExpandStr( p_wk->p_word_set, dest_str , str  );
 
       // メッセージの書き込み
-      HABITAT_ZONE_GRA_MakeFrameWinMsg( dest_str,&p_wk->gra_sys ,font_colro);
+      HABITAT_ZONE_GRA_MakeFrameWinMsg( dest_str,&p_wk->gra_sys );
       GFL_STR_DeleteBuffer( dest_str );
       GFL_STR_DeleteBuffer( str );
       p_wk->sub_seq++;
@@ -1283,7 +1686,6 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
   u32     msg_id;
   STRBUF  *str;
   STRBUF  *dest_str;
-  PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
   // ゾーンIDに対応した地名メッセージIDを取得
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
@@ -1311,7 +1713,7 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
  
   // メッセージの書き込み
   HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,dest_str ,&p_wk->gra_sys ,
-    LAND_MSG_POS_X , LAND_MSG_POS_Y ,LAND_MSG_W ,LAND_MSG_H ,font_colro );
+    LAND_MSG_POS_X , LAND_MSG_POS_Y ,LAND_MSG_W ,LAND_MSG_H ,FCOL_BP01WN );
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -1485,7 +1887,6 @@ static u32 GetLandTypeMsgIDLookCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INF
 static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk )
 {
   STRBUF        *str;
-  PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
   // メッセージの書き込み
   str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_explanation_button_01 );
@@ -1494,7 +1895,7 @@ static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk )
   HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
       EXPLANATION_MSG_POS_X , EXPLANATION_MSG_POS_Y,
       EXPLANATION_MSG_W,EXPLANATION_MSG_H ,
-      font_colro );
+      FCOL_WP01WN );
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -1530,7 +1931,6 @@ static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk )
 {
   STRBUF  *str;
   STRBUF  *dest_str;
-  PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
   // ゾーンIDに対応した地名メッセージIDを取得
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
@@ -1551,7 +1951,7 @@ static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk )
   HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_MAP_NAME ,dest_str ,&p_wk->gra_sys ,
       MAPNAME_MSG_POS_X , MAPNAME_MSG_POS_Y,
       MAPNAME_MSG_W,MAPNAME_MSG_H ,
-      font_colro );
+      FCOL_WP01WN );
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -1570,7 +1970,6 @@ static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk )
 static void DrawNoHabitatDatatMsg( HABITAT_ZONE_WK *p_wk )
 {
   STRBUF       *str;
-  PRINTSYS_LSB  font_colro = GetMsgFontColor();
 
   // メッセージの書き込み
   str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_seisoku_err_01 );
@@ -1579,7 +1978,7 @@ static void DrawNoHabitatDatatMsg( HABITAT_ZONE_WK *p_wk )
   HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
       NOHABITATDATA_MSG_POS_X , NOHABITATDATA_MSG_POS_Y,
       NOHABITATDATA_MSG_W,NOHABITATDATA_MSG_H,
-      font_colro );
+      FCOL_WP01WN );
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -1700,7 +2099,7 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
   {
     // 生息していない場合はありえない
     // 生息していませんメッセージ表示
-    DrawNoHabitatDatatMsg( p_wk );
+    //DrawNoHabitatDatatMsg( p_wk );
     GF_ASSERT(0);
   }
   else
@@ -1866,9 +2265,10 @@ static void SetCursorstatus( HABITAT_ZONE_WK *p_wk ,s32 index ,BOOL is_active )
   }
   
   // ポケモンが存在する時のみ
-  if( CheckIsExistPoke( p_wk ,p_wk->select_index ) >= 0 )
+  if( CheckIsExistPoke( p_wk ,index ) >= 0 )
   {
     HABITAT_ZONE_GRA_SetPokeAnmFlag( &p_wk->gra_sys ,index , is_active );
+    ONOUE_Printf("ポケモンアニメーション開始,%d,%d\n",index,is_active);
   }
   p_wk->is_cursor_active = is_active;
 }
@@ -2135,11 +2535,10 @@ static s32 CheckIsExistPoke( HABITAT_ZONE_WK *p_wk ,u8 index )
 {
   // 詳細画面に移動
   HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
-
-  // ポケモンが存在するかどうか
-  if( p_zd->poke_data[index].status >= HABITAT_POKE_STATUS_LOOK )
+ 
+  if( p_wk->monsno_list[ index ] > 0 )
   {
-    return p_zd->poke_data[index].monsno;
+    return p_wk->monsno_list[ index ];
   }
   return -1;
 }

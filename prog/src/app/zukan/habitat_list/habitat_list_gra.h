@@ -104,7 +104,6 @@ enum
   OBJ_ANM_SEQ_SCROLL_BAR          = 3,    // スクロールバー
   OBJ_ANM_SEQ_SELECT_BUTTON       = 1,    // セレクトボタン
   OBJ_ANM_SEQ_SELECT_BUTTON_ANM   = 5,    // セレクトボタン(アニメ)
-  OBJ_ANM_SEQ_LIST_CURSOR         = 33,    // リストカーソル
   OBJ_ANM_SEQ_MODE_BUTTON     = 13,   // モード切替ボタン
   OBJ_ANM_SEQ_MODE_BUTTON_ANM = 14,   // モード切替ボタン（アニメ）
   OBJ_ANM_SEQ_MINIMAP     = 15, // ミニマップ
@@ -112,6 +111,10 @@ enum
   OBJ_ANM_SEQ_EX_ICON     = 11, // びっくりマーク
   OBJ_ANM_SEQ_GET_ICON    = 7,  // 捕獲アイコン
   OBJ_ANM_SEQ_LOOK_ICON   = 8,  // 見たアイコン
+  
+  OBJ_ANM_SEQ_LIST_CURSOR01         = 32,    // リストカーソル
+  OBJ_ANM_SEQ_LIST_CURSOR02         = 34,    // リストカーソル
+  OBJ_ANM_SEQ_LIST_CURSOR03         = 36,    // リストカーソル
 };
 
 // 定数定義

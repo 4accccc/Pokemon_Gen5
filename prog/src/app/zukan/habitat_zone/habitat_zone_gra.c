@@ -1416,6 +1416,7 @@ void HABITAT_ZONE_GRA_SetPokeAnmFlag( HABITAT_ZONE_GRA_WK *p_wk ,u8 index ,
 {
   if( p_wk->p_clwk_poke_icon[index] != NULL )
   {
+    GFL_CLACT_WK_StartAnm( p_wk->p_clwk_poke_icon[index] );
     GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_poke_icon[index],is_anm );
   }
 }
@@ -1647,14 +1648,13 @@ void HABITAT_ZONE_GRA_SetSmallIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
 /**
  *	@brief  フレーム付きメッセージウィンドウを作成
  *
- *	@param	p_wk 
- *	@param	index 
- *	@param	status
+ *	@param	STRBUF* str
+ *	@param	*p_wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void HABITAT_ZONE_GRA_MakeFrameWinMsg(const STRBUF* str,HABITAT_ZONE_GRA_WK *p_wk ,PRINTSYS_LSB font_colro)
+void HABITAT_ZONE_GRA_MakeFrameWinMsg(const STRBUF* str,HABITAT_ZONE_GRA_WK *p_wk )
 {
   GFL_BMPWIN *p_win = GetBmpWin( p_wk,PRINT_UTIL_EVENT_MSG_WIN );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_win) ,15 );

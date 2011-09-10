@@ -722,6 +722,14 @@ static void MAINSEQ_ItemBlink( HABITAT_LIST_WK *p_wk )
 
   switch( p_wk->sub_seq ){
 	case 0:
+    {
+      // 選択アニメーション再生
+      GFL_CLWK* p_clwk;
+      p_clwk= HABITAT_LIST_GRA_GetComClWk( &p_wk->gra_sys ,LIST_CURSOR_CLWKID );
+      GFL_CLACT_WK_SetAnmSeq( p_clwk ,GFL_CLACT_WK_GetAnmSeq( p_clwk ) + 1);
+      GFL_CLACT_WK_SetAutoAnmFlag( p_clwk , TRUE);
+    }
+    // through break
 	case 2:
 		if( p_wk->button_cnt == 0 ){
       if( is_cmp == TRUE )

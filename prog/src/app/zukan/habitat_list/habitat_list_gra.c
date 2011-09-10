@@ -126,9 +126,9 @@ static const FRAMELIST_HEADER	sc_list_header = {
 	ZKNLISTMAIN_LIST_SX,					// 項目フレーム表示Ｘサイズ
 	ZKNLISTMAIN_LIST_SY,					// 項目フレーム表示Ｙサイズ
 
-	8,							// フレーム内に表示するBMPWINの表示Ｘ座標
+	7,							// フレーム内に表示するBMPWINの表示Ｘ座標
 	0,							// フレーム内に表示するBMPWINの表示Ｙ座標
-	14,							// フレーム内に表示するBMPWINの表示Ｘサイズ
+	15,							// フレーム内に表示するBMPWINの表示Ｘサイズ
 	3,							// フレーム内に表示するBMPWINの表示Ｙサイズ
 	5,							// フレーム内に表示するBMPWINのパレット
 
@@ -923,7 +923,7 @@ static void GRA_LoadObjGraphic( HABITAT_LIST_GRA_WK *p_wk )
   p_wk->p_clwk_common_obj[LIST_CURSOR_CLWKID] = UI_EASY_CLWK_CreateCLWK( 
       &p_wk->clres_common_obj, p_wk->p_clunit, 
       0,0,
-      OBJ_ANM_SEQ_LIST_CURSOR, HEAPID_ZUKAN_HABITAT_LIST );
+      OBJ_ANM_SEQ_LIST_CURSOR01, HEAPID_ZUKAN_HABITAT_LIST );
   GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[LIST_CURSOR_CLWKID] ,1 ); // ボタンより下
 
 
@@ -2062,10 +2062,18 @@ static void SetCursorEnable( HABITAT_LIST_GRA_WK *p_wk , BOOL flg )
 static void RefreshCursorPos( HABITAT_LIST_GRA_WK *p_wk )
 {
   s32 i;
+  s32 exist_cnt = -1;
   GFL_CLACTPOS	pos;
   GFL_CLWK *p_clwk = p_wk->p_clwk_common_obj[LIST_CURSOR_CLWKID];
   u32 cursor_pos = FRAMELIST_GetCursorPos( p_wk->p_lwk );
   u32 sc_cnt = HABITAT_LIST_GRA_GetScrollCount( p_wk );
+
+  u32 anm_seq_table[] =
+  {
+    OBJ_ANM_SEQ_LIST_CURSOR01,
+    OBJ_ANM_SEQ_LIST_CURSOR02,
+    OBJ_ANM_SEQ_LIST_CURSOR03,
+  };
 
   pos.y = (ZKNLISTMAIN_LIST_PY*8)+LIST_ICON_Y_OFFSET + (LIST_BAR_H*cursor_pos);
   pos.x = LIST_BAR_POS_X;
@@ -2076,9 +2084,14 @@ static void RefreshCursorPos( HABITAT_LIST_GRA_WK *p_wk )
     if( p_wk->p_list_data[cursor_pos+sc_cnt].is_exist_landtype[i] == TRUE )
     {
       pos.x -= 16;
+      exist_cnt ++;
     }
   }
   GFL_CLACT_WK_SetPos( p_clwk , &pos, CLSYS_DRAW_MAIN );
+  
+  GF_ASSERT( exist_cnt >= 0 );
+  HABITAT_LIST_GRA_SetAnmSeq( p_wk,
+      LIST_CURSOR_CLWKID,anm_seq_table[exist_cnt]);
 
 }
 

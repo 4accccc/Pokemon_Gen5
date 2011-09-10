@@ -23,7 +23,7 @@
 enum
 {
   // メッセージ表示場所
-  LAND_MSG_POS_X = 8,
+  LAND_MSG_POS_X = 12,
   LAND_MSG_POS_Y = 4,
   LAND_MSG_W = 240,
   LAND_MSG_H = 32,
@@ -31,7 +31,7 @@ enum
   SEASON_MSG_POS_Y = 52,
   SEASON_MSG_W = 32,
   SEASON_MSG_H = 16,
-  EXPLANATION_MSG_POS_X = 128,
+  EXPLANATION_MSG_POS_X = 124,
   EXPLANATION_MSG_POS_Y = 172,
   EXPLANATION_MSG_W = 96,
   EXPLANATION_MSG_H = 16,
@@ -60,6 +60,7 @@ typedef enum {
   SEQ_CHANGE_PARAM_TOUCH,
   SEQ_CHANGE_PARAM_POKE_SELECT,
   SEQ_CHANGE_PARAM_NONE,
+  SEQ_CHANGE_PARAM_SET_LAND_TYPE,
 }SEQ_CHANGE_PARAM;
 
 // メインシーケンス状態定義
@@ -87,6 +88,7 @@ struct _HABITAT_ZONE_WK{
 
   BOOL  is_cursor_active;           // カーソルが選択状態かどうか
   s32   select_index;               // 選択中のポケモン
+  s32   tp_select_index;            // タッチで選択したインデックス
   s32   zone_data_cnt;              // データ数
   s32   list_size;                  // ポケモンリストに表示されている数
   s32   zone_data_index;            // リストのインデックス
