@@ -60,7 +60,7 @@ typedef struct {
   GMEVENT *gmEvent;
   FIELDMAP_WORK *fieldWork;
   FLDMENUFUNC *menuFunc;
-  s16         result;
+  u16         result;
 }DEBUG_POKEWOOD_WORK;
 
 //typedef DEBUG_MENU_EVENT_WORK POKEWOOD_FUNC_WORK;
@@ -153,7 +153,8 @@ BOOL debugMenuCallProc_Pokewood( DEBUG_MENU_EVENT_WORK *wk )
 
   u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
   if (
-      ( zone_id != ZONE_ID_C15 ) && ( zone_id != ZONE_ID_C15R0101 ) && ( zone_id != ZONE_ID_C15R0201 )
+      ( zone_id != ZONE_ID_C15 ) && ( zone_id != ZONE_ID_C15R0101 )
+      && ( zone_id != ZONE_ID_C15R0201 ) && (zone_id != ZONE_ID_C15R0301 )
      )
   {
     //オーバーレイがないものを呼び出さないように使用箇所を制限
@@ -435,7 +436,9 @@ static BOOL debugMenuCallProc_PokewoodSelect( POKEWOOD_FUNC_WORK * wk )
 {
   GMEVENT *event = wk->gmEvent;
 	GMEVENT *new_event;
-	PKWD_SELECT_SCREEN_PARAM  *pkwd_param = PKWD_SELECT_SCREEN_PARAM_Create( HEAPID_PROC, wk->gmSys, &wk->result );
+	PKWD_SELECT_SCREEN_PARAM  *pkwd_param;
+  
+  pkwd_param = PKWD_SELECT_SCREEN_PARAM_Create( HEAPID_PROC, wk->gmSys, PKWD_SELECT_MODE_NORMAL, &wk->result );
 
 	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_SELECT_SCREEN_EVENT_Call, (void *)pkwd_param );

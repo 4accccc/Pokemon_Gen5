@@ -50,6 +50,8 @@ SDK_COMPILER_ASSERT(PWSV_TYPE_SENARIO_PLAYED == SCR_PKWD_SCENARIO_PLAYED_FLAG );
 SDK_COMPILER_ASSERT(PWSV_TYPE_SENARIO_SUCCESS == SCR_PKWD_SCENARIO_SUCCESS_FLAG );
 SDK_COMPILER_ASSERT(PWSV_TYPE_SENARIO_ANNOUNCED == SCR_PKWD_SCENARIO_ANNOUNCED_FLAG );
 
+SDK_COMPILER_ASSERT( SCR_PKWD_SELECT_MODE_NORMAL == PKWD_SELECT_MODE_NORMAL );
+SDK_COMPILER_ASSERT( SCR_PKWD_SELECT_MODE_DELETE == PKWD_SELECT_MODE_DEL );
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -355,12 +357,22 @@ VMCMD_RESULT EvCmdPokewoodSelectMovie( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  PKWD_SELECT_SCREEN_PARAM * screen_param;
+  GMEVENT * new_event;
+
+  u16 mode    = SCRCMD_GetVMWorkValue(core,work);
   u16* ret_wk = SCRCMD_GetVMWork(core,work);  
 
-  GMEVENT * new_event = createDummyEvent( wk );
-	SCRIPT_CallEvent( scw, new_event );
+  screen_param = PKWD_SELECT_SCREEN_PARAM_Create( heapID, gsys, mode, ret_wk );
 
-  *ret_wk = 0;  /* 仮：本当はアプリから結果を受け取る */
+  new_event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_SELECT_SCREEN_EVENT_Call, (void*)screen_param );
+
+  PKWD_SELECT_SCREEN_PARAM_Delete( screen_param );
+	SCRIPT_CallEvent( scw, new_event );
 
   return VMCMD_RESULT_SUSPEND;
 }

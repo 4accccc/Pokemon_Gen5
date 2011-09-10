@@ -37,8 +37,10 @@ extern const GFL_PROC_DATA PkwdSelectScreenProcData;
 
 #define POKEWOOD_SAVEDATA_MAX   ( 5 ) //ポケウッド録画データ最大数（＝キャンセル値）
 
-#define PKWD_SELECT_MODE_NORMAL ( 0 ) // 上映する映画を選択
-#define PKWD_SELECT_MODE_DEL    ( 1 ) // 削除する映画を選択
+typedef enum {
+  PKWD_SELECT_MODE_NORMAL = ( 0 ), // 上映する映画を選択
+  PKWD_SELECT_MODE_DEL    = ( 1 ), // 削除する映画を選択
+}PKWD_SELECT_MODE;
 
 
 //=============================================================================
@@ -53,7 +55,7 @@ typedef struct
 {	
   MYSTATUS          *mystatus;
   SAVE_CONTROL_WORK *sv;          // 外部セーブデータにアクセスするために必要
-  s16               *result;      // 選択結果を返す。(POKEWOOD_SAVEDATA_MAXだったらキャンセル)
+  u16               *result;      // 選択結果を返す。(POKEWOOD_SAVEDATA_MAXだったらキャンセル)
   POKEWOOD_SAVEDATA *pokewood_sv; // ポケウッド関連セーブデータ（内部）
-  int               mode;         // PKWD_SELECT_MODE_NORMAL（選択）かPKWD_SELECT_MODE_DEL(削除）を入れる
+  PKWD_SELECT_MODE  mode;         // PKWD_SELECT_MODE_NORMAL（選択）かPKWD_SELECT_MODE_DEL(削除）を入れる
 }PKWD_SELECT_SCREEN_PARAM;
