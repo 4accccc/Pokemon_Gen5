@@ -2,14 +2,185 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d27r2201_swplazmaw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『あんたが　ほしいもの
+あたい　もってるわ！▼
+でも　ほしけりゃ……
+わかるでしょ？　しょうぶよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:32:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『あんたが　ほしいもの
+あたい　もってるわ！▼
+でも　ほしけりゃ……
+わかるでしょ？　しょうぶよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:32:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：2回目
+・メッセージ表示後、戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:32:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ１２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:32:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmaw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:34:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:33:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:34:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:34:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：2回目
+・戦闘後、自動で表示
+・アイテム入手処理
+　No633「プラズマカード」入手</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:33:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ１２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:33:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmaw_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　プラズマカードが　ないと
+パスワードは　にゅうりょく　できない▼
+あとは　じぶんで　がんばりなさい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:34:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:34:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　プラズマカードが　ないと
+パスワードは　にゅうりょく　できない▼
+あとは　じぶんで　がんばりなさい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:34:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:34:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：2回目
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ１２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:33:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d27r2201_baker_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>あたしゃ　すきな　パンを　つくれて
+まんぞく　してるけどさ▼
+まいにち　パンと　みずだけで
+みんな　だいじょうぶ　なのかね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T06:58:20" />
+				Time="2011-09-10T09:31:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +188,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>あたしゃ　好きな　パンを　つくれて
+満足してるけどさ▼
+毎日　パンと　水だけで
+みんな　大丈夫なのかね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T06:58:26" />
+				Time="2011-09-10T10:22:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

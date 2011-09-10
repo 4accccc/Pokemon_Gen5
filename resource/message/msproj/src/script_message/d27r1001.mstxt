@@ -862,11 +862,11 @@
 			Language="JPN_KANJI">
 			<Text>なにー！　アクロマさまを
 やっつけた　だとー！！▼
-うわー！　つよがっていたが
-ポケモンを　もっていないんだ！▼</Text>
+うわー！　強がっていたが
+ポケモンを　持っていないんだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T09:13:13" />
+				Time="2011-09-10T10:14:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -894,6 +894,174 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1001_swplazmaw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『あんたが　ほしいもの
+あたい　もってるわ！▼
+でも　ほしけりゃ……
+わかるでしょ？　しょうぶよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『あんたが　ほしいもの
+あたい　もってるわ！▼
+でも　ほしけりゃ……
+わかるでしょ？　しょうぶよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：３回目
+・メッセージ表示後、戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:36:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ１２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1001_swplazmaw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：３回目
+・戦闘後、自動で表示
+・アイテム入手処理
+　No633「プラズマカード」入手</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:36:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ１２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1001_swplazmaw_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　プラズマカードが　ないと
+パスワードは　にゅうりょく　できない▼
+あとは　じぶんで　がんばりなさい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　プラズマカードが　ないと
+パスワードは　にゅうりょく　できない▼
+あとは　じぶんで　がんばりなさい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：３回目
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:36:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ１２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T10:35:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
