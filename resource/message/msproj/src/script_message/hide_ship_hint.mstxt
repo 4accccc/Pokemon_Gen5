@@ -6,10 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえメッセージ</Text>
+			<Text>どうした？　しんにゅうしゃ！▼
+オレに　かてたら
+パスワードの　ヒントを　くれてやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:01:51" />
+				Time="2011-09-10T07:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前メッセージ</Text>
+			<Text>どうした？　侵入者！▼
+オレに　勝てたら
+パスワードの　ヒントを　くれてやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:02:00" />
+				Time="2011-09-10T07:24:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -55,10 +59,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レシラムの　ヒント</Text>
+			<Text>パスワードの　ヒントは……▼
+イッシュちほうの
+でんせつポケモンの　なまえだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:39" />
+				Time="2011-09-10T07:30:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66,10 +72,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レシラムの　ヒント</Text>
+			<Text>パスワードの　ヒントは……▼
+イッシュ地方の
+伝説ポケモンの　名前だ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:52" />
+				Time="2011-09-10T07:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -78,10 +86,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント1-1</Comment>
+・ヒント1-1
+・レシラムのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:39:44" />
+				Time="2011-09-10T08:20:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -104,10 +113,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>パスワードの　ヒントは……▼
+イッシュちほうの
+でんせつポケモンの　なまえだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:44" />
+				Time="2011-09-10T07:30:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -115,10 +126,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>パスワードの　ヒントは……▼
+われわれ　プラズマ団が
+ねらっていた　伝説ポケモン！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:52" />
+				Time="2011-09-10T07:20:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -127,10 +140,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント1-2</Comment>
+・ヒント1-2
+・ゼクロムのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:39:49" />
+				Time="2011-09-10T08:20:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -251,10 +265,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえメッセージ</Text>
+			<Text>ふねの　なかって　たいくつなんだ
+ちょいと　あそんでやるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:02:21" />
+				Time="2011-09-10T08:36:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -262,10 +277,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前メッセージ</Text>
+			<Text>船の　中って　退屈なんだ
+ちょいと　遊んでやるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:02:21" />
+				Time="2011-09-10T08:37:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -300,10 +316,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レシラムの　ヒント</Text>
+			<Text>たしか　ほのおタイプの　ポケモンだ！▼
+おまえが　どこまで　いけるか
+たのしませて　もらうと　するか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:53" />
+				Time="2011-09-10T08:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -311,10 +329,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レシラムの　ヒント</Text>
+			<Text>たしか　ほのおタイプの　ポケモンだ！▼
+おまえが　どこまで　いけるか
+たのしませて　もらうと　するか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:53" />
+				Time="2011-09-10T08:37:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -323,10 +343,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント2-1</Comment>
+・ヒント2-1
+・レシラムのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:43:32" />
+				Time="2011-09-10T08:20:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -349,10 +370,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>たしか　でんきタイプの　ポケモンだ！
+おまえが　どこまで　いけるか
+たのしませて　もらうと　するか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:53" />
+				Time="2011-09-10T08:37:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -360,10 +383,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>たしか　でんきタイプの　ポケモンだ！
+おまえが　どこまで　いけるか
+たのしませて　もらうと　するか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:53" />
+				Time="2011-09-10T08:37:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -372,10 +397,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント2-2</Comment>
+・ヒント2-2
+・ゼクロムのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:07" />
+				Time="2011-09-10T08:20:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -496,10 +522,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえメッセージ</Text>
+			<Text>われら　プラズマだんは
+イッシュちほうを　しはいする！▼
+そのためだ！
+おまえの　ポケモンを　よこせ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:02:34" />
+				Time="2011-09-10T08:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -507,10 +536,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前メッセージ</Text>
+			<Text>我ら　プラズマ団は
+イッシュ地方を　支配する！▼
+そのためだ！
+おまえの　ポケモンを　よこせ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:02:34" />
+				Time="2011-09-10T08:28:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -545,10 +577,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レシラムの　ヒント</Text>
+			<Text>まけたからには
+いさぎよく　おしえてやる▼
+パスワードの　さいしょの　もじは
+レ　だ！▼
+ケチくさい　とか　いうなよ
+そういうのは　おもうだけにしろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:54" />
+				Time="2011-09-10T08:20:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -556,10 +593,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レシラムの　ヒント</Text>
+			<Text>負けたからには
+潔く　教えてやる▼
+パスワードの　最初の　文字は
+レ　だ！▼
+ケチくさい　とか　いうなよ
+そういうのは　思うだけにしろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:54" />
+				Time="2011-09-10T08:21:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -568,10 +610,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント3-1</Comment>
+・ヒント3-1
+・レシラムのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:43:28" />
+				Time="2011-09-10T08:20:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -594,10 +637,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>まけたからには
+いさぎよく　おしえてやる▼
+パスワードの　さいしょの　もじは
+ゼ　だ！▼
+ケチくさい　とか　いうなよ
+そういうのは　おもうだけにしろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:54" />
+				Time="2011-09-10T08:20:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -605,10 +653,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>負けたからには
+潔く　教えてやる▼
+パスワードの　最初の　文字は
+ゼ　だ！▼
+ケチくさい　とか　いうなよ
+そういうのは　思うだけにしろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:54" />
+				Time="2011-09-10T08:21:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -617,10 +670,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント3-2</Comment>
+・ヒント3-2
+・ゼクロムのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:56" />
+				Time="2011-09-10T08:20:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -741,10 +795,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえメッセージ</Text>
+			<Text>おっ！　おまえ　つよそうだな！
+よし！　たたかおう　たたかおう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:03:31" />
+				Time="2011-09-10T08:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -752,10 +807,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前メッセージ</Text>
+			<Text>おっ！　おまえ　強そうだな！
+よし！　戦おう　戦おう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:03:31" />
+				Time="2011-09-10T08:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -790,10 +846,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レシラムの　ヒント</Text>
+			<Text>つよいから　おしえてやるよ
+パスワードの　ヒントは……▼
+しろい　ドラゴンポケモン
+なんて　なまえ　だったっけ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:55" />
+				Time="2011-09-10T08:32:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -801,10 +860,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レシラムの　ヒント</Text>
+			<Text>強いから　教えてやるよ
+パスワードの　ヒントは……▼
+白い　ドラゴンポケモン
+なんて　名前だったっけ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:55" />
+				Time="2011-09-10T08:32:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -813,10 +875,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント4-1</Comment>
+・ヒント4-1
+・レシラムのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:43:24" />
+				Time="2011-09-10T08:20:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -839,10 +902,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>つよいから　おしえてやるよ
+パスワードの　ヒントは……▼
+しろい　ドラゴンポケモン
+なんて　なまえ　だったっけ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:55" />
+				Time="2011-09-10T08:32:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -850,10 +916,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>強いから　教えてやるよ
+パスワードの　ヒントは……▼
+黒い　ドラゴンポケモン
+なんて　なまえ　だったっけ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:47:55" />
+				Time="2011-09-10T08:32:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -862,10 +931,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒント4-2</Comment>
+・ヒント4-2
+・ゼクロムのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:44" />
+				Time="2011-09-10T08:20:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -986,11 +1056,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きを　つけな
-おんなは　うそつき　だぜ</Text>
+			<Text>フフフ……　パスワードを
+さがして　たたかう　トレーナーよ▼
+しょうぶに　かっても　こたえを
+おしえてもらえるとは　かぎらないぜ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:09" />
+				Time="2011-09-10T07:55:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -998,11 +1070,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きを　つけな
-おんなは　うそつき　だぜ</Text>
+			<Text>フフフ……　パスワードを
+探して　戦う　トレーナーよ▼
+勝負に　勝っても　ヒントを
+教えてもらえるとは　かぎらないぜ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:12" />
+				Time="2011-09-10T07:56:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1037,10 +1111,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえメッセージ</Text>
+			<Text>プラズマだんの　ジャマをするなら
+アタシが　やっつけてやる！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:03:32" />
+				Time="2011-09-10T08:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1048,10 +1123,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前メッセージ</Text>
+			<Text>プラズマ団の　ジャマをするなら
+アタシが　やっつけてやる！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:03:32" />
+				Time="2011-09-10T08:05:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1086,10 +1162,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レシラムの　ヒント</Text>
+			<Text>パスワード？
+すきに　いれちゃいなさいよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:14" />
+				Time="2011-09-10T07:54:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1097,10 +1174,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レシラムの　ヒント</Text>
+			<Text>パスワード？
+好きに　いれちゃいなさいよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:14" />
+				Time="2011-09-10T07:54:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1135,10 +1213,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>パスワード？
+すきに　いれちゃいなさいよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:14" />
+				Time="2011-09-10T07:54:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1146,10 +1225,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>パスワード？
+好きに　いれちゃいなさいよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:14" />
+				Time="2011-09-10T07:54:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1184,10 +1264,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>パスワード？
+すきに　いれちゃいなさいよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:14" />
+				Time="2011-09-10T07:54:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1195,10 +1276,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>パスワード？
+好きに　いれちゃいなさいよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:14" />
+				Time="2011-09-10T07:54:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1233,10 +1315,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>パスワード？
+すきに　いれちゃいなさいよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:14" />
+				Time="2011-09-10T07:54:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1244,10 +1327,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>パスワード？
+好きに　いれちゃいなさいよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:14" />
+				Time="2011-09-10T07:54:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1282,10 +1366,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえメッセージ</Text>
+			<Text>チョロチョロ　チョロネコちゃん
+あんたの　ポケモン　ちょうだいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:03:33" />
+				Time="2011-09-10T07:43:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1293,10 +1378,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前メッセージ</Text>
+			<Text>チョロチョロ　チョロネコちゃん
+あんたの　ポケモン　ちょうだいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:03:33" />
+				Time="2011-09-10T07:43:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1331,10 +1417,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レシラムの　ヒント</Text>
+			<Text>あたし　チョロネコが　すきなの▼
+だけど　なかなか　もらえないのよ
+どこかで　たすけてあげないと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:15" />
+				Time="2011-09-10T07:59:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1342,10 +1430,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レシラムの　ヒント</Text>
+			<Text>あたし　チョロネコが　好きなの▼
+だけど　なかなか　もらえないのよ
+どこかで　助けてあげないと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:15" />
+				Time="2011-09-10T07:59:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1380,10 +1470,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>あたし　チョロネコが　すきなの▼
+だけど　なかなか　もらえないのよ
+どこかで　たすけてあげないと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:15" />
+				Time="2011-09-10T07:59:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1391,10 +1483,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゼクロムの　ヒント</Text>
+			<Text>あたし　チョロネコが　好きなの▼
+だけど　なかなか　もらえないのよ
+どこかで　助けてあげないと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:15" />
+				Time="2011-09-10T07:59:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1429,10 +1523,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>あたし　チョロネコが　すきなの▼
+だけど　なかなか　もらえないのよ
+どこかで　たすけてあげないと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:15" />
+				Time="2011-09-10T07:59:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1440,10 +1536,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライトストーンの　ヒント</Text>
+			<Text>あたし　チョロネコが　好きなの▼
+だけど　なかなか　もらえないのよ
+どこかで　助けてあげないと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:15" />
+				Time="2011-09-10T07:59:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1478,10 +1576,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>あたし　チョロネコが　すきなの▼
+だけど　なかなか　もらえないのよ
+どこかで　たすけてあげないと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:15" />
+				Time="2011-09-10T07:59:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1489,10 +1589,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークストーンの　ヒント</Text>
+			<Text>あたし　チョロネコが　好きなの▼
+だけど　なかなか　もらえないのよ
+どこかで　助けてあげないと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:48:15" />
+				Time="2011-09-10T07:59:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
