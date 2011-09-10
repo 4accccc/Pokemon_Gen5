@@ -46,7 +46,19 @@ enum {
 	NARC_field_landdata_patch_JA_NURSERY_03_R_dat = 32,
 	NARC_field_landdata_patch_JA_NURSERY_01_L_dat = 33,
 	NARC_field_landdata_patch_JA_NURSERY_02_L_dat = 34,
-	NARC_field_landdata_patch_JA_NURSERY_03_L_dat = 35
+	NARC_field_landdata_patch_JA_NURSERY_03_L_dat = 35,
+	NARC_field_landdata_patch_JA_EXERCICE_01_R_dat = 36,
+	NARC_field_landdata_patch_JA_EXERCICE_02_R_dat = 37,
+	NARC_field_landdata_patch_JA_EXERCICE_03_R_dat = 38,
+	NARC_field_landdata_patch_JA_EXERCICE_01_L_dat = 39,
+	NARC_field_landdata_patch_JA_EXERCICE_02_L_dat = 40,
+	NARC_field_landdata_patch_JA_EXERCICE_03_L_dat = 41,
+	NARC_field_landdata_patch_JA_ANTIQUE_01_R_dat = 42,
+	NARC_field_landdata_patch_JA_ANTIQUE_02_R_dat = 43,
+	NARC_field_landdata_patch_JA_ANTIQUE_03_R_dat = 44,
+	NARC_field_landdata_patch_JA_ANTIQUE_01_L_dat = 45,
+	NARC_field_landdata_patch_JA_ANTIQUE_02_L_dat = 46,
+	NARC_field_landdata_patch_JA_ANTIQUE_03_L_dat = 47
 };
 
 /* NARC_FIELD_LANDDATA_PATCH_NAIX_ */
