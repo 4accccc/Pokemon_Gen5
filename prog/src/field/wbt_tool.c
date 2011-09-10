@@ -379,6 +379,14 @@ WBTROM_TRID WBTTOOL_GetRivalTrainerID( const WBTROM_TRDATA * rom_trdata )
 }
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+u16 WBTTOOL_GetRomTrainerBtlTrType( const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id )
+{
+  GF_ASSERT( tr_id < rom_trdata->num );
+  return rom_trdata->data[ tr_id ].tr_type;
+}
+
+//------------------------------------------------------------------
 /**
  * @brief ROMトレーナーデータの動作モデルID取得
  * @param[in]   rom_trdata

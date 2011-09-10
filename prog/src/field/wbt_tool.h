@@ -70,6 +70,8 @@ extern void WBTTOOL_GetRomTrainerTypeName( HEAPID heapID, WBTROM_TRID wbt_tr_id,
 
 extern const WBTROM_TRDATA * WBTTOOL_CreateRomTrainerData( HEAPID heapID );
 extern void WBTTOOL_DeleteRomTrainerData( WBTROM_TRDATA * rom_trdata );
+extern u16 WBTTOOL_GetRomTrainerBtlTrType(
+    const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id );
 extern u16 WBTTOOL_GetRomTrainerMMdlID(
     const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id );
 extern WBT_TRPRI WBTTOOL_GetRomTrainerPriority(
