@@ -176,6 +176,7 @@ SUBDIRS	=	wmi \
 			dendou_pc \
 			btl_subway \
 			infinity_dungeon \
+			habitat_list \
 			dendou_demo \
 			profanity_word \
 			symbol \

@@ -38,6 +38,9 @@
 // ゲームデータ
 #include "gamesystem/game_data.h"
 
+// プリントカーソル
+#include "app/app_keycursor.h"
+
 // OBJ初期位置
 enum
 {
@@ -94,6 +97,7 @@ enum
   OBJ_ANM_SEQ_BUTTON_FISHING_ANM  = 21,
   OBJ_ANM_SEQ_BUTTON_EXPLANATION  = 28,
   OBJ_ANM_SEQ_BUTTON_EXPLANATION_ANM  = 29,
+  OBJ_ANM_SEQ_MENU_BAR  = 29,
 };
 
 // OBJWKID
@@ -112,6 +116,7 @@ enum
   OBJ_WK_CANCEL,
   OBJ_WK_RETURN,
   OBJ_WK_MAP_BLINK,
+  OBJ_WK_MENU_BAR,
   OBJ_WK_STAMP_SMALL_01,
   COMMON_OBJ_WK_MAX = OBJ_WK_STAMP_SMALL_01 + HABITAT_ZONE_POKE_LIST_MAX,
 
@@ -171,7 +176,7 @@ enum
 //=====================================
 typedef enum _BG_FRAME{
   BGM_FRAME_FONT        = GFL_BG_FRAME0_M,
-  BGM_FRAME_MENUBAR     = GFL_BG_FRAME1_M,
+  BGM_FRAME_EVMSG_WIN   = GFL_BG_FRAME1_M,
   BGM_FRAME_BACK        = GFL_BG_FRAME2_M,
   BGM_FRAME_SCROLL_WIN  = GFL_BG_FRAME3_M,
   BGS_FRAME_FONT        = GFL_BG_FRAME0_S,
@@ -187,6 +192,7 @@ typedef enum
 {
   PRINT_UTIL_INFO_WIN,
   PRINT_UTIL_MAP_NAME,
+  PRINT_UTIL_EVENT_MSG_WIN,
   PRINT_UTIL_MAX,
 }PRINT_UTIL_WIN;
 
@@ -265,6 +271,11 @@ typedef struct {
   PRINT_QUE         *p_print_que;
   GFL_BMPWIN        *p_font_win;
   GFL_BMPWIN        *p_font_win_sub;
+  GFL_BMPWIN        *p_event_win_sub;
+  
+  APP_PRINTSYS_COMMON_WORK  print_sys_wk;             // プリントシステムワーク
+  GFL_TCBLSYS       *p_tcb_sys;               // プリントシステム用タスク
+  PRINT_STREAM      *p_print_stream;
   
   // 背景スクロール---------------------
   u32 back_bg_scroll_wait_count;
@@ -275,6 +286,10 @@ typedef struct {
   // アルファアニメーション -----------
   s32               obj_exist_ev1;
   u16               obj_exist_alpha_anime_count;
+  
+  // カーソル ------------
+  APP_KEYCURSOR_WORK        *p_cursor;
+  BOOL                      is_cursor_draw;
 
 }HABITAT_ZONE_GRA_WK;
 
@@ -307,4 +322,9 @@ extern void HABITAT_ZONE_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_ZONE_GRA_W
 extern void HABITAT_ZONE_GRA_SetMapBlink( HABITAT_ZONE_GRA_WK *p_wk ,u16 zone_group );
 extern void HABITAT_ZONE_GRA_SetSmallIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
                                           u16 index ,GRA_SMALLICON_STATUS status);
+extern void HABITAT_ZONE_GRA_MakeFrameWinMsg(const STRBUF* str,HABITAT_ZONE_GRA_WK *p_wk ,PRINTSYS_LSB font_colro);
+
+extern void HABITAT_ZONE_GRA_DeleteFrameWinMsg( HABITAT_ZONE_GRA_WK *p_wk );
+extern void HABITAT_ZONE_GRA_EnableStrCursor( HABITAT_ZONE_GRA_WK *p_wk );
+extern void HABITAT_ZONE_GRA_SetAnmSeq( HABITAT_ZONE_GRA_WK *p_wk ,s32 clwkid ,u32 anm_seq );
 

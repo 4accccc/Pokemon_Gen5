@@ -78,6 +78,7 @@ typedef struct {
   u16 season_enable;           // 季節の存在状態
   HABITAT_GROUND_INFO_TYPE info_ground_type;  // 地形の詳細情報
   HABITAT_ZONE_POKE_DATA poke_data[ HABITAT_ZONE_POKE_LIST_MAX ]; // データリスト
+  HABITATLIST_STATUS  is_complete[ HABITAT_GROUND_MAX ];  // コンプリートしているか
 }HABITAT_ZONE_DATA;
 
 //===================================================================================

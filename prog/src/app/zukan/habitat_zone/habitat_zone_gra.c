@@ -18,6 +18,7 @@
 #include "system/wipe.h"
 #include "system/gfl_use.h"
 #include "sound/pm_sndsys.h"
+#include "gamesystem\msgspeed.h"
 
 #include "habitat_zone_gra.cdat"
 
@@ -30,11 +31,7 @@
 
 #include "../../../../../resource/fldmapdata/zonetable/zone_id.h"
 
-#if	PM_VERSION == VERSION_B2
-#include "../../../../../resource/zukan_data/zkn_area_b_zone_group.cdat"
-#else
-#include "../../../../../resource/zukan_data/zkn_area_w_zone_group.cdat"
-#endif
+#include "system/bmp_winframe.h"      // BMPウィンドウフレーム
 
 //ポケアイコン
 #include "pokeicon/pokeicon.h"
@@ -52,7 +49,7 @@ FS_EXTERN_OVERLAY(townmap);
 //=============================================================================
 
 // ＢＧパレット番号
-#define	HABITAT_ZONE_MBG_PAL_TOUCHBAR	( 14 )		// タッチバー
+#define APP_WINFRAME_USE_PALETE       ( 12 )      // ウィンドウフレーム用パレット
 #define	HABITAT_ZONE_MBG_PAL_FONT			( 15 )		// メイン画面フォントパレット
 #define	HABITAT_ZONE_SBG_PAL_FONT			( 15 )		// サブ画面フォントパレット
 
@@ -116,6 +113,8 @@ static void GRA_GetPokeIconPos( u8 index ,GFL_CLACTPOS *p_pos );
 static void GRA_AlpaMain( HABITAT_ZONE_GRA_WK* p_wk );
 static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 index );
 static void GRA_ObjExistAlphaReset( HABITAT_ZONE_GRA_WK* p_wk );
+static GFL_BMPWIN* GetBmpWin( HABITAT_ZONE_GRA_WK *p_wk ,PRINT_UTIL_WIN win_id);
+static void GRA_StreamMain( HABITAT_ZONE_GRA_WK *p_wk );
 
 //===============================================================================
 // 初期化・終了関数呼び出し
@@ -250,6 +249,12 @@ void HABITAT_ZONE_GRA_Main( HABITAT_ZONE_GRA_WK *p_wk )
 
   // アルファアニメーション
   GRA_AlpaMain( p_wk );
+  
+  // プリントストリームの更新
+  if( p_wk->p_print_stream != NULL )
+  {
+    GRA_StreamMain( p_wk );
+  }
 
   // 背景スクロール
   p_wk->back_bg_scroll_wait_count++;
@@ -262,6 +267,38 @@ void HABITAT_ZONE_GRA_Main( HABITAT_ZONE_GRA_WK *p_wk )
 
   // セルアクター更新
   GFL_CLACT_SYS_Main();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ストリーム更新
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GRA_StreamMain( HABITAT_ZONE_GRA_WK *p_wk )
+{
+  BOOL ret;
+
+  // タスクの更新
+  GFL_TCBL_Main( p_wk->p_tcb_sys );
+
+  // キーカーソルの更新
+  APP_KEYCURSOR_Main(p_wk->p_cursor,p_wk->p_print_stream ,p_wk->p_event_win_sub );
+
+  // ストリームの更新
+  ret = APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->print_sys_wk , p_wk->p_print_stream );
+
+  if( ret == TRUE )
+  {
+    if( p_wk->is_cursor_draw == TRUE )
+    {
+      APP_KEYCURSOR_Write( p_wk->p_cursor , GFL_BMPWIN_GetBmp( p_wk->p_event_win_sub ) , 0xF );
+      GFL_BMPWIN_TransVramCharacter( p_wk->p_event_win_sub );
+    }
+  }
 }
 
 //===============================================================================
@@ -315,14 +352,16 @@ static void GRA_InitBg(void)
     GFL_BG_SetVisible( BGM_FRAME_FONT ,VISIBLE_ON );
 	}
 
-	{	// メニューバー
+	{	// イベント用メッセージウィンドウ
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x4000,
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
-		GFL_BG_SetBGControl( BGM_FRAME_MENUBAR, &cnth, GFL_BG_MODE_TEXT );
-    GFL_BG_SetVisible( BGM_FRAME_MENUBAR ,VISIBLE_ON );
+		GFL_BG_SetBGControl( BGM_FRAME_EVMSG_WIN, &cnth, GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen( BGM_FRAME_EVMSG_WIN );
+		GFL_BG_LoadScreenV_Req( BGM_FRAME_EVMSG_WIN );
+    GFL_BG_SetVisible( BGM_FRAME_EVMSG_WIN ,VISIBLE_ON );
 	}
 	{	// 背景
 		GFL_BG_BGCNT_HEADER cnth= {
@@ -396,7 +435,7 @@ static void GRA_InitBg(void)
 
   // 表示状態変更
 	GFL_DISP_GX_SetVisibleControl(
-		BGM_FRAME_FONT | BGM_FRAME_MENUBAR | BGM_FRAME_BACK | BGM_FRAME_SCROLL_WIN
+		BGM_FRAME_FONT | BGM_FRAME_EVMSG_WIN | BGM_FRAME_BACK | BGM_FRAME_SCROLL_WIN
       ,VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl(
 		BGS_FRAME_FONT | BGS_FRAME_BAR | BGS_FRAME_MAP | BGS_FRAME_ROOT , VISIBLE_ON );
@@ -492,10 +531,43 @@ static void GRA_InitBmpWin( HABITAT_ZONE_GRA_WK *p_wk )
     PRINT_UTIL_Setup( &p_wk->print_util[ PRINT_UTIL_MAP_NAME ] ,
                                                   p_wk->p_font_win_sub  );
   }
- 
+
+  // 達成イベント用BMPWIN作成
+  {
+    p_wk->p_event_win_sub = GFL_BMPWIN_Create( BGM_FRAME_EVMSG_WIN,
+        2   , 8   ,
+        32 -4  , 24 -8 -7 ,
+        HABITAT_ZONE_MBG_PAL_FONT , GFL_BMP_CHRAREA_GET_B );
+
+    // スクリーンの作成
+    GFL_BMPWIN_MakeScreen( p_wk->p_event_win_sub );
+
+    // ウィンドウのクリアー
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_event_win_sub), 0 );
+
+    // 転送
+    GFL_BMPWIN_TransVramCharacter( p_wk->p_event_win_sub );
+
+    // 転送リクエスト
+    GFL_BG_LoadScreenV_Req( BGM_FRAME_EVMSG_WIN );
+    
+    // プリントユーティリティーの準備
+    PRINT_UTIL_Setup( &p_wk->print_util[ PRINT_UTIL_EVENT_MSG_WIN ] ,
+                                                  p_wk->p_event_win_sub  );
+  }
+  
 	// フォント
   p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
 
+  // プリントシステムの初期化
+  APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->print_sys_wk , APP_PRINTSYS_COMMON_TYPE_BOTH );
+  
+  // プリントシステム用タスクの生成
+  p_wk->p_tcb_sys = GFL_TCBL_Init( HEAPID_ZUKAN_HABITAT_ZONE,HEAPID_ZUKAN_HABITAT_ZONE , 1 , 0 );
+  
+  // カーソルの作成
+  p_wk->p_cursor = APP_KEYCURSOR_Create( 0xf , TRUE , TRUE , HEAPID_ZUKAN_HABITAT_ZONE );
+ 
 }
 
 //----------------------------------------------------------------------------
@@ -615,27 +687,6 @@ static void GRA_LoadBgGraphic(void)
     GFL_ARC_CloseDataHandle( ah );
   }
 
-  // 共通素材アーカイブ
-  {
-    // タッチバー
-    ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_ZUKAN_HABITAT_ZONE );
-
-    GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
-        ah, APP_COMMON_GetBarCharArcIdx(), BGM_FRAME_MENUBAR, 0, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
-    GFL_ARCHDL_UTIL_TransVramPalette(
-        ah, APP_COMMON_GetBarPltArcIdx(), PALTYPE_MAIN_BG,
-        HABITAT_ZONE_MBG_PAL_TOUCHBAR*0x20, 0x20, HEAPID_ZUKAN_HABITAT_ZONE );
-    GFL_ARCHDL_UTIL_TransVramScreen(
-        ah, APP_COMMON_GetBarScrnArcIdx(),
-        BGM_FRAME_MENUBAR, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
-    GFL_BG_ChangeScreenPalette(
-        BGM_FRAME_MENUBAR, HABITAT_ZONE_TOUCH_BAR_PX, HABITAT_ZONE_TOUCH_BAR_PY,
-        HABITAT_ZONE_TOUCH_BAR_SX, HABITAT_ZONE_TOUCH_BAR_SY, HABITAT_ZONE_MBG_PAL_TOUCHBAR );
-    GFL_BG_LoadScreenV_Req( BGM_FRAME_MENUBAR );
-
-    GFL_ARC_CloseDataHandle( ah );
-  }
-
 	// フォントパレット
 	GFL_ARC_UTIL_TransVramPalette(
 		ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
@@ -717,11 +768,19 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     p_wk->p_clwk_common_obj[OBJ_WK_SEASON_L] = UI_EASY_CLWK_CreateCLWK( 
       &p_wk->clres_common_obj, p_wk->p_clunit, 
       OBJ_POS_L_X, OBJ_POS_L_Y, OBJ_ANM_SEQ_L, HEAPID_ZUKAN_HABITAT_ZONE );
+    GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[OBJ_WK_SEASON_L] ,1 );
 
     // 季節Rボタン
     p_wk->p_clwk_common_obj[OBJ_WK_SEASON_R] = UI_EASY_CLWK_CreateCLWK( 
       &p_wk->clres_common_obj, p_wk->p_clunit, 
       OBJ_POS_R_X, OBJ_POS_R_Y, OBJ_ANM_SEQ_R, HEAPID_ZUKAN_HABITAT_ZONE );
+    GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[OBJ_WK_SEASON_R] ,1 );
+
+    // メニューバー
+    p_wk->p_clwk_common_obj[OBJ_WK_MENU_BAR] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_common_obj, p_wk->p_clunit, 
+      0, 0, OBJ_ANM_SEQ_MENU_BAR, HEAPID_ZUKAN_HABITAT_ZONE );
+    GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[OBJ_WK_MENU_BAR] ,1 );
 
     // 大きなスタンプ
     p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG] = UI_EASY_CLWK_CreateCLWK( 
@@ -759,6 +818,7 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
           &p_wk->clres_common_obj, p_wk->p_clunit, 
           pos.x + SMALL_ICON_OFFSET_X, pos.y + SMALL_ICON_OFFSET_Y,
           OBJ_ANM_SEQ_STAMP_SMALL_GET, HEAPID_ZUKAN_HABITAT_ZONE );
+      GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[OBJ_WK_STAMP_SMALL_START+i] ,1 );
     }
 
     // 説明を見るボタン(フォント面より下においておく)
@@ -845,6 +905,7 @@ static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 in
 
     // 上にアイテムアイコンを描画するので優先度を下げておく
     GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk_poke_icon[index], HABITAT_ZONE_OBJPRI_POKEICON );
+    GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_poke_icon[index] ,1 );
 
     // オートアニメ OFF
     GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk_poke_icon[index], FALSE );
@@ -998,10 +1059,17 @@ static void GRA_ExitBmpWin( HABITAT_ZONE_GRA_WK *p_wk )
   // フォント
 	GFL_FONT_Delete( p_wk->p_font );
 
+  // カーソル削除
+  APP_KEYCURSOR_Delete( p_wk->p_cursor );
+
+  // タスクの終了
+  GFL_TCBL_Exit( p_wk->p_tcb_sys );
+
   // ビットマップウィンドウの削除
 	GFL_BMPWIN_Exit();
   GFL_BMPWIN_Delete( p_wk->p_font_win );
   GFL_BMPWIN_Delete( p_wk->p_font_win_sub );
+  GFL_BMPWIN_Delete( p_wk->p_event_win_sub );
 }
 
 //=============================================================================
@@ -1109,7 +1177,10 @@ static void GRA_PrintMain( HABITAT_ZONE_GRA_WK *p_wk )
   for( i = 0; i < PRINT_UTIL_MAX ; i++ )
   {
     trans_end = PRINT_UTIL_Trans( &p_wk->print_util[i], p_wk->p_print_que );
-    p_wk->is_print_util_wati = trans_end;
+    if( p_wk->is_print_util_wati == FALSE )
+    {
+      p_wk->is_print_util_wati = trans_end;
+    }
   }
 }
 
@@ -1146,19 +1217,7 @@ BOOL HABITAT_ZONE_GRA_CheckPrintUtilStatus( HABITAT_ZONE_GRA_WK *p_wk )
 void HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_WIN win_id, const STRBUF* str,
     HABITAT_ZONE_GRA_WK *p_wk ,s16 x, s16 y ,s16 w, s16 h ,PRINTSYS_LSB font_colro )
 {
-  GFL_BMPWIN *p_win;
-
-  switch( win_id )
-  {
-  case PRINT_UTIL_INFO_WIN:
-      p_win = p_wk->p_font_win;
-    break;
-  case PRINT_UTIL_MAP_NAME:
-      p_win = p_wk->p_font_win_sub;
-    break;
-  default:
-    GF_ASSERT(0);
-  }
+  GFL_BMPWIN *p_win = GetBmpWin( p_wk,win_id );
 	
   // 塗りつぶし
   GFL_BMP_Fill( GFL_BMPWIN_GetBmp(p_win) ,x ,y ,w ,h ,0 );
@@ -1185,19 +1244,7 @@ void HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_WIN win_id, const STRBUF* str,
 //-----------------------------------------------------------------------------
 void HABITAT_ZONE_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_ZONE_GRA_WK *p_wk ,s16 x, s16 y ,s16 w, s16 h )
 {
-  GFL_BMPWIN *p_win;
-
-  switch( win_id )
-  {
-  case PRINT_UTIL_INFO_WIN:
-      p_win = p_wk->p_font_win;
-    break;
-  case PRINT_UTIL_MAP_NAME:
-      p_win = p_wk->p_font_win_sub;
-    break;
-  default:
-    GF_ASSERT(0);
-  }
+  GFL_BMPWIN *p_win = GetBmpWin( p_wk,win_id );
 	
   // 塗りつぶし
   GFL_BMP_Fill( GFL_BMPWIN_GetBmp(p_win) ,x ,y ,w ,h ,0 );
@@ -1235,23 +1282,8 @@ static void GRA_BlinkAnmMain( HABITAT_ZONE_GRA_WK *p_wk )
 //-----------------------------------------------------------------------------
 void HABITAT_ZONE_GRA_BmpFil( PRINT_UTIL_WIN win_id ,u8 col_code ,HABITAT_ZONE_GRA_WK *p_wk )
 {
-  
-  GFL_BMPWIN *p_win;
-  u8 frame;
-  switch( win_id )
-  {
-  case PRINT_UTIL_INFO_WIN:
-      p_win = p_wk->p_font_win;
-    break;
-  case PRINT_UTIL_MAP_NAME:
-      p_win = p_wk->p_font_win_sub;
-    break;
-
-  default:
-    GF_ASSERT(0);
-  }
-
   // クリア
+  GFL_BMPWIN *p_win = GetBmpWin( p_wk,win_id );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_win) ,col_code );
 }
 
@@ -1609,5 +1641,120 @@ void HABITAT_ZONE_GRA_SetSmallIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
     GF_ASSERT(0);
     break;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フレーム付きメッセージウィンドウを作成
+ *
+ *	@param	p_wk 
+ *	@param	index 
+ *	@param	status
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_MakeFrameWinMsg(const STRBUF* str,HABITAT_ZONE_GRA_WK *p_wk ,PRINTSYS_LSB font_colro)
+{
+  GFL_BMPWIN *p_win = GetBmpWin( p_wk,PRINT_UTIL_EVENT_MSG_WIN );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_win) ,15 );
+
+  // スクリーンの作成
+  GFL_BMPWIN_MakeScreen( p_win );
+
+  // グラフィックのセット
+  BmpWinFrame_GraphicSet( BGM_FRAME_EVMSG_WIN,1 , APP_WINFRAME_USE_PALETE , MENU_TYPE_SYSTEM , HEAPID_ZUKAN_HABITAT_ZONE );
+  BmpWinFrame_Write( p_win , WINDOW_TRANS_ON_V, 1, APP_WINFRAME_USE_PALETE );
+ 
+  // プリントストリームの作成
+  p_wk->p_print_stream = PRINTSYS_PrintStream( p_wk->p_event_win_sub , 0 , 0 , str ,
+      p_wk->p_font , MSGSPEED_GetWait() , p_wk->p_tcb_sys , 0 , HEAPID_ZUKAN_HABITAT_ZONE , 15 );
+
+  p_wk->is_cursor_draw = FALSE;
+
+  // 転送
+  GFL_BG_LoadScreenV_Req( BGM_FRAME_EVMSG_WIN );
+  GFL_BMPWIN_TransVramCharacter( p_win );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ウィンドウの削除
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_DeleteFrameWinMsg( HABITAT_ZONE_GRA_WK *p_wk )
+{
+  GFL_BMPWIN *p_win = GetBmpWin( p_wk,PRINT_UTIL_EVENT_MSG_WIN );
+  PRINTSYS_PrintStreamDelete( p_wk->p_print_stream );
+  BmpWinFrame_Clear( p_win,WINDOW_TRANS_ON_V );
+  GFL_BMPWIN_ClearScreen( p_win );
+  GFL_BG_LoadScreenV_Req( BGM_FRAME_FONT );
+  p_wk->p_print_stream = NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソルを表示する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_EnableStrCursor( HABITAT_ZONE_GRA_WK *p_wk )
+{
+  p_wk->is_cursor_draw = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief フレームIDに対応したBMPWINを返す
+ *
+ *	@param	*p_wk 
+ *	@param	win_id
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_BMPWIN* GetBmpWin( HABITAT_ZONE_GRA_WK *p_wk ,PRINT_UTIL_WIN win_id)
+{
+  switch( win_id )
+  {
+  case PRINT_UTIL_INFO_WIN:
+    return p_wk->p_font_win;
+  case PRINT_UTIL_MAP_NAME:
+    return p_wk->p_font_win_sub;
+  case PRINT_UTIL_EVENT_MSG_WIN:
+    return p_wk->p_event_win_sub;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+  return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションシーケンスを設定する
+ *
+ *	@param	*p_wk 
+ *	@param	clwkid 
+ *	@param	anm_seq 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetAnmSeq( HABITAT_ZONE_GRA_WK *p_wk ,s32 clwkid ,u32 anm_seq )
+{
+  GFL_CLWK *p_clwk;
+  p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,clwkid );
+  GFL_CLACT_WK_SetAnmSeq( p_clwk, anm_seq );
+  GFL_CLACT_WK_SetAnmFrame( p_clwk ,0 );
+  GFL_CLACT_WK_SetAutoAnmFlag( p_clwk , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE );
 }
 

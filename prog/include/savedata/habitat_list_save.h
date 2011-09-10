@@ -77,3 +77,17 @@ extern HABITATLIST_SAVE* SaveData_GetHabitatListSave( SAVE_CONTROL_WORK *p_sv );
 //-----------------------------------------------------------------------------
 HABITATLIST_STATUS HABITATLIST_SAVE_GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_GROUND_TYPE type);
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーンステータスを設定する
+ *
+ *	@param	*p_sv             生息地リストセーブデータ
+ *	@param	habitat_zone_id   ゾーン一デックス
+ *	@param	type              設定するする地形タイプ
+ *	@param	status            設定するステータス
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITATLIST_SAVE_SetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_GROUND_TYPE type ,HABITATLIST_STATUS status);
+

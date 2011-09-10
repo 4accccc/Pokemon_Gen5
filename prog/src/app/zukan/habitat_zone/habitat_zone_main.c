@@ -16,14 +16,12 @@
 #include "msg/msg_seisoku.h"        // for msg_seisoku_*
 #include "habitat_zone_main_def.h"  // 定数定義
 #include "field/zonedata.h"         // for ZONEDATA_GetPlaceNameID
+#include "sound/pm_sndsys.h"
 
-#include "../../../../../resource/fldmapdata/zonetable/zone_id.h"
-
-#if	PM_VERSION == VERSION_B2
-#include "../../../../../resource/zukan_data/zkn_area_b_zone_group.cdat"
-#else
-#include "../../../../../resource/zukan_data/zkn_area_w_zone_group.cdat"
-#endif
+// 生息地データ
+#include "fieldmap/zone_id.h" // for ZONE_ID_*
+#include "../../../../resource/fldmapdata/flagwork/flag_define.h" // for SYS_FLAG_ARRIVE_*
+#include "../../../../../resource/habitat_list/habitat_list_data.cdat" // for sc_habitat_list_data
 
 //=============================================================================
 /**
@@ -57,6 +55,7 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_PokeSelectKeyInput( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk );
+static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk );
 
 //--------------------------------------------------
 // ID定義
@@ -70,6 +69,7 @@ typedef enum _MAIN_SEQ{
   MAIN_SEQ_CHANGE_LAND_TYPE,
   MAIN_SEQ_POKESELECT_KEY_INPUT,
   MAIN_SEQ_MOVE_POKE_CURSOR,
+  MAIN_SEQ_COMPLETE_EVETN,
   MAIN_SEQ_APPEXIT,
   MAIN_SEQ_NULL,
 }MAIN_SEQ;
@@ -86,6 +86,7 @@ static const MainFunc MainSeq[] = {
   MAINSEQ_ChangeLandType,     // 地形タイプ切替
   MAINSEQ_PokeSelectKeyInput, // ポケモン選択キー入力
   MAINSEQ_MovePokeCursor,     // ポケモン選択カーソルを移動させる
+  MAINSEQ_CompleteEvetn,      // 達成イベント
   MAINSEQ_AppExit,            // アプリケーションの終了処理
   NULL,                       // 何も処理をしない
 };
@@ -98,6 +99,9 @@ static void ClearExplanationMsg( HABITAT_ZONE_WK *p_wk );
 static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk );
 static void DrawNoHabitatDatatMsg( HABITAT_ZONE_WK *p_wk );
 static void ClearNoHabitatDataMsg( HABITAT_ZONE_WK *p_wk );
+static u32 GetLandTypeMsgID( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type);
+static u32 GetLandTypeMsgIDLookCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type);
+static u32 GetLandTypeMsgIDGetCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type);
 
 // データ処理系---------------------------------------
 static HABITAT_ZONE_DATA* GetNowListData( HABITAT_ZONE_WK *p_wk );
@@ -107,12 +111,15 @@ static void SkipLandType( HABITAT_ZONE_WK *p_wk ,BOOL is_skip_r );
 static void SetRetMod( HABITAT_ZONE_WK *p_wk ,HABITAT_ZONE_RET_MODE ret_mode );
 static void CreateAppData( HABITAT_ZONE_WK *p_wk );
 static s32 CheckIsExistPoke( HABITAT_ZONE_WK *p_wk ,u8 index );
+static HABITATLIST_STATUS CheckCompleteEvent( HABITAT_ZONE_WK *p_wk );
+static s32 GetSaveDataIndex( u16 zone_group_id );
 
 // ポケモンアイコン系---------------------------------------
 static void MakePokeIconList( HABITAT_ZONE_WK *p_wk );
 
 // シーケンス制御 ----------------------------------------------
 static void SetNextSeq( HABITAT_ZONE_WK *p_wk ,MAIN_SEQ seq_id ,SEQ_CHANGE_PARAM param );
+static void SetCompleteEvetnID( HABITAT_ZONE_WK *p_wk ,HABITATLIST_STATUS id );
 
 // 画面更新系
 static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk );
@@ -120,6 +127,7 @@ static void RefreshLandPokeIcon( HABITAT_ZONE_WK *p_wk );
 static void SetPokeSelectButton( HABITAT_ZONE_WK *p_wk );
 static void SetZoneSelectButton( HABITAT_ZONE_WK *p_wk );
 static void RefreshMapWin( HABITAT_ZONE_WK *p_wk );
+static void SetCompIcon( HABITAT_ZONE_WK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -194,7 +202,19 @@ static void MAINSEQ_FadeIn( HABITAT_ZONE_WK *p_wk )
     break;
   case 1:
     {
-      SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+      HABITATLIST_STATUS event;
+      event = CheckCompleteEvent( p_wk );
+      if( event != HABITAT_ZONE_STATUS_NONE )
+      {
+        // イベントIDを設定する
+        SetCompleteEvetnID( p_wk ,event );
+        SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
+      }
+      else
+      {
+        // 通常キー入力に起動
+        SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+      }
       break;
     }
   }
@@ -452,6 +472,9 @@ static void MAINSEQ_AppInit( HABITAT_ZONE_WK *p_wk )
 
   // マップウィンドウ（上画面の更新）
   RefreshMapWin( p_wk );
+ 
+  // コンプリートアイコンをセットする
+  SetCompIcon( p_wk );
 
   // フェードシーケンスに移行
   SetNextSeq( p_wk ,MAIN_SEQ_FADEIN ,SEQ_CHANGE_PARAM_NONE );
@@ -726,6 +749,9 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
 
         // マップウィンドウ（上画面の更新）
         RefreshMapWin( p_wk );
+ 
+        // コンプリートアイコンをセットする
+        SetCompIcon( p_wk );
         
         // シーケンスを進める
         p_wk->sub_seq++;
@@ -737,11 +763,74 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
       // 文字描画終了を待ってキー入力状態に以降
       if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
       {
-        // キー入力状態に切替
-        SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+        HABITATLIST_STATUS event;
+        event = CheckCompleteEvent( p_wk );
+        if( event != HABITAT_ZONE_STATUS_NONE )
+        {
+          // イベントIDを設定する
+          SetCompleteEvetnID( p_wk ,event );
+          SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
+        }
+        else
+        {
+          // キー入力状態に切替(はんこアイコン表示)
+          SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+        }
       }
     }
-      break;
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンプリートアイコンを表示
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetCompIcon( HABITAT_ZONE_WK *p_wk )
+{
+  HABITATLIST_STATUS event;
+  GFL_CLWK *p_clwk;
+  HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
+
+  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_STAMP_BIG );
+  event = CheckCompleteEvent( p_wk );
+
+  // イベントが存在するかチェック
+  if( event != HABITAT_ZONE_STATUS_NONE )
+  {
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+    return;
+  }
+
+  switch( p_zd->is_complete[p_wk->land_type] )
+  {
+  case HABITAT_ZONE_STATUS_NONE:
+    {
+      ONOUE_Printf("そうフレーム数:%x\n",GFL_CLACT_WK_GetAnmFrame( p_clwk ));
+      GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+    }
+    break;
+  case HABITAT_ZONE_STATUS_LOOK:
+    {
+      // 最終フレームを設定
+      GFL_CLACT_WK_SetAnmFrame( p_clwk ,GFL_CLACT_WK_GetAnmFrame( p_clwk ) );
+      GFL_CLACT_WK_SetAnmSeq( p_clwk ,OBJ_ANM_SEQ_STAMP_BIG_LOOK );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+    }
+    break;
+  case HABITAT_ZONE_STATUS_GET:
+    {
+      // 最終フレームを設定
+      GFL_CLACT_WK_SetAnmFrame( p_clwk ,GFL_CLACT_WK_GetAnmFrame( p_clwk ) );
+      GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_STAMP_BIG_GET );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+    }
+    break;
   }
 }
 
@@ -806,6 +895,9 @@ static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk )
 
       // ポケモンアイコンリストを作成する
       RefreshLandPokeIcon( p_wk );
+ 
+      // コンプリートアイコンをセットする
+      SetCompIcon( p_wk );
 
       // アニメーション開始
       p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys
@@ -837,8 +929,19 @@ static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk )
       // 文字描画終了を待ってキー入力状態に以降
       if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
       {
-        // キー入力状態に切替
-        SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+        HABITATLIST_STATUS event;
+        event = CheckCompleteEvent( p_wk );
+        if( event != HABITAT_ZONE_STATUS_NONE )
+        {
+          // イベントIDを設定する
+          SetCompleteEvetnID( p_wk ,event );
+          SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
+        }
+        else
+        {
+          SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+        }
+
       }
       else
       {
@@ -1027,6 +1130,130 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンプリートイベント
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
+{
+  PRINTSYS_LSB  font_colro = GetMsgFontColor();
+  switch( p_wk->sub_seq )
+  {
+  case 0:
+    {
+      u32           msg_id;
+      STRBUF        *str;
+      STRBUF        *dest_str;
+      PRINTSYS_LSB  font_colro = GetMsgFontColor();
+
+      // ゾーンIDに対応した地名メッセージIDを取得
+      HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
+      u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_group);
+     
+      // BGMの切替
+      PMSND_PushBGM();
+      if( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET )
+      {
+        // ファンファーレ
+        PMSND_PlayBGM( BANK_ME_ZUKAN_02 );
+
+        // 地形メッセージIDを取得
+        msg_id = GetLandTypeMsgIDGetCmp( p_wk->land_type,p_list_data->info_ground_type);
+      }
+      else
+      {
+        // ファンファーレ
+        PMSND_PlayBGM( BANK_ME_ZUKAN_02 );
+        // 地形メッセージIDを取得
+        msg_id = GetLandTypeMsgIDLookCmp( p_wk->land_type,p_list_data->info_ground_type);
+      }
+
+      // ワードセットに登録
+      WORDSET_RegisterPlaceName( p_wk->p_word_set, 0, place_id );
+
+      // ワードセット生成展開先バッファー作成
+      dest_str = GFL_STR_CreateBuffer( 256, HEAPID_ZUKAN_HABITAT_ZONE );
+
+      // メッセージの書き込み
+      str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_id );
+      WORDSET_ExpandStr( p_wk->p_word_set, dest_str , str  );
+
+      // メッセージの書き込み
+      HABITAT_ZONE_GRA_MakeFrameWinMsg( dest_str,&p_wk->gra_sys ,font_colro);
+      GFL_STR_DeleteBuffer( dest_str );
+      GFL_STR_DeleteBuffer( str );
+      p_wk->sub_seq++;
+    }
+    break;
+  case 1:
+    {
+      if( !PMSND_CheckPlayBGM() )
+      {
+        // BGMを戻す
+        PMSND_PopBGM();
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 2:
+    // はんこアニメーション再生
+    {
+      if( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET )
+      {
+        HABITAT_ZONE_GRA_SetAnmSeq( &p_wk->gra_sys ,OBJ_WK_STAMP_BIG ,OBJ_ANM_SEQ_STAMP_BIG_GET);
+      }
+      else
+      {
+        HABITAT_ZONE_GRA_SetAnmSeq( &p_wk->gra_sys ,OBJ_WK_STAMP_BIG ,OBJ_ANM_SEQ_STAMP_BIG_LOOK);
+      }
+      p_wk->sub_seq++;
+    }
+    break;
+  case 3:
+    // はんこアニメーション終了待ち
+    {
+      GFL_CLWK *p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_STAMP_BIG );
+      // アニメーション終了待ち
+      if( GFL_CLACT_WK_CheckAnmActive( p_clwk ) == FALSE )
+      {
+        PMSND_PlaySE( SEQ_SE_SW_ZUKANSTUMP_01 );
+        HABITAT_ZONE_GRA_EnableStrCursor( &p_wk->gra_sys );
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 4:
+    {
+      if( (GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY) ||
+          (GFL_UI_TP_GetTrg() == TRUE) )
+      {
+        s32 index;
+        HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
+
+        // 決定音
+        PMSND_PlaySystemSE( APP_PRINTSYS_COMMON_SE_TRG );
+        
+        // ゾーンのステータスを設定する
+        index = GetSaveDataIndex( p_zd->zone_group );
+        HABITATLIST_SAVE_SetZoneStatus( p_wk->p_habitat_sv,
+            index,p_wk->land_type ,p_wk->cmp_event_id );
+
+        // ウィンドウの削除
+        HABITAT_ZONE_GRA_DeleteFrameWinMsg( &p_wk->gra_sys );
+
+        // 通常キー入力に起動
+        SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+        p_wk->sub_seq++;
+      }
+    }
+  }
+}
+
 //=============================================================================
 // メッセージ書き込み系
 //=============================================================================
@@ -1042,7 +1269,7 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
 {
-  u32     msg_id = msg_seisoku_zone_01;
+  u32     msg_id;
   STRBUF  *str;
   STRBUF  *dest_str;
   PRINTSYS_LSB  font_colro = GetMsgFontColor();
@@ -1050,40 +1277,9 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
   // ゾーンIDに対応した地名メッセージIDを取得
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
   u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_group);
-  
-  // 場所ごとにメッセージを切り替える
-  if( p_wk->land_type == HABITAT_GROUND_LAND )
-  {
-    const msg_id_table[] =
-    {
-      msg_seisoku_zone_01,  // 草地
-      msg_seisoku_zone_02,  // 砂地
-      msg_seisoku_zone_03,  // 沼
-      msg_seisoku_zone_04,  // 洞窟
-      msg_seisoku_zone_08,  // 橋
-      msg_seisoku_zone_07,  // 混合
-      msg_seisoku_zone_07,  // なし
-    };
-    GF_ASSERT( p_list_data->info_ground_type < HABITAT_GROUND_INFO_NONE );
-    
-    // 地形ごとにメッセージを選択
-    msg_id = msg_id_table[p_list_data->info_ground_type];
-  }
-  else if( p_wk->land_type == HABITAT_GROUND_WATERSIDE )
-  {
-    // 水辺
-    msg_id = msg_seisoku_zone_05;
-   
-  }
-  else if( p_wk->land_type == HABITAT_GROUND_FISHING )
-  {
-    // 釣り
-    msg_id = msg_seisoku_zone_06;
-  }
-  else
-  {
-    GF_ASSERT( 0 );
-  }
+ 
+  // 地形メッセージIDを取得
+  msg_id = GetLandTypeMsgID( p_wk->land_type,p_list_data->info_ground_type);
  
   // 季節判定
   if( p_list_data->season_enable == TRUE )
@@ -1109,6 +1305,161 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
   GFL_STR_DeleteBuffer( dest_str );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在の地形情報からメッセージIDを取得する
+ *
+ *	@param	type 
+ *	@param	info_type
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 GetLandTypeMsgID( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type)
+{
+  u32 msg_id = msg_seisoku_zone_01;
+
+  // 場所ごとにメッセージを切り替える
+  if( type == HABITAT_GROUND_LAND )
+  {
+    const msg_id_table[] =
+    {
+      msg_seisoku_zone_01,  // 草地
+      msg_seisoku_zone_02,  // 砂地
+      msg_seisoku_zone_03,  // 沼
+      msg_seisoku_zone_04,  // 洞窟
+      msg_seisoku_zone_08,  // 橋
+      msg_seisoku_zone_07,  // 混合
+      msg_seisoku_zone_07,  // なし
+    };
+    GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
+    
+    // 地形ごとにメッセージを選択
+    msg_id = msg_id_table[info_type];
+  }
+  else if( type == HABITAT_GROUND_WATERSIDE )
+  {
+    // 水辺
+    msg_id = msg_seisoku_zone_05;
+   
+  }
+  else if( type == HABITAT_GROUND_FISHING )
+  {
+    // 釣り
+    msg_id = msg_seisoku_zone_06;
+  }
+  else
+  {
+    GF_ASSERT( 0 );
+  }
+
+  return msg_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在の地形情報から捕獲コンプリートメッセージIDを取得する
+ *
+ *	@param	type 
+ *	@param	info_type
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 GetLandTypeMsgIDGetCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type)
+{
+  u32 msg_id = msg_seisoku_zone_01;
+
+  // 場所ごとにメッセージを切り替える
+  if( type == HABITAT_GROUND_LAND )
+  {
+    // @todo 橋のメッセージIDは仮
+    const msg_id_table[] =
+    {
+      msg_seisoku_result_08,  // 草地
+      msg_seisoku_result_09,  // 砂地
+      msg_seisoku_result_10,  // 沼
+      msg_seisoku_result_11,  // 洞窟
+      msg_seisoku_result_11,  // 橋
+      msg_seisoku_result_14,  // 混合
+      msg_seisoku_result_14,  // なし
+    };
+    GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
+    
+    // 地形ごとにメッセージを選択
+    msg_id = msg_id_table[info_type];
+  }
+  else if( type == HABITAT_GROUND_WATERSIDE )
+  {
+    // 水辺
+    msg_id = msg_seisoku_result_12;
+   
+  }
+  else if( type == HABITAT_GROUND_FISHING )
+  {
+    // 釣り
+    msg_id = msg_seisoku_result_13;
+  }
+  else
+  {
+    GF_ASSERT( 0 );
+  }
+
+  return msg_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在の地形情報からみたコンプリートメッセージIDを取得する
+ *
+ *	@param	type 
+ *	@param	info_type
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 GetLandTypeMsgIDLookCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type)
+{
+  u32 msg_id = msg_seisoku_zone_01;
+
+  // 場所ごとにメッセージを切り替える
+  if( type == HABITAT_GROUND_LAND )
+  {
+    // @todo 橋のメッセージIDは仮
+    const msg_id_table[] =
+    {
+      msg_seisoku_result_01,  // 草地
+      msg_seisoku_result_02,  // 砂地
+      msg_seisoku_result_03,  // 沼
+      msg_seisoku_result_04,  // 洞窟
+      msg_seisoku_result_07,  // 橋
+      msg_seisoku_result_07,  // 混合
+      msg_seisoku_result_07,  // なし
+    };
+    GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
+    
+    // 地形ごとにメッセージを選択
+    msg_id = msg_id_table[info_type];
+  }
+  else if( type == HABITAT_GROUND_WATERSIDE )
+  {
+    // 水辺
+    msg_id = msg_seisoku_result_05;
+   
+  }
+  else if( type == HABITAT_GROUND_FISHING )
+  {
+    // 釣り
+    msg_id = msg_seisoku_result_06;
+  }
+  else
+  {
+    GF_ASSERT( 0 );
+  }
+
+  return msg_id;
 }
 
 //----------------------------------------------------------------------------
@@ -1291,6 +1642,7 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
     {
       // ポケモンアイコンをセット
       HABITAT_ZONE_GRA_SetPokeIcon( &p_wk->gra_sys ,p_pk[i].monsno, index );
+
       // カーソルをOFF状態にする
       HABITAT_ZONE_GRA_SetCursorStatus( &p_wk->gra_sys ,
           index ,GRA_POKEICON_CURSOR_OFF );
@@ -1469,20 +1821,10 @@ static void RefreshLandPokeIcon( HABITAT_ZONE_WK *p_wk )
   // 生息地リスト
   {
     GFL_CLWK *p_clwk;
-    if( p_list_data->season_enable == TRUE )
-    {
-      p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
-      GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
-      p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
-      GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
-    }
-    else
-    {
-      p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
-      GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-      p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
-      GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-    }
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable);
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable);
   }
 }
 
@@ -1642,11 +1984,11 @@ static void SetPokeSelectButton( HABITAT_ZONE_WK *p_wk )
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_BUTTON_EXPLANATION );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
 
-  // 季節用左右ボタン
+  // 季節用左右ボタン(季節に関係なくOFF)
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
-  GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
-  GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
 
   // 説明を見るの文字列書き込み
   DrawExplanationMsg( p_wk );
@@ -1754,10 +2096,13 @@ static void CreateAppData( HABITAT_ZONE_WK *p_wk )
 {
   GAMEDATA *p_gdata = p_wk->p_init_param->p_gdata;
   ZUKAN_SAVEDATA* p_zkn_sv = GAMEDATA_GetZukanSave( p_gdata );
+	SAVE_CONTROL_WORK *p_svcont = GAMEDATA_GetSaveControlWork( p_gdata );
+  HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
 
    
   // 初期化パラメータからデータを取得
   p_wk->p_zkn_sv        = p_zkn_sv;
+  p_wk->p_habitat_sv    = p_habitat_sv; 
   p_wk->zone_data_cnt   = p_wk->p_init_param->zone_cnt;
   p_wk->season          = p_wk->p_init_param->start_season;
   p_wk->land_type       = p_wk->p_init_param->start_land_type;
@@ -1786,5 +2131,75 @@ static s32 CheckIsExistPoke( HABITAT_ZONE_WK *p_wk ,u8 index )
     return p_zd->poke_data[index].monsno;
   }
   return -1;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief 達成イベント発生チェック
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval 発生する場合はイベントID、しない場合はMAXを返す
+ */
+//-----------------------------------------------------------------------------
+static HABITATLIST_STATUS CheckCompleteEvent( HABITAT_ZONE_WK *p_wk )
+{
+  s32 index;
+  HABITATLIST_STATUS ls;
+  HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
+  index = GetSaveDataIndex( p_zd->zone_group );
+  ls = HABITATLIST_SAVE_GetZoneStatus( p_wk->p_habitat_sv,index,p_wk->land_type );
+ 
+  ONOUE_Printf("セーブの状態：%x\n",ls);
+  ONOUE_Printf("コンプリートの状態：%x\n",p_zd->is_complete[p_wk->land_type]);
+
+  // セーブデータインデックスを取得する
+  if( ls < p_zd->is_complete[p_wk->land_type] )
+  {
+    ONOUE_Printf("地形コンプリートイベント発生\n");
+
+    return p_zd->is_complete[p_wk->land_type];
+  }
+  return HABITAT_ZONE_STATUS_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンプリートイベントIDを設定する
+ *
+ *	@param	*p_wk 
+ *	@param	id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetCompleteEvetnID( HABITAT_ZONE_WK *p_wk ,HABITATLIST_STATUS id )
+{
+  GF_ASSERT( id != HABITAT_ZONE_STATUS_NONE );
+  p_wk->cmp_event_id = id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーングループIDからセーブデータインデックスを取得する
+ *
+ *	@param	zone_group_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static s32 GetSaveDataIndex( u16 zone_group_id )
+{
+  s32 i = 0;
+  // リストの長さをまず取得
+  for( i = 0; i < HABITAT_LIST_DATA_MAX ; i++ )
+  {
+    if( sc_habitat_list_data[i].zone_group_id == zone_group_id )
+    {
+      return i;
+    }
+  }
+  GF_ASSERT(0);
+  return 0;
 }
 

@@ -91,8 +91,9 @@ struct _HABITAT_ZONE_WK{
   s32   list_size;                  // ポケモンリストに表示されている数
   s32   zone_data_index;            // リストのインデックス
   s32   season;                     // 表示中のの季節
-  HABITAT_GROUND_TYPE land_type;  // 表示中のの場所タイプ
+  HABITAT_GROUND_TYPE land_type;    // 表示中のの場所タイプ
   WORDSET *p_word_set;
+  HABITATLIST_STATUS cmp_event_id;  // コンプリートイベントのID
 
   // ゾーンごとに更新されるデータ -----------------
   BOOL  land_appear[ HABITAT_GROUND_MAX ];           // 地形を表示するか
@@ -102,6 +103,7 @@ struct _HABITAT_ZONE_WK{
   SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ
   
   // 図鑑セーブデータ
-  ZUKAN_SAVEDATA  *p_zkn_sv;
+  ZUKAN_SAVEDATA    *p_zkn_sv;
+  HABITATLIST_SAVE  *p_habitat_sv;
 };
 

@@ -28,13 +28,13 @@ typedef struct {
   u32 ground_status:2;
   u32 waterside_status:2;
   u32 fishing_status:2;
-
-  // 取得用共用体
-  union{
-    u8 data_pack;
-  };
 } HABITAT_ZONE_STATUS_DATA;
 
+// 取得用共用体
+typedef union{
+  HABITAT_ZONE_STATUS_DATA data;
+  u8 data_pack;
+}HABITAT_ZONE_STATUS_DATA_PACK;
 
 
 //=============================================================================
@@ -61,7 +61,8 @@ SDK_COMPILER_ASSERT( sizeof(HABITATLIST_SAVE) == HABITATLIST_SAVE_WORK_SIZE );
  *					プロトタイプ宣言
 */
 //=============================================================================
-static HABITAT_ZONE_STATUS_DATA GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id );
+static HABITAT_ZONE_STATUS_DATA_PACK GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id );
+static void SetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_ZONE_STATUS_DATA_PACK data );
 
 //----------------------------------------------------------------------------
 /**
@@ -115,22 +116,63 @@ HABITATLIST_SAVE* SaveData_GetHabitatListSave( SAVE_CONTROL_WORK *p_sv )
 //-----------------------------------------------------------------------------
 HABITATLIST_STATUS HABITATLIST_SAVE_GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_GROUND_TYPE type)
 {
-  HABITAT_ZONE_STATUS_DATA status;
+  HABITAT_ZONE_STATUS_DATA_PACK status;
   status  = GetZoneStatus( p_sv ,habitat_zone_id );
 
   // タイプごとに返す
   switch( type )
   {
   case HABITAT_GROUND_LAND:
-    return status.ground_status;
+    return status.data.ground_status;
   case HABITAT_GROUND_WATERSIDE:
-    return status.ground_status;
+    return status.data.waterside_status;
   case HABITAT_GROUND_FISHING:
-    return status.ground_status;
+    return status.data.fishing_status;
   default:
     GF_ASSERT(0);
     return HABITAT_ZONE_STATUS_NONE;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーンステータスを設定する
+ *
+ *	@param	*p_sv             生息地リストセーブデータ
+ *	@param	habitat_zone_id   ゾーン一デックス
+ *	@param	type              設定するする地形タイプ
+ *	@param	status            設定するステータス
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITATLIST_SAVE_SetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_GROUND_TYPE type ,HABITATLIST_STATUS status)
+{
+  HABITAT_ZONE_STATUS_DATA_PACK set_data;
+  set_data = GetZoneStatus( p_sv ,habitat_zone_id );
+
+  // タイプごとに設定
+  switch( type )
+  {
+  case HABITAT_GROUND_LAND:
+    set_data.data.ground_status    = status;
+    ONOUE_Printf("草地書き換え:%d->%d\n",set_data.data.ground_status,status);
+    break;
+  case HABITAT_GROUND_WATERSIDE:
+    set_data.data.waterside_status = status;
+    ONOUE_Printf("水辺書き換え:%d->%d\n",set_data.data.waterside_status,status);
+    break;
+  case HABITAT_GROUND_FISHING:
+    set_data.data.fishing_status   = status;
+    ONOUE_Printf("釣り書き換え:%d->%d\n",set_data.data.fishing_status,status);
+    break;
+  default:
+    GF_ASSERT(0);
+    return;
+  }
+
+  // セット
+  SetZoneStatus( p_sv,habitat_zone_id , set_data );
 }
 
 //----------------------------------------------------------------------------
@@ -143,10 +185,27 @@ HABITATLIST_STATUS HABITATLIST_SAVE_GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 ha
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static HABITAT_ZONE_STATUS_DATA GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id )
+static HABITAT_ZONE_STATUS_DATA_PACK GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id )
 {
-  HABITAT_ZONE_STATUS_DATA data;
+  HABITAT_ZONE_STATUS_DATA_PACK data;
   data.data_pack = p_sv->zone_status[habitat_zone_id];
   return data;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地形データを設定する
+ *
+ *	@param	*p_wk 
+ *	@param	habitat_zone_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_ZONE_STATUS_DATA_PACK data )
+{
+  HABITAT_ZONE_STATUS_DATA_PACK *p_dest;
+  p_dest = (HABITAT_ZONE_STATUS_DATA_PACK*)&p_sv->zone_status[habitat_zone_id];
+  p_dest->data_pack = data.data_pack;
 }
 

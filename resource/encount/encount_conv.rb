@@ -492,10 +492,10 @@ class CEncountData
       # 出力
       type_name_table = ["草地","砂地","沼","洞窟","橋","混合","なし"]
       
-      puts "---------------------------"
-      puts "【 %s 】"%zone_name
-      puts "白地形：%s"%type_name_table[zone_hash[zone_name].white_ground_type]
-      puts "黒地形：%s"%type_name_table[zone_hash[zone_name].black_ground_type]
+#      puts "---------------------------"
+#      puts "【 %s 】"%zone_name
+#      puts "白地形：%s"%type_name_table[zone_hash[zone_name].white_ground_type]
+#      puts "黒地形：%s"%type_name_table[zone_hash[zone_name].black_ground_type]
 
       # データ取得
       white_data = zone_hash[zone_name].white_data

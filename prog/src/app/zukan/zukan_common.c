@@ -19,7 +19,7 @@
 #include "arc_def.h"          // for ARCID_*
 #include "fieldmap/zone_id.h" // for ZONE_ID_*
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h" // for SYS_FLAG_ARRIVE_*
-#include "../../../../resource/zukan_data/habitat_list_data.cdat" // for sc_habitat_list_data
+#include "../../../../resource/habitat_list/habitat_list_data.cdat" // for sc_habitat_list_data
 
 
 //============================================================================================
@@ -28,6 +28,11 @@
 #define	BASEBG_SCROLL_WAIT	( 4 )			// ＢＧスクロールウェイト
 #define	BASEBG_SCROLL_VAL		( 1 )			// ＢＧスクロール値
 
+//============================================================================================
+//	プロトタイプ
+//============================================================================================
+static void GetCompleteFlag( HABITATLIST_STATUS *p_dest,
+    ARC_HABITAT_ZONE_DATA *p_arc_data ,ZUKAN_SAVEDATA *p_save);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -309,6 +314,10 @@ void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info )
         ONOUE_Printf("季節フラグ:%u\n",p_zone_data->season_enable);
         ONOUE_Printf("モンスター種類:%u\n",arc_data.data_num);
         ONOUE_Printf("地形タイプ:%u\n",arc_data.ground_type);
+
+        // 地形コンプリート状態を設定する
+        GetCompleteFlag( p_zone_data->is_complete ,&arc_data ,p_save );
+
         // ポケモンデータを設定
         for( n = 0; n < arc_data.data_num; n ++ )
         {
@@ -413,57 +422,11 @@ void MakeHabitatListData( ZUKANHABITAT_LIST_DATA * p_zone_list )
           = arc_data.land_enable[HABITAT_GROUND_WATERSIDE];
         p_ld->is_exist_landtype[HABITAT_GROUND_FISHING]
           = arc_data.land_enable[HABITAT_GROUND_FISHING];
-
+        
         // コンプリート状態
         {
-          BOOL flg;
-          u8 is_land_appear[HABITAT_GROUND_MAX];  // その地形にポケモンが出現するか
-          p_ld->is_complete[HABITAT_GROUND_LAND]      = HABITAT_ZONE_STATUS_GET;
-          p_ld->is_complete[HABITAT_GROUND_WATERSIDE] = HABITAT_ZONE_STATUS_GET;
-          p_ld->is_complete[HABITAT_GROUND_FISHING]   = HABITAT_ZONE_STATUS_GET;
-
-          // 地形ごとに出現するかどうかをチェックする
-          for( n = 0; n < arc_data.data_num ; n++ )
-          {
-            // 初期化
-            GFL_STD_MemClear( is_land_appear ,sizeof(is_land_appear) );
-
-            for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id++ )
-            {
-              for( season_id = 0 ; season_id < PMSEASON_TOTAL; season_id++ )
-              {
-                is_land_appear[ground_id] |=
-                  arc_data.mons_data[n].is_appear[season_id][ground_id];
-              }
-            }
-
-            // その地形に出現する場合は、捕獲状況をチェックする
-            for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id++ )
-            {
-              if( is_land_appear[ground_id] >= 1 )
-              {
-                // 捕獲チェック
-                if( p_ld->is_complete[ground_id] == HABITAT_ZONE_STATUS_GET )
-                {
-                  flg=ZUKANSAVE_GetPokeGetFlag(p_save,arc_data.mons_data[n].monsno);
-                  if(!flg)
-                  {
-                    // 見たコンプリートに格下げ
-                    p_ld->is_complete[ground_id] = HABITAT_ZONE_STATUS_LOOK;
-                  }
-                }
-                // 見たチェック
-                if( p_ld->is_complete[ground_id] == HABITAT_ZONE_STATUS_LOOK )
-                {
-                  if(!ZUKANSAVE_GetPokeSeeFlag(p_save,arc_data.mons_data[n].monsno))
-                  {
-                    // 未コンプリートに格下げ
-                    p_ld->is_complete[ground_id] = HABITAT_ZONE_STATUS_NONE;
-                  }
-                }
-              }
-            }
-          }
+          // 地形コンプリート状態を設定する
+          GetCompleteFlag( p_ld->is_complete ,&arc_data ,p_save );
 
           // リスト状態(セーブと異なる場合は、びっくりマークに変更)
           for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id++ )
@@ -515,3 +478,68 @@ void MakeHabitatListData( ZUKANHABITAT_LIST_DATA * p_zone_list )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モンスターのコンプリート状態を取得する
+ *
+ *	@param	*p_dest
+ *	@param	*p_arc_data 
+ *	@param	*p_save
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GetCompleteFlag( HABITATLIST_STATUS *p_dest,
+    ARC_HABITAT_ZONE_DATA *p_arc_data ,ZUKAN_SAVEDATA *p_save)
+{  
+  s32 n;
+  BOOL flg;
+  u8 season_id,ground_id;
+  u8 is_land_appear[HABITAT_GROUND_MAX];  // その地形にポケモンが出現するか
+  p_dest[HABITAT_GROUND_LAND]      = HABITAT_ZONE_STATUS_GET;
+  p_dest[HABITAT_GROUND_WATERSIDE] = HABITAT_ZONE_STATUS_GET;
+  p_dest[HABITAT_GROUND_FISHING]   = HABITAT_ZONE_STATUS_GET;
+
+  // 地形ごとに出現するかどうかをチェックする
+  for( n = 0; n < p_arc_data->data_num ; n++ )
+  {
+    // 初期化
+    GFL_STD_MemClear( is_land_appear ,sizeof(is_land_appear) );
+
+    for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id++ )
+    {
+      for( season_id = 0 ; season_id < PMSEASON_TOTAL; season_id++ )
+      {
+        is_land_appear[ground_id] |=
+          p_arc_data->mons_data[n].is_appear[season_id][ground_id];
+      }
+    }
+
+    // その地形に出現する場合は、捕獲状況をチェックする
+    for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id++ )
+    {
+      if( is_land_appear[ground_id] >= 1 )
+      {
+        // 捕獲チェック
+        if( p_dest[ground_id] == HABITAT_ZONE_STATUS_GET )
+        {
+          flg=ZUKANSAVE_GetPokeGetFlag(p_save,p_arc_data->mons_data[n].monsno);
+          if(!flg)
+          {
+            // 見たコンプリートに格下げ
+            p_dest[ground_id] = HABITAT_ZONE_STATUS_LOOK;
+          }
+        }
+        // 見たチェック
+        if( p_dest[ground_id] == HABITAT_ZONE_STATUS_LOOK )
+        {
+          if(!ZUKANSAVE_GetPokeSeeFlag(p_save,p_arc_data->mons_data[n].monsno))
+          {
+            // 未コンプリートに格下げ
+            p_dest[ground_id] = HABITAT_ZONE_STATUS_NONE;
+          }
+        }
+      }
+    }
+  }
+}
