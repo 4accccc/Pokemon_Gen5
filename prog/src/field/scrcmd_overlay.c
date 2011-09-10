@@ -189,6 +189,7 @@ static const ZONEID UseZoneIDTbl_pokewood[] =
   ZONE_ID_C15,
   ZONE_ID_C15R0101,
   ZONE_ID_C15R0201,
+  ZONE_ID_C15R0301,
 };
 //-------------------------------------
 ///	バッジチェックゲート
