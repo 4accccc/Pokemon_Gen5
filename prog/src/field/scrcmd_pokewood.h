@@ -31,13 +31,17 @@ extern VMCMD_RESULT EvCmdPokewoodSelectScenario( VMHANDLE *core, void *wk );
 // ポケウッド　上映選択
 extern VMCMD_RESULT EvCmdPokewoodSelectMovie( VMHANDLE * core, void *wk );
 
+//　映画のコピー
+extern VMCMD_RESULT EvCmdPokewoodCopyMovie( VMHANDLE * core, void * wk );
+
 extern VMCMD_RESULT EvCmdPokewoodSetScenarioName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodGetScenarioStatus( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdPokewoodSetScenarioStatus( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodGetMoviesCount( VMHANDLE * core, void * wk );
-extern VMCMD_RESULT EvCmdPokewoodDeleteMovie( VMHANDLE * core, void * wk );
-extern VMCMD_RESULT EvCmdPokewoodGetFirstTimeSeeingFlag( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodCheckMovieEnable( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodGetMovieValue( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdPokewoodCheckNewStarRank( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdPokewoodSetStudioMMdl( VMHANDLE * core, void * wk );
 
 extern int PokewoodStarPoint2StarRank( int point);
 

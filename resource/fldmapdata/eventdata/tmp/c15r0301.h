@@ -9,6 +9,7 @@
 #ifndef ZONE_C15R0301_EVC_H
 #define ZONE_C15R0301_EVC_H
 
+#define C15R0301_PKWD_SHOW                 0
 
 #endif //ZONE_C15R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c15r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

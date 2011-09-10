@@ -728,6 +728,8 @@
 #define FV_D02R0101_SWLEADER1_01           808 /* 0x0328 ヤグルマの森：チェレン・七賢人 */
 #define FV_D27R1001_R1301_POKE10_01        809 /* 0x0329 プラズマフリゲート：研究施設キュレム */
 #define FV_R20_RANGER_01                   810 /* 0x032a 20番道路：季節表示トレーナー */
+#define FV_PKWD_STAFF01                    811 /* 0x032b ポケウッド撮影所：監督、共演者 */
+#define FV_PKWD_STAFF02                    812 /* 0x032c ポケウッド撮影所：撮影スタッフ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

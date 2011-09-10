@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/12 13:01:17
+#save date:2011/09/10 20:53:48
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c15r0101.wms
 #SECTION START:OBJ_EVENT
@@ -14,17 +14,17 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c15r0101.wms
 #type
 1
 #ID name
-C15R0101_PKWD_REC
+C15R0101_WKOBJCODE00
 #OBJ CODE Number
-DANPEI
+WKOBJCODE00
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_PKWD_STAFF01
 #Event Script Name
-SCRID_POKEWOOD_REC
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -40,22 +40,22 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 136
+-8 0 136
 #event number: 1
 #type
 1
 #ID name
-C15R0101_PKWD_SHOW
+C15R0101_WKOBJCODE01
 #OBJ CODE Number
-GIRL4
+WKOBJCODE01
 #MOVE CODE Number
-MV_DOWN
+MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_PKWD_STAFF01
 #Event Script Name
-SCRID_POKEWOOD_SHOW
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 0 136
+-56 0 88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

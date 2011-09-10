@@ -20,8 +20,9 @@ typedef enum {
   PKWD_REC_POS_01,
   PKWD_REC_POS_02,
   PKWD_REC_POS_03,
+  PKWD_REC_POS_TMP,
 
-  PKWD_REC_POS_MAX,
+  PKWD_REC_POS_MAX = PKWD_REC_POS_TMP,
 }PKWD_REC_POS;
 
 //======================================================================
@@ -35,10 +36,6 @@ typedef struct {
   u32 scenario_no;      ///<シナリオNo.
 }PKWD_REC_EVENT_PARAM;
 
-typedef struct{
-  int type;         // 録画・再生指定
-  int senario_no;   // シナリオNO
-}POKEWOOD_EVENT_PARAM;
 
 //======================================================================
 //  extern

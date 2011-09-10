@@ -15002,6 +15002,19 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief ポケウッド：映画をコピー（上映可能状態にする）
+ */
+//--------------------------------------------------------------
+#define _PKWD_COPY_MOVIE( rec_pos ) \
+    _ASM_PKWD_COPY_MOVIE rec_pos
+
+    .macro  _ASM_PKWD_COPY_MOVIE rec_pos
+    .short  EV_SEQ_PKWD_COPY_MOVIE
+    .short  \rec_pos
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief ポケウッド：シナリオ名セット
  */
 //--------------------------------------------------------------
@@ -15016,15 +15029,31 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ポケウッド：シナリオ追加状態取得
+ * @brief ポケウッド：シナリオ状態取得
  */
 //--------------------------------------------------------------
-#define _PKWD_GET_SCENARIO_STATUS( ret_wk ) \
-    _ASM_PKWD_GET_SCENARIO_STATUS ret_wk
+#define _PKWD_GET_SCENARIO_STATUS( type, sc_no, ret_wk ) \
+    _ASM_PKWD_GET_SCENARIO_STATUS type, sc_no, ret_wk
 
-    .macro  _ASM_PKWD_GET_SCENARIO_STATUS ret_wk
+    .macro  _ASM_PKWD_GET_SCENARIO_STATUS type, sc_no, ret_wk
     .short  EV_SEQ_PKWD_GET_SCENARIO_STATUS
+    .short  \type
+    .short  \sc_no
     .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：シナリオ状態セット
+ */
+//--------------------------------------------------------------
+#define _PKWD_SET_SCENARIO_STATUS( type, sc_no ) \
+    _ASM_PKWD_SET_SCENARIO_STATUS type, sc_no, value
+
+    .macro  _ASM_PKWD_SET_SCENARIO_STATUS type, sc_no
+    .short  EV_SEQ_PKWD_SET_SCENARIO_STATUS
+    .short  \type
+    .short  \sc_no
     .endm
 
 //--------------------------------------------------------------
@@ -15042,26 +15071,31 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ポケウッド：上映データ削除
+ * @brief ポケウッド：スターランクが上がったかどうかのチェック
  */
 //--------------------------------------------------------------
-#define _PKWD_DELETE_MOVIE( rec_pos )  \
-    _ASM_PKWD_DELETE_MOVIE rec_pos
-    .macro  _ASM_PKWD_DELETE_MOVIE rec_pos
-    .short  EV_SEQ_PKWD_DELETE_MOVIE
-    .short  \rec_pos
+#define _PKWD_CHECK_NEW_STAR_RANK( ret_wk )  \
+    _ASM_PKWD_CHECK_NEW_STAR_RANK ret_wk
+    .macro  _ASM_PKWD_CHECK_NEW_STAR_RANK ret_wk
+    .short  EV_SEQ_PKWD_CHECK_NEW_STAR_RANK
+    .short  \ret_wk
     .endm
 
 //--------------------------------------------------------------
 /**
- * @brief ポケウッド：初回視聴チェック
+ * @brief ポケウッド：スタジオ内の動作モデル指定を取得
+ * @param[in]   sc_no シナリオ指定
+ * @param[out]  mmdl1 動作モデル指定
+ * @param[out]  mmdl2 動作モデル指定
  */
 //--------------------------------------------------------------
-#define _PKWD_GET_1ST_TIME_SEE_FLAG( ret_wk )  \
-    _ASM_PKWD_GET_1ST_TIME_SEE_FLAG ret_wk
-    .macro  _ASM_PKWD_GET_1ST_TIME_SEE_FLAG ret_wk
-    .short  EV_SEQ_PKWD_GET_1ST_TIME_SEE_FLAG
-    .short  \ret_wk
+#define _PKWD_SET_STUDIO_MMDL( sc_no, mmdl1, mmdl2 )  \
+    _ASM_PKWD_SET_STUDIO_MMDL sc_no, mmdl1, mmdl2
+    .macro  _ASM_PKWD_SET_STUDIO_MMDL sc_no, mmdl1, mmdl2
+    .short  EV_SEQ_PKWD_SET_STUDIO_MMDL
+    .short  \sc_no
+    .short  \mmdl1
+    .short  \mmdl2
     .endm
 
 //--------------------------------------------------------------

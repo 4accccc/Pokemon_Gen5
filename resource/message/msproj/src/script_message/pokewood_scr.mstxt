@@ -411,10 +411,10 @@
 			Language="JPN">
 			<Text>ＯＫ！　ＯＫ！▼
 じゃあ　この　さくひんに　ピッタリの
-ポケモンを　てはい　しとくぜ！</Text>
+ポケモンを　てはい　しとくぜ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:46:12" />
+				User="tamada:W00253"
+				Time="2011-09-10T09:50:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -424,10 +424,10 @@
 			Language="JPN_KANJI">
 			<Text>ＯＫ！　ＯＫ！▼
 じゃあ　この　作品に　ピッタリの
-ポケモンを　手配　しとくぜ！</Text>
+ポケモンを　手配　しとくぜ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:46:33" />
+				User="tamada:W00253"
+				Time="2011-09-10T09:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -488,10 +488,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＯＫ！
-じゃあ　さつえいを　はじめようか！</Text>
+じゃあ　さつえいを　はじめようか！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:53:39" />
+				User="tamada:W00253"
+				Time="2011-09-10T11:20:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -500,10 +500,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＯＫ！
-じゃあ　撮影を　はじめようか！</Text>
+じゃあ　撮影を　はじめようか！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:54:05" />
+				User="tamada:W00253"
+				Time="2011-09-10T11:20:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -574,10 +574,10 @@
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！▼
 さいきん　キミは　やくしゃ　らしい
-イイかおに　なってきたねえー</Text>
+イイかおに　なってきたねえー▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:22:51" />
+				User="tamada:W00253"
+				Time="2011-09-10T09:50:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -587,10 +587,10 @@
 			Language="JPN_KANJI">
 			<Text>ヘイ！　[Name:TrainerName ]！▼
 最近　キミは　役者らしい
-イイ顔に　なってきたねえー</Text>
+イイ顔に　なってきたねえー▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:23:44" />
+				User="tamada:W00253"
+				Time="2011-09-10T09:50:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -613,10 +613,10 @@
 [Name:TrainerName ]の　ポケモンは
 たしかに　イカしてると　おもうぜ！▼
 ただ　まずは　ポケウッドの　ポケモンで
-さくひんを　とってくれないか！？</Text>
+さくひんを　とってくれないか！？▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T08:13:08" />
+				User="tamada:W00253"
+				Time="2011-09-10T09:50:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -628,10 +628,10 @@
 [Name:TrainerName ]の　ポケモンは
 たしかに　イカしてると　思うぜ！▼
 ただ　まずは　ポケウッドの　ポケモンで
-作品を　撮ってくれないか！？</Text>
+作品を　撮ってくれないか！？▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T08:13:32" />
+				User="tamada:W00253"
+				Time="2011-09-10T09:50:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -654,10 +654,10 @@
 			Language="JPN">
 			<Text>ＯＨ！　ざんねんだが　そのポケモンは
 ポケウッドの　さつえいには▽
-チャレンジ　できないんだ！</Text>
+チャレンジ　できないんだ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T08:18:15" />
+				User="tamada:W00253"
+				Time="2011-09-10T09:50:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -667,10 +667,10 @@
 			Language="JPN_KANJI">
 			<Text>ＯＨ！　残念だが　そのポケモンは
 ポケウッドの　撮影には▽
-チャレンジ　できないんだ！</Text>
+チャレンジ　できないんだ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T08:18:30" />
+				User="tamada:W00253"
+				Time="2011-09-10T09:50:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -897,6 +897,200 @@
 				User="tamada:W00253"
 				Time="2011-07-04T12:22:35" />
 		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>かんとくのセリフ（仮）▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:43:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:46:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かんとくのセリフ（仮）▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:43:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:53:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>監督：開始のセリフ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:42:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>かんとくのセリフ（仮）▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:43:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:46:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かんとくのセリフ（仮）▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:43:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:53:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>監督：開始のセリフ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:42:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>かんとくのセリフ（仮）▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:43:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:46:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かんとくのセリフ（仮）▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:43:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:53:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>監督：開始のセリフ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:42:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>かんとくのセリフ（仮）▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:43:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:46:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かんとくのセリフ（仮）▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:43:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:53:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>監督：開始のセリフ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:42:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>かんとくのセリフ（仮）▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:43:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:46:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かんとくのセリフ（仮）▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:43:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:53:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>監督：開始のセリフ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T13:42:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_system_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>レポートを　かいています
+でんげんを　きらないでください</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T12:26:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:46:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レポートを　書いています
+電源を　きらないでください</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T12:26:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:53:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セーブ時の警告メッセージ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-09-10T12:26:08" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_theater_tes_01">

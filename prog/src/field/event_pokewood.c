@@ -66,7 +66,8 @@ SDK_COMPILER_ASSERT( PKWD_REC_POS_00 == LOADDATA_POKEWOOD0 );
 SDK_COMPILER_ASSERT( PKWD_REC_POS_01 == LOADDATA_POKEWOOD1 );
 SDK_COMPILER_ASSERT( PKWD_REC_POS_02 == LOADDATA_POKEWOOD2 );
 SDK_COMPILER_ASSERT( PKWD_REC_POS_03 == LOADDATA_POKEWOOD3 );
-SDK_COMPILER_ASSERT( PKWD_REC_POS_MAX <= LOADDATA_POKEWOOD_MAX );
+SDK_COMPILER_ASSERT( PKWD_REC_POS_TMP == LOADDATA_POKEWOOD4 );
+//SDK_COMPILER_ASSERT( PKWD_REC_POS_MAX == LOADDATA_POKEWOOD_MAX );
 
 //======================================================================
 //  define
@@ -824,25 +825,25 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
   return GMEVENT_RES_CONTINUE;
 }
 
-enum{
-  PW_REC_SEQ_START=0,
-  PW_REC_SEQ_ENCOUNT_EFFECT,
-  PW_REC_SEQ_FIELDMAP_EXIT,
-  PW_REC_SEQ_CALL_BATTLE,
-  PW_REC_SEQ_SAVE,
-  PW_REC_SEQ_FREE_BSP,
-  PW_REC_SEQ_FIELD_BGM_PLAY,
-  PW_REC_SEQ_FIELD_OPEN,
-  PW_REC_SEQ_FIELD_BGM_WAIT,
-  PW_REC_SEQ_FADEIN,
-  PW_REC_SEQ_END,
-};
-
 //-----------------------------------------------------------------------------
 // ポケウッド撮影イベント
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * work )
 {
+  enum{
+    PW_REC_SEQ_START=0,
+    PW_REC_SEQ_ENCOUNT_EFFECT,
+    PW_REC_SEQ_FIELDMAP_EXIT,
+    PW_REC_SEQ_CALL_BATTLE,
+    PW_REC_SEQ_SAVE,
+    PW_REC_SEQ_FREE_BSP,
+    PW_REC_SEQ_FIELD_BGM_PLAY,
+    PW_REC_SEQ_FIELD_OPEN,
+    PW_REC_SEQ_FIELD_BGM_WAIT,
+    PW_REC_SEQ_FADEIN,
+    PW_REC_SEQ_END,
+  };
+
   PBEW * pbew = (PBEW*)work;
   PREW * prew = pbew->prew;
 
@@ -994,7 +995,7 @@ static GMEVENT_RESULT pokewoodCallEvent( GMEVENT * event, int *seq, void * work 
 //============================================================================================
 //-----------------------------------------------------------------------------
 /**
- * @brief ポケウッド再生イベントの生成
+ * @brief ポケウッド撮影イベントの生成
  * @param gsys
  * @return  生成イベント
  */
@@ -1006,11 +1007,12 @@ GMEVENT * POKEWOOD_EVENT_Rec( GAMESYS_WORK *gsys, void * param )
   const PKWD_REC_EVENT_PARAM * rec_param = (const PKWD_REC_EVENT_PARAM *)param;
   //POKEWOOD_WORK * pokewood_work = (POKEWOOD_WORK*)parent_work;
 
-  GF_ASSERT( rec_param->rec_pos < PKWD_REC_POS_MAX );
+  //GF_ASSERT( rec_param->rec_pos < PKWD_REC_POS_MAX );
   event = GMEVENT_Create( gsys, NULL, pokewoodCallEvent, sizeof(PREW) );
   prew = GMEVENT_GetEventWork( event );
   prew->gsys      = gsys;
-  prew->rec_id    = rec_param->rec_pos; // 録画NO
+  prew->rec_id    = PKWD_REC_POS_TMP; //仮：とりあえず最後の場所をテンポラリとして使う
+  //prew->rec_id    = rec_param->rec_pos; // 録画NO
   prew->SenarioNo = rec_param->scenario_no;
   prew->heapID    = HEAPID_PROC;
   OS_Printf(" POKEWOOD EVENT rec_id = %x, senario = %d\n", rec_param->rec_pos, rec_param->scenario_no );
@@ -1510,3 +1512,4 @@ GMEVENT * PKWD_EVENT_SetSelectPokeList( GAMESYS_WORK * gsys, void * parent_work 
    
   return( event );
 }
+

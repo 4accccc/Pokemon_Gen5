@@ -797,6 +797,12 @@
 ///最大シナリオナンバー
 #define   SCR_PKWD_SCENARIO_MAX     (40)
 
+//ポケウッドシナリオ情報の種別指定
+#define   SCR_PKWD_SCENARIO_OPEN_FLAG         (0) ///<オープンしているか（遊べるか）
+#define   SCR_PKWD_SCENARIO_PLAYED_FLAG       (1) ///<撮影済みか
+#define   SCR_PKWD_SCENARIO_SUCCESS_FLAG      (2) ///<成功終了したか
+#define   SCR_PKWD_SCENARIO_ANNOUNCED_FLAG    (3) ///<オープン告知済みか
+
 //--------------------------------------------------------------
 //  scrcmd_infinity_dungeon.c
 //  無限ダンジョン関連定義

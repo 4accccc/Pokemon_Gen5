@@ -1108,7 +1108,7 @@ static void createAllResource(FIELD_BMODEL_MAN * man, const FLD_G3DPAL * fld_g3d
     {
       OBJ_RES * objRes = &man->objRes[entryNo];
       OBJRES_initialize( man, objRes, entryNo, fld_g3dPal );
-      TAMADA_Printf("BM:Create Rsc %d (%d)\n", entryNo, objRes->bmInfo->bm_id);
+      //TAMADA_Printf("BM:Create Rsc %d (%d)\n", entryNo, objRes->bmInfo->bm_id);
     }
   }
 

@@ -7,5 +7,6 @@
 //スクリプトデータID定義
 #define SCRID_POKEWOOD_REC (10815)
 #define SCRID_POKEWOOD_SHOW (10816)
+#define SCRID_POKEWOOD_MONITOR (10817)
 
 #endif //_POKEWOOD_SCR_DEF_H_

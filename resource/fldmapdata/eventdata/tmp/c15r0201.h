@@ -11,6 +11,7 @@
 #ifndef ZONE_C15R0201_EVC_H
 #define ZONE_C15R0201_EVC_H
 
+#define C15R0201_POKEWOOD_REC              0
 
 #endif //ZONE_C15R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c15r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
