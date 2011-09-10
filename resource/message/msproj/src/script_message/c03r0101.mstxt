@@ -25160,11 +25160,14 @@ girl4_04へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>へい！
-じまん　してるかーい▼</Text>
+			<Text>きみは　うれしいとき
+どんなカンジで　よろこぶ？▼
+ぼくは『ヤッター！』なんだけど
+もっと　ステキな▽
+よろこびかたを　おしえてよ</Text>
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:17:46" />
+				Time="2011-09-10T07:35:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25172,11 +25175,14 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>へい！
-自慢　してるかーい▼</Text>
+			<Text>君は　嬉しいとき
+どんなカンジで　喜ぶ？▼
+僕は『ヤッター！』なんだけど
+もっと　ステキな▽
+喜びかたを　教えてよ</Text>
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:18:03" />
+				Time="2011-09-10T07:35:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25185,13 +25191,14 @@ girl4_04へ続く
 		<CommentCell
 			Language="JPN">
 			<Comment>・自慢隊員
-このメッセージの表示後、分岐
+はじめての会話の場合
 
-はじめての会話　⇒　man2_02へ
-一度会話している　⇒　man2_03へ</Comment>
+このメッセージの表示後、選択ウインドウを表示
+『はい』　⇒　自慢入力画面　入力後　⇒　man2_04へ
+『いいえ』　⇒　man2_03へ</Comment>
 			<CommentModifiedBy
 				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:14:49" />
+				Time="2011-09-10T07:34:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -25214,11 +25221,11 @@ girl4_04へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おれに　キミの　じまんを
-きかせてくれよ？▼</Text>
+			<Text>うれしいときに　つい　いってしまう！
+そんな　ことばを　おしえてよ！</Text>
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:21:26" />
+				Time="2011-09-10T07:36:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25226,11 +25233,11 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>俺に　キミの　自慢を
-聞かせてくれよ？▼</Text>
+			<Text>嬉しいときに　つい　言ってしまう！
+そんな　言葉を　教えてよ！</Text>
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:21:42" />
+				Time="2011-09-10T07:36:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25239,67 +25246,14 @@ girl4_04へ続く
 		<CommentCell
 			Language="JPN">
 			<Comment>・自慢隊員
-このメッセージの表示後、選択ウインドウを表示
+2回目の会話の場合
 
-『はい』　⇒　自慢入力画面　入力後　⇒　man2_05へ
-『いいえ』　⇒　man2_04へ</Comment>
+このメッセージの表示後、選択ウインドウを表示
+『はい』　⇒　自慢入力画面　入力後　⇒　man2_04へ
+『いいえ』　⇒　man2_03へ</Comment>
 			<CommentModifiedBy
 				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:15:58" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>MAN2
-自慢隊員</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:14:33" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03r0101_man2_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>また　じまんしに　きたのか
-いいぜ　きかせてくれよ？▼</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:23:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>また　自慢しに　来たのか
-いいぜ　聞かせてくれよ？▼</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:23:48" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>・自慢隊員
-このメッセージの表示後、選択ウインドウを表示
-
-『はい』　⇒　自慢入力画面　入力後　⇒　man2_05へ
-『いいえ』　⇒　man2_04へ</Comment>
-			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:16:02" />
+				Time="2011-09-10T07:34:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -25365,15 +25319,14 @@ girl4_04へ続く
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03r0101_man2_04"
+		Label="msg_c03r0101_man2_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうか　じまん　したくなったら
-いつでもきな▼</Text>
+			<Text>ん～　ざんねん！</Text>
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:26:12" />
+				Time="2011-09-10T07:36:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25381,11 +25334,10 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうか　自慢　したくなったら
-いつでもきな▼</Text>
+			<Text>ん～　残念！</Text>
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:26:24" />
+				Time="2011-09-10T07:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25417,15 +25369,17 @@ girl4_04へ続く
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03r0101_man2_05"
+		Label="msg_c03r0101_man2_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>！！
-いい　じまん　だぜ！▼</Text>
+			<Text>ステキな　セリフ！！▼
+すれちがいログの　はつげんで
+すばやく　にゅうりょくできるように▽
+とうろく　しておいたからね！</Text>
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:24:44" />
+				Time="2011-09-10T07:55:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25433,11 +25387,13 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>！！
-いい　自慢　だぜ！▼</Text>
+			<Text>ステキな　セリフ！！▼
+すれ違いログの　発言で
+素早く　入力できるように▽
+登録　しておいたからね！</Text>
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:24:59" />
+				Time="2011-09-10T07:55:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
