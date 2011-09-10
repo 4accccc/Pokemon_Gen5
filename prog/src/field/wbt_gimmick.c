@@ -604,6 +604,7 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID
 static void DEBUGMENU_Exit( void );
 
 static int  debug_trface;
+static int  debug_wbt_trtype;
 
 #endif // WBT_DEBUG_MENU
 
@@ -705,7 +706,7 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
       strbuf2  = MyStatus_CreateNameString( myStatus, p_wk->heapID );
 
       OS_Printf("デバッグ VSビジョン\n");
-      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_VS, strbuf1, strbuf2, 0, debug_trface );
+      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_VS, strbuf1, strbuf2, 0, debug_wbt_trtype );
 
       GFL_STR_DeleteBuffer( strbuf1 );
       GFL_STR_DeleteBuffer( strbuf2 );
@@ -720,13 +721,14 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
       strbuf1  = MyStatus_CreateNameString( myStatus, p_wk->heapID );
 
       OS_Printf("デバッグ 優勝ビジョン\n");
-      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_WIN_PLAYER, strbuf1, NULL, debug_trface, 0 );
+      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_WIN_PLAYER, strbuf1, NULL, debug_wbt_trtype, 0 );
 
       GFL_STR_DeleteBuffer( strbuf1 );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
     {
       WBT_GIMMICK_EffectStart( p_fieldmap, SCR_WBT_EFFECT_CHAMP, SCR_WBT_EFFECT_POS_R );
+      OS_Printf("デバッグ エフェクト\n");
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
     {
@@ -735,6 +737,7 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
     {
       WBT_GIMMICK_EffectStart( p_fieldmap, SCR_WBT_EFFECT_WM, SCR_WBT_EFFECT_POS_L );
+      OS_Printf("デバッグ エフェクト\n");
     }
   }
 #endif
@@ -2204,13 +2207,30 @@ static void DebugWin_Update_ChangeData( void *userWork, DEBUGWIN_ITEM *item )
   WBT_GMK_TMP *p_wk = userWork;
   int value = debug_trface;
 
-  if( DebugWin_ChangeData( &value, 0, TRTYPE_MAX-1 ) )
+  if( DebugWin_ChangeData( &value, 0, 77-1+2 ) )    // MOB+主人公分
   {
+    u16 wbt_trtype;
     // 更新あり
     debug_trface = value;
+
+    // 主人公はそのままだしたいので
+    // それ以外をWBTトレーナーにする
+    if( debug_trface > 1 )
+    {
+      WBTROM_TRDATA *wbtrom = (void*)WBTTOOL_CreateRomTrainerData( HEAPID_FIELDMAP );
+      // WBTのトレーナータイプに変換
+      wbt_trtype = WBTTOOL_GetRomTrainerBtlTrType( wbtrom, debug_trface - 2 );
+      WBTTOOL_DeleteRomTrainerData( wbtrom );
+      debug_wbt_trtype = wbt_trtype;
+    }
+    else
+    {
+      wbt_trtype = debug_trface;
+      debug_wbt_trtype = wbt_trtype;
+    }
+
     // トレーナータイプ名取得
-    //WBTTOOL_GetRomTrainerName( p_wk->heapID, debug_trface, p_wk->trtype_name );
-    p_wk->trtype_name = GFL_MSG_CreateString( p_wk->trtype_msg, debug_trface );
+    p_wk->trtype_name = GFL_MSG_CreateString( p_wk->trtype_msg, wbt_trtype );
     DEBUGWIN_RefreshScreen();
   }
 }
