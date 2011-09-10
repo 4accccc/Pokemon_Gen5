@@ -799,4 +799,118 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_swplazmam_stop_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フン！　この　さきに　いきたければ
+もうひとつの　ワープパネルに　のりな▼
+もっとも　のった　さきで
+コテンパンに　されるだろうけどな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:14:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:13:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フン！　この先に　行きたければ
+もうひとつの　ワープパネルに　乗りな▼
+もっとも　乗った　先で
+コテンパンに　されるだろうけどな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:14:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:13:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ストッパー
+・アクロマ戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:13:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:13:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_swplazmam_stop_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なにー！　アクロマさまを
+やっつけた　だとー！！▼
+うわー！　つよがっていたが
+ポケモンを　もっていないんだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:13:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:13:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なにー！　アクロマさまを
+やっつけた　だとー！！▼
+うわー！　つよがっていたが
+ポケモンを　もっていないんだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:13:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:13:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ストッパー
+・アクロマ戦闘後
+　メッセージ表示後、逃げていく
+・画面外に消えると操作可能</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:13:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-10T09:13:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
