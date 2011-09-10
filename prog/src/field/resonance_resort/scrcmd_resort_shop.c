@@ -50,6 +50,7 @@
 #include "resort_binary.h"
 #include "resort_reception.h"
 #include "resort_field.h"
+#include "resort_util.h"
 #include "../gmk_tmp_wk.h"
 #include "savedata/resonance_resort_sv.h"
 #include "wifi_unionobj_plt.cdat" //for sc_wifi_unionobj_plt
@@ -184,6 +185,7 @@ typedef struct _SHOP_BUY_APP_WORK{
 
   BOOL (*ShopCallFunc)( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
 
+  RESORT_SYSTEM           *p_resort_sys;
   RESORT_BINARY_SHOP      *p_shop;
   const RESORT_BINARY_SHOP_DATA *cp_shop_data;
   RESORT_BINARY_PRESENT *p_present;
@@ -358,6 +360,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.p_all_people = RESORT_SYSTEM_GetPeopleAllData( resort_sys );
   sbw->wk.p_abstruct_man  = RESORT_SYSTEM_GetAbstructManager( resort_sys );
   sbw->wk.p_city  = RESORT_SYSTEM_GetCityData( resort_sys );
+  sbw->wk.p_resort_sys = resort_sys;
 
 
   *sbw->wk.ret_service_type = FALSE;
@@ -3235,7 +3238,7 @@ static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
     RESORT_FEVER_NONE_COEFFEICENT   = 1,
     RESORT_FEVER_EXIST_COEFFEICENT  = 2,
   };
-  BOOL is_fever = RESORT_SCRCMD_IsFever( p_wk->p_abstruct_man, p_wk->p_city );
+  BOOL is_fever = RESORT_UTIL_IsFever( p_wk->p_resort_sys );
   u32 fever_num = is_fever ? RESORT_FEVER_EXIST_COEFFEICENT: RESORT_FEVER_NONE_COEFFEICENT;
   u32 city_lv = RESORT_CITY_DATA_GetData( p_wk->p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
 

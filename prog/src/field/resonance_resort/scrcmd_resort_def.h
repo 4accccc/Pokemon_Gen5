@@ -38,6 +38,14 @@
 #define RESORT_GET_PARAM_SELECT_NURSERY     (22)
 #define RESORT_GET_PARAM_SELECT_ANTIQUE     (23)
 #define RESORT_GET_PARAM_SELECT_CAFE        (24)
+#define RESORT_GET_PARAM_CHECK_RESIDENT_00  (25)
+#define RESORT_GET_PARAM_CHECK_RESIDENT_01  (26)
+#define RESORT_GET_PARAM_CHECK_RESIDENT_02  (27)
+#define RESORT_GET_PARAM_CHECK_RESIDENT_03  (28)
+#define RESORT_GET_PARAM_CHECK_RESIDENT_04  (29)
+#define RESORT_GET_PARAM_CHECK_RESIDENT_05  (30)
+#define RESORT_GET_PARAM_CHECK_RESIDENT_06  (31)
+#define RESORT_GET_PARAM_CHECK_RESIDENT_07  (32)
 
 //RESORT_GET_PARAM_CHECK_SCOUTの戻り値
 #define RESORT_CHECK_SCOUT_YES          (0) //いいよ
@@ -72,7 +80,7 @@
 ///_RESORT_ACTION用
 #define RESORT_ACTION_LEAVE           (0)
 //_RESORT_SET_WORD用
-#define RESORT_WORD_PEOPLE            (0)
+#define RESORT_WORD_PEOPLE            (0) //人の名前
 #define RESORT_WORD_SHOP              (1) //「フラワー○○」とか（現在のお店）
 #define RESORT_WORD_SHOP_LABEL        (2) //「売る」とか
 #define RESORT_WORD_FREE_GREET        (3)
@@ -291,6 +299,29 @@
 #define RESORT_RANK_WND_GET_POKE              (6)
 #define RESORT_RANK_WND_HATCH_EGG             (7)
 #define RESORT_RANK_WND_MAX                   (8)
+
+//_RESORT_GET_OFFRECO用
+#define RESORT_OFFRECO_GAMESTART_MSGID        (0)
+#define RESORT_OFFRECO_DENDOU_MSGID           (1)
+#define RESORT_OFFRECO_PLAYTIME_MSGID         (2)
+#define RESORT_OFFRECO_ZUKAN_MSGID            (3)
+#define RESORT_OFFRECO_POKE_MSGID             (5)
+#define RESORT_OFFRECO_COMEFROM_MSGID         (6)
+#define RESORT_OFFRECO_JOB_MSGID              (7)
+#define RESORT_OFFRECO_HOBBY_MSGID            (8)
+#define RESORT_OFFRECO_CITYLV_MSGID           (9)
+#define RESORT_OFFRECO_CITYMSG_EXSIT          (10)
+#define RESORT_OFFRECO_CITYSHOP_CNT           (11)
+#define RESORT_OFFRECO_ENDSHOP_MSGID          (12)
+#define RESORT_OFFRECO_SHOP_MSGID_00          (13)
+#define RESORT_OFFRECO_SHOP_MSGID_01          (14)
+#define RESORT_OFFRECO_SHOP_MSGID_02          (15)
+#define RESORT_OFFRECO_SHOP_MSGID_03          (16)
+#define RESORT_OFFRECO_SHOP_MSGID_04          (17)
+#define RESORT_OFFRECO_SHOP_MSGID_05          (18)
+#define RESORT_OFFRECO_SHOP_MSGID_06          (19)
+#define RESORT_OFFRECO_SHOP_MSGID_07          (20)
+
 
 //リゾート用レコードID
 #define  RESORT_RECORD_ID_NONE        ( 0)//なにもない

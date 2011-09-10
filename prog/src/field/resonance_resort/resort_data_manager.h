@@ -13,7 +13,6 @@
 #include "resort_map.h"
 #include "resort_people_def.h"
 #include "resort_binary.h"
-#include "field/field_msgbg.h"
 
 //=============================================================================
 /**
@@ -177,17 +176,3 @@ extern void RESORT_DATA_MANAGER_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 typ
 
 extern void RESORT_DATA_MANAGER_SetPresetPeople( RESORT_DATA_MANAGER *p_wk, RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_PROXY_BUFF *p_proxy_buff, const RESORT_BINARY_PRESET *cp_preset, const MYSTATUS *cp_mystatus, u16 people_type, u16 preset_type, HEAPID heapID );
 
-
-//=============================================================================
-/**
- *					ÉåÉRÅ[Éhâ{óó
-*/
-//=============================================================================
-extern FLDMSGWIN * RESORT_RANK_WND_Create( FLDMSGBG *p_msgbg, HEAPID heapID );
-extern void RESORT_RANK_WND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *p_people_all, FLDMSGBG *p_msgbg, WORDSET *p_wordset, GAMEDATA *p_gamedata, u32 param, HEAPID heapID );
-
-extern u16 RESORT_SCRCMD_GetMsgID( u16 param, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_ABSTRUCT_MANAGER *p_man, RESORT_CITY_DATA *p_city ,RESORT_BINARY_SPOT *p_spot, RESORT_BINARY_SHOP *p_shop, RESORT_BINARY_CITY *p_city_data, WORDSET *p_wordset, HEAPID heapID );
-
-extern void RESORT_SCRCMD_CheckSpot( u16 index, RESORT_RESIDENT_DATA *p_resident, RESORT_CITY_DATA *p_city_data,RESORT_BINARY_SPOT *p_spot, RESORT_BINARY_SHOP *p_shop, RESORT_BINARY_CITY *p_city, WORDSET *p_wordset, u16 *ret_grade_msg, u16 *ret_eff_msg, u16 *ret_lvup, u16* ret_city_lvup );
-
-extern BOOL RESORT_SCRCMD_IsFever( RESORT_ABSTRUCT_MANAGER *p_man, RESORT_CITY_DATA *p_city_data );

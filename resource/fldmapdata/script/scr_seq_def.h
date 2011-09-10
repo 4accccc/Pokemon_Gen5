@@ -14100,16 +14100,16 @@
 
 //--------------------------------------------------------------
 /**
- * @brief リゾート用  サービス情報を取得
+ * @brief リゾート用  住民個人情報を取得  内部でワードセットする
  */
 //--------------------------------------------------------------
-#define _RESORT_GET_OFFRECO( npc_idx, cnt, ret_wk ) \
-      _ASM_RESORT_GET_OFFRECO npc_idx, cnt, ret_wk
+#define _RESORT_GET_OFFRECO( index, param, ret_wk ) \
+      _ASM_RESORT_GET_OFFRECO index, param, ret_wk
 
-  .macro _ASM_RESORT_GET_OFFRECO npc_idx, cnt, ret_wk
+  .macro _ASM_RESORT_GET_OFFRECO index, param, ret_wk
   .short EV_SEQ_RESORT_GET_OFFRECO
-  .short \npc_idx
-  .short \cnt
+  .short \index
+  .short \param
   .short \ret_wk
   .endm
 

@@ -224,12 +224,6 @@ typedef enum {
   EDITBOX_ID_RESI_UPDATE,
 
   //住民拡張１データ
-  EDITBOX_ID_EXT1_MEDAL_BIT_00,
-  EDITBOX_ID_EXT1_MEDAL_BIT_01,
-  EDITBOX_ID_EXT1_MEDAL_BIT_02,
-  EDITBOX_ID_EXT1_MEDAL_BIT_03,
-  EDITBOX_ID_EXT1_MEDAL_BIT_04,
-  EDITBOX_ID_EXT1_MEDAL_BIT_05,
   EDITBOX_ID_EXT1_MEDAL_ID,
   EDITBOX_ID_EXT1_MEDAL_YEAR,
   EDITBOX_ID_EXT1_MEDAL_MONTH,
@@ -881,30 +875,6 @@ static const STR_PARAM StrParamsResidentExtend123[] =
   {STR_TYPE_CAPTION, RESORT_DATA_49,  STR_POS_X, STR_LINE1_POS_Y,
     0,0,0,0,
     0,0,0},
-  //0
-  {STR_TYPE_BIT, CAPTION_NONE,  STR_POS_X, STR_LINE2_POS_Y,
-    0,STR_LINE2_POS_Y,16*8,TOUCH_H,
-    16,0,EDITBOX_ID_EXT1_MEDAL_BIT_00 },
-  //1
-  {STR_TYPE_BIT, CAPTION_NONE,  16*8+STR_POS_X, STR_LINE2_POS_Y,
-    16*8,STR_LINE2_POS_Y,16*8,TOUCH_H,
-    16,0,EDITBOX_ID_EXT1_MEDAL_BIT_01 },
-  //2
-  {STR_TYPE_BIT, CAPTION_NONE,  STR_POS_X, STR_LINE3_POS_Y,
-    0,STR_LINE3_POS_Y,16*8,TOUCH_H,
-    16,0,EDITBOX_ID_EXT1_MEDAL_BIT_02 },
-  //3
-  {STR_TYPE_BIT, CAPTION_NONE,  16*8+STR_POS_X, STR_LINE3_POS_Y,
-    16*8,STR_LINE3_POS_Y,16*8,TOUCH_H,
-    16,0,EDITBOX_ID_EXT1_MEDAL_BIT_03 },
-  //4
-  {STR_TYPE_BIT, CAPTION_NONE,  STR_POS_X, STR_LINE4_POS_Y,
-    0,STR_LINE4_POS_Y,16*8,TOUCH_H,
-    16,0,EDITBOX_ID_EXT1_MEDAL_BIT_04 },
-  //5
-  {STR_TYPE_BIT, CAPTION_NONE,  16*8+STR_POS_X, STR_LINE4_POS_Y,
-    16*8,STR_LINE4_POS_Y,16*8,TOUCH_H,
-    16,0,EDITBOX_ID_EXT1_MEDAL_BIT_05 },
   //イチオシ
   {STR_TYPE_CAPTION, RESORT_DATA_50,  STR_POS_X, STR_LINE5_POS_Y,
     0,0,0,0,
@@ -3125,17 +3095,6 @@ static void Resident_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_r
       p_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT );
     }
 
-    //ビット
-    {
-      u16 medal_bit[6];
-      RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, medal_bit );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_00]  = medal_bit[0];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_01]  = medal_bit[1];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_02]  = medal_bit[2];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_03]  = medal_bit[3];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_04]  = medal_bit[4];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_05]  = medal_bit[5];
-    }
 
     //日付
     {
@@ -3215,18 +3174,6 @@ static BOOL Resident_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_
     RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, cp_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT] );
   }
 
-  //ビット
-  {
-    u16 medal_bit[6];
-    medal_bit[0] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_00];
-    medal_bit[1] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_01];
-    medal_bit[2] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_02];
-    medal_bit[3] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_03];
-    medal_bit[4] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_04];
-    medal_bit[5] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_05];
-    RESORT_RESIDENT_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, (u32)medal_bit );
-  }
-
   //日付
   {
     RESORT_DATE date;
@@ -3296,17 +3243,6 @@ static void Tourist_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_re
       p_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT );
     }
 
-    //ビット
-    {
-      u16 medal_bit[6];
-      RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, medal_bit );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_00]  = medal_bit[0];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_01]  = medal_bit[1];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_02]  = medal_bit[2];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_03]  = medal_bit[3];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_04]  = medal_bit[4];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_05]  = medal_bit[5];
-    }
 
     //日付
     {
@@ -3387,18 +3323,6 @@ static BOOL Tourist_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_I
     RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, cp_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT] );
   }
 
-  //ビット
-  {
-    u16 medal_bit[6];
-    medal_bit[0] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_00];
-    medal_bit[1] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_01];
-    medal_bit[2] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_02];
-    medal_bit[3] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_03];
-    medal_bit[4] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_04];
-    medal_bit[5] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_05];
-    RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, (u32)medal_bit );
-  }
-
   //日付
   {
     RESORT_DATE date;
@@ -3459,17 +3383,6 @@ static void Owner_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_reso
       p_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT );
     }
 
-    //ビット
-    {
-      u16 medal_bit[6];
-      RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, medal_bit );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_00]  = medal_bit[0];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_01]  = medal_bit[1];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_02]  = medal_bit[2];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_03]  = medal_bit[3];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_04]  = medal_bit[4];
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_05]  = medal_bit[5];
-    }
 
     //日付
     {
@@ -3520,17 +3433,6 @@ static BOOL Owner_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INP
     RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, cp_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT] );
   }
 
-  //ビット
-  {
-    u16 medal_bit[6];
-    medal_bit[0] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_00];
-    medal_bit[1] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_01];
-    medal_bit[2] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_02];
-    medal_bit[3] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_03];
-    medal_bit[4] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_04];
-    medal_bit[5] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_05];
-    RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, (u32)medal_bit );
-  }
 
   //日付
   {

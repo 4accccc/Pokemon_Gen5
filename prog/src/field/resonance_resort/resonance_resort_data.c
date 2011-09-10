@@ -375,8 +375,8 @@ static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDA
     QUESTIONNAIRE_SAVE_WORK *p_ques_sv = SaveData_GetQuestionnaire(p_sv);
     QUESTIONNAIRE_ANSWER_WORK *p_ques_ans = Questionnaire_GetAnswerWork(p_ques_sv);
 
-    p_wk->job   = QuestionnaireAnswer_ReadBit(p_ques_ans, QUESTION_ID_JOB);
-    p_wk->hobby = QuestionnaireAnswer_ReadBit(p_ques_ans, QUESTION_ID_HOBBY);
+    p_wk->job   = QuestionnaireAnswer_ReadBit(p_ques_ans, QUESTION_ID_JOB) + 1;
+    p_wk->hobby = QuestionnaireAnswer_ReadBit(p_ques_ans, QUESTION_ID_HOBBY) + 1;
   }
 
   //プレイ時間
@@ -409,8 +409,8 @@ static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GA
   p_wk->objcode  = UnionView_GetObjCode( cp_beacon_info->trainer_view );
   {
     const QUESTIONNAIRE_ANSWER_WORK *cp_ques_ans = &cp_beacon_info->question_answer;
-    p_wk->job   = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_JOB);
-    p_wk->hobby = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_HOBBY);
+    p_wk->job   = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_JOB) + 1;
+    p_wk->hobby = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_HOBBY) + 1;
   }
 
   p_wk->play_hour = cp_beacon_info->play_hour;
@@ -608,11 +608,26 @@ static BOOL RESORT_BASIC2_DATA_IsValid( const RESORT_BASIC2_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u8  medal_bit[RESORT_RECV_MEDAL_BIT_BYTE];
-  u8  medal_rank;
-  u8  recommend_medalID;
+
+  u32 lot         :4;
+  u32 parlor      :4;
+  u32 market      :4;
+  u32 florist     :4;
+  u32 exercice    :4;
+  u32 nursery     :4;
+  u32 antique     :4;
+  u32 cafe        :4;      //4
+
+  u32 zukan       :10;
+  u32 first_poke  :10;
+  u32 medal_rank  :8;         //4
+  u32 dummy       :4;
+
+  u8  recommend_medalID;        //8
   u8  medal_num;
-  RESORT_DATE recommend_date;
+  RESORT_DATE   recommend_date;
+  RESORT_DATE   start_date;
+  RESORT_DATE   dendou_date;
 } RESORT_EXTEND1_DATA;
 SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND1_DATA) == RESORT_EXTEND1_DATA_SIZE );
 
@@ -627,27 +642,88 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND1_DATA) == RESORT_EXTEND1_DATA_SIZE );
 static void RESORT_EXTEND1_DATA_SetMyData( RESORT_EXTEND1_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
-  MEDALBOX *p_mdlbox  = SaveData_GetMedalBox(p_sv);
 
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND1_DATA) );
 
-  p_wk->medal_num  = MEDALBOX_GetMedalCount(p_mdlbox,FALSE);
-  p_wk->recommend_medalID = MEDALBOX_GetPushMedalID(p_mdlbox);
-
-  //TODO
-  //medal bit
-
-  p_wk->medal_rank = MEDALBOX_GetMedalBoxRank( p_mdlbox );
-
-  if( p_wk->recommend_medalID < MDLID_MAX )
+  //メダル情報
   {
-    u8 year;
-    u8 month;
-    u8 day;
+    MEDALBOX *p_mdlbox  = SaveData_GetMedalBox(p_sv);
+    p_wk->medal_num  = MEDALBOX_GetMedalCount(p_mdlbox,FALSE);
+    p_wk->recommend_medalID = MEDALBOX_GetPushMedalID(p_mdlbox);
+    p_wk->medal_rank = MEDALBOX_GetMedalBoxRank( p_mdlbox );
+    if( p_wk->recommend_medalID < MDLID_MAX )
+    {
+      u8 year;
+      u8 month;
+      u8 day;
 
-    MEDALBOX_GetDate( p_mdlbox, p_wk->recommend_medalID, &year , &month , &day );
+      MEDALBOX_GetDate( p_mdlbox, p_wk->recommend_medalID, &year , &month , &day );
 
-    p_wk->recommend_date = RESORT_DATE_SET( year, month, day );
+      p_wk->recommend_date = RESORT_DATE_SET( year, month, day );
+    }
+  }
+
+  //リゾート情報
+  {
+    RESONANCE_RESORT_SV *p_reso_sv = RESONANCE_RESORT_SV_GetWork(p_sv);
+    RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_reso_sv );
+    int i;
+    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+    {
+      RESORT_RESIDENT_DATA *p_resi = RESORT_PEOPLE_ALL_DATA_GetResident(p_people_all,i);
+      if( !RESORT_RESIDENT_DATA_IsEmpty(p_resi) )
+      {
+        u32 type = RESORT_RESIDENT_DATA_GetData(p_resi, RESORT_DATA_PARAM_TYPE, NULL);
+        switch(type)
+        {
+        case RESORT_RESIDENT_TYPE_NURSERY:
+          p_wk->nursery++;
+          break;
+        case RESORT_RESIDENT_TYPE_EXERCICE:
+          p_wk->exercice++;
+          break;
+        case RESORT_RESIDENT_TYPE_LOT:
+          p_wk->lot++;
+          break;
+        case RESORT_RESIDENT_TYPE_ANTIQUE:
+          p_wk->antique++;
+          break;
+        case RESORT_RESIDENT_TYPE_PARLOR:
+          p_wk->parlor++;
+          break;
+        case RESORT_RESIDENT_TYPE_MARKET:
+          p_wk->market++;
+          break;
+        case RESORT_RESIDENT_TYPE_CAFE:
+          p_wk->cafe++;
+          break;
+        case RESORT_RESIDENT_TYPE_FLORIST:
+          p_wk->florist++;
+          break;
+        }
+      }
+    }
+  }
+
+  //図鑑、先頭ポケ
+  {
+    ZUKAN_SAVEDATA *p_zukan = GAMEDATA_GetZukanSave((GAMEDATA *)cp_gamedata);
+    POKEPARTY *p_party = GAMEDATA_GetMyPokemon((GAMEDATA *)cp_gamedata);
+
+    p_wk->zukan = ZUKANSAVE_GetPokeGetCount( p_zukan );
+
+    if( PokeParty_GetPokeCount(p_party) >= 1 )
+    {
+      POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer(p_party, 0);
+      if( PP_Get( p_pp, ID_PARA_tamago_flag, NULL ) )
+      {
+        p_wk->first_poke = MONSNO_TAMAGO;
+      }
+      else
+      {
+        p_wk->first_poke = PP_Get( p_pp, ID_PARA_monsno, NULL );
+      }
+    }
   }
 }
 
@@ -1598,12 +1674,30 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
   case RESORT_DATA_PARAM_EXT1_MEDAL_BOX_RANK:
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
     return cp_wk->extend1.medal_rank;
-  case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:
-    if( p_ret_adrs )
-    {
-      GFL_STD_MemCopy( cp_wk->extend1.medal_bit, p_ret_adrs, RESORT_RECV_MEDAL_BIT_BYTE );
-    }
-    return (u32)cp_wk->extend1.medal_bit;
+  case RESORT_DATA_PARAM_EXT1_START_DATE:
+    return cp_wk->extend1.start_date;
+  case RESORT_DATA_PARAM_EXT1_DENDOU_DATE:
+    return cp_wk->extend1.dendou_date;
+  case RESORT_DATA_PARAM_EXT1_ZUKAN:
+    return cp_wk->extend1.zukan;
+  case RESORT_DATA_PARAM_EXT1_FIRST_POKE:
+    return cp_wk->extend1.first_poke;
+  case RESORT_DATA_PARAM_EXT1_SHOP_LOT:
+    return cp_wk->extend1.lot;
+  case RESORT_DATA_PARAM_EXT1_SHOP_PARLOR:
+    return cp_wk->extend1.parlor;
+  case RESORT_DATA_PARAM_EXT1_SHOP_MARKET:
+    return cp_wk->extend1.market;
+  case RESORT_DATA_PARAM_EXT1_SHOP_FLORIST:
+    return cp_wk->extend1.florist;
+  case RESORT_DATA_PARAM_EXT1_SHOP_EXERCICE:
+    return cp_wk->extend1.exercice;
+  case RESORT_DATA_PARAM_EXT1_SHOP_NURSERY:
+    return cp_wk->extend1.nursery;
+  case RESORT_DATA_PARAM_EXT1_SHOP_ANTIQUE:
+    return cp_wk->extend1.antique;
+  case RESORT_DATA_PARAM_EXT1_SHOP_CAFE:
+    return cp_wk->extend1.cafe;
   //拡張データ2
   case RESORT_DATA_PARAM_EXT2_RANK_00:
   case RESORT_DATA_PARAM_EXT2_RANK_01:
@@ -1854,8 +1948,41 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
     p_wk->extend1.medal_rank = data;
     break;
-  case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:
-    GFL_STD_MemCopy( (void*)data, p_wk->extend1.medal_bit, RESORT_RECV_MEDAL_BIT_BYTE );
+  case RESORT_DATA_PARAM_EXT1_START_DATE:
+    p_wk->extend1.start_date  = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_DENDOU_DATE:
+    p_wk->extend1.dendou_date = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_ZUKAN:
+    p_wk->extend1.zukan = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_FIRST_POKE:
+    p_wk->extend1.first_poke  = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_SHOP_LOT:
+    p_wk->extend1.lot = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_SHOP_PARLOR:
+    p_wk->extend1.parlor = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_SHOP_MARKET:
+    p_wk->extend1.market  = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_SHOP_FLORIST:
+    p_wk->extend1.florist = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_SHOP_EXERCICE:
+    p_wk->extend1.exercice  = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_SHOP_NURSERY:
+    p_wk->extend1.nursery = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_SHOP_ANTIQUE:
+    p_wk->extend1.antique = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_SHOP_CAFE:
+    p_wk->extend1.cafe  = data;
     break;
   //拡張データ2
   case RESORT_DATA_PARAM_EXT2_RANK_00:
