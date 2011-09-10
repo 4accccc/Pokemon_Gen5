@@ -25,6 +25,9 @@
 #include  "sound/swan_sound_data.sadl"
 #include  "message.naix"
 
+#include  "gamesystem/game_data.h"
+#include  "savedata/etc_save.h"
+
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_nishino | defined DEBUG_ONLY_FOR_nakatsui | defined DEBUG_ONLY_FOR_nagihashi_toru
 #define SEIKAKU_PRINT
@@ -464,12 +467,13 @@ BtlBgAttr TT_TrainerTypeBtlBgAttrGet( int trtype )
 /**
  *  @brief  エンカウントトレーナーデータを取得する
  *
+ *  @param[in]      gamedata ゲームデータ
  *  @param[in/out]  bp      戦闘システムに引き渡す構造体のポインタ
  *  @param[in]      num     何番目のトレーナーID？（タッグの時のため）
  *  @param[in]      heapID  メモリ確保するためのヒープID
  */
 //============================================================================================
-void TT_EncountTrainerPersonalDataMake( TrainerID tr_id, BSP_TRAINER_DATA* data, HEAPID heapID )
+void	TT_EncountTrainerPersonalDataMake( GAMEDATA* gamedata, TrainerID tr_id, BSP_TRAINER_DATA* data, HEAPID heapID )
 {
   TRAINER_DATA*   td;
 
@@ -481,6 +485,14 @@ void TT_EncountTrainerPersonalDataMake( TrainerID tr_id, BSP_TRAINER_DATA* data,
   data->tr_type = td->tr_type;
   data->ai_bit = td->aibit;
 
+  if( data->tr_type == TRTYPE_SWRIVAL )
+  {
+    // ライバルならセーブデータから名前を取得
+    SAVE_CONTROL_WORK * sv_ctrl_work = GAMEDATA_GetSaveControlWork( gamedata );
+    ETC_SAVE_WORK * etcsave = SaveData_GetEtc( sv_ctrl_work );
+    GFL_STR_SetStringCode( data->name, EtcSave_GetRivalName( etcsave ) );
+  }
+  else
   {
     GFL_MSGDATA* man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trname_dat, heapID );
     GFL_MSG_GetString( man, tr_id, data->name );
