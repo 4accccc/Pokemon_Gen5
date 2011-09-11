@@ -1837,10 +1837,10 @@
 		Label="msg_fm_title_npc_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>かけだし　エリートトレーナー！</Text>
+			<Text>かくとうかと　しゅぎょう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T07:55:21" />
+				Time="2011-09-11T04:37:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1848,10 +1848,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かけだし　エリートトレーナー！</Text>
+			<Text>かくとうかと　しゅぎょう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-11T04:37:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1879,7 +1879,7 @@
 			<Text>エリートへの　みちのり！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T08:39:43" />
+				Time="2011-09-11T04:37:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2461,10 +2461,10 @@
 		Label="msg_fm_title_evt_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>きのこ　だいしゅうかく！</Text>
+			<Text>きのこの　かくれんぼ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T09:34:19" />
+				Time="2011-09-10T08:48:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2472,10 +2472,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きのこ　だいしゅうかく！</Text>
+			<Text>きのこの　かくれんぼ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T08:48:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2578,10 +2578,10 @@
 		Label="msg_fm_title_evt_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>スーパー　タマゴふか　タイム！</Text>
+			<Text>タマゴと　おさんぽ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T09:37:31" />
+				Time="2011-09-10T08:44:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2589,10 +2589,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スーパー　タマゴふか　タイム！</Text>
+			<Text>タマゴと　おさんぽ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T08:45:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3487,13 +3487,13 @@
 		Label="msg_fm_explain_npc_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベテラントレーナーの
+			<Text>エリートトレーナーの
 しゅぎょうの　あいてを　しよう！
 せいげんじかんないに
 [Digit:4digits Idx="1" ]にんいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T11:06:39" />
+				Time="2011-09-11T04:38:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3501,13 +3501,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベテラントレーナーの
+			<Text>エリートトレーナーの
 しゅぎょうの　あいてを　しよう！
 せいげんじかんないに
 [Digit:4digits Idx="1" ]にんいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-11T04:38:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4073,12 +4073,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
-ポケモンを　さがしてみよう！
+[Name:PokemonName ]を　さがしてみよう！
 せいげんじかんないに
 [Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:17:07" />
+				Time="2011-09-10T05:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4087,12 +4087,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゆれる　くさむらにいる
-ポケモンを　さがしてみよう！
+[Name:PokemonName ]を　さがしてみよう！
 せいげんじかんないに
 [Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T05:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4123,7 +4123,7 @@
 [Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:19:05" />
+				Time="2011-09-10T05:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4137,7 +4137,7 @@
 [Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T05:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4148,14 +4148,14 @@
 			<Comment>ミッション説明文</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:18:15" />
+				Time="2011-09-10T05:52:39" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
 			<Comment>ミッション説明文</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T05:52:39" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -4168,7 +4168,7 @@
 [Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:19:18" />
+				Time="2011-09-10T05:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4182,7 +4182,7 @@
 [Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T05:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4193,14 +4193,14 @@
 			<Comment>ミッション説明文</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:22:54" />
+				Time="2011-09-10T05:52:39" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
 			<Comment>ミッション説明文</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T05:52:39" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -4213,7 +4213,7 @@
 [Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:19:19" />
+				Time="2011-09-10T05:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4227,7 +4227,7 @@
 [Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T05:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4238,14 +4238,14 @@
 			<Comment>ミッション説明文</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:22:54" />
+				Time="2011-09-10T05:52:39" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
 			<Comment>ミッション説明文</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T05:52:39" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -4258,7 +4258,7 @@
 [Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:19:22" />
+				Time="2011-09-10T05:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4272,7 +4272,7 @@
 [Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T05:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4283,59 +4283,14 @@
 			<Comment>ミッション説明文</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:22:54" />
+				Time="2011-09-10T05:52:39" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
 			<Comment>ミッション説明文</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_fm_explain_poke_07">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゆれる　くさむらにいる
-[Name:PokemonName ]を　さがしてみよう！
-せいげんじかんないに
-[Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:19:24" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:19:24" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゆれる　くさむらにいる
-[Name:PokemonName ]を　さがしてみよう！
-せいげんじかんないに
-[Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ミッション説明文</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:22:54" />
-		</CommentCell>
-		<CommentCell
-			Language="JPN_KANJI">
-			<Comment>ミッション説明文</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-10T05:52:39" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -4523,7 +4478,7 @@
 ふか　させよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:44:29" />
+				Time="2011-09-10T08:47:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4727,6 +4682,45 @@
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
 				Time="2011-08-26T12:42:00" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_explain_tr_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナーを　たおせ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-10T05:55:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-10T05:55:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレーナーを　倒せ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-10T05:55:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-10T05:55:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-10T05:55:43" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-10T05:55:43" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>
