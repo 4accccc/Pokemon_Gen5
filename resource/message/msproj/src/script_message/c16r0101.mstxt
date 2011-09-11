@@ -64,18 +64,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここは　イッシュちほうの
-はるか　みなみの　うみに　ある▼
-うめたてて　つくられた
-じんこうの　しま　です▼
-ヒウンシティから　ひこうきに　のって
-おとずれる　ことが　できます▼
-トレーナーが　はねやすみ　できる
-すてきな　リゾートに　なるように▽
+			<Text>ここは　イッシュちほうで
+いちばん　あたらしい　まち▽
+【街名】です▼
+たくさんの　ひとびとが　おとずれて
+よろこびと　つながりが　ある▽
+すてきな　まちに　なるように▽
 げんざい　かいはつ　しています▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:00" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T11:44:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -83,18 +81,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここは　イッシュちほうの
-はるか　みなみの　うみに　ある▼
-うめたてて　つくられた
-じんこうの　しま　です▼
-ヒウンシティから　ひこうきに　のって
-おとずれる　ことが　できます▼
-トレーナーが　はねやすみ　できる
-すてきな　リゾートに　なるように▽
+			<Text>ここは　イッシュちほうで
+いちばん　あたらしい　まち▽
+【街名】です▼
+たくさんの　ひとびとが　おとずれて
+よろこびと　つながりが　ある▽
+すてきな　まちに　なるように▽
 げんざい　かいはつ　しています▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:00" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T11:44:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -121,22 +117,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このリゾートを　けいかくした
-とある　おかねもちの▽
-ジェントルマンに　スカウトされて▼
-あなたは　この　リゾートの
+			<Text>この　アベニューを　つくった
+オーナーに　スカウトされて▼
+あなたは　この　アベニューの
 かいはつの　せきにんしゃ　である▽
 『[Name:ResortMayor Idx="0" ]』に　なりました▼
 ここでの　もくてきは　ただ　ひとつ
-すてきな　リゾートを　つくること！▼
+すてきな　まちを　つくること！▼
 あそびに　きた　ひとびとが
-まんぞく　できる　しまに　しましょう▼
-うしろに　おしごとを　てだすけ　する
+まんぞく　できる　まちに　しましょう▼
+おしごとを　てだすけ　する
 ひしょも　ひかえて　いますから▽
 なんなりと　もうしつけ　ください▼　</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:05" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T12:10:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -144,22 +139,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このリゾートを　けいかくした
-とある　おかねもちの▽
-ジェントルマンに　スカウトされて▼
-あなたは　この　リゾートの
+			<Text>この　アベニューを　つくった
+オーナーに　スカウトされて▼
+あなたは　この　アベニューの
 かいはつの　せきにんしゃ　である▽
 『[Name:ResortMayor Idx="0" ]』に　なりました▼
 ここでの　もくてきは　ただ　ひとつ
-すてきな　リゾートを　つくること！▼
+すてきな　まちを　つくること！▼
 あそびに　きた　ひとびとが
-まんぞく　できる　しまに　しましょう▼
-うしろに　おしごとを　てだすけ　する
+まんぞく　できる　まちに　しましょう▼
+おしごとを　てだすけ　する
 ひしょも　ひかえて　いますから▽
 なんなりと　もうしつけ　ください▼　</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:05" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T12:10:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -189,18 +183,17 @@
 			<Text>さまざまな　つうしんを　して
 まちに　ゲストを　よびましょう▼
 つうしんしした　あいては
-このさきの　ワープポイントから　いく▽
-ゲストルームに　やってくるので▽
+アベニューに　あらわれるので▽
 はなしかけて　みましょう▼
-ゲストルームで　できることは
+はなしかけて　できることは
 つぎの　２つ　です▼
 「まちに　しょうたい」　すること
-「スポットに　あんない」　すること▼
+「まちを　あんない」　すること▼
 くわくは　それぞれの
 せつめいを　おききください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:11" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -211,18 +204,17 @@
 			<Text>さまざまな　つうしんを　して
 まちに　ゲストを　よびましょう▼
 つうしんしした　あいては
-このさきの　ワープポイントから　いく▽
-ゲストルームに　やってくるので▽
+アベニューに　あらわれるので▽
 はなしかけて　みましょう▼
-ゲストルームで　できることは
+はなしかけて　できることは
 つぎの　２つ　です▼
 「まちに　しょうたい」　すること
-「スポットに　あんない」　すること▼
+「まちを　あんない」　すること▼
 くわくは　それぞれの
 せつめいを　おききください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:11" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:04:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -256,12 +248,10 @@
 ハイリンクで　しんにゅうされたり
 ユニオンルームや　ＩＲつうしん▽
 ランダムマッチ　ＧＴＳ　などで▽
-あそんだ　あいても　やってきます▼
-つうしん　したら　まずは
-ゲストルームへ　いってみましょう▼</Text>
+あそんだ　あいても　やってきます▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:16" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:04:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -276,12 +266,10 @@
 ハイリンクで　しんにゅうされたり
 ユニオンルームや　ＩＲつうしん▽
 ランダムマッチ　ＧＴＳ　などで▽
-あそんだ　あいても　やってきます▼
-つうしん　したら　まずは
-ゲストルームへ　いってみましょう▼</Text>
+あそんだ　あいても　やってきます▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:16" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:04:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -309,15 +297,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>「しょうたいする」を　えらぶと
-ゲストが　リゾートの　じゅうにんと▽
-なって　たてものが　つくられます▼
-ゆめを　もっている　ひとは
-とくべつな　スポットが　できるので▼
+ゲストが　まちの　じゅうにんと▽
+なって　おみせが　つくられます▼
+それぞれの　ひとが
+ゆめを　もっているので▼
 しょうたいする　ときに　あいての
 はなしを　よくきいて　えらびましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T11:31:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -326,15 +314,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>「しょうたいする」を　えらぶと
-ゲストが　リゾートの　じゅうにんと▽
-なって　たてものが　つくられます▼
-ゆめを　もっている　ひとは
-とくべつな　スポットが　できるので▼
+ゲストが　まちの　じゅうにんと▽
+なって　おみせが　つくられます▼
+それぞれの　ひとが
+ゆめを　もっているので▼
 しょうたいする　ときに　あいての
 はなしを　よくきいて　えらびましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T11:31:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -361,30 +349,26 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲストルームに　いる　ひとへ
+			<Text>まちに　きた　ひとへ
 「あんないする」を▽
 やってみましょう▼
 ゲストが　まんぞくすると
-あんない　した　スポットと▽
+あんない　した　おみせと▽
 まちの　にんきが　あがります▼
 にんきを　たくさん　あつめると
-レベルアップ　しますよ▼
-スポットの　レベルが　あがれば
+ランクが　アップ　します▼
+おみせの　ランクが　あがれば
 しなものや　サービスが▽
-はってんして　べんりに　なります▼
-まちの　レベルが　あがると
-あたらしい　スポットを▽
-たてられるように　なったり▼
-うわさを　ききつけて
-ジムリーダーの　ような▽
-ゆうめいじんが　あそびに▽
-くるかも　しれません▼
+べんりに　なります▼
+まちの　ランクが　あがると
+おみせの　しなものの　ねだんが▽
+ちょっぴり　おやすく　なります▼
 ゲストの　いきたい　ところへ
 うまく　あんないして▽
 にんきを　あげて　いきましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:27" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:18:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -392,30 +376,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲストルームに　いる　ひとへ
+			<Text>まちに　きた　ひとへ
 「あんないする」を▽
 やってみましょう▼
 ゲストが　まんぞくすると
-あんない　した　スポットと▽
+あんない　した　おみせと▽
 まちの　にんきが　あがります▼
 にんきを　たくさん　あつめると
-レベルアップ　しますよ▼
-スポットの　レベルが　あがれば
+ランクが　アップ　します▼
+おみせの　ランクが　あがれば
 しなものや　サービスが▽
-はってんして　べんりに　なります▼
-まちの　レベルが　あがると
-あたらしい　スポットを▽
-たてられるように　なったり▼
-うわさを　ききつけて
-ジムリーダーの　ような▽
-ゆうめいじんが　あそびに▽
-くるかも　しれません▼
+べんりに　なります▼
+まちの　ランクが　あがると
+おみせの　しなものの　ねだんが▽
+ちょっぴり　おやすく　なります▼
 ゲストの　いきたい　ところへ
 うまく　あんないして▽
 にんきを　あげて　いきましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:27" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:18:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -442,11 +422,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すてきな　リゾートになること
+			<Text>すてきな　まちに　なること
 たのしてみに　しています▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:35" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:18:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -454,11 +434,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すてきな　リゾートになること
+			<Text>すてきな　まちに　なること
 たのしてみに　しています▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:35" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -487,10 +467,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここって　どこ？</Text>
+			<Text>ここって　なに？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:41" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -498,10 +478,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここって　どこ？</Text>
+			<Text>ここって　なに？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:41" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:00:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -567,10 +547,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すてきなリゾート　って？</Text>
+			<Text>すてきなまち　って？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:47:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -578,10 +558,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すてきなリゾート　って？</Text>
+			<Text>すてきなまち　って？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-11T09:47:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
