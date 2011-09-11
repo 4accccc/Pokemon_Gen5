@@ -18,7 +18,7 @@
 
 
 ///ƒtƒŒ[ƒ€”’è‹`
-#define DRAW_ANMFRM_NONFLIP_SWSAGE1_ACT0  ( 40 )
+#define DRAW_ANMFRM_NONFLIP_SWSAGE1_ACT0  ( 55 )
 
 
 #endif //__H_FMMDL_ANM_NONFLIP_SWSAGE1_H__
