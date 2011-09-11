@@ -176,6 +176,17 @@ extern const POS_EVENT_DATA * EVENTDATA_GetPosEventDataTbl(
 
 //------------------------------------------------------------------
 /**
+ * @brief	BGイベント データテーブル取得
+ * @param	evdata  イベントデータへのポインタ
+ * @param o_num   int*   イベントデータ数を格納して返すワークポインタ
+ * @retval BG_EVENT_DATA* (NULL = イベントなし)
+ */
+//------------------------------------------------------------------
+extern const BG_TALK_DATA * EVENTDATA_GetTalkBGEventTbl(
+    const EVENTDATA_SYSTEM *evdata, int* o_num );
+
+//------------------------------------------------------------------
+/**
  * @brief	座標イベントを取得(高さを無視するver.)
  * @param	evdata イベントデータへのポインタ
  * @param evwork イベントワークへのポインタ 
@@ -272,5 +283,32 @@ extern BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx3
  */
 //-----------------------------------------------------------------------------
 extern BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_LOCATION* cp_location );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGTalk グリッドマップ　座標あたり判定
+ *
+ *	@param	cp_data   データ
+ *	@param	cp_pos    ３D座標
+ *
+ *	@retval TRUE  範囲内
+ *	@retval FALSE 範囲外
+ */
+//-----------------------------------------------------------------------------
+extern BOOL BGTalkData_GPOS_IsHit( const BG_TALK_DATA* cp_data, const VecFx32* cp_pos );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール座標の判定
+ *
+ *	@param	cp_data       データ
+ *	@param	cp_location   レールロケーション
+ *
+ *	@retval TRUE  範囲内
+ *	@retval FALSE 範囲外
+ */
+//-----------------------------------------------------------------------------
+extern BOOL BGTalkData_RPOS_IsHit( const BG_TALK_DATA* cp_data, const RAIL_LOCATION* cp_location );
+
 
 

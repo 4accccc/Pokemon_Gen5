@@ -2942,6 +2942,9 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
   //新規ゾーンに配置する動作モデルを追加
   MAPCHG_loadMMdl( gamedata, loc_req );
 
+  //フェスギミックゾーン初期化
+  FES_GIMMICK_ZoneChangeSetup( gsys, loc.zone_id );
+
   //フィールド技　マップ効果
   MAPCHG_setupFieldSkillMapEff( gamedata, loc.zone_id );
 

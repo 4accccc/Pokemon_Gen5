@@ -388,7 +388,7 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
   case 2:
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );
-    FES_GIMMICK_ZoneChangeSetup( wk->fes_gimmick, FIELDMAP_GetZoneID( wk->fieldmap) );
+    FES_GIMMICK_ZoneChangeSetup( wk->gsys, FIELDMAP_GetZoneID( wk->fieldmap) );
 #if 0
     TIMEICON_Exit( wk->timeIcon );
     FLDSYSWIN_STREAM_Delete( wk->winStream );
@@ -620,6 +620,8 @@ static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void
     (*seq)++;
     break;
   case 2:
+    //ミッションギミック削除処理
+    FES_GIMMICK_Delete( FIELDMAP_GetFesGimmickSys( wk->fieldmap ) );
     LINK_FESTIVAL_MissionEnd( wk->fest_sys ); //ミッション終了
     GMEVENT_CallEvent( event, EVENT_FieldClose( wk->gsys, wk->fieldmap ) );
     (*seq)++;

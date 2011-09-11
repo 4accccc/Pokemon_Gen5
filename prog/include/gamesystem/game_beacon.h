@@ -151,7 +151,7 @@ typedef enum{
   GAMEBEACON_ACTION_FMISSION_MUSHROOM_CAPTURE,      ///<フェスミッション [ポケモン名]を捕まえた(キノコエンカウント)
 
   GAMEBEACON_ACTION_FMISSION_HELP_CHILD,         ///<フェスミッション まいごを助けた
-  GAMEBEACON_ACTION_FMISSION_HAND_A_PRESENT,     ///<フェスミッション [アイテム名]を渡した
+  GAMEBEACON_ACTION_FMISSION_PRESENT_ITEM,       ///<フェスミッション [アイテム名]を渡した
   GAMEBEACON_ACTION_FMISSION_ELITE_TR_WIN,       ///<フェスミッション エリートトレーナーを倒した
   GAMEBEACON_ACTION_FMISSION_ITEM_TRADE,         ///<フェスミッション 道具交換成功
   GAMEBEACON_ACTION_FMISSION_ITEM_BUY,           ///<フェスミッション [アイテム名]を買った

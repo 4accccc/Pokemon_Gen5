@@ -84,6 +84,10 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     (*seq)++;
     break;
   case _FIELD_FADE_CLOSE:
+    if( faw->mode == FMISSION_APP_MODE_RESULT ){
+      //ミッションギミック削除処理
+      FES_GIMMICK_Delete( FIELDMAP_GetFesGimmickSys( fwork ) );
+    }
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fwork));
     (*seq)++;
     break;

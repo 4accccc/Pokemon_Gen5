@@ -45,11 +45,6 @@ struct _LINK_FESTIVAL{
   FEST_BEACON*  m_beacon;           //現ミッションデータ ビーコン構造体へのアクセスポインタ
   FMISSION_ARC_COMMON*  m_arc;      //現ミッションデータ コモンアーカイブデータ構造体へのアクセスポインタ
 
-//  GFL_STD_RandContext rnd_context;  //現ミッションで用いる乱数コンテキスト
-
-  //ミッションフラグ領域
-  u8  m_flag[FMISSION_FLAG_AREA_LEN];
-
   //スコアログ
   LINKFEST_LOG  log[LINKFEST_LOG_MAX];
   LINKFEST_LOG  last;  //最後のミッションログ
@@ -60,5 +55,7 @@ struct _LINK_FESTIVAL{
 
   struct  _FMISSION_GPOWER_TBL  mlog_gpower_tbl;  //ミッションログ　デルパワーストックテーブル
   struct  _FMISSION_ENTRY_TBL   mlog_entry_tbl;   //ミッションログ　エントリーデータストックテーブル
+
+  u8  m_gmk_work[FMISSION_WORK_AREA_LEN];
 };
 

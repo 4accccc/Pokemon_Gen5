@@ -1269,12 +1269,22 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 #ifdef BUGFIX_GFBTS1975_100713
   //Gパワー効果終了チェック
   if( req.subscreenRequest && WIPE_SYS_EndCheck() ){
+    //フェスタミッション終了チェック
+    event = CheckFesMissionEnd( gsys, fieldWork );
+    if( event != NULL ){
+      return event;
+    }
     event = CheckGPowerEffectEnd( gsys );
     if( event != NULL ){
       return event;
     }
   }
 #else
+  //フェスタミッション終了チェック
+  event = CheckFesMissionEnd( gsys, fieldWork );
+  if( event != NULL ){
+    return event;
+  }
   //Gパワー効果終了チェック
   event = CheckGPowerEffectEnd( gsys );
   if( event != NULL ){

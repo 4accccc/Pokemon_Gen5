@@ -292,12 +292,12 @@ void FMISSION_DATA_GetExpStr( FMISSION_DATA_MAN* man, STRBUF* str, const FEST_MI
   WORDSET* wset = WORDSET_CreateEx( 2, WORDSET_FMISSION_BUFLEN, GFL_HEAP_LOWID(heapID));
   STRBUF* tmp = GFL_STR_CreateBuffer( BUFLEN_FMISSION_EXP, GFL_HEAP_LOWID(heapID) );
  
-  //目標
-  WORDSET_RegisterNumber( wset, 0, beacon->goal, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-
   //パラメータ
-  wset_MissionParam( wset, tmp, 1, DATA_FMissionDataType[arc->m_type].param_wset, beacon->base_param ); 
+  wset_MissionParam( wset, tmp, 0, DATA_FMissionDataType[arc->m_type].param_wset, beacon->base_param ); 
   
+  //目標
+  WORDSET_RegisterNumber( wset, 1, beacon->goal, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
   GFL_MSG_GetString( man->msg, arc->m_exp_id, tmp );
   WORDSET_ExpandStr( wset, str, tmp );
 

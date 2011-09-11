@@ -143,7 +143,7 @@ typedef enum{
   BG_TALK_TYPE_HIDE,  //隠しアイテム
   BG_TALK_TYPE_MAX,
 
-  BG_TALK_TYPE_DUMMY_FES = BG_TALK_TYPE_MAX, ///<フェスミッション用ダミーイベント
+  BG_TALK_TYPE_DUMMY_FES,     ///<フェスミッション用ダミーイベント
   BG_TALK_TYPE_DUMMY_FES_NPC, ///<フェスNPCミッション用ダミーイベント
 }BG_TALK_TYPE;
 

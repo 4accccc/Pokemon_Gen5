@@ -130,9 +130,9 @@ static u16 ConnectData_GetExitDirToDir( const CONNECT_DATA * cp_data );
 // BG_TALK_DATA ポジション
 //============================================================================================
 static void BGTalkData_GPOS_GetPos( const BG_TALK_DATA* cp_data, VecFx32* p_pos );
-static BOOL BGTalkData_GPOS_IsHit( const BG_TALK_DATA* cp_data, const VecFx32* cp_pos );
+//static BOOL BGTalkData_GPOS_IsHit( const BG_TALK_DATA* cp_data, const VecFx32* cp_pos );
 static void BGTalkData_RPOS_GetLocation( const BG_TALK_DATA* cp_data, RAIL_LOCATION* p_location );
-static BOOL BGTalkData_RPOS_IsHit( const BG_TALK_DATA* cp_data, const RAIL_LOCATION* cp_location );
+//static BOOL BGTalkData_RPOS_IsHit( const BG_TALK_DATA* cp_data, const RAIL_LOCATION* cp_location );
 
 //============================================================================================
 // POS_EVENT_DATA ポジション
@@ -754,9 +754,9 @@ BOOL CONNECTDATA_IsClosedExit( const CONNECT_DATA * connect )
 
 //-----------------------------------------------------------------------------
 /**
- * @brief BGイベントの移動
+ * @brief 出入り口イベントの移動
  * @param evdata
- * @param bg_id
+ * @param exit_id
  * @param gx
  * @param gy
  * @param gz
@@ -793,7 +793,7 @@ void EVENTDATA_MoveConnectData( EVENTDATA_SYSTEM * evdata, u16 exit_id, u16 gx, 
 //		動作モデル関連
 //============================================================================================
 //------------------------------------------------------------------
-/* フェスミッション用*
+/* フェスミッション用
  * @brief	動作モデルヘッダーを取得
  * @param	evdata		イベントデータへのポインタ
  * @retval	MMDL_HEADER*
@@ -1177,6 +1177,21 @@ enum {
 
 //------------------------------------------------------------------
 /**
+ * @brief	BGイベント データテーブル取得
+ * @param	evdata  イベントデータへのポインタ
+ * @param o_num   int*   イベントデータ数を格納して返すワークポインタ
+ * @retval BG_EVENT_DATA* (NULL = イベントなし)
+ */
+//------------------------------------------------------------------
+const BG_TALK_DATA * EVENTDATA_GetTalkBGEventTbl(
+    const EVENTDATA_SYSTEM *evdata, int* o_num )
+{
+  *o_num = evdata->bg_count;
+  return (const BG_TALK_DATA*)evdata->bg_data;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	BG話し掛けイベントチェック    内部でPOSTYPEを判断
  * @param	evdata イベントデータへのポインタ
  * @param pos チェックする座標　　VecFx32* or RAIL_LOCATION*
@@ -1196,6 +1211,9 @@ static u16 EventData_CheckTalkBGEventBase(
     u16 max = evdata->bg_count;
     for( ; i < max; i++, data++ )
     {
+      if( data->type >= BG_TALK_TYPE_MAX ){
+        continue; //ダミーイベントをはじく
+      }
       if(data->pos_type == EVENTDATA_POSTYPE_GRID)
       {
         if( !BGTalkData_GPOS_IsHit( data, pos ) )
@@ -2032,7 +2050,7 @@ static void BGTalkData_GPOS_GetPos( const BG_TALK_DATA* cp_data, VecFx32* p_pos 
  *	@retval FALSE 範囲外
  */
 //-----------------------------------------------------------------------------
-static BOOL BGTalkData_GPOS_IsHit( const BG_TALK_DATA* cp_data, const VecFx32* cp_pos )
+BOOL BGTalkData_GPOS_IsHit( const BG_TALK_DATA* cp_data, const VecFx32* cp_pos )
 {
   const BG_TALK_DATA_GPOS* cp_gpos;
   int gx, gz, y;
@@ -2116,7 +2134,7 @@ static void BGTalkData_RPOS_GetLocation( const BG_TALK_DATA* cp_data, RAIL_LOCAT
  *	@retval FALSE 範囲外
  */
 //-----------------------------------------------------------------------------
-static BOOL BGTalkData_RPOS_IsHit( const BG_TALK_DATA* cp_data, const RAIL_LOCATION* cp_location )
+BOOL BGTalkData_RPOS_IsHit( const BG_TALK_DATA* cp_data, const RAIL_LOCATION* cp_location )
 {
   const BG_TALK_DATA_RPOS * cp_pos;
   

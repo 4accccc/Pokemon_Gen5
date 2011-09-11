@@ -11,7 +11,15 @@
 //               スクリプト本体
 //--------------------------------------------------------------------
 _EVENT_DATA   ev_fmission_item_get
-_EVENT_DATA   ev_fmission_npc_talk
+_EVENT_DATA   ev_fmission_npc_lost_children
+_EVENT_DATA   ev_fmission_npc_present_item
+_EVENT_DATA   ev_fmission_npc_item_tarade
+_EVENT_DATA   ev_fmission_npc_item_buy
+_EVENT_DATA   ev_fmission_npc_item_rps
+_EVENT_DATA   ev_fmission_npc_memory_quiz
+_EVENT_DATA   ev_fmission_npc_battle
+_EVENT_DATA   ev_fmission_npc_get_a_present
+_EVENT_DATA   ev_fmission_npc_zukan_quiz
 _EVENT_DATA_END //終了
 
 //--------------------------------------------------------------------
@@ -29,11 +37,101 @@ EVENT_END
 
 
 /**************************************************************/
-/*  NPC探しミッション：話しかけイベント                       */
+/*  NPC探しミッション：話しかけイベント　　                   */
 /**************************************************************/
-EVENT_START   ev_fmission_npc_talk
-  _TALK_OBJ_START()
+
+//====================================================================
+//迷子
+//====================================================================
+EVENT_START   ev_fmission_npc_lost_children
+  _CALL sub_npc_lost_children_main
+EVENT_END
+
+
+//====================================================================
+//アイテムプレゼント
+//====================================================================
+EVENT_START   ev_fmission_npc_present_item
+  _CALL sub_npc_lost_children_main
+EVENT_END
+
+//====================================================================
+//アイテム交換
+//====================================================================
+EVENT_START   ev_fmission_npc_item_tarade
+  _CALL sub_npc_lost_children_main
+EVENT_END
+
+//====================================================================
+//アイテム購入
+//====================================================================
+EVENT_START   ev_fmission_npc_item_buy
+  _CALL sub_npc_lost_children_main
+EVENT_END
+
+//====================================================================
+//じゃんけん
+//====================================================================
+EVENT_START   ev_fmission_npc_item_rps
+  _CALL sub_npc_lost_children_main
+EVENT_END
+
+//====================================================================
+//記憶クイズ
+//====================================================================
+EVENT_START   ev_fmission_npc_memory_quiz
+  _CALL sub_npc_lost_children_main
+EVENT_END
+
+//====================================================================
+//バトル
+//====================================================================
+EVENT_START   ev_fmission_npc_battle
+  _CALL sub_npc_lost_children_main
+EVENT_END
+
+//====================================================================
+//アイテムをもらう
+//====================================================================
+EVENT_START   ev_fmission_npc_get_a_present
+  _CALL sub_npc_lost_children_main
+EVENT_END
+
+//====================================================================
+//ポケモン図鑑クイズ
+//====================================================================
+EVENT_START   ev_fmission_npc_zukan_quiz
+  _CALL sub_npc_lost_children_main
+EVENT_END
+
+//--------------------------------------------------------
+//共通処理：暗転して話しかけ相手を消す
+//--------------------------------------------------------
+sub_fmission_npc_vanish:
+{
+  //話しかけ相手に登録されている非表示フラグを取得
+  //【fes仮】
   
+  //暗転開始
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+  
+  _TIME_WAIT( 8 )
+  _OBJ_DEL( SCWK_TARGET_OBJID )  //話しかけ相手を消す
+  //非表示フラグをセット
+  
+  //暗転復帰
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+}
+_RET
+
+//--------------------------------------------------------
+//迷子探しメイン
+//--------------------------------------------------------
+sub_npc_lost_children_main:
+{
+  _TALK_OBJ_START()
   
   /*------------迷子レスキューミッション---------------*/
   
@@ -50,35 +148,13 @@ EVENT_START   ev_fmission_npc_talk
   _MSGWIN_CLOSE()
   
   //暗転復帰でNPC消す
-  _CALL	ev_fmission_npc_vanish
+  _CALL	sub_fmission_npc_vanish
   
   //きえさった・・・
   _SYSWIN_MSG( msg_fm_npc_lostboy_04, POS_DEFAULT )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
-  
-EVENT_END
-
-
-//共通処理：暗転して話しかけ相手を消す
-ev_fmission_npc_vanish:
-  //話しかけ相手に登録されている非表示フラグを取得
-  //【fes仮】
-  
-  //暗転開始
-  _BLACK_OUT()
-  _DISP_FADE_END_CHECK()
-  
-  _TIME_WAIT( 8 )
-  //_OBJ_DEL( id )話しかけ相手を消す
-  //非表示フラグをセット
-  
-  //暗転復帰
-  _BLACK_IN()
-  _DISP_FADE_END_CHECK()
-  
-  
+}
 _RET
-
 
 

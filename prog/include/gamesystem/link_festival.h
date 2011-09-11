@@ -18,12 +18,12 @@
 
 /*
   @brief  フラグ領域バッファ長定義
-  本当はfield/fes_gimmick_local.h のフラグ領域構造体FES_GIMMICK_FLAG_WORKのサイズ定義を直接参照したいが
+  本当はfield/fes_gimmick_local.h のフラグ領域構造体FES_GIMMICK_WORKのサイズ定義を直接参照したいが
   フィールドローカルの定義とファイルを切り離すことが難しかったので直値で定義している。
 
   field/fes_gimmik.c で SDK_COMPILER_ASSERT()で必要なサイズが確保されているかチェックしている
  */
-#define FMISSION_FLAG_AREA_LEN  (36)
+#define FMISSION_WORK_AREA_LEN  (0x400)
 
 #define LINKFEST_LOG_MAX  (99) //フェスミッションログMax(自分含めて100がmax)
 #define LINKFEST_LOG_END  (LINKFEST_LOG_MAX-1) //フェスミッションログEndIndex
@@ -275,10 +275,10 @@ extern BOOL LINK_FESTIVAL_TMapRootUpdate( LINK_FESTIVAL* wk, u16 new_root );
 
 //---------------------------------------------------------
 /*
- *  @brief  リンクフェスティバル ミッションフラグ領域バッファへのポインタを返す
+ *  @brief  リンクフェスティバル ミッションギミックワーク領域バッファへのポインタを返す
  */
 //---------------------------------------------------------
-extern void* LINK_FESTIVAL_MissionFlagBufPointerGet( LINK_FESTIVAL* wk );
+extern void* LINK_FESTIVAL_GetMissionGimmickWork( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*

@@ -11,6 +11,7 @@
 #include "field/fes_gimmick.h"
 #include "field/fes_gimmick_def.h"
 #include "field/fes_gimmick_item.h"
+#include "field/fes_gimmick_npc.h"
 
 typedef union _FES_GIMMICK_WORK{
   FES_GIMMICK_ITEM_WORK item_wk;  ///<アイテムミッション用ワーク 
@@ -39,7 +40,7 @@ struct _FES_GIMMICK{
   u16 zone_id;  ///<現在のゾーンID
   FLDEFF_TASK* eff_task;  ///<フィールドエフェクトタスクのポインタを保持
 
-  FES_GIMMICK_WORK  wk_buf; //ミッション別ローカルワーク
+  void* wk_buf; //ミッション別ローカルワークへのポインタ保持
 };
 
 extern void FES_GIMMICK_SUB_RndInit( const u32 key, const u16 zone_id, GFL_STD_RandContext* rnd_c );

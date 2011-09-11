@@ -58,7 +58,7 @@ typedef enum{
   FMISSION_LOG_ACT_MUSHROOM_CAPTURE = 29,      ///<[ポケモン名]を捕まえた(キノコエンカウント)
 
   FMISSION_LOG_ACT_HELP_CHILD = 30,         ///<まいごを助けた
-  FMISSION_LOG_ACT_HAND_A_PRESENT = 31,     ///<[アイテム名]を渡した
+  FMISSION_LOG_ACT_PRESENT_ITEM = 31,       ///<[アイテム名]を渡した
   FMISSION_LOG_ACT_ELITE_TR_WIN = 32,       ///<エリートトレーナーを倒した
   FMISSION_LOG_ACT_ITEM_TRADE = 33,         ///<道具交換成功
   FMISSION_LOG_ACT_ITEM_BUY = 34,           ///<[アイテム名]を買った

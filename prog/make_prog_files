@@ -509,6 +509,9 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_person.c \
         gamesystem/fest_mission_nw.c \
         gamesystem/fest_mission_data.c \
+        field/fes_gimmick_nw.c \
+        field/fes_gimmick_item_nw.c \
+        field/fes_gimmick_npc_nw.c \
         field/scrcmd_keysystem.c \
         field/scrcmd_dataconvert.c \
         field/scrcmd_walk_count.c \
@@ -794,6 +797,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_fmission.c \
         field/fes_gimmick.c \
         field/fes_gimmick_item.c \
+        field/fes_gimmick_npc.c \
         field/place_name_letter.c \
         field/event_entrance_in.c \
         field/event_entrance_out.c \

@@ -1131,8 +1131,8 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     FLDMAPPER_AllSetUp( fieldWork->g3Dmapper ); // 初期化スクリプトで追加されたマップブロックを読み込む
 
     //フェスギミックのフィールド復帰時セットアップ
-    FES_GIMMICK_ZoneChangeSetup( fieldWork->fesGimmickSys, fieldWork->location.zone_id );
-//    FES_GIMMICK_FieldRecoverSetup( fieldWork->fesGimmickSys );
+//  FES_GIMMICK_ZoneChangeSetup( fieldWork->fesGimmickSys, fieldWork->location.zone_id );
+    FES_GIMMICK_FieldRecoverSetup( fieldWork->fesGimmickSys );
 
     //フィールドマップ用イベント起動チェックをセットする
     if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
@@ -3143,6 +3143,10 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	//新規ゾーンに配置する動作モデルセット 1200 micro sec程度削減
   MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
 	zoneChange_SetMMdl( fieldWork, gdata, fmmdlsys, evdata, new_zone_id );
+ 
+  FES_GIMMICK_ZoneChangeSetup( fieldWork->gsys, new_zone_id );
+  FES_GIMMICK_FieldRecoverSetup( fieldWork->fesGimmickSys );
+  
   MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 
   //侵入：通信プレイヤー更新停止フラグリセット
@@ -3188,14 +3192,6 @@ static void zoneChange_SetMMdl( FIELDMAP_WORK* fieldWork, GAMEDATA *gdata,
 		const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
 		MMDLSYS_SetMMdl( fmmdlsys, header, zone_id, count, evwork );
 	}
-  {
-    LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( fieldWork->gsys );
-
-    if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
-      FES_GIMMICK_ZoneChangeSetup( fieldWork->fesGimmickSys, zone_id );
-//      FES_GIMMICK_FieldRecoverSetup( fieldWork->fesGimmickSys );
-    }
-  }
 }
 
 //--------------------------------------------------------------

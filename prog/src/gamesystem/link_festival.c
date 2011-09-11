@@ -406,12 +406,12 @@ BOOL LINK_FESTIVAL_TMapRootUpdate( LINK_FESTIVAL* wk, u16 new_root )
 
 //---------------------------------------------------------
 /*
- *  @brief  リンクフェスティバル ミッションフラグ領域バッファへのポインタを返す
+ *  @brief  リンクフェスティバル ミッションギミックワーク領域バッファへのポインタを返す
  */
 //---------------------------------------------------------
-void* LINK_FESTIVAL_MissionFlagBufPointerGet( LINK_FESTIVAL* wk )
+void* LINK_FESTIVAL_GetMissionGimmickWork( LINK_FESTIVAL* wk )
 {
-  return wk->m_flag;
+  return (void*)wk->m_gmk_work;
 }
 
 //---------------------------------------------------------
@@ -897,7 +897,7 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   wk->finfo_bonus = 0;
   wk->now_score = 0;
   wk->tmap_root = 0xFFFF; //無効値で初期化
-  MI_CpuClear8( wk->m_flag, sizeof(u8)*FMISSION_FLAG_AREA_LEN);
+  MI_CpuClear8( wk->m_gmk_work, sizeof(u8)*FMISSION_WORK_AREA_LEN);
 
   wk->ready_timer = 0;
   wk->top_score_update_f = FALSE;
