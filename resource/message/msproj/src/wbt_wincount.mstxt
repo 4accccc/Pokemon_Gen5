@@ -1459,7 +1459,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_wincount_020">
+		Label="msg_wbt_wincount_020"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]</Text>
@@ -1491,7 +1492,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_wincount_021">
+		Label="msg_wbt_wincount_021"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうゆうしょうかいすう</Text>
@@ -1523,7 +1525,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_wincount_022">
+		Label="msg_wbt_wincount_022"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なまえ</Text>

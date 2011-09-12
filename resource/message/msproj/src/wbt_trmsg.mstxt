@@ -26350,10 +26350,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１回戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・前作主人公
+・１回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26406,10 +26408,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２回戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・前作主人公
+・２回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26462,10 +26466,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>決勝戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・前作主人公
+・決勝戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26518,10 +26524,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>対戦後メッセージ</Comment>
+			<Comment>♂
+・前作主人公
+・対戦後メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26574,10 +26582,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>対戦後　プレイヤー負けメッセージ</Comment>
+			<Comment>♂
+・前作主人公
+・対戦後　プレイヤー負けメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26630,10 +26640,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>プレイヤーが勝った場合のメッセージ</Comment>
+			<Comment>♂
+・前作主人公
+・プレイヤーが勝った場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26686,10 +26698,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>プレイヤーが負けた場合のメッセージ</Comment>
+			<Comment>♂
+・前作主人公
+・プレイヤーが負けた場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26742,10 +26756,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>前口上メッセージ</Comment>
+			<Comment>♂：アナウンス
+・前口上メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26798,10 +26813,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１回戦用対戦前メッセージ</Comment>
+			<Comment>♀
+・前作主人公
+・１回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26854,10 +26871,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２回戦用対戦前メッセージ</Comment>
+			<Comment>♀
+・前作主人公
+・２回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26910,10 +26929,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>決勝戦用対戦前メッセージ</Comment>
+			<Comment>♀
+・前作主人公
+・決勝戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26966,10 +26987,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>対戦後メッセージ</Comment>
+			<Comment>♀
+・前作主人公
+・対戦後メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27022,10 +27045,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>対戦後　プレイヤー負けメッセージ</Comment>
+			<Comment>♀
+・前作主人公
+・対戦後　プレイヤー負けメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27078,10 +27103,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>プレイヤーが勝った場合のメッセージ</Comment>
+			<Comment>♀
+・前作主人公
+・プレイヤーが勝った場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27134,10 +27161,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>プレイヤーが負けた場合のメッセージ</Comment>
+			<Comment>♀
+・前作主人公
+・プレイヤーが負けた場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27190,10 +27219,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>前口上メッセージ</Comment>
+			<Comment>♂：アナウンス
+・前口上メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:43:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27246,10 +27276,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１回戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・イベント：ライバル
+・１回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:16:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27279,11 +27311,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２かいせん
-かりメッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:44:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27291,11 +27322,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２回戦
-仮メッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:44:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27303,10 +27333,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２回戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・イベント：ライバル
+・２回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:16:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27336,11 +27368,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>けっしょうせん
-かりメッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:44:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27348,11 +27379,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>決勝戦
-仮メッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:44:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27360,10 +27390,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>決勝戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・イベント：ライバル
+・決勝戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:17:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27393,11 +27425,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんご
-かりメッセージ▼</Text>
+			<Text>……まけた　オレは　ふがいないが
+オマエの　つよさ　いいぜ！▼
+プラズマだんに　たちむかうとき
+てつだえ！　ていうか　きめたから！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:33:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27405,11 +27439,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦後
-仮メッセージ▼</Text>
+			<Text>……負けた　オレは　ふがいないが
+オマエの　強さ　いいぜ！▼
+プラズマ団に　立ち向かうとき
+手伝え！　ていうか　決めたから！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27417,10 +27453,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>対戦後メッセージ</Comment>
+			<Comment>♂
+・イベント：ライバル
+・対戦後メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:17:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27450,11 +27488,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんご　プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>ぜんりょくで　たたかい　まけたなら
+オレが　よわいってことさ！▽
+クッ！　きたえかたが　たりないか！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:38:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27462,11 +27501,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦後　プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>全力で　戦い　負けたなら
+オレが　弱いってことさ！▽
+クッ！　鍛え方が　足りないか！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:41:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27474,10 +27514,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>対戦後　プレイヤー負けメッセージ</Comment>
+			<Comment>♂
+・イベント：ライバル
+・対戦後　プレイヤー負けメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:17:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27507,11 +27549,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレイヤーしょうり
-かりメッセージ▼</Text>
+			<Text>まけて　こんなことを　いうのも
+ことばが　かるいけどな▼
+オマエの　ポケモン
+たのしそうに　たたかうのな！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:40:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27519,11 +27563,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー勝利
-仮メッセージ▼</Text>
+			<Text>負けて　こんなことを　いうのも
+言葉が　軽いけどな▼
+オマエの　ポケモン
+楽しそうに　戦うのな！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27531,10 +27577,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>プレイヤーが勝った場合のメッセージ</Comment>
+			<Comment>♂
+・イベント：ライバル
+・プレイヤーが勝った場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:17:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27564,11 +27612,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>オマエは　オマエで
+つよくなれば　いいけどさ▼
+オレが　プラズマだんと　たたかうとき
+それじゃ　あぶないんだよ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:42:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27576,11 +27626,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>オマエは　オマエで
+強くなれば　いいけどさ▼
+オレが　プラズマ団と　戦うとき
+それじゃ　危ないんだよ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:42:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27588,10 +27640,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>プレイヤーが負けた場合のメッセージ</Comment>
+			<Comment>♂
+・イベント：ライバル
+・プレイヤーが負けた場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:17:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27621,11 +27675,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-イベント・スワンライバル▼</Text>
+			<Text>おなじく　ヒオウギを　たびだち
+おのれを　きたえる　[Name:TrainerName Idx="1" ]！！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:27:09" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:18:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27633,11 +27687,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-イベント・スワンライバル▼</Text>
+			<Text>同じく　ヒオウギを　旅立ち
+己を　鍛える　[Name:TrainerName Idx="1" ]！！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:27:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:18:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27645,10 +27699,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>前口上メッセージ</Comment>
+			<Comment>♂：アナウンス
+・イベント：ライバル
+・前口上メッセージ
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:42:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27678,11 +27735,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントチェレン１かいせん
-かりメッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:47:36" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:45:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27690,11 +27746,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントチェレン１回戦
-仮メッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:47:42" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:45:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27702,10 +27757,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１回戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・イベント：チェレン
+・１回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:27:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:15:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27735,11 +27792,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントチェレン２かいせん
-かりメッセージ▼</Text>
+			<Text>ぼくが　ジムリーダーに　なって
+はじめての　チャレンジャーだった▽
+きみと　こうして　また▽
+たたかえるのは　うれしいかぎり　だよ▼
+ここまでの　たびで　きみは
+ポケモンの　なにを　しり▽
+きずなを　ふかめたか　みせてもらう！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:47:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:11:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27747,11 +27809,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントチェレン２回戦
-仮メッセージ▼</Text>
+			<Text>ぼくが　ジムリーダーに　なって
+初めての　チャレンジャーだった▽
+きみと　こうして　また▽
+戦えるのは　うれしいかぎり　だよ▼
+ここまでの　旅で　きみは
+ポケモンの　なにを　知り▽
+きずなを　深めたか　みせてもらう！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:47:48" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:11:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27759,10 +27826,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２回戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・イベント：チェレン
+・２回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:27:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:15:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27792,11 +27861,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントチェレンけっしょうせん
-かりメッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:47:51" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:45:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27804,11 +27872,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントチェレン決勝戦
-仮メッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:47:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:45:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27816,10 +27883,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>決勝戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・イベント：チェレン
+・決勝戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:27:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:15:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27849,11 +27918,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントチェレンたいせんご
-かりメッセージ▼</Text>
+			<Text>すごいね……！▼
+ヒオウギで　ちょうせん　されたときと
+うんでいの　ちがい　だよ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:47:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:07:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27861,11 +27931,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントチェレン対戦後
-仮メッセージ▼</Text>
+			<Text>すごいね……！▼
+ヒオウギで　挑戦されたときと
+雲泥の違い　だよ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:48:01" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:08:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27873,10 +27944,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>対戦後メッセージ</Comment>
+			<Comment>♂
+・イベント：チェレン
+・対戦後メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:27:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:15:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27906,11 +27979,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントチェレン　たいせんご
-プレイヤーまけ　かりメッセージ▼</Text>
+			<Text>まけても　きみの　ポケモンたちの
+とうしは　まだ　みなぎっているね▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:48:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27918,11 +27991,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントチェレン　対戦後
-プレイヤー負け　仮メッセージ▼</Text>
+			<Text>負けても　きみの　ポケモンたちの
+闘志は　まだ　みなぎっているね▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:48:40" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27930,10 +28003,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>対戦後　プレイヤー負けメッセージ</Comment>
+			<Comment>♂
+・イベント：チェレン
+・対戦後　プレイヤー負けメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:27:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:15:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27963,11 +28038,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントチェレン　プレイヤーしょうり
-かりメッセージ▼</Text>
+			<Text>ポケモンが　いてくれたから
+ここまで　これた▼
+なぜ　ポケモンが　たすけてくれるか
+ポケモンと　トレーナーでは　なく▼
+いのちと　いのちの　かんけいで
+かんがえるのが　ひつよう　かもね▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:48:45" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:14:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27975,11 +28054,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントチェレン　プレイヤー勝利
-仮メッセージ▼</Text>
+			<Text>ポケモンが　いてくれたから
+ここまで　来れた▼
+なぜ　ポケモンが　助けてくれるか
+ポケモンと　トレーナーでは　なく▼
+命と　命の　関係で
+考えるのが　必要かもね▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:48:48" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:15:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -27987,10 +28070,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>プレイヤーが勝った場合のメッセージ</Comment>
+			<Comment>♂
+・イベント：チェレン
+・プレイヤーが勝った場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:27:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:15:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -28020,11 +28105,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントチェレン　プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>ポケモンが　いてくれたから
+ここまで　これた▼
+なぜ　ポケモンが　たすけてくれるか
+ポケモンと　トレーナーでは　なく▼
+いのちと　いのちの　かんけいで
+かんがえるのが　ひつよう　かもね▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:49:08" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:14:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28032,11 +28121,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントチェレン　プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>ポケモンが　いてくれたから
+ここまで　来れた▼
+なぜ　ポケモンが　助けてくれるか
+ポケモンと　トレーナーでは　なく▼
+命と　命の　関係で
+考えるのが　必要かもね▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:49:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:15:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28044,10 +28137,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>プレイヤーが負けた場合のメッセージ</Comment>
+			<Comment>♂
+・イベント：チェレン
+・プレイヤーが負けた場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:27:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:15:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -28077,11 +28172,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-イベント・チェレン▼</Text>
+			<Text>りそうを　もとめ　たたかいつづける！
+わかき　ポケモントレーナー　チェレン▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:49:22" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28089,11 +28184,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-イベント・チェレン▼</Text>
+			<Text>理想を　求め　戦い続ける！
+若き　ポケモントレーナー　チェレン▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:31:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28101,10 +28196,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>前口上メッセージ</Comment>
+			<Comment>♂：アナウンス
+・イベント：チェレン
+・前口上メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:27:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:42:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -28134,11 +28231,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントアクロマ １かいせん
-かりメッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:49:33" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:45:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28146,11 +28242,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントアクロマ　１回戦
-仮メッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:49:43" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:45:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28158,10 +28253,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１回戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・イベント：アクロマ
+・１回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:28:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:54:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -28191,11 +28288,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントアクロマ　２かいせん
-かりメッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:49:47" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:45:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28203,11 +28299,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントアクロマ　２回戦
-仮メッセージ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:49:50" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:45:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28215,10 +28310,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２回戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・イベント：アクロマ
+・２回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:28:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:54:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -28248,11 +28345,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントアクロマ　けっしょうせん
-かりメッセージ▼</Text>
+			<Text>わたくしが　けんきゅうしゃ　として
+もとめる　りそう　しんじつ……▼
+それは　ポケモンが　もつ
+ほんらいの　ちから……▽
+それを　どうすれば　ひきだせるのか？▼
+できうるならば　これまでどおり
+トレーナーと　ポケモンとの▽
+しんらいかんけいで　あってほしい！▼
+あなたは　それが　ただしいと
+おしえてくれるのか　たのしみです！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:49:53" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:04:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28260,11 +28365,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントアクロマ　決勝戦
-仮メッセージ▼</Text>
+			<Text>わたくしが　学究の徒　として
+求める　理想　真実……▼
+それは　ポケモンが　持つ
+本来の　力……▽
+それを　どうすれば　引き出せるのか？▼
+できうるならば　これまでどおり
+トレーナーと　ポケモンとの▽
+信頼関係で　あってほしい！▼
+あなたは　それが　正しいと
+教えてくれるのか　楽しみです！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:49:55" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28272,10 +28385,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>決勝戦用対戦前メッセージ</Comment>
+			<Comment>♂
+・イベント：アクロマ
+・決勝戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:28:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:54:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -28305,11 +28420,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントアクロマ　たいせんご
-かりメッセージ▼</Text>
+			<Text>おみごと　ですッ！▼
+いまの　しょうぶで
+おそわったことが　ありますよ▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:49:59" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:00:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28317,11 +28433,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントアクロマ　対戦後
-仮メッセージ▼</Text>
+			<Text>おみごと　ですッ！▼
+いまの　勝負で
+教わったことが　ありますよ▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:50:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:00:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28329,10 +28446,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>対戦後メッセージ</Comment>
+			<Comment>♂
+・イベント：アクロマ
+・対戦後メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:28:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:54:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -28362,11 +28481,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントアクロマ　たいせんご
-プレイヤーまけ　かりメッセージ▼</Text>
+			<Text>どうしたのですッ？▼
+まえのように　もっと　ポケモンの
+ちからを　ひきだせないとはッ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:50:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:00:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28374,11 +28494,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントアクロマ　対戦後
-プレイヤー負け　仮メッセージ▼</Text>
+			<Text>どうしたのですッ？▼
+前えのように　もっと　ポケモンの
+能力を　引き出せないとはッ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:50:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:00:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28386,10 +28507,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>対戦後　プレイヤー負けメッセージ</Comment>
+			<Comment>♂
+・イベント：アクロマ
+・対戦後　プレイヤー負けメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:28:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:54:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -28419,11 +28542,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントアクロマ　プレイヤーしょうり
-かりメッセージ▼</Text>
+			<Text>アクロマ『さすがです！▼
+あなたの　そばにいる
+ポケモンは　しあわせ　でしょうねッ！！▽
+じぶんたちの　ちからを　はっきできて！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:50:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:06:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28431,11 +28556,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントアクロマ　プレイヤー勝利
-仮メッセージ▼</Text>
+			<Text>アクロマ『さすがです！▼
+あなたの　そばにいる
+ポケモンは　シアワセ　でしょうねッ！▽
+自分たちの　能力を　発揮できて！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:50:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:06:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28443,10 +28570,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>プレイヤーが勝った場合のメッセージ</Comment>
+			<Comment>♂
+・イベント：アクロマ
+・プレイヤーが勝った場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:28:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:54:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -28476,11 +28605,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントアクロマ　プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>アクロマ『なんたることッ！▼
+なぜ　ポケモンの
+ちからを　ひきだせないのですッ！？▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:50:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:06:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28488,11 +28618,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントアクロマ　プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>アクロマ『なんたることッ！▼
+なぜ　ポケモンの
+力を　引き出せないのですッ！？▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-09T11:50:35" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:06:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28500,10 +28631,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>プレイヤーが負けた場合のメッセージ</Comment>
+			<Comment>♂
+・イベント：アクロマ
+・プレイヤーが負けた場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:28:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:54:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -28533,11 +28666,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-イベント・アクロマ▼</Text>
+			<Text>アクロマッ　とうじょう！　ねがいは
+ポケモンの　ちからを　ひきだすこと！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:31:35" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:58:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28545,11 +28678,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-イベント・アクロマ▼</Text>
+			<Text>アクロマッ　登場！　願いは
+ポケモンの　力を　引き出すこと！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:31:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:58:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -28557,10 +28690,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>前口上メッセージ</Comment>
+			<Comment>♂：アナウンス
+・イベント：アクロマ
+・前口上メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-07T05:28:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:42:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
