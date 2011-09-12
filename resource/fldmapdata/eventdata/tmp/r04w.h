@@ -28,11 +28,24 @@
 #define TR_PRINCESS_08                    10
 #define TR_BACKPACKERM_18                 11
 #define R04W_POKE628_01                   12
+#define R04W_OLDMAN1_01                   13
+#define R04W_SWBOSS_01                    14
+#define R04W_BIGROCK_01                   15
+#define R04W_BIGROCK_02                   16
+#define R04W_BIGROCK_03                   17
+#define R04W_BIGROCK_04                   18
+#define R04W_BIGROCK_05                   19
+#define R04W_BIGROCK_08                   20
+#define R04W_BIGROCK_06                   21
+#define R04W_BIGROCK_07                   22
 
 #endif //ZONE_R04W_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04w.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_R04W_EVB_H
 #define ZONE_R04W_EVB_H
 
+#define BG_R04W_SIGN1_01                  0
+#define BG_R04W_SIGN4_01                  1
+#define BG_R04W_SIGN4_02                  2
 
 #endif //ZONE_R04W_EVB_H

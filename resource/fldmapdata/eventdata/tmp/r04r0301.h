@@ -12,6 +12,7 @@
 
 #define R04R0301_WORKMAN2_01               0
 #define R04R0301_POKE49_01                 1
+#define R04R0301_GIRL2_01                  2
 
 #endif //ZONE_R04R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r04r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

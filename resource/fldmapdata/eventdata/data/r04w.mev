@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/01 16:52:53
+#save date:2011/09/07 13:16:26
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r04w.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r04w.wms
 #hold event type:
 1
 #hold event number:
-13
+23
 #event number: 0
 #type
 1
@@ -413,6 +413,316 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 504 -48 -792
+#event number: 13
+#type
+1
+#ID name
+R04W_OLDMAN1_01
+#OBJ CODE Number
+OLDMAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R04W_OLDMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -1336
+#event number: 14
+#type
+1
+#ID name
+R04W_SWBOSS_01
+#OBJ CODE Number
+SWBOSS
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R04_SWBOSS_01
+#Event Script Name
+SCRID_R04W_SWBOSS_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 -1304
+#event number: 15
+#type
+1
+#ID name
+R04W_BIGROCK_01
+#OBJ CODE Number
+POKE50
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R04_BIGROCK_01
+#Event Script Name
+SCRID_R04W_BIGROCK_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -1272
+#event number: 16
+#type
+1
+#ID name
+R04W_BIGROCK_02
+#OBJ CODE Number
+POKE50
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R04_BIGROCK_01
+#Event Script Name
+SCRID_R04W_BIGROCK_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -1272
+#event number: 17
+#type
+1
+#ID name
+R04W_BIGROCK_03
+#OBJ CODE Number
+POKE50
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R04_BIGROCK_01
+#Event Script Name
+SCRID_R04W_BIGROCK_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 -1272
+#event number: 18
+#type
+1
+#ID name
+R04W_BIGROCK_04
+#OBJ CODE Number
+POKE50
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R04_BIGROCK_01
+#Event Script Name
+SCRID_R04W_BIGROCK_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 0 -1272
+#event number: 19
+#type
+1
+#ID name
+R04W_BIGROCK_05
+#OBJ CODE Number
+POKE50
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R04_BIGROCK_01
+#Event Script Name
+SCRID_R04W_BIGROCK_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 -1272
+#event number: 20
+#type
+1
+#ID name
+R04W_BIGROCK_08
+#OBJ CODE Number
+POKE50
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R04_BIGROCK_01
+#Event Script Name
+SCRID_R04W_BIGROCK_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -1240
+#event number: 21
+#type
+1
+#ID name
+R04W_BIGROCK_06
+#OBJ CODE Number
+POKE50
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R04_BIGROCK_01
+#Event Script Name
+SCRID_R04W_BIGROCK_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -1256
+#event number: 22
+#type
+1
+#ID name
+R04W_BIGROCK_07
+#OBJ CODE Number
+POKE50
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R04_BIGROCK_01
+#Event Script Name
+SCRID_R04W_BIGROCK_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 -1256
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -422,7 +732,46 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+3
+#event number: 0
+#Bg Event Label
+BG_R04W_SIGN1_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_UPDOWN
+#Bg Script Name
+SCRID_BG_R04W_SIGN1_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+568 0 -1528
+#event number: 1
+#Bg Event Label
+BG_R04W_SIGN4_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_UPDOWN
+#Bg Script Name
+SCRID_BG_R04W_SIGN4_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 -568
+#event number: 2
+#Bg Event Label
+BG_R04W_SIGN4_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_UPDOWN
+#Bg Script Name
+SCRID_BG_R04W_SIGN4_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+360 0 -568
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -432,7 +781,41 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#Pos Event Label
+POS_R04W_OLDMAN1_02
+#Pos Script Name
+SCRID_POS_R04W_OLDMAN1_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R04_POKE
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -1368
+#size
+5 1
+#event number: 1
+#Pos Event Label
+POS_R04W_SWBOSS_02
+#Pos Script Name
+SCRID_POS_R04W_SWBOSS_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R04_SWBOSS
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -1320
+#size
+5 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
