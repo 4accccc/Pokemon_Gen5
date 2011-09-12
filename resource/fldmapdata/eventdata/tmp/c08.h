@@ -10,8 +10,7 @@
 #define DOOR_ID_C08_C08R0301_EXIT01       5
 #define DOOR_ID_C08_C08R0401_EXIT01       6
 #define DOOR_ID_C08_C08R0701_EXIT01       7
-#define DOOR_ID_C08_C08R0601_EXIT01       8
-#define DOOR_ID_C08_C08R0801_EXIT01       9
+#define DOOR_ID_C08_C08R0801_EXIT01       8
 
 #endif //ZONE_C08_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
