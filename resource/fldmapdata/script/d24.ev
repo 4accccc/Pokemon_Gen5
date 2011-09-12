@@ -12,6 +12,8 @@
   .include  "msg_d24.h"
   .include  "d24.h"
 
+  //@author fujimura_souichirou（看板配置）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,19 +21,21 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_zone_d24
-_EVENT_DATA    ev_init_d24
+_EVENT_DATA   ev_zone_d24
+_EVENT_DATA   ev_init_d24
+_EVENT_DATA   ev_bg_d24_sign1_01
 _EVENT_DATA_END
 
 //バージョン取得
 DEFINE_LOCAL LCWK_VERSION
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
-DEFINE_LOCAL  LCW_POSX
-DEFINE_LOCAL  LCW_POSZ
+DEFINE_LOCAL LCW_POSX
+DEFINE_LOCAL LCW_POSZ
+
 
 /************************************************************/
-/*		ZONE_CHANGE                             */
+/*  ZONE_CHANGE                                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_d24
   
@@ -55,10 +59,19 @@ INIT_EVENT_START   ev_zone_d24
 INIT_EVENT_END
 
 /************************************************************/
-/*					FIELD_INIT_SCRIPT						*/
+/*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
 INIT_EVENT_START ev_init_d24
 
 //
 
 INIT_EVENT_END
+
+/**************************************************************/
+/*  施設掲示板01                                              */
+/**************************************************************/
+EVENT_START  ev_bg_d24_sign1_01
+  _EASY_BGWIN_MSG( msg_d24_sign1_01, TYPE_POST )
+EVENT_END
+
+

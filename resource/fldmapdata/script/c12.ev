@@ -16,6 +16,7 @@
   .include  "c12_def.h"
   
   //@author Mizuguchi_Mai
+  //@author fujimura_souichirou（クリア後・ライバルの妹イベント）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -54,12 +55,14 @@ _EVENT_DATA    ev_pos_c12_rival_pair_01_guide
 _EVENT_DATA    ev_scene_c12_gymclear_01
 _EVENT_DATA    ev_c12_swleader1_01
 _EVENT_DATA    ev_c12_rival_pair_01
+_EVENT_DATA    ev_scene_c12_rivalsister_end_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
-DEFINE_LOCAL  LCW_POSX
-DEFINE_LOCAL  LCW_POSZ
+DEFINE_LOCAL LCW_POSX
+DEFINE_LOCAL LCW_POSZ
+
 
 /************************************************************/
 /*		ZONE_CHANGE                             */
@@ -104,6 +107,14 @@ INIT_EVENT_START ev_init_c12
   IF $WK_SCENE_C12GYM_OPEN == 3 THEN
     _OBJ_POS_CHANGE( C12_SWBELL_01, 40, 1, 740, DIR_RIGHT )
     _OBJ_POS_CHANGE( C12_SWLEADER1_01, 38, 1, 740, DIR_LEFT )
+  ENDIF
+
+  //エンディング後ならライバルと妹の位置を変更
+  IF $WK_SCENE_SPPOKE_EVENT_01 == 1 THEN
+
+    _OBJ_POS_CHANGE( C12_SWRIVAL_01, 45, 1, 762, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C12_SWSISTER_01, 45, 1, 763, DIR_RIGHT )
+
   ENDIF
 
 INIT_EVENT_END
@@ -1408,6 +1419,134 @@ EVENT_START   ev_bg_c12_board_04
 		_EASY_BGWIN_MSG( msg_c12_gymsign_02, TYPE_POST )
 	ENDIF
 EVENT_END
+
+/************************************************************/
+/*  SCENE_CHANGE：ライバルの妹イベント（クリア後）          */
+/************************************************************/
+EVENT_START   ev_scene_c12_rivalsister_end_01
+
+  //アニメ：主人公振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+
+  //主人公名を代入
+  _PLAYER_NAME( 0 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
+
+  //ライバル：コイツが　はなしたいってさ▼
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_end_01, C12_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：ライバルの妹移動
+  _OBJ_ANIME_AUTO( C12_SWSISTER_01, 47, 763, FORCE_TYPE_NPC, 8, DIR_LR )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+
+  //妹：あたしの　チョロネコ……
+  _BALLOONWIN_OBJMSG_POS( msg_c12_rivalsister_end_01, C12_SWSISTER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //ライバル：まだ　あるんだろ？
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_end_02, C12_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //妹：ポケモンの　ゆめを　みるの▽
+  _BALLOONWIN_OBJMSG_POS( msg_c12_rivalsister_end_02, C12_SWSISTER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：主人公振り向き、妹移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME( C12_SWSISTER_01, anm_swsister_work_a )
+
+  //ライバル：なんか　よくわかんないけど
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_end_03, C12_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：ライバル、妹移動（途中でライバル止まる）
+  _OBJ_ANIME( C12_SWRIVAL_01, anm_swrival_work_a )
+  _OBJ_ANIME( C12_SWSISTER_01, anm_swsister_work_b )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：ライバル戻ってくる
+  _OBJ_ANIME( C12_SWRIVAL_01, anm_swrival_work_b )
+  _OBJ_ANIME_WAIT()
+
+  //ライバル：あっ　わすれてた▼
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_end_04, C12_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：ライバル、妹移動（途中でライバル止まる）
+  _OBJ_ANIME( C12_SWRIVAL_01, anm_swrival_work_c )
+  _OBJ_ANIME( C12_SWSISTER_01, anm_swsister_work_c )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( C12_SWRIVAL_01 )
+  _OBJ_DEL( C12_SWSISTER_01 )
+
+  //========================================//
+  //ライバルと妹を非表示  【仮】デバッグ等でイベントを始めた場合、ここでフラグをセットすると停止する場合があるので一時的にコメントアウト
+  //_FLAG_SET( FV_C12_SWRIVAL )
+  //_FLAG_SET( FV_C12_SWRIVAL_SISTER )
+  //POSイベント進行
+  $WK_SCENE_SPPOKE_EVENT_01 = 2
+  //========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//  ライバルの妹：歩きa（クリア後イベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swsister_work_a
+  _ANIME_DATA AC_WAIT_8F,2
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ライバル：歩きa（クリア後イベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swrival_work_a
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ライバルの妹：歩きb（クリア後イベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swsister_work_b
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA AC_WALK_U_8F,3
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ライバル：歩きb（クリア後イベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swrival_work_b
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ライバルの妹：歩きc（クリア後イベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swsister_work_c
+  _ANIME_DATA AC_WAIT_8F,2
+  _ANIME_DATA AC_WALK_U_8F,9
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ライバル：歩きc（クリア後イベント用）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swrival_work_c
+  _ANIME_DATA AC_WALK_U_8F,11
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //	☆タウンマップ入手イベント：ママ定位置に戻る

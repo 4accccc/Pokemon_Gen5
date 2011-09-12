@@ -9,6 +9,10 @@
 #ifndef ZONE_D33R0101_EVC_H
 #define ZONE_D33R0101_EVC_H
 
+#define D33R0101_HAKASE2_01                0
+#define D33R0101_TPOKE_0525_01             1
+#define D33R0101_TPOKE_0523_01             2
+#define D33R0101_TPOKE_0524_01             3
 
 #endif //ZONE_D33R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d33r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

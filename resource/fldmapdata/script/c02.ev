@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c02.h"
   .include  "c02.h"
 
+  //@author fujimura_souichirou（ユクシーイベント）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,27 +21,212 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_bg_c02_sign1_01
-_EVENT_DATA    ev_bg_c02_sign2_01
-_EVENT_DATA    ev_bg_c02_sign3_01
+_EVENT_DATA   ev_zone_c02
+_EVENT_DATA   ev_bg_c02_sign1_01
+_EVENT_DATA   ev_bg_c02_sign2_01
+_EVENT_DATA   ev_bg_c02_sign3_01
+_EVENT_DATA   ev_pos_c02_sppoke1_01
+_EVENT_DATA   ev_c02_sppoke1_01
 _EVENT_DATA_END
+
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+/**************************************************************/
+/*  ZONE_CHANGE_LABEL                                         */
+/**************************************************************/
+INIT_EVENT_START  ev_zone_c02
+
+  //ユクシーを呼び出した状態でゾーンチェンジした場合、再度POSイベントから
+  IF FLAG_OFF( FV_C02_SPPOKE1_01 ) && $WK_SCENE_C02_SPPOKE1_01 == 2 THEN
+
+    //==================================//
+    //ユクシー非表示
+    _FLAG_SET( FV_C02_SPPOKE1_01 )
+    //POS再配置
+    $WK_SCENE_C02_SPPOKE1_01 = 1
+    //==================================//
+
+  ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*  C02 SIGN1の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_bg_c02_sign1_01
-  _EASY_BGWIN_MSG( msg_c02_sign1_01, TYPE_TOWN)	//簡易メッセージＢＧ用
+  _EASY_BGWIN_MSG( msg_c02_sign1_01, TYPE_TOWN)   //簡易メッセージＢＧ用
 EVENT_END
 
 /**************************************************************/
-/*  C02 SIGN2用イベントスクリプト  		                      */
+/*  C02 SIGN2用イベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_c02_sign2_01
-	_EASY_BGWIN_MSG( msg_c02_sign2_01,TYPE_POST )
+  _EASY_BGWIN_MSG( msg_c02_sign2_01, TYPE_POST )
 EVENT_END
 /**************************************************************/
-/*  C02 SIGN3用イベントスクリプト  		                      */
+/*  C02 SIGN3用イベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_c02_sign3_01
-	_EASY_BGWIN_MSG( msg_c02_gymsign_01,TYPE_POST )
+  _EASY_BGWIN_MSG( msg_c02_gymsign_01, TYPE_POST )
 EVENT_END
+
+/**************************************************************/
+/*  POS：ユクシー登場                                         */
+/**************************************************************/
+EVENT_START   ev_pos_c02_sppoke1_01
+
+  //システム：ふしぎな　けはいが　する……！
+  _SYSWIN_MSG( msg_c02_sppoke1_01, POS_DOWN )
+
+  //あたりを調べる？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //==================================//
+    //ユクシー表示
+    _FLAG_RESET( FV_C02_SPPOKE1_01 )
+    //POSイベント進行
+    $WK_SCENE_C02_SPPOKE1_01 = 2
+    //==================================//
+
+    //プレイヤーの向きを取得
+    _PLAYER_DIR_GET( LWK_DIR ) 
+
+    //主人公が上を向いていない場合は上を向かせる
+    IF $LWK_DIR != DIR_UP THEN
+      //アニメ：主人公振り向き
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+
+    _TIME_WAIT ( 30 )  //間
+
+    //ユクシー：きょううん！
+    _VOICE_PLAY( MONSNO_480, 0 ) 
+    _PLAINWIN_MSG_UP( msg_c02_sppoke1_02 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _PLAINWIN_CLOSE()
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+    //ユクシー出現
+    _OBJ_ADD( C02_SPPOKE1_01 )
+
+    //ユクシー登場座標にジャンプ
+    _OBJ_POS_CHANGE( C02_SPPOKE1_01, 633, 2, 580, DIR_RIGHT )
+
+    //ユクシー停止座標まで移動
+    $LCW_POSZ -= 2
+    _OBJ_TRANS( C02_SPPOKE1_01, LCW_POSX, 0, LCW_POSZ, 8*6 )
+
+    //ユクシー再配置（↑のコマンドだと接地しないので）
+    _OBJ_POS_CHANGE( C02_SPPOKE1_01, LCW_POSX, 0, LCW_POSZ, DIR_LEFT )
+
+    //アニメ：ユクシー振り向き
+    _OBJ_ANIME( C02_SPPOKE1_01, anm_common_turn_d )
+    _OBJ_ANIME_WAIT()
+
+    _TIME_WAIT( 16 )
+
+  ELSE    //いいえ
+
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  ユクシー：話しかけ（戦闘／倒した場合は殿堂入り後復帰）    */
+/**************************************************************/
+EVENT_START   ev_c02_sppoke1_01
+
+  _TALK_START_SE_PLAY()
+
+  //ユクシー：きょううん！
+  _VOICE_PLAY( MONSNO_480, 0 ) 
+  _GIZAPLAINWIN_MSG_POS( msg_c02_sppoke1_02, POS_DOWN )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  // Lv.60 ユクシー
+  _WILD_BTL_SET_LEGEND( MONSNO_480, 60 )
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //==================================//
+    //ユクシー非表示
+    _FLAG_SET( FV_C02_SPPOKE1_01 )
+    //POSイベント進行
+    $WK_SCENE_C02_SPPOKE1_01 = 3
+    //==================================//
+    _OBJ_DEL( C02_SPPOKE1_01 )   //ユクシーを消す
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //ユクシーを捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+
+    //==================================//
+    //ユクシーを捕獲した
+    _FLAG_SET( FE_C02_SPPOKE1_GET_01 )
+    //==================================//
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
+
+    //システム：ユクシーは
+    _SYSWIN_MSG( msg_c02_sppoke1_03, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+
+  ENDSWITCH
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+

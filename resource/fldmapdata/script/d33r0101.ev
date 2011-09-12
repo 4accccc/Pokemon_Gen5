@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d33r0101.h"
-  //.include  "d33r0101.h"
+  .include  "d33r0101.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +21,307 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d33r0101
+_EVENT_DATA   ev_pos_d33r0101_hakase2_01
+_EVENT_DATA   ev_pos_d33r0101_sppoke_01
+_EVENT_DATA   ev_d33r0101_hakase2_01
 _EVENT_DATA_END
+
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*  ZONE_CHANGE_LABEL                                         */
 /**************************************************************/
 //ev_zone_d33r0101:
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  POS：アララギ娘イベント                                   */
 /**************************************************************/
-ev_d33r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_pos_d33r0101_hakase2_01
+
+  //アニメ：アララギ娘振り向き
+  _OBJ_ANIME( D33R0101_HAKASE2_01, anm_hakase2_guide01 )
+  _OBJ_ANIME_WAIT()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+
+  //アニメ：アララギ娘、主人公に接近
+  IF $LCW_POSX == 18 THEN
+    $LCW_POSZ -= 1
+    _OBJ_ANIME_AUTO( D33R0101_HAKASE2_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    $LCW_POSZ -= 1
+    _OBJ_ANIME_AUTO( D33R0101_HAKASE2_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( D33R0101_HAKASE2_01, anm_common_turn_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+
+  //アララギ娘：あら……
+  _BALLOONWIN_OBJMSG_POS( msg_d33r0101_hakase2_01, D33R0101_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：アララギ娘きょろきょろする
+  _OBJ_ANIME( D33R0101_HAKASE2_01, anm_meet )
+  _OBJ_ANIME_WAIT()
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( D33R0101_HAKASE2_01, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
+
+  //アララギ娘：それにしても　この　くうかん……▼
+  _BALLOONWIN_OBJMSG_POS( msg_d33r0101_hakase2_02, D33R0101_HAKASE2_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //========================================//
+  //POSイベント進行
+  $WK_SCENE_SPPOKE_EVENT_01 = 3
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  POS：ユクシー・エムリット・アグノムイベント               */
+/**************************************************************/
+EVENT_START   ev_pos_d33r0101_sppoke_01
+
+  //システム：ふしぎな　けはいが　する……！
+  _SYSWIN_MSG( msg_d33r0101_event_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+
+  //========================================//
+  //ユクシー・エムリット・アグノム表示
+  _FLAG_RESET( FV_D33R0101_SPPOKE_01 )
+  //========================================//
+
+  //アニメ：アララギ博士振り向き
+  _OBJ_ANIME( D33R0101_HAKASE2_01, anm_common_turn_u )
+
+  //アニメ：主人公、アララギ博士移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk2_u )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 18, 17, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME_AUTO( D33R0101_HAKASE2_01, 17, 19, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 16 )    //間
+
+  //ユクシー表示【仮】表示演出は仮のもの
+  _OBJ_ADD( D33R0101_TPOKE_0523_01 )
+
+  //ユクシー：きょううん！
+  _VOICE_PLAY( MONSNO_480, 0 )
+  _PLAINWIN_MSG_DOWN( msg_d33r0101_sppoke1_01 )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アララギ娘：ユクシー！
+  _BALLOONWIN_OBJMSG_POS( msg_d33r0101_hakase2_03, D33R0101_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  _TIME_WAIT( 16 )    //間
+
+  //エムリット表示【仮】表示演出は仮のもの
+  _OBJ_ADD( D33R0101_TPOKE_0524_01 )
+
+  //エムリット：きゃううん！
+  _VOICE_PLAY( MONSNO_481, 0 )
+  _PLAINWIN_MSG_DOWN( msg_d33r0101_sppoke2_01 )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：主人公と博士振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( D33R0101_HAKASE2_01, anm_common_turn_l )
+  _OBJ_ANIME_WAIT()
+
+  //アララギ娘：エムリット！
+  _BALLOONWIN_OBJMSG_POS( msg_d33r0101_hakase2_04, D33R0101_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  _TIME_WAIT( 16 )    //間
+
+  //アグノム表示【仮】表示演出は仮のもの
+  _OBJ_ADD( D33R0101_TPOKE_0525_01 )
+
+  //アグノム：きゅううん！
+  _VOICE_PLAY( MONSNO_482, 0 )
+  _PLAINWIN_MSG_DOWN( msg_d33r0101_sppoke3_01 )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：主人公と博士振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( D33R0101_HAKASE2_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //アララギ娘：それに　アグノム！
+  _BALLOONWIN_OBJMSG_POS( msg_d33r0101_hakase2_05, D33R0101_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：主人公と博士振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( D33R0101_HAKASE2_01, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 32 )    //間
+
+  //ユクシー退場【仮】表示演出は仮のもの
+  _OBJ_DEL( D33R0101_TPOKE_0523_01 )
+
+  //システム：ユクシーは
+  _SYSWIN_MSG( msg_d33r0101_sppoke1_02, POS_DOWN )
+  _SYSWIN_CLOSE()
+
+  _TIME_WAIT( 8 )    //間
+
+  //エムリット退場【仮】表示演出は仮のもの
+  _OBJ_DEL( D33R0101_TPOKE_0524_01 )
+
+  //システム：エムリットは
+  _SYSWIN_MSG( msg_d33r0101_sppoke2_02, POS_DOWN )
+  _SYSWIN_CLOSE()
+
+  _TIME_WAIT( 8 )    //間
+
+  //アグノム退場【仮】表示演出は仮のもの
+  _OBJ_DEL( D33R0101_TPOKE_0525_01 )
+
+  //システム：アグノムは
+  _SYSWIN_MSG( msg_d33r0101_sppoke3_02, POS_DOWN )
+  _SYSWIN_CLOSE()
+
+  _TIME_WAIT( 16 )    //間
+
+  //アニメ：主人公振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
+
+  //アララギ娘：あの　３びきは……
+  _BALLOONWIN_OBJMSG_POS( msg_d33r0101_hakase2_06, D33R0101_HAKASE2_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：アララギ娘退場
+  _OBJ_ANIME_AUTO( D33R0101_HAKASE2_01, 18, 27, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( D33R0101_HAKASE2_01 )
+
+  //========================================//
+  //POSイベント進行
+  $WK_SCENE_SPPOKE_EVENT_01 = 4
+  //ユクシーPOSイベント配置
+  $WK_SCENE_C02_SPPOKE1_01 = 1
+  //エムリットPOSイベント配置
+  $WK_SCENE_R07R0105_SPPOKE2_01 = 1
+  //アグノムPOSイベント配置
+  $WK_SCENE_D26_SPPOKE3_01 = 1
+  //ユクシー・エムリット・アグノム非表示
+  _FLAG_SET( FV_D33R0101_SPPOKE_01 )
+  //博士非表示
+  _FLAG_SET( FV_D33R0101_HAKASE2_01 )
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  アララギ娘：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_d33r0101_hakase2_01
+
+  _TALK_OBJ_START()
+
+  //アララギ娘：それにしても　この　くうかん……▼
+  _BALLOONWIN_TALKOBJ_MSG( msg_d33r0101_hakase2_02 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：上に2歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk2_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：下に2歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk2_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：きょろきょろする
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_meet
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//アララギ娘：「！」振り向く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_hakase2_guide01
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
 

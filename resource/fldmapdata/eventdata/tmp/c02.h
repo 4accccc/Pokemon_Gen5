@@ -20,6 +20,7 @@
 #ifndef ZONE_C02_EVC_H
 #define ZONE_C02_EVC_H
 
+#define C02_SPPOKE1_01                     0
 
 #endif //ZONE_C02_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

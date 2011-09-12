@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c08r0202.h"
-  //.include  "c08r0202.h"
+  .include  "c08r0202.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +21,528 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_c08r0202_babyboy1_01
+_EVENT_DATA   ev_c08r0202_babyboy1_02
+_EVENT_DATA   ev_c08r0202_babygirl1_01
+_EVENT_DATA   ev_c08r0202_babygirl1_02
 _EVENT_DATA_END
+
+//変数
+DEFINE_LOCAL LCWK_MSGID_01  //男の子01
+DEFINE_LOCAL LCWK_MSGID_02  //男の子02
+DEFINE_LOCAL LCWK_MSGID_03  //女の子01
+DEFINE_LOCAL LCWK_MSGID_04  //女の子02
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL LCW_POSX
+DEFINE_LOCAL LCW_POSZ
+
+//サブウィン座標用変数
+DEFINE_LOCAL LCW_BABYBOY_01_POSX
+DEFINE_LOCAL LCW_BABYBOY_01_POSZ
+DEFINE_LOCAL LCW_BABYBOY_02_POSX
+DEFINE_LOCAL LCW_BABYBOY_02_POSZ
+DEFINE_LOCAL LCW_BABYGIRL_01_POSX
+DEFINE_LOCAL LCW_BABYGIRL_01_POSZ
+DEFINE_LOCAL LCW_BABYGIRL_02_POSX
+DEFINE_LOCAL LCW_BABYGIRL_02_POSZ
+
+//------------------------------注意--------------------------------//
+//                                                                  //
+//  クイズイベントに LOCALWORK0～3 まで使用しています。             //
+//  同マップ内の使用を禁止します。                                  //
+//                                                                  //
+//------------------------------------------------------------------//
+
+
+/**************************************************************/
+/*  男の子01：話しかけ（サブウィンクイズ）                    */
+/**************************************************************/
+EVENT_START   ev_c08r0202_babyboy1_01
+
+  _TALK_OBJ_START()
+
+  //クイズ出題前
+  IF $LOCALWORK0 == 0 THEN
+
+    //男の子01：ひとの　ものまねって　たのしいよね▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08r0202_babyboy1_01 )
+
+    //サブウィンクイズに挑戦する？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //男の子01：じゃ　いくよ！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c08r0202_babyboy1_02 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //会話後、元の向きに戻る
+      _OBJ_ANIME( C08R0202_BABYBOY1_01, anm_common_turn_d )
+      _OBJ_ANIME_WAIT()
+
+      //イベント進行
+      $LOCALWORK0 = 1
+
+      //サブウィンクイズへ
+      _CALL ev_c08r0202_subwin_puiz_01
+
+    ELSE    //いいえ
+
+      //男の子01：そっか……
+      _BALLOONWIN_TALKOBJ_MSG( msg_c08r0202_babyboy1_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //会話後、元の向きに戻る
+      _OBJ_ANIME( C08R0202_BABYBOY1_01, anm_common_turn_d )
+      _OBJ_ANIME_WAIT()
+
+    ENDIF
+
+  //クイズ出題中
+  ELSE
+
+    //男の子01：ぼくの　まねをした　ひとは　だれ？
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08r0202_babyboy1_04 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //会話後、元の向きに戻る
+    _OBJ_ANIME( C08R0202_BABYBOY1_01, anm_common_turn_d )
+    _OBJ_ANIME_WAIT()
+
+  ENDIF
+
+EVENT_END
+
+//サブウィンクイズ01
+ev_c08r0202_subwin_puiz_01:
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+  //主人公の座標でサブウィンの表示位置を出す
+  IF $LCW_POSX >= 9 THEN
+    $LCW_BABYBOY_01_POSX = 9
+    $LCW_BABYBOY_02_POSX = 9
+    $LCW_BABYGIRL_01_POSX = 5
+    $LCW_BABYGIRL_02_POSX = 16
+  ELSIF $LCW_POSX <= 9 THEN
+    $LCW_BABYBOY_01_POSX = 9
+    $LCW_BABYBOY_02_POSX = 9
+    $LCW_BABYGIRL_01_POSX = 4
+    $LCW_BABYGIRL_02_POSX = 18
+  ELSE
+    $LCW_BABYBOY_01_POSX = 9
+    $LCW_BABYBOY_02_POSX = 9
+    $LCW_BABYGIRL_01_POSX = 5
+    $LCW_BABYGIRL_02_POSX = 13
+  ENDIF
+
+ IF $LCW_POSZ >= 11 THEN
+    $LCW_BABYBOY_01_POSZ = 5
+    $LCW_BABYBOY_02_POSZ = 13
+    $LCW_BABYGIRL_01_POSZ = 9
+    $LCW_BABYGIRL_02_POSZ = 9
+ ELSIF $LCW_POSZ <= 11 THEN
+    $LCW_BABYBOY_01_POSZ = 7
+    $LCW_BABYBOY_02_POSZ = 15
+    $LCW_BABYGIRL_01_POSZ = 10
+    $LCW_BABYGIRL_02_POSZ = 10
+  ELSE
+    $LCW_BABYBOY_01_POSZ = 9
+    $LCW_BABYBOY_02_POSZ = 14
+    $LCW_BABYGIRL_01_POSZ = 9
+    $LCW_BABYGIRL_02_POSZ = 9
+  ENDIF
+
+  //乱数で0～4幅で次の台詞を決める
+  _GET_RND( LOCALWORK1, 4 )
+
+  //クイズのお題
+  $LCWK_MSGID_01 = msg_c08r0202_babyboy1_sub_01
+  $LCWK_MSGID_01 += $LOCALWORK1
+
+  //男の子01：《クイズのお題》ギギアル・ココロモリ・マリルリ・シビルドン
+  _SUBWIN_MSG( LCWK_MSGID_01, LCW_BABYBOY_01_POSX, LCW_BABYBOY_01_POSZ, 1 )
+  _TIME_WAIT( 32 )
+  _SUBWIN_CLOSE( 1 )
+
+  _TIME_WAIT( 16 )  //間
+
+  //お題が「ギギアル」の場合
+  IF $LOCALWORK1 == 0 THEN
+
+    //クイズのハズレを「ギアル」「ギギギアル」に
+    $LCWK_MSGID_02 = msg_c08r0202_sub_01
+    $LCWK_MSGID_03 = msg_c08r0202_sub_02
+
+  //お題が「ココロモリ」の場合
+  ELSIF $LOCALWORK1 == 1 THEN
+
+    //クイズのハズレを「コロモリ」「ハハコモリ」に
+    $LCWK_MSGID_02 = msg_c08r0202_sub_03
+    $LCWK_MSGID_03 = msg_c08r0202_sub_04
+
+  //お題が「マリルリ」の場合
+  ELSIF $LOCALWORK1 == 2 THEN
+
+    //クイズのハズレを「リルル」「マリル」に
+    $LCWK_MSGID_02 = msg_c08r0202_sub_05
+    $LCWK_MSGID_03 = msg_c08r0202_sub_06
+
+  //お題が「シビルドン」の場合
+  ELSIF $LOCALWORK1 == 3 THEN
+
+    //クイズのハズレを「シビシラス」「シビビール」に
+    $LCWK_MSGID_02 = msg_c08r0202_sub_07
+    $LCWK_MSGID_03 = msg_c08r0202_sub_08
+
+  ENDIF
+
+  //乱数で0～3幅でセリフの順番を決める
+  _GET_RND( LOCALWORK2, 3 )
+
+  //Ａパターン
+  IF $LOCALWORK2 == 0 THEN
+
+    _SUBWIN_MSG( LCWK_MSGID_01, LCW_BABYGIRL_01_POSX, LCW_BABYGIRL_01_POSZ, 2 ) 
+    _SUBWIN_MSG( LCWK_MSGID_02, LCW_BABYBOY_02_POSX, LCW_BABYBOY_02_POSZ, 3 )
+    _SUBWIN_MSG( LCWK_MSGID_03, LCW_BABYGIRL_02_POSX, LCW_BABYGIRL_02_POSZ, 4 ) 
+    //クイズの答えを代入（女の子01が正解に）
+    $LOCALWORK3 = 0
+
+  //Ｂパターン
+  ELSIF $LOCALWORK2 == 1 THEN
+
+    _SUBWIN_MSG( LCWK_MSGID_02, LCW_BABYGIRL_01_POSX, LCW_BABYGIRL_01_POSZ, 2 )
+    _SUBWIN_MSG( LCWK_MSGID_01, LCW_BABYBOY_02_POSX, LCW_BABYBOY_02_POSZ, 3 )
+    _SUBWIN_MSG( LCWK_MSGID_03, LCW_BABYGIRL_02_POSX, LCW_BABYGIRL_02_POSZ, 4 )
+    //クイズの答えを代入（男の子02が正解に）
+    $LOCALWORK3 = 1
+
+  //Ｃパターン
+  ELSIF $LOCALWORK2 == 2 THEN
+
+    _SUBWIN_MSG( LCWK_MSGID_02, LCW_BABYGIRL_01_POSX, LCW_BABYGIRL_01_POSZ, 2 )
+    _SUBWIN_MSG( LCWK_MSGID_03, LCW_BABYBOY_02_POSX, LCW_BABYBOY_02_POSZ, 3 )
+    _SUBWIN_MSG( LCWK_MSGID_01, LCW_BABYGIRL_02_POSX, LCW_BABYGIRL_02_POSZ, 4 )
+    //クイズの答えを代入（女の子02が正解に）
+    $LOCALWORK3 = 2
+
+  ENDIF
+  _TIME_WAIT( 32 )
+  _SUBWIN_CLOSE( 2 )
+  _SUBWIN_CLOSE( 3 )
+  _SUBWIN_CLOSE( 4 )
+
+  _TIME_WAIT( 16 )  //間
+
+_RET
+
+/**************************************************************/
+/*  男の子02：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c08r0202_babyboy1_02
+
+  //クイズ出題前
+  IF $LOCALWORK0 == 0 THEN
+
+    _TALK_OBJ_START()
+    //男の子02：マネッコは　ボクじゃないよ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08r0202_babyboy2_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //自機方向取得
+    _PLAYER_DIR_GET( LWK_DIR )
+
+    //会話後、上以外を向いていた場合は元の向きに戻る
+    IF $LWK_DIR != DIR_DOWN THEN
+
+      _OBJ_ANIME( C08R0202_BABYBOY1_02, anm_common_turn_u )
+      _OBJ_ANIME_WAIT()
+
+    ENDIF
+
+  //クイズ出題中
+  ELSIF $LOCALWORK0 == 1 THEN
+
+    _TALK_START_SE_PLAY()
+    //男の子01：その　ともだちが
+    _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_05, C08R0202_BABYBOY1_01, POS_DEFAULT )
+
+    //その人が正解だと思う？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //正解か判定
+      IF $LOCALWORK3 == 1 THEN
+
+        //男の子01：せいかい　でした！▼
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_06, C08R0202_BABYBOY1_01, POS_DEFAULT )
+
+      ELSE
+
+        //男の子01：うーん……　ざんねん　でした
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_07, C08R0202_BABYBOY1_01, POS_DEFAULT )
+
+      ENDIF
+
+      //イベント進行
+      $LOCALWORK0 = 0
+
+      //もう一度やる？
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //男の子01：じゃ　いくよ！
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_02, C08R0202_BABYBOY1_01, POS_DEFAULT )
+        _AB_KEYWAIT_MARK()
+        _MSGWIN_CLOSE()
+
+        //イベント進行
+        $LOCALWORK0 = 1
+
+        //サブウィンクイズへ
+        _CALL ev_c08r0202_subwin_puiz_01
+
+      ELSE    //いいえ
+
+        //男の子01：そっか……
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_03, C08R0202_BABYBOY1_01, POS_DEFAULT )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE    //いいえ
+
+      //男の子01：じゃあ　ぼくの　まねをした
+      _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_08, C08R0202_BABYBOY1_01, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  女の子01：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c08r0202_babygirl1_01
+
+  //クイズ出題前
+  IF $LOCALWORK0 == 0 THEN
+
+    _TALK_OBJ_START()
+    //女の子01：あたしね　じぶんの
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08r0202_babygirl1_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //自機方向取得
+    _PLAYER_DIR_GET( LWK_DIR )
+
+    //会話後、右以外を向いていた場合は元の向きに戻る
+    IF $LWK_DIR != DIR_LEFT THEN
+
+      _OBJ_ANIME( C08R0202_BABYGIRL1_01, anm_common_turn_r )
+      _OBJ_ANIME_WAIT()
+
+    ENDIF
+
+  //クイズ出題中
+  ELSIF $LOCALWORK0 == 1 THEN
+
+    _TALK_START_SE_PLAY()
+    //男の子01：その　ともだちが
+    _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_05, C08R0202_BABYBOY1_01, POS_DEFAULT )
+
+    //その人が正解だと思う？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //正解か判定
+      IF $LOCALWORK3 == 0 THEN
+
+        //男の子01：せいかい　でした！▼
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_06, C08R0202_BABYBOY1_01, POS_DEFAULT )
+
+      ELSE
+
+        //男の子01：うーん……　ざんねん　でした
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_07, C08R0202_BABYBOY1_01, POS_DEFAULT )
+
+      ENDIF
+
+      //イベント進行
+      $LOCALWORK0 = 0
+
+      //もう一度やる？
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //男の子01：じゃ　いくよ！
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_02, C08R0202_BABYBOY1_01, POS_DEFAULT )
+        _AB_KEYWAIT_MARK()
+        _MSGWIN_CLOSE()
+
+        //イベント進行
+        $LOCALWORK0 = 1
+
+        //サブウィンクイズへ
+        _CALL ev_c08r0202_subwin_puiz_01
+
+      ELSE    //いいえ
+
+        //男の子01：そっか……
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_03, C08R0202_BABYBOY1_01, POS_DEFAULT )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE    //いいえ
+
+      //男の子01：じゃあ　ぼくの　まねをした
+      _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_08, C08R0202_BABYBOY1_01, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  女の子02：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c08r0202_babygirl1_02
+
+  //クイズ出題前
+  IF $LOCALWORK0 == 0 THEN
+
+    _TALK_OBJ_START()
+    //女の子02：だれかの　まねを　するよりも
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08r0202_babygirl2_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //自機方向取得
+    _PLAYER_DIR_GET( LWK_DIR )
+
+    //会話後、左以外を向いていた場合は元の向きに戻る
+    IF $LWK_DIR != DIR_RIGHT THEN
+
+      _OBJ_ANIME( C08R0202_BABYGIRL1_02, anm_common_turn_l )
+      _OBJ_ANIME_WAIT()
+
+    ENDIF
+
+  //クイズ出題中
+  ELSIF $LOCALWORK0 == 1 THEN
+
+    _TALK_START_SE_PLAY()
+    //男の子01：その　ともだちが
+    _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_05, C08R0202_BABYBOY1_01, POS_DEFAULT )
+
+    //その人が正解だと思う？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //正解か判定
+      IF $LOCALWORK3 == 2 THEN
+
+        //男の子01：せいかい　でした！▼
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_06, C08R0202_BABYBOY1_01, POS_DEFAULT )
+
+      ELSE
+
+        //男の子01：うーん……　ざんねん　でした
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_07, C08R0202_BABYBOY1_01, POS_DEFAULT )
+
+      ENDIF
+
+      //イベント進行
+      $LOCALWORK0 = 0
+
+      //もう一度やる？
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //男の子01：じゃ　いくよ！
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_02, C08R0202_BABYBOY1_01, POS_DEFAULT )
+        _AB_KEYWAIT_MARK()
+        _MSGWIN_CLOSE()
+
+        //イベント進行
+        $LOCALWORK0 = 1
+
+        //サブウィンクイズへ
+        _CALL ev_c08r0202_subwin_puiz_01
+
+      ELSE    //いいえ
+
+        //男の子01：そっか……
+        _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_03, C08R0202_BABYBOY1_01, POS_DEFAULT )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE    //いいえ
+
+      //男の子01：じゃあ　ぼくの　まねをした
+      _BALLOONWIN_OBJMSG_POS( msg_c08r0202_babyboy1_08, C08R0202_BABYBOY1_01, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+

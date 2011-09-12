@@ -9,6 +9,10 @@
 #ifndef ZONE_C08R0202_EVC_H
 #define ZONE_C08R0202_EVC_H
 
+#define C08R0202_BABYBOY1_01               0
+#define C08R0202_BABYGIRL1_02              1
+#define C08R0202_BABYBOY1_02               2
+#define C08R0202_BABYGIRL1_01              3
 
 #endif //ZONE_C08R0202_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08r0202.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

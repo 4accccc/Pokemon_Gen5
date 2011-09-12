@@ -25,6 +25,7 @@
 #define D26_ROCK_04                       13
 #define D26_ROCK_05                       14
 #define D26_ROCK_06                       15
+#define D26_SPPOKE3_01                    16
 
 #endif //ZONE_D26_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
