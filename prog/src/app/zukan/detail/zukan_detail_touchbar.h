@@ -124,3 +124,8 @@ extern u32 ZUKAN_DETAIL_TOUCHBAR_GetCustomIconPlttRegIdx( ZUKAN_DETAIL_TOUCHBAR_
 // BGプライオリティを設定する(OBJのBGプライオリティにもこの値が設定される)
 extern void ZUKAN_DETAIL_TOUCHBAR_SetBgPriority( ZUKAN_DETAIL_TOUCHBAR_WORK* work, u8 pri );
 
+extern void Zukan_Detail_Touchbar_ActiveAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work ,BOOL is_active );
+
+extern void Zukan_Detail_Touchbar_VisibleAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work ,BOOL is_visible );
+extern void Zukan_Detail_Touchbar_PushAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+

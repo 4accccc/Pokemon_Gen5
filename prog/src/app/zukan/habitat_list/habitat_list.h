@@ -57,6 +57,7 @@ typedef struct {
 
 	// [out]
 	u32	ret_mode;								// 終了モード
+  u16 select_index;
 }ZUKANHABITAT_LIST_DATA;
 
 // メインワーク

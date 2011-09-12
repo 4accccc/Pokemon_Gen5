@@ -486,14 +486,20 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
     break;
   case TPID_BUTTON_UP:
     {
-      ONOUE_Printf("ゾーン切替UP\n");
-      SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_UP );
+      if( p_wk->zone_data_cnt > 1 )
+      {
+        ONOUE_Printf("ゾーン切替UP\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_UP );
+      }
     }
     break;
   case TPID_BUTTON_DOWN:
     {
-      ONOUE_Printf("ゾーン切替DOWN\n");
-      SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_DOWN );
+      if( p_wk->zone_data_cnt > 1 )
+      {
+        ONOUE_Printf("ゾーン切替DOWN\n");
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_DOWN );
+      }
     }
     break;
   case TPID_BUTTON_SEASON_L:
@@ -577,13 +583,19 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
       }
       else if( key_trg & PAD_KEY_UP )
       {
-        ONOUE_Printf("ゾーン切替UP\n");
-        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_UP );
+        if( p_wk->zone_data_cnt > 1 )
+        {
+          ONOUE_Printf("ゾーン切替UP\n");
+          SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_UP );
+        }
       }
       else if( key_trg & PAD_KEY_DOWN )
       {
-        ONOUE_Printf("ゾーン切替DOWN\n");
-        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_DOWN );
+        if( p_wk->zone_data_cnt > 1 )
+        {
+          ONOUE_Printf("ゾーン切替DOWN\n");
+          SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_ZONE ,SEQ_CHANGE_PARAM_DOWN );
+        }
       }
       else if( key_trg & PAD_BUTTON_A )
       {
@@ -942,6 +954,8 @@ static void MAINSEQ_AppExit( HABITAT_ZONE_WK *p_wk )
       // アニメーション終了待ち
       if( GFL_CLACT_WK_CheckAnmActive( p_clwk ) == FALSE )
       {
+        // 選択中のインデックスを取得を設定する
+        p_wk->p_init_param->select_index = p_wk->select_index;
         // メインシーケンスの状態を終了に設定
         p_wk->main_status = HABITAT_ZONE_MAIN_EXIT;
       }
@@ -1575,14 +1589,14 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       if( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET )
       {
         // ファンファーレ
-        PMSND_PlayBGM( BANK_ME_ZUKAN_01 );
+        PMSND_PlayBGM( SEQ_ME_ZUKAN_01 );
         // 地形メッセージIDを取得
         msg_id = GetLandTypeMsgIDGetCmp( p_wk->land_type,p_list_data->info_ground_type);
       }
       else
       {
         // ファンファーレ
-        PMSND_PlayBGM( BANK_ME_ZUKAN_02 );
+        PMSND_PlayBGM( SEQ_ME_ZUKAN_02 );
         // 地形メッセージIDを取得
         msg_id = GetLandTypeMsgIDLookCmp( p_wk->land_type,p_list_data->info_ground_type);
       }
@@ -2352,6 +2366,14 @@ static void MakeZoneCommonData( HABITAT_ZONE_WK *p_wk )
     }
   }
 
+  if( p_wk->zone_data_cnt <= 1 )
+  {
+    GFL_CLWK *p_clwk;
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_UP_ARROW );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_DOWN_ARROW );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+  }
   // @todo 釣りポケモン開放済みかどうか
   // @todo 波乗り開放済みかどうか
 
@@ -2601,7 +2623,6 @@ static void SetCompleteEvetnID( HABITAT_ZONE_WK *p_wk ,HABITATLIST_STATUS id )
 static s32 GetSaveDataIndex( u16 zone_group_id )
 {
   s32 i = 0;
-  // リストの長さをまず取得
   for( i = 0; i < HABITAT_LIST_DATA_MAX ; i++ )
   {
     if( sc_habitat_list_data[i].zone_group_id == zone_group_id )

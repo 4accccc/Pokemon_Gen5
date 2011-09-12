@@ -267,7 +267,7 @@ extern GFL_CLWK* HABITAT_LIST_GRA_GetComClWk(
 extern void HABITAT_LIST_GRA_ClearWin( PRINT_UTIL_WIN win_id ,HABITAT_LIST_GRA_WK *p_wk ,s16 x, s16 y ,s16 w, s16 h );
 extern BOOL HABITAT_LIST_GRA_FrameListInit( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_MakeList( HABITAT_LIST_GRA_WK* p_wk, u8 list_size,
-                ZUKANHABITAT_LIST_LISTDATA *p_list_data ,u16 default_zone_group);
+    ZUKANHABITAT_LIST_LISTDATA *p_list_data ,u16 default_zone_group,u16 initPos);
 extern void HABITAT_LIST_GRA_DeleteList( HABITAT_LIST_GRA_WK* p_wk );
 extern u32 HABITAT_LIST_GRA_ListMain( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_GetScrollBarYPos( HABITAT_LIST_GRA_WK *p_wk );

@@ -1428,7 +1428,7 @@ GFL_CLWK* HABITAT_LIST_GRA_GetComClWk( HABITAT_LIST_GRA_WK *p_wk ,s32 obj_id )
  */
 //-----------------------------------------------------------------------------
 void HABITAT_LIST_GRA_MakeList( HABITAT_LIST_GRA_WK* p_wk, u8 list_size,
-              ZUKANHABITAT_LIST_LISTDATA *p_list_data ,u16 default_zone_group)
+    ZUKANHABITAT_LIST_LISTDATA *p_list_data ,u16 default_zone_group,u16 initPos)
 {
 	ARCHANDLE * ah;
 	u32	i;
@@ -1442,6 +1442,7 @@ void HABITAT_LIST_GRA_MakeList( HABITAT_LIST_GRA_WK* p_wk, u8 list_size,
 		hed = sc_list_header;
 		hed.itemMax = PLACE_DATA_MAX;
 		hed.cbWork  = p_wk;
+    hed.initPos = initPos;
 		for( i = 0; i < list_size ; i++ )
 		{
       const ZUKANHABITAT_LIST_LISTDATA *p_ld = &p_list_data[i];
@@ -1493,11 +1494,9 @@ void HABITAT_LIST_GRA_MakeList( HABITAT_LIST_GRA_WK* p_wk, u8 list_size,
 
     for( i=0; i < list_size; i++ )
     {
-      // @todo 地形存在の有無をみて、背景シーケンスを設定する
       s32 screen_id;
       u16 place_id = ZONEDATA_GetPlaceNameID( p_list_data[i].zone_group );
       p_wk->p_place_name[i] = GFL_MSG_CreateString( p_msg , place_id );
-      //ONOUE_Printf("場所ID：%x\n",place_id);
       screen_id = GetBackGroundScreenID( &p_list_data[i] );
       FRAMELIST_AddItem( p_wk->p_lwk, screen_id, TRUE );
     }

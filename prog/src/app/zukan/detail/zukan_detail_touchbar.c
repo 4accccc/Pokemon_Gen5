@@ -89,6 +89,7 @@ enum
 enum
 {
   MAP_CUSTOM_DUMMY       = ZKND_TBAR_ICON_CUSTOM,
+  MAP_CUSTOM_AREA_JUMP,
 };
 // FORM
 enum
@@ -115,6 +116,7 @@ enum
 enum
 {
   MAP_ICON_RETURN,
+  MAP_ICON_AREA_JUMP,
 #ifdef USE_MAP_DUMMY_ICON
   MAP_ICON_CUSTOM_DUMMY,  // ダミーのアイコン  // 常に非表示にしておく。これがないと、アイコンを削除して生成する際に、画面が乱れてしまう。
 #endif
@@ -184,6 +186,7 @@ static const GFL_CLACTPOS general_icon_const_pos_no_map[GENERAL_ICON_MAX] =
 static const ICON_CONST_SET map_icon_const_set[MAP_ICON_MAX] =
 {
   { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_MAP_RETURN,     ZKNDTL_SCMD_MAP_RETURN,    },
+  { MAP_CUSTOM_AREA_JUMP,     { 128, ZKND_TBAR_ICON_Y + 12  },    160, ZKNDTL_CMD_MAP_RET_HABITAT,     ZKNDTL_SCMD_MAP_RET_HABITAT,    },
 #ifdef USE_MAP_DUMMY_ICON
   { MAP_CUSTOM_DUMMY,         { 104, ZKND_TBAR_ICON_Y       },    48,  ZKNDTL_CMD_NONE,           ZKNDTL_CMD_NONE,           },
 #endif
@@ -1540,23 +1543,23 @@ static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
  
   // リソース読み込み
   {
-    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, work->heap_id );
+    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, work->heap_id );
     work->map_ncl = GFL_CLGRP_PLTT_RegisterEx(
                             handle,
-                            NARC_townmap_gra_tmap_obj_NCLR,
+                            NARC_zukan_gra_info_mapwin_obj_NCLR,
                             draw_type,
-                            OBJ_PAL_POS_M_CUSTOM * 0x20, 2, OBJ_PAL_NUM_M_CUSTOM,
+                            OBJ_PAL_POS_M_CUSTOM * 0x20, 0, OBJ_PAL_NUM_M_CUSTOM,
                             work->heap_id );	
     work->map_ncg = GFL_CLGRP_CGR_Register(
                             handle,
-                            NARC_townmap_gra_tmap_obj_d_NCGR,
+                            NARC_zukan_gra_info_mapwin_obj_NCGR,
                             FALSE,
                             draw_type,
                             work->heap_id );
     work->map_nce = GFL_CLGRP_CELLANIM_Register(
                             handle,
-                            NARC_townmap_gra_tmap_obj_d_NCER,
-                            NARC_townmap_gra_tmap_obj_d_NANR,
+                            NARC_zukan_gra_info_mapwin_obj_NCER,
+                            NARC_zukan_gra_info_mapwin_obj_NANR,
                             work->heap_id );
     GFL_ARC_CloseDataHandle( handle );
   }
@@ -1586,6 +1589,7 @@ static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
       icon_tbl[i].width   = work->icon_set[i].cset->width;
     }
 #ifdef USE_MAP_DUMMY_ICON
+
     // 以下カスタムボタンならば入れなくてはいけない情報
     // カスタムボタン
     {
@@ -1603,6 +1607,21 @@ static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
       }
     }
 #endif
+    // カスタムボタン
+    {
+      u8 i;
+      for( i=MAP_ICON_AREA_JUMP; i<=MAP_ICON_AREA_JUMP; i++ )
+      {
+        icon_tbl[i].cg_idx            = work->map_ncg;    // キャラリソース
+        icon_tbl[i].plt_idx           = work->map_ncl;    // パレットリソース
+        icon_tbl[i].cell_idx          = work->map_nce;    // セルリソース
+        icon_tbl[i].active_anmseq     = 6;                // アクティブのときのアニメ
+        icon_tbl[i].noactive_anmseq   = 7;                // ノンアクティブのときのアニメ
+        icon_tbl[i].push_anmseq       = 8;                // 押したときのアニメ（STOPになっていること）
+        icon_tbl[i].key               = PAD_BUTTON_A;     // キーで押したときに動作させたいならば、ボタン番号
+        icon_tbl[i].se                = 0;                // 押したときにSEならしたいならば、SEの番号
+      }
+    }
 
     // 設定構造体
     // さきほどの窓情報＋リソース情報をいれる
@@ -1634,6 +1653,7 @@ static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
     ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[MAP_ICON_CUSTOM_DUMMY].cset->id, FALSE );
   }
 #endif
+  ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[MAP_ICON_AREA_JUMP].cset->id, TRUE );
 }
 static void Zukan_Detail_Touchbar_DeleteMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
@@ -1865,5 +1885,50 @@ static void Zukan_Detail_Touchbar_MainForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
       ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[FORM_ICON_CUR_R].cset->id );
     }
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリアジャンプボタンのアクティブ状態を切り替える
+ *
+ *	@param	work 
+ *	@param	is_active 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void Zukan_Detail_Touchbar_ActiveAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work ,BOOL is_active )
+{
+  ZKND_TBAR_SetActive( work->tbwk ,work->icon_set[MAP_ICON_AREA_JUMP].cset->id ,is_active );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリアジャンプの表示状態切替
+ *
+ *	@param	work 
+ *	@param	is_visible 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void Zukan_Detail_Touchbar_VisibleAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work ,BOOL is_visible )
+{
+  ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[MAP_ICON_AREA_JUMP].cset->id, is_visible );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリアジャンプボタンを押したことにする
+ *
+ *	@param	work 
+ *	@param	is_visible 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void Zukan_Detail_Touchbar_PushAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[MAP_ICON_AREA_JUMP].cset->id );
 }
 

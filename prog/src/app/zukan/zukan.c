@@ -70,6 +70,9 @@ typedef struct {
 
   ZUKAN_DETAIL_TYPE   detail_type;    // SEQ_INFO_CALLのときのみ使用
   BOOL                is_habitat_call;// 生息地リストからの呼び出し 
+  BOOL                is_info_call;   // 詳細画面からの呼び出し
+  u16                 info_select_zone;   // 詳細画面からの呼び出し
+  u16                 habitat_list_index;   // 生息地リストインデックス
 
 	void * work;			// 各処理のワーク
 }ZUKAN_MAIN_WORK;
@@ -195,7 +198,7 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 	}
 
 #ifdef DEBUG_ONLY_FOR_onoue_masayuki
-	wk->mainSeq = SEQ_HABITAT_ZONE_LIST_CALL;
+	//wk->mainSeq = SEQ_HABITAT_ZONE_LIST_CALL;
 #endif
 
 	return GFL_PROC_RES_FINISH;
@@ -605,6 +608,12 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
 
 	detail = wk->work;
 
+  // 生息地リストから呼び出されている場合は初期化しない
+  if( wk->is_habitat_call == FALSE)
+  {
+    wk->is_info_call = FALSE; // 呼び出し指定初期化
+  }
+
   {
     monsno = detail->list[detail->no];
     ZUKANSAVE_SetDefaultMons( zukan_savedata, monsno );
@@ -621,6 +630,8 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
   case ZUKAN_DETAIL_RET_CALL_HABITAT:
     {
       ret = SEQ_HABITAT_ZONE_CALL;
+      wk->is_info_call = TRUE;
+      wk->info_select_zone = detail->habitat_zone_group;
     }
     break;
   case ZUKAN_DETAIL_RET_RETURN:
@@ -663,7 +674,17 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
 	p_zone_info->p_gdata = wk->prm->gamedata;
 
   // リストをデータを作成
-  MakeHabitatZoneListData( p_zone_info );
+  if( (wk->is_info_call == TRUE) && (wk->is_habitat_call == FALSE) )
+  {
+    ONOUE_Printf("生息地リスト：単一呼出%d\n",wk->info_select_zone);
+    MakeHabitatZoneListData( p_zone_info ,wk->info_select_zone ,0 );
+  }
+  else
+  {
+    ONOUE_Printf("生息地リスト：セーブからリスト生成\n");
+    MakeHabitatZoneListData( p_zone_info ,NO_SELECT_ZONE_ID ,wk->habitat_list_index);
+    //MakeHabitatZoneListData( p_zone_info ,NO_SELECT_ZONE_ID ,0);
+  }
 
 	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_habitat_zone),
                                       &ZUKANHABITAT_ZONE_ProcData, p_zone_info );
@@ -693,7 +714,17 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
     break;
 
   case HABITAT_ZONE_RET_RETURN:
-    ret = SEQ_HABITAT_ZONE_LIST_CALL;
+    if( wk->is_info_call == TRUE )
+    {
+      ONOUE_Printf("詳細画面へ戻る\n");
+      ret = SEQ_INFO_CALL;
+    }
+    else
+    {
+      ONOUE_Printf("リスト画面へ戻る\n");
+      wk->habitat_list_index = p_zone_info->select_index;
+      ret = SEQ_HABITAT_ZONE_LIST_CALL;
+    }
     wk->is_habitat_call = FALSE;
     break;
 
@@ -739,7 +770,7 @@ static int MainSeq_CallHabitatZoneList( ZUKAN_MAIN_WORK * wk )
 	p_zone_list->p_gdata = wk->prm->gamedata;
 
   // リストデータを作成する
-  MakeHabitatListData( p_zone_list );
+  MakeHabitatListData( p_zone_list ,wk->habitat_list_index );
 
   GFL_PROC_LOCAL_CallProc( wk->localProc,
       FS_OVERLAY_ID(zukan_habitat_list), &ZUKANHABITAT_LIST_ProcData, p_zone_list );
@@ -773,6 +804,7 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
     wk->prm->retMode = ZUKAN_RET_NORMAL;
     break;
   case HABITAT_LIST_RET_CALL_ZONE_INFO:
+    wk->habitat_list_index = zone_list->select_index;
     ret = SEQ_HABITAT_ZONE_CALL;
     break;
   case HABITAT_LIST_RET_ZENKOKU:

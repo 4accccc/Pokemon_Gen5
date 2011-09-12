@@ -25,6 +25,7 @@
 // フェードイン/アウトのスピード
 #define ZKNCOMM_FADE_WAIT   (-14)     // PaletteFadeReqWriteのwaitに渡せる値
 
+#define NO_SELECT_ZONE_ID   (0xFFFF) // ゾーンIDを指定せずにゾーン詳細画面を作製知る場合のゾーンID
 
 // セルアクターデータ
 typedef struct {
@@ -184,7 +185,7 @@ extern GFL_CLWK * ZKNCOMM_CreateClact( GFL_CLUNIT * unit, const ZKNCOMM_CLWK_DAT
  *	@retval
  */
 //-----------------------------------------------------------------------------
-extern void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info );
+extern void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info,u16 zone_group_id ,u16 select_index );
 
 //----------------------------------------------------------------------------
 /**
@@ -195,4 +196,4 @@ extern void MakeHabitatZoneListData( ZUKANHABITAT_ZONE_DATA * p_zone_info );
  *	@retval
  */
 //-----------------------------------------------------------------------------
-extern void MakeHabitatListData( ZUKANHABITAT_LIST_DATA * p_zone_list );
+extern void MakeHabitatListData( ZUKANHABITAT_LIST_DATA * p_zone_list ,u16 select_index );

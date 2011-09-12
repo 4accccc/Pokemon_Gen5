@@ -72,6 +72,7 @@ typedef struct _ZUKAN_DETAIL_PARAM
   ZUKAN_DETAIL_RETURN  ret;                ///< [out]     次の指示
   BOOL                 is_habitat_call;    ///< [in]      生息地モードでの呼び出し
   u16                  zone_group;         ///< [out]     選択されたゾーングループ
+  u16                  habitat_zone_group;         ///< [out]     分布図で選択されたゾーングループ
 }
 ZUKAN_DETAIL_PARAM;
 

@@ -390,6 +390,7 @@ static void MAINSEQ_KeyInput( HABITAT_LIST_WK *p_wk )
       SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
       SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
       ONOUE_Printf("€–Ú‘I‘ð %d\n",list_pos);
+      p_wk->p_init_param->select_index = list_pos;
     }
     break;
   }

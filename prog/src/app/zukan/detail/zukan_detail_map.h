@@ -60,5 +60,4 @@ typedef struct _ZUKAN_DETAIL_MAP_WORK ZUKAN_DETAIL_MAP_WORK;
 extern void         ZUKAN_DETAIL_MAP_InitParam(
                             ZUKAN_DETAIL_MAP_PARAM*  param,
                             HEAPID                   heap_id );
-extern u16 Zukan_Detail_Map_CheckHabitatInfoCall( ZUKAN_DETAIL_MAP_PARAM* work );
 

@@ -388,17 +388,6 @@ static GFL_PROC_RESULT Zukan_Detail_ProcMain( GFL_PROC* proc, int* seq, void* pw
       cmd = ZUKAN_DETAIL_TOUCHBAR_GetTouch( work->touchbar );
     }
     
-    // •ª•z}ê—p–ß‚è’lŽæ“¾
-    if( param->type == ZUKAN_DETAIL_TYPE_MAP )
-    {
-      u16 zone_group = Zukan_Detail_Map_CheckHabitatInfoCall( work->zkndtl_proc_param );
-      if( HABITAT_NO_CALL_ID != zone_group )
-      {
-        cmd = ZKNDTL_SCMD_MAP_RET_HABITAT;
-        param->zone_group = zone_group;
-      }
-    }
-
     ZKNDTL_PROC_SysCommand(work->zkndtl_proc, work->cmn, cmd);
     
     switch( cmd )
@@ -409,7 +398,13 @@ static GFL_PROC_RESULT Zukan_Detail_ProcMain( GFL_PROC* proc, int* seq, void* pw
     case ZKNDTL_CMD_MAP:     work->zkndtl_proc_next_type     = ZUKAN_DETAIL_TYPE_MAP;      break;
     case ZKNDTL_CMD_VOICE:   work->zkndtl_proc_next_type     = ZUKAN_DETAIL_TYPE_VOICE;    break;
     case ZKNDTL_CMD_FORM:    work->zkndtl_proc_next_type     = ZUKAN_DETAIL_TYPE_FORM;     break;
-    case ZKNDTL_SCMD_MAP_RET_HABITAT: param->ret             = ZUKAN_DETAIL_RET_CALL_HABITAT;     break;
+    case ZKNDTL_SCMD_MAP_RET_HABITAT:
+      {
+        ZUKAN_DETAIL_MAP_PARAM *proc_param = work->zkndtl_proc_param;
+        param->habitat_zone_group  = proc_param->select_zone_group;
+        param->ret = ZUKAN_DETAIL_RET_CALL_HABITAT;
+      }
+      break;
     }
   }
   

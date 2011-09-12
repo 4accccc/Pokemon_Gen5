@@ -354,7 +354,7 @@ static void MakeFrameListData( HABITAT_LIST_WK *p_wk )
   ZUKANHABITAT_LIST_LISTDATA *p_ld = p_wk->p_init_param->p_list_data;
   u8 list_size = p_wk->p_init_param->list_size;
   u16 default_zone_group = p_wk->p_init_param->default_zone_group;
-  HABITAT_LIST_GRA_MakeList( &p_wk->gra_sys ,list_size ,p_ld ,default_zone_group );
+  HABITAT_LIST_GRA_MakeList( &p_wk->gra_sys ,list_size ,p_ld ,default_zone_group ,p_wk->p_init_param->select_index );
 }
 
 //----------------------------------------------------------------------------
