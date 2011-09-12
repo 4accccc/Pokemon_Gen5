@@ -42,6 +42,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pair_d06_01"
@@ -71,6 +78,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>未使用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:55:03" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -78,17 +92,25 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d24r0301_swbell_07"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしはね
-・その１</Text>
+			<Text>あたしはね　じぶんに
+なにが　できるか　わからなくて▽
+それを　さがすため　たびに　でたの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:54:09" />
+				Time="2011-09-12T05:08:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -96,11 +118,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしはね
-・その１</Text>
+			<Text>あたしはね　自分に
+なにが　できるか　わからなくて▽
+それを　探すため　旅に　でたの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:54:09" />
+				Time="2011-09-12T05:14:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -136,11 +159,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしはね
-・その２</Text>
+			<Text>あたし……
+トレーナーとしては　よわいんだけど▼
+それでも　たびを　つづけられたのは
+ポケモンが　がんばってくれたからなの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:54:09" />
+				Time="2011-09-12T05:08:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -148,11 +173,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしはね
-・その２</Text>
+			<Text>あたし……
+トレーナーとしては　弱いんだけど▼
+それでも　旅を　続けられたのは
+ポケモンが　がんばってくれたからなの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:54:09" />
+				Time="2011-09-12T05:14:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -188,11 +215,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしはね
-・その３</Text>
+			<Text>だれもが　かちつづけられる　とか
+そんなのは　むずかしいよ……▼
+でもね　ポケモンを　すき！　なのは
+いつでも　いつまでも　できるよねえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:54:09" />
+				Time="2011-09-12T05:14:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -200,11 +229,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしはね
-・その３</Text>
+			<Text>だれもが　勝ち続けられる　とか
+そんなのは　難しいよ……▼
+でもね　ポケモンを　好き！　なのは
+いつでも　いつまでも　できるよねえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:54:09" />
+				Time="2011-09-12T05:14:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -240,11 +271,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしはね
-・その４</Text>
+			<Text>すきな　ポケモンたちの　ことを
+もっともっと　しりたい……！▼
+それが　アララギはかせの　もとで
+おてつだいを　はじめた　りゆうかな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:54:09" />
+				Time="2011-09-12T05:16:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -252,11 +285,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしはね
-・その４</Text>
+			<Text>好きな　ポケモンたちの　ことを
+もっともっと　知りたい……！▼
+それが　アララギ博士の　もとで
+お手伝いを　始めた　理由かな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:54:09" />
+				Time="2011-09-12T05:16:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -292,11 +327,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしはね
-・その５</Text>
+			<Text>はかせの　おてつだいが
+ほんとうに　やりたいことなのか……▼
+じつは　まだ　わからないけど
+やっていて　すごく　たのしいの！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:54:09" />
+				Time="2011-09-12T05:15:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -304,11 +341,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしはね
-・その５</Text>
+			<Text>博士の　お手伝いが
+本当に　やりたいことなのか……▼
+じつは　まだ　わからないけど
+やっていて　すごく　楽しいの！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:54:09" />
+				Time="2011-09-12T05:16:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -331,6 +370,110 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-10T08:54:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0301_swbell_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えええ！　あなぬけのヒモを
+つかわれたら　はぐれちゃうよお？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えええ！　あなぬけのヒモを
+使われたら　はぐれちゃうよお？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・Black2ver
+・禁則処理：道具「あなぬけのヒモ」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0301_swbell_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えええ！　あなをほるの　わざを
+つかわれたら　はぐれちゃうよお？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えええ！　あなをほるの　技を
+使われたら　はぐれちゃうよお？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・Black2ver
+・禁則処理：わざ「あなをほる」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T03:56:54" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -433,6 +576,116 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-10T08:54:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0401_boss_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ここで　ボクは……▼
+めがみたちに　ヒトとして
+めんどうを　みてもらい……▼
+しちけんじん　たちから
+さまざまな　ちしきを　おそわった……[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:19:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:19:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ここで　ボクは……▼
+女神たちに　ヒトとして
+面倒を　みてもらい……▼
+七賢人たち　から
+さまざまな　知識を　教わった……[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:19:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:19:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・振り向き会話
+・n01r0401では繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:19:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:19:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0501_boss_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは……　ダレにも
+みえない　ものが　みたいんだ[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:20:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:20:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは……　ダレにも
+みえない　ものが　みたいんだ[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:20:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:20:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・振り向き会話
+・n01r0501では繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:20:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T05:20:18" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

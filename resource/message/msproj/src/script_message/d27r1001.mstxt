@@ -918,13 +918,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『あんたが　ほしいもの
+			<Text>プラズマ団『あんたが　ほしいもの
 あたい　もってるわ！▼
 でも　ほしけりゃ……
-わかるでしょ？　しょうぶよ！▼</Text>
+わかるでしょ？　勝負よ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:35:57" />
+				Time="2011-09-12T03:53:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1032,11 +1032,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　プラズマカードが　ないと
-パスワードは　にゅうりょく　できない▼
-あとは　じぶんで　がんばりなさい</Text>
+パスワードは　入力できない▼
+あとは　自分で　がんばりなさい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:35:57" />
+				Time="2011-09-12T03:53:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
