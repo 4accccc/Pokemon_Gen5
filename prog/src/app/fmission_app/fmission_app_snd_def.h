@@ -16,6 +16,8 @@
 #define SND_FMA_CANCEL	( SEQ_SE_CANCEL1 )			///< キャンセル音
 #define SND_FMA_SKIP	( SEQ_SE_MESSAGE )			///< ボタン送り
 //
+#define SND_FMA_COUNT	( SEQ_SE_DECIDE5 )			///< カウントダウン音
+//
 #define SND_FMA_RESULT	( SEQ_SE_SW_FES_06 )		///< 結果発表
 #define SND_FMA_HISCORE	( SEQ_SE_SW_FES_07 )		///< ハイスコア
 //

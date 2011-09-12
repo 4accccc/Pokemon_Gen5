@@ -452,7 +452,7 @@ static GFL_PROC_RESULT FMissionAppProc_Main( GFL_PROC *proc, int *seq, void *pwk
 			break;
 		case 2:
 			WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
-							WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+							WIPE_FADE_WHITE, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
 			(*seq) ++;
 			break;
 		//
@@ -946,6 +946,8 @@ static void fma_chk_diff( FMISSION_APP_WORK* wk )
 				for(i=0;i<5;i++){
 					FmaCmn_chg_pal( wk, FMA_CLWKMODE_NORMAL, FMAI_CLWK_TIME_00+i, 1 );
 				}
+				// SE
+				PMSND_PlaySE( SND_FMA_COUNT );
 			}
 			wk->OldWork.Timer = timer;
 		}
@@ -2102,6 +2104,14 @@ static BOOL fma_chk_meswin( FMISSION_APP_WORK *wk )
 			// 報酬手に入らず=>矢印表示
 			wk->Flag |= FLG_FMA_ME_MES;
 		}
+		// ダブルスコアの有無
+		if(!(wk->Flag & FLG_FMA_DOUBLE)){
+			// ハイリンクの有無
+			if(!(wk->Flag & FLG_FMA_HILINK)){
+				// どちらもない => ここで終わり
+				wk->Flag |= FLG_FMA_MSG_END;
+			}
+		}
 		// stream
 		FmaCmn_disp_winmes( wk, FMAR_CANVAS_DOWN_WIN, id, 1 );
 		wk->Flag |= FLG_FMA_MSG_01;
@@ -2137,14 +2147,14 @@ static BOOL fma_chk_meswin( FMISSION_APP_WORK *wk )
 				// 手に入らず
 				wk->Flag |= FLG_FMA_ME_MES;
 			}
+			// ハイリンクの有無
+			if(!(wk->Flag & FLG_FMA_HILINK)){
+				// ない場合=>ここで終わり
+				wk->Flag |= FLG_FMA_MSG_END;
+			}
 			// stream
 			FmaCmn_disp_winmes( wk, FMAR_CANVAS_DOWN_WIN, id, 1 );
 			wk->Flag |= FLG_FMA_MSG_03;
-			// ME待ち
-			if(wk->Flag & FLG_FMA_ME_WAIT){
-				// 矢印非表示(念のため)
-				FmaCmn_disp_arrow( wk, FALSE );
-			}
 			return( TRUE );
 		}
 		else{
