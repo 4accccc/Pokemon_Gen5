@@ -43,7 +43,7 @@ struct _FEST_BEACON{
   u32  base_param:10;    ///<汎用パラメータ 基礎値(1023)
   u32  ex_param:10;      ///<汎用パラメータ 拡張値(1023)
   u32  distribution_f:1; ///<配信ミッションフラグ
-  u32  version_f:1;      ///<開催バージョンフラグ(0ならW,1ならB)
+  u32  version_idx:1;    ///<開催バージョンIndex(FMISSION_VERSION_WHITE / FMISSION_VERSION_BLACK )
 };
 
 ///typedef宣言はfest_mission.h内(構造体サイズが20byteを越えてはいけない)

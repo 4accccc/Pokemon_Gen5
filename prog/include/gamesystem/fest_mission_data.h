@@ -51,14 +51,16 @@ typedef struct _FMISSION_ARC_COMMON{
  * 修正する必要があります
  */
 typedef struct _FMISSION_ARC_PARAM{
-  u8  end_type:4;       ///<クリアタイプ FMISSION_END_TYPE
-  u8  location:4;       ///<範囲 FMISSION_LOCATION
+  u8  end_type;       ///<クリアタイプ FMISSION_END_TYPE
+  u8  location;       ///<範囲 FMISSION_LOCATION
   u8  time_bonus;     ///<ボーナスタイム FMISSION_TBONUS
   u8  pay_bonus;      ///<報酬計算式タイプ FMISSION_END_TYPE
   u8  sp_pay;         ///<ダブルスコアのスペシャルボーナス数
+  u8  dummy;          ///<パディング
 
   u16 sp_item;        ///<ダブルスコアのスペシャルボーナスアイテム
-  u16 param;          ///<汎用パラメータ
+  u16 base_param;     ///<汎用パラメータベース
+  u16 ex_param;       ///<汎用パラメータ拡張
   u16 item;           ///<報酬アイテム
   u16 open_flag_id;   ///<ミッションの開放条件フラグID
   FMISSION_ARCDATA_LV_PARAM level[FMISSION_LEVEL_MAX];

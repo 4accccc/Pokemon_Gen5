@@ -188,17 +188,24 @@ void FMISSION_DATA_GetMissionParamByHandle( ARCHANDLE* handle, FEST_MISSION_ID i
   pp = &dat.param;
 
   beacon->m_id = id;
-//  beacon->m_type = pc->m_type; 
-  beacon->base_param = pp->param;
+  beacon->m_level = level;
+  beacon->base_param = pp->base_param;
+  beacon->ex_param = pp->ex_param;
   
-//  beacon->m_time = pp->level[level].time;
   beacon->goal = pp->level[level].goal;
   beacon->pay = pp->level[level].pay;
   beacon->item = pp->item;
   beacon->end_type = pp->end_type;
   beacon->time_bonus = pp->time_bonus;
   beacon->pay_bonus = pp->pay_bonus;
-
+  beacon->sp_item = pp->sp_item;
+  beacon->sp_pay = pp->sp_pay;
+  if( GET_VERSION() == VERSION_W2 ){
+    beacon->version_idx = FMISSION_VERSION_WHITE;
+  }else{
+    beacon->version_idx = FMISSION_VERSION_BLACK;
+  }
+ 
   beacon->life = pp->level[level].time*60; //sec2frame
 
   //アーカイブコモンデータセット

@@ -42,32 +42,33 @@ DST_NOTE_MID_H = "このファイルはresource/fmission_data/tool/fmission_data_conv.r
 COLUMN_TYPE = 1
 COLUMN_ID = 2
 COLUMN_MEMO = 3
-COLUMN_PARAM = 4
-COLUMN_UNIT = 5
-COLUMN_END_TYPE = 6
-COLUMN_TBONUS = 7
-COLUMN_PAY_BONUS = 8
-COLUMN_OPEN_FLAG = 9
-COLUMN_ENTRY_FLAG = 10 
-COLUMN_LOCATION = 11 
-COLUMN_HOST = 12
-COLUMN_LV1_TIME = 13
-COLUMN_LV1_GOAL = 14
-COLUMN_LV1_NUM = 15
-COLUMN_LV2_TIME = 16
-COLUMN_LV2_GOAL = 17
-COLUMN_LV2_NUM = 18
-COLUMN_LV3_TIME = 19
-COLUMN_LV3_GOAL = 20
-COLUMN_LV3_NUM = 21
-COLUMN_LV4_TIME = 22
-COLUMN_LV4_GOAL = 23
-COLUMN_LV4_NUM = 24
-COLUMN_ITEM = 25
-COLUMN_DSCORE_ITEM = 26
-COLUMN_DSCORE_PAY = 27
-COLUMN_TITLE = 28
-COLUMN_EXP = 29
+COLUMN_BASE_PARAM = 4
+COLUMN_EX_PARAM = 5
+COLUMN_UNIT = 6
+COLUMN_END_TYPE = 7
+COLUMN_TBONUS = 8
+COLUMN_PAY_BONUS = 9
+COLUMN_OPEN_FLAG = 10 
+COLUMN_ENTRY_FLAG = 11 
+COLUMN_LOCATION = 12
+COLUMN_HOST = 13
+COLUMN_LV1_TIME = 14
+COLUMN_LV1_GOAL = 15
+COLUMN_LV1_NUM = 16
+COLUMN_LV2_TIME = 17
+COLUMN_LV2_GOAL = 18
+COLUMN_LV2_NUM = 19
+COLUMN_LV3_TIME = 20
+COLUMN_LV3_GOAL = 21
+COLUMN_LV3_NUM = 22
+COLUMN_LV4_TIME = 23
+COLUMN_LV4_GOAL = 24
+COLUMN_LV4_NUM = 25
+COLUMN_ITEM = 26
+COLUMN_DSCORE_ITEM = 27
+COLUMN_DSCORE_PAY = 28
+COLUMN_TITLE = 29
+COLUMN_EXP = 30
 
 arg = $*
 
@@ -299,19 +300,21 @@ class CMission
 
     #u8*4  クリアタイプ、範囲、タイムボーナス、報酬ボーナス、ダブルスコア報酬数
     buf[0] = @end_type
-    buf[0] |= (@location<<4)
-    buf[1] = @time_bonus
-    buf[2] = @pay_bonus
-    buf[3] = @ds_pay
-    fp.write( buf.pack("C4") )
+    buf[1] = @location
+    buf[2] = @time_bonus
+    buf[3] = @pay_bonus
+    buf[4] = @ds_pay
+    buf[5] = 0
+    fp.write( buf.pack("C6") )
 
     #u16*4 ダブルスコアアイテム、汎用パラメータ、報酬アイテム、ミッションの開放条件フラグID
     buf[0] = @ds_item
-    buf[1] = @param
-    buf[2] = @item
-    buf[3] = @open_flag_id 
-    print("mission_param = #{@param}, #{@item}, #{@ds_item}, #{@open_flag_id}\n")
-    fp.write( buf.pack("S4"))
+    buf[1] = @base_param
+    buf[2] = @ex_param
+    buf[3] = @item
+    buf[4] = @open_flag_id 
+    print("mission_param = #{@base_param}, #{@ex_param}, #{@item}, #{@ds_item}, #{@open_flag_id}\n")
+    fp.write( buf.pack("S5"))
 
     #(u16,u8,u8) * 4 レベルごとの制限時間と目標と報酬数
     fp.write( @level.pack("SCCSCCSCCSCC") )
@@ -333,27 +336,30 @@ class CMission
     @type = c_def_list.search( work[COLUMN_TYPE], "ミッションタイプ")
     @type_str = work[COLUMN_TYPE]
     @id = work[COLUMN_ID]
-    print("missionid = #{@type_str}->#{@type}, #{@id}, #{work[COLUMN_PARAM]}\n")
+    print("missionid = #{@type_str}->#{@type}, #{@id}, #{work[COLUMN_BASE_PARAM]}\n")
     @memo = work[COLUMN_MEMO] 
 
-    param = work[COLUMN_PARAM]
+    param = work[COLUMN_BASE_PARAM]
     case @type_str
     when "POKEBTL"
-      @param = $monsno_hash.fetch( param, 0 )
+      @base_param = $monsno_hash.fetch( param, 0 )
       print("type POKEBTL\n")
     when "EVENT"
-      @param = c_def_list.search( param, "パラメータ->イベントID")
+      @base_param = c_def_list.search( param, "パラメータ->イベントID")
       print("type EVENT\n")
     when "ITEM"
-      @param = 0
+      @base_param = 0
       print("type ITEM\n")
     when "NPC"
-      @param = 0
+      @base_param = 0
       print("type NPC\n")
     when "TRBTL"
-      @param = 0
+      @base_param = 0
       print("type TRBTL\n")
     end
+    
+    @ex_param = work[COLUMN_EX_PARAM].to_i
+
     @unit = c_def_list.search( work[COLUMN_UNIT], "単位系")
     @end_type = c_def_list.search( work[COLUMN_END_TYPE], "終了条件" ) 
     @time_bonus = work[COLUMN_TBONUS].to_i

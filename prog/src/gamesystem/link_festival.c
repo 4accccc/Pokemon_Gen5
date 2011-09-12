@@ -537,7 +537,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   {
     u8 level;
     OCCUPY_INFO* occupy_sv = GAMEDATA_GetMyOccupyInfo( wk->gdata );
-    u32 exp = FMISSION_SAVE_GetHilinkLevelExp( f_save, wk->m_beacon->version_f );
+    u32 exp = FMISSION_SAVE_GetHilinkLevelExp( f_save, wk->m_beacon->version_idx );
 
     exp += pl->score;
     if( exp > FMISSION_SV_HILINK_LEVEL_EXP_MAX ){
@@ -545,11 +545,11 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     }
     level = exp/FMISSION_SV_HILINK_LEVEL_EXP_STEP;
     //余りの経験値をセーブに書き戻し
-    FMISSION_SAVE_SetHilinkLevelExp( f_save, wk->m_beacon->version_f, exp%FMISSION_SV_HILINK_LEVEL_EXP_STEP );
+    FMISSION_SAVE_SetHilinkLevelExp( f_save, wk->m_beacon->version_idx, exp%FMISSION_SV_HILINK_LEVEL_EXP_STEP );
   
     //パレスレベルを上げる
-    pl->hilink_version = wk->m_beacon->version_f;
-    if( wk->m_beacon->version_f == FMISSION_VERSION_WHITE ){
+    pl->hilink_version = wk->m_beacon->version_idx;
+    if( wk->m_beacon->version_idx == FMISSION_VERSION_WHITE ){
       pl->hilink_level_up = OccupyInfo_LevelUpWhite( occupy_sv, level );
     }else{
       pl->hilink_level_up = OccupyInfo_LevelUpBlack( occupy_sv, level );
