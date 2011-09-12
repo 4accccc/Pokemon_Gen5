@@ -266,7 +266,15 @@
 #define WK_SCENE_C03P07_CGEAR_01         16654 /* 0x410e ヒウンシティ・チャレンジストリート：マコモＣギア入手イベント制御ワーク */
 #define WK_SCENE_C03P08_FESGUIDE_01      16655 /* 0x410f ヒウンシティ：フェスチュートリアルPOS制御ワーク */
 #define WK_SCENE_C16_TUTORIAL_SEQ        16656 /* 0x4110 ジョインアベニュー：チュートリアルイベント進行ワーク */
-#define WK_SCENE_D02R0101_SWLEADER1      16657 /* 0x4111  */
+#define WK_SCENE_D02R0101_SWLEADER1      16657 /* 0x4111 ヤグルマの森：チェレン連れ歩きPOS制御ワーク */
+#define WK_SCENE_N01R0401_BOSS           16658 /* 0x4112 N城：N連れ歩きPOS制御ワーク */
+#define WK_SCENE_N01R0402_BOSS           16659 /* 0x4113 N城：イベントPOS制御ワーク */
+#define WK_SCENE_N01R0502_BOSS           16660 /* 0x4114 N城：謁見の間イベント進行制御ワーク */
+#define WK_SCENE_SPPOKE_EVENT_01         16661 /* 0x4115 ヒオウギシティ 心の空洞：ユクシー・エムリット・アグノム遭遇イベント制御 */
+#define WK_SCENE_C02_SPPOKE1_01          16662 /* 0x4116 シッポウシティ：ユクシーイベント制御 */
+#define WK_SCENE_R07R0105_SPPOKE2_01     16663 /* 0x4117 タワーオブヘブン：エムリットイベント制御 */
+#define WK_SCENE_D26_SPPOKE3_01          16664 /* 0x4118 チャンピオンロード：アグノムイベント制御 */
+#define WK_SCENE_C16R0101_PRIZE          16665 /* 0x4119 ジョインアベニュー：ご褒美イベントSECNE制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
@@ -318,6 +326,7 @@
 #define WK_OTHER_AMUSEMENT_PARTNER       16776 /* 0x4188 ライモン遊園地：観覧車でのパートナーを保存しておく用ワーク */
 #define WK_OTHER_LCC_TRADE_CNT           16777 /* 0x4189 ライモン遊園地：観覧車で隠しキャラとのデート後の交換回数カウント用ワーク */
 #define WK_OTHER_D02R0101_PAIR           16778 /* 0x418a ヤグルマの森：チェレン連れ歩きセリフ */
+#define WK_OTHER_N01R0401_PAIR           16779 /* 0x418b Ｎ城：N連れ歩きセリフ */
 
 #define WK_AREA_END                      16815 /* 0x41af  */
 

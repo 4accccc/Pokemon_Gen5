@@ -408,7 +408,14 @@
 #define FE_D02R0101_PAIR_01                392 /* 0x0188 ヤグルマの森：連れ歩き状態管理フラグ */
 #define FE_C03R1103_FIRSTTALK              393 /* 0x0189 ヒウンシティ：マコモの初回会話フラグ C03R1103 */
 #define FE_C03R1103_POKE_GET               394 /* 0x018a ヒウンシティ：ショーロのイーブイ入手フラグ */
-		/* not used   395(0x018b) */
+#define FE_N01R0401_PAIR_01                395 /* 0x018b N城：連れ歩き状態管理フラグ */
+#define FE_C02_SPPOKE1_GET_01              396 /* 0x018c シッポウシティ：ユクシー捕獲フラグ */
+#define FE_R07R0105_SPPOKE2_GET_01         397 /* 0x018d タワーオブヘブン：エムリット捕獲フラグ */
+#define FE_D26_SPPOKE3_GET_01              398 /* 0x018e チャンピオンロード：アグノム捕獲フラグ */
+#define FE_D29R0401_POKE1_GET_01           399 /* 0x018f ヤーコンロード：レジアイス捕獲フラグ */
+#define FE_D29R0401_POKE2_GET_01           400 /* 0x0190 ヤーコンロード：レジロック捕獲フラグ */
+#define FE_D29R0401_POKE3_GET_01           401 /* 0x0191 ヤーコンロード：レジスチル捕獲フラグ */
+#define FE_D07R0601_POKE4_GET_01           402 /* 0x0192 ネジ山：レジギガス捕獲フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -728,8 +735,20 @@
 #define FV_D02R0101_SWLEADER1_01           808 /* 0x0328 ヤグルマの森：チェレン・七賢人 */
 #define FV_D27R1001_R1301_POKE10_01        809 /* 0x0329 プラズマフリゲート：研究施設キュレム */
 #define FV_R20_RANGER_01                   810 /* 0x032a 20番道路：季節表示トレーナー */
-#define FV_PKWD_STAFF01                    811 /* 0x032b ポケウッド撮影所：監督、共演者 */
-#define FV_PKWD_STAFF02                    812 /* 0x032c ポケウッド撮影所：撮影スタッフ */
+#define FV_N01R0401_BOSS_01                811 /* 0x032b N城入り口：N */
+#define FV_N01R0502_BOSS_01                812 /* 0x032c Ｎ城謁見の間：N */
+#define FV_N01R0502_NPOKE_01               813 /* 0x032d Ｎ城謁見の間：レシラム・ゼクロム */
+#define FV_PKWD_STAFF01                    814 /* 0x032e ポケウッド撮影所：監督、共演者 */
+#define FV_PKWD_STAFF02                    815 /* 0x032f ポケウッド撮影所：撮影スタッフ */
+#define FV_D33R0101_SPPOKE_01              816 /* 0x0330 心の空洞：ユクシー・エムリット・アグノム */
+#define FV_D33R0101_HAKASE2_01             817 /* 0x0331 心の空洞：アララギ娘 */
+#define FV_C02_SPPOKE1_01                  818 /* 0x0332 シッポウシティ：ユクシー */
+#define FV_R07R0105_SPPOKE2_01             819 /* 0x0333 タワーオブヘブン：エムリット */
+#define FV_D26_SPPOKE3_01                  820 /* 0x0334 チャンピオンロード：アグノム */
+#define FV_D29R0401_POKE1_01               821 /* 0x0335 ヤーコンロード：レジアイス */
+#define FV_D29R0401_POKE2_01               822 /* 0x0336 ヤーコンロード：レジロック */
+#define FV_D29R0401_POKE3_01               823 /* 0x0337 ヤーコンロード：レジスチル */
+#define FV_D07R0601_POKE4_01               824 /* 0x0338 ネジ山：レジギガス */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
