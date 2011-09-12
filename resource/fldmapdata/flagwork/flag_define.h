@@ -416,6 +416,9 @@
 #define FE_D29R0401_POKE2_GET_01           400 /* 0x0190 ヤーコンロード：レジロック捕獲フラグ */
 #define FE_D29R0401_POKE3_GET_01           401 /* 0x0191 ヤーコンロード：レジスチル捕獲フラグ */
 #define FE_D07R0601_POKE4_GET_01           402 /* 0x0192 ネジ山：レジギガス捕獲フラグ */
+#define FE_D04R2301_POKE13_GET_01          403 /* 0x0193 古代の城：ウルガモス捕獲フラグ */
+#define FE_D04R2301_POKE13_MEET_01         404 /* 0x0194 古代の城：ウルガモス遭遇フラグ */
+#define FE_C14R0201_TRADE_01               405 /* 0x0195 セイガイハシティ：ポケモン交換フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -752,6 +755,7 @@
 #define FV_C07_NINJA_01                    825 /* 0x0339 セッカシティ：ダークトリニティ01 */
 #define FV_C07_NINJA_02                    826 /* 0x033a セッカシティ：ダークトリニティ02 */
 #define FV_C07_NINJA_03                    827 /* 0x033b セッカシティ：ダークトリニティ03 */
+#define FV_D04R2301_POKE13_01              828 /* 0x033c 古代の城：ウルガモス */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
