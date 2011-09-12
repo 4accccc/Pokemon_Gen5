@@ -1359,9 +1359,9 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swgoddess2.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #swsage1.imd
-./mmdl_res/swsage1.imd: ./mmdl_nchara/swsage1.ncg ./mmdl_nchara/swsage1.ncl ./mmdl_dmy/t4x4x16.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip_swsage1.csv
+./mmdl_res/swsage1.imd: ./mmdl_nchara/swsage1.ncg ./mmdl_nchara/swsage1.ncl ./mmdl_dmy/t4x4x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip_swsage1.csv
 	@echo convert ncg_imd swsage1
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swsage1.ncg ./mmdl_res ./mmdl_dmy/t4x4x16.imd 4 4 16
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swsage1.ncg ./mmdl_res ./mmdl_dmy/t4x4x15.imd 4 4 15
 
 #swsage7.imd
 ./mmdl_res/swsage7.imd: ./mmdl_nchara/swsage7.ncg ./mmdl_nchara/swsage7.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
