@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-06-18T18:46:58" source="c03_d00_00c.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-12T18:05:53" source="c03_d00_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-06-18T18:46:58" source="c03_d00_00c.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-09-12T18:05:53" source="c03_d00_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="art01a_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/art01a.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/art01a.tga"
 	>
 		<bitmap size="64">
 			1111 1111 1111 1111 0001 0011 1100 1000
@@ -53,7 +53,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_atriel_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_atriel.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_atriel.tga"
 	>
 		<bitmap size="32">
 			cc44 222c cc44 222c cc44 111c cc55 000c
@@ -67,7 +67,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_atriel2_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_atriel2.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_atriel2.tga"
 	>
 		<bitmap size="128">
 			8888 8888 8888 8888 bbbb bbbb bbbb bbbb
@@ -92,7 +92,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a3i5"
 		palette_name="c3_gate_2_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_gate_2.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_gate_2.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -118,7 +118,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_green_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_green.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_green.tga"
 	>
 		<bitmap size="128">
 			8888 9998 9999 9999 8889 9988 9999 8888
@@ -144,7 +144,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_ice_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_ice.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_ice.tga"
 	>
 		<bitmap size="512">
 			7776 7777 7777 6777 9998 9999 9999 8999
@@ -218,7 +218,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_ice2_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_ice2.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_ice2.tga"
 	>
 		<bitmap size="512">
 			ffff ffff ffff ffff ffff ffff ffff 5fff
@@ -291,7 +291,7 @@
 		width="64" height="32" original_width="64" original_height="32"
 		format="a3i5"
 		palette_name="c3_ki_kage_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_ki_kage.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_ki_kage.tga"
 	>
 		<bitmap size="1024">
 			0101 0101 0101 0101 0101 0101 2121 0121
@@ -429,7 +429,7 @@
 		format="palette256"
 		color0_mode="transparency"
 		palette_name="c3_minato1_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_minato1.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_minato1.tga"
 	>
 		<bitmap size="512">
 			1212 1212 1212 1212 1212 1212 1212 1212
@@ -503,7 +503,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="c3_plant1_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_plant1.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_plant1.tga"
 	>
 		<bitmap size="16">
 			aaa9 6aaa 0002 8000 ffc2 83ff fff2 8fff
@@ -515,7 +515,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_road_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_road.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_road.tga"
 	>
 		<bitmap size="512">
 			999b 7999 99bb 4999 999b 7999 999b 4999
@@ -589,7 +589,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="c3_road2_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_road2.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_road2.tga"
 	>
 		<bitmap size="128">
 			5554 1555 5555 0555 a951 1a56 a569 115a
@@ -615,7 +615,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="c3_test_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_test.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_test.tga"
 	>
 		<bitmap size="256">
 			0100 0100 1b1b 1b1b 0302 0308 0303 0303
@@ -656,7 +656,7 @@
 		width="64" height="64" original_width="64" original_height="64"
 		format="a3i5"
 		palette_name="c3_tree3_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_tree3.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_tree3.tga"
 	>
 		<bitmap size="2048">
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
@@ -922,7 +922,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_yuka_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_yuka.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_yuka.tga"
 	>
 		<bitmap size="256">
 			2222 2222 3332 2222 3222 2233 2222 2222
@@ -964,7 +964,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3bay_yuka1_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3bay_yuka1.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3bay_yuka1.tga"
 	>
 		<bitmap size="256">
 			1100 2222 2222 3222 2233 2222 3332 2222
@@ -1006,7 +1006,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3test_block_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3test_block.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3test_block.tga"
 	>
 		<bitmap size="64">
 			5555 5555 5555 5555 4444 4444 4444 4444
@@ -1024,7 +1024,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="block4"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3test_block4_b.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3test_block4_b.tga"
 	>
 		<bitmap size="64">
 			5554 5555 5555 2355 5554 5555 5555 2355
@@ -1042,7 +1042,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_block6"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3test_block6_b.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3test_block6_b.tga"
 	>
 		<bitmap size="128">
 			4444 4444 4444 1444 4444 4444 4444 1444
@@ -1068,7 +1068,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3test_buil8_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3test_buil8.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3test_buil8.tga"
 	>
 		<bitmap size="64">
 			7777 7777 7777 7777 3333 3333 3333 3333
@@ -1086,7 +1086,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="cashier01_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/cashier01.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/cashier01.tga"
 	>
 		<bitmap size="128">
 			2222 2222 2222 2222 2222 2222 2222 2222
@@ -1111,7 +1111,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="gra_w_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/gra_w.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/gra_w.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1136,7 +1136,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/h_kage.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/h_kage.tga"
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
@@ -1150,7 +1150,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="h_mado_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/h_mado.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/h_mado.tga"
 	>
 		<bitmap size="32">
 			0000 aaa4 0000 6aa9 4000 1aaa 9000 06aa
@@ -1164,7 +1164,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="kanban_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/kanban.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/kanban.tga"
 	>
 		<bitmap size="256">
 			beee aadb aaaa aaaa aaaa aaaa bdaa eeeb

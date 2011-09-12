@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-06-18T19:12:23" source="c03_c00_00c.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-12T18:03:20" source="c03_c00_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-06-18T19:12:23" source="c03_c00_00c.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-09-12T18:03:20" source="c03_c00_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -35,7 +35,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="black_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/black.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/black.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -46,7 +46,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="buill_black_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/buill_black.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/buill_black.tga"
 	>
 		<bitmap size="128">
 			2222 2222 2222 2222 2222 2222 2222 2222
@@ -72,7 +72,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="buill_black2_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/buill_black2.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/buill_black2.tga"
 	>
 		<bitmap size="128">
 			1522 3111 1111 1111 1522 3111 3333 1333
@@ -98,7 +98,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_buil01_a_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil01_a.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_buil01_a.tga"
 	>
 		<bitmap size="256">
 			4444 4444 4444 4444 4444 4444 4444 4444
@@ -140,7 +140,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="c3_buil03_a_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil03_a.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_buil03_a.tga"
 	>
 		<bitmap size="32">
 			ffff ffff aaab eaaa aaab eaaa 002b e800
@@ -154,7 +154,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="c3_buil04_a_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil04_a.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_buil04_a.tga"
 	>
 		<bitmap size="64">
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
@@ -172,7 +172,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_buil05_b_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil05_b.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_buil05_b.tga"
 	>
 		<bitmap size="128">
 			1332 2311 2222 2222 1332 1111 1111 1111
@@ -198,7 +198,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_buil06_a_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil06_a.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_buil06_a.tga"
 	>
 		<bitmap size="128">
 			4444 4444 4444 1444 3333 3333 3333 1333
@@ -224,7 +224,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_buil07_a_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil07_a.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_buil07_a.tga"
 	>
 		<bitmap size="64">
 			3333 3333 3333 0133 2223 2222 2222 0122
@@ -241,7 +241,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a3i5"
 		palette_name="c3_buil4_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil4.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_buil4.tga"
 	>
 		<bitmap size="128">
 			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
@@ -267,7 +267,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_green_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_green.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_green.tga"
 	>
 		<bitmap size="128">
 			8888 9998 9999 9999 8889 9988 9999 8888
@@ -293,7 +293,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_line_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_line.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_line.tga"
 	>
 		<bitmap size="16">
 			3333 3333 2222 2222 1111 1111 1111 1111
@@ -305,7 +305,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_road_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_road.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_road.tga"
 	>
 		<bitmap size="512">
 			999b 7999 99bb 4999 999b 7999 999b 4999
@@ -379,7 +379,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="c3_road2_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_road2.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_road2.tga"
 	>
 		<bitmap size="128">
 			5554 1555 5555 0555 a951 1a56 a569 115a
@@ -405,7 +405,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="c3_test_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_test.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_test.tga"
 	>
 		<bitmap size="256">
 			0100 0100 1b1b 1b1b 0302 0308 0303 0303
@@ -447,7 +447,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_yuka_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_yuka.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_yuka.tga"
 	>
 		<bitmap size="256">
 			2222 2222 3332 2222 3222 2233 2222 2222
@@ -489,7 +489,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3bay_yuka1_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3bay_yuka1.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3bay_yuka1.tga"
 	>
 		<bitmap size="256">
 			1100 2222 2222 3222 2233 2222 3332 2222
@@ -530,7 +530,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="gra_w_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/gra_w.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/gra_w.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -555,7 +555,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/h_kage.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/h_kage.tga"
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
@@ -569,7 +569,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="h_mado_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/h_mado.tga"
+		path="C:/home/swan_data3d/field/out47/map/tex/1sp/h_mado.tga"
 	>
 		<bitmap size="32">
 			0000 aaa4 0000 6aa9 4000 1aaa 9000 06aa
@@ -1319,7 +1319,7 @@
 	<polygon index="2" name="polygon2"
 		vertex_size="14" polygon_size="4"
 		triangle_size="0" quad_size="4"
-		volume_min="-4.031250 -0.625000 -4.000000"
+		volume_min="-4.031250 -0.625000 -5.000000"
 		volume_max="3.843750 -0.125000 6.000000"
 		volume_r="7.255371"
 		mtx_prim_size="1"
@@ -1350,7 +1350,7 @@
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="3.843750 -0.625000"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xz xz="3.843750 -4.000000"/>
+					<pos_xz xz="3.843750 -5.000000"/>
 					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="-4.031250 -0.625000"/>
 					<tex st="0.000000 32.000000"/>
