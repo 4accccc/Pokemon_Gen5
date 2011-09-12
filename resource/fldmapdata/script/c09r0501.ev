@@ -23,7 +23,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_pos_c09r0501_lighting_01
+_EVENT_DATA   ev_pos_c09r0501_lighting_01
+_EVENT_DATA   ev_c09r0501_swchampion_01
 _EVENT_DATA_END
 
 //主人公座標取得変数
@@ -41,38 +42,74 @@ DEFINE_LOCAL  LCW_SIDE
 //                                                                  //
 //------------------------------------------------------------------//
 
-
 /************************************************************/
-/*  チャンピオン                                            */
+/*  POS:チャンピオン（ライトオン／ストッパー）              */
 /************************************************************/
 EVENT_START ev_pos_c09r0501_lighting_01
 
-  //照明が点灯
-  _CHAMPION_LIGHTING()
+  //POS起動１回目か
+  IF $LOCALWORK1 == 0 THEN
 
-  _TIME_WAIT( 16 )
+    //アイリス：ようこそ
+    _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_00, C09R0501_SWCHAMPION_01, POS_UP )
+    _MSGWIN_CLOSE()
 
-  //主人公座標取得（レールロケーション取得）
-  _GET_PLAYER_RAIL_LOC( LCW_INDEX, LCW_FRONT, LCW_SIDE )
+    //照明が点灯
+    _CHAMPION_LIGHTING()
 
-  //アニメ：主人公移動（チャンピオンの前へ）
-  SWITCH $LCW_SIDE
-  CASE 0 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_x15 )
-  CASE 1 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_x16 )
-  CASE 2 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_x17 )
-  ENDSWITCH
+    _TIME_WAIT( 16 )
+
+    //アイリス：まってたよー！
+    _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_01, C09R0501_SWCHAMPION_01, POS_UP )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //チャンピオン移動
+    _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_champion_walk_down_01 )
+    _OBJ_ANIME_WAIT()
+
+/*
+    //主人公座標取得（レールロケーション取得）
+    _GET_PLAYER_RAIL_LOC( LCW_INDEX, LCW_FRONT, LCW_SIDE )
+
+    //アニメ：主人公移動（チャンピオンの前へ）
+    SWITCH $LCW_SIDE
+    CASE 0 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_x15 )
+    CASE 1 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_x16 )
+    CASE 2 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_x17 )
+    ENDSWITCH
+    _OBJ_ANIME_WAIT()
+*/
+
+    //=====================================
+    //２回目以降はストッパーとして機能
+    $LOCALWORK1 = 1
+    //=====================================
+
+  //POS起動２回目以降
+  ELSE
+
+    //アイリス：ええー！
+    _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_05, C09R0501_SWCHAMPION_01, POS_UP )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up )
   _OBJ_ANIME_WAIT()
 
-  //アイリス：まってたよー！
-  _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_01, C09R0501_SWCHAMPION_01, POS_UP )
-  _MSGWIN_CLOSE()
+EVENT_END
 
-  //チャンピオン移動
-  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_champion_walk_down_01 )
-  _OBJ_ANIME_WAIT()
+/************************************************************/
+/*  チャンピオン（アイリス）：話しかけ                      */
+/************************************************************/
+EVENT_START ev_c09r0501_swchampion_01
+
+  _TALK_OBJ_START()
 
   //ゲームクリア前後で分岐
   IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
@@ -117,26 +154,56 @@ EVENT_START ev_pos_c09r0501_lighting_01
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
+  //プレイヤーの向きを取得
+  _PLAYER_DIR_GET( LWK_DIR )
+
+  //アニメ：アイリス振り向き
+  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_staystep_u )
+  _TIME_WAIT( 8 )
+  //主人公が上を向いていない場合は上を向かせる
+  IF $LWK_DIR != DIR_UP THEN
+    //アニメ：主人公振り向き
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  ENDIF
+ _OBJ_ANIME_WAIT()
+
   //殿堂入り部屋出現
   _CHAMPION_HALL_ROOM()
 
-  _TIME_WAIT( 60*10 )  //殿堂入り部屋出現演出待ち
+  _TIME_WAIT( 370 )  //殿堂入り部屋出現演出待ち
 
-  //【仮】チャンピオン、主人公の移動などカット
+  _TIME_WAIT( 16 )  //間
+
+  //アニメ：チャンピオン移動（殿堂入り部屋へ）
+  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_champion_walk_up_01 )
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+  //アニメ：主人公移動（殿堂入り部屋へ）
+  SWITCH $LCW_POSX
+  CASE 15 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_work_up_x15 )
+  CASE 16 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_work_up_x16 )
+  CASE 17 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_work_up_x17 )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
 
   //マップチェンジ後以下のスクリプトを起動する
   _RESERVE_SCRIPT( SCRID_RESERVE_C09R0601_SWCHAMPION_01 )
 
   //殿堂入り部屋へシーン切り替え
-  _MAP_CHANGE_WARP( ZONE_ID_C09R0601, 8, 16, DIR_UP )
-
-  //=====================================
-  //このPOSの起動をさせなくする
-  $LOCALWORK0 = 1
-  //=====================================
+  _MAP_CHANGE( ZONE_ID_C09R0601, 8, 16, DIR_UP )
 
 EVENT_END
 
+//--------------------------------------------------------------------
+//主人公：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_vs_champion_stairs_up
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //主人公：チャンピオンの前へ01
@@ -164,10 +231,60 @@ _ANIME_LABEL  anm_vs_champion_stairs_up_x17
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
+//主人公：殿堂入り部屋へ01
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_work_up_x15
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_U_8F,19
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：殿堂入り部屋へ02
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_work_up_x16
+  _ANIME_DATA AC_WALK_U_8F,20
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：殿堂入り部屋へ03
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_work_up_x17
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,19
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
 //チャンピオン：椅子から降りる
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_champion_walk_down_01
   _ANIME_DATA AC_WALK_D_8F,4
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//チャンピオン：殿堂入り部屋へ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_champion_walk_up_01
+  _ANIME_DATA AC_WALK_U_8F,19
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
 
