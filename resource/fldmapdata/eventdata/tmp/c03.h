@@ -49,5 +49,14 @@
 #define BGID_C03_SIGN8_01                11
 #define BGID_C03_SIGN8_02                12
 #define BGID_C03_SIGN1_06                13
+#define BG_C03_DUMMY_FES_01              14
+#define BG_C03_DUMMY_FES_02              15
+#define BG_C03_DUMMY_FES_03              16
+#define BG_C03_DUMMY_FES_04              17
+#define BG_C03_DUMMY_FES_05              18
+#define BG_C03_DUMMY_FES_06              19
+#define BG_C03_DUMMY_FES_07              20
+#define BG_C03_DUMMY_FES_08              21
+#define BG_C03_DUMMY_FES_09              22
 
 #endif //ZONE_C03_EVB_H

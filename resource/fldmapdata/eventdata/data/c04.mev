@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/25 12:55:28
+#save date:2011/09/12 19:59:46
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
@@ -329,7 +329,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-8
+23
 #event number: 0
 #Bg Event Label
 BGID_C04_BOARD_03
@@ -434,6 +434,201 @@ SCRID_BG_C04_BOARD_08
 EVENTDATA_POSTYPE_GRID
 #position
 40 16 -568
+#event number: 8
+#Bg Event Label
+BG_C04_DUMMY_FES_01
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+296 16 -456
+#event number: 9
+#Bg Event Label
+BG_C04_DUMMY_FES_02
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+424 16 -456
+#event number: 10
+#Bg Event Label
+BG_C04_DUMMY_FES_03
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+472 16 -488
+#event number: 11
+#Bg Event Label
+BG_C04_DUMMY_FES_04
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+376 16 -568
+#event number: 12
+#Bg Event Label
+BG_C04_DUMMY_FES_05
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+280 16 -616
+#event number: 13
+#Bg Event Label
+BG_C04_DUMMY_FES_06
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 16 -616
+#event number: 14
+#Bg Event Label
+BG_C04_DUMMY_FES_07
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 16 -520
+#event number: 15
+#Bg Event Label
+BG_C04_DUMMY_FES_08
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 16 -392
+#event number: 16
+#Bg Event Label
+BG_C04_DUMMY_FES_09
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 16 -440
+#event number: 17
+#Bg Event Label
+BG_C04_DUMMY_FES_10
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 32 -200
+#event number: 18
+#Bg Event Label
+BG_C04_DUMMY_FES_11
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+424 16 -136
+#event number: 19
+#Bg Event Label
+BG_C04_DUMMY_FES_12
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+264 16 -88
+#event number: 20
+#Bg Event Label
+BG_C04_DUMMY_FES_13
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 16 -72
+#event number: 21
+#Bg Event Label
+BG_C04_DUMMY_FES_14
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+712 0 -72
+#event number: 22
+#Bg Event Label
+BG_C04_DUMMY_FES_15
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+520 0 -696
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -443,7 +638,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-16
+1
 #event number: 0
 #Pos Event Label
 POS_C04_SWRIVAL_01
@@ -461,261 +656,6 @@ EVENTDATA_POSTYPE_GRID
 136 16 -88
 #size
 1 4
-#event number: 1
-#Pos Event Label
-POS_C04_DUMMY_FES_01
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-296 16 -456
-#size
-1 1
-#event number: 2
-#Pos Event Label
-POS_C04_DUMMY_FES_02
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-424 16 -456
-#size
-1 1
-#event number: 3
-#Pos Event Label
-POS_C04_DUMMY_FES_03
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-472 16 -488
-#size
-1 1
-#event number: 4
-#Pos Event Label
-POS_C04_DUMMY_FES_04
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-280 16 -616
-#size
-1 1
-#event number: 5
-#Pos Event Label
-POS_C04_DUMMY_FES_05
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 16 -616
-#size
-1 1
-#event number: 6
-#Pos Event Label
-POS_C04_DUMMY_FES_06
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 16 -520
-#size
-1 1
-#event number: 7
-#Pos Event Label
-POS_C04_DUMMY_FES_07
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 16 -392
-#size
-1 1
-#event number: 8
-#Pos Event Label
-POS_C04_DUMMY_FES_08
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-376 16 -568
-#size
-1 1
-#event number: 9
-#Pos Event Label
-POS_C04_DUMMY_FES_9
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-520 0 -696
-#size
-1 1
-#event number: 10
-#Pos Event Label
-POS_C04_DUMMY_FES_10
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-136 16 -440
-#size
-1 1
-#event number: 11
-#Pos Event Label
-POS_C04_DUMMY_FES_11
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-536 32 -200
-#size
-1 1
-#event number: 12
-#Pos Event Label
-POS_C04_DUMMY_FES_12
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-712 0 -72
-#size
-1 1
-#event number: 13
-#Pos Event Label
-POS_C04_DUMMY_FES_13
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-424 16 -136
-#size
-1 1
-#event number: 14
-#Pos Event Label
-POS_C04_DUMMY_FES_14
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-264 16 -88
-#size
-1 1
-#event number: 15
-#Pos Event Label
-POS_C04_DUMMY_FES_15
-#Pos Script Name
-0
-#Pos Check Type
-POS_CHECK_TYPE_DUMMY_FES
-#Event Trigger Work Name
-0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--136 16 -72
-#size
-1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

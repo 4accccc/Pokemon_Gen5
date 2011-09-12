@@ -24,5 +24,14 @@
 #define BGID_C03P01_SIGN_01               0
 #define BGID_C03P01_SIGN_02               1
 #define BGID_C03P01_SIGN_03               2
+#define BG_C03P01_DUMMY_FES_01            3
+#define BG_C03P01_DUMMY_FES_02            4
+#define BG_C03P01_DUMMY_FES_03            5
+#define BG_C03P01_DUMMY_FES_04            6
+#define BG_C03P01_DUMMY_FES_05            7
+#define BG_C03P01_DUMMY_FES_06            8
+#define BG_C03P01_DUMMY_FES_07            9
+#define BG_C03P01_DUMMY_FES_08           10
+#define BG_C03P01_DUMMY_FES_09           11
 
 #endif //ZONE_C03P01_EVB_H

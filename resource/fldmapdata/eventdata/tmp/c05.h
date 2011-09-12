@@ -43,5 +43,25 @@
 #define C05_BOARD_04                      3
 #define C05_BOARD_05                      4
 #define C05_BOARD_06                      5
+#define BG_C05_DUMMY_FES_01               6
+#define BG_C05_DUMMY_FES_02               7
+#define BG_C05_DUMMY_FES_03               8
+#define BG_C05_DUMMY_FES_04               9
+#define BG_C05_DUMMY_FES_05              10
+#define BG_C05_DUMMY_FES_06              11
+#define BG_C05_DUMMY_FES_07              12
+#define BG_C05_DUMMY_FES_08              13
+#define BG_C05_DUMMY_FES_09              14
+#define BG_C05_DUMMY_FES_10              15
+#define BG_C05_DUMMY_FES_11              16
+#define BG_C05_DUMMY_FES_12              17
+#define BG_C05_DUMMY_FES_13              18
+#define BG_C05_DUMMY_FES_14              19
+#define BG_C05_DUMMY_FES_15              20
+#define BG_C05_DUMMY_FES_16              21
+#define BG_C05_DUMMY_FES_17              22
+#define BG_C05_DUMMY_FES_18              23
+#define BG_C05_DUMMY_FES_19              24
+#define BG_C05_DUMMY_FES_20              25
 
 #endif //ZONE_C05_EVB_H
