@@ -876,6 +876,7 @@ static GFL_PROC_RESULT WBTListProc_Exit( GFL_PROC *proc, int *seq, void *pwk, vo
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
+	BOOL	bflg;
 	WBTLIST_MAIN_WORK* wk = mywk;
 	
 	switch ( *seq )
@@ -890,7 +891,14 @@ static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, vo
 			if(!(wk->DebugFlag & FLG_DBG_INPUT)){
 				// I—¹”»’è
 				if(wk->Step == STEP_END){
-					(*seq) ++;
+					//--------
+					// Que‘Ò‚¿
+					//--------
+					bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
+					if(bflg == TRUE){
+						OS_Printf("que end(wbt_list)\n");
+						(*seq) ++;
+					}
 				}
 			}else{
 				if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )

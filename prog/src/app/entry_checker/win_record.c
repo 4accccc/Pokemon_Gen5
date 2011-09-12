@@ -967,6 +967,7 @@ static GFL_PROC_RESULT WinRecordProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT WinRecordProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
+	BOOL	bflg;
 	WIN_RECORD_MAIN_WORK* wk = mywk;
 	
 	switch ( *seq )
@@ -980,7 +981,14 @@ static GFL_PROC_RESULT WinRecordProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 		case 1:
 			if( wk->Step == STEP_END )
 			{
-				(*seq) ++;
+				//--------
+				// Que‘Ò‚¿
+				//--------
+				bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
+				if(bflg == TRUE){
+					OS_Printf("que end(win_record)\n");
+					(*seq) ++;
+				}
 			}
 			break;
 		case 2:

@@ -807,6 +807,7 @@ static GFL_PROC_RESULT GPowerAppProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT GPowerAppProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
+	BOOL	bflg;
 	GPOWER_APP_MAIN_WORK* wk = mywk;
 	
 	switch ( *seq )
@@ -818,9 +819,15 @@ static GFL_PROC_RESULT GPowerAppProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 			}
 			break;
 		case 1:
-			if( wk->Step == STEP_END )
-			{
-				(*seq) ++;
+			if( wk->Step == STEP_END ){
+				//--------
+				// Que‘Ò‚¿
+				//--------
+				bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
+				if(bflg == TRUE){
+					OS_Printf("que end(gpower_app)\n");
+					(*seq) ++;
+				}
 			}
 			break;
 		case 2:

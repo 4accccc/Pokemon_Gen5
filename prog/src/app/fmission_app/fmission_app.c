@@ -425,7 +425,8 @@ static GFL_PROC_RESULT FMissionAppProc_Exit( GFL_PROC *proc, int *seq, void *pwk
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT FMissionAppProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
-{ 
+{
+	BOOL	bflg;
 	FMISSION_APP_WORK* wk = mywk;
 	
 	switch ( *seq )
@@ -439,7 +440,14 @@ static GFL_PROC_RESULT FMissionAppProc_Main( GFL_PROC *proc, int *seq, void *pwk
 		case 1:
 			// 終了判定
 			if(wk->Step == STEP_END){
-				(*seq) ++;
+				//--------
+				// Que待ち
+				//--------
+				bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
+				if(bflg == TRUE){
+					OS_Printf("que end(fmission_app)\n");
+					(*seq) ++;
+				}
 			}
 			break;
 		case 2:
@@ -917,6 +925,10 @@ static void fma_chk_diff( FMISSION_APP_WORK* wk )
 	s16		rank;
 	BOOL	bflg;
 	//
+	// 終了時は処理しない
+	if(wk->Step == STEP_END){
+		return;
+	}
 	// 情報の更新(毎フレームでいいらしい)
 	LINK_FESTIVAL_GetMissionStatus( wk->Param->fest_sys, &wk->MissionStatus  );
 	//
@@ -1015,6 +1027,10 @@ static void fma_chk_scroll( FMISSION_APP_WORK* wk )
 {
 	s32		flg=0;
 	//
+	// 終了時は処理しない
+	if(wk->Step == STEP_END){
+		return;
+	}
 	// ログのチェック(毎フレーム必要)
 	fma_chk_log_buffer( wk );
 	
@@ -2014,6 +2030,10 @@ static void fma_disp_fix_string( FMISSION_APP_WORK *wk, const s32 mode )
 //--------------------------------------------------------------
 static void fma_chk_level_timer( FMISSION_APP_WORK *wk )
 {
+	// 終了時は処理しない
+	if(wk->Step == STEP_END){
+		return;
+	}
 	// 念のため
 	if(wk->Flag & FLG_FMA_TIME_STOP){
 		return;

@@ -380,6 +380,7 @@ static GFL_PROC_RESULT TDownloadProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT TDownloadProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
+	BOOL	bflg;
 	T_DOWNLOAD_MAIN_WORK* wk = mywk;
 	
 	switch ( *seq )
@@ -393,7 +394,14 @@ static GFL_PROC_RESULT TDownloadProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 		case 1:
 			// I—¹”»’è
 			if(wk->Step == STEP_END){
-				(*seq) ++;
+				//--------
+				// Que‘Ò‚¿
+				//--------
+				bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
+				if(bflg == TRUE){
+					OS_Printf("que end(t_download)\n");
+					(*seq) ++;
+				}
 			}
 			break;
 		case 2:
