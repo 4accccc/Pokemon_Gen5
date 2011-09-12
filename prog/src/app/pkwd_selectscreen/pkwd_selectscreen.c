@@ -577,6 +577,7 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Exit( GFL_PROC *proc, int *seq, void
     BLINKPALANM_Exit( wk->blinkWork[i] );
   }
   
+  OS_Printf("screen select result=%d\n", *wk->param->result );
 
   PkwdSelectScreen_ListObj_Del( wk );
   PkwdSelectScreen_ListObj_UnloadResource( wk );
@@ -807,6 +808,9 @@ static void PkwdSelectScreen_LOGO_u_LoadResource( PKWD_SELECT_SCREEN_BG_WORK *wk
   int pal, cgx, scr;
   ARCHANDLE	*handle;
 
+  // ƒƒSBG–Ê‚ð‹P“xƒAƒbƒv‚Å”’‚É
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2, 16 );
+
   // ƒ^ƒbƒ`‘Ò‚¿‚ÅƒJ[ƒ\ƒ‹‚ª‚Ç‚±‚É‚à–³‚¢‚Æ‚«‚Í‹ó”’ƒƒS‚ð“]‘—
   if(index==-1){
     pal = NARC_pkwd_announce_gra_pkwd_title99_logo_NCLR;
@@ -827,6 +831,8 @@ static void PkwdSelectScreen_LOGO_u_LoadResource( PKWD_SELECT_SCREEN_BG_WORK *wk
 
 	GFL_ARC_CloseDataHandle( handle );
 
+  // ƒƒS‚a‚f–Ê‚Ì‹P“x–ß‚·
+  G2S_BlendNone();
 }
 
 
@@ -1647,13 +1653,14 @@ static BOOL SubSeq_Main( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 
   // Œˆ’è‚©ƒLƒƒƒ“ƒZƒ‹‚©
   if(result!=GFL_UI_TP_HIT_NONE){
-    PMSND_PlaySE( SE_PKWDSELECT_DECIDE );
+    PMSND_PlaySE( SE_PKWDSELECT_DECIDE ); // Œˆ’è
     BLINKPALANM_SetDecideAnime( wk->blinkWork[wk->nowpos] );
     wk->seq = MENU_DECIDE_WAIT;
   }else{
     if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN ||
        TOUCHBAR_GetTouch(wk->touchbar)==TOUCHBAR_ICON_RETURN ){
-      wk->seq = MENU_FADEOUT;
+      wk->seq = MENU_FADEOUT;             // ƒLƒƒƒ“ƒZƒ‹
+      *wk->param->result = POKEWOOD_SAVEDATA_MAX;
     }
   }
   return FALSE;
@@ -1771,6 +1778,7 @@ static BOOL SubSeq_Yesno_Normal( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
         // ã‰fÏ‚Ý‚É‚·‚é
         POKEWOOD_SAVEDATA_SetMovieShowed( wk->param->pokewood_sv, wk->nowpos, TRUE );
         wk->seq = MENU_FADEOUT;
+        *wk->param->result = wk->nowpos;
     }else{
       wk->seq   = MENU_START;
       _set_cursor_blink( wk, wk->nowpos );
@@ -1818,6 +1826,7 @@ static BOOL SubSeq_Yesno_Delete2( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   if((result=_yesno_wait(wk))>=0){
     if(result==0){
         wk->seq = MENU_FADEOUT;
+        *wk->param->result = wk->nowpos;
     }else{
       wk->seq   = MENU_START;
       _set_cursor_blink( wk, wk->nowpos );
