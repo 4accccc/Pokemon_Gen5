@@ -55,12 +55,12 @@ void GAMEBEACON_Set_BattlePokeStart(u16 monsno)
 /**
  * 送信ビーコンセット：ポケモンとの対戦に勝利しました
  * @param   monsno   ポケモン番号
+ *
+ * フェス中は戦闘中の「倒した」ビーコンのみ
  */
 //==================================================================
 void GAMEBEACON_Set_BattlePokeVictory(u16 monsno)
 {
-//  LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, monsno, 1 );
-
   if( GAMEBEACON_SUB_PokeBeaconTypeIsSpecial( monsno )){
     GAMEBEACON_Set_BattleSpPokeVictory(monsno);
   }else{
@@ -222,6 +222,10 @@ void GAMEBEACON_Set_BattleTrainerVictory(u16 tr_no)
   if( tr_no >= TRID_MAX ){
     return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
   }
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_WIN, tr_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_WIN, tr_no );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleTrainerVictory(&GameBeaconSys->send.info, tr_no);
@@ -287,6 +291,10 @@ void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no)
 {
   if( tr_no >= TRID_MAX ){
     return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
+  }
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_WIN, tr_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_WIN, tr_no );
+    return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
@@ -354,6 +362,10 @@ void GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no)
   if( tr_no >= TRID_MAX ){
     return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
   }
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_WIN, tr_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_WIN, tr_no );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleSpTrainerVictory(&GameBeaconSys->send.info, tr_no);
@@ -420,6 +432,10 @@ void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
   if( tr_no >= TRID_MAX ){
     return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
   }
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_WIN, tr_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_WIN, tr_no );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleChampionVictory(&GameBeaconSys->send.info, tr_no);
@@ -482,6 +498,10 @@ void BEACONINFO_Set_GPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_id)
 //==================================================================
 void GAMEBEACON_Set_SpItemGet(u16 item)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_ITEM_GET, item ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_ITEM_GET, item );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SP_ITEM_GET) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_SpItemGet(&GameBeaconSys->send.info, item);
@@ -625,6 +645,10 @@ void BEACONINFO_Set_Escape(GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Set_HPLittle(const STRBUF *nickname)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_HP_LITTLE, (u32)nickname ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE, (u32)nickname );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_HP_LITTLE) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_HPLittle(&GameBeaconSys->send.info, nickname);
@@ -655,6 +679,10 @@ void BEACONINFO_Set_HPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
 //==================================================================
 void GAMEBEACON_Set_PPLittle(const STRBUF *nickname)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_PP_LITTLE, (u32)nickname ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE, (u32)nickname );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_PP_LITTLE) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_PPLittle(&GameBeaconSys->send.info, nickname);
@@ -748,6 +776,10 @@ void BEACONINFO_Set_StateIsAbnormal(GAMEBEACON_INFO *info, const STRBUF *nicknam
 //==================================================================
 void GAMEBEACON_Set_FieldSkill(u16 wazano)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_FIELD_SKILL, wazano ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_FIELD_SKILL, wazano );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FIELD_SKILL) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_FieldSkill(&GameBeaconSys->send.info, wazano);
@@ -775,6 +807,10 @@ void BEACONINFO_Set_FieldSkill(GAMEBEACON_INFO *info, u16 wazano)
 //==================================================================
 void GAMEBEACON_Set_SodateyaEgg( void )
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_SODATEYA_EGG, 0 ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_SODATEYA_EGG, 0 );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SODATEYA_EGG) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_SodateyaEgg(&GameBeaconSys->send.info);
@@ -802,6 +838,10 @@ void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Set_EggHatch( u16 monsno )
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EGG_HATCH, monsno ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_EGG_HATCH, monsno );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_EGG_HATCH) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_EggHatch(&GameBeaconSys->send.info, monsno );
@@ -830,6 +870,10 @@ void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, u16 monsno )
 //==================================================================
 void GAMEBEACON_Set_Shoping(void)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_SHOPING, 0 ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_SHOPING, 0 );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SHOPING) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_Shoping(&GameBeaconSys->send.info);
@@ -992,6 +1036,10 @@ void BEACONINFO_Set_TrialHouseRank(GAMEBEACON_INFO *info, u8 rank)
 //==================================================================
 void GAMEBEACON_Set_FerrisWheel(void)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_FERRIS_WHEEL, 0 ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_FERRIS_WHEEL, 0 );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FERRIS_WHEEL) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_FerrisWheel(&GameBeaconSys->send.info);
@@ -1209,6 +1257,43 @@ static void GAMEBEACON_Set_SuretigaiCount(u32 count)
 void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count)
 {
   info->suretigai_count = count;
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：全滅した
+ */
+//==================================================================
+void GAMEBEACON_Set_GameOver( void )
+{
+  FM_CHECK_SCORE_RET ret = GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_GAMEOVER, 0 );
+
+  if( ret ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send,
+      GAMEBEACON_ACTION_FMISSION_GAMEOVER, 0 );
+  }
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：フェスミッション　ログアクションビーコン送信
+ *
+ * @param   log_act    ミッションイベントID
+ * @param   param      2byteの汎用パラメータ
+ *
+ * イベントミッション、NPCミッション
+ */
+//==================================================================
+void GAMEBEACON_Set_FMissionLogAction( FMISSION_LOG_ACTION log_act, u16 param )
+{
+  if( log_act < FMISSION_LOG_ACT_WP_START ){
+    GF_ASSERT(0);
+    return; //NotBeaconのアクションはリクエスト不可
+  }
+  if(  GAMEBEACON_SUB_FMissionCheckScore( log_act, param ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send,
+      GAMEBEACON_ACTION_FEST_BEACON_LOG_ACT_START+log_act, param );
+  }
 }
 
 //==================================================================

@@ -12,6 +12,7 @@
 #include "gamesystem/gamesystem_def.h"
 #include "gamesystem/gamedata_def.h"
 #include "gamesystem/fest_mission.h"
+#include "gamesystem/fmission_log_id.h"
 #include "print/wordset.h"
 #include "field/gpower_id.h"
 #include "gamesystem/playerwork.h"  //typedef ZONEID
@@ -175,6 +176,7 @@ typedef enum{
 #define GAMEBEACON_ACTION_FEST_BEACON_NUM   ( (GAMEBEACON_FEST_BEACON_END-GAMEBEACON_ACTION_FEST_BEACON_START)+1)
 #define GAMEBEACON_ACTION_FEST_BEACON_WP_START ( GAMEBEACON_ACTION_FMISSION ) //ミッションパラメータ持ち
 #define GAMEBEACON_ACTION_FEST_BEACON_WP_END ( GAMEBEACON_ACTION_FMISSION_POKE_DOWN-1 )  //ミッションパラメータ持ち
+#define GAMEBEACON_ACTION_FEST_BEACON_LOG_ACT_START  (GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT)  //ログアクションビーコンスタート
 
 //==============================================================================
 //  型定義
@@ -273,10 +275,12 @@ extern void GAMEBEACON_Set_Musical(const STRBUF *nickname);
 extern void GAMEBEACON_Set_OtherGPowerUse(GPOWER_ID gpower_id);
 extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id);
 extern void GAMEBEACON_Set_FreeWord(const STRBUF *free_word);
+extern void GAMEBEACON_Set_GameOver( void );
 
 extern void GAMEBEACON_Set_FestMission( FEST_MISSION* mission );
 extern void GAMEBEACON_Set_FMissionWildPokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f );
 extern void GAMEBEACON_Set_FMissionWildPokemonKnockOut( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f );
+extern void GAMEBEACON_Set_FMissionLogAction( FMISSION_LOG_ACTION log_act, u16 param );
 extern void GAMEBEACON_Set_FMissionEventClear( u16 ev_id );
 extern void GAMEBEACON_Set_FMissionItemGet( u16 item_no );
 

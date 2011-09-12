@@ -1080,12 +1080,18 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGER *send
   case GAMEBEACON_ACTION_FMISSION_POKE_DOWN:
     BEACONINFO_Set_Dying( info, (const STRBUF*)param);
     break;
+  case GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE:
+    BEACONINFO_Set_HPLittle( info, (const STRBUF*)param);
+    break;
+  case GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE:
+    BEACONINFO_Set_PPLittle( info, (const STRBUF*)param);
+    break;
   default:
     info->action.fmission = LINK_FESTIVAL_GetMissionWork( fest_sys )->beacon;
     info->action.fmission.act_param = (u16)param;
     break;
   }
-  info->action.action_no = action;
+  info->action.action_no = action;  //アクションno上書き
   info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;  //スワン以降のみ
   BEACONINFO_Set_Details_Walk( info );
 

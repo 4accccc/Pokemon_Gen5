@@ -16,6 +16,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_event.h"
+#include "gamesystem/game_beacon.h"
 
 #include "event_gameover.h"
 
@@ -110,6 +111,8 @@ static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *w
 		//警告BG以外を表示オフ
 		SetBrightness( BRIGHTNESS_BLACK, (PLANEMASK_ALL^PLANEMASK_BG3), MASK_MAIN_DISPLAY);
 		SetBrightness( BRIGHTNESS_BLACK, PLANEMASK_ALL, MASK_SUB_DISPLAY);
+    
+    GAMEBEACON_Set_GameOver();
 
 		//ゲームオーバー警告
     GMEVENT_CallProc( event, FS_OVERLAY_ID(gameclear_demo), &GameOverMsgProcData, param );

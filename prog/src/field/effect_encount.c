@@ -13,6 +13,7 @@
 #include "fieldmap.h"
 #include "map_attr.h"
 
+#include "gamesystem/game_beacon.h"
 #include "savedata/misc.h"
 #include "field_encount.h"
 #include "fldeff_encount.h"
@@ -352,14 +353,18 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
     if( rnd < 200 ){
       event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
     }else{
-      event = effitem_ItemGetEventSet( enc, effitem_GetItemBridge() );
+      u16 item = effitem_GetItemBridge();
+      event = effitem_ItemGetEventSet( enc, item );
+      GAMEBEACON_Set_FMissionLogAction( FMISSION_LOG_ACT_FEATHER_GET, item );
       ev_no = 1;
     } 
   }else if( ep->type == EFFENC_TYPE_CAVE ){
     if( rnd < 400){
       event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
     }else{
-      event = effitem_ItemGetEventSet( enc, effitem_GetItemCave() );
+      u16 item = effitem_GetItemCave();
+      event = effitem_ItemGetEventSet( enc, item );
+      GAMEBEACON_Set_FMissionLogAction( FMISSION_LOG_ACT_JEWEL_GET, item );
       ev_no = 1;
     }
   }else{

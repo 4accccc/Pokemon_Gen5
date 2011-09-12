@@ -20,6 +20,7 @@
 #include "fldeff_fishing.h"
 
 #include "gamesystem/btl_setup.h"
+#include "gamesystem/game_beacon.h"
 #include "encount_data.h"
 #include "field_encount.h"
 #include "effect_encount.h"
@@ -289,6 +290,11 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     if( ret == CODE_HIT){
       sub_DelLureAnime( wk );
       MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_HIT );
+      {
+        POKEPARTY* enemy_party = BATTLE_PARAM_GetPokePartyPointer( wk->bsp, BTL_CLIENT_ENEMY1 );
+        POKEMON_PARAM* pp = PokeParty_GetMemberPointer( enemy_party, 0 );
+        GAMEBEACON_Set_FMissionLogAction( FMISSION_LOG_ACT_FISHING_ENCOUNT, PP_Get( pp, ID_PARA_monsno, NULL ) );
+      }
       SCRIPT_CallScript( event,SCRID_FLD_EV_FISHING_SUCCESS, NULL, NULL, HEAPID_FIELDMAP );
       *seq = SEQ_HIT_SUCCESS;
     }else if( ret == CODE_END){
