@@ -1428,6 +1428,10 @@ void EVENTDATA_GetBGTalkCenterPos( const BG_TALK_DATA * data, VecFx32* pos )
   GF_ASSERT( data );
   GF_ASSERT( pos );
   BGTalkData_GPOS_GetPos( data, pos );
+
+  //posは左上座標が返って来るので、グリッド中心になるように補正
+  pos->x += FIELD_CONST_GRID_HALF_FX32_SIZE; 
+  pos->z += FIELD_CONST_GRID_HALF_FX32_SIZE; 
 }
 void EVENTDATA_GetBGTalkCenterRailLocation( const BG_TALK_DATA * data, RAIL_LOCATION* location )
 {
