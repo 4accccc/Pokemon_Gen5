@@ -25,10 +25,16 @@
 
 #define HILINK_LEVEL_EXP_MAX  (1000)  //ハイリンク経験値のストックMax
 
+FS_EXTERN_OVERLAY( notwifi_fes_gimmick_item );
+FS_EXTERN_OVERLAY( notwifi_fes_gimmick_npc );
+FS_EXTERN_OVERLAY( field_fes_gimmick_item );
+FS_EXTERN_OVERLAY( field_fes_gimmick_npc );
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
 static BOOL linkfes_IsMissionClear( LINK_FESTIVAL* wk, u32* score );
+static void lnkfes_OverlayLoadUnload( const FEST_MISSION* m_src, BOOL load_f );
 static void lnkfes_BeaconSend( LINK_FESTIVAL* wk );
 static void topscore_Clear( LINK_FESTIVAL* wk, LINKFEST_LOG_TOP_SCORE* tsp );
 static void log_ClearAll( LINK_FESTIVAL* wk );
@@ -287,6 +293,9 @@ void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m_src, B
 
   //最後のミッションを覚えておく
   log_LastMissionLogStore( wk, &wk->mission );
+
+  //フェスギミック用オーバレイをロード
+  lnkfes_OverlayLoadUnload( m_src, TRUE );
 }
 
 //---------------------------------------------------------
@@ -306,6 +315,8 @@ void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, BOOL live_f )
 //---------------------------------------------------------
 void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
 {
+  lnkfes_OverlayLoadUnload( &wk->mission, FALSE );
+  
   FEST_MISSION_End( &wk->mission );
   
   //ハイリンク接続禁止フラグOff
@@ -846,6 +857,38 @@ void LINKFEST_LOG_TOP_SCORE_Delete( LINKFEST_LOG_TOP_SCORE* tsp )
 //=========================================================================
 //サブルーチン
 //=========================================================================
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ミッションタイプごとにオーバーレイロード&アンロード
+ */
+//---------------------------------------------------------
+static void lnkfes_OverlayLoadUnload( const FEST_MISSION* m_src, BOOL load_f )
+{
+  FSOverlayID ol_nw,ol_field;
+
+  switch( m_src->arc.m_type ){
+  case FMISSION_TYPE_ITEM:
+    ol_nw = FS_OVERLAY_ID( notwifi_fes_gimmick_item );
+    ol_field = FS_OVERLAY_ID( field_fes_gimmick_item );
+    break;
+  case FMISSION_TYPE_NPC:
+    ol_nw = FS_OVERLAY_ID( notwifi_fes_gimmick_npc );
+    ol_field = FS_OVERLAY_ID( field_fes_gimmick_npc );
+    break;
+  default:
+    return;
+  }
+  if( load_f ){
+    GFL_OVERLAY_Load( ol_nw );
+    GFL_OVERLAY_Load( ol_field );
+  }else{
+    GFL_OVERLAY_Unload( ol_field );
+    GFL_OVERLAY_Unload( ol_nw );
+  }
+}
+
+
 //---------------------------------------------------------
 /*
  * @brief リンクフェスティバル　ビーコン送信

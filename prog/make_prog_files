@@ -510,8 +510,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         gamesystem/fest_mission_nw.c \
         gamesystem/fest_mission_data.c \
         field/fes_gimmick_nw.c \
-        field/fes_gimmick_item_nw.c \
-        field/fes_gimmick_npc_nw.c \
         field/scrcmd_keysystem.c \
         field/scrcmd_dataconvert.c \
         field/scrcmd_walk_count.c \
@@ -580,9 +578,18 @@ SRCS_OVERLAY_NOTWIFI_EVENT_WBT = field/event_wbt.c
 #GROUP_OVERLAY_NOTWIFI_EVENT_ALL
 SRCS_OVERLAY_NOTWIFI_EVENT_POKEWOOD = field/event_pokewood.c
 
-#侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
+#フェスアイテムミッションNOTWIFIギミック用オーバーレイ
 #===> GROUP_OVERLAY_NOTWIFI_EVENT_ALL
-#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_NOTWIFI_FES_GIMMICK
+SRCS_OVERLAY_NOTWIFI_FES_GIMMICK_ITEM = field/fes_gimmick_item_nw.c
+
+#フェスNPCミッションNOTWIFIギミック用オーバーレイ
+#===> GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+#GROUP_OVERLAY_NOTWIFI_FES_GIMMICK
+SRCS_OVERLAY_NOTWIFI_FES_GIMMICK_NPC = field/fes_gimmick_npc_nw.c
+
+#侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
+#===> GROUP_OVERLAY_NOTWIFI_FES_GIMMICK
 #GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
 SRCS_OVERLAY_INTRUDE_SYSTEM = field/field_comm/intrude_comm.c \
         field/field_comm/intrude_comm_command.c \
@@ -592,8 +599,7 @@ SRCS_OVERLAY_INTRUDE_SYSTEM = field/field_comm/intrude_comm.c \
         field/field_comm/intrude_symbol.c
 
 #ユニオンシステムでほぼ常駐に置かなければいけないもの(侵入の常駐物と並列化)
-#===> GROUP_OVERLAY_NOTWIFI_EVENT_ALL
-#===> SRCS_OVERLAY_NOTWIFI
+#===> GROUP_OVERLAY_NOTWIFI_FES_GIMMICK
 #GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
 SRCS_OVERLAY_UNION_SYSTEM = net_app/union/union_comm.c \
         net_app/union/union_main.c \
@@ -796,8 +802,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_fmission_info.c \
         field/scrcmd_fmission.c \
         field/fes_gimmick.c \
-        field/fes_gimmick_item.c \
-        field/fes_gimmick_npc.c \
         field/place_name_letter.c \
         field/event_entrance_in.c \
         field/event_entrance_out.c \
@@ -1069,25 +1073,37 @@ SRCS_OVERLAY_OEKAKI = net_app/oekaki/comm_command_oekaki.c \
 		      net_app/oekaki/oekaki.c
 
 
-# フィールド天気
+#=======================================
+#フィールドフェスミッションギミック
+
 #===> GROUP_OVERLAY_SCRCMD
+#GROUP_OVERLAY_FIELD_FES_GIMMICK
+SRCS_OVERLAY_FIELD_FES_GIMMICK_ITEM = field/fes_gimmick_item.c
+
+#===> GROUP_OVERLAY_SCRCMD
+#GROUP_OVERLAY_FIELD_FES_GIMMICK
+SRCS_OVERLAY_FIELD_FES_GIMMICK_NPC = field/fes_gimmick_npc.c
+
+#========================================
+# フィールド天気
+#===> GROUP_OVERLAY_FIELD_FES_GIMMICK
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_SUNNY = field/weather_sunny.c
 
-#===> GROUP_OVERLAY_SCRCMD
+#===> GROUP_OVERLAY_FIELD_FES_GIMMICK
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_SNOW = field/weather_snow.c
 
-#===> GROUP_OVERLAY_SCRCMD
+#===> GROUP_OVERLAY_FIELD_FES_GIMMICK
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_RAIN = field/weather_rain.c
 
-#===> GROUP_OVERLAY_SCRCMD
+#===> GROUP_OVERLAY_FIELD_FES_GIMMICK
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
                   field/weather_mirage.c
 
-#===> GROUP_OVERLAY_SCRCMD
+#===> GROUP_OVERLAY_FIELD_FES_GIMMICK
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_MIST = field/weather_mist.c
 
