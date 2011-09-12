@@ -249,14 +249,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アクロマ『……つよい！▼
-あなたは　つよい　トレーナーだ！▼
-そこで　たずねたいことが　ある！
-あなたは　ポケモンと　トレーナーは▼
-わかりあうことで　さらなる　たかみを
+あなたは　つよい　トレーナーだ！
+そこで　たずねますッ！▼
+ポケモンと　トレーナーは
+わかりあうことで　さらなる　たかみを▽
 めざせると　かんがえていますかっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:48:50" />
+				Time="2011-09-12T11:07:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -265,14 +265,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アクロマ『……強い！▼
-あなたは　強い　トレーナーだ！▼
-そこで　たずねたいことが　ある！
-あなたは　ポケモンと　トレーナーは▼
-わかりあうことで　さらなる　高みを
+あなたは　強い　トレーナーだ！
+そこで　たずねますッ！▼
+ポケモンと　トレーナーは
+わかりあうことで　さらなる　高みを▽
 目指せると　考えていますかっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:33:24" />
+				Time="2011-09-12T11:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -434,14 +434,14 @@
 			<Text>くりかえしますが　わたくしは
 ポケモンを　つよくするなら▽
 しゅだんは　なんでも　いいのです！▼
-ひとと　ポケモンの　こうりゅう　だけ
+ひとと　ポケモンの　こうりゅうで
 とどかない　たかみが　あるなら▼
 そこに　こころは　なくても
 かがくてきアプローチのみで▽
 ちからを　はっき　させてもいいのです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:12:43" />
+				Time="2011-09-12T11:08:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -452,14 +452,14 @@
 			<Text>繰り返しますが　わたくしは
 ポケモンを　強くするなら▽
 手段は　なんでも　いいのです！▼
-人と　ポケモンの　交流だけ
+人と　ポケモンの　交流だけで
 届かない　高みが　あるなら▼
 そこに　心は　なくても
 科学的アプローチのみ　で▽
 能力を　発揮させてもいいのです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:12:46" />
+				Time="2011-09-12T11:08:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -764,11 +764,11 @@
 			<Text>これを　もっていきなさい！▼
 どのような　ポケモンでも　かならず
 つかまえる　マスターボールです▼
-ゲーチスが　よういしていた　ものですが
+ゲーチスが　ようい　していましたが
 あなたが　つかうほうが　いいでしょう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:49:43" />
+				Time="2011-09-12T11:04:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -779,11 +779,11 @@
 			<Text>これを　持っていきなさい！▼
 どのような　ポケモンでも　かならず
 つかまえる　マスターボールです▼
-ゲーチスが　用意していた　ものですが
+ゲーチスが　用意していましたが
 あなたが　使うほうが　いいでしょう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:52:06" />
+				Time="2011-09-12T11:04:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

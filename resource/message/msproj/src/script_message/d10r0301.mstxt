@@ -570,14 +570,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『おこさまが
+			<Text>プラズマ団『お子様が
 かっこいいこと　いってんなよ！▼
 とにかく　プラズマフリゲートに
-だれも　ちかづけるんじゃない！▽
-こいつら　まとめて　しまつしろ！▼</Text>
+だれも　近づけるんじゃない！▽
+こいつら　まとめて　始末しろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:09:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -639,10 +639,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてswplazmam2_01</Comment>
+・続けてswplazmam2_01
+・0＝主人公名
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:09:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -946,14 +948,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロット『つよさの　ない　こころも
-こころの　ない　つよさも▽
+			<Text>ロット『強さの　ない　心も
+心の　ない　強さも▽
 こんなとき　なにも　できない▼
-むかしの　なかまを　すくうため
-イッシュを　まもるため　たたかうぞ！▼</Text>
+むかしの　仲間を　救うため
+イッシュを　守るため　戦うぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:10:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1005,14 +1007,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おまえたち　いけ！▼
+			<Text>おまえたち　行け！▼
 [Name:TrainerName Idx="1" ]だったか▼
 おまえが　探している　ポケモンは
 ダークトリニティの▽
 だれかが　持っている　はずだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:10:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1163,12 +1165,21 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ロット『おお！▼
-・ねぎらい
-・船の行方▽
-・アクロマについて</Text>
+おまえたち　ぶじで　あったか
+よかったのう！！▼
+プラズマだんの　ふね　だがな
+アクロマが　きて　いいおった▼
+わたくしの　のぞむ　こたえを
+あの　トレーナーが　おしえてくれた！▼
+かんしゃの　きもちとして
+プラズマだんを　かいさん　させます▼
+それでは　ポケモンと　ともに
+ただしき　みちを！▼
+そういって　どこかに　とんでいきおった
+とりあえず　かいけつ　なのかの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:17:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1177,12 +1188,21 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロット『おお！▼
-・ねぎらい
-・船の行方▽
-・アクロマについて</Text>
+おまえたち　無事で　あったか
+よかったのう！！▼
+プラズマ団の　船だがな
+アクロマが　来て　いいおった▼
+わたくしの　望む　答えを
+あの　トレーナーが　教えてくれた！▼
+感謝の　気持ちとして
+プラズマ団を　解散させます▼
+それでは　ポケモンと　共に
+正しき　道を！▼
+そういって　どこかに　飛んでいきおった
+とりあえず　解決なのかの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:17:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1218,10 +1238,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>戦闘中</Text>
+			<Text>ポケモンの　きもちを　むしして
+トレーナーから　きりはなすな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:24:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1229,10 +1250,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘中</Text>
+			<Text>ポケモンの　気持ちを　無視して
+トレーナーから　切り離すな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:24:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1267,10 +1289,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>戦闘後</Text>
+			<Text>……じぶんに　えらそうなことを
+いう　しかくは　ありません▼
+むかしは　じぶんも
+ポケモンを　うばっていたのですから</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:32:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1278,10 +1303,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後</Text>
+			<Text>……自分に　偉そうなことを
+いう　資格は　ありません▼
+昔は　自分も
+ポケモンを　奪っていたのですから</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:32:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1370,10 +1398,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>戦闘後</Text>
+			<Text>にげていった　アイツ
+なにか　わかってくれたかな……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:19:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1381,10 +1410,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後</Text>
+			<Text>逃げていった　アイツ
+なにか　わかってくれたかな……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:19:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1420,10 +1450,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>戦闘中</Text>
+			<Text>うらぎりものの　しちけんじん　め！▼
+アンタを　ボコボコにして
+ゲーチスさまに　ほめてもらうぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:20:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1431,10 +1463,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘中</Text>
+			<Text>裏切り者の　七賢人め！▼
+アンタを　ボコボコにして
+ゲーチスさまに　ほめてもらうぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:21:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1470,10 +1504,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>戦闘中</Text>
+			<Text>イッシュを　しはいして
+ポケモンを　おれらのものに　する！▼
+そうすりゃ　２ねんまえの
+しっぱいは　チャラさ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:21:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1481,10 +1518,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘中</Text>
+			<Text>イッシュを　支配して
+ポケモンを　おれらのものに　する！▼
+そうすりゃ　２年前の
+失敗は　チャラさ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:22:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1520,10 +1560,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>戦闘中</Text>
+			<Text>こいつとの　ポケモンしょうぶ
+あつい！▼
+うう！　おれは　これまで
+まちがって　いたのか！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:22:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1531,10 +1574,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘中</Text>
+			<Text>こいつとの　ポケモン勝負
+熱い！▼
+うう！　おれは　これまで
+間違って　いたのか！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-09-12T11:22:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

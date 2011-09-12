@@ -215,4 +215,165 @@
 				Time="2011-09-10T06:56:47" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_baker_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たーんと　おたべ！▼
+おなかが　すいてちゃ
+だれも　あいせないからね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:50:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たーんと　お食べ！▼
+おなかが　すいてちゃ
+だれも　愛せないからね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:54:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:50:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BAKER</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:36" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmam_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクロマさん▼
+ポケモンを　だいじにすることで
+のうりょくを　はっき　させるなら▽
+ここに　いても　いいってさ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:54:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクロマさん▼
+ポケモンを　大事にすることで
+能力を　発揮させるなら▽
+ここに　いても　いいってさ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:54:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmaw_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだんに　はいって
+いわれたことを　やっていれば▽
+パンを　たべれて　よかったの……▼
+じぶんで　かんがえなかったから
+こう　なっちゃったのよね……▼
+あー！
+この　パン　おいしー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:54:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団に　はいって
+いわれたことを　やっていれば▽
+パンを　食べれて　よかったの……▼
+自分で　考えなかったから
+こう　なっちゃったのよね……▼
+あー！
+この　パン　おいしー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:49:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

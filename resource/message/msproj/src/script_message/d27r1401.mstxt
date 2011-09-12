@@ -1,3 +1,103 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d27r1401_swplazmaw_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このコ……　とりのこされちゃって
+なんか　かわいそうなのよ▼
+どうしようかしら？　ホドモエの
+れんちゅうに　たのもうかな……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:38:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:36:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>このコ……　とりのこされちゃって
+なんか　かわいそうなのよ▼
+どうしようかしら？　ホドモエの
+れんちゅうに　たのもうかな……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:38:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:36:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：クリア後
+・下記、ポケモンと隣接</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:37:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:36:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1401_poke29_end_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ぎゅう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:38:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:38:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ぎゅう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:38:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:38:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・アジト船：クリア後
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:39:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE29
+ポケモン・ミルホッグ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:37:56" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

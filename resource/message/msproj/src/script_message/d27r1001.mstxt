@@ -1067,4 +1067,167 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d27r1001_swplazmam1_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キュレム……　むりやり
+こきつかわれて　かなしかっただろうな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:56:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キュレム……　むりやり
+こきつかわれて　かなしかっただろうな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:56:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1001_swplazmam2_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　プラズマフリゲートは
+キュレムの　こおりエネルギー　とか▼
+ソーラーパネル　とか
+エコロジーな　ふね　なんだ▼
+まあね　イッシュを　ボロボロにしちゃ
+しはいするときに　こまるけどさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:59:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　プラズマフリゲートは
+キュレムの　こおりエネルギー　とか▼
+ソーラーパネル　とか
+エコロジーな　ふね　なんだ▼
+まあね　イッシュを　ボロボロにしちゃ
+しはいするときに　こまるけどさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:59:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1001_swplazmaw_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクロマさん……　Nさまのことを
+ごぞんじ　ないけれど　あえば▽
+どんなふうに　なるのかしら……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T11:02:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクロマさん……　Nさまのことを
+ご存知ないけれど　会えば▽
+どんな風に　なるのかしら……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T11:02:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:55:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

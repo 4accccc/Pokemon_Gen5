@@ -2442,4 +2442,98 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『そらは　ひろいね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:30:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:29:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団『空は　広いね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:30:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:30:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:27:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:27:43" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmaw_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『しってたよ……▼
+ゲーチスさまに　つかわれていた
+そんなこと　しってたよ……▼
+だけど　ここには
+なかまが　いたんだもん▽
+……ほとんど　いなくなったけどね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:30:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:29:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『知ってたよ……▼
+ゲーチスさまに　使われていた
+そんなこと　知ってたよ……▼
+だけど　ここには
+仲間が　いたんだもん▽
+……ほとんど　いなくなったけどね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:31:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:30:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:37:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:27:40" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>

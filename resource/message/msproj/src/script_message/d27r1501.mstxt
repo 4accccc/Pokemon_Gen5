@@ -1,3 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d27r1501_swplazmam_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>のぞまれても　いないのに
+だれかを　たすける　なんて▽
+なにさまだ！　って　かんじだな▼
+あいてが　しあわせか　どうかなんて
+たにんの　オレには　わからんのに</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:45:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:39:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>望まれても　いないのに
+だれかを　助ける　なんて▽
+何様だ！　って感じだな▼
+相手が　幸せか　どうかなんて
+他人の　オレには　わからんのに</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:45:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:39:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:39:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:39:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>

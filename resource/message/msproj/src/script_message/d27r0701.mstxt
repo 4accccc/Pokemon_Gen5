@@ -186,11 +186,11 @@
 ひつよう　なんですよ▼
 なので　プラズマだんいん　から
 パスワードを　ききだしてください▼
-ちなみに　オレが　しってる
-ヒントは　？？？？？　です</Text>
+ちなみに　ポケモンの　なまえが
+パスワード　らしいですよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T04:35:56" />
+				Time="2011-09-12T10:32:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -204,11 +204,11 @@
 必要なんですよ▼
 なので　プラズマ団員から
 パスワードを　ききだしてください▼
-ちなみに　オレが　知ってる
-ヒントは　？？？？？　です</Text>
+ちなみに　ポケモンの　名前が
+パスワード　らしいですよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T04:36:00" />
+				Time="2011-09-12T10:32:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -350,5 +350,64 @@
 				User="matsumiya:W00224"
 				Time="2011-09-10T05:26:15" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0701_swplazmam_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん　だけど
+かいさん　しちゃったよ▼
+ようやく　ワープパネルでの
+いどうを　おぼえたのに……▼
+くやしいから　ここに　のこって
+ワープパネルで　いどう　しまくるぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:34:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:33:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団　だけど
+解散しちゃったよ▼
+ようやく　ワープパネルでの
+移動を　覚えたのに……▼
+くやしいから　ここに　残って
+ワープパネルで　移動しまくるぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:34:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:33:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:33:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T10:33:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
