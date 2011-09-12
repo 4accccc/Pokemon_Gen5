@@ -327,6 +327,7 @@
 #define WK_OTHER_LCC_TRADE_CNT           16777 /* 0x4189 ライモン遊園地：観覧車で隠しキャラとのデート後の交換回数カウント用ワーク */
 #define WK_OTHER_D02R0101_PAIR           16778 /* 0x418a ヤグルマの森：チェレン連れ歩きセリフ */
 #define WK_OTHER_N01R0401_PAIR           16779 /* 0x418b Ｎ城：N連れ歩きセリフ */
+#define WK_OTHER_C07_SEASON              16780 /* 0x418c セッカシティ：ダークトリニティイベントに使用 ゾーンチェンジラベルで現季節とワークの季節で差分があれば０に戻す */
 
 #define WK_AREA_END                      16815 /* 0x41af  */
 
