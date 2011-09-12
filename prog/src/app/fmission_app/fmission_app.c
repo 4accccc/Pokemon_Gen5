@@ -515,7 +515,7 @@ static void fma_init( FMISSION_APP_WORK* wk )
 #ifdef PM_DEBUG
 	// R押しながら(debug)
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
-		wk->Flag |= FLG_FMA_DEBUG;
+//		wk->Flag |= FLG_FMA_DEBUG;
 	}
 #endif
 	wk->OldWork.Timer	= -1;
@@ -1342,14 +1342,36 @@ static void fma_update_up_result( FMISSION_APP_WORK* wk )
 	//----------------------------------------
 	// 段階で表示していくので項目ごとに並べる
 	//----------------------------------------
-	//-----------
-	// LV0の場合
-	//-----------
+	//-----------------------
+	// LV0の場合(固定のもの)
+	//------------------------
 	if(wk->Flag & FLG_FMA_LEVEL0){
 		// タイトル
 		fma_disp_fes_string( wk, FMA_MES_TITLE, FMAR_CANVAS_UP_TITLE, 0, 4, PRINTTOOL_MODE_LEFT );
 		// 星(obj)
 		FmaCmn_disp_star( wk, FMAR_CLWK_STAR );
+		//
+		// 参加人数(左)
+		strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[1] );
+		FmaCmn_disp_string( wk, FMAR_CANVAS_UP_JOIN_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+		GFL_STR_DeleteBuffer( strbuf );
+		// 人アイコン
+		FmaCmn_set_obj_visible( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_ICON_01, TRUE );
+		//
+		// クリア目標
+		fma_disp_fes_string( wk, FMA_MES_CLEAR, FMAR_CANVAS_UP_CLEAR_L, 0, 0, PRINTTOOL_MODE_LEFT );
+		// トータルスコア(左)
+		strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[3] );
+		FmaCmn_disp_string( wk, FMAR_CANVAS_UP_SCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+		GFL_STR_DeleteBuffer( strbuf );
+		//
+		// クリアタイム
+		if(wk->Flag & FLG_FMA_CLEAR_TIME){
+			// クリアタイム(左)
+			strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[9] );
+			FmaCmn_disp_string( wk, FMAR_CANVAS_UP_TIME_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+			GFL_STR_DeleteBuffer( strbuf );
+		}
 	}
 	//-----------
 	// LV1の場合
@@ -1358,15 +1380,8 @@ static void fma_update_up_result( FMISSION_APP_WORK* wk )
 		//----------
 		// 1段階目
 		//----------
-		// 参加人数(左)
-		strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[1] );
-		FmaCmn_disp_string( wk, FMAR_CANVAS_UP_JOIN_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
-		GFL_STR_DeleteBuffer( strbuf );
-		//
 		// 参加人数(右)
 		fma_disp_fes_string( wk, FMA_MES_JOIN, FMAR_CANVAS_UP_JOIN_R, 48, 0, PRINTTOOL_MODE_RIGHT );
-		// 人アイコン
-		FmaCmn_set_obj_visible( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_ICON_01, TRUE );
 		// SE
 		PMSND_PlaySE( SND_FMA_RESULT );
 	}
@@ -1377,14 +1392,6 @@ static void fma_update_up_result( FMISSION_APP_WORK* wk )
 		//------------
 		// 2段階目
 		//------------
-		// クリア目標
-		fma_disp_fes_string( wk, FMA_MES_CLEAR, FMAR_CANVAS_UP_CLEAR_L, 0, 0, PRINTTOOL_MODE_LEFT );
-		//
-		// トータルスコア(左)
-		strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[3] );
-		FmaCmn_disp_string( wk, FMAR_CANVAS_UP_SCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
-		GFL_STR_DeleteBuffer( strbuf );
-		//
 		// トータルスコア(右)
 		fma_disp_total_score( wk, 1 );
 		//
@@ -1397,11 +1404,6 @@ static void fma_update_up_result( FMISSION_APP_WORK* wk )
 		//
 		// クリアタイム
 		if(wk->Flag & FLG_FMA_CLEAR_TIME){
-			// クリアタイム(左)
-			strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[9] );
-			FmaCmn_disp_string( wk, FMAR_CANVAS_UP_TIME_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
-			GFL_STR_DeleteBuffer( strbuf );
-			//
 			// クリアタイム(右)
 			timer = LINK_FESTIVAL_GetMissionLife( wk->Param->fest_sys );
 			buf[0] = timer/60;		// 分
@@ -1444,12 +1446,13 @@ static void fma_update_down_result( FMISSION_APP_WORK* wk )
 	
 	//----------------------------------------
 	// 段階で表示していくので項目ごとに並べる
+	// =>仕様変更により一括で表示
 	//----------------------------------------
 	
 	//----------
-	// LV2の場合
+	// LV3の場合
 	//----------
-	if(wk->Flag & FLG_FMA_LEVEL2){
+	if(wk->Flag & FLG_FMA_LEVEL3){
 		// マイスコア(左)
 		strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[5] );
 		FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_MYSCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
@@ -1479,11 +1482,6 @@ static void fma_update_down_result( FMISSION_APP_WORK* wk )
 			// トップスコア(右)
 			fma_disp_fes_string( wk, FMA_MES_TOPSCORE, FMAR_CANVAS_DOWN_TOPSCORE_R, 64, 0, PRINTTOOL_MODE_RIGHT );
 		}
-	}
-	//----------
-	// LV3の場合
-	//----------
-	if(wk->Flag & FLG_FMA_LEVEL3){
 		//
 		// 成功時のみ表示
 		if(wk->Flag & FLG_FMA_SUCCESS){
