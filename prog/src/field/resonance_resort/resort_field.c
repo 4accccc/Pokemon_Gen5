@@ -172,6 +172,7 @@ static void RESORT_FIELD_EFFECT_Stop( RESORT_FIELD_EFFECT *p_wk, RESORT_FIELD_EF
  */
 //=============================================================================
 static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, HEAPID heapID );
+static void RESORT_FIELD_AppearCeleb( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, HEAPID heapID );
 
 //=============================================================================
 /**
@@ -241,6 +242,9 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
   
   //街へ来たとき１日１回だけファンが増加する
   RESORT_FIELD_AppearFun( p_wk->p_sys, p_gamedata, heapID );
+
+  //街へ来たとき１日１回だけセレブが出現することがある
+  RESORT_FIELD_AppearCeleb( p_wk->p_sys, p_gamedata, heapID );
 
   //人物システム
   p_wk->p_people_sys = RESORT_FIELD_PEOPLE_Init( heapID, p_wk->p_sys, GAMEDATA_GetMMdlSys(p_gamedata), FIELDMAP_GetFieldPlayer(p_fieldmap), is_people_add );
@@ -3625,4 +3629,13 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
   }
 }
 
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セレブ出現処理
+ *
+ *	@param	RESORT_SYSTEM *p_sys システム
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_FIELD_AppearCeleb( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, HEAPID heapID )
+{
+}

@@ -10,6 +10,9 @@
 #define ZONE_C16R0101_EVC_H
 
 #define C16R0101_INFOMATION                0
+#define C16R0101_OWNER                     1
+#define C16R0101_SECRETARY_01              2
+#define C16R0101_SECRETARY_02              3
 
 #endif //ZONE_C16R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c16r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

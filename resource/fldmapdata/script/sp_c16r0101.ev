@@ -15,6 +15,11 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_SCENE_CHANGE_LABEL		sp_c16r0101_tbl
+_FIELD_INIT_LABEL		  SCRID_INIT_C16R0101
 _SP_EVENT_DATA_END
 
-
+//テーブル定義
+sp_c16r0101_tbl:
+  _SCENE_CHANGE_DATA  WK_SCENE_C16R0101_PRIZE,1,SCRID_SCENE_C16R0101_PRIZE
+  _SCENE_CHANGE_END

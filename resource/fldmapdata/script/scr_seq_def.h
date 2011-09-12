@@ -14194,6 +14194,20 @@
   .short \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  人物MMDL追加処理
+ */
+//--------------------------------------------------------------
+#define _RESORT_ADD_PEOPLE( param, ret_wk ) \
+      _ASM_RESORT_ADD_PEOPLE param, ret_wk
+
+  .macro _ASM_RESORT_ADD_PEOPLE param, ret_wk
+  .short EV_SEQ_RESORT_ADD_PEOPLE
+  .short \param
+  .short \ret_wk
+  .endm
+
 //======================================================================
 //
 //    無限ダンジョン関連

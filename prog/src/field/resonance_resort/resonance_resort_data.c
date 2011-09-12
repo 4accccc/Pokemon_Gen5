@@ -963,10 +963,21 @@ static BOOL RESORT_EXTEND6_DATA_IsValid( const RESORT_EXTEND6_DATA *cp_wk )
  *	@param	*p_str  受け取りバッファ
  */
 //-----------------------------------------------------------------------------
-static void RESORT_EXTEND6_DATA_GetPhrase( const RESORT_EXTEND6_DATA *cp_data, STRCODE *p_str )
+static void RESORT_EXTEND6_DATA_GetPhrase( const RESORT_EXTEND6_DATA *cp_data, STRCODE *p_str, u16 trainerID )
 {
-  GFL_STD_MemCopy( cp_data->phrase, p_str, sizeof(STRCODE)*RESORT_PHRASE_LEN);
-  *((p_str)+RESORT_PHRASE_LEN) = GFL_STR_GetEOMCode();
+  if( cp_data->phrase[0] != GFL_STR_GetEOMCode() )
+  {
+    GFL_STD_MemCopy( cp_data->phrase, p_str, sizeof(STRCODE)*RESORT_PHRASE_LEN);
+    *((p_str)+RESORT_PHRASE_LEN) = GFL_STR_GetEOMCode();
+  }
+  else
+  {
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
+    STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, resort_kutiguse_00+trainerID%10 );
+    GFL_STR_GetStringCode( p_strbuf, p_str, RESORT_PHRASE_LEN+EOM_SIZE );
+    GFL_STR_DeleteBuffer( p_strbuf );
+    GFL_MSG_Delete( p_msg );
+  }
 }
 //-------------------------------------
 ///	拡張データ7
@@ -1009,10 +1020,21 @@ static BOOL RESORT_EXTEND7_DATA_IsValid( const RESORT_EXTEND7_DATA *cp_wk )
  *	@param	*p_str  受け取りバッファ
  */
 //-----------------------------------------------------------------------------
-static void RESORT_EXTEND7_DATA_GetThanks( const RESORT_EXTEND7_DATA *cp_data, STRCODE *p_str )
+static void RESORT_EXTEND7_DATA_GetThanks( const RESORT_EXTEND7_DATA *cp_data, STRCODE *p_str, u16 trainerID )
 {
-  GFL_STD_MemCopy( cp_data->thanks, p_str, sizeof(STRCODE)*RESORT_THANKS_LEN);
-  *((p_str)+RESORT_THANKS_LEN) = GFL_STR_GetEOMCode();
+  if( cp_data->thanks[0]  != GFL_STR_GetEOMCode() )
+  {
+    GFL_STD_MemCopy( cp_data->thanks, p_str, sizeof(STRCODE)*RESORT_THANKS_LEN);
+    *((p_str)+RESORT_THANKS_LEN) = GFL_STR_GetEOMCode();
+  }
+  else
+  {
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
+    STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, resort_thanks_00+trainerID%10 );
+    GFL_STR_GetStringCode( p_strbuf, p_str, RESORT_THANKS_LEN+EOM_SIZE );
+    GFL_STR_DeleteBuffer( p_strbuf );
+    GFL_MSG_Delete( p_msg );
+  }
 }
 
 
@@ -1746,41 +1768,17 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return cp_wk->extend5.record_date[ param - RESORT_DATA_PARAM_EXT5_RECORD_DATE_00];
   //拡張データ6
   case RESORT_DATA_PARAM_EXT6_PHRASE:
-    if( RESORT_RECV_DATA_IsExtend( cp_wk, RESORT_EXTEND_TYPE_06 ) 
-      && cp_wk->extend6.phrase[0] != GFL_STR_GetEOMCode() )
-    {
-      RESORT_EXTEND6_DATA_GetPhrase( &cp_wk->extend6, (STRCODE *)p_ret_adrs );
-    }
-    else
-    {
-      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_kutiguse_00+cp_wk->basic1.trainerID%10 );
-      GFL_STR_GetStringCode( p_str, (STRCODE*)p_ret_adrs, RESORT_PHRASE_LEN+EOM_SIZE );
-      GFL_STR_DeleteBuffer( p_str );
-      GFL_MSG_Delete( p_msg );
-    }
+    RESORT_EXTEND6_DATA_GetPhrase( &cp_wk->extend6, (STRCODE *)p_ret_adrs, cp_wk->basic1.trainerID );
     return 0;
   //拡張データ7
   case RESORT_DATA_PARAM_EXT7_THANKS:
-    if( RESORT_RECV_DATA_IsExtend( cp_wk, RESORT_EXTEND_TYPE_07 )
-      && cp_wk->extend7.thanks[0] != GFL_STR_GetEOMCode() )
-    {
-      RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, (STRCODE *)p_ret_adrs );
-    }
-    else
-    {
-      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_thanks_00+cp_wk->basic1.trainerID%10 );
-      GFL_STR_GetStringCode( p_str, (STRCODE*)p_ret_adrs, RESORT_THANKS_LEN+EOM_SIZE );
-      GFL_STR_DeleteBuffer( p_str );
-      GFL_MSG_Delete( p_msg );
-    }
+    RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, (STRCODE *)p_ret_adrs,cp_wk->basic1.trainerID );
     return 0;
   case RESORT_DATA_PARAM_PHRASE_CODE:  //p_ret_adrsから取得
-    RESORT_EXTEND6_DATA_GetPhrase( &cp_wk->extend6, (STRCODE *)p_ret_adrs );
+    RESORT_EXTEND6_DATA_GetPhrase( &cp_wk->extend6, (STRCODE *)p_ret_adrs,cp_wk->basic1.trainerID);
     return 0;
   case RESORT_DATA_PARAM_THANKS_CODE:  //p_ret_adrsから取得
-    RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, (STRCODE *)p_ret_adrs );
+    RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, (STRCODE *)p_ret_adrs,cp_wk->basic1.trainerID );
     return 0;
   default:
     GF_ASSERT_MSG(0,"%d",param);
@@ -2492,32 +2490,10 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     return cp_wk->basic1.language;
 
   case RESORT_DATA_PARAM_EXT6_PHRASE:
-    if( cp_wk->extend6.phrase[0] != GFL_STR_GetEOMCode() )
-    {
-      RESORT_EXTEND6_DATA_GetPhrase( &cp_wk->extend6, p_ret_adrs );
-    }
-    else
-    {
-      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_kutiguse_00+cp_wk->basic1.trainerID%10 );
-      GFL_STR_GetStringCode( p_str, (STRCODE*)p_ret_adrs, RESORT_PHRASE_LEN+EOM_SIZE );
-      GFL_STR_DeleteBuffer( p_str );
-      GFL_MSG_Delete( p_msg );
-    }
+    RESORT_EXTEND6_DATA_GetPhrase( &cp_wk->extend6, p_ret_adrs, cp_wk->basic1.trainerID );
     return 0;
   case RESORT_DATA_PARAM_EXT7_THANKS:
-    if( cp_wk->extend7.thanks[0] != GFL_STR_GetEOMCode() )
-    {
-      RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, p_ret_adrs );
-    }
-    else
-    {
-      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_thanks_00+cp_wk->basic1.trainerID%10 );
-      GFL_STR_GetStringCode( p_str, (STRCODE*)p_ret_adrs, RESORT_THANKS_LEN+EOM_SIZE );
-      GFL_STR_DeleteBuffer( p_str );
-      GFL_MSG_Delete( p_msg );
-    }
+    RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, p_ret_adrs, cp_wk->basic1.trainerID );
     return 0;
   case RESORT_DATA_PARAM_INTRODUCTION:
     {
@@ -3763,6 +3739,12 @@ u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DA
     return cp_wk->meet_day;
   case RESORT_DATA_PARAM_TYPE:
     return cp_wk->type;
+  case RESORT_DATA_PARAM_EXT6_PHRASE:  //p_ret_adrsから取得
+    RESORT_EXTEND6_DATA_GetPhrase( &cp_wk->extend6, p_ret_adrs, cp_wk->basic1.trainerID );
+    return 0;
+  case RESORT_DATA_PARAM_EXT7_THANKS:  //p_ret_adrsから取得
+    RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, p_ret_adrs,cp_wk->basic1.trainerID );
+    return 0;
   default:
     GF_ASSERT(0);
     return 0;
@@ -4366,27 +4348,28 @@ RESORT_RECORD_ADD_ID_SORT:
 struct _RESORT_CITY_DATA
 {
   STRCODE city_name[RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE]; //42
-  STRCODE my_name[RESORT_MY_NAME_BUFF_MAX+EOM_SIZE];  //84
+  STRCODE my_name[RESORT_MY_NAME_BUFF_MAX+EOM_SIZE];  //42 84
+  u32     trainerID[RESORT_TRAINER_ID_STORE_SIZE];  //128 212
+  u32     exp;              //4 216
   u16     lv; 
-  u16     state;  //92
-  u32     trainerID[RESORT_TRAINER_ID_STORE_SIZE];  //128 220
-  u8      encount[32];  //32 252
-  u8      decoration[32]; //32 284
-  u8      ev_flag[32];  //32 316
-  u16     arrangement[16];  //32 348
-  u32     talk_cnt;     //7*4=28 376
-  u32     build_cnt;
-  u32     quest_clear_cnt;
-  u32     exp;
-  u32     tex;
-  u32     fun_day_flag  : 1;
-  u32     is_tutorial   : 1;
-  u32     dummy         :30;
-  u8      secret_present_type;
-  u8      secret_present_num;
-  u8      secret_present_flag;
-  u8      trainerID_cnt;
-  u32     rnd_seed;
+  u16     tex;              //4 220
+  u32     fun_day_flag  :1;
+  u32     is_tutorial   :1;
+  u32     prize_sec03   :1;
+  u32     prize_sec04   :1;
+  u32     prize_neon    :1;
+  u32     prize_scout   :1;
+  u32     prize_cityname :1;
+  u32     ev_prize_sec03   :1;
+  u32     ev_prize_sec04   :1;
+  u32     ev_prize_neon    :1;
+  u32     ev_prize_scout   :1;
+  u32     ev_prize_cityname :1;
+  u32     dummy         :20;    //4 224
+
+  u16     trainerID_max;
+  u16     trainerID_cnt;        //4 228
+  u32     rnd_seed;             //4 232
 };
 SDK_COMPILER_ASSERT(sizeof(RESORT_CITY_DATA) == RESORT_CITY_DATA_SIZE );
 
@@ -4490,6 +4473,26 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->fun_day_flag;
   case RESORT_CITY_DATA_PARAM_IS_TUTORIAL:
     return cp_wk->is_tutorial;
+  case RESORT_CITY_DATA_PARAM_PRIZE_SEC03:
+    return cp_wk->prize_sec03;
+  case RESORT_CITY_DATA_PARAM_PRIZE_SEC04:
+    return cp_wk->prize_sec04;
+  case RESORT_CITY_DATA_PARAM_PRIZE_CITYNAME:
+    return cp_wk->prize_cityname;
+  case RESORT_CITY_DATA_PARAM_PRIZE_NEON:
+    return cp_wk->prize_neon;
+  case RESORT_CITY_DATA_PARAM_PRIZE_SCOUT:
+    return cp_wk->prize_scout;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03:
+    return cp_wk->ev_prize_sec03;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC04:
+    return cp_wk->ev_prize_sec04;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_CITYNAME:
+    return cp_wk->ev_prize_cityname;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_NEON:
+    return cp_wk->ev_prize_neon;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT:
+    return cp_wk->ev_prize_scout;
   default:
     GF_ASSERT(0);
     return 0;
@@ -4529,6 +4532,36 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
   case RESORT_CITY_DATA_PARAM_IS_TUTORIAL:
     p_wk->is_tutorial = data;
     break;
+  case RESORT_CITY_DATA_PARAM_PRIZE_SEC03:
+    p_wk->prize_sec03 = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_PRIZE_SEC04:
+    p_wk->prize_sec04 = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_PRIZE_CITYNAME:
+    p_wk->prize_cityname  = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_PRIZE_NEON:
+    p_wk->prize_neon  = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_PRIZE_SCOUT:
+    p_wk->prize_scout = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03:
+    p_wk->ev_prize_sec03 = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC04:
+    p_wk->ev_prize_sec04 = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_CITYNAME:
+    p_wk->ev_prize_cityname  = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_NEON:
+    p_wk->ev_prize_neon  = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT:
+    p_wk->ev_prize_scout = data;
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -4547,6 +4580,7 @@ void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
   //ビーコントレーナーセーブを破棄
   GFL_STD_MemClear( p_wk->trainerID, sizeof(u32)*RESORT_TRAINER_ID_STORE_SIZE );
   p_wk->trainerID_cnt = 0;
+  p_wk->trainerID_max = 0;
 
   //乱数再抽選
   p_wk->rnd_seed      = GFUser_GetPublicRand(0);
@@ -4567,6 +4601,8 @@ void RESORT_CITY_DATA_AddTrainerID( RESORT_CITY_DATA *p_wk, u32 trainerID )
   p_wk->trainerID[ p_wk->trainerID_cnt ]  = trainerID;
   p_wk->trainerID_cnt++;
   p_wk->trainerID_cnt %= RESORT_TRAINER_ID_STORE_SIZE;
+  p_wk->trainerID_max++;
+  p_wk->trainerID_max = MATH_IMin( p_wk->trainerID_max, RESORT_TRAINER_ID_STORE_SIZE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -4581,7 +4617,7 @@ void RESORT_CITY_DATA_AddTrainerID( RESORT_CITY_DATA *p_wk, u32 trainerID )
 BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainerID )
 {
   int i;
-  for( i = 0; i < RESORT_TRAINER_ID_STORE_SIZE; i++ )
+  for( i = 0; i < cp_wk->trainerID_max; i++ )
   {
     if( cp_wk->trainerID[ i ] == trainerID )
     {

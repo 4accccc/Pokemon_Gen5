@@ -47,8 +47,17 @@ INIT_EVENT_END
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START ev_init_c16
+
+  DEFINE_LOCAL LWK_RET
+
   // 出口位置変更
   _CALL ev_c16_exit_change
+
+  //ご褒美イベントがあったらフラグをたてる
+  _RESORT_GET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE, LWK_RET )
+  IF $LWK_RET != RESORT_CITYPRIZE_TYPE_NONE THEN
+    $WK_SCENE_C16R0101_PRIZE  = 1
+  ENDIF
 
   // 初回イベントのオーナーと秘書位置変更
   SWITCH $WK_SCENE_C16_TUTORIAL_SEQ

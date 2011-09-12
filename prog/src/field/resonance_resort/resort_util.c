@@ -77,14 +77,17 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
   RESORT_BINARY_SPOT *p_spot  = RESORT_SYSTEM_GetBinarySpot(p_sys);
   RESORT_BINARY_SHOP *p_shop  = RESORT_SYSTEM_GetBinaryShop(p_sys);
   RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity(p_sys);
+  RESORT_BINARY_PRESET *p_set = RESORT_SYSTEM_GetBinaryPreset(p_sys);
 
 
+  u32 type  = 0;
   u32 sex = PM_MALE;
   u16 people_type = 0;
   
   if( p_abstruct )
   {
     people_type = RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct);
+    type = RESORT_ABSTRUCT_DATA_GetData(p_abstruct, RESORT_DATA_PARAM_TYPE,NULL);
   }
 
   switch( param )
@@ -107,13 +110,18 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     }
     break;
   case RESORT_MSGID_WHERETOGO:
-    GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST
-        || people_type == RESORT_PEOPLE_TYPE_PROXY );
+    if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
+    {
+      return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_WANTSPOT );
+    }
+    else
     {
       u32 spot = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_WANT_SPOT, NULL );
+      GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST
+          || people_type == RESORT_PEOPLE_TYPE_PROXY );
       if( spot == 0 )
       {
-        spot = RESORT_ABSTRUCT_DATA_DrawLotsWhereToGo( p_abstruct, p_spot, p_city, p_city_data );
+        spot = RESORT_UTIL_DrawLotsWantSpot( p_abstruct, p_sys );
         RESORT_ABSTRUCT_DATA_SetData( p_abstruct, RESORT_DATA_PARAM_WANT_SPOT, spot );
       }
       GF_ASSERT( spot > 0 );
@@ -228,7 +236,14 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_tourist_scout_04_m, resort_tourist_scout_04_f );
     break;
   case RESORT_TOURIST_SPOT_GOING:
-    return SexGetMsgID( sex, resort_resident_spot_go_00_m, resort_resident_spot_go_00_f );
+    if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
+    {
+      return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_GOOUT );
+    }
+    else
+    {
+      return SexGetMsgID( sex, resort_resident_spot_go_00_m, resort_resident_spot_go_00_f );
+    }
     break;
   case RESORT_TOURIST_ITEM_MSGID:
     return SexGetMsgID( sex, resort_tourist_item_00_m, resort_tourist_item_00_f );
@@ -356,6 +371,8 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_nursery_00_m, resort_nursery_00_f );
   case RESORT_SHOP_NURSERY_HATCH_MSGID:
     return SexGetMsgID( sex, resort_nursery_02_m, resort_nursery_02_f );
+  case RESORT_CELEB_GREET_MSGID:
+    return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_GREET );
   case RESORT_MSGID_BOARD_00:
   case RESORT_MSGID_BOARD_01:
   case RESORT_MSGID_BOARD_02:
@@ -389,6 +406,153 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  スポットIDが住人と一致しているかチェック
+ *
+ *	@param	u16 want_spot スポットID
+ *	@param	*p_resident 調べる住人
+ *	@param	*p_sys      システム
+ *	@param  *p_index    インデックス
+ *
+ *	@return TRUEスポット当選  FALSE当選していない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, u32 *p_index )
+{
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
+  RESORT_BINARY_SPOT *p_spot  = RESORT_SYSTEM_GetBinarySpot(p_sys);
+  RESORT_BINARY_SHOP *p_shop  = RESORT_SYSTEM_GetBinaryShop(p_sys);
+
+  RESORT_INSTITUTION_DATA *p_institution =  RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+  const RESORT_BINARY_SHOP_DATA *cp_binary_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
+
+  u32 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
+  u32 kind = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
+  u32 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+  int i;
+
+  BOOL is_good = FALSE;
+  u32 ret_grade = 0;
+  u32 ret_index = 0;
+
+  for( i = 0; i < RESORT_BINARY_SPOT_ANSWER_MAX; i++ )
+  {
+    u16 type = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_TYPE + i*RESORT_BINARY_SPOT_ANSWER_NUM );
+    u16 data = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_DATA + i*RESORT_BINARY_SPOT_ANSWER_NUM );
+    u16 grade = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_GRADE + i*RESORT_BINARY_SPOT_ANSWER_NUM );
+	
+	  //条件にあうかチェック
+	  switch( type )
+	  {
+	  case RESORT_SPOT_TYPE_SHOPTYPE:
+	    if( shop_type == data )
+	    {
+	      is_good = TRUE;
+	    }
+	    break;
+	
+	  case RESORT_SPOT_TYPE_SEX:
+	    if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL ) == data )
+	    {
+	      is_good = TRUE;
+	    }
+	    break;
+	
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_00:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_01:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_02:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_03:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_04:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_05:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_06:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_07:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_08:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_09:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_10:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_11:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_12:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_13:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_14:
+	  case RESORT_SPOT_TYPE_MOUTHCOMM_15:
+	    type = type - RESORT_SPOT_TYPE_MOUTHCOMM_00;
+	    if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT4_GOSSIP_00 + type, NULL ) == (data + 1) )
+	    {
+	      is_good = TRUE;
+	    } 
+	    break;
+	
+	  case RESORT_SPOT_TYPE_RANKDATA_00:
+	  case RESORT_SPOT_TYPE_RANKDATA_01:
+	  case RESORT_SPOT_TYPE_RANKDATA_02:
+	  case RESORT_SPOT_TYPE_RANKDATA_03:
+	  case RESORT_SPOT_TYPE_RANKDATA_04:
+	  case RESORT_SPOT_TYPE_RANKDATA_05:
+	  case RESORT_SPOT_TYPE_RANKDATA_06:
+	  case RESORT_SPOT_TYPE_RANKDATA_07:
+	  case RESORT_SPOT_TYPE_RANKDATA_08:
+	    {
+	      type = type - RESORT_SPOT_TYPE_RANKDATA_00;
+	      if( data == RESORT_SPOTRANK_TYPE_RANKDATA_FIRST )
+	      {
+	        u32 rank = RESORT_UTIL_CalcRankingNum( p_people_all, p_resident, type );
+	        if( rank == 0 )
+	        {
+	          is_good = TRUE;
+	        }
+	      }
+	      else
+	      {
+	        if( type < 8 )
+	        {
+	          u32 num = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT2_RANK_00 + type, NULL );
+	          if( num > data )
+	          {
+	            is_good = TRUE;
+	          }
+	        }
+	        else if( type == 8 )
+	        {
+	          u32 num = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
+	          if( num > data )
+	          {
+	            is_good = TRUE;
+	          }
+	        }
+	      }
+	    }
+	    break;
+	
+	  default:
+	    GF_ASSERT(0);
+	  case RESORT_SPOT_TYPE_NONE:
+	    is_good = FALSE;
+	    break;
+	  }
+
+    if( is_good )
+    {
+      //もし評価最高なら
+      if( grade == 2 )
+      {
+        ret_index = i;
+        break;
+      }
+      else if( ret_grade < grade )
+      {
+        ret_grade = grade;
+        ret_index = i;
+      }
+    }
+  }
+
+  if( p_index )
+  {
+    *p_index = ret_index;
+  }
+
+  return is_good;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  スポットにあっているかチェックする
  *
  *	@param	u16 index スポットID
@@ -401,8 +565,12 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
  *	@param	ret_city_lvup   街がレベルアップしたか
  */
 //-----------------------------------------------------------------------------
-void RESORT_UTIL_CheckSpot( u16 index, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, WORDSET *p_wordset, u16 *ret_grade_msg, u16 *ret_eff_msg, u16 *ret_lvup, u16* ret_city_lvup )
+void RESORT_UTIL_SetSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, WORDSET *p_wordset, u16 *ret_grade_msg, u16 *ret_eff_msg, u16 *ret_lvup, u16* ret_city_lvup )
 {
+  enum
+  {
+    SPOT_FAVORITE_TYPE_REVISION = FX32_CONST(0.75F),
+  };
 
   static const fx32 sc_grade[RESORT_GRADE_TYPE_MAX]  =
   {
@@ -411,10 +579,12 @@ void RESORT_UTIL_CheckSpot( u16 index, RESORT_RESIDENT_DATA *p_resident, RESORT_
     FX32_CONST(2.0),
   };
 
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
   RESORT_CITY_DATA *p_city_data = RESORT_SYSTEM_GetCityData(p_sys);
   RESORT_BINARY_SPOT *p_spot  = RESORT_SYSTEM_GetBinarySpot(p_sys);
   RESORT_BINARY_SHOP *p_shop  = RESORT_SYSTEM_GetBinaryShop(p_sys);
   RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity(p_sys);
+  RESORT_RECV_DATA *p_own = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
 
   RESORT_INSTITUTION_DATA *p_institution =  RESORT_RESIDENT_DATA_GetInstitution( p_resident );
   const RESORT_BINARY_SHOP_DATA *cp_binary_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
@@ -424,7 +594,18 @@ void RESORT_UTIL_CheckSpot( u16 index, RESORT_RESIDENT_DATA *p_resident, RESORT_
   u32 kind = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
   u32 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
   u32 exp;
-  int i;
+  u32 add_exp = 0;
+  u32 grade = 0;
+  u32 favorite_type;
+  u32 index;
+  BOOL is_good = FALSE;
+
+  {
+    u32 favorite_job  = RESORT_RECV_DATA_GetData(p_own, RESORT_DATA_PARAM_WANT_JOB, NULL);
+    const RESORT_BINARY_SHOP_DATA *cp_favorite_data = RESORT_BINARY_SHOP_GetData( p_shop, favorite_job );
+    favorite_type = RESORT_BINARY_SHOP_DATA_GetData( cp_favorite_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+ 
+  }
 
   //何も起こらないときのメッセージ
   *ret_grade_msg  = resort_sys_08;
@@ -433,11 +614,11 @@ void RESORT_UTIL_CheckSpot( u16 index, RESORT_RESIDENT_DATA *p_resident, RESORT_
 
   if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL) == PM_MALE )
   {
-    *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_EFF_MSG_M );
+    *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_EFF_MSG_M );
   }
   else
   {
-    *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_EFF_MSG_F );
+    *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_EFF_MSG_F );
   }
 
   if( lv >= RESORT_SHOP_LVMAX )
@@ -446,134 +627,106 @@ void RESORT_UTIL_CheckSpot( u16 index, RESORT_RESIDENT_DATA *p_resident, RESORT_
     return;
   }
 
-  for( i = 0; i < RESORT_BINARY_SPOT_ANSWER_MAX; i++ )
+  //スポット一致チェック
+  is_good = RESORT_UTIL_CheckSpot(want_spot, p_resident, p_sys, &index );
+
+  if( is_good )
   {
-    u16 type = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_TYPE + i*RESORT_BINARY_SPOT_ANSWER_NUM );
-    u16 data = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_DATA + i*RESORT_BINARY_SPOT_ANSWER_NUM );
-    u16 grade = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_GRADE + i*RESORT_BINARY_SPOT_ANSWER_NUM );
-    u16 add_exp = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_BAESEXP );
-    BOOL is_good = FALSE;
+    add_exp = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_BAESEXP + index*RESORT_BINARY_SPOT_ANSWER_NUM );
+    grade = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_GRADE + index*RESORT_BINARY_SPOT_ANSWER_NUM );
+    add_exp = FX_Whole(  add_exp * sc_grade[ grade ] );
+  }
 
-    add_exp = FX_Whole( sc_grade[ grade ] * add_exp );
+  //施設に経験値が入る
+  if( is_good )
+  {
+    *ret_grade_msg = resort_sys_03 + grade;
+    WORDSET_RegisterNumber( p_wordset, 5, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    exp = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
+    next_exp = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NEXT_EXP );
 
-    //条件にあうかチェック
-    switch( type )
+    //お気に入り施設は必要経験値
+    if( favorite_type == shop_type )
     {
-    case RESORT_SPOT_TYPE_SHOPTYPE:
-      if( shop_type == data )
-      {
-        is_good = TRUE;
-      }
-      break;
-
-    case RESORT_SPOT_TYPE_SEX:
-      if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL ) == data )
-      {
-        is_good = TRUE;
-      }
-      break;
-
-    case RESORT_SPOT_TYPE_MOUTHCOMM_00:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_01:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_02:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_03:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_04:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_05:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_06:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_07:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_08:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_09:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_10:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_11:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_12:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_13:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_14:
-    case RESORT_SPOT_TYPE_MOUTHCOMM_15:
-      type = type - RESORT_SPOT_TYPE_MOUTHCOMM_00;
-      if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT4_GOSSIP_00 + type, NULL ) == (data + 1) )
-      {
-        is_good = TRUE;
-      } 
-      break;
-    case RESORT_SPOT_TYPE_NONE:
-      is_good = FALSE;
-      break;
-    default:
-      GF_ASSERT(0);
+      next_exp = FX_Whole( next_exp * SPOT_FAVORITE_TYPE_REVISION );
     }
 
-    //施設に経験値が入る
-    if( is_good )
+    if( exp + add_exp >= next_exp )
     {
-      *ret_grade_msg = resort_sys_03 + grade;
-      WORDSET_RegisterNumber( p_wordset, 5, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-      exp = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
-      next_exp = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NEXT_EXP );
+      const RESORT_BINARY_SHOP_DATA *cp_new_shop_data;
+      u32 shopID;
+      lv++;
+      exp = 0;
+      *ret_lvup = RESORT_SET_SPOT_SHOP_LVUP;
+      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, lv );
+
+      //レベルアップしたら施設IDを変更
+      shopID = RESORT_BINARY_SHOP_SearchShopID( p_shop, kind, lv, shop_type );
+      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
+      cp_new_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
+
+      WORDSET_RegisterNumber( p_wordset, 6, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+      if( RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) != RESORT_BINARY_SHOP_DATA_GetData( cp_new_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) )
+      {
+        *ret_lvup = RESORT_SET_SPOT_SHOP_CHANGE;
+      }
+    }
+    else
+    {
+      exp += add_exp;
+    }
+    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP, exp );
+  }
+
+  //街に経験値が入る
+  if( is_good )
+  {
+    u32 city_prev_idx;
+    u32 city_next_idx;
+    lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
+    exp = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, NULL );
+
+    if( lv < RESORT_BINARY_CITY_GetCityLvMax( p_city ) )
+    {
+
+      WORDSET_RegisterNumber( p_wordset, 7, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+      city_prev_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
+      next_exp = RESORT_BINARY_CITY_GetData( p_city, city_prev_idx, RESORT_BINARY_CITY_PARAM_EXP );
       if( exp + add_exp >= next_exp )
       {
-        const RESORT_BINARY_SHOP_DATA *cp_new_shop_data;
-        u32 shopID;
         lv++;
         exp = 0;
-        *ret_lvup = RESORT_SET_SPOT_SHOP_LVUP;
-        RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, lv );
+        WORDSET_RegisterNumber( p_wordset, 8, lv, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 
-        //レベルアップしたら施設IDを変更
-        shopID = RESORT_BINARY_SHOP_SearchShopID( p_shop, kind, lv, shop_type );
-        RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
-        cp_new_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
-
-        WORDSET_RegisterNumber( p_wordset, 6, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-
-        if( RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) != RESORT_BINARY_SHOP_DATA_GetData( cp_new_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) )
+        city_next_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
         {
-          *ret_lvup = RESORT_SET_SPOT_SHOP_CHANGE;
+          u32 prev_prize =  RESORT_BINARY_CITY_GetData( p_city, city_prev_idx, RESORT_BINARY_CITY_PARAM_PRIZE );
+          u32 next_prize =  RESORT_BINARY_CITY_GetData( p_city, city_next_idx, RESORT_BINARY_CITY_PARAM_PRIZE );
+          if( next_prize != RESORT_CITYPRIZE_TYPE_NONE
+              && prev_prize != next_prize
+            )
+          {
+            RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03+next_prize-1, TRUE );
+            *ret_city_lvup = RESORT_SET_SPOT_CITY_LVUP_PRIZE;
+          }
+          else
+          {
+            *ret_city_lvup = RESORT_SET_SPOT_CITY_LVUP;
+          }
         }
       }
       else
       {
         exp += add_exp;
       }
-      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP, exp );
+      RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, lv );
+      RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, exp );
     }
-
-    //街に経験値が入る
-    if( is_good )
+    else
     {
-      u32 city_idx;
-      lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
-      exp = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, NULL );
-
-      if( lv < RESORT_BINARY_CITY_GetCityLvMax( p_city ) )
-      {
-
-        WORDSET_RegisterNumber( p_wordset, 7, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-
-        city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
-        next_exp = RESORT_BINARY_CITY_GetData( p_city, city_idx, RESORT_BINARY_CITY_PARAM_EXP );
-        if( exp + add_exp >= next_exp )
-        {
-          lv++;
-          exp = 0;
-          *ret_city_lvup = RESORT_SET_SPOT_CITY_LVUP;
-          WORDSET_RegisterNumber( p_wordset, 8, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-        }
-        else
-        {
-          exp += add_exp;
-        }
-        RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, lv );
-        RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, exp );
-      }
-      else
-      {
-        *ret_city_lvup = RESORT_SET_SPOT_CITY_LVMAX;
-      }
-    }
-
-    if( is_good )
-    {
-      break;
+      *ret_city_lvup = RESORT_SET_SPOT_CITY_LVMAX;
     }
   }
 }
@@ -898,6 +1051,149 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  いきたい場所のグループを抽選
+ *
+ *	@param	const RESORT_ABSTRUCT_DATA *cp_wk ワーク
+ *	@param	*p_sys  システム
+ *
+ *	@return グループ
+ */
+//-----------------------------------------------------------------------------
+static u32 Resort_Util_DrawLotsSpotGroup( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_SYSTEM *p_sys )
+{
+  const RESORT_BINARY_CITY *cp_city_data = RESORT_SYSTEM_GetBinaryCity(p_sys);
+  const RESORT_CITY_DATA *cp_city = RESORT_SYSTEM_GetCityData(p_sys);
+
+
+  //街レベルから弱中強グループをランダム選出
+  {
+    u32 lv = RESORT_CITY_DATA_GetData( cp_city, RESORT_CITY_DATA_PARAM_LV, NULL);
+
+    u32 index = RESORT_BINARY_CITY_GetIndexByCityLv( cp_city_data, lv );
+    u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( cp_wk, RESORT_RND_ID_WHERESPOT_LV, 100 );
+    u32 percent = 0;
+
+    int  i;
+    for( i = 0; i < RESORT_APPEAL_LV_MAX; i++ )
+    {
+      percent += RESORT_BINARY_CITY_GetData( cp_city_data, index, RESORT_BINARY_CITY_PARAM_GROUP_00+i );
+      if( percent > rnd )
+      {
+        return i;
+      }
+    }
+    NAGI_Printf( "group%d idx%d lv%d\n", i, index, lv );
+  }
+  GF_ASSERT(0);
+  return 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グループから行きたい場所IDを抽選
+ *
+ *	@param	const RESORT_ABSTRUCT_DATA *cp_wk ワーク
+ *	@param	*p_sys  システム
+ *	@param	group   グループ
+ *
+ *	@return 生きたい場所ID
+ */
+//-----------------------------------------------------------------------------
+static u32 Resort_Util_DrawLotsWantSpotByGroup( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_SYSTEM *p_sys, u32 group )
+{
+  const RESORT_BINARY_SPOT *cp_spot_data  = RESORT_SYSTEM_GetBinarySpot(p_sys);
+
+  //選ばれたグループから行きたいお店メッセージをランダム選出
+  {
+    int rnd;
+    int i;
+    int cnt = 0;
+
+    //i = 1なのは、0は何も無いを表すため
+    //グループに属しているいきたい場所カウント
+    for( i = 1; i < RESORT_BINARY_SPOT_GetMax(cp_spot_data); i++ )
+    {
+      u16 g = RESORT_BINARY_SPOT_GetData( cp_spot_data, i, RESORT_BINARY_SPOT_PARAM_GROUP );
+      if( group == g )
+      {
+        cnt++;
+      }
+    }
+
+    GF_ASSERT( cnt != 0 );
+
+    rnd = RESORT_ABSTRUCT_DATA_GetRnd( cp_wk, RESORT_RND_ID_WHERESPOT_KIND, cnt );
+
+    cnt = 0;
+    for( i = 1; i < RESORT_BINARY_SPOT_GetMax(cp_spot_data); i++ )
+    {
+      u16 g = RESORT_BINARY_SPOT_GetData( cp_spot_data, i, RESORT_BINARY_SPOT_PARAM_GROUP );
+      if( group == g )
+      {
+        if( cnt == rnd )
+        {
+          return i;
+        }
+        cnt++;
+      }
+    }
+  }
+  GF_ASSERT(0);
+  return 1;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  行きたい場所の抽選処理
+ *
+ *	@param	const RESORT_ABSTRUCT_DATA *cp_wk ワーク
+ *	@param	*p_sys  システム
+ *
+ *	@return 行きたい場所ID
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_UTIL_DrawLotsWantSpot( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_SYSTEM *p_sys )
+{
+  //グループ抽選
+  u32 group = Resort_Util_DrawLotsSpotGroup( cp_wk, p_sys );
+
+  //いきたい場所抽選
+  u32 want_spot = Resort_Util_DrawLotsWantSpotByGroup( cp_wk, p_sys, group );
+
+  //もしグループ強の場合、◎がなかったらグループ弱から抽選する
+  {
+    RESORT_BINARY_SPOT *p_spot  = RESORT_SYSTEM_GetBinarySpot(p_sys);
+    RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
+    int i;
+    BOOL is_retry = TRUE;
+
+    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+    {
+      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_people_all,i);
+      if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
+      {
+        u32 index;
+        if( RESORT_UTIL_CheckSpot( want_spot, p_resident, p_sys, &index ) )
+        {
+          if( RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_GRADE + index*RESORT_BINARY_SPOT_ANSWER_NUM ) == RESORT_GRADE_TYPE_EXCELLENT )
+          {
+            is_retry = FALSE;
+            break;
+          }
+        }
+      }
+    }
+
+    if( is_retry )
+    {
+      want_spot = Resort_Util_DrawLotsWantSpotByGroup( cp_wk, p_sys, RESORT_APPEAL_LV_LOW );
+    }
+  }
+
+  return want_spot;
+}
 
 
 //=============================================================================
@@ -955,7 +1251,7 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
   RESORT_WORK *p_reso_wk = GAMEDATA_GetReosrtWork( p_gamedata );
   MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
 
-  GF_ASSERT( param < 8 );
+  GF_ASSERT( param < 9 );
 
   //ランキング作成
 
@@ -973,17 +1269,33 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_data) )
     {
       if( (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param < 4)
-        || (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_03) && param >= 4) )
+        || (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_03) && param >= 4)
+        || (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_01) && param == 8) )
       {
         rnkdata[cnt].index  = i;
-        rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT2_RANK_00 + param, NULL );
+        if( param < 8 )
+        {
+          rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT2_RANK_00 + param, NULL );
+        }
+        else
+        {
+          rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
+        }
         cnt++;
       }
     }
   }
   {
     rnkdata[cnt].index  = 8;
-    rnkdata[cnt].value  = RESORT_WORK_GetData( p_reso_wk, RESORT_WORK_GET_PARAM_RNKDATA_NET_TRADE + param );
+    if( param < 8 )
+    {
+      rnkdata[cnt].value  = RESORT_WORK_GetData( p_reso_wk, RESORT_WORK_GET_PARAM_RNKDATA_NET_TRADE + param );
+    }
+    else
+    {
+      MEDALBOX *p_mdlbox  = SaveData_GetMedalBox(GAMEDATA_GetSaveControlWork(p_gamedata));
+      rnkdata[cnt].value  = MEDALBOX_GetMedalCount(p_mdlbox,FALSE);
+    }
     cnt++;
   }
   //ソート
@@ -1075,4 +1387,175 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
     GFL_STR_DeleteBuffer( p_src_str );
     GFL_STR_DeleteBuffer( p_name_str );
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ご褒美ナンバーを取得
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *
+ *	@return ご褒美ナンバー
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys )
+{
+  static const struct
+  {
+    RESORT_CITY_DATA_PARAM param;
+    u32 prize;
+  } sc_param_to_prize[] =
+  {
+    //TODO イベント発生優先度
+    {
+      RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03,
+      RESORT_CITYPRIZE_TYPE_ADD_SECRETARY3,
+    },
+    {
+      RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC04,
+      RESORT_CITYPRIZE_TYPE_ADD_SECRETARY4,
+    },
+    {
+      RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT,
+      RESORT_CITYPRIZE_TYPE_SCOUT_SECRETARY,
+    },
+    {
+      RESORT_CITY_DATA_PARAM_EV_PRIZE_NEON,
+      RESORT_CITYPRIZE_TYPE_CHANGE_CITYNEON,
+    },
+    {
+      RESORT_CITY_DATA_PARAM_EV_PRIZE_CITYNAME,
+      RESORT_CITYPRIZE_TYPE_CHANGE_CITYNAME,
+    },
+  };
+
+  RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData(p_sys);
+
+  int i;
+  
+  for( i = 0; i <= NELEMS(sc_param_to_prize); i++ )
+  {
+    if( RESORT_CITY_DATA_GetData(p_city,sc_param_to_prize[i].param,NULL) )
+    {
+      return sc_param_to_prize[i].prize;
+    }
+  }
+  return RESORT_CITYPRIZE_TYPE_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  順位取得
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_people_all  人物データ
+ *	@param	*p_resident 調べる住人
+ *	@param	param   パラメータ
+ *
+ *	@return 順位
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RESIDENT_DATA *p_resident, u32 param )
+{
+ struct
+  {
+    u32 index;
+    u32 value;
+    BOOL is_mark;
+  }rnkdata[ RESORT_RESIDENT_DATA_NUM ];
+
+  int i, j;
+  int cnt = 0;
+
+  //ランキング作成
+
+  //空に
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    rnkdata[i].index    = RNKDATA_EMPTY;
+    rnkdata[i].value    = RNKDATA_EMPTY;
+    rnkdata[i].is_mark  = FALSE;
+  }
+
+  //データを集める
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i );
+    if( !RESORT_RESIDENT_DATA_IsEmpty(p_data) )
+    {
+      if( (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param < 4)
+        || (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_03) && param >= 4)
+        || (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_01) && param == 8) )
+      {
+        rnkdata[cnt].index  = i;
+        if( param < 8 )
+        {
+          rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT2_RANK_00 + param, NULL );
+        }
+        else
+        {
+          rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
+        }
+        if( p_resident == p_data )
+        {
+          rnkdata[cnt].is_mark  = TRUE;
+        }
+        cnt++;
+      }
+    }
+  }
+  //ソート
+  for( i = 0; i < cnt-1; i++ )
+  {
+    for( j = cnt-1; j > i; j-- )
+    {
+      s32 idx1  = j-1;
+      s32 idx2  = j;
+      if( rnkdata[idx1].value < rnkdata[idx2].value )
+      {
+        s32 value = rnkdata[idx1].value;
+        s32 index = rnkdata[idx1].index;
+        rnkdata[idx1] = rnkdata[idx2];
+        rnkdata[idx2].value = value;
+        rnkdata[idx2].index = index;
+      }
+    }
+  }
+
+  //順位
+  for( i = 0; i < cnt; i++ )
+  {
+    if( rnkdata[i].is_mark )
+    {
+      break;
+    }
+  }
+
+  return i;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セレブのデータを取得
+ *
+ *	@param	RESORT_BINARY_PRESET *p_set ROM内人物データ
+ *	@param	*p_abstruct 人物抽象
+ *	@param	param   パラム
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_UTIL_GetCelebData( RESORT_BINARY_PRESET *p_set, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_BINARY_PRESET_PARAM param )
+{
+  GF_ASSERT( p_abstruct != NULL && RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct) == RESORT_PEOPLE_TYPE_PROXY && RESORT_ABSTRUCT_DATA_GetData(p_abstruct, RESORT_DATA_PARAM_TYPE,NULL) == RESORT_PROXY_TYPE_CELEB );
+  {
+    u32 objcode = RESORT_ABSTRUCT_DATA_GetData(p_abstruct,RESORT_DATA_PARAM_OBJCODE,NULL);
+    int i;
+    for( i = 0; i < RESORT_BINARY_GetMax(p_set);i++ )
+    {
+      if( objcode == RESORT_BINARY_PRESET_GetData(p_set,i,RESORT_BINARY_PRESET_PARAM_VIEW) )
+      {
+        return RESORT_BINARY_PRESET_GetData(p_set,i,param);
+      }
+    }
+  }
+  GF_ASSERT(0);
+  return 0;
 }

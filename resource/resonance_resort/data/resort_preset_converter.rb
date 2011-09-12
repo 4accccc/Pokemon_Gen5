@@ -63,6 +63,15 @@ PRESET_COL_WANTSPOT   = 7     #列：行きたいお店
 PRESET_COL_INTRO      = 8     #列：挨拶
 PRESET_COL_PHRASE     = 9     #列：口癖
 PRESET_COL_THANKS     =10     #列：感謝
+PRESET_COL_CELEB_GREET      = 11     #列：セレブ挨拶
+PRESET_COL_CELEB_WANTSPOT   = 12     #列：セレブお店行きたい
+PRESET_COL_CELEB_GOOUT      = 13     #列：セレブ行ってきます
+PRESET_COL_CELEB_SHOP_GREET = 14     #列：セレブお店挨拶
+PRESET_COL_CELEB_SHOP_OK    = 15     #列：セレブお店OK
+PRESET_COL_CELEB_SHOP_NG    = 16     #列：セレブお店NG
+
+PRESET_COL_CELEB_MSG_START  = PRESET_COL_CELEB_GREET     #列：セレブメッセージ開始
+PRESET_COL_CELEB_MSG_END    = PRESET_COL_CELEB_SHOP_NG    #列：セレブメッセージ終了
 def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h )
 
   objdata = HeaderDataArray.new
@@ -147,6 +156,23 @@ def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h )
     rescue HeaderSearchError
       exit(1)
     end
+
+    if $define_hash[ type ] == "セレブ特定出現"
+      for msg in PRESET_COL_CELEB_MSG_START...PRESET_COL_CELEB_MSG_END+1
+        msgid  = csv.get( row, msg )
+        begin
+          data.write_u16( msgdata.search( "#{msgid}", "#{rom}行のセレブ文" ) )
+        rescue HeaderSearchError
+          exit(1)
+        end
+      end
+    else
+      for msg in PRESET_COL_CELEB_MSG_START...PRESET_COL_CELEB_MSG_END+1
+        data.write_u16(0)
+      end
+    end
+
+
   end
 
   #ヘッダに書きこみ

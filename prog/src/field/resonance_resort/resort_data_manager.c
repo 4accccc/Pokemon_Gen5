@@ -499,25 +499,20 @@ u32 RESORT_ABSTRUCT_DATA_DrawLotsPresentItem( const RESORT_ABSTRUCT_DATA *cp_wk,
     int i;
 
     u32 present_list  = RESORT_BINARY_CITY_GetData( cp_city_data, index, RESORT_BINARY_CITY_PARAM_PRESENT_LIST );
+    u32 rnd_max = RESORT_BINARY_PRESENT_GetData( cp_present_data, present_list, RESORT_BINARY_PRESENT_PARAM_DENOMINATOR );
+
 
     //なにのおみやげを貰えるか
-    rnd = RESORT_ABSTRUCT_DATA_GetRnd( cp_wk, RESORT_RND_ID_ITEM_KIND, 100 );
+    u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( cp_wk, RESORT_RND_ID_ITEM_KIND, rnd_max );
 
-    present_recv  = 0;
-    for( i = 0; i < RESORT_BINARY_PRESENT_PARAM_ITEM_MAX; i++ )
+
+    u16 index = RESORT_BINARY_PRESENT_DrawLotsIndex( cp_present_data, present_list, rnd );
+
+    if( index != RESORT_BINARY_PRESENT_PARAM_ITEM_MAX )
     {
-      u32 item = RESORT_BINARY_PRESENT_GetData( cp_present_data, present_list, RESORT_BINARY_PRESENT_PARAM_ITEM_00+i*2 );
-      present_recv += RESORT_BINARY_PRESENT_GetData( cp_present_data, present_list, RESORT_BINARY_PRESENT_PARAM_PERCENT_00+i*2 );
-
-      if( rnd < present_recv )
-      {
-        GF_ASSERT_MSG( item != 0, "idx%d item%d percent%d rnd%d\n", i, item, present_recv, rnd );
-        return item;
-      }
+      return RESORT_BINARY_PRESENT_GetData( cp_present_data, present_list, RESORT_BINARY_PRESENT_PARAM_ITEM_00+index*2 );
     }
   }
-
-
 
   return 0;
 }
@@ -794,81 +789,6 @@ u32 RESORT_ABSTRUCT_DATA_GetBufferIndex( const RESORT_ABSTRUCT_DATA *cp_wk )
 u32 RESORT_ABSTRUCT_DATA_GetRnd( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_RND_ID id, u32 range )
 {
   return cp_wk->cp_func->GetRnd( cp_wk->p_data_adrs, id, range );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  いきたい場所抽選
- *
- *	@param	const RESORT_RECV_DATA *cp_wk   ワーク
- *	@param	RESORT_BINARY_SPOT *cp_spot_data  いきたい場所バイナリ
- *	@param	RESORT_BINARY_CITY *cp_city_data  街バイナリ
- *	@param	RESORT_CITY_DATA *cp_city         街データ
- *
- *	@return いきたい場所ID
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_ABSTRUCT_DATA_DrawLotsWhereToGo( const RESORT_ABSTRUCT_DATA *cp_wk, const RESORT_BINARY_SPOT *cp_spot_data, const RESORT_BINARY_CITY *cp_city_data, const RESORT_CITY_DATA *cp_city )
-{
-  u32 appeal_lv = 0;
-
-  //街レベルから弱中強グループをランダム選出
-  {
-    u32 lv = RESORT_CITY_DATA_GetData( cp_city, RESORT_CITY_DATA_PARAM_LV, NULL);
-
-    u32 index = RESORT_BINARY_CITY_GetIndexByCityLv( cp_city_data, lv );
-    u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( cp_wk, RESORT_RND_ID_WHERESPOT_LV, 100 );
-    u32 percent = 0;
-
-    int  i;
-    for( i = 0; i < RESORT_APPEAL_LV_MAX; i++ )
-    {
-      percent += RESORT_BINARY_CITY_GetData( cp_city_data, index, RESORT_BINARY_CITY_PARAM_GROUP_00+i );
-      if( percent > rnd )
-      {
-        appeal_lv = i;
-        break;
-      }
-    }
-    NAGI_Printf( "group%d idx%d lv%d\n", i, index, lv );
-  }
-
-  //選ばれたグループから行きたいお店メッセージをランダム選出
-  {
-    int rnd;
-    int i;
-    int cnt = 0;
-
-    //i = 1なのは、0は何も無いを表すため
-    for( i = 1; i < RESORT_BINARY_SPOT_GetMax(cp_spot_data); i++ )
-    {
-      u16 group = RESORT_BINARY_SPOT_GetData( cp_spot_data, i, RESORT_BINARY_SPOT_PARAM_GROUP );
-      if( group == appeal_lv )
-      {
-        cnt++;
-      }
-    }
-
-    GF_ASSERT( cnt != 0 );
-
-    rnd = RESORT_ABSTRUCT_DATA_GetRnd( cp_wk, RESORT_RND_ID_WHERESPOT_KIND, cnt );
-
-    cnt = 0;
-    for( i = 1; i < RESORT_BINARY_SPOT_GetMax(cp_spot_data); i++ )
-    {
-      u16 group = RESORT_BINARY_SPOT_GetData( cp_spot_data, i, RESORT_BINARY_SPOT_PARAM_GROUP );
-      if( group == appeal_lv )
-      {
-        if( cnt == rnd )
-        {
-          return i;
-        }
-        cnt++;
-      }
-    }
-  }
-  GF_ASSERT(0);
-  return 1;
 }
 
 //=============================================================================

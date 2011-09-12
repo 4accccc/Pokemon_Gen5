@@ -12,6 +12,7 @@
   .include  "msg_c16r0101.h"
   .include  "c16r0101.h"
   .include  "resort_scr_define.h"
+  .include  "../../../prog/src/field/resonance_resort/resort_people_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,22 +21,42 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c16r0101
+_EVENT_DATA    ev_init_c16r0101
 _EVENT_DATA    ev_c16r0101_infomation
+_EVENT_DATA    ev_scene_c16r0101_prize
 _EVENT_DATA_END
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_c16r0101:
-//  _END
+DEFINE_LOCAL LWK_RET
+DEFINE_LOCAL LWK_MSGID
+DEFINE_LOCAL LWK_OBJID
+DEFINE_LOCAL LWK_INDEX
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c16r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c16r0101
+{
+  //ご褒美イベント以外は消す
+  IF $WK_SCENE_C16R0101_PRIZE == 0 THEN
+    _OBJ_DEL(C16R0101_OWNER)
+    _OBJ_DEL(C16R0101_SECRETARY_01)
+    _OBJ_DEL(C16R0101_SECRETARY_02)
+  ELSE
+    _RESORT_GET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE, LWK_RET )
+    _DEBUG_PRINT_WK( LWK_RET )
+    SWITCH $LWK_RET
+    CASE RESORT_CITYPRIZE_TYPE_ADD_SECRETARY3 THEN
+      _RESORT_SET_PRESET_PEOPLE( RESORT_PEOPLE_TYPE_SECRETARY, RESORT_PRESET_TYPE_SECRETARY_03 )
+      _RESORT_ADD_PEOPLE( RESORT_ADD_PEOPLE_SECRETARY_03, LWK_OBJID )
+      _OBJ_POS_CHANGE( LWK_OBJID, 6, 0, 4, DIR_DOWN )
+    CASE RESORT_CITYPRIZE_TYPE_ADD_SECRETARY4 THEN
+      _RESORT_SET_PRESET_PEOPLE( RESORT_PEOPLE_TYPE_SECRETARY, RESORT_PRESET_TYPE_SECRETARY_04 )
+      _RESORT_ADD_PEOPLE( RESORT_ADD_PEOPLE_SECRETARY_04, LWK_OBJID )
+      _OBJ_POS_CHANGE( LWK_OBJID, 6, 0, 4, DIR_DOWN )
+    ENDSWITCH
+  ENDIF
+}
+INIT_EVENT_END
 
 /**************************************************************/
 /*            説明する人                                       */
@@ -90,3 +111,313 @@ EVENT_START ev_c16r0101_infomation
   _BALLOONWIN_CLOSE()
 }
 EVENT_END
+
+/**************************************************************/
+/*            ご褒美イベント                                  */
+/**************************************************************/
+EVENT_START ev_scene_c16r0101_prize
+{
+  _RESORT_GET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE, LWK_RET )
+
+  SWITCH $LWK_RET
+  CASE RESORT_CITYPRIZE_TYPE_ADD_SECRETARY3 THEN
+    _CALL sub_prize_add_sec03
+  CASE RESORT_CITYPRIZE_TYPE_ADD_SECRETARY4 THEN
+    _CALL sub_prize_add_sec04
+  CASE RESORT_CITYPRIZE_TYPE_CHANGE_CITYNAME THEN
+    _CALL sub_prize_cityname
+  CASE RESORT_CITYPRIZE_TYPE_CHANGE_CITYNEON THEN
+    _CALL sub_prize_neon
+  CASE RESORT_CITYPRIZE_TYPE_SCOUT_SECRETARY THEN
+    _CALL sub_prize_scout
+  ENDSWITCH
+
+  //シーン終了
+  //====================================
+  $WK_SCENE_C16R0101_PRIZE  = 0
+  //====================================
+}
+EVENT_END
+
+//==============================================================
+//サブルーチン：ご褒美イベント１：秘書３追加
+//==============================================================
+sub_prize_add_sec03:
+{
+  //プレイヤー近づく
+  _CALL sub_prize_come_player
+
+
+  //挨拶
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_greet_01, C16R0101_OWNER, POS_DEFAULT )
+
+  //説明
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_info_01, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //OBJID取得
+  _GET_OBJID( LWK_OBJID, LWK_RET, 6, 0, 4 )
+
+  //秘書３出てくる
+  _CALL sub_prize_sec03_come
+
+  //秘書３話す
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_SECRETARY, 2, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_SECRETARY, 2, 1 )
+  _BALLOONWIN_OBJMSG_POS( resort_prize_sec_01, LWK_OBJID, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //退出
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_bye_01, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //フラグON
+  _RESORT_SET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE_END, RESORT_CITYPRIZE_TYPE_ADD_SECRETARY3 )
+
+  //オーナー帰る
+  _CALL sub_prize_goout_owner
+}
+_RET
+
+//==============================================================
+//サブルーチン：ご褒美イベント２：秘書４追加
+//==============================================================
+sub_prize_add_sec04:
+{
+  //プレイヤー近づく
+  _CALL sub_prize_come_player
+
+  //挨拶
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_greet_02, C16R0101_OWNER, POS_DEFAULT )
+
+  //説明
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_info_02, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //OBJID取得
+  _GET_OBJID( LWK_OBJID, LWK_RET, 6, 0, 4 )
+
+  //秘書４出てくる
+  _CALL sub_prize_sec03_come
+
+  //秘書４話す
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_SECRETARY, 3, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_SECRETARY, 3, 1 )
+  _BALLOONWIN_OBJMSG_POS( resort_prize_sec_02, LWK_OBJID, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //退出
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_bye_02, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //フラグON
+  _RESORT_SET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE_END, RESORT_CITYPRIZE_TYPE_ADD_SECRETARY4 )
+
+  //オーナー帰る
+  _CALL sub_prize_goout_owner
+
+}
+_RET
+
+//==============================================================
+//サブルーチン：ご褒美イベント３：街名変更
+//==============================================================
+sub_prize_cityname:
+{
+  //プレイヤー近づく
+  _CALL sub_prize_come_player
+
+  //挨拶
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_greet_03, C16R0101_OWNER, POS_DEFAULT )
+
+  //説明
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_info_03, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //性別で台詞が違う
+  _GET_OBJID( LWK_OBJID, LWK_RET, 13, 0, 5 )
+  _RESORT_GET_DATA( RESORT_GET_PARAM_CITYNAME_SEC_SEX, LWK_RET )
+  _RESORT_GET_DATA( RESORT_GET_PARAM_CITYNAME_SEC_INDEX, LWK_INDEX )
+
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_SECRETARY, LWK_INDEX, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_SECRETARY, LWK_INDEX, 1 )
+  IF $LWK_RET == 0 THEN
+    _BALLOONWIN_OBJMSG_POS( resort_prize_sec_03_m, LWK_OBJID, POS_DEFAULT )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( resort_prize_sec_03_f, LWK_OBJID, POS_DEFAULT )
+  ENDIF
+  _BALLOONWIN_CLOSE()
+
+  //退出
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_bye_03, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //フラグON
+  _RESORT_SET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE_END, RESORT_CITYPRIZE_TYPE_CHANGE_CITYNAME )
+  //オーナー帰る
+  _CALL sub_prize_goout_owner
+}
+_RET
+
+//==============================================================
+//サブルーチン：ご褒美イベント４：ネオン変更
+//==============================================================
+sub_prize_neon:
+{
+  //プレイヤー近づく
+  _CALL sub_prize_come_player
+
+  //挨拶
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_greet_04, C16R0101_OWNER, POS_DEFAULT )
+
+  //説明
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_info_04, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //性別で台詞が違う
+  _GET_OBJID( LWK_OBJID, LWK_RET, 13, 0, 5 )
+  _RESORT_GET_DATA( RESORT_GET_PARAM_NEON_SEC_SEX, LWK_RET )
+  _RESORT_GET_DATA( RESORT_GET_PARAM_NEON_SEC_INDEX, LWK_INDEX )
+
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_SECRETARY, LWK_INDEX, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_SECRETARY, LWK_INDEX, 1 )
+  IF $LWK_RET == 0 THEN
+    _BALLOONWIN_OBJMSG_POS( resort_prize_sec_04_m, LWK_OBJID, POS_DEFAULT )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( resort_prize_sec_04_f, LWK_OBJID, POS_DEFAULT )
+  ENDIF
+  _BALLOONWIN_CLOSE()
+
+  //退出
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_bye_04, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //フラグON
+  _RESORT_SET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE_END, RESORT_CITYPRIZE_TYPE_CHANGE_CITYNEON )
+
+  //オーナー帰る
+  _CALL sub_prize_goout_owner
+}
+_RET
+
+//==============================================================
+//サブルーチン：ご褒美イベント５：スカウト
+//==============================================================
+sub_prize_scout:
+{
+  //プレイヤー近づく
+  _CALL sub_prize_come_player
+
+  //挨拶
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_greet_05, C16R0101_OWNER, POS_DEFAULT )
+
+  //説明
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_info_05, C16R0101_OWNER, POS_DEFAULT )
+
+  //退出
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_bye_05, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //フラグON
+  _RESORT_SET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE_END, RESORT_CITYPRIZE_TYPE_SCOUT_SECRETARY )
+
+  //オーナー帰る
+  _CALL sub_prize_goout_owner
+}
+_RET
+
+//==============================================================
+//サブルーチン：ご褒美イベント：開始
+//==============================================================
+sub_prize_come_player:
+{
+  //プレイヤーこさせる
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 8, 5, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+}
+_RET
+
+//==============================================================
+//サブルーチン：ご褒美イベント：終了
+//==============================================================
+sub_prize_goout_owner:
+{
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_makeaway )
+  _OBJ_ANIME( C16R0101_OWNER, anm_owner_goout )
+  _OBJ_ANIME( C16R0101_SECRETARY_01, anm_sec01_goout )
+  _OBJ_ANIME( C16R0101_SECRETARY_02, anm_sec02_goout )
+  _OBJ_ANIME_WAIT()
+
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+
+  _OBJ_DEL( C16R0101_OWNER )
+  _OBJ_DEL( C16R0101_SECRETARY_01 )
+  _OBJ_DEL( C16R0101_SECRETARY_02 )
+}
+_RET
+
+
+//--------------------------------------------------------------------
+//主人公：退く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_makeaway
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA AC_WAIT_8F, 1
+	_ANIME_DATA	AC_DIR_D,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//オーナー：帰る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_owner_goout
+	_ANIME_DATA	AC_WALK_D_8F,9
+  _ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//秘書１：帰る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sec01_goout
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,9
+  _ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//秘書２：帰る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sec02_goout
+  _ANIME_DATA AC_WAIT_8F, 1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,9
+  _ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//==============================================================
+//サブルーチン：ご褒美イベント：秘書３出てくる
+//==============================================================
+sub_prize_sec03_come:
+{
+  _OBJ_ANIME( LWK_OBJID, anm_sec03_come )
+  _OBJ_ANIME_WAIT()
+}
+_RET
+
+
+//--------------------------------------------------------------------
+//秘書３：でてくる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sec03_come
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0

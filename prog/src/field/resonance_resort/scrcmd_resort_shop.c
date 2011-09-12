@@ -1179,19 +1179,13 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
         u32 percent = 0;
         u32 listID = wk->cp_select->param1;
         RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( wk->p_people );
-        u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( p_abstruct, RESORT_RND_ID_SHOP_LIST_00+wk->cp_select->id, 100 );
+        u32 rnd_max = RESORT_BINARY_PRESENT_GetData( wk->p_present, listID, RESORT_BINARY_PRESENT_PARAM_DENOMINATOR);
+        u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( p_abstruct, RESORT_RND_ID_SHOP_LIST_00+wk->cp_select->id, rnd_max );
+
+        u16 index = RESORT_BINARY_PRESENT_DrawLotsIndex( wk->p_present, listID, rnd );
         int i;
-        for( i = 0; i < RESORT_BINARY_PRESENT_PARAM_ITEM_MAX; i++ )
-        {
-          u32 v = RESORT_BINARY_PRESENT_GetData( wk->p_present, listID, RESORT_BINARY_PRESENT_PARAM_ITEM_00+i*2);
-          percent += RESORT_BINARY_PRESENT_GetData(wk->p_present, listID, RESORT_BINARY_PRESENT_PARAM_PERCENT_00+i*2);
-          if( rnd < percent )
-          {
-            item = v;
-            break;
-          }
-        }
-        GF_ASSERT_MSG( item != 0, "idx%d item%d percent%d rnd%d\n", i, item, percent, rnd );
+        GF_ASSERT( index != RESORT_BINARY_PRESENT_PARAM_ITEM_MAX );
+        item = RESORT_BINARY_PRESENT_GetData( wk->p_present, listID, RESORT_BINARY_PRESENT_PARAM_ITEM_00+index*2);
       }
 
       WORDSET_RegisterWord( wk->wordSet, 2, wk->cp_select->p_decidename, PM_NEUTRAL, TRUE, PM_LANG );

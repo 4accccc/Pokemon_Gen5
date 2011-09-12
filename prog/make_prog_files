@@ -2471,6 +2471,7 @@ SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 #===> SRCS_OVERLAY_TITLE
 #===> SRCS_OVERLAY_BATTLE_RETURN
 #===> SRCS_OVERLAY_BOX
+#===> SRCS_OVERLAY_DEBUG_RESORT
 SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 											app/name_input/namein_graphic.c \
 											app/name_input/namein_data.c

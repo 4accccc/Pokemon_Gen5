@@ -291,7 +291,9 @@ void RESORT_BINARY_SHOP_Exit( RESORT_BINARY_SHOP *p_wk )
 u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, u16 kind, u16 lv, u16 type )
 {
   int i;
-  for( i = 0; i < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk); i ++ )
+
+  //先頭はNULLデータとしている
+  for( i = 1; i < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk); i ++ )
   {
     const RESORT_BINARY_SHOP_DATA *cp_data = RESORT_BINARY_GetStruct(cp_wk->p_shop, i);
     if( RESORT_BINARY_SHOP_DATA_GetData( cp_data, RESORT_BINARY_SHOP_PARAM_SHOP ) == kind 
@@ -421,4 +423,33 @@ u16 RESORT_BINARY_SERVICE_DATA_GetData( const RESORT_BINARY_SERVICE_DATA *cp_wk,
 {
   GF_ASSERT( param < RESORT_BINARY_SERVICE_PARAM_MAX );
   return cp_wk->param[ param ];
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  抽選
+ *
+ *	@param	const RESORT_BINARY_PRESENT *cp_wk  ワーク
+ *	@param	rnd 乱数（RESORT_BINARY_PRESENT_PARAM_DENOMINATORの）
+ *
+ *	@return 抽選したインデックス  (RESORT_BINARY_PRESENT_PARAM_ITEM_MAXならなし)
+ */
+//-----------------------------------------------------------------------------
+u16 RESORT_BINARY_PRESENT_DrawLotsIndex( const RESORT_BINARY_PRESENT *cp_wk, u32 listID, u32 rnd )
+{
+  int i;
+  u32 percent = 0;
+
+  for( i = 0; i < RESORT_BINARY_PRESENT_PARAM_ITEM_MAX; i++ )
+  {
+    u32 item = RESORT_BINARY_PRESENT_GetData(cp_wk, listID, RESORT_BINARY_PRESENT_PARAM_ITEM_00+i*2);
+    percent += RESORT_BINARY_PRESENT_GetData(cp_wk, listID, RESORT_BINARY_PRESENT_PARAM_PERCENT_00+i*2);
+    if( rnd < percent )
+    {
+     GF_ASSERT_MSG( item != 0, "idx%d item%d percent%d rnd%d\n", i, item, percent, rnd );
+      return i;
+    }
+  }
+  return RESORT_BINARY_PRESENT_PARAM_ITEM_MAX;
 }

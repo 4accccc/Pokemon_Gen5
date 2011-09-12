@@ -48,8 +48,9 @@ PRE_ROW_START      = 1     #行開始位置
 PRE_COL_START      = 0     #列開始位置
 PRE_COL_TAG        = PRE_COL_START    #列:タグ
 PRE_COL_USE        = 1                #列:用途
-PRE_COL_PERCENT    = 2                #列：確率１
-PRE_COL_ITEM       = 3                #列：道具１
+PRE_COL_DENOMINATOR = 2                #列:分母
+PRE_COL_PERCENT    = 3                #列：確率１
+PRE_COL_ITEM       = 4                #列：道具１
 
 PRE_COL_CEL_NUM   =  2
 PRE_COL_ITEM_MAX   = 10
@@ -62,10 +63,15 @@ def convertPresent( csv, data, header, hash )
     
     tag      = csv.get( row, PRE_COL_TAG )
     use      = csv.get( row, PRE_COL_USE )
+    denominator = csv.get( row, PRE_COL_DENOMINATOR )
 
     use_hash.store( tag, use )
 
     header.write( "#define RESORT_LIST_ID_#{tag}  (#{row-PRE_ROW_START})\n")
+
+
+    data.write_u16(denominator)
+    data.write_u16(0)
 
     for cnt in 0...PRE_COL_ITEM_MAX
       per     = csv.get( row, PRE_COL_PERCENT+cnt*PRE_COL_CEL_NUM )

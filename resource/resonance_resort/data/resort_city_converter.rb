@@ -74,6 +74,7 @@ CITY_COL_EXP        = 5     #列：経験値
 CITY_COL_CITY_RANK  = 6     #列：肩書き
 CITY_COL_PRE_LIST   = 7     #列：おみやげリスト
 CITY_COL_PRE_PER    = 8     #列：受け取り確率
+CITY_COL_PRIZE    = 9     #列：街ご褒美
 
 def convertCity( csv, data, msg_h, pre_h )
   
@@ -95,6 +96,7 @@ def convertCity( csv, data, msg_h, pre_h )
     rank      = csv.get( row, CITY_COL_CITY_RANK )
     pre       = csv.get( row, CITY_COL_PRE_LIST )
     per       = csv.get( row, CITY_COL_PRE_PER )
+    prize     = csv.get( row, CITY_COL_PRIZE )
 
     data.write_u16( lv_l )
     data.write_u16( lv_h )
@@ -120,6 +122,7 @@ def convertCity( csv, data, msg_h, pre_h )
       exit(1)
     end
     data.write_u16( per )
+    data.write_u16( $define_hash[prize] )
 
   end
 end

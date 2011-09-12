@@ -185,12 +185,12 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       *p_ret_wk = RESORT_PEOPLE_PEOPLEID_TO_MMDLID( peopleID );
     }
     break;
-  case RESORT_GET_PARAM_IS_SECREARY_FULL:
+  case RESORT_GET_PARAM_IS_SCOUT:
     {
       RESORT_SECRETARY_DATA *p_secretary = RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( p_all_people );
-
-      //NULLなら全部いる
-      *p_ret_wk = (p_secretary == NULL);
+      BOOL flag = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_SCOUT,NULL);
+      //NULLなら全部いる  かつ  フラグON
+      *p_ret_wk = ((p_secretary == NULL) && flag);
     }
     break;
   case RESORT_GET_PARAM_MERGE_FLAG:
@@ -485,6 +485,78 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       *p_ret_wk = !RESORT_RESIDENT_DATA_IsEmpty( p_resi );
     }
     break;
+  case RESORT_GET_PARAM_IS_NEON:
+    *p_ret_wk = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_NEON,NULL);
+    break;
+  case RESORT_GET_PARAM_IS_CITYNAME:
+    *p_ret_wk = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_CITYNAME,NULL);
+    break;
+  case RESORT_GET_PARAM_CITYNAME_SEC_SEX:
+    {
+      int i;
+      u32 sex = 0;
+      for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+      {
+        RESORT_SECRETARY_DATA *p_sec = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
+        if( !RESORT_SECRETARY_DATA_IsEmpty(p_sec)
+          && RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_TYPE, NULL) == RESORT_SECRETARY_TYPE_WORK )
+        {
+          sex = RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_SEX, NULL);
+          break;
+        }
+      }
+      *p_ret_wk = sex;
+    }
+    break;
+  case RESORT_GET_PARAM_NEON_SEC_SEX:
+    {
+      int i;
+      u32 sex = 0;
+      for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+      {
+        RESORT_SECRETARY_DATA *p_sec = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
+        if( !RESORT_SECRETARY_DATA_IsEmpty(p_sec)
+          && RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_TYPE, NULL) == RESORT_SECRETARY_TYPE_WORK )
+        {
+          sex = RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_SEX, NULL);
+          break;
+        }
+      }
+      *p_ret_wk = sex;
+    }
+    break;
+  case RESORT_GET_PARAM_CITYNAME_SEC_INDEX:
+    {
+      int i;
+      for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+      {
+        RESORT_SECRETARY_DATA *p_sec = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
+        if( !RESORT_SECRETARY_DATA_IsEmpty(p_sec)
+          && RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_TYPE, NULL) == RESORT_SECRETARY_TYPE_WORK )
+        {
+          *p_ret_wk = i;
+          break;
+        }
+      }
+      GF_ASSERT( i < RESORT_SECRETARY_DATA_NUM );
+    }
+    break;
+  case RESORT_GET_PARAM_NEON_SEC_INDEX:
+    {
+      int i;
+      for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+      {
+        RESORT_SECRETARY_DATA *p_sec = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
+        if( !RESORT_SECRETARY_DATA_IsEmpty(p_sec)
+          && RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_TYPE, NULL) == RESORT_SECRETARY_TYPE_WORK )
+        {
+          *p_ret_wk = i;
+          break;
+        }
+      }
+      GF_ASSERT( i < RESORT_SECRETARY_DATA_NUM );
+    }
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -772,23 +844,19 @@ VMCMD_RESULT EvCmdResortLot( VMHANDLE *p_core, void *p_wk_adrs )
     u16 listID = RESORT_BINARY_SERVICE_DATA_GetData( cp_service, RESORT_BINARY_SERVICE_PARAM_PARAM_1 );
     u16 service = RESORT_BINARY_SERVICE_DATA_GetData( cp_service, RESORT_BINARY_SERVICE_PARAM_SERVICE_ID );
 
-    u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( p_abstruct, RESORT_RND_ID_SHOP_LIST_00+param, 100 );
-    u32 percent = 0;
+    u32 rnd_max = RESORT_BINARY_PRESENT_GetData(cp_present, listID, RESORT_BINARY_PRESENT_PARAM_DENOMINATOR);
+
+    u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( p_abstruct, RESORT_RND_ID_SHOP_LIST_00+param, rnd_max );
+    u16 index = RESORT_BINARY_PRESENT_DrawLotsIndex( cp_present, listID, rnd );
+
     GF_ASSERT( listID < RESORT_BINARY_GetMax(cp_present) );
     GF_ASSERT( service == RESORT_SERVICE_TYPE_DRAWLOTS );
-    for( i = 0; i < RESORT_BINARY_PRESENT_PARAM_ITEM_MAX; i++ )
-    {
-      u32 item = RESORT_BINARY_PRESENT_GetData(cp_present, listID, RESORT_BINARY_PRESENT_PARAM_ITEM_00+i*2);
-      percent += RESORT_BINARY_PRESENT_GetData(cp_present, listID, RESORT_BINARY_PRESENT_PARAM_PERCENT_00+i*2);
-      if( rnd < percent )
-      {
-        GF_ASSERT_MSG( item != 0, "idx%d item%d percent%d rnd%d\n", i, item, percent, rnd );
-        *p_ret_item = item;
-        *p_ret_wk   = i+1;
-        break;
-      }
-    }
 
+    *p_ret_wk   = index+1;
+    if( index != RESORT_BINARY_PRESENT_PARAM_ITEM_MAX )
+    {
+      *p_ret_item = RESORT_BINARY_PRESENT_GetData(cp_present, listID, RESORT_BINARY_PRESENT_PARAM_ITEM_00+index*2);
+    }
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -1081,7 +1149,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
 
   RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, idx );
 
-  RESORT_UTIL_CheckSpot( index, p_resident, p_sys, p_wordset, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup );
+  RESORT_UTIL_SetSpot( index, p_resident, p_sys, p_wordset, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup );
   return VMCMD_RESULT_CONTINUE;
 
 }
@@ -1739,6 +1807,11 @@ VMCMD_RESULT EvCmdResortSetMyData( VMHANDLE *p_core, void *p_wk_adrs )
       RESORT_FIELD_StartPeople( p_field );
     }
     break;
+  case RESORT_MY_PARAM_EV_PRIZE_END:
+    GF_ASSERT( RESORT_CITYPRIZE_TYPE_NONE < data && data < RESORT_CITYPRIZE_TYPE_MAX );
+    RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03+data-1, FALSE );
+    RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_PRIZE_SEC03+data-1, TRUE );
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -1767,6 +1840,7 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(p_gamesys) );
   RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
   RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
   RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
   switch( param )
@@ -1795,6 +1869,9 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_MY_PARAM_IS_FEVER:
     *p_ret_wk = RESORT_UTIL_IsFever( p_sys );
+    break;
+  case RESORT_MY_PARAM_EV_PRIZE:
+    *p_ret_wk = RESORT_UTIL_GetPrizeEv( p_sys );
     break;
   default:
     GF_ASSERT(0);
@@ -2052,6 +2129,57 @@ VMCMD_RESULT EvCmdResortPrintRankWindow( VMHANDLE *p_core, void *p_wk_adrs )
   VMCMD_SetWait( p_core, VmWait_RankWindow );
 
   return VMCMD_RESULT_SUSPEND;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出終了
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 結果コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortAddPeople( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_SYSTEM *p_sys = Resort_Scrcmd_GetSystem( p_field );
+  RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
+  RESORT_ABSTRUCT_MANAGER *p_man = RESORT_SYSTEM_GetAbstructManager(p_sys);
+
+  u16 id   = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 *p_ret_wk   = SCRCMD_GetVMWork(p_core, p_wk );
+
+  RESORT_PEOPLE_SYS_ADD_PARAM add_param;
+  GFL_STD_MemClear( &add_param ,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
+
+  switch( id )
+  {
+  case RESORT_ADD_PEOPLE_SECRETARY_03:
+    add_param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_SECRETARY, 2 );
+    add_param.placeID = RESORT_PLACEID_RECEPTION;
+    {
+      RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_AddNew( p_people_sys, &add_param );
+      u16 peopleID = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      *p_ret_wk = RESORT_PEOPLE_PEOPLEID_TO_MMDLID( peopleID );
+    }
+    break;
+  case RESORT_ADD_PEOPLE_SECRETARY_04:
+    add_param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_SECRETARY, 3 );
+    add_param.placeID = RESORT_PLACEID_RECEPTION;
+    {
+      RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_AddNew( p_people_sys, &add_param );
+      u16 peopleID = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      *p_ret_wk = RESORT_PEOPLE_PEOPLEID_TO_MMDLID( peopleID );
+    }
+    break;
+  }
+
+  return VMCMD_RESULT_CONTINUE;
 }
 
 //----------------------------------------------------------------------------

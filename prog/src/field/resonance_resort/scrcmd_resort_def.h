@@ -17,7 +17,7 @@
 //=============================================================================
 //_RESORT_GET_DATA用
 #define RESORT_GET_PARAM_FRONT_OBJID        (0)
-#define RESORT_GET_PARAM_IS_SECREARY_FULL   (1)
+#define RESORT_GET_PARAM_IS_SCOUT           (1)
 #define RESORT_GET_PARAM_MERGE_FLAG         (2)
 #define RESORT_GET_PARAM_PRESENT_ID         (3)
 #define RESORT_GET_PARAM_IS_INSTITUTION_EMPTY   (6)
@@ -46,6 +46,12 @@
 #define RESORT_GET_PARAM_CHECK_RESIDENT_05  (30)
 #define RESORT_GET_PARAM_CHECK_RESIDENT_06  (31)
 #define RESORT_GET_PARAM_CHECK_RESIDENT_07  (32)
+#define RESORT_GET_PARAM_IS_NEON            (33)
+#define RESORT_GET_PARAM_IS_CITYNAME        (34)
+#define RESORT_GET_PARAM_CITYNAME_SEC_SEX   (35)
+#define RESORT_GET_PARAM_NEON_SEC_SEX       (36)
+#define RESORT_GET_PARAM_CITYNAME_SEC_INDEX   (37)
+#define RESORT_GET_PARAM_NEON_SEC_INDEX       (38)
 
 //RESORT_GET_PARAM_CHECK_SCOUTの戻り値
 #define RESORT_CHECK_SCOUT_YES          (0) //いいよ
@@ -73,6 +79,8 @@
 #define RESORT_MY_PARAM_TEX                (17)
 #define RESORT_MY_PARAM_IS_TUTORIAL        (18)
 #define RESORT_MY_PARAM_IS_FEVER           (19)
+#define RESORT_MY_PARAM_EV_PRIZE           (20)
+#define RESORT_MY_PARAM_EV_PRIZE_END       (21)
 
 //_RESORT_JOB_CHANGE用
 #define RESORT_JOBCHANGE_RESIDENT           (0)
@@ -212,6 +220,9 @@
 #define RESORT_SHOP_NATUKI_NG_MSGID           (165) //なつきあがらない
 #define RESORT_SHOP_LV_NG_MSGID               (166) //LVあがらない
 
+  //セレブ
+#define RESORT_CELEB_GREET_MSGID              (170)
+
 //_RESORT_SEARCH_RECEPTION用
 #define RESORT_SEARCH_PROXY_GTS               (0)
 #define RESORT_SEARCH_PROXY_MYSTERY           (0)
@@ -272,6 +283,7 @@
 #define RESORT_SET_SPOT_CITY_NONE             (0)
 #define RESORT_SET_SPOT_CITY_LVUP             (1)
 #define RESORT_SET_SPOT_CITY_LVMAX            (2)
+#define RESORT_SET_SPOT_CITY_LVUP_PRIZE       (3)
 
 //_RESORT_GET_INSTITUTION_DATA用
 #define RESORT_INSTITUTION_SHOPTYPE            (0)
@@ -298,7 +310,8 @@
 #define RESORT_RANK_WND_NET_BATTLE            (5)
 #define RESORT_RANK_WND_GET_POKE              (6)
 #define RESORT_RANK_WND_HATCH_EGG             (7)
-#define RESORT_RANK_WND_MAX                   (8)
+#define RESORT_RANK_WND_MEDALNUM              (8)
+#define RESORT_RANK_WND_MAX                   (9)
 
 //_RESORT_GET_OFFRECO用
 #define RESORT_OFFRECO_GAMESTART_MSGID        (0)
@@ -322,6 +335,9 @@
 #define RESORT_OFFRECO_SHOP_MSGID_06          (19)
 #define RESORT_OFFRECO_SHOP_MSGID_07          (20)
 
+//_RESORT_ADD_PEOPLE
+#define RESORT_ADD_PEOPLE_SECRETARY_03        (0)
+#define RESORT_ADD_PEOPLE_SECRETARY_04        (1)
 
 //リゾート用レコードID
 #define  RESORT_RECORD_ID_NONE        ( 0)//なにもない

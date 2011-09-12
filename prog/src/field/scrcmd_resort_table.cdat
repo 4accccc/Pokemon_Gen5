@@ -42,7 +42,7 @@
   NO_CMD()
   NO_CMD()
   DEF_CMD( EvCmdResortEndItem, EV_SEQ_RESORT_END_ITEM )
-  NO_CMD()
+  DEF_CMD( EvCmdResortAddPeople, EV_SEQ_RESORT_ADD_PEOPLE )
   DEF_CMD( EvCmdResortSetPresetPoeple, EV_SEQ_RESORT_SET_PRESET_PEOPLE )
   DEF_CMD( EvCmdResortGetNpcData, EV_SEQ_RESORT_GET_NPC_DATA )
   DEF_CMD( EvCmdResortSetMyData, EV_SEQ_RESORT_SET_MY_DATA )

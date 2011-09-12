@@ -742,4 +742,927 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_greet_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_greet_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_greet_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_greet_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_greet_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_info_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょうは　きみに　プレゼントが　あるんだ▼
+きみの　しごとを　たすける
+あたらしい　ひしょを　スカウト　したよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:28:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょうは　きみに　プレゼントが　あるんだ▼
+きみの　しごとを　たすける
+あたらしい　ひしょを　スカウト　したよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:28:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_info_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょうは　きみに　プレゼントが　あるんだ▼
+きみの　しごとを　たすける
+あたらしい　ひしょを　スカウト　したよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:28:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょうは　きみに　プレゼントが　あるんだ▼
+きみの　しごとを　たすける
+あたらしい　ひしょを　スカウト　したよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:28:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_info_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょうは　きみに　プレゼントが　あるんだ▼
+まちに　すきな　なまえを　つけてみないか▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:33:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょうは　きみに　プレゼントが　あるんだ▼
+まちに　すきな　なまえを　つけてみないか▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:33:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_info_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょうは　きみに　プレゼントが　あるんだ▼
+まちに　くるひとに　たのしんでもらえるように
+ネオンを　こうじできるように　てはいしたよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:30:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょうは　きみに　プレゼントが　あるんだ▼
+まちに　くるひとに　たのしんでもらえるように
+ネオンを　こうじできるように　てはいしたよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_info_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょうは　きみに　じょげんが　あるんだ▼
+きみも　すきなひとを　ひしょに　したいだろう
+まちゆくひとを　ひしょに　してみないか▼
+</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:32:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょうは　きみに　じょげんが　あるんだ▼
+きみも　すきなひとを　ひしょに　したいだろう
+まちゆくひとを　ひしょに　してみないか▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:32:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_bye_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_bye_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_bye_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_bye_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_bye_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_sec_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+つかれている　ポケモンを
+やすませることが　できます▼
+わたしに　はなしかけて
+くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:34:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+つかれている　ポケモンを
+やすませることが　できます▼
+わたしに　はなしかけて
+くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:34:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_sec_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+もっとべんりに　パソコンを
+つかうことが　できます▼
+わたしに　はなしかけて
+くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:35:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+もっとべんりに　パソコンを
+つかうことが　できます▼
+わたしに　はなしかけて
+くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:35:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_sec_03_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+まちの　なまえを　かえるには
+わたしに　はなしかけて　くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:35:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+まちの　なまえを　かえるには
+わたしに　はなしかけて　くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:35:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_sec_03_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+まちの　なまえを　かえるには
+わたしに　はなしかけて　くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:35:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+まちの　なまえを　かえるには
+わたしに　はなしかけて　くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:35:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_sec_04_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+ネオンを　かえるには
+わたしに　はなしかけて　くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:39:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+ネオンを　かえるには
+わたしに　はなしかけて　くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:39:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_sec_04_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+ネオンを　かえるには
+わたしに　はなしかけて　くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:39:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortGreet Idx="1" ]
+[Name:TrainerName ]です！▼
+ネオンを　かえるには
+わたしに　はなしかけて　くださいね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:39:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

@@ -81,3 +81,9 @@
 #define SEQ_INFOMATION_Q04        (4)
 #define SEQ_INFOMATION_Q05        (5)
 #define SEQ_INFOMATION_Q06        (6)
+
+//ƒZƒŒƒu
+#define SEQ_CELEB_SPOT            (0)
+#define SEQ_CELEB_TRADE           (1)
+#define SEQ_CELEB_BYE             (2)
+
