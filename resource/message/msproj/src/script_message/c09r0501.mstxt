@@ -2,6 +2,52 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c09r0501_swchampion_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ようこそ
+ちょうせんしゃ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:26:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:25:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ようこそ
+ちょうせんしゃ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:26:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:25:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・posイベント（GRIDX＝15～17、GRIDZ＝43）
+・メッセージ後ライト点灯
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:26:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWCHAMPION
+チャンピオン・アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T06:25:59" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c09r0501_swchampion_01"
 		Style="Large">
 		<LanguageCell
