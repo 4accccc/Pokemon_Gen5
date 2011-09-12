@@ -8,13 +8,13 @@
 			Language="JPN">
 			<Text>ヤーコン『こんかい　おまえたちに
 さんか　してもらうのは▼
-オールトーナメント！
+ホドモエトーナメント！　ルールは
 なんでも　オーケーの　たいかいだ！▼
 ８にん　さんかの　トーナメントで
 ３かい　かてば　ゆうしょう　だぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:03:08" />
+				Time="2011-09-12T07:51:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24,13 +24,13 @@
 			Language="JPN_KANJI">
 			<Text>ヤーコン『今回　おまえたちに
 参加してもらうのは▼
-オールトーナメント！
+ホドモエトーナメント！　ルールは
 なんでも　オーケーの　大会だ！▼
 ８人参加の　トーナメントで
 ３回　勝てば　優勝だぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:04:05" />
+				Time="2011-09-12T07:51:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -374,10 +374,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]も　はやくな！▼</Text>
+			<Text>[Name:TrainerName ]も　はやくしろよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:46:48" />
+				Time="2011-09-12T07:40:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -385,10 +385,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]も　はやくな！▼</Text>
+			<Text>[Name:TrainerName ]も　はやくしろよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:50:27" />
+				Time="2011-09-12T07:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -491,18 +491,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『[Name:TrainerName ]たち　ひさしぶり！▼
+			<Text>ホミカ『あら　[Name:TrainerName ]たち！▼
 たまたま　テレビ　みてたら
-みんな　すっごい　しょうぶ　してて！▼
-とうぜん　グッと　きちゃうよね！
-あたしも　まけてられないし！▼
-つぎの　トーナメントに
-エントリー　しちゃおっと！▼
+みんな　すっごい　しょうぶ　してて！▽
+とうぜん　グッと　きちゃうよね！▼
+……とはいえ
+あたしの　ほうが　もっともっと
+かんきゃくを　ヒートさせちゃうけど▼
+なので　つぎの　トーナメントに
+エントリー　しとくから！▼
 こんかいは　せんせんふこく
-みんな　ぶっとばしちゃうから！▼</Text>
+みんな　ぶっとばしちゃうよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:32:46" />
+				Time="2011-09-12T07:42:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -510,18 +512,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『[Name:TrainerName ]たち　ひさしぶり！▼
+			<Text>ホミカ『あら　[Name:TrainerName ]たち！▼
 たまたま　テレビ　みてたら
-みんな　すっごい　勝負してて！▼
-とうぜん　グッと　きちゃうよね！
-あたしも　負けてられないし！▼
-次の　トーナメントに
-エントリー　しちゃおっと！▼
-こんかいは　宣戦布告
-みんな　ぶっとばしちゃうから！▼</Text>
+みんな　すっごい　勝負してて！▽
+当然　グッと　きちゃうよね！▼
+……とはいえ
+あたしの　ほうが　もっともっと
+観客を　ヒートさせちゃうけど▼
+なので　次の　トーナメントに
+エントリー　しとくから！▼
+今回は　宣戦布告
+みんな　ぶっとばしちゃうよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:33:13" />
+				Time="2011-09-12T07:42:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -630,10 +634,11 @@
 しょうぶを　つうじて▽
 ポケモンの　のうりょくを　ひきだす▼
 だが　まだ！
-せいかいでは　ない！！</Text>
+せいかい　とするには▽
+こんきょが　よわすぎます！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:34:24" />
+				Time="2011-09-12T07:44:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -645,10 +650,11 @@
 ポケモン勝負を　通じて▽
 ポケモンの　能力を　ひきだす▼
 だが　まだ！
-正解では　ない！！</Text>
+正解　とするには▽
+根拠が　貧弱すぎます！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:34:58" />
+				Time="2011-09-12T07:44:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -673,6 +679,114 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swrival_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『んー▼
+トーナメントに　さんかする　いじょうは
+はつさんか　はつゆうしょう　ってのが▽
+かっこいいよな　やっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:48:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:47:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『んー▼
+トーナメントに　参加する　以上は
+初参加　初優勝　ってのが▽
+かっこいいよな　やっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:48:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:48:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・外にでるまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:47:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:46:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swleader1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『イッシュの　ジムリーダーも
+トーナメントに　さんかして▽
+うでを　みがくことに　なるだろうね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:48:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:48:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『イッシュの　ジムリーダーも
+トーナメントに　参加して▽
+腕を　磨くことに　なるだろうね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:49:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:48:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・外にでるまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:47:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-12T07:46:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
