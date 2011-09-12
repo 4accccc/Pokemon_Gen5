@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 static void DEBUG_MEMORY_STORE_Use( void )
 {
-  static u8 sc_memory_buffer[0x08000];
+  static u8 sc_memory_buffer[0x07000];
   sc_memory_buffer[0] = 0;
 }
 
