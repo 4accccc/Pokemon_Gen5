@@ -80,6 +80,11 @@ extern u32 POKEWOOD_REC_GetWorkSize( void );
 extern void POKEWOOD_REC_Init( HEAPID heapID );
 extern void POKEWOOD_REC_Exit( void );
 
+//バッファ内容のバックアップ
+void POKEWOOD_REC_Backup( void * backup_area );
+//バッファ内容の復元
+void POKEWOOD_REC_Restore( const void * backup_area );
+
 //セーブ　ロード
 extern LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_LOADDATA_NUM num );
 extern SAVE_RESULT POKEWOOD_REC_Save( GAMEDATA *p_gamedata, HEAPID heapID, POKEWOOD_LOADDATA_NUM num, u16 *p_work );

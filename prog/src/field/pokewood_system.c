@@ -22,6 +22,8 @@
 #include "tr_tool/ex_trainer_def.h" //TRID_OFFSET_WBT
 #include "battle/pokewood/pokewood_senario.h"
 
+#include "savedata/pokewood_rec.h"  //POKEWOOD_REC_GetWorkSize
+
 //============================================================================================
 //============================================================================================
 
@@ -45,6 +47,7 @@ PKWDSYS * PKWDSYS_Create( HEAPID heapID )
 
   pkwdsys->heapID = heapID;
 
+  pkwdsys->backup_area = GFL_HEAP_AllocClearMemory( heapID, POKEWOOD_REC_GetWorkSize() );
   return pkwdsys;
 }
 
@@ -59,6 +62,7 @@ PKWDSYS * PKWDSYS_Create( HEAPID heapID )
 //=============================================================================================
 void PKWDSYS_Delete( PKWDSYS * pkwdsys )
 {
+  GFL_HEAP_FreeMemory( pkwdsys->backup_area );
   GFL_HEAP_FreeMemory( pkwdsys );
 }
 
@@ -224,7 +228,12 @@ u16 PKWDSYS_GetPlayNo( PKWDSYS *pkwdsys )
   return pkwdsys->play_no;
 }
 
-
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void * PKWDSYS_GetBackupArea( PKWDSYS *pkwdsys )
+{
+  return pkwdsys->backup_area;
+}
 
 //------------------------------------------------------------------
 /**

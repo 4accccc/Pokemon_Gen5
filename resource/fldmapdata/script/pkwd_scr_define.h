@@ -25,3 +25,10 @@
 #define   PKWD_REC_SUBSEQ_REC           4
 #define   PKWD_REC_SUBSEQ_ASK_GO        5
 
+
+#define   PKWD_SHOW_SEQ_END             0
+#define   PKWD_SHOW_SEQ_GOODBYE         1
+#define   PKWD_SHOW_SEQ_FIRST_MENU      2
+#define   PKWD_SHOW_SEQ_SELECT_MOVIE    3
+#define   PKWD_SHOW_SEQ_WATCH_MOVIE     4
+#define   PKWD_SHOW_SEQ_JUDGE           5

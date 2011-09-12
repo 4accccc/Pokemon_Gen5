@@ -69,8 +69,7 @@ SDK_COMPILER_ASSERT( SCR_PKWD_SELECT_MODE_DELETE == PKWD_SELECT_MODE_DEL );
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-GMEVENT * PKWD_EVENT_CopyMovie(
-    GAMESYS_WORK * gsys, PKWD_REC_POS src_pos, PKWD_REC_POS dst_pos );
+GMEVENT * PKWB_EVENT_Save( GAMESYS_WORK * gsys, PKWD_REC_POS dst_pos );
 //============================================================================================
 //============================================================================================
 
@@ -641,7 +640,7 @@ VMCMD_RESULT EvCmdPokewoodCopyMovie( VMHANDLE * core, void * wk )
   u16 rec_pos = SCRCMD_GetVMWorkValue( core, work );
 
   GF_ASSERT( rec_pos < PKWD_REC_POS_MAX );
-  next_event = PKWD_EVENT_CopyMovie( gsys, PKWD_REC_POS_TMP, rec_pos );
+  next_event = PKWB_EVENT_Save( gsys, rec_pos );
   SCRIPT_CallEvent( scw, next_event );
 
   return VMCMD_RESULT_SUSPEND;
@@ -654,18 +653,17 @@ VMCMD_RESULT EvCmdPokewoodCopyMovie( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 typedef struct {
   GAMEDATA * gamedata;
-  PKWD_REC_POS src_pos;
+  PKWDSYS * pkwdsys;
   PKWD_REC_POS dst_pos;
   u16 save_tmp;
 }EVENT_POKEWOOD_COPY_MOVE_WORK, EPCMW;
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static GMEVENT_RESULT eventPokewoodCopyMovie( GMEVENT * event, int *seq, void * wk )
+static GMEVENT_RESULT eventPokewoodSave( GMEVENT * event, int *seq, void * wk )
 {
   typedef enum {
     PKWD_COPY_SEQ_INIT = 0,
-    PKWD_COPY_SEQ_LOAD,
     PKWD_COPY_SEQ_SAVE,
     PKWD_COPY_SEQ_END,
   }PKWD_COPY_SEQ;
@@ -681,26 +679,12 @@ static GMEVENT_RESULT eventPokewoodCopyMovie( GMEVENT * event, int *seq, void * 
   switch ((PKWD_COPY_SEQ)*seq)
   {
   case PKWD_COPY_SEQ_INIT:
-    OS_Printf("POKEWOOD Move Copy Start(%d -> %d)\n", epcmw->src_pos, epcmw->dst_pos );
+    OS_Printf("POKEWOOD Save Start(%d)\n", epcmw->dst_pos );
     POKEWOOD_REC_Init( heapID );
-    *seq = PKWD_COPY_SEQ_LOAD;
+    POKEWOOD_REC_Restore( PKWDSYS_GetBackupArea( epcmw->pkwdsys ) );
     /* FALL THROUGH */
 
-  case PKWD_COPY_SEQ_LOAD:
-    OS_Printf("POKEWOOD Move Copy Load\n");
-    load_res = POKEWOOD_REC_Load( sv, heapID, epcmw->src_pos );
-    if ( load_res == LOAD_RESULT_OK && POKEWOOD_REC_IsExist() == TRUE )
-    {
-      *seq = PKWD_COPY_SEQ_SAVE;
-    }
-    else
-    {
-      *seq = PKWD_COPY_SEQ_END;
-    }
-    break;
-
   case PKWD_COPY_SEQ_SAVE:
-    OS_Printf("POKEWOOD Move Copy Save\n");
     save_res = POKEWOOD_REC_Save( epcmw->gamedata, heapID, epcmw->dst_pos, &epcmw->save_tmp );
     switch ( save_res )
     {
@@ -722,15 +706,14 @@ static GMEVENT_RESULT eventPokewoodCopyMovie( GMEVENT * event, int *seq, void * 
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-GMEVENT * PKWD_EVENT_CopyMovie(
-    GAMESYS_WORK * gsys, PKWD_REC_POS src_pos, PKWD_REC_POS dst_pos )
+GMEVENT * PKWB_EVENT_Save( GAMESYS_WORK * gsys, PKWD_REC_POS dst_pos )
 {
   GMEVENT * event;
   EPCMW * epcmw;
-  event = GMEVENT_Create( gsys, NULL, eventPokewoodCopyMovie, sizeof(EPCMW) );
+  event = GMEVENT_Create( gsys, NULL, eventPokewoodSave, sizeof(EPCMW) );
   epcmw = GMEVENT_GetEventWork( event );
   epcmw->gamedata = GAMESYSTEM_GetGameData( gsys );
-  epcmw->src_pos = src_pos;
+  epcmw->pkwdsys = * ( GAMEDATA_GetPKWDSysPointer( epcmw->gamedata ) );
   epcmw->dst_pos = dst_pos;
   epcmw->save_tmp = 0;
   return event;

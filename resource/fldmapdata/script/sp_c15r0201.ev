@@ -11,10 +11,12 @@
 
   .include  "scr_seq_def.h"
   .include  "c15r0201_def.h"
+  .include  "pokewood_scr_def.h"
 
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_ZONE_CHANGE_LABEL  SCRID_ZONE_POKEWOOD_STUDIO_ENTRANCE
 _SP_EVENT_DATA_END
 
 

@@ -12,6 +12,7 @@
 #include "pokewood_system.h"
 #include "poke_tool/poke_tool.h"
 #include "gamesystem/btl_setup.h"
+#include "battle/pokewood.h"
 
 //============================================================================================
 //============================================================================================
@@ -57,5 +58,7 @@ struct _POKEWOOD_SYSTEM {
   // ポケウッド上映画面関連
   u16 play_no;     // セーブデータ何番を上映するか
 
+  /// 録画データ　バックアップ領域
+  void * backup_area;
 };
 

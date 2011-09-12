@@ -112,6 +112,22 @@ void POKEWOOD_REC_Exit( void )
   sp_pokewood_rec_sv = NULL;
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void POKEWOOD_REC_Backup( void * backup_area )
+{
+  GF_ASSERT( sp_pokewood_rec_sv != NULL );
+  GFL_STD_MemCopy32( sp_pokewood_rec_sv, backup_area, sizeof(POKEWOOD_REC_SAVEDATA) );
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void POKEWOOD_REC_Restore( const void * backup_area )
+{
+  GF_ASSERT( sp_pokewood_rec_sv != NULL );
+  GFL_STD_MemCopy32( backup_area, sp_pokewood_rec_sv, sizeof(POKEWOOD_REC_SAVEDATA) );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ì«Ç›çûÇ›
