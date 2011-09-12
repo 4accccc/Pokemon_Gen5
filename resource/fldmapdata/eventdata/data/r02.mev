@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/12 12:07:00
+#save date:2011/09/12 14:44:18
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r02.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r02.wms
 #hold event type:
 1
 #hold event number:
-10
+12
 #event number: 0
 #type
 1
@@ -138,9 +138,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_VETERANW_09
+TR_MINI_20
 #OBJ CODE Number
-VETERANW
+GIRL2
 #MOVE CODE Number
 MV_RND_DLR
 #EVENT TYPE Number
@@ -148,7 +148,7 @@ EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_VETERANW_09
+SCRID_TRID_MINI_20
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -173,7 +173,7 @@ TR_MINI_19
 #OBJ CODE Number
 GIRL2
 #MOVE CODE Number
-MV_RIGHT
+MV_RND_DR
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -320,6 +320,68 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 728 32 88
+#event number: 10
+#type
+1
+#ID name
+TR_TANPAN_26
+#OBJ CODE Number
+BOY2
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_TANPAN_26
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+5
+#Parameter 2 Number
+0
+#Move Limit X Number
+5
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 0 40
+#event number: 11
+#type
+1
+#ID name
+TR_VETERANW_09
+#OBJ CODE Number
+VETERANW
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_VETERANW_09
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+4
+#Parameter 1 Number
+3
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 -296
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

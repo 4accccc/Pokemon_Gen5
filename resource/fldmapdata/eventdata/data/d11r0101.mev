@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/06 18:24:00
+#save date:2011/09/09 17:38:41
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d11r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d11r0101.wms
 #hold event type:
 1
 #hold event number:
-12
+19
 #event number: 0
 #type
 1
@@ -382,6 +382,223 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 456 0 -920
+#event number: 12
+#type
+1
+#ID name
+TR_DOCTOR_10
+#OBJ CODE Number
+DOCTOR
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_DOCTOR_10
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 0 -264
+#event number: 13
+#type
+1
+#ID name
+TR_CLEANING_04
+#OBJ CODE Number
+CLEANINGM
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_CLEANING_04
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+3
+#Parameter 1 Number
+3
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+6
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+696 0 -568
+#event number: 14
+#type
+1
+#ID name
+TR_WORKER2_31
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_RND_DR
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WORKER2_31
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+312 0 -376
+#event number: 15
+#type
+1
+#ID name
+TR_SCIENTISTW_11
+#OBJ CODE Number
+ASSISTANTW
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCIENTISTW_11
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+504 0 -280
+#event number: 16
+#type
+1
+#ID name
+TR_WORKER2_32
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WORKER2_32
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -648
+#event number: 17
+#type
+1
+#ID name
+TR_SCIENTISTM_15
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCIENTISTM_15
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+712 0 -840
+#event number: 18
+#type
+1
+#ID name
+TR_CLEANING_05
+#OBJ CODE Number
+CLEANINGM
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_CLEANING_05
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+10
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+360 0 -72
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

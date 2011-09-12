@@ -12,6 +12,13 @@
 #define R18_ROCK_01                        0
 #define R18_ROCK_02                        1
 #define R18_DPLEADER5_01                   2
+#define TR_VETERANW_11                     3
+#define TR_VETERANM_13                     4
+#define TR_KARATE_16                       5
+#define TR_MOUNT_16                        6
+#define TR_VETERANM_14                     7
+#define TR_BATTLEG_15                      8
+#define TR_VETERANW_10                     9
 
 #endif //ZONE_R18_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r18.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

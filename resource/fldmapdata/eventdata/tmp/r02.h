@@ -13,12 +13,14 @@
 #define R02_TREE_01                        1
 #define TR_VETERANM_12                     2
 #define TR_TANPAN_25                       3
-#define TR_VETERANW_09                     4
+#define TR_MINI_20                         4
 #define TR_MINI_19                         5
 #define R02_BOY2_01                        6
 #define R02_BOY2_02                        7
 #define R02_GIRL2_01                       8
 #define R02_PIPE_01                        9
+#define TR_TANPAN_26                      10
+#define TR_VETERANW_09                    11
 
 #endif //ZONE_R02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

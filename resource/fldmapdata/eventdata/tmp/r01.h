@@ -11,6 +11,10 @@
 
 #define TR_BACKPACKERW_18                  0
 #define TR_BACKPACKERM_24                  1
+#define TR_RANGERW_19                      2
+#define TR_RANGERM_19                      3
+#define TR_ELITEM_30                       4
+#define TR_ELITEW_30                       5
 
 #endif //ZONE_R01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

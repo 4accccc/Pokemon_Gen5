@@ -28,6 +28,13 @@
 #define FLD_ITEM_37                        9
 #define FLD_ITEM_38                       10
 #define FLD_ITEM_39                       11
+#define TR_DOCTOR_10                      12
+#define TR_CLEANING_04                    13
+#define TR_WORKER2_31                     14
+#define TR_SCIENTISTW_11                  15
+#define TR_WORKER2_32                     16
+#define TR_SCIENTISTM_15                  17
+#define TR_CLEANING_05                    18
 
 #endif //ZONE_D11R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d11r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

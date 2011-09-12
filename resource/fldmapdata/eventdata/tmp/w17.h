@@ -9,6 +9,12 @@
 #ifndef ZONE_W17_EVC_H
 #define ZONE_W17_EVC_H
 
+#define TR_FISHING_25                      0
+#define TR_FISHING_24                      1
+#define TR_SWIMMERW_10                     2
+#define TR_SWIMMERM_11                     3
+#define TR_SWIMMERM_12                     4
+#define TR_SWIMMERW_11                     5
 
 #endif //ZONE_W17_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/w17.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
