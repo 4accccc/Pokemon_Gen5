@@ -35,8 +35,6 @@ extern const GFL_PROC_DATA PkwdSelectScreenProcData;
  */
 //=============================================================================
 
-#define POKEWOOD_SAVEDATA_MAX   ( 5 ) //ポケウッド録画データ最大数（＝キャンセル値）
-
 typedef enum {
   PKWD_SELECT_MODE_NORMAL = ( 0 ), // 上映する映画を選択
   PKWD_SELECT_MODE_DEL    = ( 1 ), // 削除する映画を選択

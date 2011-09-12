@@ -577,6 +577,7 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Exit( GFL_PROC *proc, int *seq, void
     BLINKPALANM_Exit( wk->blinkWork[i] );
   }
   
+  // ‘I‘ðŒ‹‰Ê‚Ì•\Ž¦
   OS_Printf("screen select result=%d\n", *wk->param->result );
 
   PkwdSelectScreen_ListObj_Del( wk );

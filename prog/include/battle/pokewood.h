@@ -10,8 +10,8 @@
 #pragma once
 
 /// ポケウッドシナリオ最大定義
-#define POKEWOOD_SENARIO_MAX  ( 48 )  ///< ポケウッドのシナリオ最大数
-
+#define POKEWOOD_SENARIO_MAX    ( 40 )  ///< ポケウッドのシナリオ最大数
+#define POKEWOOD_SAVEDATA_MAX   (  4 )  //ポケウッド録画データ最大数（＝キャンセル値）
 
 /// 作品ジャンル
 enum{

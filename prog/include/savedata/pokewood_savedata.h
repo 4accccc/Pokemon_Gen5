@@ -12,9 +12,9 @@
 #include "gamesystem/game_data.h"
 #include "battle/pokewood.h"
 
-#define POKEWOOD_BOXOFFICE_DATA_MAX   ( 40 )    ///< 記録として残す興行成績ランキングの数
-#define POKEWOOD_MYPOKE_NUM           (  6 )    ///< ポケモンアイコンで保存する自分の手持ちポケモンアイコンの数
-#define POKEWOOD_SHOWING_MAX          (  4 )    ///< 同時に上映する最大数
+#define POKEWOOD_BOXOFFICE_DATA_MAX   ( POKEWOOD_SENARIO_MAX )  ///< 記録として残す興行成績ランキングの数
+#define POKEWOOD_MYPOKE_NUM           (  6 )                    ///< ポケモンアイコンで保存する自分の手持ちポケモンアイコンの数
+#define POKEWOOD_SHOWING_MAX          ( POKEWOOD_SAVEDATA_MAX ) ///< 同時に上映する最大数
 
 /// ポケウッド情報取得関数用定義
 enum{
