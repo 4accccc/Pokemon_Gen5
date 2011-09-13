@@ -465,6 +465,8 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
   u32 ret_grade = 0;
   u32 ret_index = 0;
 
+  GF_ASSERT( want_spot < RESORT_SPOT_ID_MAX );
+
   for( i = 0; i < RESORT_BINARY_SPOT_ANSWER_MAX; i++ )
   {
     u16 type = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_TYPE + i*RESORT_BINARY_SPOT_ANSWER_NUM );
@@ -553,7 +555,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
 	    break;
 	
 	  default:
-	    GF_ASSERT(0);
+	    GF_ASSERT_MSG(0,"%d",type);
 	  case RESORT_SPOT_TYPE_NONE:
 	    is_good = FALSE;
 	    break;
@@ -624,7 +626,7 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
   const RESORT_BINARY_SHOP_DATA *cp_binary_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
   u32 next_exp;
 
-  u16 want_spot = RESORT_ABSTRUCT_DATA_GetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, NULL );
+  u16 want_spot = RESORT_ABSTRUCT_DATA_GetData( p_wk, RESORT_DATA_PARAM_WANT_SPOT, NULL );
   u16 visitor_sex = RESORT_ABSTRUCT_DATA_GetData( p_wk, RESORT_DATA_PARAM_SEX, NULL );
   BOOL is_celeb = FALSE;
   u32 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
