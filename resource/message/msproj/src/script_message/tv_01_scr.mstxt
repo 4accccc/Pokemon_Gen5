@@ -10852,28 +10852,25 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『やってまいりました！
-ポケモン　うんどうかい！！▼
-こんかいの　きょうぎは　みんな
+			<Text>しかい『ポケモン　うんどうかい！！
+こんかいの　きょうぎは　みんな▽
 だいすき　１００メートルそう　だ！▼
 おおっと……さっそく　あかぐみの
 ポケモンの　にゅうじょうです！▼
 じゃまするものは　けちらし　すすむ！
 ずつきうし　ポケモン　バッフロン！▼
 たいする　しろぐみは　おそろしき
-ちょうのうりょくの　つかいて▽
-ユンゲラーだ！▼
+ちょうのうりょくしゃ　ユンゲラーだ！▼
 さぁ　りょうしゃ　スタートちてんに
 つきました　それでは　いきますよ！▽
 よーい　どんッ！！▼
-おおっと　さっそくバッフロンが
+おおっと　さっそく　バッフロンが
 パワフルなダッシュで　かけぬけます！▼
 ユンゲラーせんしゅは……▼
 えっ！？　スタートちてんから
 うごきだすようすが　ありません！▼
-バッフロンせんしゅの　もうダッシュに
-しろはたを　あげてしまったのか？▽
-さぁ　ゴールは　もくぜんだ！▼
+バッフロンせんしゅ！
+もう　ゴールは　もくぜんだ！▼
 ……おおっ！？
 ユンゲラーせんしゅが　きえたあッ！▼
 これは……テレポーテーションだ！
@@ -10888,7 +10885,7 @@ SEE YOU SOON！</Text>
 ひぇええええええええっ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T01:51:53" />
+				Time="2011-09-13T03:17:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10896,9 +10893,8 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>司会『やってまいりました！
-ポケモン　運動会！！▼
-今回の　競技は　みんな
+			<Text>司会『ポケモン　運動会！！
+今回の　競技は　みんな▽
 大好き　１００メートル走だ！▼
 おおっと……さっそく　赤組の
 ポケモンの　入場です！▼
@@ -10914,9 +10910,8 @@ SEE YOU SOON！</Text>
 ユンゲラー選手は……▼
 えっ！？　スタート地点から
 動き出すが様子　ありません！▼
-バッフロン選手の　猛ダッシュに
-白旗を　あげてしまったのか？▽
-さぁ　ゴールは　目前だ！▼
+バッフロン選手！
+もう　ゴールは　目前だ！▼
 ……おおっ！？
 ユンゲラー選手が　消えたあッ！▼
 これは……テレポーテーションだ！
@@ -10931,7 +10926,7 @@ SEE YOU SOON！</Text>
 ひぇええええええええっ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T01:52:07" />
+				Time="2011-09-13T03:17:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10965,9 +10960,8 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『やってまいりました！
-ポケモン　うんどうかい！！▼
-なんと　こんかいは
+			<Text>しかい『ポケモン　うんどうかい！！
+なんと　こんかいは▽
 じゅうどうと　からての　たいけつ！▽
 いしゅかくとうぎせん　だ！▼
 じゅうどうスタイルで　たたかうのは
@@ -11000,7 +10994,7 @@ SEE YOU SOON！</Text>
 かいじょうより　おつたえしました！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T03:28:57" />
+				Time="2011-09-13T03:18:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11008,9 +11002,8 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>司会『やってまいりました！
-ポケモン　運動会！！▼
-なんと　今回は
+			<Text>司会『ポケモン　運動会！！
+なんと　今回は▽
 柔道と　空手の　対決！▽
 異種格闘技戦だ！▼
 柔道スタイルで　戦うのは
@@ -11041,7 +11034,7 @@ SEE YOU SOON！</Text>
 お伝えしました！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T03:34:17" />
+				Time="2011-09-13T03:18:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11075,9 +11068,8 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『やってまいりました！
-ポケモン　うんどうかい！！▼
-サザナミわん　いっしゅうレース！
+			<Text>しかい『ポケモン　うんどうかい！！
+サザナミわん　いっしゅうレース！▽
 こんかいは　すいえい　たいけつだ！▼
 あかぐみは　どうもうな
 さかなポケモン　バスラオ！▽
@@ -11109,7 +11101,7 @@ SEE YOU SOON！</Text>
 シッポウはくぶつかんまで　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:02:29" />
+				Time="2011-09-13T03:20:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11117,9 +11109,8 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>司会『やってまいりました！
-ポケモン　運動会！！▼
-サザナミ湾　一周レース！
+			<Text>司会『ポケモン　運動会！！
+サザナミ湾　一周レース！▽
 今回は　水泳対決だ！▼
 赤組は　どうもうな
 さかなポケモン　バスラオ！▽
@@ -11151,7 +11142,7 @@ SEE YOU SOON！</Text>
 シッポウ博物館まで　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:02:40" />
+				Time="2011-09-13T03:20:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11185,12 +11176,10 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『やってきました！
-ポケモン　うんどうかい！！▽
+			<Text>しかい『ポケモン　うんどうかい！！
 こんかいは　ほうがんなげ！▼
-あかぐみは　きたえぬかれた
-にくたいで　しんきろくを　めざす！▽
-ドテッコツ！▼
+あかぐみは
+きんにくもりもり　ドテッコツ！▼
 しろぐみは　なにやら　さくせんが
 あるようすの　ズルッグ！▼
 まずは　ドテッコツせんしゅ！
@@ -11221,7 +11210,7 @@ SEE YOU SOON！</Text>
 おつたえいたしました！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T05:52:19" />
+				Time="2011-09-13T03:21:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11229,11 +11218,10 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>司会『やってきました！
-ポケモン　運動会！！▽
+			<Text>司会『ポケモン　運動会！！
 今回は　砲丸投げ！▼
-赤組は　鍛え抜かれた　肉体で
-新記録を　目指す！　ドテッコツ！▼
+赤組は　筋肉もりもり
+ドテッコツ！▼
 白組は　なにやら　作戦が
 あるようすの　ズルッグ！▼
 まずは　ドテッコツ選手！
@@ -11264,7 +11252,7 @@ SEE YOU SOON！</Text>
 お伝えいたしました！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T05:52:26" />
+				Time="2011-09-13T03:22:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11298,9 +11286,8 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『やってきました！
-ポケモン　うんどうかい！！▼
-こんかいの　きょうぎは　ダンゴロを
+			<Text>しかい『ポケモン　うんどうかい！！
+こんかいの　きょうぎは　ダンゴロを▽
 つかった　でんとうきょうぎ▽
 ダンゴロボーリングだ！▼
 ルールは　かんたん　１０ほんの
@@ -11327,7 +11314,7 @@ SEE YOU SOON！</Text>
 おつたえしました！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T06:06:26" />
+				Time="2011-09-13T03:22:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11335,9 +11322,8 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>司会『やってきました！
-ポケモン　運動会！！▼
-今回の競技は　ダンゴロを　使った
+			<Text>司会『ポケモン　運動会！！
+今回の競技は　ダンゴロを　使った▽
 伝統競技　ダンゴロボーリングだ！▼
 ルールは　簡単　１０本の
 ピンを　ダンゴロを　転がして▽
@@ -11363,7 +11349,7 @@ SEE YOU SOON！</Text>
 お伝えしました！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T06:12:40" />
+				Time="2011-09-13T03:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11397,9 +11383,8 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『やってきました！
-ポケモン　うんどうかい！！▼
-こんかいは　おしあい　へしあい
+			<Text>しかい『ポケモン　うんどうかい！！
+こんかいは　おしあい　へしあい▽
 スモウで　しょうぶです！▼
 ひがしぃ！　もえる　ぶたポケモン
 チャオブーやまぁ！！▼
@@ -11423,7 +11408,7 @@ SEE YOU SOON！</Text>
 かいじょうより　おつたえしました！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T06:29:26" />
+				Time="2011-09-13T03:23:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11431,9 +11416,8 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>司会『やってきました！
-ポケモン　運動会！！▼
-今回は　おしあい　へしあい
+			<Text>司会『ポケモン　運動会！！
+今回は　おしあい　へしあい▽
 スモウで　勝負です！▼
 東ぃ！　燃える　ぶたポケモン
 チャオブー山ぁ！！▼
@@ -11456,7 +11440,7 @@ SEE YOU SOON！</Text>
 お伝えしました！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T06:32:23" />
+				Time="2011-09-13T03:23:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11490,9 +11474,8 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『やってきました！
-ポケモン　うんどうかい！！▼
-こんかいは　みなさん　おまちかね
+			<Text>しかい『ポケモン　うんどうかい！！
+こんかいは　みなさん　おまちかね▽
 ポケモンたっきゅう　せんしゅけんの▽
 けっしょうせんです！▼
 さぁ　でてきてもらいましょう！
@@ -11517,11 +11500,11 @@ SEE YOU SOON！</Text>
 ねむってしまいました！▼
 これは……ゴチルゼルせんしゅの
 ゆうしょうです！！▼
-バトルスタジアムとくせつ
-かいじょうより　おおくりしました！▼</Text>
+こちら　バトルスタジアムより
+おおくりしました！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:10:40" />
+				Time="2011-09-13T03:24:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11529,9 +11512,8 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>司会『やってきました！
-ポケモン　運動会！！▼
-今回は　みなさん　おまちかね
+			<Text>司会『ポケモン　運動会！！
+今回は　みなさん　おまちかね▽
 ポケモン卓球　選手権の▽
 決勝戦です！▼
 さぁ　出てきてもらいましょう！
@@ -11556,11 +11538,11 @@ SEE YOU SOON！</Text>
 眠ってしまいました！▼
 これは……ゴチルゼル選手の
 優勝です！！▼
-バトルスタジアム特設会場より
+バトルスタジアム　特設会場より
 お送りしました！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:10:44" />
+				Time="2011-09-13T03:24:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11594,9 +11576,8 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『やってきました！
-ポケモン　うんどうかい！！▼
-きょうは　サザナミシティより
+			<Text>しかい『ポケモン　うんどうかい！！
+きょうは　サザナミシティより▽
 ビーチバレーたいかいを▽
 おおくりいたします！▼
 すでに　チームガマガルと
@@ -11619,7 +11600,7 @@ SEE YOU SOON！</Text>
 ベロベロしないでくれぇー！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T07:03:49" />
+				Time="2011-09-13T03:24:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11627,9 +11608,8 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『やってきました！
-ポケモン　運動会！！▼
-今日は　サザナミシティより
+			<Text>しかい『ポケモン　運動会！！
+今日は　サザナミシティより▽
 ビーチバレー大会を▽
 お送りいたします！▼
 すでに　チームガマガルと
@@ -11652,7 +11632,7 @@ SEE YOU SOON！</Text>
 ベロベロしないでくれぇー！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T07:05:48" />
+				Time="2011-09-13T03:24:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11686,9 +11666,8 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『やってきました！
-ポケモン　うんどうかい！！▼
-きょうの　ウェイトリフティングに
+			<Text>しかい『ポケモン　うんどうかい！！
+きょうの　ウェイトリフティングに▽
 ちょうせんしてくれるのは▼
 もりもりの　きんにくで　おなじみの
 ドテッコツ！　それに▽
@@ -11718,7 +11697,7 @@ SEE YOU SOON！</Text>
 せいえんで　あふれています！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T07:32:30" />
+				Time="2011-09-13T03:25:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11726,9 +11705,8 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>司会『やってきました！
-ポケモン　運動会！！▼
-今日の　ウェイトリフティングに
+			<Text>司会『ポケモン　運動会！！
+今日の　ウェイトリフティングに▽
 挑戦してくれるのは▼
 もりもりの　筋肉で　おなじみの
 ドテッコツ！　それに▽
@@ -11758,7 +11736,7 @@ SEE YOU SOON！</Text>
 声援で　あふれています！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:15:44" />
+				Time="2011-09-13T03:25:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11792,9 +11770,8 @@ SEE YOU SOON！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『やってきました！
-ポケモン　うんどうかい！！▼
-ししょうであり　ボスの　キリキザンと
+			<Text>しかい『ポケモン　うんどうかい！！
+ししょうであり　ボスの　キリキザンと▽
 でしの　コマタナに　よる▽
 フェンシング　たいけつ！▼
 おとこには　のりこえなければ
@@ -11809,13 +11786,12 @@ SEE YOU SOON！</Text>
 さすがの　キリキザンせんしゅも
 おどろきを　かくせない　ようす！▼
 しかし　たいせいを　たてなおし
-おもいきり　きりあげ……▽
 コマタナの　けんを　はねとばした！▽
 しょうぶは　きまったか！？▼
 ……いや　キリキザンせんしゅは
 とつぜん　けんを　なげすてて▽
 さって……いってしまった？▼
-これは……どういうことだ……
+これは……どういうこと……
 コマタナの　じつりょくを　みとめ▽
 ボスのざを　ゆずった……▽
 という　ことでしょうか？▼
@@ -11827,7 +11803,7 @@ SEE YOU SOON！</Text>
 おまえだ　コマタナ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:22:02" />
+				Time="2011-09-13T03:27:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11835,9 +11811,8 @@ SEE YOU SOON！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『やってきました！
-ポケモン　運動会！！▼
-師匠であり　ボスの　キリキザンと
+			<Text>しかい『ポケモン　運動会！！
+師匠であり　ボスの　キリキザンと▽
 弟子の　コマタナに　よる▽
 フェンシング対決！▼
 男には　乗り越えなければ
@@ -11852,13 +11827,12 @@ SEE YOU SOON！</Text>
 さすがの　キリキザン選手も
 驚きを　かくせない　ようす！▼
 しかし　体勢を　たてなおし
-思い切り　切り上げ……▽
 コマタナの　剣を　跳ね飛ばした！▽
 勝負は　決まったか！？▼
 ……いや　キリキザン選手は
 とつぜん　剣を　投げ捨てて▽
 去って……行ってしまった？▼
-これは……どういうことだ……
+これは……どういうこと……
 コマタナの　実力を　認め▽
 ボスの座を　譲った……▽
 という　ことでしょうか？▼
@@ -11870,7 +11844,7 @@ SEE YOU SOON！</Text>
 おまえだ　コマタナ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:22:54" />
+				Time="2011-09-13T03:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12765,8 +12739,8 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-このばんぐみは　さまざまな
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+このばんぐみは　さまざまな▽
 もんだいを　かかえた　ポケモンたちと▽
 ねっけつブリーダー　ポールが▽
 なかよくなるまでを　えがいた▽
@@ -12788,7 +12762,7 @@ BEAUTIFULは　美しいという　意味
 じかい　おたのしみに！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T09:11:25" />
+				Time="2011-09-13T03:41:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12796,8 +12770,8 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-この番組は　様々な
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+この番組は　様々な▽
 問題を　かかえた　ポケモンたちと▽
 熱血ブリーダー　ポールが▽
 仲良くなるまでを　描いた▽
@@ -12819,7 +12793,7 @@ BEAUTIFULは　美しいという　意味
 次回　お楽しみに！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T08:45:23" />
+				Time="2011-09-13T03:41:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12853,13 +12827,8 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-このばんぐみは　さまざまな
-もんだいを　かかえた　ポケモンたちと▽
-ねっけつブリーダー　ポールが▽
-なかよくなるまでを　えがいた▽
-ドキュメンタリーばんぐみ　である▼
-おまたせしました！
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+おまたせしました！　こんかいは▽
 かみつく　ミネズミ　こうはんだ！▼
 きずだらけに　なりながら
 ミネズミと　せいかつする　ポール……▼
@@ -12890,7 +12859,7 @@ BEAUTIFULは　美しいという　意味
 うおおおおおおおおおおっ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:27:13" />
+				Time="2011-09-13T03:41:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12898,13 +12867,8 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-この番組は　様々な
-問題を　かかえた　ポケモンたちと▽
-熱血ブリーダー　ポールが▽
-仲良くなるまでを　描いた▽
-ドキュメンタリー番組である▼
-お待たせしました！
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+お待たせしました！　今回は▽
 かみつく　ミネズミ　後半だ！▼
 傷だらけに　なりながら
 ミネズミと　生活する　ポール……▼
@@ -12935,7 +12899,7 @@ BEAUTIFULは　美しいという　意味
 うおおおおおおおおおおっ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:27:03" />
+				Time="2011-09-13T03:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12969,15 +12933,15 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-このばんぐみは　さまざまな
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+このばんぐみは　さまざまな▽
 もんだいを　かかえた　ポケモンたちと▽
 ねっけつブリーダー　ポールが▽
 なかよくなるまでを　えがいた▽
 ドキュメンタリーばんぐみ　である▼
 きょうの　ポケモンは
 ししゅんきの　ドッコラー▼
-なにかにつけ　はんこうてきな
+かれは　なにかにつけ　はんこうてきな
 たいどを　みせて　トレーナーを▽
 こまらせているのだ……▼
 ポールが　ドッコラーに　あいにいくと
@@ -12996,7 +12960,7 @@ BEAUTIFULは　美しいという　意味
 じかい　おたのしみに！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T09:11:11" />
+				Time="2011-09-13T03:41:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13004,15 +12968,15 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-この番組は　様々な
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+この番組は　様々な▽
 問題を　かかえた　ポケモンたちと▽
 熱血ブリーダー　ポールが▽
 仲良くなるまでを　描いた▽
 ドキュメンタリー番組である▼
 今日の　ポケモンは
 思春期の　ドッコラー▼
-なにかにつけ　反抗的な
+かれは　なにかにつけ　反抗的な
 態度を　みせて　トレーナーを▽
 困らせているのだ……▼
 ポールが　ドッコラーに　会いにいくと
@@ -13031,7 +12995,7 @@ BEAUTIFULは　美しいという　意味
 次回　お楽しみに！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T09:14:47" />
+				Time="2011-09-13T03:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13065,13 +13029,8 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-このばんぐみは　さまざまな
-もんだいを　かかえた　ポケモンたちと▽
-ねっけつブリーダー　ポールが▽
-なかよくなるまでを　えがいた▽
-ドキュメンタリーばんぐみ　である▼
-おまたせしました！
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+おまたせしました！　こんかいは▽
 あおいうみと　ドッコラー　こうへんだ！▼
 はなしかけたところ　いきなり
 かくざいで　なぐられた　ポール！▽
@@ -13100,7 +13059,7 @@ BEAUTIFULは　美しいという　意味
 まんきつしようぜ！　またな！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T09:35:45" />
+				Time="2011-09-13T03:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13108,13 +13067,8 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-この番組は　様々な
-問題を　かかえた　ポケモンたちと▽
-熱血ブリーダー　ポールが▽
-仲良くなるまでを　描いた▽
-ドキュメンタリー番組である▼
-お待たせしました！
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+お待たせしました！　今回は▽
 青い海と　ドッコラー　後編だ！▼
 話しかけたところ　いきなり
 角材で　殴られた　ポール！▽
@@ -13143,7 +13097,7 @@ BEAUTIFULは　美しいという　意味
 満喫しようぜ！　またな！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T09:17:59" />
+				Time="2011-09-13T03:40:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13177,8 +13131,8 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-このばんぐみは　さまざまな
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+このばんぐみは　さまざまな▽
 もんだいを　かかえた　ポケモンたちと▽
 ねっけつブリーダー　ポールが▽
 なかよくなるまでを　えがいた▽
@@ -13205,7 +13159,7 @@ BEAUTIFULは　美しいという　意味
 じかい　おたのしみに！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:31:28" />
+				Time="2011-09-13T03:40:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13213,8 +13167,8 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-この番組は　様々な
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+この番組は　様々な▽
 問題を　かかえた　ポケモンたちと▽
 熱血ブリーダー　ポールが▽
 仲良くなるまでを　描いた▽
@@ -13241,7 +13195,7 @@ BEAUTIFULは　美しいという　意味
 次回　お楽しみに！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:31:22" />
+				Time="2011-09-13T03:40:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13275,13 +13229,8 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-このばんぐみは　さまざまな
-もんだいを　かかえた　ポケモンたちと▽
-ねっけつブリーダー　ポールが▽
-なかよくなるまでを　えがいた▽
-ドキュメンタリーばんぐみ　である▼
-おまたせしました！
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+おまたせしました！　こんかいは▽
 こいする　マッギョ　こうへんだ！▼
 しつれんで　おちこむ　マッギョを
 ぬまちに　つれだした　ポール！▽
@@ -13312,7 +13261,7 @@ BEAUTIFULは　美しいという　意味
 おしえられちまったよ……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:34:07" />
+				Time="2011-09-13T03:40:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13320,13 +13269,8 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-この番組は　様々な
-問題を　かかえた　ポケモンたちと▽
-熱血ブリーダー　ポールが▽
-仲良くなるまでを　描いた▽
-ドキュメンタリー番組である▼
-お待たせしました！
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+お待たせしました！　今回は▽
 恋する　マッギョ　後編だ！▼
 失恋で　落ち込む　マッギョを
 沼地に　連れ出した　ポール！▽
@@ -13357,7 +13301,7 @@ BEAUTIFULは　美しいという　意味
 教えられちまったよ……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:35:39" />
+				Time="2011-09-13T03:40:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13391,8 +13335,8 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-このばんぐみは　さまざまな
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+このばんぐみは　さまざまな▽
 もんだいを　かかえた　ポケモンたちと▽
 ねっけつブリーダー　ポールが▽
 なかよくなるまでを　えがいた▽
@@ -13419,7 +13363,7 @@ BEAUTIFULは　美しいという　意味
 じかいへと　つづく！　おたのしみに！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:38:46" />
+				Time="2011-09-13T03:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13427,8 +13371,8 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-この番組は　様々な
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+この番組は　様々な▽
 問題を　かかえた　ポケモンたちと▽
 熱血ブリーダー　ポールが▽
 仲良くなるまでを　描いた▽
@@ -13455,7 +13399,7 @@ BEAUTIFULは　美しいという　意味
 次回へと　つづく！　お楽しみに！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:38:59" />
+				Time="2011-09-13T03:40:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13489,13 +13433,8 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-このばんぐみは　さまざまな
-もんだいを　かかえた　ポケモンたちと▽
-ねっけつブリーダー　ポールが▽
-なかよくなるまでを　えがいた▽
-ドキュメンタリーばんぐみ　である▼
-おまたせしました！
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+おまたせしました！　こんかいは▽
 タブンネの　ほしいもの　こうへんだ！▼
 いえでした　タブンネを
 やっとのことで　みつけた　ポール！▼
@@ -13523,7 +13462,7 @@ BEAUTIFULは　美しいという　意味
 かいけつほうとは！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T10:45:22" />
+				Time="2011-09-13T03:40:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13531,13 +13470,8 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-この番組は　様々な
-問題を　かかえた　ポケモンたちと▽
-熱血ブリーダー　ポールが▽
-仲良くなるまでを　描いた▽
-ドキュメンタリー番組である▼
-お待たせしました！
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+お待たせしました！　今回は▽
 タブンネの　欲しいもの　後編だ！▼
 家出した　タブンネを
 やっとのことで　みつけた　ポール！▼
@@ -13564,7 +13498,7 @@ BEAUTIFULは　美しいという　意味
 ポールが導きだした　解決法とは！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-12T10:46:14" />
+				Time="2011-09-13T03:40:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13598,13 +13532,8 @@ BEAUTIFULは　美しいという　意味
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-このばんぐみは　さまざまな
-もんだいを　かかえた　ポケモンたちと▽
-ねっけつブリーダー　ポールが▽
-なかよくなるまでを　えがいた▽
-ドキュメンタリーばんぐみ　である▼
-タブンネの　ほしいもの……
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+こんかいは　タブンネの　ほしいもの……▽
 いよいよ　かんけつへん！▼
 おおごえを　だして　タブンネに
 にげられてしまった　ポールは▽
@@ -13634,7 +13563,7 @@ BEAUTIFULは　美しいという　意味
 トレーナーの　みんな！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:42:29" />
+				Time="2011-09-13T03:39:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13642,13 +13571,8 @@ BEAUTIFULは　美しいという　意味
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナレーター『やんちゃＤＥブリーダー！▼
-この番組は　様々な
-問題を　かかえた　ポケモンたちと▽
-熱血ブリーダー　ポールが▽
-仲良くなるまでを　描いた▽
-ドキュメンタリー番組である▼
-タブンネの　欲しいもの……
+			<Text>ナレーター『やんちゃＤＥブリーダー！
+今回は　タブンネの　欲しいもの……▽
 いよいよ　完結編！▼
 大声を　だして　タブンネに
 逃げられてしまった　ポールは▽
@@ -13677,7 +13601,7 @@ BEAUTIFULは　美しいという　意味
 トレーナーの　みんな！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-09-13T02:43:56" />
+				Time="2011-09-13T03:39:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
