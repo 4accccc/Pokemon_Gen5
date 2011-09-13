@@ -9,6 +9,7 @@
 #ifndef ZONE_C14R0201_EVC_H
 #define ZONE_C14R0201_EVC_H
 
+#define C14R0201_BADMAN_01                 0
 
 #endif //ZONE_C14R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c14r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

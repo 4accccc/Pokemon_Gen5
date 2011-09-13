@@ -420,6 +420,36 @@ INIT_EVENT_START  ev_init_gameclear_script
     $WK_SCENE_D26_SPPOKE3_01 = 1
   ENDIF
 
+  //ウルガモス未捕獲時の復活処理
+  IF FLAG_ON( FV_D04R2301_POKE13_01 ) && FLAG_OFF( FE_D04R2301_POKE13_GET_01 ) THEN
+    //OBJを消していて、捕まえていなければ復活させる
+    _FLAG_RESET( FV_D04R2301_POKE13_01 )
+  ENDIF
+
+  //レジアイス未捕獲時の復活処理
+  IF FLAG_ON( FV_D29R0401_POKE1_01 ) && FLAG_OFF( FE_D29R0401_POKE1_GET_01 ) THEN
+    //OBJを消していて、捕まえていなければ復活させる
+    _FLAG_RESET( FV_D29R0401_POKE1_01 )
+  ENDIF
+
+  //レジロック未捕獲時の復活処理
+  IF FLAG_ON( FV_D29R0401_POKE2_01 ) && FLAG_OFF( FE_D29R0401_POKE2_GET_01 ) THEN
+    //OBJを消していて、捕まえていなければ復活させる
+    _FLAG_RESET( FV_D29R0401_POKE2_01 )
+  ENDIF
+
+  //レジスチル未捕獲時の復活処理
+  IF FLAG_ON( FV_D29R0401_POKE3_01 ) && FLAG_OFF( FE_D29R0401_POKE3_GET_01 ) THEN
+    //OBJを消していて、捕まえていなければ復活させる
+    _FLAG_RESET( FV_D29R0401_POKE3_01 )
+  ENDIF
+
+  //レジギガス未捕獲時の復活処理
+  IF FLAG_ON( FV_D07R0601_POKE4_01 ) && FLAG_OFF( FE_D07R0601_POKE4_GET_01 ) THEN
+    //OBJを消していて、捕まえていなければ復活させる
+    _FLAG_RESET( FV_D07R0601_POKE4_01 )
+  ENDIF
+
 
 }
 INIT_EVENT_END

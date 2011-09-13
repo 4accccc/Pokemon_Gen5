@@ -131,7 +131,7 @@ _ANIME_LABEL  anm_c09r0601_walk_up_01
 //でんどういり：マシンの前に移動
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_c09r0601_walk_up_02
-  _ANIME_DATA AC_WALK_U_8F,9
+  _ANIME_DATA AC_WALK_U_8F,12
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------

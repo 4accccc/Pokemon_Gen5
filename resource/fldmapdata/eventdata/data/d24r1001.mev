@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/25 18:24:31
+#save date:2011/09/13 11:08:43
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d24r1001.wms
 #SECTION START:OBJ_EVENT
@@ -16,7 +16,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d24r1001.wms
 #ID name
 D24R1001_POKE485_01
 #OBJ CODE Number
-TPOKE_0528
+POKE54
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number

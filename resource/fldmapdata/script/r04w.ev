@@ -367,7 +367,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r04w_poke628_01
 
-  _TALK_OBJ_START()
+  _TALK_START_SE_PLAY()
 
   //ウォーグル：わっわっわっわ！！
   _VOICE_PLAY( MONSNO_567, 0 ) 

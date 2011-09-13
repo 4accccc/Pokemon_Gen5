@@ -107,7 +107,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_d24r0401_poke485_01
 
-  _TALK_OBJ_START()
+  _TALK_START_SE_PLAY()
 
   //ヒードラン：ごぼぼっ　ごぼぼぼ！
   _VOICE_PLAY( MONSNO_485, 0 ) 

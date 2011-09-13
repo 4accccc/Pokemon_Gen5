@@ -367,7 +367,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r04_poke630_01
 
-  _TALK_OBJ_START()
+  _TALK_START_SE_PLAY()
 
   //バルジーナ：くぉーん！！
   _VOICE_PLAY( MONSNO_633, 0 ) 

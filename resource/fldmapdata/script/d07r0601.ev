@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d07r0601.h"
-  //.include  "d07r0601.h"
+  .include  "d07r0601.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +21,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d07r0601
+_EVENT_DATA   ev_d07r0601_poke4_01
+_EVENT_DATA   ev_bg_d07r0601_01
 _EVENT_DATA_END
 
 
@@ -30,9 +33,109 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  レジギガス：話しかけ（戦闘／倒した場合は殿堂入り後復帰）  */
 /**************************************************************/
-ev_d07r0601:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_d07r0601_poke4_01
+
+  //ローカルワーク定義
+  DEFINE_LOCAL KOORI_NUM  // 手持ちレジアイスの数
+  DEFINE_LOCAL IWA_NUM    // 手持ちレジロックの数
+  DEFINE_LOCAL HAGANE_NUM // 手持ちレジスチルの数
+
+  _TALK_START_SE_PLAY()
+
+  //手持ちにレジアイスはいるか
+  _GET_PARTY_POKE_COUNT_BY_MONSNO( MONSNO_378, KOORI_NUM )
+
+  //手持ちにレジロックはいるか
+  _GET_PARTY_POKE_COUNT_BY_MONSNO( MONSNO_377, IWA_NUM )
+
+  //手持ちにレジスチルはいるか
+  _GET_PARTY_POKE_COUNT_BY_MONSNO( MONSNO_379, HAGANE_NUM )
+
+  //手持ちにレジアイス・レジロック・レジスチルはいない
+  IF $KOORI_NUM == 0 || $IWA_NUM == 0 || $HAGANE_NUM == 0 THEN
+
+    //システム：きょだいな　ちからを　かんじさせる
+    _SYSWIN_MSG( msg_d07r0601_poke4_01, POS_DOWN )
+    _SYSWIN_CLOSE()
+
+  ELSE
+
+    //レジギガス戦へ
+    _CALL ev_gigasu_01
+
+  ENDIF
+
+EVENT_END
+
+
+//レジギガス戦
+ev_gigasu_01:
+
+  //システム：きょだいな　ちからを　かんじさせる
+  _SYSWIN_MSG( msg_d07r0601_poke4_02, POS_DOWN )
+  _SYSWIN_CLOSE()
+
+  //レジギガス：……ズッ　ズッ！！
+  _VOICE_PLAY( MONSNO_486, 0 ) 
+  _GIZAPLAINWIN_MSG_POS( msg_d07r0601_poke4_03, POS_DOWN )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  // Lv.70 レジギガス
+  _WILD_BTL_SET_LEGEND( MONSNO_486, 70 )
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //==================================//
+    //レジギガス非表示
+    _FLAG_SET( FV_D07R0601_POKE4_01 )
+    //==================================//
+    _OBJ_DEL( D07R0601_POKE4_01 )   //レジギガスを消す
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //レジギガスを捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+
+    //==================================//
+    //レジギガスを捕獲した
+    _FLAG_SET( FE_D07R0601_POKE4_GET_01 )
+    //==================================//
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
+
+    //システム：レジギガスは　こうどうの
+    _SYSWIN_MSG( msg_d07r0601_poke4_04, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+
+  ENDSWITCH
+
+_RET
+
+/**************************************************************/
+/*  文字                                                      */
+/**************************************************************/
+EVENT_START  ev_bg_d07r0601_01    //【仮】BG設置場所が未定
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：かかれている　もじを　よんだ……
+  _PLAINWIN_MSG_DOWN( msg_d07r0601_poke4_05 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+
+EVENT_END
+
 

@@ -9,6 +9,7 @@
 #ifndef ZONE_D04R2301_EVC_H
 #define ZONE_D04R2301_EVC_H
 
+#define D04R2301_POKE13_01                 0
 
 #endif //ZONE_D04R2301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r2301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

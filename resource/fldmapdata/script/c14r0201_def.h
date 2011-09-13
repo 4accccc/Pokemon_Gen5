@@ -5,6 +5,6 @@
 #define _C14R0201_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C14R0201 (1)
+#define SCRID_C14R0201_BADMAN_01 (1)
 
 #endif //_C14R0201_DEF_H_
