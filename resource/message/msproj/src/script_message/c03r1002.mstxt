@@ -58,19 +58,16 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03r1002_mountain_01"
+		Label="msg_c03r1002_musicianw_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むかしのひとは　いいことを　いった
-「ねるこは　そだつ！」▼
-そう！　ねむるの　わざを　つかうと
-ポケモンが　ねむって　かいふくする！▼
-すでに　わたしの　ポケモンには
-おぼえさせたので　きみに　ゆずろう！▼</Text>
+			<Text>あんた　ねむれてる？▼
+ねむらないと　かいふく　しないよ▼
+とゆーわけで　これ　あげる！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:17:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -78,15 +75,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>昔の人は　いいことを　いった
-「寝る子は　育つ！」▼
-そう！　ねむるの　技を　使うと
-ポケモンが　眠って　回復する！▼
-すでに　わたしの　ポケモンには
-覚えさせたので　きみに　譲ろう！▼</Text>
+			<Text>あんた　眠れてる？▼
+眠らないと　回復しないよ▼
+とゆーわけで　これ　あげる！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -94,19 +88,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♀
 ・アイテム入手処理
 　No371「ねむる」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:57:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MOUNTAIN</Text>
+			<Text>MUSICIANW</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:56:47" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -124,18 +118,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03r1002_mountain_02"
+		Label="msg_c03r1002_musicianw_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねても　すぐ　めざめる
-きのみ　ってのが　あるらしい▼
-それを　もたせておけば
-ねむって　かいふくして▽
-すぐに　おきて……　というわけだ！</Text>
+			<Text>ポケモンに　きのみの
+カゴのみを　もたせておくの！▼
+そうすりゃ　ねむって　げんきになって
+すぐに　めざめて……ってわけ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:58:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -143,14 +136,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>寝ても　すぐ　目覚める
-木の実ってのが　あるらしい▼
-それを　持たせておけば
-眠って　回復して▽
-すぐに　起きて……　というわけだ！</Text>
+			<Text>ポケモンに　きのみの
+カゴのみを　持たせておくの！▼
+そうすりゃ　眠って　元気になって
+すぐに　めざめて……ってわけ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:17:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -158,18 +150,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♀
 ・アイテム入手後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:57:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MOUNTAIN</Text>
+			<Text>MUSICIANW</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:56:49" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -181,6 +173,129 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1002_poke31_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワオーン！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:58:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:58:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワオーン！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:58:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:58:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:55:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE31
+ポケモン・ハーデリア</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:56:24" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1002_mountain_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:33:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:33:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:33:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:33:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:33:34" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1002_mountain_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:33:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:33:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:33:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:33:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:33:35" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

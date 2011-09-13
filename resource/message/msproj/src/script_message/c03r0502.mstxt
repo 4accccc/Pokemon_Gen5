@@ -2,6 +2,367 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c03r0502_businessman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたらしい　オフィスには
+ポケモンが　いてほしいな……▼
+だけど　かのじょの　まえで
+そんなこと　いえるわけないよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:33:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:41:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>新しい　オフィスには
+ポケモンが　いてほしいな……▼
+だけど　彼女の　前で
+そんなこと　いえるわけないよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:33:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:41:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:28:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSINESSMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:45:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0502_businessman_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モンスタボールが　できるまえからも
+ひとと　ポケモンは　いっしょで▽
+これからも　ずっと　そうなのかな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:34:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:18:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モンスタボールが　できるまえからも
+ひとと　ポケモンは　いっしょで▽
+これからも　ずっと　そうなのかな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:34:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:18:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア後
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:28:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSINESSMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:18:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0502_policeman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆくえふめいの　ポケモン……▼
+もし　はんにんが
+プラズマだん　だとしても▽
+どこにいるのか　わからんのだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:32:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:42:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>行方不明の　ポケモン……▼
+もし　犯人が
+プラズマ団　だとしても▽
+どこにいるのか　わからんのだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:34:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:42:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:28:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POLICEMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:29:59" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0502_policeman_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>にがそうとした　ポケモンが
+トレーナーの　もとに　もどる……▼
+きいたことは　あるが
+じっさいに　みると　むねをうたれるね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:35:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:18:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>逃がそうとした　ポケモンが
+トレーナーの　もとに　戻る……▼
+きいたことは　あるが
+実際に　みると　胸を打たれるね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:35:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:18:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア後
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:28:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POLICEMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:30:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0502_ol_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしの　ポケモン……
+どこに　きえたのかしら……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:17:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:41:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしの　ポケモン……
+どこに　消えたのかしら……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:17:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:41:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・クリア前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:42:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OL</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:42:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0502_ol_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしの　ポケモン！
+ズルッグが　もどってきたの……！▼
+プラズマだんに
+つかまって　いたのか……▼
+はぐれていたのが
+じりきで　もどってきたのか……▽
+わからないけど　とにかく　サイコー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:12:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:42:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしの　ポケモン！
+ズルッグが　戻ってきたの……！▼
+プラズマ団に
+捕まって　いたのか……▼
+はぐれていたのが
+自力で　戻ってきたのか……▽
+わからないけど　とにかく　サイコー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:17:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:42:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・クリア後
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:42:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OL</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T08:42:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0502_poke38_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>グッルッズウ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:12:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:12:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グッルッズウ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:12:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:12:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア後に登場
+・あわせてポケモンの鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:12:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE38
+ポケモン・ズルッグ
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T09:11:13" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c03r0502_mrlock_01"
 		Style="Large">
 		<LanguageCell

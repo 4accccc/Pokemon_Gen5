@@ -793,10 +793,11 @@
 			Language="JPN">
 			<Comment>♂：クリア後
 ・アジト船４回目
-・アイテム入手処理</Comment>
+・アイテム入手処理
+　No001「マスターボール」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:47:17" />
+				Time="2011-09-13T08:54:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
