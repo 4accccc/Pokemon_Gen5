@@ -157,4 +157,393 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c02r0701_breederw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あっ　あのう……
+トレーナーさん▼
+そだてやさんで　みつかった
+ポケモンの　タマゴ　なんですけど▽
+あなた　そだててみませんか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:06:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あっ　あのう……
+トレーナーさん▼
+そだてやさんで　みつかった
+ポケモンの　タマゴ　なんですけど▽
+あなた　そだててみませんか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:07:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン入手前（1回目）
+・はい/いいえの選択肢表示
+　はい→breederw_05
+　はい選択、手持ち一杯→breederw_03
+　いいえ→breederw_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:07:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:01:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0701_breederw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そだてやさんで　みつかった
+ポケモンの　タマゴ　なんですけど▽
+あなた　そだててみませんか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:03:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そだてやさんで　みつかった
+ポケモンの　タマゴ　なんですけど▽
+あなた　そだててみませんか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:07:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン入手前（２回目）
+・はい/いいえの選択肢表示
+　はい→breederw_05
+　はい選択、手持ち一杯→breederw_03
+　いいえ→breederw_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:07:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:01:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0701_breederw_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あのう……▼
+ポケモンが　いっぱいで
+タマゴ　うけとれないですよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:04:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あのう……▼
+ポケモンが　いっぱいで
+タマゴ　うけとれないですよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:07:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択、手持ち一杯</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:01:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:01:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0701_breederw_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……あっ　はい
+わかりました▼
+あのう　タマゴを　そだてたくなったら
+また　はなしかけてくださいね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:04:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……あっ　はい
+わかりました▼
+あのう　タマゴを　そだてたくなったら
+また　はなしかけてくださいね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:07:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択
+・このメッセージ表示後は、breederw_02から</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:07:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:01:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0701_breederw_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あっ　はい！▼
+では　この　タマゴを
+よろしく　おねがい　します！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:05:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あっ　はい！▼
+では　この　タマゴを
+よろしく　おねがい　します！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:07:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択
+・ポケモン入手処理
+　No440「ピンプク」のタマゴ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:05:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:01:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0701_breederw_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンの　タマゴ　ですけれど
+げんきな　ポケモンと▽
+いっしょに　しておくと　いいそうです▼
+あっ　はい……　わかりやすくいえば
+タマゴを　つれあるくって　ことです▼
+そうですね　３ばんどうろに
+そだてやさんが　あるので▽
+そこで　くわしいことが　きけるかも</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:07:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンの　タマゴ　ですけれど
+げんきな　ポケモンと▽
+いっしょに　しておくと　いいそうです▼
+あっ　はい……　わかりやすくいえば
+タマゴを　つれあるくって　ことです▼
+そうですね　３ばんどうろに
+そだてやさんが　あるので▽
+そこで　くわしいことが　きけるかも</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:07:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン入手後、自動で表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:01:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:01:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0701_breederw_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]は
+タマゴを　もらった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]は
+タマゴを　もらった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:00:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:03:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:01:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
