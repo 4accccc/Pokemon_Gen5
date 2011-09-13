@@ -737,7 +737,9 @@
 #define	TRID_NINJA_06   ( 724 ) 
 #define	TRID_NINJA_07   ( 725 ) 
 #define	TRID_SWPLAZMAM_34   ( 726 ) 
-#define TRID_MAX  ( 727 )
+#define	TRID_OL_09   ( 727 ) 
+#define	TRID_BUSINESS2_03   ( 728 ) 
+#define TRID_MAX  ( 729 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;

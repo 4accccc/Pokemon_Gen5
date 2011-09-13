@@ -4080,6 +4080,16 @@
 		<language name="JPN_KANJI" width="216">したっぱ</language>
 	</row>
 
+	<row id="ol_09">
+		<language name="JPN" width="216">サトコ</language>
+		<language name="JPN_KANJI" width="216">サトコ</language>
+	</row>
+
+	<row id="business2_03">
+		<language name="JPN" width="216">シゲオ</language>
+		<language name="JPN_KANJI" width="216">シゲオ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
