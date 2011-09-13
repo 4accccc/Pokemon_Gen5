@@ -213,4 +213,850 @@
 				Time="2011-08-12T10:35:11" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_itemboy_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>わーんわーん！
+[Name:Item ]が　ほしーよー▽
+ちょうだいよー</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:51:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:51:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わーんわーん！
+[Name:Item ]が　ほしーよー▽
+ちょうだいよー</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>→ＹＥＳ／ＮＯ
+
+タグ0：道具名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:40:48" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>→ＹＥＳ／ＮＯ
+
+タグ0：道具名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_itemboy_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>けちー！　けちんぼ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:52:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:52:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>けちー！　けちんぼ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＯ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:53:39" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ＮＯ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_itemboy_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>もってないじゃん！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:53:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:53:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もってないじゃん！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>指定どうぐ未所持</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:53:50" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>指定どうぐ未所持</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_itemboy_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>やったー！
+ありがとう！！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:54:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:53:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やったー！
+ありがとう！！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＹＥＳ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:54:17" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ＹＥＳ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_itemboy_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]を　わたしてあげた▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:55:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:54:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]を　わたしてあげた▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムウインドウ
+
+タグ0：道具名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:56:01" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>システムウインドウ
+
+タグ0：道具名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_itemboy_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>たいせつにするね！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:55:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:54:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たいせつにするね！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:55:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:55:51" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:55:53" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは！
+しゅっちょう　フレンドリィショップです！▼
+ただいま　タイムセールちゅう！
+[Name:Item ]を　[Digit:6digits Idx="1" ]えんで▽
+こうにゅう　しませんか？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:53:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:57:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは！
+しゅっちょう　フレンドリィショップです！▼
+ただいま　タイムセールちゅう！
+[Name:Item ]を　[Digit:6digits Idx="1" ]えんで▽
+こうにゅう　しませんか？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:53:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>
+タグ0：道具名
+タグ1：価格</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:41:22" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>
+タグ0：道具名
+タグ1：価格</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop01_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>またの　ごりようを
+おまちして　おりまーす！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:52:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T02:58:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>またの　ごりようを
+おまちして　おりまーす！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:52:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＯ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:44:28" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ＮＯ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop01_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらら
+おかねが　たりませんよ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:53:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:41:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらら
+おかねが　たりませんよ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:53:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>所持金不足</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:44:44" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>所持金不足</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop01_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらあら
+それいじょう　もてませんよ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:53:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:41:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらあら
+それいじょう　もてませんよ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:54:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>指定どうぐＭＡＸ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:44:53" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>指定どうぐＭＡＸ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop01_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>まいどありー！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:54:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:42:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まいどありー！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:54:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＹＥＳ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:44:57" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ＹＥＳ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop01_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]を
+[Digit:6digits Idx="1" ]えんで　かいました▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:43:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:43:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]を
+[Digit:6digits Idx="1" ]えんで　かいました▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムウインドウ
+
+タグ0：道具名
+タグ1：価格</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:44:05" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>システムウインドウ
+
+タグ0：道具名
+タグ1：価格</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop01_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんごとも　フレンドリィショップを
+よろしく　おねがいしまーす！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:55:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:44:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんごとも　フレンドリィショップを
+よろしく　おねがいしまーす！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:55:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:45:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:55:58" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:55:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop02_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>フフフ……
+[Name:Item ]を　[Digit:6digits Idx="1" ]えんで
+こうにゅう　しないかね？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フフフ……
+[Name:Item ]を　[Digit:6digits Idx="1" ]えんで
+こうにゅう　しないかね？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>サングラスから買い物
+
+タグ0：道具名
+タグ1：価格</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:51:33" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>サングラスから買い物
+
+タグ0：道具名
+タグ1：価格</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:51:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop02_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ざんねん……
+またきなよ▽
+ウチは　じか　だからね</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ざんねん……
+またきなよ▽
+ウチは　じか　だからね</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＯ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ＮＯ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop02_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>かねが　たりないねぇ……</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かねが　たりないねぇ……</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>所持金不足</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>所持金不足</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop02_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>オイオイ　もちすぎだよ</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オイオイ　もちすぎだよ</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>指定どうぐＭＡＸ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>指定どうぐＭＡＸ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop02_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>フフフ……
+いい　はんだんだ▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フフフ……
+いい　はんだんだ▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＹＥＳ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ＹＥＳ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop02_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]を
+[Digit:6digits Idx="1" ]えんで　かいました▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]を
+[Digit:6digits Idx="1" ]えんで　かいました▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムウインドウ
+
+タグ0：道具名
+タグ1：価格</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>システムウインドウ
+
+タグ0：道具名
+タグ1：価格</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_shop02_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>それじゃあ　またな▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:56:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それじゃあ　またな▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:56:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:49:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:55:56" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-13T03:55:57" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
