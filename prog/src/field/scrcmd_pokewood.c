@@ -480,6 +480,8 @@ VMCMD_RESULT EvCmdPokewoodCheckMovieEnable( VMHANDLE * core, void * wk )
 //-----------------------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：ポケウッド録画データの評価を取得
+ *
+ * @todo  STARNGE ENDが未実装
  */
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdPokewoodGetMovieValue( VMHANDLE * core, void * wk )
@@ -488,7 +490,14 @@ VMCMD_RESULT EvCmdPokewoodGetMovieValue( VMHANDLE * core, void * wk )
   u16   rec_id = SCRCMD_GetVMWorkValue( core, work );
   u16 * ret_wk = SCRCMD_GetVMWork( core, work );
 
-  *ret_wk = getRecordInfo( wk, rec_id, POKEWOOD_REC_PARAM_SUCCESS, NULL );
+  if ( getRecordInfo( wk, rec_id, POKEWOOD_REC_PARAM_SUCCESS, NULL ) == TRUE )
+  {
+    *ret_wk = SCR_PKWD_RESULT_GOOD_END;
+  }
+  else
+  {
+    *ret_wk = SCR_PKWD_RESULT_BAD_END;
+  }
   OS_Printf("EvCmdPokewoodGetMovieValue( rec_id = %d, result = %d\n", rec_id, *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
@@ -504,12 +513,12 @@ VMCMD_RESULT EvCmdPokewoodSetScenarioName( VMHANDLE * core, void * wk )
   SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
   WORDSET*     wordset = SCRIPT_GetWordSet( sc );
   u8               idx = VMGetU8(core);
-  u16           rec_id = SCRCMD_GetVMWorkValue( core, work );
+  u16           sc_no = SCRCMD_GetVMWorkValue( core, work );
   HEAPID        heapID = SCRCMD_WORK_GetHeapID( work );
 
   u32           msg_id;
   
-  msg_id = pw_title_00 + getRecordInfo( wk, rec_id, POKEWOOD_REC_PARAM_SENARIO, NULL );
+  msg_id = pw_title_00 + sc_no;
   {
     GFL_MSGDATA     *man;
     STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
@@ -521,7 +530,7 @@ VMCMD_RESULT EvCmdPokewoodSetScenarioName( VMHANDLE * core, void * wk )
     }
     WORDSET_RegisterWord( wordset, idx, strbuf, PM_NEUTRAL, TRUE, PM_LANG );
   }
-  OS_Printf("EvCmdPokewoodSetScenarioName( rec_id = %d, scenario = %d\n", rec_id, msg_id );
+  OS_Printf("EvCmdPokewoodSetScenarioName( scenario = %d, msg_id = %d\n", sc_no, msg_id );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -577,6 +586,31 @@ VMCMD_RESULT EvCmdPokewoodGetMoviesCount( VMHANDLE * core, void * wk )
 
 //-----------------------------------------------------------------------------
 /**
+ * @brief スクリプトコマンド：ポケウッド　新着台本のチェック
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodCheckNewScenario( VMHANDLE * core, void * wk )
+{
+  POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
+  SCRCMD_WORK*    work = wk;
+  u16 sc_no       = SCRCMD_GetVMWorkValue( core, work );
+  u16 * msg_type  = SCRCMD_GetVMWork( core, work );
+  u16 * ret_wk    = SCRCMD_GetVMWork( core, work );
+
+  *ret_wk = FALSE;
+  if ( POKEWOOD_SAVEDATA_GetPokewoodFlag( pkwdsave, PWSV_TYPE_SENARIO_OPEN, sc_no ) == TRUE
+      && POKEWOOD_SAVEDATA_GetPokewoodFlag( pkwdsave, PWSV_TYPE_SENARIO_ANNOUNCED, sc_no ) == FALSE )
+  {
+    POKEWOOD_SAVEDATA_SetPokewoodFlag( pkwdsave, PWSV_TYPE_SENARIO_ANNOUNCED, sc_no );
+    *msg_type = SCR_PKWD_RESULT_GOOD_END; //仮：実際にはシナリオ情報のテーブルから
+    *ret_wk = TRUE;
+  }
+  OS_Printf("EvCmdPokewoodCheckNewScenario(%d) --> %d, %d\n", sc_no, *msg_type, *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
  * @brief スクリプトコマンド：ポケウッド　スターランク更新チェック
  */
 //-----------------------------------------------------------------------------
@@ -587,12 +621,44 @@ VMCMD_RESULT EvCmdPokewoodCheckNewStarRank( VMHANDLE * core, void * wk )
   POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
   u32 point = POKEWOOD_SAVEDATA_GetStarPoint( pkwdsave );
   u32 rank = POKEWOOD_SAVEDATA_CalcStarPoint2StarRank( point );
+
   *ret_wk = POKEWOOD_SAVEDATA_GetStarRankAnnounced( pkwdsave, rank );
   POKEWOOD_SAVEDATA_SetStarRankAnnounced( pkwdsave, rank, TRUE );
 
   OS_Printf("EvCmdPokewoodCheckNewStarRank(%d-->%d) == %d\n", point, rank, *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
+//-----------------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ポケウッド 初上映データかどうかのチェック
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodIsNewlyReleaseMovie( VMHANDLE * core, void * wk )
+{
+  POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 play_id = SCRCMD_GetVMWorkValue( core, wk );
+
+  *ret_wk = POKEWOOD_SAVEDATA_GetPokewoodPlayedFlag( pkwdsave, play_id );
+  POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( pkwdsave, play_id );
+  TAMADA_Printf("EvCmdPokewoodIsNewlyReleaseMovie(%d)-->%d\n", play_id, *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+//-----------------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ポケウッド　出演ポケモンがレンタルかどうかチェック
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodIsRentalPokeMovie( VMHANDLE * core, void * wk )
+{
+  POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 play_id = SCRCMD_GetVMWorkValue( core, wk );
+
+  *ret_wk = TRUE;  //仮
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //-----------------------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：ポケウッド　スタジオの動作モデルコードを取得する
@@ -612,7 +678,6 @@ VMCMD_RESULT EvCmdPokewoodSetStudioMMdl( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-
 #if 0
 //-----------------------------------------------------------------------------
 /**
@@ -627,10 +692,10 @@ VMCMD_RESULT EvCmdPokewoodSetScenarioName( VMHANDLE * core, void * wk )
 
 //-----------------------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：ポケウッド
+ * @brief スクリプトコマンド：ポケウッド  映画をセーブ
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdPokewoodCopyMovie( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdPokewoodSaveMovie( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK * work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK * scw  = SCRCMD_WORK_GetScriptWork( work );

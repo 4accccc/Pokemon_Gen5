@@ -15008,6 +15008,8 @@
 //--------------------------------------------------------------
 /**
  * @brief ポケウッド：上映データ選択
+ * @param[in]   mode      アプリのモード(script_def.hのSCR_PKWD_SELECT_MODE_を参照）
+ * @param[out]  rec_pos   選択した場所
  */
 //--------------------------------------------------------------
 #define _PKWD_SELECT_MOVIE( mode, rec_pos )  \
@@ -15020,14 +15022,15 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ポケウッド：映画をコピー（上映可能状態にする）
+ * @brief ポケウッド：映画をセーブ（上映可能にする）
+ * @param[in] rec_pos   セーブする場所
  */
 //--------------------------------------------------------------
-#define _PKWD_COPY_MOVIE( rec_pos ) \
-    _ASM_PKWD_COPY_MOVIE rec_pos
+#define _PKWD_SAVE_MOVIE( rec_pos ) \
+    _ASM_PKWD_SAVE_MOVIE rec_pos
 
-    .macro  _ASM_PKWD_COPY_MOVIE rec_pos
-    .short  EV_SEQ_PKWD_COPY_MOVIE
+    .macro  _ASM_PKWD_SAVE_MOVIE rec_pos
+    .short  EV_SEQ_PKWD_SAVE_MOVIE
     .short  \rec_pos
     .endm
 
@@ -15089,7 +15092,27 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief ポケウッド：新着シナリオのチェック
+ * @param[in]   sc_no
+ * @param[out]  msg_type
+ * @param[out]  ret_wk
+ */
+//--------------------------------------------------------------
+#define _PKWD_CHECK_NEW_SCENARIO( sc_no, msg_type, ret_wk ) \
+    _ASM_PKWD_CHECK_NEW_SCENARIO sc_no, msg_type, ret_wk
+
+    .macro  _ASM_PKWD_CHECK_NEW_SCENARIO sc_no, msg_type, ret_wk
+    .short  EV_SEQ_PKWD_CHECK_NEW_SCENARIO
+    .short  \sc_no
+    .short  \msg_type
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief ポケウッド：スターランクが上がったかどうかのチェック
+ *
+ * ※このチェックの中でスターランク未通知→通知済みに変化するので注意
  */
 //--------------------------------------------------------------
 #define _PKWD_CHECK_NEW_STAR_RANK( ret_wk )  \
@@ -15097,6 +15120,36 @@
     .macro  _ASM_PKWD_CHECK_NEW_STAR_RANK ret_wk
     .short  EV_SEQ_PKWD_CHECK_NEW_STAR_RANK
     .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：初上映映画かどうかのチェック
+ *
+ * ※このチェックの中で初上映状態→上映済み状態に変化するので注意
+ */
+//--------------------------------------------------------------
+#define _PKWD_IS_NEWLY_RELEASED_MOVIE( ret_wk, play_id )  \
+    _ASM_PKWD_IS_NEWLY_RELEASED_MOVIE ret_wk, play_id
+
+    .macro  _ASM_PKWD_IS_NEWLY_RELEASED_MOVIE ret_wk, play_id
+    .short  EV_SEQ_PKWD_IS_NEWLY_RELEASED_MOVIE
+    .short  \ret_wk
+    .short  \play_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：レンタルポケモンを使った映画かどうかのチェック
+ */
+//--------------------------------------------------------------
+#define _PKWD_IS_RENTAL_POKE_MOVIE( ret_wk, play_id )  \
+    _ASM_PKWD_IS_RENTAL_POKE_MOVIE ret_wk, play_id
+
+    .macro  _ASM_PKWD_IS_RENTAL_POKE_MOVIE ret_wk, play_id
+    .short  EV_SEQ_PKWD_IS_RENTAL_POKE_MOVIE
+    .short  \ret_wk
+    .short  \play_id
     .endm
 
 //--------------------------------------------------------------

@@ -806,6 +806,17 @@
 #define   SCR_PKWD_SELECT_MODE_NORMAL         (0) ///<上映選択画面：通常
 #define   SCR_PKWD_SELECT_MODE_DELETE         (1) ///<上映選択画面：削除
 
+#define   SCR_PKWD_RESULT_GOOD_END            (0) ///<映画評価：成功
+#define   SCR_PKWD_RESULT_BAD_END             (1) ///<映画評価：失敗
+#define   SCR_PKWD_RESULT_STRANGE_END         (2) ///<映画評価：特殊ルート
+
+#define   SCR_PKWD_ADDMSG_GOOD_END            (0) ///<台本追加MSG:前の台本のGOODEND
+#define   SCR_PKWD_ADDMSG_GAMECLEAR           (1) ///<台本追加MSG:ゲームクリア後
+#define   SCR_PKWD_ADDMSG_STARRANK            (2) ///<台本追加MSG:スターランクの上昇
+#define   SCR_PKWD_ADDMSG_PROFITS             (3) ///<台本追加MSG:興行収益
+#define   SCR_PKWD_ADDMSG_ALL_GOOD_END        (4) ///<台本追加MSG:すべての台本のGOODEND
+
+
 //--------------------------------------------------------------
 //  scrcmd_infinity_dungeon.c
 //  無限ダンジョン関連定義

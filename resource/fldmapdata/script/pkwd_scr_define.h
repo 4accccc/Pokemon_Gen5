@@ -31,4 +31,6 @@
 #define   PKWD_SHOW_SEQ_FIRST_MENU      2
 #define   PKWD_SHOW_SEQ_SELECT_MOVIE    3
 #define   PKWD_SHOW_SEQ_WATCH_MOVIE     4
-#define   PKWD_SHOW_SEQ_JUDGE           5
+#define   PKWD_SHOW_SEQ_AFTER           5
+#define   PKWD_SHOW_SEQ_JUDGE_NPC       6
+

@@ -18,7 +18,7 @@
   DEF_CMD( EvCmdPokewoodShow,                   EV_SEQ_PKWD_SHOW )    // ポケウッド　撮影
   DEF_CMD( EvCmdPokewoodSelectScenario,         EV_SEQ_PKWD_SELECT_SCENARIO )    // ポケウッド　台本
   DEF_CMD( EvCmdPokewoodSelectMovie,            EV_SEQ_PKWD_SELECT_MOVIE )
-  DEF_CMD( EvCmdPokewoodCopyMovie,              EV_SEQ_PKWD_COPY_MOVIE )    //映画をコピー
+  DEF_CMD( EvCmdPokewoodSaveMovie,              EV_SEQ_PKWD_SAVE_MOVIE )    //映画をセーブ
 
   DEF_CMD( EvCmdPokewoodSetScenarioName,        EV_SEQ_PKWD_SET_SCENARIO_NAME )
   DEF_CMD( EvCmdPokewoodGetScenarioStatus,      EV_SEQ_PKWD_GET_SCENARIO_STATUS )
@@ -31,7 +31,10 @@
   DEF_CMD( EvCmdPokewoodSystemEnd,              EV_SEQ_PKWD_SYSTEM_END )
   DEF_CMD( EvCmdPKWDSelectPokemon,              EV_SEQ_PKWD_SELECT_POKEMON )
   DEF_CMD( EvCmdPKWDSetJoinMypoke,              EV_SEQ_PKWD_SET_JOIN_MYPOKE ) // 手持ちポケモンでポケウッドに参加するか？
+  DEF_CMD( EvCmdPokewoodCheckNewScenario,       EV_SEQ_PKWD_CHECK_NEW_SCENARIO )
   DEF_CMD( EvCmdPokewoodCheckNewStarRank,       EV_SEQ_PKWD_CHECK_NEW_STAR_RANK )
+  DEF_CMD( EvCmdPokewoodIsNewlyReleaseMovie,    EV_SEQ_PKWD_IS_NEWLY_RELEASED_MOVIE )
+  DEF_CMD( EvCmdPokewoodIsRentalPokeMovie,      EV_SEQ_PKWD_IS_RENTAL_POKE_MOVIE )
   DEF_CMD( EvCmdPokewoodSetStudioMMdl,          EV_SEQ_PKWD_SET_STUDIO_MMDL )
   
   END_CMD

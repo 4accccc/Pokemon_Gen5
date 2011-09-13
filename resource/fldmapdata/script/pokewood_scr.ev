@@ -76,19 +76,15 @@ EVENT_START ev_pokewood_rec
 
   //スターランクが上がったかどうか
   _PKWD_CHECK_NEW_STAR_RANK( SCWK_ANSWER )
-  IF $SCWK_ANSWER == TRUE THEN
+  IF $SCWK_ANSWER == FALSE THEN
     //「ヘイ！最近キミは役者らしいイイかおになってきたねー」
     _PLAYER_NAME( 0 )
     _BALLOONWIN_OBJMSG_POS( msg_pw_studio_14, SCWK_TARGET_OBJID, POS_DOWN )
   ENDIF
 
-  //仮：本当はコマンドから結果を受け取る
-  $SCWK_ANSWER = FALSE
-  //_PKWD_GET_SCENARIO_STATUS( SCR_PKWD_SCENARIO_SUCCESS_FLAG, LWK_PKWD_SCENARIO, SCWK_ANSWER )
-  IF $SCWK_ANSWER == TRUE THEN
-    //「ヘイ！前にキミが出演した～」台本追加のセリフ
-    _BALLOONWIN_OBJMSG_POS( msg_pw_studio_02, SCWK_TARGET_OBJID, POS_DOWN )
-  ENDIF
+  //新着シナリオチェック：それにあわせてメッセージ
+  _CALL ev_pkwd_check_new_scenario
+
 
   WHILE $LWK_PKWD_SEQ != PKWD_REC_SEQ_END
 
@@ -405,7 +401,7 @@ ev_pkwd_rec_save:
       _SYSWIN_MSG_ALLPUT( msg_pw_system_01, POS_DOWN )
       //仮：セーブ処理を呼び出し
       _DEBUG_PRINT_WK( LWK_PKWD_REC_POS )
-      _PKWD_COPY_MOVIE( LWK_PKWD_REC_POS )
+      _PKWD_SAVE_MOVIE( LWK_PKWD_REC_POS )
       _MSGWIN_CLOSE()
       _SE_PLAY( SEQ_SE_SAVE )
       $LWK_PKWD_SUBSEQ = PKWD_REC_SUBSEQ_ASK_GO
@@ -476,6 +472,38 @@ ev_pkwd_get_empty_pos:
   $LWK_PKWD_REC_POS = SCR_PKWD_MOVIE_MAX
   _RET
   
+//--------------------------------------------------------------
+//  新着台本チェック
+//--------------------------------------------------------------
+ev_pkwd_check_new_scenario:
+{
+  DEFINE_LOCAL  LWK_PKWD_ADDMSG_TYPE
+
+  $LWK_PKWD_SCENARIO = 0
+  WHILE $LWK_PKWD_SCENARIO < SCR_PKWD_SCENARIO_MAX
+    _PKWD_CHECK_NEW_SCENARIO( LWK_PKWD_SCENARIO, LWK_PKWD_ADDMSG_TYPE, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _PLAYER_NAME( 0 )
+      _PKWD_SET_SCENARIO_NAME( 1, LWK_PKWD_SCENARIO )  //シナリオ名セット
+      SWITCH $LWK_PKWD_ADDMSG_TYPE
+      CASE SCR_PKWD_ADDMSG_GOOD_END THEN
+        _BALLOONWIN_OBJMSG_POS( msg_pw_studio_02, SCWK_TARGET_OBJID, POS_DOWN ) //仮
+      CASE SCR_PKWD_ADDMSG_GAMECLEAR THEN
+        _BALLOONWIN_OBJMSG_POS( msg_pw_studio_02, SCWK_TARGET_OBJID, POS_DOWN ) //仮
+      CASE SCR_PKWD_ADDMSG_STARRANK THEN
+        _BALLOONWIN_OBJMSG_POS( msg_pw_studio_02, SCWK_TARGET_OBJID, POS_DOWN ) //仮
+      CASE SCR_PKWD_ADDMSG_PROFITS THEN
+        _BALLOONWIN_OBJMSG_POS( msg_pw_studio_02, SCWK_TARGET_OBJID, POS_DOWN ) //仮
+      CASE SCR_PKWD_ADDMSG_ALL_GOOD_END THEN
+        _BALLOONWIN_OBJMSG_POS( msg_pw_studio_02, SCWK_TARGET_OBJID, POS_DOWN ) //仮
+      ENDSWITCH
+    ENDIF
+    $LWK_PKWD_SCENARIO += 1
+  ENDWHILE
+
+}
+_RET
+
 //==============================================================================
 //
 //    ポケウッド  シアター
@@ -490,6 +518,7 @@ DEFINE_LOCAL  LWK_PKWD_SHOW_MENU
 DEFINE_LOCAL  LWK_PKWD_SHOW_LOOP
 DEFINE_LOCAL  LWK_PKWD_SHOW_REC_POS
 DEFINE_LOCAL  LWK_PKWD_SHOW_REC_COUNT
+DEFINE_LOCAL  LWK_PKWD_SHOW_NEW_RELEASED
 
 EVENT_START ev_pokewood_show
 
@@ -518,8 +547,18 @@ EVENT_START ev_pokewood_show
     CASE PKWD_SHOW_SEQ_WATCH_MOVIE  THEN
       _CALL ev_pkwd_show_watch_movie
 
-    CASE PKWD_SHOW_SEQ_JUDGE        THEN
-      _CALL ev_pkwd_show_judge
+    CASE PKWD_SHOW_SEQ_AFTER        THEN
+      _CALL ev_pkwd_show_after
+      //_PKWD_IS_NEWLY_RELEASED_MOVIE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
+      IF $LWK_PKWD_SHOW_NEW_RELEASED == TRUE THEN
+        $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_JUDGE_NPC
+      ELSE
+        $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_GOODBYE
+      ENDIF
+
+    CASE PKWD_SHOW_SEQ_JUDGE_NPC    THEN
+      _CALL ev_pkwd_show_judge_npc
+      $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_END
 
     DEFAULT
       $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_END
@@ -603,6 +642,7 @@ ev_pkwd_show_watch_movie:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_in_theater )
   _OBJ_ANIME_WAIT()
 
+  _PKWD_IS_NEWLY_RELEASED_MOVIE( LWK_PKWD_SHOW_REC_POS, LWK_PKWD_SHOW_NEW_RELEASED )
   //上映呼び出し
   _PKWD_SHOW( LWK_PKWD_SHOW_REC_POS )
 
@@ -610,7 +650,7 @@ ev_pkwd_show_watch_movie:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_out_theater )
   _OBJ_ANIME_WAIT()
 
-  $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_JUDGE
+  $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_AFTER
 _RET
 
 _ANIME_LABEL  anm_player_go_in_theater
@@ -621,28 +661,82 @@ _ANIME_LABEL  anm_player_go_in_theater
 _ANIME_LABEL  anm_player_go_out_theater
   _ANIME_DATA AC_WALK_D_8F, 3
   _ANIME_DATA AC_WALK_L_8F, 6
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
   _ANIME_DATA ACMD_END,0
 
 
 /**************************************************************/
 //
 /**************************************************************/
-ev_pkwd_show_judge:
+ev_pkwd_show_after:
   _PKWD_GET_MOVIE_VALUE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
   //評価が決まっていないため暫定
   SWITCH $SCWK_ANSWER
-  CASE 0 THEN
+  CASE SCR_PKWD_RESULT_GOOD_END THEN
     _BALLOONWIN_OBJMSG_POS( msg_pw_theater_07, SCWK_TARGET_OBJID, POS_DOWN )
-  CASE 1 THEN
+  CASE SCR_PKWD_RESULT_BAD_END THEN
     _BALLOONWIN_OBJMSG_POS( msg_pw_theater_08, SCWK_TARGET_OBJID, POS_DOWN )
-  CASE 2 THEN
+  CASE SCR_PKWD_RESULT_STRANGE_END THEN
     _BALLOONWIN_OBJMSG_POS( msg_pw_theater_09, SCWK_TARGET_OBJID, POS_DOWN )
   ENDSWITCH
 
-  $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_GOODBYE
 _RET
 
+/**************************************************************/
+//
+/**************************************************************/
+ev_pkwd_show_judge_npc:
+//仮
+  _OBJ_ADD_EX( 14, 18, DIR_UP, MMDL_ID_EVENTOBJ_00, DANPEI, MV_DMY )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_commentator_appear )
+  _OBJ_ANIME_WAIT()
+  _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_01, MMDL_ID_EVENTOBJ_00, POS_DOWN )
 
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_right )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_commentator_close )
+  _OBJ_ANIME_WAIT()
+
+  _PKWD_GET_MOVIE_VALUE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
+  _PLAYER_NAME( 0 )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_PKWD_RESULT_GOOD_END THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_04, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  CASE SCR_PKWD_RESULT_BAD_END THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_02, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  CASE SCR_PKWD_RESULT_STRANGE_END THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_03, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  ENDSWITCH
+
+  _PKWD_IS_RENTAL_POKE_MOVIE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_05, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  ENDIF
+  _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_06, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_commentator_disappear )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+_RET
+
+_ANIME_LABEL  anm_commentator_appear
+  _ANIME_DATA AC_WALK_U_8F, 7
+  _ANIME_DATA AC_MARK_GYOE, 1
+  _ANIME_DATA AC_STAY_WALK_L_8F, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_commentator_close
+  _ANIME_DATA AC_WALK_L_16F, 4
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_player_turn_right
+  _ANIME_DATA AC_STAY_WALK_R_8F, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_commentator_disappear
+  _ANIME_DATA AC_WALK_D_8F, 9
+  _ANIME_DATA ACMD_END, 0
 
 //==============================================================================
 //
