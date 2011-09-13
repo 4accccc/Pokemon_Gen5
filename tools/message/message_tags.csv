@@ -56,6 +56,7 @@ GROUP,1,Name,単語,Name,,,,,,,,,,,,,,,
 1,61,TrialhouseRank,トライアルハウスランク,TrialhouseRank,"トライアルハウスでのランクです。
 「マスターランク」など",Pixel,91,UInt8,Idx,0,番号,Index,,,
 1,62,Weather,天候,Weather,ゲートの電光掲示板に表示されます。「はれ」・「すなあらし」など,Pixel,65,UInt8,Idx,0,番号,Index,,,
+,63,PokewoodScenarioName,ポケウッドシナリオ名,PokewoodScenarioName,ポケウッドのシナリオ名称,Pixel,234,UInt8,Idx,0,番号,Index,,,
 1,128,Month,month,month,月の名前,Pixel,80,UInt8,Idx,0,番号,Index,,,
 
 
@@ -80,23 +81,23 @@ GROUP,50,Character1,Character1,Character1,代替文字に変換されるタグ,,,,,,,,,,
 50,16,100,100,100,神殿文字の100,SyachiWidth,0,,,,,,,,
 50,17,1000,1000,1000,神殿文字の1000,SyachiWidth,0,,,,,,,,
 50,18,10000,10000,10000,神殿文字の10000,SyachiWidth,0,,,,,,,,
-50,19,100000,100000,100000,神殿文字の100000,SyachiWidth,0,,,,,,,,
-50,20,1000000,1000000,1000000,神殿文字の1000000,SyachiWidth,0,,,,,
+50,19,100000,100000,100000,神殿文字の100000,SyachiWidth,0
+50,20,1000000,1000000,1000000,神殿文字の1000000,SyachiWidth,0
 
-GROUP,51,Character2,Character2,Character2,代替文字に変換されるタグ,,,,,,,
-51,0,Upper_er,Upper_er,Upper_er,,SyachiWidth,0,,,,,
-51,1,Upper_re,Upper_re,Upper_re,,SyachiWidth,0,,,,,
-51,2,Upper_r,Upper_r,Upper_r,,SyachiWidth,0,,,,,
-51,3,Upper_e,Upper_e,Upper_e,,SyachiWidth,0,,,,,
-51,4,Abbrev.,Abbrev.,Abbrev.,,SyachiWidth,0,,,,,
-51,5,Center_dot,Center_dot,Center_dot,,SyachiWidth,0,,,,,
-51,6,L_SingleQuot.,L_SingleQuot.,L_SingleQuot.,,SyachiWidth,0,,,,,
-51,7,L_DoubleQuot.,L_DoubleQuot.,L_DoubleQuot.,,SyachiWidth,0,,,,,
-51,8,PKMN,PKMN,PKMN,,SyachiWidth,0,,,,,
-51,9,null,null,null,,SyachiWidth,0,,,,,
+GROUP,51,Character2,Character2,Character2,代替文字に変換されるタグ,,
+51,0,Upper_er,Upper_er,Upper_er,,SyachiWidth,0
+51,1,Upper_re,Upper_re,Upper_re,,SyachiWidth,0
+51,2,Upper_r,Upper_r,Upper_r,,SyachiWidth,0
+51,3,Upper_e,Upper_e,Upper_e,,SyachiWidth,0
+51,4,Abbrev.,Abbrev.,Abbrev.,,SyachiWidth,0
+51,5,Center_dot,Center_dot,Center_dot,,SyachiWidth,0
+51,6,L_SingleQuot.,L_SingleQuot.,L_SingleQuot.,,SyachiWidth,0
+51,7,L_DoubleQuot.,L_DoubleQuot.,L_DoubleQuot.,,SyachiWidth,0
+51,8,PKMN,PKMN,PKMN,,SyachiWidth,0
+51,9,null,null,null,,SyachiWidth,0
 
-GROUP,52,Kor,韓国,Kor,,,,,,,,
-52,0,Article,助詞,Article,韓国語の助詞です。直前の文字に応じて変化します。現状では直前に単語タグが存在する必要があります。,SyachiWidth,0,KrArticle,char,none,字,char
+GROUP,52,Kor,韓国,Kor,,,
+52,0,Article,助詞,Article,韓国語の助詞です。直前の文字に応じて変化します。現状では直前に単語タグが存在する必要があります。,SyachiWidth,0,KrArticle,char,none,字,char,,,,,,,,,,
 
 GROUP,189,Ctrl1,汎用コントロール,Ctrl1,,,,,,,,,,,,,,,,,,
 189,0,Color,カラー変更,カラー変更,"システムのカラータグより細かい設定が可能な低レベル版。
@@ -116,7 +117,7 @@ GROUP,190,Ctrl2,動的コントロール,Ctrl2,,,,,,,,,,,,,,,,,,
 190,2,WaitOne,ウェイト変更（単発）,ウェイト変更（単発）,,Pixel,0,UInt16,frame,0,フレーム数,フレーム数,,,,,,,,,,
 190,3,WaitCont,ウェイト変更（継続）,ウェイト変更（継続）,,Pixel,0,UInt16,frame,0,フレーム数,フレーム数,,,,,,,,,,
 190,4,WaitReset,ウェイトリセット,ウェイトリセット,,Pixel,0,,,,,,,,,,,,,,,
-190,5,CallBackOne,コールバック引数変更（単発）,コールバック引数変更（単発）,,Pixel,0,UInt16,arg,0,引数,引数,,,,,,,,,,
+190,5,CallBackOne,コールバック引数変更（単発）,コールバック引数変更（単発）,,Pixel,0,UInt16,arg,0,引数,引数
 190,6,CallBackCont,コールバック引数変更（継続）,コールバック引数変更（継続）,,Pixel,0,UInt16,arg,0,引数,引数
 190,7,CallBackReset,コールバック引数リセット,コールバック引数リセット,,Pixel,0,,,,,
 190,8,ClearWin,描画領域クリア,描画領域クリア,,Pixel,0,,,,,
