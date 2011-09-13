@@ -81,9 +81,12 @@ EVENT_START   ev_reserve_d05r0101_tutorial
   //ライバルを表示
   _FLAG_RESET( FV_D05R0101_SWRIVAL_01 )
   //========================================//
-  _OBJ_ADD( D05R0101_SWRIVAL_01 )  //ライバル表示
-  _SE_PLAY( SEQ_SE_KAIDAN ) //【仮】階段SE
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
+  
+  _OBJ_ADD( D05R0101_SWRIVAL_01 )  //ライバル表示
   _OBJ_ANIME_WAIT()
 
   //アニメ：主人公、ライバル指定位置へ

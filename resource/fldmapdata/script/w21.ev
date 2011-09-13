@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_w21.h"
   .include  "w21.h"
+  .include  "w21_def.h"  //タラップ表示イベント用参照
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -25,7 +26,7 @@ _EVENT_DATA    ev_recover_w21
 _EVENT_DATA    ev_pos_w21_swrival_01
 _EVENT_DATA    ev_reserve_w21_swplazma_end_01
 _EVENT_DATA    ev_w21_swleader1_01
-_EVENT_DATA    ev_pos_w21_d27_door
+_EVENT_DATA    ev_reserve_w21_swleader8_01
 _EVENT_DATA_END
 
 //バージョン取得
@@ -38,22 +39,32 @@ DEFINE_LOCAL  LCW_POSZ
 /*					ZONE_CHANGE_LABEL  						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_w21
-  //
+  /*
+  //プラズマフリゲートイベント進行中以外は接続を移動させる
+  IF $WK_SCENE_W21_01 != 3 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_W21_D27R0101_EXIT01, 787, -3, 247 )
+  ENDIF
+  */
 INIT_EVENT_END
 
 /************************************************************/
 /*					FIELD_INIT_LABEL  						*/
 /************************************************************/
 INIT_EVENT_START	ev_init_w21
-  
+
+  //シズイ登場イベント起動
+  IF $WK_SCENE_W21_01 == 2 THEN
+    _OBJ_POS_CHANGE(W21_SWRIVAL_01,797,-5,242,DIR_UP)
+    _OBJ_POS_CHANGE(W21_SWLEADER8_01,798,-5,241,DIR_LEFT)
+    
   //乗船2回目後イベント
-  IF $WK_SCENE_W21_01 == 3 && FLAG_OFF(FV_W21_SWRIVAL_01) THEN
+  ELSIF $WK_SCENE_W21_01 == 4 && FLAG_OFF(FV_W21_SWRIVAL_01) THEN
     _OBJ_POS_CHANGE(W21_SWRIVAL_01,794,-5,243,DIR_UP)
-  ENDIF
   
   //乗船2回目後（D10到着前）
-  IF $WK_SCENE_W21_01 == 4 && FLAG_OFF(FV_W21_SWLEADER1_01) THEN
+  ELSIF $WK_SCENE_W21_01 == 5 && FLAG_OFF(FV_W21_SWLEADER1_01) THEN
     _OBJ_POS_CHANGE(W21_SWLEADER1_01,794,-5,242,DIR_RIGHT)
+  
   ENDIF
 
 INIT_EVENT_END
@@ -65,25 +76,15 @@ INIT_EVENT_START	ev_recover_w21
   //
 INIT_EVENT_END
 
-/**************************************************************/
-/* 			POS：【仮】プラズマ団船接続			  */
-/**************************************************************/
-EVENT_START		ev_pos_w21_d27_door
-
-  //アニメ：主人公入り口へ移動
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_r)
-  _OBJ_ANIME_WAIT()
-  
-  //マップチェンジ
-  _MAP_CHANGE( ZONE_ID_D27R0101, 11, 31, DIR_RIGHT )
-
-EVENT_END
-
-
 /************************************************************/
-/*					POS：  						*/
+/*					POS：プラズマフリゲート発見  						*/
 /************************************************************/
 EVENT_START	ev_pos_w21_swrival_01
+  
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
   //========================================//
   //W21ライバル表示
   _FLAG_RESET( FV_W21_SWRIVAL_01 )
@@ -91,20 +92,40 @@ EVENT_START	ev_pos_w21_swrival_01
   _FLAG_RESET( FV_W21_SWLEADER8_01 )
   //========================================//
   
-  //主人公・ライバル名代入
-  _PLAYER_NAME( 0 )
-  _RIVAL_NAME( 1 )
+  //カメラ操作　プラズマフリゲートにフォーカス
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,52531200,-327759,15736832,48 )
   
-  //ライバル動作モデル生成
-  _OBJ_ADD(W21_SWRIVAL_01)
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  _TIME_WAIT( 200 )
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (48)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()    //カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()   //カメラ操作終了
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
+  //ライバル動作モデル生成
+  _OBJ_ADD(W21_SWRIVAL_01)
   _SE_WAIT()
   
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  $LCW_POSX -= 1
+  
   //アニメ：ライバル登場
-  _OBJ_ANIME_AUTO( W21_SWRIVAL_01 , 794, 242, FORCE_TYPE_NPC, 8, DIR_UD)
-  _TIME_WAIT(8)
+  _OBJ_ANIME_AUTO( W21_SWRIVAL_01 , LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  IF $LCW_POSZ != 242 THEN
+    _OBJ_ANIME( W21_SWRIVAL_01 , anm_staystep_r )
+  ENDIF
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
@@ -126,40 +147,30 @@ EVENT_START	ev_pos_w21_swrival_01
   _PLAINWIN_MSG_DOWN( msg_w21_swleader8_01 )
   _MSGWIN_CLOSE()
   
-  //シズイ動作モデル生成
-  _OBJ_ADD(W21_SWLEADER8_01)
-  
-  _OBJ_POS_CHANGE(W21_SWLEADER8_01,801,0,245,DIR_LEFT)
-  
-  //カメラ操作　シズイにフォーカス
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 9688,0,970752,52502528,-327759,159621126,48 )
-  
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-  
-  //暗転処理
-  _BLACK_OUT()
-  _DISP_FADE_END_CHECK()
-  
   //マップ差し替え:W21アジト船タラップ表示
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, TRUE , TRUE )
   
-  //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (1)
-  _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-  _CAMERA_END()		//カメラ操作終了
+  //========================================//
+  //W21シズイイベント進行
+  $WK_SCENE_W21_01 = 2
+  //========================================//
   
-  //シズイ・ライバル・主人公位置変更
-  _OBJ_POS_CHANGE(MMDL_ID_PLAYER,795,-5,241,DIR_DOWN)
-  _OBJ_POS_CHANGE(W21_SWRIVAL_01,795,-5,243,DIR_UP)
-  _OBJ_POS_CHANGE(W21_SWLEADER8_01,796,-5,242,DIR_LEFT)
-  
-  //暗転復帰
-  _BLACK_IN()
-  _DISP_FADE_END_CHECK()
+  //予約スクリプト
+  _RESERVE_SCRIPT( SCRID_RESERVE_W21_SWLEADER8_01 )
+  //D05マップチェンジ
+  _MAP_CHANGE( ZONE_ID_W21, 797, 240, DIR_DOWN )
+
+EVENT_END
+
+/************************************************************/
+/*					RESERVE：シズイ搭乗  						*/
+/************************************************************/
+EVENT_START	ev_reserve_w21_swleader8_01
+
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
   
   //シズイ：これで
   _BALLOONWIN_OBJMSG_POS( msg_w21_swleader8_02 , W21_SWLEADER8_01 ,POS_DEFAULT )
@@ -234,9 +245,12 @@ EVENT_START	ev_pos_w21_swrival_01
   //ライバル動作モデル削除
   _OBJ_DEL( W21_SWRIVAL_01 )
   
+  //接続配置変更
+  _SXY_MOVE_EXIT_EVENT( DOOR_ID_W21_D27R0101_EXIT01, 799, -5, 240 )
+  
   //========================================//
   //W21シズイイベント終了
-  $WK_SCENE_W21_01 = 2
+  $WK_SCENE_W21_01 = 3
   //W21シズイ非表示
   _FLAG_SET( FV_W21_SWRIVAL_01 )
   //W21ライバル非表示
@@ -270,11 +284,12 @@ EVENT_START	ev_pos_w21_swrival_01
   ENDIF
   
 EVENT_END
-
 //--------------------------------------------------------------------
 //	シズイ退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader8_bye_01
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,5
 	_ANIME_DATA	ACMD_END,0
 
@@ -350,7 +365,7 @@ EVENT_START	ev_reserve_w21_swplazma_end_01
   
   //========================================//
   //W21イベント終了
-  $WK_SCENE_W21_01 = 4
+  $WK_SCENE_W21_01 = 5
   //D10R0101 POSイベント起動
   $WK_SCENE_D10R0101_SWPLAZMA_01 = 1
   //W21ライバル非表示

@@ -11,7 +11,6 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d05.h"
   .include  "d05.h"
-  .include  "d05_def.h" //アジト船イベント完成まで仮参照
   .include  "d05r0101.h"  //WBT誘導イベント用参照
   .include  "d05r0101_def.h"  //WBT誘導イベント用参照
   
@@ -32,7 +31,6 @@ _EVENT_DATA    ev_reserve_d05_swplazma_af_01
 _EVENT_DATA    ev_d05_swboss_01
 _EVENT_DATA    ev_zone_d05
 _EVENT_DATA    ev_init_d05
-_EVENT_DATA    ev_pos_d05_d27_door
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -45,7 +43,10 @@ DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 INIT_EVENT_START   ev_zone_d05
   
-//
+  //プラズマフリゲートイベント進行中以外は接続を移動させる
+  IF $WK_SCENE_D05 != 3 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D05_D27R0101_EXIT01, 202, 0, 492 )
+  ENDIF
   
 INIT_EVENT_END
 
@@ -67,20 +68,6 @@ INIT_EVENT_START ev_init_d05
   ENDIF
 
 INIT_EVENT_END
-
-/**************************************************************/
-/* 			POS：【仮】プラズマ団船接続			  */
-/**************************************************************/
-EVENT_START		ev_pos_d05_d27_door
-
-  //アニメ：主人公入り口へ移動
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_r)
-  _OBJ_ANIME_WAIT()
-  
-  //マップチェンジ
-  _MAP_CHANGE( ZONE_ID_D27R0101, 10, 32, DIR_RIGHT )
-
-EVENT_END
 
 /**************************************************************/
 /* 			POS：WBT誘導イベント			  */
@@ -211,12 +198,12 @@ EVENT_START		ev_scene_d05_swplazma_01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_out_wbt_player )
   _TIME_WAIT(12)
   
-  //ライバル動作モデル生成
-  _OBJ_ADD( D05_SWRIVAL_01 )
-  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
+  
+  //ライバル動作モデル生成
+  _OBJ_ADD( D05_SWRIVAL_01 )
   
   //アニメ：ライバル出てくる
   _OBJ_ANIME( D05_SWRIVAL_01, anm_out_wbt_rival )
@@ -271,12 +258,12 @@ EVENT_START		ev_scene_d05_swplazma_01
   _BALLOONWIN_OBJMSG_POS( msg_d05_swrival_02,D05_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //アクロマ動作モデル生成
-  _OBJ_ADD( D05_SWBOSS_01 )
-  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
+  
+  //アクロマ動作モデル生成
+  _OBJ_ADD( D05_SWBOSS_01 )
   
   //アニメ：アクロマ登場
   _OBJ_ANIME( D05_SWBOSS_01, anm_out_wbt_swboss )
@@ -340,9 +327,12 @@ EVENT_START		ev_scene_d05_swplazma_01
   _OBJ_DEL( D05_SWLEADER1_01 )
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
   
+  //プラズマフリゲート接続位置変更
+  _SXY_MOVE_EXIT_EVENT( DOOR_ID_D05_D27R0101_EXIT01, 199, -1, 493 )
+  
   //========================================//
   //D05プラズマ団イベント終了
-  $WK_SCENE_D05 = 4
+  $WK_SCENE_D05 = 3
   //D05ライバル非表示
   _FLAG_SET( FV_D05_SWRIVAL_01 )
   //D05チェレン非表示

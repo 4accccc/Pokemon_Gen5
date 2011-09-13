@@ -20,6 +20,9 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_d27r0301_warp_01
+_EVENT_DATA    ev_zone_d27r0301
+_EVENT_DATA    ev_init_d27r0301
+_EVENT_DATA    ev_recover_d27r0301
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -34,6 +37,38 @@ DEFINE_LOCAL LCWK_VERSION
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+/************************************************************/
+/*					ZONE_CHANGE_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d27r0301
+
+  //D10プラズマフリゲート起動中
+  IF FLAG_ON( FE_D10_PLAZMA_FRIGATE_01 ) THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0301_D27R0101_EXIT01, 23, 0, 1 )
+  //プラズマフリゲートいない
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0301_D27R1101_EXIT01, 23, 0, 1 )
+  ENDIF
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d27r0301
+  
+  //
+
+INIT_EVENT_END
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d27r0301
+
+  //
+
+INIT_EVENT_END
 
 /************************************************************/
 /*					特殊接続				*/

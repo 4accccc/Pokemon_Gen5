@@ -62,7 +62,29 @@ DEFINE_LOCAL  LCW_POSZ
 /*					ZONE_CHANGE_LABEL  						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r0101
-  
+
+  //D10プラズマフリゲート起動中
+  IF FLAG_ON( FE_D10_PLAZMA_FRIGATE_01 ) THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0201_D27R0101_EXIT01, 16, 0, 17 )
+  //プラズマフリゲートいない
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0201_D27R1101_EXIT01, 16, 0, 17 )
+  ENDIF
+  /*
+  //D05からの搭乗時
+  IF $WK_SCENE_D05 == 3 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_W21_EXIT01, 0, 0, 0 )
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_D13_EXIT01, 0, 0, 0 )
+  //W21からの搭乗時
+  ELSIF $WK_SCENE_W21_01  == 3 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_D05_EXIT01, 0, 0, 0 )
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_D13_EXIT01, 0, 0, 0 )
+  //D13からの搭乗時
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_D05_EXIT01, 0, 0, 0 )
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_W21_EXIT01, 0, 0, 0 )
+  ENDIF
+  */
 INIT_EVENT_END
 
 /************************************************************/
@@ -430,6 +452,7 @@ EVENT_START	ev_d27r0101_swrival_01
     //========================================//
     //乗船1回目の全てのイベントを終了
     $WK_SCENE_D27R0101_FIRST_01 = 4
+    $WK_SCENE_D05 = 4
     //乗船1回目の人物を全て非表示に
     _FLAG_SET(FV_D27R0101_SWRIVAL_01)
     _FLAG_SET(FV_D27R0101_SWPLAZMA_01)
@@ -559,12 +582,12 @@ ev_d27r0101_first_end:
   _FLAG_RESET( FV_D27R0101_NINJA_01 )
   //========================================//
   
-  //七賢人動作OBJ生成
-  _OBJ_ADD( D27R0101_SWSAGE7_01 )
-  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
+  
+  //七賢人動作OBJ生成
+  _OBJ_ADD( D27R0101_SWSAGE7_01 )
   
   //アニメ：ヴィオ1歩前へ
   _OBJ_ANIME_AUTO( D27R0101_SWSAGE7_01 , 18, 16, FORCE_TYPE_NPC, 16, DIR_UD)
@@ -878,12 +901,12 @@ EVENT_START	ev_scene_d27r0101_secondbtl_01
   _OBJ_ANIME( D27R0101_SWRIVAL_01 , anm_rival_to_r0201_01 )
   _OBJ_ANIME_WAIT()
   
+  //動作モデルを削除
+  _OBJ_DEL( D27R0101_SWRIVAL_01 )
+  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
-  
-  //動作モデルを削除
-  _OBJ_DEL( D27R0101_SWRIVAL_01 )
   
   //========================================//
   //ライバル・プラズマ団を非表示に
@@ -985,12 +1008,12 @@ EVENT_START	ev_pos_d27r0101_second_w_01
   
   ENDIF
   
+  //動作モデル削除
+  _OBJ_DEL( D27R0101_SWRIVAL_01 )
+  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
-  
-  //動作モデル削除
-  _OBJ_DEL( D27R0101_SWRIVAL_01 )
   
   //アニメ：主人公船内へ
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_u )
@@ -1045,12 +1068,12 @@ EVENT_START	ev_pos_d27r0101_second_b_01
   _FLAG_RESET( FV_D27R0101_SWRIVAL_01 )
   //========================================//
   
-  //動作モデルを生成
-  _OBJ_ADD( D27R0101_SWRIVAL_01 )
-  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
+  
+  //動作モデルを生成
+  _OBJ_ADD( D27R0101_SWRIVAL_01 )
   
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
@@ -1080,12 +1103,12 @@ EVENT_START	ev_pos_d27r0101_second_b_01
   
   _OBJ_ANIME_WAIT()
   
+  //動作モデル削除
+  _OBJ_DEL( D27R0101_SWRIVAL_01 )
+  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
-  
-  //動作モデル削除
-  _OBJ_DEL( D27R0101_SWRIVAL_01 )
   
   //ハッチ前ならば移動
   IF $LCW_POSZ == 17 THEN
