@@ -15659,9 +15659,9 @@ swplazmaw_10　白</language>
 
 	<row id="TRID_MOUNT_29_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
+テストメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+仮メッセージ▼</language>
 	</row>
 
 	<row id="TRID_MOUNT_29_TRMSG_FIGHT_LOSE">
@@ -15680,9 +15680,9 @@ swplazmaw_10　白</language>
 
 	<row id="TRID_BATTLEG_23_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
+テストメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+仮メッセージ▼</language>
 	</row>
 
 	<row id="TRID_BATTLEG_23_TRMSG_FIGHT_LOSE">
@@ -15701,9 +15701,9 @@ swplazmaw_10　白</language>
 
 	<row id="TRID_BATTLEG_24_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
+テストメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+仮メッセージ▼</language>
 	</row>
 
 	<row id="TRID_BATTLEG_24_TRMSG_FIGHT_LOSE">
@@ -15722,9 +15722,9 @@ swplazmaw_10　白</language>
 
 	<row id="TRID_KARATE_25_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
+テストメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+仮メッセージ▼</language>
 	</row>
 
 	<row id="TRID_KARATE_25_TRMSG_FIGHT_LOSE">
@@ -15743,9 +15743,9 @@ swplazmaw_10　白</language>
 
 	<row id="TRID_KARATE_26_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
+テストメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+仮メッセージ▼</language>
 	</row>
 
 	<row id="TRID_KARATE_26_TRMSG_FIGHT_LOSE">
@@ -15803,6 +15803,56 @@ swplazmaw_10　白</language>
 	<row id="TRID_SWPLAZMAM_34_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">プラーズマー！</language>
 		<language name="JPN_KANJI" width="216">プラーズマー！</language>
+	</row>
+
+	<row id="TRID_OL_09_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">みためは　ふつうの　ＯＬ！
+その　しょうたいは　おんなスパイ！▽
+わかる？　つよいのよ　あたし！▼</language>
+		<language name="JPN_KANJI" width="216">見た目は　普通の　ＯＬ！
+その正体は　女スパイ！▽
+わかる？　強いのよ　あたし！▼</language>
+	</row>
+
+	<row id="TRID_OL_09_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">スパイが　にんむに　しっぱい！！</language>
+		<language name="JPN_KANJI" width="216">スパイが　任務に　失敗！！</language>
+	</row>
+
+	<row id="TRID_OL_09_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">おんなスパイの　あたしは
+あたらしい　しゃちょうの▽
+しょうたいを　しらべているの！▼
+まさか　おこさま　だなんて
+じょうしきてきに　ありえないもんね！！</language>
+		<language name="JPN_KANJI" width="216">女スパイの　あたしは
+新しい　社長の▽
+正体を　調べているの！▼
+まさか　お子様だなんて
+常識的に　ありえないもんね！！</language>
+	</row>
+
+	<row id="TRID_BUSINESS2_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">ノルマたっせい！
+そのため　きみに　いどむ！▼</language>
+		<language name="JPN_KANJI" width="216">ノルマ達成！
+そのため　きみに　挑む！▼</language>
+	</row>
+
+	<row id="TRID_BUSINESS2_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ムムム……　まけたが
+アイデアが　ひらめいた！</language>
+		<language name="JPN_KANJI" width="216">ムムム……　負けたが
+アイデアが　ひらめいた！</language>
+	</row>
+
+	<row id="TRID_BUSINESS2_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">バトルカンパニーの　わたしたちは
+ポケモンしょうぶを　かずおおく▽
+こなすことが　ノルマ　なんだよ！</language>
+		<language name="JPN_KANJI" width="216">バトルカンパニーの　わたしたちは
+ポケモン勝負を　数多く▽
+こなすことが　ノルマ　なんだよ！</language>
 	</row>
 
 	<flowchart-group-list>
