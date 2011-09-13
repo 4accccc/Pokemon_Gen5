@@ -171,6 +171,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
   MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
   MEDALBOX *p_mdl = SaveData_GetMedalBox( GAMEDATA_GetSaveControlWork(p_gamedata) );
+  RESORT_BINARY_PRESET *p_preset = RESORT_SYSTEM_GetBinaryPreset(p_sys);
 
   if( p_people )
   {
@@ -556,6 +557,9 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       }
       GF_ASSERT( i < RESORT_SECRETARY_DATA_NUM );
     }
+    break;
+  case RESORT_GET_PARAM_CELEB_TRADE_NO:
+    *p_ret_wk = RESORT_UTIL_GetCelebData( p_preset, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_TRADE );
     break;
   default:
     GF_ASSERT(0);
@@ -1144,12 +1148,12 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *ret_lvup = SCRCMD_GetVMWork( p_core, p_wk );
   u16 *ret_city_lvup = SCRCMD_GetVMWork( p_core, p_wk );
 
-  u32 index = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, NULL );
+  RESORT_ABSTRUCT_DATA *p_abstruct  = RESORT_PEOPLE_GetAbstructData( p_people);
 
 
   RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, idx );
 
-  RESORT_UTIL_SetSpot( index, p_resident, p_sys, p_wordset, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup );
+  RESORT_UTIL_SetSpot( p_abstruct, p_resident, p_sys, p_wordset, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup );
   return VMCMD_RESULT_CONTINUE;
 
 }
@@ -1812,6 +1816,9 @@ VMCMD_RESULT EvCmdResortSetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03+data-1, FALSE );
     RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_PRIZE_SEC03+data-1, TRUE );
     break;
+  case RESORT_MY_PARAM_CELEB_TRADE_FLAG:
+    RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_CELEB_TRADE_FLAG, data );
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -1873,6 +1880,10 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_MY_PARAM_EV_PRIZE:
     *p_ret_wk = RESORT_UTIL_GetPrizeEv( p_sys );
     break;
+  case RESORT_MY_PARAM_CELEB_TRADE_FLAG:
+    *p_ret_wk = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_CELEB_TRADE_FLAG, NULL );
+    break;
+
   default:
     GF_ASSERT(0);
   }

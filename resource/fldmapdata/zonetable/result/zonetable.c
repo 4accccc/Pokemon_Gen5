@@ -17848,7 +17848,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_RESONANCE02, // camera_area
+		NARC_camera_scroll_original_C16_bin, // camera_area
 		15,   // padding > placeicon
     0,
 		15,

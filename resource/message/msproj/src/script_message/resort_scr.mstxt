@@ -1104,6 +1104,128 @@ PDW♂</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_tourist_greet_17_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+１かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T05:38:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+１かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T05:39:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>旅行者挨拶文
+SWANビーコン０（基本バグ？）</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T05:39:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：通信名
+2：クチグセ
+3：リゾート名</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_18_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ここは　あたらしい　まちですか？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T06:36:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ここは　あたらしい　まちですか？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-08-30T06:36:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>旅行者挨拶文
+BW♂</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T05:39:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：通信名
+2：クチグセ
+3：リゾート名</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_tourist_greet_00_f"
 		Style="Large">
 		<LanguageCell
@@ -1612,6 +1734,71 @@ GTSで　こうかんしたこと
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:50:44" />
 		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_17_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+１かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T05:40:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+１かい　すれちがったこと
+しっている？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T05:40:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_tourist_greet_18_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ここは　あたらしい　まちですか？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
+ここは　あたらしい　まちですか？▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:50:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BW</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T05:41:07" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="resort_tourist_citymsg_01_m"
@@ -3286,9 +3473,9 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
+			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
 げんざい　[Digit:2digits Idx="2" ]　です▼
-つぎの　ランクに　なるには
+つぎの　レベルに　なるには
 にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
 どんどん　『[Name:ResortShop Idx="1" ]』を
 おすすめして　ください▼</Text>
@@ -3297,14 +3484,14 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T06:08:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:44" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
+			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
 げんざい　[Digit:2digits Idx="2" ]　です▼
-つぎの　ランクに　なるには
+つぎの　レベルに　なるには
 にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
 どんどん　『[Name:ResortShop Idx="1" ]』を
 おすすめして　ください▼</Text>
@@ -3313,8 +3500,8 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T06:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:46" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -3344,9 +3531,9 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
+			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
 げんざい　[Digit:2digits Idx="2" ]　です▼
-つぎの　ランクに　なるには
+つぎの　レベルに　なるには
 にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
 どんどん　『[Name:ResortShop Idx="1" ]』を
 おすすめして　ください▼</Text>
@@ -3355,14 +3542,14 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T06:08:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:46" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
+			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
 げんざい　[Digit:2digits Idx="2" ]　です▼
-つぎの　ランクに　なるには
+つぎの　レベルに　なるには
 にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
 どんどん　『[Name:ResortShop Idx="1" ]』を
 おすすめして　ください▼</Text>
@@ -3371,8 +3558,8 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T06:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:47" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -3765,31 +3952,31 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
+			<Text>げんざい　レベル　[Digit:2digits Idx="0" ]
 『[Name:ResortGreet Idx="2" ]』です▼
-つぎの　ランクまで
+つぎの　レベルまで
 にんきは　あと[Digit:4digits Idx="1" ]ひつようです▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:48" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
+			<Text>げんざい　レベル　[Digit:2digits Idx="0" ]
 『[Name:ResortGreet Idx="2" ]』です▼
-つぎの　ランクまで
+つぎの　レベルまで
 にんきは　あと[Digit:4digits Idx="1" ]ひつようです▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:50" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4086,31 +4273,31 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
+			<Text>げんざい　レベル　[Digit:2digits Idx="0" ]
 『[Name:ResortGreet Idx="2" ]』です▼
-つぎの　ランクまで
+つぎの　レベルまで
 にんきは　あと[Digit:4digits Idx="1" ]ひつようです▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:51" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
+			<Text>げんざい　レベル　[Digit:2digits Idx="0" ]
 『[Name:ResortGreet Idx="2" ]』です▼
-つぎの　ランクまで
+つぎの　レベルまで
 にんきは　あと[Digit:4digits Idx="1" ]ひつようです▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:51" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7618,7 +7805,64 @@ GTSで　こうかんしたこと
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_sys_08"
+		Label="resort_sys_08_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『……　……
+……[Name:ResortShop Idx="1" ]！？▽
+ちょっと　ちがう……！！▼
+[Name:TrainerName Idx="0" ]は
+かえって　いった……▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『……　……
+……[Name:ResortShop Idx="1" ]！？▽
+ちょっと　ちがう……！！▼
+[Name:TrainerName Idx="0" ]は
+かえって　いった……▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+
+効果なし</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_sys_08_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -7820,38 +8064,38 @@ GTSで　こうかんしたこと
 			Language="JPN">
 			<Text>……！！▼
 [Name:ResortShop Idx="1" ]の
-ランクが　あがった！▼
+レベルが　あがった！▼
 [Name:ResortShop Idx="1" ]は
-ランク　[Digit:3digits Idx="6" ]　に　なった！▼</Text>
+レベル　[Digit:3digits Idx="6" ]　に　なった！▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-08-31T13:42:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:53" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……！！▼
 [Name:ResortShop Idx="1" ]の
-ランクが　あがった！▼
+レベルが　あがった！▼
 [Name:ResortShop Idx="1" ]は
-ランク　[Digit:3digits Idx="6" ]　に　なった！▼</Text>
+レベル　[Digit:3digits Idx="6" ]　に　なった！▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-08-31T13:42:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:54" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：旧施設名
 1：
 2：
-3：ランク
+3：レベル
 4：新施設名</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7907,9 +8151,9 @@ GTSで　こうかんしたこと
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>0：ランク数
+			<Text>0：レベル数
 1：リゾート名
-2：現在の施設ランク</Text>
+2：現在の施設レベル</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -7937,11 +8181,10 @@ GTSで　こうかんしたこと
 			<Text>[Name:ResortShop Idx="1" ]に
 [Name:TrainerName Idx="0" ]が　やってきた！▼
 [Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="4" ]！▼
-[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼
-……　……　……　……　……　……▼</Text>
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T11:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7952,12 +8195,64 @@ GTSで　こうかんしたこと
 			<Text>[Name:ResortShop Idx="1" ]に
 [Name:TrainerName Idx="0" ]が　やってきた！▼
 [Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="4" ]！▼
-[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼
-……　……　……　……　……　……
-……　……　……　……　……　……▼</Text>
+</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T11:52:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：店舗名
+2：店舗の住民名
+3：住民フリーワード
+4：店舗フリーワード</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_sys_23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼
+……　……　……　……　……　……▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T11:52:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T11:52:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8018,7 +8313,7 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>店ランク
+			<Text>店レベル
 
 0：施設名
 1：経験値</Text>
@@ -8070,7 +8365,7 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街ランク
+			<Text>街レベル
 
 0：リゾート名
 1：経験値</Text>
@@ -8100,9 +8395,9 @@ GTSで　こうかんしたこと
 			Language="JPN">
 			<Text>……！！▼
 [Name:ResortTown Idx="0" ]の
-ランクが　あがった！▼
+レベルが　あがった！▼
 [Name:ResortTown Idx="0" ]は
-ランク　[Digit:4digits Idx="8" ]に　なった！▼
+レベル　[Digit:4digits Idx="8" ]に　なった！▼
 『[Name:ResortTown Idx="2" ]』　として
 [Name:ResortTown Idx="0" ]の　うわさが▽
 ちょっぴり　ひろまった！！▼</Text>
@@ -8111,16 +8406,16 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:50:59" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……！！▼
 [Name:ResortTown Idx="0" ]の
-ランクが　あがった！▼
+レベルが　あがった！▼
 [Name:ResortTown Idx="0" ]は
-ランク　[Digit:4digits Idx="8" ]に　なった！▼
+レベル　[Digit:4digits Idx="8" ]に　なった！▼
 『[Name:ResortTown Idx="2" ]』　として
 [Name:ResortTown Idx="0" ]の　うわさが▽
 ちょっぴり　ひろまった！！▼</Text>
@@ -8129,15 +8424,15 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:51:00" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街ランク
+			<Text>街レベル
 
 0：リゾート名
-1：リゾートランク
+1：リゾートレベル
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8185,10 +8480,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街ランク
+			<Text>街レベル
 
 0：リゾート名
-1：リゾートランク
+1：リゾートレベル
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8238,10 +8533,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街ランク
+			<Text>街レベル
 
 0：リゾート名
-1：リゾートランク
+1：リゾートレベル
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8297,10 +8592,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街ランク
+			<Text>街レベル
 
 0：リゾート名
-1：リゾートランク
+1：リゾートレベル
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8756,10 +9051,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドリーム★[Name:TrainerName Idx="0" ]</Text>
+			<Text>ラッキー★[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:53:49" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8767,23 +9062,15 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドリーム★[Name:TrainerName Idx="0" ]</Text>
+			<Text>ラッキー★[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:53:57" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>店舗名
-</Comment>
-			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:54:18" />
-		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -8804,10 +9091,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ラッキー★[Name:TrainerName Idx="0" ]</Text>
+			<Text>ハッピー★[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:53:49" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8815,10 +9102,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ラッキー★[Name:TrainerName Idx="0" ]</Text>
+			<Text>ハッピー★[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:53:57" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8844,10 +9131,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハッピー★[Name:TrainerName Idx="0" ]</Text>
+			<Text>ドリーム★[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:53:49" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8855,10 +9142,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハッピー★[Name:TrainerName Idx="0" ]</Text>
+			<Text>ドリーム★[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:53:57" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8979,10 +9266,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サロン★[Name:TrainerName Idx="0" ]</Text>
+			<Text>ビューティ★[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:54:57" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8990,10 +9277,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サロン★[Name:TrainerName Idx="0" ]</Text>
+			<Text>ビューティ★[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:55:13" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9027,10 +9314,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スタジオ★[Name:TrainerName Idx="0" ]</Text>
+			<Text>サロン★[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:55:04" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9038,10 +9325,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スタジオ★[Name:TrainerName Idx="0" ]</Text>
+			<Text>サロン★[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:55:13" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9122,10 +9409,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]マート</Text>
+			<Text>[Name:TrainerName Idx="0" ]や</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:55:38" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9133,10 +9420,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]マート</Text>
+			<Text>[Name:TrainerName Idx="0" ]や</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:55:58" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9170,10 +9457,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スーパー[Name:TrainerName Idx="0" ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]マート</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:55:47" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9181,10 +9468,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スーパー[Name:TrainerName Idx="0" ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]マート</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:55:58" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9360,10 +9647,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]パーク</Text>
+			<Text>フラワー[Name:TrainerName Idx="0" ]２</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:56:26" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9371,10 +9658,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]パーク</Text>
+			<Text>フラワー[Name:TrainerName Idx="0" ]２</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:56:46" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9407,10 +9694,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]ガーデン</Text>
+			<Text>フラワー[Name:TrainerName Idx="0" ]３</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:56:37" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9418,10 +9705,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]ガーデン</Text>
+			<Text>フラワー[Name:TrainerName Idx="0" ]３</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:56:46" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9548,10 +9835,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]ジム</Text>
+			<Text>[Name:TrainerName Idx="0" ]どうじょう２</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:57:12" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9559,10 +9846,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]ジム</Text>
+			<Text>[Name:TrainerName Idx="0" ]道場２</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:57:36" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9595,10 +9882,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]コロシアム</Text>
+			<Text>[Name:TrainerName Idx="0" ]どうじょう３</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:57:21" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9606,10 +9893,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]コロシアム</Text>
+			<Text>[Name:TrainerName Idx="0" ]道場３</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:57:45" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9689,10 +9976,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]ハウス</Text>
+			<Text>[Name:TrainerName Idx="0" ]えん</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:58:07" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9700,10 +9987,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]ハウス</Text>
+			<Text>[Name:TrainerName Idx="0" ]園</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:58:32" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9736,10 +10023,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]クラブ</Text>
+			<Text>[Name:TrainerName Idx="0" ]えん２</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:58:14" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9747,10 +10034,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]クラブ</Text>
+			<Text>[Name:TrainerName Idx="0" ]園２</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:58:32" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9783,10 +10070,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]ランド</Text>
+			<Text>[Name:TrainerName Idx="0" ]えん３</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:58:20" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9794,10 +10081,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]ランド</Text>
+			<Text>[Name:TrainerName Idx="0" ]園３</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:58:32" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9877,10 +10164,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]コレクション</Text>
+			<Text>アンティーク[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:59:36" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9888,10 +10175,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]コレクション</Text>
+			<Text>アンティーク[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:59:57" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9924,10 +10211,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]セレクション</Text>
+			<Text>アンティーク[Name:TrainerName Idx="0" ]２</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:59:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9935,10 +10222,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]セレクション</Text>
+			<Text>アンティーク[Name:TrainerName Idx="0" ]２</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:59:57" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9971,10 +10258,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]ミュージアム</Text>
+			<Text>アンティーク[Name:TrainerName Idx="0" ]３</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:59:50" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9982,10 +10269,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]ミュージアム</Text>
+			<Text>アンティーク[Name:TrainerName Idx="0" ]３</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T04:59:57" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10065,10 +10352,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きっさ[Name:TrainerName Idx="0" ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]しょくどう</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:00:19" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10076,10 +10363,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>喫茶[Name:TrainerName Idx="0" ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]しょくどう</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:01:50" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10112,10 +10399,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]しょくどう</Text>
+			<Text>リストランテ[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:00:34" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10123,10 +10410,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]食堂</Text>
+			<Text>リストランテ[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:01:58" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10159,10 +10446,10 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レストラン[Name:TrainerName Idx="0" ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]クラブ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:01:10" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10170,10 +10457,10 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レストラン[Name:TrainerName Idx="0" ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]クラブ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:01:41" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21712,7 +21999,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 みんなを
 ドキドキ　ワクワクさせたいな▼</Text>
 			<TextModifiedBy
@@ -21720,13 +22007,13 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 みんなを
 ドキドキ　ワクワクさせたいな▼</Text>
 			<TextModifiedBy
@@ -21734,8 +22021,8 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -21765,7 +22052,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いろいろな　ポケモンを
 きれいに　したいな▼</Text>
 			<TextModifiedBy
@@ -21773,13 +22060,13 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いろいろな　ポケモンを
 きれいに　したいな▼</Text>
 			<TextModifiedBy
@@ -21787,8 +22074,8 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -21818,7 +22105,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いいものを　いっぱい　あつめて
 みんなを　おどろかせたいな▼</Text>
 			<TextModifiedBy
@@ -21826,13 +22113,13 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いいものを　いっぱい　あつめて
 みんなを　おどろかせたいな▼</Text>
 			<TextModifiedBy
@@ -21840,8 +22127,8 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -21871,7 +22158,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 きれいな　はなで
 みんなを　いやしたいな▼</Text>
 			<TextModifiedBy
@@ -21879,13 +22166,13 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 きれいな　はなで
 みんなを　いやしたいな▼</Text>
 			<TextModifiedBy
@@ -21893,8 +22180,8 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -21924,7 +22211,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いろんな　ポケモンを　きたえて
 きたえて　つよく　したいな▼</Text>
 			<TextModifiedBy
@@ -21932,13 +22219,13 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いろんな　ポケモンを　きたえて
 きたえて　つよく　したいな▼</Text>
 			<TextModifiedBy
@@ -21946,8 +22233,8 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -21977,7 +22264,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 ポケモンの　タマゴを
 かえす　しごとが　いたいな▼</Text>
 			<TextModifiedBy
@@ -21985,13 +22272,13 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 ポケモンの　タマゴを
 かえす　しごとが　いたいな▼</Text>
 			<TextModifiedBy
@@ -21999,8 +22286,8 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -22030,7 +22317,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 こだわりの　どうぐを　そろえて
 みんなを　おどろかせたいな！▼</Text>
 			<TextModifiedBy
@@ -22038,13 +22325,13 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 こだわりの　どうぐを　そろえて
 みんなを　おどろかせたいな！▼</Text>
 			<TextModifiedBy
@@ -22052,8 +22339,8 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -22083,7 +22370,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 ポケモンの　ために
 おいしい　ごはんを　つくって▽
 ポケモンを　しあわせにしたいな▼</Text>
@@ -22092,13 +22379,13 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 ポケモンの　ために
 おいしい　ごはんを　つくって▽
 ポケモンを　しあわせにしたいな▼</Text>
@@ -22107,8 +22394,8 @@ GTSで　こうかんしたこと
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -22138,7 +22425,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 みんなを
 ドキドキ　ワクワクさせたいな▼</Text>
 			<TextModifiedBy
@@ -22146,13 +22433,13 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:40:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 みんなを
 ドキドキ　ワクワクさせたいな▼</Text>
 			<TextModifiedBy
@@ -22160,8 +22447,8 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:40:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -22184,7 +22471,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いろいろな　ポケモンを
 きれいに　したいな▼</Text>
 			<TextModifiedBy
@@ -22192,13 +22479,13 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いろいろな　ポケモンを
 きれいに　したいな▼</Text>
 			<TextModifiedBy
@@ -22206,8 +22493,8 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:40:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -22230,7 +22517,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いいものを　いっぱい　あつめて
 みんなを　おどろかせたいな▼</Text>
 			<TextModifiedBy
@@ -22238,13 +22525,13 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いいものを　いっぱい　あつめて
 みんなを　おどろかせたいな▼</Text>
 			<TextModifiedBy
@@ -22252,8 +22539,8 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -22276,7 +22563,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 きれいな　はなで
 みんなを　いやしたいな▼</Text>
 			<TextModifiedBy
@@ -22284,13 +22571,13 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 きれいな　はなで
 みんなを　いやしたいな▼</Text>
 			<TextModifiedBy
@@ -22298,8 +22585,8 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -22322,7 +22609,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いろんな　ポケモンを　きたえて
 きたえて　つよく　したいな▼</Text>
 			<TextModifiedBy
@@ -22330,13 +22617,13 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 いろんな　ポケモンを　きたえて
 きたえて　つよく　したいな▼</Text>
 			<TextModifiedBy
@@ -22344,8 +22631,8 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -22368,7 +22655,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 ポケモンの　タマゴを
 かえす　しごとが　いたいな▼</Text>
 			<TextModifiedBy
@@ -22376,13 +22663,13 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 ポケモンの　タマゴを
 かえす　しごとが　いたいな▼</Text>
 			<TextModifiedBy
@@ -22390,8 +22677,8 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -22414,7 +22701,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 こだわりの　どうぐを　そろえて
 みんなを　おどろかせたいな！▼</Text>
 			<TextModifiedBy
@@ -22422,13 +22709,13 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 こだわりの　どうぐを　そろえて
 みんなを　おどろかせたいな！▼</Text>
 			<TextModifiedBy
@@ -22436,8 +22723,8 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -22460,7 +22747,7 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 ポケモンの　ために
 おいしい　ごはんを　つくって▽
 ポケモンを　しあわせにしたいな▼</Text>
@@ -22469,13 +22756,13 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もしも　この　まちで
-ゆめを　かなえるなら……▼
+くらすことが　できたら……▼
 ポケモンの　ために
 おいしい　ごはんを　つくって▽
 ポケモンを　しあわせにしたいな▼</Text>
@@ -22484,8 +22771,8 @@ GTSで　こうかんしたこと
 				Time="2011-09-01T04:41:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T05:05:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-01T04:41:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -45020,6 +45307,540 @@ GTSで　こうかんしたこと
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_greet_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_wantshop_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かわいい　てんいんさんが
+いるみせに　いきたいわ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:08:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かわいい　てんいんさんが
+いるみせに　いきたいわ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:08:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_goout_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃあ　いってくるわね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:51:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃあ　いってくるわね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:51:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_shopgreet_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『ここは　どんな　おみせ　なのかな▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:51:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T09:31:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_shop_ok_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:52:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:52:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_shop_ng_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『うーん　わたしの　このみじゃ
+ないかなーー▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:53:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『うーん　わたしの　このみじゃ
+ないかなーー▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:53:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_trade_greet_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダンゴロ　もってない？
+わたしの　シママと　こうかん　しようよ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:11:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダンゴロ　もってない？
+わたしの　シママと　こうかん　しようよ！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:11:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_trade_select_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃあ　えらんでー▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:08:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃあ　えらんでー▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_trade_bye_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃあ　またこんどね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:09:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃあ　またこんどね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:09:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_trade_ok_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ありがとう！　
+ダンゴロ　たいせつに　するね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:10:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ありがとう！　
+ダンゴロ　たいせつに　するね▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:10:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_trade_ng_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:10:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-13T03:10:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:42" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>

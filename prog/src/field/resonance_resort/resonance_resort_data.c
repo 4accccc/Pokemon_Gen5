@@ -2384,10 +2384,12 @@ BOOL RESORT_PROXY_DATA_IsEmpty( const RESORT_PROXY_DATA *cp_wk )
 //-----------------------------------------------------------------------------
 BOOL RESORT_PROXY_DATA_IsValid( const RESORT_PROXY_DATA *cp_wk )
 {
-  if( !RESORT_BASIC1_DATA_IsValid( &cp_wk->basic1 ) )
+  if( cp_wk->type == RESORT_PROXY_TYPE_PDW || cp_wk->type == RESORT_PROXY_TYPE_GTS )
   {
-    RESORT_VALID_ASSERT( "代理人データ：性別が不正です\n" );
-    return FALSE;
+    if( !RESORT_BASIC1_DATA_IsValid( &cp_wk->basic1 ) )
+    {
+      return FALSE;
+    }
   }
 
   return TRUE;
@@ -4365,7 +4367,9 @@ struct _RESORT_CITY_DATA
   u32     ev_prize_neon    :1;
   u32     ev_prize_scout   :1;
   u32     ev_prize_cityname :1;
-  u32     dummy         :20;    //4 224
+  u32     celeb_day_flag    :1;
+  u32     celeb_trade_flag  :1;
+  u32     dummy         :18;    //4 224
 
   u16     trainerID_max;
   u16     trainerID_cnt;        //4 228
@@ -4493,6 +4497,10 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->ev_prize_neon;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT:
     return cp_wk->ev_prize_scout;
+  case RESORT_CITY_DATA_CELEB_DAY_FLAG:
+    return cp_wk->celeb_day_flag;
+  case RESORT_CITY_DATA_CELEB_TRADE_FLAG:
+    return cp_wk->celeb_trade_flag;
   default:
     GF_ASSERT(0);
     return 0;
@@ -4562,6 +4570,12 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT:
     p_wk->ev_prize_scout = data;
     break;
+  case RESORT_CITY_DATA_CELEB_DAY_FLAG:
+    p_wk->celeb_day_flag = data;
+    break;
+  case RESORT_CITY_DATA_CELEB_TRADE_FLAG:
+    p_wk->celeb_trade_flag = data;
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -4583,10 +4597,13 @@ void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
   p_wk->trainerID_max = 0;
 
   //乱数再抽選
-  p_wk->rnd_seed      = GFUser_GetPublicRand(0);
+  p_wk->rnd_seed      = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
 
   //ファンを再度出現させる
   p_wk->fun_day_flag  = FALSE;
+
+  //セレブ抽選フラグ
+  p_wk->celeb_day_flag = FALSE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -4626,6 +4643,22 @@ BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainer
   }
 
   return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街データでの抽選
+ *
+ *	@param	const RESORT_CITY_DATA *cp_wk ワーク
+ *	@param	id  乱数使用ID
+ *	@param	range   範囲
+ *
+ *	@return 乱数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_CITY_DATA_GetRnd( const RESORT_CITY_DATA *cp_wk, RESORT_RND_ID id, u32 range )
+{
+  u32 seed = RESORT_CITY_DATA_GetData( cp_wk, RESORT_CITY_DATA_PARAM_RND_SEED, NULL );
+  return RESORT_DATA_GetRnd( seed, id, range );
 }
 
 //=============================================================================

@@ -91,7 +91,7 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
   //汎用ワーク確保
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID, heapID, sizeof(RESORT_RECEPTION_WORK));
 
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(prof_word) );
+  //GFL_OVERLAY_Load( FS_OVERLAY_ID(prof_word) );
 
   NAGI_Printf( "迎賓館setup\n" );
 
@@ -159,7 +159,7 @@ void RESORT_RECEPTION_End( FIELDMAP_WORK *p_fieldmap )
   RESORT_PEOPLE_SYS_Exit( p_wk->p_people_sys );
   RESORT_SYSTEM_Exit( p_wk->p_sys );
 
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(prof_word) );
+  //GFL_OVERLAY_Unload( FS_OVERLAY_ID(prof_word) );
 
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);

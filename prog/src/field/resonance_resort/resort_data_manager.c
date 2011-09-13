@@ -1216,23 +1216,74 @@ static void Resort_Data_Manager_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 typ
  *	@param	RESORT_RECV_DATA *cp_owner  自分のデータ
  */
 //-----------------------------------------------------------------------------
-void RESORT_DATA_MANAGER_SetProxyFunRandom( RESORT_PROXY_DATA *p_wk, const RESORT_BINARY_PRESET *cp_preset, const RESORT_RECV_DATA *cp_owner, HEAPID heapID )
+void RESORT_DATA_MANAGER_SetProxyRandom( RESORT_PROXY_DATA *p_wk, u32 proxy_type, RESORT_CITY_DATA *p_city, const RESORT_BINARY_PRESET *cp_preset, const RESORT_RECV_DATA *cp_owner, HEAPID heapID )
 {
-  u32 presetID  = 0;
-  while(TRUE )
+  static const struct
   {
-    presetID = GFUser_GetPublicRand( RESORT_PRESET_ID_MAX );
-
-    if( RESORT_BINARY_PRESET_GetData( cp_preset, presetID, RESORT_BINARY_PRESET_PARAM_TYPE ) == RESORT_PRESET_TYPE_RANDOM )
+    u16 proxy_type;
+    u16 preset_type; 
+  }
+  sc_proxy_to_preset[] =
+  {
     {
+      RESORT_PROXY_TYPE_FUN,
+      RESORT_PRESET_TYPE_RANDOM,
+    },
+    {
+      RESORT_PROXY_TYPE_CELEB,
+      RESORT_PRESET_TYPE_APPOINT,
+    },
+  };
+  
+  int i;
+  u32 cnt;
+  u32 rnd;
+  u32 presetID  = 0xFF;
+  u32 preset_type = 0xFF;
+
+  for( i = 0; i < NELEMS(sc_proxy_to_preset);i++ )
+  {
+    if( sc_proxy_to_preset[i].proxy_type == proxy_type )
+    {
+      preset_type = sc_proxy_to_preset[i].preset_type;
       break;
     }
   }
+  GF_ASSERT(preset_type != 0xFF );
+
+
+  cnt = 0;
+  for( i = 0; i < RESORT_BINARY_GetMax( cp_preset ); i++ )
+  {
+    if( RESORT_BINARY_PRESET_GetData( cp_preset, i, RESORT_BINARY_PRESET_PARAM_TYPE ) == preset_type )
+    {
+      cnt++;
+    }
+  }
+  GF_ASSERT(cnt!=0);
+
+  rnd = RESORT_CITY_DATA_GetRnd( p_city, RESORT_RND_ID_CITY_PRESET, cnt );
+
+  cnt = 0;
+  for( i = 0; i < RESORT_BINARY_GetMax( cp_preset ); i++ )
+  {
+    if( RESORT_BINARY_PRESET_GetData( cp_preset, i, RESORT_BINARY_PRESET_PARAM_TYPE ) == preset_type )
+    {
+      if( cnt == rnd )
+      {
+        presetID = i;
+        break;
+      }
+      cnt++;
+    }
+  }
+  GF_ASSERT(presetID != 0xFF );
 
   //プリセットを設定
-  Resort_Data_Manager_SetProxyPreset( p_wk, RESORT_PROXY_TYPE_FUN, cp_preset, presetID, heapID );
+  Resort_Data_Manager_SetProxyPreset( p_wk, proxy_type, cp_preset, presetID, heapID );
 
   //ファンは主人公のフリーワードをコピーする
+  if( proxy_type == RESORT_PROXY_TYPE_FUN )
   {
     STRCODE strcode[ 64 ];
 

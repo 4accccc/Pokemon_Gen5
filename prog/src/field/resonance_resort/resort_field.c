@@ -39,6 +39,7 @@
 #include "resort_binary.h"
 #include "scrcmd_resort_def.h"
 #include "resort_sys.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //mine
 #include "resort_field.h"
@@ -214,7 +215,7 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
   //汎用ワーク確保
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID, heapID, sizeof(RESORT_FIELD_WORK));
 
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(prof_word) );
+  //GFL_OVERLAY_Load( FS_OVERLAY_ID(prof_word) );
 
 
   //リゾートシステム作成
@@ -240,11 +241,11 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     is_people_add = !RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_IS_TUTORIAL,NULL);
   }
   
-  //街へ来たとき１日１回だけファンが増加する
-  RESORT_FIELD_AppearFun( p_wk->p_sys, p_gamedata, heapID );
-
   //街へ来たとき１日１回だけセレブが出現することがある
   RESORT_FIELD_AppearCeleb( p_wk->p_sys, p_gamedata, heapID );
+
+  //街へ来たとき１日１回だけファンが増加する
+  RESORT_FIELD_AppearFun( p_wk->p_sys, p_gamedata, heapID );
 
   //人物システム
   p_wk->p_people_sys = RESORT_FIELD_PEOPLE_Init( heapID, p_wk->p_sys, GAMEDATA_GetMMdlSys(p_gamedata), FIELDMAP_GetFieldPlayer(p_fieldmap), is_people_add );
@@ -290,7 +291,7 @@ void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap )
   RESORT_FIELD_PEOPLE_Exit( p_wk->p_people_sys );
   RESORT_SYSTEM_Exit( p_wk->p_sys );
 
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(prof_word) );
+  //GFL_OVERLAY_Unload( FS_OVERLAY_ID(prof_word) );
 
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
@@ -3616,7 +3617,7 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
 
     for( i = 0; i < fun_appear_num; i++ )
     {
-      RESORT_DATA_MANAGER_SetProxyFunRandom( p_proxy, p_preset, p_owner, heapID );
+      RESORT_DATA_MANAGER_SetProxyRandom( p_proxy, RESORT_PROXY_TYPE_FUN, p_city, p_preset, p_owner, heapID );
       if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) != RESORT_SETDATA_SET )
       {
         continue;
@@ -3638,4 +3639,63 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
 //-----------------------------------------------------------------------------
 static void RESORT_FIELD_AppearCeleb( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, HEAPID heapID )
 {
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_gamedata);
+  RESORT_BINARY_CITY *p_city_data = RESORT_SYSTEM_GetBinaryCity(p_sys);
+  RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_sys );
+  EVENTWORK *p_evwork = GAMEDATA_GetEventWork( p_gamedata );
+  RESORT_PEOPLE_ALL_DATA *p_all_people  = RESORT_SYSTEM_GetPeopleAllData( p_sys );
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
+  RESORT_BINARY_PRESET *p_preset = RESORT_SYSTEM_GetBinaryPreset( p_sys );
+  RESONANCE_RESORT_SV *p_reso_sv = RESONANCE_RESORT_SV_GetWork(p_sv);
+
+  //殿堂入りしているかつ１日１回フラグ
+  if( EVENTWORK_CheckEventFlag( p_evwork, SYS_FLAG_GAME_CLEAR )
+    && !RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_CELEB_DAY_FLAG,NULL) )
+  {
+    RESORT_PROXY_BUFF *p_proxy_buff = RESORT_SYSTEM_GetProxyBuff(p_sys);
+    int i;
+    BOOL is_ok = TRUE;
+    
+    //セレブがいないとき
+    for( i = 0; i < RESORT_PROXY_BUFF_GetMax(p_proxy_buff); i++ )
+    {
+      RESORT_PROXY_DATA *p_data = RESORT_PROXY_BUFF_GetData( p_proxy_buff, i );
+      if( !RESORT_PROXY_DATA_IsEmpty(p_data) )
+      {
+        if( RESORT_PROXY_DATA_GetData(p_data,RESORT_DATA_PARAM_TYPE,NULL) == RESORT_PROXY_TYPE_CELEB )
+        {
+          is_ok = FALSE;
+          break;
+        }
+      }
+    }
+
+    if( is_ok )
+    {
+
+      u32 lv = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_LV,NULL);
+      u32 city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city_data, lv );
+
+      u32 celeb_per =  RESORT_BINARY_CITY_GetData( p_city_data, city_idx, RESORT_BINARY_CITY_PARAM_CELEB_PER );
+
+      u32 rnd = RESORT_CITY_DATA_GetRnd( p_city, RESORT_RND_ID_CITY_CELEV, 100 );
+      if( rnd < celeb_per )
+      {
+        //セレブいれる
+        RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID) );
+
+        RESORT_DATA_MANAGER_SetProxyRandom( p_proxy, RESORT_PROXY_TYPE_CELEB, p_city, p_preset, p_owner, heapID );
+        
+        if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) == RESORT_SETDATA_SET )
+        {
+          //交換フラグOFF
+          RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_CELEB_TRADE_FLAG, FALSE );
+        }
+        RESORT_PROXY_DATA_Exit( p_proxy );
+
+      }
+    }
+
+    RESORT_CITY_DATA_SetData(p_city,RESORT_CITY_DATA_CELEB_DAY_FLAG,TRUE);
+  }
 }

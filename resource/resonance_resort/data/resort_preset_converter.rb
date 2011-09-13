@@ -22,17 +22,18 @@ MSG_HEADER  = ARGV[1]
 OBJCODE     = ARGV[2]
 SHOP_HEADER = ARGV[3]
 SPOT_HEADER = ARGV[4]
-OUTPUTNAME  = ARGV[5]
+TRADE_HEADER = ARGV[5]
+OUTPUTNAME  = ARGV[6]
 def checkArgument
   if PRESETCSV == nil || MSG_HEADER == nil || OBJCODE == nil ||
-    SHOP_HEADER == nil || SPOT_HEADER == nil || OUTPUTNAME == nil
+    SHOP_HEADER == nil || SPOT_HEADER == nil || OUTPUTNAME == nil || TRADE_HEADER == nil
 
     puts "USAGE\n"
     puts "ruby resort_preset_converter.rb preset_csv msg_header objcode shopid.h spotid.h outputname "
   end
 
   
-  for i in 0...4
+  for i in 0...5
     unless FileTest.exists?(ARGV[i])
       puts "#{ARGV[i]}が見つかりません"
       return false
@@ -63,16 +64,23 @@ PRESET_COL_WANTSPOT   = 7     #列：行きたいお店
 PRESET_COL_INTRO      = 8     #列：挨拶
 PRESET_COL_PHRASE     = 9     #列：口癖
 PRESET_COL_THANKS     =10     #列：感謝
-PRESET_COL_CELEB_GREET      = 11     #列：セレブ挨拶
-PRESET_COL_CELEB_WANTSPOT   = 12     #列：セレブお店行きたい
-PRESET_COL_CELEB_GOOUT      = 13     #列：セレブ行ってきます
-PRESET_COL_CELEB_SHOP_GREET = 14     #列：セレブお店挨拶
-PRESET_COL_CELEB_SHOP_OK    = 15     #列：セレブお店OK
-PRESET_COL_CELEB_SHOP_NG    = 16     #列：セレブお店NG
+PRESET_COL_CELEB_TRADE     =11     #列：セレブ用交換データ
+PRESET_COL_CELEB_GREET      = 12     #列：セレブ挨拶
+PRESET_COL_CELEB_WANTSPOT   = 13     #列：セレブお店行きたい
+PRESET_COL_CELEB_GOOUT      = 14     #列：セレブ行ってきます
+PRESET_COL_CELEB_SHOP_GREET = 15     #列：セレブお店挨拶
+PRESET_COL_CELEB_SHOP_OK    = 16     #列：セレブお店OK
+PRESET_COL_CELEB_SHOP_NG    = 17     #列：セレブお店NG
 
-PRESET_COL_CELEB_MSG_START  = PRESET_COL_CELEB_GREET     #列：セレブメッセージ開始
-PRESET_COL_CELEB_MSG_END    = PRESET_COL_CELEB_SHOP_NG    #列：セレブメッセージ終了
-def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h )
+PRESET_COL_CELEB_TRADE_GREET  = 18   #列：セレブ交換誘い文
+PRESET_COL_CELEB_TRADE_BYE    = 19   #列：セレブ交換またね
+PRESET_COL_CELEB_TRADE_SELECT = 20   #列：セレブ交換選択文
+PRESET_COL_CELEB_TRADE_NG     = 21   #列：セレブ交換違うよ文
+PRESET_COL_CELEB_TRADE_OK     = 22   #列：セレブ交換OK文
+
+PRESET_COL_CELEB_MSG_START  = PRESET_COL_CELEB_GREET      #列：セレブメッセージ開始
+PRESET_COL_CELEB_MSG_END    = PRESET_COL_CELEB_TRADE_OK    #列：セレブメッセージ終了
+def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h, trade_h )
 
   objdata = HeaderDataArray.new
   objdata.load( code_h )
@@ -85,6 +93,9 @@ def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h )
 
   spotdata = HeaderDataArray.new
   spotdata.load( spot_h )
+
+  tradedata = HeaderDataArray.new
+  tradedata.load( trade_h )
 
   for row in PRESET_ROW_START...csv.row_length-1
     
@@ -158,6 +169,13 @@ def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h )
     end
 
     if $define_hash[ type ] == "セレブ特定出現"
+      trade  = csv.get( row, PRESET_COL_CELEB_TRADE )
+      begin
+        data.write_u16( tradedata.search( "#{trade}", "#{row}行の交換ポケ" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end
+
       for msg in PRESET_COL_CELEB_MSG_START...PRESET_COL_CELEB_MSG_END+1
         msgid  = csv.get( row, msg )
         begin
@@ -167,6 +185,7 @@ def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h )
         end
       end
     else
+      data.write_u16(0)
       for msg in PRESET_COL_CELEB_MSG_START...PRESET_COL_CELEB_MSG_END+1
         data.write_u16(0)
       end
@@ -207,7 +226,7 @@ begin
                     "#レゾナンスリゾートROM内人物データDの定義情報です",
                     "Toru=Nagihashi" )
   #コンバート
-  convertPreset( csv, data, header, OBJCODE, MSG_HEADER, SHOP_HEADER, SPOT_HEADER )
+  convertPreset( csv, data, header, OBJCODE, MSG_HEADER, SHOP_HEADER, SPOT_HEADER, TRADE_HEADER )
 
   #ヘッダ書き込み
   header.genelate( "#{OUTPUTNAME}.h" )

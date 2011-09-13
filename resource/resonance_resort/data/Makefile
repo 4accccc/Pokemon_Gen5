@@ -36,6 +36,7 @@ bmodelfile 	= ../../fldmapdata/build_model/output/buildmodel_indoor.naix
 fieldevent	= ../../fldmapdata/eventdata/tmp/c16.h
 landpatch 	= ../../fldmapdata/land_data_patch/land_data_patch_def.h
 objcode 		= ../../fldmmdl/fldmmdl_objcode.h
+fldtrade		= ../../fld_trade/fld_trade_list.h
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -120,7 +121,7 @@ $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(
 	ruby $(SPOTCONV) $(targetspot).csv $(msgfile) $(targetspot)
 	ruby $(NPCCONV) $(targetnpc).csv $(targetkutikomi).csv $(msgfile) $(objcode) $(targetnpc) $(targetkutikomi)
 	ruby $(CITYCONV) $(targetcity).csv $(targetpresent).h $(msgfile) $(targetcity)
-	ruby $(PRESETCONV) $(targetpreset).csv $(msgfile) $(objcode) $(targetshop).h $(targetspot).h $(targetpreset)
+	ruby $(PRESETCONV) $(targetpreset).csv $(msgfile) $(objcode) $(targetshop).h $(targetspot).h $(fldtrade) $(targetpreset)
 	-rm -f *.csv
 endif
 

@@ -52,6 +52,7 @@
 #define RESORT_GET_PARAM_NEON_SEC_SEX       (36)
 #define RESORT_GET_PARAM_CITYNAME_SEC_INDEX   (37)
 #define RESORT_GET_PARAM_NEON_SEC_INDEX       (38)
+#define RESORT_GET_PARAM_CELEB_TRADE_NO       (39)
 
 //RESORT_GET_PARAM_CHECK_SCOUTの戻り値
 #define RESORT_CHECK_SCOUT_YES          (0) //いいよ
@@ -81,6 +82,7 @@
 #define RESORT_MY_PARAM_IS_FEVER           (19)
 #define RESORT_MY_PARAM_EV_PRIZE           (20)
 #define RESORT_MY_PARAM_EV_PRIZE_END       (21)
+#define RESORT_MY_PARAM_CELEB_TRADE_FLAG   (22)
 
 //_RESORT_JOB_CHANGE用
 #define RESORT_JOBCHANGE_RESIDENT           (0)
@@ -160,6 +162,7 @@
 #define RESORT_TOURIST_ITEM_MSGID         (57) //アイテムわたし
 #define RESORT_TOURIST_BYE_MSGID          (58) //またね
 #define RESORT_TOURIST_JOY_MSGID          (59) //招待喜び
+#define RESORT_TOURIST_SHOP_GREET_MSGID   (60) //案内でお店に来たときに挨拶文
   //住人
 #define RESORT_RESIDENT_GREET_MSGID           (80)  //挨拶
 #define RESORT_RESIDENT_BYE_MSGID             (81)  //またね
@@ -222,6 +225,11 @@
 
   //セレブ
 #define RESORT_CELEB_GREET_MSGID              (170)
+#define RESORT_CELEB_TRADE_GREET_MSGID        (171)
+#define RESORT_CELEB_TRADE_BYE_MSGID          (172)
+#define RESORT_CELEB_TRADE_SELECT_MSGID       (173)
+#define RESORT_CELEB_TRADE_NG_MSGID           (174)
+#define RESORT_CELEB_TRADE_OK_MSGID           (175)
 
 //_RESORT_SEARCH_RECEPTION用
 #define RESORT_SEARCH_PROXY_GTS               (0)

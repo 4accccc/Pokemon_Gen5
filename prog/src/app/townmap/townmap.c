@@ -3705,7 +3705,7 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
       const STRCODE *cp_code = (const STRCODE *)RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, NULL );
       GFL_STR_SetStringCode( p_wk->p_strbuf, cp_code );
 
-      is_ja_ok = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_IS_TUTORIAL, NULL );
+      is_ja_ok = !RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_IS_TUTORIAL, NULL );
     }
     else
     {
