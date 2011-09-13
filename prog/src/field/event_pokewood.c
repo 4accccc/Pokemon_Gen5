@@ -531,87 +531,27 @@ static void deletePokewoodBSP( BATTLE_SETUP_PARAM * bsp )
 //============================================================================================
 //============================================================================================
 //-----------------------------------------------------------------------------
+/**
+ * @brief 録画データを上映用に書き直す
+ */
 //-----------------------------------------------------------------------------
-typedef struct {
-  u8 bufID;
-  BATTLE_SETUP_PARAM * bsp;
-  GAMEDATA * gamedata;
-  HEAPID heapID;
-
-  u16 saveSeq0;
-  u16 saveSeq1;
-
-}POKEWOOD_SAVE_EVENT_WORK, PSEW;
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work )
+static void rewritePokewoodRec( GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp, HEAPID heapID )
 {
-  PSEW * psew = (PSEW *)work;
-  u8 bufID = psew->bufID;
+  // 指定シナリオのプレイ済みフラグを立てる
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
+  POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( ps, bsp->pokewoodSenario);  // シナリオ撮影済みフラグを立てる
 
-  switch ( *seq )
-  {
-  case 0:
-    // 指定シナリオのプレイ済みフラグを立てる
-    {
-      POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(psew->gamedata);
-      POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( ps, psew->bsp->pokewoodSenario);  // シナリオ撮影済みフラグを立てる
-    }
+  BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
+  // BATTLE_SETUP_PARAMを上映用のトレーナーデータに書き換える
+  dataMakeEncountTrainer( bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, bsp->tr_data[BTL_CLIENT_ENEMY1], 
+                          bsp->playerStatus[0], heapID );
+  bsp->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( heapID );
+  dataMakeMyTrainer( bsp->pokewoodSenario, bsp->tr_data[BTL_CLIENT_PLAYER], bsp->playerStatus[0], heapID );
+  bsp->tr_data[BTL_CLIENT_ENEMY1]->tr_id   = 1;
 
-    /**
-     *  BATTLE_SETUP_PARAM の録画データセーブ開始
-     */
-    OS_Printf(" load pokewood player sex=%d\n ", MyStatus_GetMySex(psew->bsp->playerStatus[0]));
-    BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
-    // BATTLE_SETUP_PARAMを上映用のトレーナーデータに書き換える
-    dataMakeEncountTrainer( psew->bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, psew->bsp->tr_data[BTL_CLIENT_ENEMY1], 
-                            psew->bsp->playerStatus[0], psew->heapID );
-    psew->bsp->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( psew->heapID );
-    dataMakeMyTrainer( psew->bsp->pokewoodSenario, psew->bsp->tr_data[BTL_CLIENT_PLAYER], psew->bsp->playerStatus[0], psew->heapID );
-    psew->bsp->tr_data[BTL_CLIENT_ENEMY1]->tr_id   = 1;
-
-    POKEWOOD_REC_ConvertRecToShow( psew->bsp, psew->heapID );
-    BattleRec_StoreSetupParam( psew->bsp );
-    psew->saveSeq0 = 0;
-    psew->saveSeq1 = 0;
-    OS_Printf("ポケウッドセーブ開始\n");
-    (*seq) ++;
-    break;
-
-  case 1:
-    /**
-     *  BATTLE_SETUP_PARAM の録画データセーブ終了待ち
-     */
-#if 0
-    {
-      SAVE_RESULT result;
-      result = POKEWOOD_REC_Save(psew->gamedata, psew->heapID, bufID, &psew->saveSeq0 );
-      switch( result ){
-      case SAVE_RESULT_OK:
-        OS_Printf("save result=%d\n", result);
-        (*seq)++;
-        break;
-      case SAVE_RESULT_NG:
-        OS_Printf("save result=%d\n", result);
-        (*seq)++;
-        break;
-
-      default:
-        break;
-      }
-    }
-    break;
-#else
-    ;;;;;/* do nothing */;;;;;
-    /* FALL THROUGH */
-#endif
-
-  case 2:
-    BattleRec_UnloadToolModule();
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
+  POKEWOOD_REC_ConvertRecToShow( bsp, heapID );
+  BattleRec_StoreSetupParam( bsp );
+  BattleRec_UnloadToolModule();
 }
 
 //----------------------------------------------------------------------------------
@@ -681,22 +621,7 @@ static void _delete_pkwd_briefing_param( PKWD_BRIEFING_PARAM *param )
   // 現状なにもなし
   return;
 }
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-static GMEVENT * createPokewoodSaveEvent(
-    GAMESYS_WORK * gsys, u8 bufID, BATTLE_SETUP_PARAM * bsp, HEAPID heapID )
-{
-  GMEVENT * event;
-  PSEW * psew;
-  event = GMEVENT_Create( gsys, NULL, pokewoodSaveEvent, sizeof( PSEW ) );
-  psew = GMEVENT_GetEventWork( event );
-  GFL_STD_MemClear( psew, sizeof(PSEW) );
-  psew->bufID = bufID;
-  psew->bsp = bsp;
-  psew->heapID = heapID;
-  psew->gamedata = GAMESYSTEM_GetGameData( gsys );
-  return event;
-}
+
 //============================================================================================
 //============================================================================================
 
@@ -895,9 +820,7 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
   case PW_REC_SEQ_SAVE:
     if(pbew->bp->result!=BTL_RESULT_RUN)
     { // 逃げてなかったらセーブする
-      u8 bufID = prew->rec_id;
-      GMEVENT * new_event = createPokewoodSaveEvent( gsys, bufID, pbew->bp, GFL_HEAPID_APP );
-      GMEVENT_CallEvent( event, new_event );
+      rewritePokewoodRec( gamedata, pbew->bp, prew->heapID );
     }
     (*seq)++;
     break;
@@ -943,8 +866,7 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static GMEVENT * createPokewoodBattleEvent(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, PREW * prew )
+static GMEVENT * createPokewoodBattleEvent( GAMESYS_WORK * gsys, PREW * prew )
 {
   GMEVENT * event;
   PBEW * pbew;
@@ -976,7 +898,6 @@ static GMEVENT_RESULT pokewoodCallEvent( GMEVENT * event, int *seq, void * work 
   GAMESYS_WORK * gsys = prew->gsys;
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   PKWDSYS * pkwdsys = *(GAMEDATA_GetPKWDSysPointer( gamedata ) );
-  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   HEAPID heapID = prew->heapID;
 
   switch ( *seq )
@@ -987,7 +908,7 @@ static GMEVENT_RESULT pokewoodCallEvent( GMEVENT * event, int *seq, void * work 
     //仮：本来はシナリオなどから反映する
     {
       GMEVENT * call_event;
-      call_event = createPokewoodBattleEvent( gsys, fieldmap, prew );
+      call_event = createPokewoodBattleEvent( gsys, prew );
       GMEVENT_CallEvent( event, call_event );
     }
     *seq = PRE_SEQ_END;
@@ -1026,7 +947,6 @@ GMEVENT * POKEWOOD_EVENT_Rec( GAMESYS_WORK *gsys, void * param )
   event = GMEVENT_Create( gsys, NULL, pokewoodCallEvent, sizeof(PREW) );
   prew = GMEVENT_GetEventWork( event );
   prew->gsys      = gsys;
-  //prew->rec_id    = PKWD_REC_POS_TMP; //仮：とりあえず最後の場所をテンポラリとして使う
   prew->rec_id    = rec_param->rec_pos; // 録画NO
   prew->SenarioNo = rec_param->scenario_no;
   prew->heapID    = HEAPID_PROC;
