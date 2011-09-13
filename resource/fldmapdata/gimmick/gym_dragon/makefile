@@ -2,12 +2,13 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	saitou tanoue_reiko unno fuchino onoue_masayuki nakamura_akira
+USERS	=	saitou tanoue_reiko unno fuchino onoue_masayuki nakamura_akira ohkubo_tomohiko
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = gym_dragon
+targetname_w = gym_dragon_w
+targetname_b = gym_dragon_b
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -30,7 +31,8 @@ include data_list
 #------------------------------------------------------------------------------
 #データ
 #------------------------------------------------------------------------------
-ARCLIST = arc_list.txt
+ARCLIST_W = arc_list_w.txt
+ARCLIST_B = arc_list_b.txt
 
 #------------------------------------------------------------------------------
 #コンバートファイル
@@ -47,12 +49,6 @@ DATA_CDAT_FILE = gym_dragon_trace_data.cdat
 HEIGHT_DATA_CDAT_FILE = gym_dragon_height_data.cdat
 ID_HEADER_FILE = gym_dragon_trace_data_id.h
 DEF_DATA_FILE = gym_dragon_gym_data_def.h
-
-#LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
-#コンバート対象者のみ、中間ファイル削除
-#ifeq	($(CONVERTUSER),true)	
-#LDIRT_CLEAN += $(targetname).narc $(targetname).naix arc_result.txt *.nsb* *.bin
-#endif
 
 LINCLUDES	= $(NITROSDK_ROOT)/include
 LINCLUDES	+= $(dir $<)
@@ -71,14 +67,18 @@ EXCELCONV = ../../../../tools/exceltool/xls2xml/tab_out_direct_sheet.rb
 
 
 
-do-build: $(TARGETDIR)/$(targetname).narc $(DATA_CDAT_FILE) $(HEIGHT_DATA_CDAT_FILE) $(DEF_DATA_FILE)
+do-build: $(TARGETDIR)/$(targetname_b).narc $(TARGETDIR)/$(targetname_w).narc $(DATA_CDAT_FILE) $(HEIGHT_DATA_CDAT_FILE) $(DEF_DATA_FILE)
 
 clean:
-	@rm -f $(TARGETDIR)/$(targetname).narc
-	@rm -f $(TARGETDIR)/$(targetname).naix
+	@rm -f $(TARGETDIR)/$(targetname_w).narc
+	@rm -f $(TARGETDIR)/$(targetname_w).naix
+	@rm -f $(TARGETDIR)/$(targetname_b).narc
+	@rm -f $(TARGETDIR)/$(targetname_b).naix
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
-	@rm -f $(targetname).narc
-	@rm -f $(targetname).naix
+	@rm -f $(targetname_w).narc
+	@rm -f $(targetname_w).naix
+	@rm -f $(targetname_b).narc
+	@rm -f $(targetname_b).naix
 	@rm -f *.nsb*
 	@rm -f *.bin
 	@rm -f $(DATA_CSV_FILE)
@@ -93,10 +93,16 @@ endif
 
 
 #コピー実行する
-$(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
-	@echo copying $(targetname).narc
-	@$(COPY) $(targetname).narc $(TARGETDIR)
-	@$(COPY) $(targetname).naix $(TARGETDIR)
+$(TARGETDIR)/$(targetname_w).narc:  $(targetname_w).narc 
+	@echo copying $(targetname_w).narc
+	@$(COPY) $(targetname_w).narc $(TARGETDIR)
+	@$(COPY) $(targetname_w).naix $(TARGETDIR)
+
+#コピー実行する
+$(TARGETDIR)/$(targetname_b).narc:  $(targetname_b).narc 
+	@echo copying $(targetname_b).narc
+	@$(COPY) $(targetname_b).narc $(TARGETDIR)
+	@$(COPY) $(targetname_b).naix $(TARGETDIR)
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
@@ -149,8 +155,13 @@ $(DEF_DATA_FILE): $(DEF_CSV_FILE) $(DEF_DATACONV)
 	@ruby $(ICA_CNV) -srt $< $@
 
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(DATA_LIST)
-	@nnsarc -i -cl -l -n $(targetname).narc -S $(ARCLIST) > arc_result.txt
-	$(NAIXCUT) $(targetname).naix
+$(targetname_b).narc: $(DATA_LIST)
+	@nnsarc -i -cl -l -n $(targetname_b).narc -S $(ARCLIST_B) > arc_result.txt
+	$(NAIXCUT) $(targetname_b).naix
+
+# コピー先のnarcが古い場合実行する
+$(targetname_w).narc: $(DATA_LIST)
+	@nnsarc -i -cl -l -n $(targetname_w).narc -S $(ARCLIST_W) > arc_result.txt
+	$(NAIXCUT) $(targetname_w).naix
 
 endif

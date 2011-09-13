@@ -155,84 +155,167 @@ enum
 };
 
 //リソースデータ
+#if PM_VERSION == VERSION_B2
 static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
 {
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_hero_dra_move_nsbmd,
+    NARC_gym_dragon_b_hero_dra_move_b_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_hero_dra_move_nsbca,
+    NARC_gym_dragon_b_hero_dra_move_nsbca,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_hero_dra_move_nsbma,
+    NARC_gym_dragon_b_hero_dra_move_nsbma,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_hero_dra_move_nsbta,
+    NARC_gym_dragon_b_hero_dra_move_nsbta,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_hero_dra_move_nsbva,
+    NARC_gym_dragon_b_hero_dra_move_nsbva,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_hero_dra_move_nsbtp,
+    NARC_gym_dragon_b_hero_dra_move_nsbtp,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_hero_dra_sign_nsbtp,
+    NARC_gym_dragon_b_hero_dra_sign_nsbtp,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_emy_dra_body01_nsbmd,
+    NARC_gym_dragon_b_emy_dra_body01_b_nsbmd,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_emy_dra_body02_nsbmd,
+    NARC_gym_dragon_b_emy_dra_body02_b_nsbmd,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_emy_dra_body03_nsbmd,
+    NARC_gym_dragon_b_emy_dra_body03_b_nsbmd,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_emy_dra_body04_nsbmd,
+    NARC_gym_dragon_b_emy_dra_body04_b_nsbmd,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_emy_dra_body01_nsbca,
+    NARC_gym_dragon_b_emy_dra_body01_nsbca,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_emy_dra_body02_nsbca,
+    NARC_gym_dragon_b_emy_dra_body02_nsbca,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_emy_dra_body03_nsbca,
+    NARC_gym_dragon_b_emy_dra_body03_nsbca,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_emy_dra_body04_nsbca,
+    NARC_gym_dragon_b_emy_dra_body04_nsbca,
     GFL_G3D_UTIL_RESARC
   },
 };
+#else
+static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
+{
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_hero_dra_move_w_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_hero_dra_move_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_hero_dra_move_nsbma,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_hero_dra_move_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_hero_dra_move_nsbva,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_hero_dra_move_nsbtp,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_hero_dra_sign_nsbtp,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_emy_dra_body01_w_nsbmd,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_emy_dra_body02_w_nsbmd,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_emy_dra_body03_w_nsbmd,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_emy_dra_body04_w_nsbmd,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_emy_dra_body01_nsbca,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_emy_dra_body02_nsbca,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_emy_dra_body03_nsbca,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_w_emy_dra_body04_nsbca,
+    GFL_G3D_UTIL_RESARC
+  },
+};
+
+#endif
+
 
 // アニメ設定
 static const GFL_G3D_UTIL_ANM sc_g3d_hero_dragon_anm[] = 

@@ -54,7 +54,7 @@ typedef struct {
 // 移動用データファイル一覧
 // =================================================
 static const ARCDATID sc_hero_move_data[] =
-{
+#if PM_VERSION == VERSION_B2
 EOS
 
 
@@ -88,10 +88,20 @@ data.each_with_index{|line,i|
 }
 # 書き込み
 arc_name_list.uniq!
+out_file.puts "{"
 arc_name_list.each{|name|
-  out_file.puts " NARC_gym_dragon_%s_bin,"%[name]
+  out_file.puts " NARC_gym_dragon_b_%s_bin,"%[name]
 }
 out_file.puts "};"
+
+out_file.puts "#else"
+out_file.puts "{"
+arc_name_list.each{|name|
+  out_file.puts " NARC_gym_dragon_w_%s_bin,"%[name]
+}
+out_file.puts "};"
+out_file.puts "#endif"
+
 out_file.puts "#define HERO_MOVE_DATA_MAX  (NELEMS(sc_hero_move_data))"
 
 out_file.puts <<EOS

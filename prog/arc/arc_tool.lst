@@ -219,7 +219,8 @@
   ARCID_ZUKAN_GRA "zukan_gra.narc"  # 図鑑グラフィック
   ARCID_DEMO3D_GRA "demo3d.narc" # 3Dデモ再生アプリ
   ARCID_DEMO3D_2DGRA "demo3d_2dgra.narc" # 3Dデモ再生アプリ2Dリソース
-  ARCID_GYM_DRAGON  "fieldmap/gym_dragon.narc"  #ドラゴンジム
+  $VERSION_W2  ARCID_GYM_DRAGON "fieldmap/gym_dragon_w.narc"  # ドラゴンジム
+  $VERSION_B2  ARCID_GYM_DRAGON "fieldmap/gym_dragon_b.narc"  # ドラゴンジム
   ARCID_SCR_CAM_PRM "fieldmap/scr_cam_prm.narc" #スクリプトカメラパラメータ
   ARCID_CORP        "corp.narc"   #コーポレーション表記
   ARCID_FLD_TRADE_POKE "fld_trade_poke.narc"  #ゲーム内交換ポケモンデータ

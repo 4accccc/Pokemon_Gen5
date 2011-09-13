@@ -19,7 +19,12 @@
 
 #include "field/field_const.h"          //for FIELD_CONST_GRID_FX32_SIZE
 
-#include "arc/fieldmap/gym_dragon.naix"
+#if PM_VERSION == VERSION_B2
+#include "arc/fieldmap/gym_dragon_b.naix"
+#else
+#include "arc/fieldmap/gym_dragon_w.naix"
+#endif
+
 #include "system/main.h"                //for HEAPID_FIELDMAP
 #include "script.h"                     //for SCRIPT_CallScript
 
