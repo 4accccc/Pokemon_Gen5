@@ -33,7 +33,7 @@ struct _POKEWOOD_SAVEDATA{
   s16 star_rank_announce;                     ///< スターポイントが上がった事を告知したか
   u8  title_no[POKEWOOD_SHOWING_MAX];         ///< 上映中の映画の看板ナンバー
   
-  u8 array[308];                              ///<
+  u8 array[148];                              ///<
 };
 
 //---------------------------------------------------------------------------
@@ -226,9 +226,14 @@ void POKEWOOD_SAVEDATA_SetSuccessFlag( POKEWOOD_SAVEDATA *sv, int no, BOOL value
  * @param   data  POKEWOOD_BOXOFFICE_RECORD
  */
 //=============================================================================================
-void POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, POKEWOOD_BOXOFFICE_RECORD *data )
+void POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no, POKEWOOD_BOXOFFICE_RECORD *data )
 {
-  return;
+  // 興行収入が上回っている場合はランキングに残す
+  if(data->profits >= sv->boxoffice_record[no].profits){
+    sv->boxoffice_record[no]             = *data;
+    sv->boxoffice_record[no].new_flag    = 0;
+    sv->boxoffice_record[no].update_flag = 1;
+  }
 }
 
 //=============================================================================================

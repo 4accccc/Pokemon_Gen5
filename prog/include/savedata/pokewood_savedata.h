@@ -27,10 +27,13 @@ enum{
 
 /// ポケウッド興行成績データ構造体定義
 typedef struct {
-  int     profits;                          // 収益             4
-  u16     pokeicon[POKEWOOD_MYPOKE_NUM];    // ポケモンアイコン 2x6
-                                            // 計 12+4 = 16
-//  STRCODE nickname[BUFLEN_POKEMON_NAME];  // ポケモン名 8+12*2=32
+  int     profits;                        // 収益             4
+  u16     pokeicon[POKEWOOD_MYPOKE_NUM];  // ポケモンアイコン 2x6
+  u8      new_flag;                       // 新着フラグ(0:閲覧してない, 1:閲覧済み）
+  u8      update_flag;                    // 更新フラグ(0:更新無し,1:更新アリ）
+  u8      pokeicon_star_bit;              // ポケモンアイコンにスターをつけるかどうか(0-5bitが対応）
+  u8      etc;                            // 余り
+                                          // 計 12+4+2 = 18
 }POKEWOOD_BOXOFFICE_RECORD;
 
 
@@ -100,7 +103,7 @@ extern void POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( POKEWOOD_SAVEDATA *sv, int 
  */
 //=============================================================================================
 extern const POKEWOOD_BOXOFFICE_RECORD *POKEWOOD_SAVEDATA_GetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no );
-extern void  POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, POKEWOOD_BOXOFFICE_RECORD *data );
+extern void  POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no, POKEWOOD_BOXOFFICE_RECORD *data );
 
 
 
