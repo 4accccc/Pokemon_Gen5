@@ -514,10 +514,6 @@ enum{
   AUDIENCE_SEQ_APPLAUSE,      // 拍手
 };
 
-// 6/17版
-#define __DEBUG_AUDIENCE__
-//#undef  __DEBUG_AUDIENCE__
-
 //============================================================================================
 /**
  *  構造体宣言
@@ -1682,14 +1678,22 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_BATTLE_RECORDER_PARAM* bibrp = ( BTLV_INPUT_BATTLE_RECORDER_PARAM * )param;
       STRBUF* msg_src = NULL;
       int i;
-
+      BOOL bflg=FALSE;
+      
+      // 上映モードの場合
+      if( BTL_MAIN_GetPokewoodMode(BTLV_EFFECT_GetMainModule())==BTL_POKEWOOD_SHOW ){
+        bflg = TRUE;
+      }
+      //
       for( i = 0 ; i < 3 ; i++ )
       {
         biw->button_exist[ i ] = 1;
       }
-#ifndef __DEBUG_AUDIENCE__		// コメントアウト
-      BTLV_INPUT_CreateBattleRecorderScreen( biw, bibrp );
-#endif
+      // 上映中は除く
+      if(bflg == FALSE){
+        BTLV_INPUT_CreateBattleRecorderScreen( biw, bibrp );
+      }
+      
       switch( bibrp->stop_flag ){
       case BTLV_INPUT_BR_STOP_KEY:    //キーによる中断
       case BTLV_INPUT_BR_STOP_BREAK:  //データ破壊による中断
@@ -1724,22 +1728,23 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
       else
       {
-#ifndef __DEBUG_AUDIENCE__		// スクロールしてしまうのでコメントアウト
-        if( bibrp->stop_flag == BTLV_INPUT_BR_STOP_NONE )
-        {
-          //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, 0 );
-          //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, TTS2BR_FRAME0_SCROLL_Y );
-          SetupSetScroll( biw, GFL_BG_FRAME0_S, 0, TTS2BR_FRAME0_SCROLL_Y,
+        // 上映中は除く(スクロールしてしまう)
+        if(bflg == FALSE){
+          if( bibrp->stop_flag == BTLV_INPUT_BR_STOP_NONE )
+          {
+            //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, 0 );
+            //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, TTS2BR_FRAME0_SCROLL_Y );
+            SetupSetScroll( biw, GFL_BG_FRAME0_S, 0, TTS2BR_FRAME0_SCROLL_Y,
                           BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
-        }
-        else
-        {
-          //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, TTS2BR_FRAME0_SCROLL_X );
-          //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, 0 );
-          SetupSetScroll( biw, GFL_BG_FRAME0_S, TTS2BR_FRAME0_SCROLL_X, 0,
+          }
+          else
+          {
+            //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, TTS2BR_FRAME0_SCROLL_X );
+            //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, 0 );
+            SetupSetScroll( biw, GFL_BG_FRAME0_S, TTS2BR_FRAME0_SCROLL_X, 0,
                           BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
+          }
         }
-#endif
         if( msg_src )
         {
           PRINTSYS_Print( biw->bmp_data, BR_MESSAGE_X, BR_MESSAGE_Y, msg_src, biw->font );
@@ -2917,26 +2922,34 @@ static  void  BTLV_INPUT_DeleteAudienceObj( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
 {
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
-
+  BOOL	bflg=FALSE;
+  
+  // 上映モードの場合
+  if( BTL_MAIN_GetPokewoodMode(BTLV_EFFECT_GetMainModule())==BTL_POKEWOOD_SHOW ){
+    bflg = TRUE;
+  }
+  
   switch( ttw->seq_no ){
   case 0:
-#ifndef __DEBUG_AUDIENCE__		// 保留
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0f_NSCR,ttw->biw),
+    // 上映中は除く
+    if(bflg == FALSE){
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0f_NSCR,ttw->biw),
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1f_NSCR,ttw->biw),
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1f_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
-    SePlayOpen( ttw->biw );
-    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
-    //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
-    //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
-    //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
+      SePlayOpen( ttw->biw );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+      //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+      //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+      //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+      //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+      SetupSetScroll( ttw->biw, GFL_BG_FRAME1_S, TTS2C_FRAME1_SCROLL_X, TTS2C_FRAME1_SCROLL_Y,
                     BG_VISIBLE_ON, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
-    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
-    SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
-    PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
-#endif
+      SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
+      SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
+      PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    }
+    //
     ttw->seq_no++;
     break;
   case 1:
@@ -2956,14 +2969,15 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
       //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
-#ifndef __DEBUG_AUDIENCE__		// スクロールしてしまうので保留
-      SetupSetScroll( ttw->biw, GFL_BG_FRAME0_S, ttw->scr_x, ttw->scr_y,
+      //
+      // 上映中は除く(スクロールしてしまうため)
+      if(bflg == FALSE){
+        SetupSetScroll( ttw->biw, GFL_BG_FRAME0_S, ttw->scr_x, ttw->scr_y,
                       BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
-#endif
+      }
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
 
     if(BTL_MAIN_GetPokewoodMode(BTLV_EFFECT_GetMainModule())==BTL_POKEWOOD_SHOW){
-#ifndef __DEBUG_AUDIENCE__		// 新データのため保留
         // BGリソース転送
 //        GFL_ARCHDL_UTIL_TransVramBgCharacter( ttw->biw->handle, NARC_battgra_wb_pkwd_movie_NCGR,
 //                                            GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
@@ -2973,7 +2987,6 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
 //                                         GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
         // OBJリソース転送・登録
 //        BTLV_INPUT_CreateAudienceObj( ttw->biw );
-#endif
       }
     }
     break;
