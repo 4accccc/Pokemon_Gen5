@@ -11,6 +11,9 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d02r0101.h"
   .include  "d02r0101.h"
+  .include  "d02r0101_def.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,7 +24,297 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_bg_d02r0101_stone_01
 _EVENT_DATA		ev_bg_d02r0101_sign1_01
+_EVENT_DATA		ev_pos_d02r0101_swleader1_01
+_EVENT_DATA		ev_pos_d02r0101_swleader1_02
+_EVENT_DATA		ev_d02r0101_swleader1_03
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/**************************************************************/
+/*		POS：チェレン連れ歩き						  */
+/**************************************************************/
+EVENT_START		ev_pos_d02r0101_swleader1_01
+    //連れ歩いている
+  IF FLAG_ON(FE_D02R0101_PAIR_01) THEN
+    _CALL ev_d02r0101_pairend_01
+  
+  //連れ歩いていない
+  ELSE
+    _CALL ev_d02r0101_pairstart_01
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/*		POS：チェレン連れ歩き						  */
+/**************************************************************/
+EVENT_START		ev_pos_d02r0101_swleader1_02
+  
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  
+  //連れ歩き解除
+  _PAIR_TRAINER_FREE( SCRID_D02R0101_SWLEADER1_03, MV_DMY )
+  
+  //==================================//
+  //連れ歩き終了フラグ
+  _FLAG_RESET(FE_D02R0101_PAIR_01)
+  //==================================//
+  
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 43,30, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_swleader1_meet_sage5 )
+  _OBJ_ANIME_WAIT()
+  
+  //アスラフィールド上に配置
+  _OBJ_ADD_EX( 43, 41, DIR_UP, MMDL_ID_EVENTOBJ_00, SAGE5, MV_DMY )
+  
+  //アニメ：アスラ登場
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 43,32, FORCE_TYPE_NOT, 4, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //アスラ：しょあ！
+  _GIZAWIN_OBJMSG_POS( msg_d02r0101_sage5_01 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _GIZAWIN_CLOSE()
+  
+  //アニメ：主人公・チェレン振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_sage5 )
+  _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_player_look_sage5 )
+  _OBJ_ANIME_WAIT()
+  
+  //アスラ：わしは
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //チェレン：プラズマ団は
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_14, D02R0101_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アスラ：まてまて！
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  
+  //アスラ：あやまちて　あらためざる
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アスラ退場
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_sage5_bye )
+  _TIME_WAIT( 16 )
+  //アニメ：主人公・チェレン見送り
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：……なんだろう
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_15, D02R0101_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン主人公を見る
+  _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：それはともかく
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_16, D02R0101_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】アイテム入手処理：パワーアンクル
+	_ITEM_EVENT_KEYWAIT(ITEM_PAWAAANKURU, 1)
+	
+	//チェレン：じゃ　また！
+	_BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_17, D02R0101_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン退場
+  _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_swleader1_bye )
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン・アスラ動作モデル削除
+  _OBJ_DEL( D02R0101_SWLEADER1_01 )
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
+  //==================================//
+  //連れ歩き終了フラグ
+  _FLAG_RESET(FE_D02R0101_PAIR_01)
+  //D02R0101 POS無効
+  $WK_SCENE_D02R0101_SWLEADER1 = 1
+  _FLAG_SET( FV_D02R0101_SWLEADER1_01 )
+  //==================================//
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	主人公・チェレン：アスラに振り向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_look_sage5
+  _ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：七賢人と出会う
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader1_meet_sage5
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader1_bye
+  _ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage5_bye
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/*		チェレン話しかけ
+/**************************************************************/
+EVENT_START		ev_d02r0101_swleader1_03
+  _TALK_START_SE_PLAY()
+  
+   //主人公・チェレン名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+
+  //話しかけるごとに0～4のセリフを順番に表示（4で終わり）
+  $SCWK_TEMP0 = msg_d02r0101_swleader1_05
+  $SCWK_TEMP0 += $WK_OTHER_D02R0101_PAIR
+  
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  IF $WK_OTHER_D02R0101_PAIR != 4 THEN
+    $WK_OTHER_D02R0101_PAIR += 1
+  ENDIF
+  
+EVENT_END
+
+//連れ歩き開始スクリプト
+ev_d02r0101_pairstart_01:
+
+  //主人公・チェレン名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  IF FLAG_OFF( FE_D02R0101_SWLEADER1_FIRST ) THEN
+    //一緒に行こう！（初回会話）
+    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_01, D02R0101_SWLEADER1_01, POS_DEFAULT )
+  ELSE
+    //ヤグルマの森で（離脱後会話）
+    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_12, D02R0101_SWLEADER1_01, POS_DEFAULT )
+  ENDIF
+  
+   {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_03, D02R0101_SWLEADER1_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    IF $LCW_POSX != 69 THEN
+    $LCW_POSX -= 1
+      _OBJ_ANIME_AUTO( D02R0101_SWLEADER1_01,LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+      _OBJ_ANIME_WAIT()
+      _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_staystep_r)
+      _OBJ_ANIME_WAIT()
+    ENDIF
+    
+    //【仮】連れ歩き開始（連れ歩きIDが仮）
+    _PAIR_TRAINER_SET( D02R0101_SWLEADER1_01, PAIR_ID_D02R0101_SWLEADER1, PAIR_TYPE_ONE_ZONE, TRID_SWLEADER1_1_02, PAIR_ID_D02R0101_SWLEADER1 )
+    //==================================//
+    //連れ歩き開始フラグ
+    _FLAG_SET(FE_D02R0101_PAIR_01)
+    //初回会話完了フラグ
+    _FLAG_SET(FE_D02R0101_SWLEADER1_FIRST)
+    //==================================//
+    
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+    _OBJ_ANIME_WAIT()
+    
+  //いいえ
+  ELSE
+
+    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_02, D02R0101_SWLEADER1_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //アニメ：主人公戻す
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+    _OBJ_ANIME_WAIT()
+
+  ENDIF
+  }
+_RET
+
+//連れ歩き中終了処理
+ev_d02r0101_pairend_01:
+
+  //主人公・チェレン名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  //アニメ：主人公振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：いちどそとにでる？
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_04, PAIR_TRAINER_01, POS_DEFAULT )
+  
+   {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_02, PAIR_TRAINER_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //連れ歩き解除
+    _PAIR_TRAINER_FREE( SCRID_D02R0101_SWLEADER1_03, MV_DMY )
+    
+    //アニメ：主人公戻す・チェレン戻る
+    
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    
+    _OBJ_ANIME_AUTO( D02R0101_SWLEADER1_01,68,69, FORCE_TYPE_NOT, 8, DIR_LR )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_staystep_r )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+    _OBJ_ANIME_WAIT()
+    
+    //==================================//
+    //連れ歩き終了フラグ
+    _FLAG_RESET(FE_D02R0101_PAIR_01)
+    //==================================//
+  
+  //いいえ
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_03, PAIR_TRAINER_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //アニメ：主人公戻す
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  }
+_RET
+
 
 /**************************************************************/
 /*	D02R0101	リーフィア進化用の石						  */
@@ -41,3 +334,74 @@ EVENT_START		ev_bg_d02r0101_sign1_01
 	_EASY_BGWIN_MSG( msg_d02r0101_sign1_01, TYPE_INFO )
   _FLAG_SET( MDL_FLAG_BOARD_D02R0101_01 )
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

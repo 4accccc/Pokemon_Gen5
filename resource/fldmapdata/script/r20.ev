@@ -46,8 +46,10 @@ INIT_EVENT_START   ev_zone_r20
   
   //HˆÈŠO
   IF $SCWK_SEASON != PMSEASON_AUTUMN THEN
-    //—Ž‚¿—tPOS‚ð–³Œø‚É
-    $LOCALWORK0 = 1
+    _FLAG_SET( FV_R20_RANGER_01 )
+  //H
+  ELSE
+    _FLAG_RESET( FV_R20_RANGER_01 )
   ENDIF
   
 INIT_EVENT_END

@@ -33,6 +33,7 @@
 #define TR_VETERANW_17                    19
 #define TR_TANPAN_32                      20
 #define TR_RANGERW_27                     21
+#define D02R0101_SWLEADER1_01             22
 
 #endif //ZONE_D02R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
