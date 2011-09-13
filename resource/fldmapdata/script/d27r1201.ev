@@ -119,12 +119,12 @@ EVENT_START	ev_reserve_d27r1201_rival_01
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d)
   _OBJ_ANIME_WAIT()
   
+  //動作モデル削除
+  _OBJ_DEL( D27R1201_SWRIVAL_01 )
+  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
-  
-  //動作モデル削除
-  _OBJ_DEL( D27R1201_SWRIVAL_01 )
   
   //========================================//
   //ライバルを非表示
