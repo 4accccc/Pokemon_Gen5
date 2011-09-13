@@ -4202,7 +4202,7 @@ RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL_DATA *
 u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS *cp_mystatus )
 {
   u16 want_job = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_WANT_JOB, NULL );
-  u16 ver = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_VER, NULL );
+  u16 ver = MyStatus_GetRomCode( cp_mystatus );
 
 
   if( want_job == RESORT_SHOP_ID_NULL )
