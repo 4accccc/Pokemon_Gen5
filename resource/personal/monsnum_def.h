@@ -664,24 +664,32 @@
 #define		MONSNO_663		( 655 )		//Ｍ．Ｖ２
 #define		MONSNO_664		( 656 )		//てんそうき
 #define		MONSNO_665		( 657 )		//だいＯＬ
-#define		MONSNO_666		( 658 )		//マネキン
-#define		MONSNO_667		( 659 )		//せいぶつＸ
-#define		MONSNO_668		( 660 )		//ははおや
+#define		MONSNO_666		( 658 )		//ひとがた
+#define		MONSNO_667		( 659 )		//かいぶつ
+#define		MONSNO_668		( 660 )		//Ｆ－００
 #define		MONSNO_669		( 661 )		//あくりょう
 #define		MONSNO_670		( 662 )		//しろいかべ
 #define		MONSNO_671		( 663 )		//くろいかべ
-#define		MONSNO_672		( 664 )		//セットＡ
-#define		MONSNO_673		( 665 )		//セットＢ
-#define		MONSNO_674		( 666 )		//セットＣ
-#define		MONSNO_675		( 667 )		//セットＤ
-#define		MONSNO_676		( 668 )		//セットＥ
-#define		MONSNO_677		( 669 )		//セットＦ
-#define		MONSNO_678		( 670 )		//セットＧ
-#define		MONSNO_679		( 671 )		//セットＨ
-#define		MONSNO_680		( 672 )		//セットＩ
-#define		MONSNO_681		( 673 )		//セットＪ
-#define		MONSNO_682		( 674 )		//セットＫ
-#define		MONSNO_683		( 675 )		//セットＬ
+#define		MONSNO_672		( 664 )		//セットＵ１
+#define		MONSNO_673		( 665 )		//セットＵ２
+#define		MONSNO_674		( 666 )		//セットＨ１
+#define		MONSNO_675		( 667 )		//セットＭ１
+#define		MONSNO_676		( 668 )		//セットＭ２
+#define		MONSNO_677		( 669 )		//セットＴ１
+#define		MONSNO_678		( 670 )		//セットＯ１
+#define		MONSNO_679		( 671 )		//セットＯ２
+#define		MONSNO_680		( 672 )		//セットＣ１
+#define		MONSNO_681		( 673 )		//セットＣ２
+#define		MONSNO_682		( 674 )		//セットＧ１
+#define		MONSNO_683		( 675 )		//セットＷ１
+#define		MONSNO_684		( 676 )		//セットＷ２
+#define		MONSNO_685		( 677 )		//セットＲ１
+#define		MONSNO_686		( 678 )		//セットＲ２
+#define		MONSNO_687		( 679 )		//セットＫ１
+#define		MONSNO_688		( 680 )		//ＵＦＯ２
+#define		MONSNO_689		( 681 )		//だいＯＬ２
+#define		MONSNO_690		( 682 )		//Ｆ－００２
+#define		MONSNO_691		( 683 )		//カラテおう
 //別フォルム定義
 //アンノーン
 #define		FORMNO_201_UNA				( 0 )
@@ -817,6 +825,21 @@
 #define		FORMNO_527_AUTUMN				( 2 )
 #define		FORMNO_527_WINTER				( 3 )
 #define		FORMNO_527_MAX				( 4 )
+
+//トルネロス
+#define		FORMNO_648_NORMAL				( 0 )
+#define		FORMNO_648_AR				( 1 )
+#define		FORMNO_648_MAX				( 2 )
+
+//ボルトロス
+#define		FORMNO_649_NORMAL				( 0 )
+#define		FORMNO_649_AR				( 1 )
+#define		FORMNO_649_MAX				( 2 )
+
+//ランドロス
+#define		FORMNO_652_NORMAL				( 0 )
+#define		FORMNO_652_AR				( 1 )
+#define		FORMNO_652_MAX				( 2 )
 
 //キュレム
 #define		FORMNO_653_A				( 0 )

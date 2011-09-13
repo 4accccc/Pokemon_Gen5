@@ -669,26 +669,34 @@
 #define		MONSNO_mv2					( 655 )
 #define		MONSNO_TENSOUKI			( 656 )
 #define		MONSNO_DAIol				( 657 )
-#define		MONSNO_MANEKIN			( 658 )
-#define		MONSNO_SEIBUTUx			( 659 )
-#define		MONSNO_HAHAOYA			( 660 )
+#define		MONSNO_HITOGATA			( 658 )
+#define		MONSNO_KAIBUTU			( 659 )
+#define		MONSNO_ff00					( 660 )
 #define		MONSNO_AKURYOU			( 661 )
 #define		MONSNO_SIROIKABE		( 662 )
 #define		MONSNO_KUROIKABE		( 663 )
-#define		MONSNO_SETTOa				( 664 )
-#define		MONSNO_SETTOb				( 665 )
-#define		MONSNO_SETTOc				( 666 )
-#define		MONSNO_SETTOd				( 667 )
-#define		MONSNO_SETTOe				( 668 )
-#define		MONSNO_SETTOf				( 669 )
-#define		MONSNO_SETTOg				( 670 )
-#define		MONSNO_SETTOh				( 671 )
-#define		MONSNO_SETTOi				( 672 )
-#define		MONSNO_SETTOj				( 673 )
-#define		MONSNO_SETTOk				( 674 )
-#define		MONSNO_SETTOl				( 675 )
+#define		MONSNO_SETTOu1			( 664 )
+#define		MONSNO_SETTOu2			( 665 )
+#define		MONSNO_SETTOh1			( 666 )
+#define		MONSNO_SETTOm1			( 667 )
+#define		MONSNO_SETTOm2			( 668 )
+#define		MONSNO_SETTOt1			( 669 )
+#define		MONSNO_SETTOo1			( 670 )
+#define		MONSNO_SETTOo2			( 671 )
+#define		MONSNO_SETTOc1			( 672 )
+#define		MONSNO_SETTOc2			( 673 )
+#define		MONSNO_SETTOg1			( 674 )
+#define		MONSNO_SETTOw1			( 675 )
+#define		MONSNO_SETTOw2			( 676 )
+#define		MONSNO_SETTOr1			( 677 )
+#define		MONSNO_SETTOr2			( 678 )
+#define		MONSNO_SETTOk1			( 679 )
+#define		MONSNO_ufo2					( 680 )
+#define		MONSNO_DAIol2				( 681 )
+#define		MONSNO_ff002				( 682 )
+#define		MONSNO_KARATEOU			( 683 )
 #define		MONSNO_END					( 649 )
-#define		MONSNO_MAX					( 677 )
+#define		MONSNO_MAX					( 685 )
 
 //別フォルム定義
 //アンノーン
@@ -826,6 +834,21 @@
 #define		FORMNO_MEBUKIZIKA_WINTER				( 3 )
 #define		FORMNO_MEBUKIZIKA_MAX				( 4 )
 
+//トルネロス
+#define		FORMNO_TORUNEROSU_NORMAL				( 0 )
+#define		FORMNO_TORUNEROSU_AR				( 1 )
+#define		FORMNO_TORUNEROSU_MAX				( 2 )
+
+//ボルトロス
+#define		FORMNO_BORUTOROSU_NORMAL				( 0 )
+#define		FORMNO_BORUTOROSU_AR				( 1 )
+#define		FORMNO_BORUTOROSU_MAX				( 2 )
+
+//ランドロス
+#define		FORMNO_RANDOROSU_NORMAL				( 0 )
+#define		FORMNO_RANDOROSU_AR				( 1 )
+#define		FORMNO_RANDOROSU_MAX				( 2 )
+
 //キュレム
 #define		FORMNO_KYUREMU_A				( 0 )
 #define		FORMNO_KYUREMU_WHITE				( 1 )
@@ -856,7 +879,7 @@
 #define		FORMNO_TAMAGO_MAX				( 2 )
 
 //フォルム違いトータル
-#define OTHER_FORM_MAX  ( 63 )
+#define OTHER_FORM_MAX  ( 66 )
 
 //イッシュ図鑑トータル
 #define ZUKANNO_ISSHU_END  ( 253 )
