@@ -3228,13 +3228,19 @@ static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
 {
   enum
   {
-    RESORT_PRICE_COEFFEICENT = FX32_CONST(0.004f),
+    RESORT_PRICE_COEFFEICENT = FX32_CONST(0.002f),
     RESORT_FEVER_NONE_COEFFEICENT   = 1,
     RESORT_FEVER_EXIST_COEFFEICENT  = 2,
   };
   BOOL is_fever = RESORT_UTIL_IsFever( p_wk->p_resort_sys );
   u32 fever_num = is_fever ? RESORT_FEVER_EXIST_COEFFEICENT: RESORT_FEVER_NONE_COEFFEICENT;
   u32 city_lv = RESORT_CITY_DATA_GetData( p_wk->p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+  GF_ASSERT( city_lv != 0 );
 
-  return price - FX_Whole(price * (city_lv-1) * fever_num * RESORT_PRICE_COEFFEICENT );
+  if( city_lv < RESORT_BINARY_CITY_GetCityLvMax(RESORT_SYSTEM_GetBinaryCity(p_wk->p_resort_sys))  )
+  {
+    city_lv--;
+  }
+
+  return price - FX_Whole(price * city_lv * fever_num * RESORT_PRICE_COEFFEICENT );
 }

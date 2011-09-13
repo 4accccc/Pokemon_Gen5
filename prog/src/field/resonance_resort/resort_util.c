@@ -680,12 +680,6 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
     *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_EFF_MSG_F );
   }
 
-  if( lv >= RESORT_SHOP_LVMAX )
-  {
-    *ret_lvup = RESORT_SET_SPOT_SHOP_LVMAX;
-    return;
-  }
-
   //スポット一致チェック
   is_good = RESORT_UTIL_CheckSpot(want_spot, p_resident, p_sys, &index );
 
@@ -717,32 +711,40 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
       next_exp = FX_Whole( next_exp * SPOT_FAVORITE_TYPE_REVISION );
     }
 
-    if( exp + add_exp >= next_exp )
+
+    if( lv >= RESORT_SHOP_LVMAX )
     {
-      const RESORT_BINARY_SHOP_DATA *cp_new_shop_data;
-      u32 shopID;
-      lv++;
-      exp = 0;
-      *ret_lvup = RESORT_SET_SPOT_SHOP_LVUP;
-      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, lv );
-
-      //レベルアップしたら施設IDを変更
-      shopID = RESORT_BINARY_SHOP_SearchShopID( p_shop, kind, lv, shop_type );
-      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
-      cp_new_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
-
-      WORDSET_RegisterNumber( p_wordset, 6, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-
-      if( RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) != RESORT_BINARY_SHOP_DATA_GetData( cp_new_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) )
-      {
-        *ret_lvup = RESORT_SET_SPOT_SHOP_CHANGE;
-      }
+      *ret_lvup = RESORT_SET_SPOT_SHOP_LVMAX;
     }
     else
     {
-      exp += add_exp;
+      if( exp + add_exp >= next_exp )
+      {
+        const RESORT_BINARY_SHOP_DATA *cp_new_shop_data;
+        u32 shopID;
+        lv++;
+        exp = 0;
+        *ret_lvup = RESORT_SET_SPOT_SHOP_LVUP;
+        RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, lv );
+
+        //レベルアップしたら施設IDを変更
+        shopID = RESORT_BINARY_SHOP_SearchShopID( p_shop, kind, lv, shop_type );
+        RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
+        cp_new_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
+
+        WORDSET_RegisterNumber( p_wordset, 6, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+        if( RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) != RESORT_BINARY_SHOP_DATA_GetData( cp_new_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) )
+        {
+          *ret_lvup = RESORT_SET_SPOT_SHOP_CHANGE;
+        }
+      }
+      else
+      {
+        exp += add_exp;
+      }
+      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP, exp );
     }
-    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP, exp );
   }
 
   //街に経験値が入る

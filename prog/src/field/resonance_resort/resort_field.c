@@ -103,7 +103,7 @@ typedef struct _RESORT_CROWD_PEOPLE RESORT_CROWD_PEOPLE;
 
 static RESORT_CROWD_PEOPLE * RESORT_CROWD_PEOPLE_Init( HEAPID heapID, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player, const RESORT_BINARY_SHOP *cp_shop, const RESORT_BINARY_INSTITUTION *cp_institution, RESORT_PEOPLE_ALL_DATA *p_all_people );
 static void RESORT_CROWD_PEOPLE_Exit( RESORT_CROWD_PEOPLE *p_wk );
-static void RESORT_CROWD_PEOPLE_Main( RESORT_CROWD_PEOPLE *p_wk );
+static void RESORT_CROWD_PEOPLE_Main( RESORT_CROWD_PEOPLE *p_wk, const FIELDMAP_WORK* cp_fieldmap );
 static void RESORT_CROWD_PEOPLE_SetUp( RESORT_CROWD_PEOPLE *p_wk );
 
 static void RESORT_CROWD_PEOPLE_Add( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
@@ -138,7 +138,7 @@ typedef struct _RESORT_FIELD_PEOPLE RESORT_FIELD_PEOPLE;
 
 static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYSTEM *p_sys, MMDLSYS *p_mmdlsys, const FIELD_PLAYER* cp_player, BOOL is_people_add );
 static void RESORT_FIELD_PEOPLE_Exit( RESORT_FIELD_PEOPLE *p_wk );
-static void RESORT_FIELD_PEOPLE_Main( RESORT_FIELD_PEOPLE *p_wk, FIELD_PLAYER *p_player );
+static void RESORT_FIELD_PEOPLE_Main( RESORT_FIELD_PEOPLE *p_wk, FIELDMAP_WORK* p_fieldmap );
 static void RESORT_FIELD_PEOPLE_StartAdd( RESORT_FIELD_PEOPLE *p_wk );
 static RESORT_PEOPLE_SYS * RESORT_FIELD_PEOPLE_GetPeopleSys( RESORT_FIELD_PEOPLE *p_wk );
 static void RESORT_FIELD_PEOPLE_DeleteCrowd( RESORT_FIELD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
@@ -307,7 +307,7 @@ void RESORT_FIELD_Move( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
 
-  RESORT_FIELD_PEOPLE_Main( p_wk->p_people_sys, FIELDMAP_GetFieldPlayer(p_fieldmap) );
+  RESORT_FIELD_PEOPLE_Main( p_wk->p_people_sys, p_fieldmap );
   RESORT_NPC_SYS_Main( p_wk->p_npc_sys );
   RESORT_CROWD_NOISE_Main( p_wk->p_noise, p_fieldmap );
   RESORT_FIELD_EFFECT_Main( p_wk->p_effect );
@@ -807,23 +807,26 @@ static void RESORT_CROWD_PEOPLE_Exit( RESORT_CROWD_PEOPLE *p_wk )
  *	@param	RESORT_CROWD_PEOPLE *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void RESORT_CROWD_PEOPLE_Main( RESORT_CROWD_PEOPLE *p_wk )
+static void RESORT_CROWD_PEOPLE_Main( RESORT_CROWD_PEOPLE *p_wk, const FIELDMAP_WORK* cp_fieldmap )
 {
-  //各ライン動作
+  if( FIELDMAP_CheckDoEvent( cp_fieldmap ) == FALSE )
   {
-    int i;
-    for( i = 0; i < RESORT_CROWD_MOVE_LINE_MAX; i++ )
+    //各ライン動作
     {
-      RESORT_CROWD_LINE_Main( &p_wk->line[i] );
+      int i;
+      for( i = 0; i < RESORT_CROWD_MOVE_LINE_MAX; i++ )
+      {
+        RESORT_CROWD_LINE_Main( &p_wk->line[i] );
+      }
     }
-  }
 
-  //各ワーク動作
-  {
-    int i;
-    for( i = 0; i < RESORT_CROWD_PEOPLE_BUFFER_MAX; i++ )
+    //各ワーク動作
     {
-      RESORT_CROWD_PEOPLE_WK_Main( &p_wk->wk[i], p_wk->p_mmdlsys, p_wk->cp_player );
+      int i;
+      for( i = 0; i < RESORT_CROWD_PEOPLE_BUFFER_MAX; i++ )
+      {
+        RESORT_CROWD_PEOPLE_WK_Main( &p_wk->wk[i], p_wk->p_mmdlsys, p_wk->cp_player );
+      }
     }
   }
 }
@@ -3022,11 +3025,11 @@ static void RESORT_FIELD_PEOPLE_Exit( RESORT_FIELD_PEOPLE *p_wk )
  *	@param	RESORT_FIELD_PEOPLE *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void RESORT_FIELD_PEOPLE_Main( RESORT_FIELD_PEOPLE *p_wk, FIELD_PLAYER *p_player )
+static void RESORT_FIELD_PEOPLE_Main( RESORT_FIELD_PEOPLE *p_wk, FIELDMAP_WORK* p_fieldmap )
 {
   RESORT_FIELD_BUFF_Main( p_wk->p_buff );
-  RESORT_PEOPLE_SYS_Main( p_wk->p_people_sys, p_player );
-  RESORT_CROWD_PEOPLE_Main( p_wk->p_crowd );
+  RESORT_PEOPLE_SYS_Main( p_wk->p_people_sys, FIELDMAP_GetFieldPlayer(p_fieldmap) );
+  RESORT_CROWD_PEOPLE_Main( p_wk->p_crowd, p_fieldmap );
 }
 //----------------------------------------------------------------------------
 /**
