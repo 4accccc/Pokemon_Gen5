@@ -191,12 +191,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>へー　カノコタウン？
-じゃあ　ポケモンけんきゅうじょ　ね？▼
-それとも　ママの　おともだちの
-いえに　あそびに　いくのかな？▼</Text>
+じゃあ　ポケモン研究所　ね？▼
+それとも　ママの　お友達の
+家に　遊びに　行くのかな？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:51" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:16:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -243,11 +243,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カラクサタウン！▼
-だれかが　かなでていた
-がっきの　ねいろを　おもいだすわ▼</Text>
+だれかが　奏でていた
+楽器の　音色を　思い出すわ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:51" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:28:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -296,11 +296,11 @@
 			Language="JPN_KANJI">
 			<Text>サンヨウシティだと
 レストランが　おすすめ　よ！▼
-なんたって　もとジムリーダーの
-おみせ　だもの！　きっとすごいわ！▼</Text>
+なんたって　元ジムリーダーの
+お店　だもの！　きっとすごいわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:51" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:23:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -348,12 +348,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ママは　シッポウシティの
-そうこや　カフェソーコが　すきよ▼
-もちろん　いちばんの　おすすめは
-シッポウはくぶつかん　だけどね！▼</Text>
+倉庫や　カフェソーコが　好きよ▼
+もちろん　一番の　おすすめは
+シッポウ博物館　だけどね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:51" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:24:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -405,16 +405,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヒウンシティ！
-もう　みどころが　ありすぎて▼
-かんこうあんないの　ひとに
-きいてみるのが　いいかもね▼
-あとは……
-じぶんで　たんけんよ！▼
-しらない　まちに　ついたときの
-たのしみの　いちばんは　たんけん！▼</Text>
+もう　見所が　ありすぎて▼
+観光案内の　人に
+聞いてみるのが　いいかもね▼
+後は……
+自分で　探検よ！▼
+知らない　町に　着いたときの
+楽しみの　一番は　探検！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:25:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -465,17 +465,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライモンシティは　ごらくの　まち！▼
+			<Text>ライモンシティは　娯楽の　町！▼
 あそこの　ポケモンセンターでの
-おしごとも　たのしかったわね▼
+お仕事も　楽しかったわね▼
 えーとね▼
 ビッグスタジアム　リトルコートで
-きたえる　トレーナーが　おおいわよ！▼
-ほかにも　みどころが　たくさんね
-あなたの　すきに　してみなさい！▼</Text>
+きたえる　トレーナーが　多いわよ！▼
+他にも　見所が　たくさんね
+あなたの　好きに　してみなさい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:27:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -525,12 +525,12 @@
 			Language="JPN_KANJI">
 			<Text>ホドモエシティ！▼
 ちかごろは　ホテルが
-いっぱい　たちならぶんでしょ？▼
-それいがいは
-あまり　しらないなあ▼</Text>
+いっぱい　立ち並ぶんでしょ？▼
+それ以外は
+あまり　知らないなあ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -580,12 +580,12 @@
 			Language="JPN_KANJI">
 			<Text>フキヨセシティ　といえば
 フウロちゃん！▼
-むかしは　ポケモンジムの
-しかけで　きずついた　ひとが▽
-ポケセンに　きてたわね！▼</Text>
+昔は　ポケモンジムの
+しかけで　傷ついた　人が▽
+ポケセンに　来てたわね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:29:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -632,11 +632,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セッカシティ　ね……▼
-しきの　うつろい　というか
-ふゆげしきが　すきな　まちね▼</Text>
+四季の　移ろい　というか
+冬景色が　好きな　町ね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -686,14 +686,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ソウリュウシティ！
-いい　まちよ▼
-あたしが　きいた　はなしだと
-しちょうの　シャガさんが▼
+良い　町よ▼
+あたしが　聞いた　話だと
+市長の　シャガさんが▼
 ドラゴンタイプの　すごい
-わざを　おしえてくださるって！▼</Text>
+技を　教えてくださるって！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:30:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -740,13 +740,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１ばんどうろ……
-うーん　なにが　あったっけ？▼
-そうだ！　なみのりを　つかえば
-いがいな　ところに　いけるわよ！▼</Text>
+			<Text>１番道路……
+うーん　何が　あったっけ？▼
+そうだ！　なみのりを　使えば
+意外な　所に　行けるわよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:33:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -792,12 +792,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２ばんどうろ　ね……▼
+			<Text>２番道路　ね……▼
 なんとなくだけど
-だんさが　あったわ！▼</Text>
+段差が　あったわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:32:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -845,14 +845,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>３ばんどうろには
-そだてやさんが　いるわね▼
-あと　ほいくえんも　あったな▼
-それと　ちかすいみゃくのあな　だっけ
-どうくつも　あったはずよ！▼</Text>
+			<Text>３番道路には
+育て屋さんが　いるわね▼
+あと　保育園も　あったな▼
+それと　地下水脈の穴　だっけ
+洞穴も　あったはずよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -899,13 +899,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>へえ！　４ばんどうろ！
-あそこも　たいへん　なのよ▼
-かいはつこうじを　すすめたり
-いせきが　みつかったり▼</Text>
+			<Text>へえ！　４番道路！
+あそこも　大変　なのよ▼
+開発工事を　進めたり
+遺跡が　みつかったり▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:36:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -954,15 +954,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５ばんどうろの
+			<Text>５番道路の
 パフォーマーを　みるため▼
 ポケモンセンターを
-ぬけだしたわね……▼
-たしか　どうぐを　かいとってくれる
-おんなのこが　いるんじゃない？▼</Text>
+抜け出したわね……▼
+確か　道具を　買い取ってくれる
+女の子が　いるんじゃない？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1010,14 +1010,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>６ばんどうろの
-きせつけんきゅうじょに　いった？▽
-それに　どうくつも　あったっけ？▼
+			<Text>６番道路の
+季節研究所に　行った？▽
+それに　洞穴も　あったっけ？▼
 あとは……
 そうね　たまげるかもね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:38:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1064,13 +1064,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>７ばんどうろの　いっぽんばし！
-うっかり　とまると　おちちゃうのよね！▼
-あとは　ながい　くさむらから
-いがいな　ポケモンが　とびだしたっけ？▼</Text>
+			<Text>７番道路の　一本橋！
+うっかり　止まると　落ちちゃうのよね！▼
+あとは　長い　草むらから
+意外な　ポケモンが　飛び出したっけ？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:39:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1117,13 +1117,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>８ばんどうろの　みずたまり
-ふゆに　なると　こおって▽
-すべって　うまく　すすめないのが▽
-ママの　おきにいり　ね！▼</Text>
+			<Text>８番道路の　水たまり
+冬に　なると　こおって▽
+滑って　うまく　進めないのが▽
+ママの　お気に入り　ね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:41:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1171,14 +1171,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>９ばんどうろ　ね▼
+			<Text>９番道路　ね▼
 やんちゃさんが　いっぱい　いるから
-ポケモンしょうぶを　いどまれるかも▼
+ポケモン勝負を　いどまれるかも▼
 トレーナーだから
-たたかうのが　いちばん　よね！▼</Text>
+戦うのが　一番　よね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:42:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1223,11 +1223,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０ばんどうろ　すきだったな
-なんだか　じょじょうてき　で……</Text>
+			<Text>１０番道路　好きだったな
+なんだか　叙情的　で……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:43:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1281,12 +1281,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１１ばんどうろも
-１４ばんどうろと　おなじで▽
+			<Text>１１番道路も
+１４番道路と　同じで▽
 たきのぼり　よね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:43:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1333,13 +1333,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１２ばんどうろは
-なだらかな　きゅうりょうちたい▼
+			<Text>１２番道路は
+なだらかな　丘陵地帯▼
 でこぼこ　でこぼこっ
-あるくと　きもちいいのよ！▼</Text>
+歩くと　気持ち良いのよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:44:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1387,14 +1387,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１３ばんどうろ　といえば
-とにかく　ながい　いんしょうね！▼
+			<Text>１３番道路　といえば
+とにかく　長い　印象ね！▼
 メインルートが　わかりにくかった
-きおくが　あるけれど　ぎゃくに▽
-いろんな　ところに　いけば　いいの！▼</Text>
+記憶が　あるけれど　逆に▽
+いろんな　所に　行けば　いいの！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:45:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1439,11 +1439,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１４ばんどうろに　いるの？
+			<Text>１４番道路に　いるの？
 なら　たきのぼり　よね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:45:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1492,15 +1492,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１５ばんどうろ　かあ……▼
-いちばんの　めだまは
+			<Text>１５番道路　かあ……▼
+一番の　目玉は
 シフトファクトリー　よね▼
-あと　ポケモンこうかんを　してくれる
-おねえさんが　いたような▼
-んー　きおくちがい　かも……？▼</Text>
+あと　ポケモン交換を　してくれる
+お姉さんが　いたような▼
+んー　記憶違い　かも……？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:46:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1549,15 +1549,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１６ばんどうろ　ね……▼
+			<Text>１６番道路　ね……▼
 ライモンシティの　そばに
-あんな　もりが　ひろがるなんて▽
-けっこう　いがい　よね▼
-まよいのもり　って
-いまは　どうなっているのかしら？▼</Text>
+あんな　森が　広がるなんて▽
+結構　意外　よね▼
+迷いの森　って
+今は　どうなっているのかしら？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:47:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1604,13 +1604,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１７ばんすいどう　ね▼
-あそこは　みずの　ながれが
-はげしくて　なかなか　おもいどおりに▽
-すすめなかったわ……▼</Text>
+			<Text>１７番水道　ね▼
+あそこは　水の　流れが
+激しくて　なかなか　思いどおりに▽
+進めなかったわ……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:48:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1656,12 +1656,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１８ばんどうろ！▼
-あそこの　とくちょうって……▼
-なにが　あったかしら？▼</Text>
+			<Text>１８番道路！▼
+あそこの　特徴って……▼
+何が　あったかしら？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:48:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1709,14 +1709,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆめのあとち……▼
-そこに　のこされた
-ふしぎな　ちからに　ひきよせられ▼
-めずらしい　ポケモンが
-やってくるって　きいたわ！▼</Text>
+			<Text>夢の跡地……▼
+そこに　残された
+不思議な　力に　引き寄せられ▼
+珍しい　ポケモンが
+やってくるって　聞いたわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1764,14 +1764,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヤグルマのもり　には
+			<Text>ヤグルマの森　には
 むしタイプの　ポケモンが▽
 いっぱい　いるわね▼
 ちなみに　ママは　むしタイプ
-ポケモン　きらいじゃないわ！▼</Text>
+ポケモン　嫌いじゃないわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:50:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1819,12 +1819,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>リゾートデザートなの
-すなあらしには　きをつけてね！▼
+すなあらしには　気をつけてね！▼
 ポケモンに　よっては
-いつも　ダメージを　うけちゃうわ！▼</Text>
+いつも　ダメージを　受けちゃうわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:51:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1872,14 +1872,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こだいのしろ　ですって！
-あなた　すなに　うまっちゃうわよ！▼
-しってるでしょ？▼
-すなの　くぼみの　ちかくで
-はしったりすると　おちちゃうの！▼</Text>
+			<Text>古代の城　ですって！
+あなた　砂に　埋まっちゃうわよ！▼
+知ってるでしょ？▼
+砂の　くぼみの　近くで
+走ったりすると　落ちちゃうの！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:52:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1923,10 +1923,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>れいとうコンテナ</Text>
+			<Text>冷凍コンテナ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1983,13 +1983,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なあに？　なんだか
-キーン　っておとも　するけど……▼
-えっ　でんきいしのほらあな？▼
+キーン　って音も　するけど……▼
+えっ　電気石の洞穴？▼
 へー　ライブキャスターが
-つうじるんだ！　はじめてしったわ！▼</Text>
+通じるんだ！　初めて知ったわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:35:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2038,15 +2038,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっと　こえが　とおいけど……▼
-ネジやま？▼
-なっとく！　ヤーコンさんの
-やま　なのよねー▼
-カセキが　みつかる　ばしょって
-ママは　きいてるわ！▼</Text>
+			<Text>ちょっと　声が　遠いけど……▼
+ネジ山？▼
+納得！　ヤーコンさんの
+山　なのよねー▼
+カセキが　みつかる　場所って
+ママは　聞いてるわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:55:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2093,13 +2093,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リュウラセンのとう！
-へー　なかに　はいれるんだ？▼
-あれでしょ？　でんせつの　ポケモンが
-ねむっているかも　しれない　ばしょね▼</Text>
+			<Text>リュウラセンの塔！
+へー　中に　はいれるんだ？▼
+あれでしょ？　伝説の　ポケモンが
+眠っているかも　しれない　場所ね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:56:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2147,16 +2147,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チャンピオンロード！
-しれんのみち　ね！▼
+試練の道　ね！▼
 だいじょうぶ！　あなたには
 ポケモンが　いてくれるでしょ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:56:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:12:02" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2208,12 +2208,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カゴメタウン　かあ▼
-いったときの　いんしょうだと
-ひると　よるとで▽
-ぜんぜん　ちがう　まち　だったわ！▼</Text>
+行ったときの　印象だと
+昼と　夜とで▽
+全然　違う　町　だったわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:57:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2263,14 +2263,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サザナミタウンね▼
-むかしは　すっごい
-おかねもちが　いたんだけど▽
-ひっこし　なさったらしいわね▼
-それから　べっそうも　へって
-ちょっと　さみしい　はなしね▼</Text>
+昔は　すっごい
+お金持ちが　いたんだけど▽
+引越し　なさったらしいわね▼
+それから　別荘も　減って
+ちょっと　さみしい　話ね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:59:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2320,12 +2320,12 @@
 			Language="JPN_KANJI">
 			<Text>カナワタウン！▼
 なあに？　あなた
-てつどうずき　だったの！？▼
-でも　その　きもち
+鉄道好き　だったの！？▼
+でも　その　気持ち
 ママも　わかるのよねー▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T05:59:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2376,13 +2376,13 @@
 			Language="JPN_KANJI">
 			<Text>[System:Color name="0" ]ポケモンリーグ[/System:Color]！▼
 すごーい！▼
-してんのうに　ちょうせん
-そして……！　ってところね▼
+四天王に　挑戦
+そして……！　って所ね▼
 あなたの　そばにいる
-ポケモンを　しんじて　すすむのみよ！▼</Text>
+ポケモンを　信じて　進むのみよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:00:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2430,12 +2430,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……えっ　どこにいるの？▼
-Ｎのしろ？▼
+Ｎの城？▼
 ゴメンね……
 ママ　よく　わからない▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:00:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2484,15 +2484,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロイヤルイッシュごう？▼
+			<Text>ロイヤルイッシュ号？▼
 ヒウンからの　クルーズなんて
 ちょっと　ゴキゲンね！▼
 で　あなたは　どっちなの？
-しょうぶを　たのしむの？▽
-それとも　ふうけいを　たのしむの？▼</Text>
+勝負を　楽しむの？▽
+それとも　風景を　楽しむの？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:01:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2540,12 +2540,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ギアステーションね▼
-カナワタウンいきの　トレインを
-いがいと　みおとすのよ▼
-よゆうが　あれば　のってみなさいよ▼</Text>
+カナワタウン行きの　トレインを
+意外と　見落とすのよ▼
+余裕が　あれば　乗ってみなさいよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:01:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2596,13 +2596,13 @@
 			Language="JPN_KANJI">
 			<Text>バトルサブウェイ！
 まあ　チャレンジャーね！▼
-かちぬくのは　かなり
-たいへん　だけど▼
-たたかった　ちしきと　けいけんが
-あなたを　つよくするはずよ！▼</Text>
+勝ち抜くのは　かなり
+大変　だけど▼
+戦った　知識と　経験が
+あなたを　強くするはずよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:03:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2653,13 +2653,13 @@
 			Language="JPN_KANJI">
 			<Text>ミュージカルホール！▼
 ふふふ……
-じつは　ママも　かよっていたのよ！▼
-ママは　みるほう　せんもん　だけどね
+実は　ママも　通っていたのよ！▼
+ママは　みるほう　専門　だけどね
 アクセサリーを　つけた▽
 ポケモンの　ダンスが　かわいくて！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2705,10 +2705,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ブラックシティ　ねえ
-いまは　どう　かわったのかしら？▼</Text>
+今は　どう　変わったのかしら？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:05:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2754,10 +2754,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホワイトフォレスト　ねえ
-いまは　どう　かわったのかしら？▼</Text>
+今は　どう　変わったのかしら？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:05:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2805,12 +2805,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ユナイテッドタワー　か▼
-がいこくの　おともだちと
-ポケモンを　こうかん　したなら▽
-ぜひ　いってみなさいな！▼</Text>
+外国の　お友達と
+ポケモンを　交換　したなら▽
+ぜひ　行ってみなさいな！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:06:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2857,13 +2857,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちかすいみゃくのあな　ね……▼
-ちいさな　どうくつ　だけど
-おくまで　たどりつくには▽
-いがいと　くろう　するかもね！▼</Text>
+			<Text>地下水脈の穴　ね……▼
+小さな　洞穴　だけど
+奥まで　たどり着くには▽
+意外と　苦労　するかもね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2910,13 +2910,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フキヨセのほらあな　か▼
+			<Text>フキヨセの洞穴　か▼
 キバゴって　ポケモンを
 つかまえよう　とする▽
-トレーナーが　おおいのよね！▼</Text>
+トレーナーが　多いのよね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:08:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2964,14 +2964,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しさくのはら……？▼
+			<Text>思索の原……？▼
 ああ！
-ヤグルマのもりの　おくね！▼
-で　そんなところで
+ヤグルマの森の　奥ね！▼
+で　そんな所で
 なに　してるの？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:14:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3019,12 +3019,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>タワーオブヘブン……
-ポケモンの　おはか　なのよね▼
-きっと　きょうも　こころやさしい
-ひとが　かねを　ならしているのね▼</Text>
+ポケモンの　お墓　なのよね▼
+きっと　今日も　心優しい
+人が　鐘を　鳴らしているのね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:14:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3072,14 +3072,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セッカのしつげん……▼
-セッカのしつげん……▼
+			<Text>セッカの湿原……▼
+セッカの湿原……▼
 なんだっけ……？▼
-きいたことは　あるけれど
-いったことは　ないのよね……▼</Text>
+聞いたことは　あるけれど
+行ったことは　ないのよね……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:15:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3127,10 +3127,10 @@
 			Language="JPN_KANJI">
 			<Text>ショッピングモール？▼
 うーん　なぜかな？
-そうこのこと　おもいだしちゃった！▼</Text>
+倉庫のこと　思い出しちゃった！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:16:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3174,10 +3174,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しゅぎょうのいわや</Text>
+			<Text>修行の岩屋</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:16:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3232,11 +3232,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>シフトファクトリー！▼
-パークはかせの
-おてつだい　たのしいわよね！▼</Text>
+パーク博士の
+お手伝い　楽しいわよね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3287,13 +3287,13 @@
 			Language="JPN_KANJI">
 			<Text>ジャイアントホール？▼
 どこだっけ……？
-いんせきが　おちた　ばしょ？▼
-あれ　ちがったっけ？▼
-アララギはかせに　そんな
-はなしを　きいた　きがするけど……▼</Text>
+いんせきが　落ちた　場所？▼
+あれ　違ったっけ？▼
+アララギ博士に　そんな
+話を　聞いた　気がするけど……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:21:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3341,14 +3341,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いま　どこなの？▼
-リバティガーデンとう　ね▼
-２ねんまえ
-まぼろしの　ポケモンが▽
-みつかったって　わだい　だったわ！▼</Text>
+			<Text>今　どこなの？▼
+リバティガーデン島　ね▼
+２年前
+幻の　ポケモンが▽
+みつかったって　話題　だったわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:22:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3397,11 +3397,11 @@
 			Language="JPN_KANJI">
 			<Text>Ｐ２ラボ？
 ちょっと　わからないわね……▼
-もしかしたら　１７ばんすいどうの
-けんきゅうじょの　ことかな？▼</Text>
+もしかしたら　１７番水道の
+研究所の　ことかな？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:22:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3452,15 +3452,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>スカイアローブリッジは
-ほんとうに　すごいよね▼
-さいしょに　みたとき……▼
+本当に　すごいよね▼
+最初に　みたとき……▼
 そう　みたときよ
 わたったとき　じゃなくて▼
-あっけに　とられる　って
+あっけに　取られる　って
 ああいうことを　いうのね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:23:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3507,13 +3507,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホドモエのはねばし　か▼
-ママも　あの　はしが
-あがったり　さがるところを▽
+			<Text>ホドモエの跳ね橋　か▼
+ママも　あの　橋が
+上がったり　下がる所を▽
 みてみたいんだけどな……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:24:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3561,12 +3561,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>シリンダーブリッジの
-あしの　うらに　つたわる　しんどう▼
+足の　裏に　伝わる　振動▼
 エネルギーが　はいりこんでくる……
-そんな　かんじで　すきなのよ！▼</Text>
+そんな　感じで　好きなのよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:25:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3615,13 +3615,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ビレッジブリッジ　ね
-さいきん　ようすが　かわって▽
+最近　様子が　変わって▽
 テニスコートとか　できたのよ▼
 ただ　ポケモンセンターが　ないから
 あんまり　なじみが　なくて……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:26:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3669,12 +3669,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ワンダーブリッジは
-みらいっぽい　デザインなのに▼
-ゆうれいが　いるって
+未来っぽい　デザインなのに▼
+幽霊が　いるって
 ウワサが　あるのよ……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:27:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3723,11 +3723,11 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンク？▼
 ちょっと　わからないな……▼
-イッシュちほうに
-そんな　ばしょが　あるの？▼</Text>
+イッシュ地方に
+そんな　場所が　あるの？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:28:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3774,13 +3774,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうじょうのやしろ　かあ▼
-はたけの　かみさまと　いわれる
-てんきの　ポケモンを　まつる▽
-おやしろが　あるのよねえ……▼</Text>
+			<Text>ほうじょうの社　かあ▼
+畑の　神様と　いわれる
+天気の　ポケモンを　まつる▽
+お社が　あるのよねえ……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:29:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3828,14 +3828,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サザナミわん！▼
+			<Text>サザナミ湾！▼
 ダイビングスポット　として
-ゆうめいな　ばしょね▼
-そして　かいていには……
-あとは　じぶんで　たしかめてね！▼</Text>
+有名な　場所ね▼
+そして　海底には……
+後は　自分で　確かめてね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:30:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3872,8 +3872,8 @@
 ママ　おもうんだけど
 ポケモンの　しわざ　なのかもね？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T02:59:10" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:31:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3881,12 +3881,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まよいのもり……▼
-ママ　おもうんだけど
-ポケモンの　しわざ　なのかもね？▼</Text>
+			<Text>迷いの森……▼
+ママ　思うんだけど
+ポケモンの　仕業　なのかもね？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:31:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3899,6 +3899,13 @@
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-13T02:57:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:31:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3935,14 +3942,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しれんのむろ……？▼
+			<Text>試練の室……？▼
 むかし　トレーナーから
-きいた　きおくが　あるような……▼
+聞いた　記憶が　あるような……▼
 チャンピオンロードに　あった
-いわの　こべや　だっけ？▼</Text>
+岩の　小部屋　だっけ？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:34:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3999,15 +4006,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しるべのま……▼
-あっ　おもいだした！▼
-フキヨセのほらあなの
-いちばん　おく　だっけ？▼
-めずらしい　ポケモンの　すみか　って
-かんがえている　ひとも　いんだよね▼</Text>
+			<Text>導の間……▼
+あっ　思いだした！▼
+フキヨセの洞穴の
+一番　奥　だっけ？▼
+珍しい　ポケモンの　すみか　って
+考えている　人も　いんだよね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:35:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4054,13 +4061,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンクのもり？▼
+			<Text>ハイリンクの森？▼
 ちょっと　わからないな……▼
-イッシュちほうに
-そんな　ばしょが　あるの？▼</Text>
+イッシュ地方に
+そんな　場所が　あるの？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4111,17 +4118,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライモンシティは　ごらくの　まち！▼
+			<Text>ライモンシティは　娯楽の　町！▼
 あそこの　ポケモンセンターでの
-おしごとも　たのしかったわね▼
+お仕事も　楽しかったわね▼
 えーとね▼
 ビッグスタジアム　リトルコートで
-きたえる　トレーナーが　おおいわよ！▼
-ほかにも　みどころが　たくさんね
-あなたの　すきに　してみなさい！▼</Text>
+きたえる　トレーナーが　多いわよ！▼
+他にも　見所が　たくさんね
+あなたの　好きに　してみなさい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:37:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4172,12 +4179,12 @@
 			Language="JPN_KANJI">
 			<Text>ホドモエシティ！▼
 ちかごろは　ホテルが
-いっぱい　たちならぶんでしょ？▼
-それいがいは
-あまり　しらないなあ▼</Text>
+いっぱい　立ち並ぶんでしょ？▼
+それ以外は
+あまり　知らないなあ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:38:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4228,12 +4235,12 @@
 			Language="JPN_KANJI">
 			<Text>フキヨセシティ　といえば
 フウロちゃん！▼
-むかしは　ポケモンジムの
-しかけで　きずついた　ひとが▽
-ポケセンに　きてたわね！▼</Text>
+昔は　ポケモンジムの
+しかけで　傷ついた　人が▽
+ポケセンに　来てたわね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:39:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4281,11 +4288,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セッカシティ　ね……▼
-しきの　うつろい　というか
-ふゆげしきが　すきな　まちね▼</Text>
+四季の　移ろい　というか
+冬景色が　好きな　町ね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:39:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4336,14 +4343,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ソウリュウシティ！
-いい　まちよ▼
-あたしが　きいた　はなしだと
-しちょうの　シャガさんが▼
+良い　町よ▼
+あたしが　聞いた　話だと
+市長の　シャガさんが▼
 ドラゴンタイプの　すごい
-わざを　おしえてくださるって！▼</Text>
+技を　教えてくださるって！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:40:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4392,12 +4399,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>へー　カノコタウン？
-じゃあ　ポケモンけんきゅうじょ　ね？▼
-それとも　ママの　おともだちの
-いえに　あそびに　いくのかな？▼</Text>
+じゃあ　ポケモン研究所　ね？▼
+それとも　ママの　お友達の
+家に　遊びに　行くのかな？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:40:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4444,10 +4451,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホワイトフォレスト　ねえ
-いまは　どう　かわったのかしら？▼</Text>
+今は　どう　変わったのかしら？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4494,10 +4501,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ブラックシティ　ねえ
-いまは　どう　かわったのかしら？▼</Text>
+今は　どう　変わったのかしら？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:41:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4542,10 +4549,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>れいとうコンテナ</Text>
+			<Text>冷凍コンテナ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4602,13 +4609,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なあに？　なんだか
-キーン　っておとも　するけど……▼
-えっ　でんきいしのほらあな？▼
+キーン　って音も　するけど……▼
+えっ　電気石の洞穴？▼
 へー　ライブキャスターが
-つうじるんだ！　はじめてしったわ！▼</Text>
+通じるんだ！　初めて知ったわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:46:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4658,15 +4665,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっと　こえが　とおいけど……▼
-ネジやま？▼
-なっとく！　ヤーコンさんの
-やま　なのよねー▼
-カセキが　みつかる　ばしょって
-ママは　きいてるわ！▼</Text>
+			<Text>ちょっと　声が　遠いけど……▼
+ネジ山？▼
+納得！　ヤーコンさんの
+山　なのよねー▼
+カセキが　みつかる　場所って
+ママは　聞いてるわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:42:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4714,13 +4721,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リュウラセンのとう！
-へー　なかに　はいれるんだ？▼
-あれでしょ？　でんせつの　ポケモンが
-ねむっているかも　しれない　ばしょね▼</Text>
+			<Text>リュウラセンの塔！
+へー　中に　はいれるんだ？▼
+あれでしょ？　伝説の　ポケモンが
+眠っているかも　しれない　場所ね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:42:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4772,13 +4779,13 @@
 			Language="JPN_KANJI">
 			<Text>ジャイアントホール？▼
 どこだっけ……？
-いんせきが　おちた　ばしょ？▼
-あれ　ちがったっけ？▼
-アララギはかせに　そんな
-はなしを　きいた　きがするけど……▼</Text>
+いんせきが　落ちた　場所？▼
+あれ　違ったっけ？▼
+アララギ博士に　そんな
+話を　聞いた　気がするけど……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:43:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4826,13 +4833,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホドモエのはねばし　か▼
-ママも　あの　はしが
-あがったり　さがるところを▽
+			<Text>ホドモエの跳ね橋　か▼
+ママも　あの　橋が
+上がったり　下がる所を▽
 みてみたいんだけどな……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:43:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4881,12 +4888,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>シリンダーブリッジの
-あしの　うらに　つたわる　しんどう▼
+足の　裏に　伝わる　振動▼
 エネルギーが　はいりこんでくる……
-そんな　かんじで　すきなのよ！▼</Text>
+そんな　感じで　好きなのよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:43:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4936,13 +4943,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ビレッジブリッジ　ね
-さいきん　ようすが　かわって▽
+最近　様子が　変わって▽
 テニスコートとか　できたのよ▼
 ただ　ポケモンセンターが　ないから
 あんまり　なじみが　なくて……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:44:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4991,12 +4998,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ワンダーブリッジは
-みらいっぽい　デザインなのに▼
-ゆうれいが　いるって
+未来っぽい　デザインなのに▼
+幽霊が　いるって
 ウワサが　あるのよ……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:44:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5046,15 +5053,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５ばんどうろの
+			<Text>５番道路の
 パフォーマーを　みるため▼
 ポケモンセンターを
-ぬけだしたわね……▼
-たしか　どうぐを　かいとってくれる
-おんなのこが　いるんじゃない？▼</Text>
+抜け出したわね……▼
+確か　道具を　買い取ってくれる
+女の子が　いるんじゃない？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:44:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5103,14 +5110,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>６ばんどうろの
-きせつけんきゅうじょに　いった？▽
-それに　どうくつも　あったっけ？▼
+			<Text>６番道路の
+季節研究所に　行った？▽
+それに　洞穴も　あったっけ？▼
 あとは……
 そうね　たまげるかもね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:45:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5158,13 +5165,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>７ばんどうろの　いっぽんばし！
-うっかり　とまると　おちちゃうのよね！▼
-あとは　ながい　くさむらから
-いがいな　ポケモンが　とびだしたっけ？▼</Text>
+			<Text>７番道路の　一本橋！
+うっかり　止まると　落ちちゃうのよね！▼
+あとは　長い　草むらから
+意外な　ポケモンが　飛び出したっけ？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:46:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5212,13 +5219,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>８ばんどうろの　みずたまり
-ふゆに　なると　こおって▽
-すべって　うまく　すすめないのが▽
-ママの　おきにいり　ね！▼</Text>
+			<Text>８番道路の　水たまり
+冬に　なると　こおって▽
+滑って　うまく　進めないのが▽
+ママの　お気に入り　ね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:46:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5267,14 +5274,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>９ばんどうろ　ね▼
+			<Text>９番道路　ね▼
 やんちゃさんが　いっぱい　いるから
-ポケモンしょうぶを　いどまれるかも▼
+ポケモン勝負を　いどまれるかも▼
 トレーナーだから
-たたかうのが　いちばん　よね！▼</Text>
+戦うのが　一番　よね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:46:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5321,12 +5328,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１１ばんどうろも
-１４ばんどうろと　おなじで▽
+			<Text>１１番道路も
+１４番道路と　同じで▽
 たきのぼり　よね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5374,13 +5381,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１２ばんどうろは
-なだらかな　きゅうりょうちたい▼
+			<Text>１２番道路は
+なだらかな　丘陵地帯▼
 でこぼこ　でこぼこっ
-あるくと　きもちいいのよ！▼</Text>
+歩くと　気持ち良いのよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5429,14 +5436,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１３ばんどうろ　といえば
-とにかく　ながい　いんしょうね！▼
+			<Text>１３番道路　といえば
+とにかく　長い　印象ね！▼
 メインルートが　わかりにくかった
-きおくが　あるけれど　ぎゃくに▽
-いろんな　ところに　いけば　いいの！▼</Text>
+記憶が　あるけれど　逆に▽
+いろんな　所に　行けば　いいの！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5482,11 +5489,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１４ばんどうろに　いるの？
+			<Text>１４番道路に　いるの？
 なら　たきのぼり　よね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5534,13 +5541,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１５ばんどうろ　かあ……▼
-ポケモンこうかんを　してくれる
-おねえさんが　いたような▼
-んー　きおくちがい　かも……？▼</Text>
+			<Text>１５番道路　かあ……▼
+ポケモン交換を　してくれる
+お姉さんが　いたような▼
+んー　記憶違い　かも……？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:47:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5588,13 +5595,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１５ばんどうろ　かあ……▼
-ポケモンこうかんを　してくれる
-おねえさんが　いたような▼
-んー　きおくちがい　かも……？▼</Text>
+			<Text>１５番道路　かあ……▼
+ポケモン交換を　してくれる
+お姉さんが　いたような▼
+んー　記憶違い　かも……？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5643,12 +5650,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カゴメタウン　かあ▼
-いったときの　いんしょうだと
-ひると　よるとで▽
-ぜんぜん　ちがう　まち　だったわ！▼</Text>
+行ったときの　印象だと
+昼と　夜とで▽
+全然　違う　町　だったわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:48:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5699,14 +5706,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サザナミタウンね▼
-むかしは　すっごい
-おかねもちが　いたんだけど▽
-ひっこし　なさったらしいわね▼
-それから　べっそうも　へって
-ちょっと　さみしい　はなしね▼</Text>
+昔は　すっごい
+お金持ちが　いたんだけど▽
+引越し　なさったらしいわね▼
+それから　別荘も　減って
+ちょっと　さみしい　話ね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:48:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5756,11 +5763,11 @@
 			Language="JPN_KANJI">
 			<Text>カラクサゲートと　いえば！▼
 うーん……▼
-なにか　ほかの　ゲートと
-ちがうところが　あったっけ……？▼</Text>
+なにか　他の　ゲートと
+違う所が　あったっけ……？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:49:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5808,12 +5815,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サザナミゲートは
-たてがたの　ゲート▼
-よこがたの　ゲートとの　ちがいは
-ないのが　ゲートの　いいところ！▼</Text>
+縦型の　ゲート▼
+横型の　ゲートとの　違いは
+ないのが　ゲートの　良い所！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5862,11 +5869,11 @@
 			Language="JPN_KANJI">
 			<Text>シッポウゲートは
 ゲートらしい　ゲートね！▼
-ほかの　ゲートとの　ちがいは
+他の　ゲートとの　違いは
 マニアでないと　わからないけどね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:50:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5913,11 +5920,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヒウンゲート　かあ！▼
-ヒウンシティと　４ばんどうろ　との
-ギャップが　たのしいのよね！▼</Text>
+ヒウンシティと　４番道路　との
+ギャップが　楽しいのよね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:50:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5963,10 +5970,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ライモンゲートは　３つも　あるの！▼
-でも　どれも　かわりは　ないかもね▼</Text>
+でも　どれも　変わりは　ないかもね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:50:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6015,11 +6022,11 @@
 			Language="JPN_KANJI">
 			<Text>ソウリュウゲート　ねえ▼
 どちらかの　ゲートに
-いつも　なにか　たべてる▽
-おとこのひとが　いたような……？▼</Text>
+いつも　なにか　食べてる▽
+男の人が　いたような……？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:51:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6068,13 +6075,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ブラックゲート！▼
-ぬければ　ひろがる
+抜ければ　広がる
 ブラックシティ！▼
 うーん　ゲートって　あまり
-かたることが　ないわね……▼</Text>
+語ることが　ないわね……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:51:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6123,13 +6130,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホワイトゲート！▼
-ぬければ　ひろがる
+抜ければ　広がる
 ホワイトフォレスト！▼
 うーん　ゲートって　あまり
-かたることが　ないわね……▼</Text>
+語ることが　ないわね……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:51:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6177,12 +6184,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ブリッジゲート　ね▼
-イッシュちほうに　ある　おおくの
-はしに　つながる　ゲートは▽
+イッシュ地方に　ある　多くの
+橋に　つながる　ゲートは▽
 すべて　ブリッジゲート　なのよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:52:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6231,13 +6238,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロードゲート？▼
-ふふふ　ロードゲートと　よばれる
+ふふふ　ロードゲートと　呼ばれる
 ゲートは　２つ　あるのよ▼
-いちばんどうろの　ちかくと
-リゾートデザートの　ちかくね！▼</Text>
+一番道路の　近くと
+リゾートデザートの　近くね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:53:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6284,13 +6291,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいていいせき！▼
-なぞの　こだいもじ！▼
-ひみつを　ときあかしたら
-ママにも　おしえてね！▼</Text>
+			<Text>海底遺跡！▼
+なぞの　古代文字！▼
+秘密を　解き明かしたら
+ママにも　教えてね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6339,11 +6346,11 @@
 			Language="JPN_KANJI">
 			<Text>ええ？
 ヒオウギに　いるの！▼
-だったら　かえってくれば
-いいじゃない！　じぶんの　いえよ！▼</Text>
+だったら　帰ってくれば
+いいじゃない！　自分の　家よ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:55:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6393,14 +6400,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>タテワキシティ！▼
-ライブハウスに　いった！？▼
-さいきん　ホミカちゃんの
-バンドが　おきにいり　なのよ！▼
-だって　きいていると
-げんきいっぱいに　なれるでしょ！▼</Text>
+ライブハウスに　行った！？▼
+最近　ホミカちゃんの
+バンドが　お気に入り　なのよ！▼
+だって　聞いていると
+元気いっぱいに　なれるでしょ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6449,13 +6456,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まっ！セイガイハシティ　なの？▼
-イッシュちほうでも
+イッシュ地方でも
 とびっきりの　リゾートね！▼
 ママ　あそこの　ポケモンセンターには
-ちょっとの　あいだしか　いなかったの▼</Text>
+ちょっとの　間しか　いなかったの▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:56:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6506,13 +6513,13 @@
 			Language="JPN_KANJI">
 			<Text>ポケウッド　ですって！▼
 なあに　あなた
-えいがに　でるの！？▽
-じゃあ　ＤＶＤを　かわないとね！▼
+映画に　出るの！？▽
+じゃあ　ＤＶＤを　買わないとね！▼
 あっ　アドバイスよ！
-えんぎは　しぜんたい　でね！▼</Text>
+演技は　自然体　でね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:56:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6559,11 +6566,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ジョインアベニュー　かあ▼
-あそこの　かわりゆく　みせとか
+あそこの　変わりゆく　店とか
 どことなく　ロマンチックなのよね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:57:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6612,13 +6619,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サンギタウンねー
-アデクさんの　いえには　いった？▼
-むかしは　ママも
+アデクさんの　家には　いった？▼
+昔は　ママも
 アデクさんに　ポケモンを▽
-おしえてもらったわ！　なつかしい！▼</Text>
+教えてもらったわ！　懐かしい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6667,13 +6674,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヤマジタウンは
-リバースマウンテン　ちかくの▽
-ちいさな　まち　だけど▼
-かわった　まちなみの
-いがいと　にんきの　ばしょよ！▼</Text>
+リバースマウンテン　近くの▽
+小さな　町　だけど▼
+変わった　町並みの
+意外と　人気の　場所よ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T06:59:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6720,13 +6727,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１９ばんどうろは
-ヒオウギを　でて　すぐの　ばしょ▼
-やまあいの　みち　といった　かんじの
-どうろ　でしょ！▼</Text>
+			<Text>１９番道路は
+ヒオウギを　出て　すぐの　場所▼
+山あいの　道　といった　感じの
+道路　でしょ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:00:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6773,13 +6780,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０ばんどうろも
-きせつの　へんかを　たのしめるわ▼
-ママが　すきなのは　あき！
-だって　おちばが……　ね！▼</Text>
+			<Text>２０番道路も
+季節の　変化を　楽しめるわ▼
+ママが　好きなのは　秋！
+だって　落ち葉が……　ね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6826,13 +6833,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２１ばんすいどう　は
-いわが　おおい！　って　かんじ▼
-なので　いがいに　すすむのが
-たいへんな　めいろ　みたいよね！▼</Text>
+			<Text>２１番水道　は
+岩が　多い！　って　感じ▼
+なので　意外に　進むのが
+大変な　迷路　みたいよね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6879,13 +6886,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２２ばんどうろ　は
-みどりゆたかな　どうろ　ね▼
+			<Text>２２番道路　は
+緑豊かな　道路　ね▼
 ということは　いろんな
 ポケモンが　いるかもね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:02:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6934,15 +6941,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２３ばんどうろ　ねえ……▼
-イッシュに　のこる
-さいごの　だいしぜん……▼
-なんて　おおげさに　かたる　ひとが
-いるほど　きふくに　とんだ▽
-すすむのも　けわしい　みち　らしいね▼</Text>
+			<Text>２３番道路　ねえ……▼
+イッシュに　残る
+最後の　大自然……▼
+なんて　おおげさに　語る　人が
+いるほど　起伏に　とんだ▽
+進むのも　けわしい　道　らしいね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6994,18 +7001,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウンげすいどう▼
-いいかえれば
-ヒウンシティの　げすいどう　ね▼
+			<Text>ヒウン下水道▼
+いい換えれば
+ヒウンシティの　下水道　ね▼
 ごめんなさい
-あることは　しっているけれど▽
-いったことは　ないのよ▼
-だけど　きいて！▼
-げすいどうの　さきに
-ひみつのばしょが　あるって　ウワサよ！▼</Text>
+あることは　知っているけれど▽
+行ったことは　ないのよ▼
+だけど　聞いて！▼
+下水道の　先に
+秘密の場所が　あるって　ウワサよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:06:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7054,15 +7061,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼくじょう　ね！▼
-ちいさいころの　ママったら
-そこで　ポケモンを　のりまわして▽
-すっごく　おこられたらしいわ！▼
-うん　こどもの　ときだから
-ぜんぜん　おぼえていないの！▼</Text>
+			<Text>牧場　ね！▼
+小さいころの　ママったら
+そこで　ポケモンを　乗り回して▽
+すっごく　怒られたらしいわ！▼
+うん　子供の　ときだから
+全然　覚えていないの！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:08:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7110,12 +7117,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>タチワキコンビナート？
-なあに　おしごとの　おてつだい？▼
-それにしても　おもいだすわね
-やけいが　きれいなの　そこ▼</Text>
+なあに　お仕事の　お手伝い？▼
+それにしても　思い出すわね
+夜景が　きれいなの　そこ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:09:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7164,13 +7171,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>リバースマウンテン！▼
-そこで　ちからつきて
+そこで　力尽きて
 ポケモンセンターに　くる▽
-トレーナーも　おおかったわ！▼
-あなたも　きをつけてね！▼</Text>
+トレーナーも　多かったわ！▼
+あなたも　気をつけてね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:10:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7220,14 +7227,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ストレンジャーハウス！？▼
-しってる　しってる！▼
-リバースマウンテンちかく　の
+知ってる　知ってる！▼
+リバースマウンテン近く　の
 ミステリースポット　でしょ！▼
 ……もしかしたら
-ゆうれいに　あえるかも！？▼</Text>
+幽霊に　会えるかも！？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7275,16 +7282,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チャンピオンロード！
-しれんのみち　ね！▼
+試練の道　ね！▼
 だいじょうぶ！　あなたには
 ポケモンが　いてくれるでしょ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:11:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:12:03" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7330,12 +7337,12 @@
 			Language="JPN_KANJI">
 			<Text>なあに？
 プラズマフリゲート？▼
-しらないわねえ▼
-ママも　いって　どんな　ばしょか
+知らないわねえ▼
+ママも　行って　どんな　場所か
 みておいたほうが　いいかな？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:12:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7383,14 +7390,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こだいのぬけみち……▼
-そのなのとおり
-こだいに　つくられた　ちかつうろ▼
-だれが　なんのために　つくったのか
-とおりぬければ　わかるかもね！▼</Text>
+			<Text>古代の抜け道……▼
+その名のとおり
+古代に　作られた　地下通路▼
+だれが　なんのために　作ったのか
+通り抜ければ　わかるかもね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:13:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7442,14 +7449,14 @@
 			Language="JPN_KANJI">
 			<Text>ヤーコンロード　ね▼
 なんでも　ヤーコンさんが
-こつこつと　ほりすすんでいた　って▼
-あなをほる　って
-みりょくてき　なのかしら？▼
-シンオウちほうにも　あなをほるのが
-すきな　ひとが　いるって　きいたわ！▼</Text>
+こつこつと　掘り進んでいた　って▼
+穴を掘る　って
+魅力的　なのかしら？▼
+シンオウ地方にも　穴を掘るのが
+好きな　人が　いるって　聞いたわ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:15:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7544,14 +7551,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しろのじゅどう！▼
-いわゆる　むげんダンジョンね
-どこまで　いけるか？▼
-そんなの　ポケモンと　いっしょの
-あなたなら　よゆう　でしょ！▼</Text>
+			<Text>白の樹洞！▼
+いわゆる　無限ダンジョンね
+どこまで　行けるか？▼
+そんなの　ポケモンと　一緒の
+あなたなら　余裕　でしょ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:16:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7599,14 +7606,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろのまてんろう！▼
-いわゆる　むげんダンジョンね
-どこまで　いけるか？▼
-そんなの　ポケモンと　いっしょの
-あなたなら　よゆう　でしょ！▼</Text>
+			<Text>黒の摩天楼！▼
+いわゆる　無限ダンジョンね
+どこまで　行けるか？▼
+そんなの　ポケモンと　一緒の
+あなたなら　余裕　でしょ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:16:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7653,13 +7660,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うみべのどうくつ　ね……▼
-おおきな　いわを　いつのまにか
-なみや　かぜ……　そして　ポケモンが▽
-あなを　あけた　どうくつ　なのよね▼</Text>
+			<Text>海辺の洞穴　ね……▼
+大きな　岩を　いつの間にか
+波や　風……　そして　ポケモンが▽
+穴を　開けた　洞穴　なのよね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:17:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7706,13 +7713,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こころのくうどう　ね……▼
-なにかが　いるだろう……
-そういわれても　なにもいない▽
-ふしぎな　ばしょ　らしいわね▼</Text>
+			<Text>心の空洞　ね……▼
+何かが　いるだろう……
+そういわれても　何もいない▽
+不思議な　場所　らしいわね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:20:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7759,13 +7766,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあな……？▼
+			<Text>隠し穴……？▼
 ちょっと　わからないわね▼
 ちなみに　ママは
-なにも　かくしていないわよ！▼</Text>
+何も　隠していないわよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:20:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7820,12 +7827,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>へえ　マリンチューブ！▼
-さいきん　できたばかりでしょ
-あるく　すいぞくかん！▼
-ママも　いってみたいな！▼</Text>
+最近　できたばかりでしょ
+歩く　水族館！▼
+ママも　行ってみたいな！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:21:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7872,11 +7879,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>タチワキゲート　かあ▼
-ゲートって　とくに
-どこも　かわりが　ないのよね……▼</Text>
+ゲートって　特に
+どこも　変わりが　ないのよね……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:21:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7932,12 +7939,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヒオウギゲート　って
-すぐ　ちかく　じゃない？▼
-なあに？　やすむなら
-うちに　かえってくれば　いいのに▼</Text>
+すぐ　近く　じゃない？▼
+なあに？　休むなら
+家に　帰ってくれば　いいのに▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:22:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7995,16 +8002,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しぜんほごく……？
-ウワサには　きいたこと　あるけど▼
-めずらしい　ポケモンを　まもるため
-えらばれた　ひとしか▽
-いけないように　してるって……▼
+			<Text>自然保護区……？
+ウワサには　聞いたこと　あるけど▼
+珍しい　ポケモンを　守るため
+選ばれた　人しか▽
+行けないように　してるって……▼
 なあに？　あなた
-えらばれちゃったのかしら！？▼</Text>
+選ばれちゃったのかしら！？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:22:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8061,13 +8068,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふふふ……▼
-あなたも　とりつかれたのね
-メダルの　みりょくに！▼
-メダルじむきょく　なら
+あなたも　取り付かれたのね
+メダルの　魅力に！▼
+メダル事務局　なら
 いろんなことが　わかるよね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-13T03:39:52" />
+				User="swan_scenario:W00293"
+				Time="2011-09-13T07:26:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
