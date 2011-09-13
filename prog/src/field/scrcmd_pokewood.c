@@ -682,6 +682,7 @@ static GMEVENT_RESULT eventPokewoodSave( GMEVENT * event, int *seq, void * wk )
     OS_Printf("POKEWOOD Save Start(%d)\n", epcmw->dst_pos );
     POKEWOOD_REC_Init( heapID );
     POKEWOOD_REC_Restore( PKWDSYS_GetBackupArea( epcmw->pkwdsys ) );
+    *seq = PKWD_COPY_SEQ_SAVE;
     /* FALL THROUGH */
 
   case PKWD_COPY_SEQ_SAVE:
