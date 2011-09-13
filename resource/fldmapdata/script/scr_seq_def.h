@@ -13765,19 +13765,21 @@
  *              RESORT_LIST_TYPE_SORT     …入れ替え
  *
  * @param[in]   param モードに渡す引数（どのアイテムリストか、とか）
+ * @param[in]   canera  カメラ移動タイプ
  * @param[out]  選んだサービスタイプ
  * @param[out]  選んだサービスの引数
  * @param[out]  選んだサービスインデックス
  * @param[out]  値段
  */
 //--------------------------------------------------------------
-#define _RESORT_CALL_LIST( idx, param, ret_type, ret_param, ret_param2, ret_idx, ret_price ) \
-    _ASM_RESORT_CALL_LIST idx, param, ret_type, ret_param, ret_param2, ret_idx, ret_price
+#define _RESORT_CALL_LIST( idx, param, camera, ret_type, ret_param, ret_param2, ret_idx, ret_price ) \
+    _ASM_RESORT_CALL_LIST idx, param, camera, ret_type, ret_param, ret_param2, ret_idx, ret_price
 
-  .macro _ASM_RESORT_CALL_LIST idx, param, ret_type, ret_param, ret_param2, ret_idx, ret_price
+  .macro _ASM_RESORT_CALL_LIST idx, param, camera, ret_type, ret_param, ret_param2, ret_idx, ret_price
   .short EV_SEQ_RESORT_CALL_LIST
   .short \idx
   .short \param
+  .short \camera
   .short \ret_type
   .short \ret_param
   .short \ret_param2

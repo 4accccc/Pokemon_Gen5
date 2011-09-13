@@ -200,6 +200,7 @@ typedef struct _SHOP_BUY_APP_WORK{
   u16*  ret_service_param2;
   u16*  ret_service_idx;
   u16*  ret_price;
+  u32   camera_type;
 
   //以下、モード別処理
   void (*List_Init)( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
@@ -328,6 +329,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
   u16            shop_type  = SCRCMD_GetVMWorkValue( core, work );
   u16            shop_param  = SCRCMD_GetVMWorkValue( core, work );
+  u16            camera_type  = SCRCMD_GetVMWorkValue( core, work );
   u16*           ret_service_type   = SCRCMD_GetVMWork( core, work );
   u16*           ret_service_param = SCRCMD_GetVMWork( core, work );
   u16*           ret_service_param2 = SCRCMD_GetVMWork( core, work );
@@ -361,6 +363,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.p_abstruct_man  = RESORT_SYSTEM_GetAbstructManager( resort_sys );
   sbw->wk.p_city  = RESORT_SYSTEM_GetCityData( resort_sys );
   sbw->wk.p_resort_sys = resort_sys;
+  sbw->wk.camera_type = camera_type;
 
 
   *sbw->wk.ret_service_type = FALSE;
@@ -480,7 +483,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
  * @param   fieldcamera カメラ設定
  */
 //----------------------------------------------------------------------------------
-static void Start_CameraMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, FIELD_CAMERA *fieldcamera )
+static void Start_CameraMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, FIELD_CAMERA *fieldcamera, u32 camera_type )
 {
   // ショップで買い物を開始するときのカメラ移動のオフセットデータ
   static const VecFx32 shopcamera_move_tbl[4]={
@@ -513,12 +516,43 @@ static void Start_CameraMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, 
   param.Core.TrgtPos.y += shopcamera_move_tbl[dir].y;
   param.Core.TrgtPos.z += shopcamera_move_tbl[dir].z;
 
+
   param.Chk.Shift = FALSE;
   param.Chk.Pitch = FALSE;
-  param.Chk.Yaw   = FALSE;
+  param.Chk.Yaw   = TRUE;
   param.Chk.Dist  = FALSE;
   param.Chk.Fovy  = FALSE;
   param.Chk.Pos   = TRUE;
+
+  if( camera_type == RESORT_LIST_CAMERA_SHOP )
+  {
+    int i;
+    void *p_data_adrs = RESORT_PEOPLE_GetDataAdrs( sbw->wk.p_people );
+    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+    {
+      RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident(sbw->wk.p_all_people,i );
+      if( p_data == p_data_adrs )
+      {
+        break;
+      }
+    }
+    GF_ASSERT( i < RESORT_RESIDENT_DATA_NUM );
+
+    if(i%2)
+    {
+      //左側
+      param.Core.AngleYaw += 0x1000;
+      param.Core.TrgtPos.z += FX32_ONE*8;
+    }
+    else
+    {
+      //右側
+      param.Core.AngleYaw -= 0x1100;
+      param.Core.TrgtPos.z += FX32_ONE*8;
+      param.Core.TrgtPos.x -= FX32_ONE*8;
+    }
+  }
+
 
   // カメラ移動開始
   FIELD_CAMERA_SetLinerParamOv( fieldcamera, &param, 10 );
@@ -570,7 +604,7 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
     case SHOP_BUY_CALL_CAMERA_MOVE:
       OS_Printf("ショップ起動\n");
       // カメラ移動開始
-      Start_CameraMove( sbw, fieldmap, fieldcamera );   
+      Start_CameraMove( sbw, fieldmap, fieldcamera, sbw->wk.camera_type );
       sbw->seq++;
       break;
     case SHOP_BUY_CALL_CAMERA_MOVE_WAIT:
@@ -590,7 +624,7 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
     case SHOP_BUY_CALL_CAMERA_RETURN:
       // 移動カメラ戻す処理
       {
-        FLD_CAM_MV_PARAM_CHK chk = {FALSE, FALSE,FALSE,FALSE,FALSE,TRUE,};
+        FLD_CAM_MV_PARAM_CHK chk = {FALSE, FALSE,TRUE,FALSE,FALSE,TRUE,};
         FIELD_CAMERA_RecvLinerParam(fieldcamera, &chk, 8);
       }
       sbw->seq++;

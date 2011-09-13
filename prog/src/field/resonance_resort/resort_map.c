@@ -207,7 +207,7 @@ void RESORT_MAP_GetResidentGridPos( u16 buffer_index, u16 shop_rank, u16 *p_x, u
   *p_z    = sc_resident_pos[buffer_index].z;
   *p_dir  = sc_resident_pos[buffer_index].dir;
 
-  if( shop_rank == 2 )
+  if( shop_rank >= 2 )
   {
     if( *p_dir == DIR_RIGHT )
     {
