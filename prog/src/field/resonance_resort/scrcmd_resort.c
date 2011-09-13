@@ -1143,6 +1143,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
 
   u16 idx = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 *ret_result = SCRCMD_GetVMWork( p_core, p_wk );
   u16 *ret_grade_msg = SCRCMD_GetVMWork( p_core, p_wk );
   u16 *ret_eff_msg = SCRCMD_GetVMWork( p_core, p_wk );
   u16 *ret_lvup = SCRCMD_GetVMWork( p_core, p_wk );
@@ -1153,7 +1154,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
 
   RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, idx );
 
-  RESORT_UTIL_SetSpot( p_abstruct, p_resident, p_sys, p_wordset, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup );
+  *ret_result = RESORT_UTIL_SetSpot( p_abstruct, p_resident, p_sys, p_wordset, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup );
   return VMCMD_RESULT_CONTINUE;
 
 }
@@ -1786,19 +1787,37 @@ VMCMD_RESULT EvCmdResortSetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_MY_PARAM_WANT_JOB:
     {
-      static const u16 sc_shop_id[]  =
+      static const u16 sc_shop_id_b[]  =
       {
-        RESORT_SHOP_ID_LOT_00,//RESORT_RESIDENT_TYPE_LOT
-        RESORT_SHOP_ID_PARLOR_00,//RESORT_RESIDENT_TYPE_PARLOR
-        RESORT_SHOP_ID_MARKET_00,//RESORT_RESIDENT_TYPE_MARKET
-        RESORT_SHOP_ID_FLORIST_00,//RESORT_RESIDENT_TYPE_FLORIST
-        RESORT_SHOP_ID_EXERCICE_00,//RESORT_RESIDENT_TYPE_EXERCICE
-        RESORT_SHOP_ID_NURSERY_00,//RESORT_RESIDENT_TYPE_NURSERY
-        RESORT_SHOP_ID_ANTIQUE_00,//RESORT_RESIDENT_TYPE_ANTIQUE
-        RESORT_SHOP_ID_CAFE_00,//RESORT_RESIDENT_TYPE_CAFE
+        RESORT_SHOP_ID_LOT_00_B2,//RESORT_RESIDENT_TYPE_LOT
+        RESORT_SHOP_ID_PARLOR_00_B2,//RESORT_RESIDENT_TYPE_PARLOR
+        RESORT_SHOP_ID_MARKET_00_B2,//RESORT_RESIDENT_TYPE_MARKET
+        RESORT_SHOP_ID_FLORIST_00_B2,//RESORT_RESIDENT_TYPE_FLORIST
+        RESORT_SHOP_ID_EXERCICE_00_B2,//RESORT_RESIDENT_TYPE_EXERCICE
+        RESORT_SHOP_ID_NURSERY_00_B2,//RESORT_RESIDENT_TYPE_NURSERY
+        RESORT_SHOP_ID_ANTIQUE_00_B2,//RESORT_RESIDENT_TYPE_ANTIQUE
+        RESORT_SHOP_ID_CAFE_00_B2,//RESORT_RESIDENT_TYPE_CAFE
       };
-      GF_ASSERT( data < NELEMS(sc_shop_id) );
-      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_WANT_JOB, sc_shop_id[data] );
+      static const u16 sc_shop_id_w[]  =
+      {
+        RESORT_SHOP_ID_LOT_00_W2,//RESORT_RESIDENT_TYPE_LOT
+        RESORT_SHOP_ID_PARLOR_00_W2,//RESORT_RESIDENT_TYPE_PARLOR
+        RESORT_SHOP_ID_MARKET_00_W2,//RESORT_RESIDENT_TYPE_MARKET
+        RESORT_SHOP_ID_FLORIST_00_W2,//RESORT_RESIDENT_TYPE_FLORIST
+        RESORT_SHOP_ID_EXERCICE_00_W2,//RESORT_RESIDENT_TYPE_EXERCICE
+        RESORT_SHOP_ID_NURSERY_00_W2,//RESORT_RESIDENT_TYPE_NURSERY
+        RESORT_SHOP_ID_ANTIQUE_00_W2,//RESORT_RESIDENT_TYPE_ANTIQUE
+        RESORT_SHOP_ID_CAFE_00_W2,//RESORT_RESIDENT_TYPE_CAFE
+      };
+      GF_ASSERT( data < NELEMS(sc_shop_id_b) );
+      if( GET_VERSION() == VERSION_B2 )
+      {
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_WANT_JOB, sc_shop_id_b[data] );
+      }
+      else
+      {
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_WANT_JOB, sc_shop_id_w[data] );
+      }
     }
     break;
   case RESORT_MY_PARAM_TEX:

@@ -594,9 +594,11 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
  *	@param	*ret_eff_msg    演出文章
  *	@param	*ret_lvup       レベルアップしたか
  *	@param	ret_city_lvup   街がレベルアップしたか
+ *
+ *	return TRUE ◎～△  FALSE×
  */
 //-----------------------------------------------------------------------------
-void RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, WORDSET *p_wordset, u16 *ret_grade_msg, u16 *ret_eff_msg, u16 *ret_lvup, u16* ret_city_lvup )
+BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, WORDSET *p_wordset, u16 *ret_grade_msg, u16 *ret_eff_msg, u16 *ret_lvup, u16* ret_city_lvup )
 {
   enum
   {
@@ -699,7 +701,7 @@ void RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
   {
     if( is_celeb )
     {
-      *ret_grade_msg = RESORT_UTIL_GetCelebData( p_set, p_wk, RESORT_BINARY_PRESET_PARAM_CELEB_SHOP_NG ); 
+      *ret_grade_msg = RESORT_UTIL_GetCelebData( p_set, p_wk, RESORT_BINARY_PRESET_PARAM_CELEB_SHOP_OK ); 
     }
     else
     {
@@ -793,6 +795,8 @@ void RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
       *ret_city_lvup = RESORT_SET_SPOT_CITY_LVMAX;
     }
   }
+
+  return is_good;
 }
 
 //----------------------------------------------------------------------------

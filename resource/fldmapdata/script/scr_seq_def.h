@@ -13934,12 +13934,13 @@
  * @note ‚Q‚É{İŒoŒ±’l@‚R‚É{İƒŒƒxƒ‹@‚S‚ÉŠXŒoŒ±’l@‚T‚ÉŠXƒŒƒxƒ‹‚ª“ü‚é
  */
 //--------------------------------------------------------------
-#define _RESORT_SET_SPOT( idx, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup) \
-      _ASM_RESORT_SET_SPOT idx, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup
+#define _RESORT_SET_SPOT( idx, ret_result, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup) \
+      _ASM_RESORT_SET_SPOT idx, ret_result, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup
 
-  .macro _ASM_RESORT_SET_SPOT idx, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup
+  .macro _ASM_RESORT_SET_SPOT idx, ret_result, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup
   .short EV_SEQ_RESORT_SET_SPOT
   .short \idx
+  .short \ret_result
   .short \ret_grade_msg
   .short \ret_eff_msg
   .short \ret_lvup

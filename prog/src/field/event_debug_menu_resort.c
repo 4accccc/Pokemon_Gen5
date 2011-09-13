@@ -566,7 +566,7 @@ static BOOL debugMenuCallProc_DesignerSetup1( DEBUG_MENU_EVENT_WORK *p_wk )
       RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, 2 );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, RESORT_SHOP_ID_CAFE_02  );
+      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, RESORT_SHOP_ID_CAFE_02_B2  );
       RESORT_RESIDENT_DATA_JobChange( p_resident );
     }
   }

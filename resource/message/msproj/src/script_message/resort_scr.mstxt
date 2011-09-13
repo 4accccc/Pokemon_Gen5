@@ -8180,11 +8180,11 @@ GTSで　こうかんしたこと
 			Language="JPN">
 			<Text>[Name:ResortShop Idx="1" ]に
 [Name:TrainerName Idx="0" ]が　やってきた！▼
-[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="4" ]！▼
+[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼
 </Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-12T11:52:27" />
+				Time="2011-09-13T06:47:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8194,11 +8194,11 @@ GTSで　こうかんしたこと
 			Language="JPN_KANJI">
 			<Text>[Name:ResortShop Idx="1" ]に
 [Name:TrainerName Idx="0" ]が　やってきた！▼
-[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="4" ]！▼
+[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼
 </Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-12T11:52:29" />
+				Time="2011-09-13T06:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8235,11 +8235,11 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼
+			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="4" ]！▼
 ……　……　……　……　……　……▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-12T11:52:39" />
+				Time="2011-09-13T06:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8247,12 +8247,11 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼
-……　……　……　……　……　……
+			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="4" ]！▼
 ……　……　……　……　……　……▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-12T11:52:40" />
+				Time="2011-09-13T06:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45622,11 +45621,11 @@ GTSで　こうかんしたこと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダンゴロ　もってない？
-わたしの　シママと　こうかん　しようよ！</Text>
+			<Text>ピカチュウ　もってない？
+わたしの　リオルと　こうかん　しようよ！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:11:35" />
+				Time="2011-09-13T06:45:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45634,11 +45633,11 @@ GTSで　こうかんしたこと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダンゴロ　もってない？
-わたしの　シママと　こうかん　しようよ！</Text>
+			<Text>ピカチュウ　もってない？
+わたしの　リオルと　こうかん　しようよ！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:11:35" />
+				Time="2011-09-13T06:45:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

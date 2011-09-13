@@ -132,3 +132,9 @@
 //スポットサービス
 #define RESORT_SPOTRANK_TYPE_RANKDATA_FIRST (0) //１位の人
 #define RESORT_SPOTRANK_TYPE_MAX (1) //最大
+//バージョン
+#define RESORT_VERSION_W (1) //W
+#define RESORT_VERSION_B (0) //B
+#define RESORT_VERSION_W2 (3) //W2
+#define RESORT_VERSION_B2 (2) //B2
+#define RESORT_VERSION_MAX (4) //最大

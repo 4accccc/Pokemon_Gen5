@@ -4202,6 +4202,8 @@ RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL_DATA *
 u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS *cp_mystatus )
 {
   u16 want_job = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_WANT_JOB, NULL );
+  u16 ver = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_VER, NULL );
+
 
   if( want_job == RESORT_SHOP_ID_NULL )
   {
@@ -4210,21 +4212,93 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
     default:
       GF_ASSERT(0);
     case 1:
-      return RESORT_SHOP_ID_LOT_00;
+      switch( ver )
+      {
+      case VERSION_BLACK:
+        return RESORT_SHOP_ID_LOT_00_B;
+      case VERSION_WHITE:
+        return RESORT_SHOP_ID_LOT_00_W;
+      case VERSION_B2:
+        return RESORT_SHOP_ID_LOT_00_B2;
+      default:
+        GF_ASSERT(0);
+      case VERSION_W2:
+        return RESORT_SHOP_ID_LOT_00_W2;
+      }
     case 2:
     case 7:
-      return RESORT_SHOP_ID_EXERCICE_00;
+      switch( ver )
+      {
+      case VERSION_BLACK:
+        return RESORT_SHOP_ID_EXERCICE_00_B;
+      case VERSION_WHITE:
+        return RESORT_SHOP_ID_EXERCICE_00_W;
+      case VERSION_B2:
+        return RESORT_SHOP_ID_EXERCICE_00_B2;
+      default:
+        GF_ASSERT(0);
+      case VERSION_W2:
+        return RESORT_SHOP_ID_EXERCICE_00_W2;
+      }
     case 3:
     case 8:
-      return RESORT_SHOP_ID_MARKET_00;
+      switch( ver )
+      {
+      case VERSION_BLACK:
+        return RESORT_SHOP_ID_MARKET_00_B;
+      case VERSION_WHITE:
+        return RESORT_SHOP_ID_MARKET_00_W;
+      case VERSION_B2:
+        return RESORT_SHOP_ID_MARKET_00_B2;
+      default:
+        GF_ASSERT(0);
+      case VERSION_W2:
+        return RESORT_SHOP_ID_MARKET_00_W2;
+      }
     case 4:
     case 9:
-      return RESORT_SHOP_ID_FLORIST_00;
+      switch( ver )
+      {
+      case VERSION_BLACK:
+        return RESORT_SHOP_ID_FLORIST_00_B;
+      case VERSION_WHITE:
+        return RESORT_SHOP_ID_FLORIST_00_W;
+      case VERSION_B2:
+        return RESORT_SHOP_ID_FLORIST_00_B2;
+      default:
+        GF_ASSERT(0);
+      case VERSION_W2:
+        return RESORT_SHOP_ID_FLORIST_00_W2;
+      }
     case 5:
-      return RESORT_SHOP_ID_NURSERY_00;
+      switch( ver )
+      {
+      case VERSION_BLACK:
+        return RESORT_SHOP_ID_NURSERY_00_B;
+      case VERSION_WHITE:
+        return RESORT_SHOP_ID_NURSERY_00_W;
+      case VERSION_B2:
+        return RESORT_SHOP_ID_NURSERY_00_B2;
+      default:
+        GF_ASSERT(0);
+      case VERSION_W2:
+        return RESORT_SHOP_ID_NURSERY_00_W2;
+      }
     case 0:
     case 6:
-      return RESORT_SHOP_ID_ANTIQUE_00;
+      switch( ver )
+      {
+      case VERSION_BLACK:
+        return RESORT_SHOP_ID_ANTIQUE_00_B;
+      case VERSION_WHITE:
+        return RESORT_SHOP_ID_ANTIQUE_00_W;
+      case VERSION_B2:
+        return RESORT_SHOP_ID_ANTIQUE_00_B2;
+      default:
+        GF_ASSERT(0);
+      case VERSION_W2:
+        return RESORT_SHOP_ID_ANTIQUE_00_W2;
+      }
     }
   }
     

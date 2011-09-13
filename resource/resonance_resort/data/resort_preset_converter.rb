@@ -168,7 +168,7 @@ def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h, trade_h )
       exit(1)
     end
 
-    if $define_hash[ type ] == "セレブ特定出現"
+    if type == "セレブ特定出現"
       trade  = csv.get( row, PRESET_COL_CELEB_TRADE )
       begin
         data.write_u16( tradedata.search( "#{trade}", "#{row}行の交換ポケ" ) )
@@ -179,7 +179,7 @@ def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h, trade_h )
       for msg in PRESET_COL_CELEB_MSG_START...PRESET_COL_CELEB_MSG_END+1
         msgid  = csv.get( row, msg )
         begin
-          data.write_u16( msgdata.search( "#{msgid}", "#{rom}行のセレブ文" ) )
+          data.write_u16( msgdata.search( "#{msgid}", "#{row}行のセレブ文" ) )
         rescue HeaderSearchError
           exit(1)
         end
