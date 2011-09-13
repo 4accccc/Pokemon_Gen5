@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-08-08T19:02:45" source="nschool_02.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-09-13T11:40:03" source="nschool_02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-08-08T19:02:45" source="nschool_02.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-09-13T11:40:03" source="nschool_02.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -21,15 +21,15 @@
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="10 10"
+	compress_material="on" material_size="12 12"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-2.609863 0.062500 -1.375000" whd="5.406982 1.906250 2.703125"/>
+<box_test pos_scale="5" xyz="-2.609863 0.062500 -1.400391" whd="5.406982 1.906250 2.728271"/>
 
-<tex_image_array size="10">
+<tex_image_array size="12">
 	<tex_image index="0" name="h_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
@@ -57,7 +57,75 @@
 			41aa 0006 906a 0001 641a 0000 1906 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="nkabe"
+	<tex_image index="2" name="jouro"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="jouro_pl"
+		path="C:/home/swan_data3d/build_model/outdoor/nschool_02/tex/jouro.tga"
+	>
+		<bitmap size="128">
+			0000 0000 3300 0033 0000 0000 0000 0000
+			0000 0000 4653 0364 0000 0000 0000 0000
+			0000 3000 3465 3653 0000 0000 0000 0000
+			0000 3000 3446 3433 0000 0000 0000 0000
+			9990 5000 3446 5653 0099 0000 0000 0000
+			7879 3009 4466 3664 09a8 0000 0000 0000
+			a78b 900b 6663 b366 9a7b 0000 0000 0000
+			99b0 9b9b 333a 9a33 9790 0000 0000 0000
+			bb00 b9a9 aaa8 98aa b8b0 0000 0000 0000
+			0000 9abb 7888 9887 b8bb 0000 0000 0000
+			0000 bb00 7888 9887 0b9b 0000 0000 0000
+			0000 9000 788a 9a87 00bb 0000 0000 0000
+			0000 c000 78a9 c9a7 000c 0000 0000 0000
+			0000 d000 99cc ccc9 000d 0000 0000 0000
+			0000 0000 cccd dccc 0000 0000 0000 0000
+			0000 0000 cdd0 0ddc 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="n_jaguchi"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="n_jaguchi_pl"
+		path="C:/home/swan_data3d/build_model/outdoor/nschool_02/tex/n_jaguchi.tga"
+	>
+		<bitmap size="256">
+			3333 3333 3333 3333 3333 3333 5003 0054
+			3333 3333 3333 3333 3333 3333 2503 0521
+			3333 3333 3333 3333 3333 3333 1133 3114
+			3333 3333 3333 3333 3333 3333 1573 7511
+			4444 4444 4444 4444 4444 4444 2774 7722
+			7777 7777 7777 7777 7777 7777 7707 0771
+			5555 5555 5555 5555 5555 5555 7005 0072
+			4444 4444 4444 4444 4444 4444 7004 0077
+			4444 4434 5444 4444 4444 4434 0004 0000
+			4444 4444 4444 4444 4444 4444 0004 0000
+			4444 4444 4445 4444 4444 4444 0005 0000
+			4544 4544 4444 4443 4544 4544 0004 0000
+			4444 4444 4444 4444 4444 4444 0004 0000
+			4444 4444 4445 4544 4444 4444 0005 0000
+			4444 4444 4444 4444 4444 4444 0004 0000
+			4444 4444 4444 4444 4444 4444 0004 0000
+			3333 3333 3333 4333 3344 3333 3333 3333
+			3333 3333 3333 5433 3455 3333 3333 3333
+			4443 4444 4444 5544 4555 4444 4444 3444
+			6643 6666 6666 6666 6666 6666 6666 3466
+			5643 5555 5555 6665 6666 5555 5555 3465
+			5643 5555 5555 6665 6666 5555 5555 3465
+			5643 5555 5555 6655 5666 5555 5555 3465
+			5643 5555 5555 6655 5666 5555 5555 3465
+			5643 5555 5555 6655 5666 5555 5555 3465
+			5643 5555 5555 6555 5566 5555 5555 3465
+			5643 5555 5555 6555 5566 5555 5555 3465
+			5743 5555 5555 6555 5566 5555 5555 3475
+			5743 5555 5555 6555 5566 5555 5555 3475
+			6743 6666 6666 6666 6666 6666 6666 3476
+			7743 7777 7777 7777 7777 7777 7777 3477
+			7743 7777 7777 7777 7777 7777 7777 3477
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="nkabe"
 		width="32" height="16" original_width="32" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -83,7 +151,7 @@
 			6667 5444 6444 8766 6667 b999 6999 8766
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="nkabe2"
+	<tex_image index="5" name="nkabe2"
 		width="8" height="16" original_width="8" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -97,7 +165,7 @@
 			3443 4333 3443 4333 3443 4333 3443 4333
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="nkabe3"
+	<tex_image index="6" name="nkabe3"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -123,7 +191,7 @@
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="nshasira"
+	<tex_image index="7" name="nshasira"
 		width="32" height="16" original_width="32" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -149,7 +217,7 @@
 			bbdd bbdd bbdd bbdd bbdd bbdd bbdd bbdd
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="nskabe"
+	<tex_image index="8" name="nskabe"
 		width="32" height="64" original_width="32" original_height="64"
 		format="palette16"
 		color0_mode="transparency"
@@ -223,7 +291,7 @@
 			5555 5555 5555 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="nsyane"
+	<tex_image index="9" name="nsyane"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -249,38 +317,38 @@
 			6610 1666 6610 1666 0006 0000 0006 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="out55_fl_sp"
+	<tex_image index="10" name="out55_fl"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="out55_fl_sp_pl"
-		path="C:/home/swan_data3d/build_model/outdoor/nschool_02/tex/out55_fl_sp.tga"
+		palette_name="out55_fl_pl"
+		path="C:/home/swan_data3d/build_model/outdoor/nschool_02/tex/01_haru/out55_fl.tga"
 	>
 		<bitmap size="128">
-			bb00 0000 0000 0000 bdb0 000b 0000 0000
-			ccbb 00bd aa00 0000 ccdb 00bb a6a0 000a
-			dbb0 000b 99aa 00a6 bb00 0000 996a 00aa
-			0000 0000 6aa0 000a 0000 0000 aa00 0000
-			aa00 0000 0000 0000 a6a0 000a 0000 0000
-			99aa 00a6 8800 0000 996a 00aa 8580 0008
-			6aa0 000a 7788 0085 aa00 0000 7758 0088
-			0000 0000 5880 0008 0000 0000 8800 0000
+			dd00 0000 0000 0000 dfd0 000d 0000 0000
+			eedd 00df cc00 0000 eefd 00dd c8c0 000c
+			fdd0 000d bbcc 00c8 dd00 0000 bb8c 00cc
+			0000 0000 8cc0 000c 0000 0000 cc00 0000
+			cc00 0000 0000 0000 c8c0 000c 0000 0000
+			bbcc 00c8 aa00 0000 bb8c 00cc a7a0 000a
+			8cc0 000c 99aa 00a7 cc00 0000 997a 00aa
+			0000 0000 7aa0 000a 0000 0000 aa00 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			1110 0001 0011 0110 3331 1014 1133 1331
-			3340 3144 1333 1333 4410 3244 2133 0133
-			4100 2144 2223 0133 1000 1122 2212 0013
-			0000 1111 2212 0001 1000 1111 1111 0011
-			2100 1122 2111 0012 2200 1122 2122 0122
-			3310 2123 2133 0132 3340 3113 2133 0433
-			2332 4101 1013 1334 0222 1000 0001 1120
+			3330 0003 0033 0330 5553 3036 3355 3553
+			5560 5366 3555 3555 6630 5466 4355 0355
+			6300 4366 4445 0355 3000 3344 4434 0035
+			0000 3333 4434 0003 3000 3333 3333 0033
+			4300 3344 4333 0034 4400 3344 4344 0344
+			5530 4345 4355 0354 5560 5335 4355 0655
+			4554 6303 3035 3556 0444 3000 0003 3340
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="out55_ka_sp"
+	<tex_image index="11" name="out55_ka"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="out55_ka_sp_pl"
-		path="C:/home/swan_data3d/build_model/outdoor/nschool_02/tex/out55_ka_sp.tga"
+		palette_name="out55_ka_pl"
+		path="C:/home/swan_data3d/build_model/outdoor/nschool_02/tex/01_haru/out55_ka.tga"
 	>
 		<bitmap size="128">
 			2222 2222 2222 2222 2222 2222 2222 2222
@@ -303,46 +371,53 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="10">
+<tex_palette_array size="12">
 	<tex_palette index="0" name="h_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="h_mado_pl" color_size="4">
 		7339 7b9c 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="nkabe2_pl" color_size="16">
+	<tex_palette index="2" name="jouro_pl" color_size="16">
+		69fd 0000 7fff 1e4d 2f74 26b0 2f12 335f
+		2aff 0df7 1a7c 1570 298e 35f2 7fff 7fff
+	</tex_palette>
+	<tex_palette index="3" name="n_jaguchi_pl" color_size="8">
+		759f 6739 4e73 4e73 4210 39ce 318c 2d6b
+	</tex_palette>
+	<tex_palette index="4" name="nkabe2_pl" color_size="16">
 		02d9 031c 037f 19b2 2a36 4631 5294 5ad6
 		5ef7 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="3" name="nkabe3_pl" color_size="4">
+	<tex_palette index="5" name="nkabe3_pl" color_size="4">
 		4631 4a52 5294 5ad6
 	</tex_palette>
-	<tex_palette index="4" name="nkabe_pl" color_size="16">
+	<tex_palette index="6" name="nkabe_pl" color_size="16">
 		1ee6 2327 2b69 1685 2732 1af1 3bbf 2f7e
 		1f3d 2adc 327a 2a39 1dd8 25f9 5294 4631
 	</tex_palette>
-	<tex_palette index="5" name="nshasira_pl" color_size="16">
+	<tex_palette index="7" name="nshasira_pl" color_size="16">
 		0c63 0e16 0e58 1235 1258 129b 154d 2232
 		29f2 3922 4da6 4eb6 55e5 56f8 6227 635b
 	</tex_palette>
-	<tex_palette index="6" name="nskabe_pl" color_size="16">
+	<tex_palette index="8" name="nskabe_pl" color_size="16">
 		0000 1d65 21c6 2627 298e 2dd0 2e89 3612
 		52d6 5af8 635b 6fbd 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="nsyane_pl" color_size="8">
+	<tex_palette index="9" name="nsyane_pl" color_size="8">
 		4928 4d29 5149 5549 596a 5d6a 616a 7fff
 	</tex_palette>
-	<tex_palette index="8" name="out55_fl_sp_pl" color_size="16">
-		69fd 2de8 2a29 328c 2e4b 6bdf 375e 5b7d
-		4b1b 2efe 229d 14b9 1cfb 295d 7fff 7fff
+	<tex_palette index="10" name="out55_fl_pl" color_size="16">
+		7fff 0000 7fff 2a07 2248 2eac 2a6b 6bdf
+		375e 5b7d 4b1b 2efe 229d 14b9 1cfb 295d
 	</tex_palette>
-	<tex_palette index="9" name="out55_ka_sp_pl" color_size="16">
+	<tex_palette index="11" name="out55_ka_pl" color_size="16">
 		759f 192b 218f 4e95 5f19 2a38 1d4d 3e12
 		25d4 1d70 739d 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="10">
+<material_array size="12">
 	<material index="0" name="h_kage"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
@@ -391,13 +466,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="nkabe"
+	<material index="2" name="jouro"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="8"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -408,20 +483,20 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="4"
-		tex_tiling="repeat clamp"
+		tex_image_idx="2" tex_palette_idx="2"
+		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="nkabe2"
+	<material index="3" name="n_jaguchi"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="8"
+		polygon_id="7"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -432,20 +507,20 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="2"
-		tex_tiling="repeat clamp"
+		tex_image_idx="3" tex_palette_idx="3"
+		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="nkabe3"
+	<material index="4" name="nkabe"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="8"
+		polygon_id="9"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -456,20 +531,20 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="3"
+		tex_image_idx="4" tex_palette_idx="6"
 		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="nshasira"
+	<material index="5" name="nkabe2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="8"
+		polygon_id="9"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -480,20 +555,20 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="5" tex_palette_idx="5"
+		tex_image_idx="5" tex_palette_idx="4"
 		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="nskabe"
+	<material index="6" name="nkabe3"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="8"
+		polygon_id="9"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -504,14 +579,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="6" tex_palette_idx="6"
+		tex_image_idx="6" tex_palette_idx="5"
 		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="nsyane"
+	<material index="7" name="nshasira"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -529,13 +604,13 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="7" tex_palette_idx="7"
-		tex_tiling="repeat repeat"
+		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="out55_fl_sp"
+	<material index="8" name="nskabe"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -553,13 +628,13 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="8" tex_palette_idx="8"
-		tex_tiling="repeat repeat"
+		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="out55_ka_sp"
+	<material index="9" name="nsyane"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -583,124 +658,84 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="10" name="out55_fl"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="25 25 25"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="10" tex_palette_idx="10"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="11" name="out55_ka"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="25 25 25"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="11" tex_palette_idx="11"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 </material_array>
 
 <matrix_array size="1">
 	<matrix index="0" mtx_weight="1" node_idx="0"/>
 </matrix_array>
 
-<polygon_array size="10">
+<polygon_array size="12">
 	<polygon index="0" name="polygon0"
-		vertex_size="48" polygon_size="12"
-		triangle_size="0" quad_size="12"
-		volume_min="2.104248 0.625488 -1.588623"
-		volume_max="3.851563 0.974609 1.034180"
-		volume_r="4.109131"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="2.284424 0.125000 -2.800537"
+		volume_max="3.306152 0.646973 -2.058594"
+		volume_r="4.279785"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="48">
+				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="14.562500 16.187500"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="2.505127 0.974609 -0.564209"/>
-					<tex st="14.562500 0.250000"/>
-					<pos_xz xz="2.658203 -1.135498"/>
-					<tex st="7.875000 0.250000"/>
-					<pos_xz xz="2.399902 -1.204590"/>
-					<tex st="7.875000 16.187500"/>
-					<pos_xz xz="2.246826 -0.633301"/>
-					<tex st="0.062500 18.062500"/>
-					<pos_xyz xyz="3.347656 0.721191 0.724121"/>
-					<tex st="0.062500 31.687500"/>
-					<pos_xy xy="3.851563 0.721191"/>
-					<tex st="47.687500 31.687500"/>
-					<pos_xz xz="3.851563 -1.236572"/>
-					<tex st="47.687500 18.062500"/>
-					<pos_xy xy="3.347656 0.721191"/>
-					<tex st="0.062500 18.062500"/>
-					<pos_xyz xyz="3.104248 0.625488 1.034180"/>
-					<tex st="0.062500 31.687500"/>
-					<pos_xy xy="3.608154 0.625488"/>
-					<tex st="63.750000 31.687500"/>
-					<pos_xz xz="3.608154 -1.588623"/>
-					<tex st="63.750000 18.062500"/>
-					<pos_xy xy="3.104248 0.625488"/>
-					<tex st="14.562500 16.187500"/>
-					<pos_xyz xyz="2.149658 0.974609 0.069824"/>
-					<tex st="14.562500 0.250000"/>
-					<pos_xz xz="2.634277 0.409180"/>
-					<tex st="7.875000 0.250000"/>
-					<pos_xz xz="2.787354 0.190186"/>
-					<tex st="7.875000 16.187500"/>
-					<pos_xz xz="2.302979 -0.149170"/>
-					<tex st="54.000000 8.062500"/>
-					<pos_xyz xyz="2.462646 0.849609 -1.400635"/>
-					<tex st="-1.625000 8.062500"/>
-					<pos_xz xz="2.462646 0.881104"/>
-					<tex st="-1.625000 15.875000"/>
-					<pos_xy xy="2.758301 0.849609"/>
-					<tex st="54.000000 15.875000"/>
-					<pos_xz xz="2.758301 -1.400635"/>
-					<tex st="7.812500 15.937500"/>
-					<pos_xz xz="2.166748 0.881104"/>
-					<tex st="7.812500 8.125000"/>
-					<pos_xy xy="2.462646 0.849609"/>
-					<tex st="63.437500 8.125000"/>
-					<pos_xz xz="2.462646 -1.400635"/>
-					<tex st="63.437500 15.937500"/>
-					<pos_xy xy="2.166748 0.849609"/>
-					<tex st="0.062500 18.062500"/>
-					<pos_xyz xyz="2.347656 0.721191 0.724121"/>
-					<tex st="0.062500 31.687500"/>
-					<pos_xy xy="2.851563 0.721191"/>
-					<tex st="47.687500 31.687500"/>
-					<pos_xz xz="2.851563 -1.236572"/>
-					<tex st="47.687500 18.062500"/>
-					<pos_xy xy="2.347656 0.721191"/>
-					<tex st="0.062500 18.062500"/>
-					<pos_xyz xyz="2.104248 0.625488 1.034180"/>
-					<tex st="0.062500 31.687500"/>
-					<pos_xy xy="2.608154 0.625488"/>
-					<tex st="63.750000 31.687500"/>
-					<pos_xz xz="2.608154 -1.588623"/>
-					<tex st="63.750000 18.062500"/>
-					<pos_xy xy="2.104248 0.625488"/>
-					<tex st="6.250000 16.187500"/>
-					<pos_xyz xyz="3.142822 0.974609 0.088135"/>
-					<tex st="6.250000 0.250000"/>
-					<pos_xz xz="3.627197 0.427246"/>
-					<tex st="-0.437500 0.250000"/>
-					<pos_xz xz="3.780518 0.208252"/>
-					<tex st="-0.437500 16.187500"/>
-					<pos_xz xz="3.296143 -0.130859"/>
-					<tex st="5.937500 0.187500"/>
-					<pos_xyz xyz="3.465820 0.849609 0.904297"/>
-					<tex st="61.687500 0.187500"/>
-					<pos_xz xz="3.465820 -1.382324"/>
-					<tex st="61.687500 8.000000"/>
-					<pos_xy xy="3.170166 0.849609"/>
-					<tex st="5.937500 8.000000"/>
-					<pos_xz xz="3.170166 0.904297"/>
-					<tex st="-1.812500 0.250000"/>
-					<pos_xz xz="3.761719 -1.382324"/>
-					<tex st="-1.812500 8.062500"/>
-					<pos_xy xy="3.465820 0.849609"/>
-					<tex st="53.937500 8.062500"/>
-					<pos_xz xz="3.465820 0.904297"/>
-					<tex st="53.937500 0.250000"/>
-					<pos_xy xy="3.761719 0.849609"/>
-					<tex st="6.687500 16.187500"/>
-					<pos_xyz xyz="3.778809 0.974609 -0.635254"/>
-					<tex st="6.687500 0.250000"/>
-					<pos_xz xz="3.294189 -0.974365"/>
-					<tex st="0.000000 0.250000"/>
-					<pos_xz xz="3.141113 -0.755615"/>
-					<tex st="0.000000 16.187500"/>
-					<pos_xz xz="3.625488 -0.416260"/>
+					<tex st="0.062500 15.937500"/>
+					<nrm xyz="0.183594 0.707031 0.683594"/>
+					<pos_xyz xyz="2.419678 0.125000 -2.058594"/>
+					<tex st="19.875000 15.937500"/>
+					<pos_xz xz="3.306152 -2.296143"/>
+					<tex st="19.875000 0.062500"/>
+					<pos_xyz xyz="3.170898 0.646973 -2.800537"/>
+					<tex st="0.062500 0.062500"/>
+					<pos_xz xz="2.284424 -2.562988"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -1040,21 +1075,39 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="4" name="polygon4"
-		vertex_size="84" polygon_size="24"
-		triangle_size="2" quad_size="22"
+		vertex_size="96" polygon_size="28"
+		triangle_size="2" quad_size="26"
 		volume_min="-5.219727 0.125000 -2.750000"
-		volume_max="5.594727 0.125000 2.656250"
+		volume_max="5.594727 0.250000 2.656250"
 		volume_r="6.194336"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
-			<primitive_array size="5">
+			<primitive_array size="6">
 				<primitive index="0" type="quad_strip" vertex_size="8">
 					<mtx idx="0"/>
-					<tex st="4.000000 1.000000"/>
+					<tex st="7.875000 5.875000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xyz xyz="4.933105 0.250000 -1.864502"/>
+					<tex st="7.875000 0.125000"/>
+					<pos_xz xz="5.094482 -1.722168"/>
+					<tex st="0.125000 5.875000"/>
+					<pos_xz xz="4.933105 -2.531250"/>
+					<tex st="0.125000 0.125000"/>
+					<pos_xz xz="5.094482 -2.673584"/>
+					<tex st="7.875000 5.875000"/>
+					<pos_xz xz="3.492920 -2.531250"/>
+					<tex st="7.875000 0.125000"/>
+					<pos_xz xz="3.331543 -2.673584"/>
+					<tex st="0.125000 5.875000"/>
+					<pos_xz xz="3.492920 -1.864502"/>
+					<tex st="0.125000 0.125000"/>
+					<pos_xz xz="3.331543 -1.722168"/>
+				</primitive>
+				<primitive index="1" type="quad_strip" vertex_size="8">
+					<tex st="4.000000 1.000000"/>
 					<pos_s xyz="2.250000 0.125000 2.000000"/>
 					<tex st="4.000000 7.000000"/>
 					<pos_xz xz="1.750000 1.500000"/>
@@ -1071,7 +1124,7 @@
 					<tex st="4.000000 7.000000"/>
 					<pos_xz xz="-1.875000 1.875000"/>
 				</primitive>
-				<primitive index="1" type="quad_strip" vertex_size="8">
+				<primitive index="2" type="quad_strip" vertex_size="8">
 					<pos_xy xy="-1.875000 0.125000"/>
 					<pos_xy xy="-0.125000 0.125000"/>
 					<pos_xz xz="-1.875000 1.500000"/>
@@ -1082,7 +1135,7 @@
 					<pos_xz xz="-4.250000 -2.750000"/>
 					<pos_xy xy="2.250000 0.125000"/>
 				</primitive>
-				<primitive index="2" type="quad_strip" vertex_size="6">
+				<primitive index="3" type="quad_strip" vertex_size="6">
 					<pos_xz xz="-2.375000 2.001709"/>
 					<tex st="4.000000 7.000000"/>
 					<pos_xz xz="-1.875000 1.500000"/>
@@ -1095,31 +1148,39 @@
 					<tex st="4.000000 7.000000"/>
 					<pos_xz xz="-3.750000 -2.250000"/>
 				</primitive>
-				<primitive index="3" type="quads" vertex_size="56">
-					<tex st="0.125000 7.875000"/>
-					<pos_xz xz="3.750000 -2.000000"/>
-					<tex st="7.875000 7.875000"/>
-					<pos_xz xz="3.750000 1.000000"/>
+				<primitive index="4" type="quads" vertex_size="60">
+					<tex st="0.125000 5.875000"/>
+					<pos_xyz xyz="4.933105 0.250000 -1.864502"/>
+					<tex st="7.875000 5.875000"/>
+					<pos_xy xy="3.492920 0.250000"/>
 					<tex st="7.875000 0.125000"/>
-					<pos_xz xz="4.000000 1.250000"/>
+					<pos_xz xz="3.331543 -1.722168"/>
 					<tex st="0.125000 0.125000"/>
-					<pos_xz xz="4.000000 -1.750000"/>
+					<pos_xy xy="5.094482 0.250000"/>
 					<tex st="0.125000 7.875000"/>
-					<pos_xz xz="3.750000 1.000000"/>
+					<pos_s xyz="4.750000 0.125000 -1.500000"/>
 					<tex st="7.875000 7.875000"/>
-					<pos_xy xy="3.062500 0.125000"/>
+					<pos_xz xz="4.750000 1.500000"/>
 					<tex st="7.875000 0.125000"/>
-					<pos_xz xz="3.312500 1.250000"/>
+					<pos_xz xz="5.000000 1.750000"/>
 					<tex st="0.125000 0.125000"/>
-					<pos_xy xy="4.000000 0.125000"/>
+					<pos_xz xz="5.000000 -1.250000"/>
+					<tex st="0.125000 7.875000"/>
+					<pos_xz xz="4.750000 1.500000"/>
+					<tex st="7.875000 7.875000"/>
+					<pos_xy xy="4.062500 0.125000"/>
+					<tex st="7.875000 0.125000"/>
+					<pos_xz xz="4.312500 1.750000"/>
+					<tex st="0.125000 0.125000"/>
+					<pos_xy xy="5.000000 0.125000"/>
 					<tex st="3.000000 4.625000"/>
-					<pos_xz xz="3.062500 -2.000000"/>
+					<pos_xz xz="4.062500 -1.500000"/>
 					<tex st="3.000000 2.687500"/>
-					<pos_xz xz="3.062500 1.000000"/>
+					<pos_xz xz="4.062500 1.500000"/>
 					<tex st="5.000000 2.687500"/>
-					<pos_xy xy="3.750000 0.125000"/>
+					<pos_xy xy="4.750000 0.125000"/>
 					<tex st="5.000000 4.625000"/>
-					<pos_xz xz="3.750000 -2.000000"/>
+					<pos_xz xz="4.750000 -1.500000"/>
 					<tex st="0.000000 8.000000"/>
 					<pos_xz xz="1.750000 1.500000"/>
 					<tex st="0.000000 0.000000"/>
@@ -1137,29 +1198,29 @@
 					<tex st="8.000000 8.000000"/>
 					<pos_xz xz="-1.875000 1.875000"/>
 					<tex st="0.125000 7.875000"/>
-					<pos_xz xz="2.750000 -2.000000"/>
+					<pos_xz xz="2.750000 -1.500000"/>
 					<tex st="7.875000 7.875000"/>
-					<pos_xz xz="2.750000 1.000000"/>
+					<pos_xz xz="2.750000 1.500000"/>
 					<tex st="7.875000 0.125000"/>
-					<pos_xz xz="3.000000 1.250000"/>
+					<pos_xz xz="3.000000 1.750000"/>
 					<tex st="0.125000 0.125000"/>
-					<pos_xz xz="3.000000 -1.750000"/>
+					<pos_xz xz="3.000000 -1.250000"/>
 					<tex st="0.125000 7.875000"/>
-					<pos_xz xz="2.750000 1.000000"/>
+					<pos_xz xz="2.750000 1.500000"/>
 					<tex st="7.875000 7.875000"/>
 					<pos_xy xy="2.062500 0.125000"/>
 					<tex st="7.875000 0.125000"/>
-					<pos_xz xz="2.312500 1.250000"/>
+					<pos_xz xz="2.312500 1.750000"/>
 					<tex st="0.125000 0.125000"/>
 					<pos_xy xy="3.000000 0.125000"/>
 					<tex st="3.000000 4.625000"/>
-					<pos_xz xz="2.062500 -2.000000"/>
+					<pos_xz xz="2.062500 -1.500000"/>
 					<tex st="3.000000 2.687500"/>
-					<pos_xz xz="2.062500 1.000000"/>
+					<pos_xz xz="2.062500 1.500000"/>
 					<tex st="5.000000 2.687500"/>
 					<pos_xy xy="2.750000 0.125000"/>
 					<tex st="5.000000 4.625000"/>
-					<pos_xz xz="2.750000 -2.000000"/>
+					<pos_xz xz="2.750000 -1.500000"/>
 					<tex st="31.437500 6.312500"/>
 					<pos_xz xz="-4.719727 2.093750"/>
 					<tex st="28.500000 6.312500"/>
@@ -1209,7 +1270,7 @@
 					<tex st="8.000000 6.562500"/>
 					<pos_xz xz="1.405273 2.656250"/>
 				</primitive>
-				<primitive index="4" type="triangles" vertex_size="6">
+				<primitive index="5" type="triangles" vertex_size="6">
 					<tex st="4.000000 7.000000"/>
 					<pos_xz xz="1.750000 -2.250000"/>
 					<pos_xz xz="-0.125000 1.500000"/>
@@ -1224,9 +1285,9 @@
 	<polygon index="5" name="polygon5"
 		vertex_size="144" polygon_size="42"
 		triangle_size="0" quad_size="42"
-		volume_min="2.125000 0.250000 -1.937500"
-		volume_max="3.812500 1.064453 1.062500"
-		volume_r="4.309326"
+		volume_min="2.125000 0.250000 -1.437500"
+		volume_max="4.812500 1.189453 1.562500"
+		volume_r="5.087402"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -1237,40 +1298,40 @@
 					<mtx idx="0"/>
 					<tex st="15.812500 17.937500"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_s xyz="3.812500 0.250000 -1.937500"/>
+					<pos_s xyz="4.812500 0.250000 -1.437500"/>
 					<tex st="15.812500 6.062500"/>
-					<pos_xy xy="3.812500 0.530273"/>
+					<pos_xy xy="4.812500 0.530273"/>
 					<tex st="13.875000 17.937500"/>
-					<pos_yz yz="0.250000 -1.750000"/>
+					<pos_yz yz="0.250000 -1.250000"/>
 					<tex st="13.875000 6.062500"/>
-					<pos_xy xy="3.812500 0.530273"/>
+					<pos_xy xy="4.812500 0.530273"/>
 					<tex st="-13.812500 17.937500"/>
-					<pos_yz yz="0.250000 0.916504"/>
+					<pos_yz yz="0.250000 1.416504"/>
 					<tex st="-13.812500 6.062500"/>
-					<pos_xy xy="3.812500 0.530273"/>
+					<pos_xy xy="4.812500 0.530273"/>
 					<tex st="-15.750000 17.937500"/>
-					<pos_yz yz="0.250000 1.062500"/>
+					<pos_yz yz="0.250000 1.562500"/>
 					<tex st="-15.750000 6.062500"/>
-					<pos_xy xy="3.812500 0.530273"/>
+					<pos_xy xy="4.812500 0.530273"/>
 				</primitive>
 				<primitive index="1" type="quad_strip" vertex_size="8">
 					<tex st="15.812500 17.937500"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_xy xy="3.125000 0.250000"/>
+					<pos_xy xy="4.125000 0.250000"/>
 					<tex st="15.812500 6.062500"/>
-					<pos_xy xy="3.125000 0.530273"/>
+					<pos_xy xy="4.125000 0.530273"/>
 					<tex st="13.875000 17.937500"/>
-					<pos_yz yz="0.250000 0.916504"/>
+					<pos_yz yz="0.250000 1.416504"/>
 					<tex st="13.875000 6.062500"/>
-					<pos_xy xy="3.125000 0.530273"/>
+					<pos_xy xy="4.125000 0.530273"/>
 					<tex st="-13.812500 17.937500"/>
-					<pos_yz yz="0.250000 -1.750000"/>
+					<pos_yz yz="0.250000 -1.250000"/>
 					<tex st="-13.812500 6.062500"/>
-					<pos_xy xy="3.125000 0.530273"/>
+					<pos_xy xy="4.125000 0.530273"/>
 					<tex st="-15.750000 17.937500"/>
-					<pos_yz yz="0.250000 -1.937500"/>
+					<pos_yz yz="0.250000 -1.437500"/>
 					<tex st="-15.750000 6.062500"/>
-					<pos_xy xy="3.125000 0.530273"/>
+					<pos_xy xy="4.125000 0.530273"/>
 				</primitive>
 				<primitive index="2" type="quad_strip" vertex_size="8">
 					<tex st="15.812500 17.937500"/>
@@ -1279,15 +1340,15 @@
 					<tex st="15.812500 6.062500"/>
 					<pos_xy xy="2.812500 0.530273"/>
 					<tex st="13.875000 17.937500"/>
-					<pos_yz yz="0.250000 -1.750000"/>
+					<pos_yz yz="0.250000 -1.250000"/>
 					<tex st="13.875000 6.062500"/>
 					<pos_xy xy="2.812500 0.530273"/>
 					<tex st="-13.812500 17.937500"/>
-					<pos_yz yz="0.250000 0.916504"/>
+					<pos_yz yz="0.250000 1.416504"/>
 					<tex st="-13.812500 6.062500"/>
 					<pos_xy xy="2.812500 0.530273"/>
 					<tex st="-15.750000 17.937500"/>
-					<pos_yz yz="0.250000 1.062500"/>
+					<pos_yz yz="0.250000 1.562500"/>
 					<tex st="-15.750000 6.062500"/>
 					<pos_xy xy="2.812500 0.530273"/>
 				</primitive>
@@ -1298,67 +1359,67 @@
 					<tex st="15.812500 6.062500"/>
 					<pos_xy xy="2.125000 0.530273"/>
 					<tex st="13.875000 17.937500"/>
-					<pos_yz yz="0.250000 0.916504"/>
+					<pos_yz yz="0.250000 1.416504"/>
 					<tex st="13.875000 6.062500"/>
 					<pos_xy xy="2.125000 0.530273"/>
 					<tex st="-13.812500 17.937500"/>
-					<pos_yz yz="0.250000 -1.750000"/>
+					<pos_yz yz="0.250000 -1.250000"/>
 					<tex st="-13.812500 6.062500"/>
 					<pos_xy xy="2.125000 0.530273"/>
 					<tex st="-15.750000 17.937500"/>
-					<pos_yz yz="0.250000 -1.937500"/>
+					<pos_yz yz="0.250000 -1.437500"/>
 					<tex st="-15.750000 6.062500"/>
 					<pos_xy xy="2.125000 0.530273"/>
 				</primitive>
 				<primitive index="4" type="quad_strip" vertex_size="6">
 					<tex st="-16.625000 40.875000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xz xz="3.812500 0.916504"/>
+					<pos_xz xz="4.812500 1.416504"/>
 					<tex st="32.625000 40.875000"/>
-					<pos_xz xz="3.812500 -1.750000"/>
+					<pos_xz xz="4.812500 -1.250000"/>
 					<tex st="-16.625000 32.250000"/>
-					<pos_xz xz="3.468750 0.916504"/>
+					<pos_xz xz="4.468750 1.416504"/>
 					<tex st="32.625000 32.250000"/>
-					<pos_xz xz="3.468750 -1.750000"/>
+					<pos_xz xz="4.468750 -1.250000"/>
 					<tex st="-16.625000 40.875000"/>
-					<pos_xz xz="3.125000 0.916504"/>
+					<pos_xz xz="4.125000 1.416504"/>
 					<tex st="32.625000 40.875000"/>
-					<pos_xz xz="3.125000 -1.750000"/>
+					<pos_xz xz="4.125000 -1.250000"/>
 				</primitive>
 				<primitive index="5" type="quad_strip" vertex_size="6">
 					<tex st="-0.125000 17.937500"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="3.812500 0.250000 1.062500"/>
+					<pos_s xyz="4.812500 0.250000 1.562500"/>
 					<tex st="-0.125000 6.062500"/>
-					<pos_xy xy="3.812500 0.530273"/>
+					<pos_xy xy="4.812500 0.530273"/>
 					<tex st="-7.937500 17.937500"/>
-					<pos_xy xy="3.468750 0.250000"/>
+					<pos_xy xy="4.468750 0.250000"/>
 					<tex st="-7.937500 6.062500"/>
-					<pos_xy xy="3.468750 0.530273"/>
+					<pos_xy xy="4.468750 0.530273"/>
 					<tex st="-15.750000 17.937500"/>
-					<pos_xy xy="3.125000 0.250000"/>
+					<pos_xy xy="4.125000 0.250000"/>
 					<tex st="-15.750000 6.062500"/>
-					<pos_xy xy="3.125000 0.530273"/>
+					<pos_xy xy="4.125000 0.530273"/>
 				</primitive>
 				<primitive index="6" type="quad_strip" vertex_size="6">
 					<tex st="-16.625000 40.875000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xz xz="2.812500 0.916504"/>
+					<pos_xz xz="2.812500 1.416504"/>
 					<tex st="32.625000 40.875000"/>
-					<pos_xz xz="2.812500 -1.750000"/>
+					<pos_xz xz="2.812500 -1.250000"/>
 					<tex st="-16.625000 32.250000"/>
-					<pos_xz xz="2.468750 0.916504"/>
+					<pos_xz xz="2.468750 1.416504"/>
 					<tex st="32.625000 32.250000"/>
-					<pos_xz xz="2.468750 -1.750000"/>
+					<pos_xz xz="2.468750 -1.250000"/>
 					<tex st="-16.625000 40.875000"/>
-					<pos_xz xz="2.125000 0.916504"/>
+					<pos_xz xz="2.125000 1.416504"/>
 					<tex st="32.625000 40.875000"/>
-					<pos_xz xz="2.125000 -1.750000"/>
+					<pos_xz xz="2.125000 -1.250000"/>
 				</primitive>
 				<primitive index="7" type="quad_strip" vertex_size="6">
 					<tex st="-0.125000 17.937500"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="2.812500 0.250000 1.062500"/>
+					<pos_s xyz="2.812500 0.250000 1.562500"/>
 					<tex st="-0.125000 6.062500"/>
 					<pos_xy xy="2.812500 0.530273"/>
 					<tex st="-7.937500 17.937500"/>
@@ -1373,190 +1434,190 @@
 				<primitive index="8" type="quads" vertex_size="88">
 					<tex st="8.187500 25.500000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_xyz xyz="3.414307 0.483154 -1.724121"/>
+					<pos_xyz xyz="4.414307 0.483154 -1.349121"/>
 					<tex st="8.750000 25.500000"/>
-					<pos_xz xz="3.414307 -1.654297"/>
+					<pos_xz xz="4.414307 -1.154297"/>
 					<tex st="8.750000 24.375000"/>
-					<pos_xy xy="3.414307 0.836182"/>
+					<pos_xy xy="4.414307 0.961182"/>
 					<tex st="8.187500 24.375000"/>
-					<pos_xz xz="3.414307 -1.724121"/>
+					<pos_xz xz="4.414307 -1.349121"/>
 					<tex st="8.187500 25.500000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xyz xyz="3.525879 0.483154 -1.654297"/>
+					<pos_xyz xyz="4.525879 0.483154 -1.154297"/>
 					<tex st="8.750000 25.500000"/>
-					<pos_xz xz="3.525879 -1.724121"/>
+					<pos_xz xz="4.525879 -1.349121"/>
 					<tex st="8.750000 24.375000"/>
-					<pos_xy xy="3.525879 0.836182"/>
+					<pos_xy xy="4.525879 0.961182"/>
 					<tex st="8.187500 24.375000"/>
-					<pos_xz xz="3.525879 -1.654297"/>
+					<pos_xz xz="4.525879 -1.154297"/>
 					<tex st="5.062500 63.562500"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xy xy="3.414307 0.483154"/>
+					<pos_xy xy="4.414307 0.483154"/>
 					<tex st="8.937500 63.562500"/>
-					<pos_xy xy="3.525879 0.483154"/>
+					<pos_xy xy="4.525879 0.483154"/>
 					<tex st="8.937500 56.125000"/>
-					<pos_xy xy="3.525879 0.836182"/>
+					<pos_xy xy="4.525879 0.961182"/>
 					<tex st="5.062500 56.125000"/>
-					<pos_xy xy="3.414307 0.836182"/>
+					<pos_xy xy="4.414307 0.961182"/>
 					<tex st="8.187500 25.500000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_xyz xyz="3.269531 0.845947 -1.718262"/>
+					<pos_xyz xyz="4.269531 0.970947 -1.343262"/>
 					<tex st="8.750000 25.500000"/>
-					<pos_xz xz="3.269531 -1.625488"/>
+					<pos_xz xz="4.269531 -1.125488"/>
 					<tex st="8.750000 24.375000"/>
-					<pos_xy xy="3.269531 1.064453"/>
+					<pos_xy xy="4.269531 1.189453"/>
 					<tex st="8.187500 24.375000"/>
-					<pos_xz xz="3.269531 -1.718262"/>
+					<pos_xz xz="4.269531 -1.343262"/>
 					<tex st="8.187500 25.500000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xyz xyz="3.670654 0.845947 -1.625488"/>
+					<pos_xyz xyz="4.670654 0.970947 -1.125488"/>
 					<tex st="8.750000 25.500000"/>
-					<pos_xz xz="3.670654 -1.718262"/>
+					<pos_xz xz="4.670654 -1.343262"/>
 					<tex st="8.750000 24.375000"/>
-					<pos_xy xy="3.670654 1.064453"/>
+					<pos_xy xy="4.670654 1.189453"/>
 					<tex st="8.187500 24.375000"/>
-					<pos_xz xz="3.670654 -1.625488"/>
-					<tex st="8.250000 23.875000"/>
+					<pos_xz xz="4.670654 -1.125488"/>
+					<tex st="8.187500 21.750000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xy xy="3.269531 1.064453"/>
-					<tex st="8.812500 23.875000"/>
-					<pos_xy xy="3.670654 1.064453"/>
-					<tex st="8.812500 23.187500"/>
-					<pos_xz xz="3.670654 -1.718262"/>
-					<tex st="8.250000 23.187500"/>
-					<pos_xy xy="3.269531 1.064453"/>
+					<pos_xy xy="4.269531 1.189453"/>
+					<tex st="8.750000 21.750000"/>
+					<pos_xy xy="4.670654 1.189453"/>
+					<tex st="8.750000 20.625000"/>
+					<pos_xz xz="4.670654 -1.343262"/>
+					<tex st="8.187500 20.625000"/>
+					<pos_xy xy="4.269531 1.189453"/>
 					<tex st="0.062500 55.812500"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_yz yz="0.845947 -1.625488"/>
+					<pos_yz yz="0.970947 -1.125488"/>
 					<tex st="13.937500 55.812500"/>
-					<pos_xy xy="3.670654 0.845947"/>
+					<pos_xy xy="4.670654 0.970947"/>
 					<tex st="13.937500 50.125000"/>
-					<pos_xy xy="3.670654 1.064453"/>
+					<pos_xy xy="4.670654 1.189453"/>
 					<tex st="0.062500 50.125000"/>
-					<pos_xy xy="3.269531 1.064453"/>
+					<pos_xy xy="4.269531 1.189453"/>
 					<tex st="8.187500 25.500000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_xyz xyz="2.414307 0.483154 -1.724121"/>
+					<pos_xyz xyz="2.414307 0.483154 -1.349121"/>
 					<tex st="8.750000 25.500000"/>
-					<pos_xz xz="2.414307 -1.654297"/>
+					<pos_xz xz="2.414307 -1.154297"/>
 					<tex st="8.750000 24.375000"/>
-					<pos_xy xy="2.414307 0.836182"/>
+					<pos_xy xy="2.414307 0.961182"/>
 					<tex st="8.187500 24.375000"/>
-					<pos_xz xz="2.414307 -1.724121"/>
+					<pos_xz xz="2.414307 -1.349121"/>
 					<tex st="8.187500 25.500000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xyz xyz="2.525879 0.483154 -1.654297"/>
+					<pos_xyz xyz="2.525879 0.483154 -1.154297"/>
 					<tex st="8.750000 25.500000"/>
-					<pos_xz xz="2.525879 -1.724121"/>
+					<pos_xz xz="2.525879 -1.349121"/>
 					<tex st="8.750000 24.375000"/>
-					<pos_xy xy="2.525879 0.836182"/>
+					<pos_xy xy="2.525879 0.961182"/>
 					<tex st="8.187500 24.375000"/>
-					<pos_xz xz="2.525879 -1.654297"/>
+					<pos_xz xz="2.525879 -1.154297"/>
 					<tex st="5.062500 63.562500"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="2.414307 0.483154"/>
 					<tex st="8.937500 63.562500"/>
 					<pos_xy xy="2.525879 0.483154"/>
 					<tex st="8.937500 56.125000"/>
-					<pos_xy xy="2.525879 0.836182"/>
+					<pos_xy xy="2.525879 0.961182"/>
 					<tex st="5.062500 56.125000"/>
-					<pos_xy xy="2.414307 0.836182"/>
+					<pos_xy xy="2.414307 0.961182"/>
 					<tex st="8.187500 25.500000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_xyz xyz="2.269531 0.845947 -1.718262"/>
+					<pos_xyz xyz="2.269531 0.970947 -1.343262"/>
 					<tex st="8.750000 25.500000"/>
-					<pos_xz xz="2.269531 -1.625488"/>
+					<pos_xz xz="2.269531 -1.125488"/>
 					<tex st="8.750000 24.375000"/>
-					<pos_xy xy="2.269531 1.064453"/>
+					<pos_xy xy="2.269531 1.189453"/>
 					<tex st="8.187500 24.375000"/>
-					<pos_xz xz="2.269531 -1.718262"/>
+					<pos_xz xz="2.269531 -1.343262"/>
 					<tex st="8.187500 25.500000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xyz xyz="2.670654 0.845947 -1.625488"/>
+					<pos_xyz xyz="2.670654 0.970947 -1.125488"/>
 					<tex st="8.750000 25.500000"/>
-					<pos_xz xz="2.670654 -1.718262"/>
+					<pos_xz xz="2.670654 -1.343262"/>
 					<tex st="8.750000 24.375000"/>
-					<pos_xy xy="2.670654 1.064453"/>
+					<pos_xy xy="2.670654 1.189453"/>
 					<tex st="8.187500 24.375000"/>
-					<pos_xz xz="2.670654 -1.625488"/>
-					<tex st="8.250000 23.875000"/>
+					<pos_xz xz="2.670654 -1.125488"/>
+					<tex st="8.187500 21.750000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xy xy="2.269531 1.064453"/>
-					<tex st="8.812500 23.875000"/>
-					<pos_xy xy="2.670654 1.064453"/>
-					<tex st="8.812500 23.187500"/>
-					<pos_xz xz="2.670654 -1.718262"/>
-					<tex st="8.250000 23.187500"/>
-					<pos_xy xy="2.269531 1.064453"/>
+					<pos_xy xy="2.269531 1.189453"/>
+					<tex st="8.750000 21.750000"/>
+					<pos_xy xy="2.670654 1.189453"/>
+					<tex st="8.750000 20.625000"/>
+					<pos_xz xz="2.670654 -1.343262"/>
+					<tex st="8.187500 20.625000"/>
+					<pos_xy xy="2.269531 1.189453"/>
 					<tex st="0.062500 55.812500"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_yz yz="0.845947 -1.625488"/>
+					<pos_yz yz="0.970947 -1.125488"/>
 					<tex st="13.937500 55.812500"/>
-					<pos_xy xy="2.670654 0.845947"/>
+					<pos_xy xy="2.670654 0.970947"/>
 					<tex st="13.937500 50.125000"/>
-					<pos_xy xy="2.670654 1.064453"/>
+					<pos_xy xy="2.670654 1.189453"/>
 					<tex st="0.062500 50.125000"/>
-					<pos_xy xy="2.269531 1.064453"/>
+					<pos_xy xy="2.269531 1.189453"/>
 					<tex st="5.250000 40.875000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="3.468750 0.530273 -1.750000"/>
+					<pos_xyz xyz="4.468750 0.530273 -1.250000"/>
 					<tex st="10.750000 40.875000"/>
-					<pos_xy xy="3.812500 0.530273"/>
+					<pos_xy xy="4.812500 0.530273"/>
 					<tex st="10.750000 38.125000"/>
-					<pos_xz xz="3.812500 -1.937500"/>
+					<pos_xz xz="4.812500 -1.437500"/>
 					<tex st="5.250000 38.125000"/>
-					<pos_xy xy="3.468750 0.530273"/>
+					<pos_xy xy="4.468750 0.530273"/>
 					<tex st="5.250000 40.875000"/>
-					<pos_xz xz="3.125000 -1.750000"/>
+					<pos_xz xz="4.125000 -1.250000"/>
 					<tex st="10.750000 40.875000"/>
-					<pos_xy xy="3.468750 0.530273"/>
+					<pos_xy xy="4.468750 0.530273"/>
 					<tex st="10.750000 38.125000"/>
-					<pos_xz xz="3.468750 -1.937500"/>
+					<pos_xz xz="4.468750 -1.437500"/>
 					<tex st="5.250000 38.125000"/>
-					<pos_xy xy="3.125000 0.530273"/>
-					<pos_xz xz="3.468750 1.062500"/>
+					<pos_xy xy="4.125000 0.530273"/>
+					<pos_xz xz="4.468750 1.562500"/>
 					<tex st="10.750000 38.125000"/>
-					<pos_xy xy="3.812500 0.530273"/>
+					<pos_xy xy="4.812500 0.530273"/>
 					<tex st="10.750000 40.875000"/>
-					<pos_xz xz="3.812500 0.916504"/>
+					<pos_xz xz="4.812500 1.416504"/>
 					<tex st="5.250000 40.875000"/>
-					<pos_xy xy="3.468750 0.530273"/>
+					<pos_xy xy="4.468750 0.530273"/>
 					<tex st="5.250000 38.125000"/>
-					<pos_xz xz="3.125000 1.062500"/>
+					<pos_xz xz="4.125000 1.562500"/>
 					<tex st="10.750000 38.125000"/>
-					<pos_xy xy="3.468750 0.530273"/>
+					<pos_xy xy="4.468750 0.530273"/>
 					<tex st="10.750000 40.875000"/>
-					<pos_xz xz="3.468750 0.916504"/>
+					<pos_xz xz="4.468750 1.416504"/>
 					<tex st="5.250000 40.875000"/>
-					<pos_xy xy="3.125000 0.530273"/>
-					<pos_xz xz="2.468750 -1.750000"/>
+					<pos_xy xy="4.125000 0.530273"/>
+					<pos_xz xz="2.468750 -1.250000"/>
 					<tex st="10.750000 40.875000"/>
 					<pos_xy xy="2.812500 0.530273"/>
 					<tex st="10.750000 38.125000"/>
-					<pos_xz xz="2.812500 -1.937500"/>
+					<pos_xz xz="2.812500 -1.437500"/>
 					<tex st="5.250000 38.125000"/>
 					<pos_xy xy="2.468750 0.530273"/>
 					<tex st="5.250000 40.875000"/>
-					<pos_xz xz="2.125000 -1.750000"/>
+					<pos_xz xz="2.125000 -1.250000"/>
 					<tex st="10.750000 40.875000"/>
 					<pos_xy xy="2.468750 0.530273"/>
 					<tex st="10.750000 38.125000"/>
-					<pos_xz xz="2.468750 -1.937500"/>
+					<pos_xz xz="2.468750 -1.437500"/>
 					<tex st="5.250000 38.125000"/>
 					<pos_xy xy="2.125000 0.530273"/>
-					<pos_xz xz="2.468750 1.062500"/>
+					<pos_xz xz="2.468750 1.562500"/>
 					<tex st="10.750000 38.125000"/>
 					<pos_xy xy="2.812500 0.530273"/>
 					<tex st="10.750000 40.875000"/>
-					<pos_xz xz="2.812500 0.916504"/>
+					<pos_xz xz="2.812500 1.416504"/>
 					<tex st="5.250000 40.875000"/>
 					<pos_xy xy="2.468750 0.530273"/>
 					<tex st="5.250000 38.125000"/>
-					<pos_xz xz="2.125000 1.062500"/>
+					<pos_xz xz="2.125000 1.562500"/>
 					<tex st="10.750000 38.125000"/>
 					<pos_xy xy="2.468750 0.530273"/>
 					<tex st="10.750000 40.875000"/>
-					<pos_xz xz="2.468750 0.916504"/>
+					<pos_xz xz="2.468750 1.416504"/>
 					<tex st="5.250000 40.875000"/>
 					<pos_xy xy="2.125000 0.530273"/>
 				</primitive>
@@ -1564,6 +1625,121 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="6" name="polygon6"
+		vertex_size="48" polygon_size="12"
+		triangle_size="0" quad_size="12"
+		volume_min="2.104248 0.625488 -1.088623"
+		volume_max="4.851563 0.974609 1.534180"
+		volume_r="5.055420"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="48">
+					<mtx idx="0"/>
+					<tex st="6.250000 16.187500"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xyz xyz="4.142822 0.974609 0.588135"/>
+					<tex st="6.250000 0.250000"/>
+					<pos_xz xz="4.627197 0.927246"/>
+					<tex st="-0.437500 0.250000"/>
+					<pos_xz xz="4.780518 0.708252"/>
+					<tex st="-0.437500 16.187500"/>
+					<pos_xz xz="4.296143 0.369141"/>
+					<tex st="5.937500 0.187500"/>
+					<pos_xyz xyz="4.465820 0.849609 1.404297"/>
+					<tex st="61.687500 0.187500"/>
+					<pos_xz xz="4.465820 -0.882324"/>
+					<tex st="61.687500 8.000000"/>
+					<pos_xy xy="4.170166 0.849609"/>
+					<tex st="5.937500 8.000000"/>
+					<pos_xz xz="4.170166 1.404297"/>
+					<tex st="-1.812500 0.250000"/>
+					<pos_xz xz="4.761719 -0.882324"/>
+					<tex st="-1.812500 8.062500"/>
+					<pos_xy xy="4.465820 0.849609"/>
+					<tex st="53.937500 8.062500"/>
+					<pos_xz xz="4.465820 1.404297"/>
+					<tex st="53.937500 0.250000"/>
+					<pos_xy xy="4.761719 0.849609"/>
+					<tex st="6.687500 16.187500"/>
+					<pos_xyz xyz="4.778809 0.974609 -0.135254"/>
+					<tex st="6.687500 0.250000"/>
+					<pos_xz xz="4.294189 -0.474365"/>
+					<tex st="0.000000 0.250000"/>
+					<pos_xz xz="4.141113 -0.255615"/>
+					<tex st="0.000000 16.187500"/>
+					<pos_xz xz="4.625488 0.083740"/>
+					<tex st="14.562500 16.187500"/>
+					<pos_xz xz="2.505127 -0.064209"/>
+					<tex st="14.562500 0.250000"/>
+					<pos_xz xz="2.658203 -0.635498"/>
+					<tex st="7.875000 0.250000"/>
+					<pos_xz xz="2.399902 -0.704590"/>
+					<tex st="7.875000 16.187500"/>
+					<pos_xz xz="2.246826 -0.133301"/>
+					<tex st="0.062500 18.062500"/>
+					<pos_xyz xyz="4.347656 0.721191 1.224121"/>
+					<tex st="0.062500 31.687500"/>
+					<pos_xy xy="4.851563 0.721191"/>
+					<tex st="47.687500 31.687500"/>
+					<pos_xz xz="4.851563 -0.736572"/>
+					<tex st="47.687500 18.062500"/>
+					<pos_xy xy="4.347656 0.721191"/>
+					<tex st="0.062500 18.062500"/>
+					<pos_xyz xyz="4.104248 0.625488 1.534180"/>
+					<tex st="0.062500 31.687500"/>
+					<pos_xy xy="4.608154 0.625488"/>
+					<tex st="63.750000 31.687500"/>
+					<pos_xz xz="4.608154 -1.088623"/>
+					<tex st="63.750000 18.062500"/>
+					<pos_xy xy="4.104248 0.625488"/>
+					<tex st="14.562500 16.187500"/>
+					<pos_xyz xyz="2.149658 0.974609 0.069824"/>
+					<tex st="14.562500 0.250000"/>
+					<pos_xz xz="2.634277 0.409180"/>
+					<tex st="7.875000 0.250000"/>
+					<pos_xz xz="2.787354 0.190186"/>
+					<tex st="7.875000 16.187500"/>
+					<pos_xz xz="2.302979 -0.149170"/>
+					<tex st="54.000000 8.062500"/>
+					<pos_xyz xyz="2.462646 0.849609 -0.900635"/>
+					<tex st="-1.625000 8.062500"/>
+					<pos_xz xz="2.462646 1.381104"/>
+					<tex st="-1.625000 15.875000"/>
+					<pos_xy xy="2.758301 0.849609"/>
+					<tex st="54.000000 15.875000"/>
+					<pos_xz xz="2.758301 -0.900635"/>
+					<tex st="7.812500 15.937500"/>
+					<pos_xz xz="2.166748 1.381104"/>
+					<tex st="7.812500 8.125000"/>
+					<pos_xy xy="2.462646 0.849609"/>
+					<tex st="63.437500 8.125000"/>
+					<pos_xz xz="2.462646 -0.900635"/>
+					<tex st="63.437500 15.937500"/>
+					<pos_xy xy="2.166748 0.849609"/>
+					<tex st="0.062500 18.062500"/>
+					<pos_xyz xyz="2.347656 0.721191 1.224121"/>
+					<tex st="0.062500 31.687500"/>
+					<pos_xy xy="2.851563 0.721191"/>
+					<tex st="47.687500 31.687500"/>
+					<pos_xz xz="2.851563 -0.736572"/>
+					<tex st="47.687500 18.062500"/>
+					<pos_xy xy="2.347656 0.721191"/>
+					<tex st="0.062500 18.062500"/>
+					<pos_xyz xyz="2.104248 0.625488 1.534180"/>
+					<tex st="0.062500 31.687500"/>
+					<pos_xy xy="2.608154 0.625488"/>
+					<tex st="63.750000 31.687500"/>
+					<pos_xz xz="2.608154 -1.088623"/>
+					<tex st="63.750000 18.062500"/>
+					<pos_xy xy="2.104248 0.625488"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="7" name="polygon7"
 		vertex_size="16" polygon_size="4"
 		triangle_size="0" quad_size="4"
 		volume_min="-3.812500 0.375000 -2.312500"
@@ -1614,7 +1790,7 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
-	<polygon index="7" name="polygon7"
+	<polygon index="8" name="polygon8"
 		vertex_size="80" polygon_size="21"
 		triangle_size="4" quad_size="17"
 		volume_min="-4.000000 1.906250 -2.500000"
@@ -1814,7 +1990,7 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
-	<polygon index="8" name="polygon8"
+	<polygon index="9" name="polygon9"
 		vertex_size="54" polygon_size="15"
 		triangle_size="2" quad_size="13"
 		volume_min="-3.875000 0.250000 -2.375000"
@@ -1955,7 +2131,7 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
-	<polygon index="9" name="polygon9"
+	<polygon index="10" name="polygon10"
 		vertex_size="42" polygon_size="11"
 		triangle_size="2" quad_size="9"
 		volume_min="-3.875000 0.250000 0.750000"
@@ -2061,6 +2237,115 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
+	<polygon index="11" name="polygon11"
+		vertex_size="42" polygon_size="12"
+		triangle_size="4" quad_size="8"
+		volume_min="3.492920 0.250000 -2.531250"
+		volume_max="4.933105 1.031738 -1.864502"
+		volume_r="5.577148"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="3">
+				<primitive index="0" type="triangle_strip" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.625000 1.312500"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xyz xyz="4.933105 0.375000 -2.531250"/>
+					<tex st="10.937500 15.187500"/>
+					<pos_xz xz="4.213135 -2.197754"/>
+					<tex st="21.562500 1.312500"/>
+					<pos_xz xz="4.933105 -1.864502"/>
+					<tex st="0.625000 1.312500"/>
+					<pos_xy xy="3.492920 0.375000"/>
+				</primitive>
+				<primitive index="1" type="quads" vertex_size="32">
+					<tex st="25.375000 8.062500"/>
+					<nrm xyz="0.000000 0.939453 0.341797"/>
+					<pos_xyz xyz="4.048828 0.874512 -1.976074"/>
+					<tex st="31.687500 8.062500"/>
+					<pos_xy xy="4.377197 0.874512"/>
+					<tex st="31.687500 0.062500"/>
+					<pos_yz yz="1.031738 -2.407959"/>
+					<tex st="25.375000 0.062500"/>
+					<pos_xy xy="4.048828 1.031738"/>
+					<tex st="8.812500 24.812500"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
+					<pos_xyz xyz="3.540771 0.426758 -2.528320"/>
+					<pos_xz xz="3.540771 -2.316162"/>
+					<pos_xy xy="3.540771 0.935547"/>
+					<pos_xz xz="3.540771 -2.528320"/>
+					<nrm xyz="0.998047 0.000000 0.000000"/>
+					<pos_xyz xyz="4.882324 0.426758 -2.316162"/>
+					<pos_xz xz="4.882324 -2.528320"/>
+					<pos_xy xy="4.882324 0.935547"/>
+					<pos_xz xz="4.882324 -2.316162"/>
+					<tex st="1.687500 2.750000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xy xy="3.540771 0.935547"/>
+					<tex st="9.687500 2.750000"/>
+					<pos_xy xy="4.882324 0.935547"/>
+					<tex st="9.687500 1.812500"/>
+					<pos_xz xz="4.882324 -2.528320"/>
+					<tex st="1.687500 1.812500"/>
+					<pos_xy xy="3.540771 0.935547"/>
+					<tex st="-32.375000 31.750000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_yz yz="0.426758 -2.316162"/>
+					<tex st="0.437500 31.750000"/>
+					<pos_xy xy="4.882324 0.426758"/>
+					<tex st="0.437500 16.375000"/>
+					<pos_xy xy="4.882324 0.935547"/>
+					<tex st="-32.375000 16.375000"/>
+					<pos_xy xy="3.540771 0.935547"/>
+					<tex st="4.000000 32.000000"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
+					<pos_xyz xyz="3.492920 0.250000 -2.531250"/>
+					<tex st="4.187500 32.000000"/>
+					<pos_xz xz="3.492920 -1.864502"/>
+					<tex st="4.187500 24.000000"/>
+					<pos_xy xy="3.492920 0.375000"/>
+					<tex st="4.000000 24.000000"/>
+					<pos_xz xz="3.492920 -2.531250"/>
+					<tex st="12.187500 32.000000"/>
+					<nrm xyz="0.998047 0.000000 0.000000"/>
+					<pos_xyz xyz="4.933105 0.250000 -1.864502"/>
+					<tex st="28.000000 32.000000"/>
+					<pos_xz xz="4.933105 -2.531250"/>
+					<tex st="28.000000 24.000000"/>
+					<pos_xy xy="4.933105 0.375000"/>
+					<tex st="12.187500 24.000000"/>
+					<pos_xz xz="4.933105 -1.864502"/>
+					<tex st="4.187500 32.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_xy xy="3.492920 0.250000"/>
+					<tex st="12.187500 32.000000"/>
+					<pos_xy xy="4.933105 0.250000"/>
+					<tex st="12.187500 24.000000"/>
+					<pos_xy xy="4.933105 0.375000"/>
+					<tex st="4.187500 24.000000"/>
+					<pos_xy xy="3.492920 0.375000"/>
+				</primitive>
+				<primitive index="2" type="triangles" vertex_size="6">
+					<tex st="0.625000 1.312500"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xz xz="3.492920 -2.531250"/>
+					<tex st="10.937500 15.187500"/>
+					<pos_xz xz="4.213135 -2.197754"/>
+					<tex st="21.562500 1.312500"/>
+					<pos_xz xz="4.933105 -2.531250"/>
+					<tex st="0.625000 1.312500"/>
+					<pos_xz xz="3.492920 -1.864502"/>
+					<tex st="10.937500 15.187500"/>
+					<pos_xz xz="4.213135 -2.197754"/>
+					<tex st="21.562500 1.312500"/>
+					<pos_xz xz="3.492920 -2.531250"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
 </polygon_array>
 
 <node_array size="1">
@@ -2075,28 +2360,30 @@
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
-		display_size="10"
-		vertex_size="580" polygon_size="159"
-		triangle_size="18" quad_size="141"
-		volume_min="-5.219727 0.125000 -2.750000"
+		display_size="12"
+		vertex_size="638" polygon_size="176"
+		triangle_size="22" quad_size="154"
+		volume_min="-5.219727 0.125000 -2.800537"
 		volume_max="5.594727 3.937500 2.656250"
 		volume_r="6.194336"
 	>
 		<display index="0" material="0" polygon="4" priority="0"/>
-		<display index="1" material="1" polygon="6" priority="0"/>
-		<display index="2" material="2" polygon="3" priority="0"/>
-		<display index="3" material="3" polygon="2" priority="0"/>
-		<display index="4" material="4" polygon="1" priority="0"/>
-		<display index="5" material="5" polygon="9" priority="0"/>
-		<display index="6" material="6" polygon="8" priority="0"/>
-		<display index="7" material="7" polygon="7" priority="0"/>
-		<display index="8" material="8" polygon="0" priority="0"/>
-		<display index="9" material="9" polygon="5" priority="0"/>
+		<display index="1" material="1" polygon="7" priority="0"/>
+		<display index="2" material="2" polygon="0" priority="0"/>
+		<display index="3" material="3" polygon="11" priority="0"/>
+		<display index="4" material="4" polygon="3" priority="0"/>
+		<display index="5" material="5" polygon="2" priority="0"/>
+		<display index="6" material="6" polygon="1" priority="0"/>
+		<display index="7" material="7" polygon="10" priority="0"/>
+		<display index="8" material="8" polygon="9" priority="0"/>
+		<display index="9" material="9" polygon="8" priority="0"/>
+		<display index="10" material="10" polygon="6" priority="0"/>
+		<display index="11" material="11" polygon="5" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="580" polygon_size="159"
-	triangle_size="18" quad_size="141"/>
+<output_info vertex_size="638" polygon_size="176"
+	triangle_size="22" quad_size="154"/>
 
 </body>
 
