@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/10 20:51:53
+#save date:2011/09/12 15:17:17
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c15r0201.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ C15R0201_POKEWOOD_REC
 #OBJ CODE Number
 DANPEI
 #MOVE CODE Number
-MV_LEFT
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -26,7 +26,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_POKEWOOD_REC
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -40,7 +40,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -56
+-56 0 56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
