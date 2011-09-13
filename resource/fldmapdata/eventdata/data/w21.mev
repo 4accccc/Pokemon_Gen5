@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/13 16:19:00
+#save date:2011/09/13 18:29:53
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\w21.wms
 #SECTION START:OBJ_EVENT
@@ -469,11 +469,11 @@ DOOR_ID_W21_D27R0101_EXIT01
 #Next Zone ID Name
 ZONE_ID_D27R0101
 #Next Door ID Name
-DOOR_ID_W21_D27R0101_EXIT01
+DOOR_ID_D27R0101_W21_EXIT01
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
