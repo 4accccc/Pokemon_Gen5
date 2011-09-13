@@ -685,7 +685,15 @@ enum {
 	NARC_zukan_area_w_zkn_area_w_monsno_672_dat = 671,
 	NARC_zukan_area_w_zkn_area_w_monsno_673_dat = 672,
 	NARC_zukan_area_w_zkn_area_w_monsno_674_dat = 673,
-	NARC_zukan_area_w_zkn_area_w_monsno_675_dat = 674
+	NARC_zukan_area_w_zkn_area_w_monsno_675_dat = 674,
+	NARC_zukan_area_w_zkn_area_w_monsno_676_dat = 675,
+	NARC_zukan_area_w_zkn_area_w_monsno_677_dat = 676,
+	NARC_zukan_area_w_zkn_area_w_monsno_678_dat = 677,
+	NARC_zukan_area_w_zkn_area_w_monsno_679_dat = 678,
+	NARC_zukan_area_w_zkn_area_w_monsno_680_dat = 679,
+	NARC_zukan_area_w_zkn_area_w_monsno_681_dat = 680,
+	NARC_zukan_area_w_zkn_area_w_monsno_682_dat = 681,
+	NARC_zukan_area_w_zkn_area_w_monsno_683_dat = 682
 };
 
 /* NARC_ZUKAN_AREA_W_NAIX_ */

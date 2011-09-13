@@ -3955,6 +3955,21 @@
 		<language name="JPN_KANJI">１．９ｍ</language>
 	</row>
 
+	<row id="ZKN_HEIGHT_641_001">
+		<language name="JPN">１．５ｍ</language>
+		<language name="JPN_KANJI">１．５ｍ</language>
+	</row>
+
+	<row id="ZKN_HEIGHT_642_001">
+		<language name="JPN">１．５ｍ</language>
+		<language name="JPN_KANJI">１．５ｍ</language>
+	</row>
+
+	<row id="ZKN_HEIGHT_645_001">
+		<language name="JPN">１．５ｍ</language>
+		<language name="JPN_KANJI">１．５ｍ</language>
+	</row>
+
 	<row id="ZKN_HEIGHT_646_001">
 		<language name="JPN">３．０ｍ</language>
 		<language name="JPN_KANJI">３．０ｍ</language>
