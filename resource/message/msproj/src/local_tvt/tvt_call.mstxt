@@ -641,10 +641,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どこにいるの？</Text>
+			<Text>いま　どこ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T12:52:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -652,15 +652,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どこにいるの？</Text>
+			<Text>いま　どこ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T12:52:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージへ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T12:54:02" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル</Text>
@@ -741,6 +748,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T12:51:49" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル</Text>
@@ -3142,10 +3156,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあねー[Ctrl2:PageClear ]</Text>
+			<Text>それでは　げんきでね
+バイバーイ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:16:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3153,10 +3168,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあねー[Ctrl2:PageClear ]</Text>
+			<Text>それでは　元気でね
+バイバーイ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:16:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3189,10 +3205,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よお！[Ctrl2:PageClear ]</Text>
+			<Text>なんだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3200,10 +3216,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よお！[Ctrl2:PageClear ]</Text>
+			<Text>なんだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3233,7 +3249,7 @@
 			<Text>かりメッセージ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:39:55" />
+				Time="2011-09-13T13:17:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3250,6 +3266,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:16" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3291,6 +3315,14 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:40:08" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3325,6 +3357,14 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:40:08" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3359,6 +3399,14 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:40:08" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3393,6 +3441,14 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:40:08" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3427,6 +3483,14 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:04:53" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3461,6 +3525,14 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:04:53" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3495,6 +3567,14 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:04:53" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3529,6 +3609,14 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:04:53" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3563,6 +3651,14 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:04:53" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3577,10 +3673,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあなー[Ctrl2:PageClear ]</Text>
+			<Text>じゃあな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T12:33:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3588,15 +3684,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあなー[Ctrl2:PageClear ]</Text>
+			<Text>じゃあな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T12:33:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>さよなら選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:15:47" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライバル
@@ -3618,10 +3721,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>いま　どこ　って？▼
+ヒウンシティの　すみから　すみまで
+プラズマだんを　さがしてるよ！▼
+オマエも　みつけてないんだろ？▼
+いいか！
+ぜったいに　みつけだすぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:56:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3629,10 +3737,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>いま　どこ　って？▼
+ヒウンシティの　すみから　すみまで
+プラズマだんを　さがしてるよ！▼
+オマエも　みつけてないんだろ？▼
+いいか！
+ぜったいに　みつけだすぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3640,10 +3753,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・下水道イベントクリア前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:29" />
+				Time="2011-09-13T12:54:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3666,10 +3780,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>さっきは　たすかった！▼
+オレは　まだ　ヒウンで
+プラズマだんを　さがすけどさ▼
+おまえは　ポケモンジムに
+いけば　いいんじゃないか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:56:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3677,10 +3795,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>さっきは　たすかった！▼
+オレは　まだ　ヒウンで
+プラズマだんを　さがすけどさ▼
+おまえは　ポケモンジムに
+いけば　いいんじゃないか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3688,10 +3810,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・c03ポケモンジム前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:32" />
+				Time="2011-09-13T12:54:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3707,10 +3830,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ヒウンの　ポケモンジムで
+インセクトバッジを　とった？▼
+だったら　つぎは
+ライモンシティに　いって▽
+ジムリーダーに　ちょうせん　すれば？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:17:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3718,10 +3845,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ヒウンの　ポケモンジムで
+インセクトバッジを　とった？▼
+だったら　つぎは
+ライモンシティに　いって▽
+ジムリーダーに　ちょうせん　すれば？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3729,10 +3860,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・c04ポケモンジム前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:32" />
+				Time="2011-09-13T12:54:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3748,10 +3880,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>なんだよ▼
+ホドモエの　ポケモンジムに
+ちょうせん　したのか？▼
+まだなら　いけば　いいだろ！▼
+ちなみに　ジムリーダーは
+じめんタイプの　つかいて　らしいぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3759,10 +3896,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>なんだよ▼
+ホドモエの　ポケモンジムに
+ちょうせん　したのか？▼
+まだなら　いけば　いいだろ！▼
+ちなみに　ジムリーダーは
+じめんタイプの　つかいて　らしいぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3770,10 +3912,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・c05ポケモンジム前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:32" />
+				Time="2011-09-13T12:54:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3789,10 +3932,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>さっき　ヤーコンの
+おっさんに　いわれただろ？▼
+ホドモエの　トーナメントに
+さんか　してくれって！▼
+トーナメントは　ホドモエシティの
+みなみに　あるってさ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:20:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3800,10 +3948,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>さっき　ヤーコンの
+おっさんに　いわれただろ？▼
+ホドモエの　トーナメントに
+さんか　してくれって！▼
+トーナメントは　ホドモエシティの
+みなみに　あるってさ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3811,10 +3964,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・ホドモエトーナメント優勝前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:32" />
+				Time="2011-09-13T12:54:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3830,10 +3984,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>きいてる　ばあいか！
+プラズマだん　だぞ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3841,10 +3996,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>きいてる　ばあいか！
+プラズマだん　だぞ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3852,10 +4008,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・プラズマフリゲート１回目クリア前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:32" />
+				Time="2011-09-13T12:54:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3871,10 +4028,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>そうだな……▼
+オマエの　じつりょく　なら
+フキヨセの　ジムリーダーにも▽
+かてるんじゃないか？▼
+まっ　オレは　もう
+ジェットバッジ　てにいれたけどな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3882,10 +4044,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>そうだな……▼
+オマエの　じつりょく　なら
+フキヨセの　ジムリーダーにも▽
+かてるんじゃないか？▼
+まっ　オレは　もう
+ジェットバッジ　てにいれたけどな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3893,10 +4060,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・c06ポケモンジムクリア前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:32" />
+				Time="2011-09-13T12:54:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3912,10 +4080,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ひとこと　だけだぞ▼
+リバースマウンテン▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:07:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3923,10 +4092,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ひとこと　だけだぞ▼
+リバースマウンテン▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3934,10 +4104,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・リバースマウンテンでベルと連れ歩き前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:32" />
+				Time="2011-09-13T12:54:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3953,10 +4124,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>いま　サザナミあたり　かな▼
+そうだな……　ひさしぶりに
+オマエと　しょうぶ　するか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:07:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3964,10 +4137,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>いま　サザナミあたり　かな▼
+そうだな……　ひさしぶりに
+オマエと　しょうぶ　するか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3975,10 +4150,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・サザナミでのライバル戦闘前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:32" />
+				Time="2011-09-13T12:54:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3994,10 +4170,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>オレは　ソウリュウシティの
+ポケモンジムを　めざしてる▼
+ジムリーダーは　かなり
+てごわいって　はなし　だぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:02:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4005,10 +4184,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>オレは　ソウリュウシティの
+ポケモンジムを　めざしてる▼
+ジムリーダーは　かなり
+てごわいって　はなし　だぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4016,10 +4198,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・c08ポケモンジムクリア前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:34" />
+				Time="2011-09-13T12:54:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4035,10 +4218,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ぶじ　か！▼
+オレは　セイガイハ　だから
+すぐには　いけないけど▽
+オマエなら　だいじょうぶ　だろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:01:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4046,10 +4232,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ぶじ　か！▼
+オレは　セイガイハ　だから
+すぐには　いけないけど▽
+オマエなら　だいじょうぶ　だろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4057,10 +4246,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・c08でチェレンと会話する前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:34" />
+				Time="2011-09-13T12:54:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4076,10 +4266,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>……プラズマだんは　さがしてる
+ぜんぜん　みつからないけどな！▼
+おまえは　セイガイハの
+シズイって　ジムリーダーを▽
+さっさと　たおしてこいよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:31:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4087,10 +4281,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>……プラズマだんは　さがしてる
+ぜんぜん　みつからないけどな！▼
+おまえは　セイガイハの
+シズイって　ジムリーダーを▽
+さっさと　たおしてこいよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4098,10 +4296,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・c14ポケモンジムクリア前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:34" />
+				Time="2011-09-13T12:54:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4117,10 +4316,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>オレは
+プラズマフリゲートを　さがしてる！▽
+オマエも　てわけ　してくれよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:00:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4128,10 +4329,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>オレは
+プラズマフリゲートを　さがしてる！▽
+オマエも　てわけ　してくれよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4139,10 +4342,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・プラズマフリゲート侵入イベント前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:37" />
+				Time="2011-09-13T12:54:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4158,10 +4362,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>……！？▼
+いま　ライブキャスターで
+はなしてる　ばあい　かよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:21:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4169,10 +4375,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>……！？▼
+いま　ライブキャスターで
+はなしてる　ばあい　かよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4180,10 +4388,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・プラズマフリゲート２回目クリア前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:37" />
+				Time="2011-09-13T12:54:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4199,10 +4408,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>チャンピオンロードを　こえたら
+ポケモンリーグ　だぜ▼
+チャンピオンロードは
+２３ばんどうろの　さきだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:22:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4210,10 +4422,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>チャンピオンロードを　こえたら
+ポケモンリーグ　だぜ▼
+チャンピオンロードは
+２３ばんどうろの　さきだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4221,10 +4436,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・チャンピオンロード到達前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:37" />
+				Time="2011-09-13T12:54:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4240,10 +4456,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ふうん　いま
+チャンピオンロードか▼
+だったら　もうすぐ
+ポケモンリーグ　だな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:22:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4251,10 +4470,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ふうん　いま
+チャンピオンロードか▼
+だったら　もうすぐ
+ポケモンリーグ　だな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4262,10 +4484,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・ポケモンリーグ到達前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:37" />
+				Time="2011-09-13T12:54:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4281,10 +4504,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>オレは　どこでも　いいだろ▼
+オマエ
+ポケモンリーグ　なんだろ？▼
+だったら
+しょうり　あるのみ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:59:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4292,10 +4519,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>オレは　どこでも　いいだろ▼
+オマエ
+ポケモンリーグ　なんだろ？▼
+だったら
+しょうり　あるのみ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4303,10 +4534,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・ポケモンリーグ内、クリア前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:38" />
+				Time="2011-09-13T12:54:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4322,10 +4554,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>サザナミタウン　だよ
+ヒマなら　くれば？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T12:59:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4333,10 +4566,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>サザナミタウン　だよ
+ヒマなら　くれば？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-13T13:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4344,10 +4578,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・クリア後、サザナミでのライバル戦闘前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:38" />
+				Time="2011-09-13T12:54:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4385,10 +4620,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・クリア後、？？？でのライバル戦闘前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:38" />
+				Time="2011-09-13T12:54:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4426,10 +4662,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>シナリオ進行でのヒントメッセージ</Comment>
+			<Comment>目的地メッセージ
+・クリア後、？？？でのライバル戦闘後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T03:00:38" />
+				Time="2011-09-13T12:55:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -1281,4 +1281,100 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c14_sign4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かおだしかんばんが　ある……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:15:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:15:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>顔出し看板が　ある……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:16:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:16:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>看板分類：
+・クリア前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:16:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板：顔出し看板</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:15:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_sign4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かおだしかんばんが　ある……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:16:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:16:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>顔出し看板が　ある……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:16:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:16:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>看板分類：
+・クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:16:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板：顔出し看板</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-13T06:16:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
