@@ -422,6 +422,9 @@
 #define FE_C07_NINJA_FIRSTTALK             406 /* 0x0196 セッカシティ：ダークトリニティ初回会話フラグ */
 #define FE_D02R0101_SWLEADER1_FIRST        407 /* 0x0197 ヤグルマの森：チェレン初回会話フラグ */
 #define FE_FMISSION_EV_TOH_CLEAR           408 /* 0x0198 フェスミッションイベントクリアフラグ(タワーオブヘブンの鐘を鳴らした) */
+#define FE_C01GYM0101_LEADER1A_FIRST       409 /* 0x0199 サンヨウレストラン：ポッド初回会話フラグ */
+#define FE_C01GYM0101_LEADER1B_FIRST       410 /* 0x019a サンヨウレストラン：コーン初回会話フラグ */
+#define FE_C01GYM0101_LEADER1C_FIRST       411 /* 0x019b サンヨウレストラン：デント初回会話フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -2445,6 +2448,8 @@
 #define TMFLG_AMUSEMENT_NPC               2773 /* 0x0ad5 ライモン遊園地：観覧車NPCキャラ会話フラグ */
 #define TMFLG_R04_POKE_567_633_MEET       2774 /* 0x0ad6 4番道路：１週間に１回出現するバルジーナ（ウォーグル）に出会った */
 #define TMFLG_D20_POKE_536_MEET           2775 /* 0x0ad7 海底神殿海上：１週間に１回出現するブルンゲルに出会った */
+#define TMFLG_C01GYM0101_LEADER1_BT       2776 /* 0x0ad8 サンヨウレストラン：１日１回三つ子ダブルバトルイベント */
+#define TMFLG_C01GYM0101_SHOW             2777 /* 0x0ad9 サンヨウレストラン：サルショーイベント */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 

@@ -328,6 +328,7 @@
 #define WK_OTHER_D02R0101_PAIR           16778 /* 0x418a ヤグルマの森：チェレン連れ歩きセリフ */
 #define WK_OTHER_N01R0401_PAIR           16779 /* 0x418b Ｎ城：N連れ歩きセリフ */
 #define WK_OTHER_C07_SEASON              16780 /* 0x418c セッカシティ：ダークトリニティイベントに使用 ゾーンチェンジラベルで現季節とワークの季節で差分があれば０に戻す */
+#define WK_OTHER_C01GYM0101_BTL          16781 /* 0x418d サンヨウレストラン：ジムリーダー戦闘後会話分岐用 */
 
 #define WK_AREA_END                      16815 /* 0x41af  */
 
