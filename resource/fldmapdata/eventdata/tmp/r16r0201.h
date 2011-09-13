@@ -16,6 +16,7 @@
 #define TR_VETERANM_08                     3
 #define FLD_ITEM_65                        4
 #define FLD_ITEM_66                        5
+#define FLD_ITEM_67                        6
 
 #endif //ZONE_R16R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r16r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

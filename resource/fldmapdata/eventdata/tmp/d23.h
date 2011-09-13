@@ -11,7 +11,6 @@
 
 #define FLD_ITEM_17                        0
 #define FLD_ITEM_19                        1
-#define FLD_ITEM_18                        2
 
 #endif //ZONE_D23_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d23.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -23,5 +22,6 @@
 #define BG_D23_DUMMY_FES_03               2
 #define BG_D23_DUMMY_FES_04               3
 #define BG_D23_DUMMY_FES_05               4
+#define HIDE_ITEM_02                      5
 
 #endif //ZONE_D23_EVB_H

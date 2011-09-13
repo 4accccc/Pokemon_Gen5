@@ -9,7 +9,6 @@
 #ifndef ZONE_D22_EVC_H
 #define ZONE_D22_EVC_H
 
-#define FLD_ITEM_12                        0
 
 #endif //ZONE_D22_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d22.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

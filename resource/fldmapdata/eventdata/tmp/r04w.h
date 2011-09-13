@@ -38,6 +38,10 @@
 #define R04W_BIGROCK_08                   20
 #define R04W_BIGROCK_06                   21
 #define R04W_BIGROCK_07                   22
+#define FLD_ITEM_53W                      23
+#define FLD_ITEM_47W                      24
+#define FLD_ITEM_48W                      25
+#define FLD_ITEM_50                       26
 
 #endif //ZONE_R04W_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04w.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
