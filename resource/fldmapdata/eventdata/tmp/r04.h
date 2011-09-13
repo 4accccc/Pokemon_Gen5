@@ -41,6 +41,10 @@
 #define R04_BIGROCK_10                    23
 #define R04_BIGROCK_11                    24
 #define R04_POKE630_01                    25
+#define FLD_ITEM_47                       26
+#define FLD_ITEM_48                       27
+#define FLD_ITEM_49                       28
+#define FLD_ITEM_53                       29
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
