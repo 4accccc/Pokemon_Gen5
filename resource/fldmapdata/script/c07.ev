@@ -13,6 +13,7 @@
   .include  "c07.h"
 
   //@author fujimura_souichirou
+  //@author	suginaka_katsunori	ダークトリニティイベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -33,8 +34,40 @@ _EVENT_DATA    ev_c07_iss2_01
 _EVENT_DATA    ev_c07_iss3_01
 _EVENT_DATA    ev_c07_iss4_01
 _EVENT_DATA    ev_c07_ambrella_02
+_EVENT_DATA		ev_pos_c07_ninja
+_EVENT_DATA		ev_zone_c07
 _EVENT_DATA_END
 
+/**************************************************************/
+/*               フィールド初期化スクリプト                   */
+/**************************************************************/
+INIT_EVENT_START ev_zone_c07
+{
+	DEFINE_LOCAL	LWK_SEASON
+	
+	_GET_SEASON_ID( LWK_SEASON )
+
+	//別の季節になっている場合はワークを０にする
+	SWITCH $WK_OTHER_C07_SEASON
+	CASE 1 THEN	//春の場合	
+		IF $LWK_SEASON != PMSEASON_SPRING THEN
+			$WK_OTHER_C07_SEASON = 0
+		ENDIF
+	CASE 2 THEN	//夏の場合
+		IF $LWK_SEASON != PMSEASON_SUMMER THEN
+			$WK_OTHER_C07_SEASON = 0
+		ENDIF
+	CASE 3 THEN	//秋の場合
+		IF $LWK_SEASON != PMSEASON_AUTUMN THEN
+			$WK_OTHER_C07_SEASON = 0
+		ENDIF
+	CASE 4 THEN	//冬の場合
+		IF $LWK_SEASON != PMSEASON_WINTER THEN
+			$WK_OTHER_C07_SEASON = 0
+		ENDIF
+	ENDSWITCH
+}
+INIT_EVENT_END
 
 /**************************************************************/
 /*  街看板                                                    */
@@ -151,4 +184,460 @@ EVENT_START   ev_c07_ambrella_02
 
 EVENT_END
 
+/**************************************************************/
+/*	ダークトリニティーイベント								  */
+/**************************************************************/
+EVENT_START		ev_pos_c07_ninja
 
+	//========================================/
+	
+	_FLAG_RESET(FV_C07_NINJA_01)
+	_FLAG_RESET(FV_C07_NINJA_02)
+	_FLAG_RESET(FV_C07_NINJA_03)
+	
+	//========================================/
+
+	_OBJ_ADD( C07_NINJA_01 )
+	_OBJ_ADD( C07_NINJA_02 )
+	_OBJ_ADD( C07_NINJA_03 )
+
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+
+	//プレイヤー座標取得
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+	
+	//座標によってトリニティーの場所変更
+	SWITCH $LWK_POSZ
+	CASE 195 THEN
+		_OBJ_POS_CHANGE( C07_NINJA_01, 219, 3, 195, DIR_LEFT )
+		_OBJ_POS_CHANGE( C07_NINJA_02, 221, 3, 196, DIR_LEFT )
+		_OBJ_POS_CHANGE( C07_NINJA_03, 221, 3, 195, DIR_LEFT )
+	CASE 196 THEN
+		_OBJ_POS_CHANGE( C07_NINJA_01, 219, 3, 196, DIR_LEFT )
+		_OBJ_POS_CHANGE( C07_NINJA_02, 221, 3, 195, DIR_LEFT )
+		_OBJ_POS_CHANGE( C07_NINJA_03, 221, 3, 196, DIR_LEFT )
+	ENDSWITCH
+
+	//ニンジャ　出現
+	_OBJ_ANIME( C07_NINJA_01, anm_ninja_come )
+	_OBJ_ANIME( C07_NINJA_02, anm_ninja_come )
+	_OBJ_ANIME( C07_NINJA_03, anm_ninja_come )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公　！マーク・中央へ移動
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+
+	IF FLAG_OFF( FE_C07_NINJA_FIRSTTALK ) THEN
+		//ニンジャ１：オマエか　よかったな
+		_BALLOONWIN_OBJMSG( msg_c07_ninja1_01 , C07_NINJA_01 )
+	
+		//========================================/
+		
+		//初回会話フラグセット
+		_FLAG_SET(FE_C07_NINJA_FIRSTTALK)
+		
+		//========================================/
+	
+	ELSE
+	
+		//ニンジャ１：オレたちと　たたかえ！
+		_BALLOONWIN_OBJMSG( msg_c07_ninja1_02 , C07_NINJA_01 )
+	
+	ENDIF
+	
+	
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_CALL ev_season_workset
+	
+		//オマエに　かつ！
+		_BALLOONWIN_OBJMSG( msg_c07_ninja1_03 , C07_NINJA_01 )
+		_MSGWIN_CLOSE()
+		
+		//戦闘処理
+		//トレーナー戦呼び出し
+		_TRAINER_BTL_SET( TRID_NINJA_05, 0 )
+	
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+		
+		//ニンジャ１　消去
+		_OBJ_ANIME( C07_NINJA_01, anm_ninja_leave1 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_DEL( C07_NINJA_01 )
+		
+		//ニンジャ２　移動
+		_OBJ_ANIME( C07_NINJA_02, anm_ninja_leave1 )
+		_OBJ_ANIME_WAIT()
+		
+		//座標によってトリニティーの場所変更
+		SWITCH $LWK_POSZ
+		CASE 195 THEN
+			_OBJ_POS_CHANGE( C07_NINJA_02, 219, 3, 195, DIR_LEFT  )
+		CASE 196 THEN
+			_OBJ_POS_CHANGE( C07_NINJA_02, 219, 3, 196, DIR_LEFT )
+		ENDSWITCH
+
+		_OBJ_ANIME( C07_NINJA_02, anm_ninja_come1 )
+		_OBJ_ANIME_WAIT()
+		
+		//========================================/
+		
+		_FLAG_SET(FV_C07_NINJA_01)
+		
+		//========================================/
+		
+		//手持ち数が３匹以上か？
+		
+		DEFINE_LOCAL	LWK_COUNT
+		
+		_GET_PARTY_POKE_COUNT( LWK_COUNT, POKECOUNT_MODE_BATTLE_ENABLE )
+		
+		//手持ち数が３匹以上の場合
+		IF $LWK_COUNT >= 3 THEN
+		
+			//どうする　つづけて
+			_BALLOONWIN_OBJMSG( msg_c07_ninja2_02 , C07_NINJA_02 )
+			
+			//はい・いいえ分岐
+			_YES_NO_WIN( SCWK_ANSWER )
+			
+			//はいの場合
+			IF $SCWK_ANSWER == SCR_YES THEN
+			
+				//たたかうこと！
+				_BALLOONWIN_OBJMSG( msg_c07_ninja2_03 , C07_NINJA_02 )
+				_MSGWIN_CLOSE()
+				
+				//戦闘処理
+				//トレーナー戦呼び出し
+				_TRAINER_BTL_SET( TRID_NINJA_06, 0 )
+	
+				//敗戦チェック
+				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+				IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+					_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+				ELSE
+					_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+				ENDIF
+		
+				//ニンジャ２　消去
+				_OBJ_ANIME( C07_NINJA_02, anm_ninja_leave1 )
+				_OBJ_ANIME_WAIT()
+				_OBJ_DEL( C07_NINJA_02 )
+				
+				//========================================/
+		
+				_FLAG_SET(FV_C07_NINJA_02)
+		
+				//========================================/
+				
+				//ニンジャ３　移動
+				_OBJ_ANIME( C07_NINJA_03, anm_ninja_leave1 )
+				_OBJ_ANIME_WAIT()
+		
+				//座標によってトリニティーの場所変更
+				SWITCH $LWK_POSZ
+				CASE 195 THEN
+					_OBJ_POS_CHANGE( C07_NINJA_03, 219, 3, 195, DIR_LEFT  )
+				CASE 196 THEN
+					_OBJ_POS_CHANGE( C07_NINJA_03, 219, 3, 196, DIR_LEFT )
+				ENDSWITCH
+
+				_OBJ_ANIME( C07_NINJA_03, anm_ninja_come1 )
+				_OBJ_ANIME_WAIT()
+				
+				//手持ち数が３匹以上か？
+				_GET_PARTY_POKE_COUNT( LWK_COUNT, POKECOUNT_MODE_BATTLE_ENABLE )
+				
+				//手持ち数が３匹以上の場合
+				IF $LWK_COUNT >= 3 THEN
+				
+					//どうする　つづけて
+					_BALLOONWIN_OBJMSG( msg_c07_ninja3_02 , C07_NINJA_03 )
+					
+					//はい・いいえ分岐
+					_YES_NO_WIN( SCWK_ANSWER )
+					
+					//はいの場合
+					IF $SCWK_ANSWER == SCR_YES THEN
+					
+						//……！
+						_BALLOONWIN_OBJMSG( msg_c07_ninja3_03 , C07_NINJA_03 )
+						_MSGWIN_CLOSE()
+						
+						//戦闘処理
+						//トレーナー戦呼び出し
+						_TRAINER_BTL_SET( TRID_NINJA_07, 0 )
+	
+						//敗戦チェック
+						_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+						IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+							_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+						ELSE
+							_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+						ENDIF
+
+						//ニンジャ　消去
+						_OBJ_ANIME( C07_NINJA_03, anm_ninja_leave1 )
+						_OBJ_ANIME_WAIT()
+						_OBJ_DEL( C07_NINJA_03 )
+
+						//========================================/
+		
+						_FLAG_SET(FV_C07_NINJA_03)
+		
+						//========================================/
+
+					//いいえの場合
+					ELSE
+					
+						//そうか　また　きせつが　かわったとき
+						_BALLOONWIN_OBJMSG( msg_c07_ninja3_04 , C07_NINJA_03 )
+						_MSGWIN_CLOSE()
+						
+						//ニンジャ　消去
+						_OBJ_ANIME( C07_NINJA_03, anm_ninja_leave1 )
+						_OBJ_ANIME_WAIT()
+						_OBJ_DEL( C07_NINJA_03 )
+						
+						
+						//終了
+						//========================================/
+		
+						_FLAG_SET(FV_C07_NINJA_03)
+		
+						//========================================/
+					
+					
+					ENDIF
+						
+				//手持ち数が三匹以下の場合
+				ELSE
+				
+					//つづいて　オレが
+					_BALLOONWIN_OBJMSG( msg_c07_ninja3_01 , C07_NINJA_03 )
+					_MSGWIN_CLOSE()
+			
+					//ニンジャ３　消去
+					_OBJ_ANIME( C07_NINJA_03, anm_ninja_leave1 )
+					_OBJ_ANIME_WAIT()
+					_OBJ_DEL( C07_NINJA_03 )
+			
+					//終了
+					//========================================/
+		
+					_FLAG_SET(FV_C07_NINJA_03)
+		
+					//========================================/
+
+				ENDIF
+	
+			//いいえの場合
+			ELSE
+				
+				//そうか　また　きせつが　かわったとき
+				_BALLOONWIN_OBJMSG( msg_c07_ninja2_04 , C07_NINJA_02 )
+				_MSGWIN_CLOSE()
+			
+				//ニンジャ２・３　消去
+				_OBJ_ANIME( C07_NINJA_02, anm_ninja_leave1 )
+				_OBJ_ANIME( C07_NINJA_03, anm_ninja_leave1 )
+				_OBJ_ANIME_WAIT()
+				_OBJ_DEL( C07_NINJA_02 )
+				_OBJ_DEL( C07_NINJA_03 )
+
+				//終了
+				//========================================/
+		
+				_FLAG_SET(FV_C07_NINJA_02)
+				_FLAG_SET(FV_C07_NINJA_03)
+		
+				//========================================/
+			
+			ENDIF
+
+		//手持ち数が三匹以下の場合
+		ELSE
+				
+			//つづいて　オレが
+			_BALLOONWIN_OBJMSG( msg_c07_ninja2_01 , C07_NINJA_02 )
+			_MSGWIN_CLOSE()
+		
+			//ニンジャ２・３　消去
+			_OBJ_ANIME( C07_NINJA_02, anm_ninja_leave1 )
+			_OBJ_ANIME( C07_NINJA_03, anm_ninja_leave1 )
+			_OBJ_ANIME_WAIT()
+			_OBJ_DEL( C07_NINJA_02 )
+			_OBJ_DEL( C07_NINJA_03 )
+		
+			//終了
+			//========================================/
+		
+			_FLAG_SET(FV_C07_NINJA_02)
+			_FLAG_SET(FV_C07_NINJA_03)
+		
+			//========================================/
+		
+		ENDIF
+
+	//いいえの場合
+	ELSE
+	
+		//終了
+		_MSGWIN_CLOSE()
+		
+		//========================================/
+	
+		_FLAG_SET(FV_C07_NINJA_01)
+		_FLAG_SET(FV_C07_NINJA_02)
+		_FLAG_SET(FV_C07_NINJA_03)
+	
+		//========================================/
+
+		_OBJ_ANIME( C07_NINJA_01, anm_ninja_leave1 )
+		_OBJ_ANIME( C07_NINJA_02, anm_ninja_leave1 )
+		_OBJ_ANIME( C07_NINJA_03, anm_ninja_leave1 )
+		_OBJ_ANIME_WAIT()
+
+		_OBJ_DEL( C07_NINJA_01 )
+		_OBJ_DEL( C07_NINJA_02 )
+		_OBJ_DEL( C07_NINJA_03 )
+		
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+		_OBJ_ANIME_WAIT()
+		
+	ENDIF
+
+EVENT_END
+
+ev_season_workset:
+
+DEFINE_LOCAL	LWK_SEASON
+	
+_GET_SEASON_ID( LWK_SEASON )
+
+SWITCH $LWK_SEASON
+CASE PMSEASON_SPRING THEN
+	$WK_OTHER_C07_SEASON = 1
+CASE PMSEASON_SUMMER THEN
+	$WK_OTHER_C07_SEASON = 2
+CASE PMSEASON_AUTUMN THEN
+	$WK_OTHER_C07_SEASON = 3
+CASE PMSEASON_WINTER THEN
+	$WK_OTHER_C07_SEASON = 4
+ENDSWITCH
+
+_RET
+
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：１歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_back_l
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆ニンジャ：出現・退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_come
+	_ANIME_DATA	AC_NINJA_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ninja_leave
+	_ANIME_DATA	AC_NINJA_ACT1,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ninja_come1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_NINJA_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ninja_leave1
+	_ANIME_DATA	AC_NINJA_ACT1,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0

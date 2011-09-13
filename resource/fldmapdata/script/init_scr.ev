@@ -270,6 +270,11 @@ init_flags:
   _FLAG_SET( FV_R07R0105_SPPOKE2_01 )  //エムリット
   _FLAG_SET( FV_D26_SPPOKE3_01 )  //アグノム
 
+  //C07:セッカシティ　ダークトリニティ
+  _FLAG_SET( FV_C07_NINJA_01 )
+  _FLAG_SET( FV_C07_NINJA_02 )
+  _FLAG_SET( FV_C07_NINJA_03 )
+
 
 }
 _RET

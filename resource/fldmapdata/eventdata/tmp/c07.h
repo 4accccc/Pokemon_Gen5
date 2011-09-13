@@ -25,6 +25,9 @@
 #define C07_ISS4_01                        7
 #define C07_AMBRELLA_02                    8
 #define FLD_ITEM_239                       9
+#define C07_NINJA_01                      10
+#define C07_NINJA_02                      11
+#define C07_NINJA_03                      12
 
 #endif //ZONE_C07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

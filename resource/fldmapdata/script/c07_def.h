@@ -17,5 +17,7 @@
 #define SCRID_C07_ISS3_01 (10)
 #define SCRID_C07_ISS4_01 (11)
 #define SCRID_C07_AMBRELLA_02 (12)
+#define SCRID_POS_C07_NINJA (13)
+#define SCRID_ZONE_C07 (14)
 
 #endif //_C07_DEF_H_
