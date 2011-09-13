@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-06-03T20:39:54" source="swheroine_a.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-09-13T16:54:12" source="swheroine_a.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-06-03T20:39:54" source="swheroine_a.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-09-13T16:54:12" source="swheroine_a.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -43,31 +43,31 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 ccc0 0ccc 0000 0000 0000
-			0000 0000 c000 c99c c99c 000c 0000 0000
-			0000 cc00 cf00 c999 999c 00fc 00cc 0000
-			0000 98c0 9cfc 9998 8999 cfc9 0c89 0000
-			0000 899c 9cf9 8889 9888 9fc9 c998 0000
-			0000 899f cc79 9999 9999 97cc f998 0000
-			0000 99cf cc7c 2222 2222 c7cc fc99 0000
-			0000 cc9f 2c6c d522 225d c6c2 f9cc 0000
-			0000 999f 22ff 2552 2552 ff22 f999 0000
-			0000 c9f0 2fcb dd11 11dd bcf2 0f9c 0000
-			0000 ff00 fcca 1111 1111 accf 00ff 0000
-			0000 0000 ac9f 33fd df33 f9ca 0000 0000
-			0000 0000 bc9f bbfd dfbb f9cb 0000 0000
-			0000 c000 f9f9 bbbb bbbb 9f9f 000c 0000
-			0000 9cc0 0fc9 abaf faba 9cf0 0cc9 0000
-			0000 99c0 c0c9 9fc8 7cf9 9c0c 0c99 0000
-			0000 9c00 a9cc 25f8 7f52 ccee 00c9 0000
-			0000 c000 faab e5f0 ff5e baf7 000c 0000
-			0000 f000 0fbb 55ef fe55 bbf7 000f 0000
-			0000 0000 40ff d55e dfed ff7d 0000 0000
-			0000 0000 f000 ddee ddfd 0f7e 0000 0000
-			0000 0000 f000 ee34 e4ee 0fee 0000 0000
-			0000 0000 0000 0444 ef40 00fe 0000 0000
-			0000 0000 0000 f77f f77f 000f 0000 0000
-			0000 0000 0000 feef feef 0000 0000 0000
+			0000 0000 0000 bbb0 0bbb 0000 0000 0000
+			0000 0000 b000 b99b b99b 000b 0000 0000
+			0000 bb00 bf0b b999 999b b0fb 00bb 0000
+			0000 79b0 9bfb 9997 7999 bfb9 0b97 0000
+			0000 979b 9bb9 7779 9777 9bb9 b979 0000
+			0000 979f bb69 4499 9944 96bb f979 0000
+			0000 799f bb6b 1144 4411 b6bb f997 0000
+			0000 99bf 4b5f 1111 1111 f5b4 fb99 0000
+			0000 bbff 11ff cc41 14cc ff11 ffbb 0000
+			0000 bbf0 1fba cccc cccc abf1 0fbb 0000
+			0000 ff00 fbb8 ccc1 1ccc 8bbf 00ff 0000
+			0000 b000 8b9f 11fc cf11 f9b8 000b 0000
+			0000 9f00 ab9f aafc cfaa f9ba 00f9 0000
+			0000 9f00 f9fb aaaa aaaa bf9f 00f9 0000
+			0000 99f0 0f0b 8a8f f8a8 b0f0 0f99 0000
+			0000 b9f0 f000 9dd3 3fe9 000f 0f9b 0000
+			0000 b9b0 82ff 14fd df41 ff28 0b9b 0000
+			0000 fb00 d88a d4f0 fe4d a88f 00bf 0000
+			0000 f000 0faa 1c4f eec1 aaf4 000f 0000
+			0000 0000 b0ff cc46 2cec ff2c 0000 0000
+			0000 0000 f000 4466 1ce4 0211 0000 0000
+			0000 0000 f000 666d 1e77 0021 0000 0000
+			0000 0000 0000 7dde edd7 0002 0000 0000
+			0000 0000 0000 f22f f22f 0000 0000 0000
+			0000 0000 0000 f43f f34f 0000 0000 0000
 			0000 0000 0000 0ff0 0ff0 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
@@ -76,8 +76,8 @@
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="in27_w01_pl" color_size="16">
-		36c8 4d7d 4158 3110 20a5 6af5 0215 373d
-		21b1 192d 3a7a 5f5f 14c8 7fff 2529 0000
+		470e 399b 24f0 5e0e 6f16 0215 373d 29f3
+		3a7a 216f 5f5f 14ca 7fff 2529 14a5 0000
 	</tex_palette>
 </tex_palette_array>
 
