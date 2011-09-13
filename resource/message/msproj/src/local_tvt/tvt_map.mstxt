@@ -407,14 +407,14 @@
 			<Text>ヒウンシティ！
 もう　見所が　ありすぎて▼
 観光案内の　人に
-聞いてみるのが　いいかもね▼
-後は……
+きいてみるのが　いいかもね▼
+あとは……
 自分で　探検よ！▼
 知らない　町に　着いたときの
 楽しみの　一番は　探検！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:25:47" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:34:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -633,10 +633,10 @@
 			Language="JPN_KANJI">
 			<Text>セッカシティ　ね……▼
 四季の　移ろい　というか
-冬景色が　好きな　町ね▼</Text>
+冬景色が　好きな　街ね▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:29:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:36:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -686,14 +686,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ソウリュウシティ！
-良い　町よ▼
-あたしが　聞いた　話だと
+良い　街よ▼
+あたしが　きいた　話だと
 市長の　シャガさんが▼
 ドラゴンタイプの　すごい
 技を　教えてくださるって！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:30:54" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:34:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1224,10 +1224,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>１０番道路　好きだったな
-なんだか　叙情的　で……</Text>
+なんだか　叙情的で……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:43:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:34:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1552,12 +1552,12 @@
 			<Text>１６番道路　ね……▼
 ライモンシティの　そばに
 あんな　森が　広がるなんて▽
-結構　意外　よね▼
+結構　意外よね▼
 迷いの森　って
 今は　どうなっているのかしら？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:47:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:34:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2041,12 +2041,12 @@
 			<Text>ちょっと　声が　遠いけど……▼
 ネジ山？▼
 納得！　ヤーコンさんの
-山　なのよねー▼
+山なのよねー▼
 カセキが　みつかる　場所って
 ママは　聞いてるわ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:55:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2148,11 +2148,11 @@
 			Language="JPN_KANJI">
 			<Text>チャンピオンロード！
 試練の道　ね！▼
-だいじょうぶ！　あなたには
+大丈夫！　あなたには
 ポケモンが　いてくれるでしょ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:56:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:35:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -2597,12 +2597,12 @@
 			<Text>バトルサブウェイ！
 まあ　チャレンジャーね！▼
 勝ち抜くのは　かなり
-大変　だけど▼
+大変だけど▼
 戦った　知識と　経験が
 あなたを　強くするはずよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:03:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:35:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2654,12 +2654,12 @@
 			<Text>ミュージカルホール！▼
 ふふふ……
 実は　ママも　通っていたのよ！▼
-ママは　みるほう　専門　だけどね
+ママは　みるほう　専門だけどね
 アクセサリーを　つけた▽
 ポケモンの　ダンスが　かわいくて！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:05:28" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2806,11 +2806,11 @@
 			Language="JPN_KANJI">
 			<Text>ユナイテッドタワー　か▼
 外国の　お友達と
-ポケモンを　交換　したなら▽
+ポケモンを　交換したなら▽
 ぜひ　行ってみなさいな！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:06:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3946,10 +3946,10 @@
 むかし　トレーナーから
 聞いた　記憶が　あるような……▼
 チャンピオンロードに　あった
-岩の　小部屋　だっけ？▼</Text>
+岩の　小部屋だっけ？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:34:06" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:36:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4289,10 +4289,10 @@
 			Language="JPN_KANJI">
 			<Text>セッカシティ　ね……▼
 四季の　移ろい　というか
-冬景色が　好きな　町ね▼</Text>
+冬景色が　好きな　街ね▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:39:59" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:36:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4343,14 +4343,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ソウリュウシティ！
-良い　町よ▼
-あたしが　聞いた　話だと
+良い　街よ▼
+あたしが　きいた　話だと
 市長の　シャガさんが▼
 ドラゴンタイプの　すごい
 技を　教えてくださるって！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:40:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:36:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7663,10 +7663,10 @@
 			<Text>海辺の洞穴　ね……▼
 大きな　岩を　いつの間にか
 波や　風……　そして　ポケモンが▽
-穴を　開けた　洞穴　なのよね▼</Text>
+穴を　開けた　洞穴なのよね▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T07:17:59" />
+				User="matsumiya:W00224"
+				Time="2011-09-13T13:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
