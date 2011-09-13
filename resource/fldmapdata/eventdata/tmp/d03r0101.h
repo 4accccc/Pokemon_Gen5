@@ -4,7 +4,6 @@
 
 #define DOOR_ID_D03R0101_D03R0201_EXIT01  0
 #define DOOR_ID_D03R0101_D04R0101_EXIT01  1
-#define DOOR_ID_D03R0101_D04R3401_EXIT01  2
 
 #endif //ZONE_D03R0101_EVD_H
 //このファイルは../data/d03r0101.mevから自動生成されました
@@ -26,6 +25,14 @@
 #define TR_BACKPACKERM_29                 12
 #define TR_BACKPACKERM_30                 13
 #define TR_BACKPACKERW_25                 14
+#define FLD_ITEM_54                       15
+#define FLD_ITEM_55                       16
+#define FLD_ITEM_56                       17
+#define FLD_ITEM_57                       18
+#define FLD_ITEM_58                       19
+#define FLD_ITEM_59                       20
+#define FLD_ITEM_60                       21
+#define FLD_ITEM_61                       22
 
 #endif //ZONE_D03R0101_EVC_H
 //このファイルは../data/d03r0101.mevから自動生成されました
