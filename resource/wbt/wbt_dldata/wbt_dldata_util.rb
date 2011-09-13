@@ -97,7 +97,7 @@ end
 #-------------------------
 # 文字列のパック(要確認)
 #-------------------------
-def str2pack( buffer, num )
+def str2pack_org( buffer, num )
   array = Array.new
   #
   j=0
@@ -122,6 +122,127 @@ def str2pack( buffer, num )
 #      p sprintf("utf : %x",buffer[i])
     end
   }
+  # サイズ注意
+  return array.pack("C*")
+#  return array.pack("S*")
+end
+
+#-------------------------
+# 文字列のパック(新)
+#-------------------------
+def str2pack( buffer, num )
+  array = Array.new	# 格納用
+  #
+  buffersize = buffer.size;
+  #
+  cnt = 0
+  j=0
+  len = num*2
+  # ループ
+  len.times{|i|
+    #-----------
+    # 念のため
+    #-----------
+    if(j >= len)
+      break;
+    end
+    #
+    #------------
+    # skipの処理
+    #------------
+    if(cnt > 0)
+      cnt = cnt-1
+      next;
+    end
+    #
+    #---------------------------------
+    # サイズ以上の場合=>0xffをセット
+    #---------------------------------
+    if(buffersize <= i)
+      array << 0xff
+      j = j+1
+      next;
+    end
+    
+    if(buffer[i] == nil)
+#      array << 0xffff;
+#      p sprintf("miss");
+    else
+      # 改行処理
+      # (0x0a, 0x00) => (0xfe, 0xff)に変換
+      if(buffer[i] == 0x0a)
+        # 念のため
+        if(i < len-2)
+           if(buffer[i+1] == 0x00)
+             array << 0xfe
+             array << 0xff
+             cnt = 1
+             j = j+2
+             next;
+          end
+        end
+      end
+      #
+      # 改ページ処理
+      # (0xbc, 0x25) => (0x00,0xf0,0x01,0xbe,0x00,0x00)に変換
+      if(buffer[i] == 0xbc)
+        # 念のため
+        if(i < len-2)
+           if(buffer[i+1] == 0x25)
+             # 足りない場合は出力しない
+             if(j <= len-8)
+               array << 0x00
+               array << 0xf0
+               array << 0x01
+               array << 0xbe
+               array << 0x00
+               array << 0x00
+#               p sprintf("page :%d,%d\n",j,len-8)
+               j = j+6
+             else
+               p sprintf("page error:%d,%d\n",j,len-8)
+             end
+             cnt = 1
+             next;
+          end
+        end
+      end
+      #
+      # 改ページ処理(行送り)
+      # (0xbd, 0x25) => (0x00,0xf0,0x00,0xbe,0x00,0x00)に変換
+      if(buffer[i] == 0xbd)
+        # 念のため
+        if(i < len-2)
+           if(buffer[i+1] == 0x25)
+             # 足りない場合は出力しない
+             if(j <= len-8)
+               array << 0x00
+               array << 0xf0
+               array << 0x00
+               array << 0xbe
+               array << 0x00
+               array << 0x00
+#               p sprintf("page :%d,%d\n",j,len-8)
+               j = j+6
+             else
+               p sprintf("page error:%d,%d\n",j,len-8)
+             end
+             cnt = 1
+             next;
+          end
+        end
+      end
+      array << buffer[i];
+      j = j+1
+#      p sprintf("utf : %x",buffer[i])
+    end
+  }
+  #
+  # サイズのチェック
+#  p sprintf("** size ** : %d,%d,(%d)",buffersize,j,num*2)
+  array[num*2-2] = 0xff;
+  array[num*2-1] = 0xff;
+  #
   # サイズ注意
   return array.pack("C*")
 #  return array.pack("S*")
