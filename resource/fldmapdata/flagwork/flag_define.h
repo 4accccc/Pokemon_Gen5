@@ -419,6 +419,8 @@
 #define FE_D04R2301_POKE13_GET_01          403 /* 0x0193 古代の城：ウルガモス捕獲フラグ */
 #define FE_D04R2301_POKE13_MEET_01         404 /* 0x0194 古代の城：ウルガモス遭遇フラグ */
 #define FE_C14R0201_TRADE_01               405 /* 0x0195 セイガイハシティ：ポケモン交換フラグ */
+#define FE_C07_NINJA_FIRSTTALK             406 /* 0x0196 セッカシティ：ダークトリニティ初回会話フラグ */
+#define FE_D02R0101_SWLEADER1_FIRST        407 /* 0x0197 ヤグルマの森：チェレン初回会話フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -756,6 +758,19 @@
 #define FV_C07_NINJA_02                    826 /* 0x033a セッカシティ：ダークトリニティ02 */
 #define FV_C07_NINJA_03                    827 /* 0x033b セッカシティ：ダークトリニティ03 */
 #define FV_D04R2301_POKE13_01              828 /* 0x033c 古代の城：ウルガモス */
+#define FV_FLDMONS_01                      829 /* 0x033d タマゲタケ（フィールドアイテム型）１匹目 */
+#define FV_FLDMONS_02                      830 /* 0x033e タマゲタケ（フィールドアイテム型）２匹目 */
+#define FV_FLDMONS_03                      831 /* 0x033f タマゲタケ（フィールドアイテム型）３匹目 */
+#define FV_FLDMONS_04                      832 /* 0x0340 タマゲタケ（フィールドアイテム型）４匹目 */
+#define FV_FLDMONS_05                      833 /* 0x0341 タマゲタケ（フィールドアイテム型）５匹目 */
+#define FV_FLDMONS_06                      834 /* 0x0342 タマゲタケ（フィールドアイテム型）６匹目 */
+#define FV_FLDMONS_07                      835 /* 0x0343 タマゲタケ（フィールドアイテム型）７匹目 */
+#define FV_FLDMONS_08                      836 /* 0x0344 タマゲタケ（フィールドアイテム型）８匹目 */
+#define FV_FLDMONS_09                      837 /* 0x0345 タマゲタケ（フィールドアイテム型）９匹目 */
+#define FV_FLDMONS_10                      838 /* 0x0346 タマゲタケ（フィールドアイテム型）１０匹目 */
+#define FV_FLDMONS_11                      839 /* 0x0347 タマゲタケ（フィールドアイテム型）１１匹目 */
+#define FV_FLDMONS_12                      840 /* 0x0348 タマゲタケ（フィールドアイテム型）１２匹目 */
+#define FV_N01R0501_BOSS_01                841 /* 0x0349 Ｎ城謁見の間フロア：N */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
