@@ -468,6 +468,8 @@ static BOOL debugMenuCallProc_PokewoodBriefing( POKEWOOD_FUNC_WORK * wk )
 	GMEVENT *new_event;
 	PKWD_BRIEFING_PARAM  *param = PKWD_BRIEFING_PARAM_Create( HEAPID_PROC, wk->gmSys, 0 );
 
+  param->audienceNum = 10;
+
 	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_BRIEFING_EVENT_Call, (void *)param );
 
