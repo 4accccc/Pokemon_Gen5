@@ -421,6 +421,7 @@
 #define FE_C14R0201_TRADE_01               405 /* 0x0195 セイガイハシティ：ポケモン交換フラグ */
 #define FE_C07_NINJA_FIRSTTALK             406 /* 0x0196 セッカシティ：ダークトリニティ初回会話フラグ */
 #define FE_D02R0101_SWLEADER1_FIRST        407 /* 0x0197 ヤグルマの森：チェレン初回会話フラグ */
+#define FE_FMISSION_EV_TOH_CLEAR           408 /* 0x0198 フェスミッションイベントクリアフラグ(タワーオブヘブンの鐘を鳴らした) */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
