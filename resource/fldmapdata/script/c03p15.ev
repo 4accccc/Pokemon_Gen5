@@ -93,11 +93,11 @@ EVENT_START   ev_scene_c03p15_first_01
   
   _OBJ_ANIME_WAIT()
   
+  _OBJ_DEL( C03P15_SWRIVAL_01 )
+  
   //äKíiSEçƒê∂
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
-  
-  _OBJ_DEL( C03P15_SWRIVAL_01 )
   
   //==================================//
   //c03p15ÇÃPOSñ≥å¯

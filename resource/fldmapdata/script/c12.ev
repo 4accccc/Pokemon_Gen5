@@ -909,6 +909,10 @@ EVENT_START		ev_scene_c12_gymclear_01
   
   _CAMERA_MOVE( 9688,0,970752,2588672,65551,48410624,24 )
   
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
   //========================================// 
   //C12のチェレン表示
   _FLAG_RESET( FV_C12_SWANLEADER1 )
@@ -916,9 +920,6 @@ EVENT_START		ev_scene_c12_gymclear_01
   _OBJ_ADD( C12_SWLEADER1_01 )
   //========================================//
   
-  //階段SE再生
-  _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
   
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   

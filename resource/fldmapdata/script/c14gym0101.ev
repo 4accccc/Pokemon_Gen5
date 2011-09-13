@@ -135,7 +135,7 @@ ev_leader8_btl:
   _BALLOONWIN_CLOSE()
 
   //================================================//
-  //ジムトレーナーの視線無効
+  //【仮】ジムトレーナーの視線無効
 /*
   _TRAINER_FLAG_SET( TRID_ELITEM_26 )
   _TRAINER_FLAG_SET( TRID_ELITEM_27 )
@@ -149,7 +149,6 @@ ev_leader8_btl:
   _FLAG_SET( SYS_FLAG_ELBOARD_C06GYMWIN )
   //================================================//
   //POSイベント進行
-  $WK_SCENE_W21_01 = 1    //21番水道イベント用
   $WK_SCENE_C14_SWLEADER8_01 = 1    //ジムの外に出た時のライバルイベント用
   //================================================//
 

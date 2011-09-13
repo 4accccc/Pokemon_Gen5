@@ -518,18 +518,18 @@ _TALK_OBJ_START()
 		_BALLOONWIN_TALKOBJ_MSG( msg_c13_swplazmam1_04 )
 		_MSGWIN_CLOSE()
 		
-		//【仮】戦闘開始
-		//_TRAINER_BTL_SET()
+		//戦闘開始
+		_TRAINER_BTL_SET(TRID_SWPLAZMAM_34,0)
 		
 		//敗戦チェック
-  		//_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-  		/*
+  	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  	
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 			_TRAINER_WIN()	//勝利処理へ
 		ELSE
 			_TRAINER_LOSE()	//敗北処理へ
 		ENDIF
-		*/
+		
 		
 		//ホミカ・ライバルの向きを右向きに直す
 		_OBJ_ANIME( C13_SWRIVAL_01, anm_dir_r )

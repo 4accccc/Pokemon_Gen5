@@ -85,9 +85,8 @@ EVENT_START   ev_pos_c03r0303_cleaningm_01
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
-  //トレーナー戦呼び出し【仮】トレーナーIDは仮のもの
-  //_TRAINER_BTL_SET( schoolb_14, 0 ) 
-  _TRAINER_BTL_SET( TRID_GENTLE_05, 0 ) 
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SCHOOLB_14, 0 ) 
 
   //結果チェック
   _CALL ev_battle_check

@@ -262,12 +262,13 @@ EVENT_START		ev_pos_c05_plazma_sage_01
   _FLAG_RESET(FV_C05_SAGE6_01)
   //========================================//
   
-  //七賢人動作OBJ生成
-  _OBJ_ADD(C05_SAGE6_01)
-  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
+  
+  //七賢人動作OBJ生成
+  _OBJ_ADD(C05_SAGE6_01)
+  
   
   //アニメ：七賢人1歩下へ
   _OBJ_ANIME( C05_SAGE6_01, anm_walk_d )
@@ -436,12 +437,12 @@ ev_c05_sage6_btl:
   _OBJ_ANIME( C05_SAGE6_01, anm_walk_u )
   _OBJ_ANIME_WAIT()
   
+  //ロットの動作OBJ削除
+  _OBJ_DEL(C05_SAGE6_01)
+  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
-  
-  //ロットの動作OBJ削除
-  _OBJ_DEL(C05_SAGE6_01)
   
   //アニメ：主人公移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_pleyer_in_pokehouse )

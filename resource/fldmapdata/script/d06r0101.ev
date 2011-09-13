@@ -131,7 +131,10 @@ EVENT_START   ev_pos_d06r0101_boss_01
   _MSGWIN_CLOSE()
 
   //遠ざかっていく演出
-  _SE_PLAY( SEQ_SE_KAIDAN )   //【仮】階段SE再生？
+  
+  //階段SE
+  _SE_PLAY( SEQ_SE_KAIDAN ) 
+  _SE_WAIT()
   _OBJ_DEL( D06R0101_BOSS_01 )
 
   //========================================//

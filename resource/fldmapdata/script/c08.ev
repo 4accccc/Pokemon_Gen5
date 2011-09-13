@@ -177,9 +177,10 @@ EVENT_START   ev_scene_c08_guide_01
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
   //シャガ動作OBJ表示
   _OBJ_ADD( C08_SWLEADER7_01 )
-  _SE_WAIT()
   
   //アニメ：シャガジムから出る
   _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 405, 145, FORCE_TYPE_NOT, 8, DIR_LR)

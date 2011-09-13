@@ -149,14 +149,13 @@ EVENT_START   ev_c06r0201_swleader6_01
       //ベル表示
       _FLAG_RESET( FV_C06R0201_SWBELL_01 )
       //========================================//
-      _OBJ_ADD( C06R0201_SWBELL_01 )  //ベル登場
-
-      //【仮】階段SE（SEは仮です）
+      
+      //階段SE
       _SE_PLAY( SEQ_SE_KAIDAN )
-
-      _TIME_WAIT( 8 )
       _SE_WAIT()
-
+      
+      _OBJ_ADD( C06R0201_SWBELL_01 )  //ベル登場
+      
       //アニメ：主人公振り向き
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
       _OBJ_ANIME( C06R0201_HAKASE2_01, anm_common_turn_d )

@@ -85,12 +85,12 @@ EVENT_START   ev_scene_c08r0101_legend_01
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 9, 12, FORCE_TYPE_NOT, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   
+  //シャガ動作モデル非表示
+  _OBJ_DEL(C08R0101_SWLEADER7_01)
+  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
-  
-  //シャガ動作モデル非表示
-  _OBJ_DEL(C08R0101_SWLEADER7_01)
   
   //アニメ：主人公シャガの前に移動
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 9, 14, FORCE_TYPE_NOT, 8, DIR_LR)

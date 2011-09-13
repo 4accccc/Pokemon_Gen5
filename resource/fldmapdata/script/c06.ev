@@ -187,7 +187,7 @@ EVENT_START   ev_pos_c06_hakase_01
   _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_04, C06_HAKASE2_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
-  //アイテム入手：バトルレコーダー
+  //アイテム入手：わざマシン入手
   _ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN54, 1 )
 
   //アララギ：みねうちは　てがけん　して
@@ -309,14 +309,16 @@ EVENT_START   ev_scene_c06_swleader6_01
   _OBJ_ADD( C06_SWLEADER6_01 )
   _OBJ_ADD( C06_HAKASE2_01 )
 
-  //【仮】階段SE（SEは仮です）
-  _SE_PLAY( SEQ_SE_KAIDAN )   //【仮】階段SE再生？
+  //階段SE
+  _SE_PLAY( SEQ_SE_KAIDAN ) 
+  _SE_WAIT()
+  
   //フウロと博士再配置（表示）
   _OBJ_POS_CHANGE( C06_SWLEADER6_01, 78, 0, 268, DIR_DOWN )
   _OBJ_POS_CHANGE( C06_HAKASE2_01, 84, 0, 279, DIR_UP )
 
   _TIME_WAIT( 15 )
-  _SE_WAIT()
+  
 
   //アニメ：フウロ移動
   _OBJ_ANIME_AUTO( C06_SWLEADER6_01, 78, 270, FORCE_TYPE_NPC, 8, DIR_UD )

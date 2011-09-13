@@ -50,13 +50,13 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 7, 20, FORCE_TYPE_NPC, 8, DIR_LR)
   
   _TIME_WAIT(16)
-
-  //フィールド上にライバル配置
-  _OBJ_ADD_EX( 7, 25, DIR_UP, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
+
+  //フィールド上にライバル配置
+  _OBJ_ADD_EX( 7, 25, DIR_UP, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
   
   _OBJ_ANIME_WAIT()
   
@@ -122,12 +122,12 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
+  //ライバル動作OBJ消す
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
-  
-  //ライバル動作OBJ消す
-  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
   
   _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_u )
   _OBJ_ANIME_WAIT()

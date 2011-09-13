@@ -708,15 +708,15 @@ EVENT_START   ev_c04_swheroine_01
     _OBJ_ANIME_AUTO( C04_TBOSS_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
     _TIME_WAIT( 8 )
     _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_u )  //ノボリ待機
-    _SE_PLAY( SEQ_SE_KAIDAN )   //【仮】階段SE再生？
     _OBJ_DEL( C04_TBOSS_01 )
-    _SE_WAIT()
 
     //アニメ：ノボリ退場
     _OBJ_ANIME_AUTO( C04_TBOSSBL_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
     _TIME_WAIT( 8 )
-    _SE_PLAY( SEQ_SE_KAIDAN )   //【仮】階段SE再生？
     _OBJ_DEL( C04_TBOSSBL_01 )
+    
+    //階段SE
+    _SE_PLAY( SEQ_SE_KAIDAN ) 
     _SE_WAIT()
 
     _TIME_WAIT( 15 )
