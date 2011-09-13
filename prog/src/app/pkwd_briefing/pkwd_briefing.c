@@ -25,6 +25,7 @@
 #include "title/startmenu.h"
 #include "test/performance.h"
 #include "app/pkwd_briefing.h"
+#include "infowin/infowin.h"
 #include "sound/pm_sndsys.h"
 #include "poke_tool/monsno_def.h"
 
@@ -68,11 +69,14 @@
 ///[PUSH START BUTTON]の点滅間隔
 #define PUSH_TIMER_WAIT     (45)
 
+//情報ステータスバーパレット
+#define INFOWIN_PAL_NO  ( 0x0f ) 
+
 
 ///タイトルロゴBGのBGプライオリティ
 enum{
-  BGPRI_MSG = 0,        ///<
-  BGPRI_TITLE_LOGO = 2, ///<
+  BGPRI_MSG = 1,        ///<
+  BGPRI_TITLE_LOGO = 0, ///<
   BGPRI_TITLE_BACK = 3, ///<
   BGPRI_BRIEF1 = 0,       ///<
   BGPRI_BRIEF2 = 1,       ///<
@@ -81,13 +85,14 @@ enum{
 };
 
 enum{
-  FRAME_BRIEF1 = GFL_BG_FRAME1_M,   ///< メイン画面メッセージ１
-  FRAME_BRIEF2 = GFL_BG_FRAME2_M,   ///< メイン画面メッセージ２
-  FRAME_BKGR   = GFL_BG_FRAME3_M,   ///< メイン画面背景「Develped by GameFreak」
-  FRAME_MSG    = GFL_BG_FRAME1_S,   ///< メッセージフレーム
-  FRAME_LOGO   = GFL_BG_FRAME3_S,   ///< タイトルロゴのBGフレーム
-  FRAME_BACK   = GFL_BG_FRAME2_S,   ///< チェックの背景BG
+  FRAME_BRIEF1  = GFL_BG_FRAME1_M,   ///< メイン画面メッセージ１
+  FRAME_BRIEF2  = GFL_BG_FRAME2_M,   ///< メイン画面メッセージ２
+  FRAME_BKGR    = GFL_BG_FRAME3_M,   ///< メイン画面背景「Develped by GameFreak」
+  FRAME_MSG     = GFL_BG_FRAME1_S,   ///< メッセージフレーム
+  FRAME_LOGO    = GFL_BG_FRAME3_S,   ///< タイトルロゴのBGフレーム
+  FRAME_INFOWIN = GFL_BG_FRAME2_S,   ///< チェックの背景BG
 };
+
 
 
 /// シーケンスID定義
@@ -109,6 +114,12 @@ enum{
   OBJ_RES_CEL,
   OBJ_RES_MAX,
 };
+
+// ポケウッド観客
+enum{
+  BTLV_INPUT_AUDIENCE_MAX = 22,
+};
+
 
 
 #define TITLE_RES_ARCID (ARCID_TITLE)
@@ -182,6 +193,16 @@ typedef struct{
   u32                       clres[OBJ_RES_MAX];
 }OAM_CONTROL;
 
+//ポケウッド観客
+typedef struct{
+  u32                   audience_charaID;		// objcharIDを流用
+  u32                   audience_plttID;
+  u32                   audience_cellID;
+  GFL_CLUNIT*           audience_clunit;
+  GFL_CLWK*             audience_wk[ BTLV_INPUT_AUDIENCE_MAX ];
+  ARCHANDLE                *aHandle;
+}AUDIENCE_CONTROL;
+
 typedef struct {
   PKWD_BRIEFING_PARAM *param;
   u16           seq;
@@ -191,6 +212,7 @@ typedef struct {
   G2D_CONTROL   CG2d;
   G3D_CONTROL   CG3d;
   OAM_CONTROL   COam;
+  AUDIENCE_CONTROL AOam;
   
   u32           totalWait;
   int           voiceIndex;
@@ -205,9 +227,9 @@ typedef struct {
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-GFL_PROC_RESULT PkwdBriefingInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-GFL_PROC_RESULT PkwdBriefingMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-GFL_PROC_RESULT PkwdBriefingEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+GFL_PROC_RESULT PkwdBriefingProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+GFL_PROC_RESULT PkwdBriefingProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
 //==============================================================================
 //  外部関数宣言
@@ -220,9 +242,9 @@ GFL_PROC_RESULT PkwdBriefingEnd( GFL_PROC * proc, int * seq, void * pwk, void * 
 //  PROC
 //--------------------------------------------------------------
 const GFL_PROC_DATA PkwdBriefingProcData = {
-  PkwdBriefingInit,
-  PkwdBriefingMain,
-  PkwdBriefingEnd,
+  PkwdBriefingProcInit,
+  PkwdBriefingProcMain,
+  PkwdBriefingProcEnd,
 };
 
 //==============================================================================
@@ -258,6 +280,12 @@ static void initLcdWindow( void );
 static void _briefing_print( G2D_CONTROL *CG2d, int page, int sex );
 static BOOL _next_page_check( PKWD_BRIEFING_WORK *tw );
 
+static void btlv_init_audience_disp( PKWD_BRIEFING_WORK *pbw, HEAPID heapID );
+static  void  BTLV_INPUT_DeleteAudienceObj( AUDIENCE_CONTROL *AOam );
+
+
+FS_EXTERN_OVERLAY( battle_view );
+
 //--------------------------------------------------------------
 /**
  * @brief   タイトル画面初期化
@@ -270,7 +298,7 @@ static BOOL _next_page_check( PKWD_BRIEFING_WORK *tw );
  * @retval  
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT PkwdBriefingInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+GFL_PROC_RESULT PkwdBriefingProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   PKWD_BRIEFING_WORK *tw;
   PKWD_BRIEFING_PARAM *param = (PKWD_BRIEFING_PARAM *)pwk;
@@ -283,6 +311,8 @@ GFL_PROC_RESULT PkwdBriefingInit( GFL_PROC * proc, int * seq, void * pwk, void *
   tw->param  = param;
 
   tw->sex    = MyStatus_GetMySex(tw->param->mystatus);
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(battle_view));
 
   return GFL_PROC_RES_FINISH;
 }
@@ -300,7 +330,7 @@ static void _key_check( PKWD_BRIEFING_WORK *tw )
   // ゲーム開始
   if(  GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK){
     tw->seq  = SEQ_VOICE_PLAY;
-    GFL_BG_SetVisible(FRAME_BACK, VISIBLE_OFF);
+    GFL_BG_SetVisible(FRAME_INFOWIN, VISIBLE_ON);
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
 //    PMSND_FadeOutBGM( 4 );
 
@@ -390,7 +420,7 @@ static void _debug_blend(void)
  * @retval  GFL_PROC_RESULT   
  */
 //=============================================================================================
-GFL_PROC_RESULT PkwdBriefingMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   PKWD_BRIEFING_WORK* tw = mywk;
   u8 test_buff;
@@ -411,10 +441,12 @@ GFL_PROC_RESULT PkwdBriefingMain( GFL_PROC * proc, int * seq, void * pwk, void *
     setupG2Dcontrol(&tw->CG2d, tw->param->scenario_no, tw->heapID);
     setupG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
     setupOAMcontrol(&tw->COam, tw->heapID);
-
+    btlv_init_audience_disp( tw, tw->heapID );
     // 1ページ目の文字列を描画
     _briefing_print( &tw->CG2d, 0, tw->sex );
-
+    //情報ステータスバー初期化
+    INFOWIN_Init( GFL_BG_FRAME2_S, INFOWIN_PAL_NO, tw->param->gameData , tw->heapID );
+    GFL_NET_ReloadIconTopOrBottom( TRUE, tw->heapID );
 
     // FADEIN設定
     GFL_FADE_SetMasterBrightReq
@@ -475,6 +507,8 @@ GFL_PROC_RESULT PkwdBriefingMain( GFL_PROC * proc, int * seq, void * pwk, void *
 
   case SEQ_END:
     // 解放
+    INFOWIN_Exit();
+    BTLV_INPUT_DeleteAudienceObj( &tw->AOam );
     releaseOAMcontrol(&tw->COam);
     releaseG3Dcontrol(&tw->CG3d);
     releaseG2Dcontrol(&tw->CG2d);
@@ -486,7 +520,9 @@ GFL_PROC_RESULT PkwdBriefingMain( GFL_PROC * proc, int * seq, void * pwk, void *
     return GFL_PROC_RES_FINISH;
   }
 
+  
   return GFL_PROC_RES_CONTINUE;
+
 }
 
 
@@ -502,12 +538,14 @@ GFL_PROC_RESULT PkwdBriefingMain( GFL_PROC * proc, int * seq, void * pwk, void *
  * @retval  GFL_PROC_RESULT   
  */
 //=============================================================================================
-GFL_PROC_RESULT PkwdBriefingEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+GFL_PROC_RESULT PkwdBriefingProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   PKWD_BRIEFING_WORK * tw = mywk;
 
   GFL_PROC_FreeWork(proc);
   GFL_HEAP_DeleteHeap(HEAPID_PKWD_BRIEFING);
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(battle_view));
 
 
   return GFL_PROC_RES_FINISH;
@@ -542,9 +580,9 @@ static void initIO(void)
 //  VRAM
 //==============================================================================
 static const GFL_DISP_VRAM vramBank = {
-  GX_VRAM_SUB_BG_128_C,          // メイン2DエンジンのBG
+  GX_VRAM_BG_128_D,               // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_NONE,         // メイン2DエンジンのBG拡張パレット
-  GX_VRAM_SUB_BG_32_H,            // サブ2DエンジンのBG
+  GX_VRAM_SUB_BG_128_C,           // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,     // サブ2DエンジンのBG拡張パレット
   GX_VRAM_OBJ_NONE,               // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,        // メイン2DエンジンのOBJ拡張パレット
@@ -593,7 +631,6 @@ static void MainFunc(PKWD_BRIEFING_WORK* tw)
   tw->bef_vcnt  = now_vcnt;
 
   mainSystem(&tw->CSys, tw->heapID);
-  mainG2Dcontrol(&tw->CG2d, tw->heapID);
 
   //処理落ちした場合は１シンク進める
   do
@@ -604,6 +641,7 @@ static void MainFunc(PKWD_BRIEFING_WORK* tw)
 
   mainG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
   mainOAMcontrol(&tw->COam, tw->heapID);
+  INFOWIN_Update();
 }
 
 
@@ -726,27 +764,20 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
     static const GFL_BG_BGCNT_HEADER sub_msg_frame = {  //サブ画面BGフレーム1
       0, 0, 0x800, 0,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, 0x04000,
+      GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, 0x04000,
       GX_BG_EXTPLTT_01, BGPRI_MSG, 0, 0, FALSE
     };
-    static const GFL_BG_BGCNT_HEADER sub_logo_frame = { //サブ画面BGフレーム3
+    static const GFL_BG_BGCNT_HEADER sub_logo_frame = { //サブ画面BGフレーム2
       0, 0, 0x800, 0,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-      GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, 0x8000,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x04000, 0x4000,
       GX_BG_EXTPLTT_01, BGPRI_TITLE_LOGO, 0, 0, FALSE
     };
-    static const GFL_BG_BGCNT_HEADER sub_back_frame = { //サブ画面BGフレーム2
-      0, 0, 0x800, 0,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-      GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x04000, 0x8000,
-      GX_BG_EXTPLTT_01, BGPRI_TITLE_BACK, 0, 0, FALSE
-    };
-    GFL_BG_SetBGControl( FRAME_BRIEF1, &main_brief1_frame, GFL_BG_MODE_TEXT );
-    GFL_BG_SetBGControl( FRAME_BRIEF2, &main_brief2_frame, GFL_BG_MODE_TEXT );
-    GFL_BG_SetBGControl( FRAME_BKGR,   &main_bkgr_frame,   GFL_BG_MODE_TEXT );
-    GFL_BG_SetBGControl( FRAME_MSG,    &sub_msg_frame,     GFL_BG_MODE_TEXT );
-    GFL_BG_SetBGControl( FRAME_LOGO,   &sub_logo_frame,    GFL_BG_MODE_TEXT );
-    GFL_BG_SetBGControl( FRAME_BACK,   &sub_back_frame,    GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( FRAME_BRIEF1,  &main_brief1_frame, GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( FRAME_BRIEF2,  &main_brief2_frame, GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( FRAME_BKGR,    &main_bkgr_frame,   GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( FRAME_MSG,     &sub_msg_frame,     GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( FRAME_INFOWIN, &sub_logo_frame,    GFL_BG_MODE_TEXT );
   }
   //メイン画面背景設定
   {
@@ -769,31 +800,10 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
     GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_OFF );
     GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_OFF );
   }
-  //グラフィックデータロード(LOGO)
-  {
-  GFL_ARC_UTIL_TransVramBgCharacter(
-    TITLE_RES_ARCID, TITLE_RES_LOGO_NCGR, FRAME_LOGO, 0, 0x8000, 1, heapID);
-  GFL_ARC_UTIL_TransVramScreen(
-    TITLE_RES_ARCID, TITLE_RES_LOGO_NSCR, FRAME_LOGO, 0, 0, 1, heapID);
-  GFL_ARC_UTIL_TransVramPalette(
-    TITLE_RES_ARCID, TITLE_RES_LOGO_NCLR, PALTYPE_SUB_BG, 0, 0, heapID);
-  
-    GFL_BG_LoadScreenReq( FRAME_LOGO );
-    GFL_BG_SetVisible(FRAME_LOGO, VISIBLE_OFF);
-  }
-
-  // グラフィックデータロード（BACK)
-  {
-    GFL_ARC_UTIL_TransVramScreen(
-      TITLE_RES_ARCID, TITLE_RES_BACK_NSCR, FRAME_BACK, 0, 0, 1, heapID);
-    GFL_BG_SetVisible( FRAME_BACK, VISIBLE_ON );
-  }
-
-  //メッセージ関連作成(MSG)
   {
     int i;
-    GFL_BG_FillCharacter( FRAME_MSG, 0x00, 1, 0 );
-    GFL_BG_FillScreen( FRAME_MSG, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+//    GFL_BG_FillCharacter( FRAME_MSG, 0x00, 1, 0 );
+//    GFL_BG_FillScreen( FRAME_MSG, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 
     //BMPWIN作成
     CG2d->bmpwin[0] = GFL_BMPWIN_Create( FRAME_BRIEF1, BRIEF_BMPWIN_X, BRIEF_BMPWIN_Y, 
@@ -834,18 +844,6 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
   }
 }
 
-static void mainG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
-{
-  GFL_BG_SetVisible(FRAME_MSG, FALSE);
-  GFL_BG_SetScrollReq( FRAME_BACK, GFL_BG_SCROLL_X_SET, CG2d->scrol_work/2 );
-
-  // BLACKは右にスクロール・WHITEは左にスクロール
-  if(GetVersion()==VERSION_B2){
-    CG2d->scrol_work++;
-  }else{
-    CG2d->scrol_work--;
-  }
-}
 
 static void releaseG2Dcontrol(G2D_CONTROL* CG2d)
 {
@@ -1076,13 +1074,14 @@ static void setupOAMcontrol(OAM_CONTROL* COam, HEAPID heapID)
     add.bgpri   = 0;
     add.softpri = 0;
 
+#if 0
     COam->clwk    = GFL_CLACT_WK_Create( COam->clunit,
                                        COam->clres[OBJ_RES_CHR],
                                        COam->clres[OBJ_RES_PAL],
                                        COam->clres[OBJ_RES_CEL],
                                        &add, CLSYS_DEFREND_SUB, heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( COam->clwk, TRUE );
-  
+#endif  
   }
   
 
@@ -1305,3 +1304,280 @@ static BOOL _next_page_check( PKWD_BRIEFING_WORK *tw )
   }
   return GFL_STR_CompareBuffer(tw->CG2d.expandbuf[index], tw->CG2d.endkeyword);
 }
+
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// 下画面観客
+//-------------------------------------------------------------------------------------------------
+
+static void SetAudienceOnOff( AUDIENCE_CONTROL *AOam, int no, BOOL flag );
+static void SetAudienceCondition( AUDIENCE_CONTROL *AOam, const s32 no, const s32 mode );
+
+//--------------------------------------------------------------
+/**
+ * @brief   ポケウッド画面観客OBJ表示
+ */
+//--------------------------------------------------------------
+// 観客の情報
+// (x,y,pal,0)
+static const u8 audience_info[][4]={
+  { 32,  104, 3, 0, },
+  { 80,  104, 3, 0, },
+  { 128, 104, 3, 0, },
+  { 176, 104, 3, 0, },
+  { 224, 104, 3, 0, },
+  {   8, 136, 2, 0, },
+  {  56, 136, 2, 0, },
+  { 104, 136, 2, 0, },
+  { 152, 136, 2, 0, },
+  { 200, 136, 2, 0, }, // 10
+  { 248, 136, 2, 0, },
+  { 32,  168, 1, 0, },
+  { 80,  168, 1, 0, },
+  { 128, 168, 1, 0, },
+  { 176, 168, 1, 0, },
+  { 224, 168, 1, 0, },
+  {   8, 200, 0, 0, },
+  {  56, 200, 0, 0, },
+  { 104, 200, 0, 0, },
+  { 152, 200, 0, 0, }, // 20
+  { 200, 200, 0, 0, },
+  { 248, 200, 0, 0, },
+};
+
+// 基本情報
+static const GFL_CLWK_DATA audience_param[] =
+{
+  {
+    0, 0,     //x, y
+    0, 2, 0,  //アニメ番号、優先順位、BGプライオリティ
+  },
+};
+
+//--------------------------------------------------------------
+/**
+ * @brief   ポケウッド画面観客OBJ初期化
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_CreateAudienceObj( AUDIENCE_CONTROL *AOam, HEAPID heapID )
+{
+  u8  col;
+  int i;
+  
+  AOam->aHandle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, heapID );
+
+  AOam->audience_clunit  = GFL_CLACT_UNIT_Create( BTLV_INPUT_AUDIENCE_MAX, 1, heapID );
+
+  // リソース転送
+  AOam->audience_charaID = GFL_CLGRP_CGR_Register( AOam->aHandle, NARC_battgra_wb_pkwd_obj_NCGR, 0, CLSYS_DRAW_SUB, heapID );
+  AOam->audience_cellID  = GFL_CLGRP_CELLANIM_Register( AOam->aHandle, NARC_battgra_wb_pkwd_obj_NCER, NARC_battgra_wb_pkwd_obj_NANR, heapID );
+  AOam->audience_plttID  = GFL_CLGRP_PLTT_RegisterEx( AOam->aHandle, NARC_battgra_wb_pkwd_obj_NCLR, CLSYS_DRAW_SUB, 0, 0, 4, heapID );
+  
+  //
+  // clwkのセット
+  for( i = 0 ; i < BTLV_INPUT_AUDIENCE_MAX ; i++ )
+  {
+    // 左上側から順に埋まっていく
+    GFL_CLWK_DATA param = audience_param[0];
+    param.pos_x = audience_info[i][0];
+    param.pos_y = audience_info[i][1];
+    param.softpri = 0x80-i;    // 変更
+    AOam->audience_wk[ i ] = GFL_CLACT_WK_Create( AOam->audience_clunit, AOam->audience_charaID,
+                                                 AOam->audience_plttID, AOam->audience_cellID,
+                                                 &param, CLSYS_DEFREND_SUB, heapID );
+    //
+    GFL_CLACT_WK_SetAutoAnmFlag( AOam->audience_wk[ i ], TRUE );
+    GFL_CLACT_WK_SetDrawEnable(  AOam->audience_wk[ i ], TRUE );
+    
+    // カラーをセット
+    col = audience_info[i][2];
+    GFL_CLACT_WK_SetPlttOffs( AOam->audience_wk[ i ], col, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ポケウッド画面観客OBJ破棄
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_DeleteAudienceObj( AUDIENCE_CONTROL *AOam )
+{
+  int i;
+  
+  for( i = 0 ; i < BTLV_INPUT_AUDIENCE_MAX ; i++ )
+  {
+    if(AOam->audience_wk[i]){
+      GFL_CLACT_WK_Remove( AOam->audience_wk[ i ] );
+      AOam->audience_wk[i] = 0;
+    }
+  }
+  // CGRは他で破棄される
+  GFL_CLGRP_CELLANIM_Release( AOam->audience_cellID );
+  GFL_CLGRP_PLTT_Release( AOam->audience_plttID );
+
+  if(AOam->audience_clunit!=NULL){
+    GFL_CLACT_UNIT_Delete( AOam->audience_clunit );
+  }
+
+  GFL_ARC_CloseDataHandle( AOam->aHandle );
+}
+
+
+static int _get_audienceBit( u32 work, int index )
+{
+  return (work>>index)&1;
+}
+
+static void _set_audienceBit( u32 *work, int index )
+{
+  *work |= (1<<index);
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客人数を設定する
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
+static u32 set_audience_appear( AUDIENCE_CONTROL *AOam, int audienceNum )
+{
+  int count=0,no,i;
+  u32 audienceBit = 0;
+  
+  while(count!=audienceNum){
+    no = GFUser_GetPublicRand( BTLV_INPUT_AUDIENCE_MAX );
+    if(_get_audienceBit(audienceBit, no)==0){
+      SetAudienceOnOff( AOam, no, TRUE );
+      SetAudienceCondition( AOam, no, 0 );
+      _set_audienceBit( &audienceBit, no );
+      count++;
+      OS_Printf("audience %d=on\n", _get_audienceBit(audienceBit, no));
+    }
+  }
+
+  for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
+    if(_get_audienceBit(audienceBit, i)==0){
+      SetAudienceOnOff( AOam, no, FALSE );
+      SetAudienceCondition( AOam, i, 0 );
+      OS_Printf("audience %d=off\n", _get_audienceBit(audienceBit, i));
+    }
+  }
+  return audienceBit;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   観客の処理(初期化まとめ)
+ */
+//--------------------------------------------------------------
+static void btlv_init_audience_disp( PKWD_BRIEFING_WORK *pbw, HEAPID heapID )
+{
+  // OBJリソース転送・登録
+  BTLV_INPUT_CreateAudienceObj( &pbw->AOam, heapID );
+  
+  // 観客表示・非表示設定
+  pbw->param->audienceBit = set_audience_appear( &pbw->AOam, pbw->param->audienceNum );
+  
+  // BG0非表示：操作パネル => 今回は表示(仮対応)
+  // BG1表示：上書きして使用
+  // BG2非表示：メッセージ、情報パネル
+  // BG3非表示：背景(アフィン)
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+  // 念のため
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  //
+  // (BG)リソース転送
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( pbw->AOam.aHandle, NARC_battgra_wb_pkwd_movie_c_NCGR,
+                                          GFL_BG_FRAME1_S, 0, 32*32, FALSE, heapID );
+  GFL_ARCHDL_UTIL_TransVramScreen( pbw->AOam.aHandle, NARC_battgra_wb_pkwd_movie02_c_NSCR,	// test
+                                          GFL_BG_FRAME1_S, 0, 0, FALSE, heapID );
+  GFL_ARCHDL_UTIL_TransVramPalette( pbw->AOam.aHandle, NARC_battgra_wb_pkwd_movie_c_NCLR,
+                                          PALTYPE_SUB_BG, 0, 7*0x20, heapID );
+  // 念のため
+//  SetupSetScroll( pbw->AOam, BG_NO_FRAME, 0, 0, BG_VISIBLE_OFF, BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_OFF );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	表示・非表示の設定
+ *
+ * @param   AOam		
+ * @param   no		
+ * @param   flag		
+ */
+//----------------------------------------------------------------------------------
+static void SetAudienceOnOff( AUDIENCE_CONTROL *AOam, int no, BOOL flag )
+{
+  //--------------
+  // 表示/非表示
+  //--------------
+  GFL_CLACT_WK_SetDrawEnable( AOam->audience_wk[ no ], flag );
+  
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   観客の切り替え
+ *
+ * @param	PKWD_BRIEFING_WORK	*biw
+ * @param	const BOOL		(TRUE:表示、FALSE:非表示)
+ * @param	const s32		番号(左上から(0 - BTLV_INPUT_AUDIENCE_MAX-1))
+ * @param	const s32		種類(AUDIENCE_SEQ_*)
+ */
+//--------------------------------------------------------------
+static void SetAudienceCondition( AUDIENCE_CONTROL *AOam, const s32 no, const s32 mode )
+{
+  u8   col;
+  s32  seq;
+  
+  //----------------------
+  // シーケンスの切り替え
+  //----------------------
+  seq = mode;
+  //
+  GFL_CLACT_WK_SetAnmSeq(      AOam->audience_wk[ no ], seq );
+  GFL_CLACT_WK_SetAutoAnmFlag( AOam->audience_wk[ no ], TRUE );
+  // パレット変更
+  col = audience_info[no][2];
+  GFL_CLACT_WK_SetPlttOffs( AOam->audience_wk[ no ], col, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+}
+
+
+//=============================================================================================
+//  観客の表示テスト
+//=============================================================================================
+static void debug_btlv_audience( AUDIENCE_CONTROL *AOam )
+{
+  int  i;
+  BOOL bflg=FALSE;
+  
+  // 左
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
+    for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
+      bflg = TRUE;
+      // セット
+      SetAudienceOnOff(AOam, i, bflg);
+      SetAudienceCondition( AOam, i, i%9 );
+    }
+  }
+  // 右
+  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
+    for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
+      bflg = TRUE;
+      if(i%2){
+        bflg = FALSE;
+      }
+      // セット
+      SetAudienceOnOff(AOam, i, bflg);
+      SetAudienceCondition( AOam, i, i%9 );
+    }
+  }
+}
+

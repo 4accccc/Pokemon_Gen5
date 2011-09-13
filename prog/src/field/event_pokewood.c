@@ -665,6 +665,7 @@ static void _delete_pkwd_count_param( PKWD_COUNT_PARAM *param )
 static void _init_pkwd_briefing_param( PKWD_BRIEFING_PARAM *param, BATTLE_SETUP_PARAM *bsp, MYSTATUS *mystatus )
 {
   param->scenario_no  = bsp->pokewoodSenario;
+  param->audienceNum  = bsp->audience_num;
   param->mystatus     = mystatus;
 }
 
@@ -757,6 +758,8 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
 #ifdef PM_DEBUG
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
       (*seq) = PW_SHOW_SEQ_CALL_BATTLE;
+    }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
+      (*seq) = PW_SHOW_SEQ_BRIEFING_APP;
     }else{
       _init_pkwd_count_param( &prew->pkwd_count_param, pbew->bp );
       GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_announce), &PkwdCountProcData, &prew->pkwd_count_param );
