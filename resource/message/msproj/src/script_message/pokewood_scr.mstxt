@@ -1342,11 +1342,11 @@ msg_pw_theater_tes_04</Comment>
 		Label="msg_pw_theater_tes_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:Undefined ]』を
+			<Text>『[Name:PokewoodScenarioName ]』を
 見てみるのね？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-13T11:54:42" />
+				User="tamada:W00253"
+				Time="2011-09-13T04:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1354,11 +1354,11 @@ msg_pw_theater_tes_04</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:Undefined ]』を
+			<Text>『[Name:PokewoodScenarioName ]』を
 見てみるのね？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-13T11:54:52" />
+				User="tamada:W00253"
+				Time="2011-09-13T04:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
