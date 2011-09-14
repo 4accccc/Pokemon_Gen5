@@ -1895,16 +1895,16 @@ Nの　気持ちは　わかりません▼
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なんだよ▼
-にげた　プラズマだんが
+逃げた　プラズマ団が
 おきざりに　した　ポケモンが▽
 けっこう　いるんだってよ▼
 で　オレも
-もちぬしさがしを　てつだうのさ▼
-オマエ　せっかく　きたんだから
-オレと　しょうぶ　していけよ！</Text>
+持ち主探しを　手伝うのさ▼
+オマエ　せっかく　来たんだから
+オレと　勝負していけよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:17:39" />
+				Time="2011-09-14T10:01:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1945,10 +1945,10 @@ Nの　気持ちは　わかりません▼
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『なあ　[Name:TrainerName ]
-オレと　しょうぶ　していけよ！</Text>
+オレと　しょうぶ　しろ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:19:28" />
+				Time="2011-09-14T10:02:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1957,10 +1957,10 @@ Nの　気持ちは　わかりません▼
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なあ　[Name:TrainerName ]
-オレと　しょうぶ　していけよ！</Text>
+オレと　勝負しろ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:19:25" />
+				Time="2011-09-14T10:01:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2010,10 +2010,10 @@ Nの　気持ちは　わかりません▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いくぜッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『行くぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:17:39" />
+				Time="2011-09-14T10:02:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2121,17 +2121,17 @@ Nの　気持ちは　わかりません▼
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そうなんだよな▼
-しょうぶで　かつのも　つよさなら▼
-じぶんの　ポケモンの　もどりを
-しんじて　まつのも　つよさ　だし▼
+勝負で　勝つのも　強さなら▼
+自分の　ポケモンの　戻りを
+信じて　待つのも　強さ　だし▼
 こいつらみたいに　なにをいわれても
-しんねんを　つらぬくのも　つよさ　か▼
+信念を　貫くのも　強さ　か▼
 [Name:TrainerName ]！
-よければ　あした　また　こいよ▽
-あいて　してやるから！</Text>
+よければ　明日　また　来いよ▽
+相手してやるから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:20:31" />
+				Time="2011-09-14T10:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

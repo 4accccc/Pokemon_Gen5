@@ -2771,13 +2771,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンずかんの
+			<Text>ポケモン図鑑の
 ちょうしは　どう？▼
 なんて　きいちゃうけど
-ほんとうは　たびを　たのしんでよ！▼</Text>
+本当は　旅を　楽しんでよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:30" />
+				Time="2011-09-14T10:03:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2831,12 +2831,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンずかんは
-ポケモンを　つかまえることで▽
-くわしい　じょうほうを　えられるわ！▼</Text>
+			<Text>ポケモン図鑑は
+ポケモンを　捕まえることで▽
+詳しい　情報を　得られるわ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:30" />
+				Time="2011-09-14T10:04:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2885,14 +2885,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンずかんの　ページを
-うめることは　じゅうよう　だけど▼
-ポケモンと　むきあうことの　ほうが
-１００ばいも　１０００ばいも▽
-じゅうよう　なの　わすれないでね！▼</Text>
+			<Text>ポケモン図鑑の　ページを
+埋めることは　重要だけど▼
+ポケモンと　向き合うことの　ほうが
+１００倍も　１０００倍も▽
+重要なの　忘れないでね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:30" />
+				Time="2011-09-14T10:04:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2932,11 +2932,11 @@
 それでも　すべての　なぞは
 ときあかせないけれど　すこしずつ▽
 なにかが　わかっていけば▼
-あとに　つづく　ひとに
+あとに　つづく　けんきゅうしゃに
 なにか　のこせていけるのよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:12" />
+				Time="2011-09-14T10:05:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2944,17 +2944,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくちの　ポケモンはかせと
-ちからを　あわせ▽
-ポケモンの　なぞに　いどむ▼
+			<Text>各地の　ポケモン博士と
+力を　あわせ▽
+ポケモンの　なぞに　挑む▼
 それでも　すべての　なぞは
-ときあかせないけれど　すこしずつ▽
+解き明かせないけれど　すこしずつ▽
 なにかが　わかっていけば▼
-あとに　つづく　ひとに
-なにか　のこせていけるのよね▼</Text>
+あとに　続く　研究者に
+なにか　残せていけるのよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:30" />
+				Time="2011-09-14T10:05:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3001,12 +3001,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンずかんの
+			<Text>ポケモン図鑑の
 なにが　パワーアップすれば▽
 みんな　うれしいのかな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:30" />
+				Time="2011-09-14T10:05:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3058,13 +3058,13 @@
 			Language="JPN_KANJI">
 			<Text>きみたちを　みてると
 バックパッカーだったころを▽
-おもいだして　やるき　でるわね！▼
+思い出して　やる気　でるわね！▼
 そうなの！　わたしも
-ポケモンずかんを　もって▽
-イッシュちほうを　たびしたのよ！▼</Text>
+ポケモン図鑑を　持って▽
+イッシュ地方を　旅したのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:30" />
+				Time="2011-09-14T10:05:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3102,10 +3102,10 @@
 あなたの　ママと　しりあったの！▼
 ポケモンセンターの　うけつけで
 はなしこんじゃって▽
-うしろに　ぎょうれつ　つくったっけ！▼</Text>
+すごい　ぎょうれつ　つくったっけ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:11:27" />
+				Time="2011-09-14T10:06:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3114,13 +3114,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたしが　バックパッカーの　ころ
-あなたの　ママと　しりあったの！▼
-ポケモンセンターの　うけつけで
-はなしこんじゃって▽
-うしろに　ぎょうれつ　つくったっけ！▼</Text>
+あなたの　ママと　知り合ったの！▼
+ポケモンセンターの　受付で
+話しこんじゃって▽
+すごい　行列　つくったっけ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:30" />
+				Time="2011-09-14T10:06:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3169,14 +3169,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せかいには　きっと
+			<Text>世界には　きっと
 まだ　みたことのない▽
 ポケモンが　いるのよね！▼
-ねっ！　そうぞうしたら
+ねっ！　想像したら
 ワクワクするでしょ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:30" />
+				Time="2011-09-14T10:07:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3223,12 +3223,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆめは　おおきく！▼
-ぜんせかいの　ポケモンと
+			<Text>夢は　大きく！▼
+全世界の　ポケモンと
 であってほしいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:30" />
+				Time="2011-09-14T10:07:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3263,14 +3263,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なかよくなるためには　しること
-そして　うけいれること▼
+そして　あいてを　うけいれること▼
 だって　ポケモンと　ひとは
 ちがう　ルールで　いきてるもの！▼
 わたしたちの　きぼうを　おしつけても
 うまく　いかないでしょ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T06:29:26" />
+				Time="2011-09-14T10:07:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3278,15 +3278,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なかよくなるためには　しること
-そして　うけいれること▼
-だって　ポケモンと　ひとは
-ちがう　ルールで　いきてるもの！▼
-わたしたちの　きぼうを　おしつけても
+			<Text>仲良くなるためには　知ること
+そして　相手を　受け入れること▼
+だって　ポケモンと　人は
+違う　ルールで　生きてるもの！▼
+わたしたちの　希望を　押しつけても
 うまく　いかないでしょ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:27:30" />
+				Time="2011-09-14T10:07:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3429,11 +3429,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……だいじな　ものは
-じぶんの　ちからで　まもりたいよな▼</Text>
+			<Text>……大事な　ものは
+自分の　力で　守りたいよな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:02:55" />
+				Time="2011-09-14T10:08:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3469,11 +3469,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンしょうぶに　つよい　ヤツが
-ただしいって　わけじゃ　ないけど▽
+ただしいって　わけじゃないけど▽
 まけたら　なにも　いえないよな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:01:14" />
+				Time="2011-09-14T10:08:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3481,12 +3481,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンしょうぶに　つよい　ヤツが
-ただしいって　わけじゃ　ないけど▽
-まけたら　なにも　いえないよな？▼</Text>
+			<Text>ポケモン勝負に　強い　ヤツが
+正しい　って　わけじゃないけど▽
+負けたら　なにも　いえないよな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:02:55" />
+				Time="2011-09-14T10:08:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3529,14 +3529,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よるに　なって
-しずまりかえった　とき▼
-みみを　すませば
-ポケモンの　あしおとが　きこえる▼
-そういうのが　すき　なんだよ▼</Text>
+			<Text>夜に　なって
+静まりかえった　とき▼
+耳を　すませば
+ポケモンの　足音が　きこえる▼
+そういうのが　好き　なんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:02:55" />
+				Time="2011-09-14T10:09:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3577,12 +3577,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じぶんに　じしんが　あれば
+			<Text>自分に　自身が　あれば
 そして　ポケモンが　いてくれるなら▽
-みちに　まようことも　たのしめる▼</Text>
+道に　迷うことも　楽しめる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:02:55" />
+				Time="2011-09-14T10:09:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3624,11 +3624,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どんな　ポケモンが　いたら
-てもちポケモンの　じゃくてんを▽
-カバーできるか　かんがえてた▼</Text>
+てもちポケモンの　弱点を▽
+カバーできるか　考えてた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:02:55" />
+				Time="2011-09-14T10:09:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3668,11 +3668,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どんな　りゆうが　あろうが
+			<Text>どんな　理由が　あろうが
 ひとの　ものを　とったら　ドロボウさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:02:55" />
+				Time="2011-09-14T10:09:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3713,12 +3713,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どんな　ふうに　そだてて
-つよくしようか　かんがえるのは▽
-たのしい　じかん　だよな▼</Text>
+			<Text>どんな　風に　育てて
+強くしようか　考えるのは▽
+楽しい　時間だよな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:02:55" />
+				Time="2011-09-14T10:10:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3758,11 +3758,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このみで　いえば
+			<Text>好みで　いえば
 すばやい　ポケモン　かな……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:02:55" />
+				Time="2011-09-14T10:10:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3803,12 +3803,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ　わるい▼
+			<Text>あっ　悪い▼
 やりたいこと　あるんで
 また　あとで！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:02:55" />
+				Time="2011-09-14T10:10:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3849,10 +3849,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……んー
-とくに　はなすこと　ないけど▼</Text>
+とくに　話すこと　ないけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T07:02:55" />
+				Time="2011-09-14T10:10:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3946,13 +3946,13 @@
 			Language="JPN_KANJI">
 			<Text>いま　どこ　って？▼
 ヒウンシティの　すみから　すみまで
-プラズマだんを　さがしてるよ！▼
+プラズマ団を　探してるよ！▼
 オマエも　みつけてないんだろ？▼
 いいか！
-ぜったいに　みつけだすぞ！▼</Text>
+絶対に　みつけだすぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4002,14 +4002,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきは　たすかった！▼
+			<Text>さっきは　助かった！▼
 オレは　まだ　ヒウンで
-プラズマだんを　さがすけどさ▼
+プラズマ団を　探すけどさ▼
 おまえは　ポケモンジムに
-いけば　いいんじゃないか？▼</Text>
+行けば　いいんじゃないか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:11:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4054,12 +4054,12 @@
 			Language="JPN_KANJI">
 			<Text>ヒウンの　ポケモンジムで
 インセクトバッジを　とった？▼
-だったら　つぎは
-ライモンシティに　いって▽
-ジムリーダーに　ちょうせん　すれば？▼</Text>
+だったら　次は
+ライモンシティに　行って▽
+ジムリーダーに　挑戦すれば？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:11:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4105,13 +4105,13 @@
 			Language="JPN_KANJI">
 			<Text>なんだよ▼
 ホドモエの　ポケモンジムに
-ちょうせん　したのか？▼
-まだなら　いけば　いいだろ！▼
+挑戦したのか？▼
+まだなら　行けば　いいだろ！▼
 ちなみに　ジムリーダーは
-じめんタイプの　つかいて　らしいぜ！▼</Text>
+じめんタイプの　使い手らしいぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:11:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4158,12 +4158,12 @@
 			<Text>さっき　ヤーコンの
 おっさんに　いわれただろ？▼
 ホドモエの　トーナメントに
-さんか　してくれって！▼
+参加してくれって！▼
 トーナメントは　ホドモエシティの
-みなみに　あるってさ！▼</Text>
+南に　あるってさ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:11:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4203,11 +4203,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きいてる　ばあいか！
-プラズマだん　だぞ！！▼</Text>
+			<Text>きいてる　場合か！
+プラズマ団　だぞ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:12:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4252,14 +4252,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうだな……▼
-オマエの　じつりょく　なら
+オマエの　実力なら
 フキヨセの　ジムリーダーにも▽
-かてるんじゃないか？▼
+勝てるんじゃないか？▼
 まっ　オレは　もう
-ジェットバッジ　てにいれたけどな！▼</Text>
+ジェットバッジ　手にいれたけどな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:12:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4299,11 +4299,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひとこと　だけだぞ▼
+			<Text>一言　だけだぞ▼
 リバースマウンテン▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:12:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4345,11 +4345,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いま　サザナミあたり　かな▼
-そうだな……　ひさしぶりに
-オマエと　しょうぶ　するか▼</Text>
+そうだな……　久しぶりに
+オマエと　勝負するか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:12:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4394,10 +4394,10 @@
 			<Text>オレは　ソウリュウシティの
 ポケモンジムを　めざしてる▼
 ジムリーダーは　かなり
-てごわいって　はなし　だぜ！▼</Text>
+手ごわいって　話しだぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:13:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4537,11 +4537,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オレは
-プラズマフリゲートを　さがしてる！▽
-オマエも　てわけ　してくれよ！▼</Text>
+プラズマフリゲートを　探してる！▽
+オマエも　手分け　してくれよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:13:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4584,10 +4584,10 @@
 			Language="JPN_KANJI">
 			<Text>……！？▼
 いま　ライブキャスターで
-はなしてる　ばあい　かよ！▼</Text>
+話してる　場合かよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:13:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4629,13 +4629,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャンピオンロードを　こえたら
+			<Text>チャンピオンロードを　越えたら
 ポケモンリーグ　だぜ▼
 チャンピオンロードは
-２３ばんどうろの　さきだよ！▼</Text>
+２３番道路の　先だよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:13:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4730,10 +4730,10 @@
 オマエ
 ポケモンリーグ　なんだろ？▼
 だったら
-しょうり　あるのみ！▼</Text>
+勝利あるのみ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:13:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4774,10 +4774,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サザナミタウン　だよ
-ヒマなら　くれば？▼</Text>
+ヒマなら　来れば？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:08:59" />
+				Time="2011-09-14T10:14:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4818,12 +4818,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？に　いるよ▼
-ヒマなら　くれば？
-あいて　してやるから▼</Text>
+			<Text>ホドモエに　いるよ▼
+ヒマなら　来れば？
+相手してやるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:40:06" />
+				Time="2011-09-14T10:14:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4832,10 +4832,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>目的地メッセージ
-・クリア後、？？？でのライバル戦闘前</Comment>
+・クリア後、c05r0501でのライバル戦闘前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T12:54:59" />
+				Time="2011-09-14T10:14:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4847,7 +4847,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff00</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4873,12 +4873,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あいかわらず
-？？？に　いるよ▼
+ホドモエに　いるよ▼
 オマエは　オマエの
-すきに　すれば　いいんじゃない？▼</Text>
+好きに　すれば　いいんじゃない？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:40:37" />
+				Time="2011-09-14T10:14:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4887,10 +4887,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>目的地メッセージ
-・クリア後、？？？でのライバル戦闘後</Comment>
+・クリア後、c05r0501でのライバル戦闘後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T12:55:02" />
+				Time="2011-09-14T10:14:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4902,7 +4902,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff00</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4978,15 +4978,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいかい？▼
-モンスターボールは　つねに
+モンスターボールは　常に
 きらさない　ように　すること▼
 いつ　どこで　どんな　ポケモンと
-であうか　わからない▼
-チャンスは　やってくると　しんじて
-じゅんび　しておかないとね！▼</Text>
+出会うか　わからない▼
+チャンスは　やってくると　信じて
+準備して　おかないとね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:39:41" />
+				Time="2011-09-14T10:20:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5046,18 +5046,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンしょうぶでの
-ほんとうの　はいぼくは▽
+			<Text>ポケモン勝負での
+本当の　はいぼくは▽
 あきらめるってこと！▼
-まけた　りゆうを　かんがえ
-どう　おぎなうか　くふうする▼
+負けた　理由を　考え
+どう　補うか　工夫する▼
 そして　チャレンジしつづければ
-まえの　じぶんを　こえられる▼
+前の　自分を　超えられる▼
 だけど　なにも　しなければ
-ぜったいに　かてないからね▼</Text>
+絶対に　勝てないからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:39:41" />
+				Time="2011-09-14T10:21:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5095,10 +5095,10 @@
 ポケモンの　ちしきを
 おしえるのも　だいじだけど▼
 なにより　ポケモンと　いると
-たのしいことを　おしえたいな！▼</Text>
+たのしいって　しってほしいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:35:22" />
+				Time="2011-09-14T10:22:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5107,13 +5107,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うーん▼
-ポケモンの　ちしきを
-おしえるのも　だいじだけど▼
+ポケモンの　知識を
+教えるのも　大事だけど▼
 なにより　ポケモンと　いると
-たのしいことを　おしえたいな！▼</Text>
+楽しいって　知ってほしいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:39:41" />
+				Time="2011-09-14T10:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5152,11 +5152,11 @@
 ひとの　かず……　いや
 ポケモンと　ひとの　かずだけ
 あるんだよね　きっと▼
-だから　たった　ひとつの
-せいかいって　あるし　ないんだよね▼</Text>
+だから　せいかい　って
+あるともいえるし　ないともいえるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:39:32" />
+				Time="2011-09-14T10:23:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5164,16 +5164,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しんじつも……
-りそうも……▼
-ひとの　かず……　いや
-ポケモンと　ひとの　かずだけ
+			<Text>真実も……
+理想も……▼
+人の　数……　いや
+ポケモンと　人の　数だけ
 あるんだよね　きっと▼
-だから　たった　ひとつの
-せいかいって　あるし　ないんだよね▼</Text>
+だから　正解って
+あるともいえるし　ないともいえるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:39:41" />
+				Time="2011-09-14T10:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5223,11 +5223,11 @@
 			Language="JPN_KANJI">
 			<Text>ぼくが　メガネを　はずして
 ベルが　メガネを　かけてて……▼
-ひさしぶりに　あったとき
-すごく　おどろいたよ▼</Text>
+ひさしぶりに　会ったとき
+すごく　驚いたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:39:41" />
+				Time="2011-09-14T10:24:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5278,14 +5278,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こどもの　ころ
-めかくし　して　すごすという▽
-じっけんを　したよ▼
+目隠し　して　過ごすという▽
+実験を　したよ▼
 そうすることで
-かんかくが　きたえられる……▽
-そんなふうに　かんがえていたんだ▼</Text>
+感覚が　鍛えられる……▽
+そんな風に　考えていたんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T06:50:29" />
+				Time="2011-09-14T10:24:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5389,13 +5389,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じぶんに　じしんが　ないときは
-チャンピオンとかの　かたがきで▽
-じぶんを　ひょうげん　したくなるけど▽
-それは　うわべの　ことなんだよね▼</Text>
+			<Text>自分に　自信が　ないときは
+チャンピオンとかの　肩書きで▽
+自分を　表現したくなるけど▽
+それは　上辺の　ことなんだよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:39:41" />
+				Time="2011-09-14T10:25:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5444,14 +5444,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちしきが　あっても
-ちえが　ないと　ダメなのかもね▼
-ちしきは　あくまでも　じょうほう
-じょうほうを　どう　いかせるか？▽
-それが　だいじだと　おもうんだ▼</Text>
+			<Text>知識が　あっても
+知恵が　ないと　ダメなのかもね▼
+知識は　あくまでも　情報
+情報を　どう　いかせるか？▽
+それが　大事だと　思うんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:39:41" />
+				Time="2011-09-14T10:25:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5500,14 +5500,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きになることは　しらべる
-そして　じっさいに　たしかめる▼
-あたま　だけで
+			<Text>気になることは　調べる
+そして　実際に　たしかめる▼
+頭だけで
 わかったつもりで　いると▽
-いろいろ　いたいめに　あうからね▼</Text>
+いろいろ　痛い目に　あうからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:39:41" />
+				Time="2011-09-14T10:26:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5657,14 +5657,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　どんな　かんじ？▼
-いい　かんじ　だったら
-すっごく　たのしいし▼
+			<Text>きょうは　どんな　感じ？▼
+いい　感じ　だったら
+すっごく　楽しいし▼
 いまいち　だったら
-あしたが　すごく　たのしいはずだよ！▼</Text>
+明日が　すごく　楽しいはずだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:28:59" />
+				Time="2011-09-14T10:26:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5713,14 +5713,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンと　であうため
-くさむらに　はいるのって▽
+			<Text>ポケモンと　出会うため
+草むらに　入るのって▽
 いつになっても　ドキドキするよ▼
-あの　きもち　いつまでも
-ぜったいに　わすれないよ！▼</Text>
+あの気持ち　いつまでも
+絶対に　忘れないよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:28:59" />
+				Time="2011-09-14T10:26:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5747,14 +5747,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はかせの　おてつだいで
+			<Text>アララギはかせの　おてつだいで
 たっくさん　ほんを　よんでいたら▽
 メガネを　かけるように　なったの▼
 あたしとしては
-にあってるつもり　なんだ！▼</Text>
+にあってるつもり　だよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:24:44" />
+				Time="2011-09-14T10:27:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5762,14 +5762,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はかせの　おてつだいで
-たっくさん　ほんを　よんでいたら▽
+			<Text>アララギ博士の　お手伝いで
+たっくさん　本を　読んでいたら▽
 メガネを　かけるように　なったの▼
 あたしとしては
-にあってるつもり　なんだ！▼</Text>
+似合ってるつもり　だよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:28:59" />
+				Time="2011-09-14T10:27:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5813,14 +5813,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モンスターボールを
-１０こ　まとめて　かうとね▼
+１０個　まとめて　買うと▼
 な　な　なんと！
-プレミアボールを　１こ▽
+プレミアボールを　１個▽
 もらえて　しまうんだよ！▼
 すごいよねえ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:28:59" />
+				Time="2011-09-14T10:28:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5862,12 +5862,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ねえねえ　いきなりだけど
-あたし　おもうんだ！▼
-ともだちって　あえなくても
+あたし　思うんだ！▼
+ともだちって　会えなくても
 ともだち　だよね　きっと！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:28:59" />
+				Time="2011-09-14T10:30:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5900,11 +5900,11 @@
 むかしじゃなくて　というか▽
 つい　さいきん　なのかな？▼
 ポケモンを　もらって
-ポケモンずかんを　わたされ▽
+ポケモンずかんを　たくされ▽
 たびを　はじめたときの　ことだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:20:24" />
+				Time="2011-09-14T10:31:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5913,16 +5913,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>えーっとね
-むかしのこと　おもいだしてたの▼
+昔のこと　思い出してたの▼
 といっても　そんな
-むかしじゃなくて　というか▽
-つい　さいきん　なのかな？▼
+昔じゃなくて　というか▽
+つい　最近　なのかな？▼
 ポケモンを　もらって
-ポケモンずかんを　わたされ▽
-たびを　はじめたときの　ことだよ▼</Text>
+ポケモン図鑑を　託され▽
+旅を　はじめたときの　ことだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:28:59" />
+				Time="2011-09-14T10:31:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5961,10 +5961,10 @@
 うれしい？　それとも　こまる？▼
 あたしは　じぶんの　ポケモンに
 いつも　はなしかけてるけど▽
-へんじしたら　どうなるのかなあ？▼</Text>
+へんじしたら　どうするのかなあ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:56:27" />
+				Time="2011-09-14T10:31:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5973,14 +5973,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ねえねえ▼
-ポケモンと　はなせたら
-うれしい？　それとも　こまる？▼
-あたしは　じぶんの　ポケモンに
-いつも　はなしかけてるけど▽
-へんじしたら　どうなるのかなあ？▼</Text>
+ポケモンと　話せたら
+うれしい？　それとも　困る？▼
+あたしは　自分の　ポケモンに
+いつも　話しかけてるけど▽
+返事したら　どうするのかなあ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:28:59" />
+				Time="2011-09-14T10:31:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6031,14 +6031,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの
-いちばんの　ふしぎ……▼
-それは　ひとと
-いっしょに　いること！▼
-それを　けんきゅうテーマに
-しようかな　なんて　おもってるの▼</Text>
+一番の　不思議……▼
+それは　人と
+一緒に　いること！▼
+それを　研究テーマに
+しようかな　なんて　思ってるの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:28:59" />
+				Time="2011-09-14T10:32:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6092,17 +6092,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしはね
-ポケモンの　けんきゅうを▽
-はじめたばかり　というか▼
-まだ　おてつだい　だけど
-ぜったいに　ポケモンの　すべてを▽
-ときあかすなんて　むりでしょ▼
+ポケモンの　研究を▽
+始めたばかり　というか▼
+まだ　お手伝い　だけど
+絶対に　ポケモンの　すべてを▽
+解き明かすなんて　無理でしょ▼
 それを　わかっていて
-けんきゅうを　つづける　はかせって▽
-すごいと　おもうんだよねえ……▼</Text>
+研究を　続ける　博士って▽
+すごいと　尊敬するんだよねえ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:28:59" />
+				Time="2011-09-14T10:33:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6154,11 +6154,11 @@
 			<Text>……　……　……
 ……　……　……▼
 ああ！　ごめんね▼
-いま　きになる
-ポケモンが　とびだしたから……▼</Text>
+いま　気になる
+ポケモンが　飛び出したから……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:28:59" />
+				Time="2011-09-14T10:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6302,13 +6302,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いっしょに　たびをする
-ポケモンは　ふえたの？▼
-たびは　にぎやかな　ほうが
-ぜったいに　たのしいわよ！▼</Text>
+			<Text>一緒に　旅をする
+ポケモンは　増えたの？▼
+旅は　にぎやかな　方が
+絶対に　楽しいわよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:44:07" />
+				Time="2011-09-14T10:34:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6361,11 +6361,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうの　こんだては
+			<Text>きょうの　献立は
 なにに　しようかなー？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:44:22" />
+				Time="2011-09-14T10:35:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6401,12 +6401,12 @@
 			Language="JPN">
 			<Text>いろんな　ポケモンが　いて
 おなじ　しゅるいの　ポケモンでも▽
-せいかくとか　ぜんぶ　ちがうのよ▼
+せいかくとか　ぜんぜん　ちがうのよ▼
 あなたに　ぴったりの
 ポケモンは　どんな　ポケモンかな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:29:32" />
+				Time="2011-09-14T10:35:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6415,13 +6415,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いろんな　ポケモンが　いて
-おなじ　しゅるいの　ポケモンでも▽
-せいかくとか　ぜんぶ　ちがうのよ▼
+同じ　種類の　ポケモンでも▽
+性格とか　ぜんぜん　違うのよ▼
 あなたに　ぴったりの
 ポケモンは　どんな　ポケモンかな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:42:04" />
+				Time="2011-09-14T10:35:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6469,13 +6469,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンに　しんらい　されるには
-まず　いっしょに　あるくこと！▼
+			<Text>ポケモンに　信頼されるには
+まず　一緒に　歩くこと！▼
 そうすれば　あなたの
-いろんなことを　しってもらえるわよ！▼</Text>
+いろんなことを　知ってもらえるわよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:42:04" />
+				Time="2011-09-14T10:35:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6524,14 +6524,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いえの　ことは　だいじょうぶよ！▼
+			<Text>いえの　ことは　大丈夫よ！▼
 あなたが　いつ
-かえってきても　いいように▼
+帰ってきても　いいように▼
 ベッドの　シーツは
-まいにち　あらってるから！▼</Text>
+毎日　洗ってるから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:42:04" />
+				Time="2011-09-14T10:36:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6582,14 +6582,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いきなり　マジメに　なっちゃうけど▼
-あなたが　うまれたとき
+あなたが　生まれたとき
 すでに　ポケモンは　いたよね▼
-それって　あたりまえ　だけど
-あたりまえの　ことを　なぜ？　って▽
-かんがえるのも　たび　かもね？▼</Text>
+それって　当たり前　だけど
+当たり前の　ことを　なぜ？　って▽
+考えるのも　旅かもね？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:42:04" />
+				Time="2011-09-14T10:36:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6639,13 +6639,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンセンターの
-うけつけの　ひとはね　いがいと▽
-トレーナーのこと　おぼえているのよ▼
-もちろん　いっしょに　いる
+受付の　人はね　意外と▽
+トレーナーのこと　覚えているのよ▼
+もちろん　一緒に　いる
 ポケモンたちの　こともね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:42:04" />
+				Time="2011-09-14T10:36:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6694,14 +6694,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン　いっぱい　つかまえた？▼
+			<Text>ポケモン　いっぱい　捕まえた？▼
 じゃあ　たまには
 ポケモンセンターの　ボックスを　みて▼
-あなたと　たびを　したがっている
+あなたと　旅を　したがっている
 ポケモンが　いるかもよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:42:04" />
+				Time="2011-09-14T10:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6750,12 +6750,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンセンターは
-みんなの　いえ！▼
-そういうつもりで　えんりょなく
-りよう　すれば　いいのよ！▼</Text>
+みんなの　家！▼
+そういうつもりで　遠慮なく
+利用すれば　いいのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:42:04" />
+				Time="2011-09-14T10:37:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6804,14 +6804,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おこづかいは　たりてる？▼
+			<Text>おこづかいは　足りてる？▼
 なんて　きいてみたけど
-あなたなら　だいじょうぶ　よね！▼
-だけど　ムダづかいは　だめよ
-いざというとき　こまるから▼</Text>
+あなたなら　大丈夫よね！▼
+だけど　無駄使いは　だめよ
+いざというとき　困るから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T03:42:04" />
+				Time="2011-09-14T10:37:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
