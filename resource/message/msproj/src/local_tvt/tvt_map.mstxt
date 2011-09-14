@@ -410,11 +410,11 @@
 きいてみるのが　いいかもね▼
 あとは……
 自分で　探検よ！▼
-知らない　町に　着いたときの
+知らない　街に　着いたときの
 楽しみの　一番は　探検！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:34:05" />
+				Time="2011-09-14T02:48:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -465,7 +465,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライモンシティは　娯楽の　町！▼
+			<Text>ライモンシティは　娯楽の　街！▼
 あそこの　ポケモンセンターでの
 お仕事も　楽しかったわね▼
 えーとね▼
@@ -474,8 +474,8 @@
 他にも　見所が　たくさんね
 あなたの　好きに　してみなさい！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:27:28" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T02:48:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4118,7 +4118,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライモンシティは　娯楽の　町！▼
+			<Text>ライモンシティは　娯楽の　街！▼
 あそこの　ポケモンセンターでの
 お仕事も　楽しかったわね▼
 えーとね▼
@@ -4127,8 +4127,8 @@
 他にも　見所が　たくさんね
 あなたの　好きに　してみなさい！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:37:58" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T02:48:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5802,11 +5802,12 @@
 			Language="JPN">
 			<Text>サザナミゲートは
 たてがたの　ゲート▼
-よこがたの　ゲートとの　ちがいは
-ないのが　ゲートの　いいところ！▼</Text>
+よこがたの　ゲートと
+とくに　ちがいが　ないのが▽
+ゲートの　いいところ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T03:26:44" />
+				Time="2011-09-14T02:54:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5816,11 +5817,12 @@
 			Language="JPN_KANJI">
 			<Text>サザナミゲートは
 縦型の　ゲート▼
-横型の　ゲートとの　違いは
-ないのが　ゲートの　良い所！▼</Text>
+横型の　ゲートと
+特に　違いが　ないのが▽
+ゲートの　良い所！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:49:48" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T02:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6403,11 +6405,11 @@
 ライブハウスに　行った！？▼
 最近　ホミカちゃんの
 バンドが　お気に入り　なのよ！▼
-だって　聞いていると
+だって　聴いていると
 元気いっぱいに　なれるでしょ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T09:21:53" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T02:55:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6946,10 +6948,10 @@
 最後の　大自然……▼
 なんて　おおげさに　語る　人が
 いるほど　起伏に　とんだ▽
-進むのも　けわしい　道らしいね▼</Text>
+進むのも　険しい　道らしいね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:37:37" />
+				Time="2011-09-14T03:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7007,12 +7009,12 @@
 ごめんなさい
 あることは　知っているけれど▽
 行ったことは　ないのよ▼
-だけど　聞いて！▼
+だけど　きいて！▼
 下水道の　先に
 秘密の場所が　あるって　ウワサよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T07:06:44" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:07:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

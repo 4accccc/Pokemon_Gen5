@@ -2702,10 +2702,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！[Ctrl2:PageClear ]</Text>
+			<Text>はーい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T05:46:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2713,15 +2713,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！[Ctrl2:PageClear ]</Text>
+			<Text>はーい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T05:46:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -2749,10 +2757,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきね[Ctrl2:PageClear ]</Text>
+			<Text>ポケモンずかんの
+ちょうしは　どう？▼
+なんて　きいちゃうけど
+ほんとうは　たびを　たのしんでよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T05:47:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2760,15 +2771,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今日は　いい天気ね[Ctrl2:PageClear ]</Text>
+			<Text>ポケモンずかんの
+ちょうしは　どう？▼
+なんて　きいちゃうけど
+ほんとうは　たびを　たのしんでよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T07:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -2796,10 +2818,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモンずかんは
+ポケモンを　つかまえることで▽
+くわしい　じょうほうを　えられるわ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:48:34" />
+				Time="2011-09-14T06:38:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2807,15 +2831,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモンずかんは
+ポケモンを　つかまえることで▽
+くわしい　じょうほうを　えられるわ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:48:34" />
+				Time="2011-09-14T07:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:48:34" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -2836,10 +2870,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモンずかんの　ページを
+うめることは　じゅうよう　だけど▼
+ポケモンと　むきあうことの　ほうが
+１００ばいも　１０００ばいも▽
+じゅうよう　なの　わすれないでね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:48:41" />
+				Time="2011-09-14T07:22:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2847,15 +2885,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモンずかんの　ページを
+うめることは　じゅうよう　だけど▼
+ポケモンと　むきあうことの　ほうが
+１００ばいも　１０００ばいも▽
+じゅうよう　なの　わすれないでね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:48:41" />
+				Time="2011-09-14T07:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:48:41" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -2876,10 +2926,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>かくちの　ポケモンはかせと
+ちからを　あわせ▽
+ポケモンの　なぞに　いどむ▼
+それでも　すべての　なぞは
+ときあかせないけれど　すこしずつ▽
+なにかが　わかっていけば▼
+あとに　つづく　ひとに
+なにか　のこせていけるのよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:48:41" />
+				Time="2011-09-14T07:27:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2887,15 +2944,30 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>かくちの　ポケモンはかせと
+ちからを　あわせ▽
+ポケモンの　なぞに　いどむ▼
+それでも　すべての　なぞは
+ときあかせないけれど　すこしずつ▽
+なにかが　わかっていけば▼
+あとに　つづく　ひとに
+なにか　のこせていけるのよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:48:41" />
+				Time="2011-09-14T07:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:48:41" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -2916,10 +2988,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモンずかんの
+なにが　パワーアップすれば▽
+みんな　うれしいのかな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:48:41" />
+				Time="2011-09-14T07:20:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2927,15 +3001,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモンずかんの
+なにが　パワーアップすれば▽
+みんな　うれしいのかな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:48:41" />
+				Time="2011-09-14T07:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:48:41" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -2956,10 +3040,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>きみたちを　みてると
+バックパッカーだったころを▽
+おもいだして　やるき　でるわね！▼
+そうなの！　わたしも
+ポケモンずかんを　もって▽
+イッシュちほうを　たびしたのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:45" />
+				Time="2011-09-14T07:16:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2967,15 +3056,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>きみたちを　みてると
+バックパッカーだったころを▽
+おもいだして　やるき　でるわね！▼
+そうなの！　わたしも
+ポケモンずかんを　もって▽
+イッシュちほうを　たびしたのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:45" />
+				Time="2011-09-14T07:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:04:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -2996,10 +3098,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>わたしが　バックパッカーの　ころ
+あなたの　ママと　しりあったの！▼
+ポケモンセンターの　うけつけで
+はなしこんじゃって▽
+うしろに　ぎょうれつ　つくったっけ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:45" />
+				Time="2011-09-14T07:11:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3007,15 +3113,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>わたしが　バックパッカーの　ころ
+あなたの　ママと　しりあったの！▼
+ポケモンセンターの　うけつけで
+はなしこんじゃって▽
+うしろに　ぎょうれつ　つくったっけ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:45" />
+				Time="2011-09-14T07:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:04:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -3036,10 +3154,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>せかいには　きっと
+まだ　みたことのない▽
+ポケモンが　いるのよね！▼
+ねっ！　そうぞうしたら
+ワクワクするでしょ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:45" />
+				Time="2011-09-14T07:03:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3047,15 +3169,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>せかいには　きっと
+まだ　みたことのない▽
+ポケモンが　いるのよね！▼
+ねっ！　そうぞうしたら
+ワクワクするでしょ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:45" />
+				Time="2011-09-14T07:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:04:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -3076,10 +3210,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ゆめは　おおきく！▼
+ぜんせかいの　ポケモンと
+であってほしいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:45" />
+				Time="2011-09-14T06:40:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3087,15 +3223,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ゆめは　おおきく！▼
+ぜんせかいの　ポケモンと
+であってほしいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:45" />
+				Time="2011-09-14T07:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:04:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -3116,10 +3262,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>なかよくなるためには　しること
+そして　うけいれること▼
+だって　ポケモンと　ひとは
+ちがう　ルールで　いきてるもの！▼
+わたしたちの　きぼうを　おしつけても
+うまく　いかないでしょ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:45" />
+				Time="2011-09-14T06:29:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3127,15 +3278,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>なかよくなるためには　しること
+そして　うけいれること▼
+だって　ポケモンと　ひとは
+ちがう　ルールで　いきてるもの！▼
+わたしたちの　きぼうを　おしつけても
+うまく　いかないでしょ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:45" />
+				Time="2011-09-14T07:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:04:45" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:16:56" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -3178,6 +3342,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>さよなら選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:00" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>アララギ博士</Text>
@@ -3246,10 +3417,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>……だいじな　ものは
+じぶんの　ちからで　まもりたいよな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:17:24" />
+				Time="2011-09-14T07:02:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3257,10 +3429,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>……だいじな　ものは
+じぶんの　ちからで　まもりたいよな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:04" />
+				Time="2011-09-14T07:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3295,10 +3468,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモンしょうぶに　つよい　ヤツが
+ただしいって　わけじゃ　ないけど▽
+まけたら　なにも　いえないよな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:08" />
+				Time="2011-09-14T07:01:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3306,10 +3481,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモンしょうぶに　つよい　ヤツが
+ただしいって　わけじゃ　ないけど▽
+まけたら　なにも　いえないよな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:08" />
+				Time="2011-09-14T07:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3337,10 +3514,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>よるに　なって
+しずまりかえった　とき▼
+みみを　すませば
+ポケモンの　あしおとが　きこえる▼
+そういうのが　すき　なんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:08" />
+				Time="2011-09-14T06:54:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3348,10 +3529,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>よるに　なって
+しずまりかえった　とき▼
+みみを　すませば
+ポケモンの　あしおとが　きこえる▼
+そういうのが　すき　なんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:08" />
+				Time="2011-09-14T07:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3379,10 +3564,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>じぶんに　じしんが　あれば
+そして　ポケモンが　いてくれるなら▽
+みちに　まようことも　たのしめる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:08" />
+				Time="2011-09-14T06:53:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3390,10 +3577,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>じぶんに　じしんが　あれば
+そして　ポケモンが　いてくれるなら▽
+みちに　まようことも　たのしめる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:08" />
+				Time="2011-09-14T07:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3421,10 +3610,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>どんな　ポケモンが　いたら
+てもちポケモンの　じゃくてんを▽
+カバーできるか　かんがえてた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:08" />
+				Time="2011-09-14T06:50:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3432,10 +3623,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>どんな　ポケモンが　いたら
+てもちポケモンの　じゃくてんを▽
+カバーできるか　かんがえてた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:08" />
+				Time="2011-09-14T07:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3463,10 +3656,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>どんな　りゆうが　あろうが
+ひとの　ものを　とったら　ドロボウさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:53" />
+				Time="2011-09-14T06:47:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3474,10 +3668,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>どんな　りゆうが　あろうが
+ひとの　ものを　とったら　ドロボウさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:53" />
+				Time="2011-09-14T07:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3505,10 +3700,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>どんな　ふうに　そだてて
+つよくしようか　かんがえるのは▽
+たのしい　じかん　だよな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:53" />
+				Time="2011-09-14T06:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3516,10 +3713,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>どんな　ふうに　そだてて
+つよくしようか　かんがえるのは▽
+たのしい　じかん　だよな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:53" />
+				Time="2011-09-14T07:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3547,10 +3746,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>このみで　いえば
+すばやい　ポケモン　かな……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:53" />
+				Time="2011-09-14T06:45:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3558,10 +3758,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>このみで　いえば
+すばやい　ポケモン　かな……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:53" />
+				Time="2011-09-14T07:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3589,10 +3790,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>あっ　わるい▼
+やりたいこと　あるんで
+また　あとで！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:53" />
+				Time="2011-09-14T06:44:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3600,10 +3803,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>あっ　わるい▼
+やりたいこと　あるんで
+また　あとで！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:53" />
+				Time="2011-09-14T07:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3631,10 +3836,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>……んー
+とくに　はなすこと　ないけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:53" />
+				Time="2011-09-14T06:39:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3642,10 +3848,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>……んー
+とくに　はなすこと　ないけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:04:53" />
+				Time="2011-09-14T07:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4598,10 +4805,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>？？？に　いるよ▼
+ヒマなら　くれば？
+あいて　してやるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-14T05:40:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4609,10 +4818,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>？？？に　いるよ▼
+ヒマなら　くれば？
+あいて　してやるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-14T05:40:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4634,16 +4845,26 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:40:41" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_20"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>あいかわらず
+？？？に　いるよ▼
+オマエは　オマエの
+すきに　すれば　いいんじゃない？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-14T05:40:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4651,10 +4872,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>あいかわらず
+？？？に　いるよ▼
+オマエは　オマエの
+すきに　すれば　いいんじゃない？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:40:41" />
+				Time="2011-09-14T05:40:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4676,6 +4900,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:40:41" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_GREET_01"
@@ -4729,11 +4960,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モンスターボールは　つねに
-きらさない　ように　すること[Ctrl2:PageClear ]</Text>
+			<Text>いいかい？▼
+モンスターボールは　つねに
+きらさない　ように　すること▼
+いつ　どこで　どんな　ポケモンと
+であうか　わからない▼
+チャンスは　やってくると　しんじて
+じゅんび　しておかないとね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T05:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4741,16 +4977,29 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モンスターボールは　つねに
-きらさない　ように　すること[Ctrl2:PageClear ]</Text>
+			<Text>いいかい？▼
+モンスターボールは　つねに
+きらさない　ように　すること▼
+いつ　どこで　どんな　ポケモンと
+であうか　わからない▼
+チャンスは　やってくると　しんじて
+じゅんび　しておかないとね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T05:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -4778,10 +5027,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモンしょうぶでの
+ほんとうの　はいぼくは▽
+あきらめるってこと！▼
+まけた　りゆうを　かんがえ
+どう　おぎなうか　くふうする▼
+そして　チャレンジしつづければ
+まえの　じぶんを　こえられる▼
+だけど　なにも　しなければ
+ぜったいに　かてないからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:50:59" />
+				Time="2011-09-14T05:34:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4789,15 +5046,31 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモンしょうぶでの
+ほんとうの　はいぼくは▽
+あきらめるってこと！▼
+まけた　りゆうを　かんがえ
+どう　おぎなうか　くふうする▼
+そして　チャレンジしつづければ
+まえの　じぶんを　こえられる▼
+だけど　なにも　しなければ
+ぜったいに　かてないからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:50:59" />
+				Time="2011-09-14T05:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:50:59" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -4818,10 +5091,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>うーん▼
+ポケモンの　ちしきを
+おしえるのも　だいじだけど▼
+なにより　ポケモンと　いると
+たのしいことを　おしえたいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:02" />
+				Time="2011-09-14T05:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4829,15 +5106,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>うーん▼
+ポケモンの　ちしきを
+おしえるのも　だいじだけど▼
+なにより　ポケモンと　いると
+たのしいことを　おしえたいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:02" />
+				Time="2011-09-14T05:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:02" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -4858,10 +5147,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>しんじつも……
+りそうも……▼
+ひとの　かず……　いや
+ポケモンと　ひとの　かずだけ
+あるんだよね　きっと▼
+だから　たった　ひとつの
+せいかいって　あるし　ないんだよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:02" />
+				Time="2011-09-14T05:39:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4869,15 +5164,29 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>しんじつも……
+りそうも……▼
+ひとの　かず……　いや
+ポケモンと　ひとの　かずだけ
+あるんだよね　きっと▼
+だから　たった　ひとつの
+せいかいって　あるし　ないんだよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:02" />
+				Time="2011-09-14T05:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:02" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -4898,10 +5207,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ぼくが　メガネを　はずして
+ベルが　メガネを　かけてて……▼
+ひさしぶりに　あったとき
+すごく　おどろいたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:02" />
+				Time="2011-09-14T05:26:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4909,15 +5221,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ぼくが　メガネを　はずして
+ベルが　メガネを　かけてて……▼
+ひさしぶりに　あったとき
+すごく　おどろいたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:02" />
+				Time="2011-09-14T05:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:02" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -4938,10 +5261,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>こどもの　ころ
+めかくし　して　すごすという▽
+じっけんを　したよ▼
+そうすることで
+かんかくが　きたえられる……▽
+そんなふうに　かんがえていたんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:04" />
+				Time="2011-09-14T06:50:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4949,15 +5277,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>こどもの　ころ
+めかくし　して　すごすという▽
+じっけんを　したよ▼
+そうすることで
+かんかくが　きたえられる……▽
+そんなふうに　かんがえていたんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:04" />
+				Time="2011-09-14T06:50:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:05:04" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -4978,10 +5319,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ぼくのこと　だけど
+ジムリーダーとして　おかしくない？▼
+あっ
+ゴメンゴメン！▼
+そんなこと　こたえづらいよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:04" />
+				Time="2011-09-14T05:23:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4989,15 +5334,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ぼくのこと　だけど
+ジムリーダーとして　おかしくない？▼
+あっ
+ゴメンゴメン！▼
+そんなこと　こたえづらいよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:04" />
+				Time="2011-09-14T05:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:05:04" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -5018,10 +5375,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>じぶんに　じしんが　ないときは
+チャンピオンとかの　かたがきで▽
+じぶんを　ひょうげん　したくなるけど▽
+それは　うわべの　ことなんだよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:04" />
+				Time="2011-09-14T05:09:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5029,15 +5389,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>じぶんに　じしんが　ないときは
+チャンピオンとかの　かたがきで▽
+じぶんを　ひょうげん　したくなるけど▽
+それは　うわべの　ことなんだよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:04" />
+				Time="2011-09-14T05:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:05:04" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -5058,10 +5429,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ちしきが　あっても
+ちえが　ないと　ダメなのかもね▼
+ちしきは　あくまでも　じょうほう
+じょうほうを　どう　いかせるか？▽
+それが　だいじだと　おもうんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:04" />
+				Time="2011-09-14T05:08:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5069,15 +5444,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ちしきが　あっても
+ちえが　ないと　ダメなのかもね▼
+ちしきは　あくまでも　じょうほう
+じょうほうを　どう　いかせるか？▽
+それが　だいじだと　おもうんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:04" />
+				Time="2011-09-14T05:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:05:04" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -5098,10 +5485,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>きになることは　しらべる
+そして　じっさいに　たしかめる▼
+あたま　だけで
+わかったつもりで　いると▽
+いろいろ　いたいめに　あうからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:04" />
+				Time="2011-09-14T05:06:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5109,15 +5500,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>きになることは　しらべる
+そして　じっさいに　たしかめる▼
+あたま　だけで
+わかったつもりで　いると▽
+いろいろ　いたいめに　あうからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:04" />
+				Time="2011-09-14T05:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:05:04" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -5138,10 +5541,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またね[Ctrl2:PageClear ]</Text>
+			<Text>じゃ　またね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T04:58:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5149,15 +5552,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>またね[Ctrl2:PageClear ]</Text>
+			<Text>じゃ　またね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T04:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>さよなら選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:20" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>チェレン</Text>
@@ -5185,10 +5595,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！[Ctrl2:PageClear ]</Text>
+			<Text>こんにちは！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:44:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5196,15 +5606,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！[Ctrl2:PageClear ]</Text>
+			<Text>こんにちは！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:44:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:22" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5225,10 +5642,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきだね[Ctrl2:PageClear ]</Text>
+			<Text>きょうは　どんな　かんじ？▼
+いい　かんじ　だったら
+すっごく　たのしいし▼
+いまいち　だったら
+あしたが　すごく　たのしいはずだよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T04:49:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5236,15 +5657,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今日は　いい天気だね[Ctrl2:PageClear ]</Text>
+			<Text>きょうは　どんな　かんじ？▼
+いい　かんじ　だったら
+すっごく　たのしいし▼
+いまいち　だったら
+あしたが　すごく　たのしいはずだよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5265,10 +5698,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモンと　であうため
+くさむらに　はいるのって▽
+いつになっても　ドキドキするよ▼
+あの　きもち　いつまでも
+ぜったいに　わすれないよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:13" />
+				Time="2011-09-14T05:28:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5276,15 +5713,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモンと　であうため
+くさむらに　はいるのって▽
+いつになっても　ドキドキするよ▼
+あの　きもち　いつまでも
+ぜったいに　わすれないよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:13" />
+				Time="2011-09-14T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:13" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5298,10 +5747,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>はかせの　おてつだいで
+たっくさん　ほんを　よんでいたら▽
+メガネを　かけるように　なったの▼
+あたしとしては
+にあってるつもり　なんだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:15" />
+				Time="2011-09-14T05:24:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5309,15 +5762,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>はかせの　おてつだいで
+たっくさん　ほんを　よんでいたら▽
+メガネを　かけるように　なったの▼
+あたしとしては
+にあってるつもり　なんだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:15" />
+				Time="2011-09-14T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:15" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5331,10 +5796,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>モンスターボールを
+１０こ　まとめて　かうとね▼
+な　な　なんと！
+プレミアボールを　１こ▽
+もらえて　しまうんだよ！▼
+すごいよねえ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:15" />
+				Time="2011-09-14T05:23:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5342,15 +5812,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>モンスターボールを
+１０こ　まとめて　かうとね▼
+な　な　なんと！
+プレミアボールを　１こ▽
+もらえて　しまうんだよ！▼
+すごいよねえ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:15" />
+				Time="2011-09-14T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:15" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5364,10 +5847,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ねえねえ　いきなりだけど
+あたし　おもうんだ！▼
+ともだちって　あえなくても
+ともだち　だよね　きっと！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:15" />
+				Time="2011-09-14T05:21:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5375,15 +5861,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ねえねえ　いきなりだけど
+あたし　おもうんだ！▼
+ともだちって　あえなくても
+ともだち　だよね　きっと！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:15" />
+				Time="2011-09-14T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:15" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5397,10 +5894,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>えーっとね
+むかしのこと　おもいだしてたの▼
+といっても　そんな
+むかしじゃなくて　というか▽
+つい　さいきん　なのかな？▼
+ポケモンを　もらって
+ポケモンずかんを　わたされ▽
+たびを　はじめたときの　ことだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:11" />
+				Time="2011-09-14T05:20:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5408,15 +5912,30 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>えーっとね
+むかしのこと　おもいだしてたの▼
+といっても　そんな
+むかしじゃなくて　というか▽
+つい　さいきん　なのかな？▼
+ポケモンを　もらって
+ポケモンずかんを　わたされ▽
+たびを　はじめたときの　ことだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:11" />
+				Time="2011-09-14T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:05:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5437,10 +5956,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ねえねえ▼
+ポケモンと　はなせたら
+うれしい？　それとも　こまる？▼
+あたしは　じぶんの　ポケモンに
+いつも　はなしかけてるけど▽
+へんじしたら　どうなるのかなあ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:11" />
+				Time="2011-09-14T03:56:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5448,15 +5972,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ねえねえ▼
+ポケモンと　はなせたら
+うれしい？　それとも　こまる？▼
+あたしは　じぶんの　ポケモンに
+いつも　はなしかけてるけど▽
+へんじしたら　どうなるのかなあ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:11" />
+				Time="2011-09-14T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:05:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5477,10 +6014,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモンの
+いちばんの　ふしぎ……▼
+それは　ひとと
+いっしょに　いること！▼
+それを　けんきゅうテーマに
+しようかな　なんて　おもってるの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:11" />
+				Time="2011-09-14T03:54:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5488,15 +6030,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモンの
+いちばんの　ふしぎ……▼
+それは　ひとと
+いっしょに　いること！▼
+それを　けんきゅうテーマに
+しようかな　なんて　おもってるの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:11" />
+				Time="2011-09-14T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:05:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5517,10 +6072,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>あたしはね
+ポケモンの　けんきゅうを▽
+はじめたばかり　というか▼
+まだ　おてつだい　だけど
+ぜったいに　ポケモンの　すべてを▽
+ときあかすなんて　むりでしょ▼
+それを　わかっていて
+けんきゅうを　つづける　はかせって▽
+すごいと　おもうんだよねえ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:11" />
+				Time="2011-09-14T03:50:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5528,15 +6091,31 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>あたしはね
+ポケモンの　けんきゅうを▽
+はじめたばかり　というか▼
+まだ　おてつだい　だけど
+ぜったいに　ポケモンの　すべてを▽
+ときあかすなんて　むりでしょ▼
+それを　わかっていて
+けんきゅうを　つづける　はかせって▽
+すごいと　おもうんだよねえ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:11" />
+				Time="2011-09-14T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:05:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5557,10 +6136,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>……　……　……
+……　……　……▼
+ああ！　ごめんね▼
+いま　きになる
+ポケモンが　とびだしたから……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:11" />
+				Time="2011-09-14T03:47:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5568,15 +6151,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>……　……　……
+……　……　……▼
+ああ！　ごめんね▼
+いま　きになる
+ポケモンが　とびだしたから……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T04:05:11" />
+				Time="2011-09-14T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T04:05:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5597,10 +6192,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またねー[Ctrl2:PageClear ]</Text>
+			<Text>またねえ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:42:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5608,15 +6203,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>またねー[Ctrl2:PageClear ]</Text>
+			<Text>またねえ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:42:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>さよなら選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ベル</Text>
@@ -5637,10 +6239,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら？　げんきそうじゃない[Ctrl2:PageClear ]</Text>
+			<Text>おっ
+げんきそうな　こえね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:24:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5648,10 +6251,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら？　元気そうじゃない[Ctrl2:PageClear ]</Text>
+			<Text>おっ
+元気そうな　声ね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:24:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5684,10 +6288,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　いいてんきね[Ctrl2:PageClear ]</Text>
+			<Text>いっしょに　たびをする
+ポケモンは　ふえたの？▼
+たびは　にぎやかな　ほうが
+ぜったいに　たのしいわよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5695,15 +6302,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今日は　いい天気ね[Ctrl2:PageClear ]</Text>
+			<Text>いっしょに　たびをする
+ポケモンは　ふえたの？▼
+たびは　にぎやかな　ほうが
+ぜったいに　たのしいわよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
@@ -5731,10 +6349,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>きょうの　こんだては
+なにに　しようかなー？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:30" />
+				Time="2011-09-14T03:44:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5742,15 +6361,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>きょうの　こんだては
+なにに　しようかなー？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:30" />
+				Time="2011-09-14T03:44:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:30" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
@@ -5771,10 +6399,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>いろんな　ポケモンが　いて
+おなじ　しゅるいの　ポケモンでも▽
+せいかくとか　ぜんぶ　ちがうのよ▼
+あなたに　ぴったりの
+ポケモンは　どんな　ポケモンかな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:29:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5782,15 +6414,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>いろんな　ポケモンが　いて
+おなじ　しゅるいの　ポケモンでも▽
+せいかくとか　ぜんぶ　ちがうのよ▼
+あなたに　ぴったりの
+ポケモンは　どんな　ポケモンかな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
@@ -5811,10 +6455,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモンに　しんらい　されるには
+まず　いっしょに　あるくこと！▼
+そうすれば　あなたの
+いろんなことを　しってもらえるわよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:32:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5822,15 +6469,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモンに　しんらい　されるには
+まず　いっしょに　あるくこと！▼
+そうすれば　あなたの
+いろんなことを　しってもらえるわよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
@@ -5851,10 +6509,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>いえの　ことは　だいじょうぶよ！▼
+あなたが　いつ
+かえってきても　いいように▼
+ベッドの　シーツは
+まいにち　あらってるから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5862,15 +6524,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>いえの　ことは　だいじょうぶよ！▼
+あなたが　いつ
+かえってきても　いいように▼
+ベッドの　シーツは
+まいにち　あらってるから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
@@ -5891,10 +6565,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>いきなり　マジメに　なっちゃうけど▼
+あなたが　うまれたとき
+すでに　ポケモンは　いたよね▼
+それって　あたりまえ　だけど
+あたりまえの　ことを　なぜ？　って▽
+かんがえるのも　たび　かもね？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:40:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5902,15 +6581,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>いきなり　マジメに　なっちゃうけど▼
+あなたが　うまれたとき
+すでに　ポケモンは　いたよね▼
+それって　あたりまえ　だけど
+あたりまえの　ことを　なぜ？　って▽
+かんがえるのも　たび　かもね？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
@@ -5931,10 +6623,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモンセンターの
+うけつけの　ひとはね　いがいと▽
+トレーナーのこと　おぼえているのよ▼
+もちろん　いっしょに　いる
+ポケモンたちの　こともね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:33:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5942,15 +6638,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモンセンターの
+うけつけの　ひとはね　いがいと▽
+トレーナーのこと　おぼえているのよ▼
+もちろん　いっしょに　いる
+ポケモンたちの　こともね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
@@ -5971,10 +6679,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモン　いっぱい　つかまえた？▼
+じゃあ　たまには
+ポケモンセンターの　ボックスを　みて▼
+あなたと　たびを　したがっている
+ポケモンが　いるかもよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:38:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5982,15 +6694,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモン　いっぱい　つかまえた？▼
+じゃあ　たまには
+ポケモンセンターの　ボックスを　みて▼
+あなたと　たびを　したがっている
+ポケモンが　いるかもよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
@@ -6011,10 +6735,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ポケモンセンターは
+みんなの　いえ！▼
+そういうつもりで　えんりょなく
+りよう　すれば　いいのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:35:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6022,15 +6749,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ポケモンセンターは
+みんなの　いえ！▼
+そういうつもりで　えんりょなく
+りよう　すれば　いいのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
@@ -6051,10 +6789,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>おこづかいは　たりてる？▼
+なんて　きいてみたけど
+あなたなら　だいじょうぶ　よね！▼
+だけど　ムダづかいは　だめよ
+いざというとき　こまるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:36:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6062,15 +6804,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>おこづかいは　たりてる？▼
+なんて　きいてみたけど
+あなたなら　だいじょうぶ　よね！▼
+だけど　ムダづかいは　だめよ
+いざというとき　こまるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T02:51:39" />
+				Time="2011-09-14T03:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T02:51:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>はなす/話す選択時
+・ランダム</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
@@ -6091,10 +6845,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それじゃあ　きをつけてね[Ctrl2:PageClear ]</Text>
+			<Text>はーい！
+じゃあ　げんき　でねー！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6102,15 +6857,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それじゃあ　気をつけてね[Ctrl2:PageClear ]</Text>
+			<Text>はーい！
+じゃあ　元気でねー！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:19:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>さよなら選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T03:17:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>主人公ママ</Text>
