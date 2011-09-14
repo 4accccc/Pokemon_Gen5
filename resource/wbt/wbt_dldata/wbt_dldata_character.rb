@@ -65,27 +65,33 @@ class WBT_CHARACTER_SINGLE
     @pokemon.set_data( conv )
     #
     @name = [];
-    SAVELEN_TRAINER_NAME.times{|i|
+    len = SAVELEN_TRAINER_NAME*2
+    len.times{|i|
       @name[i] = 0;
     }
     @title = [];
-    WBTDL_TRAINER_TITLE_LEN.times{|i|
+    len = WBTDL_TRAINER_TITLE_LEN*2
+    len.times{|i|
       @title[i] = 0;
     }
     @msg_before = [];
-    WBTDL_MSG_LEN.times{|i|
+    len = WBTDL_MSG_LEN*2
+    len.times{|i|
       @msg_before[i] = 0;
     }
     @msg_after_win = [];
-    WBTDL_MSG_LEN.times{|i|
+    len = WBTDL_MSG_LEN*2
+    len.times{|i|
       @msg_after_win[i] = 0;
     }
     @msg_after_lose = [];
-    WBTDL_MSG_LEN.times{|i|
+    len = WBTDL_MSG_LEN*2
+    len.times{|i|
       @msg_after_lose[i] = 0;
     }
     @msg_announce = [];
-    WBTDL_MSG_LEN.times{|i|
+    len = WBTDL_MSG_LEN*2
+    len.times{|i|
       @msg_announce[i] = 0;
     }
     #

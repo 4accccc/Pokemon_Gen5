@@ -52,7 +52,8 @@ class WBT_POKEMON_SINGLE
     @monsno      = 0;	# É|ÉPÉÇÉìî‘çÜ
     #
     @nick_name = [];
-    NICKNAME_LEN.times{|i|
+    len = NICKNAME_LEN*2
+    len.times{|i|
       @nick_name[i] = 0;
     }
     @expbuf    = [];	# ìwóÕíl

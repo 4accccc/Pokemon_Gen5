@@ -73,15 +73,18 @@ class WBT_DATA
     @tournament_id = 0;
     #
     @tournament_name = [];
-    WBTDL_TOURNAMENT_NAME_LEN.times{|i|
+    len = WBTDL_TOURNAMENT_NAME_LEN*2
+    len.times{|i|
       @tournament_name[i] = 0;
     }
     @contents_explain = [];
-    WBTDL_TOURNAMENT_EXPLAIN_LEN.times{|i|
+    len = WBTDL_TOURNAMENT_EXPLAIN_LEN*2
+    len.times{|i|
       @contents_explain[i] = 0;
     }
     @regulation_explain = [];
-    WBTDL_TOURNAMENT_REG_EXPLAIN_LEN.times{|i|
+    len = WBTDL_TOURNAMENT_REG_EXPLAIN_LEN*2
+    len.times{|i|
       @regulation_explain[i] = 0;
     }
     #
@@ -249,6 +252,12 @@ class WBT_DATA
     #
     # 変換
     @tournament_name = get_unicode( 0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW )
+    #
+#    size = @tournament_name.size;
+#    p sprintf("size :%d",size)
+#    size.times{|i|
+#      p sprintf( "%x",@tournament_name[i] )
+#    }
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
 #      p sprintf("%s :%s", $title_str[12],@tournament_name)
