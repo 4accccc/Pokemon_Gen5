@@ -59,7 +59,7 @@ void POKEWOOD_SAVEDATA_Init( POKEWOOD_SAVEDATA * sv )
 	MI_CpuClear8( sv, sizeof(POKEWOOD_SAVEDATA));
 
   // 初期シナリオオープン状態を作成
-  for(i=0;i<3;i++){
+  for(i=0;i<2;i++){
     POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, i ); /// ポケウッド初期状態/ハチクマン/チュートリアル
     POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_ANNOUNCED, i );
   }

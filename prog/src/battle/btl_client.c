@@ -6992,13 +6992,14 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
   // ポケウッド撮影時に条件達成・未達成を伝える
   case SEQ_POKEWOOD_REC_END_MSG:
     if(SubSeq_POKEWOOD_RecEnd_Sequence(wk)){
+      BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
       POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
       int event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount,
                                            BTL_MAIN_GetPokewoodFailReason(wk->mainModule));
       _check_ending( wk, senario, event_no );
       _check_pokewood_success( wk, senario, event_no );
       // 最終評価値を決定する
-      CalcPokewoodEstimate( wk, &wk->pokewoodSeqWork.Estimate );
+      bsp->pokewoodProfit = CalcPokewoodEstimate( wk, &wk->pokewoodSeqWork.Estimate );
       return TRUE;
     }
     break;

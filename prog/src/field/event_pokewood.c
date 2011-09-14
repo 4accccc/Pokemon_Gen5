@@ -56,6 +56,7 @@
 #include "savedata/pokewood_rec.h"
 #include "msg/msg_pokewood_name.h"
 #include "../battle/pokewood/pokewood_senario.h"
+#include "pkwd_scenario_open.h"
 
 #include "pokewood_party.naix"
 
@@ -547,6 +548,8 @@ static void rewritePokewoodRec( GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp, H
     if(bsp->pokewoodResult==BTL_POKEWOOD_RESULT_SUCCESS){
       POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_SUCCESS, bsp->pokewoodSenario );
     }
+    // シナリオオープンチェック
+    PKWD_OpenCheckScenario( ps, bsp->pokewoodSenario, bsp->pokewoodResult, bsp->pokewoodProfit );
   }
 
   BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
@@ -1458,5 +1461,122 @@ GMEVENT * PKWD_EVENT_SetSelectPokeList( GAMESYS_WORK * gsys, void * parent_work 
   PKWDSYS_SetupPokeStatusData( pkwdsys, gamedata, &work->status_data );
    
   return( event );
+}
+
+//--------------------------------------------------------------
+// シナリオオープン条件構造体
+//--------------------------------------------------------------
+typedef struct{
+  u8 open_provision;  // オープン条件
+  u8 target;          // 条件で参照される値
+} SCENARIO_PROVISION;
+
+static const SCENARIO_PROVISION ScenarioProvisionTbl[]={
+  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ1
+  { PW_OPEN_PROVISION_SUCCESS,   0 },   // シナリオ2
+  { PW_OPEN_PROVISION_SUCCESS,   1 },   // シナリオ3
+  { PW_OPEN_PROVISION_SUCCESS,   2 },   // シナリオ4
+  { PW_OPEN_PROVISION_SUCCESS,   3 },   // シナリオ5
+  { PW_OPEN_PROVISION_SUCCESS,   4 },   // シナリオ6
+  { PW_OPEN_PROVISION_SUCCESS,   5 },   // シナリオ7
+  { PW_OPEN_PROVISION_SUCCESS,   6 },   // シナリオ8
+  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ9
+  { PW_OPEN_PROVISION_SUCCESS,   8 },   // シナリオ10
+  { PW_OPEN_PROVISION_SUCCESS,   9 },   // シナリオ11
+  { PW_OPEN_PROVISION_SUCCESS,  10 },   // シナリオ12
+  { PW_OPEN_PROVISION_GAMECLEAR,   },   // シナリオ13
+  { PW_OPEN_PROVISION_SUCCESS,  12 },   // シナリオ14
+  { PW_OPEN_PROVISION_SUCCESS,  13 },   // シナリオ15
+  { PW_OPEN_PROVISION_SUCCESS,  14 },   // シナリオ16
+  { PW_OPEN_PROVISION_BEGINING     },   // シナリオ17
+  { PW_OPEN_PROVISION_SUCCESS,  16 },   // シナリオ18
+  { PW_OPEN_PROVISION_SUCCESS,  17 },   // シナリオ19
+  { PW_OPEN_PROVISION_SUCCESS,  18 },   // シナリオ20
+  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ21
+  { PW_OPEN_PROVISION_SUCCESS,  20 },   // シナリオ22
+  { PW_OPEN_PROVISION_SUCCESS,  21 },   // シナリオ23
+  { PW_OPEN_PROVISION_SUCCESS,  22 },   // シナリオ24
+  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ25
+  { PW_OPEN_PROVISION_SUCCESS,  24 },   // シナリオ26
+  { PW_OPEN_PROVISION_SUCCESS,  25 },   // シナリオ27
+  { PW_OPEN_PROVISION_STARRANK, 3  },   // シナリオ28
+  { PW_OPEN_PROVISION_SUCCESS,  27 },   // シナリオ29
+  { PW_OPEN_PROVISION_SUCCESS,  28 },   // シナリオ30
+  { PW_OPEN_PROVISION_SUCCESS,  29 },   // シナリオ31
+  { PW_OPEN_PROVISION_SUCCESS,  30 },   // シナリオ32
+  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ33
+  { PW_OPEN_PROVISION_SUCCESS,  31 },   // シナリオ34
+  { PW_OPEN_PROVISION_SUCCESS,  32 },   // シナリオ35
+  { PW_OPEN_PROVISION_SUCCESS,  33 },   // シナリオ36
+  { PW_OPEN_PROVISION_STARRANK, 2  },   // シナリオ37
+  { PW_OPEN_PROVISION_SUCCESS,  35 },   // シナリオ38
+  { PW_OPEN_PROVISION_SUCCESS,  36 },   // シナリオ39
+  { PW_OPEN_PROVISION_PROFIT,      },   // シナリオ40
+};
+
+
+//=============================================================================================
+/**
+ * @brief	シナリオが新しくオープンするかチェックする(関数内でオープンも行う）
+ *
+ * @param   ps		          POKEWOOD_SAVEDATA
+ * @param   scenario_no		  シナリオNO
+ * @param   pokewoodResult	撮影終了時の状態
+ * @param   profit		      興行収益
+ */
+//=============================================================================================
+void PKWD_OpenCheckScenario( POKEWOOD_SAVEDATA *ps, int scenario_no, int result, int profit )
+{
+  int i;
+  OS_Printf("x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-\n");
+  OS_Printf("scenario=%d, result=%d, profit=%d\n", scenario_no, result, profit );
+  OS_Printf("x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-\n");
+  
+  
+  // i番目のシナリオがまだオープンしていないのであればチェック
+  for(i=0;i<POKEWOOD_SENARIO_MAX;i++){
+
+    if( POKEWOOD_SAVEDATA_GetPokewoodFlag(ps, PWSV_TYPE_SENARIO_OPEN, i)==0){
+      switch(ScenarioProvisionTbl[i].open_provision){
+      // 指定のシナリオを成功エンド
+      case PW_OPEN_PROVISION_SUCCESS:
+        if( scenario_no==ScenarioProvisionTbl[i].target && result==1 ){
+          POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, i );
+        }
+        break;
+      // 指定のスターランクに到達した
+      case PW_OPEN_PROVISION_STARRANK:
+        {
+          int point = POKEWOOD_SAVEDATA_GetStarPoint( ps );
+          int rank  = POKEWOOD_SAVEDATA_CalcStarPoint2StarRank(point);
+          if( rank >= ScenarioProvisionTbl[i].target ){
+            POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, i );
+          }
+        }
+        break;
+
+      // 指定の興行収入以上の成績を残した
+      case PW_OPEN_PROVISION_PROFIT:
+        if(profit>=POKEWOOD_PROVISION_PROFIT){
+            POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, i );
+        }
+        break;
+      }
+    }
+  }
+}
+
+//=============================================================================================
+/**
+ * @brief	各シナリオがオープンされる条件を返す
+ *
+ * @param   scenario_no		
+ *
+ * @retval  int		オープン条件（pkwd_scenario_open.hに記述）
+ */
+//=============================================================================================
+int  PKWD_GetScenarioOpenProvision( int scenario_no )
+{
+  return ScenarioProvisionTbl[scenario_no].open_provision;
 }
 

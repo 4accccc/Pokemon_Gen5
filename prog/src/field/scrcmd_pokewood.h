@@ -46,7 +46,7 @@ extern VMCMD_RESULT EvCmdPokewoodIsNewlyReleaseMovie( VMHANDLE * core, void * wk
 extern VMCMD_RESULT EvCmdPokewoodIsRentalPokeMovie( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodSetStudioMMdl( VMHANDLE * core, void * wk );
 
-extern int PokewoodStarPoint2StarRank( int point);
+extern int  PokewoodStarPoint2StarRank( int point);
 
 #ifdef _cplusplus
 }	// extern "C"{

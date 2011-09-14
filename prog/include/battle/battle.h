@@ -385,10 +385,12 @@ typedef struct {
   u32              restHPRatio[ BTL_CLIENT_NUM ];
 
   // [io] ポケウッドデータ  撮影モードのときはoutput 上映モードのときはinput
-  u8 pokewoodChoiceTbl[BTL_POKEWOOD_CHOICE_MAX];
+  u8  pokewoodChoiceTbl[BTL_POKEWOOD_CHOICE_MAX];
   BtlPokewoodResult       pokewoodResult;      ///< 撮影終了時が成功・失敗・ストレンジかを格納
-  u8 audience_num;        ///< 劇場の観客数(max=22)
-  u8 player_star_rank;    ///< Player Star Rank
+  u8  audience_num;        ///< 劇場の観客数(max=22)
+  u8  player_star_rank;    ///< Player Star Rank
+  u32 audience_bit;        ///< 観客配置のBitテーブル
+  u32 pokewoodProfit;      ///< 撮影結果の興行成績
 
   //難易度調整値
   s8 difficulty_lv;

@@ -36,6 +36,7 @@
 #include "pokewood_system.h"
 #include "savedata/pokewood_rec.h"
 #include "savedata/pokewood_savedata.h"
+#include "pkwd_scenario_open.h"
 
 #include "msg/msg_pw_movietitle.h"
 
@@ -784,4 +785,5 @@ GMEVENT * PKWB_EVENT_Save( GAMESYS_WORK * gsys, PKWD_REC_POS dst_pos )
   epcmw->save_tmp = 0;
   return event;
 }
+
 
