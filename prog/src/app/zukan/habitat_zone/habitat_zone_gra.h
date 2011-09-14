@@ -109,6 +109,9 @@ enum
   OBJ_WK_SEASON_R,
   OBJ_WK_STAMP_BIG,
   OBJ_WK_BUTTON_LAND,
+  OBJ_WK_MAP_BLINK,
+
+  // ↓ここからスクロール
   OBJ_WK_BUTTON_WATERSIDE,
   OBJ_WK_BUTTON_FISHING,
   OBJ_WK_BUTTON_EXPLANATION,
@@ -117,13 +120,17 @@ enum
   OBJ_WK_CHECK_BOX,
   OBJ_WK_CANCEL,
   OBJ_WK_RETURN,
-  OBJ_WK_MAP_BLINK,
   OBJ_WK_MENU_BAR,
+  // ↑ここまでスクロール
+
   OBJ_WK_STAMP_SMALL_01,
   COMMON_OBJ_WK_MAX = OBJ_WK_STAMP_SMALL_01 + HABITAT_ZONE_POKE_LIST_MAX,
 
   // ポケモンごとのスタンプアイコン開始位置
   OBJ_WK_STAMP_SMALL_START = OBJ_WK_STAMP_SMALL_01,
+
+  M_SCROLL_OBJ_START = OBJ_WK_BUTTON_WATERSIDE,
+  M_SCROLL_OBJ_END = OBJ_WK_MENU_BAR,
 };
 
 // 共通素材用OBJWKID
@@ -297,7 +304,6 @@ typedef struct {
 //
 //=============================================================================
 extern void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk ,GAMEDATA *p_gdata );
-extern void HABITAT_ZONE_GRA_CallOpeningFade( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_Exit( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_VblankMain( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_Main( HABITAT_ZONE_GRA_WK *p_wk );
@@ -325,4 +331,7 @@ extern void HABITAT_ZONE_GRA_MakeFrameWinMsg(const STRBUF* str,HABITAT_ZONE_GRA_
 extern void HABITAT_ZONE_GRA_DeleteFrameWinMsg( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_EnableStrCursor( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_SetAnmSeq( HABITAT_ZONE_GRA_WK *p_wk ,s32 clwkid ,u32 anm_seq );
+extern void HABITAT_ZONE_GRA_CallFade( HABITAT_ZONE_GRA_WK *p_wk, u8 start, u8 end );
+extern u16 HABITAT_ZONE_GRA_CheckFade( HABITAT_ZONE_GRA_WK *p_wk );
+extern void HABITAT_ZONE_GRA_AddScrollFrame( HABITAT_ZONE_GRA_WK *p_wk ,s32 yval,BOOL is_main  );
 

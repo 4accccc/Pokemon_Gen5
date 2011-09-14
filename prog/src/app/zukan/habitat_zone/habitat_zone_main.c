@@ -17,6 +17,7 @@
 #include "field/zonedata.h"         // for ZONEDATA_GetPlaceNameID
 #include "sound/pm_sndsys.h"
 #include "habitat_zone_main_def.h"  // 定数定義
+#include "../zukan_common.h"
 
 // 生息地データ
 #include "fieldmap/zone_id.h" // for ZONE_ID_*
@@ -31,6 +32,7 @@
 
 #define FCOL_WP01WN		( PRINTSYS_LSB_Make(0xF,0x1,0x2) )	// フォントカラー：両用０１白抜
 #define FCOL_BP01WN		( PRINTSYS_LSB_Make(0x1,0x2,0xF) )	// フォントカラー：両用０１黒抜
+
 
 //=============================================================================
 /**
@@ -249,6 +251,7 @@ enum{
 static void MAINSEQ_AppInit( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_AppExit( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_FadeIn( HABITAT_ZONE_WK *p_wk );
+static void MAINSEQ_FadeOut( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_ReturnTopKeyInput( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk );
@@ -263,6 +266,7 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk );
 typedef enum _MAIN_SEQ{
   MAIN_SEQ_APPINIT,
   MAIN_SEQ_FADEIN,
+  MAIN_SEQ_FADEOUT,
   MAIN_SEQ_TOP_KEY_INPUT,
   MAIN_SEQ_RETURN_TOP_KEY_INPUT,
   MAIN_SEQ_CHANGE_SEASON,
@@ -280,6 +284,7 @@ typedef enum _MAIN_SEQ{
 static const MainFunc MainSeq[] = {
   MAINSEQ_AppInit,            // アプリケーションの初期化
   MAINSEQ_FadeIn,             // フェードイン
+  MAINSEQ_FadeOut,            // フェードアウト
   MAINSEQ_TopKeyInput,        // トップキー
   MAINSEQ_ReturnTopKeyInput,  // トップキー入力に戻る
   MAINSEQ_ChangeSeason,       // 季節切替
@@ -391,32 +396,114 @@ static void MAINSEQ_FadeIn( HABITAT_ZONE_WK *p_wk )
       // 文字描画終了を待ってフェードを呼び出す
       if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
       {
-
-        // オープニングフェード呼出
-        GX_SetMasterBrightness( 0 );
-        GXS_SetMasterBrightness( 0 );
-        HABITAT_ZONE_GRA_CallOpeningFade( &p_wk->gra_sys );
+        p_wk->main_scroll_cnt = FRAME_SCROLL_COUNT;
+        p_wk->sub_scroll_cnt  = -FRAME_SCROLL_COUNT;
+        // パレットフェードを行う
+        HABITAT_ZONE_GRA_CallFade( &p_wk->gra_sys ,16,16 );
+        HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,p_wk->main_scroll_cnt,TRUE );
+        HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,p_wk->sub_scroll_cnt,FALSE );
         p_wk->sub_seq++;
       }
     }
     break;
   case 1:
     {
-      HABITATLIST_STATUS event;
-      event = CheckCompleteEvent( p_wk );
-      if( event != HABITAT_ZONE_STATUS_NONE )
+      if( HABITAT_ZONE_GRA_CheckFade( &p_wk->gra_sys ) == 0 )
       {
-        // イベントIDを設定する
-        SetCompleteEvetnID( p_wk ,event );
-        SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
+        // マスター輝度を戻す
+        GX_SetMasterBrightness( 0 );
+        GXS_SetMasterBrightness( 0 );
+        // オープニングフェード
+        HABITAT_ZONE_GRA_CallFade( &p_wk->gra_sys ,16,0 );
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 2:
+    {
+      // スクロール待ち
+      if( p_wk->main_scroll_cnt <= 0)
+      {
+        if( HABITAT_ZONE_GRA_CheckFade( &p_wk->gra_sys ) == 0 )
+        {
+          HABITATLIST_STATUS event;
+          event = CheckCompleteEvent( p_wk );
+          if( event != HABITAT_ZONE_STATUS_NONE )
+          {
+            // イベントIDを設定する
+            SetCompleteEvetnID( p_wk ,event );
+            SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
+          }
+          else
+          {
+            // 通常キー入力に起動
+            SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+          }
+        }
       }
       else
       {
-        // 通常キー入力に起動
-        SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+        HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,-ZKNCOMM_BAR_SPEED,TRUE );
+        HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,ZKNCOMM_BAR_SPEED,FALSE );
+        p_wk->main_scroll_cnt-=ZKNCOMM_BAR_SPEED;
+        p_wk->sub_scroll_cnt+=ZKNCOMM_BAR_SPEED;
       }
-      break;
     }
+    break;
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードアウトシーケンス
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MAINSEQ_FadeOut( HABITAT_ZONE_WK *p_wk )
+{
+  switch(p_wk->sub_seq)
+  {
+  case 0:
+    {
+      // 文字描画終了を待ってフェードを呼び出す
+      if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
+      {
+        p_wk->main_scroll_cnt = 0;
+        p_wk->sub_scroll_cnt  = 0;
+        // パレットフェードを行う
+        HABITAT_ZONE_GRA_CallFade( &p_wk->gra_sys ,0,16 );
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 1:
+    {
+      if( HABITAT_ZONE_GRA_CheckFade( &p_wk->gra_sys ) == 0 )
+      {
+        // スクロール待ち
+        if( p_wk->main_scroll_cnt >= FRAME_SCROLL_COUNT)
+        {
+          // 輝度を最低にしておく
+          GX_SetMasterBrightness( -16 );
+          GXS_SetMasterBrightness( -16 );
+
+          // メインシーケンスの状態を終了に設定
+          p_wk->main_status = HABITAT_ZONE_MAIN_EXIT;
+        }
+        else
+        {
+          HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,ZKNCOMM_BAR_SPEED,TRUE );
+          HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,-ZKNCOMM_BAR_SPEED,FALSE );
+          p_wk->main_scroll_cnt+=ZKNCOMM_BAR_SPEED;
+          p_wk->sub_scroll_cnt-=ZKNCOMM_BAR_SPEED;
+        }
+      }
+    }
+    break;
   }
 }
 
@@ -993,9 +1080,7 @@ static void MAINSEQ_AppExit( HABITAT_ZONE_WK *p_wk )
       // アニメーション終了待ち
       if( GFL_CLACT_WK_CheckAnmActive( p_clwk ) == FALSE )
       {
-        // メインシーケンスの状態を終了に設定
-        p_wk->main_status = HABITAT_ZONE_MAIN_EXIT;
-
+        SetNextSeq( p_wk, MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE);
       }
     }
     break;

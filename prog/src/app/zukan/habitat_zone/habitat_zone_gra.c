@@ -106,7 +106,6 @@ static void GRA_ExitBmpWin( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_ExitBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk );
 
 // 処理系
-static void GRA_SetPalFadeSeq( HABITAT_ZONE_GRA_WK *p_wk, u8 start, u8 end );
 static void GRA_PrintMain( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_BlinkAnmMain( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_GetPokeIconPos( u8 index ,GFL_CLACTPOS *p_pos );
@@ -1081,16 +1080,30 @@ static void GRA_ExitBmpWin( HABITAT_ZONE_GRA_WK *p_wk )
 //  パレットフェード操作
 //
 //=============================================================================
-static void GRA_SetPalFadeSeq( HABITAT_ZONE_GRA_WK *p_wk, u8 start, u8 end )
+void HABITAT_ZONE_GRA_CallFade( HABITAT_ZONE_GRA_WK *p_wk, u8 start, u8 end )
 {
 	PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_BG,  0xbfff, ZKNCOMM_FADE_WAIT,
                                         start, end, 0, GFUser_VIntr_GetTCBSYS() );
-//	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_BG,   0xffef, 
-//      ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-//	PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_OBJ, 0xf878, 
-//      ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-//	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_OBJ,  PF_SUB_OBJ_REQ_BIT, 
-//	ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_BG,   0xffef, 
+      ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_OBJ, 0xf878, 
+      ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_OBJ,  PF_SUB_OBJ_REQ_BIT, 
+	ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief パレットフェード終了チェック
+ *
+ *	@param	*p_wk 
+ *
+ * @retval  "0 = 終了"
+ */
+//-----------------------------------------------------------------------------
+u16 HABITAT_ZONE_GRA_CheckFade( HABITAT_ZONE_GRA_WK *p_wk )
+{
+	return PaletteFadeCheck( p_wk->p_pfd );
 }
 
 //----------------------------------------------------------------------------
@@ -1146,15 +1159,6 @@ static void GRA_InitBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk )
 //  グラフィック操作系
 //
 //=============================================================================
-void HABITAT_ZONE_GRA_CallOpeningFade( HABITAT_ZONE_GRA_WK *p_wk )
-{
-	GRA_SetPalFadeSeq( p_wk, 16, 0 );
-
-  ONOUE_Printf("colmode = %x\n",GFL_BG_GetScreenColorMode(BGS_FRAME_FONT));
-  ONOUE_Printf("colmode = %x\n",GFL_BG_GetScreenColorMode(BGS_FRAME_BAR));
-  ONOUE_Printf("colmode = %x\n",GFL_BG_GetScreenColorMode(BGS_FRAME_MAP));
-  ONOUE_Printf("colmode = %x\n",GFL_BG_GetScreenColorMode(BGS_FRAME_ROOT));
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -1760,5 +1764,40 @@ void HABITAT_ZONE_GRA_SetAnmSeq( HABITAT_ZONE_GRA_WK *p_wk ,s32 clwkid ,u32 anm_
   GFL_CLACT_WK_SetAnmFrame( p_clwk ,0 );
   GFL_CLACT_WK_SetAutoAnmFlag( p_clwk , TRUE );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定フレームのスクロールオブジェクトを操作する
+ *
+ *	@param	*p_wk 
+ *	@param	ypos
+ *	@param	is_main  
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_AddScrollFrame( HABITAT_ZONE_GRA_WK *p_wk ,s32 yval,BOOL is_main  )
+{
+  s32 i;
+  GFL_CLACTPOS	pos;
+
+  if( is_main )
+  {
+    // OBJスクロール
+    for( i = M_SCROLL_OBJ_START ; i<=M_SCROLL_OBJ_END; i++ )
+    {
+      GFL_CLWK *p_clwk = p_wk->p_clwk_common_obj[i];
+      GFL_CLACT_WK_GetPos( p_clwk , &pos, CLSYS_DRAW_MAIN );
+      pos.y += yval;
+      GFL_CLACT_WK_SetPos( p_clwk , &pos, CLSYS_DRAW_MAIN );
+    }
+  }
+  else
+  {
+    // BGスクロール
+	  GFL_BG_SetScrollReq( BGS_FRAME_FONT, GFL_BG_SCROLL_Y_DEC, yval );
+	  GFL_BG_SetScrollReq( BGS_FRAME_BAR, GFL_BG_SCROLL_Y_DEC, yval );
+  }
 }
 

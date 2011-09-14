@@ -124,5 +124,9 @@ struct _HABITAT_ZONE_WK{
   // 図鑑セーブデータ
   ZUKAN_SAVEDATA    *p_zkn_sv;
   HABITATLIST_SAVE  *p_habitat_sv;
+  
+  // スクロール
+  s32 main_scroll_cnt;
+  s32 sub_scroll_cnt;
 };
 
