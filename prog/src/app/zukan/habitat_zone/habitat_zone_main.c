@@ -75,8 +75,8 @@ static const GFL_UI_TP_HITTBL sc_touch_hit_tbl_top_menu[] =
 	{ TB_PY, TB_PY+TB_SY-1, 0, 24 },		    // 上
 	{ TB_PY, TB_PY+TB_SY-1, 24, 24+24 },		    // 下
 
-	{ 102, 110 + 16, 16 , 40 },		          // 季節L
-	{ 102, 110 + 16, 216 , 240 },		        // 季節R
+	{ 102, 102 + 24, 8 , 32 },		          // 季節L
+	{ 102, 102 + 24, 224 , 240 },		        // 季節R
 	
   // カーソル
   { GET_CURPOS_Y(0) ,GET_CURPOS_Y(0) + POKECURSOR_H,
@@ -1080,18 +1080,22 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
       {
         if( GFL_CLACT_WK_CheckAnmActive( p_clwk ) == FALSE )
         {
-          // アニメーションシーケンスを決定
+          GFL_CLWK *p_clwk_no_anm;
+          // アニメーションシーケンスを決定、アニメーションしていないほうと同じフレーム数に同期する
           if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
           {
+            p_clwk_no_anm = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
             GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_L );
+            GFL_CLACT_WK_ResetAnm( p_clwk );
+            GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
           }
           else if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
           {
+            p_clwk_no_anm = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
             GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_R );
+            GFL_CLACT_WK_ResetAnm( p_clwk );
+            GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
           }
-          // アニメーションの状態をリセット
-          GFL_CLACT_WK_SetAnmIndex( p_clwk , 0);
-          GFL_CLACT_WK_SetAutoAnmFlag( p_clwk ,FALSE );
 
           // デフォルトの季節を設定
           HABITATLIST_SAVE_SetDefaultSeason( p_wk->p_habitat_sv, p_wk->season );

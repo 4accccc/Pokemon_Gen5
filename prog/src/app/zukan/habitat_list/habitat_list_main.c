@@ -10,12 +10,14 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include <gflib.h>
-#include "system/main.h"            // HEAPID
+#include "system/main.h"              // HEAPID
 #include "habitat_list.h"           
 #include "habitat_list_main.h"
-#include "msg/msg_seisoku.h"        // for msg_seisoku_*
-#include "habitat_list_main_def.h"  // 定数定義
-#include "field/zonedata.h"         // for ZONEDATA_GetPlaceNameID
+#include "msg/msg_seisoku.h"          // for msg_seisoku_*
+#include "habitat_list_main_def.h"    // 定数定義
+#include "field/zonedata.h"           // for ZONEDATA_GetPlaceNameID
+#include "sound/pm_sndsys.h"          // for PMSND_PlaySE
+#include "../list/zknlist_snd_def.h"  // リストと同じ音を使用
 
 //=============================================================================
 /**
@@ -399,6 +401,7 @@ static void MAINSEQ_KeyInput( HABITAT_LIST_WK *p_wk )
       u32 list_pos = HABITAT_LIST_GRA_GetListPos( &p_wk->gra_sys );
       SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
       SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
+      PMSND_PlaySE( ZKNLIST_SE_DECIDE );
       ONOUE_Printf("項目選択 %d\n",list_pos);
     }
     break;
@@ -466,6 +469,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       u32 list_pos = HABITAT_LIST_GRA_GetListPos( &p_wk->gra_sys );
       SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
       SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
+      PMSND_PlaySE( ZKNLIST_SE_DECIDE );
     }
     break;
 
@@ -489,6 +493,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
         SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
         HABITAT_LIST_GRA_SetCursorPos( &p_wk->gra_sys, cursor_pos );
         SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
+        PMSND_PlaySE( ZKNLIST_SE_DECIDE );
       }
     }
     ONOUE_Printf("右アイコンタッチ\n");
@@ -514,6 +519,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
         SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
         HABITAT_LIST_GRA_SetCursorPos( &p_wk->gra_sys, cursor_pos );
         SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
+        PMSND_PlaySE( ZKNLIST_SE_DECIDE );
       }
     }
     ONOUE_Printf("中アイコンタッチ\n");
@@ -539,6 +545,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
         SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
         HABITAT_LIST_GRA_SetCursorPos( &p_wk->gra_sys, cursor_pos );
         SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
+        PMSND_PlaySE( ZKNLIST_SE_DECIDE );
       }
     }
     ONOUE_Printf("左アイコンタッチ\n");
@@ -546,6 +553,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
 
   case HABITATLIST_UI_BUTTON_SELECT:
     {
+      PMSND_PlaySE( ZKNLIST_SE_DECIDE );
       SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
       HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
           MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
@@ -569,6 +577,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
 
   case HABITATLIST_UI_BUTTON_X:
     {
+      PMSND_PlaySE( ZKNLIST_SE_CLOASE );
       SetRetMod( p_wk ,HABITAT_LIST_RET_EXIT );
       CallCellAnm( p_wk ,EXIT_BUTTON_CLWKID,APP_COMMON_BARICON_EXIT_ON,
           MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE );
@@ -577,11 +586,13 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
     break;
 
   case HABITATLIST_UI_BUTTON_Y:
+    PMSND_PlaySE( ZKNLIST_SE_Y );
     ONOUE_Printf("Yタッチ\n");
     break;
 
   case HABITATLIST_UI_BUTTON_RETURN:
     {
+      PMSND_PlaySE( ZKNLIST_SE_CANCEL );
       SetRetMod( p_wk ,HABITAT_LIST_RET_RETURN );
       CallCellAnm( p_wk ,RETURN_BUTTON_CLWKID,APP_COMMON_BARICON_RETURN_ON,
           MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
@@ -593,6 +604,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
     {
       if( p_wk->is_zenkoku == TRUE )
       {
+        PMSND_PlaySE( ZKNLIST_SE_DECIDE );
         SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
         HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
             MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
@@ -607,6 +619,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
 
   case HABITATLIST_UI_MODE_BUTTON_02:
     {
+      PMSND_PlaySE( ZKNLIST_SE_DECIDE );
       if( p_wk->is_zenkoku == TRUE )
       {
         SetRetMod( p_wk ,HABITAT_LIST_RET_ZENKOKU );
@@ -638,6 +651,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       // ボタン入力を行う
       if( trg & PAD_BUTTON_X )
       {
+				PMSND_PlaySE( ZKNLIST_SE_CLOASE );
         SetRetMod( p_wk ,HABITAT_LIST_RET_EXIT );
         CallCellAnm( p_wk ,EXIT_BUTTON_CLWKID,APP_COMMON_BARICON_EXIT_ON,
             MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
@@ -645,6 +659,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       }
       else if( trg & PAD_BUTTON_B )
       {
+				PMSND_PlaySE( ZKNLIST_SE_CANCEL );
         SetRetMod( p_wk ,HABITAT_LIST_RET_RETURN );
         CallCellAnm( p_wk ,RETURN_BUTTON_CLWKID,APP_COMMON_BARICON_RETURN_ON,
             MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
@@ -652,10 +667,12 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       }
       else if( trg & PAD_BUTTON_Y )
       {
+				PMSND_PlaySE( ZKNLIST_SE_Y );
         ONOUE_Printf("Yボタン\n");
       }
       else if( trg & PAD_BUTTON_SELECT )
       {
+        PMSND_PlaySE( ZKNLIST_SE_DECIDE );
         SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
         // モードによって光らせるボタンを変える
         if( p_wk->is_zenkoku == TRUE )

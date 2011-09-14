@@ -769,12 +769,14 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
       &p_wk->clres_common_obj, p_wk->p_clunit, 
       OBJ_POS_L_X, OBJ_POS_L_Y, OBJ_ANM_SEQ_L, HEAPID_ZUKAN_HABITAT_ZONE );
     GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[OBJ_WK_SEASON_L] ,1 );
+    GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_common_obj[OBJ_WK_SEASON_L],TRUE );
 
     // 季節Rボタン
     p_wk->p_clwk_common_obj[OBJ_WK_SEASON_R] = UI_EASY_CLWK_CreateCLWK( 
       &p_wk->clres_common_obj, p_wk->p_clunit, 
       OBJ_POS_R_X, OBJ_POS_R_Y, OBJ_ANM_SEQ_R, HEAPID_ZUKAN_HABITAT_ZONE );
     GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[OBJ_WK_SEASON_R] ,1 );
+    GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_common_obj[OBJ_WK_SEASON_R],TRUE );
 
     // メニューバー
     p_wk->p_clwk_common_obj[OBJ_WK_MENU_BAR] = UI_EASY_CLWK_CreateCLWK( 

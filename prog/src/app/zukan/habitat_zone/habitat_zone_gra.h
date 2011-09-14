@@ -44,9 +44,9 @@
 // OBJèâä˙à íu
 enum
 {
-  OBJ_POS_L_X = 24,
+  OBJ_POS_L_X = 16,
   OBJ_POS_L_Y = 110,
-  OBJ_POS_R_X = 232,
+  OBJ_POS_R_X = 240,
   OBJ_POS_R_Y = 110,
   OBJ_POS_STAMP_BIG_X = 224,
   OBJ_POS_STAMP_BIG_Y = 20,
