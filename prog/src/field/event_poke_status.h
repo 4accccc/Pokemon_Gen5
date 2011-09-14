@@ -16,6 +16,7 @@ FS_EXTERN_OVERLAY( notwifi_event_poke_status );
 typedef struct _EVENT_POKESEL_PARAM{
   u16*  retDecide;  ///<‘I‘ðŒ‹‰Ê‚ÌŠi”[æƒ[ƒN
   u16*  retPos;     ///<‘I‘ðˆÊ’u‚ÌŠi”[æƒ[ƒN
+  u32   mode;
 }EVENT_POKESEL_PARAM;
 
 typedef struct _EVENT_POKESEL_PARAM_WOBOE{

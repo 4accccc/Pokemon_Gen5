@@ -61,7 +61,7 @@ GMEVENT * EVENT_CreatePokeSelect(
   EVENT_POKESEL_PARAM* prm = (EVENT_POKESEL_PARAM*)parent;
 
   // ポケモンリスト生成
-  pl_data = PLIST_DATA_AllocInit( gdata, PL_MODE_SET, party, HEAPID_PROC );
+  pl_data = PLIST_DATA_AllocInit( gdata, prm->mode, party, HEAPID_PROC );
 
   // イベント生成
   event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_PokeSelect, sizeof(SELECT_POKE_WORK));

@@ -6222,6 +6222,28 @@
 
   .macro  _ASM_SELECT_TEMOTI_POKE decide, ret_wk, value
   .short  EV_SEQ_PARTY_POKE_SELECT
+  .short  \0
+  .short  \decide
+  .short  \ret_wk
+  .short  \value
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SELECT_TEMOTI_TAMAGO
+ * @brief 汎用手持ちたまご選択
+ * @param decide 選択結果の格納先 (TRUE：FALSE 選択したか)
+ * @param ret_wk 選択結果の格納先 (０～５ 選択位置)
+ * @param value  予備ワーク (０を入れておいてください
+ * @retval u16   選択結果
+ */
+//--------------------------------------------------------------
+#define _SELECT_TEMOTI_TAMAGO( decide , ret_wk , value ) \
+    _ASM_SELECT_TEMOTI_TANAGO decide, ret_wk, value
+
+  .macro  _ASM_SELECT_TEMOTI_TANAGO decide, ret_wk, value
+  .short  EV_SEQ_PARTY_POKE_SELECT
+  .short  \1
   .short  \decide
   .short  \ret_wk
   .short  \value

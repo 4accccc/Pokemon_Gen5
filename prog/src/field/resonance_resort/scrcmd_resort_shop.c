@@ -201,7 +201,8 @@ typedef struct _SHOP_BUY_APP_WORK{
   u16*  ret_service_param2;
   u16*  ret_service_idx;
   u16*  ret_price;
-  u32   camera_type;
+  u16   camera_type;
+  u16   sex;
 
   //以下、モード別処理
   void (*List_Init)( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
@@ -384,6 +385,8 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   //sbw->Camera_EndMove     = CameraNormal_EndMove;
   sbw->Camera_StartMove   = CameraShop_StartMove;
   sbw->Camera_EndMove     = CameraShop_EndMove;
+
+  sbw->wk.sex = RESORT_PEOPLE_GetData( sbw->wk.p_people, RESORT_DATA_PARAM_SEX, NULL );
 
   *sbw->wk.ret_service_type = FALSE;
 
@@ -835,11 +838,11 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
   {
     if(wk->cp_select->serviceID == RESORT_SERVICE_TYPE_ITEM )
     {
-      ShopPrintMsg( wk, mes_shop_02_07_04 );
+      ShopPrintMsg( wk, mes_shop_02_07_04_m + wk->sex );
     }
     else
     {
-      ShopPrintMsg( wk, mes_shop_02_07_06 );
+      ShopPrintMsg( wk, mes_shop_02_07_06_m + wk->sex );
     }
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_BACK;
@@ -848,7 +851,7 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
   else if(wk->cp_select->serviceID == RESORT_SERVICE_TYPE_ITEM
       && MYITEM_AddCheck( wk->myitem, wk->cp_select->param1, wk->cp_select->param2, wk->heapId )==FALSE)
   {
-    ShopPrintMsg( wk, mes_shop_02_05 );
+    ShopPrintMsg( wk, mes_shop_02_05_m + wk->sex );
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_BACK;
 
@@ -856,7 +859,7 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
   }else if(gold<wk->cp_select->price)
   {
     // お金が足りない
-    ShopPrintMsg( wk, mes_shop_02_01 );
+    ShopPrintMsg( wk, mes_shop_02_01_m + wk->sex );
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_BACK;
 
@@ -865,11 +868,11 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
   {
     if(wk->cp_select->serviceID == RESORT_SERVICE_TYPE_ITEM )
     {
-      ShopDecideMsg(wk,  mes_shop_02_03, wk->cp_select );
+      ShopDecideMsg(wk,  mes_shop_02_03_m + wk->sex, wk->cp_select );
     }
     else
     {
-      ShopDecideMsg(wk,  mes_shop_02_03_01, wk->cp_select );
+      ShopDecideMsg(wk,  mes_shop_02_03_01_m + wk->sex, wk->cp_select );
     }
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_ONLY1_YESNO;
@@ -1224,7 +1227,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
     if( wk->cp_select->serviceID == RESORT_SERVICE_TYPE_ITEM )
     {
       PMSND_PlaySE( SEQ_SE_SYS_22 );
-      ShopPrintMsgItem( wk, mes_shop_02_04, wk->cp_select->param1 );
+      ShopPrintMsgItem( wk, mes_shop_02_04_m + wk->sex, wk->cp_select->param1 );
       // 支払い方法によって引き算する対象を替える
       _sub_payment( wk, wk->cp_select->price );
       print_mygold( wk );
@@ -1239,7 +1242,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
     else if( wk->cp_select->serviceID == RESORT_SERVICE_TYPE_TREASURE )
     {
       PMSND_PlaySE( SEQ_SE_SYS_22 );
-      ShopDecideMsg( wk, mes_shop_09_20, wk->cp_select );
+      ShopDecideMsg( wk, mes_shop_09_20_m + wk->sex, wk->cp_select );
       _sub_payment( wk, wk->cp_select->price );
       print_mygold( wk );
       RESORT_INSTITUTION_DATA_SetBit(wk->p_institution, wk->cp_select->id, TRUE );
@@ -1251,7 +1254,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
     {
       //その他のサービスは選んだら終了。あとでスクリプト側から料金とフラグを建てる
       PMSND_PlaySE( SEQ_SE_SYS_22 );
-      ShopPrintMsg( wk, mes_shop_02_07_03 );
+      ShopPrintMsg( wk, mes_shop_02_07_03_m + wk->sex );
       wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
       wk->next = SHOPBUY_SEQ_END;
     }
@@ -1274,7 +1277,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
       }
 
       WORDSET_RegisterWord( wk->wordSet, 2, wk->cp_select->p_decidename, PM_NEUTRAL, TRUE, PM_LANG );
-      ShopPrintMsgItem( wk, mes_shop_09_21, item );
+      ShopPrintMsgItem( wk, mes_shop_09_21_m + wk->sex, item );
       MYITEM_AddItem( wk->myitem, item, 1, wk->heapId);
       wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
       wk->next = SHOPBUY_SEQ_BACK;
@@ -1689,8 +1692,7 @@ static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id )
         STRBUF *p_name_str;
         STRBUF *p_info_str;
         STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_01 );
-        STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_03 );
-        STRBUF *p_secinfo  = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_03_01+cnt);
+        STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_03_01+cnt );
         u8 sex = RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_SEX, NULL );
         RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_NAME, name );
         p_name = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, wk->heapId );
@@ -1703,7 +1705,6 @@ static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id )
 
         WORDSET_ExpandStr( wk->wordSet, p_name_str, p_name_tmp );
 
-        WORDSET_RegisterWord( wk->wordSet, 3, p_secinfo, PM_NEUTRAL, TRUE, PM_LANG );
         WORDSET_RegisterNumber( wk->wordSet, 4, y, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
         WORDSET_RegisterNumber( wk->wordSet, 5, m, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
         WORDSET_RegisterNumber( wk->wordSet, 6, d, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -1714,7 +1715,6 @@ static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id )
         wk->lineup[cnt].p_info =  p_info_str;
 
         GFL_STR_DeleteBuffer( p_name );
-        GFL_STR_DeleteBuffer( p_secinfo );
         GFL_STR_DeleteBuffer( p_info_tmp );
         GFL_STR_DeleteBuffer( p_name_tmp );
 
@@ -1852,7 +1852,7 @@ static void SecretaryList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
     STRBUF *p_name_str;
     STRBUF *p_info_str;
     STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_01 );
-    STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_03 );
+    STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_03_01+i );
     u8 sex = RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_SEX, NULL );
     RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_NAME, name );
     p_name = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, wk->heapId );
@@ -1913,6 +1913,7 @@ static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
 
     STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_02 );
     STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04_01 +shop_type );
+    STRBUF *p_name_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(wk->heapId) );
     u8 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
 
     WORDSET_RegisterNumber( wk->wordSet, 1, i+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -1924,6 +1925,14 @@ static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
     WORDSET_RegisterWord( wk->wordSet, 1, p_shopinfo, PM_NEUTRAL, TRUE, PM_LANG );
     WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_info, p_info_tmp );
 
+    {
+      STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
+      RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_NAME, name );
+      GFL_STR_SetStringCode(p_name_str, name );
+      WORDSET_RegisterWord( wk->wordSet, 2, p_name_str, sex, TRUE, PM_LANG );
+    }
+
+    GFL_STR_DeleteBuffer( p_name_str );
     GFL_STR_DeleteBuffer( p_info_tmp );
     GFL_STR_DeleteBuffer( p_name_tmp );
     GFL_STR_DeleteBuffer( p_shopinfo );

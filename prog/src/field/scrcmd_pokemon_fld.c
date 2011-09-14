@@ -73,6 +73,7 @@ VMCMD_RESULT EvCmdPartyPokeSelect( VMHANDLE *core, void *wk )
 {
   int i;
   SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16                mode = VMGetU16( core );
   u16*         ret_decide = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
   u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第2引数
   u16               value = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数(予備値)
@@ -86,6 +87,7 @@ VMCMD_RESULT EvCmdPartyPokeSelect( VMHANDLE *core, void *wk )
     MI_CpuClear8( &prm, sizeof(EVENT_POKESEL_PARAM));
     prm.retDecide = ret_decide;
     prm.retPos = ret_wk;
+    prm.mode  = mode==0? PL_MODE_SET: PL_MODE_GURU2;
     
     event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID( notwifi_event_poke_status ), EVENT_CreatePokeSelect, (void*)&prm );

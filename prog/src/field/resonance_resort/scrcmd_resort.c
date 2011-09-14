@@ -2151,7 +2151,6 @@ VMCMD_RESULT EvCmdResortPrintRankWindow( VMHANDLE *p_core, void *p_wk_adrs )
 
   *pp_subproc_wk_adrs = p_subwk;
 
-  // ショップ呼び出し
   VMCMD_SetWait( p_core, VmWait_RankWindow );
 
   return VMCMD_RESULT_SUSPEND;
