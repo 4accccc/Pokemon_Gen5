@@ -15855,6 +15855,189 @@ swplazmaw_10　白</language>
 こなすことが　ノルマ　なんだよ！</language>
 	</row>
 
+	<row id="TRID_SWRIVAL_16_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">その　わざなら
+オレの　よみどおり　だな！</language>
+		<language name="JPN_KANJI" width="216">その技なら
+オレの　読みどおり　だな！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_16_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">この　わざに　すべてを　かけようぜ！
+あいぼう！</language>
+		<language name="JPN_KANJI" width="216">この技に　すべてを　かけようぜ！
+相棒！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_16_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……ありがとな</language>
+		<language name="JPN_KANJI" width="216">……ありがとな</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_17_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">その　わざなら
+オレの　よみどおり　だな！</language>
+		<language name="JPN_KANJI" width="216">その技なら
+オレの　読みどおり　だな！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_17_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">この　わざに　すべてを　かけようぜ！
+あいぼう！</language>
+		<language name="JPN_KANJI" width="216">この技に　すべてを　かけようぜ！
+相棒！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_17_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……ありがとな</language>
+		<language name="JPN_KANJI" width="216">……ありがとな</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_18_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">その　わざなら
+オレの　よみどおり　だな！</language>
+		<language name="JPN_KANJI" width="216">その技なら
+オレの　読みどおり　だな！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_18_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">この　わざに　すべてを　かけようぜ！
+あいぼう！</language>
+		<language name="JPN_KANJI" width="216">この技に　すべてを　かけようぜ！
+相棒！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_18_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……ありがとな</language>
+		<language name="JPN_KANJI" width="216">……ありがとな</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_19_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">どんな　わざでも　あわてず
+れいせいに　たいしょ　するさ！</language>
+		<language name="JPN_KANJI" width="216">どんな　技でも　あわてず
+冷静に　対処するさ！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_19_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">どんな　じょうきょうでも　あわてず
+れいせいに　たいしょ　するさ！</language>
+		<language name="JPN_KANJI" width="216">どんな　状況でも　あわてず
+冷静に　対処するさ！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_19_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">くやしさと……
+すがすがしさと……</language>
+		<language name="JPN_KANJI" width="216">くやしさと……
+すがすがしさと……</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_20_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">どんな　わざでも　あわてず
+れいせいに　たいしょ　するさ！</language>
+		<language name="JPN_KANJI" width="216">どんな　技でも　あわてず
+冷静に　対処するさ！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_20_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">どんな　じょうきょうでも　あわてず
+れいせいに　たいしょ　するさ！</language>
+		<language name="JPN_KANJI" width="216">どんな　状況でも　あわてず
+冷静に　対処するさ！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_20_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">くやしさと……
+すがすがしさと……</language>
+		<language name="JPN_KANJI" width="216">くやしさと……
+すがすがしさと……</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_21_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">どんな　わざでも　あわてず
+れいせいに　たいしょ　するさ！</language>
+		<language name="JPN_KANJI" width="216">どんな　技でも　あわてず
+冷静に　対処するさ！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_21_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">どんな　じょうきょうでも　あわてず
+れいせいに　たいしょ　するさ！</language>
+		<language name="JPN_KANJI" width="216">どんな　状況でも　あわてず
+冷静に　対処するさ！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_21_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">くやしさと……
+すがすがしさと……</language>
+		<language name="JPN_KANJI" width="216">くやしさと……
+すがすがしさと……</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_22_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ポケモンが　いたがってる！
+それは！　つまり　オレのいたみ！</language>
+		<language name="JPN_KANJI" width="216">ポケモンが　痛がってる！
+それは！　つまり　オレの痛み！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_22_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">かんじるぜ！　いま　オレと
+あいぼうの　こころは　ひとつだ！</language>
+		<language name="JPN_KANJI" width="216">感じるぜ！　いま　オレと
+相棒の　心は　１つだ！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_22_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">なるほどな……！　オマエは
+ポケモンの　ちからを　ひきだしてるよ</language>
+		<language name="JPN_KANJI" width="216">なるほどな……！　オマエは
+ポケモンの　能力を　引き出してるよ</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_23_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ポケモンが　いたがってる！
+それは！　つまり　オレのいたみ！</language>
+		<language name="JPN_KANJI" width="216">ポケモンが　痛がってる！
+それは！　つまり　オレの痛み！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_23_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">かんじるぜ！　いま　オレと
+あいぼうの　こころは　ひとつだ！</language>
+		<language name="JPN_KANJI" width="216">感じるぜ！　いま　オレと
+相棒の　心は　１つだ！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_23_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">なるほどな……！　オマエは
+ポケモンの　ちからを　ひきだしてるよ</language>
+		<language name="JPN_KANJI" width="216">なるほどな……！　オマエは
+ポケモンの　能力を　引き出してるよ</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_24_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ポケモンが　いたがってる！
+それは！　つまり　オレのいたみ！</language>
+		<language name="JPN_KANJI" width="216">ポケモンが　痛がってる！
+それは！　つまり　オレの痛み！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_24_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">かんじるぜ！　いま　オレと
+あいぼうの　こころは　ひとつだ！</language>
+		<language name="JPN_KANJI" width="216">感じるぜ！　いま　オレと
+相棒の　心は　１つだ！</language>
+	</row>
+
+	<row id="TRID_SWRIVAL_24_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">なるほどな……！　オマエは
+ポケモンの　ちからを　ひきだしてるよ</language>
+		<language name="JPN_KANJI" width="216">なるほどな……！　オマエは
+ポケモンの　能力を　引き出してるよ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
