@@ -30,10 +30,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>0：市長名
+</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:29:49" />
+				User="shimoyamada:W00184"
+				Time="2011-09-14T10:35:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -66,14 +67,14 @@
 			Language="JPN">
 			<Text>ここは　イッシュちほうで
 いちばん　あたらしい　まち▽
-【街名】です▼
+『[Name:ResortTown Idx="1" ]』です▼
 たくさんの　ひとびとが　おとずれて
 よろこびと　つながりが　ある▽
 すてきな　まちに　なるように▽
 げんざい　かいはつ　しています▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T11:44:44" />
+				Time="2011-09-14T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -83,19 +84,27 @@
 			Language="JPN_KANJI">
 			<Text>ここは　イッシュちほうで
 いちばん　あたらしい　まち▽
-【街名】です▼
+『[Name:ResortTown Idx="1" ]』です▼
 たくさんの　ひとびとが　おとずれて
 よろこびと　つながりが　ある▽
 すてきな　まちに　なるように▽
 げんざい　かいはつ　しています▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T11:44:49" />
+				Time="2011-09-14T10:36:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:30:00" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：－
+1：街名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-14T10:36:16" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>回答１
@@ -159,6 +168,14 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:30:05" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：市長名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-14T10:39:18" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>回答２
@@ -248,10 +265,13 @@
 ハイリンクで　しんにゅうされたり
 ユニオンルームや　ＩＲつうしん▽
 ランダムマッチ　ＧＴＳ　などで▽
-あそんだ　あいても　やってきます▼</Text>
+あそんだ　あいても　やってきます▼
+また　つうしん　しなくても
+イッシュちほうで　かつやく　することで
+ファンが　くることも　ありますよ▼　</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T09:04:27" />
+				Time="2011-09-14T10:41:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -266,10 +286,13 @@
 ハイリンクで　しんにゅうされたり
 ユニオンルームや　ＩＲつうしん▽
 ランダムマッチ　ＧＴＳ　などで▽
-あそんだ　あいても　やってきます▼</Text>
+あそんだ　あいても　やってきます▼
+また　つうしん　しなくても
+イッシュちほうで　かつやく　することで
+ファンが　くることも　ありますよ▼　</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T09:04:34" />
+				Time="2011-09-14T10:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

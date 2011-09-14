@@ -144,13 +144,13 @@
 いろんな　ひとと　であえる　たちばの
 にんげんに　たのみたいんだ▼
 ……　　……　　……　　……
-……　　……　　……　　……！！▼
+……　　……　　……　　……▼
 わし　ビビっと　きた！▼
 どうだね？
 きみ　やってみないかい？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T11:08:33" />
+				Time="2011-09-14T05:03:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -174,13 +174,13 @@
 いろんな　ひとと　であえる　たちばの
 にんげんに　たのみたいんだ▼
 ……　　……　　……　　……
-……　　……　　……　　……！！▼
+……　　……　　……　　……▼
 わし　ビビっと　きた！▼
 どうだね？
 きみ　やってみないかい？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T11:08:41" />
+				Time="2011-09-14T05:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -338,13 +338,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【クチグセ】！
-【カンゲキ】！▼
+			<Text>[Name:ResortGreet ]！
+[Name:ResortGreet Idx="1" ]！▼
 きみ　おもった　とおりの
 にんげん　だね！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T12:30:32" />
+				Time="2011-09-14T05:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -352,13 +352,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【クチグセ】！
-【カンゲキ】！▼
+			<Text>[Name:ResortGreet ]！
+[Name:ResortGreet Idx="1" ]！▼
 きみ　おもった　とおりの
 にんげん　だね！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T12:30:39" />
+				Time="2011-09-14T05:06:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -366,10 +366,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>0：フリーワードくちぐせ
+1：フリーワードかんげき
+</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T10:16:06" />
+				User="shimoyamada:W00184"
+				Time="2011-09-14T05:05:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -553,13 +555,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かしこまりました
-【市長名】▼
+[Name:ResortGreet ]！▼
 それでは
 じゅんびが　ととのいましたら▽
 はなしかけて　いただけますか▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T12:21:42" />
+				Time="2011-09-14T05:10:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -568,13 +570,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>かしこまりました
-【市長名】▼
+[Name:ResortGreet ]！▼
 それでは
 じゅんびが　ととのいましたら▽
 はなしかけて　いただけますか▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T12:21:49" />
+				Time="2011-09-14T05:12:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -582,10 +584,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>0：市長名</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T10:16:08" />
+				User="shimoyamada:W00184"
+				Time="2011-09-14T05:09:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -908,6 +910,48 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c16_secretary2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたは　チュートリアルを
+している　ところで　ございます▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-11T10:23:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたは　チュートリアルを
+している　ところで　ございます▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-11T10:23:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-14T05:16:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c16_secretary2_01"
 		Style="Large">
 		<LanguageCell
@@ -936,10 +980,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>0：市長名</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T10:16:08" />
+				User="shimoyamada:W00184"
+				Time="2011-09-14T05:16:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -978,10 +1022,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>0：市長名</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T10:16:08" />
+				User="shimoyamada:W00184"
+				Time="2011-09-14T05:16:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1020,10 +1064,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>0：市長名</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T10:16:08" />
+				User="shimoyamada:W00184"
+				Time="2011-09-14T05:16:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1062,10 +1106,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>0：市長名</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T10:16:08" />
+				User="shimoyamada:W00184"
+				Time="2011-09-14T05:16:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1104,10 +1148,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>0：市長名</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T10:16:08" />
+				User="shimoyamada:W00184"
+				Time="2011-09-14T05:16:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
