@@ -14,6 +14,8 @@
 #define TR_WORKER2_33                      1
 #define D29R0101_ROCK_01                   2
 #define D29R0101_ROCK_02                   3
+#define FLD_ITEM_83                        4
+#define FLD_ITEM_85                        5
 
 #endif //ZONE_D29R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d29r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -15,14 +15,13 @@
 #define R06R0202_ROCK_03                   2
 #define TR_ELITEM_44                       3
 #define TR_ELITEW_43                       4
+#define FLD_ITEM_84                        5
+#define FLD_ITEM_86                        6
 
 #endif //ZONE_R06R0202_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06r0202.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_R06R0202_EVB_H
 #define ZONE_R06R0202_EVB_H
 
-#define R06R0202_HIDE_ITEM_02             0
-#define R06R0202_HIDE_ITEM_01             1
-#define R06R0202_HIDE_ITEM_03             2
 
 #endif //ZONE_R06R0202_EVB_H
