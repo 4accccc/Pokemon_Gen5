@@ -775,6 +775,7 @@
 #define FV_FLDMONS_11                      839 /* 0x0347 タマゲタケ（フィールドアイテム型）１１匹目 */
 #define FV_FLDMONS_12                      840 /* 0x0348 タマゲタケ（フィールドアイテム型）１２匹目 */
 #define FV_N01R0501_BOSS_01                841 /* 0x0349 Ｎ城謁見の間フロア：N */
+#define FV_C01GYM0101_SARU_01              842 /* 0x034a サンヨウシティ：サルショー */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
