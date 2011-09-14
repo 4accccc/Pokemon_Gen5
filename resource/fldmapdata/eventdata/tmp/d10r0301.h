@@ -21,6 +21,9 @@
 #define D10R0301_SWRIVAL_01                6
 #define D10R0301_SWPLAZMAM_02              7
 #define D10R0301_SWPLAZMAW_01              8
+#define FLD_ITEM_185_2                     9
+#define FLD_ITEM_186_2                    10
+#define FLD_ITEM_184_2                    11
 
 #endif //ZONE_D10R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

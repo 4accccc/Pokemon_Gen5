@@ -21,6 +21,9 @@
 #define TR_ELITEM_40                       3
 #define TR_BATTLEG_21                      4
 #define TR_VETERANW_15                     5
+#define FLD_ITEM_205                       6
+#define FLD_ITEM_213                       7
+#define FLD_ITEM_215                       8
 
 #endif //ZONE_D26R0701_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r0701.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

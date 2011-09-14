@@ -20,6 +20,11 @@
 #define TR_ELITEM_38                       3
 #define TR_VETERANW_14                     4
 #define TR_ELITEM_41                       5
+#define FLD_ITEM_204                       6
+#define FLD_ITEM_206                       7
+#define FLD_ITEM_209                       8
+#define FLD_ITEM_211                       9
+#define FLD_ITEM_212                      10
 
 #endif //ZONE_D26R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

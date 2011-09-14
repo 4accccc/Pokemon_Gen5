@@ -10,6 +10,8 @@
 #ifndef ZONE_D26R0601_EVC_H
 #define ZONE_D26R0601_EVC_H
 
+#define FLD_ITEM_214                       0
+#define FLD_ITEM_207                       1
 
 #endif //ZONE_D26R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -16,6 +16,8 @@
 #define D26R0301_TREE_02                   1
 #define TR_ELITEM_38W                      2
 #define TR_ELITEW_37W                      3
+#define FLD_ITEM_208                       4
+#define FLD_ITEM_210                       5
 
 #endif //ZONE_D26R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

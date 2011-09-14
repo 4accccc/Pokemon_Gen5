@@ -26,6 +26,12 @@
 #define D26_ROCK_05                       14
 #define D26_ROCK_06                       15
 #define D26_SPPOKE3_01                    16
+#define FLD_ITEM_198                      17
+#define FLD_ITEM_199                      18
+#define FLD_ITEM_200                      19
+#define FLD_ITEM_201                      20
+#define FLD_ITEM_202                      21
+#define FLD_ITEM_203                      22
 
 #endif //ZONE_D26_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

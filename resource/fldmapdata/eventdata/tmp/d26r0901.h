@@ -20,6 +20,7 @@
 #define TR_ESPM_14W                        5
 #define TR_ESPW_13W                        6
 #define TR_ELITEM_37W                      7
+#define FLD_ITEM_218W                      8
 
 #endif //ZONE_D26R0901_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r0901.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

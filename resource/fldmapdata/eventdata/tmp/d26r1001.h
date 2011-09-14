@@ -19,6 +19,11 @@
 #define TR_VETERANW_14W                    2
 #define TR_ELITEM_41W                      3
 #define TR_ELITEW_40W                      4
+#define FLD_ITEM_204W                      5
+#define FLD_ITEM_206W                      6
+#define FLD_ITEM_209W                      7
+#define FLD_ITEM_211W                      8
+#define FLD_ITEM_212W                      9
 
 #endif //ZONE_D26R1001_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26r1001.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
