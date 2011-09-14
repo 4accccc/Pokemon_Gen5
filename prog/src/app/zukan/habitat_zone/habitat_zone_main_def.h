@@ -58,6 +58,7 @@ typedef enum {
   SEQ_CHANGE_PARAM_B,
   SEQ_CHANGE_PARAM_X,
   SEQ_CHANGE_PARAM_TOUCH,
+  SEQ_CHANGE_PARAM_TOUCH_INIT,
   SEQ_CHANGE_PARAM_POKE_SELECT,
   SEQ_CHANGE_PARAM_NONE,
   SEQ_CHANGE_PARAM_SET_LAND_TYPE,
@@ -68,6 +69,22 @@ typedef enum{
   HABITAT_ZONE_MAIN_CONTINUE,
   HABITAT_ZONE_MAIN_EXIT,
 }HABITAT_ZONE_MAIN_STATUS;
+
+//-------------------------------------
+///	SE
+//=====================================
+enum {
+  SE_CALL_INFO          = SEQ_SE_DECIDE1,
+  SE_ZONE_CHANGE        = SEQ_SE_SELECT1,
+  SE_SEASON_CHANGE      = SEQ_SE_SELECT3,
+  SE_GROUND_TYPE_CHANGE = SEQ_SE_SELECT3,
+  SE_TOP_TO_POKESELECT  = SEQ_SE_DECIDE1,
+  SE_RETURN             = SEQ_SE_CANCEL1,
+  SE_EXIT               = SEQ_SE_CLOSE1,
+  SE_Y_REG              = SEQ_SE_SYS_07,
+  SE_CURSOR_MOVE        = SEQ_SE_SELECT1,
+  SE_POKE_SELECT        = SEQ_SE_DECIDE1,
+};
 
 //=============================================================================
 //

@@ -91,3 +91,74 @@ HABITATLIST_STATUS HABITATLIST_SAVE_GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 ha
 //-----------------------------------------------------------------------------
 void HABITATLIST_SAVE_SetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_GROUND_TYPE type ,HABITATLIST_STATUS status);
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  閲覧中のゾーングループIDを取得
+ *
+ *	@param	*p_sv 
+ *	@param	zone_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void HABITATLIST_SAVE_SetDefaultZoneGroupID( HABITATLIST_SAVE *p_sv , u16 zone_id );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デフォルトゾーングループIDを取得
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern u16 HABITATLIST_SAVE_GetDefaultZoneGroupID( HABITATLIST_SAVE *p_sv );
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動時のデフォルト季節を設定する
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern u8 HABITATLIST_SAVE_GetDefaultSeason( HABITATLIST_SAVE *p_sv );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動時のデフォルト季節を取得する
+ *
+ *	@param	*p_sv 
+ *	@param	season 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void HABITATLIST_SAVE_SetDefaultSeason( HABITATLIST_SAVE *p_sv , u16 season );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動時のデフォルト地形を設定する
+ *
+ *	@param	*p_sv 
+ *	@param	 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void HABITATLIST_SAVE_SetDefaultGround( HABITATLIST_SAVE *p_sv , u16 ground_type );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動時のデフォルト地形を取得する
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern u8 HABITATLIST_SAVE_GetDefaultGround( HABITATLIST_SAVE *p_sv );
+

@@ -299,7 +299,8 @@ static void ZukanHabitatList_HBlank( GFL_TCB* tcb, void* wk )
 static HABITAT_LIST_WK* CreateWkData( GFL_PROC * proc ,ZUKANHABITAT_LIST_DATA *p_list_info )
 {
   HABITAT_LIST_WK *p_wk;
-
+	SAVE_CONTROL_WORK *p_svcont;
+ 
   // 確保
   p_wk = GFL_PROC_AllocWork( proc, sizeof(HABITAT_LIST_WK),
       HEAPID_ZUKAN_HABITAT_LIST );
@@ -314,6 +315,10 @@ static HABITAT_LIST_WK* CreateWkData( GFL_PROC * proc ,ZUKANHABITAT_LIST_DATA *p
   p_wk->p_app_msg =GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_MESSAGE, NARC_message_seisoku_dat, HEAPID_ZUKAN_HABITAT_LIST );
 
+  // セーブデータの取得
+  p_svcont = GAMEDATA_GetSaveControlWork( p_list_info->p_gdata );
+  p_wk->p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
+ 
   // ワードセットを作成
   p_wk->p_word_set = WORDSET_Create( HEAPID_ZUKAN_HABITAT_LIST ); 
 
@@ -351,10 +356,10 @@ static void DeleteWkData( GFL_PROC * proc , HABITAT_LIST_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void MakeFrameListData( HABITAT_LIST_WK *p_wk )
 {
-  ZUKANHABITAT_LIST_LISTDATA *p_ld = p_wk->p_init_param->p_list_data;
+  ZUKANHABITAT_LIST_LISTDATA *p_ld = p_wk->p_init_param->list_data;
   u8 list_size = p_wk->p_init_param->list_size;
-  u16 default_zone_group = p_wk->p_init_param->default_zone_group;
-  HABITAT_LIST_GRA_MakeList( &p_wk->gra_sys ,list_size ,p_ld ,default_zone_group ,p_wk->p_init_param->select_index );
+  u16 default_zone_group = HABITATLIST_SAVE_GetDefaultZoneGroupID( p_wk->p_habitat_sv );
+  HABITAT_LIST_GRA_MakeList( &p_wk->gra_sys ,list_size ,p_ld ,default_zone_group ,0 );
 }
 
 //----------------------------------------------------------------------------

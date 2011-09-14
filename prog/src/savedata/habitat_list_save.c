@@ -21,7 +21,7 @@
 //=============================================================================
 
 //-------------------------------------
-///	生息地状態構造体
+///	生息地ごとのデータ状態構造体
 //=====================================
 typedef struct {
   // 参照、設定用データ
@@ -35,6 +35,15 @@ typedef union{
   HABITAT_ZONE_STATUS_DATA data;
   u8 data_pack;
 }HABITAT_ZONE_STATUS_DATA_PACK;
+
+//-------------------------------------
+///	生息地状態構造体
+//=====================================
+typedef struct {
+  u16 default_zone_group_id;
+  u8  default_season;
+  u8  default_ground_type;
+} HABITAT_ZONE_DATA;
 
 
 //=============================================================================
@@ -50,8 +59,9 @@ struct _HABITATLIST_SAVE
   //TODO せいそくちリスト実装者が中のパラメータ決めてください。
   //HABITATLIST_SAVE_WORK_SIZEの大きさで足りなかったら増やしてください
   //あと100byte程度は増やせるはず…。詳しくはblock 70のalignを見てください。
-  u8  dummy_data[HABITATLIST_SAVE_WORK_SIZE-HABITATLIST_ZONE_ID_MAX];
+  u8  dummy_data[HABITATLIST_SAVE_WORK_SIZE-HABITATLIST_ZONE_ID_MAX-4];
   u8  zone_status[HABITATLIST_ZONE_ID_MAX];
+  HABITAT_ZONE_DATA list_data;
 };
 
 SDK_COMPILER_ASSERT( sizeof(HABITATLIST_SAVE) == HABITATLIST_SAVE_WORK_SIZE );
@@ -207,5 +217,92 @@ static void SetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_Z
   HABITAT_ZONE_STATUS_DATA_PACK *p_dest;
   p_dest = (HABITAT_ZONE_STATUS_DATA_PACK*)&p_sv->zone_status[habitat_zone_id];
   p_dest->data_pack = data.data_pack;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  閲覧中のゾーングループIDを設定
+ *
+ *	@param	*p_sv 
+ *	@param	zone_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITATLIST_SAVE_SetDefaultZoneGroupID( HABITATLIST_SAVE *p_sv , u16 zone_id )
+{
+  p_sv->list_data.default_zone_group_id = zone_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デフォルトゾーングループIDを取得
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u16 HABITATLIST_SAVE_GetDefaultZoneGroupID( HABITATLIST_SAVE *p_sv )
+{
+  return p_sv->list_data.default_zone_group_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動時のデフォルト季節を設定する
+ *
+ *	@param	*p_sv 
+ *	@param	season 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITATLIST_SAVE_SetDefaultSeason( HABITATLIST_SAVE *p_sv , u16 season )
+{
+  p_sv->list_data.default_season = season;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動時のデフォルト季節を設定する
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u8 HABITATLIST_SAVE_GetDefaultSeason( HABITATLIST_SAVE *p_sv )
+{
+  return p_sv->list_data.default_season;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動時のデフォルト地形を設定する
+ *
+ *	@param	*p_sv 
+ *	@param	 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITATLIST_SAVE_SetDefaultGround( HABITATLIST_SAVE *p_sv , u16 ground_type )
+{
+  p_sv->list_data.default_ground_type = ground_type;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動時のデフォルト地形を取得する
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u8 HABITATLIST_SAVE_GetDefaultGround( HABITATLIST_SAVE *p_sv )
+{
+  return p_sv->list_data.default_ground_type;
 }
 

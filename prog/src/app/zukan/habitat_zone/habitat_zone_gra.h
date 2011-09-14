@@ -85,6 +85,8 @@ enum
   OBJ_ANM_SEQ_L_ANM = 25,
   OBJ_ANM_SEQ_STAMP_BIG_LOOK      = 27,
   OBJ_ANM_SEQ_STAMP_BIG_GET       = 26,
+  OBJ_ANM_SEQ_STAMP_BIG_LOOK_STOP = 39,
+  OBJ_ANM_SEQ_STAMP_BIG_GET_STOP  = 38,
   OBJ_ANM_SEQ_STAMP_MIDDLE_GET    = 7,
   OBJ_ANM_SEQ_STAMP_MIDDLE_LOOK   = 8,
   OBJ_ANM_SEQ_STAMP_SMALL_GET     = 9,
@@ -152,8 +154,8 @@ enum{
   POKEICON_CURSOR_ON_PALID    = BLINK_PALID_POKE_CURSOR_CHANGE,
   POKEICON_CURSOR_OFF_PALID   = BLINK_PALID_POKE_CURSOR_START,
   POKEICON_CURSOR_NONE_PALID  = 0xB,
-  SMALL_ICON_OFFSET_X   = 16,    // ポケモンアイコン用見た、捕獲アイコンオフセット
-  SMALL_ICON_OFFSET_Y   = 0,   // ポケモンアイコン用見た、捕獲アイコンオフセット
+  SMALL_ICON_OFFSET_X   = 10,    // ポケモンアイコン用見た、捕獲アイコンオフセット
+  SMALL_ICON_OFFSET_Y   = -2,   // ポケモンアイコン用見た、捕獲アイコンオフセット
   MENU_BAR_POS_X   = 256/2,    // メニューバーの位置
   MENU_BAR_POS_Y   = 192/2,     // メニューバーの位置
 

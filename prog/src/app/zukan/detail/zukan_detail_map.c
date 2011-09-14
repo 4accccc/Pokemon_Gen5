@@ -59,6 +59,7 @@
 
 // 生息地データ
 #include "../../../../../resource/fldmapdata/flagwork/flag_define.h" // for SYS_FLAG_ARRIVE_*
+#include "../../../../resource/habitat_list/habitat_list_data.h" // for HABITAT_LIST_DATA_MAX
 #include "../../../../../resource/habitat_list/habitat_list_data.cdat" // for sc_habitat_list_data
 #include "savedata/habitat_list_save.h"
 
@@ -1666,7 +1667,23 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
       break;
     case ZKNDTL_CMD_MAP_RET_HABITAT:
       {
-        ONOUE_Printf("ボタンを非表示に\n");
+        // セーブデータ取得
+        GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+        SAVE_CONTROL_WORK *p_svcont = GAMEDATA_GetSaveControlWork( gamedata );
+        HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
+
+        // ゾーンIDを設定
+        u16 zone_id = TOWNMAP_DATA_GetParam( work->townmap_data,
+            work->select_data_idx, TOWNMAP_DATA_PARAM_ZONE_ID );
+        HABITATLIST_SAVE_SetDefaultZoneGroupID(  p_habitat_sv, zone_id ); 
+          
+        // 季節設定
+        if( work->appear_rule == APPEAR_RULE_SEASON )
+        {
+          HABITATLIST_SAVE_SetDefaultSeason(  p_habitat_sv, work->season_id ); 
+        }
+
+        // ボタンとメッセージ削除
         Zukan_Detail_Touchbar_VisibleAreaJump(touchbar ,FALSE);
         Zukan_Detail_Map_UtilClearAreaJumpMsg( work );
         work->end_cmd = END_CMD_OUTSIDE;
@@ -3276,6 +3293,7 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
       {
         // 同じ場所を選択した
         ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+       // ボタンを押したことにする
         Zukan_Detail_Touchbar_PushAreaJump( touchbar );
       }
       else if( work->select_data_idx != DATA_IDX_NONE )

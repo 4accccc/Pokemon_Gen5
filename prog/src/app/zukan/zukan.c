@@ -63,6 +63,9 @@ typedef struct {
 	u16	listMax;		// リストデータ数
 	u16	listMode;		// リストモード
 
+  u16 *habitatLst;	// リストデータ
+	u16	habitatListMax;		    // リストデータ数
+
 	ZKNCOMM_LIST_SORT	sort;		// ソートデータ
 
 	int	mainSeq;			// メインシーケンス
@@ -71,7 +74,6 @@ typedef struct {
   ZUKAN_DETAIL_TYPE   detail_type;    // SEQ_INFO_CALLのときのみ使用
   BOOL                is_habitat_call;// 生息地リストからの呼び出し 
   BOOL                is_info_call;   // 詳細画面からの呼び出し
-  u16                 info_select_zone;   // 詳細画面からの呼び出し
   u16                 habitat_list_index;   // 生息地リストインデックス
 
 	void * work;			// 各処理のワーク
@@ -88,6 +90,7 @@ static GFL_PROC_RESULT ZukanProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 static GFL_PROC_RESULT ZukanProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
 static void FreeListData( ZUKAN_MAIN_WORK * wk );
+static void FreeHabitatListData( ZUKAN_MAIN_WORK * wk );
 
 static int MainSeq_LocalProcWait( ZUKAN_MAIN_WORK * wk );
 
@@ -248,6 +251,7 @@ static GFL_PROC_RESULT ZukanProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 	ZUKAN_MAIN_WORK * wk = mywk;
 
 	FreeListData( wk );
+  FreeHabitatListData(wk);
 
 	GFL_PROC_LOCAL_Exit( wk->localProc );
 
@@ -273,6 +277,23 @@ static void FreeListData( ZUKAN_MAIN_WORK * wk )
 	if( wk->list != NULL ){
 		GFL_HEAP_FreeMemory( wk->list );
 		wk->list = NULL;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生息地用リスト画面
+ *
+ *	@param	* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void FreeHabitatListData( ZUKAN_MAIN_WORK * wk )
+{
+	if( wk->habitatLst != NULL ){
+		GFL_HEAP_FreeMemory( wk->habitatLst );
+		wk->habitatLst = NULL;
 	}
 }
 
@@ -564,10 +585,20 @@ static int MainSeq_CallDetail( ZUKAN_MAIN_WORK * wk )
   
   detail->gamedata = wk->prm->gamedata;
   detail->type     = wk->detail_type;
-  detail->list     = wk->list;
-  detail->num      = wk->listMax;
   detail->no       = 0;
   detail->is_habitat_call = wk->is_habitat_call;
+
+  // 使用するリストデータの切替
+  if( wk->is_habitat_call == TRUE )
+  {
+    detail->list  = wk->habitatLst;
+    detail->num   = wk->habitatListMax;
+  }
+  else
+  {
+    detail->list     = wk->list;
+    detail->num      = wk->listMax;
+  }
 
   {
     u16 i;
@@ -631,7 +662,6 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
     {
       ret = SEQ_HABITAT_ZONE_CALL;
       wk->is_info_call = TRUE;
-      wk->info_select_zone = detail->habitat_zone_group;
     }
     break;
   case ZUKAN_DETAIL_RET_RETURN:
@@ -667,6 +697,8 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
 static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
 {
   ZUKANHABITAT_ZONE_DATA * p_zone_info;
+	SAVE_CONTROL_WORK *p_svcont = GAMEDATA_GetSaveControlWork( wk->prm->gamedata );
+  HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
 
 	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANHABITAT_ZONE_DATA) );
 	GFL_STD_MemClear( wk->work, sizeof(ZUKANHABITAT_ZONE_DATA) );
@@ -676,14 +708,13 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
   // リストをデータを作成
   if( (wk->is_info_call == TRUE) && (wk->is_habitat_call == FALSE) )
   {
-    ONOUE_Printf("生息地リスト：単一呼出%d\n",wk->info_select_zone);
-    MakeHabitatZoneListData( p_zone_info ,wk->info_select_zone ,0 );
+    ONOUE_Printf("生息地リスト：単一呼出%d\n",0);
+    ZKNCOMM_MakeHabitatZoneListData( p_habitat_sv,p_zone_info ,TRUE );
   }
   else
   {
     ONOUE_Printf("生息地リスト：セーブからリスト生成\n");
-    MakeHabitatZoneListData( p_zone_info ,NO_SELECT_ZONE_ID ,wk->habitat_list_index);
-    //MakeHabitatZoneListData( p_zone_info ,NO_SELECT_ZONE_ID ,0);
+    ZKNCOMM_MakeHabitatZoneListData( p_habitat_sv,p_zone_info ,FALSE );
   }
 
 	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_habitat_zone),
@@ -722,16 +753,24 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
     else
     {
       ONOUE_Printf("リスト画面へ戻る\n");
-      wk->habitat_list_index = p_zone_info->select_index;
+      //wk->habitat_list_index = p_zone_info->select_index;
       ret = SEQ_HABITAT_ZONE_LIST_CALL;
     }
     wk->is_habitat_call = FALSE;
     break;
 
   case HABITAT_ZONE_RET_INFO:
-    ret = SEQ_INFO_CALL;
-    wk->detail_type = ZUKAN_DETAIL_TYPE_INFO;
-    wk->is_habitat_call = TRUE; // 生息地リストモードに切り替え
+    {
+      SAVE_CONTROL_WORK *p_svcont = GAMEDATA_GetSaveControlWork( wk->prm->gamedata );
+      HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
+      ret = SEQ_INFO_CALL;
+      wk->detail_type = ZUKAN_DETAIL_TYPE_INFO;
+      wk->is_habitat_call = TRUE; // 生息地リストモードに切り替え
+
+      // 指定ゾーンリストを作成
+      FreeHabitatListData( wk );
+      wk->habitatListMax = ZKNCOMM_MakeHabitatList( wk->prm->savedata,p_habitat_sv,&wk->habitatLst, HEAPID_ZUKAN_SYS );
+    }
     break;
 
   default:
@@ -742,8 +781,6 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
     break;
   }
 		
-  // 確保したデータ開放
-  GFL_HEAP_FreeMemory( p_zone_info->p_zone_list_data );
   // ワーク開放
 	GFL_HEAP_FreeMemory( wk->work );
 
@@ -763,6 +800,8 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
 static int MainSeq_CallHabitatZoneList( ZUKAN_MAIN_WORK * wk )
 {
   ZUKANHABITAT_LIST_DATA * p_zone_list;
+	SAVE_CONTROL_WORK *p_svcont = GAMEDATA_GetSaveControlWork( wk->prm->gamedata );
+  HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
 
 	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANHABITAT_LIST_DATA) );
 	GFL_STD_MemClear( wk->work, sizeof(ZUKANHABITAT_LIST_DATA) );
@@ -770,7 +809,7 @@ static int MainSeq_CallHabitatZoneList( ZUKAN_MAIN_WORK * wk )
 	p_zone_list->p_gdata = wk->prm->gamedata;
 
   // リストデータを作成する
-  MakeHabitatListData( p_zone_list ,wk->habitat_list_index );
+  ZKNCOMM_MakeHabitatListData( p_habitat_sv,p_zone_list );
 
   GFL_PROC_LOCAL_CallProc( wk->localProc,
       FS_OVERLAY_ID(zukan_habitat_list), &ZUKANHABITAT_LIST_ProcData, p_zone_list );
@@ -804,7 +843,6 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
     wk->prm->retMode = ZUKAN_RET_NORMAL;
     break;
   case HABITAT_LIST_RET_CALL_ZONE_INFO:
-    wk->habitat_list_index = zone_list->select_index;
     ret = SEQ_HABITAT_ZONE_CALL;
     break;
   case HABITAT_LIST_RET_ZENKOKU:
@@ -836,8 +874,6 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
     break;
   }
 
-  // 確保したデータ開放
-  GFL_HEAP_FreeMemory( zone_list->p_list_data );
   // ワーク開放
   GFL_HEAP_FreeMemory( wk->work );
   

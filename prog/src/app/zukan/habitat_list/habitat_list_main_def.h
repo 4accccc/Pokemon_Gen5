@@ -93,6 +93,7 @@ struct _HABITAT_LIST_WK{
 
   WORDSET         *p_word_set;
   ZUKAN_SAVEDATA  *p_zkn_sv;
+  HABITATLIST_SAVE *p_habitat_sv;
 
   SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ
   u32 list_key_state;         // リストキー状態

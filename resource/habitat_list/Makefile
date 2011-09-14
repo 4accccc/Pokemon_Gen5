@@ -21,6 +21,7 @@ habitat_data_list_w = habitat_data_file_list_w.list
 habitat_data_list_b = habitat_data_file_list_b.list
 encout_marshal 	 = $(PROJECT_RSCDIR)/encount/encount_data.marshal
 habitat_data				= habitat_list_data.cdat
+habitat_data_h			= habitat_list_data.h
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -82,7 +83,7 @@ $(input_habitat_data_csv) : $(input_habitat_data) habitat_data_cnv.rb
 	@ruby $(EXCELCONV) $(input_habitat_data) -n 0 -s > $(input_habitat_data_csv)
 
 $(habitat_data) : $(input_habitat_data_csv) habitat_data_cnv.rb
-	ruby habitat_data_cnv.rb $(habitat_data) $(input_habitat_data_csv)
+	ruby habitat_data_cnv.rb $(habitat_data) $(habitat_data_h) $(input_habitat_data_csv)
 
 endif
 

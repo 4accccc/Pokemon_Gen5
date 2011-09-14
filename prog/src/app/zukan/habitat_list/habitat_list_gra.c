@@ -1646,11 +1646,9 @@ static void ListCallBack_Draw( void *work, u32 item_index, PRINT_UTIL *p_util, s
   PRINT_QUE           *p_que;
   u32 prm;
 
-  // @todo ウィンドウの上下の挙動を確認する
   p_que = FRAMELIST_GetPrintQue( p_wk->p_lwk );
   PRINTTOOL_PrintColor( p_util, p_que, 0, 4, p_wk->p_place_name[item_index],
       p_wk->p_font, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
-  //ONOUE_Printf("文字描画[%d,%d]\n",item_index,py);
 
   // パラメータ取得
 	prm = FRAMELIST_GetItemParam( p_wk->p_lwk, item_index );

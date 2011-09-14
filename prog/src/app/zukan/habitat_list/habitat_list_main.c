@@ -324,6 +324,16 @@ static void MAINSEQ_AppInit( HABITAT_LIST_WK *p_wk )
 // @todo 地名表示バーとメニューバーのスクロールアウト、フェード処理を入れる
 static void MAINSEQ_AppExit( HABITAT_LIST_WK *p_wk )
 {
+  u32 sc_cnt = HABITAT_LIST_GRA_GetScrollCount( &p_wk->gra_sys );
+  s32 cursor_pos = HABITAT_LIST_GRA_GetCursorPos( &p_wk->gra_sys );
+  s32 list_index = sc_cnt + cursor_pos;
+  ZUKANHABITAT_LIST_LISTDATA *p_data =
+          HABITAT_LIST_GRA_GetListData( &p_wk->gra_sys ,list_index);
+  
+  // 現在選択しているゾーングループを設定
+  HABITATLIST_SAVE_SetDefaultZoneGroupID(p_wk->p_habitat_sv ,p_data->zone_group );
+
+  // 終了を設定
   p_wk->main_status = HABITAT_LIST_MAIN_EXIT;
 }
 
@@ -390,7 +400,6 @@ static void MAINSEQ_KeyInput( HABITAT_LIST_WK *p_wk )
       SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
       SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
       ONOUE_Printf("項目選択 %d\n",list_pos);
-      p_wk->p_init_param->select_index = list_pos;
     }
     break;
   }

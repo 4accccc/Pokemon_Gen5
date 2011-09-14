@@ -83,6 +83,3 @@ static const HABITAT_LIST_DATA sc_habitat_list_data[] =
   {SYS_FLAG_ARRIVE_R18,ZONE_ID_R18,17},  // １８番道路
   {SYS_FLAG_ARRIVE_D13,ZONE_ID_D13,33},  // Ｐ２ラボ
 };
-
-// 生息地リストデータ数
-#define HABITAT_LIST_DATA_MAX (58)

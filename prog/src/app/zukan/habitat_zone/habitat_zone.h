@@ -14,6 +14,7 @@
 #include "savedata/habitat_list_save.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/pm_season.h"
+#include "../../../../resource/habitat_list/habitat_list_data.h" // for HABITAT_LIST_DATA_MAX
 
 //===================================================================================
 //	定数
@@ -89,14 +90,10 @@ typedef struct {
 	// [in]
   GAMEDATA *p_gdata;				// ゲームデータ
   u32 zone_cnt;             // データ数
-  u32 start_zone_index;     // 開始データインデックス
-  u32 start_season;         // 開始季節
-  HABITAT_GROUND_TYPE start_land_type;      // 開始場所タイプ
-  HABITAT_ZONE_DATA *p_zone_list_data;      // ゾーンごとのデータ格納先
+  HABITAT_ZONE_DATA zone_list_data[HABITAT_LIST_DATA_MAX];      // ゾーンごとのデータ格納先
 
 	// [out]
 	u32	ret_mode;								// 終了モード
-  u16 select_index;
 }ZUKANHABITAT_ZONE_DATA;
 
 // メインワーク

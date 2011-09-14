@@ -20,13 +20,15 @@ def string_check( str ,check_w )
 end
 
 OUT_FNAME = ARGV[0]
-DATA_FNAME = ARGV[1]
+OUT_H_FNAME = ARGV[1]
+DATA_FNAME = ARGV[2]
 
 SYS_FLAG_INDEX    = 1
 ZONE_GROUP_INDEX  = 2
 COMMENT_INDEX     = 3
 
 out_file = open(OUT_FNAME,"w")
+out_h_file = open(OUT_H_FNAME,"w")
 data_file = CSV.open(DATA_FNAME,"r")
 
 header =<<EOS
@@ -97,7 +99,24 @@ $habitat_arc_idx_table.each_key{|group_name|
 out_file.puts "};"
 
 
-out_file.puts "\n// 生息地リストデータ数"
-out_file.puts "#define HABITAT_LIST_DATA_MAX (%d)"%[table_lng]
 
+header =<<EOS
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		%s
+ *	@brief  生息地リストデータファイルヘッダ
+ *	@author	Masayuki Onoue
+ *	@date		2011.09.14
+ *	@note		コンバータが出力したファイルです。
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+EOS
+
+out_h_file.puts header%[OUT_H_FNAME]
+out_h_file.puts "\n// 生息地リストデータ数"
+out_h_file.puts "#define HABITAT_LIST_DATA_MAX (%d)"%[table_lng]
+
+out_h_file.close
 out_file.close

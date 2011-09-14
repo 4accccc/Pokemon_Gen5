@@ -790,6 +790,8 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
       OBJ_ANM_SEQ_STAMP_BIG_LOOK, HEAPID_ZUKAN_HABITAT_ZONE );
     GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG],FALSE );
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG],FALSE );
+    GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG], CLSYS_AFFINETYPE_DOUBLE );
+    
 
     // —¤’nƒ{ƒ^ƒ“
     p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_LAND] = UI_EASY_CLWK_CreateCLWK( 

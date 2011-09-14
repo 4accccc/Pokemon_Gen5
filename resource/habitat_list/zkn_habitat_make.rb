@@ -156,7 +156,7 @@ zone_group_data.each_key{|zone_group|
 }
 
 
-=begin
+#=begin
 
 # マージしたデータを格納する
 zone_group_data.each_key{|zone_group|
@@ -176,7 +176,7 @@ zone_group_data.each_key{|zone_group|
       data.white_data[g_type].each_key{|season|
         print "%s(%2d種類):"%[season_name[season],data.white_data[g_type][season].size]
         if data.white_data[g_type][season].size > 20 then
-          #raise "20種類以上使用されています"
+          raise "20種類以上使用されています"
         end
         data.white_data[g_type][season].each{|mons_data|
           print "%s,"%[mons_data]
@@ -201,7 +201,7 @@ zone_group_data.each_key{|zone_group|
         }
         print "\n"
         if data.black_data[g_type][season].size > 20 then
-          #raise "20種類以上使用されています"
+          raise "20種類以上使用されています"
         end
       }
     end
@@ -210,7 +210,7 @@ zone_group_data.each_key{|zone_group|
   print "\n"
 }
 
-=end
+#=end
 
 # バイナリデータの出力
 zone_group_data.each_key{|zone_group|

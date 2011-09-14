@@ -14,6 +14,7 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/pm_season.h"
 #include "../habitat_zone/habitat_zone.h" // for HABITAT_GROUND_MAX
+#include "../../../../resource/habitat_list/habitat_list_data.h" // for HABITAT_LIST_DATA_MAX
 
 // 戻り値
 typedef enum{
@@ -52,12 +53,10 @@ typedef struct {
 	// [in]
   GAMEDATA  *p_gdata;				                // ゲームデータ
   u8        list_size;
-  ZUKANHABITAT_LIST_LISTDATA *p_list_data;  // リストデータ
-  u16       default_zone_group;
+  ZUKANHABITAT_LIST_LISTDATA list_data[HABITAT_LIST_DATA_MAX];  // リストデータ
 
 	// [out]
 	u32	ret_mode;								// 終了モード
-  u16 select_index;
 }ZUKANHABITAT_LIST_DATA;
 
 // メインワーク
