@@ -246,14 +246,13 @@ class WBT_DATA
     if(ret == -1)
       wbt_exit();
     end
+    #
     # 変換
-    str = @conv.get_cell(0,DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW)
-    @tournament_name = NKF.nkf("-w16L0", str)
-
+    @tournament_name = get_unicode( 0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW )
     # セット(コードの変換注意)
-    if(@local_debug == 1)
-      p sprintf("%s :%s", $title_str[12],@conv.get_cell(0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW))
-    end
+#    if(@local_debug == 1)
+#      p sprintf("%s :%s", $title_str[12],@tournament_name)
+#    end
   end
   
   #----------------------------------
@@ -268,13 +267,12 @@ class WBT_DATA
     end
     
     # 変換
-    str = @conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW)
-    @regulation_explain = NKF.nkf("-w16L0", str)
+    @regulation_explain = get_unicode(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW)
     
     # セット(コードの変換注意)
-    if(@local_debug == 1)
-      p sprintf("%s :%s", $title_str[13],@conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW))
-    end
+#    if(@local_debug == 1)
+#      p sprintf("%s :%s", $title_str[13],@conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW))
+#    end
   end
   
   #----------------------------------
@@ -289,8 +287,7 @@ class WBT_DATA
     end
     
     # 変換
-    str = @conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW)
-    @contents_explain = NKF.nkf("-w16L0", str)
+    @contents_explain = get_unicode(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW)
     
     # セット(コードの変換注意)
     if(@local_debug == 1)

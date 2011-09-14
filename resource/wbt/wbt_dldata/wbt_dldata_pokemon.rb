@@ -219,16 +219,15 @@ class WBT_POKEMON_SINGLE
     ret = chkblank_no_print( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+4 ) )
     if(ret == -1)
       # 空白の場合はポケモン名をセットする
-      @nick_name = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW)
+       @nick_name = get_unicode( 6, POKE_START_COL+offset, POKE_START_ROW );
     else
       # セット
-      @nick_name = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+4)
+       @nick_name = get_unicode( 6, POKE_START_COL+offset, POKE_START_ROW+4 );
     end
-    @nick_name = NKF.nkf("-w16L0", @nick_name)
     #
-    if(@local_debug == 1)
-      p sprintf("%s :%s", $poke_str[13], @nick_name )
-    end
+#    if(@local_debug == 1)
+#      p sprintf("%s :%s", $poke_str[13], @nick_name )
+#    end
   end
   
   #----------------

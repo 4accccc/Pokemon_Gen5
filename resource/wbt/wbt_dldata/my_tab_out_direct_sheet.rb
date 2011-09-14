@@ -46,6 +46,21 @@ class MY_ExcelConv
   # î•ñ‚Ìæ“¾
   # (col,row)(cA‰¡)‚Ìî•ñ‚ğæ“¾
   def get_cell( sheetnum, col, row )
+    # CP_ACP‚Åæ“¾(’Êí‚Ìwindows)
+    WIN32OLE.codepage = WIN32OLE::CP_ACP
+    #
+    sheet = $xl.Worksheets.Item( sheetnum+1 )
+    sheet.extend Worksheet
+    str = sheet.Cells( col, row ).Value
+    return( str )
+  end
+  
+  # î•ñ‚Ìæ“¾
+  # (col,row)(cA‰¡)‚Ìî•ñ‚ğæ“¾
+  def get_cell2( sheetnum, col, row )
+    # UTF8‚Åæ“¾
+    WIN32OLE.codepage = WIN32OLE::CP_UTF8
+    #
     sheet = $xl.Worksheets.Item( sheetnum+1 )
     sheet.extend Worksheet
     str = sheet.Cells( col, row ).Value

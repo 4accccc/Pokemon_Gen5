@@ -159,13 +159,12 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    str = @conv.get_cell(4, TRAINER_START_COL, TRAINER_START_ROW+@char_id )
-    @name = NKF.nkf("-w16L0", str)
+    @name = get_unicode( 4, TRAINER_START_COL, TRAINER_START_ROW+@char_id );
     
     # セット(コードの変換注意)
-    if(@local_debug == 1)
-      p sprintf("%s(%d) :%s", $trainer_str[0],@char_id, @conv.get_cell(4, TRAINER_START_COL, TRAINER_START_ROW+@char_id))
-    end
+#    if(@local_debug == 1)
+#      p sprintf("%s(%d) :%s", $trainer_str[0],@char_id, @conv.get_cell(4, TRAINER_START_COL, TRAINER_START_ROW+@char_id))
+#    end
   end
   
   #----------------------------------
@@ -180,13 +179,12 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    str = @conv.get_cell(4, TRAINER_START_COL+1, TRAINER_START_ROW+@char_id )
-    @title = NKF.nkf("-w16L0", str)
+    @title = get_unicode( 4, TRAINER_START_COL+1, TRAINER_START_ROW+@char_id );
     
     # セット(コードの変換注意)
-    if(@local_debug == 1)
-      p sprintf("%s(%d) :%s", $trainer_str[2],@char_id, @conv.get_cell(4, TRAINER_START_COL+1, TRAINER_START_ROW+@char_id))
-    end
+#    if(@local_debug == 1)
+#      p sprintf("%s(%d) :%s", $trainer_str[2],@char_id, @conv.get_cell(4, TRAINER_START_COL+1, TRAINER_START_ROW+@char_id))
+#    end
   end
   
   #----------------------------------
@@ -201,14 +199,13 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    str = @conv.get_cell(4, TRAINER_START_COL+12+@local_language, TRAINER_START_ROW+@char_id )
-    @msg_before = NKF.nkf("-w16L0", str)
+    @msg_before = get_unicode( 4, TRAINER_START_COL+12+@local_language, TRAINER_START_ROW+@char_id );
     
     # セット(コードの変換注意)
-    if(@local_debug == 1)
-      p sprintf("%s(%d) :%s", $trainer_str[1],@char_id, 
-                              @conv.get_cell(4, TRAINER_START_COL+12+@local_language, TRAINER_START_ROW+@char_id))
-    end
+#    if(@local_debug == 1)
+#      p sprintf("%s(%d) :%s", $trainer_str[1],@char_id, 
+#                              @conv.get_cell(4, TRAINER_START_COL+12+@local_language, TRAINER_START_ROW+@char_id))
+#    end
   end
   
   #----------------------------------
@@ -223,14 +220,13 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    str = @conv.get_cell(4, TRAINER_START_COL+24+@local_language, TRAINER_START_ROW+@char_id )
-    @msg_after_win = NKF.nkf("-w16L0", str)
+    @msg_after_win = get_unicode( 4, TRAINER_START_COL+24+@local_language, TRAINER_START_ROW+@char_id );
     
     # セット(コードの変換注意)
-    if(@local_debug == 1)
-      p sprintf("%s(%d) :%s", $trainer_str[3],@char_id,
-                              @conv.get_cell(4, TRAINER_START_COL+24+@local_language, TRAINER_START_ROW+@char_id))
-    end
+#    if(@local_debug == 1)
+#      p sprintf("%s(%d) :%s", $trainer_str[3],@char_id,
+#                              @conv.get_cell(4, TRAINER_START_COL+24+@local_language, TRAINER_START_ROW+@char_id))
+#    end
   end
   
   #----------------------------------
@@ -245,14 +241,13 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    str = @conv.get_cell(4, TRAINER_START_COL+34+@local_language, TRAINER_START_ROW+@char_id )
-    @msg_after_lose = NKF.nkf("-w16L0", str)
+    @msg_after_lose = get_unicode( 4, TRAINER_START_COL+34+@local_language, TRAINER_START_ROW+@char_id );
     
     # セット(コードの変換注意)
-    if(@local_debug == 1)
-      p sprintf("%s(%d) :%s", $trainer_str[4],@char_id,
-                              @conv.get_cell(4, TRAINER_START_COL+34+@local_language, TRAINER_START_ROW+@char_id))
-    end
+#    if(@local_debug == 1)
+#      p sprintf("%s(%d) :%s", $trainer_str[4],@char_id,
+#                              @conv.get_cell(4, TRAINER_START_COL+34+@local_language, TRAINER_START_ROW+@char_id))
+#    end
   end
   
   #----------------------------------
@@ -267,14 +262,13 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    str = @conv.get_cell(4, TRAINER_START_COL+43+@local_language, TRAINER_START_ROW+@char_id )
-    @msg_announce = NKF.nkf("-w16L0", str)
+    @msg_announce = get_unicode( 4, TRAINER_START_COL+43+@local_language, TRAINER_START_ROW+@char_id );
     
     # セット(コードの変換注意)
-    if(@local_debug == 1)
-      p sprintf("%s(%d) :%s", $trainer_str[5],@char_id, 
-                              @conv.get_cell(4, TRAINER_START_COL+43+@local_language, TRAINER_START_ROW+@char_id))
-    end
+#    if(@local_debug == 1)
+#      p sprintf("%s(%d) :%s", $trainer_str[5],@char_id, 
+#                              @conv.get_cell(4, TRAINER_START_COL+43+@local_language, TRAINER_START_ROW+@char_id))
+#    end
   end
   
   #--------------------
@@ -448,7 +442,7 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 番号をそのままセット
-    # 変換はプログラム側で対応
+    # 変換はプログラム側で対応(仕様変更)
     @type_id = num;
 #    # トレーナータイプ指定からトレーナータイプを取得
 #    str = @conv.get_cell(5, TYPE_START_COL+num-1, TYPE_START_ROW)

@@ -82,6 +82,18 @@ $error_str = [ "の指定が正しくありません",
 # 国のテーブル参照用ハッシュ
 $lang_tbl_hash   = { "日"=>0, "英"=>1, "仏"=>2, "伊"=>3, "独"=>4, "西"=>5, "韓"=>6 }
 
+# コード表示用(test用)
+$codes = {
+  NKF::JIS      => "JIS",
+  NKF::EUC      => "EUC",
+  NKF::SJIS     => "SJIS",
+  NKF::BINARY   => "BINARY",
+  NKF::UNKNOWN  => "UNKNOWN(ASCII)",
+  NKF::ASCII    => "ASCII",
+  NKF::UTF8     => "UTF8",
+  NKF::UTF16    => "UTF16",
+};
+
 #---------------------------------------------------------
 #---------------------------------------------------------
 #-------------
@@ -133,7 +145,11 @@ end
 def str2pack( buffer, num )
   array = Array.new	# 格納用
   #
-  buffersize = buffer.size;
+  buffersize = buffer.size
+  # 1byte単位に分割
+#  str = buffer;
+#  buffer2 = str.unpack("C*")
+  buffer2 = buffer
   #
   cnt = 0
   j=0
@@ -164,16 +180,16 @@ def str2pack( buffer, num )
       next;
     end
     
-    if(buffer[i] == nil)
+#    if(buffer2[i] == nil)
 #      array << 0xffff;
 #      p sprintf("miss");
-    else
+#    else
       # 改行処理
       # (0x0a, 0x00) => (0xfe, 0xff)に変換
-      if(buffer[i] == 0x0a)
+      if(buffer2[i] == 0x0a)
         # 念のため
         if(i < len-2)
-           if(buffer[i+1] == 0x00)
+           if(buffer2[i+1] == 0x00)
              array << 0xfe
              array << 0xff
              cnt = 1
@@ -185,10 +201,10 @@ def str2pack( buffer, num )
       #
       # 改ページ処理
       # (0xbc, 0x25) => (0x00,0xf0,0x01,0xbe,0x00,0x00)に変換
-      if(buffer[i] == 0xbc)
+      if(buffer2[i] == 0xbc)
         # 念のため
         if(i < len-2)
-           if(buffer[i+1] == 0x25)
+           if(buffer2[i+1] == 0x25)
              # 足りない場合は出力しない
              if(j <= len-8)
                array << 0x00
@@ -210,10 +226,10 @@ def str2pack( buffer, num )
       #
       # 改ページ処理(行送り)
       # (0xbd, 0x25) => (0x00,0xf0,0x00,0xbe,0x00,0x00)に変換
-      if(buffer[i] == 0xbd)
+      if(buffer2[i] == 0xbd)
         # 念のため
         if(i < len-2)
-           if(buffer[i+1] == 0x25)
+           if(buffer2[i+1] == 0x25)
              # 足りない場合は出力しない
              if(j <= len-8)
                array << 0x00
@@ -232,10 +248,10 @@ def str2pack( buffer, num )
           end
         end
       end
-      array << buffer[i];
+      array << buffer2[i];
       j = j+1
-#      p sprintf("utf : %x",buffer[i])
-    end
+#      p sprintf("utf : %x",buffer2[i])
+#    end
   }
   #
   # サイズのチェック
@@ -296,6 +312,38 @@ def get_array_num( str, src, maxnum )
   }
 #   p sprintf("[%d,%d]", i,j)
   return(j)
+end
+
+#-------------------------
+# unicodeをセット
+#-------------------------
+def get_unicode( index, col, row )
+  # UTF8で取得
+  str = @conv.get_cell2(index, col, row)
+  #----------------
+  # UTF8 -> UTF16へ
+  #----------------
+  # 正しく変換されないことがあったので保留
+#  str2 = NKF.nkf('-m0 -w16L0', str)
+  #
+  #UTF8をUTF16に変換
+  str2 = str.kconv(Kconv::UTF16, Kconv::UTF8)
+  #1byte単位に分割
+  # u16に変換後u8単位にしているので、
+  # (必ず2の倍数となるはず)
+  strArr = str2.unpack("C*")
+  # 
+  pos = 0
+  # kconvの場合は
+  # 上位、下位を変更しないとだめらしい..
+  while pos < strArr.size/2
+    temp = strArr[pos*2]
+    strArr[pos*2] = strArr[pos*2+1]
+    strArr[pos*2+1] = temp
+    pos = pos+1
+  end
+  #
+  return( strArr )
 end
 
 #-------------------------------------------------------
