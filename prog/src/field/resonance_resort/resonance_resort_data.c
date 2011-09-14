@@ -1121,6 +1121,7 @@ struct _RESORT_BEACON_DATA
   RESORT_BASIC2_DATA  basic2;
   u8                  extend[RESORT_EXTEND_DATA_SIZE];
   RESORT_EXTEND_TYPE  extend_type;
+  RESORT_COMM_TYPE    comm_type;
 };
 
 //-------------------------------------
@@ -1354,8 +1355,8 @@ BOOL RESORT_RECV_DATA_AddBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DAT
   //まずは初期化
   RESORT_RECV_DATA_InitInstance( p_wk );
 
-  //通信経路は必ずビーコン
-  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_COMM_ID, RESORT_COMM_TYPE_BEACON );
+  //通信経路
+  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_COMM_ID, cp_beacon->comm_type );
 
   //ベーシックは必ずいれる
   p_wk->basic1  = cp_beacon->basic1;
@@ -2171,6 +2172,7 @@ void RESORT_BEACON_DATA_SetMyData( RESORT_BEACON_DATA *p_wk, RESORT_EXTEND_TYPE 
 {
   RESORT_BASIC1_DATA_SetMyData( &p_wk->basic1, cp_gamedata );
   RESORT_BASIC2_DATA_SetMyData( &p_wk->basic2, cp_gamedata );
+  p_wk->comm_type = RESORT_COMM_TYPE_BEACON;
 
   //エラー値チェック
   if( type >= RESORT_EXTEND_TYPE_MAX )
@@ -2220,9 +2222,12 @@ void RESORT_BEACON_DATA_GetBeaconInfo( const RESORT_BEACON_DATA *cp_wk, GAMEBEAC
  *	@param	GAMEBEACON_INFO *cp_beacon_info   ビーコンデータ
  */
 //-----------------------------------------------------------------------------
-void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACON_INFO *cp_beacon_info )
+void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACON_INFO *cp_beacon_info, RESORT_COMM_TYPE comm_type )
 {
+  GF_ASSERT( comm_type == RESORT_COMM_TYPE_BEACON || comm_type == RESORT_COMM_TYPE_HYLINKFES );
+
   GFL_STD_MemClear( p_wk, sizeof(RESORT_BEACON_DATA) );
+  p_wk->comm_type = comm_type;
   RESORT_BASIC1_DATA_SetBeaconInfo( &p_wk->basic1, cp_beacon_info );
 
   if( cp_beacon_info->pm_version == VERSION_W2 || cp_beacon_info->pm_version == VERSION_B2 )

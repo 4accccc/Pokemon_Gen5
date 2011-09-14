@@ -50,3 +50,9 @@ extern u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys );
 extern u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RESIDENT_DATA *p_resident, u32 param );
 
 extern u32 RESORT_UTIL_GetCelebData( RESORT_BINARY_PRESET *p_set, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_BINARY_PRESET_PARAM param );
+
+typedef enum
+{
+  RESORT_UTIL_VISIBLE_LIST, //リストモードの時は話しかけている人と住民以外を全部非表示
+}RESORT_UTIL_VISIBLE;
+extern void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type );

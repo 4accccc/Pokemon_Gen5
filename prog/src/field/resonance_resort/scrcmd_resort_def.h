@@ -118,8 +118,9 @@
 
 #define RESORT_LIST_CANCEL              (0xFF)
 
-#define RESORT_LIST_CAMERA_NORMAL       (0)
+#define RESORT_LIST_CAMERA_GRID         (0)
 #define RESORT_LIST_CAMERA_SHOP         (1)
+#define RESORT_LIST_CAMERA_RECEPTION    (2)
 
   //RESORT_LIST_TYPE_SELECT
 #define RESORT_LIST_SELECT_SECRETARY_ADD      (0)

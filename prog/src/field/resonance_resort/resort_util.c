@@ -194,6 +194,10 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
           }
 
         }
+        else if( comm == RESORT_COMM_TYPE_HYLINKFES )
+        {
+          return SexGetMsgID( sex, resort_tourist_greet_14_m, resort_tourist_greet_14_f);
+        }
         else if( comm == RESORT_COMM_TYPE_NULL )
         {
           //ファンかチュートリアル
@@ -1630,4 +1634,46 @@ u32 RESORT_UTIL_GetCelebData( RESORT_BINARY_PRESET *p_set, RESORT_ABSTRUCT_DATA 
   }
   GF_ASSERT(0);
   return 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  状況に応じて人物の表示、非表示をする
+ *
+ *	@param	RESORT_PEOPLE_SYS *p_sys  システム
+ *	@param	*p_talk_people  話している人（いないor無視したいときはNULL）
+ *	@param	type  状況
+ */
+//-----------------------------------------------------------------------------
+void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type )
+{
+  static const struct
+  {
+    u32 array[RESORT_PEOPLE_TYPE_MAX];
+  }
+  sc_visible_type[] =
+  {
+    { RESORT_PEOPLE_TYPE_TOURIST, RESORT_PEOPLE_TYPE_PROXY, RESORT_PEOPLE_TYPE_MAX },
+  };
+
+  int i;
+  int j;
+
+  GF_ASSERT( type < NELEMS(sc_visible_type) );
+
+  for( i = 0; i < RESORT_PEOPLE_SYS_GetPeopleMax(p_sys); i++ )
+  {
+    RESORT_PEOPLE *p_wk = RESORT_PEOPLE_SYS_GetPeopleByIndex( p_sys, i );
+    if( p_wk )
+    {
+      u32 people_type = RESORT_PEOPLE_GetPeopleData(p_wk, RESORT_PEOPLE_DATA_PARAM_TYPE);
+      for( j = 0; j < RESORT_PEOPLE_TYPE_MAX
+          && sc_visible_type[type].array[j] != RESORT_PEOPLE_TYPE_MAX; j++ )
+      {
+        if( p_wk != p_talk_people && people_type == sc_visible_type[type].array[j] )
+        {
+          RESORT_PEOPLE_SetVisible( p_wk, FALSE );
+        }
+      }
+    }
+  }
 }

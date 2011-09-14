@@ -185,6 +185,7 @@ typedef struct _SHOP_BUY_APP_WORK{
 
   BOOL (*ShopCallFunc)( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
 
+  RESORT_PEOPLE_SYS       *p_people_sys;
   RESORT_SYSTEM           *p_resort_sys;
   RESORT_BINARY_SHOP      *p_shop;
   const RESORT_BINARY_SHOP_DATA *cp_shop_data;
@@ -228,14 +229,18 @@ typedef struct _SHOP_BUY_APP_WORK{
 } SHOP_BUY_APP_WORK;
 
 // ショップ買う起動時構造体
-typedef struct {
+typedef struct _SHOP_BUY_CALL_WORK{
   u8  seq;       // シーケンス制御ワーク
   u8  wait;      // ウェイト用
   u8  shopType;  // ショップタイプ(RESORT_CALL_LIST_TYPE_ITEM,  etc..)
   u8  shopParam;    // ショップの品物ID（shop_data.cdat参照。SHOP_TYOE_FIXの際に使用する)
   int camera_flag_push; // カメラの範囲制限フラグをPUSHするためのワーク
   SHOP_BUY_APP_WORK wk; // ショップ画面ワーク
-  
+
+  u32 camera_seq;
+  BOOL (*Camera_StartMove)( struct _SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq );
+  BOOL (*Camera_EndMove)( struct _SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq );
+  GAMESYS_WORK *gsys;
 } SHOP_BUY_CALL_WORK;
 
 
@@ -245,6 +250,12 @@ typedef struct {
 //====================================================================
 
 static BOOL EvShopBuyWait( VMHANDLE *core, void *wk );
+
+
+static void ShopCall_InitStart( SHOP_BUY_CALL_WORK *sbw );
+static BOOL ShopCall_InitWait( SHOP_BUY_CALL_WORK *sbw );
+static void ShopCall_Exit( SHOP_BUY_CALL_WORK *sbw );
+
 static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, int id );
 static BOOL ShopCallFunc_Select( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, int id );
 static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, int id );
@@ -254,7 +265,7 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void shop_item_release( SHOP_BUY_APP_WORK *wk );
-static void bg_trans( SHOP_BUY_APP_WORK *wk );
+static void bg_trans( SHOP_BUY_APP_WORK *wk, u32 shop_type );
 static void bg_clear( SHOP_BUY_APP_WORK *wk );
 static void obj_init( SHOP_BUY_APP_WORK *wk );
 static void obj_load_item( SHOP_BUY_APP_WORK *wk );
@@ -282,7 +293,7 @@ static void sort_shop_main( SHOP_BUY_APP_WORK *wk );
 static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
 static void string_alloc( SHOP_BUY_APP_WORK *wk );  
 
-static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( SCRCMD_WORK*   work, FIELDMAP_WORK *p_fieldmap );
+static RESORT_PEOPLE_SYS * Resort_ScrcmdShop_GetPeopleSys( FIELDMAP_WORK *p_fieldmap );
 
 static void ItemList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
 static void SelectPeople_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
@@ -309,6 +320,12 @@ static void InstitutionList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
 
 static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u16 * rsc_idx );
 static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price );
+
+static BOOL CameraNormal_StartMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq );
+static BOOL CameraNormal_EndMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq );
+
+static BOOL CameraShop_StartMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq );
+static BOOL CameraShop_EndMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq );
 
 //scrcmd_resort.cのソースを使う
 extern RESORT_SYSTEM * Resort_Scrcmd_GetSystem( FIELDMAP_WORK *p_field );
@@ -364,7 +381,13 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.p_city  = RESORT_SYSTEM_GetCityData( resort_sys );
   sbw->wk.p_resort_sys = resort_sys;
   sbw->wk.camera_type = camera_type;
-
+  sbw->wk.p_people_sys = Resort_ScrcmdShop_GetPeopleSys( fieldmap );
+  sbw->gsys = gsys;
+  sbw->wk.p_people  = Resort_Scrcmd_GetFrontPeople( work, sbw->wk.p_people_sys );
+  //sbw->Camera_StartMove   = CameraNormal_StartMove;
+  //sbw->Camera_EndMove     = CameraNormal_EndMove;
+  sbw->Camera_StartMove   = CameraShop_StartMove;
+  sbw->Camera_EndMove     = CameraShop_EndMove;
 
   *sbw->wk.ret_service_type = FALSE;
 
@@ -385,13 +408,10 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
 
     //自分のお店データを取得
     {
-      RESORT_PEOPLE *p_people = Resort_ScrcmdShop_GetFrontPeople( work, fieldmap );
-      sbw->wk.p_people = p_people;
+      GF_ASSERT( RESORT_PEOPLE_GetPeopleData( sbw->wk.p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
 
-      GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
-
-      sbw->wk.p_institution = RESORT_RESIDENT_DATA_GetInstitution( RESORT_PEOPLE_GetDataAdrs( p_people) );
-      sbw->wk.cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( sbw->wk.p_shop, RESORT_PEOPLE_GetDataAdrs(p_people) );
+      sbw->wk.p_institution = RESORT_RESIDENT_DATA_GetInstitution( RESORT_PEOPLE_GetDataAdrs( sbw->wk.p_people) );
+      sbw->wk.cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( sbw->wk.p_shop, RESORT_PEOPLE_GetDataAdrs(sbw->wk.p_people) );
     }
 
     break;
@@ -538,19 +558,21 @@ static void Start_CameraMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, 
     }
     GF_ASSERT( i < RESORT_RESIDENT_DATA_NUM );
 
+#if 0
     if(i%2)
     {
       //左側
       param.Core.AngleYaw += 0x1000;
-      param.Core.TrgtPos.z += FX32_ONE*8;
+      param.Core.TrgtPos.z -= FX32_ONE*16;
+      param.Core.TrgtPos.x -= FX32_ONE*16;
     }
     else
     {
       //右側
-      param.Core.AngleYaw -= 0x1100;
-      param.Core.TrgtPos.z += FX32_ONE*8;
-      param.Core.TrgtPos.x -= FX32_ONE*8;
+      param.Core.AngleYaw -= 0x1200;
+      param.Core.TrgtPos.z += FX32_ONE*32;
     }
+#endif
   }
 
 
@@ -571,13 +593,9 @@ static void Start_CameraMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, 
 static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
 {
   enum{
-    SHOP_BUY_CALL_CAMERATRACE_STOP=0,
-    SHOP_BUY_CALL_CAMERATRACE_STOP_WAIT,
-    SHOP_BUY_CALL_CAMERA_MOVE,
-    SHOP_BUY_CALL_CAMERA_MOVE_WAIT,
+    SHOP_BUY_CAMERA_START,
     SHOP_BUY_CALL,
-    SHOP_BUY_CALL_CAMERA_RETURN,
-    SHOP_BUY_CALL_CAMERA_RETURN_WAIT,
+    SHOP_BUY_CAMERA_END,
     SHOP_BUY_CALL_END,
   };
 
@@ -592,27 +610,13 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
   // ショップ呼び出しイベントシーケンス
   switch(sbw->seq)
   {
-    case SHOP_BUY_CALL_CAMERATRACE_STOP:  // カメラ移動停止（念のため）
-      FIELD_CAMERA_StopTraceRequest( fieldcamera );
-      sbw->seq++;
-      break;
-    case SHOP_BUY_CALL_CAMERATRACE_STOP_WAIT:
-      if(FIELD_CAMERA_CheckTrace(fieldcamera)==FALSE){
-        sbw->seq++;
-      }
-      break;
-    case SHOP_BUY_CALL_CAMERA_MOVE:
-      OS_Printf("ショップ起動\n");
-      // カメラ移動開始
-      Start_CameraMove( sbw, fieldmap, fieldcamera, sbw->wk.camera_type );
-      sbw->seq++;
-      break;
-    case SHOP_BUY_CALL_CAMERA_MOVE_WAIT:
-      // カメラ移動終了待ち
-      if(!FIELD_CAMERA_CheckMvFunc(fieldcamera)){
-        sbw->seq++;
-        sbw->wk.seq = 0;
+    case SHOP_BUY_CAMERA_START:
+      if( sbw->Camera_StartMove( sbw, fieldmap, &sbw->camera_seq ) )
+      {
+        OS_Printf("ショップ起動\n");
         FLDMSGBG_SetBlendAlpha( FALSE );  // メッセージウインドウ半透明OFF
+        sbw->wk.seq = 0;
+        sbw->seq++;
       }
       break;
     case SHOP_BUY_CALL:
@@ -621,22 +625,9 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
         sbw->seq++;
       }
       break;
-    case SHOP_BUY_CALL_CAMERA_RETURN:
-      // 移動カメラ戻す処理
+    case SHOP_BUY_CAMERA_END:
+      if( sbw->Camera_EndMove( sbw, fieldmap, &sbw->camera_seq ) )
       {
-        FLD_CAM_MV_PARAM_CHK chk = {FALSE, FALSE,TRUE,FALSE,FALSE,TRUE,};
-        FIELD_CAMERA_RecvLinerParam(fieldcamera, &chk, 8);
-      }
-      sbw->seq++;
-      sbw->wait=0;
-      break;
-    case SHOP_BUY_CALL_CAMERA_RETURN_WAIT:
-      // カメラ移動終了待ち
-      if(!FIELD_CAMERA_CheckMvFunc(fieldcamera)){
-        FIELD_CAMERA_BindDefaultTarget(fieldcamera);
-        FIELD_CAMERA_SetCameraAreaActive( fieldcamera, sbw->camera_flag_push );
-        FIELD_CAMERA_RestartTrace( fieldcamera );
-        FIELD_CAMERA_ClearRecvCamParam(fieldcamera);
         FLDMSGBG_SetBlendAlpha( TRUE );  // メッセージウインドウ半透明ON
         sbw->seq++;
       }
@@ -709,7 +700,7 @@ static const BMPWIN_YESNO_DAT yesno_data= {
 
 // ショップ買う画面遷移用定義
 enum{
-  SHOPBUY_SEQ_INIT=0,
+  //SHOPBUY_SEQ_INIT=0,
   SHOPBUY_SEQ_MAIN,
   SHOPBUY_SEQ_SELECT,
   SHOPBUY_SEQ_BACK,
@@ -723,7 +714,7 @@ enum{
 };
 
 enum{
-  SHOPSELECT_SEQ_INIT=0,
+  //SHOPSELECT_SEQ_INIT=0,
   SHOPSELECT_SEQ_MAIN,
   SHOPSELECT_SEQ_SELECT,
   SHOPSELECT_SEQ_BACK,
@@ -737,7 +728,7 @@ enum{
 
 
 enum{
-  SHOPSORT_SEQ_INIT=0,
+  //SHOPSORT_SEQ_INIT=0,
   SHOPSORT_SEQ_INITWAIT,
   SHOPSORT_SEQ_MAIN,
   SHOPSORT_SEQ_SELECT,
@@ -901,6 +892,7 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
 static void item_shop_main( SHOP_BUY_APP_WORK *wk )
 {
   u32 ret;
+#if 0
   // printQueに処理が残っている場合はメインを通さない
   if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
     return;
@@ -911,6 +903,7 @@ static void item_shop_main( SHOP_BUY_APP_WORK *wk )
     GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_LIST] );
     wk->FirstTrans++;
   }
+#endif
 
   // リスト処理メイン
   ret = BmpMenuList_Main( wk->menuList );
@@ -941,6 +934,8 @@ static void item_shop_main( SHOP_BUY_APP_WORK *wk )
 static void select_shop_main( SHOP_BUY_APP_WORK *wk )
 {
   u32 ret;
+
+#if 0
   // printQueに処理が残っている場合はメインを通さない
   if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
     return;
@@ -951,6 +946,7 @@ static void select_shop_main( SHOP_BUY_APP_WORK *wk )
     GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_LIST] );
     wk->FirstTrans++;
   }
+#endif
 
   // リスト処理メイン
   ret = BmpMenuList_Main( wk->menuList );
@@ -982,6 +978,7 @@ static void select_shop_main( SHOP_BUY_APP_WORK *wk )
 static void sort_shop_main( SHOP_BUY_APP_WORK *wk )
 {
   u32 ret;
+#if 0
   // printQueに処理が残っている場合はメインを通さない
   if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
     return;
@@ -992,6 +989,7 @@ static void sort_shop_main( SHOP_BUY_APP_WORK *wk )
     GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_LIST] );
     wk->FirstTrans++;
   }
+#endif
 
   // リスト処理メイン
   ret = BmpMenuList_Main( wk->menuList );
@@ -1094,6 +1092,61 @@ static void _sub_payment( SHOP_BUY_APP_WORK *wk, int pay )
   // レコード：買った回数
   RECORD_Inc( wk->record, RECID_SHOPPING_CNT );
 }
+
+
+static void ShopCall_InitStart( SHOP_BUY_CALL_WORK *sbw )
+{
+  SHOP_BUY_APP_WORK *wk = &sbw->wk;
+
+  shop_call_init(sbw->gsys, wk, sbw->shopType, sbw->shopParam);
+
+  bg_trans( wk, sbw->shopType );     // BG転送
+
+  if( sbw->shopType == RESORT_LIST_TYPE_BUY )
+  {
+    print_money(wk);  //おこづかい表示
+    print_mygold(wk);   // 所持金表示
+  }
+  wk->List_Init( sbw->gsys, wk, sbw->shopType, sbw->shopParam );
+}
+
+static BOOL ShopCall_InitWait( SHOP_BUY_CALL_WORK *sbw )
+{
+  SHOP_BUY_APP_WORK *wk = &sbw->wk;
+
+  // printQueに処理が残っている場合はメインを通さない
+  if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
+    return FALSE;
+  }
+
+  // BMPの転送待ちの場合があるので、BmpwinOnのタイミングをズラした
+  if(wk->FirstTrans==0){
+    GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_LIST] );
+    wk->FirstTrans++;
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+static void ShopCall_Exit( SHOP_BUY_CALL_WORK *sbw )
+{
+  SHOP_BUY_APP_WORK *wk = &sbw->wk;
+
+  wk->List_Exit( sbw->gsys, wk, sbw->shopType, sbw->shopParam );
+
+  bmpwin_list_exit(wk);   // BMPLIST解放
+  obj_del( wk );          // OBJ削除
+  bmpwin_exit( wk );      // BMPWIN解放
+  bg_clear(wk);           // BG消去
+
+  // 品揃えデータ削除
+  shop_item_release( wk);
+
+  // ワーク解放
+  exit_work(wk);
+}
+
 //----------------------------------------------------------------------------------
 /**
  * @brief ショップ買うメインルーチン
@@ -1111,6 +1164,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
   u32 ret;
   
   switch( wk->seq ){
+#if 0
   case SHOPBUY_SEQ_INIT:  // 初期化
     shop_call_init(gsys, wk, type, id);
 
@@ -1120,6 +1174,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
     wk->List_Init( gsys, wk, type, id );
     wk->seq++;
     break;
+#endif
   case SHOPBUY_SEQ_MAIN:
     item_shop_main(wk);
     break;
@@ -1255,6 +1310,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
       *wk->ret_price = 0;
     }
 
+#if 0
     wk->List_Exit( gsys, wk, type, id );
 
     bmpwin_list_exit(wk);   // BMPLIST解放
@@ -1267,6 +1323,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
 
     // ワーク解放
     exit_work(wk);
+#endif
     return TRUE;
     break;
   }
@@ -1286,6 +1343,7 @@ static BOOL ShopCallFunc_Select( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int 
   u32 ret;
   
   switch( wk->seq ){
+#if 0
   case SHOPSELECT_SEQ_INIT:  // 初期化
     shop_call_init(gsys, wk, type, id);
     bg_trans( wk );     // BG転送
@@ -1294,6 +1352,7 @@ static BOOL ShopCallFunc_Select( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int 
     wk->List_Init( gsys, wk, type, id );
     wk->seq++;
     break;
+#endif
   case SHOPSELECT_SEQ_MAIN:
     select_shop_main(wk);
     break;
@@ -1368,7 +1427,7 @@ static BOOL ShopCallFunc_Select( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int 
       *wk->ret_price = 0;
     }
 
-
+#if 0
     bmpwin_list_exit(wk);   // BMPLIST解放
     obj_del( wk );          // OBJ削除
     bmpwin_exit( wk );      // BMPWIN解放
@@ -1379,6 +1438,7 @@ static BOOL ShopCallFunc_Select( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int 
 
     // ワーク解放
     exit_work(wk);
+#endif
     return TRUE;
     break;
   }
@@ -1397,6 +1457,7 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
   u32 ret;
   
   switch( wk->seq ){
+#if 0
   case SHOPSORT_SEQ_INIT:  // 初期化
     shop_call_init(gsys, wk, type, id);
     bg_trans( wk );     // BG転送
@@ -1405,8 +1466,10 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
     wk->List_Init( gsys, wk, type, id );
     wk->seq++;
     break;
+#endif
   
   case SHOPSORT_SEQ_INITWAIT:
+#if 0
    if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
      break;
     }
@@ -1415,6 +1478,7 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
       GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_LIST] );
       wk->FirstTrans++;
     }
+#endif
 
     ShopPrintMsg( wk, wk->msg_start ); 
     wk->seq  = SHOPSORT_SEQ_MSG_WAIT;
@@ -1483,6 +1547,7 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
 
     *wk->ret_service_type = ( GFL_STD_MemComp( wk->sort_tbl,wk->origin_tbl,sizeof(u16)*RESORT_RESIDENT_DATA_NUM ) != 0 ) ;
 
+#if 0
     bmpwin_list_exit(wk);   // BMPLIST解放
     obj_del( wk );          // OBJ削除
     bmpwin_exit( wk );      // BMPWIN解放
@@ -1493,6 +1558,7 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
 
     // ワーク解放
     exit_work(wk);
+#endif
     return TRUE;
     break;
   }
@@ -1994,7 +2060,7 @@ static void exit_work( SHOP_BUY_APP_WORK *wk )
  * @param   wk    
  */
 //----------------------------------------------------------------------------------
-static void bg_trans( SHOP_BUY_APP_WORK *wk )
+static void bg_trans( SHOP_BUY_APP_WORK *wk, u32 shop_type )
 {
   // 会話ウインドウ半透明OFF
 //  FLDMSGBG_SetBlendAlpha( FALSE );
@@ -2031,6 +2097,13 @@ static void bg_trans( SHOP_BUY_APP_WORK *wk )
 
   // BG2面のプライオリティを１に変更
   GFL_BG_SetPriority( GFL_BG_FRAME2_M, 1 );
+
+  if( shop_type == RESORT_LIST_TYPE_SELECT
+    || shop_type == RESORT_LIST_TYPE_SORT )
+  {
+    GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0, 0, 0, 11, 17, GFL_BG_SCRWRT_PALNL );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+  }
 
 }
 
@@ -2873,7 +2946,7 @@ static void submenu_screen_clear( int type )
  *	@return 目の前の人物を取得
  */
 //-----------------------------------------------------------------------------
-static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( SCRCMD_WORK*   work, FIELDMAP_WORK *p_fieldmap )
+static RESORT_PEOPLE_SYS * Resort_ScrcmdShop_GetPeopleSys( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_PEOPLE_SYS *p_people_sys = NULL;
   {
@@ -2888,8 +2961,7 @@ static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( SCRCMD_WORK*   work, FI
     }
     GF_ASSERT( p_people_sys != NULL );
   }
-
-  return Resort_Scrcmd_GetFrontPeople( work, p_people_sys );
+  return p_people_sys;
 }
 
 //アイテム・サービスリストの場合
@@ -3271,10 +3343,350 @@ static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
   u32 city_lv = RESORT_CITY_DATA_GetData( p_wk->p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
   GF_ASSERT( city_lv != 0 );
 
-  if( city_lv < RESORT_BINARY_CITY_GetCityLvMax(RESORT_SYSTEM_GetBinaryCity(p_wk->p_resort_sys))  )
+  if( 0 < city_lv && city_lv < RESORT_BINARY_CITY_GetCityLvMax(RESORT_SYSTEM_GetBinaryCity(p_wk->p_resort_sys))  )
   {
     city_lv--;
   }
 
   return price - FX_Whole(price * city_lv * fever_num * RESORT_PRICE_COEFFEICENT );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラをセット
+ *
+ *	@param	SHOP_BUY_CALL_WORK *sbw ワーク
+ *	@param	camera_type カメラタイプ
+ */
+//-----------------------------------------------------------------------------
+static void SetCameraMoveResort( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK *fieldmap, u32 camera_type )
+{
+
+  FIELD_CAMERA *fieldcamera = FIELDMAP_GetFieldCamera( fieldmap );
+  {
+    static const struct
+    {
+      u16 yaw;
+      fx32 x;
+      fx32 z;
+    }
+    sc_dir_camera[]  =
+    {
+      { 0x8000, -FX32_ONE*70, 0 },  //上
+      { 0, FX32_ONE*70, 0 },  //下
+      { 0x3FFF, 0, -FX32_ONE*70 },  //左
+      { 0xC000, 0, FX32_ONE*70 },  //右
+    };
+
+    int dir = 0;
+
+    sbw->camera_flag_push = FIELD_CAMERA_GetCameraAreaActive( fieldcamera );
+    FIELD_CAMERA_SetCameraAreaActive( fieldcamera, FALSE );
+    FIELD_CAMERA_FreeTarget(fieldcamera);
+
+    switch( camera_type )
+    {
+    case RESORT_LIST_CAMERA_SHOP:
+      //お店がどちら側にあるかで決まる
+      {
+        int i;
+        VecFx32 vec;
+        void *p_data_adrs = RESORT_PEOPLE_GetDataAdrs( sbw->wk.p_people );
+        for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+        {
+          RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident(sbw->wk.p_all_people,i );
+          if( p_data == p_data_adrs )
+          {
+            break;
+          }
+        }
+        GF_ASSERT( i < RESORT_RESIDENT_DATA_NUM );
+
+        if(i%2)
+        {
+          dir = DIR_LEFT;
+        }
+        else
+        {
+          dir = DIR_RIGHT;
+        }
+      }
+      break;
+    default:
+      GF_ASSERT(0);
+    case RESORT_LIST_CAMERA_GRID:
+      //話しかけた人がどの座標にいるかで決まる
+      {
+        static const struct
+        {
+          s16 x_min;
+          s16 x_max;
+          s16 z_min;
+          s16 z_max;
+          u32 dir;
+        }
+        sc_grid_pos[] =
+        {
+          { 17, 32, 0, 65, DIR_RIGHT},
+          { 0, 17, 0, 80, DIR_DOWN  },
+          { 17, 32, 65, 80, DIR_UP  },
+        };
+
+        FIELD_PLAYER *fld_player  = FIELDMAP_GetFieldPlayer( fieldmap );
+        int player_dir = FIELD_PLAYER_GetDir( fld_player );
+        s16 x, y, z;
+        int i;
+
+        FIELD_PLAYER_GetDirGridPos(fld_player, player_dir, &x, &y, &z );
+
+
+        for( i = 0; i < NELEMS(sc_grid_pos);i++ )
+        {
+          if( sc_grid_pos[i].x_min <= x && x < sc_grid_pos[i].x_max
+            && sc_grid_pos[i].z_min <= z && z < sc_grid_pos[i].z_max )
+          {
+            dir = sc_grid_pos[i].dir;
+            break;
+          }
+        }
+        GF_ASSERT_MSG( i < NELEMS(sc_grid_pos), "x%d,z%d\n", x, z );
+        
+      }
+      break;
+    case RESORT_LIST_CAMERA_RECEPTION:
+      dir = DIR_DOWN;
+      break;
+    }
+
+    {
+      VecFx32 vec;
+      FIELD_CAMERA_SetAngleYaw(fieldcamera, sc_dir_camera[dir].yaw );
+      FIELD_CAMERA_GetTargetPos( fieldcamera, &vec );
+      vec.x += sc_dir_camera[dir].x;
+      vec.z += sc_dir_camera[dir].z;
+      FIELD_CAMERA_SetTargetPos( fieldcamera, &vec );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ移動
+ *
+ *	@param	FIELD_CAMERA *fieldcamera　カメラ
+ *	@param	*p_seq  シーケンス
+ *
+ *	@return TRUEカメラ処理終了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL CameraNormal_StartMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq )
+{
+  enum
+  {
+    SHOP_BUY_CALL_CAMERATRACE_STOP=0,
+    SHOP_BUY_CALL_CAMERATRACE_STOP_WAIT,
+    SHOP_BUY_CALL_CAMERA_MOVE,
+    SHOP_BUY_CALL_CAMERA_MOVE_WAIT,
+  };
+
+  FIELD_CAMERA *fieldcamera = FIELDMAP_GetFieldCamera( fieldmap );
+
+  switch( *p_seq )
+  {
+  case SHOP_BUY_CALL_CAMERATRACE_STOP:  // カメラ移動停止（念のため）
+    FIELD_CAMERA_StopTraceRequest( fieldcamera );
+    (*p_seq)++;
+    break;
+  case SHOP_BUY_CALL_CAMERATRACE_STOP_WAIT:
+    if(FIELD_CAMERA_CheckTrace(fieldcamera)==FALSE){
+      (*p_seq)++;
+    }
+    break;
+  case SHOP_BUY_CALL_CAMERA_MOVE:
+    // カメラ移動開始
+    Start_CameraMove( sbw, fieldmap, fieldcamera, sbw->wk.camera_type );
+    (*p_seq)++;
+    break;
+  case SHOP_BUY_CALL_CAMERA_MOVE_WAIT:
+    // カメラ移動終了待ち
+    if(!FIELD_CAMERA_CheckMvFunc(fieldcamera)){
+      (*p_seq)  = 0;
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ移動
+ *
+ *	@param	FIELD_CAMERA *fieldcamera　カメラ
+ *	@param	*p_seq  シーケンス
+ *
+ *	@return TRUEカメラ処理終了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL CameraNormal_EndMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq )
+{
+  enum
+  {
+    SHOP_BUY_CALL_CAMERA_RETURN,
+    SHOP_BUY_CALL_CAMERA_RETURN_WAIT,
+  };
+
+  FIELD_CAMERA *fieldcamera = FIELDMAP_GetFieldCamera( fieldmap );
+
+  switch( *p_seq )
+  {
+    case SHOP_BUY_CALL_CAMERA_RETURN:
+      // 移動カメラ戻す処理
+      {
+        FLD_CAM_MV_PARAM_CHK chk = {FALSE, FALSE,TRUE,FALSE,FALSE,TRUE,};
+        FIELD_CAMERA_RecvLinerParam(fieldcamera, &chk, 8);
+      }
+      (*p_seq)++;
+      break;
+    case SHOP_BUY_CALL_CAMERA_RETURN_WAIT:
+      // カメラ移動終了待ち
+      if(!FIELD_CAMERA_CheckMvFunc(fieldcamera)){
+        FIELD_CAMERA_BindDefaultTarget(fieldcamera);
+        FIELD_CAMERA_SetCameraAreaActive( fieldcamera, sbw->camera_flag_push );
+        FIELD_CAMERA_RestartTrace( fieldcamera );
+        FIELD_CAMERA_ClearRecvCamParam(fieldcamera);
+
+        (*p_seq)  = 0;
+        return TRUE;
+      }
+      break;
+  }
+
+  return FALSE;
+}
+
+#define FADE_SYNC (1)
+//----------------------------------------------------------------------------
+/**
+ *	@brief  お店ようカメラ　開始移動
+ *
+ *	@param	SHOP_BUY_CALL_WORK *sbw ワーク
+ *	@param	fieldmap  フィールドマップ
+ *	@param	*p_seq  シーケンス
+ *
+ *	@return TRUEカメラ処理終了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL CameraShop_StartMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq )
+{
+  enum
+  {
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_SET_CAMERA,
+    SEQ_SHOPLIST_CREATE,
+    SEQ_SHOPLIST_WAIT,
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+  };
+
+
+  switch( *p_seq )
+  {
+  case SEQ_FADEOUT_START:
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT,0,16,FADE_SYNC );
+    (*p_seq)++;
+    break;
+  case SEQ_FADEOUT_WAIT:
+    if( !GFL_FADE_CheckFade( ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_SET_CAMERA:
+    SetCameraMoveResort( sbw, fieldmap, sbw->wk.camera_type);
+    RESORT_UTIL_SetSceneVisible( sbw->wk.p_people_sys, sbw->wk.p_people, RESORT_UTIL_VISIBLE_LIST );
+    (*p_seq)++;
+    break;
+  case SEQ_SHOPLIST_CREATE:
+    ShopCall_InitStart( sbw );
+    (*p_seq)++;
+    break;
+  case SEQ_SHOPLIST_WAIT:
+    if( ShopCall_InitWait(sbw) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_FADEIN_START:
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT,16,0,FADE_SYNC );
+    (*p_seq)++;
+    break;
+  case SEQ_FADEIN_WAIT:
+    if( !GFL_FADE_CheckFade( ) )
+    {
+      (*p_seq)  = 0;
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  お店ようカメラ　終了移動
+ *
+ *	@param	SHOP_BUY_CALL_WORK *sbw ワーク
+ *	@param	fieldmap  フィールドマップ
+ *	@param	*p_seq  シーケンス
+ *
+ *	@return TRUEカメラ処理終了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL CameraShop_EndMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq )
+{
+  enum
+  {
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+  };
+
+  FIELD_CAMERA *fieldcamera = FIELDMAP_GetFieldCamera( fieldmap );
+
+  switch( *p_seq )
+  {
+  case SEQ_FADEOUT_START:
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT,0,16,FADE_SYNC );
+    (*p_seq)++;
+    break;
+  case SEQ_FADEOUT_WAIT:
+    if( !GFL_FADE_CheckFade( ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_FADEIN_START:
+  
+    RESORT_PEOPLE_SYS_SetVisibleAll( sbw->wk.p_people_sys, TRUE );
+
+    ShopCall_Exit( sbw );
+
+    FIELD_CAMERA_SetDefaultParameter(fieldcamera);
+    FIELD_CAMERA_BindDefaultTarget(fieldcamera);
+    FIELD_CAMERA_SetCameraAreaActive( fieldcamera, sbw->camera_flag_push );
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT,16,0,FADE_SYNC );
+    (*p_seq)++;
+    break;
+  case SEQ_FADEIN_WAIT:
+    if( !GFL_FADE_CheckFade( ) )
+    {
+      (*p_seq)  = 0;
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }

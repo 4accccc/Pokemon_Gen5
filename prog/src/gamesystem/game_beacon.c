@@ -88,7 +88,7 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
 static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no);
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
 static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata);
-static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info );
+static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info, RESORT_COMM_TYPE comm_type );
 static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys );
 
 #ifdef PM_DEBUG
@@ -635,7 +635,11 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   //リゾートビーコン受け取り
   if( info->action.action_no == GAMEBEACON_ACTION_SEARCH )
   {
-    BeaconInfo_SetResortData( bsys, info );
+    BeaconInfo_SetResortData( bsys, info, RESORT_COMM_TYPE_BEACON );
+  }
+  else if( GAMEBEACON_Check_FestMission(info) )
+  {
+    BeaconInfo_SetResortData( bsys, info, RESORT_COMM_TYPE_HYLINKFES );
   }
 
   if(info->action.action_no == GAMEBEACON_ACTION_THANKYOU
@@ -999,7 +1003,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
  *	@param	GAMEBEACON_INFO *info   ビーコン情報
  */
 //-----------------------------------------------------------------------------
-static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info )
+static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info, RESORT_COMM_TYPE comm_type )
 {
   if( GAMEDATA_GetIsSave( bsys->gamedata ) == FALSE )
   {
@@ -1009,7 +1013,7 @@ static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_
     //ビーコン情報取得
     RESORT_BEACON_DATA *p_beacon  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
 
-    RESORT_BEACON_DATA_SetBeaconInfo( p_beacon, info );
+    RESORT_BEACON_DATA_SetBeaconInfo( p_beacon, info, comm_type );
 
     RESONANCE_RESORT_SV_SetData( p_resort, bsys->gamedata, p_beacon, RESORT_MERGE_TYPE_BEACON );
 

@@ -301,6 +301,7 @@ typedef enum
   RESORT_COMM_TYPE_GTS,
   RESORT_COMM_TYPE_PDW,
   RESORT_COMM_TYPE_BEACON,
+  RESORT_COMM_TYPE_HYLINKFES,
 } RESORT_COMM_TYPE;
 
 
@@ -387,7 +388,7 @@ extern RESORT_BEACON_DATA * RESORT_BEACON_DATA_Init( HEAPID heapID );
 extern void RESORT_BEACON_DATA_Exit( RESORT_BEACON_DATA *p_wk );
 extern void RESORT_BEACON_DATA_SetMyData( RESORT_BEACON_DATA *p_wk, RESORT_EXTEND_TYPE type, const GAMEDATA *cp_gamedata );
 extern void RESORT_BEACON_DATA_GetBeaconInfo( const RESORT_BEACON_DATA *cp_wk, GAMEBEACON_INFO *p_beacon_info );
-extern void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACON_INFO *cp_beacon_info );
+extern void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACON_INFO *cp_beacon_info, RESORT_COMM_TYPE comm_type );
 extern u32 RESORT_BEACON_DATA_GetTrainerID( const RESORT_BEACON_DATA *cp_wk );
 extern BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk );
 extern BOOL RESORT_BEACON_DATA_IsEmpty( const RESORT_BEACON_DATA *cp_wk );

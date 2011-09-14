@@ -797,6 +797,29 @@ void RESORT_PEOPLE_SYS_EraseMMdl( RESORT_PEOPLE_SYS *p_wk )
     }
   }
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  全ての人物に表示設定
+ *
+ *	@param	RESORT_PEOPLE_SYS *p_wk ワーク
+ *	@param	is_visible  TRUE表示  FALSE非表示
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_SYS_SetVisibleAll( RESORT_PEOPLE_SYS *p_wk, BOOL is_visible )
+{
+  int i;
+  for( i = 0; i < p_wk->param.max; i++ )
+  {
+    RESORT_PEOPLE *p_people = p_wk->p_people[i];
+    if( p_people )
+    {
+      RESORT_PEOPLE_SetVisible( p_people, is_visible );
+    }
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  人物ワークを完全に消す（データも動作モデルも）
