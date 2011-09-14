@@ -86,6 +86,8 @@ typedef struct
   RESORT_ABSTRUCT_MANAGER *p_abstruct;//データ抽象
   u32 max;                            //動作上限数
   RESORT_PLACEID placeID;                      //人物管理システムが動く場所
+  const RESORT_BINARY_SHOP  *cp_shop;           //お店データ
+  const RESORT_BINARY_INSTITUTION *cp_institution;  //施設データ
 } RESORT_PEOPLE_SYS_PARAM;
 
 //-------------------------------------

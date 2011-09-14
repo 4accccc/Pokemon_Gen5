@@ -25,13 +25,27 @@
  *				  人物個別操作、または人物情報設定や読み取り
 */
 //=============================================================================
+//-------------------------------------
+///	人物初期化ワーク
+//=====================================
+typedef struct
+{
+  RESORT_ABSTRUCT_DATA *p_data;
+  u16 peopleID;
+  RESORT_PLACEID placeID;
+  MMDLSYS * p_mmdlsys;
+  const RESORT_BINARY_PEOPLE *cp_binary;
+  const RESORT_BINARY_SHOP   *cp_shop;
+  const RESORT_BINARY_INSTITUTION *cp_institution;
+  FIELD_PLAYER *p_player;       //プレイヤー
+}RESORT_PEOPLE_INIT_PARAM;
 
 //-------------------------------------
 ///	人物抽象動作
 //=====================================
 typedef struct
 {
-  void (*SetupMmdHeader)( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
+  void (*SetupMmdHeader)( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header );
 } RESORT_PEOPLE_FUNCTION;
 
 //-------------------------------------
@@ -50,32 +64,19 @@ struct _RESORT_PEOPLE
 };
 
 //-------------------------------------
-///	人物初期化ワーク
-//=====================================
-typedef struct
-{
-  RESORT_ABSTRUCT_DATA *p_data;
-  u16 peopleID;
-  RESORT_PLACEID placeID;
-  MMDLSYS * p_mmdlsys;
-  const RESORT_BINARY_PEOPLE *cp_binary;
-  FIELD_PLAYER *p_player;       //プレイヤー
-}RESORT_PEOPLE_INIT_PARAM;
-
-//-------------------------------------
 ///	PRIVATE
 //=====================================
 //住民
-static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
+static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header );
 
 //代理人
-static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
+static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header );
 
 //観光客
-static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
+static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header );
 
 //秘書
-static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header );
+static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header );
 
 static void Resort_People_DeleteNotBideMMdl( RESORT_PEOPLE_SYS *p_wk );
 
@@ -173,7 +174,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
       }
 
       //ヘッダ個別設定
-      p_wk->cp_function->SetupMmdHeader( p_wk, &header );
+      p_wk->cp_function->SetupMmdHeader( p_wk, cp_param, &header );
 
       //MMDL作成
       p_wk->p_mmdl  = MMDLSYS_AddMMdl( cp_param->p_mmdlsys, &header, RESORT_MAP_PlaceIDToZoneID(cp_param->placeID) );
@@ -423,14 +424,20 @@ RESORT_ABSTRUCT_DATA * RESORT_PEOPLE_GetAbstructData( RESORT_PEOPLE *p_wk )
  *	@param	*p_header           MMDL作成用ヘッダ
  */
 //-----------------------------------------------------------------------------
-static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
+static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header )
 {
   u16 grid_x, grid_z, dir;
 
+  u16 idx = RESORT_ABSTRUCT_DATA_GetBufferIndex(p_wk->p_abstruct_data);
   RESORT_INSTITUTION_DATA *p_insti = RESORT_PEOPLE_GetInstitution( p_wk );
-  u16 lv  = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_LV );
+  u16 id  = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
+  const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( cp_param->cp_shop,id);
+  u16 data_3dmd = RESORT_BINARY_SHOP_DATA_GetData(cp_shop_data,RESORT_BINARY_SHOP_PARAM_3DMD_L+!(idx%2));
 
-  RESORT_MAP_GetResidentGridPos( RESORT_ABSTRUCT_DATA_GetBufferIndex(p_wk->p_abstruct_data), lv, &grid_x, &grid_z, &dir );
+  RESORT_MAP_GetResidentGridPosOfs( data_3dmd, &grid_x, &grid_z, &dir );
+
+  grid_x += RESORT_BINARY_INSTITUTION_GetData(cp_param->cp_institution, idx, RESORT_BINARY_INSTITUTION_PARAM_GRID_X );
+  grid_z += RESORT_BINARY_INSTITUTION_GetData(cp_param->cp_institution, idx, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
 
   p_header->dir = dir;
   MMDLHEADER_SetGridPos( p_header, grid_x, grid_z, 0 );
@@ -447,7 +454,7 @@ static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header 
  *	@param	*p_header           MMDL作成用ヘッダ
  */
 //-----------------------------------------------------------------------------
-static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
+static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header )
 {
   p_header->dir = DIR_UP;
   MMDLHEADER_SetGridPos( p_header, 0, 0, 0 );
@@ -464,7 +471,7 @@ static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
  *	@param	*p_header           MMDL作成用ヘッダ
  */
 //-----------------------------------------------------------------------------
-static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
+static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header )
 {
   p_header->dir = DIR_UP;
   MMDLHEADER_SetGridPos( p_header, 0, 0, 0 );
@@ -481,7 +488,7 @@ static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
  *	@param	*p_header           MMDL作成用ヘッダ
  */
 //-----------------------------------------------------------------------------
-static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_header )
+static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header )
 {
   u16 grid_x, grid_z, dir;
   u16 kind = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TYPE, NULL );
@@ -692,6 +699,8 @@ static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RES
     init_param.placeID      = cp_param->placeID;
     init_param.cp_binary    = p_wk->p_binary;
     init_param.p_mmdlsys    = p_wk->param.p_mmdlsys;
+    init_param.cp_shop      = p_wk->param.cp_shop;
+    init_param.cp_institution = p_wk->param.cp_institution;
 
     NAGI_Printf( "Add=%d\n",peopleID );
     p_wk->p_people[peopleID] = RESORT_PEOPLE_Init( p_wk->heapID, &init_param );

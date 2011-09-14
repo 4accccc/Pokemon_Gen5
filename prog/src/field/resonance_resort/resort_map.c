@@ -12,6 +12,7 @@
 #include "resort_people_def.h"
 #include "field/field_dir.h"
 #include "resort_map.h"
+#include "../../../resource/fldmapdata/land_data_patch/land_data_patch_def.h"
 //=============================================================================
 /**
  *					マップデータ
@@ -142,15 +143,15 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 people_type,
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  住民の座標
+ *	@brief  住民の座標  (施設位置からのオフセット)
  *
- *	@param	u16 buffer_index  バッファ番号
+ *	@param	u16 shop_3dmd  バッファ番号
  *	@param	*p_x  X座標
  *	@param	*p_x  Y座標
  *	@param	*p_dir  方向
  */
 //-----------------------------------------------------------------------------
-void RESORT_MAP_GetResidentGridPos( u16 buffer_index, u16 shop_rank, u16 *p_x, u16 *p_z, u16 *p_dir )
+void RESORT_MAP_GetResidentGridPosOfs( u16 shop_3dmd, u16 *p_x, u16 *p_z, u16 *p_dir )
 {
   static const struct
   {
@@ -159,66 +160,237 @@ void RESORT_MAP_GetResidentGridPos( u16 buffer_index, u16 shop_rank, u16 *p_x, u
     u32 dir;
   }sc_resident_pos[]  =
   {
-    {
-      21,
-      63,
-      DIR_LEFT,
-    },
-    {
-      9,
-      56,
-      DIR_RIGHT,
-    },
-    {
-      21,
-      49,
-      DIR_LEFT,
-    },
-    {
-      9,
-      42,
-      DIR_RIGHT,
-    },
-    {
-      21,
-      35,
-      DIR_LEFT,
-    },
-    {
-      9,
-      28,
-      DIR_RIGHT,
-    },
-    {
-      21,
-      21,
-      DIR_LEFT,
-    },
-    {
-      9,
-      14,
-      DIR_RIGHT,
-    },
+		//LAND_DATA_PATCH_JA_CAFE_01_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_CAFE_01_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_CAFE_02_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_CAFE_02_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_CAFE_03_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_CAFE_03_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_LOT_01_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_LOT_02_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_LOT_03_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_LOT_01_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_LOT_02_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_LOT_03_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_PARLOR_01_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_PARLOR_02_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_PARLOR_03_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_PARLOR_01_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_PARLOR_02_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_PARLOR_03_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_MARKET_01_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_MARKET_02_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_MARKET_03_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_MARKET_01_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_MARKET_02_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_MARKET_03_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_FLORIST_01_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_FLORIST_02_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_FLORIST_03_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_FLORIST_01_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_FLORIST_02_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_FLORIST_03_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_NURSERY_01_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_NURSERY_02_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_NURSERY_03_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_NURSERY_01_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_NURSERY_02_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_NURSERY_03_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_EXERCICE_01_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_EXERCICE_02_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_EXERCICE_03_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_EXERCICE_01_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_EXERCICE_02_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_EXERCICE_03_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_ANTIQUE_01_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_ANTIQUE_02_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_ANTIQUE_03_R
+    { 2, 3, DIR_LEFT },
+		//LAND_DATA_PATCH_JA_ANTIQUE_01_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_ANTIQUE_02_L
+    { 3, 3, DIR_RIGHT },
+		//LAND_DATA_PATCH_JA_ANTIQUE_03_L
+    { 3, 3, DIR_RIGHT },
+  };
+  GF_ASSERT( LAND_DATA_PATCH_MAX == NELEMS(sc_resident_pos) );
+
+  GF_ASSERT( shop_3dmd < NELEMS(sc_resident_pos) );
+
+  *p_x    = sc_resident_pos[shop_3dmd].x;
+  *p_z    = sc_resident_pos[shop_3dmd].z;
+  *p_dir  = sc_resident_pos[shop_3dmd].dir;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  看板の座標  (施設位置からのオフセット)
+ *
+ *	@param	u16 shop_3dmd  バッファ番号
+ *	@param	*p_x  X座標
+ *	@param	*p_x  Y座標
+ *	@param	*p_dir  方向
+ */
+//-----------------------------------------------------------------------------
+void RESORT_MAP_GetBoardGridPosOfs( u16 shop_3dmd, u16 *p_x, u16 *p_z )
+{
+  static const struct
+  {
+    u16 x;
+    u16 z;
+  }sc_board_pos[]  =
+  {
+		//LAND_DATA_PATCH_JA_CAFE_01_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_CAFE_01_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_CAFE_02_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_CAFE_02_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_CAFE_03_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_CAFE_03_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_LOT_01_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_LOT_02_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_LOT_03_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_LOT_01_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_LOT_02_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_LOT_03_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_PARLOR_01_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_PARLOR_02_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_PARLOR_03_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_PARLOR_01_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_PARLOR_02_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_PARLOR_03_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_MARKET_01_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_MARKET_02_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_MARKET_03_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_MARKET_01_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_MARKET_02_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_MARKET_03_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_FLORIST_01_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_FLORIST_02_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_FLORIST_03_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_FLORIST_01_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_FLORIST_02_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_FLORIST_03_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_NURSERY_01_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_NURSERY_02_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_NURSERY_03_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_NURSERY_01_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_NURSERY_02_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_NURSERY_03_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_EXERCICE_01_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_EXERCICE_02_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_EXERCICE_03_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_EXERCICE_01_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_EXERCICE_02_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_EXERCICE_03_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_ANTIQUE_01_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_ANTIQUE_02_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_ANTIQUE_03_R
+    { 0, 1 },
+		//LAND_DATA_PATCH_JA_ANTIQUE_01_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_ANTIQUE_02_L
+    { 5, 2 },
+		//LAND_DATA_PATCH_JA_ANTIQUE_03_L
+    { 5, 2 },
   };
 
-  GF_ASSERT( buffer_index < NELEMS(sc_resident_pos) );
+  GF_ASSERT( LAND_DATA_PATCH_MAX == NELEMS(sc_board_pos) );
 
-  *p_x    = sc_resident_pos[buffer_index].x;
-  *p_z    = sc_resident_pos[buffer_index].z;
-  *p_dir  = sc_resident_pos[buffer_index].dir;
+  GF_ASSERT( shop_3dmd < NELEMS(sc_board_pos) );
 
-  if( shop_rank >= 2 )
-  {
-    if( *p_dir == DIR_RIGHT )
-    {
-      (*p_x)++;
-    }
-    else
-    {
-      (*p_x)--;
-    }
-  }
+  *p_x    = sc_board_pos[shop_3dmd].x;
+  *p_z    = sc_board_pos[shop_3dmd].z;
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  秘書の位置

@@ -126,6 +126,8 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
     param.p_abstruct  = RESORT_SYSTEM_GetAbstructManager( p_wk->p_sys );
     param.max     = RECEPTION_PEOPLE_MAX;
     param.placeID  = RESORT_PLACEID_RECEPTION;
+    param.cp_shop = RESORT_SYSTEM_GetBinaryShop(p_wk->p_sys);
+    param.cp_institution = RESORT_SYSTEM_GetBinaryInstitution(p_wk->p_sys);
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
 
     if( is_people_add )

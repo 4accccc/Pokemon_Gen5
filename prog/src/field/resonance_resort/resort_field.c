@@ -2971,6 +2971,8 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
     param.p_abstruct  = RESORT_SYSTEM_GetAbstructManager( p_sys );
     param.max = RESORT_FIELD_PEOPLE_MAX;
     param.placeID = RESORT_PLACEID_FIELD;
+    param.cp_shop = RESORT_SYSTEM_GetBinaryShop(p_sys);
+    param.cp_institution = RESORT_SYSTEM_GetBinaryInstitution(p_sys);
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
     if( is_people_add )
     {

@@ -263,13 +263,30 @@ void RESORT_MAPCREATE_EventDataOverWrite( RESORT_MAPCREATE *p_wk, EVENTDATA_SYST
   //住人の数だけ配置を行う
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
-    const RESORT_RESIDENT_DATA *cp_resident = RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk->cp_people_all, i);
-    if( RESORT_RESIDENT_DATA_IsEmpty( cp_resident ) )
-    {
-      u16 bgID = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_BOARD_ID );
+    RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk->cp_people_all, i);
 
+    u16 bgID = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_BOARD_ID );
+
+    if( RESORT_RESIDENT_DATA_IsEmpty( p_resident ) )
+    {
       //空なら施設がない＝看板がない
       EVENTDATA_MoveBGData( p_evdata, bgID, 0, 0, 0 );
+    }
+    else
+    {
+      RESORT_INSTITUTION_DATA *p_insti = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+      u16 id  = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data_one = RESORT_BINARY_SHOP_GetData( p_wk->p_shop_data,id);
+      u16 data_3dmd = RESORT_BINARY_SHOP_DATA_GetData(cp_shop_data_one,RESORT_BINARY_SHOP_PARAM_3DMD_L+!(i%2));
+
+      u16 x;
+      u16 z;
+      RESORT_MAP_GetBoardGridPosOfs( data_3dmd, &x, &z );
+
+      x += RESORT_BINARY_INSTITUTION_GetData(p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_X );
+      z += RESORT_BINARY_INSTITUTION_GetData(p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
+
+      EVENTDATA_MoveBGData( p_evdata, bgID, x, 0, z );
     }
   }
 }
