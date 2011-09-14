@@ -505,6 +505,9 @@ static void setDLPokemon( POKEMON_PARAM * pp, const WBTDL_POKEMON * dl_poke, HEA
     point = PP_Get( pp, ID_PARA_pp_max1 + i, NULL );
     PP_Put( pp, ID_PARA_pp1 + i, point );
   }
+  //パワー乱数設定
+  PP_Put( pp, ID_PARA_power_rnd, dl_poke->power_rnd );
+
   //経験値設定
   PP_Put( pp, ID_PARA_hp_exp, dl_poke->hp_exp );
   PP_Put( pp, ID_PARA_pow_exp, dl_poke->pow_exp );

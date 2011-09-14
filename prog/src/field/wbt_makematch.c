@@ -254,7 +254,6 @@ static BOOL checkEnableEntryRomTrainer( const WBT_MATCH_CONDITION * cond, const 
   case WBTCUP_RENTALMASTER:
     return rom_data->entry_rentalmaster;
 
-  case WBTCUP_WCS:
   case WBTCUP_ISSYU:
   case WBTCUP_KANTO:
   case WBTCUP_JOUTO:
@@ -381,21 +380,6 @@ static void entryWorldTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
 static void entryRegionTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
 {
   mew_SelectPerson( mew, WBT_TRPRI_LEADER, 7 );
-
-  mew_SetEntryResult( mew, tr_list );
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief 参戦トレーナー選別：WCSトーナメント
- */
-//-----------------------------------------------------------------------------
-static void entryWCSTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
-{
-  mew_SelectPerson( mew, WBT_TRPRI_SPECIAL, 1 );
-  mew_SelectPerson( mew, WBT_TRPRI_CHAMP, 1 );
-  mew_SelectPerson( mew, WBT_TRPRI_LEADER, 2 );
-  mew_SelectPerson( mew, WBT_TRPRI_WEAK_MOB, 3 );
 
   mew_SetEntryResult( mew, tr_list );
 }
@@ -552,9 +536,6 @@ void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond
     break;
   case WBTCUP_WORLD:
     entryWorldTournament( mew, tr_list );
-    break;
-  case WBTCUP_WCS:
-    entryWCSTournament( mew, tr_list );
     break;
   case WBTCUP_HODOMOE_EVENT:
     entryHodomoeEventTournament( mew, tr_list );

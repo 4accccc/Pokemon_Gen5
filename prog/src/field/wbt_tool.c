@@ -135,13 +135,6 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
     WBTBTDATA_3,
     { 0, 0, 0, 0 },
   },
-  {//WBTCUP_WCS,         //WCSトーナメント
-    msg_wbtsys_title_17,
-    WBTWIN_COUNT_WCS,
-    WBTRECEPT_1, WBTREG_WCS,
-    WBTBTDATA_1,
-    { 0, 0, 0, 0 },
-  },
   {//WBTCUP_HODOMOE_EVENT, //ホドモエトーナメント（イベント）           
     msg_wbtsys_title_05,
     WBTWIN_COUNT_HODOMOE,
@@ -621,8 +614,6 @@ static BOOL checkCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup, const u16 * win_
   case WBTCUP_WORLD:        //ワールドリーダーズトーナメント     
     return all_region_clear;
 
-  case WBTCUP_WCS:          //WCSトーナメント
-    return ( win_count[ WBTWIN_COUNT_HODOMOE ] != 0 );
   }
   //よくわからないものは開催できない
   return FALSE;

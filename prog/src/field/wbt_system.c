@@ -737,10 +737,6 @@ u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys )
   static const u8 regSubwayTable[] = {
     REG_WBT_SUBWAY_SINGLE, REG_WBT_SUBWAY_DOUBLE, REG_WBT_SUBWAY_TRIPLE, REG_WBT_SUBWAY_ROTATION,
   };
-  static const u8 regWCSTable[] = {
-    REG_WBT_WCS_SINGLE, REG_WBT_WCS_DOUBLE, REG_WBT_WCS_TRIPLE, REG_WBT_WCS_ROTATION,
-  };
-
   const u8 * tbl;
 
   if ( wbtsys->wbtcup == WBTCUP_HODOMOE_EVENT )
@@ -759,9 +755,6 @@ u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys )
   case WBTREG_SUBWAY:
   case WBTREG_POKETYPE:
     tbl = regSubwayTable;
-    break;
-  case WBTREG_WCS:
-    tbl = regWCSTable;
     break;
   }
   GF_ASSERT( wbtsys->rule != WBTRULE_NULL && wbtsys->rule < WBTRULE_MAX );
