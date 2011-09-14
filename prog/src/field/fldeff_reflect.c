@@ -14,12 +14,18 @@
 #include "fldmmdl.h"
 
 #include "fldeff_reflect.h"
+#include "arc/fieldmap/zone_id.h"
 
 //======================================================================
 //  define
 //======================================================================
-#ifdef DEBUG_ONLY_FOR_kagaya
-#define DEBUG_REFLECT_CHECK
+#ifdef PM_DEBUG
+//#define DEBUG_REFLECT_CHECK
+//#define FLDEFF_REF_Printf(...) OS_TPrintf(__VA_ARGS__)
+#endif
+
+#ifndef FLDEFF_REF_Printf
+#define FLDEFF_REF_Printf(...) /*  */
 #endif
 
 #define BUGFIX_BTS_GF1706_GF1720 //BTS GF1706,1720 １ドット潰れ対処
@@ -92,6 +98,8 @@ static void reflectBlAct_Update(
     GFL_BBDACT_SYS *bbdactsys, int actID, void *wk );
 
 static const FLDEFF_TASK_HEADER data_reflectTaskHeader;
+
+static void ResortAddOffset( u32 zone_id, MMDL_BLACT_MDLSIZE size, VecFx32 *p_pos );
 
 #ifdef BUGFIX_BTS_GF1706_GF1720
 static fx32 btsGF1706_GetOffsetScaleY( u32 zone_id );
@@ -460,6 +468,8 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     pos.y += btsGF1706_GetOffsetY( zone_id, param->mdl_size );
     #endif
 
+    ResortAddOffset( zone_id, param->mdl_size, &pos );
+
 #ifdef DEBUG_REFLECT_CHECK
     if( MMDL_GetOBJID(work->head.mmdl) == MMDL_ID_PLAYER ){
       int printf = 0;
@@ -479,23 +489,23 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
           (*pSelect) = 0;
         }
         
-        KAGAYA_Printf( "reflect操作 " );
+        FLDEFF_REF_Printf( "reflect操作 " );
         
         switch( (*pSelect) ){
         case 1:
-          KAGAYA_Printf( "32x32\n" );
+          FLDEFF_REF_Printf( "32x32\n" );
           break;
         case 2:
-          KAGAYA_Printf( "16x16\n" );
+          FLDEFF_REF_Printf( "16x16\n" );
           break;
         case 3:
-          KAGAYA_Printf( "64x64\n" );
+          FLDEFF_REF_Printf( "64x64\n" );
           break;
         case 4:
-          KAGAYA_Printf( "Y拡縮\n" );
+          FLDEFF_REF_Printf( "Y拡縮\n" );
           break;
         default: //0
-          KAGAYA_Printf( "OFF\n" );
+          FLDEFF_REF_Printf( "OFF\n" );
         }
       }
       
@@ -508,13 +518,13 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
           
         switch( (*pCtrlPos) ){
         case 0:
-          KAGAYA_Printf( "REFLECT CTRL X\n" );
+          FLDEFF_REF_Printf( "REFLECT CTRL X\n" );
           break;
         case 1:
-          KAGAYA_Printf( "REFLECT CTRL Y\n" );
+          FLDEFF_REF_Printf( "REFLECT CTRL Y\n" );
           break;
         case 2:
-          KAGAYA_Printf( "REFLECT CTRL Z\n" );
+          FLDEFF_REF_Printf( "REFLECT CTRL Z\n" );
           break;
         }
       }
@@ -567,25 +577,25 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
         d_offs = eff_reflect->d_offs;
         
         for( i = 0; i < MMDL_BLACT_MDLSIZE_MAX; i++, d_offs++ ){
-          KAGAYA_Printf( "reflect " );
+          FLDEFF_REF_Printf( "reflect " );
           
           switch( i ){
           case MMDL_BLACT_MDLSIZE_32x32:
-            KAGAYA_Printf( "32x32 " );
+            FLDEFF_REF_Printf( "32x32 " );
             break;
           case MMDL_BLACT_MDLSIZE_16x16:
-            KAGAYA_Printf( "16x16 " );
+            FLDEFF_REF_Printf( "16x16 " );
             break;
           case MMDL_BLACT_MDLSIZE_64x64:
-            KAGAYA_Printf( "64x64 " );
+            FLDEFF_REF_Printf( "64x64 " );
             break;
           }
           
-          KAGAYA_Printf( "X=0x%x,Y=0x%x,Z=0x%x\n",
+          FLDEFF_REF_Printf( "X=0x%x,Y=0x%x,Z=0x%x\n",
               d_offs->x, d_offs->y, d_offs->z );
         }
         
-        KAGAYA_Printf( "SCALE = 0x%x\n", eff_reflect->d_offs_scale_y );
+        FLDEFF_REF_Printf( "SCALE = 0x%x\n", eff_reflect->d_offs_scale_y );
       }
     }
     
@@ -598,7 +608,8 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     #if 1  //カメラターゲットからの距離によりズレを補正
     {
       //通常のフィールドマップを参考
-      #define REF_OFFS_TX_UNIT_ONE (0x7000/96)
+      #define REF_OFFS_TX_UNIT_ONE_X (0x7000/96)
+      #define REF_OFFS_TX_UNIT_ONE_Z (0xea)
       
       fx32 ox;
       int tx,mx;
@@ -615,9 +626,33 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
       GFL_G3D_CAMERA_GetTarget( g3Dcamera, &t_pos );
       tx = FX32_NUM( t_pos.x );
       mx = FX32_NUM( pos.x );
-      
-      ox = REF_OFFS_TX_UNIT_ONE * (mx-tx);
+
+      ox = REF_OFFS_TX_UNIT_ONE_X * (mx-tx);
       pos.x += ox;
+#if 0
+#ifdef PM_DEBUG
+      if( GFL_UI_KEY_GetTrg( ) & PAD_BUTTON_L )
+      {
+        REF_OFFS_TX_UNIT_ONE_Z -= 0x10;
+        OS_TFPrintf( 2, "0x%x\n", REF_OFFS_TX_UNIT_ONE_Z );
+      }
+      else if( GFL_UI_KEY_GetTrg( ) & PAD_BUTTON_R )
+      {
+        REF_OFFS_TX_UNIT_ONE_Z += 0x10;
+        OS_TFPrintf( 2, "0x%x\n", REF_OFFS_TX_UNIT_ONE_Z );
+      }
+#endif
+#endif
+      
+      //リゾートではカメラがX軸向きに変わるので
+      //Z方向も補正する
+      if( zone_id == ZONE_ID_C16 )
+      {
+        int tz = FX32_NUM( t_pos.z );
+        int mz = FX32_NUM( pos.z );
+
+        pos.z += REF_OFFS_TX_UNIT_ONE_Z * (mz-tz);
+      }
     }
     #endif
 
@@ -748,20 +783,20 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
           (*pFlag) = 0;
         }
         
-        KAGAYA_Printf( "reflect操作 " );
+        FLDEFF_REF_Printf( "reflect操作 " );
         
         switch( (*pFlag) ){
         case MMDL_BLACT_MDLSIZE_32x32:
-          KAGAYA_Printf( "32x32\n" );
+          FLDEFF_REF_Printf( "32x32\n" );
           break;
         case MMDL_BLACT_MDLSIZE_16x16:
-          KAGAYA_Printf( "16x16\n" );
+          FLDEFF_REF_Printf( "16x16\n" );
           break;
         case MMDL_BLACT_MDLSIZE_64x64:
-          KAGAYA_Printf( "64x64\n" );
+          FLDEFF_REF_Printf( "64x64\n" );
           break;
         default:
-          KAGAYA_Printf( "OFF\n" );
+          FLDEFF_REF_Printf( "OFF\n" );
         }
       }
       
@@ -793,21 +828,21 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
         d_offs = work->head.eff_reflect->d_offs;
 
         for( i = 0; i < MMDL_BLACT_MDLSIZE_MAX; i++, d_offs++ ){
-          KAGAYA_Printf( "reflect " );
+          FLDEFF_REF_Printf( "reflect " );
           
           switch( i ){
           case MMDL_BLACT_MDLSIZE_32x32:
-            KAGAYA_Printf( "32x32 " );
+            FLDEFF_REF_Printf( "32x32 " );
             break;
           case MMDL_BLACT_MDLSIZE_16x16:
-            KAGAYA_Printf( "16x16 " );
+            FLDEFF_REF_Printf( "16x16 " );
             break;
           case MMDL_BLACT_MDLSIZE_64x64:
-            KAGAYA_Printf( "64x64 " );
+            FLDEFF_REF_Printf( "64x64 " );
             break;
           }
 
-          KAGAYA_Printf( "X=0x%x,Y=0x%x,Z=0x%x\n",
+          FLDEFF_REF_Printf( "X=0x%x,Y=0x%x,Z=0x%x\n",
               d_offs->x, d_offs->y, d_offs->z );
         }
       }
@@ -956,12 +991,12 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
       
       if( trg & PAD_BUTTON_START ){
         work->head.eff_reflect->d_select ^= 1;
-        KAGAYA_Printf( "リフレクト座標操作機能 " );
+        FLDEFF_REF_Printf( "リフレクト座標操作機能 " );
         
         if( work->head.eff_reflect->d_select ){
-          KAGAYA_Printf( "ON\n" );
+          FLDEFF_REF_Printf( "ON\n" );
         }else{
-          KAGAYA_Printf( "OFF\n" );
+          FLDEFF_REF_Printf( "OFF\n" );
         }
       }
       
@@ -986,7 +1021,7 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
       }
       
       if( printf ){
-        KAGAYA_Printf( "リフレクト X=0x%x,Y=0x%x,Z=0x%x\n",
+        FLDEFF_REF_Printf( "リフレクト X=0x%x,Y=0x%x,Z=0x%x\n",
             d_offs->x, d_offs->y, d_offs->z );
       }
     }
@@ -1098,7 +1133,6 @@ static const fx32 data_offsetZ[MMDL_BLACT_MDLSIZE_MAX] =
 //  BUGFIX
 //======================================================================
 #ifdef BUGFIX_BTS_GF1706_GF1720 
-#include "arc/fieldmap/zone_id.h"
 
 #define BTS_GF1709_OFFSET_SCALE_Y (-0x100)
 
@@ -1154,6 +1188,27 @@ static fx32 btsGF1706_GetOffsetY( u32 zone_id, MMDL_BLACT_MDLSIZE size )
   return( offs );
 }
 #endif //BUGFIX_BTS_GF1706_GF1720
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾート用オフセットを加算
+ *
+ *	@param	u32 zone_id ゾーンID
+ *	@param	size  サイズ
+ *	@param	*p_pos  元のあ対
+ */
+//-----------------------------------------------------------------------------
+static void ResortAddOffset( u32 zone_id, MMDL_BLACT_MDLSIZE size, VecFx32 *p_pos )
+{
+  if( zone_id == ZONE_ID_C16 )
+  {
+    if( size == MMDL_BLACT_MDLSIZE_32x32 )
+    {
+      p_pos->z  -= REF_OFFS_Z;
+      p_pos->y  -= 0x8000;
+    }
+  }
+}
 
 //======================================================================
 //  define

@@ -131,7 +131,7 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
 
         p_wk->info[ placeID ].people_buffer_type[ peopleID ]  = RESORT_ABSTRUCT_DATA_GetBufferType( p_data );
         p_wk->info[ placeID ].people_index[ peopleID ] = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_data );
-        OS_TFPrintf( 2, "placeID%d peopleID%d buffer_type%d bufferIndex%d\n", placeID, peopleID, p_wk->info[ placeID ].people_buffer_type[ peopleID ], p_wk->info[ placeID ].people_index[ peopleID ] );
+        //OS_TFPrintf( 2, "placeID%d peopleID%d buffer_type%d bufferIndex%d\n", placeID, peopleID, p_wk->info[ placeID ].people_buffer_type[ peopleID ], p_wk->info[ placeID ].people_index[ peopleID ] );
       }
     }
   }
