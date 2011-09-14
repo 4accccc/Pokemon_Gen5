@@ -327,6 +327,16 @@ const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchDataByData( const RESOR
 
   return RESORT_BINARY_GetStruct(cp_wk->p_shop, id);
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  お店から個別店情報を取得
+ *
+ *	@param	const RESORT_BINARY_SHOP *cp_wk ワーク
+ *	@param	index インデックス
+ *
+ *	@return お店データ
+ */
+//-----------------------------------------------------------------------------
 const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_GetData( const RESORT_BINARY_SHOP *cp_wk,u16 index)
 {
   GF_ASSERT(index < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk));

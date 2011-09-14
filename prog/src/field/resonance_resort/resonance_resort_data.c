@@ -600,6 +600,10 @@ static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDA
 //-----------------------------------------------------------------------------
 static BOOL RESORT_BASIC2_DATA_IsValid( const RESORT_BASIC2_DATA *cp_wk )
 {
+  if( cp_wk->want_job >= RESORT_SHOP_ID_MAX )
+  {
+    return FALSE;
+  }
   return TRUE;
 }
 
