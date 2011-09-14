@@ -350,10 +350,10 @@
 おぼえた　ポケモンが　いれば
 かいていに　もぐれる▼
 まっ　いもうとの　チョロネコを
-とりもどしてくれた　おれい　だよ▼</Text>
+とりもどしてくれた　おれい　さ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T11:30:34" />
+				Time="2011-09-14T07:49:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -365,10 +365,10 @@
 おぼえた　ポケモンが　いれば
 海底に　潜れる▼
 まっ　妹の　チョロネコを
-取り戻してくれた　お礼　だよ▼</Text>
+取り戻してくれた　お礼　さ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T11:30:20" />
+				Time="2011-09-14T07:49:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -429,11 +429,11 @@
 			Language="JPN">
 			<Comment>♂：クリア後
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→</Comment>
+　はい　→swrival_end_04
+　いいえ→swrival_end_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T11:21:06" />
+				Time="2011-09-14T07:49:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
