@@ -202,7 +202,6 @@ void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, BTLREC_RESOTRE_MODE
 	    restore_SetupSubset( setup, &rec->setupSubset );
       pokewood_restore_Senario( setup, &rec->senario );
       pokewood_restore_Subset( setup, rec );
-
       //ポケウッド再生は強制上映モード
       setup->PokewoodMode = BTL_POKEWOOD_SHOW;
     }
@@ -760,7 +759,7 @@ static void pokewood_RecPokeParty_to_PokeParty( POKEWOOD_REC_POKEPARTY *rec_part
 static void pokewood_store_Senario( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_SENARIO *senario )
 {
   senario->senario_no = setup->pokewoodSenario;
-  senario->success    = setup->pokewoodSuccessFlag;
+  senario->success    = setup->pokewoodResult;
   GFL_STD_MemCopy( setup->pokewoodChoiceTbl, senario->choiceTbl, BTL_POKEWOOD_CHOICE_MAX );
 }
 
@@ -775,7 +774,7 @@ static void pokewood_store_Senario( const BATTLE_SETUP_PARAM* setup, POKEWOOD_RE
 static void pokewood_restore_Senario( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_SENARIO *senario )
 {
   setup->pokewoodSenario = senario->senario_no;
-  setup->pokewoodSuccessFlag = senario->success;
+  setup->pokewoodResult  = senario->success;
   GFL_STD_MemCopy( senario->choiceTbl, setup->pokewoodChoiceTbl, BTL_POKEWOOD_CHOICE_MAX );
 }
 
@@ -790,7 +789,8 @@ static void pokewood_restore_Senario( BATTLE_SETUP_PARAM* setup, const POKEWOOD_
 //----------------------------------------------------------------------------------
 static void pokewood_store_Subset( const BATTLE_SETUP_PARAM *setup, POKEWOOD_REC_WORK *rec )
 {
-  rec->audience_num = setup->audience_num;
+  rec->audience_num = setup->audience_num;       // 上映開始時観客数
+  rec->rental_flag  = setup->pokewoodRentalFlag; // レンタルポケモンを使っているか？
 }
 
 //----------------------------------------------------------------------------------
@@ -803,7 +803,8 @@ static void pokewood_store_Subset( const BATTLE_SETUP_PARAM *setup, POKEWOOD_REC
 //----------------------------------------------------------------------------------
 static void pokewood_restore_Subset( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_WORK *rec )
 {
-  setup->audience_num = rec->audience_num;
+  setup->audience_num = rec->audience_num;      // 上映開始時観客数
+  setup->pokewoodRentalFlag = rec->rental_flag; // レンタルポケモンを使っているか？
 }
 
 //----------------------------------------------------------------------------
@@ -1028,3 +1029,4 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
     }
   }
 }
+

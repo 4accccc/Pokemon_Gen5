@@ -292,6 +292,9 @@ u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst )
   // 初期観客数
   case POKEWOOD_REC_PARAM_AUDIENCE_NUM:
     return sp_pokewood_rec_sv->rec.audience_num;
+  // レンタルポケモンを使用しているか？
+  case POKEWOOD_REC_PARAM_RENTAL_FLAG:
+    return sp_pokewood_rec_sv->rec.rental_flag;
   default:
     GF_ASSERT(0);
     return 0;

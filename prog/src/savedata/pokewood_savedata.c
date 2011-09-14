@@ -55,20 +55,21 @@ int POKEWOOD_SAVEDATA_GetWorkSize(void)
 //---------------------------------------------------------------------------
 void POKEWOOD_SAVEDATA_Init( POKEWOOD_SAVEDATA * sv )
 {
+  int i;
 	MI_CpuClear8( sv, sizeof(POKEWOOD_SAVEDATA));
 
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 0 ); /// ポケウッド初期状態
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 1 ); // ハチクマン
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 2 ); 
+  // 初期シナリオオープン状態を作成
+  for(i=0;i<3;i++){
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, i ); /// ポケウッド初期状態/ハチクマン/チュートリアル
+    POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_ANNOUNCED, i );
+  }
+  for(i=33;i<40;i++){
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, i ); /// 素材確認用シナリオオープン
+    POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_ANNOUNCED, i );
+  }
 
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 33 ); /// 素材確認用シナリオオープン
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 34 ); 
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 35 ); 
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 36 ); 
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 37 ); 
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 38 ); 
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 39 ); 
-
+  // スターポイント告知済みフラグ設定
+  POKEWOOD_SAVEDATA_SetStarRankAnnounced( sv, 0, 1 );
 }
 
 //--------------------------------------------------------------------------------------------

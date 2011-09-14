@@ -127,6 +127,13 @@ typedef enum{
   BTL_CLIENT_NUM,
 }BTL_CLIENT_ID;
 
+/// ポケウッド終了告知用(pokewoodResultに格納)
+typedef enum{
+  BTL_POKEWOOD_RESULT_BAD=0,      // 失敗END
+  BTL_POKEWOOD_RESULT_SUCCESS,    // 成功END
+  BTL_POKEWOOD_RESULT_STRANGE,    // ストレンジEND
+}BtlPokewoodResult;
+
 //-----------------------------------------------------------------------------------
 /**
  * フィールドの状態から決定されるバトルシチュエーションデータ
@@ -368,7 +375,8 @@ typedef struct {
 
   u8 bag_nouse_flag       :1;  // アイテム使用禁止フラグ
 
-  u16 pokewoodSenario;         // ポケウッドのシナリオＮＯ(アライメント合わせに２バイト使ってます）
+  u8 pokewoodSenario;         // ポケウッドのシナリオNo
+  u8 pokewoodRentalFlag;      // ポケウッドにレンタルポケモンで参加しているか？(1:レンタル 0:自前）
 
   u8 fightPokeIndex[ TEMOTI_POKEMAX ];  // 戦闘に出たポケモンのパーティ内Indexと同じ位置がTRUEになる（それ以外はFALSE）
 
@@ -378,7 +386,7 @@ typedef struct {
 
   // [io] ポケウッドデータ  撮影モードのときはoutput 上映モードのときはinput
   u8 pokewoodChoiceTbl[BTL_POKEWOOD_CHOICE_MAX];
-  u8 pokewoodSuccessFlag; ///< 撮影成功フラグ
+  BtlPokewoodResult       pokewoodResult;      ///< 撮影終了時が成功・失敗・ストレンジかを格納
   u8 audience_num;        ///< 劇場の観客数(max=22)
   u8 player_star_rank;    ///< Player Star Rank
 

@@ -56,6 +56,10 @@
 
 #define POKEWOOD_SHAKE_NORMAL_DISTANCE  (10)
 
+#define POKEWOOD_END_BAD      ( 0 )     ///< ポケウッド撮影がダメ終了
+#define POKEWOOD_END_SUCCESS  ( 1 )     ///< ポケウッド撮影が成功終了
+#define POKEWOOD_END_STRANGE  ( 2 )     ///< ポケウッド撮影がストレンジ終了
+
 //-------------------------------------
 //	等速直線運動動作
 //=====================================
@@ -487,7 +491,7 @@ void POKEWOOD_CUTIN_AttachViewCore( POKEWOOD_CUTIN *p_wk, BTLV_CORE* p_core )
  *	@return TRUEで存在  FALSEで存在していない
  */
 //-----------------------------------------------------------------------------
-BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event, BOOL success_flag, BOOL is_fource )
+BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event, u8 success_result, BOOL is_fource )
 {
   int i;
   for( i = 0; i < NELEMS(sc_pw_cutin_dat_search); i++ )
@@ -499,13 +503,13 @@ BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event, BOO
       switch( sc_pw_cutin_dat_search[i].term )
       {
       case PW_CUTIN_TERM_SUCCESS:
-        is_ok = (success_flag == TRUE);
+        is_ok = (success_result == POKEWOOD_END_SUCCESS);
         break;
       case PW_CUTIN_TERM_ANYTIME:
         is_ok = TRUE;
         break;
       case PW_CUTIN_TERM_FAILURE:
-        is_ok = (success_flag == FALSE);
+        is_ok = (success_result != POKEWOOD_END_SUCCESS);
         break;
       default:
         GF_ASSERT(0);

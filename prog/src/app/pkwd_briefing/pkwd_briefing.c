@@ -44,18 +44,6 @@
 /// あらすじ文字列の1回表示毎のウェイト
 #define BRIEFING_MSG_WAIT      (180)
 
-/// 上下画面を入れ替えるフレーム
-#define TITLE_FLIP_WAIT   ( 678-12 )
-
-/// 伝説ポケモンが鳴くフレーム
-#define POKE_VOICE_FRAME    ( 5001 )
-
-/// ループパートに入った時のフレーム
-#define POKE_LOOP_PART_FRAME  ( 5301 )
-
-/// 黒：ポリゴンデモのループ終了フレームの指定
-#define POKE_LOOP_END_FRAME   ( 5619 )
-
 // １画面に表示する文字数( (18文字＋改行)x8 )x2
 #define BRIEFING_MSG_LENGTH   ( 19*8*2 )
 
@@ -64,10 +52,6 @@
 
 ///フォントが使用するパレット番号
 #define U_FONT_PALNO  (0x0)
-///アイテムアイコンのパレット展開位置
-#define D_MATSU_ICON_PALNO    (0)
-///[PUSH START BUTTON]の点滅間隔
-#define PUSH_TIMER_WAIT     (45)
 
 //情報ステータスバーパレット
 #define INFOWIN_PAL_NO  ( 0x0f ) 
@@ -88,9 +72,8 @@ enum{
   FRAME_BRIEF1  = GFL_BG_FRAME1_M,   ///< メイン画面メッセージ１
   FRAME_BRIEF2  = GFL_BG_FRAME2_M,   ///< メイン画面メッセージ２
   FRAME_BKGR    = GFL_BG_FRAME3_M,   ///< メイン画面背景「Develped by GameFreak」
-  FRAME_MSG     = GFL_BG_FRAME1_S,   ///< メッセージフレーム
-  FRAME_LOGO    = GFL_BG_FRAME3_S,   ///< タイトルロゴのBGフレーム
-  FRAME_INFOWIN = GFL_BG_FRAME2_S,   ///< チェックの背景BG
+  FRAME_SEATS   = GFL_BG_FRAME1_S,   ///< 観客席BG
+  FRAME_INFOWIN = GFL_BG_FRAME2_S,   ///< 情報ウインドウ面
 };
 
 
@@ -120,29 +103,6 @@ enum{
   BTLV_INPUT_AUDIENCE_MAX = 22,
 };
 
-
-
-#define TITLE_RES_ARCID (ARCID_TITLE)
-
-
-#include "title_black.naix"
-
-// ロゴ(BG)
-#define TITLE_RES_LOGO_NCLR (NARC_title_black_blk_logo_NCLR)
-#define TITLE_RES_LOGO_NCGR (NARC_title_black_blk_logo_lz_NCGR)
-#define TITLE_RES_LOGO_NSCR (NARC_title_black_blk_logo_lz_NSCR)
-#define TITLE_RES_BACK_NSCR (NARC_title_black_blk_base_lz_NSCR)
-
-// 「PUSH START BUTTON」（セルアクター）
-#define TITLE_RES_PUSH_NCLR (NARC_title_black_blk_obj_NCLR)
-#define TITLE_RES_PUSH_NCGR (NARC_title_black_blk_obj_lz_NCGR)
-#define TITLE_RES_PUSH_NCER (NARC_title_black_blk_obj_NCER)
-#define TITLE_RES_PUSH_NANR (NARC_title_black_blk_obj_NANR)
-
-// 「Developed by GameFreak」(BG)
-#define TITLE_RES_DEV_NCLR (NARC_title_black_blk_develop_NCLR)
-#define TITLE_RES_DEV_NCGR (NARC_title_black_blk_develop_lz_NCGR)
-#define TITLE_RES_DEV_NSCR (NARC_title_black_blk_develop_lz_NSCR)
 
 #ifdef PM_DEBUG
 #endif
@@ -445,8 +405,8 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
     // 1ページ目の文字列を描画
     _briefing_print( &tw->CG2d, 0, tw->sex );
     //情報ステータスバー初期化
-    INFOWIN_Init( GFL_BG_FRAME2_S, INFOWIN_PAL_NO, tw->param->gameData , tw->heapID );
-    GFL_NET_ReloadIconTopOrBottom( TRUE, tw->heapID );
+    INFOWIN_Init( FRAME_INFOWIN, INFOWIN_PAL_NO, tw->param->gameData , tw->heapID );
+    GFL_NET_ReloadIconTopOrBottom( FALSE, tw->heapID );
 
     // FADEIN設定
     GFL_FADE_SetMasterBrightReq
@@ -776,7 +736,7 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
     GFL_BG_SetBGControl( FRAME_BRIEF1,  &main_brief1_frame, GFL_BG_MODE_TEXT );
     GFL_BG_SetBGControl( FRAME_BRIEF2,  &main_brief2_frame, GFL_BG_MODE_TEXT );
     GFL_BG_SetBGControl( FRAME_BKGR,    &main_bkgr_frame,   GFL_BG_MODE_TEXT );
-    GFL_BG_SetBGControl( FRAME_MSG,     &sub_msg_frame,     GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( FRAME_SEATS,     &sub_msg_frame,     GFL_BG_MODE_TEXT );
     GFL_BG_SetBGControl( FRAME_INFOWIN, &sub_logo_frame,    GFL_BG_MODE_TEXT );
   }
   //メイン画面背景設定
@@ -802,8 +762,8 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
   }
   {
     int i;
-//    GFL_BG_FillCharacter( FRAME_MSG, 0x00, 1, 0 );
-//    GFL_BG_FillScreen( FRAME_MSG, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+//    GFL_BG_FillCharacter( FRAME_SEATS, 0x00, 1, 0 );
+//    GFL_BG_FillScreen( FRAME_SEATS, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 
     //BMPWIN作成
     CG2d->bmpwin[0] = GFL_BMPWIN_Create( FRAME_BRIEF1, BRIEF_BMPWIN_X, BRIEF_BMPWIN_Y, 
@@ -1048,47 +1008,14 @@ static void releaseG3Dcontrol(G3D_CONTROL* CG3d)
 //--------------------------------------------------------------
 static void setupOAMcontrol(OAM_CONTROL* COam, HEAPID heapID)
 {
-  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, heapID );
-  
   GFL_CLACT_SYS_Create(&GFL_CLSYSINIT_DEF_DIVSCREEN, &vramBank, heapID);
   
   COam->clunit = GFL_CLACT_UNIT_Create(ACT_MAX, 0, heapID);
   GFL_CLACT_UNIT_SetDefaultRend(COam->clunit);
 
-  // ---PUSH START BUTTON---
-  COam->clres[OBJ_RES_CHR]  = GFL_CLGRP_CGR_Register( handle, 
-                                                      TITLE_RES_PUSH_NCGR, 1, 
-                                                      CLSYS_DRAW_SUB, heapID );
-  COam->clres[OBJ_RES_PAL] = GFL_CLGRP_PLTT_Register( handle, 
-                                                      TITLE_RES_PUSH_NCLR, 
-                                                      CLSYS_DRAW_SUB, 0, heapID );
-  COam->clres[OBJ_RES_CEL] = GFL_CLGRP_CELLANIM_Register( handle, 
-                                                         TITLE_RES_PUSH_NCER, 
-                                                         TITLE_RES_PUSH_NANR, 
-                                                         heapID );
-  {
-    GFL_CLWK_DATA add;
-    add.pos_x   = 128;
-    add.pos_y   = 96;
-    add.anmseq  = 0;
-    add.bgpri   = 0;
-    add.softpri = 0;
-
-#if 0
-    COam->clwk    = GFL_CLACT_WK_Create( COam->clunit,
-                                       COam->clres[OBJ_RES_CHR],
-                                       COam->clres[OBJ_RES_PAL],
-                                       COam->clres[OBJ_RES_CEL],
-                                       &add, CLSYS_DEFREND_SUB, heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( COam->clwk, TRUE );
-#endif  
-  }
-  
-
   //OBJ表示ON
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
 
-  GFL_ARC_CloseDataHandle( handle );
 }
 
 static void mainOAMcontrol(OAM_CONTROL* COam, HEAPID heapID)
@@ -1098,12 +1025,9 @@ static void mainOAMcontrol(OAM_CONTROL* COam, HEAPID heapID)
 
 static void releaseOAMcontrol(OAM_CONTROL* COam)
 {
-  GFL_CLGRP_CGR_Release(      COam->clres[OBJ_RES_CHR] );
-  GFL_CLGRP_PLTT_Release(     COam->clres[OBJ_RES_PAL] );
-  GFL_CLGRP_CELLANIM_Release( COam->clres[OBJ_RES_CEL] );
 
  GFL_CLACT_UNIT_Delete(COam->clunit);
-  GFL_CLACT_SYS_Delete();
+ GFL_CLACT_SYS_Delete();
 }
 
 
@@ -1455,15 +1379,15 @@ static u32 set_audience_appear( AUDIENCE_CONTROL *AOam, int audienceNum )
       SetAudienceCondition( AOam, no, 0 );
       _set_audienceBit( &audienceBit, no );
       count++;
-      OS_Printf("audience %d=on\n", _get_audienceBit(audienceBit, no));
+      OS_Printf("audience %d=on\n", no );
     }
   }
 
   for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
     if(_get_audienceBit(audienceBit, i)==0){
-      SetAudienceOnOff( AOam, no, FALSE );
+      SetAudienceOnOff( AOam, i, FALSE );
       SetAudienceCondition( AOam, i, 0 );
-      OS_Printf("audience %d=off\n", _get_audienceBit(audienceBit, i));
+      OS_Printf("audience %d=off\n", i);
     }
   }
   return audienceBit;
@@ -1487,17 +1411,17 @@ static void btlv_init_audience_disp( PKWD_BRIEFING_WORK *pbw, HEAPID heapID )
   // BG2非表示：メッセージ、情報パネル
   // BG3非表示：背景(アフィン)
   GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
-  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-  GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
+  GFL_BG_SetVisible( FRAME_SEATS, VISIBLE_ON );
+  GFL_BG_SetVisible( FRAME_INFOWIN, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
   // 念のため
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
   //
   // (BG)リソース転送
   GFL_ARCHDL_UTIL_TransVramBgCharacter( pbw->AOam.aHandle, NARC_battgra_wb_pkwd_movie_c_NCGR,
-                                          GFL_BG_FRAME1_S, 0, 32*32, FALSE, heapID );
+                                          FRAME_SEATS, 0, 32*32, FALSE, heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( pbw->AOam.aHandle, NARC_battgra_wb_pkwd_movie02_c_NSCR,	// test
-                                          GFL_BG_FRAME1_S, 0, 0, FALSE, heapID );
+                                          FRAME_SEATS, 0, 0, FALSE, heapID );
   GFL_ARCHDL_UTIL_TransVramPalette( pbw->AOam.aHandle, NARC_battgra_wb_pkwd_movie_c_NCLR,
                                           PALTYPE_SUB_BG, 0, 7*0x20, heapID );
   // 念のため

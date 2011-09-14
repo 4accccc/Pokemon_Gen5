@@ -44,10 +44,12 @@ typedef enum
 //=====================================
 typedef enum 
 {
-  POKEWOOD_REC_PARAM_SENARIO,         // シナリオナンバー
-  POKEWOOD_REC_PARAM_SUCCESS,         // 成功フラグ
-  POKEWOOD_REC_PARAM_POKE0,           // 自分の手持ち１匹目のPOKEMON_PARAM
-  POKEWOOD_REC_PARAM_AUDIENCE_NUM,    // 初期観客数
+  POKEWOOD_REC_PARAM_SENARIO,         ///< シナリオナンバー
+  POKEWOOD_REC_PARAM_SUCCESS,         ///< 成功フラグ
+  POKEWOOD_REC_PARAM_POKE0,           ///< 自分の手持ち１匹目のPOKEMON_PARAM
+  POKEWOOD_REC_PARAM_AUDIENCE_NUM,    ///< 初期観客数
+  POKEWOOD_REC_PARAM_RENTAL_FLAG,     ///< レンタルポケモンを使用しているか？
+
 } POKEWOOD_REC_PARAM;
 
 
@@ -99,3 +101,4 @@ extern u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst );
 //撮影データを上映データへ変換
 //->battle_rec_tool.cにあるのでBattleRec_LoadToolModuleしてください
 extern void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID );
+extern void BattleRec_SetPokewoodRentalFlag( BOOL rental_flag );

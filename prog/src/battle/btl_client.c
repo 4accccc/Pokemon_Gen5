@@ -2126,18 +2126,18 @@ static void _set_pokewood_choice_bsp( BTL_CLIENT *wk, int event_no, int choice )
   bsp->pokewoodChoiceTbl[event_no] = choice;
 }
 
-static BOOL _get_pokewood_success_flag( BTL_CLIENT *wk )
+static BtlPokewoodResult _get_pokewood_success_flag( BTL_CLIENT *wk )
 {
   BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
-  OS_Printf("ポケウッド成功フラグ取得 = %dd\n",bsp->pokewoodSuccessFlag );
-  return bsp->pokewoodSuccessFlag;
+  OS_Printf("ポケウッド成功フラグ取得 = %dd\n",bsp->pokewoodResult );
+  return bsp->pokewoodResult;
 }
 
-static void _set_pokewood_success_flag( BTL_CLIENT *wk, BOOL flag )
+static void _set_pokewood_success_flag( BTL_CLIENT *wk, BtlPokewoodResult result )
 {
   BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
-  bsp->pokewoodSuccessFlag = flag;
-  OS_Printf("ポケウッド成功フラグ設定 = %d\n", flag);
+  bsp->pokewoodResult = result;
+  OS_Printf("ポケウッド成功フラグ設定 = %d\n", result);
 }
 
 static void _check_pokewood_success( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, int event_no )
@@ -2146,11 +2146,15 @@ static void _check_pokewood_success( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, 
   if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_REC){ 
     // 成功イヴェントの起動が行われたら
     if(senario->success_event==event_no){
-      _set_pokewood_success_flag( wk, TRUE );    // 成功フラグを立てる
+      _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_SUCCESS );    // 成功フラグを立てる
     }else{
-      _set_pokewood_success_flag( wk, FALSE );   // 逆なら立てない
+      if(senario->event[event_no].point <= 0 ){
+        _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_BAD );      // エンディング点数が低かったらBAD
+      }else if(senario->event[event_no].point > 100){
+        _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_STRANGE );  // 100以上の場合はストレンジEND
+      }
     }
-    OS_Printf("success check event_no=%d\n", event_no);
+    OS_Printf("success check event_no=%d, pokewoodResult = %d\n", event_no, _get_pokewood_success_flag(wk));
   }
 }
 

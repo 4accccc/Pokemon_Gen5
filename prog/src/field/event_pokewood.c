@@ -371,9 +371,7 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, F
     BTL_SETUP_Single_Trainer( bsp, gamedata, &sit, TRID_NULL, heapID );
     BTL_SETUP_AllocRecBuffer( bsp, heapID );
   }
-//  TT_EncountTrainerPersonalDataMake( tr_id, bsp->tr_data[BTL_CLIENT_ENEMY1], heapID );
   dataMakeEncountTrainer( senario_no, BTL_POKEWOOD_REC, bsp->tr_data[BTL_CLIENT_ENEMY1], mystatus, heapID);
-//  setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, enemyData[senario_no], enemyDataNum[senario_no] );
   setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, senario_no, 1 );
 
   //プレイヤーセット
@@ -382,13 +380,14 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, F
     bsp->playerStatus[BTL_CLIENT_PLAYER] = GAMEDATA_GetMyStatus( gamedata );
     
     // プレイヤーパーティーの登録
-//    setupPokemon( mystatus, bsp->party[BTL_CLIENT_PLAYER], heapID, myData[senario_no], myDataNum[senario_no] );
     if(PKWDSYS_GetJoinMypoke(*pkwdsys)==TRUE){
       // 手持ちから出す
       PKWDSYS_CreateBattleParty( *pkwdsys, gamedata, bsp->party[BTL_CLIENT_PLAYER] );
+      bsp->pokewoodRentalFlag = FALSE;
     }else{
       // レンタルポケモン
       setupPokemon( mystatus, bsp->party[BTL_CLIENT_PLAYER], heapID, senario_no, 0 );
+      bsp->pokewoodRentalFlag = TRUE;
     }
   }
 
@@ -537,9 +536,18 @@ static void deletePokewoodBSP( BATTLE_SETUP_PARAM * bsp )
 //-----------------------------------------------------------------------------
 static void rewritePokewoodRec( GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp, HEAPID heapID )
 {
+  PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
+
   // 指定シナリオのプレイ済みフラグを立てる
-  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
-  POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( ps, bsp->pokewoodSenario);  // シナリオ撮影済みフラグを立てる
+  {
+    POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
+    POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( ps, bsp->pokewoodSenario);  // シナリオ撮影済みフラグを立てる
+
+    // 撮影成功であれば成功フラグを立てる
+    if(bsp->pokewoodResult==BTL_POKEWOOD_RESULT_SUCCESS){
+      POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_SUCCESS, bsp->pokewoodSenario );
+    }
+  }
 
   BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
   // BATTLE_SETUP_PARAMを上映用のトレーナーデータに書き換える
@@ -548,9 +556,11 @@ static void rewritePokewoodRec( GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp, H
   bsp->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( heapID );
   dataMakeMyTrainer( bsp->pokewoodSenario, bsp->tr_data[BTL_CLIENT_PLAYER], bsp->playerStatus[0], heapID );
   bsp->tr_data[BTL_CLIENT_ENEMY1]->tr_id   = 1;
-
+  
+  // BATTLE_SETUP_PARAMをポケウッド録画データに変換
   POKEWOOD_REC_ConvertRecToShow( bsp, heapID );
   BattleRec_StoreSetupParam( bsp );
+//  BattleRec_SetPokewoodRentalFlag( PKWDSYS_GetJoinMypoke(*pkwdsys)^1 );   //レンタルポケモンフラグを反映させる
   BattleRec_UnloadToolModule();
 }
 
@@ -579,6 +589,8 @@ static void _init_pkwd_count_param( PKWD_COUNT_PARAM *param, BATTLE_SETUP_PARAM 
   // 現在はシナリオNOとタイトル画像指定番号を同じにする
   param->title_no = bsp->pokewoodSenario;
   param->sex      = MyStatus_GetMySex( bsp->playerStatus[0] );
+
+  OS_Printf("レンタルポケモンか？=%d\n", POKEWOOD_REC_GetData(POKEWOOD_REC_PARAM_RENTAL_FLAG,NULL));
 }
 
 //----------------------------------------------------------------------------------

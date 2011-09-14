@@ -147,9 +147,9 @@ PKWD_BRIEFING_PARAM * PKWD_BRIEFING_PARAM_Create( HEAPID heapID, GAMESYS_WORK *g
 	
 	param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_BRIEFING_PARAM) );
 	// ‰Šú‰»
-  param->sv          = sv;
-//  param->pokewood_sv = pokewood_sv;
-  param->mystatus    = mystatus;
+  param->sv       = sv;
+  param->gameData = gamedata;
+  param->mystatus = mystatus;
 
 	return param;
 }

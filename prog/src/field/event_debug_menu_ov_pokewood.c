@@ -172,6 +172,22 @@ BOOL debugMenuCallProc_Pokewood( DEBUG_MENU_EVENT_WORK *wk )
   work->heapID = heapID;
   work->fieldWork = fieldWork;
 
+  // ポケウッド状況のデバッグプリント
+  {
+    int i;
+    POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata( GAMESYSTEM_GetGameData(gsys) );
+    for(i=0;i<40;i++){
+      OS_Printf("p senario%02d open=%d, played=%d, success=%d, announced=%d\n", i ,
+                POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_OPEN, i ),     // シナリオオープンフラグ
+                POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_PLAYED, i ),   // シナリオ撮影済みフラグ
+                POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_SUCCESS, i ),  // シナリオ成功終了済みフラグ
+                POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_ANNOUNCED, i ) // シナリオオープン告知済みフラグ
+                );
+    }
+    for(i=0;i<5;i++){
+      OS_Printf("StarRank%d Announced=%d\n", i, POKEWOOD_SAVEDATA_GetStarRankAnnounced(ps,i));
+    }
+  }
   return TRUE;
 }
 
