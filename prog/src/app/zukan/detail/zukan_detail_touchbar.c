@@ -185,8 +185,8 @@ static const GFL_CLACTPOS general_icon_const_pos_no_map[GENERAL_ICON_MAX] =
 // MAP
 static const ICON_CONST_SET map_icon_const_set[MAP_ICON_MAX] =
 {
-  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_MAP_RETURN,     ZKNDTL_SCMD_MAP_RETURN,    },
-  { MAP_CUSTOM_AREA_JUMP,     { 128, ZKND_TBAR_ICON_Y + 12  },    160, ZKNDTL_CMD_MAP_RET_HABITAT,     ZKNDTL_SCMD_MAP_RET_HABITAT,    },
+  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_MAP_RETURN,       ZKNDTL_SCMD_MAP_RETURN,    },
+  { MAP_CUSTOM_AREA_JUMP,     { 56, ZKND_TBAR_ICON_Y       },    160, ZKNDTL_CMD_MAP_RET_HABITAT,  ZKNDTL_SCMD_MAP_RET_HABITAT,    },
 #ifdef USE_MAP_DUMMY_ICON
   { MAP_CUSTOM_DUMMY,         { 104, ZKND_TBAR_ICON_Y       },    48,  ZKNDTL_CMD_NONE,           ZKNDTL_CMD_NONE,           },
 #endif
@@ -1619,7 +1619,7 @@ static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
         icon_tbl[i].noactive_anmseq   = 7;                // ノンアクティブのときのアニメ
         icon_tbl[i].push_anmseq       = 8;                // 押したときのアニメ（STOPになっていること）
         icon_tbl[i].key               = PAD_BUTTON_A;     // キーで押したときに動作させたいならば、ボタン番号
-        icon_tbl[i].se                = 0;                // 押したときにSEならしたいならば、SEの番号
+        icon_tbl[i].se                = SEQ_SE_DECIDE1;   // 押したときにSEならしたいならば、SEの番号
       }
     }
 

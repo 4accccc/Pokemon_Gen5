@@ -107,5 +107,9 @@ struct _HABITAT_LIST_WK{
   // ボタン点滅用
   u8	button_cnt;					    // ボタンアニメ用カウンタ
 
+  // スクロール
+  s32 main_scroll_cnt;
+  s32 sub_scroll_cnt;
+
 };
 

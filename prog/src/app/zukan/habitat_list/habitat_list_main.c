@@ -18,6 +18,7 @@
 #include "field/zonedata.h"           // for ZONEDATA_GetPlaceNameID
 #include "sound/pm_sndsys.h"          // for PMSND_PlaySE
 #include "../list/zknlist_snd_def.h"  // リストと同じ音を使用
+#include "../zukan_common.h"
 
 //=============================================================================
 /**
@@ -43,6 +44,7 @@ typedef void (*MainFunc)(HABITAT_LIST_WK*);
 // メインシーケンス---------------------------------
 static void MAINSEQ_AppInit( HABITAT_LIST_WK *p_wk );
 static void MAINSEQ_FadeIn( HABITAT_LIST_WK *p_wk );
+static void MAINSEQ_FadeOut( HABITAT_LIST_WK *p_wk );
 static void MAINSEQ_KeyInput( HABITAT_LIST_WK *p_wk );
 static void MAINSEQ_AppExit( HABITAT_LIST_WK *p_wk );
 static void MAINSEQ_PageMove( HABITAT_LIST_WK *p_wk );
@@ -68,6 +70,7 @@ static void SetRetMod( HABITAT_LIST_WK *p_wk ,HABITAT_LIST_RET_MODE ret_mode );
 typedef enum _MAIN_SEQ{
   MAIN_SEQ_APPINIT,
   MAIN_SEQ_FADEIN,
+  MAIN_SEQ_FADEOUT,
   MAIN_SEQ_KEY_INPUT,
   MAIN_SEQ_ANIM_WAIT,
   MAIN_SEQ_PAGE_MOVE,
@@ -81,6 +84,7 @@ typedef enum _MAIN_SEQ{
 static const MainFunc MainSeq[] = {
   MAINSEQ_AppInit,            // アプリケーションの初期化
   MAINSEQ_FadeIn,             // フェードイン
+  MAINSEQ_FadeOut,
   MAINSEQ_KeyInput,           // メインキー処理
   MAINSEQ_AnimWait,           // アニメーション待ち処理
   MAINSEQ_PageMove,           // ページ移動
@@ -94,6 +98,7 @@ static const MainFunc MainSeq[] = {
 static const BOOL ListEnable[] = {
   FALSE,  // アプリケーションの初期化
   FALSE,  // フェードイン
+  FALSE,  // フェードアウト
   TRUE,   // メインキー処理
   FALSE,  // アニメ待ち
   FALSE,  // ページ移動
@@ -264,19 +269,99 @@ static void MAINSEQ_FadeIn( HABITAT_LIST_WK *p_wk )
       // 文字描画終了を待ってフェードを呼び出す
       if( HABITAT_LIST_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
       {
-        // オープニングフェード呼出
-        GX_SetMasterBrightness( 0 );
-        GXS_SetMasterBrightness( 0 );
-        HABITAT_LIST_GRA_CallOpeningFade( &p_wk->gra_sys );
+        p_wk->main_scroll_cnt = FRAME_SCROLL_COUNT;
+        p_wk->sub_scroll_cnt  = -FRAME_SCROLL_COUNT;
+        // パレットフェードを行う
+        HABITAT_LIST_GRA_CallFade( &p_wk->gra_sys ,16,16 );
+        HABITAT_LIST_GRA_AddScrollFrame( &p_wk->gra_sys ,p_wk->main_scroll_cnt,TRUE );
+        HABITAT_LIST_GRA_AddScrollFrame( &p_wk->gra_sys ,p_wk->sub_scroll_cnt,FALSE );
         p_wk->sub_seq++;
       }
     }
     break;
   case 1:
     {
-      SetNextSeq( p_wk, MAIN_SEQ_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
-      break;
+      if( HABITAT_LIST_GRA_CheckFade( &p_wk->gra_sys ) == 0 )
+      {
+        // マスター輝度を戻す
+        GX_SetMasterBrightness( 0 );
+        GXS_SetMasterBrightness( 0 );
+        // オープニングフェード
+        HABITAT_LIST_GRA_CallFade( &p_wk->gra_sys ,16,0 );
+        p_wk->sub_seq++;
+      }
     }
+    break;
+  case 2:
+    {
+      // スクロール待ち
+      if( p_wk->main_scroll_cnt <= 0)
+      {
+        if( HABITAT_LIST_GRA_CheckFade( &p_wk->gra_sys ) == 0 )
+        {
+          SetNextSeq( p_wk, MAIN_SEQ_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+        }
+      }
+      else
+      {
+        HABITAT_LIST_GRA_AddScrollFrame( &p_wk->gra_sys ,-ZKNCOMM_BAR_SPEED,TRUE );
+        HABITAT_LIST_GRA_AddScrollFrame( &p_wk->gra_sys ,ZKNCOMM_BAR_SPEED,FALSE );
+        p_wk->main_scroll_cnt-=ZKNCOMM_BAR_SPEED;
+        p_wk->sub_scroll_cnt+=ZKNCOMM_BAR_SPEED;
+      }
+    }
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードインシーケンス
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MAINSEQ_FadeOut( HABITAT_LIST_WK *p_wk )
+{
+  switch(p_wk->sub_seq)
+  {
+  case 0:
+    {
+      // 文字描画終了を待ってフェードを呼び出す
+      if( HABITAT_LIST_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
+      {
+        p_wk->main_scroll_cnt = 0;
+        p_wk->sub_scroll_cnt  = 0;
+        // パレットフェードを行う
+        HABITAT_LIST_GRA_CallFade( &p_wk->gra_sys ,0,16 );
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 1:
+    {
+      if( HABITAT_LIST_GRA_CheckFade( &p_wk->gra_sys ) == 0 )
+      {
+        // スクロール待ち
+        if( p_wk->main_scroll_cnt >= FRAME_SCROLL_COUNT)
+        {
+          // 輝度を最低にしておく
+          GX_SetMasterBrightness( -16 );
+          GXS_SetMasterBrightness( -16 );
+          SetNextSeq( p_wk, MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE);
+        }
+        else
+        {
+          HABITAT_LIST_GRA_AddScrollFrame( &p_wk->gra_sys ,ZKNCOMM_BAR_SPEED,TRUE );
+          HABITAT_LIST_GRA_AddScrollFrame( &p_wk->gra_sys ,-ZKNCOMM_BAR_SPEED,FALSE );
+          p_wk->main_scroll_cnt+=ZKNCOMM_BAR_SPEED;
+          p_wk->sub_scroll_cnt-=ZKNCOMM_BAR_SPEED;
+        }
+      }
+    }
+    break;
   }
 }
 
@@ -294,7 +379,7 @@ static void MAINSEQ_AppInit( HABITAT_LIST_WK *p_wk )
   // フォントウィンドウのクリア
   HABITAT_LIST_GRA_BmpFil( PRINT_UTIL_INFO_WIN , 0 ,&p_wk->gra_sys );
   HABITAT_LIST_GRA_BmpFil( PRINT_UTIL_TITLE_WIN , 0 ,&p_wk->gra_sys );
-  
+
   // 通信アイコンを表示
   GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_ZUKAN_HABITAT_LIST );
 
@@ -438,7 +523,6 @@ static void MAINSEQ_AnimWait( HABITAT_LIST_WK *p_wk )
       {
         // 次のシーケンスに移動
         SetNextSeq( p_wk, p_wk->next_seq_id ,p_wk->next_seq_param);
-        p_wk->sub_seq++;
       }
     }
     break;
@@ -570,7 +654,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
             MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
       }
       CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_ANM,
-          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE );
+          MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE );
       ONOUE_Printf("SELECTタッチ\n");
     }
     break;
@@ -580,7 +664,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       PMSND_PlaySE( ZKNLIST_SE_CLOASE );
       SetRetMod( p_wk ,HABITAT_LIST_RET_EXIT );
       CallCellAnm( p_wk ,EXIT_BUTTON_CLWKID,APP_COMMON_BARICON_EXIT_ON,
-          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE );
+          MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE );
       ONOUE_Printf("Xタッチ\n");
     }
     break;
@@ -595,7 +679,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       PMSND_PlaySE( ZKNLIST_SE_CANCEL );
       SetRetMod( p_wk ,HABITAT_LIST_RET_RETURN );
       CallCellAnm( p_wk ,RETURN_BUTTON_CLWKID,APP_COMMON_BARICON_RETURN_ON,
-          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
+          MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
       ONOUE_Printf("戻るタッチ\n");
     }
     break;
@@ -611,7 +695,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
         HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
             MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
         CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_ANM,
-            MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE, SEQ_CHANGE_PARAM_NONE );
+            MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE, SEQ_CHANGE_PARAM_NONE );
         ONOUE_Printf("モード切替1タッチ\n");
       }
     }
@@ -633,7 +717,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
           MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
       CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_ANM,
-          MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
+          MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
       ONOUE_Printf("モード切替2タッチ\n");
     }
     break;
@@ -641,7 +725,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
   case HABITATLIST_UI_MODE_BUTTON_03:
     // 機能なし
 //    CallCellAnm( p_wk ,MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
-//        MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
+//        MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
 //    ONOUE_Printf("モード切替3タッチ\n");
     break;
 
@@ -654,7 +738,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
 				PMSND_PlaySE( ZKNLIST_SE_CLOASE );
         SetRetMod( p_wk ,HABITAT_LIST_RET_EXIT );
         CallCellAnm( p_wk ,EXIT_BUTTON_CLWKID,APP_COMMON_BARICON_EXIT_ON,
-            MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
+            MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
         ONOUE_Printf("Xボタン\n");
       }
       else if( trg & PAD_BUTTON_B )
@@ -662,7 +746,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
 				PMSND_PlaySE( ZKNLIST_SE_CANCEL );
         SetRetMod( p_wk ,HABITAT_LIST_RET_RETURN );
         CallCellAnm( p_wk ,RETURN_BUTTON_CLWKID,APP_COMMON_BARICON_RETURN_ON,
-            MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
+            MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
         ONOUE_Printf("Bボタン\n");
       }
       else if( trg & PAD_BUTTON_Y )
@@ -688,7 +772,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
         HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
                         MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
         CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_ANM,
-            MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
+            MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
         ONOUE_Printf("SELECTボタン\n");
       }
     }
@@ -794,8 +878,7 @@ static void MAINSEQ_ItemBlink( HABITAT_LIST_WK *p_wk )
 
 	case 4:
 		if( p_wk->button_cnt == 0 ){
-			p_wk->sub_seq = 0;
-      SetNextSeq( p_wk, MAIN_SEQ_APPEXIT ,SEQ_CHANGE_PARAM_NONE);
+      SetNextSeq( p_wk, MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE);
       return;
 		}else{
 			p_wk->button_cnt--;

@@ -79,22 +79,21 @@ enum
   MODE_BUTTON_01_CLWKID,
   MODE_BUTTON_02_CLWKID,
   MODE_BUTTON_03_CLWKID,
+  SCROLL_BUTTON_CLWKID,
+  SCROLL_BAR_CLWKID,
+  LIST_CURSOR_CLWKID,
+
+  // ここから下はスクロール
   SELECT_BUTTON_CLWKID,
   L_BUTTON_CLWKID,
   R_BUTTON_CLWKID,
   CHECKBOX_CLWKID,
   RETURN_BUTTON_CLWKID,
   EXIT_BUTTON_CLWKID,
-  SCROLL_BUTTON_CLWKID,
-  SCROLL_BAR_CLWKID,
-  LIST_CURSOR_CLWKID,
   COMMON_OBJ_WK_MAX,
-};
 
-// 共通素材用OBJWKID
-enum
-{
-  APP_MENU_OBJ_WK_MAX,
+  M_SCROLL_OBJ_START = SELECT_BUTTON_CLWKID,
+  M_SCROLL_OBJ_END = EXIT_BUTTON_CLWKID,
 };
 
 // アニメーションシーケンス
@@ -253,7 +252,7 @@ typedef struct {
 //
 //=============================================================================
 extern void HABITAT_LIST_GRA_Init( HABITAT_LIST_GRA_WK *p_wk ,GAMEDATA *p_gdata );
-extern void HABITAT_LIST_GRA_CallOpeningFade( HABITAT_LIST_GRA_WK *p_wk );
+extern void HABITAT_LIST_GRA_CallFade( HABITAT_LIST_GRA_WK *p_wk, u8 start, u8 end );
 extern void HABITAT_LIST_GRA_Exit( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_VblankMain( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_HblankMain( HABITAT_LIST_GRA_WK *p_wk );
@@ -283,4 +282,6 @@ extern u32 HABITAT_LIST_GRA_GetCursorPos( HABITAT_LIST_GRA_WK *p_wk );
 extern BOOL HABITAT_LIST_GRA_GetCanListDown( HABITAT_LIST_GRA_WK *p_wk );
 extern BOOL HABITAT_LIST_GRA_CheckAnmActive( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid );
 extern u16 HABITAT_LIST_GRA_GetAnmSeq( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid );
+extern u16 HABITAT_LIST_GRA_CheckFade( HABITAT_LIST_GRA_WK *p_wk );
+extern void HABITAT_LIST_GRA_AddScrollFrame( HABITAT_LIST_GRA_WK *p_wk ,s32 ypos,BOOL is_main  );
 

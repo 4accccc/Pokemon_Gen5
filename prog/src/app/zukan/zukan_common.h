@@ -25,6 +25,8 @@
 // フェードイン/アウトのスピード
 #define ZKNCOMM_FADE_WAIT   (-14)     // PaletteFadeReqWriteのwaitに渡せる値
 
+#define	FRAME_SCROLL_COUNT	( 48 )		// 背景スクロールカウント
+
 
 // セルアクターデータ
 typedef struct {

@@ -2211,7 +2211,7 @@ static void Zukan_Detail_Map_MsgTextInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
     { BG_FRAME_S_TEXT,  9, 25, 16,  2, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_F },
     { BG_FRAME_M_TEXT,  2,  0, 15,  2, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_F },
     { BG_FRAME_M_TEXT,  8, 10, 16,  2, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_F },
-    { BG_FRAME_M_TEXT,  10, 24-3, 16,  3, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_F },
+    { BG_FRAME_M_TEXT,  10, 21, 16,  3, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_F },
   };
 
   u8 i;
@@ -4331,12 +4331,12 @@ static void Zukan_Detail_Map_UtilDrawAreaJumpMsg( ZUKAN_DETAIL_MAP_PARAM* param,
   if( is_active == TRUE )
   {
     PRINTSYS_PrintQueColor( work->print_que[TEXT_AREA_JUMP], GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_AREA_JUMP]),
-        0, 4, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+        0, 5, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
   }
   else
   {
     PRINTSYS_PrintQueColor( work->print_que[TEXT_AREA_JUMP], GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_AREA_JUMP]),
-        0, 4, strbuf, work->font, PRINTSYS_LSB_Make(2,1,0) );
+        0, 5, strbuf, work->font, PRINTSYS_LSB_Make(2,1,0) );
   }
   GFL_STR_DeleteBuffer( strbuf );
   work->text_trans[TEXT_AREA_JUMP] = TRUE;

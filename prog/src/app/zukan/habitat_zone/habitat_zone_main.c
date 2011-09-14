@@ -1014,6 +1014,7 @@ static void MAINSEQ_AppExit( HABITAT_ZONE_WK *p_wk )
 static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
 {
   GFL_CLWK *p_clwk;
+  GFL_CLWK *p_no_anm_clwk;
   
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
   GF_ASSERT( p_list_data->season_enable == TRUE );
@@ -1022,10 +1023,12 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
   if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
   {
     p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
+    p_no_anm_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
   }
   else if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
   {
     p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
+    p_no_anm_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
   }
   else
   {
@@ -1037,6 +1040,10 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
   // 左右ボタンアニメーション再生
   case 0:
     {
+      // アニメションをとめる
+      GFL_CLACT_WK_ResetAnm( p_no_anm_clwk );
+      GFL_CLACT_WK_StopAnm( p_no_anm_clwk );
+
       // アニメーションシーケンスを決定、季節の切替
       if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
       {
@@ -1096,6 +1103,9 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
             GFL_CLACT_WK_ResetAnm( p_clwk );
             GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
           }
+
+          // アニメーションを開始
+          GFL_CLACT_WK_StartAnm( p_no_anm_clwk );
 
           // デフォルトの季節を設定
           HABITATLIST_SAVE_SetDefaultSeason( p_wk->p_habitat_sv, p_wk->season );
