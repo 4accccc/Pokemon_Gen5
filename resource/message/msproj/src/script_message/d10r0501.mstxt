@@ -1941,11 +1941,11 @@ N</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWSAGE1
-ゲーチス</Text>
+			<Text>SWSAGE1B
+ゲーチス・杖なし</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-14T02:35:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2002,11 +2002,11 @@ N</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWSAGE1
-ゲーチス</Text>
+			<Text>SWSAGE1B
+ゲーチス・杖なし</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-14T02:35:21" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2127,11 +2127,11 @@ N</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWSAGE1
-ゲーチス</Text>
+			<Text>SWSAGE1B
+ゲーチス・杖なし</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-14T02:35:23" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -3042,6 +3042,58 @@ N</Text>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_wand_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ゲーチスが
+もっていた　ステッキ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T02:38:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T02:37:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ゲーチスが
+持っていた　ステッキ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T02:38:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T02:37:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＢＧメッセージ
+・ゲーチスがいた場所に配置
+・ゲームクリア後もずっと</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T02:39:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAND
+ゲーチスの杖</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-14T02:35:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
