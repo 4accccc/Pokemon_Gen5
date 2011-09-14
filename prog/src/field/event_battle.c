@@ -403,7 +403,10 @@ GMEVENT * EVENT_TrainerBattle(
       {
         bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_MUGEN_W;
       }
+      // 背景設定
       bp->fieldSituation.bgType = dungeon_area;
+      // アイテム使用禁止
+      bp->bag_nouse_flag = TRUE;
     
       ONOUE_Printf("無限ダンジョン用背景差替え");
     }
